@@ -93,13 +93,13 @@ export class SystemInfoComponent {
 
     private GetCurrentTenantDateAsUtc(timeZoneOffset: number) {
         var myResult: Date = new Date();
-        myResult.setUTCFullYear(myResult.getFullYear());
-        myResult.setUTCMonth(myResult.getMonth());
-        myResult.setUTCDate(myResult.getDate());
-        myResult.setUTCHours(myResult.getHours() + timeZoneOffset);
-        myResult.setUTCMinutes(myResult.getMinutes());
-        myResult.setUTCSeconds(myResult.getSeconds());
-        myResult.setUTCMilliseconds(myResult.getMilliseconds());
+        myResult.setUTCFullYear(myResult.getUTCFullYear());
+        myResult.setUTCMonth(myResult.getUTCMonth());
+        myResult.setUTCDate(myResult.getUTCDate());
+        myResult.setUTCHours(myResult.getUTCHours() + timeZoneOffset);
+        myResult.setUTCMinutes(myResult.getUTCMinutes());
+        myResult.setUTCSeconds(myResult.getUTCSeconds());
+        myResult.setUTCMilliseconds(myResult.getUTCMilliseconds());
         return myResult;
     }
 }
