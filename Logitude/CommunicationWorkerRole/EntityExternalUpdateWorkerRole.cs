@@ -127,6 +127,8 @@ namespace CommunicationWorkerRole
 
         private void OnCatchAnalyzingError(Exception ex )
         {
+            ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", "ShipmentExternalUpdateWorkerRole : Run() Method", null);
+
             analyzeQueue.ErrorMessage = ex.Message + (ex.InnerException != null ? Environment.NewLine + "InnerException: " + ex.InnerException.Message : "");
             analyzeQueue.StackTrace = (ex.StackTrace != null ? Environment.NewLine + "Stack Trace: " + ex.StackTrace : "");
             analyzeQueue.ErrorMessage = analyzeQueue.ErrorMessage.Length > 7950 ? analyzeQueue.ErrorMessage.Substring(0, 7950) : analyzeQueue.ErrorMessage;
