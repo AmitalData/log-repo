@@ -78,7 +78,8 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
 
         public HttpResponseMessage Post(ARPaymentPM entityPM)
         {
-            if (ModelState.IsValid)
+            // TODO
+            if (ModelState.IsValid || ModelState.Keys.Any(x => x.Contains(".bankAccount.Id")))
             {
                 try
                 {

@@ -322,9 +322,6 @@ export class PaymentBankTransferLine extends BaseComponent {
     }
     set BankAccountId(value: string) {
         if (this.entityPM.BankAccountId != value) {
-            let bankAccount = {} as BankAccountPM;
-            bankAccount.Id = value;
-            this.entityPM.BankAccount = this.entityPM.BankAccount ? this.entityPM.BankAccount : bankAccount;
             this.entityPM.BankAccountId = value;
         }
     }
