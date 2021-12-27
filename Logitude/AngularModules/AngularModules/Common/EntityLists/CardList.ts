@@ -15,6 +15,8 @@ export class CardList {
 		LocalName: string;
 		InActive: boolean;
 		PaymentTermName: string;
+		PaymentTermEnglishName: string;
+		PaymentTermLocalName: string;
 		PartnerTypeName: string;
 		ReceivablesAccountingCard: string;
 		PayablesAccountingCard: string;
@@ -114,5 +116,5 @@ export class CardList {
 		RecordDate: Date;
 		BillToId: string;
 		AccountingPartnerCreditLimit: number;
-	
-}
+
+}
