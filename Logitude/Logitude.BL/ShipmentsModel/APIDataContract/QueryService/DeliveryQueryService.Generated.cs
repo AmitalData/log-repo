@@ -356,10 +356,12 @@ using Simplog.Data.ShipmentsModel;
 					 
 
 					
-                    							
+                    
+					if(!IsUpdate)
+					{							
 						temp.PickUpDeliveryNumber = item.DeliveryReference;
 
-					 
+										}  
 
 					 
 
