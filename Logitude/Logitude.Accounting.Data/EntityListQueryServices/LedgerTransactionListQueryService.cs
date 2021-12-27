@@ -1454,7 +1454,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             LedgerTransactionSorterArgs args = new LedgerTransactionSorterArgs()
             {
                 Tenant = tenant,
-                AccountId = accountId,
+                AccountId = accountId != null ? accountId : transferAccountId,
                 QueryOperations = queryOperations,
                 Transactions = resultedList,
             };
@@ -1497,10 +1497,22 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
             IQueryable<LedgerTransactionList> ledgerTransactions = GetFilteredList(queryOperations, tenant);
 
+            if (accountId is null)
+            {
+                IQueryable<LedgerTransactionList> openTransactions = GetAllTransactionsForTransferAccount(tenant, transferAccountId, ledgerTransactions);
+                return openTransactions.OrderByDescending(d => d.DocumentDate);
+            }
+            else if (transferAccountId is null)
+            {
+                IQueryable<LedgerTransactionList> openTransactions = GetTransactionsForNormalAccount(tenant, accountId, ledgerTransactions);
+                return openTransactions.OrderByDescending(d => d.DocumentDate);
+            }
+
             IQueryable<LedgerTransactionList> accountOpenTransaction = GetTransactionsForNormalAccount(tenant, accountId, ledgerTransactions);
             IQueryable<LedgerTransactionList> transferAccountOpenTransaction = GetAllTransactionsForTransferAccount(tenant, transferAccountId, ledgerTransactions);
 
             IQueryable<LedgerTransactionList> resultedList = accountOpenTransaction.Union(transferAccountOpenTransaction).OrderByDescending(d => d.DocumentDate);
+            
             return resultedList;
         }
 
