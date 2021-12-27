@@ -576,42 +576,35 @@ namespace WebFreight.Web.ReportsWebServices
         }
         private void MapShipmentMainVessel()
         {
-            if (!string.IsNullOrEmpty(shipment.MainCarriageVesselId))
+            dataProvider.MainCarriageVesselName = shipment.MainCarriageVesselName;
+
+            if (!string.IsNullOrEmpty(shipment.MainCarriageVesselName))
             {
-                Vessel vessel = this.GetVessel(shipment.MainCarriageVesselId);
-                if (vessel != null)
-                {
-                    dataProvider.MainCarriageVesselName = vessel.EnglishName;
-                    dataProvider.MainCarriageVesselNameAndNumber = vessel.EnglishName + " \\ " + shipment.MainCarriageCarrierNumber;
-                }
+                dataProvider.MainCarriageVesselNameAndNumber = shipment.MainCarriageVesselName + " \\ " + shipment.MainCarriageCarrierNumber;
             }
         }
         private void MapShipmentLastVessel()
         {
-            string lastVesselId = shipment.Transshipment3FromPortId;
+            string lastVesselName = shipment.Transshipment3VesselName;
 
-            if (lastVesselId == null)
+            if (lastVesselName == null)
             {
-                lastVesselId = shipment.Transshipment2FromPortId;
+                lastVesselName = shipment.Transshipment2VesselName;
             }
 
-            if (lastVesselId == null)
+            if (lastVesselName == null)
             {
-                lastVesselId = shipment.Transshipment1FromPortId;
+                lastVesselName = shipment.Transshipment1VesselName;
             }
 
-            if (lastVesselId == null)
+            if (lastVesselName == null)
             {
-                lastVesselId = shipment.MainCarriageVesselId;
+                lastVesselName = shipment.MainCarriageVesselName;
             }
 
-            if (lastVesselId != null)
+            if (lastVesselName != null)
             {
-                Vessel vessel = this.GetVessel(lastVesselId);
-                if (vessel != null)
-                {
-                    dataProvider.LastMainCarriageVesselNameAndNumber = vessel.EnglishName + " \\ " + shipment.MainCarriageCarrierNumber;
-                }
+                dataProvider.LastMainCarriageVesselNameAndNumber = lastVesselName + " \\ " + shipment.MainCarriageCarrierNumber;
             }
         }
         private void MapShipmentMoveType()
@@ -1161,17 +1154,6 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 itemLine.HSCode = item.Harmonize;
             }
-        }
-        private Vessel GetVessel(string id)
-        {
-            Vessel output = null;
-
-            if (!string.IsNullOrEmpty(id))
-            {
-                output = (from a in commonContext.Vessels where a.Id == id select a).FirstOrDefault();
-            }
-
-            return output;
         }
         private string GetEmptyContainer(string cardId)
         {

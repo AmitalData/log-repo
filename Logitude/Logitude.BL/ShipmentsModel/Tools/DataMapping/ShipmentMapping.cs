@@ -1723,22 +1723,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     entityMasterData.ProrateReceivables = entityPM.ProrateReceivables;
                     entityMasterData.CutoffDate = entityPM.CutoffDate;
                     entityMasterData.MainCarriageVesselId = entityPM.MainCarriageVesselId;
+                    entityMasterData.MainCarriageVesselName = entityPM.MainCarriageVesselName;
                     entityMasterData.MainCarriageIsFromStack = entityPM.MainCarriageIsFromStack;
                     entityMasterData.Transshipment1FromPortId = entityPM.Transshipment1FromPortId;
                     entityMasterData.Transshipment1CarrierId = entityPM.Transshipment1CarrierId;
                     entityMasterData.Transshipment1CarrierNumber = entityPM.Transshipment1CarrierNumber;
                     entityMasterData.Transshipment1AdditionalMAWBOBLBL = entityPM.Transshipment1AdditionalMAWBOBLBL;
                     entityMasterData.Transshipment1VesselId = entityPM.Transshipment1VesselId;
+                    entityMasterData.Transshipment1VesselName = entityPM.Transshipment1VesselName;
                     entityMasterData.Transshipment2FromPortId = entityPM.Transshipment2FromPortId;
                     entityMasterData.Transshipment2CarrierId = entityPM.Transshipment2CarrierId;
                     entityMasterData.Transshipment2CarrierNumber = entityPM.Transshipment2CarrierNumber;
                     entityMasterData.Transshipment2AdditionalMAWBOBLBL = entityPM.Transshipment2AdditionalMAWBOBLBL;
                     entityMasterData.Transshipment2VesselId = entityPM.Transshipment2VesselId;
+                    entityMasterData.Transshipment2VesselName = entityPM.Transshipment2VesselName;
                     entityMasterData.Transshipment3FromPortId = entityPM.Transshipment3FromPortId;
                     entityMasterData.Transshipment3CarrierId = entityPM.Transshipment3CarrierId;
                     entityMasterData.Transshipment3CarrierNumber = entityPM.Transshipment3CarrierNumber;
                     entityMasterData.Transshipment3AdditionalMAWBOBLBL = entityPM.Transshipment3AdditionalMAWBOBLBL;
                     entityMasterData.Transshipment3VesselId = entityPM.Transshipment3VesselId;
+                    entityMasterData.Transshipment3VesselName = entityPM.Transshipment3VesselName;
                     entityMasterData.OnCarriageAdditionalTransportModeCode = entityPM.OnCarriageAdditionalTransportModeCode;
                     entityMasterData.SplitOnCarriage = entityPM.SplitOnCarriage;
 
@@ -1934,12 +1938,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityMasterData.PreCarriageCarrierId = entityPM.PreCarriageCarrierId;
             entityMasterData.PreCarriageCarrierNumber = entityPM.PreCarriageCarrierNumber;
             entityMasterData.PreCarriageVesselId = entityPM.PreCarriageVesselId;
+            entityMasterData.PreCarriageVesselName = entityPM.PreCarriageVesselName;
             entityMasterData.PreCarriageTransportModeId = entityPM.PreCarriageTransportModeId;
             entityMasterData.OnCarriageFromPortId = entityPM.OnCarriageFromPortId;
             entityMasterData.OnCarriageToPortId = entityPM.OnCarriageToPortId;
             entityMasterData.OnCarriageCarrierId = entityPM.OnCarriageCarrierId;
             entityMasterData.OnCarriageCarrierNumber = entityPM.OnCarriageCarrierNumber;
             entityMasterData.OnCarriageVesselId = entityPM.OnCarriageVesselId;
+            entityMasterData.OnCarriageVesselName = entityPM.OnCarriageVesselName;
             entityMasterData.OnCarriageTransportModeId = entityPM.OnCarriageTransportModeId;
         }
         private static void MapPreOnForwarding(ShipmentPM entityPM, Shipment entityPoco)
@@ -1949,12 +1955,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.PreForwardingCarrierId = entityPM.PreForwardingCarrierId;
             entityPoco.PreForwardingCarrierNumber = entityPM.PreForwardingCarrierNumber;
             entityPoco.PreForwardingVesselId = entityPM.PreForwardingVesselId;
+            entityPoco.PreForwardingVesselName = entityPM.PreForwardingVesselName;
             entityPoco.PreForwardingTransportModeId = entityPM.PreForwardingTransportModeId;
             entityPoco.OnForwardingFromPortId = entityPM.OnForwardingFromPortId;
             entityPoco.OnForwardingToPortId = entityPM.OnForwardingToPortId;
             entityPoco.OnForwardingCarrierId = entityPM.OnForwardingCarrierId;
             entityPoco.OnForwardingCarrierNumber = entityPM.OnForwardingCarrierNumber;
             entityPoco.OnForwardingVesselId = entityPM.OnForwardingVesselId;
+            entityPoco.OnForwardingVesselName = entityPM.OnForwardingVesselName;
             entityPoco.OnForwardingTransportModeId = entityPM.OnForwardingTransportModeId;
         }
         private static void MapPartners(ShipmentPM entityPM, Shipment entityPoco, bool isNewEntity)

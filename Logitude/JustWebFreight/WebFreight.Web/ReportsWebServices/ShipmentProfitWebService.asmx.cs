@@ -594,26 +594,15 @@ namespace WebFreight.Web.ReportsWebServices
                             carrierLable = "Shipping line";
                             carrierNumberLabel = "Vessel/Voyage No";
 
-                            string vesselName = String.Empty;
-                            if (!string.IsNullOrEmpty(shipmentPM.MainCarriageVesselId))
+                            if (!string.IsNullOrEmpty(shipmentPM.MainCarriageVesselName))
                             {
-                                VesselRepository vesselRepository = new VesselRepository(tenant);
-                                Vessel vessel = vesselRepository.GetSingleVessel(shipmentPM.MainCarriageVesselId, tenant);
-                                if (vessel != null)
-                                {
-                                    vesselName = vessel.EnglishName;
-                                }
-                            }
-
-                            if (!string.IsNullOrEmpty(vesselName))
-                            {
-                                carrierNumber = vesselName + "/" + shipmentPM.MainCarriageCarrierCode + shipmentPM.MainCarriageCarrierNumber;
+                                carrierNumber = shipmentPM.MainCarriageVesselName + "/" + shipmentPM.MainCarriageCarrierCode + shipmentPM.MainCarriageCarrierNumber;
                             }
                             else
                             {
                                 carrierNumber = shipmentPM.MainCarriageCarrierCode + shipmentPM.MainCarriageCarrierNumber;
 
-                            }
+                            }                            
                             break;
                         }
 
@@ -1210,14 +1199,10 @@ namespace WebFreight.Web.ReportsWebServices
 
         private string GetCarrierNumberByVessel(ShipmentMasterData shipmentMasterData)
         {
-            if (!string.IsNullOrEmpty(shipmentMasterData.MainCarriageVesselId))
+            if (!string.IsNullOrEmpty(shipmentMasterData.MainCarriageVesselName))            
             {
-                Vessel maincarriagevessel = (from a in commonContext.Vessels
-                                             where a.Id == shipmentMasterData.MainCarriageVesselId
-                                             select a).FirstOrDefault();
-
-               if(maincarriagevessel != null)
-                    return maincarriagevessel.EnglishName + " " + shipmentMasterData.MainCarriageCarrierNumber;
+               if(shipmentMasterData.MainCarriageVesselName != null)
+                    return shipmentMasterData.MainCarriageVesselName + " " + shipmentMasterData.MainCarriageCarrierNumber;
             }
             return null;
         }
