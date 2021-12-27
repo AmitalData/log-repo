@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExternalReconciliationUpdateClass
    {  		
-		public const string HashString = "ff5e8b4aca0e00ce9b768a71aa27d99c";
+		public const string HashString = "cc2110f3b131f61fe6d3decd1df7a37e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -122,7 +122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "התאמה",
 			      				    DefaultText =  "External Reconciliation",
-			      				    Code =  "fc44",
+			      				    Code =  "8544",
 			      				    Name =  "ExternalReconciliation Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -1204,6 +1204,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOCrossYearConfirmMsg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.CrossYearConfirmMsg", DefaultText = "There are some reconciliation lines from different years. Are you sure you want to continue?",LocalDefaultText = @"ישנם שורות להתאמה משנים שונות! האם אתה בטוח שברצונך להמשיך", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOShowCrossYearLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.ShowCrossYearLabel", DefaultText = "Show Cross Years Reconciliations",LocalDefaultText = @"הצג התאמות עם שורות משנים שונות", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOAccoountFilterAll = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.AccoountFilter.All", DefaultText = "All",LocalDefaultText = @"הכל", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOAccoountFilterBank = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.AccoountFilter.Bank", DefaultText = "Bank GL Account",LocalDefaultText = @"כרטיס חשבון", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOAccoountFilterTransfer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.AccoountFilter.Transfer", DefaultText = "Transfer GL Account",LocalDefaultText = @"כרטיס דחויים לשלם", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOAccoountFilterlabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.AccoountFilter.label", DefaultText = "Display transactions from",LocalDefaultText = @"הצג תנועות מ", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOAccoountFilterTransferTransaction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.AccoountFilter.TransferTransaction", DefaultText = "Transfer Transaction",LocalDefaultText = @"תנועה מחשבון דחויים", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

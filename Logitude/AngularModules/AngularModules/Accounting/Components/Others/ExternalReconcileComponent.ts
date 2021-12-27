@@ -554,7 +554,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             FieldName: 'SelectCheckBox',
             DataTypeCode: 'Boolean',
             Display: '',
-            Styles: { width: '30px' },
+            Styles: { width: '60px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
@@ -773,7 +773,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         // filters.addAdditionalFilter("SourceTypeCode", "5,9", null, null, "InList", false, false, false, "String");
         filters.addAdditionalFilter("DueDate", "#today", null, null, "LessThan", false, false, false, "Date"); // value will be override in server, to avoid edging problem!
 
-        if(this.ObjectTableName == "BankAccount")
+        if(this.ObjectTableName == "BankAccount" && this.filterSelectedValue != 'filter_Bank')
             filters.addAdditionalFilter("DUMMY_TransferAccountId", this.BankAccountPM.TransferGLAcccountId, null, null, "Equals", false, false, false, "String");
 
         if (!this.showInProgessLines){
@@ -784,7 +784,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         filters.SortBy = sortingCol;
         filters.SortDirection = sortingDir;
 
-        var glaccountId = this.getGLAccountId();
+        const glaccountId = this.filterSelectedValue == 'filter_Transfer' ? null : this.getGLAccountId();
 
         return this.entityListService.getReconciliationsByFilter("LedgerTransaction", glaccountId, filters);
     }
@@ -1181,6 +1181,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
 
     AutoReco() {
+
+        this.filterSelectedValue = 'filter_All';
 
         this.TransactionSelectedLines.Clear();
         this.ExtPageSelectedLines.Clear();
@@ -2007,6 +2009,23 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         });
         return externalPagesTotal;
     }
+
+
+    //#region Filter Methods
+    public filterSelectedValue: string = 'filter_All';
+    FilterItemClicked(itemValue: string)
+    {
+        if (this.filterSelectedValue != itemValue) {
+            this.filterSelectedValue = itemValue;
+            this.FilterChanged();
+        }
+    }
+    FilterChanged()
+    {
+        this.RefreshButtonClicked();
+    }
+    //#endregion
+
 
 }
 
