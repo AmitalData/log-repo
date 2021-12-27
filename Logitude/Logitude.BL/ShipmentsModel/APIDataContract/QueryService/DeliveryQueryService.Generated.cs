@@ -318,28 +318,22 @@ using Simplog.Data.ShipmentsModel;
 					}
 			
 					
-                    
-					if(!IsUpdate)
-					{							
+                    							
 						temp.TruckNumber = item.TruckNumber;
 
-										}  
+					 
 
 					
-                    
-					if(!IsUpdate)
-					{							
+                    							
 						temp.Driver = item.Driver;
 
-										}  
+					 
 
 					
-                    
-					if(!IsUpdate)
-					{							
+                    							
 						temp.TrailerNumber = item.TrailerNumber;
 
-										}  
+					 
 
 					
                     
@@ -350,28 +344,22 @@ using Simplog.Data.ShipmentsModel;
 										}  
 
 					
-                    
-					if(!IsUpdate)
-					{							
+                    							
 						temp.Notes = item.Notes;
 
-										}  
+					 
 
 					
-                    
-					if(!IsUpdate)
-					{							
+                    							
 						temp.CarrierNumber = item.TruckerNumber;
 
-										}  
+					 
 
 					
-                    
-					if(!IsUpdate)
-					{							
+                    							
 						temp.PickUpDeliveryNumber = item.DeliveryReference;
 
-										}  
+					 
 
 					 
 

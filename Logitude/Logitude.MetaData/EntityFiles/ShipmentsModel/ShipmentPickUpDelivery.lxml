@@ -36,7 +36,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment Pickup Delivery&quot;"
-  Code="&quot;7a04&quot;"
+  Code="&quot;6233&quot;"
   Name="&quot;ShipmentPickUpDelivery&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -3966,7 +3966,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Driver&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3982,7 +3982,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;TrailerNumber&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3998,7 +3998,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;TransportModeCode&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4030,7 +4030,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;TruckerNumber&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4046,7 +4046,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;DeliveryReference&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4062,7 +4062,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Packages&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4381,7 +4381,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;TruckNumber&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4397,7 +4397,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Driver&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4413,7 +4413,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;TrailerNumber&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4429,7 +4429,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;TransportModeCode&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4461,7 +4461,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;TruckerNumber&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4477,7 +4477,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;PickUpReference&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4493,7 +4493,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Packages&quot;"
         DCVersion="&quot;ApiV1&quot;"
