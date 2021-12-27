@@ -191,7 +191,6 @@
     <None Include="DBScripts\CommonModel\202111101034_UpdateUsersSecurityLevelWithNullValues.sxml" />
     <None Include="DBScripts\CommonModel\202109021051_AddDefaultValueForSecurityLevel.sxml" />
     <None Include="DBScripts\CommonModel\202109021049_UpdateUsersSecurityLevel.sxml" />
-    <None Include="DBScripts\CommonModel\RemoveEntityChangeWorkerRole.sxml" />
     <None Include="DBScripts\CommonModel\UpdateDocumentKPIFields.sxml" />
     <None Include="DBScripts\CommonModel\UpdatePortsSearchFields.sxml" />
     <None Include="DBScripts\CommonModel\UpdateShippingLinesSearchFields.sxml" />
