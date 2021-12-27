@@ -213,6 +213,8 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public int ScheduledTasksLimitPerReport { get; set; }
         public double? PermissionBuildMonths { get; set; }
         public string WhatsAppMessagingPhoneNumber { get; set; }
+        public double? CargoTokenTimeout { get; set; }
+
 
     }
 }

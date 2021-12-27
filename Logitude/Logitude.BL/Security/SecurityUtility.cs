@@ -603,6 +603,9 @@ namespace Logitude.BL.Security
             return true;
         }
 
-
+        public static void AuthenticationOnTenant(int tenant)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

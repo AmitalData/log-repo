@@ -164,6 +164,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.PermissionBuildMonths = entityPM.PermissionBuildMonths;
             entityPOCO.ScheduledTasksLimitPerReport = entityPM.ScheduledTasksLimitPerReport;
             entityPOCO.WhatsAppMessagingPhoneNumber = entityPM.WhatsAppMessagingPhoneNumber;
+            entityPOCO.CargoTokenTimeout = entityPM.CargoTokenTimeout;
 
             string packageName = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
