@@ -12,13 +12,8 @@
         }
     }
 
-    .price-check-tooltip-frequency {
-        width: 78px;
-        text-align: center;
-    }
-
-    .price-check-tooltip-transit {
-        width: 87px;
+    .price-check-tooltip-frequency, .price-check-tooltip-transit {
+        width: auto;
         text-align: center;
     }
 
