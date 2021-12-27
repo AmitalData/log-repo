@@ -47,7 +47,6 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { AutomationArgs } from '../../../../Infrastructure/DataContracts/AutomationArgs';
 import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
 import {AutomationOnUpdateDocument} from '../../../../Infrastructure/DataContracts/AutomationOnUpdateDocument';
-import { AutomationOnUpdateDocument } from '../../../../Infrastructure/DataContracts/AutomationOnUpdateDocument';
 import { UserList } from '../../../../Common/EntityLists/UserList';
 import { UserListService } from '../../../../Common/Services/StandardLists/UserListService';
 import { ChooseUserArgs } from '../../../../Infrastructure/Components/Maintenance/Automation/ChooseSpecificUserComponent';
@@ -1186,11 +1185,6 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
 
         this.IsLoadingComplete = true;
-    }
-
-    FillOnDocumentUpdateResults() {
-        this.ResultCodeList = [];
-        this.ResultCodeList.push(new ResultCode("Send Document", "ONUPDATEDOCUMENT"));
     }
 
     private MapAutomationEvent() {
