@@ -436,12 +436,12 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     openLoginPolicyPopup(){
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = "Login Policy";
-        logitudeWindow.Width = 800;
-        logitudeWindow.Height = 600;
+        logitudeWindow.Width = 500;
+        logitudeWindow.Height = 250;
 
         var args = this.EntityPM;
         logitudeWindow.WindowArgs = args;
-        logitudeWindow.Show('CargoLoginPolicy/CargoLoginPolicy.component.ts');
+        logitudeWindow.Show('./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/CargoLoginPolicy/CargoLoginPolicyComponent');
     }
 
 

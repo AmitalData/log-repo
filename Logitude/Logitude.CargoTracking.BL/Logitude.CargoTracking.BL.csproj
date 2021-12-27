@@ -68,6 +68,7 @@
     <Compile Include="APIDataContract\QueryService\CargoTrackingShipmentQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\TransportModeQueryService.Generated.cs" />
     <Compile Include="APIDataContract\TransportMode.Generated.cs" />
+    <Compile Include="CargoTrackingServices\CargoSessionService.cs" />
     <Compile Include="CargoTrackingServices\Codes.cs" />
     <Compile Include="CargoTrackingServices\DBTablesCopy\Generated\CargoTrackingCardDxml.Generated.cs" />
     <Compile Include="CargoTrackingServices\DBTablesCopy\Generated\CargoTrackingCountryDxml.Generated.cs" />

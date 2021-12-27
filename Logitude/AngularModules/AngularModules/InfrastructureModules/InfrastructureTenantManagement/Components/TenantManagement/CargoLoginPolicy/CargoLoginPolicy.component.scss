@@ -1,0 +1,28 @@
+.body-container{
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+.popup-cell{
+    width: 180px;
+    margin: 0px 5px;
+
+}
+.footer-container{
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.popup-lyout{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.footer-container > div{
+    padding: 0px 5px;
+}

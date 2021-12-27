@@ -981,6 +981,7 @@
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\GLAccountFollowUpDataController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\UserDefinedReportController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\LedgerTransactionBalanceFilterCreateLTBFilter.cs" />
+    <Compile Include="Controllers\CargoTrackingModel\CargoSessionController.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingIncrementalStatController.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingMilestoneViewsController.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingShipmentController.cs" />

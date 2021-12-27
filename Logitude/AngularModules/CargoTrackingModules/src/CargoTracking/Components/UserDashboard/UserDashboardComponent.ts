@@ -1,5 +1,5 @@
 import { CargoTrackingShipmentList } from '../../EntityLists/CargoTrackingShipmentList';
-import { Component, ViewChild, ElementRef, AfterViewInit, Inject, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, Inject, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { SessionInfo } from 'src/Infrastructure/Utilities/SessionInfo';
 import { CargoTrackingBrandingDataExtendedService } from 'src/CargoTracking/Services/Others/CargoTrackingBrandingDataExtendedService';
@@ -10,6 +10,10 @@ import { LoginExtendedService } from 'src/Infrastructure/Services/Extended/Login
 import { filter } from 'rxjs/operators';
 import { Location } from '@angular/common';
 import { SharedService } from 'src/CargoTracking/Services/Others/SharedService';
+import { MatDialog } from '@angular/material/dialog';
+import { SessionExpirationComponent } from './session-expiration/session-expiration.component';
+import { SessionTimeoutServiceService } from 'src/Infrastructure/Services/session-timeout-service.service';
+import { Subscription } from 'rxjs';
 
 
 
@@ -18,7 +22,7 @@ import { SharedService } from 'src/CargoTracking/Services/Others/SharedService';
     templateUrl: './UserDashboardComponent.html',
     styleUrls: ['./UserDashboardComponent.css']
 })
-export class UserDashboardComponent implements AfterViewInit, OnInit
+export class UserDashboardComponent implements AfterViewInit, OnInit,OnDestroy
 {
 
     @ViewChild('input') input: ElementRef;
@@ -47,12 +51,17 @@ export class UserDashboardComponent implements AfterViewInit, OnInit
         private brandingService: CargoTrackingBrandingDataExtendedService,
         private loginService: LoginExtendedService,
         private location: Location,
+        public sessionTimeoutServiceService:SessionTimeoutServiceService,
         private router: Router,
+        public dialog: MatDialog,
         @Inject('BASE_URL') baseUrl: string,
         public sharedService: SharedService) {
         this.baseURL = baseUrl;
+        this.handleSessionTimeOut();
         this.InitComponent();
     }
+    
+    
 
     private SetDefaultBackgroundColor()
     {
@@ -67,6 +76,8 @@ export class UserDashboardComponent implements AfterViewInit, OnInit
         this.GetLoggedUserIfNotSet();
         //this.Authenticate();
         this.LoggedUserData();
+        this.sessionTimeoutServiceService.RunSessionTimeOut();
+
     }
     LoggedUserData() {
         SessionInfo.Token = sessionStorage.getItem("Token");
@@ -232,5 +243,21 @@ export class UserDashboardComponent implements AfterViewInit, OnInit
         this.router.navigate(['cargo-tracking', 'shipments']);
         this.sharedService.updateValue(false);
     }
+    handleSessionTimeOutSubscription:Subscription;
+    handleSessionTimeOut() {
+        this.handleSessionTimeOutSubscription = this.sessionTimeoutServiceService.onExpirToken.subscribe(e=>{
+            this.openDialog()
+        });
+    }
+    ngOnDestroy(): void {
+        this.handleSessionTimeOutSubscription.unsubscribe();
+    }
+    openDialog() {
+        const dialogRef = this.dialog.open(SessionExpirationComponent,{closeOnNavigation:false,disableClose:true});
+    
+        dialogRef.afterClosed().subscribe(result => {
+            this.SignOutClicked();
+        });
+      }
 
 }
