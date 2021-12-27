@@ -50,6 +50,7 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
                 EventDateTime = traceEventPM.EventDateTime,
                 LogDateTime = traceEventPM.LogDateTime,
                 Notes = traceEventPM.Notes,
+                IsAddedManually = traceEventPM.IsAddedManually,
             };
 
             if (traceEventPM.UserId != null)
