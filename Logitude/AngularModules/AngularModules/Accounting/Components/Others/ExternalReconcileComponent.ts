@@ -141,6 +141,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             this.EntityPM = args.EntityPM;
             this.ObjectTableName = args.ObjectTableName;
             this.openAmountCurrency = args.openAmountCurrency;
+            this.CurrentSession.TransferAccountId = this.BankAccountPM?.TransferGLAcccountId;
+
             this.SetTitles();
             this.ResetFilters();
         }
