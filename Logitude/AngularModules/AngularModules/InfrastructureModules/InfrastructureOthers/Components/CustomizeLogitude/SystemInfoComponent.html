@@ -136,6 +136,15 @@
                         <td><div></div></td>
                     </tr>
 
+                    <tr *ngIf="IsCustomerCare" style="vertical-align:top;height:30px">
+                        <td style="width:5px"><div></div></td>
+                        <td style="width:210px;color:black"> <span>Tenant Local Time : </span></td>
+                        <td style="width:200px;color:black">
+                            <span class="Value">{{TenantLocalTime | DateTimeToTimePipe :'L12'}}</span>
+                        </td>
+                        <td><div></div></td>
+                    </tr>
+
                     <tr *ngIf="BluesnapVisibility" style="vertical-align:top;height:30px">
                         <td style="width:5px"><div></div></td>
                         <td style="width:210px;color:black"> <span> Bluesnap user ID :</span></td>

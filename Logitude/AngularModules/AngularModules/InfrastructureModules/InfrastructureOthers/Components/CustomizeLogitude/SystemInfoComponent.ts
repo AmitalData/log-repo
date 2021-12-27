@@ -1,9 +1,9 @@
 import {Component}  from '@angular/core';
 import {ExportDocumentService} from '../../../../Common/Services/DocumentServices/ExportDocumentService';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
-import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { DateTool } from '../../../../Infrastructure/Tools';
 
 @Component({
     
@@ -30,6 +30,8 @@ export class SystemInfoComponent {
     PaidVisibility: boolean=false;
     IsTrailVisibility: boolean=false;
     TemporalPackageVisibility: boolean = false;
+    TenantLocalTime: Date;
+
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _exportDocumentService: ExportDocumentService) {
 
@@ -40,7 +42,7 @@ export class SystemInfoComponent {
         this.PackageName = SessionLocator.TenantManagementJS.PackageName;
         this.NumberOfUsers = SessionLocator.TenantManagementJS.NumberOfUsers.toString();
         this.IsTrial = SessionLocator.TenantManagementJS.IsTrial ? "Yes" : "No";
-
+        this.TenantLocalTime = this.GetCurrentTenantDateAsUtc(SessionLocator.TenantPM.TimeZoneOffset);
         if (SessionLocator.TenantManagementJS.TemporalPackageCode) {
             this.TemporalPackageVisibility = true;
         }
@@ -83,5 +85,21 @@ export class SystemInfoComponent {
 
     CloseButtonClicked() {    
         this.CurrentSession.CloseCurrentWindow();
+    }
+
+    get IsCustomerCare() {
+        return SessionLocator?.LoggedUserPM?.IsCustomerCare;
+    }
+
+    private GetCurrentTenantDateAsUtc(timeZoneOffset: number) {
+        var myResult: Date = new Date();
+        myResult.setUTCFullYear(myResult.getFullYear());
+        myResult.setUTCMonth(myResult.getMonth());
+        myResult.setUTCDate(myResult.getDate());
+        myResult.setUTCHours(myResult.getHours() + timeZoneOffset);
+        myResult.setUTCMinutes(myResult.getMinutes());
+        myResult.setUTCSeconds(myResult.getSeconds());
+        myResult.setUTCMilliseconds(myResult.getMilliseconds());
+        return myResult;
     }
 }
