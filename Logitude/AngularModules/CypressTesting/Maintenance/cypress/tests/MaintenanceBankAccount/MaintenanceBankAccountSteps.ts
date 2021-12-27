@@ -19,7 +19,6 @@ Given("the user logged in and open {string} in maintenance menu", (maintenanceIt
     Actions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, MaintenanceSelectors.MaintenanceItemBankAccount)
     Actions.OpenNewWizard(Constants.BankAccount);
 });
-
 When("create bank account", () => {
     BankAccountActions.CreateBankAccount();
 });
@@ -28,7 +27,6 @@ Then("a validation error message with {string} should appear", (validationMessag
     BaseAssertion.AssertElementContain(BaseSelectors.ValidationSummary, validationMessage)
 });
 //#endregion
-
 //#region Create new bank account
 Given("a bank account with the following details", (dataTable) => {
     bankAccountDetails = Assists.CreateInstance<BankAccountDetails>(dataTable, true);
