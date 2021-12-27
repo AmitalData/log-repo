@@ -1,0 +1,9 @@
+﻿<Script DBType="Global" Module="Global">
+
+  <Sql Version="1">
+		<![CDATA[
+		delete BatchServicesDefinitionMods where  code ='EntityChange'
+    delete BatchServicesDefinitions where  code ='EntityChange'
+    ]]>
+	</Sql>
+</Script>

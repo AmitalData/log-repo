@@ -103,6 +103,7 @@ namespace CommunicationWorkerRole
                                         }
                                         catch (Exception exc)
                                         {
+                                            ExceptionHandler.HandleException(exc, DateTime.Now, 0, null, "LogitudeLead worker", null, null);
 
                                             commLog.Retries++;
                                             commLog.ExceptionMessage = GetExceptionMessage(exc);

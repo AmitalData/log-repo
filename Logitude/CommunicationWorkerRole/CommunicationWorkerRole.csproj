@@ -479,7 +479,6 @@
     <Compile Include="EmailsWorkerRole.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="EntityChangeWorkerRole.cs" />
     <Compile Include="ExactOnlineWorkerRole.cs" />
     <Compile Include="ExportImportTextCodesWR.cs" />
     <Compile Include="ForwarderShipmentDocumentsWorkerRole.cs" />
