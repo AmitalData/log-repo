@@ -28,8 +28,10 @@ namespace Logitude.Accounting.BL.DataContract
         public decimal? TotalEndBalance  { get; set; }
         public int? VendorsCount { get; set; }
         public List<TaxDeductionReportLine> deductionLines { get; set; }
-
-
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
+        public string TenantAddress1 { get;  set; }
+        public string TenantAddress2 { get;  set; }
     }
 
     public class TotalForCompany
@@ -91,6 +93,8 @@ namespace Logitude.Accounting.BL.DataContract
         public string EnglishName { get; set; }
         public decimal? EndYearBalance { get; set; }
         public string VendorLocalName { get; set; }
+        public decimal? TotalAmount { get;  set; }
+        public string CardAddress1 { get;  set; }
     }
     
 

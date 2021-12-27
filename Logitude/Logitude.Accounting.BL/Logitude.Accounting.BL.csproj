@@ -393,6 +393,7 @@
     <Compile Include="DataContract\InterestTransactionUniqueConstraintFields.cs" />
     <Compile Include="DataContract\OpenFormatReportData.cs" />
     <Compile Include="DataContract\OpenFormatReportDataProvider.cs" />
+    <Compile Include="DataContract\TaxDeductionPerVendorReportParameters.cs" />
     <Compile Include="DataContract\TaxDeductionReportData.cs" />
     <Compile Include="DataContract\TaxDeductionReportDataProvider.cs" />
     <Compile Include="DataContract\TaxReportLinesCounter.cs" />
