@@ -3808,6 +3808,7 @@ namespace WebFreight.Web.WebServices
                 }
 
                 this.FillPickUpDeliveryAddresses(myFirstPickup, myLastDelivery, myDataProvider);
+                this.MapRoutingDataProvider(myDataProvider);
             }
 
             try
@@ -4870,6 +4871,42 @@ namespace WebFreight.Web.WebServices
                     myDataProvider.ToLocationCountryCode = country.Code;
                 }
             }
+        }
+
+        private void MapRoutingDataProvider(ShippingDeclarationDataProvider shippingDeclarationDataProvider)
+        {
+            RoutingDataProvider routingDataProvider = new RoutingDataProvider(this.shipment);
+            this.GetPreForwardingData(shippingDeclarationDataProvider, routingDataProvider);
+            this.GetOnForwardingData(shippingDeclarationDataProvider, routingDataProvider);
+            this.GetPreCarriageData(shippingDeclarationDataProvider, routingDataProvider);
+            this.GetOnCarriageData(shippingDeclarationDataProvider, routingDataProvider);
+        }
+
+        private void GetPreForwardingData(ShippingDeclarationDataProvider shippingDeclarationDataProvider, RoutingDataProvider routingDataProvider)
+        {
+            shippingDeclarationDataProvider.PreForwardingATD = routingDataProvider.PreForwardingATD;
+            shippingDeclarationDataProvider.PreForwardingATA = routingDataProvider.PreForwardingATA;
+        }
+        private void GetOnForwardingData(ShippingDeclarationDataProvider shippingDeclarationDataProvider, RoutingDataProvider routingDataProvider)
+        {
+            shippingDeclarationDataProvider.OnForwardingFrom = routingDataProvider.OnForwardingFrom;
+            shippingDeclarationDataProvider.OnForwardingETD = routingDataProvider.OnForwardingETD;
+            shippingDeclarationDataProvider.OnForwardingATD = routingDataProvider.OnForwardingATD;
+            shippingDeclarationDataProvider.OnForwardingATA = routingDataProvider.OnForwardingATA;
+            shippingDeclarationDataProvider.OnForwardingCarrierCode = routingDataProvider.OnForwardingCarrierCode;
+            shippingDeclarationDataProvider.OnForwardingCarrierNumber = routingDataProvider.OnForwardingCarrierNumber;
+        }
+        private void GetPreCarriageData(ShippingDeclarationDataProvider shippingDeclarationDataProvider, RoutingDataProvider routingDataProvider)
+        {
+            shippingDeclarationDataProvider.PreCarriageATD = routingDataProvider.PreCarriageATD;
+            shippingDeclarationDataProvider.PreCarriageATA = routingDataProvider.PreCarriageATA;
+        }
+        private void GetOnCarriageData(ShippingDeclarationDataProvider shippingDeclarationDataProvider, RoutingDataProvider routingDataProvider)
+        {
+            shippingDeclarationDataProvider.OnCarriageFrom = routingDataProvider.OnCarriageFrom;
+            shippingDeclarationDataProvider.OnCarriageETD = routingDataProvider.OnCarriageETD;
+            shippingDeclarationDataProvider.OnCarriageATD = routingDataProvider.OnCarriageATD;
+            shippingDeclarationDataProvider.OnCarriageATA = routingDataProvider.OnCarriageATA;
         }
     }
 }

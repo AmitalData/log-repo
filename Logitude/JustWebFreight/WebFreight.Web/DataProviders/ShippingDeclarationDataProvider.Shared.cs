@@ -529,5 +529,21 @@ namespace WebFreight.Web.DataProviders
         public string Handler { get; set; }
         public string INTTRADocumentTypeName { get; set; }
         public int? INTTRADocumentQTY { get; set; }
+
+        public DateTime? PreForwardingATD { get; set; }
+        public DateTime? PreForwardingATA { get; set; }
+        public string OnForwardingFrom { get; set; }
+        public DateTime? OnForwardingETD { get; set; }
+        public DateTime? OnForwardingATD { get; set; }
+        public DateTime? OnForwardingATA { get; set; }
+        public string OnForwardingCarrierCode { get; set; }
+        public string OnForwardingCarrierNumber { get; set; }
+        public DateTime? PreCarriageATD { get; set; }
+        public DateTime? PreCarriageATA { get; set; }
+        public string OnCarriageFrom { get; set; }
+        public DateTime? OnCarriageETD { get; set; }
+        public DateTime? OnCarriageATD { get; set; }
+        public DateTime? OnCarriageATA { get; set; }
+
     }
 }
