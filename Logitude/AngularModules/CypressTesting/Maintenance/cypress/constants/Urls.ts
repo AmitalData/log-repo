@@ -29,6 +29,7 @@ export class Urls {
     public static readonly AccountingSettings = "**/accountingsettings"
 
     public static readonly Tenants = "**/tenants"
+    public static readonly VATSettings = "**/tenants"
     public static readonly PostChangePassword = '**/PostChangeUserPassword'
 
     public static readonly Countries = "**/countries"
@@ -148,6 +149,8 @@ export class Urls {
 
     public static readonly Customers = "**/customers";
     public static readonly CustomerGetSingle = "**/customers/getsingle?**";
+
+    public static readonly Report = " **/reports"
 
     public static GetFilterSearch(filterBy: string) {
         return '**/getbyfilters?**' + filterBy + '**'

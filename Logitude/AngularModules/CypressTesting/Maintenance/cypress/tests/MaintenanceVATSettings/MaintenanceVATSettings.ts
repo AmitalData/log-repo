@@ -1,0 +1,40 @@
+import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
+import { MaintenanceSelectors } from "../../selectors/Selectors";
+import * as MaintenanceActions from "../../actions/Actions";
+//import * as MaintenanceActions from "../../actions/VATSettingsDetailsActions";
+import { VATSettingsDetails } from "../../models/VATSettingsDetails";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
+import { ContactDetails } from "../../models/ContactDetails";
+import { CardBillingTabDetails } from "../../models/CardBillingTabDetails";
+import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
+import * as BaseActions from "../../../../Base/cypress/actions/Actions"
+import * as GeneralActions from "../../actions/BaseActions";
+import { Constants } from '../../constants/Constants'
+import { CustomerDetails } from "../../../../Common/cypress/models/CustomerDetails";
+import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
+import * as BaseAssertion from '../../../../Base/cypress/actions/Assertion';
+
+
+
+
+let vatSettingsDetails: VATSettingsDetails
+
+
+//#region Open VATSettings
+Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
+    cy.Login();
+    MaintenanceActions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, MaintenanceSelectors.MaintenanceItemVATSettings);
+});
+
+Given("a VAT settings with the following details", (dataTable) => {
+    vatSettingsDetails = Assists.CreateInstance<VATSettingsDetails>(dataTable, true);
+    MaintenanceActions.FillVATSettingsDetails(vatSettingsDetails)
+});
+
+When("update VAT Setting", () => {
+    MaintenanceActions.UpdateVATSettings()
+});
+
+Then("the VATSetting should update successfully", () => {
+    MaintenanceActions.AssertUpdateVATSettings()
+});

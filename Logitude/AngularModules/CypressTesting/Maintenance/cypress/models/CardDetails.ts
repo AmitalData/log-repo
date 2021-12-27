@@ -10,4 +10,5 @@ export interface CardDetails {
     Phone : string ,
     Fax :string ,
     Website:string
+    VATNo:string
 }

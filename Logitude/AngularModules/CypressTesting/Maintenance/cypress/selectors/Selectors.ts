@@ -30,6 +30,9 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly MaintenanceItemBranch = "#MaintenanceItemMTBR"
    public static readonly MaintenanceItemShipperAndConsignee = "#MaintenanceItemMTCL"
    public static readonly MaintenanceItemSystemDefaults = "#MaintenanceItemCODE"
+   public static readonly MaintenanceItemCustomer = "#MaintenanceItemCUST"
+   public static readonly MaintenanceItemVATSettings = "#MaintenanceItemVATS"
+   public static readonly MaintenanceItemReport = "#MaintenanceItemMTRP"
 
    //#endregion
 
@@ -211,6 +214,7 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly CardContactBusinessPhone = "#Address_ContactBusinessPhone";
    public static readonly CardContactMobile = "#Address_ContactMobile";
    public static readonly CardContactFax = "#Address_ContactFax"
+   public static readonly CardVATNo = "#Address_VatNumber"
    //#endregion
    //#region shipping agent
    public static readonly ShippingAgentNotes = "#ShippingAgent_Notes"
@@ -292,14 +296,58 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly InActiveCreditCardTypeCheckBox = "#CreditCardType_InActive"
    //#endregion
 
-   //#region Company Address Settings
-   public static readonly CompanyAddressSettingsAddress2 = "#Address_Address2"
-   public static readonly CompanyAddressSettingsZipCode = "#Address_ZipCode"
-   //#endregion
+  //#region Company Address Settings
+  public static readonly CompanyAddressSettingsAddress2 = "#Address_Address2"
+  public static readonly CompanyAddressSettingsZipCode = "#Address_ZipCode"
+  //#endregion
 
-   //#region Customer
-   public static readonly CustomerLocalName = "#Customer_LocalName"
-   public static readonly CustomerGeneralTab = "#CustomerTHGeneral"
-   public static readonly CustomerSaveButton = "#Customer-Save"
-   //#endregion
+  //#region Customer
+  public static readonly CustomerLocalName = "#Customer_LocalName"
+  public static readonly CustomerGeneralTab = "#CustomerTHGeneral"
+  public static readonly CustomerSaveButton = "#Customer-Save"
+  //#endregion
+
+  //#region NewCustomer
+  public static readonly NewCustomer = "#NewButton_Customer"
+  public static readonly CustomerCompanyName = "#textboxdiv_Address_Name"
+  public static readonly CustomerPhone = "#Address_PhoneNumber"
+  public static readonly CustomerFax = "#Address_FaxNumber"
+  public static readonly CustomerCity = "#Address_City"
+  public static readonly CustomerCountry = "#Address_CountryId"
+  public static readonly CustomerContact = "#CheckBox_0_114_LBL"
+  public static readonly CustomerContactEnglishName = "#Address_ContactName"
+  public static readonly CustomerContactFax = "#Address_ContactFax"
+  public static readonly CustomerSave = "#Ok-AddCustomer"
+  public static readonly CustomeBankAddress = "#Customer_BankAddress"
+  public static readonly CustomeIBANNO = "#Customer_IBANNumber"
+  public static readonly CustomerSave2 = "#Customer-Save"
+  public static readonly CustomerAddressesTab = "#CustomerTHAddresses"
+  public static readonly CustomerStorageFreeDays = "#Customer_StorageFreeDays"
+  public static readonly InActiveCustomer = "#CustomerBInActive"
+  public static readonly CustomerBillingTab = "#CustomerTHBilling"
+  public static readonly CustomerBankName = "#Customer_BankName"
+  public static readonly CustomerIBANNumber = "#Customer_IBANNumber"
+  public static readonly CustomerEventsTab = "#CustomerTHEvents"
+  
+  
+  //#endregion
+
+  //#region VATSettings
+  public static readonly VATAppliesFor = "#AllPartners_ApplyVATRadio"
+  public static readonly VatFormatTypeCode = "#Tenant_VatFormatTypeCode"
+  public static readonly VATIsMandatoryFor = "#Tenant_VatMandatoryTypeCode"
+  public static readonly  VatSize = "#Tenant_VatSize"
+  
+  //#endregion
+
+  //#region Report
+  public static readonly NewReport = "#NewButton_Report"
+  public static readonly ReportName = "#Report_Code"
+  public static readonly ReportCode = "#Report_Name"
+  public static readonly ReportTemplate ="#ReportTHTemplate"
+  public static readonly ReportTemplateDescription ="#ReportsTemplate_Description"
+  public static readonly ReportEventTab = "#ReportTHEvents"
+  
+
+  //#endregion
 }

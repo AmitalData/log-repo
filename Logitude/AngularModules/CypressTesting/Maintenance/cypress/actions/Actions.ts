@@ -40,6 +40,7 @@ import { SpecialServicesTypeDetails } from "../models/SpecialServicesTypeDetails
 import { MoveTypeDetails } from "../models/MoveTypeDetails";
 import { ShipmentSubTypeDetails } from "../models/ShipmentSubTypeDetails";
 import { CreditCardTypeDetails } from "../models/CreditCardTypeDetails";
+import { VATSettingsDetails } from "../models/VATSettingsDetails";
 
 
 //#region variables
@@ -154,6 +155,10 @@ export function FillVendorBillingTab(vendorBillingTabDetails: CardBillingTabDeta
 }
 
 export function CreateVendor() {
+    CreateCard()
+}
+
+export function CreateCustomer() {
     CreateCard()
 }
 
@@ -1665,6 +1670,20 @@ export function FillCardDetails(cardDetails: CardDetails, codeDigits: number) {
     cy.FillLogLov(MaintenanceSelectors.CardCountry, cardDetails.Country, true);
     cy.FillLogLov(MaintenanceSelectors.CardState, cardDetails.State, true);
 }
+
+export function FillCustomerCardDetails(cardDetails: CardDetails) {
+    cy.FillLogTextBox(MaintenanceSelectors.CardCompanyName, cardDetails.CompanyName);
+    cy.FillLogTextBox(MaintenanceSelectors.CardVATNo, cardDetails.VATNo);
+    cy.FillLogTextBox(MaintenanceSelectors.CardPhone, cardDetails.Phone);
+    cy.FillLogTextBox(MaintenanceSelectors.CardLocalName, cardDetails.LocalName);
+    cy.FillLogTextBox(MaintenanceSelectors.CardFax, cardDetails.Fax);
+    cy.FillLogTextBox(MaintenanceSelectors.CardAddress1, cardDetails.Address1);
+    cy.FillLogTextBox(MaintenanceSelectors.CardZipCode, cardDetails.Zip);
+    cy.FillLogTextBox(MaintenanceSelectors.CardCity, cardDetails.City);
+    cy.FillLogLov(MaintenanceSelectors.CardCountry, cardDetails.Country, true);
+    cy.FillLogLov(MaintenanceSelectors.CardState, cardDetails.State, true);
+}
+
 export function FillCardContactDetails(cardConatactDetails: ContactDetails) {
     FillCheckBoxProcess(MaintenanceSelectors.CardContactCheckBox + BaseSelectors.LastElement, cardConatactDetails.AddContact)
     cy.FillLogTextBox(MaintenanceSelectors.CardContactEnglishName, cardConatactDetails.EnglishName);
@@ -1686,6 +1705,15 @@ function DefinePostCardRequest() {
 export function AssertCreateCard(CardType: string) {
     AssertPostCard(CardType)
     AssertGetByFilters()
+}
+
+export function FillVATSettingsDetails(vatSettingsDetails: VATSettingsDetails) {
+    cy.Click(MaintenanceSelectors.VATAppliesFor, null, true)
+    cy.FillLogLov(MaintenanceSelectors.VatFormatTypeCode, vatSettingsDetails.VATFormatType, true);
+    cy.FillLogLov(MaintenanceSelectors.VATIsMandatoryFor, vatSettingsDetails.IsMandatoryFor, true);
+    cy.FillLogTextBox(MaintenanceSelectors.VatSize, vatSettingsDetails.VatSize);
+    //cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
+ 
 }
 
 export function AssertPostCard(CardType: string) {
@@ -1729,6 +1757,17 @@ export function AssertMockPostCard() {
 export function SearchCard() {
     let cardCode = CardCode
     SearchCardByValue(cardCode)
+}
+
+export const SearchCustomerCard = () => {
+    let cardCode = CardCode;
+    DefineCardViewsGetFilterSearch(cardCode);
+    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, cardCode);
+    AssertCardViewsGetByFilters();
+}
+
+export const DefineCardViewsGetFilterSearch = (cardCode: string) => {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(CardCode), RequestAliases.GetFilterSearch);
 }
 
 export function SearchCardByValue(Card: string) {
@@ -1777,6 +1816,13 @@ export function AssertOpenCard() {
     AssertGetMenuButtonGroups();
     BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
 }
+
+export function AssertOpenCustomerCard() {
+    AssertCardGetSingle();
+    AssertGetMenuButtonGroups();
+    BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
+}
+
 export function AssertCardGetSingle() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
 }
@@ -1880,6 +1926,11 @@ export function CreateCustomAgent() {
 export function AssertCreateCustomAgent() {
     AssertCreateCard(Constants.CustomAgent)
 }
+
+export function AssertCreateCustomer() {
+    AssertCreateCard(Constants.Customer)
+}
+
 export function CreateCustomAgentMockCreate() {
     CreateCardMockCreate()
 }
@@ -1903,6 +1954,9 @@ export function SearchCustomAgent() {
 export function AssertSearchCustomAgent(companyName: string) {
     AssertSearchCard(companyName)
 }
+export function AssertSearchCustomer(companyName: string) {
+    AssertSearchCard(companyName)
+}
 
 function DefineCustomAgentsGetSingleRequest() {
     cy.DefineRequestWait(RestAPI.GET, Urls.CustomAgentsGetSingle, RequestAliases.GetSignle);
@@ -1911,9 +1965,18 @@ export function AssertOpenCustomAgent() {
     AssertOpenCard()
 }
 
+export function AssertOpenCustomer() {
+    AssertOpenCustomerCard()
+}
+
 export function AssertCustomAgentAddress(customAgentDetails: CardDetails) {
     cy.Click(MaintenanceSelectors.CustomAgentAddressesTab, null, true)
     AssertCardAddress(customAgentDetails)
+}
+
+export function AssertCustomerAddress(customerDetails: CardDetails) {
+    cy.Click(MaintenanceSelectors.CustomerAddressesTab, null, true)
+    AssertCardAddress(customerDetails)
 }
 
 export function AssertCustomAgentContact(conatactDetails: ContactDetails) {
@@ -1926,11 +1989,22 @@ export function FillCustomAgentGeneralTabNotes(Notes: string) {
     cy.FillLogTextBox(MaintenanceSelectors.CustomAgentNotes, " ")
     cy.FillLogTextBox(MaintenanceSelectors.CustomAgentNotes, Notes)
 }
+export function FillCustomerGeneralTabStorageFreeDays(StorageFreeDays: string) {
+    cy.Click(MaintenanceSelectors.CustomerGeneralTab, null, true)
+    cy.FillLogTextBox(MaintenanceSelectors.CustomerStorageFreeDays, "")
+    cy.FillLogTextBox(MaintenanceSelectors.CustomerStorageFreeDays, StorageFreeDays)
+}
 
 export function FillCustomAgentBillingTab(customAgentBillingTabDetails: CardBillingTabDetails) {
     cy.Click(MaintenanceSelectors.CustomAgentBillingTab, null, true)
     cy.FillLogTextBox(MaintenanceSelectors.CustomAgentBankName, customAgentBillingTabDetails.BankName)
     cy.FillLogTextBox(MaintenanceSelectors.CustomAgentIBANNumber, customAgentBillingTabDetails.IBANNo)
+}
+
+export function FillCustomerBillingTab(customerBillingTabDetails: CardBillingTabDetails) {
+    cy.Click(MaintenanceSelectors.CustomerBillingTab, null, true)
+    cy.FillLogTextBox(MaintenanceSelectors.CustomerBankName, customerBillingTabDetails.BankName)
+    cy.FillLogTextBox(MaintenanceSelectors.CustomerIBANNumber, customerBillingTabDetails.IBANNo)
 }
 
 export function AssertUpdateCustomAgent() {
@@ -2483,5 +2557,14 @@ export function UpdateAgent() {
 
 export function AssertUpdateAgent() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutAgent, 200);
+}
+
+export function UpdateVATSettings() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.VATSettings, RequestAliases.PutVATSettings);
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+
+export function AssertUpdateVATSettings() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutVATSettings, 200)
 }
 //#endregion
