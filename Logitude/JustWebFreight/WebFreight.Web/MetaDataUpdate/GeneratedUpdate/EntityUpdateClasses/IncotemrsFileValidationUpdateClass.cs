@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class IncotemrsFileValidationUpdateClass
    {  		
-		public const string HashString = "ea3b3466fecf9855923d09efa4ef0590";
+		public const string HashString = "e2ddb74c88b9ad9dd501427a1f92cfcc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -127,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "תנאי מכר המחיבים הזנת ערך בהצהרה",
 			      				    DefaultText =  "IncotemrsFileValidation",
-			      				    Code =  "IncotemrsFileValidation",
+			      				    Code = "IncotemrsFileValidation",
 			      				    Name =  "Customs.IncotemrsFileValidation",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
@@ -484,6 +484,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TermsOfSaleTypeID",
 					  						ListPropertyPath =  "TermsOfSaleTypeID",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -543,6 +544,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsFreightCharge",
 					  						ListPropertyPath =  "IsFreightCharge",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -602,6 +604,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsPortIsraelCharge",
 					  						ListPropertyPath =  "IsPortIsraelCharge",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -661,6 +664,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsInsurance",
 					  						ListPropertyPath =  "IsInsurance",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -720,6 +724,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CargoIdentifierTypeID",
 					  						ListPropertyPath =  "CargoIdentifierTypeID",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -779,6 +784,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CargoIdentifierTypeName",
 					  						ListPropertyPath =  "CargoIdentifierTypeName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -838,6 +844,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LeadDocumentTypeID",
 					  						ListPropertyPath =  "LeadDocumentTypeID",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -897,6 +904,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LeadDocumentTypeName",
 					  						ListPropertyPath =  "LeadDocumentTypeName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -938,7 +946,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-	        QueryGroup IncotemrsFileValidationQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "IncotemrsFileValidation", Name = "Customs.IncotemrsFileValidation" }, queryGroupRepository,tenantQueryGroups);
+	        QueryGroup IncotemrsFileValidationQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "IFVQ", Name = "Customs.IncotemrsFileValidation" }, queryGroupRepository,tenantQueryGroups);
 						QueryGroup IncotemrsFileValidationQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "a3ab", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable IncotemrsFileValidationObjectTable = objectTables.ContainsKey("Customs.IncotemrsFileValidation") ? objectTables["Customs.IncotemrsFileValidation"] : null;
@@ -964,7 +972,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query IncotemrsFileValidationQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = IncotemrsFileValidationTextCode_0.Id, NameTextCodeCode = IncotemrsFileValidationTextCode_0.Code, ObjectTableName = "Customs.IncotemrsFileValidation", Code = "IncotemrsFileValidation",  QueryGroupCode = "IncotemrsFileValidation", IndexOrder = 0, Tenant = 0, ObjectTableId = IncotemrsFileValidationObjectTable.Id, QuerySection = "IncotemrsFileValidations", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = IncotemrsFileValidationFeature_0.Id,FeatureUniqeCode= IncotemrsFileValidationFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query IncotemrsFileValidationQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = IncotemrsFileValidationTextCode_0.Id, NameTextCodeCode = IncotemrsFileValidationTextCode_0.Code, ObjectTableName = "Customs.IncotemrsFileValidation", Code = "IncotemrsFileValidation",  QueryGroupCode = "IFVQ", IndexOrder = 0, Tenant = 0, ObjectTableId = IncotemrsFileValidationObjectTable.Id, QuerySection = "IncotemrsFileValidations", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = IncotemrsFileValidationFeature_0.Id,FeatureUniqeCode= IncotemrsFileValidationFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn IncotemrsFileValidationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.IncotemrsFileValidation.Code" , ColumnWidth = 70 }, addedQueryColumns);
 
