@@ -160,7 +160,11 @@
                                         <a href="#" (click)="OpenJournal(Entity.JournalId)">{{Entity.JournalNumber}}</a>
                                     </div>
                                 </div>
-
+                                <div *ngIf="FieldName == 'InterestReportNumber' && IsHeaderScreenTemplate">
+                                    <div>
+                                        <a href="#" (click)="OpenInterestReport(Entity.InterestReportId)">{{Entity.InterestReportNumber}}</a>
+                                    </div>
+                                </div>
                             </div>
                         </td>
                     </tr>
