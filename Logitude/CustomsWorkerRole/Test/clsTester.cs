@@ -29,6 +29,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.Messaging.ILSWS;
+using Logitude.CustomsMessaging.Common.RequestParams;
 
 namespace CustomsWorkerRole.Test
 {
@@ -251,6 +252,9 @@ SELECT TOP 1000 [Id]
 
         }
 
+
+        
+
         public static void SendDeclarationsThatCanResendInBatch()
         {
             //12 or 13
@@ -306,6 +310,8 @@ SELECT TOP 1000 [Id]
                 Debug.WriteLine(ex.ToString());
             }
         }
+
+       
 
         public static void TestUpdateLOGITUDE_FILE()
         {
