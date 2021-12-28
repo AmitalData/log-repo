@@ -212,7 +212,6 @@ namespace Logitude.CustomsMessaging.Helpers
                 case "1404":
                 case "1585":
                 case "1423":
-                case "23928":
                 //Yuval Chalup 16.07.2015 TASK-13872 --->
                 //case "1259": Removed by Yuval Chalup 27.04.2015 TASK-12921
                 case "1930": //Yuval Chalup 24.01.2016 AMI-55745

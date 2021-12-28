@@ -24,12 +24,15 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 		IQueryable<IncotemrsFileValidationList> query = (from a in iQueryable
                                             select new IncotemrsFileValidationList()
 											{
-                     
-					                          SearchFields = a.SearchFields,
-					
-					                          Inactive = a.Inactive,
-					
-		                    	            });
+												Code = a.Code,
+
+												LocalName = a.LocalName,
+
+												SearchFields = a.SearchFields,
+
+												Inactive = a.Inactive,
+
+											});
             return query;
 		}
 
