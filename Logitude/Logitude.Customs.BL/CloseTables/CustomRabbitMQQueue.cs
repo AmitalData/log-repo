@@ -31,7 +31,7 @@ namespace Logitude.Customs.BL.CloseTables
             },
             new QueueDetails()
             {
-                Code = "UCUW2L",
+                Code = "uw2l",
                 Name = "פתיחת הצהרה מאינטגרטור",
                 Priority=1,
                 AnalyzeQueueService= AnalyzeMQQueueServiceEnum.DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceResponseService
