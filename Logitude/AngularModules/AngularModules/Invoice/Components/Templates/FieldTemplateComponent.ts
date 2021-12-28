@@ -217,4 +217,15 @@ export class FieldTemplateComponent extends BaseComponent {
                 });
         }
     }
+    OpenInterestReport(id) {
+        if (!AppTool.IsNullOrEmpty(id)) {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'InterestReport' });
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                    });
+                });
+        }
+    }
 }
