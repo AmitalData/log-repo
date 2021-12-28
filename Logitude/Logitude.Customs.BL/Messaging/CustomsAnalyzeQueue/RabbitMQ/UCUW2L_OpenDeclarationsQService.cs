@@ -23,6 +23,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -47,34 +48,23 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
                 res.ObjectTableID = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 LogMessagingUtil.Instance.AppendLine("UCUW2L_OpenDeclarationsQService");
-                XmlSerializer serializer = new XmlSerializer(typeof(DCAInUCUW2LResponseContentHeader));
-                DCAInUCUW2LResponseContentHeader mySTBMessage;
+                //XmlSerializer serializer = new XmlSerializer(typeof(DCAInUCUW2LResponseContentHeader));
+                //DCAInUCUW2LResponseContentHeader mySTBMessage;
+                string mySTBMessage = "";
+                int tetant=0;
+                communicationsData = HttpUtility.HtmlDecode(communicationsData);
                 using (TextReader reader = new StringReader(communicationsData))
                 {
-
-
+                    
                     XmlDocument doc = new XmlDocument();
                     doc.Load(reader);
-
-                    XmlNodeList elemList = doc.GetElementsByTagName("Body");
-
-                    mySTBMessage = (DCAInUCUW2LResponseContentHeader)serializer.Deserialize(new StringReader(elemList[0].InnerXml));
+                    XmlNodeList elemList = doc.GetElementsByTagName("LOGICOMMDEC");
+                    XmlNodeList te = doc.GetElementsByTagName("Tenant");
+                    mySTBMessage = elemList[0].OuterXml;
+                    tetant = int.Parse(te[0].InnerText);
+                    //mySTBMessage = (DCAInUCUW2LResponseContentHeader)serializer.Deserialize(reader1);
                 }
 
-                var qsDeclarationQueryService = new DeclarationQueryService(mySTBMessage.tenant);
-
-          //      var xml = XmlGenericUtil<LOGICUSTFILE>.SerializeObject(
-          //    new LOGICUSTFILE()
-          //    {
-          //        LogitudeCustomsFile = new LogitudeCustomsFile[] {
-          //                 new LogitudeCustomsFile(){
-          //                     COM_ID =mySTBMessage.DocumentsFilingId,
-          //                     DOC_ID =mySTBMessage.DocumentTypeCode,
-          //                     Id =mySTBMessage.DeclarationId , Tenant= mySTBMessage.tenant.ToString()
-          //                 }
-          //     }
-          //    }
-          //);
 
                 var unifreightGenericService = new Do_CommDecService();
 
@@ -96,13 +86,13 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
   <Value>@UNIFREIGHT_USER_ID@</Value>
  </Entry>
 </ArrayOfEntry>";
-                    moreParams = moreParams.Replace("@TENANT@", mySTBMessage.tenant.ToString());
+                    moreParams = moreParams.Replace("@TENANT@", tetant.ToString());
                     moreParams = moreParams.Replace("@UNIFREIGHT_USER_ID@", "AMITAL");
                     string error = "";
                     string decId = "";
                     string courierMasterID = "";
                     string customFileNo = "";
-                    unifreightGenericService.ProccessGenericRequestReal(mySTBMessage.LOGICOMMDEC, mySTBMessage.tenant, mySTBMessage.LoggingUserId, null, ref moreParams, out error, out customFileNo, out decId, out courierMasterID);
+                    unifreightGenericService.ProccessGenericRequestReal(mySTBMessage, tetant, null, null, ref moreParams, out error, out customFileNo, out decId, out courierMasterID);
                     res.EntityID = decId;
                     res.EntityReference = customFileNo;
                 }
@@ -139,10 +129,8 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
     public class DCAInUCUW2LResponseContentHeader 
     {
         public int tenant { get; set; }
-        public string LoggingUserId { get; set; }
-        public string CustomFileNo { get; set; }
         public string LOGICOMMDEC { get; set; }
-        public string MoreParams { get; set; }
+        //public string MoreParams { get; set; }
        
     }
 

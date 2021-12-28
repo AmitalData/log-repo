@@ -107,15 +107,40 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                     throw new Exception("Cannnot GetCommunicationLog");
                 }
 
-                //  if (_CommunicationLog.CommunicationStatusTypeCode == "D") return;
+                if (_CommunicationLog == null)
+                {
 
 
-                //if (_CommunicationLog == null)
-                //{
-                //    log = "Cannnot GetCommunicationLog";
+                    var _CommunicationsParams = new CommunicationsParams()
+                    {
 
-                //    throw new Exception("Cannnot GetCommunicationLog");
-                //}
+                        Tenant = tenant,
+
+                        //LoggingObjectTableId = objectTableId,
+                        //LoggingEntityId = entityId,
+
+                        Subject = queue.Name,
+                        //LoggingEntityReference = documentsFilingPM.ExternalEntityReference,
+                        // LoggingUserId = LoggingUserId,
+                        //CorrelationID = documentsFilingPM.Id,
+
+                        Status = "W",
+                        To = "RabbitMQ",
+                        CommunicationLogTypeCode = "T",
+                        FolderName = "RabbitMQ",
+                        From = "Logitude",
+                        InOut = "O",
+
+                    };
+
+
+                    var messageByte = Encoding.UTF8.GetBytes(message);
+                    _CommunicationsParams.ByteData = messageByte;
+                    communicationLogId = Communications.AddCommunicationLog(_CommunicationsParams);
+
+                    _CommunicationLog = Communications.GetCommunicationLog(tenant, communicationLogId);
+
+                }
 
                 if (_CommunicationLog.Retries == 5)
                 { success = true;
@@ -127,15 +152,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 log = "_CommunicationLog != null";
 
                 var communicationsData = message;  
-                //if (string.IsNullOrWhiteSpace(communicationsData))
-                //{
-                //    throw new Exception("communicationsData is null");
-                //}
 
-               // log = "communicationsData != null";
-
-
-                //LogMessagingUtil.Instance.Clear();
                 try
                 {
                     _AnalyzeResultModel = this.AnalyzeData(communicationsData);
@@ -148,8 +165,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                     _AnalyzeResultModel.ErrorMessage = log;
 
                     success = false;
-                    //UpdateAnlayzeRetry();
-                    throw new Exception(log);
+                     throw new Exception(log);
                 }
 
 
