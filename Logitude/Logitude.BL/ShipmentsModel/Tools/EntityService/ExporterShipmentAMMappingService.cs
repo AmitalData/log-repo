@@ -123,11 +123,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 shipmentPMPackages.Add(new Packages
                 {
                     Quantity = shipmentPMPackage.Quantity,
-                    GrossWeight = shipmentPMPackage.GrossWeight,
-                    Length = shipmentPMPackage.Length,
-                    Width = shipmentPMPackage.Width,
-                    Height = shipmentPMPackage.Height,
+                    GrossWeight = shipmentPM.ShipmentTypeName == "LCL" ? shipmentPMPackage.GrossWeight : null,
+                    Length = shipmentPM.ShipmentTypeName == "LCL" ? shipmentPMPackage.Length : null,
+                    Width = shipmentPM.ShipmentTypeName == "LCL" ? shipmentPMPackage.Width : null,
+                    Height = shipmentPM.ShipmentTypeName == "LCL" ? shipmentPMPackage.Height : null,
                     Type = shipmentPM.TransportModeId == "O" ? shipmentPMPackage.PackageTypeCode : "",
+                    ContNumber = shipmentPM.ShipmentTypeName == "FCL" ? shipmentPMPackage.ContainerNumber : "",
                 });
             }
 

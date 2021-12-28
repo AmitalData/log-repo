@@ -15,6 +15,6 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
         public double? Width { get; set; } 
         public double? Height { get; set; }
         public string Type { get; set; }
-
+        public string ContNumber { get; set; }
     }
 }
