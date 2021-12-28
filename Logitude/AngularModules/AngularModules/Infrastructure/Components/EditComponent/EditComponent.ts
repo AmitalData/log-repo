@@ -515,11 +515,17 @@ export class EditComponent implements OnDestroy {
 
             //get f. acc. Settings
             if (SessionLocator.TenantPM.AccountingActivated) {
+                if (this.EntityPM.ARInvoiceTypeCode == "IT") {
+                    myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "ARInvoice.InterestInvoiceHeaderScreen")[0];
 
-                myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "ARInvoice.FullAccHeaderScreen")[0];
+                }
+                else {
+                    myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "ARInvoice.FullAccHeaderScreen")[0];                    
+                }
                 myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === myObjectTableId);
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
+
             else {
                 myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "ARInvoice.HeaderScreen")[0];
 

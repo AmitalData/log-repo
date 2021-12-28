@@ -72,20 +72,22 @@ namespace Logitude.Accounting.BL.CoreBL
                     scope.Complete();
                     if (MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.Count > 0)
                     {
-                        string text = MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.FirstOrDefault();
-                        throw new ApplicationException($"{text}");
+                        String errorLines = "";
+                        MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.ForEach(item => errorLines += item.ToString() + "\n");
+                        throw new ApplicationException($"{errorLines}");
                     }
                     if (MyResultLoadFlatFile.ErrorRowList.Count > 0)
                     {
-                        string text = MyResultLoadFlatFile.ErrorRowList.FirstOrDefault();
-                        throw new ApplicationException($"{text}");
+                        String errorLines = "";
+                        MyResultLoadFlatFile.ErrorRowList.ForEach(item => errorLines += item.ToString() + "\n");
+                        throw new ApplicationException($"{errorLines}");
                     }
                     if (MyResultLoadFlatFile.ExceptionVendorList.Count > 0)
                     {
-                        string text = MyResultLoadFlatFile.ExceptionVendorList.FirstOrDefault();
-                        throw new ApplicationException($"{text}");
+                        String errorLines = "";
+                        MyResultLoadFlatFile.ExceptionVendorList.ForEach(item => errorLines += item.ToString() + "\n");
+                        throw new ApplicationException($"{errorLines}");
                     }
-
 
                 }
             }

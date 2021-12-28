@@ -417,6 +417,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PartnerId { get; set; }
         public string GlobalTaxCalculation { get; set; }
-
+        public string InterestReportNumber { get; set; }
+        public string InterestReportId { get;  set; }
     }
 }
