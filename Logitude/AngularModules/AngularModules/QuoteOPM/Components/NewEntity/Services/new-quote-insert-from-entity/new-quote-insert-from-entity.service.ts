@@ -19,6 +19,8 @@ export class NewQuoteInsertFromEntityService {
   ) { }
 
   partnerInsert(partnerRef: NewQuotePartnerComponent) {
+    if(!this.EntityPM) return;
+
     this.setPartner(partnerRef);
     this.setContact(partnerRef);
     partnerRef.partnerform.controls.reference1.setValue(this.EntityPM[partnerRef.capitalizeType + 'Reference1']);
@@ -46,6 +48,8 @@ export class NewQuoteInsertFromEntityService {
 
 
   propertiesInsert(propRef: NewQuotePropertiesComponent) {
+    if(!this.EntityPM) return;
+    
     const dataExist: boolean = !!this.EntityPM && !!this.EntityPM.ToPortId;
     if (!dataExist) return;
 
@@ -99,6 +103,8 @@ export class NewQuoteInsertFromEntityService {
   
 
   async generalInsert(generalRef: NewQuoteGeneralComponent) {
+    if(!this.EntityPM) return;
+    
     const dataExist: boolean = !!this.EntityPM?.ExpirationDate;
     if (!dataExist) return;
 
@@ -114,6 +120,8 @@ export class NewQuoteInsertFromEntityService {
 
 
   async expectedOrderInsert(expectedOrderRef: NewQuoteExpectedOrderComponent): Promise<void> {
+    if(!this.EntityPM) return;
+    
     const dataExist: boolean = !!this.EntityPM?.ExpirationDate;
     if (!dataExist) return;
 
