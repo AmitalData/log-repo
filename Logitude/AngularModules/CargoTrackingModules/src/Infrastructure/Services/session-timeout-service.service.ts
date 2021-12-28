@@ -18,10 +18,13 @@ export class SessionTimeoutServiceService {
     RunSessionTimeOut() {
         var url = this._apiUrl + 'CargoSession';
         this._http.get<number>(url, ServiceHelper.GetHeadersWithToken()).subscribe(tokenLifeTime => {
-            if (this.lastTimeout)
-                clearTimeout(this.lastTimeout);
-            this.lastTimeout = 0;
-            this.lastTimeout = setTimeout(() => this.runOnExpirTokenEvent(), tokenLifeTime);
+            if (tokenLifeTime != null) {
+                if (this.lastTimeout)
+                    clearTimeout(this.lastTimeout);
+                this.lastTimeout = 0;
+                this.lastTimeout = setTimeout(() => this.runOnExpirTokenEvent(), tokenLifeTime);
+            }
+
         });
     }
     runOnExpirTokenEvent() {
