@@ -22,8 +22,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (entityPM == null)
                 return;
 
-            entityPM.Id = IdCounter.GetNumber("Customs.ClientsPoa", entityPM.Tenant);
             entityPM.Tenant = entityParentPM.Tenant;
+            entityPM.Id = IdCounter.GetNumber("Customs.ClientsPoa", entityPM.Tenant);
 
 
         }

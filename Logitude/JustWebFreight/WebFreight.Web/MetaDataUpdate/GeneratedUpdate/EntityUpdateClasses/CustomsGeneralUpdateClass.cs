@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "a9db20cfdc89336d1bf1184390a7f78f";
+		public const string HashString = "d65268694fc6e3a815d6da52b3556d92";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "5b0a",
+			      				    Code =  "d753",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2022,7 +2022,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode CustomsGeneralTextCode_GeneralMHReferantWorkspace = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.ReferantWorkspace", DefaultText = "Referant Workspace",LocalDefaultText = @"מסך רפרנט", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode CustomsGeneralTextCode_GeneralMHExportStorage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.ExportStorage", DefaultText = "Storages",LocalDefaultText = @"Storages", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomsGeneralTextCode_GeneralMHExportStorage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.ExportStorage", DefaultText = "Storages",LocalDefaultText = @"אחסנות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_GeneralMHContainerization = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Containerization", DefaultText = "Containerization",LocalDefaultText = @"המכלות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

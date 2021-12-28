@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CustomsGeneral&quot;"
-  Code="&quot;5b0a&quot;"
+  Code="&quot;d753&quot;"
   Name="&quot;CustomsGeneral&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -5220,7 +5220,7 @@
     <TextCode
       Code="&quot;General.MH.ExportStorage&quot;"
       DefaultText="&quot;Storages&quot;"
-      LocalDefaultText="&quot;Storages&quot;"
+      LocalDefaultText="&quot;אחסנות&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
     <TextCode
