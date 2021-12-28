@@ -295,7 +295,7 @@ namespace CustomsWorkerRole
             {
                 var serviceAnalyzer = customRabbitMQQueue.GetCustomAnalyzerQueueService(queue);
                 //ArtemusAnalyzer analyzer = new Artemus(analyzeQueue, analyzeQueueRepository);
-                serviceAnalyzer.Run( analyzeQueueRepository, tenant , communicationLogId , message ,out  log, out success);
+                serviceAnalyzer.Run( analyzeQueueRepository, tenant , communicationLogId , message , queue, , out  log, out success);
                 scope.Complete();
             }
         }

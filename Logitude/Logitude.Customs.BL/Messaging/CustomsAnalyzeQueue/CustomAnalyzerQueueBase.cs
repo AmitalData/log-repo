@@ -51,7 +51,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
         }
 
-        public void Run( AnalyzeQueueRepository analyzeQueueRepository, int tenant, string communicationLogId , string message , out string log , out bool success)
+        public void Run( AnalyzeQueueRepository analyzeQueueRepository, int tenant, string communicationLogId , string message, QueueDetails queue, out string log , out bool success)
         {
             success = false;
             log = "none";
@@ -61,7 +61,38 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
                 if (String.IsNullOrWhiteSpace(communicationLogId))
                 {
-                    throw new Exception("CommunicationLogId is null");
+                    
+
+
+                        var _CommunicationsParams = new CommunicationsParams()
+                        {
+
+                            Tenant = tenant,
+
+                            //LoggingObjectTableId = objectTableId,
+                            //LoggingEntityId = entityId,
+
+                            Subject = queue.Name,
+                            //LoggingEntityReference = documentsFilingPM.ExternalEntityReference,
+                           // LoggingUserId = LoggingUserId,
+                            //CorrelationID = documentsFilingPM.Id,
+
+                            Status = "W",
+                            To = "RabbitMQ",
+                            CommunicationLogTypeCode = "T",
+                            FolderName = "RabbitMQ",
+                            From = "Logitude",
+                            InOut = "O",
+
+                        };
+
+
+                        var messageByte = Encoding.UTF8.GetBytes(message);
+                        _CommunicationsParams.ByteData = messageByte;
+                          communicationLogId = Communications.AddCommunicationLog(_CommunicationsParams);
+
+                    
+                     //   throw new Exception("CommunicationLogId is null");
                 }
 
                 try

@@ -167,7 +167,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
 
-                            var queuename = "UCUW2L";
+                            var queuename = "uw2l";
                             var args = new Dictionary<string, object>();
 
                             //   var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
