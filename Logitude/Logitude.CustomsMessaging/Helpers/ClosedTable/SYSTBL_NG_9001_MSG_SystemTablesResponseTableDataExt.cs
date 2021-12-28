@@ -15,6 +15,8 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         public NDMessageActionCode MyNDMessageActionCode { get; set; }
         public ContainerType MyContainerType { get; set; }
         public CertificateExemptionType MyCertificateExemptionType { get; set; }
+        public IncotemrsFileValidation MyIncotemrsFileValidation { get; set; }
+
 
         public CargoIdentifireType MyCargoIdentifireType { get; set; }
 
@@ -55,6 +57,19 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+    }
+
+    public class IncotemrsFileValidation
+    {
+        public String TermsOfSaleTypeID { get; set; }
+        public Boolean IsFreightCharge { get; set; }
+        public Boolean IsPortIsraelCharge { get; set; }
+        public Boolean IsInsurance { get; set; }
+        public String CargoIdentifierTypeID { get; set; }
+        public String CargoIdentifierTypeName { get; set; }
+        public String LeadDocumentTypeID { get; set; }
+        public String LeadDocumentTypeName { get; set; }
+
     }
     public class ContainerType
     {

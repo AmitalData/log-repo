@@ -73,7 +73,7 @@ export class NewQuoteDataService {
   }
 
   async getShipmentTypeList(): Promise<ShipmentTypeList[]> {
-    return this.logtuideTableDataService.getDataFromService(this.shipmentTypeListService.getAllFromCache());
+    return this.logtuideTableDataService.getDataFromService(this.shipmentTypeListService.getAll());
   }
 
   async getShipmentTypeById(id: string): Promise<ShipmentTypeList> {

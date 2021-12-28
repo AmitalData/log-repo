@@ -1,0 +1,312 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class IncotemrsFileValidationDataMapping: IMapping<IncotemrsFileValidationPM, IncotemrsFileValidation>,IMappingEncodeBase64NVARCHARFields<IncotemrsFileValidationPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         Code, 
+	         EnglishName, 
+	         LocalName, 
+	         SearchFields, 
+	         Inactive, 
+	         TermsOfSaleTypeID, 
+	         IsFreightCharge, 
+	         IsPortIsraelCharge, 
+	         IsInsurance, 
+	         CargoIdentifierTypeID, 
+	         CargoIdentifierTypeName, 
+	         LeadDocumentTypeID, 
+	         LeadDocumentTypeName,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         Code, 
+	         EnglishName, 
+	         LocalName, 
+	         SearchFields, 
+	         Inactive, 
+	         TermsOfSaleTypeID, 
+	         IsFreightCharge, 
+	         IsPortIsraelCharge, 
+	         IsInsurance, 
+	         CargoIdentifierTypeID, 
+	         CargoIdentifierTypeName, 
+	         LeadDocumentTypeID, 
+	         LeadDocumentTypeName,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(IncotemrsFileValidationPM entityPM, IncotemrsFileValidation entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EnglishName))
+            {
+				entityPOCO.EnglishName = entityPM.EnglishName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalName))
+            {
+				entityPOCO.LocalName = entityPM.LocalName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+				entityPOCO.SearchFields = entityPM.SearchFields;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
+            {
+				entityPOCO.Inactive = entityPM.Inactive;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TermsOfSaleTypeID))
+            {
+				entityPOCO.TermsOfSaleTypeID = entityPM.TermsOfSaleTypeID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsFreightCharge))
+            {
+				entityPOCO.IsFreightCharge = entityPM.IsFreightCharge;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPortIsraelCharge))
+            {
+				entityPOCO.IsPortIsraelCharge = entityPM.IsPortIsraelCharge;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsInsurance))
+            {
+				entityPOCO.IsInsurance = entityPM.IsInsurance;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CargoIdentifierTypeID))
+            {
+				entityPOCO.CargoIdentifierTypeID = entityPM.CargoIdentifierTypeID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CargoIdentifierTypeName))
+            {
+				entityPOCO.CargoIdentifierTypeName = entityPM.CargoIdentifierTypeName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LeadDocumentTypeID))
+            {
+				entityPOCO.LeadDocumentTypeID = entityPM.LeadDocumentTypeID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LeadDocumentTypeName))
+            {
+				entityPOCO.LeadDocumentTypeName = entityPM.LeadDocumentTypeName;
+			}
+			
+				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+		  }
+
+		public void POCOToPM(IncotemrsFileValidationPM entityPM, IncotemrsFileValidation entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Code))
+            {
+					entityPM.Code = entityPOCO.Code;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EnglishName))
+            {
+					entityPM.EnglishName = entityPOCO.EnglishName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LocalName))
+            {
+					entityPM.LocalName = entityPOCO.LocalName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchFields))
+            {
+					entityPM.SearchFields = entityPOCO.SearchFields;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Inactive))
+            {
+					entityPM.Inactive = entityPOCO.Inactive;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TermsOfSaleTypeID))
+            {
+					entityPM.TermsOfSaleTypeID = entityPOCO.TermsOfSaleTypeID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsFreightCharge))
+            {
+					entityPM.IsFreightCharge = entityPOCO.IsFreightCharge;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsPortIsraelCharge))
+            {
+					entityPM.IsPortIsraelCharge = entityPOCO.IsPortIsraelCharge;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsInsurance))
+            {
+					entityPM.IsInsurance = entityPOCO.IsInsurance;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CargoIdentifierTypeID))
+            {
+					entityPM.CargoIdentifierTypeID = entityPOCO.CargoIdentifierTypeID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CargoIdentifierTypeName))
+            {
+					entityPM.CargoIdentifierTypeName = entityPOCO.CargoIdentifierTypeName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LeadDocumentTypeID))
+            {
+					entityPM.LeadDocumentTypeID = entityPOCO.LeadDocumentTypeID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LeadDocumentTypeName))
+            {
+					entityPM.LeadDocumentTypeName = entityPOCO.LeadDocumentTypeName;
+            }
+
+		}
+
+		public void PMToOldPM(IncotemrsFileValidationPM entityPM, IncotemrsFileValidationPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EnglishName))
+            {
+                oldEntityPM.EnglishName = entityPM.EnglishName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalName))
+            {
+                oldEntityPM.LocalName = entityPM.LocalName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+                oldEntityPM.SearchFields = entityPM.SearchFields;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
+            {
+                oldEntityPM.Inactive = entityPM.Inactive;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TermsOfSaleTypeID))
+            {
+                oldEntityPM.TermsOfSaleTypeID = entityPM.TermsOfSaleTypeID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsFreightCharge))
+            {
+                oldEntityPM.IsFreightCharge = entityPM.IsFreightCharge;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPortIsraelCharge))
+            {
+                oldEntityPM.IsPortIsraelCharge = entityPM.IsPortIsraelCharge;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsInsurance))
+            {
+                oldEntityPM.IsInsurance = entityPM.IsInsurance;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CargoIdentifierTypeID))
+            {
+                oldEntityPM.CargoIdentifierTypeID = entityPM.CargoIdentifierTypeID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CargoIdentifierTypeName))
+            {
+                oldEntityPM.CargoIdentifierTypeName = entityPM.CargoIdentifierTypeName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LeadDocumentTypeID))
+            {
+                oldEntityPM.LeadDocumentTypeID = entityPM.LeadDocumentTypeID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LeadDocumentTypeName))
+            {
+                oldEntityPM.LeadDocumentTypeName = entityPM.LeadDocumentTypeName;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(IncotemrsFileValidationPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.LocalName)) //T4 find type == nText 
+            {
+                entityPM.LocalName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LocalName));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
+            {
+                entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CargoIdentifierTypeName)) //T4 find type == nText 
+            {
+                entityPM.CargoIdentifierTypeName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CargoIdentifierTypeName));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.LeadDocumentTypeName)) //T4 find type == nText 
+            {
+                entityPM.LeadDocumentTypeName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LeadDocumentTypeName));
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+		
+		private void BuildSearchFieldsGenerated(IncotemrsFileValidationPM entityPM, IncotemrsFileValidation entityPOCO, bool isNewEntity)
+        {
+            string mySearchFields = "";
+			
+           
+            entityPM.SearchFields += mySearchFields;
+            entityPOCO.SearchFields += mySearchFields;
+        }
+			  
+   }
+}
+	 
