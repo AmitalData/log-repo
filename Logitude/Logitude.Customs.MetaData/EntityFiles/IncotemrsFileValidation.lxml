@@ -101,7 +101,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;IncotemrsFileValidations&quot;"
+    ValidForQuerySection1="&quot;Customs.IncotemrsFileValidation&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -177,7 +177,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;IncotemrsFileValidations&quot;"
+    ValidForQuerySection1="&quot;Customs.IncotemrsFileValidation&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -253,7 +253,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;IncotemrsFileValidations&quot;"
+    ValidForQuerySection1="&quot;Customs.IncotemrsFileValidation&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -328,7 +328,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;IncotemrsFileValidations&quot;"
+    ValidForQuerySection1="&quot;Customs.IncotemrsFileValidation&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -402,7 +402,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;IncotemrsFileValidations&quot;"
+    ValidForQuerySection1="&quot;Customs.IncotemrsFileValidation&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -476,7 +476,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;IncotemrsFileValidations&quot;"
+    ValidForQuerySection1="&quot;Customs.IncotemrsFileValidation&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -549,7 +549,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;IncotemrsFileValidations&quot;"
+    ValidForQuerySection1="&quot;Customs.IncotemrsFileValidation&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -622,7 +622,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;IncotemrsFileValidations&quot;"
+    ValidForQuerySection1="&quot;Customs.IncotemrsFileValidation&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -695,7 +695,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;IncotemrsFileValidations&quot;"
+    ValidForQuerySection1="&quot;Customs.IncotemrsFileValidation&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -768,7 +768,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;CargoIdentifierTypeID&quot;"
+    ValidForQuerySection1="&quot;Customs.IncotemrsFileValidation&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -841,7 +841,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;IncotemrsFileValidations&quot;"
+    ValidForQuerySection1="&quot;Customs.IncotemrsFileValidation&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -914,7 +914,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;IncotemrsFileValidations&quot;"
+    ValidForQuerySection1="&quot;Customs.IncotemrsFileValidation&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -987,7 +987,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;IncotemrsFileValidations&quot;"
+    ValidForQuerySection1="&quot;Customs.IncotemrsFileValidation&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -1032,7 +1032,7 @@
     QueryGroupCode="&quot;IFVQ&quot;"
     IndexOrder="0"
     ObjectTableName="&quot;Customs.IncotemrsFileValidation&quot;"
-    QuerySection="&quot;IncotemrsFileValidations&quot;"
+    QuerySection="&quot;Customs.IncotemrsFileValidation&quot;"
     SystemLevel="true"
     IsAddNewEntity="false"
     IsPackagable="true"
@@ -1049,22 +1049,62 @@
         QueryCode="&quot;IncotemrsFileValidation&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="70" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;IncotemrsFileValidation&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="250" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;IncotemrsFileValidation&quot;"
         IndexOrder="2"
         ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="250" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;IncotemrsFileValidation&quot;"
         IndexOrder="3"
         ObjectFieldName="&quot;Inactive&quot;"
-        ColumnWidth="250" />
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;IncotemrsFileValidation&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;TermsOfSaleTypeID&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;IncotemrsFileValidation&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;IsFreightCharge&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;IncotemrsFileValidation&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;IsPortIsraelCharge&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;IncotemrsFileValidation&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;IsInsurance&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;IncotemrsFileValidation&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;CargoIdentifierTypeID&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;IncotemrsFileValidation&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;CargoIdentifierTypeName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;IncotemrsFileValidation&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;LeadDocumentTypeID&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;IncotemrsFileValidation&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;LeadDocumentTypeName&quot;"
+        ColumnWidth="100" />
     </QueryColumns>
     <QueryFilters />
   </Query>

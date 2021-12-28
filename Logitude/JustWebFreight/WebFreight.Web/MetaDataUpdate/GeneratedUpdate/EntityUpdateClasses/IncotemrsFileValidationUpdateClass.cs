@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class IncotemrsFileValidationUpdateClass
    {  		
-		public const string HashString = "e2ddb74c88b9ad9dd501427a1f92cfcc";
+		public const string HashString = "9f26388f655f52bd9fbfb1b2db6644a2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -127,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "תנאי מכר המחיבים הזנת ערך בהצהרה",
 			      				    DefaultText =  "IncotemrsFileValidation",
-			      				    Code = "IncotemrsFileValidation",
+			      				    Code =  "IFVQ",
 			      				    Name =  "Customs.IncotemrsFileValidation",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
@@ -182,7 +182,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "IncotemrsFileValidations",
+					  						ValidForQuerySection1 =  "Customs.IncotemrsFileValidation",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -245,7 +245,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "IncotemrsFileValidations",
+					  						ValidForQuerySection1 =  "Customs.IncotemrsFileValidation",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -308,7 +308,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "IncotemrsFileValidations",
+					  						ValidForQuerySection1 =  "Customs.IncotemrsFileValidation",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -370,7 +370,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "IncotemrsFileValidations",
+					  						ValidForQuerySection1 =  "Customs.IncotemrsFileValidation",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -431,7 +431,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "IncotemrsFileValidations",
+					  						ValidForQuerySection1 =  "Customs.IncotemrsFileValidation",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -492,7 +492,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "IncotemrsFileValidations",
+					  						ValidForQuerySection1 =  "Customs.IncotemrsFileValidation",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -552,7 +552,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "IncotemrsFileValidations",
+					  						ValidForQuerySection1 =  "Customs.IncotemrsFileValidation",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -612,7 +612,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "IncotemrsFileValidations",
+					  						ValidForQuerySection1 =  "Customs.IncotemrsFileValidation",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -672,7 +672,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "IncotemrsFileValidations",
+					  						ValidForQuerySection1 =  "Customs.IncotemrsFileValidation",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -732,7 +732,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "CargoIdentifierTypeID",
+					  						ValidForQuerySection1 =  "Customs.IncotemrsFileValidation",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -792,7 +792,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "IncotemrsFileValidations",
+					  						ValidForQuerySection1 =  "Customs.IncotemrsFileValidation",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -852,7 +852,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "IncotemrsFileValidations",
+					  						ValidForQuerySection1 =  "Customs.IncotemrsFileValidation",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -912,7 +912,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "IncotemrsFileValidations",
+					  						ValidForQuerySection1 =  "Customs.IncotemrsFileValidation",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -972,15 +972,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query IncotemrsFileValidationQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = IncotemrsFileValidationTextCode_0.Id, NameTextCodeCode = IncotemrsFileValidationTextCode_0.Code, ObjectTableName = "Customs.IncotemrsFileValidation", Code = "IncotemrsFileValidation",  QueryGroupCode = "IFVQ", IndexOrder = 0, Tenant = 0, ObjectTableId = IncotemrsFileValidationObjectTable.Id, QuerySection = "IncotemrsFileValidations", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = IncotemrsFileValidationFeature_0.Id,FeatureUniqeCode= IncotemrsFileValidationFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query IncotemrsFileValidationQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = IncotemrsFileValidationTextCode_0.Id, NameTextCodeCode = IncotemrsFileValidationTextCode_0.Code, ObjectTableName = "Customs.IncotemrsFileValidation", Code = "IncotemrsFileValidation",  QueryGroupCode = "IFVQ", IndexOrder = 0, Tenant = 0, ObjectTableId = IncotemrsFileValidationObjectTable.Id, QuerySection = "Customs.IncotemrsFileValidation", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = IncotemrsFileValidationFeature_0.Id,FeatureUniqeCode= IncotemrsFileValidationFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn IncotemrsFileValidationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.IncotemrsFileValidation.Code" , ColumnWidth = 70 }, addedQueryColumns);
+			 QueryColumn IncotemrsFileValidationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.IncotemrsFileValidation.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn IncotemrsFileValidationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.IncotemrsFileValidation.EnglishName" , ColumnWidth = 250 }, addedQueryColumns);
+			 QueryColumn IncotemrsFileValidationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.IncotemrsFileValidation.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn IncotemrsFileValidationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.IncotemrsFileValidation.LocalName" , ColumnWidth = 250 }, addedQueryColumns);
+			 QueryColumn IncotemrsFileValidationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.IncotemrsFileValidation.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn IncotemrsFileValidationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.IncotemrsFileValidation.Inactive" , ColumnWidth = 250 }, addedQueryColumns);
+			 QueryColumn IncotemrsFileValidationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.IncotemrsFileValidation.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn IncotemrsFileValidationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.IncotemrsFileValidation.TermsOfSaleTypeID" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn IncotemrsFileValidationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.IncotemrsFileValidation.IsFreightCharge" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn IncotemrsFileValidationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.IncotemrsFileValidation.IsPortIsraelCharge" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn IncotemrsFileValidationQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.IncotemrsFileValidation.IsInsurance" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn IncotemrsFileValidationQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.IncotemrsFileValidation.CargoIdentifierTypeID" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn IncotemrsFileValidationQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.IncotemrsFileValidation.CargoIdentifierTypeName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn IncotemrsFileValidationQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.IncotemrsFileValidation.LeadDocumentTypeID" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn IncotemrsFileValidationQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Customs.IncotemrsFileValidation.LeadDocumentTypeName" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

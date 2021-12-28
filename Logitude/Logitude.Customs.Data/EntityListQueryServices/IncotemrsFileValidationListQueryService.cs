@@ -25,12 +25,18 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                             select new IncotemrsFileValidationList()
 											{
 												Code = a.Code,
-
 												LocalName = a.LocalName,
-
 												SearchFields = a.SearchFields,
-
 												Inactive = a.Inactive,
+												LeadDocumentTypeID=a.LeadDocumentTypeID,
+												LeadDocumentTypeName=a.LeadDocumentTypeName,
+												EnglishName=a.EnglishName,
+												CargoIdentifierTypeID=a.CargoIdentifierTypeID,
+												CargoIdentifierTypeName=a.CargoIdentifierTypeName,
+												TermsOfSaleTypeID=a.TermsOfSaleTypeID,
+												IsFreightCharge=a.IsFreightCharge,
+												IsInsurance	= a.IsInsurance,
+												IsPortIsraelCharge=a.IsPortIsraelCharge,
 
 											});
             return query;
