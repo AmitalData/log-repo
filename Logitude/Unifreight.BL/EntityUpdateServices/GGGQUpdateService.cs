@@ -12,7 +12,6 @@ using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
-using Simplog.Server.Infrastructure;
 
 namespace Unifreight.BL.EntityUpdateServices
 {
@@ -36,14 +35,8 @@ namespace Unifreight.BL.EntityUpdateServices
         {
             var myGGGQQueryService = new GGGQQueryService(this.MainContext as AmitalContext);
             GGGQPM ExistGGGQPM = myGGGQQueryService.GetByPrimary(entityPM.PRIMARYNUM, entityPM.ENTNAME, entityPM.ORIGINQUE, entityPM.FORMID);
-            DateTime stopLogAt = new DateTime(2021, 12, 30);
-            string logData = "";
-            logData = $"_entityPM.PRIMARYNUM={entityPM.PRIMARYNUM},entityPM.ENTNAME={entityPM.ENTNAME},entityPM.ORIGINQUE={entityPM.ORIGINQUE},entityPM.FORMID={entityPM.FORMID}";
-            LogitudeSettings.HandleLogMe(logData, false, "Creating GGGQ" + entityPM.PRIMARYNUM, stopLogAt);
-            if (ExistGGGQPM != null && !string.IsNullOrWhiteSpace(ExistGGGQPM.QUEID))
+            if(ExistGGGQPM != null && !string.IsNullOrWhiteSpace(ExistGGGQPM.QUEID))
             {
-                logData = $"_entityPM.PRIMARYNUM={entityPM.PRIMARYNUM},entityPM.ENTNAME={entityPM.ENTNAME},entityPM.ORIGINQUE={entityPM.ORIGINQUE},entityPM.FORMID={entityPM.FORMID}";
-                LogitudeSettings.HandleLogMe(logData, false, "Exist GGGQ" + entityPM.PRIMARYNUM, stopLogAt);
                 entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.None;
                 return;
             }
