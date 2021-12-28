@@ -1,6 +1,7 @@
 ﻿using Logitude.AmitalMessaging.Customs.CustomFile;
 using Logitude.AmitalMessaging.Infrastructure;
 using Logitude.AmitalMessaging.Utils;
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.MessagingServices;
@@ -12,6 +13,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unifreight.BL.EntityQueryServices;
+using Unifreight.Data.AmitalModel;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -32,6 +35,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData = new Unifreight_L2US01ResponseData();
             this.MyResponseData.Succeeded = true;
             this.MyResponseData.HasException = true;
+
+
+
+
+            
+            var myQueryService = new DeclarationQueryService(requestParams.Tenant);
+            var declarationPM = myQueryService.GetSingle(requestParams.DeclarationId, false, false);
+            if (!string.IsNullOrWhiteSpace(declarationPM.CustomFileNo))
+            {
+                var amitalContext = AmitalContext.GetContext(requestParams.Tenant);
+                var myCCUFILEMQueryService = new CCUFILEMQueryService(amitalContext);
+                myCCUFILEMQueryService.VirtualCCUQUELOCK_LockNOWAIT(declarationPM.Tenant, declarationPM.CustomFileNo);
+            }
 
             _SivugUpsertService = new SivugUpsertService();
             _SivugUpsertService.RequestParams = requestParams;
