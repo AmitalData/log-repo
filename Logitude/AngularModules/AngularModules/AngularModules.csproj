@@ -340,6 +340,7 @@
     <Content Include="Infrastructure\Components\MultiUpdateComponent\MultiEntityUpdateErrorHandlerComponent.html" />
     <Content Include="Infrastructure\Components\MultiUpdateComponent\MultiUpdateComponent.html" />
     <Content Include="InvoiceModules\APInvoice\Components\EditTabs\APInvoiceGeneralTabComponent.html" />
+    <Content Include="InvoiceModules\ARPayment\Components\Other\ARPaymentMultiBankTransfersComponent.html" />
     <Content Include="InvoiceModules\ARPayment\Components\Other\ARPaymentMultiChequesComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Accounting\PerVendorReportFilterComponent.html" />
     <Content Include="SharedLogistics\Components\CargoTrackingMilestonesPermissiosComponent.html" />
@@ -3008,6 +3009,7 @@
     <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\EditTabs\EditMultiCurrency.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\NewEntity\ARPaymentTransferTemplate.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\NewEntity\NewARPaymentComponent.ts" />
+    <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\Other\ARPaymentMultiBankTransfersComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\Other\ARPaymentMultiChequesComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\Other\CancelARPaymentComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\ModuleARPayment.ts" />

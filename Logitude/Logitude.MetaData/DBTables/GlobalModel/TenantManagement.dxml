@@ -982,6 +982,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CargoTokenTimeout"
+    OldNames="TokenTimeout"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="GlobalTenants"

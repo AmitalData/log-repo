@@ -210,7 +210,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
             this.BackCompletedEvent = this.entityArgs.EditComponent.BackCompleted.subscribe((isBackCompleted: boolean) => {
                 if (isBackCompleted && isSaveCompleted && this.entityArgs.EditComponent.EntityPM.StatusCode == "AD") {
-                    if(this.IsFullAccounting && this.ReconcileInternalTrans){
+                    if (this.IsFullAccounting && this.ReconcileInternalTrans && this.ReconcileInternalTrans.length > 0) {
                         const paymentNo = this.entityArgs.EditComponent.EntityPM.PaymentNo;
                         this.CurrentSession.FireEvent({Name: "InternalReconcileAPPaymentCreated", PaymentNumber: paymentNo});
                     }
@@ -425,7 +425,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
     // BuildScreenData
     private BuildScreenData() {
-        if( this.IsFullAccounting && this.EntityPM.ReconcileInternalTrans) {
+        if (this.IsFullAccounting && this.EntityPM.ReconcileInternalTrans && this.ReconcileInternalTrans.length > 0) {
             this.VendorId = this.EntityPM.VendorId;
             this.AmountInPaymentCurrency = this.EntityPM.AmountInPaymentCurrency;
             this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, false);
@@ -750,7 +750,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     }
     set VendorId(value: string) {
         if (this.EntityPM != null) {
-            if (this.EntityPM.VendorId != value || (this.IsFullAccounting && this.EntityPM.ReconcileInternalTrans)) {
+            if (this.EntityPM.VendorId != value || (this.IsFullAccounting && this.EntityPM.ReconcileInternalTrans && this.ReconcileInternalTrans.length > 0)) {
                 this.EntityPM.VendorId = value;
                 this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, true);
                 this.PaymentCurrencyId = null;
@@ -1368,7 +1368,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
     get AmountInPaymentCurrency() { return this.EntityPM.AmountInPaymentCurrency; }
     set AmountInPaymentCurrency(value: number) {
-        if (this.EntityPM.AmountInPaymentCurrency != value || (this.IsFullAccounting && this.EntityPM.ReconcileInternalTrans)) {
+        if (this.EntityPM.AmountInPaymentCurrency != value || (this.IsFullAccounting && this.EntityPM.ReconcileInternalTrans && this.ReconcileInternalTrans.length > 0)) {
             this.EntityPM.AmountInPaymentCurrency = AppTool.Round(value, 2);
             this.ComputeLocalAmount();
             this.UpdateSummary();
@@ -1785,7 +1785,7 @@ export class APPaymentInvoiceArgs extends BaseComponent {
             }
         }
 
-        if(this.trigger.EntityPM.ReconcileInternalTrans) {
+        if (this.trigger.IsFullAccounting && this.trigger.EntityPM.ReconcileInternalTrans && this.trigger.EntityPM.ReconcileInternalTrans.length > 0) {
             this.CheckBoxEnabled = false;
         }
     }

@@ -387,7 +387,48 @@
         white-space: normal;
     }
 </style>
+<style>
 
+
+    .FiltersMenu li {
+        /* width: fit-content !important; */
+        width: 70px;
+        padding: 0 7px;
+        border-width: 1px;
+        margin-right: -1px;
+        /*background: #f7f7f7;*/
+    }
+
+    .FiltersMenu li:hover {
+        opacity: 0.9;
+    }
+
+    .FiltersMenu .SelectedFilter {
+        /*background: darkgrey !important;*/
+    }
+
+    .RTLMenu li:first-child,
+    .RTLMenu li:last-child {
+        border-radius: 0;
+    }
+
+    .RTLMenu li:first-child {
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+
+    .RTLMenu li:last-child {
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+    }
+
+    .FiltersMenu li {
+        width: fit-content;
+        height: 22px;
+        padding: 0 10px;
+        min-width: 60px;
+    }
+</style>
 <div style="padding: 10px;height: 100%;">
 
     <table>
@@ -456,10 +497,31 @@
                     <tr class="FormFieldRow">
                         <td>
 
+                            <div float-start style="line-height: 30px;">
+                                {{'ExternalReconciliation.O.AccoountFilter.label' | TextCodeTranslationPipe}}:
+                            </div>
+
+                            <div float-start>
+                                <ul float-start class="FiltersMenu" [class.RTLMenu]="isRTL" style="padding: 4px 10px 0">
+                                    <li float-start id="filter_All" (click)="FilterItemClicked('filter_All')"
+                                        [class.SelectedFilter]="filterSelectedValue === 'filter_All'">
+                                        {{ 'ExternalReconciliation.O.AccoountFilter.All' | TextCodeTranslationPipe }}
+                                    </li>
+                                    <li float-start id="filter_Bank" (click)="FilterItemClicked('filter_Bank')"
+                                        [class.SelectedFilter]="filterSelectedValue === 'filter_Bank'">
+                                        {{ 'ExternalReconciliation.O.AccoountFilter.Bank' | TextCodeTranslationPipe }}
+                                    </li>
+                                    <li float-start id="filter_Transfer" (click)="FilterItemClicked('filter_Transfer')"
+                                        [class.SelectedFilter]="filterSelectedValue === 'filter_Transfer'">
+                                        {{ 'ExternalReconciliation.O.AccoountFilter.Transfer' | TextCodeTranslationPipe }}
+                                    </li>
+                                </ul>
+                            </div>
+
                             <!-- First List -->
                             <ul class="horizontal-list" [style.padding]="isRTL ? '0 15px 0 0' : '0 0 0 15px'" float-start>
-                                <li float-start [style.padding-left]="isRTL ? '40px' : 'initial'"
-                                    [style.padding-right]="isRTL ? 'initial' : '40px'" style="padding-top: 4px;"
+                                <li float-start [style.padding-left]="isRTL ? '10px' : 'initial'"
+                                    [style.padding-right]="isRTL ? 'initial' : '10px'" style="padding-top: 4px;"
                                     (click)="LabelClicked()">
                                     {{'Accounting.O.ReconcileAccordingTo' | TextCodeTranslationPipe}}:
                                 </li>
@@ -507,17 +569,10 @@
                                 <!-- Seperator -->
                                 <!-- <li float-start class="seperator"></li> -->
                                 <!-- Seperator -->
-                                <li float-start class="seperator"></li>
+                                <!-- <li float-start class="seperator"></li> -->
 
                                 <!-- Show lines in progress -->
-                                <li float-start style="padding: 0 8px;padding-top: 5px;">
-                                    <CheckBox [IsChecked]="ShowInProgessLines" (Checked)="ShowInProgessLines = $event">
-                                    </CheckBox>
-                                </li>
-                                <li float-start [style.padding-left]="isRTL ? '30px' : 'initial'"
-                                    [style.padding-right]="isRTL ? 'initial' : '30px'" style="padding-top: 4px;">
-                                    {{'ReconcileExternalPageLine.O.ShowInProgess' | TextCodeTranslationPipe}}
-                                </li>
+
 
                                 <!-- Seperator -->
                                 <li float-start class="seperator"></li>
@@ -630,6 +685,19 @@
                                 </li>
 
                                 <li float-start style="width: 40px;height: 100%;"></li>
+
+                                <li float-start class="seperator"></li>
+
+                                <li float-start style="padding: 0 8px;padding-top: 5px;">
+                                    <CheckBox [IsChecked]="ShowInProgessLines" (Checked)="ShowInProgessLines = $event">
+                                    </CheckBox>
+                                </li>
+                                <li float-start [style.padding-left]="isRTL ? '30px' : 'initial'"
+                                    [style.padding-right]="isRTL ? 'initial' : '30px'" style="padding-top: 4px;">
+                                    {{'ReconcileExternalPageLine.O.ShowInProgess' | TextCodeTranslationPipe}}
+                                </li>
+
+
 
                                 <!-- Search -->
                                 <li float-start style="padding-left: 20px;padding-top: 4px;">

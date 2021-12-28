@@ -252,6 +252,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
                                                      ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
                                                      WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
+                                                     CargoTokenTimeout = a.CargoTokenTimeout,
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -453,6 +454,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
                                                   ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
                                                   WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
+                                                  CargoTokenTimeout = a.CargoTokenTimeout,
 
                                               }).FirstOrDefault();
 
@@ -646,6 +648,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
                         ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
                         WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
+                        CargoTokenTimeout = a.CargoTokenTimeout,
 
                     });
         }
@@ -1206,6 +1209,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
                                              ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
                                              WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
+                                             CargoTokenTimeout = a.CargoTokenTimeout,
                                          }).FirstOrDefault();
 
             return tenant;

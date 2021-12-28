@@ -89,6 +89,7 @@ namespace CommunicationWorkerRole
                                         }
                                         catch(Exception exc)
                                         {
+                                            ExceptionHandler.HandleException(exc, DateTime.Now, 0, null, "AgentsSharedLogistics worker role start", null, null);
 
                                             commLog.Retries++;
                                             commLog.ExceptionMessage = GetExceptionMessage(exc);

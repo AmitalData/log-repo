@@ -732,6 +732,8 @@ namespace CommunicationWorkerRole
                                 catch (Exception ex)
                                 {
                                     #region Exception handling
+                                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "importer shipments documents Batch worker role start", null, null);
+
                                     string Status = "F";
                                     if (ex.Message == "EntityNumber is null Or Document has No file" || ex.Message == "Customer Has No Access To send Document")
                                     {
@@ -805,7 +807,7 @@ namespace CommunicationWorkerRole
                         catch (Exception ex)
                         {
                             ConnectClient();
-                            ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "importer shipments worker role start", null, null);
+                            ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "importer shipments documents Batch worker role ", null, null);
                             Thread.Sleep(10000);
                         }
 
@@ -819,7 +821,7 @@ namespace CommunicationWorkerRole
             catch (Exception ex)
             {
                 ConnectClient();
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "importer shipments worker role start", null, null);
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "importer shipments documents Batch worker role ", null, null);
                 Thread.Sleep(10000);
             } 
         }

@@ -1,4 +1,4 @@
-@devsmoke @release
+@smoke2 @release
 Feature: AP Payment Invoice Connection
     The user creates a vendor, creates a Direct Export Air shipment, adds payable, creates AP Invoice,
     approves the AP Invoice, create APPayment, connect the APPayment with the invoice and disconnect them
@@ -6,10 +6,10 @@ Feature: AP Payment Invoice Connection
     Scenario: Create new vendor
         Given the user logged in and open "Vendors" in maintenance menu
         And a vendor with the following details
-            | CompanyName | CurrentDate   |
-            | City        | Anchorage     |
-            | Country     | United States |
-            | State       | Alaska        |
+            | CompanyName | CurrentDate              |
+            | City        | Anchorage                |
+            | Country     | United States of America |
+            | State       | Alaska                   |
         When create vendor
         Then the vendor should create successfully
 
@@ -51,7 +51,7 @@ Feature: AP Payment Invoice Connection
         When receive invoice
         Then the invoice should create successfully
         And the status value should be "Waiting For Approval"
-       
+
     Scenario: Approve APInvoice
         When approve invoice
         Then the invoice should update successfully

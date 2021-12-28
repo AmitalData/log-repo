@@ -935,6 +935,11 @@ export class TenantManagementPM {
     public set WhatsAppMessagingPhoneNumber(newValue: string) { if (this.whatsAppMessagingPhoneNumber != newValue) { this.whatsAppMessagingPhoneNumber = newValue; this.MarkAsDirty("WhatsAppMessagingPhoneNumber"); } }
        
 	 
+    private cargoTokenTimeout: number;
+    public get CargoTokenTimeout() { return this.cargoTokenTimeout; }
+    public set CargoTokenTimeout(newValue: number) { if (this.cargoTokenTimeout != newValue) { this.cargoTokenTimeout = newValue; this.MarkAsDirty("CargoTokenTimeout"); } }
+       
+	 
 
     public OldEntityPM: TenantManagementPM;
 		

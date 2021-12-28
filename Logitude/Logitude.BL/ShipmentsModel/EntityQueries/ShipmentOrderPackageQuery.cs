@@ -49,11 +49,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 PackageType packageType = PackageTypeRepository.GetSinglePackageType(package.PackageTypeId, package.Tenant, true);
                 if (packageType != null)
                 {
-                    package.PackageTypeName = packageType.EnglishName;
+                    MapPackageTypeDetails(package, packageType);
                 }
                 package.Dimensions = packageType != null && packageType.IsContainer ? "" : package.Length + "-" + package.Width + "-" + package.Height;
             }
             return shipmentOrderPackages;
+        }
+
+        private void MapPackageTypeDetails(ShipmentOrderPackagePM package, PackageType packageType)
+        {
+            package.PackageTypeName = packageType.EnglishName;
+            package.PackageTypeCode = packageType.Code;
         }
 
         public ShipmentOrderPackagePM GetSingleShipmentOrderPackagePM(string id)

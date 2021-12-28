@@ -39,7 +39,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;התאמה&quot;"
   DefaultText="&quot;External Reconciliation&quot;"
-  Code="&quot;fc44&quot;"
+  Code="&quot;8544&quot;"
   Name="&quot;ExternalReconciliation Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -1471,6 +1471,36 @@
       Code="&quot;ExternalReconciliation.O.ShowCrossYearLabel&quot;"
       DefaultText="&quot;Show Cross Years Reconciliations&quot;"
       LocalDefaultText="&quot;הצג התאמות עם שורות משנים שונות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ExternalReconciliation.O.AccoountFilter.All&quot;"
+      DefaultText="&quot;All&quot;"
+      LocalDefaultText="&quot;הכל&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ExternalReconciliation.O.AccoountFilter.Bank&quot;"
+      DefaultText="&quot;Bank GL Account&quot;"
+      LocalDefaultText="&quot;כרטיס חשבון&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ExternalReconciliation.O.AccoountFilter.Transfer&quot;"
+      DefaultText="&quot;Transfer GL Account&quot;"
+      LocalDefaultText="&quot;כרטיס דחויים לשלם&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ExternalReconciliation.O.AccoountFilter.label&quot;"
+      DefaultText="&quot;Display transactions from&quot;"
+      LocalDefaultText="&quot;הצג תנועות מ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ExternalReconciliation.O.AccoountFilter.TransferTransaction&quot;"
+      DefaultText="&quot;Transfer Transaction&quot;"
+      LocalDefaultText="&quot;תנועה מחשבון דחויים&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

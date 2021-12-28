@@ -666,7 +666,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         this.router.navigate(['cargo-tracking', 'shipments']);
     }
     ExternalDownloadAllClick(securityKey: string) {
-        this.documentDownloadService.ExternalDownloadAllDocuments(securityKey, this.cargoTrackingShipmentPM.ForwardingShipmentHeaderId,this.tenant);
+        this.documentDownloadService.ExternalDownloadAllDocuments(securityKey, this.cargoTrackingShipmentPM.ShipmentNumber, this.cargoTrackingShipmentPM.ForwardingShipmentHeaderId,this.tenant);
     }
     ExternalDownloadDocument(securityId: string) {
         this.documentDownloadService.ExternalDownloadPage(securityId,this.tenant);

@@ -10,6 +10,7 @@ import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/Ca
 import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
 import { CommonDataExtendedService } from 'src/Infrastructure/Services/Extended/CommonDataExtendedService';
 import { LoginExtendedService } from 'src/Infrastructure/Services/Extended/LoginExtendedService';
+import { SessionTimeoutServiceService } from 'src/Infrastructure/Services/session-timeout-service.service';
 import { LoginServiceHelper } from 'src/Infrastructure/Utilities/LoginServiceHelper';
 import { SessionInfo } from 'src/Infrastructure/Utilities/SessionInfo';
 
@@ -232,6 +233,7 @@ export class LoginComponent implements OnInit {
     }
 
     private FillSessionInfoData(userData: any) {
+       
         sessionStorage.setItem("Token", userData.Token);
         sessionStorage.setItem("LoggedUserTenant", userData.CurrentTenant);
         sessionStorage.setItem("LoggedUserEmail", userData.UserName);
