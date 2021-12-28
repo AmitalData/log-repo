@@ -433,14 +433,14 @@
 
                                                         <td *ngIf="IsShowNewButton" style="width: 30px;vertical-align:middle">
 
-                                                            <button class="Button" (click)="AddReportTemplateButtonClicked('M')">{{'General.B.Add' | TextCodeTranslationPipe}}</button>
+                                                            <button [attr.data-cy]="'AddMessageTemplate'" class="Button" (click)="AddReportTemplateButtonClicked('M')">{{'General.B.Add' | TextCodeTranslationPipe}}</button>
                                                         </td>
 
 
                                                         <td *ngIf="IsShowNewButton" style="width: 7px;"></td>
 
                                                         <td style="width: 70px;vertical-align:middle">
-                                                            <button class="Button" (click)="SetAsDefaultButtonClicked('M')">Set as Default</button>
+                                                            <button  class="Button" (click)="SetAsDefaultButtonClicked('M')">Set as Default</button>
                                                         </td>
 
                                                     </tr>
