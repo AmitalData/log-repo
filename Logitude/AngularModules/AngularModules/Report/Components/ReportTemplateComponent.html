@@ -440,7 +440,7 @@
                                                         <td *ngIf="IsShowNewButton" style="width: 7px;"></td>
 
                                                         <td style="width: 70px;vertical-align:middle">
-                                                            <button class="Button" (click)="SetAsDefaultButtonClicked('M')">Set as Default</button>
+                                                            <button [attr.data-cy]="'AddMessageTemplate'" class="Button" (click)="SetAsDefaultButtonClicked('M')">Set as Default</button>
                                                         </td>
 
                                                     </tr>
