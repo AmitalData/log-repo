@@ -376,6 +376,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         this._AccountingPaymentMethodListService.getByFilters(filter).subscribe(e=>{
             if(e && !e.HasError && e.Result.length > 0){
                     this.AccountingPaymentMethodId = e.Result[0].Id;
+                    this.AccountingPaymentMethodCode = this.DefaultSelectedPaymentMethodCode;
             }
         });
     }
