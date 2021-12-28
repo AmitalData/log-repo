@@ -92,7 +92,7 @@ export class AutocomplateTableComponent {
         .forEach(col => filters.addAdditionalFilter(col, this.filterVal, null, null, "Contains", false, false, false, "Text", false, false));
 
     const data = await this.getDataFunc(filters)
-    this.isGetAll = data.length !== this.rowTake;
+    this.isGetAll = data?.length !== this.rowTake;
 
     this.selected = this.index === 0 ? data : this.selected.concat(data)
 
