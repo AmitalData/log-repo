@@ -4,7 +4,7 @@ Feature: Automations Create, and Edit from Maintenance
 
     Scenario: Create new automation onCreate with set field value result
         Given the user logged in
-        And the user navigates to  "Automations" in maintenance menu
+        And the user navigates to Automations menu
         And the user select "Masters" entity
         And the user try to add automation onCreate with the following detailes
             | Name             | master automation |
@@ -17,7 +17,6 @@ Feature: Automations Create, and Edit from Maintenance
             | resultfieldvalue | Agent             |
         When the user save the new automatiion
         Then the new automation should createed successfully
-
 
     Scenario: Edit an automation
 

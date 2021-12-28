@@ -8,3 +8,7 @@ cy.get(AutomationsSelectors.add).click()
 
 cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
 }
+export function OpenAutomationMenu() {
+    cy.Click(AutomationsSelectors.AutomationsMenu, null)
+   
+}

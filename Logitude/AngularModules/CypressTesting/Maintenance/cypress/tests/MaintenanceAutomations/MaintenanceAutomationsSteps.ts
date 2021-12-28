@@ -7,13 +7,14 @@ import * as Actions from "../../actions/Actions";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import {AutomationsDetails} from  "../../models/AutomationsDetails"
 import * as AutomationsActions from "../../actions/AutomationsActions";
+import {AutomationsSelectors} from "../../selectors/AutomationsSelectors"
 
 //#region Create new automation onCreate
 Given("the user logged in",()=>{
     cy.Login()
 });
-Given("the user navigates to  {string} in maintenance menu", (maintenanceItemName) => {        
-    Actions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, MaintenanceSelectors.MaintenanceItemAutomation)
+Given("the user navigates to Automations menu", () => {        
+    AutomationsActions.OpenAutomationMenu()
 });
 Given("the user select {string} entity",(Masters)=> {
     cy.contains(Masters).click()
