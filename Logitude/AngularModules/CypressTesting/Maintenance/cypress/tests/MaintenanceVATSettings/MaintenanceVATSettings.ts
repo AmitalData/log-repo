@@ -4,21 +4,8 @@ import * as MaintenanceActions from "../../actions/Actions";
 //import * as MaintenanceActions from "../../actions/VATSettingsDetailsActions";
 import { VATSettingsDetails } from "../../models/VATSettingsDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
-import { ContactDetails } from "../../models/ContactDetails";
-import { CardBillingTabDetails } from "../../models/CardBillingTabDetails";
-import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
-import * as BaseActions from "../../../../Base/cypress/actions/Actions"
-import * as GeneralActions from "../../actions/BaseActions";
-import { Constants } from '../../constants/Constants'
-import { CustomerDetails } from "../../../../Common/cypress/models/CustomerDetails";
-import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
-import * as BaseAssertion from '../../../../Base/cypress/actions/Assertion';
-
-
-
 
 let vatSettingsDetails: VATSettingsDetails
-
 
 //#region Open VATSettings
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
