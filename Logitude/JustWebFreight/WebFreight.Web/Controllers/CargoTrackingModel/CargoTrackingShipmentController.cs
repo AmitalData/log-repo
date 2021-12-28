@@ -102,15 +102,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         public HttpResponseMessage PostDeclarationApprovalResponse(DeclarationApprovalArgs declarationApprovalArgs)
         {
 
-            using (var scope = new TransactionScope(TransactionScopeOption.Required,
-                                     new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
-            {
+            //using (var scope = TransactionFactory.GetTransaction())
+            //{
                 try
                 {
                     CargoTrackingShipmentsDeclarationApprovalService declarationApprovalService = new CargoTrackingShipmentsDeclarationApprovalService();
                     declarationApprovalService.HandleDeclarationApproval(declarationApprovalArgs);
 
-                    scope.Complete();
+                   // scope.Complete();
 
                     return Request.CreateResponse(HttpStatusCode.OK);
                 }
@@ -118,7 +117,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 {
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
                 }
-            }
+            //}
 
 
         }
