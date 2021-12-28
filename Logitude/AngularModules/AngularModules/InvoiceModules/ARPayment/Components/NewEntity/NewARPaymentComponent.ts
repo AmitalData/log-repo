@@ -43,6 +43,7 @@ declare var window: any;
 })
 
 export class NewARPaymentComponent extends BaseComponent implements OnInit {
+    DefaultSelectedPaymentMethodCode = "BT";
     public DataContext: NewARPaymentComponent = this;
     public ObjectTableName: string = "ARPayment";
     public newARPaymentPM: ARPaymentPM = new ARPaymentPM();
@@ -362,7 +363,8 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         if(this.preselectedPaymentMethodCode)
             this.newARPaymentPM.ForceUsingBankTransferMethod = true;
 
-        this.SetDefalutPaymentMethod();
+        if(SessionLocator.TenantPM.AccountingActivated)
+            this.SetDefalutPaymentMethod();
         
         this.LoadData();
         this.SetUIProperties();
@@ -370,10 +372,10 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     }
     SetDefalutPaymentMethod() {
         var filter = new ApiQueryFilters(true);
-        filter.addAdditionalFilter("Code", "BT", null, null, "Equal", false, false, false, "string");
-                this._AccountingPaymentMethodListService.getByFilters(filter).subscribe(e=>{
+        filter.addAdditionalFilter("Code", this.DefaultSelectedPaymentMethodCode, null, null, "Equal", false, false, false, "string");
+        this._AccountingPaymentMethodListService.getByFilters(filter).subscribe(e=>{
             if(e && !e.HasError && e.Result.length > 0){
-                this.AccountingPaymentMethodId = e.Result[0].Id;
+                    this.AccountingPaymentMethodId = e.Result[0].Id;
             }
         });
     }
