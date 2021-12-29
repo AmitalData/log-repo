@@ -131,11 +131,12 @@ namespace Logitude.Accounting.BL.Utils
                         RevaluationList revaluation = revaluationListQueryService.GetSingle(id);
                         if (revaluation != null && revaluation.RevaluationDate != null)
                         {
-                            string revaluationDiffAccountId = revaluation.RevaluationsGLAccountId;
+                           FullAccountingSettingPM setting = settingQuery.GetSingleFullAccountingSetting(tenant);
+                           bool createRevaluationJournalinDetail = setting.CreateRevaluationJournal;
+                           string revaluationDiffAccountId = revaluation.RevaluationsGLAccountId;
                             if (String.IsNullOrEmpty(revaluationDiffAccountId))
                             {
                                 string diffAccountId = "";
-                                FullAccountingSettingPM setting = settingQuery.GetSingleFullAccountingSetting(tenant);
                                 if (setting != null)
                                 {
                                     diffAccountId = setting.ExchangeRateDiffGLAccountId;
@@ -155,7 +156,7 @@ namespace Logitude.Accounting.BL.Utils
                                 foreach (GLAccountPM gLAccountPM in gLAccountPMList)
                                 {
                                     RunOneAccount(gLAccountPM, gLAccountQueryService, journalUpdateService, ratesTableQuery, revaluation.RevaluationDate,
-                                                    accountingCurrencyId, revaluationDiffAccountId, ratesList, lineList, revaluation, scope);
+                                                    accountingCurrencyId, revaluationDiffAccountId, ratesList, lineList, revaluation, scope, createRevaluationJournalinDetail);
                                 }
                                 if (lineList.Count > 0)
                                 {
@@ -216,7 +217,7 @@ namespace Logitude.Accounting.BL.Utils
 
         private static void RunOneAccount(GLAccountPM gLAccountPM, GLAccountQueryService gLAccountQueryService, JournalUpdateService journalUpdateService,
             RatesTableQuery ratesTableQuery, DateTime revaluationDate, string accountingCurrencyId, string diffAccountId,
-            List<RatesTablePM> ratesList, List<JournalLineList> lineList, RevaluationList revaluation, TransactionScope scope)
+            List<RatesTablePM> ratesList, List<JournalLineList> lineList, RevaluationList revaluation, TransactionScope scope, bool createRevaluationJournalinDetail)
         {
             LogMessagingUtil.Instance.AppendLine("Revaluation " + revaluation.RevaluationNumber + " run one account: " + gLAccountPM.DisplayNumber);
             List<GLAccountCurrencyBalance> allBalances = gLAccountQueryService.GetCurrencyBalances(gLAccountPM, revaluationDate, gLAccountPM.Tenant);
@@ -263,7 +264,10 @@ namespace Logitude.Accounting.BL.Utils
                         if (difference != 0m)
                         {
                             JournalLineList journalLine_credit;
-                            journalLine_credit = lineList.FirstOrDefault<JournalLineList>(l => l.ActionCode == "1" && l.CurrencyId == item.CurrencyId);
+                            if (createRevaluationJournalinDetail)
+                                journalLine_credit = lineList.FirstOrDefault<JournalLineList>(l => l.ActionCode == "1" && l.CurrencyId == item.CurrencyId);
+                            else
+                                journalLine_credit = lineList.FirstOrDefault<JournalLineList>(l => l.ActionCode == "1" && l.CurrencyId == item.CurrencyId && l.DebitAccountId == gLAccountPM.Id);
                             if (journalLine_credit == null)
                             {
                                 journalLine_credit = new JournalLineList
