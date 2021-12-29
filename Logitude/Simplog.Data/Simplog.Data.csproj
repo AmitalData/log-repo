@@ -1153,6 +1153,7 @@
     <Compile Include="ShipmentsModel\Repositories\OceanInsightsStatusesRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\OceanInsightsRequestRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\OtherParticipantIdRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\PayableProratedAmountRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\PickUpDeliveryPackageHarmonizeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\PickUpDeliveryTransportModeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentAdditionalCloudDataRepository.cs" />

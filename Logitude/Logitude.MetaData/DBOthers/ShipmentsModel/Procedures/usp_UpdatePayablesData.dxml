@@ -8,6 +8,9 @@
    <![CDATA[
 
 
+
+
+
    Create PROCEDURE [dbo].[usp_UpdatePayablesData]
 	(
 		@ShipmentId_PARAM varchar(15),
@@ -334,8 +337,8 @@
 							set @HouseActualProrateLocalAmount = (select sum(isnull(LocalCurrencyAmount,0)) from APInvoiceLines where APInvoiceId = @InvoiceId_PARAM and EntityPayableId = @MasterPayableId and Tenant = @Tenant)			
 							set @HouseActualProrateProfitAmount = (select sum(isnull(ProfitCurrencyAmount,0)) from APInvoiceLines where APInvoiceId = @InvoiceId_PARAM and EntityPayableId = @MasterPayableId and Tenant = @Tenant)			
 							EXECUTE usp_GetNextTableIdValue @NewProrateId OUTPUT,'PayableProratedAmount'
-							insert into PayableProratedAmounts (Id, ShipmentId, InvoiceId, PayableId, ProratedAmountInLocalCurrency, ProratedAmountInProfitCurrency)
-							values (@NewProrateId, @HouseId, @InvoiceId_PARAM, @HousePayableId, @HouseActualProrateLocalAmount, @HouseActualProrateProfitAmount)
+							insert into PayableProratedAmounts (Id, Tenant, ShipmentId, InvoiceId, PayableId, ProratedAmountInLocalCurrency, ProratedAmountInProfitCurrency)
+							values (@NewProrateId, @Tenant, @HouseId, @InvoiceId_PARAM, @NewId, @HouseActualProrateLocalAmount, @HouseActualProrateProfitAmount)
 						end
 					END
 				END
@@ -783,8 +786,8 @@
 							set @HouseActualProrateLocalAmount = (select sum(isnull(LocalCurrencyAmount,0)) from APInvoiceLines where APInvoiceId = @InvoiceId_PARAM and EntityPayableId = @MasterPayableId and Tenant = @Tenant)			
 							set @HouseActualProrateProfitAmount = (select sum(isnull(ProfitCurrencyAmount,0)) from APInvoiceLines where APInvoiceId = @InvoiceId_PARAM and EntityPayableId = @MasterPayableId and Tenant = @Tenant)			
 							EXECUTE usp_GetNextTableIdValue @NewProrateId OUTPUT,'PayableProratedAmount'
-							insert into PayableProratedAmounts (Id, ShipmentId, InvoiceId, PayableId, ProratedAmountInLocalCurrency, ProratedAmountInProfitCurrency)
-							values (@NewProrateId, @HouseId, @InvoiceId_PARAM, @HousePayableId, @HouseActualProrateLocalAmount, @HouseActualProrateProfitAmount)
+							insert into PayableProratedAmounts (Id, Tenant, ShipmentId, InvoiceId, PayableId, ProratedAmountInLocalCurrency, ProratedAmountInProfitCurrency)
+							values (@NewProrateId, @Tenant, @HouseId, @InvoiceId_PARAM, @NewId, @HouseActualProrateLocalAmount, @HouseActualProrateProfitAmount)
 						end
 					END
 				END
@@ -1071,8 +1074,8 @@
 							set @HouseActualProrateLocalAmount = (select sum(isnull(LocalCurrencyAmount,0)) from APInvoiceLines where APInvoiceId = @InvoiceId_PARAM and EntityPayableId = @MasterPayableId and Tenant = @Tenant)			
 							set @HouseActualProrateProfitAmount = (select sum(isnull(ProfitCurrencyAmount,0)) from APInvoiceLines where APInvoiceId = @InvoiceId_PARAM and EntityPayableId = @MasterPayableId and Tenant = @Tenant)			
 							EXECUTE usp_GetNextTableIdValue @NewProrateId OUTPUT,'PayableProratedAmount'
-							insert into PayableProratedAmounts (Id, ShipmentId, InvoiceId, PayableId, ProratedAmountInLocalCurrency, ProratedAmountInProfitCurrency)
-							values (@NewProrateId, @HouseId, @InvoiceId_PARAM, @HousePayableId, @HouseActualProrateLocalAmount, @HouseActualProrateProfitAmount)
+							insert into PayableProratedAmounts (Id, Tenant, ShipmentId, InvoiceId, PayableId, ProratedAmountInLocalCurrency, ProratedAmountInProfitCurrency)
+							values (@NewProrateId, @Tenant, @HouseId, @InvoiceId_PARAM, @NewId, @HouseActualProrateLocalAmount, @HouseActualProrateProfitAmount)
 						end
 					END
 				END
@@ -1240,6 +1243,7 @@
 	
 	END
 END
+
 
    	]]>
 </SqlScript>
