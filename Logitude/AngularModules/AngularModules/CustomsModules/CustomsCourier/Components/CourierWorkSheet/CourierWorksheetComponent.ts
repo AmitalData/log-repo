@@ -363,7 +363,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         currRequestParams.SelectedTotalInvoiceValue = this._SelectedTotalInvoiceValue;
         currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
         currRequestParams.SelectedCustomStatusValue = this._SelectedCustomStatusValue;
-        currRequestParams.SelectedFinalRelease = this._SelectedFinalReleaseValue;
+        currRequestParams.SelectedFinalReleaseValue = this._SelectedFinalReleaseValue;
 
 
         this._CourierMasterService.PostSendALLCorrectManifest(currRequestParams)
@@ -1015,7 +1015,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             FieldName: 'CourierCustomStatusName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierCustomStatusName"),
-            Styles: { width: '75px' },
+            Styles: { width: '120px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -1257,7 +1257,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             FieldName: 'CourierCustomStatusName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierCustomStatusName"),
-            Styles: { width: '75px' },
+            Styles: { width: '120px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
