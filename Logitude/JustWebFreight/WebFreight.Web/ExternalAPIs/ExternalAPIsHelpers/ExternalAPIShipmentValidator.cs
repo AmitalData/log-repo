@@ -110,26 +110,27 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
         }
         public void ValidatePickupDeliveryPackages()
         {
-            if (this.IsOceanInsightFeatureToggleExistInTenant())
+            if (!this.IsOceanInsightFeatureToggleExistInTenant())
             {
-                if (this.IsShipmentHasPickup())
+                return;
+            }
+            if (this.IsShipmentHasPickup())
+            {
+                foreach (ShipmentPickUpPM pickUp in shipmentPM.ShipmentPickUps)
                 {
-                    foreach (ShipmentPickUpPM pickUp in shipmentPM.ShipmentPickUps)
+                    if (pickUp.ShipmentPickUpDeliveryPackages != null && pickUp.ShipmentPickUpDeliveryPackages.Count > 0)
                     {
-                        if (pickUp.ShipmentPickUpDeliveryPackages != null && pickUp.ShipmentPickUpDeliveryPackages.Count > 0)
-                        {
-                            throw new ApplicationException("Creating Pickup package details is not permitted from the API");
-                        }
+                        throw new ApplicationException("Creating Pickup package details is not permitted from the API");
                     }
                 }
-                if (this.IsShipmentHasDelivery())
+            }
+            if (this.IsShipmentHasDelivery())
+            {
+                foreach (ShipmentDeliveryPM delivery in shipmentPM.ShipmentDeliveries)
                 {
-                    foreach (ShipmentDeliveryPM delivery in shipmentPM.ShipmentDeliveries)
+                    if (delivery.ShipmentPickUpDeliveryPackages != null && delivery.ShipmentPickUpDeliveryPackages.Count > 0)
                     {
-                        if (delivery.ShipmentPickUpDeliveryPackages != null && delivery.ShipmentPickUpDeliveryPackages.Count > 0)
-                        {
-                            throw new ApplicationException("Creating Delivery package details is not permitted from the API");
-                        }
+                        throw new ApplicationException("Creating Delivery package details is not permitted from the API");
                     }
                 }
             }
@@ -407,8 +408,8 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
 
             foreach (ShipmentPackagePM item in entityPM.ShipmentPackages)
             {
-                this.ValidateShipmentPackageItem(item, entityPM);
                 item.ChangeSetOp = this.GetChangeSet(item.ChangeSet);
+                this.ValidateShipmentPackageItem(item, entityPM);
             }
         }
         public void UpdatePayablesChangeSet(ShipmentPM entityPM)
@@ -508,7 +509,8 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                 bool hasOpenReceivables = false;
                 if (shipmentPM.ShipmentReceivables.Count() > 0)
                 {
-                    if (shipmentPM.ShipmentReceivables.Where(p => p.TotalAmount != null && p.TotalAmount != 0).Any())
+                    if (shipmentPM.ShipmentReceivables.Where(p => p.TotalAmount != null && p.TotalAmount != 0 
+                                                       && p.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).Any())
                     {
                         hasOpenReceivables = true;
                     }
@@ -518,7 +520,8 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                 {
                     if (shipmentPM.ShipmentPayables.Count() > 0)
                     {
-                        if (shipmentPM.ShipmentPayables.Where(p => p.ExpectedAmount != null && p.ExpectedAmount != 0).Any())
+                        if (shipmentPM.ShipmentPayables.Where(p => p.ExpectedAmount != null && p.ExpectedAmount != 0 
+                                                        && p.ChangeSetOp !=Simplog.Server.Infrastructure.ChangeSetOperation.Delete).Any())
                         {
                             hasOpenPayables = true;
                         }
@@ -565,11 +568,23 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
         }
         private bool IsShipmentHasPickup()
         {
-            return shipmentPM.ShipmentPickUps != null && shipmentPM.ShipmentPickUps.Count > 0;
+            if (shipmentPM.ShipmentPickUps == null)
+                return false;
+
+            if (shipmentPM.ShipmentPickUps.Count == 0)
+                return false;
+
+            return true;
         }
         private bool IsShipmentHasDelivery()
         {
-            return shipmentPM.ShipmentDeliveries != null && shipmentPM.ShipmentDeliveries.Count > 0;
+            if (shipmentPM.ShipmentDeliveries == null)
+                return false;
+
+            if (shipmentPM.ShipmentDeliveries.Count == 0)
+                return false;
+
+            return true;
         }
         private void ValidatePreCarrageFields()
         {
@@ -805,6 +820,9 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
         }
         private void ValidateShipmentPackageItem(ShipmentPackagePM item, ShipmentPM entityPM)
         {
+            if (item.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Delete)
+                return;
+
             this.ValidateShipmentPackageDimensionsAndVolume(item, entityPM);
 
             if (!item.IsContainer)
@@ -819,7 +837,6 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                 this.ValidateInsidePackage(item, entityPM);
             }
             item.VolumetricWeight = ComputeHelper.ComputeVolumetricWeight(item, entityPM);
-            //this.SetPackageChangeSet(item);
         }
         private void ValidateInsidePackage(ShipmentPackagePM item, ShipmentPM entityPM)
         {

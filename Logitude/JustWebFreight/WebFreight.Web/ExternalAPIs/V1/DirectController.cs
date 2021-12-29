@@ -325,8 +325,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 entity = apiUnassignedDataHandler.HandleUnassignedDirectShipmentData(entity);
 
                 ShipmentPM directPM = mappingService.DirectDataMappingAndValidatin(entity, tenant, computingPartnerCode, true);
-                mappingService.UpdatePickups(directPM);
-                mappingService.UpdateDeliveries(directPM);
 
                 if (directPM != null)
                 {
@@ -366,6 +364,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     externalAPIShipmentValidator.ValidateCustomsFields(directPM);
                     this.UpdatePartners(MyContext, directPM);
                     ComputeHelper.ComputeTotals(directPM);
+                    mappingService.UpdatePickups(directPM);
+                    mappingService.UpdateDeliveries(directPM);
 
                     directPM.HasUnassignedData = apiUnassignedDataHandler.HasUnassignedData;
                     directPM = apiUnassignedDataHandler.AddDirectShipmentUnassignedData(entity, directPM);
