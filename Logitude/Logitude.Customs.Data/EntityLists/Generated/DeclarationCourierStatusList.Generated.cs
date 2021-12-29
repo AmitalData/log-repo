@@ -176,6 +176,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string LastMileServiceType  { get; set; }
        [DataMember]
        public string CargoDescription  { get; set; }
+       [DataMember]
+       public bool FinalRelease  { get; set; }
    }
 
 }

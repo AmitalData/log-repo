@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -16,7 +16,7 @@ using Logitude.Customs.Data.EntityLists;
 using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
-{ 
+{
 
     public partial class DeclarationCourierStatusListQueryService
     {
@@ -117,8 +117,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   IsClosedForFollowUp = a.IsClosedForFollowUp,
                                                                   HighLowValue = a.HighLowValue,
                                                                   DocumentStatusCode = a.DocumentStatusCode,
-                                                                  SortedDocumentStatusCode= (a.DocumentStatusCode == "M" || a.DocumentStatusCode == "X")? "M" : a.DocumentStatusCode,
-                                                                  SortedCourierDeclarationStatus=(a.CourierDeclarationStatusCode == "M" || a.CourierDeclarationStatusCode == "X") ? "M" : a.CourierDeclarationStatusCode,
+                                                                  SortedDocumentStatusCode = (a.DocumentStatusCode == "M" || a.DocumentStatusCode == "X") ? "M" : a.DocumentStatusCode,
+                                                                  SortedCourierDeclarationStatus = (a.CourierDeclarationStatusCode == "M" || a.CourierDeclarationStatusCode == "X") ? "M" : a.CourierDeclarationStatusCode,
                                                                   SortedCourierManifestStatus = (a.CourierManifestStatusCode == "M" || a.CourierManifestStatusCode == "X") ? "M" : a.CourierManifestStatusCode,
                                                                   CourierHawb = d.CourierHAWB,
                                                                   ProcedureCurrentCode = d.ProcedureCurrentCode,
@@ -128,7 +128,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   DeclarationStatusTypeName = d.DeclarationStatusType == null ? null : d.DeclarationStatusType.LocalName,
                                                                   ImporterCode = d.ImporterCode,
                                                                   ImporterName = d.ImporterName != null ? d.ImporterName : (d.ImporterId != null ? d.Importer.FullName : d.ImporterName),
-                                                                  SortedImporterCode=d.ImporterCode,
+                                                                  SortedImporterCode = d.ImporterCode,
                                                                   CustomerName = d.CustomerCard.LocalName != null ? d.CustomerCard.LocalName : d.CustomerCard.EnglishName,
                                                                   CourierSearchFields = d.CourierSearchFields,
                                                                   TotalInvoiceAmountInUSD = a.TotalInvoiceAmountInUSD,
@@ -183,14 +183,15 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   MasterStorageSiteCode = cm.StorageSiteCode,
                                                                   DeclarationStorageSiteCode = d.StorageSiteCode,
                                                                   MasterHAWB = cm.HAWB,
-                                                                  TerminalReleaseDate=a.TerminalReleaseDate,
+                                                                  TerminalReleaseDate = a.TerminalReleaseDate,
                                                                   CustomFileNo = d.CustomFileNo,
                                                                   TruckerId = a.Trucker.Card.Code,
                                                                   CrateNumber = a.CrateNumber,
                                                                   TruckerName = a.Trucker.Card.LocalName,
-                                                                  AmendmentDontDisplayInList= d.AmendmentDontDisplayInList , 
-                                                                  IsAmendment  = d.IsAmendment==true? true :false ,
-                                                                CargoDescription= d.CargoDescription                                                               
+                                                                  AmendmentDontDisplayInList = d.AmendmentDontDisplayInList,
+                                                                  IsAmendment = d.IsAmendment == true ? true : false,
+                                                                  CargoDescription = d.CargoDescription,
+                                                                  FinalRelease = !d.HatraDate.HasValue,
                                                               });
 
 
@@ -227,11 +228,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             }
         }
 
-        private IQueryable<DeclarationCourierStatus> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<DeclarationCourierStatus> iQueryable, int tenant)
+        private IQueryable<DeclarationCourierStatus> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<DeclarationCourierStatus> iQueryable, int tenant)
         {
             //filters.addAdditionalFilter("CourierMasterId", this.entityPM.Id, null, null, "Equals", false, false, false, "string");
             var courierMasterIdF = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CourierMasterId").FirstOrDefault();
-            if(courierMasterIdF != null)
+            if (courierMasterIdF != null)
             {
                 string courierMasterId = (string)courierMasterIdF.FieldValue;
                 RequiredFieldErrorsForCourierDeclarationIsValid = InjectionUtil.GetRequiredFieldErrorsForCourierDeclarationIsValid(courierMasterId, tenant);
@@ -242,7 +243,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         public IQueryable<DeclarationCourierStatusList> GetByCourierMasterId(string courierMasterId, int tenant)
         {
             IQueryable<DeclarationCourierStatus> DeclarationCourierStatusQuery = (from a in context.DeclarationCourierStatuses
-                                                                                  where a.Tenant  == tenant
+                                                                                  where a.Tenant == tenant
                                                                                   select a);
 
 
@@ -267,9 +268,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     public class MyJoin
     {
         public bool ErrorPlace { get; set; }
-    public string CourierPendingReason1stName { get;  set; }
-    public string CourierPendingReasonNameList { get;  set; }
-    internal string DeclarationId { get; set; }
+        public string CourierPendingReason1stName { get; set; }
+        public string CourierPendingReasonNameList { get; set; }
+        internal string DeclarationId { get; set; }
     }
 }
-	

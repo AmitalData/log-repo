@@ -87,6 +87,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     _SelectedTotalInvoiceValue: string = 'A';
     _SelectedFastIndividualProcessValue: string = 'A';
     _SelectedCustomStatusValue: string = 'A';
+    _SelectedFinalReleaseValue: string = 'A';
 
     _SelectedMNFValue: string = 'A'; // ALL/Complete/Wrong
     _SelectedDECValue: string = 'A'; // ALL/Complete/Wrong_SelectedItems
@@ -362,6 +363,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         currRequestParams.SelectedTotalInvoiceValue = this._SelectedTotalInvoiceValue;
         currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
         currRequestParams.SelectedCustomStatusValue = this._SelectedCustomStatusValue;
+        currRequestParams.SelectedFinalRelease = this._SelectedFinalReleaseValue;
+
 
         this._CourierMasterService.PostSendALLCorrectManifest(currRequestParams)
             .subscribe((res:any) => {
@@ -483,6 +486,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         currRequestParams.SelectedTotalInvoiceValue = this._SelectedTotalInvoiceValue;
         currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
         currRequestParams.SelectedCustomStatusValue = this._SelectedCustomStatusValue;
+        currRequestParams.SelectedFinalReleaseValue = this._SelectedFinalReleaseValue;
 
         this._CourierMasterService.PostSendALLCorrectDec(currRequestParams)
             .subscribe((res:any) => {
@@ -1647,10 +1651,12 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             }
             case "N": {
                 filters.addAdditionalFilter("CourierCustomStatusCode", "2", "1", null, "NotEqual", false, false, false, "string");
- 
                 break;
             }
         }
+
+        if(this._SelectedFinalReleaseValue !== 'A')             
+            filters.addAdditionalFilter("IsClosedForFollowUp", this._SelectedFinalReleaseValue === 'Y', null, null, "Equals", false, false, false, "Boolean");
     }
 
     ViewInitCompleted($event) {
@@ -1804,67 +1810,50 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
     SelectedBOLValueClick(value: string) {
         this._SelectedBOLValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
-            this.IsFiltered = false;
-        }
-        else {
-            this.IsFiltered = true;
-        }
-        this.RefreshList();
+        this.selectedFilterClick();
     }
 
     SelectedTotalInvoiceValue(value: string) {
         this._SelectedTotalInvoiceValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
-            this.IsFiltered = false;
-        }
-        else {
-            this.IsFiltered = true;
-        }
-        this.RefreshList();
+        this.selectedFilterClick();
     }
 
     SelectedStatusValueClick(value: string) {
         this._SelectedStatusValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
-            this.IsFiltered = false;
-        }
-        else {
-            this.IsFiltered = true;
-        }
-        this.RefreshList();
+        this.selectedFilterClick();
     }
 
     SelectedAvailableValueClick(value: string) {
         this._SelectedAvailableValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
-            this.IsFiltered = false;
-        }
-        else {
-            this.IsFiltered = true;
-        }
-        this.RefreshList();
+        this.selectedFilterClick();
     }
 
     SelectedFastIndividualProcessValueClick(value: string) {
         this._SelectedFastIndividualProcessValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
-            this.IsFiltered = false;
-        }
-        else {
-            this.IsFiltered = true;
-        }
-        this.RefreshList();
+        this.selectedFilterClick();
     }
 
     SelectedCustomStatusValueClick(value: string) {
          this._SelectedCustomStatusValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
-            this.IsFiltered = false;
-        }
-        else {
-            this.IsFiltered = true;
-        }
+        this.selectedFilterClick();
+    }
+
+    SelectedFinalReleaseValueClick(value: string) {
+        this._SelectedFinalReleaseValue = value;
+        this.selectedFilterClick();
+    }
+
+    selectedFilterClick() {        
+        this.IsFiltered = [
+            this._SelectedBOLValue, 
+            this._SelectedTotalInvoiceValue, 
+            this._SelectedStatusValue, 
+            this._SelectedAvailableValue, 
+            this._SelectedFastIndividualProcessValue, 
+            this._SelectedCustomStatusValue, 
+            this._SelectedFinalReleaseValue
+        ].some(filter => filter !== 'A');
+        
         this.RefreshList();
     }
 
@@ -1880,6 +1869,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         this._SelectedTotalInvoiceValue = 'A';
         this._SelectedFastIndividualProcessValue = 'A';
         this._SelectedCustomStatusValue = 'A';
+        this._SelectedFinalReleaseValue = 'A';
         this.IsFiltered = false;
         this.RefreshList();
     }
@@ -2377,6 +2367,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         currRequestParams.SelectedTotalInvoiceValue = this._SelectedTotalInvoiceValue;
         currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
         currRequestParams.SelectedCustomStatusValue = this._SelectedCustomStatusValue;
+        currRequestParams.SelectedFinalReleaseValue = this._SelectedFinalReleaseValue;
         if (sendMode == 'VX') currRequestParams.IsCreateNewDocumentVersion = true;
 
         this._CourierMasterService.PostSendUnCorrectDocuments(currRequestParams)
