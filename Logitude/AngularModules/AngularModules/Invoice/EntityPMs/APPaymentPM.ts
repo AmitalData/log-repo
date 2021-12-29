@@ -530,7 +530,12 @@ export class APPaymentPM {
         }
     }
     //public ReconcileInternalTrans: Array<LedgerTransactionPMPM>= [];
- 
+     private vendorCode: string;
+    public get VendorCode() { return this.vendorCode; }
+    public set VendorCode(newValue: string) { if (this.vendorCode != newValue) { this.vendorCode = newValue; this.MarkAsDirty("VendorCode"); } }
+       
+	 
+
     public OldEntityPM: APPaymentPM;
 		
     public IsDirty: boolean;
