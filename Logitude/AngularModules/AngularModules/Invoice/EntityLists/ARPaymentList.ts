@@ -101,5 +101,6 @@ export class ARPaymentList {
 		Field9: string;
 		Field10: string;
 		PartnerId: string;
+		BillToCode: string;
 	
 }
