@@ -606,6 +606,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (entityPM.AmountInInvoiceCurrency == 0)
                 {
                     entityPM.StatusCode = "PD";
+                    entityPM.IsClosed = true;
                 }
 
                 else
