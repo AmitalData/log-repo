@@ -55,7 +55,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 communicationsData = HttpUtility.HtmlDecode(communicationsData);
                 using (TextReader reader = new StringReader(communicationsData))
                 {
-                    
+                    var x = reader.ReadLine();
                     XmlDocument doc = new XmlDocument();
                     doc.Load(reader);
                     XmlNodeList elemList = doc.GetElementsByTagName("LOGICOMMDEC");
