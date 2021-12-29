@@ -51,6 +51,8 @@ import { ObjectsLocator } from "../../Locators/ObjectsLocator";
         "ForceSubscribe",
         "RefreshMe",
         "IsDisabled",
+        "IsDisabledWithColor",
+
     ]
     //changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -92,6 +94,14 @@ export class LogDatePickerComponent
     }
     public set IsDisabled(newValue: boolean) {
         this.isDisabled = newValue;
+    }
+
+    private isDisabledWithColor: boolean;
+    public get IsDisabledWithColor() {
+        return this.isDisabledWithColor;
+    }
+    public set IsDisabledWithColor(newValue: boolean) {
+        this.isDisabledWithColor = newValue;
     }
     public TimeMode: string;
     InputValue: string;
@@ -2364,15 +2374,31 @@ export class LogDatePickerComponent
     SetDisabled() {
         var inputDiv = document.getElementById(this.InputDivId); //("DatePickerInputDiv");
         if (inputDiv != null && inputDiv != undefined) {
-            inputDiv.classList.add("DatePickerInputDivDisabled");
+            this.AddDisabledClass(inputDiv);
         }
+    }
+
+    private AddDisabledClass(inputDiv: HTMLElement) {
+        if (this.IsDisabledWithColor)
+            inputDiv.classList.add("DatePickerInputDivDisabledWithColor");
+
+        else
+            inputDiv.classList.add("DatePickerInputDivDisabled");
     }
 
     SetEnabled() {
         var inputDiv = document.getElementById(this.InputDivId); //("DatePickerInputDiv");
         if (inputDiv != null && inputDiv != undefined) {
-            inputDiv.classList.remove("DatePickerInputDivDisabled");
+            this.RemoveDisabledClass(inputDiv);
         }
+    }
+
+    private RemoveDisabledClass(inputDiv: HTMLElement) {
+        if (this.IsDisabledWithColor)
+            inputDiv.classList.remove("DatePickerInputDivDisabledWithColor");
+
+        else
+            inputDiv.classList.remove("DatePickerInputDivDisabled");
     }
 
     GetDate(

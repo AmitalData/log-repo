@@ -197,7 +197,7 @@
 
                                                 <td style="width: 120px;">
                                                     <LogDatePicker [ObjectFieldName]="'TaxReportMonth'" [ObjectTableName]="ObjectTableName"
-                                                                   [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                                   [DataContext]="DataContext" [HideColumns]="true" [IsDisabledWithColor]="true"></LogDatePicker>
                                                 </td>
                                                 <td>
                                                     <div></div>
@@ -213,7 +213,7 @@
 
                                                 <td style="width: 120px;" (dblclick)="FilterItemClicked('ExemptTransactions')">
                                                     <LogTextBox [ObjectFieldName]="'ExemptTaxableOutput'" [AddCommasToNumbers]="true" [InputType]="'number'" [DataContext]="DataContext"
-                                                                [Text]="ExemptTaxableOutput" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                                [Text]="ExemptTaxableOutput" [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsDisabledWithColor]="true"></LogTextBox>
                                                 </td>
 
                                                 <td>
@@ -245,7 +245,7 @@
 
                                                 <td style="width: 120px;">
                                                     <LogDatePicker [ObjectFieldName]="'LastUpdateDate'" [ObjectTableName]="ObjectTableName"
-                                                                   [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                                   [DataContext]="DataContext" [HideColumns]="true" [IsDisabledWithColor]="true"></LogDatePicker>
                                                 </td>
                                                 <td>
                                                     <div></div>
@@ -261,7 +261,7 @@
 
                                                 <td style="width: 120px;" (dblclick)="FilterItemClicked('TaxableTransactions')">
                                                     <LogTextBox [ObjectFieldName]="'TaxableOutputAmount'" [AddCommasToNumbers]="true" [InputType]="'number'" [DataContext]="DataContext"
-                                                                [Text]="TaxableOutputAmount"  [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                                [Text]="TaxableOutputAmount"  [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsDisabledWithColor]="true"></LogTextBox>
                                                 </td>
 
                                                 <td>
@@ -294,7 +294,7 @@
 
                                                 <td style="width: 120px;">
                                                     <LogTextBox [ObjectFieldName]="'VatNumber'" [InputType]="'text'" [DataContext]="DataContext"
-                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsDisabledWithColor]="true"></LogTextBox>
                                                 </td>
                                                 <td>
                                                     <div></div>
@@ -310,7 +310,7 @@
 
                                                 <td (dblclick)="FilterItemClicked('TaxableTransactions')">
                                                     <LogTextBox [ObjectFieldName]="'OutputTaxAmount'" [AddCommasToNumbers]="true" [InputType]="'number'" [DataContext]="DataContext"
-                                                    [Text]="OutputTaxAmount"  [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                    [Text]="OutputTaxAmount"  [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsDisabledWithColor]="true"></LogTextBox>
                                                 </td>
                                                 <td>
                                                     <div></div>
@@ -326,7 +326,7 @@
 
                                                 <td (dblclick)="FilterItemClicked('InputsEquipments')">
                                                     <LogTextBox [ObjectFieldName]="'EquipmentInputsTaxAmount'" [AddCommasToNumbers]="true" [InputType]="'number'" [DataContext]="DataContext"
-                                                    [Text]="EquipmentInputsTaxAmount"  [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                    [Text]="EquipmentInputsTaxAmount"  [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsDisabledWithColor]="true"></LogTextBox>
                                                 </td>
                                                 <td>
                                                   <div>
@@ -343,7 +343,7 @@
 
                                                 <td (dblclick)="FilterItemClicked('InputsOther')">
                                                     <LogTextBox [ObjectFieldName]="'OtherInputsTaxAmount'" [AddCommasToNumbers]="true" [InputType]="'number'" [DataContext]="DataContext"
-                                                    [Text]="OtherInputsTaxAmount"  [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                    [Text]="OtherInputsTaxAmount"  [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsDisabledWithColor]="true"></LogTextBox>
                                                 </td>
                                                 <td>
                                                     <div></div>
@@ -359,7 +359,7 @@
 
                                                 <td (dblclick)="FilterItemClicked('All')">
                                                     <LogTextBox [ObjectFieldName]="'AmountForPayRefund'" [AddCommasToNumbers]="true" [InputType]="'number'" [DataContext]="DataContext"
-                                                    [Text]="AmountForPayRefund"  [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                    [Text]="AmountForPayRefund"  [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsDisabledWithColor]="true"></LogTextBox>
                                                 </td>
                                                 <td>
                                                     <div></div>
