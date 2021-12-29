@@ -61,6 +61,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     IsJournalEditableAfterApproval: boolean = false;
     APInvoice: APInvoicePM;
     Voided: boolean = false;
+    private CancelledStatusCode: string = "5";
     AccountingPeriods: AccountingPeriodList[] = [];
     _AccountingPeriodListService: AccountingPeriodListService = new AccountingPeriodListService();
     ratesTableExtendedListService: RatesTableExtendedListService = new RatesTableExtendedListService();
@@ -190,7 +191,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
     SetUIProperties() {
         //Display only
-        if (this.EntityPM.StatusCode == "3") { // 3-Voided and 2-Approved
+        if (this.EntityPM.StatusCode == "3" || this.EntityPM.StatusCode == this.CancelledStatusCode) { // 3-Voided and 2-Approved
             //disable controls
             this.journalDisabled = true;
             this.PointerEvents = 'none';
