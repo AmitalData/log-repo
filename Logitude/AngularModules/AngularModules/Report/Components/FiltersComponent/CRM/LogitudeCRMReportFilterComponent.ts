@@ -27,7 +27,7 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
     public TenantPM: TenantPM;
     public FilterdOpportunityTypeList: any;
     private opportunityTypeListService: OpportunityTypeListService = new OpportunityTypeListService();
-    
+
     queryFilterItems: QueryFilterItem[];
     queryFilterItem: QueryFilterItem;
 
@@ -49,7 +49,7 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
 
     }
 
-    
+
 
     fillOpportunityTypecombo(arr: any) {
         this.FilterdOpportunityTypeList = [];
@@ -62,7 +62,7 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
                 this.FilterdOpportunityTypeList.push(i);
             }
         });
-        this.FilterdOpportunityTypeList.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });    
+        this.FilterdOpportunityTypeList.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });
     }
 
 
@@ -84,11 +84,11 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
 
     private BuidYears() {
         var currentYear = new Date().getFullYear();
-        for (let i = currentYear; i >= 2014; i--) {
+        for (let i = currentYear; i > currentYear - 10; i--) {
             this.Years.push(i);
         }
     }
-    
+
     private selectedCustomerStatus: CodeNameClass;
     get SelectedCustomerStatus() { return this.selectedCustomerStatus; }
     set SelectedCustomerStatus(value: CodeNameClass) {
@@ -104,11 +104,11 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
             this.selectedYear = value;
         }
     }
-    
+
     public SelectedItem: string = "All";
     SelectedOpportunityTypeListChanged(item) {
         this.SelectedItem = item;
-    }    
+    }
 
 
     EditedItemSource(newSource: any) {
@@ -139,7 +139,7 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
         }
 
         var myOpportunityTypes: string = "";
-        
+
         if (this.SelectedItem == "All") {
             myOpportunityTypes = "All";
         }
