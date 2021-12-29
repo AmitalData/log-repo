@@ -80,5 +80,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public double? ExternalPaymentAmount { get; set; }
         public DateTime? ExternalPaymentDate { get; set; }
         public string ExternalPaymentNotes { get; set; }
+        public string VendorCode { get; set; }
     }
 }
