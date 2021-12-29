@@ -30,9 +30,22 @@
                                     <table>
                                         <tr>
 
-                                            <!-- Customer -->
-                                            <td style="width:80px;">Customer:</td>
+                                            <!-- Year -->
+                                            <td style="width:80px;">Year:</td>
                                             <td style="width:100px;">
+                                                <ComboBox [ItemsSource]="Years"
+                                                    [SelectedItem]="SelectedYear"
+                                                    (SelectedItemChanged)="SelectedYear = $event"></ComboBox>
+                                            </td>
+
+
+                                            <td style="width:25px;">
+                                                <div></div>
+                                            </td>
+
+                                            <!-- Customer -->
+                                            <td style="width:100px;">Customer:</td>
+                                            <td style="width:170px;">
                                                 <ComboBox [ItemsSource]="CustomerStatusList" [Binding]="'Name'"
                                                     [SelectedItem]="SelectedCustomerStatus"
                                                     (SelectedItemChanged)="SelectedCustomerStatus = $event"></ComboBox>

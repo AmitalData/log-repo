@@ -27,7 +27,7 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
     public TenantPM: TenantPM;
     public FilterdOpportunityTypeList: any;
     private opportunityTypeListService: OpportunityTypeListService = new OpportunityTypeListService();
-    
+
     queryFilterItems: QueryFilterItem[];
     queryFilterItem: QueryFilterItem;
 
@@ -39,6 +39,7 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
         this.ReportsPreview = myReportsPreview;
         this.TenantPM = SessionLocator.TenantPM;
         this.BuildCustomerStatusFilters();
+        this.BuildYearsFilters();
 
         this.opportunityTypeListService.getAllFromCache().subscribe((result: any) => {
             var list: OpportunityTypeList[] = result.Result;
@@ -48,7 +49,7 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
 
     }
 
-    
+
 
     fillOpportunityTypecombo(arr: any) {
         this.FilterdOpportunityTypeList = [];
@@ -61,7 +62,7 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
                 this.FilterdOpportunityTypeList.push(i);
             }
         });
-        this.FilterdOpportunityTypeList.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });    
+        this.FilterdOpportunityTypeList.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });
     }
 
 
@@ -74,6 +75,20 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
         this.selectedCustomerStatus = this.CustomerStatusList.filter(d => d.Code == "ALL")[0];
     }
 
+    public Years: number[];
+    private BuildYearsFilters() {
+        this.Years = [];
+        this.BuidYears();
+        this.selectedYear = this.Years[0];
+    }
+
+    private BuidYears() {
+        var currentYear = new Date().getFullYear();
+        for (let i = currentYear; i > currentYear - 10; i--) {
+            this.Years.push(i);
+        }
+    }
+
     private selectedCustomerStatus: CodeNameClass;
     get SelectedCustomerStatus() { return this.selectedCustomerStatus; }
     set SelectedCustomerStatus(value: CodeNameClass) {
@@ -81,11 +96,19 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
             this.selectedCustomerStatus = value;
         }
     }
-    
+
+    private selectedYear: number;
+    get SelectedYear() { return this.selectedYear; }
+    set SelectedYear(value: number) {
+        if (this.selectedYear != value) {
+            this.selectedYear = value;
+        }
+    }
+
     public SelectedItem: string = "All";
     SelectedOpportunityTypeListChanged(item) {
         this.SelectedItem = item;
-    }    
+    }
 
 
     EditedItemSource(newSource: any) {
@@ -102,6 +125,10 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
             this.ValidationErrorsList.push("Customer field is required");
         }
 
+        if (!this.selectedYear) {
+            this.ValidationErrorsList.push("Year field is required");
+        }
+
 
         if (this.ValidationErrorsList.length != 0) {
             return;
@@ -112,7 +139,7 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
         }
 
         var myOpportunityTypes: string = "";
-        
+
         if (this.SelectedItem == "All") {
             myOpportunityTypes = "All";
         }
@@ -146,6 +173,12 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
         this.queryFilterItem.DisplayInList = false;
         this.queryFilterItem.FieldName = "CustomerStatus";
         this.queryFilterItem.FieldValue = this.SelectedCustomerStatus.Code;
+        this.queryFilterItems.push(this.queryFilterItem);
+
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "Year";
+        this.queryFilterItem.FieldValue = this.SelectedYear;
         this.queryFilterItems.push(this.queryFilterItem);
 
         if (this.ResellerId) {
