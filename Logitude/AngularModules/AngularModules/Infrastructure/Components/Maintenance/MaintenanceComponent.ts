@@ -94,9 +94,14 @@ export class MaintenanceComponent {
             }
         }
 
-        if (this.isTransmissionsPageVisible) {
+       if (this.isTransmissionsPageVisible) {
             this.PagesMenu.push(new Menu("TRANS", "Transmissions"));
         }
+
+        if (FeatureLocator.HasFeaturePermession("General", "ENTITYSTATUS") ) {
+            this.PagesMenu.push(new Menu("TRANS", "ENTITYSTATUS"));
+        }
+
 
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.BusinessProcessQueue") || FeatureLocator.HasFeaturePermession("General", "General.Features.BusinessProcessTeam") ||
             FeatureLocator.HasFeaturePermession("General", "General.Features.BusinessProcessBusinessRole")) {
