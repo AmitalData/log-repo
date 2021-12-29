@@ -78,7 +78,7 @@ namespace WebFreight.Web.DataProviders
         public int TwelfthMonthNumberOfUsersTotal { get; set; }
         public decimal TwelfthMonthNewIncomeTotal { get; set; }
         public int TwelfthMonthNewCustomerTotal { get; set; }
-
+        public decimal TotalNetAfterYear { get; set; }
     }
 
 
@@ -104,6 +104,7 @@ namespace WebFreight.Web.DataProviders
         public decimal? CurrentTotal { get; set; }
         public List<OpportunityPeriod> OpportunityPeriods { get; set; }
         public decimal? TotalNetBeforeYear { get; set; }
+        public decimal? TotalNetAfterYear { get; set; }
         public bool InActive { get; set; }
     }
 
@@ -121,9 +122,11 @@ namespace WebFreight.Web.DataProviders
             OpportunityPeriodSummaries = new List<OpportunityPeriodSummary>();
         }
 
+        public int Period { get; set; }
         public string PeriodName { get; set; }
         public decimal Total { get; set; }
         public List<OpportunityPeriodSummary> OpportunityPeriodSummaries { get; set; }
+ 
     }
 
     public class OpportunityPeriodSummary

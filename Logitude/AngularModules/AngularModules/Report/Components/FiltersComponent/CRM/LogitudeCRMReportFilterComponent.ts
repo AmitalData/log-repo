@@ -39,6 +39,7 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
         this.ReportsPreview = myReportsPreview;
         this.TenantPM = SessionLocator.TenantPM;
         this.BuildCustomerStatusFilters();
+        this.BuildYearsFilters();
 
         this.opportunityTypeListService.getAllFromCache().subscribe((result: any) => {
             var list: OpportunityTypeList[] = result.Result;
@@ -74,11 +75,33 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
         this.selectedCustomerStatus = this.CustomerStatusList.filter(d => d.Code == "ALL")[0];
     }
 
+    public Years: number[];
+    private BuildYearsFilters() {
+        this.Years = [];
+        this.BuidYears();
+        this.selectedYear = this.Years[0];
+    }
+
+    private BuidYears() {
+        var currentYear = new Date().getFullYear();
+        for (let i = currentYear; i >= 2014; i--) {
+            this.Years.push(i);
+        }
+    }
+    
     private selectedCustomerStatus: CodeNameClass;
     get SelectedCustomerStatus() { return this.selectedCustomerStatus; }
     set SelectedCustomerStatus(value: CodeNameClass) {
         if (this.selectedCustomerStatus != value) {
             this.selectedCustomerStatus = value;
+        }
+    }
+
+    private selectedYear: number;
+    get SelectedYear() { return this.selectedYear; }
+    set SelectedYear(value: number) {
+        if (this.selectedYear != value) {
+            this.selectedYear = value;
         }
     }
     
@@ -100,6 +123,10 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
 
         if (!this.SelectedCustomerStatus) {
             this.ValidationErrorsList.push("Customer field is required");
+        }
+
+        if (!this.selectedYear) {
+            this.ValidationErrorsList.push("Year field is required");
         }
 
 
@@ -146,6 +173,12 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
         this.queryFilterItem.DisplayInList = false;
         this.queryFilterItem.FieldName = "CustomerStatus";
         this.queryFilterItem.FieldValue = this.SelectedCustomerStatus.Code;
+        this.queryFilterItems.push(this.queryFilterItem);
+
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "Year";
+        this.queryFilterItem.FieldValue = this.SelectedYear;
         this.queryFilterItems.push(this.queryFilterItem);
 
         if (this.ResellerId) {
