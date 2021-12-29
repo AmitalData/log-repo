@@ -266,13 +266,13 @@
                     <td style="width: 5px;"><div></div></td>
 
                     <td style="width: 57px;">
-                        <button class="Button" [disabled]="!IsButtonEnabled" (click)="ScreensLayoutClicked()">Screens Layout</button>
+                        <button class="Button" [disabled]="!IsButtonEnabled && !IsFieldsCustomizationEnabled" (click)="ScreensLayoutClicked()">Screens Layout</button>
                     </td>
 
                     <td style="width: 5px;"><div></div></td>
 
                     <td style="width: 57px;">
-                        <button class="Button" [disabled]="!IsButtonEnabled" (click)="CustomFieldsClicked()">Custom Fields</button>
+                        <button class="Button" [disabled]="!IsButtonEnabled && !IsRulesCustomizationEnabled" (click)="CustomFieldsClicked()">Custom Fields</button>
                     </td>
 
                     <td style="width: 5px;"><div></div></td>

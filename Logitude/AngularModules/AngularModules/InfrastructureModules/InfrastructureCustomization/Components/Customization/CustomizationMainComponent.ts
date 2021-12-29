@@ -1,19 +1,22 @@
-import {Component} from '@angular/core';
-import {GeneralDomainService, FieldsTranslations} from '../../../../Infrastructure/Services/GeneralDomainService';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {ObjectTablePM} from '../../../../Infrastructure/EntityPMs/ObjectTablePM';
-import {AppTool} from '../../../../Infrastructure/Tools';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
+import { Component } from '@angular/core';
+import { GeneralDomainService, FieldsTranslations } from '../../../../Infrastructure/Services/GeneralDomainService';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ObjectTablePM } from '../../../../Infrastructure/EntityPMs/ObjectTablePM';
+import { AppTool } from '../../../../Infrastructure/Tools';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
+import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 declare var window: any;
 
 @Component({
-    
+
     templateUrl: './CustomizationMainComponent.html',
 })
 
 export class CustomizationMainComponent {
+
     public ItemsSource1: FieldsTranslations[] = [];
     public ItemsSource2: FieldsTranslations[] = [];
     public ItemsSource1Hidden: boolean = false;
@@ -26,6 +29,7 @@ export class CustomizationMainComponent {
         this.myService = new GeneralDomainService();
         this.entityResourceService = new EntityResourceService();
         this.LoadTableTranslations();
+        this.LoadPermessions();
     }
 
     private searchText: string = null;
@@ -40,7 +44,21 @@ export class CustomizationMainComponent {
         this.SearchText = text;
         this.BuildItemsSources();
     }
- 
+
+    IsObjectTableFilterEnabled: boolean;
+    IsCustomizationToggleActive: boolean;
+    LoadPermessions() {
+        this.IsObjectTableFilterEnabled = this.SetIsObjectTableFilterEnabled();
+        this.IsCustomizationToggleActive = SessionLocator.FeatureToggles.some(d => d.ToggleCode == "CUS");
+    }
+
+    SetIsObjectTableFilterEnabled(): boolean {
+        if (SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev") {
+            return false;
+        }
+        return true;
+    }
+
     private allTablesItems: FieldsTranslations[];
     private LoadTableTranslations() {
         this.myService.GetTranslationsByParam("T", "", SessionLocator.TenantPM.Language).subscribe((myResult: ServiceResponse) => {
@@ -48,7 +66,7 @@ export class CustomizationMainComponent {
             if (!myResponse.HasError) {
 
                 this.allTablesItems = myResponse.Result;
-                if (this.allTablesItems != null) {                    
+                if (this.allTablesItems != null) {
                     this.BuildItemsSources();
                 }
             }
@@ -73,7 +91,7 @@ export class CustomizationMainComponent {
 
         myTablesItems.forEach(field => {
             var table: ObjectTablePM = tablesList.filter(d => d.Id == field.ObjectTableID)[0];
-            if (table != null) {
+            if (table != null && this.HaveObjectTableAccess(table)) {
                 myData.push(field);
             }
         });
@@ -82,37 +100,61 @@ export class CustomizationMainComponent {
         this.ItemsSource2 = myData.filter(f => f.ObjectTableTypeCode == "MD");
     }
 
+    HaveObjectTableAccess(table: ObjectTablePM): boolean {
+        if (!this.IsObjectTableFilterEnabled) return true;
+        if (!this.IsCustomizationToggleActive) return false;
+        return this.HaveFieldsCustomization(table.Name) || this.HaveRulesCustomization(table.Name);
+    }
+
+    HaveFieldsCustomization(objectTableName: string): boolean {
+        return FeatureLocator.HasFeaturePermession(objectTableName, "FIELDSCUSTOMIZATION");
+    }
+
+    HaveRulesCustomization(objectTableName: string): boolean {
+        return FeatureLocator.HasFeaturePermession(objectTableName, "RULESCUSTOMIZATION");
+    }
+
     public selectedRow: FieldsTranslations;
-    Selecting(item: FieldsTranslations) {
-        this.selectedRow = item;
+    public IsFieldsCustomizationEnabled: boolean = false;
+    public IsRulesCustomizationEnabled: boolean = false;
+    
+    Selecting(fieldsTranslations: FieldsTranslations) {
+        this.selectedRow = fieldsTranslations;
+        this.IsFieldsCustomizationEnabled = false;
+        this.IsRulesCustomizationEnabled = false;
 
-        if (item == null) {
+        if (fieldsTranslations == null) {
             this.IsButtonEnabled = false;
+            return;
+        }
+        if (!this.IsObjectTableFilterEnabled) {
+            this.IsButtonEnabled = true;
+            return;
         }
 
-        else {
-            this.IsButtonEnabled = true;
-        }
+        this.IsButtonEnabled = false;
+        this.IsFieldsCustomizationEnabled = this.HaveFieldsCustomization(fieldsTranslations.ObjectTableName);
+        this.IsRulesCustomizationEnabled = this.HaveRulesCustomization(fieldsTranslations.ObjectTableName);
     }
 
     StandardFieldsClicked() {
         var table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.selectedRow.ObjectTableID)[0];
-        if (table != null) {          
-        this.entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe((response:any) => {
-        var logWindow = new LogitudeWindow();
-        logWindow.Title = "Standard Fields: " + this.selectedRow.DefaultText;
-        logWindow.IsFillScreen_115 = true;
-        logWindow.WindowArgs = { ObjectTableId: this.selectedRow.ObjectTableID};
-        logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/StandardFieldsComponent');                                    
+        if (table != null) {
+            this.entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe((response: any) => {
+                var logWindow = new LogitudeWindow();
+                logWindow.Title = "Standard Fields: " + this.selectedRow.DefaultText;
+                logWindow.IsFillScreen_115 = true;
+                logWindow.WindowArgs = { ObjectTableId: this.selectedRow.ObjectTableID };
+                logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/StandardFieldsComponent');
             });
         }
     }
-    
+
     LabelsClicked() {
         var table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.selectedRow.ObjectTableID)[0];
 
         if (table != null) {
-            this.entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe((response:any) => {
+            this.entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe((response: any) => {
                 var logWindow = new LogitudeWindow();
                 logWindow.Title = "Object Labels: " + this.selectedRow.DefaultText;
                 logWindow.IsFillScreen = true;
@@ -126,7 +168,7 @@ export class CustomizationMainComponent {
         var table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.selectedRow.ObjectTableID)[0];
 
         if (table != null) {
-            this.entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe((response:any) => {
+            this.entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe((response: any) => {
                 var logWindow = new LogitudeWindow();
                 logWindow.Title = "Screens Layout: " + this.selectedRow.DefaultText;
                 logWindow.IsFillScreen = true;
@@ -140,14 +182,14 @@ export class CustomizationMainComponent {
         var table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.selectedRow.ObjectTableID)[0];
 
         if (table != null) {
-            this.entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe((response:any) => {
+            this.entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe((response: any) => {
                 var logWindow = new LogitudeWindow();
                 logWindow.Title = "Custom Fields: " + this.selectedRow.DefaultText;
                 logWindow.IsFillScreen_115 = true;
                 logWindow.WindowArgs = { ObjectTableId: table.Id, ObjectTableName: table.Name }; //this.selectedRow.ObjectTableID;
                 logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/CustomFieldsComponent');
             });
-        } 
+        }
     }
 
     RulesClicked() {

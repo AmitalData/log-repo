@@ -136,6 +136,7 @@ export class HomeComponent implements OnDestroy{
     public LoggedUser: string;
     public IsBellVisible: boolean = false;
     public IsCustomizationVisible: boolean = false;
+    public IsCustomizationSettingVisible: boolean = false;
     public IsSignatureVisible: boolean = false;
     public IsChangePasswordVisible: boolean = false;
     public IsDataBackupVisible: boolean = false;
@@ -167,6 +168,8 @@ export class HomeComponent implements OnDestroy{
         else if (FeatureLocator.HasFeaturePermession("General", "General.Features.Customization")) {
             this.IsCustomizationVisible = true;
         }
+
+        this.IsCustomizationSettingVisible = this.CustomizationSettingPermession();
                 
         if (!this.IsLogBox && FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsCurrenciesRatesVisible = true;
@@ -208,6 +211,19 @@ export class HomeComponent implements OnDestroy{
             this.IsSetWorkerRoleNameVisible = true;
         }
 
+    }
+
+    CustomizationSettingPermession(): boolean {
+        if (!SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CUS")[0]) {
+            return false;
+        }
+        if (SessionLocator.Tenant == 261) {
+            return true;
+        }
+        if (FeatureLocator.HasFeaturePermession("General", "General.Features.CustomizationSettings")) {
+            return true;
+        }
+        return false;
     }
 
     private ShowDailyCurrenciesRates() {

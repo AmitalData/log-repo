@@ -95073,6 +95073,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;PrivateLabelAgentName&quot;"
     ListPropertyPath="&quot;PrivateLabelAgentName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -108198,6 +108199,24 @@
       FeatureTypeCode="&quot;AREA&quot;"
       FeatureTextCodeCode="&quot;Shipment.Features.UpdateUnassignedData&quot;"
       FeatureDefaultText="&quot;Update Unassigned Data&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;FIELDSCUSTOMIZATION&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Shipment.Features.FIELDSCUSTOMIZATION&quot;"
+      FeatureDefaultText="&quot;Fields Customization&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;RULESCUSTOMIZATION&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Shipment.Features.RULESCUSTOMIZATION&quot;"
+      FeatureDefaultText="&quot;Rules Customization&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

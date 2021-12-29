@@ -405,9 +405,6 @@ namespace Logitude.Infrastructure.BL
                 Description = "QBO Tax Id Calculations", 
 			});
 			 
-            
-			
-			 
             all.Add(new ToggleDetails()
             {    
                 Code = "AEV", 
@@ -431,6 +428,7 @@ namespace Logitude.Infrastructure.BL
                 Description = "Container Automation", 
                 SearchFields = "CAU,Container Automation", 
 			});
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "ODA", 
@@ -453,6 +451,14 @@ namespace Logitude.Infrastructure.BL
                 Name = "Open Format RTL", 
                 SearchFields = "OPF,Open Format RTL", 
                 Description = "Open Format RTL Issues", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CUS", 
+                Name = "Customization", 
+                SearchFields = "CUS,Customization", 
+                Description = "Customization screen and actions", 
 			});
 			
             return all;
