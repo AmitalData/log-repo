@@ -13,5 +13,6 @@ namespace Logitude.CRM.BL.DataContracts
         public string ResellerId;
         public bool ShowNet;
         public decimal ExchangeRate;
+        public int Year;
     }
 }
