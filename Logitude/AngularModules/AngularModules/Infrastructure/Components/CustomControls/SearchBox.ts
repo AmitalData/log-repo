@@ -88,8 +88,7 @@ export class SearchBox implements OnInit {
     @Input() MaxPopupItemsCount: number;
     @Input() InputType: string;
     @Input() QueryFilterItems: ApiQueryFilters;
-    public MultiGLAccountText = TextCodeTranslator.Translate("GLAccount.O.Multi");
-
+    public showLocals: boolean = false;
 
 
     LookUpTable: ObjectTablePM;
@@ -107,6 +106,7 @@ export class SearchBox implements OnInit {
 
         var ErrorPopUpId_counter = ControlsIdCounter.GetNextControlIdCounter("ErrorPopUpId");
         this.ErrorPopUpId = "ErrorPopUpId" + ErrorPopUpId_counter;
+        this.showLocals = !SessionLocator.LoggedUserPM.DontShowLocal;
 
     }
 
