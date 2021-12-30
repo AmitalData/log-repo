@@ -362,17 +362,12 @@
                                 </div>
                                 <div class="value uppercase truncateText">{{ shipment.ShipmentNumber }}</div>
 
-                                <div class="subtitle" [attr.src]="SetConsignmentNumber(shipment)">
+                                <div class="subtitle">
                                     {{SetMasterOrHouseLabel(shipment)}}
                                     <!-- Consignment No. -->
                                 </div>
                                 <div class="value uppercase truncateText">
-                                    <span
-                                        *ngIf="shipment.EntityType == 'C' && !shipment.ForwardingShipmentHeaderId && shipment.House">{{shipment.House}}</span>
-                                    <span>{{shipment.Master}}</span>
-                                    <span *ngIf="shipment.EntityType == 'C' && shipment.ForwardingShipmentHeaderId">
-                                        {{GetConsignmentNumberForCustomsForwardingShipment(shipment)}} </span>
-                                    <span *ngIf="shipment.EntityType != 'C'">{{ConsignmentNumber}}</span>
+                                    <span>{{SetMasterOrHouseValue(shipment)}}</span>
                                 </div>
                             </div>
                         </div>
