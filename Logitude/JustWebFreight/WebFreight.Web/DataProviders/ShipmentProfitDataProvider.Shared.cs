@@ -116,6 +116,11 @@ namespace WebFreight.Web.DataProviders
         public double? ProfitInLocalCurrency_Double { get; set; }
         public double? EstimateProfitInLocalCurrency_Double { get; set; }
         public double? DifferenceInLocalCurrency_Double { get; set; }
+
+        public string CustomerName { get; set; }
+        public string CustomerAddress { get; set; }
+        public string CustomerContactName { get; set; }
+        public string CustomerContactEmail { get; set; }
     }
 
     public class ProfitDetailsClass
