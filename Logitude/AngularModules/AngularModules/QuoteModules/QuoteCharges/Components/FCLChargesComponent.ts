@@ -1334,7 +1334,6 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "PRVL":
                 case "PRFR":
                 case "GWTN":
-                case "QTY":
                 case "PDCW":
                 case "PFCL":
                     {
@@ -1455,7 +1454,6 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "PRVL":
                 case "PRFR":
                 case "GWTN":
-                case "QTY":
                 case "PDCW":
                 case "PFCL":
                     {

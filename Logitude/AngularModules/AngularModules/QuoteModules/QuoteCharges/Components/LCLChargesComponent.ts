@@ -1179,7 +1179,6 @@ export class QuoteChargeItem extends BaseComponent {
                 case "PRVL":
                 case "PRFR":
                 case "GWTN":
-                case "QTY":
                 case "PDCW":
                 case "PFCL":
                     {
@@ -1286,7 +1285,6 @@ export class QuoteChargeItem extends BaseComponent {
                 case "PRVL":
                 case "PRFR":
                 case "GWTN":
-                case "QTY":
                 case "PDCW":
                 case "PFCL":
                     {
