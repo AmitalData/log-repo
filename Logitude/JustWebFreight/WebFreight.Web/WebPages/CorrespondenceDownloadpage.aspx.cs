@@ -50,7 +50,7 @@ namespace WebFreight.Web.WebPages
                     string domainName = "";
                     int tenant = int.Parse(filestrings[3] + "");
                     // cargo forwarding shipment
-                    if (filestrings.Length == 5)
+                    if (filestrings.Length >= 5)
                     {
                         forwardingShipmentEntityId = filestrings[4].ToString();
                     }
