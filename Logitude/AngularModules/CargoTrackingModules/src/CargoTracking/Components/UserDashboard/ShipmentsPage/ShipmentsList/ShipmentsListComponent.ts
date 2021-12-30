@@ -717,7 +717,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         new ToggleFilter(ShipmentDirectionCodes.Export, 'Export'),
         new ToggleFilter(ShipmentDirectionCodes.Drop, 'Drop'),
         new ToggleFilter(ShipmentDirectionCodes.Domestic, 'Domestic'),
-        new ToggleFilter(ShipmentDirectionCodes.CustomsImport, 'Customs Import')
     ];
     ShipmentTypeFilters: ToggleFilter[] = [
         new ToggleFilter(shipmentTypeCodes.Air, 'Air'),
@@ -733,11 +732,11 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
 
     sortByOptions: ToggleFilter[] = [
-        new ToggleFilter(SortOptions.CMD, 'Current Status Date'),
-        new ToggleFilter(SortOptions.ATA, 'ATA/ETA'),
-        new ToggleFilter(SortOptions.ATD, 'ATD/ETD'),
-        new ToggleFilter(SortOptions.ASC, 'Ascending'),
-        new ToggleFilter(SortOptions.DESC, 'Descending'),
+        new ToggleFilter(SortOptions.CMD, 'Current Status Date',null),
+        new ToggleFilter(SortOptions.ATA, 'ATA/ETA',null),
+        new ToggleFilter(SortOptions.ATD, 'ATD/ETD',null),
+        new ToggleFilter(SortOptions.ASC, 'Ascending',null),
+        new ToggleFilter(SortOptions.DESC, 'Descending',null),
     ];
     ShipmentDirectionFiltersDictionary: { [key: string]: ToggleFilter } = {};
     ShipmentShipmentTypeFiltersDictionary: { [key: string]: ToggleFilter } = {};
@@ -788,8 +787,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
             return this.ShipmentsCounter.Export;
         } else if (toggleFilter.Code == ShipmentDirectionCodes.Domestic) {
             return this.ShipmentsCounter.Domestic;
-        } else if (toggleFilter.Code == ShipmentDirectionCodes.CustomsImport) {
-            return this.ShipmentsCounter.CustomsImport;
         }
     }
     setCounterForMoreFiltersMultipleSelect(toggleFilter: ToggleFilter) {
@@ -1005,7 +1002,6 @@ export class CargoTrackingShipmentsCounter {
     Export: number = 0;
     Drop: number = 0;
     Domestic: number = 0;
-    CustomsImport: number = 0;
     Air: number = 0;
     Land: number = 0;
     Sea: number = 0;

@@ -15,6 +15,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
     public partial class CargoTrackingShipmentListQueryService
     {
         const string OrderType = "O";
+        const string ImportDirectionCode = "I";
+        const string CustomeImportDirectionCode = "C";
         private IQueryable<CargoTrackingShipmentList> GetIqueryableList(IQueryable<CargoTrackingShipment> iQueryable)
         {
             IQueryable<CargoTrackingPortList> ports = GetPorts();
@@ -637,6 +639,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         {
             if(shipmentSearchInput.DirectionCodes.Count <= 0)
                 return shipments;
+            if (shipmentSearchInput.DirectionCodes.Contains(ImportDirectionCode))
+                shipmentSearchInput.DirectionCodes.Add(CustomeImportDirectionCode);
             shipments = shipments.Where(d =>
                 shipmentSearchInput.DirectionCodes.Contains(d.DirectionId)
             );
