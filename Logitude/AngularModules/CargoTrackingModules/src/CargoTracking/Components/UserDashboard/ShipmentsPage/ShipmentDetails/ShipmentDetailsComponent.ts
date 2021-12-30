@@ -833,6 +833,7 @@ export class MilestoneCard
 {
     Code: string;
     Date: Date;
+    ExpectedDate: Date;
     Title: string;
     Description: string;
     IsActive: boolean;

@@ -233,10 +233,10 @@
                     </app-tooltip>
 
                     <div class="date">
-                        {{card.Date | date: 'dd'}}
+                        {{(card.Date || card.ExpectedDate) | date: 'dd'}}
                         <span style="display:inline-flex;flex-direction:column-reverse">
-                            <span style="flex:50%">{{card.Date | date: 'MMM'}}</span>
-                            <span style="flex:50%">{{card.Date | date: 'HH:mm' | dateTimeFormat}}</span>
+                            <span style="flex:50%">{{(card.Date || card.ExpectedDate)  | date: 'MMM'}}</span>
+                            <span style="flex:50%">{{(card.Date || card.ExpectedDate) | date: 'HH:mm' | dateTimeFormat}}</span>
                         </span>
                     </div>
 
@@ -244,7 +244,7 @@
                         <span >
                             <span > {{card.Title}}</span>
                             <span style="width:3px"></span>
-                            <span *ngIf="card.IsDimmed" style="font-size: 12px;"> (Expected)</span>
+                            <span *ngIf="card.IsDimmed || (!card.Date && card.ExpectedDate)" style="font-size: 12px;"> (Expected)</span>
                         </span>
                     </div>
 
