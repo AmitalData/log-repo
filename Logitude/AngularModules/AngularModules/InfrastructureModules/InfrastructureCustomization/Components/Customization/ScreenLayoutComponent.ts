@@ -1,26 +1,28 @@
-import {Component} from '@angular/core';
-import {GeneralDomainService} from '../../../../Infrastructure/Services/GeneralDomainService';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {ObjectTablePM} from '../../../../Infrastructure/EntityPMs/ObjectTablePM';
-import {ObjectFieldPM} from '../../../../Infrastructure/EntityPMs/ObjectFieldPM';
-import {ScreenPM} from '../../../../Infrastructure/EntityPMs/ScreenPM';
-import {ScreenFieldPM} from '../../../../Infrastructure/EntityPMs/ScreenFieldPM';
-import {AppTool} from '../../../../Infrastructure/Tools';
-import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {CodeNameClass} from '../../../../Infrastructure/DataContracts/CodeNameClass';
-import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
-import {ScreenLayoutArgs} from '../../../../Infrastructure/DataContracts/ScreenLayoutArgs';
-import {LoginService} from '../../../../Infrastructure/Services/LoginService';
+import { Component } from '@angular/core';
+import { GeneralDomainService } from '../../../../Infrastructure/Services/GeneralDomainService';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { InfraSettings } from '../../../../Infrastructure/Utilities/InfraSettings';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ObjectTablePM } from '../../../../Infrastructure/EntityPMs/ObjectTablePM';
+import { ObjectFieldPM } from '../../../../Infrastructure/EntityPMs/ObjectFieldPM';
+import { ScreenPM } from '../../../../Infrastructure/EntityPMs/ScreenPM';
+import { ScreenFieldPM } from '../../../../Infrastructure/EntityPMs/ScreenFieldPM';
+import { AppTool } from '../../../../Infrastructure/Tools';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
+import { ScreenLayoutArgs } from '../../../../Infrastructure/DataContracts/ScreenLayoutArgs';
+import { LoginService } from '../../../../Infrastructure/Services/LoginService';
+import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 
 
 declare var window;
 @Component({
-    
+
     templateUrl: './ScreenLayoutComponent.html',
 })
 
@@ -43,11 +45,12 @@ export class ScreenLayoutComponent extends BaseComponent {
     loginService: LoginService;
     private ObjectTable: ObjectTablePM;
     private CurrentSession = SessionLocator.SelectedSession;
+    Modified: boolean = false;
     constructor() {
         super();
         this.myService = new EntityResourceService();
         this.myGeneralService = new GeneralDomainService();
-        this.loginService = new LoginService(); 
+        this.loginService = new LoginService();
         //this.TabsList = new ObservableCollection([]);            
     }
 
@@ -75,20 +78,30 @@ export class ScreenLayoutComponent extends BaseComponent {
     //}
 
     public SelectedItem: ScreenItem;
+    public OldItem: ScreenItem;
     SelectionChanged(Item) {
         //this.OkClicked(false);
         this.SelectedItem = Item;
+        if (this.Modified) {
+            this.OpenConfirmWindow();
+            return;
+        }
+        this.GetFields();
+    }
+
+    GetFields() {
+        this.OldItem = this.SelectedItem;
+        this.Modified = false;
         this.FillbanckStackFields();
-        this.myGeneralService.GetScreenModificationByScreenCode(Item.ScreenPM.Code).subscribe((myResult: ServiceResponse) => {
+        this.myGeneralService.GetScreenModificationByScreenCode(this.SelectedItem.ScreenPM.Code).subscribe((myResult: ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
             if (myResponse.Result != null) {
                 this.GenerateScreen(myResponse.Result);
             }
             else {
-                this.GenerateScreen(Item.ScreenPM);
-            } 
+                this.GenerateScreen(this.SelectedItem.ScreenPM);
+            }
         });
-        
     }
 
     SetWindowArgs(windowArgs: any) {
@@ -102,7 +115,7 @@ export class ScreenLayoutComponent extends BaseComponent {
         for (var i = 0; i < Item.NumberOfColumns; i++) {
             var RDetails = new ScreenRowDetails();
             RDetails.ColumnIndex = i;
-            var myFields = this.currentScreenFields.filter(a => a.Column == i).sort((a, b) => { return a.Row - b.Row });
+            var myFields = this.Clone(this.currentScreenFields.filter(a => a.Column == i).sort((a, b) => { return a.Row - b.Row }));
             myFields.forEach(field => {
                 if (RDetails.ScreenFieldPMs == null) {
                     RDetails.ScreenFieldPMs = [];
@@ -165,7 +178,7 @@ export class ScreenLayoutComponent extends BaseComponent {
         else {
             this.currentScreenFields = [];
         }
-       
+
         this.currentObjectFields.forEach(objectField => {
             if (this.currentScreenFields.filter(sf => sf.ObjectFieldCode == objectField.FieldCode).length == 0) {
                 //if (objectField.DataTypeCode != null && !objectField.IsMulti) {
@@ -196,8 +209,8 @@ export class ScreenLayoutComponent extends BaseComponent {
     public authHeader;
     OkClicked(CloseWindow: boolean = true) {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
-        var ScreenId = this.SelectedItem.ScreenPM.Id;
-        var ScreenCode = this.SelectedItem.ScreenPM.Code;
+        var ScreenId = this.OldItem.ScreenPM.Id;
+        var ScreenCode = this.OldItem.ScreenPM.Code;
 
         //this.MyArgs.RemovedScreenFields = [];
         this.MyArgs.ScreenFields = [];
@@ -212,7 +225,7 @@ export class ScreenLayoutComponent extends BaseComponent {
                     ScreenCode = myfield.ScreenCode;
                     this.MyArgs.ScreenFields.push(myfield);
                 });
-            } 
+            }
         });
         this.MyArgs.Columns = Columns;
         this.MyArgs.Rows = Rows;//Math.ceil(Rows / Columns);
@@ -226,22 +239,24 @@ export class ScreenLayoutComponent extends BaseComponent {
             this.loginService.AuthHeader = this.authHeader;
             this.loginService.CurrentTenant = SessionLocator.Tenant;
             this.loginService.GetScreenFields().subscribe((myResult: any) => {
-                if (myResult != null) { 
+                if (myResult != null) {
+                    this.UpdateWindowFields(myResult);
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     if (CloseWindow == true) {
                         this.CurrentSession.CloseCurrentWindow();
-                    }
-                    window.ScreenFields = myResult;
-                    this.currentScreenFields = window.ScreenFields.filter(sf => sf.Tenant == SessionLocator.Tenant && sf.ScreenCode == ScreenCode);
-                    if (this.currentScreenFields.length == 0) {
-                        this.currentScreenFields = window.ScreenFields.filter(sf => sf.Tenant == 0 && sf.ScreenCode == ScreenCode);
+                    } else {
+                        this.GetFields();
                     }
                 }
                 this.loginService.GetScreens().subscribe((myScreensResult: any) => {
                     window.Screens = myScreensResult;
-                }); 
-            }); 
+                });
+            });
         });
+    }
+
+    UpdateWindowFields(screenFields) {
+        window.ScreenFields = screenFields;
     }
 
     OnMyMouseDown(event) {
@@ -259,11 +274,11 @@ export class ScreenLayoutComponent extends BaseComponent {
     }
 
     onMyDrop(event: DragEvent, item: ScreenRowDetails, row: number) {
-       
+        this.Modified = true;
         var id = event.dataTransfer.getData("Id");
         var fieldCode = event.dataTransfer.getData("FieldCode");
         var myitem: ObjectFieldPM = this.banckStackFields.filter(d => d.Id == id)[0];
-       
+
         if (myitem) {
             var test = window.ObjectFields.filter(a => a.Id == myitem.Id)[0];
             if (AppTool.IsNullOrEmpty(test.ObjectTableName)) {
@@ -349,6 +364,7 @@ export class ScreenLayoutComponent extends BaseComponent {
     }
 
     OnDeleteField(item) {
+        this.Modified = true;
         this.AllbanckStackFields.push(item);
         this.ScreenRows.forEach(sItem => {
             if (sItem.ObjectFieldPMs) {
@@ -368,6 +384,33 @@ export class ScreenLayoutComponent extends BaseComponent {
                 });
             }
 
+        });
+    }
+
+    Clone(list: any): any {
+        return JSON.parse(JSON.stringify(list));
+    }
+
+    OpenConfirmWindow() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 450;
+        confirmWindow.Height = 190;
+        confirmWindow.ShowCancelButton = true;
+        confirmWindow.NoButtonText = "Don't Save";
+        confirmWindow.YesButtonText = "Save ";
+        confirmWindow.CancelButtonText = "Cancel";
+        confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
+        confirmWindow.Show("This Screen has unsaved changes. Do you want to save it?");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.OkClicked(false);
+                return;
+            }
+            if (confirmWindow.No) {
+                this.GetFields();
+                return;
+            }
+            this.SelectedItem = this.OldItem;
         });
     }
 }
