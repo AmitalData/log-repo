@@ -9,6 +9,7 @@ export class NewQuoteFocusErrorService {
 
   constructor(
     private dataShareService: NewQuoteDataShareService,
+    private cdr : ChangeDetectorRef,
   ) { }
 
   focusError(form: FormGroup, elmRef: ElementRef) {
@@ -18,6 +19,7 @@ export class NewQuoteFocusErrorService {
     this.focusPartnerError()
     this.focusPropertiesError()
     this.focusAllError()
+    this.focusCursor()
   }
 
   private focusPartnerError() {
@@ -57,5 +59,13 @@ export class NewQuoteFocusErrorService {
   private scrollToHtmlElm(htmlElm: HTMLElement) {
     htmlElm.focus();
     htmlElm.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+  }
+
+  private focusCursor() {
+    this.cdr.detectChanges();
+    
+    const inputsErrArr: JQuery<HTMLElement> = $('.ng-submitted p-calendar.ng-invalid > span, .ng-submitted p-inputnumber.ng-invalid input, .ng-submitted p-autocomplete.ng-invalid input, .ng-submitted input.ng-invalid')
+    if (inputsErrArr.length)
+      inputsErrArr[0].focus()
   }
 }
