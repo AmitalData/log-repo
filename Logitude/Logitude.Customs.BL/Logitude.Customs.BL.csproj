@@ -1557,7 +1557,7 @@
     <Compile Include="EntityQueryServices\VendorCommissionQueryService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealIdentifierUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealUpdateService.cs" />
-    <Compile Include="EntityUpdateServices\CertificateExemptionTypeUpdateService - Copy.cs" />
+    <Compile Include="EntityUpdateServices\IncotemrsFileValidationUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CityUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClaimImporterDeclarsP3LoiUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClaimImporterDeclarsPage3AUpdateService.cs" />
