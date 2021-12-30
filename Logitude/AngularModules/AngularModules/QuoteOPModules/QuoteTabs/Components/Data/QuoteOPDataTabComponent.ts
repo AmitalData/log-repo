@@ -2,6 +2,7 @@ import { Component, ElementRef } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { EntityArgs } from "Infrastructure/DataContracts/EntityArgs";
+import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { NewQuoteDataShareService } from "QuoteOPM/Components/NewEntity/Services/new-quote-data-share/new-quote-data-share.service";
 import { NewQuoteDataService } from "QuoteOPM/Components/NewEntity/Services/new-quote-data/new-quote-data.service";
 import { NewQuoteHandleLinkedDataService } from "QuoteOPM/Components/NewEntity/Services/new-quote-handle-linked-data/new-quote-handle-linked-data.service";
@@ -23,6 +24,7 @@ export class QuoteOPDataTabComponent extends BaseComponent {
     public ObjectTableName: string = "QuoteOP";
     public DataContext = this;
     public IsSubjectVisible: boolean = false;
+    public isSubmit: boolean = true;
 
 
     constructor(
@@ -47,7 +49,7 @@ export class QuoteOPDataTabComponent extends BaseComponent {
         this.dataShareService.formGroup = this.formGroup;
     }
     
-
+    
     ngAfterViewInit() {        
         this.formGroup.controls.properties.valueChanges.subscribe(()=> {
             this.handleLinkedDataService.addProperty();
@@ -57,8 +59,10 @@ export class QuoteOPDataTabComponent extends BaseComponent {
         this.formGroup.controls.packages.valueChanges.subscribe(()=> {
             this.handleLinkedDataService.attachPackages()
         })
-
+        
         setTimeout(() => this.EntityPM.DisableMarkAsDirty = false, 2000);
+        
+        SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe(()=> SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM());
     }
 
 

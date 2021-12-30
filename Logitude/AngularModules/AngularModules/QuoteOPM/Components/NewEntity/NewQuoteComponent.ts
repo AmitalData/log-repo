@@ -26,7 +26,6 @@ export class NewQuoteComponent {
         private newQuoteDataService: NewQuoteDataService,
         private msg: MessageService,
         private dataShareService: NewQuoteDataShareService,
-        private ValidateService: NewQuoteValidateEntityService,
         private elmRef: ElementRef,
         private focusErrorService: NewQuoteFocusErrorService,
         private handleLinkedDataService: NewQuoteHandleLinkedDataService,
