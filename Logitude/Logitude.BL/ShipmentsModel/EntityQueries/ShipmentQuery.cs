@@ -14427,7 +14427,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public DigitalFiltersCounts GetDigitalFiltersCounts(int tenant, string CustomerId, int leastStatusWeight, int greatestStatusWeight)
         {
             (int allShipmentsCount, int activeShipmentsCount) = GetActiveShipmentsCount(tenant, CustomerId);
-            (int atOriginShipmentCount, int inTransitShipmentCount, int atDestinationShipmentCount) = GetShipmentStatusWeightCounts(tenant, CustomerId, leastStatusWeight, greatestStatusWeight);
+
+            IQueryable<ShipmentDataView> activeShipmentsDataViewFilteredByCustomerId = GetActiveShipmentsDataViewFilteredByCustomerIdQuery(tenant, CustomerId);
+            (int atOriginShipmentCount, int inTransitShipmentCount, int atDestinationShipmentCount) = GetShipmentStatusWeightCounts(activeShipmentsDataViewFilteredByCustomerId, leastStatusWeight, greatestStatusWeight, null);
+            (int atOriginAirShipmentCount, int inTransitAirShipmentCount, int atDestinationAirShipmentCount) = GetShipmentStatusWeightCounts(activeShipmentsDataViewFilteredByCustomerId, leastStatusWeight, greatestStatusWeight, "A");
+            (int atOriginOceanShipmentCount, int inTransitOceanShipmentCount, int atDestinationOceanShipmentCount) = GetShipmentStatusWeightCounts(activeShipmentsDataViewFilteredByCustomerId, leastStatusWeight, greatestStatusWeight, "O");
+            (int atOriginInlandShipmentCount, int inTransitInlandShipmentCount, int atDestinationInlandShipmentCount) = GetShipmentStatusWeightCounts(activeShipmentsDataViewFilteredByCustomerId, leastStatusWeight, greatestStatusWeight, "I");
 
             return new DigitalFiltersCounts
             {
@@ -14435,8 +14440,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Active = activeShipmentsCount,
                 Closed = allShipmentsCount - activeShipmentsCount,
                 AtOrigin = atOriginShipmentCount,
+                AtOriginAir = atOriginAirShipmentCount,
+                AtOriginOcean =  atOriginOceanShipmentCount,
+                AtOriginInland = atOriginInlandShipmentCount,
                 InTransit = inTransitShipmentCount,
-                AtDestination = atDestinationShipmentCount
+                InTransitAir = inTransitAirShipmentCount,
+                InTransitOcean = inTransitOceanShipmentCount,
+                InTransitInland = inTransitInlandShipmentCount,
+                AtDestination = atDestinationShipmentCount,
+                AtDestinationAir = atDestinationAirShipmentCount,
+                AtDestinationOcean = atDestinationOceanShipmentCount,
+                AtDestinationInland = atDestinationInlandShipmentCount
             };
         }
 
@@ -14454,21 +14468,29 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return Tuple.Create(allShipmentsCount, activeShipmentsCount);
         }
 
-        private Tuple<int, int, int> GetShipmentStatusWeightCounts(int tenant, string CustomerId, int leastStatusWeight, int greatestStatusWeight)
+        private Tuple<int, int, int> GetShipmentStatusWeightCounts(IQueryable<ShipmentDataView> activeShipmentsDataViewFilteredByCustomerId, int leastStatusWeight, int greatestStatusWeight, string tansportModeId)
+        {
+            int atOriginShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.StatusWeight < leastStatusWeight && 
+                                                                                                      (tansportModeId == null || shipment.TransportModeId == tansportModeId)).Count();
+            int inTransitShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.StatusWeight >= leastStatusWeight &&
+                                                                                                       shipment.StatusWeight < greatestStatusWeight &&
+                                                                                                       (tansportModeId == null || shipment.TransportModeId == tansportModeId)).Count();
+            int atDestinationShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.StatusWeight >= greatestStatusWeight &&
+                                                                                                           (tansportModeId == null || shipment.TransportModeId == tansportModeId)).Count();
+
+            return Tuple.Create(atOriginShipmentCount, inTransitShipmentCount, atDestinationShipmentCount);
+        }
+
+        private IQueryable<ShipmentDataView> GetActiveShipmentsDataViewFilteredByCustomerIdQuery(int tenant, string customerId)
         {
             ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
             IQueryable<ShipmentDataView> shipmentsDataView = shipmentRepository.GetShipmentViewsByTenant(tenant);
-            IQueryable<ShipmentDataView> activeShipmentsDataViewFilteredByCustomerId = shipmentsDataView.Where(shipment => shipment.CustomerId == CustomerId &&
+            IQueryable<ShipmentDataView> activeShipmentsDataViewFilteredByCustomerId = shipmentsDataView.Where(shipment => shipment.CustomerId == customerId &&
                                                                                                                            shipment.IsCancelled == false &&
                                                                                                                            shipment.IsStandalonePickupDelivery == false &&
                                                                                                                            shipment.IsOperationalClosed == false)
                                                                                                         .AsQueryable();
-            int atOriginShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.StatusWeight < leastStatusWeight).Count();
-            int inTransitShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.StatusWeight >= leastStatusWeight &&
-                                                                                                       shipment.StatusWeight < greatestStatusWeight).Count();
-            int atDestinationShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.StatusWeight >= greatestStatusWeight).Count();
-
-            return Tuple.Create(atOriginShipmentCount, inTransitShipmentCount, atDestinationShipmentCount);
+            return activeShipmentsDataViewFilteredByCustomerId;
         }
     }
 
