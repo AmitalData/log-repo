@@ -192,8 +192,9 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         }
         private static Milestone GetMostRecentEstimatedMilestone(List<Milestone> milestones)
         {
-            return milestones.Where(s => s.IsEstimation == true && s.EstimationDate != null)
-                                                        .OrderByDescending(s => s.Weight)
+            Milestone currentMilstone = milestones.Find(m => m.IsCurrent == true);
+            return milestones.Where(s => s.IsEstimation == true && s.EstimationDate != null && s.Weight > currentMilstone.Weight)
+                                                        .OrderBy(s => s.Weight)
                                                         .FirstOrDefault();
         }
     }
