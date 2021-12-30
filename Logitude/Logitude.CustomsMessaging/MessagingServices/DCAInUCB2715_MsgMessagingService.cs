@@ -107,6 +107,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 SelectedFastIndividualProcessValue = mySendUnCorrectDocumentsRequestParams.SelectedFastIndividualProcessValue,
                 SelectedCustomStatusValue = mySendUnCorrectDocumentsRequestParams.SelectedCustomStatusValue,
                 IsCreateNewDocumentVersion = mySendUnCorrectDocumentsRequestParams.IsCreateNewDocumentVersion,
+                SelectedFinalReleaseValue = mySendUnCorrectDocumentsRequestParams.SelectedFinalReleaseValue,
                 tenant = tenant,
                 MyMoreParams = "",
                 ResponseContentHeader = new DefaultResponseContentHeader()
@@ -216,6 +217,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string SelectedFastIndividualProcessValue { get; set; }
         public string SelectedCustomStatusValue { get; set; }
         public bool IsCreateNewDocumentVersion { get; set; }
+        public string SelectedFinalReleaseValue { get; set; }
 
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     }

@@ -647,8 +647,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             string defaultClassificationCode = null;
             string defaultClassificationCodeUnit = null;
             //if ((entityPM.ChangeSetOp == ChangeSetOperation.Insert || (entityPM.ChangeSetOp == ChangeSetOperation.Update && IsProcedureCurrentCodeChanged)) && declarationPM.IsCourierDeclaration && entityPM.InvoiceAmountInUSD <= 1000 && (declarationPM.ProcedureCurrentCode == "4000512" || declarationPM.ProcedureCurrentCode == "4000507"))
+            LogMessagingUtil.Instance.AppendLine($"ChangeSetOp{entityPM.ChangeSetOp} IsProcedureCurrentCodeChanged{IsProcedureCurrentCodeChanged} ProcedureCurrentCode{defaultDeclarationPM.ProcedureCurrentCode}");
             if ((entityPM.ChangeSetOp == ChangeSetOperation.Insert || (entityPM.ChangeSetOp == ChangeSetOperation.Update && IsProcedureCurrentCodeChanged)) && defaultDeclarationPM.IsCourierDeclaration && entityPM.InvoiceAmountInUSD <= 1000 && (defaultDeclarationPM.ProcedureCurrentCode == "4000512" || defaultDeclarationPM.ProcedureCurrentCode == "4000507"))
-            {
+             {
                 try
                 {
                     using (_AmitalContext = AmitalContext.GetContext(entityPM.Tenant))
@@ -672,6 +673,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 myCard = repository.GetSingleCard(_CourierMasterPM.IntegratorCode, entityPM.Tenant);
                                 if (myCard != null && !String.IsNullOrWhiteSpace(myCard.Code)) IntegratorCode = myCard.Code;
                             }
+                            LogMessagingUtil.Instance.AppendLine($"InvoiceAmountInUSD{entityPM.InvoiceAmountInUSD} shopId{shopId} IntegratorCode{IntegratorCode}");
 
                             if (entityPM.InvoiceAmountInUSD <= 75)
                             {
@@ -691,7 +693,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 if (String.IsNullOrWhiteSpace(defaultClassificationCode) && !String.IsNullOrWhiteSpace(IntegratorCode)) defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_VAL3_ITM", "NON", IntegratorCode, entityPM.Tenant);
                                 if (String.IsNullOrWhiteSpace(defaultClassificationCode)) defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_VAL3_ITEM", "NON", "NON", entityPM.Tenant);
                             }
-
                             if (!string.IsNullOrWhiteSpace(defaultClassificationCode))
                             {
                                 CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(entityPM.Tenant);
@@ -714,6 +715,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 toUpdateClassification = true;
                             }
                         }
+                        LogMessagingUtil.Instance.AppendLine($"defaultClassificationCode{defaultClassificationCode} toUpdateClassification{toUpdateClassification} ");
+
                     }
                 }
                 catch (Exception ex)
@@ -758,6 +761,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                     SIitem.ClassificationCode = defaultClassificationCode;
                                     if (string.IsNullOrWhiteSpace(SIitem.InvoiceQuantityType)) SIitem.InvoiceQuantityType = defaultClassificationCodeUnit;
                                     invoiceItemRepository.Update(SIitem);
+                                    LogMessagingUtil.Instance.AppendLine($"upsdate SIitem.ClassificationCode{SIitem.ClassificationCode} ");
+
                                 }
                             }
                         }

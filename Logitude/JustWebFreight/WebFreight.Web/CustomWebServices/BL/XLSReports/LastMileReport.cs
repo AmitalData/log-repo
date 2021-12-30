@@ -19,7 +19,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports
         {
             this.tenant = int.Parse(tenant);
         }
-        public byte[] GetLastMileReport(string hatraFromDate, string hatraToDate, string lastMileFromDate, string LastMileToDate, string airline, string trucker, string courierHawb)
+        public byte[] GetLastMileReport(string hatraFromDate, string hatraToDate, string lastMileFromDate, string LastMileToDate, string airline, string trucker, string mawb)
         {
             var context = CustomContext.GetContext((int)tenant);
             DataTable dt = SetDataTableForLastMileReport();
@@ -32,14 +32,14 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports
             lastMileFrom = this.TryParse(lastMileFromDate);
             lastMileTo = this.TryParse(LastMileToDate);
             var lastMileReportDataList = new List<LastMileReportData>();
-            var OpenCourierMasters = courierMasterQueryService.GetAllCourierMasterForLastmileReport(hatraFrom, hatraTo, lastMileFrom, lastMileTo, airline, trucker, courierHawb,tenant);
+            var OpenCourierMasters = courierMasterQueryService.GetAllCourierMasterForLastmileReport(hatraFrom, hatraTo, lastMileFrom, lastMileTo, airline, trucker, mawb, tenant);
             var qs = new DeclarationCourierStatusQueryService(context);
             int MawbCountr = 0;
             foreach (var item in OpenCourierMasters)
             {
                 var lastMileReportData = new LastMileReportData();
                 lastMileReportData.IntegratorName = item.GetType().GetProperty("IntegratorName").GetValue(item, null);
-                lastMileReportData.Mawb= item.GetType().GetProperty("Mawb").GetValue(item, null);
+                lastMileReportData.CourierHawb= item.GetType().GetProperty("CourierHAWB").GetValue(item, null);
                 lastMileReportData.LastMileServiceType = item.GetType().GetProperty("LastMileServiceType").GetValue(item, null);
                 lastMileReportData.Trucker = item.GetType().GetProperty("TruckerName").GetValue(item, null);
                 lastMileReportData.LastMileStatusName = item.GetType().GetProperty("LastMileStatusName").GetValue(item, null);
@@ -47,7 +47,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports
                 lastMileReportData.HatraDate = item.GetType().GetProperty("HatraDate").GetValue(item, null);
                 lastMileReportData.EstimatedArrivalDate = item.GetType().GetProperty("EstimatedArrivalDate").GetValue(item, null);
                 lastMileReportData.LastMileStatusDate = item.GetType().GetProperty("LastMileStatusDate").GetValue(item, null);
-                if (lastMileReportDataList.Find(x => x.Mawb == item.GetType().GetProperty("Mawb").GetValue(item, null)) == null)
+                if (lastMileReportDataList.Find(x => x.CourierHawb == item.GetType().GetProperty("CourierHAWB").GetValue(item, null)) == null)
                 {
                     MawbCountr++;
                 }
@@ -66,7 +66,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports
             lastMileReportDataList.ForEach(r =>
             {
                 var newrow = dt.NewRow();
-                newrow[0] = r.Mawb;
+                newrow[0] = r.CourierHawb;
                 newrow[1] = r.IntegratorName;
                 newrow[2] = r.Trucker;
                 newrow[3] = r.LastMileServiceType;
@@ -76,9 +76,8 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports
                 newrow[7] = r.HatraDate;
                 newrow[8] = r.TerminalReleaseDate;
 
-
                 dt.Rows.Add(newrow);
-            });
+            });            
             var Lastrow = dt.NewRow();
             Lastrow[0] = ":כמות שטרי מטען בלדר";
             Lastrow[1] = MawbCountr;
@@ -98,11 +97,10 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports
             settingCol.Columns.Add(GetColumn(3, "TruckerId", "TruckerId", "string", 150));
             settingCol.Columns.Add(GetColumn(4, "LastMileServiceType", "LastMileServiceType", "string", 150));
             settingCol.Columns.Add(GetColumn(5, "LastMileStatusName", "LastMileStatusName", "string", 150));
-            settingCol.Columns.Add(GetColumn(6, "LastMileStatusDate", "LastMileStatusDate", "string", 150));
-            settingCol.Columns.Add(GetColumn(7, "EstimatedArrivalDate", "EstimatedArrivalDate", "string", 150));
+            settingCol.Columns.Add(GetColumn(6, "LastMileStatusDate", "LastMileStatusDate", "DateTime?", 150));
+            settingCol.Columns.Add(GetColumn(7, "EstimatedArrivalDate", "EstimatedArrivalDate", "DateTime", 150));
             settingCol.Columns.Add(GetColumn(8, "HatraDate", "HatraDate", "string", 150));
             settingCol.Columns.Add(GetColumn(9, "TerminalReleaseDate", "TerminalReleaseDate", "string", 150));
-
 
             return settingCol;
         }
@@ -115,7 +113,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports
             dt.Columns.Add(GetDataColumn("סוג שירות", "LastMileServiceType", "System.String"));
             dt.Columns.Add(GetDataColumn("שם סטטוס אחרון", "LastMileStatusName", "System.String"));
             dt.Columns.Add(GetDataColumn("תאריך ושעת הסטטוס", "LastMileStatusDate", "System.String"));
-            dt.Columns.Add(GetDataColumn("תאריך הגעה משוער", "EstimatedArrivalDate", "System.String"));
+            dt.Columns.Add(GetDataColumn("תאריך הגעה משוער", "EstimatedArrivalDate", "System.DateTime"));
             dt.Columns.Add(GetDataColumn("תאריך התרה", "HatraDate", "System.String"));
             dt.Columns.Add(GetDataColumn("תאריך יציאה ממסוף", "TerminalReleaseDate", "System.String"));
             return dt;
@@ -153,7 +151,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports
     public class LastMileReportData
     {
         public DateTime LastMileDate { get; set; }
-        public string Mawb { get; set; }
+        public string CourierHawb { get; set; }
         public string IntegratorName { get; set; }
         public string Trucker { get; set; }
         public string LastMileServiceType { get; set; }

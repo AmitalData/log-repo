@@ -572,7 +572,7 @@ ID List :
                                                     {
                                                         writeHighlight = true;
                                                     }
-                                                    if (dr["TermsOfSaleTypeID"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    if (dr["TermsOfSaleTypeID"].ToString() != null)
                                                     {
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
                                                         newExt.MyIncotemrsFileValidation.TermsOfSaleTypeID = dr["TermsOfSaleTypeID"].ToString();
@@ -592,22 +592,22 @@ ID List :
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
                                                         newExt.MyIncotemrsFileValidation.IsInsurance = true;
                                                     }
-                                                    if (dr["CargoIdentifierTypeID"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    if (dr["CargoIdentifierTypeID"].ToString() != null)
                                                     {
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
                                                         newExt.MyIncotemrsFileValidation.CargoIdentifierTypeID = dr["CargoIdentifierTypeID"].ToString(); ;
                                                     }
-                                                    if (dr["CargoIdentifierTypeName"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    if (dr["CargoIdentifierTypeName"].ToString() != null)
                                                     {
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
                                                         newExt.MyIncotemrsFileValidation.CargoIdentifierTypeName = dr["CargoIdentifierTypeName"].ToString(); ;
                                                     }
-                                                    if (dr["LeadDocumentTypeID"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    if (dr["LeadDocumentTypeID"].ToString() != null)
                                                     {
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
                                                         newExt.MyIncotemrsFileValidation.LeadDocumentTypeID = dr["LeadDocumentTypeID"].ToString(); ;
                                                     }
-                                                    if (dr["LeadDocumentTypeName"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    if (dr["LeadDocumentTypeName"].ToString() != null)
                                                     {
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
                                                         newExt.MyIncotemrsFileValidation.LeadDocumentTypeName = dr["LeadDocumentTypeName"].ToString(); ;
