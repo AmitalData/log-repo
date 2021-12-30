@@ -30,8 +30,15 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
 
         protected override bool IsEqual(SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt mehesTableRow, IncotemrsFileValidationPM curDbPM)
         {
-            var gov = mehesTableRow.MyCertificateExemptionType ?? new CertificateExemptionType();
-            return base.IsEqual(mehesTableRow, curDbPM);//&& curDbPM.IsImportDeclaration == gov.IsImportDeclaration && gov.IsExportDeclaration == curDbPM.IsExportDeclaration;
+            var gov = mehesTableRow.MyIncotemrsFileValidation ?? new IncotemrsFileValidation();
+            return base.IsEqual(mehesTableRow, curDbPM) && curDbPM.IsFreightCharge == gov.IsFreightCharge
+                && gov.TermsOfSaleTypeID == curDbPM.TermsOfSaleTypeID
+                 && gov.IsPortIsraelCharge == curDbPM.IsPortIsraelCharge
+                  && gov.IsInsurance == curDbPM.IsInsurance
+                   && gov.CargoIdentifierTypeID == curDbPM.CargoIdentifierTypeID
+                    && gov.CargoIdentifierTypeName == curDbPM.CargoIdentifierTypeName
+                     && gov.LeadDocumentTypeID == curDbPM.LeadDocumentTypeID
+                      && gov.LeadDocumentTypeName == curDbPM.LeadDocumentTypeName; 
         }
         protected override void SetOtherFields(SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt mehesTableRow, IncotemrsFileValidationPM curDbPM)
         {
