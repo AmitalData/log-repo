@@ -146,7 +146,7 @@
                                                    style="cursor: pointer;text-decoration: underline;">{{showMoreReferences?'Show Less':'See all'}}</a>
             </div>
             <ul>
-                <li>
+                <li *ngIf="ShipmentOrder?.PONumber != null">
                     <custom-label>{{ShipmentOrder?.PONumber}} </custom-label>
                 </li>
                 <li *ngIf="cargoTrackingShipmentPM.EntityType == 'O' && cargoTrackingShipmentPM.ShipmentOrderPONumber">
