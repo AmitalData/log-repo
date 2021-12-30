@@ -2512,6 +2512,9 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         //this.MenuHeaderchangeevent = new EventEmitter();
         //this.ColumnsReady = new EventEmitter();
         //this.isEditControlOpened = false;
+        if (this.MethodName != undefined && this.MethodName.indexOf("Customs.") > -1) {
+            this.MethodName = this.MethodName.split('.')[1];
+        }
         this._entityListService.getSingle(selectedEntityId, this.ObjectTableName, this.MethodName == undefined ? null : this.MethodName).then((res: any) => {
             //var re = res;
             this.DestroyMe = false;

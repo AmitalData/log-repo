@@ -79,7 +79,7 @@ namespace Logitude.Customs.Data.Repsitories
             }
             return query.ToList();
         }
-        public List<dynamic> GetAllCourierMasterForLastmileReport(DateTime? hatraFromDate, DateTime? hatraToDate, DateTime? lastMileFromDate, DateTime? LastMileToDate, string airline, string trucker, string courierHawb, int tenant)
+        public List<dynamic> GetAllCourierMasterForLastmileReport(DateTime? hatraFromDate, DateTime? hatraToDate, DateTime? lastMileFromDate, DateTime? LastMileToDate, string airline, string trucker, string mawb, int tenant)
         {
             var query = (from cd in context.CourierDeclarations
                          join c in context.CourierMasters on cd.CourierMasterId equals c.Id
@@ -89,7 +89,8 @@ namespace Logitude.Customs.Data.Repsitories
                          select new
                          {
                              LastMileDate = s.Delivered ? s.LastMileStatusDate : null,
-                             Mawb = d.CourierHAWB,
+                             CourierHAWB = d.CourierHAWB,
+                             Mawb=c.MAWB,
                              IntegratorCode = c.IntegratorCode,
                              IntegratorName = c.Card != null ? c.Card.LocalName : null,
                              Airline = c.AirlineId,
@@ -113,10 +114,10 @@ namespace Logitude.Customs.Data.Repsitories
             {
                 query = query.Where(x => DbFunctions.TruncateTime(x.LastMileDate) <= LastMileToDate && DbFunctions.TruncateTime(x.LastMileDate) >= lastMileFromDate);
             }
-            if (courierHawb != "" && courierHawb != "null" && courierHawb != "undefined")
+            if (mawb != "" && mawb != "null" && mawb != "undefined")
 
             {
-                query = query.Where(x => x.Mawb == courierHawb);
+                query = query.Where(x => x.Mawb == mawb);
             }
             if (airline != "" && airline != "null" && airline != "undefined")
             {
