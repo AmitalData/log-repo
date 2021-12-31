@@ -14164,7 +14164,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                        (shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? "Containers" : "Packages")) :
                                                        (shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? "Containers" : "Packages"))
                                                        :
-                                                       null)
+                                                       shipment.BookingNumberOfPackages == null ? null :
+                                                       shipment.BookingNumberOfPackages.ToString() + " Packages")
                                                    };
 
             return shipmentsOrderPackageFieldsQuery.ToList();
