@@ -45,7 +45,7 @@ export function FillWarehouseStoragePricing(warehousePricingList: WarehouseStora
     AddPricingDefaults(warehousePricingList);
 }
 function DeletePricingDefaults() {
-    for (let i = 0; i < BaseSelectors.DeleteButton.length; i++) {
+    for (let i = 0; i < 2; i++) {
         cy.get(BaseSelectors.DeleteButton).first().click();
         cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, BaseSelectors.ContainYes)
     }
@@ -143,6 +143,23 @@ function GetMonth(monthNum: string) {
     }
 }
 
+function GetMonthNumber(monthName: string) {
+    switch (monthName) {
+        case "Jan": return "01";
+        case "Feb": return "02";
+        case "Mar": return "03";
+        case "Apr": return "04";
+        case "May": return "05";
+        case "Jun": return "06";
+        case "Jul": return "07";
+        case "Aug": return "08";
+        case "Sep": return "09";
+        case "Oct": return "10";
+        case "Nov": return "11";
+        case "Dec": return "12";
+    }
+}
+
 export function AssertDateOneOf(daySelector: string) {
     cy.get(daySelector).then(($day) => {
         const day = $day.text()
@@ -173,11 +190,18 @@ export function SubstractDaysFromDate(Days: number) {
 }
 
 export function AddDaysToTodayDate(days: number) {
-    var todayDate = new Date().toLocaleDateString("en-US", { timeZone: "Asia/Jerusalem" })
-    var todayDateList = todayDate.split("/")
+    var date = new Date();
+    date.setDate(date.getDate() + days);
+    cy.log(date.toDateString())
+    return FormateTheDateString(date.toDateString().split(" "))
+}
 
-    todayDateList[1] = (Number(todayDateList[1]) + days).toString();
-    return FormateTheDateString(todayDateList)
+function FormateTheDateString(dateList: string[]) {
+    var dd = dateList[2];
+    var mm = GetMonthNumber(dateList[1])
+    var yyyy = dateList[3];
+    var DateFormat = dd + '/' + mm + '/' + yyyy;
+    return DateFormat;
 }
 
 export function GetDatepicker(dateString: string): Datepicker {
@@ -244,23 +268,6 @@ function NavigateToAccountTab(ExternalIDName: string, AccountingSelector: string
         cy.DefineRequestWait(RestAPI.GET, AccountingURLs.EntityResourceAccountingPeriod, RequestAliases.EntityResourceAccountingPeriod)
         BaseAssertion.AssertStatusCode(RequestAliases.EntityResourceAccountingPeriod, 200)
     }
-}
-
-function FormateTheDateString(dateList: string[]) {
-    var DateFormat
-    var dd = dateList[1].toString();
-    var mm = dateList[0].toString();
-    var yyyy = dateList[2].toString();
-
-    if (Number(dd) < 10) {
-        dd = "0" + dd;
-    }
-    if (Number(mm) < 10) {
-        mm = "0" + mm;
-    }
-
-    DateFormat = dd + '/' + mm + '/' + yyyy;
-    return DateFormat;
 }
 
 function FormateTheDate(date: Date) {

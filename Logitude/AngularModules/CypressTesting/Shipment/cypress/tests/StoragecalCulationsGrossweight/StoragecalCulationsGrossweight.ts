@@ -41,7 +41,6 @@ Given("{string} weight details as following", (transportMode, dataTable) => {
 Given("pricing defaults lines as following", (dataTable) => {
     let warehousePricingList = Assists.CreateSet<WarehouseStorage>(dataTable);
     BaseActions.FillWarehouseStoragePricing(warehousePricingList)
-
 });
 
 When("update warehouse", () => {

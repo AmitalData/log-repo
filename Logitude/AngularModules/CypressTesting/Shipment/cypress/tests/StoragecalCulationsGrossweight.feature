@@ -9,7 +9,7 @@ Feature: Storage Calculations Gross Weight without Rounding
         Given the user logged in and navigate to warehouse workspace
         And open warehouse with "Testwarehouse" warehouse
         And fill with the following storage details for "CFS" Type
-            | Currency        | USD |
+            | Currency        | NIS |
             | StorageFreeDays | 2   |
         And "Air" weight details as following
             | Measurement | Gross Weight |
