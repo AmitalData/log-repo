@@ -184,7 +184,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
     public set SelectedValue(newValue: any) {
         if (this.selectedValue != newValue) {
-            if (this.ShowInActivePopUpWindow && this.SelectedItem.InActive) {
+            if (this.ShowInActivePopUpWindow && this.SelectedItem?.InActive) {
                 this.ShowInactivePopUpConfirmWindow(newValue);
             }
             else {
@@ -205,18 +205,49 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.SetSelectedValue(newValue);
-                this.SetSelectedItemActiveField();
+                this.SetSelectedItemInActiveField();
             }
             else if (confirmWindow.No) {
-                this.SearchTextNgModel = null;
-                this.OldSearchInput = null;
-                this.DisplayValue = null;
-                this.SelectedItem = null;
-                this.SelectedItemObject = null;
-                this.SelectedItemChanged.emit(this.SelectedItem);
-                this.SetSelectedValue(null);
+                this.ResetSelectedValueInput();
             }
         });
+    }
+   
+    SetSelectedItemInActiveField() {
+        this.UpdateSelectedEntity(this.SelectedItem?.Id);
+    }
+
+    UpdateSelectedEntity(id:string) {
+        var tablename = this.GetTableName();
+        this.entityPMService.getSingle(tablename, id).then((response: any) => {
+            response.subscribe((myResponse: any) => {
+                var entity = myResponse.Result;
+                entity["InActive"] = false;
+                this.entityPMService.update(tablename, entity).then((res: any) => {
+                    res.subscribe((response: any) => {
+                        CachedDataManager.RefreshTableData(tablename, true);
+                    });
+                });
+            });
+        });
+    }
+
+    GetTableName(): string  {
+        var tablename = this.GetObjectTableName(this.LookUpTableName);
+        if (this.SelectedItem?.PartnerTypeId == "SL") {
+            tablename = "ShippingLine";
+        }
+        return tablename;
+    }
+
+    ResetSelectedValueInput() {
+        this.SearchTextNgModel = null;
+        this.OldSearchInput = null;
+        this.DisplayValue = null;
+        this.SelectedItem = null;
+        this.SelectedItemObject = null;
+        this.SelectedItemChanged.emit(this.SelectedItem);
+        this.SetSelectedValue(null);
     }
 
     SetSelectedValue(newValue: any) {
@@ -240,21 +271,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         }
 
         this.isSelectedFromList = false;
-    }
-
-    SetSelectedItemActiveField() {
-        var tablename = this.GetObjectTableName(this.LookUpTableName);
-        this.entityPMService.getSingle(tablename, this.SelectedItem.Id).then((response: any) => {
-            response.subscribe((myResponse: any) => {
-                var entity = myResponse.Result;
-                entity["InActive"] = false;
-                this.entityPMService.update(tablename, entity).then((res: any) => {
-                    res.subscribe((response: any) => {
-                        CachedDataManager.RefreshTableData(tablename, true);
-                    });
-                });
-            });
-        });
     }
 
     @Input() RunToggleMode: boolean;
@@ -2040,10 +2056,9 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     OnAllDataSelect(item: any) {
-
+        this.tenantZeroSelectedEntityId = item.Id;
+        this.tenantZeroSelectedEntityTenant = item.Tenant;
         this.CopySelectedItem(item.Id)
-
-
     }
 
     OnDropDownMouseOver() {
@@ -2204,7 +2219,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         logitudeWindow.WindowClosed.subscribe(($event: any) => this.OnSearchWindowClosed($event));
 
     }
-
+    private tenantZeroSelectedEntityTenant = null;
+    private tenantZeroSelectedEntityId = null;
     OnSearchWindowClosed(args: any) {
         if (args && args != 'event') {  // No value returned
             // Get Selected value
