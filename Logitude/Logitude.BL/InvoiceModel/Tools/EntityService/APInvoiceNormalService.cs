@@ -1232,6 +1232,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     if (myPayable.ShipmentPayableAmountTypeCode == "NEXP")
                     {
                         List<ShipmentPayable> ChildPayables = shipmentPayableRepository.GetChildPayablesByParentPayable(myPayable.Id, tenant);
+                        List<string> payablesId = ChildPayables.Select(s => s.Id).ToList();
                         foreach (ShipmentPayable myChild in ChildPayables)
                         {
                             shipmentPayableRepository.Remove(myChild);
@@ -1239,6 +1240,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         shipmentPayableRepository.Remove(myPayable);
                         allPayables.Remove(myPayable);
+
+                        List<PayableProratedAmount> payableProratedAmounts = payableProratedAmountRepository.GetPayableProratedAmountsByPayablesIds(payablesId, tenant);
+                        foreach (PayableProratedAmount item in payableProratedAmounts)
+                        {
+                            payableProratedAmountRepository.Remove(item);
+                        }
                     }
 
                     else
@@ -1262,6 +1269,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         shipmentPayableRepository.Update(myPayable);
                     }
 
+                    payableProratedAmountRepository.SubmitChanges();
                     shipmentPayableRepository.SubmitChanges();
                 }
             }

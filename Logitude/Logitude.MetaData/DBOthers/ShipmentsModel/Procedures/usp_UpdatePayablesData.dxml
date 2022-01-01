@@ -25,6 +25,7 @@ BEGIN
 	(
 		Id int,
 		PayableId varchar(15),
+		InvoiceId varchar(15),
 		LocalAmount float,
 		ProfitAmount float
 	)
@@ -210,6 +211,7 @@ BEGIN
 			declare @ProrateAmountInLocalCurrency as float
 			declare @ProrateAmountInProfitCurrency as float
 			declare @NewProrateId as varchar(15)
+			declare @ProrateInvoiceId as varchar(15)
 			declare @LocalForeignAmount as float
 			declare @ProfitForeignAmount as float
 			declare @PayableProrateAmountInLocal as float
@@ -220,9 +222,9 @@ BEGIN
 		if(@InvoiceId_PARAM is not null and @InvoiceId_PARAM != 'no invoice')
 		BEGIN
 			insert into @InvoiceLinesTable
-			SELECT LineNumber, EntityPayableId, LocalCurrencyAmount, ProfitCurrencyAmount
+			SELECT LineNumber, EntityPayableId, APInvoiceId, LocalCurrencyAmount, ProfitCurrencyAmount
 			From APInvoiceLines
-			Where Tenant = @Tenant and APInvoiceId = @InvoiceId_PARAM
+			Where Tenant = @Tenant and EntityId = @MasterId
 		END
 
 		-- Loop Master Payables (1: Not PRFR)
@@ -235,7 +237,7 @@ BEGIN
 			OPEN MasterPayables1Cursor FETCH NEXT FROM MasterPayables1Cursor INTO @MasterPayableId, @MasterPayableQuantity, @MasterPayableUnitPrice, @MasterPayableVendorId, @MasterPayableChargesTypeId, @MasterPayableMeasurementId, @MasterPayablePrepaidCollectId, @MasterPayableDueTypeCode, @MasterPayableAWBPrint, @MasterPayableCurrencyId, @MasterPayableRate, @MasterPayableProfitRate, @MasterPayableLineStatusCode, @MasterPayableAmountTypeCode, @MasterPayableCreatedByUserId, @MasterPayableUpdatedByUserId, @MasterPayableCreateDate, @MasterPayableUpdateDate, @MasterPayableValueDate, @MasterPayableOpenAmount, @MasterPayableAccountedAmount, @MasterPayableExpectedAmount, @MasterPayableIATACodeId, @MasterPayableVatLocalAmount, @MasterPayableVatProfitAmount
 			WHILE @@FETCH_STATUS = 0
 			BEGIN
-
+				
 				-- Loop Houses
 				BEGIN
 					DECLARE Houses1Cursor CURSOR READ_ONLY
@@ -644,11 +646,19 @@ BEGIN
 								END
 
 								-- Create Prorate Record
-								if exists (select * from @InvoiceLinesTable where PayableId = @MasterPayableId)
-								begin
-									select @LocalForeignAmount = LocalAmount, @ProfitForeignAmount = ProfitAmount from @InvoiceLinesTable where PayableId = @MasterPayableId
-																		
-									if (@MasterPayableAmountTypeCode = 'NEXP')
+								BEGIN
+								DECLARE ProrateCursor CURSOR READ_ONLY
+								FOR
+								SELECT LocalAmount, ProfitAmount, InvoiceId
+								FROM @InvoiceLinesTable		
+								WHERE PayableId = @MasterPayableId
+								OPEN ProrateCursor FETCH NEXT FROM ProrateCursor INTO @LocalForeignAmount, @ProfitForeignAmount, @ProrateInvoiceId
+								WHILE @@FETCH_STATUS = 0
+								BEGIN
+
+								if not exists (select Id from PayableProratedAmounts where PayableId = @HousePayableId and InvoiceId = @ProrateInvoiceId)
+								begin           
+									 if (@MasterPayableAmountTypeCode = 'NEXP')
 									BEGIN
 										set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @AllHousesCount	
 										set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @AllHousesCount	
@@ -801,12 +811,18 @@ BEGIN
 									@Tenant,
 									@HouseId,
 									@HousePayableId,
-									@InvoiceId_PARAM,
+									@ProrateInvoiceId,
 									@ProrateAmountInLocalCurrency,
 									@ProrateAmountInProfitCurrency
-									)
+									)                         
+								end 
+								
+								FETCH NEXT FROM ProrateCursor INTO @LocalForeignAmount, @ProfitForeignAmount, @ProrateInvoiceId
 
-								end
+								END				
+								CLOSE ProrateCursor
+								DEALLOCATE ProrateCursor
+								END
 
 								-- Update Payable
 								BEGIN
@@ -1092,10 +1108,17 @@ BEGIN
 								END
 
 								-- Create Prorate Record
-								if exists (select * from @InvoiceLinesTable where PayableId = @MasterPayableId)
+								BEGIN
+								DECLARE ProrateCursor CURSOR READ_ONLY
+								FOR
+								SELECT LocalAmount, ProfitAmount, InvoiceId
+								FROM @InvoiceLinesTable		
+								WHERE PayableId = @MasterPayableId
+								OPEN ProrateCursor FETCH NEXT FROM ProrateCursor INTO @LocalForeignAmount, @ProfitForeignAmount, @ProrateInvoiceId
+								WHILE @@FETCH_STATUS = 0
+								BEGIN
+									if not exists (select Id from PayableProratedAmounts where PayableId = @HousePayableId and InvoiceId = @ProrateInvoiceId)
 								begin
-									select @LocalForeignAmount = LocalAmount, @ProfitForeignAmount = ProfitAmount from @InvoiceLinesTable where PayableId = @MasterPayableId
-									
 									if (@MasterPayableAmountTypeCode = 'NEXP')
 									BEGIN
 										set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @AllHousesCount
@@ -1130,12 +1153,17 @@ BEGIN
 									@Tenant,
 									@HouseId,
 									@HousePayableId,
-									@InvoiceId_PARAM,
+									@ProrateInvoiceId,
 									@ProrateAmountInLocalCurrency,
 									@ProrateAmountInProfitCurrency
 									)
-
 								end
+
+								FETCH NEXT FROM ProrateCursor INTO @LocalForeignAmount, @ProfitForeignAmount, @ProrateInvoiceId
+								END				
+								CLOSE ProrateCursor
+								DEALLOCATE ProrateCursor
+								END
 
 								-- Update Payable
 								BEGIN
@@ -1203,6 +1231,7 @@ BEGIN
 		OPEN MasterPayables3Cursor FETCH NEXT FROM MasterPayables3Cursor INTO @MasterPayableId, @MasterPayableQuantity, @MasterPayableUnitPrice, @MasterPayableVendorId, @MasterPayableChargesTypeId, @MasterPayableMeasurementId, @MasterPayablePrepaidCollectId, @MasterPayableDueTypeCode, @MasterPayableAWBPrint, @MasterPayableCurrencyId, @MasterPayableRate, @MasterPayableProfitRate, @MasterPayableLineStatusCode, @MasterPayableAmountTypeCode, @MasterPayableCreatedByUserId, @MasterPayableUpdatedByUserId, @MasterPayableCreateDate, @MasterPayableUpdateDate, @MasterPayableValueDate, @MasterPayableOpenAmount, @MasterPayableAccountedAmount, @MasterPayableExpectedAmount, @MasterPayableIATACodeId, @MasterPayableVatLocalAmount, @MasterPayableVatProfitAmount
 		WHILE @@FETCH_STATUS = 0
 		BEGIN
+
 			-- Loop Houses
 			BEGIN
 				DECLARE Houses3Cursor CURSOR READ_ONLY
@@ -1408,10 +1437,17 @@ BEGIN
 							END
 
 							-- Create Prorate Record
-								if exists (select * from @InvoiceLinesTable where PayableId = @MasterPayableId)
+							BEGIN
+								DECLARE ProrateCursor CURSOR READ_ONLY
+								FOR
+								SELECT LocalAmount, ProfitAmount, InvoiceId
+								FROM @InvoiceLinesTable		
+								WHERE PayableId = @MasterPayableId
+								OPEN ProrateCursor FETCH NEXT FROM ProrateCursor INTO @LocalForeignAmount, @ProfitForeignAmount, @ProrateInvoiceId
+								WHILE @@FETCH_STATUS = 0
+								BEGIN
+									if not exists (select Id from PayableProratedAmounts where PayableId = @HousePayableId and InvoiceId = @ProrateInvoiceId)
 								begin
-									select @LocalForeignAmount = LocalAmount, @ProfitForeignAmount = ProfitAmount from @InvoiceLinesTable where PayableId = @MasterPayableId
-									
 									if (@MasterPayableAmountTypeCode = 'NEXP')
 									BEGIN
 										set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @AllHousesCount
@@ -1446,15 +1482,19 @@ BEGIN
 									@Tenant,
 									@HouseId,
 									@HousePayableId,
-									@InvoiceId_PARAM,
+									@ProrateInvoiceId,
 									@ProrateAmountInLocalCurrency,
 									@ProrateAmountInProfitCurrency
 									)
+									end
+								FETCH NEXT FROM ProrateCursor INTO @LocalForeignAmount, @ProfitForeignAmount, @ProrateInvoiceId
+								END				
+								CLOSE ProrateCursor
+								DEALLOCATE ProrateCursor
+								END
 
-								end
-
-							-- Update Payable
-							BEGIN
+								-- Update Payable
+								BEGIN
 								set @PayableProrateAmountInLocal = (select sum(isnull(ProratedAmountInLocalCurrency,0)) from PayableProratedAmounts where PayableId = @HousePayableId and Tenant = @Tenant)			
 								set @PayableProrateAmountInProfit = (select sum(isnull(ProratedAmountInProfitCurrency,0)) from PayableProratedAmounts where PayableId = @HousePayableId and Tenant = @Tenant)			
 

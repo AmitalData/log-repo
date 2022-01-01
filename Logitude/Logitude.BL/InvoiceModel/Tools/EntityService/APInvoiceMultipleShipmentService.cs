@@ -51,6 +51,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private APInvoicePaymentRepository invoicePaymentRepository;
         private APPaymentRepository paymentRepository;
         private ShipmentPayableRepository shipmentPayableRepository;
+        private PayableProratedAmountRepository payableProratedAmountRepository;
         private string QBOAPPaymentId;
         private bool IsTransferEnabled;
         private bool CanTransferToFTP;
@@ -69,6 +70,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.invoicePaymentRepository = new APInvoicePaymentRepository(objectContext);
             this.paymentRepository = new APPaymentRepository(objectContext);
             this.shipmentPayableRepository = new ShipmentPayableRepository(tenant);
+            this.payableProratedAmountRepository = new PayableProratedAmountRepository(tenant);
 
             this.GetLoggedContact();
             this.GetAccountingSystemData();
@@ -872,14 +874,20 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (payable.ShipmentPayableAmountTypeCode == "NEXP")
                 {
                     List<ShipmentPayable> childPayables = shipmentPayableRepository.GetChildPayablesByParentPayable(payable.Id, tenant);
-
+                    List<string> payablesId = childPayables.Select(s => s.Id).ToList();
                     foreach (ShipmentPayable insideItem in childPayables)
                     {
                         shipmentPayableRepository.Remove(insideItem);
                     }
 
                     allPayables.Remove(payable);
-                    shipmentPayableRepository.Remove(payable);                    
+                    shipmentPayableRepository.Remove(payable);
+
+                    List<PayableProratedAmount> payableProratedAmounts = payableProratedAmountRepository.GetPayableProratedAmountsByPayablesIds(payablesId, tenant);
+                    foreach (PayableProratedAmount item in payableProratedAmounts)
+                    {
+                        payableProratedAmountRepository.Remove(item);
+                    }
                 }
 
                 else
@@ -902,6 +910,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     shipmentPayableRepository.Update(payable);
                 }
 
+                payableProratedAmountRepository.SubmitChanges();
                 shipmentPayableRepository.SubmitChanges();
             }
         }
