@@ -13,6 +13,8 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentSearchParent = 'searchbox';
   public static readonly ShipmentSearchParentClass = '.SearchBox';
   public static readonly ShipmentEventNote = '#EventNotes';
+
+ 
   //public static readonly InvoiceMoreList = '#MenuButtons_1';
   public static readonly ConfirmWindowYes = '#ConfirmWindow_Yes_0';
   public static readonly SaveClose = '#SaveClose';
@@ -37,6 +39,23 @@ export class ShipmentSelectors extends RegexSelectors {
  
   
   //#endregion
+  //#region Menu button in  shipment
+  public static readonly ShipmentBExceptionResolved = "[id^='ShipmentBExceptionResolved']";
+  public static readonly ShipmentBConvertToCustomFile = "[id^='ShipmentBConvertToCustomFile']";
+  public static readonly ShipmentBOperationalClose = "[id^='ShipmentBOperationalClose']";
+  public static readonly ShipmentBAccountingClose = "[id^='ShipmentBAccountingClose']";
+  public static readonly ShipmentBSendResponse = "[id^='ShipmentBSendResponse']";
+  public static readonly ShipmentBCancelShipment = "[id^='ShipmentBCancelShipment']";
+  public static readonly ShipmentBOperationalReopen = "[id^='ShipmentBOperationalReopen']";
+  public static readonly ShipmentBAccountedReopen = "[id^='ShipmentBAccountedReopen']";
+  public static readonly ShipmentBConvertShipmentFromHouseToDirect = "[id^='ShipmentBConvertShipmentFromHouseToDirect']";
+  public static readonly ShipmentBConvertShipmentFromDirectToHouse = "[id^='ShipmentBConvertShipmentFromDirectToHouse']";
+  public static readonly ShipmentBConverttoLTL = "[id^='ShipmentBConverttoLTL']";
+  public static readonly ShipmentBConvertShipmentDirection = "[id^='ShipmentBConvertShipmentDirection']";
+  public static readonly ShipmentBCopyShipment = "[id^='ShipmentBCopyShipment']";
+  public static readonly ShipmentBReactivateShipment = "[id^='ShipmentBReactivateShipment']";
+  public static readonly ShipmentBSplitShipment = "[id^='ShipmentBSplitShipment']";
+//#endregion
 
   //#region Create shipment
   public static readonly NewShipmentToggleButton = '#NEWSHIP .LogitudeToggleButtonContainer';
@@ -78,6 +97,7 @@ export class ShipmentSelectors extends RegexSelectors {
   //#endregion
 
   //#region Shipment tab
+
   public static readonly ShipmentCustomer = '#Shipment_CustomerId';
   public static readonly ShipmentIncludePickUp = '#Shipment_IncludePickUp';
   public static readonly ShipmentIncludeDelivery = '#Shipment_IncludeDelivery';
@@ -181,9 +201,13 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PickUpDeliveryATDDate = '#date_ShipmentPickUpDelivery_ATD';
   public static readonly PickUpDeliveryETADate = '#date_ShipmentPickUpDelivery_ETA';
   public static readonly PickUpDeliveryATADate = '#date_ShipmentPickUpDelivery_ATA';
+  public static readonly PickUpDeliveryETATime = '#time_ShipmentPickUpDelivery_ETA';
+  public static readonly PickUpDeliveryATATime = '#time_ShipmentPickUpDelivery_ATA';
   public static readonly PickUpDeliverynote = '#ShipmentPickUpDelivery_Notes';
   public static readonly ShipmentRatio = '#Shipment_Ratio';
   public static readonly ShipmentGrossWeightUnitCode = '#Shipment_GrossWeightUnitCode';
+  public static readonly ValidationSummary = '.LeftCenter';
+  
 
   //#endregion
 
@@ -409,6 +433,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly RedButton = ".RedButton:last"
   //#endregion
   //#region Delivery Leg standalone
+  public static readonly SavePickupDelivery = "#SaveBtn"
   public static readonly EditDelivery = "#Edit-Delivery"
   public static readonly EditPickUp = "#Edit-PickUp"
   public static readonly DeliveryToPartnerName = "#ShipmentPickUpDelivery_ToPartnerCardId"
@@ -419,10 +444,24 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly DeliveryFromPartnerName = "#ShipmentPickUpDelivery_FromPartnerCardId"
   public static readonly DeliveryFromCountryName = "#ShipmentPickUpDelivery_FromAddressCountryId"
   public static readonly DeliveryFromCityName = "#ShipmentPickUpDelivery_FromAddressCity"
-  
-  //#endregion
+  public static readonly DeliveryToCountryName = "#ShipmentPickUpDelivery_ToAddressCountryId"
+  public static readonly DeliveryToCityName = "#ShipmentPickUpDelivery_ToAddressCity"
+  public static readonly CreateButtonStandalone = "#ShipmentCreatebtn"
+  public static readonly ShipmentPickUpDeliveryCarrier = "#ShipmentPickUpDelivery_CarrierId"
+  public static readonly ShipmentPickUpDeliveryCarrierNumber = "#ShipmentPickUpDelivery_CarrierNumber"
+  public static readonly ShipmentPickUpDeliveryDriver = "#ShipmentPickUpDelivery_Driver"
+  public static readonly ShipmentPickUpDeliveryTruckNumber = "#ShipmentPickUpDelivery_TruckNumber"
+  public static readonly ShipmentPickUpDeliveryTrailerNumber = "#ShipmentPickUpDelivery_TrailerNumber"
+  public static readonly ShipmentPickUpDeliveryByRail = "#ByRail_ModeRadio"
+  public static readonly ShipmentPickUpDeliveryByTruck = "#ByTruck_ModeRadio"
+  public static readonly ShipmentPickUpDeliveryNotes= "#textboxdiv_ShipmentPickUpDelivery_Notes"
+  public static readonly ShipmentPickUpDeliveryEmptyDeliveryContainer= "#ShipmentPickUpDelivery_EmptyDeliveryContainerPartnerId"
+  public static readonly ShipmentPickUpDeliveryEmptyDeliveryDepotReference= "#ShipmentPickUpDelivery_EmptyDeliveryDepotReference"
+  public static readonly StandaloneShipmentHyperlink=".HyperlinkButtonControl"
   public static readonly ComponentBusyIndicator = "div[id^='EditComponentBusyIndicator']:last";
-
+  public static readonly FullResponsibilityCheckBox = "#CheckBox_0_8_LBL"
+  
+//#endregion
   //#region Shipment view
   public static readonly ShipmentList = "#Shipments-O-Q";
   public static readonly ShipmentViewQueryList = "#QueryList_0_0";

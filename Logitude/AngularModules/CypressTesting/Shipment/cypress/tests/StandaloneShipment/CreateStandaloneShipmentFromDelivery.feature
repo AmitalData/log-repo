@@ -43,22 +43,24 @@ Feature: Create standalone shipment from Delivery
 
     Scenario: Create standalone shipment when the Delivery is FullResponsibility and "To/From" are partners with different countries
         Given the user in the shipment's  routings tab
-        And add a Delivery leg with the following details
-            | From     | Partner           |
-            | FromName | TestShipperExport |
-            | To       | Partner           |
-            | ToName   | TestCompany       |
+        And add a new Delivery leg with the following details
+            | FullResponsibility | True                      |
+            | From               | Partner                   |
+            | FromPartner        | Israeli Tenant            |
+            | To                 | Partner                   |
+            | ToPartner          | ALS CUSTOMS SERVICES GMBH |
         And save the Delivery
-        When create standalone shipment
-        Then a validation should disply that Both Addresses must be in the same country since the direction is Domestic
+        When click create Standalone Shipment
+        Then a validation message with "Both Addresses must be in the same country since the direction is Domestic" error should appear
+
 
     Scenario: Create standalone shipment when the Delivery is FullResponsibility and "To/From" are partners with same countries
-        Given the user in the shipment's routings tab
-        And add a Delivery leg with the following details
-            | From     | Partner           |
-            | FromName | TestShipperExport |
-            | To       | Partner           |
-            | ToName   | TestShipperExport |
+        Given the user in the shipment's  routings tab
+        And add a new Delivery leg with the following details
+            | From        | Partner        |
+            | FromPartner | Israeli Tenant |
+            | To          | Partner        |
+            | ToPartner   | Israeli Tenant |
         And save the Delivery
         When create standalone shipment
         Then a domestic inland shipment should create
@@ -68,44 +70,44 @@ Feature: Create standalone shipment from Delivery
         And the link of standalon should display
 
     Scenario: Create standalone shipment when the Delivery is not FullResponsibility and "To/From" are partners with same countries
-        Given the user in the shipment's routings tab
+        Given the user in the shipment's  routings tab
         And add a new Delivery leg with the following details
-            | From     | Partner           |
-            | FromName | TestShipperExport |
-            | To       | Partner           |
-            | ToName   | TestShipperExport |
+            | From        | Partner        |
+            | FromPartner | Israeli Tenant |
+            | To          | Partner        |
+            | ToPartner   | Israeli Tenant |
+        And unchecked the FullResponsibility
         When save the Delivery
-        Then the shipment should update successfully
-        And the "Create Standalone Shipment" is dim
+        Then the Create Standalone Shipment button Should be dim
 
 
 
     Scenario: Create standalone shipment when the Delivery is FullResponsibility and from Partner to Casual Address with same countries
-        Given the user in the shipment's routong tab
+        Given the user in the shipment's  routings tab
         And  add a new Delivery leg with the following details
-            | From     | Partner            |
-            | FromName | khalid             |
-            | To       | CasualAddress     |
-            | Country  | State Of Palestine |
-            | City     | Ramallah           |
+            | From        | Partner            |
+            | FromPartner | Testagent          |
+            | To          | CasualAddress      |
+            | ToCountry   | State Of Palestine |
+            | ToCity      | Ramallah           |
         And save the Delivery
         When create standalone shipment
         Then a domestic inland shipment should create
         And the cancel ,operational close Shipment,convert to custom file and Send Response action in more button shouldn't be dim
         And all other actions should be dim
         And all fields should be dim in Delivery window
-        And the link of standalon should Delivery
+        And the link of standalon should display
 
 
 
     Scenario: Create standalone shipment when the Delivery is FullResponsibility and from port to port with same countries
-        Given the user in the shipment's routong tab
+        Given the user in the shipment's  routings tab
         And add a new Delivery leg with the following details
             | From     | Port                   |
-            | FromName | Brandscheid/Westerwald |
+            | FromPort | Brandscheid/Westerwald |
             | To       | Port                   |
-            | ToName   | Brandshagen            |
-        And save the pickup
+            | ToPort   | Brandshagen            |
+        And save the Delivery
         When create standalone shipment
         Then a domestic inland shipment should create
         And the cancel ,operational close Shipment,convert to custom file and Send Response action in more button shouldn't be dim
@@ -117,10 +119,10 @@ Feature: Create standalone shipment from Delivery
     Scenario: Create standalone shipment when the Delivery is FullResponsibility and from Casual Address to Casual Address with same countries
         Given the user in the shipment's routong tab
         And add a new Delivery leg with the following details
-            | From    | CasualAddress     |
+            | From    | CasualAddress      |
             | Country | State Of Palestine |
             | City    | Ramallah           |
-            | To      | CasualAddress     |
+            | To      | CasualAddress      |
             | Country | State Of Palestine |
             | City    | Bethlehem          |
         And save the Delivery
@@ -136,7 +138,7 @@ Feature: Create standalone shipment from Delivery
     Scenario: Create standalone shipment when the Delivery is FullResponsibility and from Casual Address to port with same countries
         Given the user in the shipment's routong tab
         And add a new Delivery leg with the following details
-            | From    | CasualAddress     |
+            | From    | CasualAddress      |
             | Country | State Of Palestine |
             | City    | Ramallah           |
             | To      | Port               |
