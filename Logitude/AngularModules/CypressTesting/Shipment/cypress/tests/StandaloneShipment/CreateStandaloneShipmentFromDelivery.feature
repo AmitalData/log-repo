@@ -117,14 +117,14 @@ Feature: Create standalone shipment from Delivery
 
 
     Scenario: Create standalone shipment when the Delivery is FullResponsibility and from Casual Address to Casual Address with same countries
-        Given the user in the shipment's routong tab
+        Given  the user in the shipment's  routings tab
         And add a new Delivery leg with the following details
-            | From    | CasualAddress      |
-            | Country | State Of Palestine |
-            | City    | Ramallah           |
-            | To      | CasualAddress      |
-            | Country | State Of Palestine |
-            | City    | Bethlehem          |
+            | From        | CasualAddress      |
+            | FromCountry | State Of Palestine |
+            | FromCity    | Ramallah           |
+            | To          | CasualAddress      |
+            | ToCountry   | State Of Palestine |
+            | ToCity      | Bethlehem          |
         And save the Delivery
         When create standalone shipment
         Then a domestic inland shipment should create
@@ -136,13 +136,13 @@ Feature: Create standalone shipment from Delivery
 
 
     Scenario: Create standalone shipment when the Delivery is FullResponsibility and from Casual Address to port with same countries
-        Given the user in the shipment's routong tab
+        Given the user in the shipment's  routings tab
         And add a new Delivery leg with the following details
-            | From    | CasualAddress      |
-            | Country | State Of Palestine |
-            | City    | Ramallah           |
-            | To      | Port               |
-            | ToName  | Palestina          |
+            | From        | CasualAddress      |
+            | FromCountry | State Of Palestine |
+            | FromCity    | Ramallah           |
+            | To          | Port               |
+            | ToPort      | Palestina          |
         And save the Delivery
         When create standalone shipment
         Then a domestic inland shipment should create

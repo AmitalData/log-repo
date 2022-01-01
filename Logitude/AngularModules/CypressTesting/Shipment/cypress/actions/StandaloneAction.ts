@@ -32,7 +32,7 @@ export function FillFromPickupDelivary(delivaryDeteails:DelivaryDeteails) {
     }
     else{
         cy.FillLogLov(ShipmentSelectors.DeliveryFromCountryName,delivaryDeteails.FromCountry , true)
-        cy.FillLogTextBox(ShipmentSelectors.DeliveryFromCityName,delivaryDeteails.FromCity,false)
+        cy.FillLogTextBox(ShipmentSelectors.DeliveryFromCityName,delivaryDeteails.FromCity)
     }
 
      
@@ -48,7 +48,7 @@ export function FillFromPickupDelivary(delivaryDeteails:DelivaryDeteails) {
   }
   else{
       cy.FillLogLov(ShipmentSelectors.DeliveryToCountryName,delivaryDeteails.ToCountry , true)
-      cy.FillLogTextBox(ShipmentSelectors.DeliveryToCityName,delivaryDeteails.ToCity,false )
+      cy.FillLogTextBox(ShipmentSelectors.DeliveryToCityName,delivaryDeteails.ToCity )
   }
    
 }
