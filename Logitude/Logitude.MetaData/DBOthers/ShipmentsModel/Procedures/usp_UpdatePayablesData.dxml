@@ -5,9 +5,9 @@
   Schema="dbo"
   Module="Shipment">
   <SqlScript>
-   <![CDATA[
-			
-
+    <![CDATA[
+    
+    
 
 
 Create PROCEDURE [dbo].[usp_UpdatePayablesData]
@@ -25,8 +25,8 @@ BEGIN
 	(
 		Id int,
 		PayableId varchar(15),
-		Amount float,
-		Rate float
+		LocalAmount float,
+		ProfitAmount float
 	)
 
 	declare @Tenant as int
@@ -207,12 +207,11 @@ BEGIN
 
 		-- House Payable Prorate Variables
 		BEGIN
-			declare @ProrateAmount as float
 			declare @ProrateAmountInLocalCurrency as float
 			declare @ProrateAmountInProfitCurrency as float
 			declare @NewProrateId as varchar(15)
-			declare @foreignAmount as float
-			declare @foreignRate as float
+			declare @LocalForeignAmount as float
+			declare @ProfitForeignAmount as float
 			declare @PayableProrateAmountInLocal as float
 			declare @PayableProrateAmountInProfit as float
 		END
@@ -221,7 +220,7 @@ BEGIN
 		if(@InvoiceId_PARAM is not null and @InvoiceId_PARAM != 'no invoice')
 		BEGIN
 			insert into @InvoiceLinesTable
-			SELECT LineNumber, EntityPayableId, ForiegnCurrencyAmount, ForiegnExchangeRate
+			SELECT LineNumber, EntityPayableId, LocalCurrencyAmount, ProfitCurrencyAmount
 			From APInvoiceLines
 			Where Tenant = @Tenant and APInvoiceId = @InvoiceId_PARAM
 		END
@@ -411,7 +410,6 @@ BEGIN
 									set @OpenAmount = 0
 									set @OpenAmountInLocalCurrency = 0
 									set @OpenAmountInProfitCurrency = 0
-									set @ProrateAmount = 0
 									set @ProrateAmountInLocalCurrency = 0
 									set @ProrateAmountInProfitCurrency = 0
 								END
@@ -648,17 +646,19 @@ BEGIN
 								-- Create Prorate Record
 								if exists (select * from @InvoiceLinesTable where PayableId = @MasterPayableId)
 								begin
-									select @foreignAmount = Amount, @foreignRate = Rate from @InvoiceLinesTable where PayableId = @MasterPayableId
+									select @LocalForeignAmount = LocalAmount, @ProfitForeignAmount = ProfitAmount from @InvoiceLinesTable where PayableId = @MasterPayableId
 																		
 									if (@MasterPayableAmountTypeCode = 'NEXP')
 									BEGIN
-										set @ProrateAmount = @foreignAmount / @AllHousesCount								
+										set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @AllHousesCount	
+										set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @AllHousesCount	
 									END
 
 									-- Fixed
 									else if (@MasterPayableMeasurementId = @FIXD_Id)
 									BEGIN
-										set @ProrateAmount = @foreignAmount / @AllHousesCount
+										set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @AllHousesCount
+										set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @AllHousesCount
 									END
 
 									-- By TEU
@@ -666,7 +666,8 @@ BEGIN
 									BEGIN
 										if (@HouseTEU <> 0)
 										begin
-											set @ProrateAmount = @foreignAmount / @HouseTEU
+											set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @HouseTEU
+											set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @HouseTEU
 										end
 									END
 
@@ -675,7 +676,8 @@ BEGIN
 									BEGIN
 										if (@HouseVolume <> 0)
 										begin
-											set @ProrateAmount = @foreignAmount / @HouseVolume
+											set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @HouseVolume
+											set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @HouseVolume
 										end
 									END
 
@@ -684,7 +686,8 @@ BEGIN
 									BEGIN
 										if (@HouseGrossWeight <> 0)
 										begin
-											set @ProrateAmount = @foreignAmount / @HouseGrossWeight
+											set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @HouseGrossWeight
+											set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @HouseGrossWeight
 										end
 									END
 
@@ -693,7 +696,8 @@ BEGIN
 									BEGIN
 										if (@HouseChargeableWeight <> 0)
 										begin
-											set @ProrateAmount = @foreignAmount / @HouseChargeableWeight
+											set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @HouseChargeableWeight
+											set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @HouseChargeableWeight
 										end
 									END
 
@@ -702,7 +706,8 @@ BEGIN
 									BEGIN
 										if (@HouseGrossWeightPerTon <> 0)
 										begin
-											set @ProrateAmount = @foreignAmount / @HouseGrossWeightPerTon
+											set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @HouseGrossWeightPerTon
+											set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @HouseGrossWeightPerTon
 										end
 									END
                 
@@ -711,7 +716,8 @@ BEGIN
 									BEGIN
 										if (@HouseGrossWeightPerStorageDays <> 0)
 										begin
-											set @ProrateAmount = @foreignAmount / @HouseGrossWeightPerStorageDays
+											set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @HouseGrossWeightPerStorageDays
+											set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @HouseGrossWeightPerStorageDays
 										end
 									END
 
@@ -720,7 +726,8 @@ BEGIN
 									BEGIN
 										if (@HouseGrossWeightInKG <> 0)
 										begin
-											set @ProrateAmount = @foreignAmount / @HouseGrossWeightInKG
+											set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @HouseGrossWeightInKG
+											set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @HouseGrossWeightInKG
 										end
 									END
 
@@ -729,7 +736,8 @@ BEGIN
 									BEGIN
 										if (@HouseChargeableWeightInKG <> 0)
 										begin
-											set @ProrateAmount = @foreignAmount / @HouseChargeableWeightInKG
+											set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @HouseChargeableWeightInKG
+											set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @HouseChargeableWeightInKG
 										end
 									END
 
@@ -738,14 +746,16 @@ BEGIN
 									BEGIN
 										if (@HouseVolumeInCBM <> 0)
 										begin
-											set @ProrateAmount = @foreignAmount / @HouseVolumeInCBM
+											set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @HouseVolumeInCBM
+											set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @HouseVolumeInCBM
 										end
 									END
 
 									-- Percent of Value
 									else if (@MasterPayableMeasurementId = @PRVL_Id)
 									BEGIN
-										set @ProrateAmount = @foreignAmount / (@HouseValueOfGoods * @MasterPayableUnitPrice)
+										set @ProrateAmountInLocalCurrency = @LocalForeignAmount / (@HouseValueOfGoods * @MasterPayableUnitPrice)
+										set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / (@HouseValueOfGoods * @MasterPayableUnitPrice)
 									END
 
 									-- Quantity
@@ -755,7 +765,8 @@ BEGIN
 										begin
 											if (@HouseNumberOfPackages <> 0)
 											begin
-												set @ProrateAmount = @foreignAmount / @HouseNumberOfPackages
+												set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @HouseNumberOfPackages
+												set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @HouseNumberOfPackages
 											end
 										end
 
@@ -763,13 +774,11 @@ BEGIN
 										begin
 											if (@HouseNumberOfContainers <> 0)
 											begin
-												set @ProrateAmount = @foreignAmount / @HouseNumberOfContainers
+												set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @HouseNumberOfContainers
+												set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @HouseNumberOfContainers
 											end
 										end											
 									END
-
-									set @ProrateAmountInLocalCurrency = @ProrateAmount * @foreignRate												
-									set @ProrateAmountInProfitCurrency = @ProrateAmountInLocalCurrency / @MasterPayableProfitRate
 
 									SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
 									BEGIN TRAN T1;
@@ -1011,7 +1020,6 @@ BEGIN
 									set @OpenAmount = 0
 									set @OpenAmountInLocalCurrency = 0
 									set @OpenAmountInProfitCurrency = 0
-									set @ProrateAmount = 0
 									set @ProrateAmountInLocalCurrency = 0
 									set @ProrateAmountInProfitCurrency = 0
 								END
@@ -1086,21 +1094,20 @@ BEGIN
 								-- Create Prorate Record
 								if exists (select * from @InvoiceLinesTable where PayableId = @MasterPayableId)
 								begin
-									select @foreignAmount = Amount, @foreignRate = Rate from @InvoiceLinesTable where PayableId = @MasterPayableId
+									select @LocalForeignAmount = LocalAmount, @ProfitForeignAmount = ProfitAmount from @InvoiceLinesTable where PayableId = @MasterPayableId
 									
 									if (@MasterPayableAmountTypeCode = 'NEXP')
 									BEGIN
-										set @ProrateAmount = @foreignAmount / @AllHousesCount							
+										set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @AllHousesCount
+										set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @AllHousesCount
 									END
 
 									-- Percent of Freight
 									else if (@MasterPayableMeasurementId = @PRFR_Id)
 									BEGIN
-										set @ProrateAmount = @foreignAmount / (@Quantity * @UnitPrice / 100)
+										set @ProrateAmountInLocalCurrency = @LocalForeignAmount / (@Quantity * @UnitPrice / 100)
+										set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / (@Quantity * @UnitPrice / 100)
 									END
-
-									set @ProrateAmountInLocalCurrency = @ProrateAmount * @foreignRate												
-									set @ProrateAmountInProfitCurrency = @ProrateAmountInLocalCurrency / @MasterPayableProfitRate
 
 									SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
 									BEGIN TRAN T1;
@@ -1342,7 +1349,6 @@ BEGIN
 								set @OpenAmount = 0
 								set @OpenAmountInLocalCurrency = 0
 								set @OpenAmountInProfitCurrency = 0
-								set @ProrateAmount = 0
 								set @ProrateAmountInLocalCurrency = 0
 								set @ProrateAmountInProfitCurrency = 0
 							END
@@ -1404,21 +1410,20 @@ BEGIN
 							-- Create Prorate Record
 								if exists (select * from @InvoiceLinesTable where PayableId = @MasterPayableId)
 								begin
-									select @foreignAmount = Amount, @foreignRate = Rate from @InvoiceLinesTable where PayableId = @MasterPayableId
+									select @LocalForeignAmount = LocalAmount, @ProfitForeignAmount = ProfitAmount from @InvoiceLinesTable where PayableId = @MasterPayableId
 									
 									if (@MasterPayableAmountTypeCode = 'NEXP')
 									BEGIN
-										set @ProrateAmount = @foreignAmount / @AllHousesCount								
+										set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @AllHousesCount
+										set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @AllHousesCount
 									END
 
 									-- Percent of foreign charges local amounts
 									else if (@MasterPayableMeasurementId = @PFCL_Id)
 									BEGIN
-										set @ProrateAmount = @foreignAmount / (@Quantity * @UnitPrice / 100)
+										set @ProrateAmountInLocalCurrency = @LocalForeignAmount / (@Quantity * @UnitPrice / 100)
+										set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / (@Quantity * @UnitPrice / 100)
 									END
-
-									set @ProrateAmountInLocalCurrency = @ProrateAmount * @foreignRate												
-									set @ProrateAmountInProfitCurrency = @ProrateAmountInLocalCurrency / @MasterPayableProfitRate
 
 									SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
 									BEGIN TRAN T1;
@@ -1506,7 +1511,6 @@ BEGIN
 
 	END
 END
-
 
 
    	]]>
