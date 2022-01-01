@@ -2,6 +2,8 @@ import { RegexSelectors } from '../selectors/RegexSelectors';
 
 export class ShipmentSelectors extends RegexSelectors {
   //#region Shared
+  
+  public static readonly MediaFillAbsolute = '.MediaFillAbsolute';
   public static readonly CloseBtn = '#CloseBtn';
   public static readonly DeleteAll = '#DeleteAll';
   public static readonly ShipmentMoreList = '#MenuButtons';
@@ -230,6 +232,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ContainsWeight = "Weight = ";
   public static readonly StorageFeeResult = "div[data-cy='StorageFee']";
   public static readonly MainCarriageOKBtn = '#MainCarriageOKBtn';
+  
   public static readonly ShipmentPickUpDeliveryToPartnerCard = '#ShipmentPickUpDelivery_ToPartnerCardId';
   public static readonly ShipmentPreCarriageTransportMode = '#Shipment_PreCarriageTransportModeId';
   public static readonly ShipmentPreCarriageFromPort = '#Shipment_PreCarriageFromPortId';
@@ -405,7 +408,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PartnerName = "[data-cy='PartnerName']";
   public static readonly RedButton = ".RedButton:last"
   //#endregion
-  //#region Delivery Leg
+  //#region Delivery Leg standalone
   public static readonly EditDelivery = "#Edit-Delivery"
   public static readonly EditPickUp = "#Edit-PickUp"
   public static readonly DeliveryToPartnerName = "#ShipmentPickUpDelivery_ToPartnerCardId"
@@ -413,6 +416,10 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PickUpDeliveryFromPort = "#ShipmentPickUpDelivery_FromPortId"
   public static readonly PickUpDeliveryETDDate = "#date_ShipmentPickUpDelivery_ETD"
   public static readonly PickUpDeliveryETDTime = "#time_ShipmentPickUpDelivery_ETD"
+  public static readonly DeliveryFromPartnerName = "#ShipmentPickUpDelivery_FromPartnerCardId"
+  public static readonly DeliveryFromCountryName = "#ShipmentPickUpDelivery_FromAddressCountryId"
+  public static readonly DeliveryFromCityName = "#ShipmentPickUpDelivery_FromAddressCity"
+  
   //#endregion
   public static readonly ComponentBusyIndicator = "div[id^='EditComponentBusyIndicator']:last";
 

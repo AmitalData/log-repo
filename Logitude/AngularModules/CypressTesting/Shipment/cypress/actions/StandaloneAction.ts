@@ -19,7 +19,37 @@ import { EventTypeDetails } from '../models/EventTypeDetails';
 import { WarehouseStorage } from 'cypress/models/WarehouseStorage';
 import { ShipmentContext } from '../models/ShipmentContext';
 import { DelivaryDeteails } from "../models/DelivaryDeteails";
+import {RegexSelectors} from "../selectors/RegexSelectors";
+import { ShipmentConstants } from '../constants/constants'
 
-export function FillDeliveryRouting(DelivaryDeteails:DelivaryDeteails) {
-    
+
+
+
+export function FillALL(delivaryDeteails:DelivaryDeteails) {
+    FillDeliveryRouting(delivaryDeteails)
+    FillFromPickupDelivary(delivaryDeteails)
+ }
+
+export function FillDeliveryRouting(delivaryDeteails:DelivaryDeteails) {
+   let fromType = RegexSelectors.PickupDeliveryFromType(delivaryDeteails.From)
+    cy.ClickRadio(fromType)
+    let toType = RegexSelectors.PickupDeliveryToType(delivaryDeteails.To)
+    cy.ClickRadio(toType)
 }
+
+export function FillFromPickupDelivary(delivaryDeteails:DelivaryDeteails) {
+     if(delivaryDeteails.From== ShipmentConstants.Partner) {
+        cy.FillLogLov(ShipmentSelectors.DeliveryFromPartnerName,delivaryDeteails.FromPartner , true)
+        
+     }
+     else if (delivaryDeteails.From== ShipmentConstants.Port) {
+        cy.FillLogLov(ShipmentSelectors.PickUpDeliveryFromPort,delivaryDeteails.FromPort , true)
+    }
+    else{
+        cy.FillLogLov(ShipmentSelectors.DeliveryFromCountryName,delivaryDeteails.FromCountry , true)
+        cy.FillLogLov(ShipmentSelectors.DeliveryFromCityName,delivaryDeteails.FromCity , true)
+    }
+
+     
+ }
+ 

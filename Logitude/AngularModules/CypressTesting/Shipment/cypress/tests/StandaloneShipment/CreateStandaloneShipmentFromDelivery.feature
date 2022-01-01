@@ -85,7 +85,7 @@ Feature: Create standalone shipment from Delivery
         And  add a new Delivery leg with the following details
             | From     | Partner            |
             | FromName | khalid             |
-            | To       | Casual Address     |
+            | To       | CasualAddress     |
             | Country  | State Of Palestine |
             | City     | Ramallah           |
         And save the Delivery
@@ -117,10 +117,10 @@ Feature: Create standalone shipment from Delivery
     Scenario: Create standalone shipment when the Delivery is FullResponsibility and from Casual Address to Casual Address with same countries
         Given the user in the shipment's routong tab
         And add a new Delivery leg with the following details
-            | From    | Casual Address     |
+            | From    | CasualAddress     |
             | Country | State Of Palestine |
             | City    | Ramallah           |
-            | To      | Casual Address     |
+            | To      | CasualAddress     |
             | Country | State Of Palestine |
             | City    | Bethlehem          |
         And save the Delivery
@@ -136,7 +136,7 @@ Feature: Create standalone shipment from Delivery
     Scenario: Create standalone shipment when the Delivery is FullResponsibility and from Casual Address to port with same countries
         Given the user in the shipment's routong tab
         And add a new Delivery leg with the following details
-            | From    | Casual Address     |
+            | From    | CasualAddress     |
             | Country | State Of Palestine |
             | City    | Ramallah           |
             | To      | Port               |
