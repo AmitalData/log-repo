@@ -35,7 +35,7 @@ namespace Logitude.BL.DataContracts
 
                 SqlParameter param3 = new SqlParameter("@InvoiceId_PARAM", SqlDbType.VarChar);
                 param3.Direction = ParameterDirection.Input;
-                param3.Value = invoiceId;
+                param3.Value = invoiceId == null ? "no invoice" : invoiceId;
                 cmd.Parameters.Add(param3);
 
                 cmd.CommandTimeout = 6000;
