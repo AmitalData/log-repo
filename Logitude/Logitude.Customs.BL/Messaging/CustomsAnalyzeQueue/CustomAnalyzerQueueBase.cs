@@ -51,7 +51,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
         }
 
-        public void Run( AnalyzeQueueRepository analyzeQueueRepository, int tenant, string communicationLogId , string message, QueueDetails queue, out string log , out bool success)
+        public void Run( AnalyzeQueueRepository analyzeQueueRepository, int tenant, string candidateCommunicationLogId , string message, QueueDetails queue, out string log , out bool success)
         {
             success = false;
             log = "none";
@@ -59,11 +59,9 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             {
                 this.analyzeQueueRepository = analyzeQueueRepository;
 
-                if (String.IsNullOrWhiteSpace(communicationLogId))
+                if (String.IsNullOrWhiteSpace(candidateCommunicationLogId))
                 {
                     
-
-
                         var _CommunicationsParams = new CommunicationsParams()
                         {
 
@@ -89,7 +87,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
                         var messageByte = Encoding.UTF8.GetBytes(message);
                         _CommunicationsParams.ByteData = messageByte;
-                          communicationLogId = Communications.AddCommunicationLog(_CommunicationsParams);
+                          candidateCommunicationLogId = Communications.AddCommunicationLog(_CommunicationsParams);
 
                     
                      //   throw new Exception("CommunicationLogId is null");
@@ -97,8 +95,11 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
                 try
                 {
-                    _CommunicationLog = Communications.GetCommunicationLog(tenant, communicationLogId);
-
+                    _CommunicationLog = Communications.GetCommunicationLog(tenant, candidateCommunicationLogId);
+                    if (_CommunicationLog == null)
+                    {
+                        _CommunicationLog = Communications.GetCommunicationLogByCorrelationID(tenant, candidateCommunicationLogId);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -123,7 +124,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                         //LoggingEntityReference = documentsFilingPM.ExternalEntityReference,
                         // LoggingUserId = LoggingUserId,
                         //CorrelationID = documentsFilingPM.Id,
-
+                        CorrelationID = candidateCommunicationLogId,
                         Status = "W",
                         To = "RabbitMQ",
                         CommunicationLogTypeCode = "T",
@@ -136,9 +137,9 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
                     var messageByte = Encoding.UTF8.GetBytes(message);
                     _CommunicationsParams.ByteData = messageByte;
-                    communicationLogId = Communications.AddCommunicationLog(_CommunicationsParams);
+                    candidateCommunicationLogId = Communications.AddCommunicationLog(_CommunicationsParams);
 
-                    _CommunicationLog = Communications.GetCommunicationLog(tenant, communicationLogId);
+                    _CommunicationLog = Communications.GetCommunicationLog(tenant, candidateCommunicationLogId);
 
                 }
 
@@ -177,7 +178,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                
                 if( _CommunicationLog == null)
                 {
-                    _CommunicationLog = Communications.GetCommunicationLog(tenant, communicationLogId);
+                    _CommunicationLog = Communications.GetCommunicationLog(tenant, candidateCommunicationLogId);
 
                 }
                 if (_CommunicationLog != null)

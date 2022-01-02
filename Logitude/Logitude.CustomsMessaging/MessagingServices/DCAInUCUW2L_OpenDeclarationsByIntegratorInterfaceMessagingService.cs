@@ -166,41 +166,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
 
+                            string InterfaceTypeCode = "uw2l";
+                            String rabbitMQCode = RabbitmqHelper.GetRabbitMQCode(tenant);
 
-                            var queuename = "uw2l";
-                            var args = new Dictionary<string, object>();
+                            var rabbitPublishService = new RabbitPublishService();
+                            rabbitPublishService.Publish(message, communicationLogId, InterfaceTypeCode, rabbitMQCode, 5);
 
-                            //   var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
-                            var factory = RabbitmqHelper.GetConnectionFactory();
-
-                            using (var connection = factory.CreateConnection())
-                            using (var channel = connection.CreateModel())
-                            {
-                                channel.BasicQos(0, 5, true);
-
-                                //args.Add("x-queue-mode", "lazy");
-                                //channel.QueueDeclare(queue: queuename,
-                                //                    durable: true,
-                                //                    exclusive: false,
-                                //                    autoDelete: false,
-                                //                    arguments: args);
-
-                                RabbitmqHelper.DeclareQueue(channel, queuename);
-
-
-                                var header = new Dictionary<string, object>();
-                                var prop = channel.CreateBasicProperties();
-                                prop.Persistent = true;
-                                prop.MessageId = communicationLogId;
-                                prop.DeliveryMode = 2; //persistent
-                                prop.Headers = header;
-
-                                channel.BasicPublish(exchange: "",
-                                                             routingKey: queuename,
-                                                             basicProperties: prop,
-                                                             body: message);
-
-                            }
                         }
                         catch (System.Exception)
                         {

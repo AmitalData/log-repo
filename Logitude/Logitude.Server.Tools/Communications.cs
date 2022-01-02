@@ -48,7 +48,14 @@ namespace Logitude.Server.Tools
             var myCommLog = communicationLogRep.GetSingleCommunicationLog(requestCommunicationLogId, tenant);
             return myCommLog;
         }
+        public static CommunicationLog GetCommunicationLogByCorrelationID(int tenant, string correlationID)
+        {
+            var myContext = CommonDataContext.GetContext(tenant);
+            CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(myContext);
 
+            var myCommLog = communicationLogRep.GetSingleCommunicationByCorrelationID( tenant, correlationID);
+            return myCommLog;
+        }
         public static CommunicationLog GetSingleCommunicationLogInProccess(int tenant, string entityId , string to, string correlationID)
         {
 
