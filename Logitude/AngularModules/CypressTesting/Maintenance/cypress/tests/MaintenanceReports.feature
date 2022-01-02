@@ -7,8 +7,6 @@ Feature: Create, Search, Open and Edit a Report from Maintenance
         And a Report with the following details
             | Name        | random         |
             | Code        | random         |
-            
-
         When create Report
         Then the Report should create successfully
 
