@@ -64,7 +64,7 @@ export class NewQuoteFocusErrorService {
   private focusCursor() {
     this.cdr.detectChanges();
     
-    const inputsErrArr: JQuery<HTMLElement> = $('.ng-submitted p-calendar.ng-invalid > span, .ng-submitted p-inputnumber.ng-invalid input, .ng-submitted p-autocomplete.ng-invalid input, .ng-submitted input.ng-invalid')
+    const inputsErrArr: NodeListOf<HTMLElement> = document.querySelectorAll('.ng-submitted p-calendar.ng-invalid > span, .ng-submitted p-inputnumber.ng-invalid input, .ng-submitted p-autocomplete.ng-invalid input, .ng-submitted input.ng-invalid')
     if (inputsErrArr.length)
       inputsErrArr[0].focus()
   }
