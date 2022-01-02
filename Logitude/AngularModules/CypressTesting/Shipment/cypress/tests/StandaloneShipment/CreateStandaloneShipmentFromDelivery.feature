@@ -80,8 +80,6 @@ Feature: Create standalone shipment from Delivery
         When save the Delivery
         Then the Create Standalone Shipment button Should be dim
 
-
-
     Scenario: Create standalone shipment when the Delivery is FullResponsibility and from Partner to Casual Address with same countries
         Given the user in the shipment's  routings tab
         And  add a new Delivery leg with the following details

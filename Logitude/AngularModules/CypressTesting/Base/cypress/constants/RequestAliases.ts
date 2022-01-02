@@ -3,6 +3,7 @@ export class RequestAliases {
     public static readonly performancelogs = "performancelogs"
     public static readonly PartnersDomainRequest = 'PartnersDomainRequest';
     public static readonly ShipmentRequest = 'ShipmentRequest';
+    public static readonly ShipmentStandaloneRequest = 'ShipmentStandaloneRequest';
     public static readonly GetShipmentConnectedEntities = 'GetShipmentConnectedEntities';
     public static readonly SplitShipmentRequest = 'SplitShipmentRequest';
     public static readonly GetTraceEvent = 'GetTraceEvent';
