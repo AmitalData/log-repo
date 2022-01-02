@@ -72,7 +72,7 @@ Feature: Status in Routings Tab
         And add ATA with '07/10/2021' as a value
         When save main carriage
         Then the direct should update successfully
-        And the status value should be "Departed"
+        And the status value should be "Arrived"
 
     Scenario: Add Expected Departure date for the Delivary
         Given the user edit Delivary window
@@ -94,19 +94,3 @@ Feature: Status in Routings Tab
         When save Delivary
         Then the direct should update successfully
         And the status value should be "Delivered"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

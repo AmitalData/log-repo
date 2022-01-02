@@ -9,7 +9,7 @@ Feature: Storage Calculations Chargeable Weight, Rounding and Receivable Correct
     Scenario: Set up a warehouse with storage charges
         Given the user logged in and navigate to warehouse workspace
         And open "Testwarehouse" warehouse
-        And the following storage details for "CFS" type
+        And fill the following storage details
             | Currency        | NIS |
             | StorageFreeDays | 0   |
         And the following "Ocean" weight details
