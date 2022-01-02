@@ -2101,30 +2101,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
-                IQueryable<Card> inactiveCards = (from d in commonDataContext.Cards
-                                                  where  (d.Id == inActiveLogLovItem.SelectedItemId || d.Id == inActiveLogLovItem.TenantZeroSelectedEntityId)
-                                                  && d.InActive
-                                                  select d);
-                ICommonDataContext commonDataContext_Loop;
-                //CardQuery cardQuery;
-                //CardService cardService;
-                CardRepository cardRepository;
-                foreach (Card card in inactiveCards)
-                {
-                    commonDataContext_Loop = CommonDataContext.GetContext(card.Tenant);
-                    // cardQuery = new CardQuery(card.Tenant);
-                    // cardService = new CardService(commonDataContext_Loop, card.Tenant);
-                    // var cardPM = cardQuery.GetSinglePM(card.Id, card.Tenant);
-                    //cardPM.InActive = false;
-                    //cardService.Update(cardPM);
-                    cardRepository = new CardRepository(commonDataContext_Loop);
-                    var updatedCard = cardRepository.GetSingleCard(card.Id, card.Tenant);
-                    updatedCard.InActive = false;
-                    cardRepository.Update(updatedCard);
-                    cardRepository.SubmitChanges();
-                    TableLastUpdateClass.UpdateTableHistory(card.Tenant, inActiveLogLovItem.TableName);
-                }
+
+                ICommonDataContext commonDataContext = CommonDataContext.GetContext(authToken.Tenant);
+                CardRepository cardRepository = new CardRepository(commonDataContext);
+                cardRepository.UpdateInActiveCard(inActiveLogLovItem.SelectedItemId, authToken.Tenant);
+                TableLastUpdateClass.UpdateTableHistory(authToken.Tenant, inActiveLogLovItem.TableName);
                 return Request.CreateResponse(HttpStatusCode.OK, "");
             }
             catch (Exception ex)

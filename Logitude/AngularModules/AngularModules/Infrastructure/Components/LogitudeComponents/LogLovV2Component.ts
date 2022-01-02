@@ -226,7 +226,9 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         inActiveLogLovItem.SelectedItemId = id;
         inActiveLogLovItem.TenantZeroSelectedEntityId = this.tenantZeroSelectedEntityId;
         service.UpdateInActiveLogLovItem(inActiveLogLovItem).subscribe((myResponse: any) => {
-            CachedDataManager.RefreshTableData(tablename, true);
+            if (!myResponse.HasError) {
+                CachedDataManager.RefreshTableData(tablename, true);
+            }
         });
     }
 

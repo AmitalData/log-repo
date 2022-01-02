@@ -875,18 +875,18 @@ export class InfrastructureDomainService {
     }
 
     UpdateInActiveLogLovItem(inActiveLogLovItem: InActiveLogLovItem) {
-        return this._http.put(this._apiUrl + "/PutInActiveLogLovItem", JSON.stringify(inActiveLogLovItem), ServiceHelper.GetHttpHeaders()).pipe(
-            map(res => {
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                var result = res;
-                serviceResponse.Result = result;
-                return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
+        return defer(() => {
+            return this._http.put(this._apiUrl + "/PutInActiveLogLovItem", JSON.stringify(inActiveLogLovItem), ServiceHelper.GetHttpHeaders()).pipe(
+                map(res => {
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    var result = res;
+                    serviceResponse.Result = result;
+                    return serviceResponse;
+                }),
+                catchError(ServiceHelper.HandleServiceError));
+        });
     }
-
-
 }
 
 export class InActiveLogLovItem {
