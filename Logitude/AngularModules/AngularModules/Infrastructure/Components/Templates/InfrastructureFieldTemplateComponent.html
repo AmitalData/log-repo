@@ -7,6 +7,10 @@
                     <img class="CenterCenter" [attr.src]="'./Images/Icons/' + FieldValue + '.png'" [title]="Entity['TransportModeName']" />
                 </div>
 
+                <div *ngIf="ObjectTableName == 'TenantManagement' && FieldName == 'PrivateLabelId'" class="TemplateTrimming">
+                    {{FieldValue}}
+                </div>
+
                 <div *ngIf="ObjectTableName == 'CommunicationLog' && (FieldName == 'CreateDate' || FieldName == 'CreateDateUTC')" class="TemplateTrimming">
                     {{FieldValue | DateTimePipe:'DTL12'}}
                 </div>

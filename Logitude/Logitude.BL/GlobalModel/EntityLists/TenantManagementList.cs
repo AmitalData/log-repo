@@ -122,6 +122,7 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public string PendingAirlines { get; set; }
         [DataMember]
         public string PrivateLabelId { get; set; }
+        public string PrivateLabelName { get; set; }
 
         public bool IsParentTenant { get; set; }
         public int? ParentTenantId { get; set; }

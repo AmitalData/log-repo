@@ -1,4 +1,4 @@
-﻿import {Component, ChangeDetectorRef} from '@angular/core';
+import {Component, ChangeDetectorRef} from '@angular/core';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
@@ -29,12 +29,20 @@ export class InfrastructureFieldTemplateComponent {
         if (this.Entity != null && this.FieldName != null) {
             this.FieldValue = this.Entity[this.FieldName];
 
+            this.SetPrivateLabelIdFieldValue();
+
             if (this.cd) {
                 var isDestroyed: boolean = this.cd['destroyed'];
                 if (!isDestroyed) {
                     this.cd.detectChanges();
                 }
             }
+        }
+    }
+
+    private SetPrivateLabelIdFieldValue() {
+        if (this.ObjectTableName == "TenantManagement" && this.FieldName == "PrivateLabelId") {
+            this.FieldValue = this.Entity["PrivateLabelName"];
         }
     }
 

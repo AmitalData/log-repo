@@ -120,6 +120,7 @@ export class TenantManagementList {
 		RegisteredAirlines: string;
 		PendingAirlines: string;
 		PrivateLabelId: string;
+		PrivateLabelName: string;
 		IsParentTenant: boolean;
 		ParentTenantId: number;
 		AgentSharedLogisticsStatisticsLastDate: Date;
