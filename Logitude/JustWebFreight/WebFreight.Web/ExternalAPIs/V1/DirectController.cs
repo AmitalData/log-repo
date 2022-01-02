@@ -122,6 +122,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         externalAPIShipmentValidator.ValidatePartnersDueToDirection();
                         externalAPIShipmentValidator.ValidatePreAndOnCarrageFields();
                         externalAPIShipmentValidator.ValidateCustomsFields(entityPM);
+                        externalAPIShipmentValidator.ValidateInActiveCarriers(entityPM);
                         this.SetClosurePropertiers(entityPM);
                         this.SetMasterNumberProperties(entityPM);
                         this.SetPrepaidCollectIds(entityPM);
@@ -364,6 +365,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     externalAPIShipmentValidator.UpdatePayablesChangeSet(directPM);
                     externalAPIShipmentValidator.UpdateReceivablesChangeSet(directPM);
                     externalAPIShipmentValidator.ValidateCustomsFields(directPM);
+                    externalAPIShipmentValidator.ValidateInActiveCarriers(directPM);
                     this.UpdatePartners(MyContext, directPM);
                     ComputeHelper.ComputeTotals(directPM);
 

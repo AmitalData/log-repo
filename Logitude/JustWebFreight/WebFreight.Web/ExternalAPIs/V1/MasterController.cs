@@ -124,7 +124,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     externalAPIShipmentValidator.ValidateShipmentClosure();
                     externalAPIShipmentValidator.ValidatePickupDeliveryPackages();
                     externalAPIShipmentValidator.ValidateConnectedHouses(entity, MyContext);
-
+                    externalAPIShipmentValidator.ValidateInActiveCarriers(entityPM);
                     this.SetClosurePropertiers(entityPM);
                     this.SetMasterNumberProperties(entityPM);
                     this.SetPrepaidCollectIds(entityPM);
@@ -309,7 +309,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             externalAPIMainCarriageLegsHelper.ValidateMainCarriageLegs();
                             externalAPIMainCarriageLegsHelper.MapTransshipments();
 
-                            //ExternalAPIShipmentValidator externalAPIShipmentValidator = new ExternalAPIShipmentValidator(MasterPM, authToken.Tenant);
+                            ExternalAPIShipmentValidator externalAPIShipmentValidator = new ExternalAPIShipmentValidator(MasterPM, authToken.Tenant);
+                            externalAPIShipmentValidator.ValidateInActiveCarriers(MasterPM);
                             //externalAPIShipmentValidator.UpdatePickupDeliveryPackagesChangeSet(MasterPM);
                             //externalAPIShipmentValidator.UpdatePayablesChangeSet(MasterPM);
                             //externalAPIShipmentValidator.UpdateReceivablesChangeSet(MasterPM);
