@@ -203,9 +203,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
                 this.ShipmentSearchInput.OrdersOnly = !this.ShipmentSearchInput.OrdersOnly;
                 this.MoreFilterMobileValue.OrdersOnly = this.ShipmentSearchInput.OrdersOnly;
                 break;
-            case MoreFilterCodes.OperationalClosedOnly:
-                this.ShipmentSearchInput.OperationalClosedOnly = !this.ShipmentSearchInput.OperationalClosedOnly;
-                this.MoreFilterMobileValue.OperationalClosedOnly = this.ShipmentSearchInput.OperationalClosedOnly;
+            case MoreFilterCodes.OperationalOpenedOnly:
+                this.ShipmentSearchInput.OperationalOpenedOnly = !this.ShipmentSearchInput.OperationalOpenedOnly;
+                this.MoreFilterMobileValue.OperationalOpenedOnly = this.ShipmentSearchInput.OperationalOpenedOnly;
                 break;
 
         }
@@ -286,10 +286,10 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.shipmentMoreFiltersMultipleSelection.DeselectFilter(MoreFilterCodes.EstimatedArrivalOnly);
         this.LoadScreenData();
     }
-    ClearOperationalClosedOnlyChanged(event) {
+    ClearOperationalOpenedOnlyChanged(event) {
         RootContext.ShipmentsScrollPosition = 0;
-        this.ShipmentSearchInput.OperationalClosedOnly = this.MoreFilterMobileValue.OperationalClosedOnly = event;
-        this.shipmentMoreFiltersMultipleSelection.DeselectFilter(MoreFilterCodes.OperationalClosedOnly);
+        this.ShipmentSearchInput.OperationalOpenedOnly = this.MoreFilterMobileValue.OperationalOpenedOnly = event;
+        this.shipmentMoreFiltersMultipleSelection.DeselectFilter(MoreFilterCodes.OperationalOpenedOnly);
         this.LoadScreenData();
     }
 
@@ -727,7 +727,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         new ToggleFilter(MoreFilterCodes.ExceptionOnly, 'Exception Only'),
         new ToggleFilter(MoreFilterCodes.OrdersOnly, 'Orders Only'),
         new ToggleFilter(MoreFilterCodes.EstimatedArrivalOnly, 'Estimated Arrival Only'),
-        new ToggleFilter(MoreFilterCodes.OperationalClosedOnly, 'Operational Closed Only')
+        new ToggleFilter(MoreFilterCodes.OperationalOpenedOnly, 'Operational Opened Only')
     ];
 
 
@@ -796,8 +796,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
             return this.ShipmentsCounter.OrdersOnly;
         } else if (toggleFilter.Code == MoreFilterCodes.EstimatedArrivalOnly) {
             return this.ShipmentsCounter.EstimatedArrivalOnly;
-        }else if (toggleFilter.Code == MoreFilterCodes.OperationalClosedOnly) {
-            return this.ShipmentsCounter.OperationalClosedOnly;
+        }else if (toggleFilter.Code == MoreFilterCodes.OperationalOpenedOnly) {
+            return this.ShipmentsCounter.OperationalOpenedOnly;
         }
     }
 
@@ -817,7 +817,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.ShipmentSearchInput.EstimatedArrivalOnly = this.MoreFilterMobileValue.EstimatedArrivalOnly = false;
         this.ShipmentSearchInput.HasException = this.MoreFilterMobileValue.HasException = false;
         this.ShipmentSearchInput.OrdersOnly = this.MoreFilterMobileValue.OrdersOnly = false;
-        this.ShipmentSearchInput.OperationalClosedOnly = this.MoreFilterMobileValue.OperationalClosedOnly = false;
+        this.ShipmentSearchInput.OperationalOpenedOnly = this.MoreFilterMobileValue.OperationalOpenedOnly = false;
         this.LoadScreenData();
     }
     ClearAdvancedFilters() {
@@ -828,7 +828,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.MoreFilterMobileValue.EstimatedArrivalOnly = false;
         this.MoreFilterMobileValue.HasException = false;
         this.MoreFilterMobileValue.OrdersOnly = false;
-        this.MoreFilterMobileValue.OperationalClosedOnly = false;
+        this.MoreFilterMobileValue.OperationalOpenedOnly = false;
     }
     ApplyFilterButtonClicked() {
         this.sharedService.updateValue(false);
@@ -847,7 +847,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.ShipmentSearchInput.EstimatedArrivalOnly = this.MoreFilterMobileValue.EstimatedArrivalOnly;
         this.ShipmentSearchInput.HasException = this.MoreFilterMobileValue.HasException;
         this.ShipmentSearchInput.OrdersOnly = this.MoreFilterMobileValue.OrdersOnly;
-        this.ShipmentSearchInput.OperationalClosedOnly = this.MoreFilterMobileValue.OperationalClosedOnly;
+        this.ShipmentSearchInput.OperationalOpenedOnly = this.MoreFilterMobileValue.OperationalOpenedOnly;
     }
     CheckFiltersExists() {
         return this.ShipmentSearchInput.CustomersIds.length > 0
@@ -857,7 +857,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
             || this.ShipmentSearchInput.EstimatedArrivalOnly
             || this.ShipmentSearchInput.HasException
             || this.ShipmentSearchInput.OrdersOnly
-            || this.ShipmentSearchInput.OperationalClosedOnly
+            || this.ShipmentSearchInput.OperationalOpenedOnly
     }
 
     SortMenuClicked(buttonCode: string) {
@@ -1008,7 +1008,7 @@ export class CargoTrackingShipmentsCounter {
     HasException: number = 0;
     OrdersOnly: number = 0;
     EstimatedArrivalOnly: number = 0;
-    OperationalClosedOnly: number = 0;
+    OperationalOpenedOnly: number = 0;
 }
 
 enum Milestones {
@@ -1052,7 +1052,7 @@ export enum MoreFilterCodes {
     ExceptionOnly = 'ExceptionOnly',
     OrdersOnly = 'OrdersOnly',
     EstimatedArrivalOnly = 'EstimatedArrivalOnly',
-    OperationalClosedOnly = 'OperationalClosedOnly'
+    OperationalOpenedOnly = 'OperationalOpenedOnly'
 }
 export enum ShipmentDirectionCodes {
     Import = 'I',
