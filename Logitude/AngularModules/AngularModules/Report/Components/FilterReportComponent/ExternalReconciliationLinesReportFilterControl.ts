@@ -43,9 +43,9 @@ export class ExternalReconciliationLinesReportFilterControl extends BaseComponen
         this.ReportsPreview = myReportsPreview;
         var month = new Date().getMonth();
         var Year = new Date().getFullYear();
-        var daysofmonth = this.daysInMonth(new Date());
-        this.REFFromDate = this.SetDate(Year, month , 1);
-        this.REFToDate = this.SetDate(Year, month, daysofmonth);
+        var yesterdayDate = new Date().setDate(new Date().getDate() - 1);
+        this.REFFromDate = this.SetDate(Year, month, 1);
+        this.REFToDate = new Date(yesterdayDate);
     }
 
     ngOnInit() {
