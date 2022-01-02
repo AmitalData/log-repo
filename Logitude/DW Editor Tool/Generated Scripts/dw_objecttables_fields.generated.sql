@@ -1469,6 +1469,9 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ChargesOrderNumberofPackagesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesOrderNumberofPackagesNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesOrderNumberofPackagesNewId,0,'Fact_Charges','[Order Number of Packages]','Order Number of Packages','Integer','false',0,0,'false','false','true','Packages','false','false','false','Shipment.BookingNumberOfPackages','false','false')  
+declare @Fact_ChargesInvoiceLineAmountLocalNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ChargesInvoiceLineAmountLocalNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesInvoiceLineAmountLocalNewId,0,'Fact_Charges','[Invoice Line Amount (Local)]','Invoice Line Amount (Local)','Decimal','false',0,0,'false','false','true','Money','false','false','false','false','true')  
 ------------------------------------------------------------------------------------
 declare @Fact_InlandDomesticShipmentsNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_InlandDomesticShipmentsNewId OUTPUT,'DWObjectTable' 
