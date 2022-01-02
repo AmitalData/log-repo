@@ -26,7 +26,7 @@ Given("the user logged in and open {string} in maintenance menu", (customerTabIt
 Given("a customer with the following details", (dataTable) => {
     customerDetails = Assists.CreateInstance<CardDetails>(dataTable, true);
     MaintenanceActions.OpenNewWizard("Customer");
-    MaintenanceActions.FillCustomerCardDetails(customerDetails)
+    MaintenanceActions.FillCardDetails(customerDetails,null)
 });
 
 Given("a customer contact with the following details", (dataTable) => {

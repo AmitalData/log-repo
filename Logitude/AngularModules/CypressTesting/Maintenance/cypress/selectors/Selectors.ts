@@ -328,8 +328,6 @@ export class MaintenanceSelectors extends RegexSelectors {
   public static readonly CustomerBankName = "#Customer_BankName"
   public static readonly CustomerIBANNumber = "#Customer_IBANNumber"
   public static readonly CustomerEventsTab = "#CustomerTHEvents"
-  
-  
   //#endregion
 
   //#region VATSettings
@@ -337,7 +335,6 @@ export class MaintenanceSelectors extends RegexSelectors {
   public static readonly VatFormatTypeCode = "#Tenant_VatFormatTypeCode"
   public static readonly VATIsMandatoryFor = "#Tenant_VatMandatoryTypeCode"
   public static readonly  VatSize = "#Tenant_VatSize"
-
   //#endregion
 
   //#region Report
@@ -347,8 +344,6 @@ export class MaintenanceSelectors extends RegexSelectors {
   public static readonly ReportTemplate ="#ReportTHTemplate"
   public static readonly ReportTemplateDescription ="#ReportsTemplate_Description"
   public static readonly ReportEventTab = "#ReportTHEvents"
-  public static readonly Add = "[data-cy='AddMessageTemplate']"
-  
-
+  public static readonly AddTemplate = "[data-cy='AddMessageTemplate']"
   //#endregion
 }

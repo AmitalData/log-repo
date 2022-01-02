@@ -2,7 +2,6 @@ import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { MaintenanceSelectors } from "../../selectors/Selectors";
 import * as MaintenanceActions from "../../actions/Actions";
 import * as Actions from "../../actions/ReportsActions";
-import { CardDetails } from "../../models/CardDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { ReportsDetails } from "../../models/ReportsDetails";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
@@ -44,7 +43,8 @@ Then("the Reports should appear successfully", () => {
 
 Given("The user create a new message template with the following details", (dataTable) => {
     // ToDo need to add id for Add Button of Template Description
-    //Actions.FillReportTemplate(reportsDetails)
+   reportsDetails = Assists.CreateInstance<ReportsDetails>(dataTable, true);
+   Actions.FillReportTemplate(reportsDetails)
 });
 
 Given("Add new data field", (dataTable) => {

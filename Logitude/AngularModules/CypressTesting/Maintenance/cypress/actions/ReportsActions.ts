@@ -1,7 +1,6 @@
 import { MaintenanceSelectors } from "../selectors/Selectors";
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import { Urls } from "../constants/Urls";
-import { Constants } from "../constants/Constants";
 import { RestAPI } from "../../../Base/cypress/constants/RestAPI";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
@@ -13,7 +12,7 @@ let reportCode = null;
 
 export function GenerateRandomNumber(NumberLength: number) {
     let NewRandomCode = gr.GenerateRandomNumberAndString(NumberLength)
-    return NewRandomCode;
+ return NewRandomCode;
 }
 
 export function FillReportstDetails(reportsDetails: ReportsDetails) {
@@ -62,7 +61,6 @@ function ReCreateReport() {
     AssertCreateReport();
 }
 
-
 export function AssertSearchReport() {
     GeneralActions.AssertSearch(reportCode);
 }
@@ -76,19 +74,17 @@ export const DefineReportViewsGetFilterSearch = (reportCode: string) => {
     cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(reportCode), RequestAliases.GetFilterSearch);
 }
 
-
-function AssertReportViewsGetByFilters() {
+export function AssertReportViewsGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
 }
 
-export function FillReportTemplate(ReportTemplate: ReportsDetails) {
+export function FillReportTemplate(reportsDetails: ReportsDetails) {
     cy.Click(MaintenanceSelectors.ReportTemplate, null, true)
-    cy.get("button").contains('Add').eq(1).click();
-    cy.FillLogTextBox(MaintenanceSelectors.ReportTemplateDescription,ReportTemplate.Description)
-    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
+    cy.Click(MaintenanceSelectors.AddTemplate, null, true)
+    cy.FillLogTextBox(MaintenanceSelectors.ReportTemplateDescription, reportsDetails.Description)
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK); 
 }
 
 export const CheckEvents = () => {
     cy.Click(MaintenanceSelectors.ReportEventTab, null, true)
-
 }

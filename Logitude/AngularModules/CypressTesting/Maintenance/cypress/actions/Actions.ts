@@ -1669,6 +1669,7 @@ export function FillCardDetails(cardDetails: CardDetails, codeDigits: number) {
     cy.FillLogTextBox(MaintenanceSelectors.CardCity, cardDetails.City);
     cy.FillLogLov(MaintenanceSelectors.CardCountry, cardDetails.Country, true);
     cy.FillLogLov(MaintenanceSelectors.CardState, cardDetails.State, true);
+    cy.FillLogTextBox(MaintenanceSelectors.CardVATNo, cardDetails.VATNo);
 }
 
 export function FillCustomerCardDetails(cardDetails: CardDetails) {
@@ -1966,7 +1967,7 @@ export function AssertOpenCustomAgent() {
 }
 
 export function AssertOpenCustomer() {
-    AssertOpenCustomerCard()
+    AssertOpenCard()
 }
 
 export function AssertCustomAgentAddress(customAgentDetails: CardDetails) {
@@ -2560,7 +2561,7 @@ export function AssertUpdateAgent() {
 }
 
 export function UpdateVATSettings() {
-    cy.DefineRequestWait(RestAPI.PUT, Urls.VATSettings, RequestAliases.PutVATSettings);
+    cy.DefineRequestWait(RestAPI.PUT, Urls.Tenants, RequestAliases.PutVATSettings);
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
 }
 
