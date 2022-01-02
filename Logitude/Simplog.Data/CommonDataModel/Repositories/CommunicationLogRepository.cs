@@ -40,7 +40,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public CommunicationLog GetSingleCommunicationByCorrelationID(int tenant, string correlationID)
         {
             var q = (from a in context.CommunicationLogs
-                     where a.Tenant== tenant && a.CorrelationID == correlationID
+                     where a.CorrelationID == correlationID
                      select a);
             var log = q.FirstOrDefault();
             return log;
