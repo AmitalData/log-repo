@@ -19,6 +19,9 @@ import {ObservableCollection} from '../../../../Infrastructure/Utilities/Observa
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import {TaxReportExtendedPMService} from '../../../Services/ExtendedPMs/TaxReportExtendedPMService';
 import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
+import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
+import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
+import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
 declare var window: any;
 
 @Component({
@@ -27,19 +30,20 @@ declare var window: any;
 })
 
 export class TaxReportDetailsTabComponent extends BaseComponent implements OnInit {
-  public Export2ExcelClicked() { }
-
 
     public EntityPM: TaxReportPM = null;
     public ObjectTableName = "TaxReport";
     public DataContext = this;
     public isRTL: boolean = false;
     public showLocals: boolean = false;
+    public LogitudeGridExportToExcelComponent:LogitudeGridExportToExcelComponent= new LogitudeGridExportToExcelComponent();
+
     private _entityListService: EntityListService = new EntityListService();
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private _TaxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
     private _TaxReportLineStatusListService: TaxReportLineStatusListService = new TaxReportLineStatusListService();
     public TaxReportColumnsReady: EventEmitter<any> = new EventEmitter();
+    public QueryColumns: QueryColumnPM[] = [];
   IsTesterButtonVisibile: boolean = false;
     ReportLines: ObservableCollection;
     OriginalReportLines: ObservableCollection;
@@ -140,8 +144,10 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
         this.GetReportCounter();
     }
-
-
+    
+    public Export2ExcelClicked(){
+        this.LogitudeGridExportToExcelComponent.ExportToExcelExcute('TaxReportLine',this.ListFilters,this.QueryColumns);
+    }
     SetUIProperty() {
         this.UIProperties.SetEnabled("VatNumber", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("OutputTaxAmount", this.ObjectTableName, false);
@@ -247,7 +253,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             this.FilterLines();
         }
     }
-    ListFilters: ApiQueryFilters
+    ListFilters: ApiQueryFilters = new ApiQueryFilters();
     FilterLines() {
 
         // var filteredLines = [];
@@ -420,6 +426,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             ServerSideSortable: true
 
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("TransmitStatusCode",'Text',TextCodeTranslator.Translate("Accounting.O.Included")));
         this.columns.push({
             FieldName: 'Line',
             DataTypeCode: 'String',
@@ -428,6 +435,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Line",'Text',TextCodeTranslator.Translate("TaxReportLine.F.Line")));
+
         this.columns.push({
             FieldName: 'LineTypeCode',
             DataTypeCode: 'String',
@@ -436,6 +445,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("LineTypeCode",'Text',TextCodeTranslator.Translate("TaxReportLine.F.LineTypeCode")));
+
         this.columns.push({
             FieldName: 'VatNumber',
             DataTypeCode: 'String',
@@ -446,6 +457,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("VatNumber",'Text',TextCodeTranslator.Translate("TaxReportLine.F.VatNumber")));
+
         this.columns.push({
             FieldName: 'Reference',
             DataTypeCode: 'String',
@@ -457,6 +470,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             ServerSideSortable: true
 
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference",'Text',TextCodeTranslator.Translate("TaxReportLine.F.Reference")));
+
         this.columns.push({
             FieldName: 'ReferecneGroup',
             DataTypeCode: 'String',
@@ -467,6 +482,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ReferecneGroup",'Text',TextCodeTranslator.Translate("TaxReportLine.F.ReferecneGroup")));
+
         this.columns.push({
             FieldName: 'ReferenceDate',
             DataTypeCode: 'DateTime',
@@ -477,6 +494,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ReferenceDate",'DateTime',TextCodeTranslator.Translate("TaxReportLine.F.ReferenceDate")));
+
         // this
         this.columns.push({
           FieldName: 'TotalInvoiceAmount',
@@ -488,6 +507,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("TotalInvoiceAmount",'Number',TextCodeTranslator.Translate("TaxReportLine.F.TotalInvoiceAmount")));
+
         this.columns.push({
             FieldName: 'VatAmount',
             DataTypeCode: 'Number',
@@ -498,6 +519,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("VatAmount",'Number',TextCodeTranslator.Translate("TaxReportLine.F.VatAmount")));
+
         this.columns.push({
             FieldName: SessionLocator.LoggedUserPM.DontShowLocal ? 'StatusEnglishName' : 'StatusLocalName',
             DataTypeCode: 'String',
@@ -508,6 +531,9 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.
+            GetQueryColumn(SessionLocator.LoggedUserPM.DontShowLocal ? 'StatusEnglishName' : 'StatusLocalName','Text',TextCodeTranslator.Translate("TaxReportLine.F.StatusEnglishName")));
+
         this.columns.push({
             FieldName: 'JournalNumber',
             DataTypeCode: 'String',
@@ -518,6 +544,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("JournalNumber",'Text',TextCodeTranslator.Translate("TaxReportLine.F.JournalNumber")));
+
         this.columns.push({
             FieldName: 'Buttons;' + this.EntityPM.StatusCode,
             DataTypeCode: 'String',
@@ -528,6 +556,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             ServerSideSortable: true,
             IsCustomTemplate: true,
       });
+      
         this.columns.push({
             FieldName: 'IsManuallyChanged',
             DataTypeCode: 'boolean',
