@@ -949,9 +949,6 @@ export const SearchCustomerCard = () => {
 export function AssertSearchCustomer(companyName: string) {
     AssertSearchCard(companyName)
 }
-export function AssertOpenCustomer() {
-    AssertOpenCard()
-}
 export function AssertCustomerAddress(customerDetails: CardDetails) {
     cy.Click(MaintenanceSelectors.CustomerAddressesTab, null, true)
     AssertCardAddress(customerDetails)
