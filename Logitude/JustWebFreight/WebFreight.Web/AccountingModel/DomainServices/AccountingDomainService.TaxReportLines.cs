@@ -19,7 +19,6 @@ namespace WebFreight.Web.AccountingModel.DomainServices
         public List<TaxReportLineList> GetTaxReportLineFilters(byte[] xmlFilters, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
-            //    SecurityUtility.CheckContactFeature("Customs.SupplierInvoiceItemsTax", "READ", tenant);
 
             accountingContext = AccountingContext.GetContext(tenant);
             TaxReportLineListQueryService listService = new TaxReportLineListQueryService(accountingContext);
@@ -30,12 +29,10 @@ namespace WebFreight.Web.AccountingModel.DomainServices
         public int GetTaxReportLineFiltersCount(byte[] xmlFilters, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
-            //  SecurityUtility.CheckContactFeature("Customs.SupplierInvoiceItemsTax", "READ", tenant);
             accountingContext = AccountingContext.GetContext(tenant);
             TaxReportLineListQueryService queryService = new TaxReportLineListQueryService(accountingContext);
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
             return queryService.GetListCount(queryOperations, tenant);
-
         }
     }
 }

@@ -138,6 +138,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
     ReloadScreen(){
         this.BuildColumns();
+        this.buildQueryColumns();
         this.GetStatuses();
         this.CD.detectChanges();
         // this.FillGrids();
@@ -426,7 +427,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             ServerSideSortable: true
 
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("TransmitStatusCode",'Text',TextCodeTranslator.Translate("Accounting.O.Included")));
+        
         this.columns.push({
             FieldName: 'Line',
             DataTypeCode: 'String',
@@ -435,7 +436,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Line",'Text',TextCodeTranslator.Translate("TaxReportLine.F.Line")));
+        
 
         this.columns.push({
             FieldName: 'LineTypeCode',
@@ -445,7 +446,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("LineTypeCode",'Text',TextCodeTranslator.Translate("TaxReportLine.F.LineTypeCode")));
+        
 
         this.columns.push({
             FieldName: 'VatNumber',
@@ -457,7 +458,6 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("VatNumber",'Text',TextCodeTranslator.Translate("TaxReportLine.F.VatNumber")));
 
         this.columns.push({
             FieldName: 'Reference',
@@ -470,7 +470,6 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             ServerSideSortable: true
 
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference",'Text',TextCodeTranslator.Translate("TaxReportLine.F.Reference")));
 
         this.columns.push({
             FieldName: 'ReferecneGroup',
@@ -482,7 +481,6 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ReferecneGroup",'Text',TextCodeTranslator.Translate("TaxReportLine.F.ReferecneGroup")));
 
         this.columns.push({
             FieldName: 'ReferenceDate',
@@ -494,7 +492,6 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ReferenceDate",'DateTime',TextCodeTranslator.Translate("TaxReportLine.F.ReferenceDate")));
 
         // this
         this.columns.push({
@@ -507,7 +504,6 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("TotalInvoiceAmount",'Number',TextCodeTranslator.Translate("TaxReportLine.F.TotalInvoiceAmount")));
 
         this.columns.push({
             FieldName: 'VatAmount',
@@ -519,7 +515,6 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("VatAmount",'Number',TextCodeTranslator.Translate("TaxReportLine.F.VatAmount")));
 
         this.columns.push({
             FieldName: SessionLocator.LoggedUserPM.DontShowLocal ? 'StatusEnglishName' : 'StatusLocalName',
@@ -531,8 +526,6 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.
-            GetQueryColumn(SessionLocator.LoggedUserPM.DontShowLocal ? 'StatusEnglishName' : 'StatusLocalName','Text',TextCodeTranslator.Translate("TaxReportLine.F.StatusEnglishName")));
 
         this.columns.push({
             FieldName: 'JournalNumber',
@@ -544,7 +537,6 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("JournalNumber",'Text',TextCodeTranslator.Translate("TaxReportLine.F.JournalNumber")));
 
         this.columns.push({
             FieldName: 'Buttons;' + this.EntityPM.StatusCode,
@@ -581,7 +573,20 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         this.TaxReportColumnsReady.emit(this.columns);
         //this.CustomColumnsReady.emit(this.columns);
     }
-
+    buildQueryColumns(){
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("TransmitStatusCode",'Text',TextCodeTranslator.Translate("Accounting.O.Included")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Line",'Text',TextCodeTranslator.Translate("TaxReportLine.F.Line")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("LineTypeCode",'Text',TextCodeTranslator.Translate("TaxReportLine.F.LineTypeCode")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("VatNumber",'Text',TextCodeTranslator.Translate("TaxReportLine.F.VatNumber")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference",'Text',TextCodeTranslator.Translate("TaxReportLine.F.Reference")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ReferecneGroup",'Text',TextCodeTranslator.Translate("TaxReportLine.F.ReferecneGroup")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ReferenceDate",'DateTime',TextCodeTranslator.Translate("TaxReportLine.F.ReferenceDate")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("TotalInvoiceAmount",'Number',TextCodeTranslator.Translate("TaxReportLine.F.TotalInvoiceAmount")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("VatAmount",'Number',TextCodeTranslator.Translate("TaxReportLine.F.VatAmount")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.
+            GetQueryColumn(SessionLocator.LoggedUserPM.DontShowLocal ? 'StatusEnglishName' : 'StatusLocalName','Text',TextCodeTranslator.Translate("TaxReportLine.F.StatusEnglishName")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("JournalNumber",'Text',TextCodeTranslator.Translate("TaxReportLine.F.JournalNumber")));
+    } 
     DataSource = {
         pageSize: 30,
         rowCount: null,
