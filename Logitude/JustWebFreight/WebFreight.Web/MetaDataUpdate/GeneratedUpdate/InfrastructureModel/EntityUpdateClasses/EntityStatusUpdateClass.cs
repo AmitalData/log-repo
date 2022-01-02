@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class EntityStatusUpdateClass
    {  		
-		public const string HashString = "03aea37aa868b2da4f1b8278b37ec7ca";
+		public const string HashString = "8f515a74cb584f72ec8f8e3f5ab3039b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -90,7 +90,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    IsNew =  false,
 			      				    DBTableName =  "EntityStatus",
 			      				    ObjectTableSingular =  "Entity Status",
-			      				    ObjectTablePlural =  "EntityStatus",
+			      				    ObjectTablePlural =  "Entity Status",
 			      				    HasCustomFilter =  true,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,

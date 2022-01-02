@@ -6,7 +6,7 @@
   DBTableName="&quot;EntityStatus&quot;"
   DBTableOldNames="EntityStatus"
   ObjectTableSingular="&quot;Entity Status&quot;"
-  ObjectTablePlural="&quot;EntityStatus&quot;"
+  ObjectTablePlural="&quot;Entity Status&quot;"
   HasCustomFilter="true"
   HasCustomFields="false"
   HasHelper="false"

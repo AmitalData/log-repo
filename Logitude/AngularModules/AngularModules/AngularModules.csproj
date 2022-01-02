@@ -1939,7 +1939,6 @@
     <TypeScriptCompile Include="Infrastructure\EntityLists\ToggleList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\WebhookKeysList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMCustomCode\BusinessProcessQueuePMCustomCode.ts" />
-    <TypeScriptCompile Include="Infrastructure\EntityPMInitServices\EntityStatusPMInitService.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMInitServices\FeatureTogglePMInitService.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BIFoldersPermissionPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BIReportFolderPM.ts" />

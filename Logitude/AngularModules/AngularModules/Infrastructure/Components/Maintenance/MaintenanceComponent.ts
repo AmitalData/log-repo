@@ -29,13 +29,24 @@ export class MaintenanceComponent {
     LayoutDirection: string = 'ltr';
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
+
+    public EntityStatusToggle: boolean = false;
     constructor() {
+        this.SetEntityStatusToggle();
         this.ItemsSource = [];
         this.BuildPagesMenu();
         this.BuildMaintenanceMenu();
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
     }
 
+
+    private SetEntityStatusToggle() {
+        let entityStatusFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EST")[0];
+        if (entityStatusFeatureToggle) {
+            this.EntityStatusToggle = true;
+
+        }
+    }
     // Pages Menu
     public PagesMenu: Menu[];
     public SelectedMenu: Menu;
@@ -97,11 +108,7 @@ export class MaintenanceComponent {
        if (this.isTransmissionsPageVisible) {
             this.PagesMenu.push(new Menu("TRANS", "Transmissions"));
         }
-
-        if (FeatureLocator.HasFeaturePermession("General", "ENTITYSTATUS") ) {
-            this.PagesMenu.push(new Menu("TRANS", "ENTITYSTATUS"));
-        }
-
+  
 
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.BusinessProcessQueue") || FeatureLocator.HasFeaturePermession("General", "General.Features.BusinessProcessTeam") ||
             FeatureLocator.HasFeaturePermession("General", "General.Features.BusinessProcessBusinessRole")) {
@@ -116,7 +123,7 @@ export class MaintenanceComponent {
         var allMenusTables: MenusTablePM[] = window.MenusTables.filter(x => x.MenuTypeCode === "MTC").sort((a, b) => { return a.IndexOfOrder - b.IndexOfOrder });
 
         allMenusTables.forEach(item => {
-
+ 
             if (FeatureLocator.IsFeatureGrantedByUniqeCode(item.FeatureUniqeCode)) {
 
                 if (item.Code == "MTCB") {
@@ -141,6 +148,10 @@ export class MaintenanceComponent {
                         this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
                     }
                 }
+                 
+                else if (item.Code == "MTCO") {
+                    this.PushEntityStatusMenu(item);
+                }
 
                 else {
                     if (item.Code != "MTHT") {
@@ -164,6 +175,13 @@ export class MaintenanceComponent {
         this.BuildTransmissionsMenus();
         this.PageChanged(this.PagesMenu[0]);
     }
+
+    private PushEntityStatusMenu(item: MenusTablePM) {
+        if (SessionLocator.LoggedUserPM.IsCustomerCare && this.EntityStatusToggle) {
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        }
+    }
+
     private BuildSystemSettings() {
 
         if (FeatureLocator.HasFeaturePermession("General", "TERMOFUSERFEATUE")) {
