@@ -272,7 +272,8 @@
                     <td style="width: 5px;"><div></div></td>
 
                     <td style="width: 57px;">
-                        <button [attr.data-cy]="'CustomFieldtId'" class="Button" [disabled]="!IsButtonEnabled" (click)="CustomFieldsClicked()">Custom Fields</button>
+                        
+                        <button [attr.data-cy]="'CustomFieldtId'" class="Button" [disabled]="!IsButtonEnabled && !IsRulesCustomizationEnabled" (click)="CustomFieldsClicked()">Custom Fields</button>
                     </td>
 
                     <td style="width: 5px;"><div></div></td>
