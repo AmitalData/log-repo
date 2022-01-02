@@ -27,9 +27,8 @@ Given("open warehouse with {string} warehouse", (warehouseName) => {
     BaseActions.OpenWarehouse(warehouseName);
 });
 
-Given("fill with the following storage details for {string} Type", (type, dataTable) => {
+Given("fill the following storage details", (dataTable) => {
     let warehouseDetails = Assists.CreateInstance<WarehouseStorage>(dataTable, true);
-    cy.FillLogLov(BaseSelectors.WarehouseTypeCode, type, true);
     BaseActions.FillWarehouseStorageDetails(warehouseDetails);
 });
 
