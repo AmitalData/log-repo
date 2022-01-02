@@ -10,6 +10,7 @@ import { ShipmentSelectors } from "../../../selectors/Selectors"
 import { RestAPI } from '../../../../../Base/cypress/constants/RestAPI';
 import { URLs } from '../../../constants/URLs';
 import { BaseSelectors } from '../../../../../Base/cypress/selectors/BaseSelectors';
+import { ShipmentConstants } from "cypress/constants/constants";
 
 let shipmentDetails: ShipmentDetails;
 let DelivarytData: DelivaryDeteails;
@@ -46,12 +47,14 @@ Given("the user open the shipment and navigate to RoutingsTab workspace", () => 
   Actions.OpenShipment(shipmentNumber);
   cy.Navigate(ShipmentSelectors.RoutingsTab);
   cy.Navigate(ShipmentSelectors.AddDelivery);
+  //cy.click(BaseSelectors.Button,ShipmentConstants.AddDelivery)
   cy.get(".Button").contains("Add Delivery").click()
  
 });
 
 Given("unchecked the FullResponsibility",()=>{
-  cy.get("#CheckBox_0_8_LBL").click()
+  //cy.get("#CheckBox_0_8_LBL").click()
+  cy.Navigate(ShipmentSelectors.FullResponsibilityCheckBox,true)
 
 })
 
@@ -78,6 +81,7 @@ Given("save the Delivery", () => {
 
 When("click create Standalone Shipment",()=>{
   cy.get("#printbutton").contains(" Create Standalone Shipment ").click()
+  //cy.Click(ShipmentSelectors.Printbutton,ShipmentConstants.CreateStandaloneShipment,true)
 
 })
 
@@ -117,11 +121,12 @@ Then("the link of standalon should display",()=>{
 
 Then("a validation message with {string} error should appear", (validationMessage) => {
   BaseAssertion.AssertElementContain(BaseSelectors.SingleError, validationMessage)
-  
+
 });
 
 Then("the Create Standalone Shipment button Should be dim",()=>{
-  BaseAssertion.AssertElementNotVisible("#printbutton")
+  //BaseAssertion.AssertElementNotVisible("#printbutton")
+  BaseAssertion.AssertElementNotVisible(ShipmentSelectors.Printbutton)
   
 })
 

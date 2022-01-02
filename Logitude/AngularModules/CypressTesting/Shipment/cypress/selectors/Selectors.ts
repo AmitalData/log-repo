@@ -460,6 +460,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly StandaloneShipmentHyperlink=".HyperlinkButtonControl"
   public static readonly ComponentBusyIndicator = "div[id^='EditComponentBusyIndicator']:last";
   public static readonly FullResponsibilityCheckBox = "#CheckBox_0_8_LBL"
+  public static readonly Printbutton = "#printbutton"
   
 //#endregion
   //#region Shipment view

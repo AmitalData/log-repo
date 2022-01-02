@@ -7,5 +7,7 @@ export class ShipmentConstants {
     public static readonly Port = "Port"
     public static readonly CasualAddress = "CasualAddress"
     public static readonly AddDelivery = "Add Delivery"
+    public static readonly CreateStandaloneShipment = "Create Standalone Shipment"
+    
     
 }
