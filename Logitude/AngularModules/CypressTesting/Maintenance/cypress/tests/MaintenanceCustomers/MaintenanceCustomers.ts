@@ -55,7 +55,7 @@ When("open the customer", () => {
 });
 
 Then("the customer should open successfully", () => {
-    MaintenanceActions.AssertOpenCustomer()
+    MaintenanceActions.AssertOpenCard()
 });
 
 Then("the customer address should have the following details", (dataTable) => {

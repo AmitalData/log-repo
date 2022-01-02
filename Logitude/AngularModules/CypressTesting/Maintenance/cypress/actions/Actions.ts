@@ -1841,13 +1841,6 @@ export function AssertOpenCard() {
     AssertGetMenuButtonGroups();
     BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
 }
-
-export function AssertOpenCustomerCard() {
-    AssertCardGetSingle();
-    AssertGetMenuButtonGroups();
-    BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
-}
-
 export function AssertCardGetSingle() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
 }
