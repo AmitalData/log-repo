@@ -38,6 +38,7 @@ import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { InfrastructureDomainService, InActiveLogLovItem } from '../../../Infrastructure/Services/InfrastructureDomainService';
 
 @Component({
     selector: 'LogLov',
@@ -217,18 +218,15 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         this.UpdateSelectedEntity(this.SelectedItem?.Id);
     }
 
-    UpdateSelectedEntity(id:string) {
+    UpdateSelectedEntity(id: string) {
         var tablename = this.GetTableName();
-        this.entityPMService.getSingle(tablename, id).then((response: any) => {
-            response.subscribe((myResponse: any) => {
-                var entity = myResponse.Result;
-                entity["InActive"] = false;
-                this.entityPMService.update(tablename, entity).then((res: any) => {
-                    res.subscribe((response: any) => {
-                        CachedDataManager.RefreshTableData(tablename, true);
-                    });
-                });
-            });
+        var service = new InfrastructureDomainService();
+        var inActiveLogLovItem = new InActiveLogLovItem();
+        inActiveLogLovItem.TableName = tablename;
+        inActiveLogLovItem.SelectedItemId = id;
+        inActiveLogLovItem.TenantZeroSelectedEntityId = this.tenantZeroSelectedEntityId;
+        service.UpdateInActiveLogLovItem(inActiveLogLovItem).subscribe((myResponse: any) => {
+            CachedDataManager.RefreshTableData(tablename, true);
         });
     }
 
@@ -2057,7 +2055,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
     OnAllDataSelect(item: any) {
         this.tenantZeroSelectedEntityId = item.Id;
-        this.tenantZeroSelectedEntityTenant = item.Tenant;
         this.CopySelectedItem(item.Id)
     }
 
@@ -2219,7 +2216,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         logitudeWindow.WindowClosed.subscribe(($event: any) => this.OnSearchWindowClosed($event));
 
     }
-    private tenantZeroSelectedEntityTenant = null;
+
     private tenantZeroSelectedEntityId = null;
     OnSearchWindowClosed(args: any) {
         if (args && args != 'event') {  // No value returned
@@ -2235,6 +2232,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 id = args;
             }
             if (tenant == 0 && !this.IsTenantZeroSearch) {
+                this.tenantZeroSelectedEntityId = id;
                 this.CopySelectedItem(id);
             }
             else {
