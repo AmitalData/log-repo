@@ -134,6 +134,81 @@ export class SharedLogisticsSettingPM {
     public set IsShowAmountLocalCurrency(newValue: boolean) { if (this.isShowAmountLocalCurrency != newValue) { this.isShowAmountLocalCurrency = newValue; this.MarkAsDirty("IsShowAmountLocalCurrency"); } }
        
 	 
+    private isShipperShowContactTS: boolean;
+    public get IsShipperShowContactTS() { return this.isShipperShowContactTS; }
+    public set IsShipperShowContactTS(newValue: boolean) { if (this.isShipperShowContactTS != newValue) { this.isShipperShowContactTS = newValue; this.MarkAsDirty("IsShipperShowContactTS"); } }
+       
+	 
+    private isConsigneeShowContactTS: boolean;
+    public get IsConsigneeShowContactTS() { return this.isConsigneeShowContactTS; }
+    public set IsConsigneeShowContactTS(newValue: boolean) { if (this.isConsigneeShowContactTS != newValue) { this.isConsigneeShowContactTS = newValue; this.MarkAsDirty("IsConsigneeShowContactTS"); } }
+       
+	 
+    private isAgentShowContactTS: boolean;
+    public get IsAgentShowContactTS() { return this.isAgentShowContactTS; }
+    public set IsAgentShowContactTS(newValue: boolean) { if (this.isAgentShowContactTS != newValue) { this.isAgentShowContactTS = newValue; this.MarkAsDirty("IsAgentShowContactTS"); } }
+       
+	 
+    private isShipperNotExShowContactTS: boolean;
+    public get IsShipperNotExShowContactTS() { return this.isShipperNotExShowContactTS; }
+    public set IsShipperNotExShowContactTS(newValue: boolean) { if (this.isShipperNotExShowContactTS != newValue) { this.isShipperNotExShowContactTS = newValue; this.MarkAsDirty("IsShipperNotExShowContactTS"); } }
+       
+	 
+    private isConsigneeNotImShowContactTS: boolean;
+    public get IsConsigneeNotImShowContactTS() { return this.isConsigneeNotImShowContactTS; }
+    public set IsConsigneeNotImShowContactTS(newValue: boolean) { if (this.isConsigneeNotImShowContactTS != newValue) { this.isConsigneeNotImShowContactTS = newValue; this.MarkAsDirty("IsConsigneeNotImShowContactTS"); } }
+       
+	 
+    private isNotify1ShowContactTS: boolean;
+    public get IsNotify1ShowContactTS() { return this.isNotify1ShowContactTS; }
+    public set IsNotify1ShowContactTS(newValue: boolean) { if (this.isNotify1ShowContactTS != newValue) { this.isNotify1ShowContactTS = newValue; this.MarkAsDirty("IsNotify1ShowContactTS"); } }
+       
+	 
+    private isNotify2ShowContactTS: boolean;
+    public get IsNotify2ShowContactTS() { return this.isNotify2ShowContactTS; }
+    public set IsNotify2ShowContactTS(newValue: boolean) { if (this.isNotify2ShowContactTS != newValue) { this.isNotify2ShowContactTS = newValue; this.MarkAsDirty("IsNotify2ShowContactTS"); } }
+       
+	 
+    private isFreightForwardShowContactTS: boolean;
+    public get IsFreightForwardShowContactTS() { return this.isFreightForwardShowContactTS; }
+    public set IsFreightForwardShowContactTS(newValue: boolean) { if (this.isFreightForwardShowContactTS != newValue) { this.isFreightForwardShowContactTS = newValue; this.MarkAsDirty("IsFreightForwardShowContactTS"); } }
+       
+	 
+    private isColoaderShowContactTS: boolean;
+    public get IsColoaderShowContactTS() { return this.isColoaderShowContactTS; }
+    public set IsColoaderShowContactTS(newValue: boolean) { if (this.isColoaderShowContactTS != newValue) { this.isColoaderShowContactTS = newValue; this.MarkAsDirty("IsColoaderShowContactTS"); } }
+       
+	 
+    private isCustomAgentExShowContactTS: boolean;
+    public get IsCustomAgentExShowContactTS() { return this.isCustomAgentExShowContactTS; }
+    public set IsCustomAgentExShowContactTS(newValue: boolean) { if (this.isCustomAgentExShowContactTS != newValue) { this.isCustomAgentExShowContactTS = newValue; this.MarkAsDirty("IsCustomAgentExShowContactTS"); } }
+       
+	 
+    private isCustomAgentImShowContactTS: boolean;
+    public get IsCustomAgentImShowContactTS() { return this.isCustomAgentImShowContactTS; }
+    public set IsCustomAgentImShowContactTS(newValue: boolean) { if (this.isCustomAgentImShowContactTS != newValue) { this.isCustomAgentImShowContactTS = newValue; this.MarkAsDirty("IsCustomAgentImShowContactTS"); } }
+       
+	 
+    private isCustomCleaPointShowContactTS: boolean;
+    public get IsCustomCleaPointShowContactTS() { return this.isCustomCleaPointShowContactTS; }
+    public set IsCustomCleaPointShowContactTS(newValue: boolean) { if (this.isCustomCleaPointShowContactTS != newValue) { this.isCustomCleaPointShowContactTS = newValue; this.MarkAsDirty("IsCustomCleaPointShowContactTS"); } }
+       
+	 
+    private isConsolidatorShowContactTS: boolean;
+    public get IsConsolidatorShowContactTS() { return this.isConsolidatorShowContactTS; }
+    public set IsConsolidatorShowContactTS(newValue: boolean) { if (this.isConsolidatorShowContactTS != newValue) { this.isConsolidatorShowContactTS = newValue; this.MarkAsDirty("IsConsolidatorShowContactTS"); } }
+       
+	 
+    private isReleasingAgentShowContactTS: boolean;
+    public get IsReleasingAgentShowContactTS() { return this.isReleasingAgentShowContactTS; }
+    public set IsReleasingAgentShowContactTS(newValue: boolean) { if (this.isReleasingAgentShowContactTS != newValue) { this.isReleasingAgentShowContactTS = newValue; this.MarkAsDirty("IsReleasingAgentShowContactTS"); } }
+       
+	 
+    private isIssuingCarAgentShowContactTS: boolean;
+    public get IsIssuingCarAgentShowContactTS() { return this.isIssuingCarAgentShowContactTS; }
+    public set IsIssuingCarAgentShowContactTS(newValue: boolean) { if (this.isIssuingCarAgentShowContactTS != newValue) { this.isIssuingCarAgentShowContactTS = newValue; this.MarkAsDirty("IsIssuingCarAgentShowContactTS"); } }
+       
+	 
 
     public OldEntityPM: SharedLogisticsSettingPM;
 		

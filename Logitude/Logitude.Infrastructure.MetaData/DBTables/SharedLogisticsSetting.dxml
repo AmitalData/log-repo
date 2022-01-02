@@ -138,4 +138,96 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="IsShipperShowContactTS"
+    OldNames="IsShipperShowContactTelSMS,IsShowShipperContactTelSMS,IsShowContactTelSMS"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsConsigneeShowContactTS"
+    OldNames="IsConsigneeContactTS"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsAgentShowContactTS"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsShipperNotExShowContactTS"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsConsigneeNotImShowContactTS"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsNotify1ShowContactTS"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsNotify2ShowContactTS"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsFreightForwardShowContactTS"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsColoaderShowContactTS"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsCustomAgentExShowContactTS"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsCustomAgentImShowContactTS"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsCustomCleaPointShowContactTS"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsConsolidatorShowContactTS"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsReleasingAgentShowContactTS"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsIssuingCarAgentShowContactTS"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
 </Table>
