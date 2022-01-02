@@ -1,4 +1,4 @@
-@release @stable
+@devrelease
 Feature: Customer Create and Edit in Maintenance Module
     The user creates a new Customer and edit it from the Maintenance Module.
 
