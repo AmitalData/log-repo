@@ -85,12 +85,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             };
 
 
-
-        public void SyncShipmentMilstones(BulkDataPreperation bulkDataPreperation)
+        
+        public void BuildSyncShipmentMilstones(UpdateCargoTrackingRecords updateCargoTrackingRecords)
         {
 
-            var buildCargoArgs = bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs;
-            
+            var buildCargoArgs = updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs;
+
             // move fields from order to forwarding
             // & if fields of forwarding is empty, fill their values from order
             var sql = BuildScriptForUpdatingForwardingShipmentMilstonesFromShipmentOrder();
@@ -101,35 +101,74 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
 
             // customs
-            
+
             sql = BuildScriptForUpdatingCustomsShipmentMilstones();
-            ExecuteByTenant(bulkDataPreperation, sql, " where CustomShipment.Tenant =");
+            ExecuteByTenant(updateCargoTrackingRecords, sql, " where CustomShipment.Tenant =");
 
             //sql = BuildScriptForUpdatingForwardingShipmentMilstonesFromCustoms();
             //ExcuteSqlScript(buildCargoArgs, sql);
 
-            // current
-            //sql = BuildScriptToSetCurrentMistones();
-            sql = BuildScriptToSetCurrentMistonesByWeight(bulkDataPreperation);
-            ExcuteSqlScript(buildCargoArgs, sql);
 
+            SyncCurrentMistones(updateCargoTrackingRecords);
 
             //sql = DisconnectShipments(buildCargoArgs);
             //ExcuteSqlScriptForSourceDatabase(cargoArgs, sql);
         }
-
-        private void ExecuteByTenant(BulkDataPreperation bulkDataPreperation, string sql , string whereCondition)
+        public void SyncCurrentMistones(UpdateCargoTrackingRecords updateCargoTrackingRecords)
         {
-            foreach (var id in bulkDataPreperation.AllTenantIds)
+
+            var sql = BuildScriptToSetCurrentMistonesByWeight(updateCargoTrackingRecords);
+            ExcuteSqlScript(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs, sql);
+        }
+        public void IncremantalSyncShipmentMilstones(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs)
+        {
+
+            var buildCargoArgs = cargoTrackingDataBaseArgs.BuildCargoArgs;
+
+            var sql = BuildScriptForUpdatingForwardingShipmentMilstonesFromShipmentOrder();
+            sql = AddWhereInIds(sql, cargoTrackingDataBaseArgs.ForwardingShipmentsIds, " and ForwardingShipment.");
+            ExcuteSqlScript(buildCargoArgs, sql);
+
+
+
+            sql = BuildScriptForUpdatingCustomsShipmentMilstones();
+            sql = AddWhereInIds(sql, cargoTrackingDataBaseArgs.ForwardingShipmentsIds, " and ForwardingShipment.");
+            ExcuteSqlScript(buildCargoArgs, sql);
+
+
+            
+        }
+
+        private string AddWhereInIds(string sql, List<string> shipmentsIds, string prefix)
+        {
+            var inQuery = $" {prefix}EntityId in(";
+            if(shipmentsIds.Count <= 0)
             {
-                var queryWithTenantCondition = sql +" "+ whereCondition + " " + id;
-                ServiceHelper.ExecuteSql(queryWithTenantCondition, bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
+                inQuery += "'--')";
+                return inQuery;
+            }
+
+            foreach (var id in shipmentsIds)
+            {
+                inQuery += $"'{id}',";
+            }
+            inQuery = inQuery.Remove(inQuery.Length - 1);
+            inQuery += ")";
+            return sql + " " + inQuery;
+        }
+
+        private void ExecuteByTenant(UpdateCargoTrackingRecords updateCargoTrackingRecords, string sql, string whereCondition)
+        {
+            foreach (var id in updateCargoTrackingRecords.AllTenantIds)
+            {
+                var queryWithTenantCondition = sql + " " + whereCondition + " " + id;
+                ServiceHelper.ExecuteSql(queryWithTenantCondition, updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
             }
         }
 
-        private string BuildScriptToSetCurrentMistonesByWeight(BulkDataPreperation bulkDataPreperation)
+        private string BuildScriptToSetCurrentMistonesByWeight(UpdateCargoTrackingRecords updateCargoTrackingRecords)
         {
-            var Milestones = bulkDataPreperation.Milestones.Where(e => e.Weight != null).OrderByDescending(e => e.Weight).ToList();
+            var Milestones = updateCargoTrackingRecords.Milestones.Where(e => e.Weight != null).OrderByDescending(e => e.Weight).ToList();
             var doneCases = GetCurrentMistonesQueryDoneCases(Milestones);
             var dateCases = GetCurrentMistonesQueryDateCases(Milestones);
             var query = $@" update CargoTrackingShipments set 

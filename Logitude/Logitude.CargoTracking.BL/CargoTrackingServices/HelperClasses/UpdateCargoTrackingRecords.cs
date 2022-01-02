@@ -13,7 +13,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
         public int NumberRecordUpdated2 { get; set; }
         public bool IsUpadteWaterMark { get; set; }
         public RecordUpdated RecordUpdated { get; set; }
-        public List<CargoTrackingMilestoneList> MilestoneList { get; set; }
+        public List<CargoTrackingMilestoneList> Milestones { get; set; }
         public CargoTrackingUpdateDataBaseArgs CargoTrackingUpdateDataBaseArgs { get; set; }
 
         // first key = tenant , second key = milestone code , value = milestone code
