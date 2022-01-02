@@ -2561,7 +2561,7 @@ export function AssertUpdateAgent() {
 }
 //#endregion
 
-//#region Vat Deatailes
+//#region Vat Settings
 export function UpdateVATSettings() {
     cy.DefineRequestWait(RestAPI.PUT, Urls.Tenants, RequestAliases.PutVATSettings);
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
