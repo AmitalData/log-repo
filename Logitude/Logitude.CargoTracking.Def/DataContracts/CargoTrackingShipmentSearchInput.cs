@@ -21,7 +21,7 @@ namespace Logitude.CargoTracking.Def.DataContracts
         public bool EstimatedArrivalOnly { get; set; }
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
-        public bool OperationalClosedOnly { get; set; }
+        public bool OperationalOpenedOnly { get; set; }
 
     }
 }
