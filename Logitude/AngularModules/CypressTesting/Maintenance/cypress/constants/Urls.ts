@@ -25,9 +25,7 @@ export class Urls {
     public static readonly PutQuoteTemplateTextDesignPMs = "**/PutQuoteTemplateTextDesignPMs";
     public static readonly PutQuoteTemplateHeaderFields = "**/PutQuoteTemplateHeaderFields";
     public static readonly PutQuoteTemplateDetailsFields = "**/PutQuoteTemplateDetailsFields";
-
     public static readonly AccountingSettings = "**/accountingsettings"
-    
     public static readonly Tenants = "**/tenants"
     public static readonly PostChangePassword = '**/PostChangeUserPassword'
 
@@ -146,10 +144,10 @@ export class Urls {
     public static readonly Users = "**/users";
     public static readonly UsersGetSingle = "**/users/getsingle?**";
 
-    public static readonly Signature ="**/PutSaveDocumentTypeTemplate"
-
     public static readonly Customers = "**/customers";
     public static readonly CustomerGetSingle = "**/customers/getsingle?**";
+
+    public static readonly Report = " **/reports"
 
     public static GetFilterSearch(filterBy: string) {
         return '**/getbyfilters?**' + filterBy + '**'

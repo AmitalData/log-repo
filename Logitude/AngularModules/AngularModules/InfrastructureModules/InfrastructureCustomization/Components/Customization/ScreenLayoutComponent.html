@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .SimpleGridViewRow:hover {
         color: black;
@@ -99,7 +99,7 @@
                     <td>
                         <table style="border:solid 1px silver">
                             <tr>
-                                <td style="width:216px;border-right:dashed 1px silver;vertical-align: top;" *ngFor="let item of ScreenRows; let row = index" >
+                                <td attr.data-cy="{{'Column_' +index}}" style="width:216px;border-right:dashed 1px silver;vertical-align: top;" *ngFor="let item of ScreenRows; let row = index" >
                                     <div (drop)="onMyDrop($event,item,row)" dropzone="true" (dragover)="onMyDragEnter($event)" style="position:absolute;top:0;bottom:0;left:0;right:0;overflow:auto;">
                                         <div class="MyObjectField PreventSelect" *ngFor="let item1 of item.ObjectFieldPMs" draggable="true" (dragstart)="OnScreenFieldDragStart($event,item1)">
                                             <table>
@@ -155,21 +155,23 @@
                                     <table>
                                         <tr>
                                             <td>
-                                                <table>
-                                                    <tr style="height:1px;">
-                                                        <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px;">
-                                                            {{item != null ? item.FullNameTextCodeDefaultText : ''}}
-                                                        </td>
-                                                    </tr>
-                                                    <tr style="height:1px;">
-                                                        <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px;">
-                                                            ({{item != null ? item.PMPropertyPath : ''}})
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td></td>
-                                                    </tr>
-                                                </table>
+                                                <div attr.data-cy="{{'Column_' + item.FieldName}}">
+                                                    <table>
+                                                        <tr style="height:1px;">
+                                                            <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px;">
+                                                                {{item != null ? item.FullNameTextCodeDefaultText : ''}}
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="height:1px;">
+                                                            <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px;">
+                                                                ({{item != null ? item.PMPropertyPath : ''}})
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                        </tr>
+                                                    </table>
+                                                    </div>
                                             </td>
                                             <!--<td style="width:30px;height:60px;">
                                                 <img class="DeleteButton RightCenter" style="right: 4px;" src="Images/RedX.png" (click)="OnDeleteValue()" />

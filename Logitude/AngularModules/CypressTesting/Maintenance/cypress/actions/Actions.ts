@@ -40,7 +40,8 @@ import { SpecialServicesTypeDetails } from "../models/SpecialServicesTypeDetails
 import { MoveTypeDetails } from "../models/MoveTypeDetails";
 import { ShipmentSubTypeDetails } from "../models/ShipmentSubTypeDetails";
 import { CreditCardTypeDetails } from "../models/CreditCardTypeDetails";
-import {SignatureDetails} from "../models/SignatureDetails";
+import { VATSettingsDetails } from "../models/VATSettingsDetails";
+
 
 //#region variables
 let CityCode = null;
@@ -839,6 +840,7 @@ export function AssertVoidInvoiceMessage(Message: string) {
     cy.Click(BaseSelectors.Button, BaseSelectors.ContainsOK)
 }
 //#endregion
+
 //#region Customer Settings
 export function FillCustomerSettingsDetails(customerSettingsDetails: CustomerSettingsDetails) {
     FillCheckBoxProcess(MaintenanceSelectors.IsCustomerTelephoneRequiredCheckBox, customerSettingsDetails.IsCustomerTelphoneRequired)
@@ -927,6 +929,32 @@ export function AssertActivateCustomer() {
 
 function DefinePutCustomer() {
     cy.DefineRequestWait(RestAPI.PUT, URLs.Customers, RequestAliases.Customers)
+}
+
+export function FillCustomerContactDetails(CustomerConatactDetails: ContactDetails) {
+    FillCardContactDetails(CustomerConatactDetails)
+}
+export function CreateCustomer() {
+    CreateCard()
+}
+export function AssertCreateCustomer() {
+    AssertCreateCard(Constants.Customer)
+}
+
+export function AssertSearchCustomer(companyName: string) {
+    AssertSearchCard(companyName)
+}
+export function AssertCustomerAddress(customerDetails: CardDetails) {
+    cy.Click(MaintenanceSelectors.CustomerAddressesTab, null, true)
+    AssertCardAddress(customerDetails)
+}
+export function FillCustomerBillingTab(customerBillingTabDetails: CardBillingTabDetails) {
+    cy.Click(MaintenanceSelectors.CustomerBillingTab, null, true)
+    cy.FillLogTextBox(MaintenanceSelectors.CustomerBankName, customerBillingTabDetails.BankName)
+    cy.FillLogTextBox(MaintenanceSelectors.CustomerIBANNumber, customerBillingTabDetails.IBANNo)
+}
+export function AssertUpdateCustomer() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutShipperConsignee, 200)
 }
 //#endregion
 
@@ -1663,7 +1691,22 @@ export function FillCardDetails(cardDetails: CardDetails, codeDigits: number) {
     cy.FillLogTextBox(MaintenanceSelectors.CardCity, cardDetails.City);
     cy.FillLogLov(MaintenanceSelectors.CardCountry, cardDetails.Country, true);
     cy.FillLogLov(MaintenanceSelectors.CardState, cardDetails.State, true);
+    cy.FillLogTextBox(MaintenanceSelectors.CardVATNo, cardDetails.VATNo);
 }
+
+export function FillCustomerCardDetails(cardDetails: CardDetails) {
+    cy.FillLogTextBox(MaintenanceSelectors.CardCompanyName, cardDetails.CompanyName);
+    cy.FillLogTextBox(MaintenanceSelectors.CardVATNo, cardDetails.VATNo);
+    cy.FillLogTextBox(MaintenanceSelectors.CardPhone, cardDetails.Phone);
+    cy.FillLogTextBox(MaintenanceSelectors.CardLocalName, cardDetails.LocalName);
+    cy.FillLogTextBox(MaintenanceSelectors.CardFax, cardDetails.Fax);
+    cy.FillLogTextBox(MaintenanceSelectors.CardAddress1, cardDetails.Address1);
+    cy.FillLogTextBox(MaintenanceSelectors.CardZipCode, cardDetails.Zip);
+    cy.FillLogTextBox(MaintenanceSelectors.CardCity, cardDetails.City);
+    cy.FillLogLov(MaintenanceSelectors.CardCountry, cardDetails.Country, true);
+    cy.FillLogLov(MaintenanceSelectors.CardState, cardDetails.State, true);
+}
+
 export function FillCardContactDetails(cardConatactDetails: ContactDetails) {
     FillCheckBoxProcess(MaintenanceSelectors.CardContactCheckBox + BaseSelectors.LastElement, cardConatactDetails.AddContact)
     cy.FillLogTextBox(MaintenanceSelectors.CardContactEnglishName, cardConatactDetails.EnglishName);
@@ -1685,6 +1728,15 @@ function DefinePostCardRequest() {
 export function AssertCreateCard(CardType: string) {
     AssertPostCard(CardType)
     AssertGetByFilters()
+}
+
+export function FillVATSettingsDetails(vatSettingsDetails: VATSettingsDetails) {
+    cy.Click(MaintenanceSelectors.VATAppliesFor, null, true)
+    cy.FillLogLov(MaintenanceSelectors.VatFormatTypeCode, vatSettingsDetails.VATFormatType, true);
+    cy.FillLogLov(MaintenanceSelectors.VATIsMandatoryFor, vatSettingsDetails.IsMandatoryFor, true);
+    cy.FillLogTextBox(MaintenanceSelectors.VatSize, vatSettingsDetails.VatSize);
+    //cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
+ 
 }
 
 export function AssertPostCard(CardType: string) {
@@ -1728,6 +1780,11 @@ export function AssertMockPostCard() {
 export function SearchCard() {
     let cardCode = CardCode
     SearchCardByValue(cardCode)
+}
+
+
+export const DefineCardViewsGetFilterSearch = (cardCode: string) => {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(CardCode), RequestAliases.GetFilterSearch);
 }
 
 export function SearchCardByValue(Card: string) {
@@ -1873,12 +1930,14 @@ export function FillCustomAgentsDetails(customAgentDetails: CardDetails) {
 export function FillCustomAgentsContactDetails(customAgentConatactDetails: ContactDetails) {
     FillCardContactDetails(customAgentConatactDetails)
 }
+
 export function CreateCustomAgent() {
     CreateCard()
 }
 export function AssertCreateCustomAgent() {
     AssertCreateCard(Constants.CustomAgent)
 }
+
 export function CreateCustomAgentMockCreate() {
     CreateCardMockCreate()
 }
@@ -1924,6 +1983,11 @@ export function FillCustomAgentGeneralTabNotes(Notes: string) {
     cy.Click(MaintenanceSelectors.CustomAgentGeneralTab, null, true)
     cy.FillLogTextBox(MaintenanceSelectors.CustomAgentNotes, " ")
     cy.FillLogTextBox(MaintenanceSelectors.CustomAgentNotes, Notes)
+}
+export function FillCustomerGeneralTabStorageFreeDays(StorageFreeDays: string) {
+    cy.Click(MaintenanceSelectors.CustomerGeneralTab, null, true)
+    cy.FillLogTextBox(MaintenanceSelectors.CustomerStorageFreeDays, "")
+    cy.FillLogTextBox(MaintenanceSelectors.CustomerStorageFreeDays, StorageFreeDays)
 }
 
 export function FillCustomAgentBillingTab(customAgentBillingTabDetails: CardBillingTabDetails) {
@@ -2244,7 +2308,6 @@ export function AssertOpenMoveType() {
 
 export function UpdateMoveType() {
     DefinePutMoveTypeRequest()
-    
     cy.Click(MaintenanceSelectors.MoveTypeSaveButton, null)
 }
 function DefinePutMoveTypeRequest() {
@@ -2469,11 +2532,8 @@ export function UpdateCustomer() {
     cy.DefineRequestWait(RestAPI.PUT, Urls.Customers, RequestAliases.PutShipperConsignee);
     cy.Click(MaintenanceSelectors.CustomerSaveButton, null);
 }
-
-export function AssertUpdateCustomer() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PutShipperConsignee, 200)
-}
 //#endregion
+
 
 //#region Company Address Settings
 export function UpdateAgent() {
@@ -2485,3 +2545,14 @@ export function AssertUpdateAgent() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutAgent, 200);
 }
 //#endregion
+
+//#region Vat Settings
+export function UpdateVATSettings() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.Tenants, RequestAliases.PutVATSettings);
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+
+export function AssertUpdateVATSettings() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutVATSettings, 200)
+}
+ //#endregion

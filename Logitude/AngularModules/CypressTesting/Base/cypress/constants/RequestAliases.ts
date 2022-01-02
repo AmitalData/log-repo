@@ -101,7 +101,10 @@ export class RequestAliases {
     public static readonly AccountingSettings = "accountingsettings"
 
     public static readonly Tenants = "Tenants"
-
+    
+   //Report
+    public static readonly PostReport = "PostReport"
+    public static readonly PutReport = "PutReport"
 
     public static readonly PostCountry = "PostCountry"
     public static readonly PutCountry = "PutCountry"
@@ -298,5 +301,8 @@ export class RequestAliases {
     public static readonly DocumentTypeTemplateExtended = "DocumentTypeTemplateExtended"
     public static readonly DocumentTypeExtended = "DocumentTypeExtended"
     public static readonly DocumentTypeCustomField = "DocumentTypeCustomField"
+
+    //VAT
+    public static readonly PutVATSettings = "PutVATSettings"
 
 }
