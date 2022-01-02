@@ -42,11 +42,12 @@ Then("the Reports should appear successfully", () => {
 Given("The user create a new message template with the following details", (dataTable) => {
    reportsDetails = Assists.CreateInstance<ReportsDetails>(dataTable, true);
    Actions.FillReportTemplate(reportsDetails)
+
 });
 
 When("save Report", () => {
-    
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainSave);
+     
 });
 
 Then("the message template should update successfully", (dataTable) => {

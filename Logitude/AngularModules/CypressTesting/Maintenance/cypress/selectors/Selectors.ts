@@ -345,5 +345,6 @@ export class MaintenanceSelectors extends RegexSelectors {
   public static readonly ReportTemplateDescription ="#ReportsTemplate_Description"
   public static readonly ReportEventTab = "#ReportTHEvents"
   public static readonly AddTemplate = "[data-cy='AddMessageTemplate']"
+  public static readonly SaveReport= "#Report-Save"
   //#endregion
 }

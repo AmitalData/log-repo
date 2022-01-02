@@ -83,8 +83,10 @@ export function FillReportTemplate(reportsDetails: ReportsDetails) {
     cy.Click(MaintenanceSelectors.AddTemplate, null, true)
     cy.FillLogTextBox(MaintenanceSelectors.ReportTemplateDescription, reportsDetails.Description)
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK); 
+    cy.Click(MaintenanceSelectors.SaveReport, null, true)
 }
 
 export const CheckEvents = () => {
     cy.Click(MaintenanceSelectors.ReportEventTab, null, true)
 }
+
