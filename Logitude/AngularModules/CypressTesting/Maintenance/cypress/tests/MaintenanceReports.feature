@@ -19,4 +19,6 @@ Feature: Create, Search, Open and Edit a Report from Maintenance
           | Description | Cypress Report |
         When save Report
         Then the message template should update successfully
-            | Report Updated | Customer Inactivated |
+          | Event                 | Notes |
+          | Report Updated        |       |
+          |Customer Inactivated   |       |    

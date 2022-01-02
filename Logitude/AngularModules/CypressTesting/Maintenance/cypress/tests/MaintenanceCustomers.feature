@@ -14,7 +14,7 @@ Feature: Customer Create and Edit in Maintenance Module
             | Zip         | 0000                      |
             | Phone       | 059055050                 |
             | Fax         | 0590000555                |
-            | VATNo       | 12345                         |
+            | VATNo       | 12345                     |
         And a customer contact with the following details
             | AddContact    | Yes         |
             | EnglishName   | TestContact |
@@ -41,15 +41,17 @@ Feature: Customer Create and Edit in Maintenance Module
             | State       | Alaska                    |
             | Zip         | 0000                      |
             | Phone       | 059055050                 |
-            | Fax         | 0590000555                | 
-    
+            | Fax         | 0590000555                |
+
     Scenario: Edit the customer
         Given "1999" as customer StorageFreeDays
         And inactivate the customer
         And fill the following customer Billing details
-            | Bankaddress | customer Bank Address|
-            | IBANNo      | zero Bank            |
+            | Bankaddress | customer Bank Address |
+            | IBANNo      | zero Bank             |
         When update customer
         Then the customer should update successfully
         And the following event should appear in events tab
-            | Customer Updated | Customer Inactivated |
+            | Event                | Notes |
+            | Customer Deactivated |       |
+            | Customer Updated     |       |

@@ -1,6 +1,7 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { MaintenanceSelectors } from "../../selectors/Selectors";
 import * as MaintenanceActions from "../../actions/Actions";
+import * as GeneralActions from "../../actions/BaseActions";
 import { CardDetails } from "../../models/CardDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { ContactDetails } from "../../models/ContactDetails";
@@ -10,23 +11,21 @@ import * as BaseActions from "../../../../Base/cypress/actions/Actions"
 import { Constants } from '../../constants/Constants'
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
 
-
-
 let customerDetails: CardDetails
 let contactDetails: ContactDetails
 let customerBillingTabDetails: CardBillingTabDetails
-
+let code = null
 
 //#region Create new customer
-Given("the user logged in and open {string} in maintenance menu", (customerTabItem) => {
+Given("the user logged in and open {string} in maintenance menu", (dataTable) => {
     cy.Login();
-    MaintenanceActions.OpenMaintenanceItemFromMaintenanceMenu(customerTabItem, MaintenanceSelectors.MaintenanceItemCustomer);
+    MaintenanceActions.OpenMaintenanceItemFromMaintenanceMenu(dataTable, MaintenanceSelectors.MaintenanceItemCustomer);
 });
 
 Given("a customer with the following details", (dataTable) => {
     customerDetails = Assists.CreateInstance<CardDetails>(dataTable, true);
     MaintenanceActions.OpenNewWizard("Customer");
-    MaintenanceActions.FillCardDetails(customerDetails,null)
+    MaintenanceActions.FillCardDetails(customerDetails, null)
 });
 
 Given("a customer contact with the following details", (dataTable) => {
@@ -42,13 +41,18 @@ Then("the customer should create successfully", () => {
     MaintenanceActions.AssertCreateCustomer()
 });
 //#endregion
+
+//#region Search Customer
 When("search customer", () => {
-    MaintenanceActions.SearchCustomerCard();
+    code = MaintenanceActions.getCardCode()
+    GeneralActions.Search(code)
 });
 
 Then("the customer should appear successfully", () => {
-    MaintenanceActions.AssertSearchCustomer(customerDetails.CompanyName);
+    GeneralActions.AssertSearch(code);
 });
+//#endregion
+
 //#region Open the customer
 When("open the customer", () => {
     MaintenanceActions.OpenCard(Constants.Customer)
@@ -62,7 +66,6 @@ Then("the customer address should have the following details", (dataTable) => {
     customerDetails = Assists.CreateInstance<CardDetails>(dataTable, true);
     MaintenanceActions.AssertCustomerAddress(customerDetails)
 });
-
 //#endregion
 
 //#region Edit the customer
@@ -93,3 +96,4 @@ Then("the following event should appear in events tab", (dataTable) => {
     let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
     BaseActions.ValidateEventsTab(eventDetailsList, MaintenanceSelectors.CustomerEventsTab);
 });
+//#endregion

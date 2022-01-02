@@ -940,12 +940,7 @@ export function CreateCustomer() {
 export function AssertCreateCustomer() {
     AssertCreateCard(Constants.Customer)
 }
-export const SearchCustomerCard = () => {
-    let cardCode = CardCode;
-    DefineCardViewsGetFilterSearch(cardCode);
-    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, cardCode);
-    AssertCardViewsGetByFilters();
-}
+
 export function AssertSearchCustomer(companyName: string) {
     AssertSearchCard(companyName)
 }

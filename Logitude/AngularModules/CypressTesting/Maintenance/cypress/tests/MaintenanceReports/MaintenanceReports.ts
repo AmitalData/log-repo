@@ -22,7 +22,6 @@ Given("a Report with the following details", (dataTable) => {
     Actions.FillReportstDetails(reportsDetails)
 });
 
-
 When("create Report", () => {
     Actions.CreateReport();
 });
@@ -30,7 +29,6 @@ When("create Report", () => {
 Then("the Report should create successfully", () => {
     Actions.AssertCreateReport()
 });
-
 
 When("search for Report", () => {
     Actions.SearchReport();
@@ -42,15 +40,12 @@ Then("the Reports should appear successfully", () => {
 });
 
 Given("The user create a new message template with the following details", (dataTable) => {
-    // ToDo need to add id for Add Button of Template Description
    reportsDetails = Assists.CreateInstance<ReportsDetails>(dataTable, true);
    Actions.FillReportTemplate(reportsDetails)
 });
 
-Given("Add new data field", (dataTable) => {
-});
-
 When("save Report", () => {
+    
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainSave);
 });
 
