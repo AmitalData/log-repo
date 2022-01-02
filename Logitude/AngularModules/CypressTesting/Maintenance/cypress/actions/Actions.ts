@@ -2553,6 +2553,17 @@ export function AssertUpdateCustomer() {
 }
 //#endregion
 
+//#region Vat Deatailes
+export function UpdateVATSettings() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.Tenants, RequestAliases.PutVATSettings);
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+
+export function AssertUpdateVATSettings() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutVATSettings, 200)
+}
+ //#endregion
+
 //#region Company Address Settings
 export function UpdateAgent() {
     cy.DefineRequestWait(RestAPI.PUT, Urls.Agents, RequestAliases.PutAgent);
@@ -2563,12 +2574,5 @@ export function AssertUpdateAgent() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutAgent, 200);
 }
 
-export function UpdateVATSettings() {
-    cy.DefineRequestWait(RestAPI.PUT, Urls.Tenants, RequestAliases.PutVATSettings);
-    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
-}
 
-export function AssertUpdateVATSettings() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PutVATSettings, 200)
-}
 //#endregion
