@@ -18,6 +18,7 @@ let shipmentNumber: string;
 Given("the user logged in and navigates to shipments workspace", () => {
   cy.Login()
   Actions.NavigatesToShipmentsWorkspace()
+
 });
 
 Given("a direct shipment with the following details", (dataTable) => {
@@ -25,16 +26,20 @@ Given("a direct shipment with the following details", (dataTable) => {
   Actions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
   Actions.FillShipmentWizardsFields(shipmentDetails);
   cy.FillLogLov(ShipmentSelectors.ShipmentShipper, shipmentDetails.Shipper, true)
+
 });
 
 When("create shipment", () => {
   Actions.CreateShipment(shipmentDetails.ShipmentLevel);
+
 });
 
 Then("the shipment should create successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
     shipmentNumber = interception.response.body.ShipmentNumber
+
   })
+
 });
 
 Given("the user open the shipment and navigate to RoutingsTab workspace", () => {
@@ -44,8 +49,10 @@ Given("the user open the shipment and navigate to RoutingsTab workspace", () => 
   cy.get(".Button").contains("Add Delivery").click()
  
 });
+
 Given("unchecked the FullResponsibility",()=>{
   cy.get("#CheckBox_0_8_LBL").click()
+
 })
 
 Given("the user in the shipment's  routings tab",()=>{
@@ -53,6 +60,7 @@ Given("the user in the shipment's  routings tab",()=>{
   cy.Navigate(ShipmentSelectors.RoutingToggle,true)
   cy.Navigate(ShipmentSelectors.Delivery,true)
   cy.get(".Button").contains("Add Delivery").click()
+
  })
 
 Given("add a new Delivery leg with the following details", (dataTable) => {
@@ -68,15 +76,15 @@ Given("save the Delivery", () => {
   
 });
 
-
-
 When("click create Standalone Shipment",()=>{
   cy.get("#printbutton").contains(" Create Standalone Shipment ").click()
+
 })
 
 When("create standalone shipment",()=>{
  StandaloneAction.CreateStandaloneShipment()
  cy.wait(100)
+
 })
 
 Then("a domestic inland shipment should create", () => {
@@ -84,25 +92,32 @@ Then("a domestic inland shipment should create", () => {
   cy.wait(5000)
   
 });
+
 Then("the cancel ,operational close Shipment,convert to custom file and Send Response action in more button shouldn't be dim",()=>{
   cy.Click(BaseSelectors.ToggleButtonClass + BaseSelectors.LastElement, null)
   StandaloneAction.AssertShipmenteMenuButtonsEnabled()
+
 })
 
 Then("all other actions should be dim",()=>{
   StandaloneAction.AssertShipmenteMenuButtonsDisabled()
+
 })
+
 Then("all fields should be dim in Delivery window",()=>{
   cy.Navigate(ShipmentSelectors.Backbutton+BaseSelectors.LastElement,true)
   StandaloneAction.AssertShipmenteDelivaryWindowDisabled()
+
 })
 
 Then("the link of standalon should display",()=>{
   BaseAssertion.AssertElementExist(ShipmentSelectors.StandaloneShipmentHyperlink)
+
 })
 
 Then("a validation message with {string} error should appear", (validationMessage) => {
   BaseAssertion.AssertElementContain(BaseSelectors.SingleError, validationMessage)
+  
 });
 
 Then("the Create Standalone Shipment button Should be dim",()=>{

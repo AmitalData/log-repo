@@ -89,7 +89,7 @@ Feature: Create standalone shipment from Delivery
             | FromPartner | Testagent          |
             | To          | CasualAddress      |
             | ToCountry   | State Of Palestine |
-            | ToCity      | Ramallah           |
+            | ToCity      | Bethlehem          |
         And save the Delivery
         When create standalone shipment
         Then a domestic inland shipment should create
