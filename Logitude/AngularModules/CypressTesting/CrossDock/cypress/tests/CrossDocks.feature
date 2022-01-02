@@ -27,7 +27,7 @@ Feature: Cross Docks Entries and Releases
     Scenario: Add cross dock entry
         Given the user in Connected Entities tab
         And a corss dock "Entry" with the following details
-            | Warehouse         | TSWHE      |
+            | Warehouse         | TSWH       |
             | ExpectedEntryDate | 15/08/2021 |
             | ExpectedEntryTime | 13:00      |
         When create cross dock entry
@@ -53,7 +53,7 @@ Feature: Cross Docks Entries and Releases
 
     Scenario: Add cross dock entry
         Given a corss dock "Entry" with the following details
-            | Warehouse         | TSWHE      |
+            | Warehouse         | TSWH       |
             | ExpectedEntryDate | 15/08/2021 |
             | ExpectedEntryTime | 14:00      |
         When create cross dock entry
@@ -77,7 +77,7 @@ Feature: Cross Docks Entries and Releases
     Scenario: Add cross dock release
         Given the user in Connected Entities tab
         And a corss dock "Release" with the following details
-            | Warehouse           | TSWHE                  |
+            | Warehouse           | TSWH                   |
             | ExpectedReleaseDate | 15/08/2021             |
             | ExpectedReleaseTime | 13:00                  |
             | Package             | PackageWithEntryNumber |
@@ -109,7 +109,7 @@ Feature: Cross Docks Entries and Releases
 
     Scenario: Add cross dock release
         Given a corss dock "Release" with the following details
-            | Warehouse           | TSWHE                  |
+            | Warehouse           | TSWH                   |
             | ExpectedReleaseDate | 15/08/2021             |
             | ExpectedReleaseTime | 14:00                  |
             | Package             | PackageWithEntryNumber |
