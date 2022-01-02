@@ -89,27 +89,29 @@ namespace Unifreight.BL.BL
         {
             var MainContext = GetAmitalContext(tenant);
 
+            IQueryable<QPorts> baseQ;
+
             if (DIRECTIONID == "E" && TRANSPORTMODEID == "A")
-                return (from port in MainContext.ETBPORTs
-                        join country in MainContext.CTBCOUNTRIES on port.COUNTRYID equals country.COUNTRYID
-                        select new Ports { Name = port.NAMEENG, Code = port.PORTID, CountryName = country.NAMEENG, SEARCHENG = port.SEARCHENG });
+                baseQ = (from port in MainContext.ETBPORTs select new QPorts { NAMEENG = port.NAMEENG, PORTID = port.PORTID, COUNTRYID = port.COUNTRYID, SEARCHENG = port.SEARCHENG });
 
             else if (DIRECTIONID == "E" && TRANSPORTMODEID == "O")
-                return (from port in MainContext.MTBPORTs
-                        join country in MainContext.CTBCOUNTRIES on port.COUNTRYID equals country.COUNTRYID
-                        select new Ports { Name = port.NAMEENG, Code = port.PORTID, CountryName = country.NAMEENG, SEARCHENG = port.SEARCHENG });
+                baseQ = (from port in MainContext.MTBPORTs select new QPorts { NAMEENG = port.NAMEENG, PORTID = port.PORTID, COUNTRYID = port.COUNTRYID, SEARCHENG = port.SEARCHENG });
 
             else if (DIRECTIONID == "I" && TRANSPORTMODEID == "A")
-                return (from port in MainContext.ITBPORTs
-                        join country in MainContext.CTBCOUNTRIES on port.COUNTRYID equals country.COUNTRYID
-                        select new Ports { Name = port.NAMEENG, Code = port.PORTID, CountryName = country.NAMEENG, SEARCHENG = port.SEARCHENG });
+                baseQ = (from port in MainContext.ITBPORTs select new QPorts { NAMEENG = port.NAMEENG, PORTID = port.PORTID, COUNTRYID = port.COUNTRYID, SEARCHENG = port.SEARCHENG });
 
             else if (DIRECTIONID == "I" && TRANSPORTMODEID == "O")
-                return (from port in MainContext.RTBPORTs
-                        join country in MainContext.CTBCOUNTRIES on port.COUNTRYID equals country.COUNTRYID
-                        select new Ports { Name = port.NAMEENG, Code = port.PORTID, CountryName = country.NAMEENG, SEARCHENG = port.SEARCHENG });
+                baseQ = (from port in MainContext.RTBPORTs select new QPorts { NAMEENG = port.NAMEENG, PORTID = port.PORTID, COUNTRYID = port.COUNTRYID, SEARCHENG = port.SEARCHENG });
 
-            return null;
+            else 
+                return null;
+
+            baseQ  = baseQ.Where(port => port.COUNTRYID != null);
+
+            IQueryable<Ports> q = baseQ.Join(MainContext.CTBCOUNTRIES, port => port.COUNTRYID, country => country.COUNTRYCODE,
+                 (port, country) => new Ports { Name = port.NAMEENG, Code = port.PORTID, CountryName = country.NAMEENG, SEARCHENG = port.SEARCHENG });
+
+            return q;
         }
 
         private IQueryable<Ports> AddFilter(IQueryable<Ports> query, QueryOperations queryOperations)
