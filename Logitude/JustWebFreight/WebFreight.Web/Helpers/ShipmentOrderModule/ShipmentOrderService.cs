@@ -30,7 +30,7 @@ namespace WebFreight.Web.Helpers.ShipmentOrderModule
         public ShipmentOrderPM Create(ShipmentOrder entity)
         {
             ShipmentOrderPM shipmentOrderPM = ShipmentOrderDataMappingAndValidatin(entity, ChangeSetOperation.Insert);
-            shipmentOrderUpdateService.Update(shipmentOrderPM,true);
+            shipmentOrderUpdateService.Update(shipmentOrderPM, true);
             return shipmentOrderPM;
         }
         public ShipmentOrderPM Update(ShipmentOrder entity)
@@ -66,7 +66,7 @@ namespace WebFreight.Web.Helpers.ShipmentOrderModule
             ShipmentOrder shipmentOrder = new ShipmentOrderQueryService(tenant).GetByOrderNumber(entity.OrderNumber, tenant);
             entity.Id = shipmentOrder.Id;
             entity.SecurityKey = shipmentOrder.SecurityKey;
-            entity.IsCancelled = shipmentOrder.IsCancelled;
+            entity.IsCancelled = !shipmentOrder.IsCancelled ? false : entity.IsCancelled;
         }
 
         private bool IsNewEntity(ChangeSetOperation changeSetOp)
