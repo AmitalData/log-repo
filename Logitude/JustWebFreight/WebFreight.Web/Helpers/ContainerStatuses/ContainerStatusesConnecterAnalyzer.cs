@@ -1559,11 +1559,11 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 return AnalyzeXMLDateValue(ATD_actual, pol_loc_timezone);
             }
-            else if (!string.IsNullOrEmpty(ATD_detected))
-            {
-                return AnalyzeXMLDateValue(ATD_detected, pol_loc_timezone);
+            //else if (!string.IsNullOrEmpty(ATD_detected))
+            //{
+            //    return AnalyzeXMLDateValue(ATD_detected, pol_loc_timezone);
 
-            }
+            //}
             return null;
         }
         private DateTime? ComputeEstimatedTrans1VesselArrival()
@@ -1585,10 +1585,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 return AnalyzeXMLDateValue(tsp1_vslarrival_actual, tsp1_loc_timezone);
             } 
-            else if (!string.IsNullOrEmpty(tsp1_vslarrival_detected))
-            {
-                return AnalyzeXMLDateValue(tsp1_vslarrival_detected, tsp1_loc_timezone);
-            }
+            //else if (!string.IsNullOrEmpty(tsp1_vslarrival_detected))
+            //{
+            //    return AnalyzeXMLDateValue(tsp1_vslarrival_detected, tsp1_loc_timezone);
+            //}
 
             return null;
         }
@@ -1652,10 +1652,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 return AnalyzeXMLDateValue(tsp1_vsldeparture_actual, tsp1_loc_timezone);
             }
-            else if (!string.IsNullOrEmpty(tsp1_vsldeparture_detected))
-            {
-                return AnalyzeXMLDateValue(tsp1_vsldeparture_detected, tsp1_loc_timezone);
-            }
+            //else if (!string.IsNullOrEmpty(tsp1_vsldeparture_detected))
+            //{
+            //    return AnalyzeXMLDateValue(tsp1_vsldeparture_detected, tsp1_loc_timezone);
+            //}
 
             return null;
         }
@@ -1678,10 +1678,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 return AnalyzeXMLDateValue(tsp2_vslarrival_actual, tsp2_loc_timezone);
             }
-            else if (!string.IsNullOrEmpty(tsp2_vslarrival_detected))
-            {
-                return AnalyzeXMLDateValue(tsp2_vslarrival_detected, tsp2_loc_timezone);
-            }
+            //else if (!string.IsNullOrEmpty(tsp2_vslarrival_detected))
+            //{
+            //    return AnalyzeXMLDateValue(tsp2_vslarrival_detected, tsp2_loc_timezone);
+            //}
 
             return null;
         }
@@ -1745,10 +1745,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 return AnalyzeXMLDateValue(tsp2_vsldeparture_actual, tsp2_loc_timezone);
             }
-            else if (!string.IsNullOrEmpty(tsp2_vsldeparture_detected))
-            {
-                return AnalyzeXMLDateValue(tsp2_vsldeparture_detected, tsp2_loc_timezone);
-            }
+            //else if (!string.IsNullOrEmpty(tsp2_vsldeparture_detected))
+            //{
+            //    return AnalyzeXMLDateValue(tsp2_vsldeparture_detected, tsp2_loc_timezone);
+            //}
 
             return null;
         }
@@ -1771,10 +1771,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 return AnalyzeXMLDateValue(tsp3_vslarrival_actual, tsp3_loc_timezone);
             }
-            else if (!string.IsNullOrEmpty(tsp3_vslarrival_detected))
-            {
-                return AnalyzeXMLDateValue(tsp3_vslarrival_detected, tsp3_loc_timezone);
-            }
+            //else if (!string.IsNullOrEmpty(tsp3_vslarrival_detected))
+            //{
+            //    return AnalyzeXMLDateValue(tsp3_vslarrival_detected, tsp3_loc_timezone);
+            //}
 
             return null;
         }
@@ -1838,10 +1838,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 return AnalyzeXMLDateValue(tsp3_vsldeparture_actual, tsp3_loc_timezone);
             }
-            else if (!string.IsNullOrEmpty(tsp3_vsldeparture_detected))
-            {
-                return AnalyzeXMLDateValue(tsp3_vsldeparture_detected, tsp3_loc_timezone);
-            }
+            //else if (!string.IsNullOrEmpty(tsp3_vsldeparture_detected))
+            //{
+            //    return AnalyzeXMLDateValue(tsp3_vsldeparture_detected, tsp3_loc_timezone);
+            //}
 
             return null;
         }
@@ -1864,10 +1864,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 return AnalyzeXMLDateValue(tsp4_vslarrival_actual, tsp4_loc_timezone);
             }
-            else if (!string.IsNullOrEmpty(tsp4_vslarrival_detected))
-            {
-                return AnalyzeXMLDateValue(tsp4_vslarrival_detected, tsp4_loc_timezone);
-            }
+            //else if (!string.IsNullOrEmpty(tsp4_vslarrival_detected))
+            //{
+            //    return AnalyzeXMLDateValue(tsp4_vslarrival_detected, tsp4_loc_timezone);
+            //}
 
             return null;
         }
@@ -1931,10 +1931,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 return AnalyzeXMLDateValue(tsp4_vsldeparture_actual, tsp4_loc_timezone);
             }
-            else if (!string.IsNullOrEmpty(tsp4_vsldeparture_detected))
-            {
-                return AnalyzeXMLDateValue(tsp4_vsldeparture_detected, tsp4_loc_timezone);
-            }
+            //else if (!string.IsNullOrEmpty(tsp4_vsldeparture_detected))
+            //{
+            //    return AnalyzeXMLDateValue(tsp4_vsldeparture_detected, tsp4_loc_timezone);
+            //}
 
             return null;
         }
@@ -1958,10 +1958,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 return AnalyzeXMLDateValue(ATA_actual, pod_loc_timezone);
             }
-            else if (!string.IsNullOrEmpty(ATA_detected))
-            {
-                return AnalyzeXMLDateValue(ATA_detected, pod_loc_timezone);
-            }
+            //else if (!string.IsNullOrEmpty(ATA_detected))
+            //{
+            //    return AnalyzeXMLDateValue(ATA_detected, pod_loc_timezone);
+            //}
 
             return null;
         }
