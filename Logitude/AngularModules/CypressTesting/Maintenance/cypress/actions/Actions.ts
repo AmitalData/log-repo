@@ -1921,6 +1921,10 @@ export function FillCustomAgentsDetails(customAgentDetails: CardDetails) {
 export function FillCustomAgentsContactDetails(customAgentConatactDetails: ContactDetails) {
     FillCardContactDetails(customAgentConatactDetails)
 }
+
+export function FillCustomerContactDetails(CustomerConatactDetails: ContactDetails) {
+    FillCardContactDetails(CustomerConatactDetails)
+}
 export function CreateCustomAgent() {
     CreateCard()
 }
@@ -1958,15 +1962,14 @@ export function AssertSearchCustomAgent(companyName: string) {
 export function AssertSearchCustomer(companyName: string) {
     AssertSearchCard(companyName)
 }
+export function AssertOpenCustomer() {
+    AssertOpenCard()
+}
 
 function DefineCustomAgentsGetSingleRequest() {
     cy.DefineRequestWait(RestAPI.GET, Urls.CustomAgentsGetSingle, RequestAliases.GetSignle);
 }
 export function AssertOpenCustomAgent() {
-    AssertOpenCard()
-}
-
-export function AssertOpenCustomer() {
     AssertOpenCard()
 }
 

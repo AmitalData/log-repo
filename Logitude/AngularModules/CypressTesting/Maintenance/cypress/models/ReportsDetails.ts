@@ -1,4 +1,4 @@
-export class ReportsDetails {
+export interface ReportsDetails {
     Code: string;
     Name: string;
     Description: string;

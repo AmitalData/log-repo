@@ -31,7 +31,7 @@ Given("a customer with the following details", (dataTable) => {
 
 Given("a customer contact with the following details", (dataTable) => {
     contactDetails = Assists.CreateInstance<ContactDetails>(dataTable, true);
-    MaintenanceActions.FillCustomAgentsContactDetails(contactDetails)
+    MaintenanceActions.FillCustomerContactDetails(contactDetails)
 });
 
 When("create customer", () => {
