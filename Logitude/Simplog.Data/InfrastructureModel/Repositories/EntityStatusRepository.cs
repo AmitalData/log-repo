@@ -29,8 +29,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         public EntityStatus GetSingleEntityStatus(string id, int tenant)
         {
            
-                EntityStatus entity   = (from a in context.EntityStatus
-                                                  where a.Tenant == tenant && a.Id == id
+                EntityStatus entity   = (from a in context.EntityStatus.Include("ObjectTable").Include("EntityStatusType")
+                                         where a.Tenant == tenant && a.Id == id
                                          select a).FirstOrDefault(); ;
                             
                 return entity;
@@ -209,7 +209,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public IQueryable<EntityStatus> GetEntityStatus(int tenant)
         {
-            return (from a in context.EntityStatus
+            return (from a in context.EntityStatus.Include("ObjectTable")
                     where a.Tenant == tenant && !a.InActive
                     select a);
         }

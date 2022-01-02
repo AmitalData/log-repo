@@ -27,26 +27,27 @@
   EnableAddFromLOV="false"
   IsRestrictable="false"
   IsMain="true"
-  IsAutoComplete="true"
+  IsAutoComplete="false"
   EnableEditFromLOV="false"
   SortingByObjectField="&quot;StatusWeight&quot;"
   InActive="false"
   IsSaveButtonVisible="true"
   IsComposition="false"
-  EnableSecurity="false"
+  EnableSecurity="true"
   AllowCustomFields="false"
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Entity Status&quot;"
-  Code="&quot;280c&quot;"
+  Code="&quot;7cfc&quot;"
   Name="&quot;EntityStatus&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Infrastructure&quot;"
+  ServerModuleName="&quot;Infrastructure&quot;"
   NoViewController="false"
   NoPMController="false"
   NoTS="false"
-  NoDefaultFeatures="true"
+  NoDefaultFeatures="false"
   HasCompactSearch="false"
   ApplyDefaultValues="false"
   HasMenuButtons="false"
@@ -230,7 +231,7 @@
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="false"
-    DisplayOnly="false"
+    DisplayOnly="true"
     SystemRequired="false"
     ObjectFieldNotRequired="true"
     SystemMaxLength="15"
@@ -307,11 +308,11 @@
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="false"
-    DisplayOnly="false"
+    DisplayOnly="true"
     SystemRequired="false"
     ObjectFieldNotRequired="true"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -326,6 +327,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;EntityStatus&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="true"
     Code="&quot;Code&quot;"
@@ -417,8 +419,8 @@
     DefaultText="&quot;InActive&quot;"
     FullLocalDefaultText="&quot;InActive&quot;"
     ListFieldLable="&quot;InActiveListLable&quot;"
-    ListLableDefaultText="&quot;InActive&quot;"
-    ListLocalDefaultText="&quot;InActive&quot;"
+    ListLableDefaultText="&quot;InActive Entity Status&quot;"
+    ListLocalDefaultText="&quot;InActive Entity Status&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -427,7 +429,7 @@
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
-    NoMetaDataField="true"
+    NoMetaDataField="false"
     GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -479,6 +481,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;EntityStatus&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="true"
     Code="&quot;Name&quot;"
@@ -494,6 +497,7 @@
     DefaultText="&quot;Name&quot;"
     ListFieldLable="&quot;NameListLable&quot;"
     ListLableDefaultText="&quot;Name&quot;"
+    ListLocalDefaultText="&quot;Name&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -535,11 +539,11 @@
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="false"
-    DisplayOnly="false"
+    DisplayOnly="true"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
@@ -555,6 +559,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;EntityStatus&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="true"
     Code="&quot;ObjectTableName&quot;"
@@ -567,7 +572,10 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;ObjectTableName&quot;"
-    DefaultText="&quot;Object Table Name&quot;"
+    DefaultText="&quot;Object Table&quot;"
+    ListFieldLable="&quot;ObjectTableNameListLable&quot;"
+    ListLableDefaultText="&quot;Object Table&quot;"
+    ListLocalDefaultText="&quot;Object Table&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -609,11 +617,11 @@
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="false"
-    DisplayOnly="false"
+    DisplayOnly="true"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
@@ -629,6 +637,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;EntityStatus&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     Code="&quot;StatusWeight&quot;"
@@ -642,6 +651,9 @@
     DisplayLongName="false"
     FullFieldLable="&quot;StatusWeight&quot;"
     DefaultText="&quot;Status Weight&quot;"
+    ListFieldLable="&quot;StatusWeightListLable&quot;"
+    ListLableDefaultText="&quot;Status Weight&quot;"
+    ListLocalDefaultText="&quot;Status Weight&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -853,6 +865,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;EntityStatus&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="true"
     Code="&quot;DisplayName&quot;"
@@ -868,6 +881,7 @@
     DefaultText="&quot;Display Name&quot;"
     ListFieldLable="&quot;DisplayNameListLable&quot;"
     ListLableDefaultText="&quot;Display Name&quot;"
+    ListLocalDefaultText="&quot;Display Name&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -979,11 +993,11 @@
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="false"
-    DisplayOnly="false"
+    DisplayOnly="true"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="3"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -998,7 +1012,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;&quot;"
+    ValidForQuerySection1="&quot;EntityStatus&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -1009,6 +1023,9 @@
     DisplayLongName="false"
     FullFieldLable="&quot;EntityStatusTypeCode&quot;"
     DefaultText="&quot;Entity Status Type Code&quot;"
+    ListFieldLable="&quot;EntityStatusTypeCodeListLable&quot;"
+    ListLableDefaultText="&quot;Entity Status Type&quot;"
+    ListLocalDefaultText="&quot;Entity Status Type&quot;"
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="EntityStatusType"
@@ -1055,7 +1072,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -1070,6 +1087,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;EntityStatus&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -1080,6 +1098,9 @@
     DisplayLongName="false"
     FullFieldLable="&quot;StatusLocalWeight&quot;"
     DefaultText="&quot;Status Local Weight&quot;"
+    ListFieldLable="&quot;StatusLocalWeightListLable&quot;"
+    ListLableDefaultText="&quot;Local Status Weight&quot;"
+    ListLocalDefaultText="&quot;Local Status Weight&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -1104,15 +1125,129 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Query
+    Code="&quot;ALES&quot;"
+    TextCode="&quot;All Entity Status&quot;"
+    QueryGroupCode="&quot;7cfc&quot;"
+    IndexOrder="0"
+    ObjectTableName="&quot;EntityStatus&quot;"
+    QuerySection="&quot;EntityStatus&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="false"
+    DefaultSortName="&quot;StatusWeight&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;ALES&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;ObjectTableName&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;ALES&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;Code&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ALES&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;Name&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;ALES&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;StatusWeight&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;ALES&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;StatusLocalWeight&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;ALES&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;EntityStatusTypeCode&quot;"
+        ColumnWidth="120" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <Screen
     Name="&quot;EntityStatusHeaderScreen&quot;"
     ObjectTableName="&quot;EntityStatus&quot;"
     IsReadOnly="true"
     IsHeaderScreen="true"
-    NumberOfColumns="2"
-    NumberOfRows="1">
-    <ScreenFields />
+    NumberOfColumns="1"
+    NumberOfRows="2">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;Code&quot;"
+        ScreenName="EntityStatusHeaderScreen" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;Name&quot;"
+        ScreenName="EntityStatusHeaderScreen" />
+    </ScreenFields>
   </Screen>
+  <Screen
+    Name="&quot;General Tab Screen&quot;"
+    ObjectTableName="&quot;EntityStatus&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="false"
+    Code="&quot;EntityStatus.GeneralTabScreen&quot;"
+    NumberOfColumns="1"
+    NumberOfRows="7">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;Code&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;Name&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="2"
+        ObjectFieldName="&quot;ObjectTableName&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="3"
+        ObjectFieldName="&quot;EntityStatusTypeCode&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="4"
+        ObjectFieldName="&quot;StatusWeight&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="5"
+        ObjectFieldName="&quot;StatusLocalWeight&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="6"
+        ObjectFieldName="&quot;InActive&quot;"
+        ScreenName="General Tab Screen" />
+    </ScreenFields>
+  </Screen>
+  <Tab
+    TabName="&quot;General&quot;"
+    ObjectTableName="&quot;EntityStatus&quot;"
+    Code="&quot;ESGC&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;"
+    TextCode="&quot;EntityStatus.TH.General&quot;"
+    IsPackagable="false"
+    IndexOrder="0"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
