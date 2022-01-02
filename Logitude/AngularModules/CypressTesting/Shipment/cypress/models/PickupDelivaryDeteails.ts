@@ -1,4 +1,4 @@
-export interface DelivaryDeteails {
+export interface PickupDelivaryDeteails {
     From:string,
     To:string,
     FromPartner:string,

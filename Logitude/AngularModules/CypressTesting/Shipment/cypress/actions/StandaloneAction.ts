@@ -4,49 +4,49 @@ import * as BaseAssertion from '../../../Base/cypress/actions/Assertion';
 import { URLs } from '../constants/URLs';
 import { RestAPI } from '../../../Base/cypress/constants/RestAPI';
 import { RequestAliases } from '../../../Base/cypress/constants/RequestAliases';
-import { DelivaryDeteails } from "../models/DelivaryDeteails";
+import { PickupDelivaryDeteails } from "../models/PickupDelivaryDeteails";
 import { RegexSelectors } from "../selectors/RegexSelectors";
 import { ShipmentConstants } from '../constants/constants'
 
 
-export function FillALL(delivaryDeteails: DelivaryDeteails) {
-   FillDeliveryRouting(delivaryDeteails)
-   FillFromPickupDelivary(delivaryDeteails)
-   FillToPickupDelivary(delivaryDeteails)
+export function FillALLPickUpDelivaryDetails(pickupdelivaryDeteails: PickupDelivaryDeteails) {
+   FillPickupDeliveryRouting(pickupdelivaryDeteails)
+   FillFromPickupDelivary(pickupdelivaryDeteails)
+   FillToPickupDelivary(pickupdelivaryDeteails)
 }
 
-export function FillDeliveryRouting(delivaryDeteails: DelivaryDeteails) {
-   let fromType = RegexSelectors.PickupDeliveryFromType(delivaryDeteails.From)
+export function FillPickupDeliveryRouting(pickupdelivaryDeteails: PickupDelivaryDeteails) {
+   let fromType = RegexSelectors.PickupDeliveryFromType(pickupdelivaryDeteails.From)
    cy.ClickRadio(fromType)
-   let toType = RegexSelectors.PickupDeliveryToType(delivaryDeteails.To)
+   let toType = RegexSelectors.PickupDeliveryToType(pickupdelivaryDeteails.To)
    cy.ClickRadio(toType)
 }
 
-export function FillFromPickupDelivary(delivaryDeteails: DelivaryDeteails) {
-   if (delivaryDeteails.From == ShipmentConstants.Partner) {
-      cy.FillLogLov(ShipmentSelectors.DeliveryFromPartnerName, delivaryDeteails.FromPartner, true)
+export function FillFromPickupDelivary(pickupdelivaryDeteails: PickupDelivaryDeteails) {
+   if (pickupdelivaryDeteails.From == ShipmentConstants.Partner) {
+      cy.FillLogLov(ShipmentSelectors.DeliveryFromPartnerName, pickupdelivaryDeteails.FromPartner, true)
 
    }
-   else if (delivaryDeteails.From == ShipmentConstants.Port) {
-      cy.FillLogLov(ShipmentSelectors.PickUpDeliveryFromPort, delivaryDeteails.FromPort, true)
+   else if (pickupdelivaryDeteails.From == ShipmentConstants.Port) {
+      cy.FillLogLov(ShipmentSelectors.PickUpDeliveryFromPort, pickupdelivaryDeteails.FromPort, true)
    }
    else {
-      cy.FillLogLov(ShipmentSelectors.DeliveryFromCountryName, delivaryDeteails.FromCountry, true)
-      cy.FillLogTextBox(ShipmentSelectors.DeliveryFromCityName, delivaryDeteails.FromCity)
+      cy.FillLogLov(ShipmentSelectors.DeliveryFromCountryName, pickupdelivaryDeteails.FromCountry, true)
+      cy.FillLogTextBox(ShipmentSelectors.DeliveryFromCityName, pickupdelivaryDeteails.FromCity)
    }
 }
 
-export function FillToPickupDelivary(delivaryDeteails: DelivaryDeteails) {
-   if (delivaryDeteails.To == ShipmentConstants.Partner) {
-      cy.FillLogLov(ShipmentSelectors.DeliveryToPartnerName, delivaryDeteails.ToPartner, true)
+export function FillToPickupDelivary(pickupdelivaryDeteails: PickupDelivaryDeteails) {
+   if (pickupdelivaryDeteails.To == ShipmentConstants.Partner) {
+      cy.FillLogLov(ShipmentSelectors.DeliveryToPartnerName, pickupdelivaryDeteails.ToPartner, true)
 
    }
-   else if (delivaryDeteails.To == ShipmentConstants.Port) {
-      cy.FillLogLov(ShipmentSelectors.PickUpDeliveryToPort, delivaryDeteails.ToPort, true)
+   else if (pickupdelivaryDeteails.To == ShipmentConstants.Port) {
+      cy.FillLogLov(ShipmentSelectors.PickUpDeliveryToPort, pickupdelivaryDeteails.ToPort, true)
    }
    else {
-      cy.FillLogTextBox(ShipmentSelectors.DeliveryToCityName, delivaryDeteails.ToCity)
-      cy.FillLogLov(ShipmentSelectors.DeliveryToCountryName, delivaryDeteails.ToCountry, true)
+      cy.FillLogTextBox(ShipmentSelectors.DeliveryToCityName, pickupdelivaryDeteails.ToCity)
+      cy.FillLogLov(ShipmentSelectors.DeliveryToCountryName, pickupdelivaryDeteails.ToCountry, true)
    }
 }
 
@@ -76,7 +76,7 @@ export function AssertShipmenteMenuButtonsDisabled() {
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentBSplitShipment + BaseSelectors.LastElement, BaseSelectors.BeDisabled)
 }
 
-export function AssertShipmenteDelivaryWindowDisabled() {
+export function AssertShipmentePickupDelivaryWindowDisabled() {
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryCarrier, BaseSelectors.BeDisabled)
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryCarrierNumber, BaseSelectors.BeDisabled)
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryDriver, BaseSelectors.BeDisabled)
@@ -84,8 +84,6 @@ export function AssertShipmenteDelivaryWindowDisabled() {
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryTrailerNumber, BaseSelectors.BeDisabled)
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryByRail, BaseSelectors.BeDisabled)
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryByTruck, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryEmptyDeliveryContainer, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryEmptyDeliveryDepotReference, BaseSelectors.BeDisabled)
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryATDDate, BaseSelectors.BeDisabled)
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryATDTime, BaseSelectors.BeDisabled)
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryETDDate, BaseSelectors.BeDisabled)
@@ -94,6 +92,10 @@ export function AssertShipmenteDelivaryWindowDisabled() {
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryETADate, BaseSelectors.BeDisabled)
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryATADate, BaseSelectors.BeDisabled)
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryATATime, BaseSelectors.BeDisabled)
+}
+export function AssertShipmenteDelivaryWindowDisabled(){
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryEmptyDeliveryContainer, BaseSelectors.BeDisabled)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryEmptyDeliveryDepotReference, BaseSelectors.BeDisabled)
 }
 
 
