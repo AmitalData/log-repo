@@ -349,6 +349,8 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
             this.ValidateInActiveCard(entityPM.Transshipment3CarrierId, "Transshipment3Carrier");
             this.ValidateInActiveCard(entityPM.PreCarriageCarrierId, "PreCarriageCarrier");
             this.ValidateInActiveCard(entityPM.OnCarriageCarrierId, "OnCarriageCarrier");
+            this.ValidateInActiveCard(entityPM.PreForwardingCarrierId, "PreForwardingCarrier");
+            this.ValidateInActiveCard(entityPM.OnForwardingCarrierId, "OnForwardingCarrier");
             this.ValidateInActiveCarriersPickUps(entityPM);
             this.ValidateInActiveCarriersDeliveries(entityPM);
         }
