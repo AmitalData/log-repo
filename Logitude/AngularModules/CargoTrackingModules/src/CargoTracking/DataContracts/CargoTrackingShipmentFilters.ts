@@ -2,7 +2,7 @@ export class MoreFilter{
     public HasException: boolean = false;
     public OrdersOnly: boolean = false;
     public EstimatedArrivalOnly: boolean = false;
-    public OperationalClosedOnly: boolean = false;
+    public OperationalOpenedOnly: boolean = false;
 }
 export class CargoTrackingShipmentSearchInput extends MoreFilter
 {

@@ -53,7 +53,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
             counter.HasException = shipmentsIQuerable.Count(d => d.CurrentMilestoneExceptions != null);
             counter.OrdersOnly = shipmentsIQuerable.Count(d => d.EntityType == "O");
             counter.EstimatedArrivalOnly = shipmentsIQuerable.Count(d => d.ArrivalEstimationDate != null && d.ArrivalDate == null);
-            counter.OperationalClosedOnly = shipmentsIQuerable.Count(d => d.IsOperationalClosed == true);
+            counter.OperationalOpenedOnly = shipmentsIQuerable.Count(d => d.IsOperationalClosed == false);
 
 
             return counter;
@@ -83,7 +83,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
         public int HasException { get; set; }
         public int OrdersOnly { get; set; }
         public int EstimatedArrivalOnly { get; set; }
-        public int OperationalClosedOnly { get; set; }
+        public int OperationalOpenedOnly { get; set; }
 
     }
 }
