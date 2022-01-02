@@ -40,22 +40,20 @@ Then("the shipment should create successfully", () => {
 
 Given("the user open the shipment and navigate to RoutingsTab workspace", () => {
   Actions.OpenShipment(shipmentNumber);
-  cy.Navigate(ShipmentSelectors.RoutingsTab);
-  cy.Navigate(ShipmentSelectors.AddDelivery);
-  //cy.click(BaseSelectors.Button,ShipmentConstants.AddDelivery)
-  cy.get(".Button").contains("Add Delivery").click()
+  cy.Click(ShipmentSelectors.RoutingsTab,null)
+  cy.Click(ShipmentSelectors.AddDelivery,null)
+  cy.Click(ShipmentSelectors.AddDelivaryButton, ShipmentConstants.AddDelivery)
 });
 
 Given("unchecked the FullResponsibility", () => {
-  //cy.get("#CheckBox_0_8_LBL").click()
-  cy.Navigate(ShipmentSelectors.FullResponsibilityCheckBox, true)
+  cy.Click(ShipmentSelectors.FullResponsibilityCheckBox,null)
 })
 
 Given("the user in the shipment's  routings tab", () => {
-  cy.Navigate(ShipmentSelectors.CloseBtn, true)
-  cy.Navigate(ShipmentSelectors.RoutingToggle, true)
-  cy.Navigate(ShipmentSelectors.Delivery, true)
-  cy.get(".Button").contains("Add Delivery").click()
+  cy.Click(ShipmentSelectors.CloseBtn,null)
+  cy.Click(ShipmentSelectors.RoutingToggle,null)
+  cy.Click(ShipmentSelectors.Delivery,null)
+  cy.Click(ShipmentSelectors.AddDelivaryButton, ShipmentConstants.AddDelivery)
 })
 
 Given("add a new Delivery leg with the following details", (dataTable) => {
@@ -65,9 +63,8 @@ Given("add a new Delivery leg with the following details", (dataTable) => {
 
 Given("save the Delivery", () => {
   cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
-  cy.Navigate(ShipmentSelectors.SavePickupDelivery, true)
+  cy.Click(ShipmentSelectors.SavePickupDelivery,null)
   BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
-
 });
 
 When("click create Standalone Shipment", () => {
@@ -95,23 +92,18 @@ Then("all other actions should be dim", () => {
 Then("all fields should be dim in Delivery window", () => {
   cy.Navigate(ShipmentSelectors.Backbutton + BaseSelectors.LastElement, true)
   StandaloneAction.AssertShipmenteDelivaryWindowDisabled()
-
 })
 
 Then("the link of standalon should display", () => {
   BaseAssertion.AssertElementExist(ShipmentSelectors.StandaloneShipmentHyperlink)
-
 })
 
 Then("a validation message with {string} error should appear", (validationMessage) => {
   BaseAssertion.AssertElementContain(BaseSelectors.SingleError, validationMessage)
-
 });
 
 Then("the Create Standalone Shipment button Should be dim", () => {
-  //BaseAssertion.AssertElementNotVisible("#printbutton")
   BaseAssertion.AssertElementNotVisible(ShipmentSelectors.Printbutton)
-
 })
 
 

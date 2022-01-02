@@ -40,7 +40,6 @@ Feature: Create standalone shipment from Delivery
         And all fields should be dim in Delivery window
         And the link of standalon should display
 
-
     Scenario: Create standalone shipment when the Delivery is FullResponsibility and "To/From" are partners with different countries
         Given the user in the shipment's  routings tab
         And add a new Delivery leg with the following details
@@ -52,7 +51,6 @@ Feature: Create standalone shipment from Delivery
         And save the Delivery
         When click create Standalone Shipment
         Then a validation message with "Both Addresses must be in the same country since the direction is Domestic" error should appear
-
 
     Scenario: Create standalone shipment when the Delivery is FullResponsibility and "To/From" are partners with same countries
         Given the user in the shipment's  routings tab
@@ -96,8 +94,6 @@ Feature: Create standalone shipment from Delivery
         And all fields should be dim in Delivery window
         And the link of standalon should display
 
-
-
     Scenario: Create standalone shipment when the Delivery is FullResponsibility and from port to port with same countries
         Given the user in the shipment's  routings tab
         And add a new Delivery leg with the following details
@@ -112,7 +108,6 @@ Feature: Create standalone shipment from Delivery
         And all other actions should be dim
         And all fields should be dim in Delivery window
         And the link of standalon should display
-
 
     Scenario: Create standalone shipment when the Delivery is FullResponsibility and from Casual Address to Casual Address with same countries
         Given  the user in the shipment's  routings tab
@@ -130,8 +125,6 @@ Feature: Create standalone shipment from Delivery
         And all other actions should be dim
         And all fields should be dim in Delivery window
         And the link of standalon should display
-
-
 
     Scenario: Create standalone shipment when the Delivery is FullResponsibility and from Casual Address to port with same countries
         Given the user in the shipment's  routings tab

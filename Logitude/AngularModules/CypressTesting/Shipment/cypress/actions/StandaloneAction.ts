@@ -60,7 +60,6 @@ export function AssertShipmenteMenuButtonsEnabled() {
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentBOperationalClose + BaseSelectors.LastElement, BaseSelectors.NotBeDisabled)
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentBSendResponse + BaseSelectors.LastElement, BaseSelectors.NotBeDisabled)
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentBCancelShipment + BaseSelectors.LastElement, BaseSelectors.NotBeDisabled)
-
 }
 
 export function AssertShipmenteMenuButtonsDisabled() {
@@ -75,8 +74,8 @@ export function AssertShipmenteMenuButtonsDisabled() {
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentBCopyShipment + BaseSelectors.LastElement, BaseSelectors.BeDisabled)
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentBReactivateShipment + BaseSelectors.LastElement, BaseSelectors.BeDisabled)
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentBSplitShipment + BaseSelectors.LastElement, BaseSelectors.BeDisabled)
-
 }
+
 export function AssertShipmenteDelivaryWindowDisabled() {
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryCarrier, BaseSelectors.BeDisabled)
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryCarrierNumber, BaseSelectors.BeDisabled)
