@@ -42,7 +42,7 @@ export function BeforeOnDestroy(target: NgxInstance, key: Key, descriptor: Descr
     inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext',
         "IsMultiline", "InputType", "HideColumns", "HideLastColumn",
         "DigitsAfterPoint", "FocusOnMe", "IsFreeText", "IsAccumulative",
-        "AllowPercentage", "UseArialFont", "DontAllowAutoSelect", 'IsRatioBox'],
+        "AllowPercentage", "UseArialFont", "DontAllowAutoSelect", 'IsRatioBox', 'IsDisabledWithColor'],
 })
 
 export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewInit, OnDestroy {
@@ -75,6 +75,8 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     public uiProperty: UIProperty;
     private show: boolean;
     IsDisabled: boolean;
+    IsDisabledWithColor: boolean;
+
     private timerToken: any;
     private textValue;
     public get TextValue() {
@@ -1722,10 +1724,10 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
 
     SetDisabled() {
         var inputDiv = document.getElementById(this.InputDivId);//("DatePickerInputDiv");
-        if (inputDiv && !this.IsMultiline) {
+        if (inputDiv && !this.IsMultiline && !this.IsDisabledWithColor) {
             inputDiv.classList.add("InputDivDisabled");
         }
-        if (this.IsMultiline) {
+        if (this.IsMultiline && !this.IsDisabledWithColor) {
             var input = document.getElementById(this.InputId);
             if (input) {
                 input.classList.add("TextAreaDisabled");
@@ -1737,10 +1739,10 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
 
     SetEnabled() {
         var inputDiv = document.getElementById(this.InputDivId);//("DatePickerInputDiv");
-        if (inputDiv && !this.IsMultiline) {
+        if (inputDiv && !this.IsMultiline && !this.IsDisabledWithColor) {
             inputDiv.classList.remove("InputDivDisabled");
         }
-        if (this.IsMultiline) {
+        if (this.IsMultiline && !this.IsDisabledWithColor) {
             var input = document.getElementById(this.InputId);
             if (input) {
                 input.classList.remove("TextAreaDisabled");
