@@ -249,6 +249,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public DateTime? SupplyDateTime { get; set; }
         [Column("IsOperationalClosed")]
 	    public bool? IsOperationalClosed { get; set; }
+        [Column("DenyDate")]
+	    public DateTime? DenyDate { get; set; }
     }
 }
 	 

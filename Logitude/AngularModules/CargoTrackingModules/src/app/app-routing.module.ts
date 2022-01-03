@@ -21,6 +21,7 @@ const routes: Routes = [
     { path: 'cargo-tracking/resetpassword', component: ResetPasswordComponent },
     { path: 'cargo-tracking/changepassword', component: ChangePasswordComponent },
     { path: 'cargo-tracking/shipment-link', component: ShipmentDetailsComponent, data:{isSharedLink: true} },
+    { path: 'cargo-tracking/declaration-link', component: ShipmentDetailsComponent, data:{isSharedLink: true, isDeclaration: true} },
     {
         path: 'cargo-tracking',
         component: UserDashboardComponent,

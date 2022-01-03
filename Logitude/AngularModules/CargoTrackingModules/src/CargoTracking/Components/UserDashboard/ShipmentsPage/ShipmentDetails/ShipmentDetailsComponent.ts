@@ -76,7 +76,9 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     public OverviewPanelTitle: string;
     public TypeTitle: string;
     isSharedLink: boolean = false;
+    isDeclaration: boolean = false;
     noShipmentFound: boolean = false;
+    approvalMessage: string;
     PartnerCardTypesOfShipmentTransportMode = {
         'A': "AIRLINES",
         'I': "TRUCKER",
@@ -96,6 +98,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     {
         const isCustomShipment = this.cargoTrackingShipmentPM.EntityType == this.EntityType_Customs;
         return isCustomShipment
+            && this.isDeclaration
             && this.cargoTrackingShipmentPM.ActivatedForDeclarationApprove
             && this.cargoTrackingShipmentPM.IsImporterApprovalRequried;
     }
@@ -138,6 +141,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
 
         const data: Data = this.route.snapshot.data;
         this.isSharedLink = data?.isSharedLink;
+        this.isDeclaration = data?.isDeclaration;
         if(this.isSharedLink){
             this.GetBrandingData();
         }
@@ -222,6 +226,28 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
                 this.ScrollToPanel(this.focusOnPanel);
 
         }, 200);
+
+
+        if(this.isSharedLink && this.isDeclaration){
+            const isCustomShipment = this.cargoTrackingShipmentPM.EntityType == this.EntityType_Customs;
+            let hasApprovalDeclineResponse = isCustomShipment
+            && this.cargoTrackingShipmentPM.ActivatedForDeclarationApprove
+            && !this.cargoTrackingShipmentPM.IsImporterApprovalRequried;
+
+            if(hasApprovalDeclineResponse){
+                const approvalResponseMessage = 'לקוח יקר, הצהרה זו אושרה בתאריך';
+                const declineResponseMessage = 'לקוח יקר, הצהרה זו נדחתה';
+
+                if(this.cargoTrackingShipmentPM.ApprovedDate)
+                    this.approvalMessage = approvalResponseMessage + ' ' +this.cargoTrackingShipmentPM.ApprovedDate;
+                else
+                    this.approvalMessage = declineResponseMessage + '\n' + this.cargoTrackingShipmentPM.DenyReason;
+
+            }else{
+                this.approvalMessage = this.cargoTrackingShipmentPM.TenantDeclarationMessage;
+            }
+
+        }
     }
 
     private GetBrandingData()

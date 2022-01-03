@@ -635,6 +635,22 @@ export class CargoTrackingShipmentMappedPM {
 
 
 
+    private approvedDate: Date;
+    public get ApprovedDate() { return this.approvedDate; }
+    public set ApprovedDate(newValue: Date) { if (this.approvedDate != newValue) { this.approvedDate = newValue; this.MarkAsDirty("ApprovedDate"); } }
+
+
+    private denyDate: Date;
+    public get DenyDate() { return this.denyDate; }
+    public set DenyDate(newValue: Date) { if (this.denyDate != newValue) { this.denyDate = newValue; this.MarkAsDirty("DenyDate"); } }
+
+
+    private denyReason: string;
+    public get DenyReason() { return this.denyReason; }
+    public set DenyReason(newValue: string) { if (this.denyReason != newValue) { this.denyReason = newValue; this.MarkAsDirty("DenyReason"); } }
+
+
+
 
 
     public OldEntityPM: CargoTrackingShipmentMappedPM;
