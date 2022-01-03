@@ -337,6 +337,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             ARPaymentTracing.Trace(theEntityPm, paymentPoco, isNewEntity);
 
+            UpdateChequeOrPaymentRefField(theEntityPm);
+
             if (mapComposition)
             {
                 this.changedList = theEntityPm.PaymentInvoices;
@@ -438,12 +440,56 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (string.IsNullOrEmpty(theEntityPm.GLAccountId))
                     throw new ApplicationException("Hey! no glaccount provided!!");
 
-                if (theEntityPm.StatusCode != "VD" && theEntityPm.ARPaymentChequeReplicas.Count ==0)
+                if (theEntityPm.StatusCode != "VD" && theEntityPm.ARPaymentChequeReplicas.Count == 0)
                     CreateReconciliationForARPayment(theEntityPm);
             }
             this.TraceConnected();
             this.GetPaymentForeignFields();
             this.BuildEntitiesNumbers();
+        }
+
+        private void UpdateChequeOrPaymentRefField(ARPaymentPM theEntityPm)
+        {
+            var invoicesIds = theEntityPm.PaymentInvoices;
+
+            foreach (ARPaymentInvoicePM item in invoicesIds)
+            {
+                this.UpdateARInvoicePaymentRefreneces(item);
+            }
+        }
+
+        private void UpdateARInvoicePaymentRefreneces(ARPaymentInvoicePM item)
+        {
+            List<ARInvoicePayment> allConnectedItems = invoicePaymentRepository.GetARInvoicePaymentByInvoiceId(item.ARInvoiceId, item.Tenant).ToList();
+
+            string paymentRefrenece = "";
+            List<string> Ids = new List<string>();
+
+            if (allConnectedItems.Count > 0)
+            {
+                 
+
+                ARPayment aRPayment = null;
+                foreach (ARInvoicePayment aRInvoicePayment in allConnectedItems)
+                {
+                    aRPayment=  paymentRepository.GetSingleARPayment(aRInvoicePayment.ARPaymentId, aRInvoicePayment.Tenant);
+                    
+                    if(aRPayment != null)
+                    {
+                        paymentRefrenece = aRPayment.ChequeOrPaymentRef == null? paymentRefrenece:  paymentRefrenece + aRPayment.ChequeOrPaymentRef+',';
+                         if(aRPayment.ChequeOrPaymentRef != null)
+                        { 
+                            Ids.Add(aRPayment.ChequeOrPaymentRef); 
+                        }
+                    } 
+                }
+            }
+
+            paymentRefrenece = string.Join(",", Ids);
+
+            var ar = invoiceRepository.GetSingleInvoice(item.ARInvoiceId);
+            ar.PaymentReferences = paymentRefrenece;
+            invoiceRepository.Update(ar);
         }
 
         private void HandleSATTranserStatus(ARPaymentPM theEntityPm)

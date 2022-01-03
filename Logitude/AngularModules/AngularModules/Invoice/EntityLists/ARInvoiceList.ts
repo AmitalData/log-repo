@@ -151,5 +151,6 @@ export class ARInvoiceList {
 		MasterShipmentNumbers: string;
 		HouseNumbers: string;
 		GlobalTaxCalculation: string;
+		PaymentReferences: string;
 	
 }

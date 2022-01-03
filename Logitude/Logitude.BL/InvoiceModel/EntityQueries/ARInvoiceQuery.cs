@@ -16,15 +16,13 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Accounting.Data.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.CommonDataModel;
-using Logitude.Accounting.Data.EntityPOCOs;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
     public class ARInvoiceQuery
     {
         public ARInvoiceRepository repository;
-        private Tenant tenantPoco;
-        private const string InterestReportInvoiceTypeCode = "IT";
+
         public ARInvoiceQuery()
         {
             repository = new ARInvoiceRepository();
@@ -1423,6 +1421,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             PaidDate  = a.PaidDate,
                             PartnerId = a.PartnerId,
                             GlobalTaxCalculation = a.GlobalTaxCalculation,
+                            PaymentReferences=a.PaymentReferences,
                         };
 
             return query;
@@ -1572,6 +1571,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              MasterShipmentNumbers = entity.MasterShipmentNumbers,
                              HouseNumbers = entity.HouseNumbers,
                              GlobalTaxCalculation = entity.GlobalTaxCalculation,
+                             PaymentReferences = entity.PaymentReferences,
                          };
 
             return result;
@@ -1693,6 +1693,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               MasterShipmentNumbers = a.MasterShipmentNumbers,
                                               HouseNumbers = a.HouseNumbers,
                                               GlobalTaxCalculation = a.GlobalTaxCalculation,
+                                              PaymentReferences = a.PaymentReferences,
                                           }).ToList();
             return invoices;
         }
@@ -1818,7 +1819,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     MasterShipmentNumbers = entityPOCO.MasterShipmentNumbers,
                     HouseNumbers = entityPOCO.HouseNumbers,
                     GlobalTaxCalculation = entityPOCO.GlobalTaxCalculation,
-
+                    PaymentReferences = entityPOCO.PaymentReferences,
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
@@ -1829,8 +1830,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 // Include Bill To is not enough to get customer data
                 CardRepository myCardRepository = new CardRepository(myCommonContext);
                 Card myBillTo = myCardRepository.GetSingleCard(entityPOCO.BillToId, tenant);
-                SetInterestReportFields(entityPM);
-
                 if (myBillTo != null)
                 {
                     entityPM.BillToName = myBillTo.EnglishName;
@@ -2008,28 +2007,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             return securedEntityPM;
         }
-        
-        private void SetInterestReportFields(ARInvoicePM invoice)
-        {
-            InterestReport interestReport = new InterestReport();
-            if (invoice.ARInvoiceTypeCode == InterestReportInvoiceTypeCode && IsAccountingActivated(invoice.Tenant))
-            {
-                InterestReportRepository interestReportRepository = new InterestReportRepository(invoice.Tenant);
-                interestReport = interestReportRepository.GetSingleByARInvoiceId(invoice.Id, invoice.Tenant);
-            }
-            if (interestReport != null)
-            {
-                invoice.InterestReportNumber = interestReport.ReportNumber;
-                invoice.InterestReportId = interestReport.Id;
-            }
-        }
-        private bool IsAccountingActivated(int tenant)
-        {
-            TenantRepository tenantRepository = new TenantRepository(tenant);
-            tenantPoco = tenantRepository.GetSingleTenant(tenant);
-            return tenantPoco.AccountingActivated;
-        }
-
         public IQueryable<ARInvoice> GetAllInterestInvoices(DateTime fromDate, DateTime toDate,bool ShowPrintedInvoice, int tenant)
         {
             var result = (from a in repository.context.ARInvoices where a.Tenant == tenant && a.ARInvoiceTypeCode== "IT" && a.InvoiceDate >= fromDate && a.InvoiceDate <= toDate  select a);
@@ -2180,6 +2157,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              PartnerId = entity.PartnerId,
                              PartnerName = entity.Partner.EnglishName,
                              GlobalTaxCalculation = entity.GlobalTaxCalculation,
+                             PaymentReferences = entity.PaymentReferences,
                          };
 
             return result;

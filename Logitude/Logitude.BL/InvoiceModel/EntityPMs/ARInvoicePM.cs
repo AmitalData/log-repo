@@ -419,5 +419,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string GlobalTaxCalculation { get; set; }
         public string InterestReportNumber { get; set; }
         public string InterestReportId { get;  set; }
+        public string PaymentReferences { get; set; }
     }
 }

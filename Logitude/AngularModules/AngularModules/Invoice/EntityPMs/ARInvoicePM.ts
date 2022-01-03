@@ -1112,6 +1112,11 @@ export class ARInvoicePM {
     public set InterestReportId(newValue: string) { if (this.interestReportId != newValue) { this.interestReportId = newValue; this.MarkAsDirty("InterestReportId"); } }
        
 	 
+    private paymentReferences: string;
+    public get PaymentReferences() { return this.paymentReferences; }
+    public set PaymentReferences(newValue: string) { if (this.paymentReferences != newValue) { this.paymentReferences = newValue; this.MarkAsDirty("PaymentReferences"); } }
+       
+	 
 
     public OldEntityPM: ARInvoicePM;
 		

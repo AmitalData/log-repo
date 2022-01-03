@@ -135,8 +135,9 @@ export class ARPaymentValidator {
     }
 
 
-    if (!SessionLocator.TenantPM.AccountingActivated && entityPm.AccountingPaymentMethodCode != "CA" && entityPm.AccountingPaymentMethodCode != "FS" && entityPm.ValueDate == null) {
-      validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.ValueDate")));
+      if (!SessionLocator.TenantPM.AccountingActivated && entityPm.AccountingPaymentMethodCode != "CA" && entityPm.AccountingPaymentMethodCode != "FS" && entityPm.ValueDate == null) {
+          entityPm.ValueDate = entityPm.UpdateDate;
+//        validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.ValueDate")));
     }
 
     return validationResults;
