@@ -1384,7 +1384,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (!entityPM.DontAddToImportersQueue
                 && IsLogBoxQueueEnabled(loggedTenant, entityPM)
                 && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive
-                && (isNewEntity == true ? !entityPM.IsCancelled : true))
+                && (isNewEntity == true ? !entityPM.IsCancelled : true)
+                && IsImportShipmentsAllowedForLogBox(loggedTenant, entityPM))
+
             {
                 return true;
             }
@@ -1411,14 +1413,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private bool IsImportShipmentsAllowedForLogBox(Tenant loggedTenant, ShipmentPM entityPM)
         {
-            if (loggedTenant.LogBoxTenantSetting.CustomerTenantShareImportFile == true)
-            {
-                return (entityPM.DirectionId.ToUpper() == "I");
-            }
-            else
-            {
+            if (entityPM.DirectionId.ToUpper() == "I" && !loggedTenant.LogBoxTenantSetting.CustomerTenantShareImportFile)
                 return false;
-            }
+            return true;
         }
 
         private bool IsExportShipmentsAllowedForLogBox(Tenant loggedTenant, ShipmentPM entityPM)
