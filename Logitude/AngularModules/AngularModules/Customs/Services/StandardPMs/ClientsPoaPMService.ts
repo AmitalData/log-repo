@@ -18,8 +18,8 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
-import { ClientsPoaPM } from 'Customs/Entitypms/ClientsPoaPM';
 
+import {ClientsPoaPM} from '../../EntityPMs/ClientsPoaPM';
 
 
 @Injectable()
