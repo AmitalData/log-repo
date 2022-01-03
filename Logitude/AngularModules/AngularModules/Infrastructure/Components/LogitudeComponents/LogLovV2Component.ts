@@ -38,7 +38,6 @@ import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
-import { InfrastructureDomainService, InActiveLogLovItem } from '../../../Infrastructure/Services/InfrastructureDomainService';
 
 @Component({
     selector: 'LogLov',
@@ -209,7 +208,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 this.SetSelectedItemInActiveField();
             }
             else if (confirmWindow.No) {
-                this.ResetSelectedValueInput();
+                this.OnDeleteValue();
             }
         });
     }
@@ -220,15 +219,16 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
     UpdateSelectedEntity(id: string) {
         var tablename = this.GetTableName();
-        var service = new InfrastructureDomainService();
-        var inActiveLogLovItem = new InActiveLogLovItem();
-        inActiveLogLovItem.TableName = tablename;
-        inActiveLogLovItem.SelectedItemId = id;
-        inActiveLogLovItem.TenantZeroSelectedEntityId = this.tenantZeroSelectedEntityId;
-        service.UpdateInActiveLogLovItem(inActiveLogLovItem).subscribe((myResponse: any) => {
-            if (!myResponse.HasError) {
-                CachedDataManager.RefreshTableData(tablename, true);
-            }
+        this.entityPMService.getSingle(tablename, id).then((response: any) => {
+            response.subscribe((myResponse: any) => {
+                var entity = myResponse.Result;
+                entity["InActive"] = false;
+                this.entityPMService.update(tablename, entity).then((res: any) => {
+                    res.subscribe((response: any) => {
+                        CachedDataManager.RefreshTableData(tablename, true);
+                    });
+                });
+            });
         });
     }
 
@@ -246,8 +246,13 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         this.DisplayValue = null;
         this.SelectedItem = null;
         this.SelectedItemObject = null;
-        this.SelectedItemChanged.emit(this.SelectedItem);
+        this.isSelectedFromList = false;
+        this.DataContext[this.ObjectFieldName] = null;
         this.SetSelectedValue(null);
+        this.ValidateField(true);
+        this.SetToolTipInfo();
+        this.SelectedItemChanged.emit(this.SelectedItem);
+        this.ValueChanged.emit(this.selectedValue);
     }
 
     SetSelectedValue(newValue: any) {
@@ -2056,7 +2061,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     OnAllDataSelect(item: any) {
-        this.tenantZeroSelectedEntityId = item.Id;
         this.CopySelectedItem(item.Id)
     }
 
@@ -2219,7 +2223,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
     }
 
-    private tenantZeroSelectedEntityId = null;
     OnSearchWindowClosed(args: any) {
         if (args && args != 'event') {  // No value returned
             // Get Selected value
@@ -2234,7 +2237,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 id = args;
             }
             if (tenant == 0 && !this.IsTenantZeroSearch) {
-                this.tenantZeroSelectedEntityId = id;
                 this.CopySelectedItem(id);
             }
             else {

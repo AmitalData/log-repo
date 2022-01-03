@@ -2094,35 +2094,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage PutInActiveLogLovItem(InActiveLogLovItem inActiveLogLovItem)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                ICommonDataContext commonDataContext = CommonDataContext.GetContext(authToken.Tenant);
-                CardRepository cardRepository = new CardRepository(commonDataContext);
-                cardRepository.UpdateInActiveCard(inActiveLogLovItem.SelectedItemId, authToken.Tenant);
-                TableLastUpdateClass.UpdateTableHistory(authToken.Tenant, inActiveLogLovItem.TableName);
-                return Request.CreateResponse(HttpStatusCode.OK, "");
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
     }
 }
 
-public class InActiveLogLovItem
-{
-    public string TableName { get; set; }
-    public string SelectedItemId { get; set; }
-    public string TenantZeroSelectedEntityId { get; set; }
-
-}
 public class BusinessRecordsSummary
 {
     public int ShipmentsCount { get; set; }

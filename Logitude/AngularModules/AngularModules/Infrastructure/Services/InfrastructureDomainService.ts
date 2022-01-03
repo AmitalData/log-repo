@@ -874,25 +874,6 @@ export class InfrastructureDomainService {
         return entityList;
     }
 
-    UpdateInActiveLogLovItem(inActiveLogLovItem: InActiveLogLovItem) {
-        return defer(() => {
-            return this._http.put(this._apiUrl + "/PutInActiveLogLovItem", JSON.stringify(inActiveLogLovItem), ServiceHelper.GetHttpHeaders()).pipe(
-                map(res => {
-                    var serviceResponse: ServiceResponse;
-                    serviceResponse = new ServiceResponse();
-                    var result = res;
-                    serviceResponse.Result = result;
-                    return serviceResponse;
-                }),
-                catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-}
-
-export class InActiveLogLovItem {
-    public TableName: string;
-    public SelectedItemId: string;
-    public TenantZeroSelectedEntityId: string; 
 }
 
 export class FeaturesUpdateHelper {

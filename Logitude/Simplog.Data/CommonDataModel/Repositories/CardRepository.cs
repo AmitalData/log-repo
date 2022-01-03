@@ -679,19 +679,5 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return cards;
         }
 
-        public void UpdateInActiveCard(string selectedItemId, int tenant)
-        {
-            Card inactiveCard = (from d in commonDataContext.Cards
-                                 where d.Id == selectedItemId
-                                 && d.InActive && d.Tenant == tenant
-                                 select d).FirstOrDefault();
-
-            if (inactiveCard == null)
-                return;
-
-            inactiveCard.InActive = false;
-            Update(inactiveCard);
-            SubmitChanges();
-        }
     }
 }
