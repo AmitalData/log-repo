@@ -43,7 +43,22 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         IsReleasingAgentShared, 
 	         IsShipperShared, 
 	         IsConsigneeShared, 
-	         IsShowAmountLocalCurrency,
+	         IsShowAmountLocalCurrency, 
+	         IsShipperShowContactTS, 
+	         IsConsigneeShowContactTS, 
+	         IsAgentShowContactTS, 
+	         IsShipperNotExShowContactTS, 
+	         IsConsigneeNotImShowContactTS, 
+	         IsNotify1ShowContactTS, 
+	         IsNotify2ShowContactTS, 
+	         IsFreightForwardShowContactTS, 
+	         IsColoaderShowContactTS, 
+	         IsCustomAgentExShowContactTS, 
+	         IsCustomAgentImShowContactTS, 
+	         IsCustomCleaPointShowContactTS, 
+	         IsConsolidatorShowContactTS, 
+	         IsReleasingAgentShowContactTS, 
+	         IsIssuingCarAgentShowContactTS,
 	      }
 
 
@@ -71,7 +86,22 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         IsReleasingAgentShared, 
 	         IsShipperShared, 
 	         IsConsigneeShared, 
-	         IsShowAmountLocalCurrency,
+	         IsShowAmountLocalCurrency, 
+	         IsShipperShowContactTS, 
+	         IsConsigneeShowContactTS, 
+	         IsAgentShowContactTS, 
+	         IsShipperNotExShowContactTS, 
+	         IsConsigneeNotImShowContactTS, 
+	         IsNotify1ShowContactTS, 
+	         IsNotify2ShowContactTS, 
+	         IsFreightForwardShowContactTS, 
+	         IsColoaderShowContactTS, 
+	         IsCustomAgentExShowContactTS, 
+	         IsCustomAgentImShowContactTS, 
+	         IsCustomCleaPointShowContactTS, 
+	         IsConsolidatorShowContactTS, 
+	         IsReleasingAgentShowContactTS, 
+	         IsIssuingCarAgentShowContactTS,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -183,6 +213,81 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsShowAmountLocalCurrency))
             {
 				entityPOCO.IsShowAmountLocalCurrency = entityPM.IsShowAmountLocalCurrency;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsShipperShowContactTS))
+            {
+				entityPOCO.IsShipperShowContactTS = entityPM.IsShipperShowContactTS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsConsigneeShowContactTS))
+            {
+				entityPOCO.IsConsigneeShowContactTS = entityPM.IsConsigneeShowContactTS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsAgentShowContactTS))
+            {
+				entityPOCO.IsAgentShowContactTS = entityPM.IsAgentShowContactTS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsShipperNotExShowContactTS))
+            {
+				entityPOCO.IsShipperNotExShowContactTS = entityPM.IsShipperNotExShowContactTS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsConsigneeNotImShowContactTS))
+            {
+				entityPOCO.IsConsigneeNotImShowContactTS = entityPM.IsConsigneeNotImShowContactTS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsNotify1ShowContactTS))
+            {
+				entityPOCO.IsNotify1ShowContactTS = entityPM.IsNotify1ShowContactTS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsNotify2ShowContactTS))
+            {
+				entityPOCO.IsNotify2ShowContactTS = entityPM.IsNotify2ShowContactTS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsFreightForwardShowContactTS))
+            {
+				entityPOCO.IsFreightForwardShowContactTS = entityPM.IsFreightForwardShowContactTS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsColoaderShowContactTS))
+            {
+				entityPOCO.IsColoaderShowContactTS = entityPM.IsColoaderShowContactTS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomAgentExShowContactTS))
+            {
+				entityPOCO.IsCustomAgentExShowContactTS = entityPM.IsCustomAgentExShowContactTS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomAgentImShowContactTS))
+            {
+				entityPOCO.IsCustomAgentImShowContactTS = entityPM.IsCustomAgentImShowContactTS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomCleaPointShowContactTS))
+            {
+				entityPOCO.IsCustomCleaPointShowContactTS = entityPM.IsCustomCleaPointShowContactTS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsConsolidatorShowContactTS))
+            {
+				entityPOCO.IsConsolidatorShowContactTS = entityPM.IsConsolidatorShowContactTS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsReleasingAgentShowContactTS))
+            {
+				entityPOCO.IsReleasingAgentShowContactTS = entityPM.IsReleasingAgentShowContactTS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsIssuingCarAgentShowContactTS))
+            {
+				entityPOCO.IsIssuingCarAgentShowContactTS = entityPM.IsIssuingCarAgentShowContactTS;
 			}
 			}
 
@@ -299,6 +404,81 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.IsShowAmountLocalCurrency = entityPOCO.IsShowAmountLocalCurrency;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsShipperShowContactTS))
+            {
+					entityPM.IsShipperShowContactTS = entityPOCO.IsShipperShowContactTS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsConsigneeShowContactTS))
+            {
+					entityPM.IsConsigneeShowContactTS = entityPOCO.IsConsigneeShowContactTS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsAgentShowContactTS))
+            {
+					entityPM.IsAgentShowContactTS = entityPOCO.IsAgentShowContactTS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsShipperNotExShowContactTS))
+            {
+					entityPM.IsShipperNotExShowContactTS = entityPOCO.IsShipperNotExShowContactTS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsConsigneeNotImShowContactTS))
+            {
+					entityPM.IsConsigneeNotImShowContactTS = entityPOCO.IsConsigneeNotImShowContactTS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsNotify1ShowContactTS))
+            {
+					entityPM.IsNotify1ShowContactTS = entityPOCO.IsNotify1ShowContactTS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsNotify2ShowContactTS))
+            {
+					entityPM.IsNotify2ShowContactTS = entityPOCO.IsNotify2ShowContactTS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsFreightForwardShowContactTS))
+            {
+					entityPM.IsFreightForwardShowContactTS = entityPOCO.IsFreightForwardShowContactTS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsColoaderShowContactTS))
+            {
+					entityPM.IsColoaderShowContactTS = entityPOCO.IsColoaderShowContactTS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsCustomAgentExShowContactTS))
+            {
+					entityPM.IsCustomAgentExShowContactTS = entityPOCO.IsCustomAgentExShowContactTS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsCustomAgentImShowContactTS))
+            {
+					entityPM.IsCustomAgentImShowContactTS = entityPOCO.IsCustomAgentImShowContactTS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsCustomCleaPointShowContactTS))
+            {
+					entityPM.IsCustomCleaPointShowContactTS = entityPOCO.IsCustomCleaPointShowContactTS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsConsolidatorShowContactTS))
+            {
+					entityPM.IsConsolidatorShowContactTS = entityPOCO.IsConsolidatorShowContactTS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsReleasingAgentShowContactTS))
+            {
+					entityPM.IsReleasingAgentShowContactTS = entityPOCO.IsReleasingAgentShowContactTS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsIssuingCarAgentShowContactTS))
+            {
+					entityPM.IsIssuingCarAgentShowContactTS = entityPOCO.IsIssuingCarAgentShowContactTS;
+            }
+
 		}
 
 		public void PMToOldPM(SharedLogisticsSettingPM entityPM, SharedLogisticsSettingPM oldEntityPM)
@@ -408,6 +588,81 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsShowAmountLocalCurrency))
             {
                 oldEntityPM.IsShowAmountLocalCurrency = entityPM.IsShowAmountLocalCurrency;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsShipperShowContactTS))
+            {
+                oldEntityPM.IsShipperShowContactTS = entityPM.IsShipperShowContactTS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsConsigneeShowContactTS))
+            {
+                oldEntityPM.IsConsigneeShowContactTS = entityPM.IsConsigneeShowContactTS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsAgentShowContactTS))
+            {
+                oldEntityPM.IsAgentShowContactTS = entityPM.IsAgentShowContactTS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsShipperNotExShowContactTS))
+            {
+                oldEntityPM.IsShipperNotExShowContactTS = entityPM.IsShipperNotExShowContactTS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsConsigneeNotImShowContactTS))
+            {
+                oldEntityPM.IsConsigneeNotImShowContactTS = entityPM.IsConsigneeNotImShowContactTS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsNotify1ShowContactTS))
+            {
+                oldEntityPM.IsNotify1ShowContactTS = entityPM.IsNotify1ShowContactTS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsNotify2ShowContactTS))
+            {
+                oldEntityPM.IsNotify2ShowContactTS = entityPM.IsNotify2ShowContactTS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsFreightForwardShowContactTS))
+            {
+                oldEntityPM.IsFreightForwardShowContactTS = entityPM.IsFreightForwardShowContactTS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsColoaderShowContactTS))
+            {
+                oldEntityPM.IsColoaderShowContactTS = entityPM.IsColoaderShowContactTS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomAgentExShowContactTS))
+            {
+                oldEntityPM.IsCustomAgentExShowContactTS = entityPM.IsCustomAgentExShowContactTS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomAgentImShowContactTS))
+            {
+                oldEntityPM.IsCustomAgentImShowContactTS = entityPM.IsCustomAgentImShowContactTS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomCleaPointShowContactTS))
+            {
+                oldEntityPM.IsCustomCleaPointShowContactTS = entityPM.IsCustomCleaPointShowContactTS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsConsolidatorShowContactTS))
+            {
+                oldEntityPM.IsConsolidatorShowContactTS = entityPM.IsConsolidatorShowContactTS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsReleasingAgentShowContactTS))
+            {
+                oldEntityPM.IsReleasingAgentShowContactTS = entityPM.IsReleasingAgentShowContactTS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsIssuingCarAgentShowContactTS))
+            {
+                oldEntityPM.IsIssuingCarAgentShowContactTS = entityPM.IsIssuingCarAgentShowContactTS;
             }
 			
 		}

@@ -315,6 +315,7 @@ export class SharedLogisticsMainComponent implements OnInit {
 
     PartnersPermissionsLinkClick() {
         var windowArgs: any = {};
+        windowArgs.IsCargoTracking = this.SharedTitleType == "CargoTracking";
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 820;

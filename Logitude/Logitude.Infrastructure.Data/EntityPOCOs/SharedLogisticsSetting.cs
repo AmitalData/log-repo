@@ -63,6 +63,36 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public bool IsConsigneeShared { get; set; }
         [Column("IsShowAmountLocalCurrency")]
 	    public bool IsShowAmountLocalCurrency { get; set; }
+        [Column("IsShipperShowContactTS")]
+	    public bool IsShipperShowContactTS { get; set; }
+        [Column("IsConsigneeShowContactTS")]
+	    public bool IsConsigneeShowContactTS { get; set; }
+        [Column("IsAgentShowContactTS")]
+	    public bool IsAgentShowContactTS { get; set; }
+        [Column("IsShipperNotExShowContactTS")]
+	    public bool IsShipperNotExShowContactTS { get; set; }
+        [Column("IsConsigneeNotImShowContactTS")]
+	    public bool IsConsigneeNotImShowContactTS { get; set; }
+        [Column("IsNotify1ShowContactTS")]
+	    public bool IsNotify1ShowContactTS { get; set; }
+        [Column("IsNotify2ShowContactTS")]
+	    public bool IsNotify2ShowContactTS { get; set; }
+        [Column("IsFreightForwardShowContactTS")]
+	    public bool IsFreightForwardShowContactTS { get; set; }
+        [Column("IsColoaderShowContactTS")]
+	    public bool IsColoaderShowContactTS { get; set; }
+        [Column("IsCustomAgentExShowContactTS")]
+	    public bool IsCustomAgentExShowContactTS { get; set; }
+        [Column("IsCustomAgentImShowContactTS")]
+	    public bool IsCustomAgentImShowContactTS { get; set; }
+        [Column("IsCustomCleaPointShowContactTS")]
+	    public bool IsCustomCleaPointShowContactTS { get; set; }
+        [Column("IsConsolidatorShowContactTS")]
+	    public bool IsConsolidatorShowContactTS { get; set; }
+        [Column("IsReleasingAgentShowContactTS")]
+	    public bool IsReleasingAgentShowContactTS { get; set; }
+        [Column("IsIssuingCarAgentShowContactTS")]
+	    public bool IsIssuingCarAgentShowContactTS { get; set; }
     }
 }
 	 

@@ -7,7 +7,7 @@ import { EntityResourceService } from '../../Infrastructure/Services/EntityResou
 import { ObjectsLocator } from '../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    
+
     templateUrl: './SharedLogisticsPartnersPermissiosComponent.html',
 })
 
@@ -20,6 +20,8 @@ export class SharedLogisticsPartnersPermissiosComponent implements OnInit {
     private myService: SharedLogisticsSettingPMService;
     public IsResourcesReady: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    IsCargoTracking: boolean;
+
     constructor(public entityResourceService: EntityResourceService) {
         this.myService = new SharedLogisticsSettingPMService();
     }
@@ -40,8 +42,12 @@ export class SharedLogisticsPartnersPermissiosComponent implements OnInit {
 
                     this.LoadMyTenantData();
                 }
-            });           
+            });
         });
+    }
+
+    SetWindowArgs(args: any) {
+        this.IsCargoTracking = args.IsCargoTracking;
     }
 
     private LoadMyTenantData() {
@@ -75,91 +81,121 @@ export class SharedLogisticsPartnersPermissiosComponent implements OnInit {
         item1.PartnerName = "Shipper";
         item1.SuggestedIsChecked = this.TenantZeroEntity.IsShipperShared;
         item1.ChooseIsChecked = this.EntityPM.IsShipperShared;
+        item1.IsShowContactTelSMS = this.EntityPM.IsShipperShowContactTS;
+        item1.IsShowContactTelSMSFieldName = "IsShipperShowContactTS";
 
         var item2: PartnerItem = new PartnerItem(this);
         item2.Code = "CO";
         item2.PartnerName = "Consignee";
         item2.SuggestedIsChecked = this.TenantZeroEntity.IsConsigneeShared;
         item2.ChooseIsChecked = this.EntityPM.IsConsigneeShared;
+        item2.IsShowContactTelSMS = this.EntityPM.IsConsigneeShowContactTS;
+        item2.IsShowContactTelSMSFieldName = "IsConsigneeShowContactTS";
 
         var item3: PartnerItem = new PartnerItem(this);
         item3.Code = "AG";
         item3.PartnerName = "Agent";
         item3.SuggestedIsChecked = this.TenantZeroEntity.IsAgentShared;
         item3.ChooseIsChecked = this.EntityPM.IsAgentShared;
+        item3.IsShowContactTelSMS = this.EntityPM.IsAgentShowContactTS;
+        item3.IsShowContactTelSMSFieldName = "IsAgentShowContactTS";
 
         var item4: PartnerItem = new PartnerItem(this);
         item4.Code = "SN";
         item4.PartnerName = "Shipper Not Exporter";
         item4.SuggestedIsChecked = this.TenantZeroEntity.IsShipperNotExporterShared;
         item4.ChooseIsChecked = this.EntityPM.IsShipperNotExporterShared;
+        item4.IsShowContactTelSMS = this.EntityPM.IsShipperNotExShowContactTS;
+        item4.IsShowContactTelSMSFieldName = "IsShipperNotExShowContactTS";
 
         var item5: PartnerItem = new PartnerItem(this);
         item5.Code = "CN";
         item5.PartnerName = "Consignee Not Importer";
         item5.SuggestedIsChecked = this.TenantZeroEntity.IsConsigneeNotImporterShared;
         item5.ChooseIsChecked = this.EntityPM.IsConsigneeNotImporterShared;
+        item5.IsShowContactTelSMS = this.EntityPM.IsConsigneeNotImShowContactTS;
+        item5.IsShowContactTelSMSFieldName = "IsConsigneeNotImShowContactTS";
 
         var item6: PartnerItem = new PartnerItem(this);
         item6.Code = "N1";
         item6.PartnerName = "Notify 1";
         item6.SuggestedIsChecked = this.TenantZeroEntity.IsNotify1Shared;
         item6.ChooseIsChecked = this.EntityPM.IsNotify1Shared;
+        item6.IsShowContactTelSMS = this.EntityPM.IsNotify1ShowContactTS;
+        item6.IsShowContactTelSMSFieldName = "IsNotify1ShowContactTS";
 
         var item7: PartnerItem = new PartnerItem(this);
         item7.Code = "N2";
         item7.PartnerName = "Notify 2";
         item7.SuggestedIsChecked = this.TenantZeroEntity.IsNotify2Shared;
         item7.ChooseIsChecked = this.EntityPM.IsNotify2Shared;
+        item7.IsShowContactTelSMS = this.EntityPM.IsNotify2ShowContactTS;
+        item7.IsShowContactTelSMSFieldName = "IsNotify2ShowContactTS";
 
         var item8: PartnerItem = new PartnerItem(this);
         item8.Code = "FF";
         item8.PartnerName = "Freight Forwarder";
         item8.SuggestedIsChecked = this.TenantZeroEntity.IsFreightForwarderShared;
         item8.ChooseIsChecked = this.EntityPM.IsFreightForwarderShared;
+        item8.IsShowContactTelSMS = this.EntityPM.IsFreightForwardShowContactTS;
+        item8.IsShowContactTelSMSFieldName = "IsFreightForwardShowContactTS";
 
         var item9: PartnerItem = new PartnerItem(this);
         item9.Code = "CL";
         item9.PartnerName = "Coloader";
         item9.SuggestedIsChecked = this.TenantZeroEntity.IsColoaderShared;
         item9.ChooseIsChecked = this.EntityPM.IsColoaderShared;
-        
+        item9.IsShowContactTelSMS = this.EntityPM.IsColoaderShowContactTS;
+        item9.IsShowContactTelSMSFieldName = "IsColoaderShowContactTS";
+
         var item10: PartnerItem = new PartnerItem(this);
         item10.Code = "CE";
         item10.PartnerName = "Custom Agent Export";
         item10.SuggestedIsChecked = this.TenantZeroEntity.IsCustomsAgentExportShared;
         item10.ChooseIsChecked = this.EntityPM.IsCustomsAgentExportShared;
+        item10.IsShowContactTelSMS = this.EntityPM.IsCustomAgentExShowContactTS;
+        item10.IsShowContactTelSMSFieldName = "IsCustomAgentExShowContactTS";
 
         var item11: PartnerItem = new PartnerItem(this);
         item11.Code = "CI";
         item11.PartnerName = "Custom Agent Import";
         item11.SuggestedIsChecked = this.TenantZeroEntity.IsCustomsAgentImportShared;
         item11.ChooseIsChecked = this.EntityPM.IsCustomsAgentImportShared;
+        item11.IsShowContactTelSMS = this.EntityPM.IsCustomAgentImShowContactTS;
+        item11.IsShowContactTelSMSFieldName = "IsCustomAgentImShowContactTS";
 
         var item12: PartnerItem = new PartnerItem(this);
         item12.Code = "CC";
         item12.PartnerName = "Custom Clearance Point";
         item12.SuggestedIsChecked = this.TenantZeroEntity.IsCustomClearancePoinShared;
         item12.ChooseIsChecked = this.EntityPM.IsCustomClearancePoinShared;
+        item12.IsShowContactTelSMS = this.EntityPM.IsCustomCleaPointShowContactTS;
+        item12.IsShowContactTelSMSFieldName = "IsCustomCleaPointShowContactTS";
 
         var item13: PartnerItem = new PartnerItem(this);
         item13.Code = "CD";
         item13.PartnerName = "Consolidator";
         item13.SuggestedIsChecked = this.TenantZeroEntity.IsConsolidatorShared;
         item13.ChooseIsChecked = this.EntityPM.IsConsolidatorShared;
+        item13.IsShowContactTelSMS = this.EntityPM.IsConsolidatorShowContactTS;
+        item13.IsShowContactTelSMSFieldName = "IsConsolidatorShowContactTS";
 
         var item14: PartnerItem = new PartnerItem(this);
         item14.Code = "RL";
         item14.PartnerName = "Releasing Agent";
         item14.SuggestedIsChecked = this.TenantZeroEntity.IsReleasingAgentShared;
         item14.ChooseIsChecked = this.EntityPM.IsReleasingAgentShared;
+        item14.IsShowContactTelSMS = this.EntityPM.IsReleasingAgentShowContactTS;
+        item14.IsShowContactTelSMSFieldName = "IsReleasingAgentShowContactTS";
 
         var item15: PartnerItem = new PartnerItem(this);
         item15.Code = "IS";
         item15.PartnerName = "Issuing Carrier Agent";
         item15.SuggestedIsChecked = this.TenantZeroEntity.IsIssuingCarrierAgentShared;
         item15.ChooseIsChecked = this.EntityPM.IsIssuingCarrierAgentShared;
-        
+        item15.IsShowContactTelSMS = this.EntityPM.IsIssuingCarAgentShowContactTS;
+        item15.IsShowContactTelSMSFieldName = "IsIssuingCarAgentShowContactTS";
+
         var item16: PartnerItem = new PartnerItem(this);
         item16.Code = "PI";
         item16.PartnerName = "Pickup and Deliveries Carriers";
@@ -199,7 +235,7 @@ export class SharedLogisticsPartnersPermissiosComponent implements OnInit {
         this.mySearchText = searchText;
         this.BuildData();
     }
-    
+
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
@@ -261,14 +297,24 @@ export class PartnerItem {
     public PartnerName: string;
     public SuggestedIsChecked: boolean;
     public IsEnabled: boolean = true;
+    public IsShowContactTelSMSFieldName: string;
+    public: boolean;
 
     private chooseIsChecked: boolean;
     public get ChooseIsChecked() { return this.chooseIsChecked; }
     public set ChooseIsChecked(value: boolean) {
         if (this.chooseIsChecked != value) {
             this.chooseIsChecked = value;
-
             this.SetIsChecked();
+        }
+    }
+
+    private isShowContactTelSMS: boolean;
+    public get IsShowContactTelSMS() { return this.isShowContactTelSMS; }
+    public set IsShowContactTelSMS(value: boolean) {
+        if (this.isShowContactTelSMS != value) {
+            this.isShowContactTelSMS = value;
+            this.father.EntityPM[this.IsShowContactTelSMSFieldName] = this.IsShowContactTelSMS;
         }
     }
 
@@ -360,4 +406,5 @@ export class PartnerItem {
             }
         }
     }
+
 }

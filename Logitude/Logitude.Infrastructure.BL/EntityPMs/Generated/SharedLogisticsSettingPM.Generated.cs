@@ -526,6 +526,351 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool isShipperShowContactTS ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsShipperShowContactTS  
+	   {
+	    
+	     get
+		{
+		   return isShipperShowContactTS;
+		 }
+		 set
+		 {
+		   if(isShipperShowContactTS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsShipperShowContactTS",OldValue=isShipperShowContactTS,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isShipperShowContactTS=value;
+		   }
+			
+		 }
+	   }
+	  private bool isConsigneeShowContactTS ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsConsigneeShowContactTS  
+	   {
+	    
+	     get
+		{
+		   return isConsigneeShowContactTS;
+		 }
+		 set
+		 {
+		   if(isConsigneeShowContactTS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsConsigneeShowContactTS",OldValue=isConsigneeShowContactTS,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isConsigneeShowContactTS=value;
+		   }
+			
+		 }
+	   }
+	  private bool isAgentShowContactTS ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsAgentShowContactTS  
+	   {
+	    
+	     get
+		{
+		   return isAgentShowContactTS;
+		 }
+		 set
+		 {
+		   if(isAgentShowContactTS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAgentShowContactTS",OldValue=isAgentShowContactTS,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isAgentShowContactTS=value;
+		   }
+			
+		 }
+	   }
+	  private bool isShipperNotExShowContactTS ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsShipperNotExShowContactTS  
+	   {
+	    
+	     get
+		{
+		   return isShipperNotExShowContactTS;
+		 }
+		 set
+		 {
+		   if(isShipperNotExShowContactTS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsShipperNotExShowContactTS",OldValue=isShipperNotExShowContactTS,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isShipperNotExShowContactTS=value;
+		   }
+			
+		 }
+	   }
+	  private bool isConsigneeNotImShowContactTS ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsConsigneeNotImShowContactTS  
+	   {
+	    
+	     get
+		{
+		   return isConsigneeNotImShowContactTS;
+		 }
+		 set
+		 {
+		   if(isConsigneeNotImShowContactTS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsConsigneeNotImShowContactTS",OldValue=isConsigneeNotImShowContactTS,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isConsigneeNotImShowContactTS=value;
+		   }
+			
+		 }
+	   }
+	  private bool isNotify1ShowContactTS ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsNotify1ShowContactTS  
+	   {
+	    
+	     get
+		{
+		   return isNotify1ShowContactTS;
+		 }
+		 set
+		 {
+		   if(isNotify1ShowContactTS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsNotify1ShowContactTS",OldValue=isNotify1ShowContactTS,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isNotify1ShowContactTS=value;
+		   }
+			
+		 }
+	   }
+	  private bool isNotify2ShowContactTS ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsNotify2ShowContactTS  
+	   {
+	    
+	     get
+		{
+		   return isNotify2ShowContactTS;
+		 }
+		 set
+		 {
+		   if(isNotify2ShowContactTS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsNotify2ShowContactTS",OldValue=isNotify2ShowContactTS,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isNotify2ShowContactTS=value;
+		   }
+			
+		 }
+	   }
+	  private bool isFreightForwardShowContactTS ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsFreightForwardShowContactTS  
+	   {
+	    
+	     get
+		{
+		   return isFreightForwardShowContactTS;
+		 }
+		 set
+		 {
+		   if(isFreightForwardShowContactTS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsFreightForwardShowContactTS",OldValue=isFreightForwardShowContactTS,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isFreightForwardShowContactTS=value;
+		   }
+			
+		 }
+	   }
+	  private bool isColoaderShowContactTS ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsColoaderShowContactTS  
+	   {
+	    
+	     get
+		{
+		   return isColoaderShowContactTS;
+		 }
+		 set
+		 {
+		   if(isColoaderShowContactTS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsColoaderShowContactTS",OldValue=isColoaderShowContactTS,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isColoaderShowContactTS=value;
+		   }
+			
+		 }
+	   }
+	  private bool isCustomAgentExShowContactTS ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsCustomAgentExShowContactTS  
+	   {
+	    
+	     get
+		{
+		   return isCustomAgentExShowContactTS;
+		 }
+		 set
+		 {
+		   if(isCustomAgentExShowContactTS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCustomAgentExShowContactTS",OldValue=isCustomAgentExShowContactTS,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isCustomAgentExShowContactTS=value;
+		   }
+			
+		 }
+	   }
+	  private bool isCustomAgentImShowContactTS ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsCustomAgentImShowContactTS  
+	   {
+	    
+	     get
+		{
+		   return isCustomAgentImShowContactTS;
+		 }
+		 set
+		 {
+		   if(isCustomAgentImShowContactTS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCustomAgentImShowContactTS",OldValue=isCustomAgentImShowContactTS,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isCustomAgentImShowContactTS=value;
+		   }
+			
+		 }
+	   }
+	  private bool isCustomCleaPointShowContactTS ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsCustomCleaPointShowContactTS  
+	   {
+	    
+	     get
+		{
+		   return isCustomCleaPointShowContactTS;
+		 }
+		 set
+		 {
+		   if(isCustomCleaPointShowContactTS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCustomCleaPointShowContactTS",OldValue=isCustomCleaPointShowContactTS,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isCustomCleaPointShowContactTS=value;
+		   }
+			
+		 }
+	   }
+	  private bool isConsolidatorShowContactTS ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsConsolidatorShowContactTS  
+	   {
+	    
+	     get
+		{
+		   return isConsolidatorShowContactTS;
+		 }
+		 set
+		 {
+		   if(isConsolidatorShowContactTS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsConsolidatorShowContactTS",OldValue=isConsolidatorShowContactTS,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isConsolidatorShowContactTS=value;
+		   }
+			
+		 }
+	   }
+	  private bool isReleasingAgentShowContactTS ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsReleasingAgentShowContactTS  
+	   {
+	    
+	     get
+		{
+		   return isReleasingAgentShowContactTS;
+		 }
+		 set
+		 {
+		   if(isReleasingAgentShowContactTS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsReleasingAgentShowContactTS",OldValue=isReleasingAgentShowContactTS,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isReleasingAgentShowContactTS=value;
+		   }
+			
+		 }
+	   }
+	  private bool isIssuingCarAgentShowContactTS ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsIssuingCarAgentShowContactTS  
+	   {
+	    
+	     get
+		{
+		   return isIssuingCarAgentShowContactTS;
+		 }
+		 set
+		 {
+		   if(isIssuingCarAgentShowContactTS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsIssuingCarAgentShowContactTS",OldValue=isIssuingCarAgentShowContactTS,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isIssuingCarAgentShowContactTS=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
