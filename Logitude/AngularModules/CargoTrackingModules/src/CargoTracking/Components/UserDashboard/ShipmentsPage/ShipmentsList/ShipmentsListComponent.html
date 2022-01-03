@@ -407,8 +407,10 @@
                         <div class="column col-md-2 sender hide-mobile" style="width: 12%;">
                             <div>
                                 <div class="subtitle">QUANTITY & WEIGHT </div>
-                                <div class="value truncateText">
-                                    <span *ngIf="shipment.NumberOfPackages">{{shipment.NumberOfPackages }} Units </span><span *ngIf="shipment.NumberOfPackages && shipment.GrossWeight"> / </span><span *ngIf="shipment.GrossWeight">{{shipment.GrossWeight}} {{shipment.GrossWeightUnitCode}}</span>
+                                <div class="value weight-quantity"  [attr.src]="SetQuantityAndWeight(shipment)" [matTooltip]="(shipment.NumberOfPackages? shipment.NumberOfPackages + ' Units ' :'' ) + (shipment.NumberOfPackages && shipment.GrossWeight? ' / ':'') +(shipment.GrossWeight?shipment.GrossWeight+' '+shipment.GrossWeightUnitCode:'')">
+                                    {{(shipment.NumberOfPackages? shipment.NumberOfPackages:'')|number}}
+                                    {{ (shipment.NumberOfPackages? ' Units ' :'' ) + (shipment.NumberOfPackages && shipment.GrossWeight? ' / ':'') }}
+                                    {{(shipment.GrossWeight?shipment.GrossWeight:'')|number}} {{(shipment.GrossWeight?shipment.GrossWeightUnitCode:'') }}
                                 </div>
 
                                 <div class="subtitle hide-mobile" [attr.src]="SetEstimationORActualDate(shipment)">

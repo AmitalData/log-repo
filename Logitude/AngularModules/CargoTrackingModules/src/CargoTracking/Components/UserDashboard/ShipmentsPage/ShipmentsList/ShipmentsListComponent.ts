@@ -408,7 +408,10 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         }
         return value;
     }
-
+    QuantityAndWeight:string;
+    public SetQuantityAndWeight(shipment: CargoTrackingShipmentList){
+        this.QuantityAndWeight = (shipment.NumberOfPackages? shipment.NumberOfPackages + ' Units ' :'' ) + (shipment.NumberOfPackages && shipment.GrossWeight? ' / ':'') +(shipment.GrossWeight?shipment.GrossWeight+' '+shipment.GrossWeightUnitCode:'');
+    }
     private SetSupplierOrCleintValueByEntityType(shipment: CargoTrackingShipmentList, value: any) {
         if (shipment.EntityType == this.EntityType_Customs) {
             value = shipment.ShipperName;
