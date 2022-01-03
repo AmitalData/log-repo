@@ -1,4 +1,5 @@
 ﻿
+using Logitude.Customs.BL.BL;
 using Logitude.Customs.Def.Contracts;
 using Logitude.Customs.Def.EntityPMs;
 using System;
@@ -18,5 +19,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             //var cts = pms.Select(rec => rec as IClosedTable).ToList();
             return pms;
         }
+
+        public List<IncotemrsFileValidationPM> GetAllFromCache() => CacheHelper.GetFromCache("IncotemrsFileValidationPMGetAll", GetAll);
     }
 }
