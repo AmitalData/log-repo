@@ -61,6 +61,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             catch (Exception exc) {
                 cashBookPM.InDepositingProgress = false;
                 SubmitCashbook(depositPM.Tenant, cashBookPM);
+                throw new ApplicationException(exc.Message);
             }
 
         }
