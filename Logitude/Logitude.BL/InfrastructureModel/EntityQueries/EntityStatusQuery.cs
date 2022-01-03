@@ -54,7 +54,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   SearchFields = a.SearchFields,
                                                   InActive = a.InActive,
                                                   DisplayName = !string.IsNullOrEmpty(a.DisplayName) ? a.DisplayName : a.Name,
-                                                  EntityStatusTypeCode = a.EntityStatusType != null?  a.EntityStatusType.Code: null,
+                                                  EntityStatusTypeCode = a.EntityStatusTypeCode,
                                                   StatusLocalWeight = a.StatusLocalWeight,
                                               });;
                         foreach (var s in entitystatuses)
