@@ -707,24 +707,13 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
            )
         {
-
-            if (DisplayNotReconciledOnly)
-            {
-                query2 = query2.Where(rec => rec.IsReconciled == false)
-
-              .Where(rec => rec.InReconcileProgress == false)
-              .Where(rec => rec.AccountId == AccountId);
-            }
-            else
-            {
-                query2 = query2.Where(rec => rec.IsReconciled == false)
-                    .Where(rec => rec.IsExternalReconcile == false)
+ 
+            query2 = query2
+                .Where(rec => rec.IsReconciled == false)
                     .Where(rec => rec.InReconcileProgress == false)// Seee CreateJournalReconcileService!!!
                     .Where(rec => rec.AccountId == AccountId)
-                    //.OrderBy(rec => rec.AccountingDate)
-                    //.Take(MaxTotal);
                     ;
-            }
+            
             return query2;
         }
         private static IQueryable<LedgerTransactionList> FilterOpenTransactionsForExternalReconcile(string AccountId, IQueryable<LedgerTransactionList> query2)
