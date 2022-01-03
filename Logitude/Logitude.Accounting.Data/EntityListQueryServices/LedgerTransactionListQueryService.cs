@@ -706,7 +706,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
             query2 = query2
                 .Where(rec => rec.IsReconciled == false)
-                .Where(rec => rec.IsExternalReconcile == false)
                 .Where(rec => rec.InReconcileProgress == false)// Seee CreateJournalReconcileService!!!
                 .Where(rec => rec.AccountId == AccountId)
                 //.OrderBy(rec => rec.AccountingDate)
