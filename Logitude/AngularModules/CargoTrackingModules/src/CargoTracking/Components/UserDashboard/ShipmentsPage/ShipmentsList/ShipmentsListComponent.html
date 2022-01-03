@@ -345,7 +345,7 @@
                                 </div>
                                 <span class="hide-mobile"
                                     (click)="OpenReferencesMessageWindow(shipment.CustomerReference?.split(','), false); $event.stopPropagation()"
-                                    *ngIf="references?.length > 4"
+                                    *ngIf="references?.length >= 3"
                                     [attr.src]="SetMoreReferenceText(shipment.CustomerReference)">
                                     <img src="./assets/images/icons/info.png" alt=" "
                                         style="margin-right: 6px; margin-top: 6px" />
