@@ -148,6 +148,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 result = string.IsNullOrEmpty(result) ? entityPM.HAWB : result + "," + entityPM.HAWB;
             }
 
+            if (!string.IsNullOrEmpty(entityPM.IntegratorName))
+            {
+                result = string.IsNullOrEmpty(result) ? entityPM.IntegratorName : result + "," + entityPM.IntegratorName;
+            }
+
             CustomsAirlineRepository rep = new CustomsAirlineRepository(entityPM.Tenant);
 
             CustomsAirline customsAirline = rep.GetSingle(poco.AirlineId, poco.Tenant);
