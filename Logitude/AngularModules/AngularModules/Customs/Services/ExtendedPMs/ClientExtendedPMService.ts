@@ -5,10 +5,10 @@ import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { ClientPM } from '../../EntityPMs/ClientPM';
+
 
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { ClientPM } from 'Customs/Entitypms/ClientPM';
 
 @Injectable()
 

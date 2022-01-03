@@ -6,7 +6,6 @@ import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionL
 import { LogTab } from '../../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ClaimPM } from '../../../../../Customs/EntityPMs/ClaimPM';
-import { ClientAddressPM } from '../../../../../Customs/EntityPMs/ClientAddressPM';
 import { ClaimsRelatedEntityPM } from '../../../../../Customs/EntityPMs/ClaimsRelatedEntityPM';
 import { ClaimsRelatedEntitiesReasonPM } from '../../../../../Customs/EntityPMs/ClaimsRelatedEntitiesReasonPM';
 import { ClaimsRelatedEntsReasonsExpPM } from '../../../../../Customs/EntityPMs/ClaimsRelatedEntsReasonsExpPM';

@@ -11,10 +11,10 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {AddAddressContactForClientRequestParams} from '../../DataContract/RequestParams/AddAddressContactForClientRequestParams';
 import {ClientSearchRequestParams} from '../../DataContract/RequestParams/ClientSearchRequestParams';
 import {CreateClientRequestParams} from '../../DataContract/RequestParams/CreateClientRequestParams';
-import {ClientPM} from '../../EntityPMs/ClientPM';
-import {ClientAddressPM} from '../../EntityPMs/ClientAddressPM';
-import {ClientsAddressCommTypePM} from '../../EntityPMs/ClientsAddressCommTypePM';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
+import { ClientAddressPM } from 'Customs/Entitypms/ClientAddressPM';
+import { ClientPM } from 'Customs/Entitypms/ClientPM';
+import { ClientsAddressCommTypePM } from 'Customs/Entitypms/ClientsAddressCommTypePM';
 
 @Injectable()
 

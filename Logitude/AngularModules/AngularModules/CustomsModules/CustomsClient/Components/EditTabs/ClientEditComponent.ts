@@ -2,7 +2,6 @@ import {Component, ViewChildren, QueryList}  from '@angular/core';
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {ClientPM} from '../../../../Customs/EntityPMs/ClientPM';
 import {ClientPMService} from '../../../../Customs/Services/StandardPMs/ClientPMService'
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -15,6 +14,7 @@ declare var window: any;
 import {ClientMessagesService} from '../../../../Customs/Services/WebServices/ClientMessagesService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { TextCodeTranslator } from      '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ClientPM } from 'Customs/Entitypms/ClientPM';
 
 
 @Component({
