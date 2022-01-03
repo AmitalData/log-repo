@@ -3,10 +3,9 @@
 	<Sql Version="1">
 	</Sql>
 
-	<Oracle Version="1">
+	<Oracle Version="2">
 		<![CDATA[
-update COURIERMASTERS set SEARCHFIELDS = SEARCHFIELDS|| ',' || (select cards.LOCALNAME from cards where cards.id= COURIERMASTERS.integratorcode)
-
+update COURIERMASTERS set SEARCHFIELDS =CONCAT( CONCAT(SEARCHFIELDS , ',' ), (select cards.LOCALNAME from cards where cards.id= COURIERMASTERS.integratorcode));
     ]]>
 	</Oracle>
 </Script>
