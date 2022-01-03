@@ -16,11 +16,19 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
         {
             string shipmentFields = !string.IsNullOrEmpty(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName) ? cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName : "*";
             shipmentFields = " C." + shipmentFields.Replace(",", " ,C.");
-            string updatedShipmentFields = shipmentFields.Replace("C.ConsigneeName", "(case when C.DirectionId = 'E' AND C.ConsigneeId IS NOT NULL then ConsigneeCard.EnglishName when" +
-                " C.DirectionId = 'E' AND C.ConsigneeId IS NULL then C.ConsigneeName end) as ConsigneeName");
+            string updatedShipmentFields = shipmentFields.Replace("C.ConsigneeName", 
+                $@"(case 
+                        when C.DirectionId = 'E' AND C.ConsigneeId IS NOT NULL AND ConsigneeCard.LocalName IS NOT NULL then ConsigneeCard.LocalName
+                        when C.DirectionId = 'E' AND C.ConsigneeId IS NOT NULL then ConsigneeCard.EnglishName 
+                        when C.DirectionId = 'E' AND C.ConsigneeId IS NULL then C.ConsigneeName end) 
+                as ConsigneeName");
 
-            updatedShipmentFields = updatedShipmentFields.Replace("C.ShipperName", "(case when (C.DirectionId = 'I' OR C.ShipmentLevelCode = 'A') AND C.ShipperId IS NOT NULL then ShipperCard.EnglishName when" +
-                " (C.DirectionId = 'I' OR C.ShipmentLevelCode = 'A') AND C.ShipperId IS NULL then C.ShipperName end) as ShipperName");
+            updatedShipmentFields = updatedShipmentFields.Replace("C.ShipperName", 
+                $@"(case 
+                        when (C.DirectionId = 'I' OR C.ShipmentLevelCode = 'A') AND C.ShipperId IS NOT NULL AND ShipperCard.LocalName IS NOT NULL then ShipperCard.LocalName 
+                        when (C.DirectionId = 'I' OR C.ShipmentLevelCode = 'A') AND C.ShipperId IS NOT NULL then ShipperCard.EnglishName 
+                        when (C.DirectionId = 'I' OR C.ShipmentLevelCode = 'A') AND C.ShipperId IS NULL then C.ShipperName end) 
+                    as ShipperName");
 
             var shipmentComputedFields =
                  "com.ContainersNumbers as ContainersNumbers," +
