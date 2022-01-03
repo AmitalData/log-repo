@@ -8,6 +8,7 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
+import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 declare var window: any;
 
 @Component({
@@ -98,6 +99,20 @@ export class CustomizationMainComponent {
 
         this.ItemsSource1 = myData.filter(f => f.ObjectTableTypeCode != "MD");
         this.ItemsSource2 = myData.filter(f => f.ObjectTableTypeCode == "MD");
+
+        if(myData || myData.length ==0){
+            this.ShowPackageMessage();
+        }
+    }
+    
+    ShowPackageMessage() {
+        var window = new ConfirmWindow();
+        window.Width = 450;
+        window.Height = 190;
+        window.Title = "You have no permession";
+        window.YesButtonText = "Ok";
+        window.ShowNoButton = false;
+        window.Show("Your package doesn't include this module..");
     }
 
     HaveObjectTableAccess(table: ObjectTablePM): boolean {
@@ -127,12 +142,7 @@ export class CustomizationMainComponent {
             this.IsButtonEnabled = false;
             return;
         }
-        if (!this.IsObjectTableFilterEnabled) {
-            this.IsButtonEnabled = true;
-            return;
-        }
-
-        this.IsButtonEnabled = false;
+        this.IsButtonEnabled = true;
         this.IsFieldsCustomizationEnabled = this.HaveFieldsCustomization(fieldsTranslations.ObjectTableName);
         this.IsRulesCustomizationEnabled = this.HaveRulesCustomization(fieldsTranslations.ObjectTableName);
     }
