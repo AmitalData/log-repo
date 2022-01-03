@@ -6,7 +6,6 @@ import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionL
 import { LogTab } from '../../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ClaimPM } from '../../../../../Customs/EntityPMs/ClaimPM';
-import { ClientAddressPM } from '../../../../../Customs/EntityPMs/ClientAddressPM';
 import { ClaimsRelatedEntityPM } from '../../../../../Customs/EntityPMs/ClaimsRelatedEntityPM';
 import { ClaimsRelatedEntitiesAmountPM } from '../../../../../Customs/EntityPMs/ClaimsRelatedEntitiesAmountPM';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -14,7 +13,6 @@ import { ObservableCollection } from '../../../../../Infrastructure/Utilities/Ob
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { CustomsSettingListService } from '../../../../../Customs/Services/StandardLists/CustomsSettingListService';
 import { ClientList } from '../../../../../Customs/EntityLists/ClientList';
-import { ClientsAddressCommTypePM } from '../../../../../Customs/EntityPMs/ClientsAddressCommTypePM';
 import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';

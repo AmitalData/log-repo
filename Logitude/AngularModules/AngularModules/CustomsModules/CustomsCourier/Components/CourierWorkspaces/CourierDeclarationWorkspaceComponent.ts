@@ -11,7 +11,6 @@ import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { CourierMasterPM } from '../../../../Customs/EntityPMs/CourierMasterPM';
-import { CourierMasterService } from '../../../../Customs/Services/Others/CourierMasterService';
 import { CourierMasterValidator } from '../../../../Customs/Validators/CourierMasterValidator';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -22,6 +21,7 @@ import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocat
 import { DeclarationExtendedListService } from '../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { DeclarationCourierStatusWebService } from '../../../../Customs/Services/WebServices/DeclarationCourierStatusWebService';
 import { CourierWorksheetSharedDataService } from '../../../../Customs/Services/DataChange/CourierWorksheetSharedDataService';
+import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
 
 @Component({
     templateUrl: './CourierDeclarationWorkspaceComponent.html',

@@ -6,12 +6,12 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
-import { CourierMasterService } from '../../../../Customs/Services/Others/CourierMasterService';
 import { CourierMasterPMService } from '../../../../Customs/Services/StandardPMs/CourierMasterPMService';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { SendALLStorageSiteRequestParams } from '../../../../Customs/DataContract/RequestParams/SendALLStorageSiteRequestParams';
 import { CourierMasterPM } from '../../../../Customs/EntityPMs/CourierMasterPM';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
 
 @Component({
     selector: 'GetStorageSiteCodeComponent',

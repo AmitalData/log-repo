@@ -1,6 +1,5 @@
 import { Component, ViewChild, ViewContainerRef, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { CourierMasterService } from '../../Services/Others/CourierMasterService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { CustomsAutonomyKeywordExtendedPMService } from '../../Services/ExtendedPMs/CustomsAutonomyKeywordExtendedPMService';
@@ -21,6 +20,7 @@ import { ExceptionReasonList } from '../../EntityLists/ExceptionReasonList';
 
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { PhysicalChecksCloseSharedDataService } from '../../Services/DataChange/PhysicalChecksCloseSharedDataService';
+import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
 @Component({
 
     templateUrl: './FieldTemplateComponent.html',
