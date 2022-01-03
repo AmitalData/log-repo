@@ -25,7 +25,7 @@ namespace Logitude.Customs.BL.Validators
         public static CustomsRequiredFieldErrors GetRequiredFieldErrorsForDeclaration(string declarationId, int tenant, DeclarationPM declarationPM = null)
         {
             DeclarationPM declaration = null;
-            
+
             CustomsRequiredFieldErrors requiredErrors = new CustomsRequiredFieldErrors() { RequiredFields = new List<CustomsRequiredFieldsErrorItem>(), };
             ICustomContext context = CustomContext.GetContext(tenant);
             CustomsRequiredFieldQueryService customsRequiredFieldQueryService = new CustomsRequiredFieldQueryService(context);
@@ -33,6 +33,8 @@ namespace Logitude.Customs.BL.Validators
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(context);
             SupplierInvoiceQueryService invoiceQuery = new SupplierInvoiceQueryService(context);
             SupplierInvoiceItemQueryService invoiceItemQuery = new SupplierInvoiceItemQueryService(context);
+            IncotemrsFileValidationQueryService incotemrsFileValidationQuery = new IncotemrsFileValidationQueryService(context);
+            List<IncotemrsFileValidationPM> incotemrsFileValidationPMs = incotemrsFileValidationQuery.GetAllFromCache();
 
             List<SupplierInvoicePM> invoicePMs = invoiceQuery.GetSupplierInvoicesForDeclaration(declarationId, tenant);//mohammad fix wi 20751
             ///List<SupplierInvoiceItemPM> invoiceItemPMs = invoiceItemQuery.GetSupplierInvoiceItemsForDeclaration(declarationId, tenant);//mohammad fix wi 20751
@@ -64,7 +66,7 @@ namespace Logitude.Customs.BL.Validators
             #region declaration entity
             ObjectTable declarationTable = objectTabelRepository.GetObjectTableByName("Customs.Declaration", 0, fromCache);
 
-            List<CustomsRequiredFieldPM> declarationRequiredFields = customsRequiredFieldQueryService.GetCustomRequiredFieldsByObjectTable(declarationTable.Id, tenant , isExport);
+            List<CustomsRequiredFieldPM> declarationRequiredFields = customsRequiredFieldQueryService.GetCustomRequiredFieldsByObjectTable(declarationTable.Id, tenant, isExport);
             List<PropertyInfo> properties = GetPropertiesForEntity("DeclarationPM");
 
             foreach (PropertyInfo info in properties)
@@ -82,7 +84,7 @@ namespace Logitude.Customs.BL.Validators
             }
 
 
-            if(declaration.Direction=="E" &&(declaration.DeclarationExportRecipients==null || declaration.DeclarationExportRecipients.Count()==0))
+            if (declaration.Direction == "E" && (declaration.DeclarationExportRecipients == null || declaration.DeclarationExportRecipients.Count() == 0))
             {
                 requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = "שורת פרטי מקבל", TableName = "Customs.Declaration" });
 
@@ -112,7 +114,7 @@ namespace Logitude.Customs.BL.Validators
             {
                 requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { CustomMessageError = error, });
             }
-            
+
             foreach (SupplierInvoicePM supplierInvoice in supplierInvoices)//declaration.SupplierInvoices)//mohammad fix wi 20751
             {
                 foreach (PropertyInfo info in SupplierInvoiceProperties)
@@ -220,7 +222,7 @@ namespace Logitude.Customs.BL.Validators
                     #region SupplierInvioceItemsCertificates
 
                     ObjectTable supplierInvioceItemsCertificateTable = objectTabelRepository.GetObjectTableByName("Customs.SupplierInvioceItemCertificat", 0, fromCache);
-                    List<CustomsRequiredFieldPM> supplierInvioceItemsCertificateRequiredFields = customsRequiredFieldQueryService.GetCustomRequiredFieldsByObjectTable(supplierInvioceItemsCertificateTable.Id, tenant , isExport);
+                    List<CustomsRequiredFieldPM> supplierInvioceItemsCertificateRequiredFields = customsRequiredFieldQueryService.GetCustomRequiredFieldsByObjectTable(supplierInvioceItemsCertificateTable.Id, tenant, isExport);
                     List<PropertyInfo> supplierInvioceItemsCertificateProperties = GetPropertiesForEntity("SupplierInvioceItemCertificatPM");
                     foreach (SupplierInvioceItemCertificatPM supplierInvioceItemsCertificate in supplierInvioceItemsCertificates)
                     {
@@ -251,7 +253,7 @@ namespace Logitude.Customs.BL.Validators
 
                 #region SupplierInvoiceItemsModifications
                 ObjectTable supplierInvoiceItemsModificationTable = objectTabelRepository.GetObjectTableByName("Customs.SupplierInvoiceItemsMod", 0, fromCache);
-                List<CustomsRequiredFieldPM> supplierInvoiceItemsModificationRequiredFields = customsRequiredFieldQueryService.GetCustomRequiredFieldsByObjectTable(supplierInvoiceItemsModificationTable.Id, tenant , isExport);
+                List<CustomsRequiredFieldPM> supplierInvoiceItemsModificationRequiredFields = customsRequiredFieldQueryService.GetCustomRequiredFieldsByObjectTable(supplierInvoiceItemsModificationTable.Id, tenant, isExport);
                 List<PropertyInfo> supplierInvoiceItemsModificationProperties = GetPropertiesForEntity("SupplierInvoiceItemsModPM");
                 foreach (SupplierInvoiceItemsModPM supplierInvoiceItemsModification in supplierInvoiceItemsModifications)
                 {
@@ -322,7 +324,7 @@ namespace Logitude.Customs.BL.Validators
                 #region SupplierInvoiceItemsProductIdentification
 
                 ObjectTable supplierInvoiceItemsProductIdentificationTable = objectTabelRepository.GetObjectTableByName("Customs.SupplierInvoiceItemsProdIdent", 0, fromCache);
-                List<CustomsRequiredFieldPM> supplierInvoiceItemsProductIdentificationRequiredFields = customsRequiredFieldQueryService.GetCustomRequiredFieldsByObjectTable(supplierInvoiceItemsProductIdentificationTable.Id, tenant , isExport);
+                List<CustomsRequiredFieldPM> supplierInvoiceItemsProductIdentificationRequiredFields = customsRequiredFieldQueryService.GetCustomRequiredFieldsByObjectTable(supplierInvoiceItemsProductIdentificationTable.Id, tenant, isExport);
                 List<PropertyInfo> supplierInvoiceItemsProductIdentificationProperties = GetPropertiesForEntity("SupplierInvoiceItemsProdIdentPM");
                 foreach (SupplierInvoiceItemsProdIdentPM supplierInvoiceItemsProductIdentification in supplierInvoiceItemsProdIdents)
                 {
@@ -419,6 +421,22 @@ namespace Logitude.Customs.BL.Validators
                             }
                         }
                     }
+
+                }
+
+                if (supplierInvoice.IncotermCode != null)
+                {
+                    var incotemrsFileValidationFilters = incotemrsFileValidationPMs.Where(x => x.EnglishName == supplierInvoice.IncotermCode && x.LeadDocumentTypeName == "הצהרת יצוא");
+
+                    bool notHaveInsuranceDetails = supplierInvoiceModifications.Where(x => x.TypeCode == "67").All(x => x.Amount == null || x.CurrencyTypeCode == null);
+                    bool needInsurance = incotemrsFileValidationFilters.Any(x => x.IsInsurance);
+                    if (notHaveInsuranceDetails && needInsurance)
+                        requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { CustomMessageError = "Customs.General.O.NoDetailsForInsurancAmount" });
+
+                    bool notHaveFreightDetails = supplierInvoiceModifications.Where(x => x.TypeCode == "144").All(x => x.Amount == null || x.CurrencyTypeCode == null);
+                    bool needFreight = incotemrsFileValidationFilters.Any(x => x.IsFreightCharge);
+                    if (notHaveFreightDetails && needFreight)
+                        requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { CustomMessageError = "Customs.General.O.NoDetailsForFreightAmount" });
                 }
 
 
@@ -633,7 +651,7 @@ namespace Logitude.Customs.BL.Validators
             //{
             //    requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { EntityReference = declaration.DeclarationNumber, FieldName = "פרטי מקבל", TableName = "Customs.DeclarationExportRecipient" });
 
-      
+
             //}
 
             ObjectTable declarationExportRecipientTable = objectTabelRepository.GetObjectTableByName("Customs.DeclarationExportRecipient", 0, fromCache);
@@ -732,7 +750,7 @@ namespace Logitude.Customs.BL.Validators
 
             #endregion
 
-            if(declaration.Direction!="E")
+            if (declaration.Direction != "E")
             {
                 #region DeclarationPaymentMethod
                 ObjectTable declarationPaymentMethodTable = objectTabelRepository.GetObjectTableByName("Customs.DeclarationPaymentMethod", 0, false);
@@ -935,7 +953,7 @@ namespace Logitude.Customs.BL.Validators
             if (claimPM.ClaimImporterDeclarsPage3 != null && claimPM.ClaimImporterDeclarsPage3.Count == 1)
             {
                 _ClaimImporterDeclarsPage3PM = (from a in claimPM.ClaimImporterDeclarsPage3
-                                               where (a.ImporterLoiDeclarationTypeCode == "1")
+                                                where (a.ImporterLoiDeclarationTypeCode == "1")
                                                 select a).FirstOrDefault();
             }
 
@@ -1006,7 +1024,7 @@ namespace Logitude.Customs.BL.Validators
                         List<SupplierInvoiceItemPM> invoiceItems = invoiceItemPMs.Where(d => d.CounterKey == supplierInvoice.InvoiceCounterKey).ToList();
                         if (invoiceItems == null)
                         {
-                            errorMessage ="specialerror,"+ "חשבון  " + supplierInvoice.SequenceNumeric+"- ," + "Customs.General.O.NoSupplierInvoiceItemForInvoice";
+                            errorMessage = "specialerror," + "חשבון  " + supplierInvoice.SequenceNumeric + "- ," + "Customs.General.O.NoSupplierInvoiceItemForInvoice";
                         }
                         else
                         {
@@ -1038,24 +1056,24 @@ namespace Logitude.Customs.BL.Validators
             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(0);
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(context);
             SupplierInvoiceQueryService invoiceQuery = new SupplierInvoiceQueryService(context);
-          
+
             CourierDeclarationQueryService courierDeclarationQueryService = new CourierDeclarationQueryService(context);
             CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(context);
             List<SupplierInvoicePM> invoicePMs = invoiceQuery.GetSupplierInvoicesForDeclaration(declarationId, tenant);//mohammad fix wi 20751
 
             CourierDeclarationPM courierDeclaration = courierDeclarationQueryService.GetCourierDeclarationByDeclarationId(declarationId, tenant);
             //CourierMasterPM courierMaster = null;
-            
+
             ClientAddressRepository clientAddressRep = new ClientAddressRepository(context);
 
             CustomsVendorQueryService vendorQueryService = new CustomsVendorQueryService(context);
 
             var fromCache = true;
             declaration = paramDeclarationPM;
-            
+
             if (declaration == null)
             {
-                
+
                 if (fromCache)
                 {
                     var cacheKey = "DeclarationPM.RequiredVldAfterUpdate" + declarationId;
@@ -1075,7 +1093,7 @@ namespace Logitude.Customs.BL.Validators
 
             #region declaration entity
             ObjectTable declarationTable = objectTabelRepository.GetObjectTableByName("Customs.Declaration", 0, fromCache);
-          //  List<CustomsRequiredFieldPM> declarationRequiredFields = customsRequiredFieldQueryService.GetCustomRequiredFieldsByObjectTable(declarationTable.Id, tenant);
+            //  List<CustomsRequiredFieldPM> declarationRequiredFields = customsRequiredFieldQueryService.GetCustomRequiredFieldsByObjectTable(declarationTable.Id, tenant);
             List<PropertyInfo> properties = GetPropertiesForEntity("DeclarationPM");
 
             bool IsImporterCodeNull = false;
@@ -1083,8 +1101,8 @@ namespace Logitude.Customs.BL.Validators
             {
                 //if(info.Name == "AgentId" || info.Name == "WeightValue")
                 if (info.Name == "AgentId")//task 46459
-                { 
-                    if (info.GetValue(declaration) == null )
+                {
+                    if (info.GetValue(declaration) == null)
                     {
                         requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.Declaration" });
                     }
@@ -1096,7 +1114,7 @@ namespace Logitude.Customs.BL.Validators
                 //    if (info.GetValue(declaration) == null)
                 //    {
                 //        IsImporterCodeNull = true;
-                       
+
                 //    }
                 //    else
                 //    {
@@ -1107,15 +1125,16 @@ namespace Logitude.Customs.BL.Validators
 
                 if (info.Name == "ImporterName")
                 {
-                  
-                        if (declaration.ImporterCode == null) { 
+
+                    if (declaration.ImporterCode == null)
+                    {
                         if (info.GetValue(declaration) == null)
                         {
                             requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.Declaration" });
 
                         }
-                     }
-                   
+                    }
+
                 }
 
                 if (info.Name == "ImporterAddress")
@@ -1179,9 +1198,9 @@ namespace Logitude.Customs.BL.Validators
             #region SupplierInvoice
 
             List<SupplierInvoicePM> supplierInvoices = invoiceQuery.GetSupplierInvoicesForDeclaration(declarationId, tenant); //declaration.SupplierInvoices;//mohammad fix wi 20751
-   
+
             ObjectTable supplierInvoiceTable = objectTabelRepository.GetObjectTableByName("Customs.SupplierInvoice", 0, true);
-           // List<CustomsRequiredFieldPM> supplierInvoiceRequiredFields = customsRequiredFieldQueryService.GetCustomRequiredFieldsByObjectTable(supplierInvoiceTable.Id, tenant);
+            // List<CustomsRequiredFieldPM> supplierInvoiceRequiredFields = customsRequiredFieldQueryService.GetCustomRequiredFieldsByObjectTable(supplierInvoiceTable.Id, tenant);
             List<PropertyInfo> SupplierInvoiceProperties = GetPropertiesForEntity("SupplierInvoicePM");
             //string[] supplierInvoiceArray = new string[declaration.SupplierInvoices.Count() + 1]; // Alaa: array index out of bounds problem
             //supplierInvoiceArray[0] = "";
@@ -1196,17 +1215,17 @@ namespace Logitude.Customs.BL.Validators
             //foreach (SupplierInvoicePM supplierInvoice in supplierInvoices)//declaration.SupplierInvoices)//mohammad fix wi 20751
             SupplierInvoicePM supplierInvoice = supplierInvoices.FirstOrDefault();
             bool vendorFromFirstSI = false;
-            if (supplierInvoice!=null)
+            if (supplierInvoice != null)
             {
                 foreach (PropertyInfo info in SupplierInvoiceProperties)
                 {
-                  if(info.Name == "VendorId")
+                    if (info.Name == "VendorId")
                     {
                         if (info.GetValue(supplierInvoice) != null)
                         {
                             string vendorId = info.GetValue(supplierInvoice).ToString();
                             CustomsVendorPM vendor = vendorQueryService.GetSingle(vendorId, false, false);
-                            if(vendor != null)
+                            if (vendor != null)
                             {
                                 vendorFromFirstSI = true;
                                 if (vendor.VendorName == null)
@@ -1245,7 +1264,7 @@ namespace Logitude.Customs.BL.Validators
                     }
 
                 }
-                
+
 
             }
             if (!vendorFromFirstSI)
@@ -1281,14 +1300,14 @@ namespace Logitude.Customs.BL.Validators
             List<ConsignmentPackagePM> ConsignmentPackages = new List<ConsignmentPackagePM>();
 
             ObjectTable consignmentTable = objectTabelRepository.GetObjectTableByName("Customs.Consignment", 0, fromCache);
-         //   List<CustomsRequiredFieldPM> consignmentRequiredFields = customsRequiredFieldQueryService.GetCustomRequiredFieldsByObjectTable(consignmentTable.Id, tenant);
+            //   List<CustomsRequiredFieldPM> consignmentRequiredFields = customsRequiredFieldQueryService.GetCustomRequiredFieldsByObjectTable(consignmentTable.Id, tenant);
             List<PropertyInfo> ConsignmentProperties = GetPropertiesForEntity("ConsignmentPM");
             foreach (ConsignmentPM Consignment in declaration.Consignments)
             {
                 foreach (PropertyInfo info in ConsignmentProperties)
                 {
                     //if(info.Name == "StorageSiteCode" || info.Name == "LoadingPortCode" || info.Name == "ThirdCargoID"|| info.Name == "ManifestNumber" || info.Name== "UnloadDate" || info.Name== "CargoDescription" || info.Name == "DeliveryPlaceName")
-                    if (info.Name == "StorageSiteCode"  || info.Name == "ThirdCargoID" || info.Name == "ManifestNumber" || info.Name == "CargoDescription")//task 46459 // task 47157
+                    if (info.Name == "StorageSiteCode" || info.Name == "ThirdCargoID" || info.Name == "ManifestNumber" || info.Name == "CargoDescription")//task 46459 // task 47157
                     {
                         if (info.GetValue(Consignment) == null)
                         {
@@ -1303,43 +1322,43 @@ namespace Logitude.Customs.BL.Validators
                         }
                     }
 
-                  
+
 
 
                 }
-             
+
                 ConsignmentPackages = ConsignmentPackages.Concat(Consignment.ConsignmentPackages).ToList();
             }
 
             #endregion
             #region ConsignmentPackages
             ObjectTable ConsignmentPackageTable = objectTabelRepository.GetObjectTableByName("Customs.ConsignmentPackage", 0, fromCache);
-         //   List<CustomsRequiredFieldPM> ConsignmentPackageRequiredFields = customsRequiredFieldQueryService.GetCustomRequiredFieldsByObjectTable(ConsignmentPackageTable.Id, tenant);
+            //   List<CustomsRequiredFieldPM> ConsignmentPackageRequiredFields = customsRequiredFieldQueryService.GetCustomRequiredFieldsByObjectTable(ConsignmentPackageTable.Id, tenant);
             List<PropertyInfo> ConsignmentPackageProperties = GetPropertiesForEntity("ConsignmentPackagePM");
             foreach (ConsignmentPackagePM ConsignmentPackage in ConsignmentPackages)
             {
                 foreach (PropertyInfo info in ConsignmentPackageProperties)
                 {
-                  if(info.Name == "PackageQuantity" || info.Name== "LineNumber" || info.Name== "GrossMassMeasure" || info.Name== "PackageTypeCode")
+                    if (info.Name == "PackageQuantity" || info.Name == "LineNumber" || info.Name == "GrossMassMeasure" || info.Name == "PackageTypeCode")
                     {
                         if (info.GetValue(ConsignmentPackage) == null)
                         {
                             requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { EntityReference = ConsignmentPackage.LineNumber.ToString(), FieldName = info.Name, TableName = "Customs.ConsignmentPackage" });
                         }
                     }
-                    
+
                 }
             }
 
             #endregion
 
-         
+
             return requiredErrors;
         }
 
         private static string toString(object obj)
         {
-            if (obj==null)
+            if (obj == null)
             {
                 return "";
             }

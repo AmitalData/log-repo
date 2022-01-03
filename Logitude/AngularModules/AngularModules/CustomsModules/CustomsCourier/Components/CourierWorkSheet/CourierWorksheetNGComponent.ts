@@ -7,6 +7,7 @@ import { AppTool } from '../../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { CourierMasterPM } from '../../../../Customs/EntityPMs/CourierMasterPM';
+import { CourierMasterService } from '../../../../Customs/Services/Others/CourierMasterService';
 import { CourierMasterValidator } from '../../../../Customs/Validators/CourierMasterValidator';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -41,7 +42,6 @@ import { DeclarationMamanSpecialActionListService } from '../../../../Customs/Se
 import { DeclarationMamanSpecialActionPM } from '../../../../Customs/EntityPMs/DeclarationMamanSpecialActionPM';
 import { DeclarationCourierStatusPMService } from '../../../../Customs/Services/StandardPMs/DeclarationCourierStatusPMService';
 import { CourierWorksheetNGListTemplate } from '../../../CustomsListTemplates/Components/CourierWorksheetNGListTemplate';
-import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
 
 
 @Component({
@@ -368,7 +368,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
         currRequestParams.SelectedTotalInvoiceValue = this._SelectedTotalInvoiceValue;
         currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
         currRequestParams.SelectedCustomStatusValue = this._SelectedCustomStatusValue;
-        currRequestParams.SelectedFinalReleaseValue = this._SelectedCustomStatusValue;
+     //   currRequestParams.SelectedFinalRelease = this._SelectedCustomStatusValue;
 
         this._CourierMasterService.PostSendALLCorrectManifest(currRequestParams)
             .subscribe((res: any) => {
