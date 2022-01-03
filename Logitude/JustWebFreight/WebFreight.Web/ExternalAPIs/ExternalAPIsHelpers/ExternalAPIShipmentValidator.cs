@@ -28,10 +28,12 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
     {
         private int tenant;
         private ShipmentPM shipmentPM;
+        private VesselRepository vesselRepository;
         public ExternalAPIShipmentValidator(ShipmentPM shipmentPM, int tenant)
         {
             this.tenant = tenant;
             this.shipmentPM = shipmentPM;
+            this.vesselRepository = new VesselRepository(tenant);
         }
 
         public void ValidateUnitCodes()
@@ -393,6 +395,8 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
             this.ValidatePreCarriageDates();
             this.ValidatePreCarriageVessel();
             this.ValidateOnCarriageVessel();
+            this.MapPreCarriageVesselName();
+            this.MapOnCarriageVesselName();
         }
         public void UpdatePickupDeliveryPackagesChangeSet(ShipmentPM entityPM)
         {
@@ -773,6 +777,19 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                 throw new ApplicationException("PreCarriage should not have Vessel");
 
         }
+
+        private void MapPreCarriageVesselName()
+        {
+            if (string.IsNullOrEmpty(shipmentPM.PreCarriageToPortId) || string.IsNullOrEmpty(shipmentPM.PreCarriageFromPortId))
+                return;
+
+            if (string.IsNullOrEmpty(shipmentPM.PreCarriageVesselId))
+                return;
+
+            Vessel preCarriageVessel = this.vesselRepository.GetSingleVessel(shipmentPM.PreCarriageVesselId,tenant);
+            shipmentPM.PreCarriageVesselName = preCarriageVessel?.EnglishName;
+        }
+
         private void ValidateOnCarriageVessel()
         {
             if (string.IsNullOrEmpty(shipmentPM.OnCarriageFromPortId) || string.IsNullOrEmpty(shipmentPM.OnCarriageFromPortId))
@@ -784,6 +801,19 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
             if (!string.IsNullOrEmpty(shipmentPM.OnCarriageVesselId))
                 throw new ApplicationException("OnCarriage should not have Vessel");
         }
+
+        private void MapOnCarriageVesselName()
+        {
+            if (string.IsNullOrEmpty(shipmentPM.OnCarriageFromPortId) || string.IsNullOrEmpty(shipmentPM.OnCarriageFromPortId))
+                return;
+
+            if (string.IsNullOrEmpty(shipmentPM.OnCarriageVesselId))
+                return;
+
+            Vessel onCarriageVessel = this.vesselRepository.GetSingleVessel(shipmentPM.OnCarriageVesselId, tenant);
+            shipmentPM.OnCarriageVesselName = onCarriageVessel?.EnglishName;
+        }
+
         private void UpdateDeliveryPackagesChangeSet(ShipmentPM entityPM)
         {
             if (entityPM.ShipmentDeliveries.Count == 0)

@@ -561,7 +561,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     BuildImportersQueue();
                     SendAutomaticallyOceanOnsightsRequest();
                     UpdatePayablesLinesVatAmounts();
-
+                    RemoveDeletedPackagesItemsFromEntityPM();
                     RunAutomationThatDependencyOnLastEntityUpdate();
 
 
@@ -707,13 +707,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (initializer.ShipmentPickUpsChangeSet != null)
             {
                 this.entityPM.ShipmentPickUps = initializer.ShipmentPickUpsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
-                this.RemoveDeletedItemsFromPickUpPackages();
             }
 
             if (initializer.ShipmentDeliveriesChangeSet != null)
             {
                 this.entityPM.ShipmentDeliveries = initializer.ShipmentDeliveriesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
-                this.RemoveDeletedItemsFromDeliveryPackages();
             }
 
             if (initializer.ShipmentPayablesChangeSet != null)
@@ -724,6 +722,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (initializer.ShipmentReceivablesChangeSet != null)
             {
                 this.entityPM.ShipmentReceivables = initializer.ShipmentReceivablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            }
+
+        }
+
+        private void RemoveDeletedPackagesItemsFromEntityPM()
+        {
+            if (initializer.ShipmentPickUpsChangeSet != null)
+            {
+                this.RemoveDeletedItemsFromPickUpPackages();
+            }
+
+            if (initializer.ShipmentDeliveriesChangeSet != null)
+            {
+                this.RemoveDeletedItemsFromDeliveryPackages();
             }
 
             if (initializer.ShipmentPackagesChangeSet != null)

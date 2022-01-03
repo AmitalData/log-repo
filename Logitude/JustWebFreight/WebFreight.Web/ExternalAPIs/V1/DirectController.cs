@@ -593,22 +593,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 }
             }
         }
-        private bool IsInlandDomesticShipment(Direct entity)
-        {
-            bool isInland = false;
-            bool isDomestic = false;
-            if (entity.Direction != null)
-            {
-                isDomestic = entity.Direction.Code == "D" ? true : false;
-            }
-
-            if (entity.TransportMode != null)
-            {
-                isInland = entity.TransportMode.Code == "I" ? true : false;
-            }
-
-            return isDomestic && isInland;
-        }
         private bool IsInlandDomesticShipment(ShipmentPM entityPM)
         {
             return entityPM.DirectionId == "D" && entityPM.TransportModeId == "I";
@@ -692,21 +676,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
             {
                 if (item.PackageType != null)
                 {
-                    if (entity.ShipmentType != null && (entity.ShipmentType.Code.Contains("FCL") || entity.ShipmentType.Code.Contains("FTL")))
+                    if (entity.ShipmentType != null && (entity.ShipmentType.Code.Contains("LCL") || entity.ShipmentType.Code.Contains("LTL")))
                     {
                         if (item.Pieces == null || item.Pieces == 0)
                         {
                             item.Pieces = 1;
                         }
                     }
-                }
-            }
-
-            if (entity.ShipmentType != null)
-            {
-                if (this.IsInlandDomesticShipment(entity))
-                {
-                    entity.OceanOrInlandPackages = null;
                 }
             }
         }
