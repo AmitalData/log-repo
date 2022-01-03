@@ -43,7 +43,7 @@ export class CustomizationMainComponent {
 
     SearchTextChanged(text: string) {
         this.SearchText = text;
-        this.BuildItemsSources();
+        this.BuildItemsSources(true);
     }
 
     IsObjectTableFilterEnabled: boolean;
@@ -74,7 +74,7 @@ export class CustomizationMainComponent {
         });
     }
 
-    private BuildItemsSources() {
+    private BuildItemsSources(fromSearch: boolean = false) {
         var myTablesItems: FieldsTranslations[];
 
         if (!AppTool.IsNullOrEmpty(this.SearchText)) {
@@ -100,11 +100,11 @@ export class CustomizationMainComponent {
         this.ItemsSource1 = myData.filter(f => f.ObjectTableTypeCode != "MD");
         this.ItemsSource2 = myData.filter(f => f.ObjectTableTypeCode == "MD");
 
-        if(myData || myData.length ==0){
+        if ((!myData || myData.length == 0) && this.IsObjectTableFilterEnabled && !fromSearch) {
             this.ShowPackageMessage();
         }
     }
-    
+
     ShowPackageMessage() {
         var window = new ConfirmWindow();
         window.Width = 450;
@@ -132,7 +132,7 @@ export class CustomizationMainComponent {
     public selectedRow: FieldsTranslations;
     public IsFieldsCustomizationEnabled: boolean = false;
     public IsRulesCustomizationEnabled: boolean = false;
-    
+
     Selecting(fieldsTranslations: FieldsTranslations) {
         this.selectedRow = fieldsTranslations;
         this.IsFieldsCustomizationEnabled = false;
