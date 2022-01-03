@@ -24,6 +24,10 @@ import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
 import { MilestoneCodes } from 'src/CargoTracking/Constants/MilestoneCodes';
 
 const mobileScreenMaxWidth = 470;
+
+const approvalResponseMessage = 'לקוח יקר, הצהרה זו אושרה בתאריך';
+const declineResponseMessage = 'לקוח יקר, הצהרה זו נדחתה';
+
 @Component({
     selector: 'ShipmentDetailsComponent',
     templateUrl: './ShipmentDetailsComponent.html',
@@ -77,8 +81,10 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     public TypeTitle: string;
     isSharedLink: boolean = false;
     isDeclaration: boolean = false;
+    hasApprovalDeclineResponse: boolean = false;
     noShipmentFound: boolean = false;
     approvalMessage: string;
+
     PartnerCardTypesOfShipmentTransportMode = {
         'A': "AIRLINES",
         'I': "TRUCKER",
@@ -228,26 +234,37 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         }, 200);
 
 
-        if(this.isSharedLink && this.isDeclaration){
+        this.SetDeclarationMessage();
+    }
+
+    private SetDeclarationMessage()
+    {
+        if (this.isSharedLink && this.isDeclaration) {
             const isCustomShipment = this.cargoTrackingShipmentPM.EntityType == this.EntityType_Customs;
-            let hasApprovalDeclineResponse = isCustomShipment
-            && this.cargoTrackingShipmentPM.ActivatedForDeclarationApprove
-            && !this.cargoTrackingShipmentPM.IsImporterApprovalRequried;
+            this.hasApprovalDeclineResponse = isCustomShipment && this.cargoTrackingShipmentPM.ActivatedForDeclarationApprove && !this.cargoTrackingShipmentPM.IsImporterApprovalRequried;
 
-            if(hasApprovalDeclineResponse){
-                const approvalResponseMessage = 'לקוח יקר, הצהרה זו אושרה בתאריך';
-                const declineResponseMessage = 'לקוח יקר, הצהרה זו נדחתה';
-
-                if(this.cargoTrackingShipmentPM.ApprovedDate)
-                    this.approvalMessage = approvalResponseMessage + ' ' +this.cargoTrackingShipmentPM.ApprovedDate;
+            if (this.hasApprovalDeclineResponse) {
+                if (this.cargoTrackingShipmentPM.ApprovedDate)
+                    this.SetApprovedDeclarationMessage();
                 else
-                    this.approvalMessage = declineResponseMessage + '\n' + this.cargoTrackingShipmentPM.DenyReason;
+                    this.SetDeniedDeclarationMessage();
 
-            }else{
+            } else {
                 this.approvalMessage = this.cargoTrackingShipmentPM.TenantDeclarationMessage;
             }
 
         }
+    }
+
+    private SetDeniedDeclarationMessage()
+    {
+        this.approvalMessage = declineResponseMessage + '\n"' + this.cargoTrackingShipmentPM.DenyReason+'"';
+    }
+
+    private SetApprovedDeclarationMessage()
+    {
+        const approvedDate = this.datePipe.transform(this.cargoTrackingShipmentPM.ApprovedDate, 'dd/MM/yyyy, HH:mm');
+        this.approvalMessage = approvalResponseMessage + ' ' + approvedDate;
     }
 
     private GetBrandingData()
@@ -761,7 +778,11 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         this.cargoTrackingShipmentExtendedService.PostDeclarationApprovalResponse(args)
             .subscribe(
 
-                res => { this.ShowDeclarationApprovedMessage(); RootContext.StopBusyIndicator();},
+                res => {
+                    this.ShowDeclarationApprovedMessage();
+                    this.GetMainShipmentByShipmentSecurityKey();
+                     RootContext.StopBusyIndicator();
+                    },
                 err => { this.ShowFailureMessage(err); RootContext.StopBusyIndicator();}
             );
 
@@ -807,6 +828,8 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
                         showOkButton: true
                     }
                 });
+                this.GetMainShipmentByShipmentSecurityKey();
+
             }, (error) =>
             {
                 RootContext.StopBusyIndicator();

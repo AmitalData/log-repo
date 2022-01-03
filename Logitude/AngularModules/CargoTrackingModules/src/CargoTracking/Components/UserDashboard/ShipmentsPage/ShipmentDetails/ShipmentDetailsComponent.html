@@ -188,7 +188,7 @@
 
             <div class="declaration-approval-message">{{ approvalMessage }}</div>
 
-            <div class="declaration-approval-toolbar">
+            <div class="declaration-approval-toolbar" *ngIf="!hasApprovalDeclineResponse">
                 <button class="declaration-approval-toolbar-button__red animate" (click)="DenyDeclaration()">דחיה</button>
                 <button class="declaration-approval-toolbar-button__green animate" (click)="ApproveDeclaration()">אושר</button>
             </div>
