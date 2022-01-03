@@ -6,6 +6,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.Helpers;
+using System.Data.Entity.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
@@ -29,9 +30,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
         }
         public CommunicationLog GetSingleCommunicationLogInProccess(string entityId, int tenant , string to, string correlationID)
         {
+            (commonDataContext as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+            DateTime dateTime = DateTime.Now.AddDays(-1);// 
             var q = (from a in context.CommunicationLogs
                      where a.To == to && a.EntityId== entityId && a.CommunicationStatusTypeCode=="W" && a.CorrelationID == correlationID
                      select a);
+            q = q.Where(r => r.CreateDate > dateTime);//bad solution - need time !!!
             var log = q.FirstOrDefault();
             return log;
  
@@ -39,11 +44,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public CommunicationLog GetSingleCommunicationByCorrelationID(int tenant, string correlationID)
         {
+            (commonDataContext as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
             bool lastDay = true;
             var q = (from a in context.CommunicationLogs
                      where a.CorrelationID == correlationID
                      select a);
-            if (lastDay)
+            if (lastDay)//bad solution - need time !!!
             {
                 DateTime dateTime = DateTime.Now.AddHours(24);
                 q = q.Where(r => r.CreateDate > dateTime);
