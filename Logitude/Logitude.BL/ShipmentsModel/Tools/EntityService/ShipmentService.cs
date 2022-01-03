@@ -561,7 +561,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     BuildImportersQueue();
                     SendAutomaticallyOceanOnsightsRequest();
                     UpdatePayablesLinesVatAmounts();
-
+                    RemoveDeletedPackagesItemsFromEntityPM();
                     RunAutomationThatDependencyOnLastEntityUpdate();
 
 
@@ -723,7 +723,64 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 this.entityPM.ShipmentReceivables = initializer.ShipmentReceivablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
             }
+
         }
+
+        private void RemoveDeletedPackagesItemsFromEntityPM()
+        {
+            if (initializer.ShipmentPickUpsChangeSet != null)
+            {
+                this.RemoveDeletedItemsFromPickUpPackages();
+            }
+
+            if (initializer.ShipmentDeliveriesChangeSet != null)
+            {
+                this.RemoveDeletedItemsFromDeliveryPackages();
+            }
+
+            if (initializer.ShipmentPackagesChangeSet != null)
+            {
+                this.entityPM.ShipmentPackages = initializer.ShipmentPackagesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            }
+        }
+
+        private void RemoveDeletedItemsFromPickUpPackages()
+        {
+            foreach(ShipmentPickUpPM shipmentPickUpPM in this.entityPM.ShipmentPickUps)
+            {
+                  this.MapShipmentPickUpPackages(shipmentPickUpPM);
+            }
+        }
+        private void MapShipmentPickUpPackages(ShipmentPickUpPM shipmentPickUpPM)
+        {
+            if (!(shipmentPickUpPM.ShipmentPickUpPackagesChangeSet != null && shipmentPickUpPM.ShipmentPickUpPackagesChangeSet.Count > 0))
+            {
+                return;
+            }
+
+            shipmentPickUpPM.ShipmentPickUpDeliveryPackages = shipmentPickUpPM.ShipmentPickUpPackagesChangeSet
+                                                              .Where(package => package.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+        }
+
+        private void RemoveDeletedItemsFromDeliveryPackages()
+        {
+            foreach(ShipmentDeliveryPM shipmentDeliveryPM in this.entityPM.ShipmentDeliveries)
+            {
+                MapShipmentDeliveryPackages(shipmentDeliveryPM);
+            }
+        }
+
+        private void MapShipmentDeliveryPackages(ShipmentDeliveryPM shipmentDeliveryPM)
+        {
+            if (!(shipmentDeliveryPM.ShipmentDeliveryPackagesChangeSet != null && shipmentDeliveryPM.ShipmentDeliveryPackagesChangeSet.Count > 0))
+            {
+                return;
+            }
+
+            shipmentDeliveryPM.ShipmentPickUpDeliveryPackages = shipmentDeliveryPM.ShipmentDeliveryPackagesChangeSet
+                                                              .Where(package => package.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+        }
+
         private void UpdateMasterHouses()
         {
             MasterHousesBehaviour MasterHousesBehaviour = new MasterHousesBehaviour(this.initializer, this.allHouses, this.isNewEntity);
