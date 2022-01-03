@@ -207,7 +207,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
             if (shipment.ShipmentPickUps.Count == 0)
                 return;
 
-            this.UpdateUpdatedShipmentPickUps(shipment);
+            this.UpdateNotDeletedShipmentPickUps(shipment);
         }
         public void UpdateDeliveries(ShipmentPM shipment)
         {
@@ -220,27 +220,35 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
             if (shipment.ShipmentDeliveries.Count == 0)
                 return;
 
-            this.UpdateUpdatedShipmentDeliveries(shipment);
+            this.UpdateNotDeletedShipmentDeliveries(shipment);
         }
-        private void UpdateUpdatedShipmentPickUps(ShipmentPM shipment)
+        private void UpdateNotDeletedShipmentPickUps(ShipmentPM shipment)
         {
             List<ShipmentPickUpPM> updatedShipmentPickUps = shipment.ShipmentPickUps.FindAll(pickUp => pickUp.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete);
             foreach (ShipmentPickUpPM pickUp in updatedShipmentPickUps)
             {
-                pickUp.PickUpDeliveryTypeCode = "PICK";
-                this.ValidateAndSetPickupFromSide(pickUp);
-                this.ValidateAndSetPickupToSide(pickUp);
+                this.MapAndValidateShipmentPickUp(pickUp);
             }
         }
-        private void UpdateUpdatedShipmentDeliveries(ShipmentPM shipment)
+        private void MapAndValidateShipmentPickUp(ShipmentPickUpPM pickUp)
+        {
+            pickUp.PickUpDeliveryTypeCode = "PICK";
+            this.ValidateAndSetPickupFromSide(pickUp);
+            this.ValidateAndSetPickupToSide(pickUp);
+        }
+        private void UpdateNotDeletedShipmentDeliveries(ShipmentPM shipment)
         {
             List<ShipmentDeliveryPM> updatedShipmentDelivery = shipment.ShipmentDeliveries.FindAll(delivery => delivery.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete);
             foreach (ShipmentDeliveryPM delivery in updatedShipmentDelivery)
             {
-                delivery.PickUpDeliveryTypeCode = "DELV";
-                this.ValidateAndSetDeliveryFromSide(delivery);
-                this.ValidateAndSetDeliveryToSide(delivery);
+                this.MapAndValidateShipmentDelivery(delivery);
             }
+        }
+        private void MapAndValidateShipmentDelivery(ShipmentDeliveryPM delivery)
+        {
+            delivery.PickUpDeliveryTypeCode = "DELV";
+            this.ValidateAndSetDeliveryFromSide(delivery);
+            this.ValidateAndSetDeliveryToSide(delivery);
         }
         private bool IsInlandDomesticShipment(ShipmentPM entityPM)
         {
