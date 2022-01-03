@@ -1,4 +1,4 @@
-import { Component, ElementRef } from "@angular/core";
+import { ChangeDetectorRef, Component, ElementRef } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { EntityArgs } from "Infrastructure/DataContracts/EntityArgs";
@@ -40,11 +40,9 @@ export class QuoteOPDataTabComponent extends BaseComponent {
 
     
     ngOnInit() {
-        this.EntityPM = this.entityArgs.EntityPM;
+        this.initIentity();
         this.EntityPM.DisableMarkAsDirty = true;
-        this.insertFromEntityService.EntityPM = this.EntityPM;
         this.setLeftSideData();
-        this.dataShareService.EntityPM = this.EntityPM;
         this.dataShareService.newQuoteRef = this.elmRef;
         this.dataShareService.formGroup = this.formGroup;
     }
@@ -61,8 +59,19 @@ export class QuoteOPDataTabComponent extends BaseComponent {
         })
         
         setTimeout(() => this.EntityPM.DisableMarkAsDirty = false, 2000);
-        
-        SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe(()=> SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM());
+                
+        SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe(async ()=> {
+            SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM()
+            await SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.OnReloadEntityPM()
+            setTimeout(() => this.initIentity(), 1000);
+        });
+    }
+    
+    
+    private initIentity() {
+        this.EntityPM = this.entityArgs.EntityPM;
+        this.insertFromEntityService.EntityPM = this.EntityPM;
+        this.dataShareService.EntityPM = this.EntityPM;
     }
 
 
@@ -78,13 +87,16 @@ export class QuoteOPDataTabComponent extends BaseComponent {
         this.setShipmentType(ctrls);        
     }
 
+
     private async setShipmentType(ctrls) {
         ctrls.shipmentType.setValue(await this.newQuoteDataService.getShipmentTypeById(this.EntityPM.ShipmentSubTypeId));
     }
 
+
     private async setTransportMode(ctrls) {
         ctrls.transportMode.setValue(await this.newQuoteDataService.getTransportModeById(this.EntityPM.TransportModeId));
     }
+
 
     private async setDirection(ctrls) {
         ctrls.direction.setValue(await this.newQuoteDataService.getDirectionById(this.EntityPM.DirectionId));
