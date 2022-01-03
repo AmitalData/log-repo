@@ -408,8 +408,7 @@
                             <div>
                                 <div class="subtitle">QUANTITY & WEIGHT </div>
                                 <div class="value truncateText">
-                                    {{shipment.NumberOfPackages || 0}} Units <br>
-                                    {{shipment.GrossWeight || 0}} {{shipment.GrossWeightUnitCode}}
+                                    <span *ngIf="shipment.NumberOfPackages">{{shipment.NumberOfPackages }} Units </span><span *ngIf="shipment.NumberOfPackages && shipment.GrossWeight"> / </span><span *ngIf="shipment.GrossWeight">{{shipment.GrossWeight}} {{shipment.GrossWeightUnitCode}}</span>
                                 </div>
 
                                 <div class="subtitle hide-mobile" [attr.src]="SetEstimationORActualDate(shipment)">
