@@ -488,7 +488,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;SearchFields&quot;"
     DefaultText="&quot;Search ...&quot;"
-    FullLocalDefaultText="&quot;שטר מטען ראשי/שטר מטען פנימי/קידומת חברת תעופה/אינטגרטור&quot;"
+    FullLocalDefaultText="&quot;ש.מ.ר/ש.מ.פ,/חב' תעופה/אינטגרטור&quot;"
     ListFieldLable="&quot;SearchFieldsListLable&quot;"
     ListLableDefaultText="&quot;Search ...&quot;"
     HelpTextCode="&quot;SearchFields&quot;"
