@@ -707,12 +707,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
            )
         {
- 
-            query2 = query2
-                .Where(rec => rec.IsReconciled == false)
-                    .Where(rec => rec.InReconcileProgress == false)// Seee CreateJournalReconcileService!!!
-                    .Where(rec => rec.AccountId == AccountId)
-                    ;
+
+                query2 = query2.Where(rec => rec.IsReconciled == false)
+
+              .Where(rec => rec.InReconcileProgress == false)
+              .Where(rec => rec.AccountId == AccountId);
             
             return query2;
         }
