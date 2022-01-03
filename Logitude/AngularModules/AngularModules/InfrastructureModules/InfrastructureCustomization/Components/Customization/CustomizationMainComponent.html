@@ -253,31 +253,31 @@
         <td style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>
-                    <td style="width: 57px;">
+                    <td *ngIf="!IsObjectTableFilterEnabled" style="width: 57px;">
                         <button class="Button" [disabled]="!IsButtonEnabled" (click)="StandardFieldsClicked()">Standard Fields</button>
                     </td>
 
                     <td style="width: 5px;"><div></div></td>
 
-                    <td style="width: 57px;">
+                    <td *ngIf="!IsObjectTableFilterEnabled" style="width: 57px;">
                         <button class="Button" [disabled]="!IsButtonEnabled" (click)="LabelsClicked()">Labels</button>
                     </td>
 
                     <td style="width: 5px;"><div></div></td>
 
-                    <td style="width: 57px;">
-                        <button class="Button" [disabled]="!IsButtonEnabled && !IsFieldsCustomizationEnabled" (click)="ScreensLayoutClicked()">Screens Layout</button>
+                    <td *ngIf="!IsObjectTableFilterEnabled || IsFieldsCustomizationEnabled" style="width: 57px;">
+                        <button class="Button" [disabled]="!IsButtonEnabled" (click)="ScreensLayoutClicked()">Screens Layout</button>
                     </td>
 
                     <td style="width: 5px;"><div></div></td>
 
-                    <td style="width: 57px;">
-                        <button class="Button" [disabled]="!IsButtonEnabled && !IsRulesCustomizationEnabled" (click)="CustomFieldsClicked()">Custom Fields</button>
+                    <td *ngIf="!IsObjectTableFilterEnabled || IsFieldsCustomizationEnabled" style="width: 57px;">
+                        <button class="Button" [disabled]="!IsButtonEnabled" (click)="CustomFieldsClicked()">Custom Fields</button>
                     </td>
 
                     <td style="width: 5px;"><div></div></td>
 
-                    <td style="width: 57px;">
+                    <td *ngIf="!IsObjectTableFilterEnabled || IsRulesCustomizationEnabled" style="width: 57px;">
                         <button class="Button" [disabled]="!IsButtonEnabled" (click)="RulesClicked()">Rules</button>
                     </td>
 
