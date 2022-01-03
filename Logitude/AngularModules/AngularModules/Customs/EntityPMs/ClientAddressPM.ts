@@ -7,7 +7,6 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-import {ClientPM} from './ClientPM';
 import {ClientsAddressCommTypePM} from './ClientsAddressCommTypePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -307,4 +306,4 @@ export class ClientAddressPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
