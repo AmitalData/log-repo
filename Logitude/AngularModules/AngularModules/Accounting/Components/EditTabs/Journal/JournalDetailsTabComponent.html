@@ -587,9 +587,9 @@
                           <ng-template let-item>
                               <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode&&item.enableForeighAmountField ? 0 : -1" [IsEnabled]="item.enableForeighAmountField && item.ActionCode ? true : false">
                                   <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align: right;direction: ltr !important;">
-                                      <div [attr.id]="'tooltip-' + item.Line" id="t" class="small-tooltip" (mouseover)="item.OnMouseOver()" (mouseleave)="item.OnMouseLeave()">
+                                      <div [attr.id]="'tooltip-'+ item.JournalId + item.Line" id="t" class="small-tooltip" (mouseover)="item.OnMouseOver()" (mouseleave)="item.OnMouseLeave()">
                                           <span>{{item.ForeignAmount | NumbersPipe:'N2'}}</span>
-                                          <div *ngIf="item.currencyRate" [attr.id]="'tooltip-body-' + item.Line" class="small-tooltip-body">
+                                          <div *ngIf="item.currencyRate" [attr.id]="'tooltip-body-'+ item.JournalId  + item.Line" class="small-tooltip-body">
                                               <div class="popup-arrow"></div>
 
                                               <div *ngIf="!item.isRateManualy" class="tooltip-text">{{'Accounting.General.O.ExchangeRatesetbysystem' | TextCodeTranslationPipe}}: {{item.currencyRate}}</div>
