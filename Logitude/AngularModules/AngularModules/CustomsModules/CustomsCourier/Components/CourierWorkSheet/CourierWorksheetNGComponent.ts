@@ -368,7 +368,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
         currRequestParams.SelectedTotalInvoiceValue = this._SelectedTotalInvoiceValue;
         currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
         currRequestParams.SelectedCustomStatusValue = this._SelectedCustomStatusValue;
-        currRequestParams.SelectedFinalRelease = this._SelectedCustomStatusValue;
+     //   currRequestParams.SelectedFinalRelease = this._SelectedCustomStatusValue;
 
         this._CourierMasterService.PostSendALLCorrectManifest(currRequestParams)
             .subscribe((res: any) => {
