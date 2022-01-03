@@ -271,7 +271,7 @@
                                                         <button *ngIf="IsSignatureVisible" (click)="SignatureClicked()">Signature</button>
                                                         <button *ngIf="IsLogBox == true" (click)="ShowDocTypesDefScreen()">Document Types Definition</button>
                                                         <button *ngIf="IsChangePasswordVisible" (click)="ChangePasswordClicked()">Change Password</button>
-                                                        <button *ngIf="IsCustomizationSettingVisible" (click)="CustomizationClicked()">Customization</button>
+                                                        <button *ngIf="IsCustomizationSettingVisible" (click)="CustomizationClicked()" [attr.data-cy]="'CustomizationId'">Customization</button>
                                                         <button *ngIf="IsCustomizationVisible" (click)="TranslateLabelsClicked()">Translate Labels</button>
                                                         <button *ngIf="IsCustomizationVisible" (click)="TranslationClicked()">Translation</button>
                                                         <button *ngIf="IsCustomizationVisible" (click)="DefaultTranslationClicked()">Default Translation</button>
