@@ -1,34 +1,36 @@
-import {Component} from '@angular/core';
-import {GeneralDomainService, FieldsTranslations} from '../../../../Infrastructure/Services/GeneralDomainService';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {ObjectTablePM} from '../../../../Infrastructure/EntityPMs/ObjectTablePM';
-import {ObjectFieldPM} from '../../../../Infrastructure/EntityPMs/ObjectFieldPM';
-import {TextCodePM} from '../../../../Infrastructure/EntityPMs/TextCodePM';
-import {AppTool} from '../../../../Infrastructure/Tools';
-import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
-import {ObjectFieldPMService} from '../../../../Infrastructure/Services/StandardPMs/ObjectFieldPMService';
+import { Component } from '@angular/core';
+import { GeneralDomainService, FieldsTranslations } from '../../../../Infrastructure/Services/GeneralDomainService';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ObjectTablePM } from '../../../../Infrastructure/EntityPMs/ObjectTablePM';
+import { ObjectFieldPM } from '../../../../Infrastructure/EntityPMs/ObjectFieldPM';
+import { TextCodePM } from '../../../../Infrastructure/EntityPMs/TextCodePM';
+import { AppTool } from '../../../../Infrastructure/Tools';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
+import { ObjectFieldPMService } from '../../../../Infrastructure/Services/StandardPMs/ObjectFieldPMService';
 
 declare var window: any;
 
 @Component({
-    
+
     templateUrl: './CustomFieldsComponent.html',
 })
 
 export class CustomFieldsComponent {
-    private myService: GeneralDomainService;    
+    private myService: GeneralDomainService;
     public CustomFieldsCollection: ObservableCollection;
     private loadedFields: ObjectFieldPM[];
     private _ObjectFieldPMService: ObjectFieldPMService;
     public IsAddButtonEnabled: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    private MaxNumberOfCustomFields: number;
+
     constructor() {
         this.myService = new GeneralDomainService();
         this.CustomFieldsCollection = new ObservableCollection([]);
-        this._ObjectFieldPMService = new ObjectFieldPMService();   
+        this._ObjectFieldPMService = new ObjectFieldPMService();
     }
 
     private ObjectTableId: string;
@@ -37,6 +39,7 @@ export class CustomFieldsComponent {
 
         this.ObjectTableId = args['ObjectTableId'];
         this.ObjectTableName = args['ObjectTableName'];
+        this.MaxNumberOfCustomFields = args['MaxNumberOfCustomFields'];
 
         this.myService.GetCustomFieldsByTableId(this.ObjectTableId).subscribe((myResult: ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
@@ -50,14 +53,12 @@ export class CustomFieldsComponent {
         });
         //this.BuildItemsSource();
     }
-    
+
     private BuildItemsSource() {
 
         this.CustomFieldsCollection = new ObservableCollection(this.loadedFields);
 
-        var fieldsCount = (this.ObjectTableName == "Shipment" || this.ObjectTableName == "Master") ? 40 : 10;
-        if (this.ObjectTableName == "Quote") fieldsCount = 20;
-
+        var fieldsCount = this.GetCustomFieldsCount();
         this.IsAddButtonEnabled = this.CustomFieldsCollection.Length < fieldsCount ? true : false;
 
         //var objectTablePM: ObjectTablePM;
@@ -88,9 +89,16 @@ export class CustomFieldsComponent {
         //this.SelectedTabItem = this.Tabs[0];
     }
 
+    GetCustomFieldsCount(): number {
+        if (this.MaxNumberOfCustomFields && this.MaxNumberOfCustomFields != 0) return this.MaxNumberOfCustomFields;
+        if (this.ObjectTableName == "Shipment" || this.ObjectTableName == "Master") return 40;
+        if (this.ObjectTableName == "Quote") return 20;
+        return 10;
+    }
+
     AddCustomField() {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "Add New Custom Field"; 
+        logWindow.Title = "Add New Custom Field";
         var windowArgs: any = {};
         this.myService = new GeneralDomainService();
         this.myService.GetFieldDataTypes().subscribe((myResult: ServiceResponse) => {
@@ -103,7 +111,7 @@ export class CustomFieldsComponent {
                 objectField.IsCustom = true;
                 objectField.DisplayInEntityVariables = true;
                 objectField.DisplayInList = true;
-                objectField.CanFilter = true; 
+                objectField.CanFilter = true;
                 windowArgs.objectField = objectField;
                 windowArgs.DataTypeCollection = myResponse.Result;
                 logWindow.WindowArgs = windowArgs;
@@ -120,12 +128,12 @@ export class CustomFieldsComponent {
                         }
                     });
                 });
-                
+
             }
         });
-       
+
     }
-   
+
     EditLine(item) {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Add New Custom Field";
@@ -134,7 +142,7 @@ export class CustomFieldsComponent {
         this.myService.GetFieldDataTypes().subscribe((myResult: ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
-                this._ObjectFieldPMService.get(item.Id).subscribe((field:any) => {
+                this._ObjectFieldPMService.get(item.Id).subscribe((field: any) => {
                     windowArgs.IsNew = false;
                     var objectField = field.Result;
                     //objectField.Tenant = SessionLocator.Tenant;
@@ -160,7 +168,7 @@ export class CustomFieldsComponent {
                         });
                     });
 
-                }); 
+                });
             }
         });
     }
@@ -168,5 +176,5 @@ export class CustomFieldsComponent {
     CancelClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
-    
+
 }
