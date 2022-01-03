@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CourierMasterUpdateClass
    {  		
-		public const string HashString = "b08fe7ff997a05a93a0bcc7998ea9445";
+		public const string HashString = "8f5851f7221effedb6ff0b0e0121c35b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -380,7 +380,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search ...",
-					  						FullLocalDefaultText =  "שטר מטען ראשי/שטר מטען פנימי/קידומת חברת תעופה",
+					  						FullLocalDefaultText =  "שטר מטען ראשי/שטר מטען פנימי/קידומת חברת תעופה/אינטגרטור",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Search ...",
 					  						HelpTextCode =  "SearchFields",
