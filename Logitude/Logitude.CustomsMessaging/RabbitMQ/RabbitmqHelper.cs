@@ -133,7 +133,12 @@ namespace Logitude.CustomsMessaging.RabbitMQ
         public static ConnectionFactory GetConnectionFactory()
         {
             //var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
-            return (new ConnectionFactory() { HostName = ConfigurationManager.AppSettings["RabbitmqHost"], UserName = ConfigurationManager.AppSettings["RabbitmqUsername"], Password = ConfigurationManager.AppSettings["RabbitmqPassword"] }); ;
+
+            string HostName = ConfigurationManager.AppSettings["RabbitmqHost"] ?? throw new Exception("HostName is null set ConfigurationManager.AppSettings RabbitmqHost"); ;
+            string UserName = ConfigurationManager.AppSettings["RabbitmqUsername"];
+            string Password = ConfigurationManager.AppSettings["RabbitmqPassword"];
+
+            return (new ConnectionFactory() { HostName = HostName, UserName = UserName, Password = Password }); ;
         }
 
         public static string GetRabbitMQCode(int currTenant)

@@ -15,11 +15,11 @@ namespace Logitude.CustomsMessaging.RabbitMQ
             string rabbitMQCode, int messagePriority)
         {
 
-            if (!string.IsNullOrWhiteSpace(InterfaceTypeCode))
+            if (string.IsNullOrWhiteSpace(InterfaceTypeCode))
             {
                 throw new ArgumentException("InterfaceTypeCode");
             }
-            if (!string.IsNullOrWhiteSpace(rabbitMQCode))
+            if (string.IsNullOrWhiteSpace(rabbitMQCode))
             {
                 throw new ArgumentException("rabbitMQCode");
             }
