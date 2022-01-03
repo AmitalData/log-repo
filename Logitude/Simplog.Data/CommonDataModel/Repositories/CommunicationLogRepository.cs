@@ -39,9 +39,15 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public CommunicationLog GetSingleCommunicationByCorrelationID(int tenant, string correlationID)
         {
+            bool lastDay = true;
             var q = (from a in context.CommunicationLogs
                      where a.CorrelationID == correlationID
                      select a);
+            if (lastDay)
+            {
+                DateTime dateTime = DateTime.Now.AddHours(24);
+                q = q.Where(r => r.CreateDate > dateTime);
+            }
             var log = q.FirstOrDefault();
             return log;
 

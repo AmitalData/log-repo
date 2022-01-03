@@ -110,6 +110,10 @@ namespace CustomsWorkerRole
         public override bool OnStart()
         {
             //WorkUntil_AnalyzeQueue_Empty_Db_NOTINUSE();
+            if (WorkerRoleServiceLocator.PleaseShutDown)
+            {
+                return true;
+            }
 
             List<int> listTenant = GetCourierTenant();
             if (listTenant.Count==0)
@@ -135,7 +139,8 @@ namespace CustomsWorkerRole
             }
 
 
-            Task.WhenAll(workers.ToArray());
+            var t=Task.WhenAll(workers.ToArray());
+            t.Wait();
             return true;
 
         }
@@ -224,7 +229,7 @@ namespace CustomsWorkerRole
 
                                 try
                                 {
-                                    Exec(customRabbitMQQueue, myQueueDetails, analyzeQueueRepository, messageId, 1, message, out log, out success);
+                                    Exec(customRabbitMQQueue, myQueueDetails, analyzeQueueRepository, messageId, currTenant, message, out log, out success);
                                 }
                                 catch (Exception)
                                 {
