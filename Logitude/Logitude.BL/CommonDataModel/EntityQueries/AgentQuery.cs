@@ -12,6 +12,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
+using Simplog.Server.Infrastructure.DataContracts;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -115,15 +116,32 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         agent.IsExternal = true;
                     }
                 }
+    
             }
 
             AgentPM securedPm = new AgentPM();
             SecuredMapping.GetMappedPM(agent, securedPm, "Agent", tenant);
-
+            if (securedPm != null && agent != null)
+            {
+                Agent entityPoco = (from s in repository.context.Agents where s.Id == securedPm.Id select s).FirstOrDefault();
+                MapCustomFields(securedPm, entityPoco);
+            }
             return securedPm;
         }
 
-
+        private void MapCustomFields(AgentPM agent, Agent entityPoco)
+        {
+            agent.Field1 = new CustomFieldClass("Field1", "Agent", entityPoco.Field1);
+            agent.Field2 = new CustomFieldClass("Field2", "Agent", entityPoco.Field2);
+            agent.Field3 = new CustomFieldClass("Field3", "Agent", entityPoco.Field3);
+            agent.Field4 = new CustomFieldClass("Field4", "Agent", entityPoco.Field4);
+            agent.Field5 = new CustomFieldClass("Field5", "Agent", entityPoco.Field5);
+            agent.Field6 = new CustomFieldClass("Field6", "Agent", entityPoco.Field6);
+            agent.Field7 = new CustomFieldClass("Field7", "Agent", entityPoco.Field7);
+            agent.Field8 = new CustomFieldClass("Field8", "Agent", entityPoco.Field8);
+            agent.Field9 = new CustomFieldClass("Field9", "Agent", entityPoco.Field9);
+            agent.Field10 = new CustomFieldClass("Field10", "Agent", entityPoco.Field10);
+        }
 
         public AgentPM GetSinglePMByCode(string code, int tenant)
         {
@@ -210,6 +228,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             AgentPM securedPm = new AgentPM();
             SecuredMapping.GetMappedPM(agent, securedPm, "Agent", tenant);
+
+            if (securedPm != null && agent != null)
+            {
+                Agent entityPoco = (from s in repository.context.Agents where s.Id == securedPm.Id select s).FirstOrDefault();
+                MapCustomFields(securedPm, entityPoco);
+            }
 
             return securedPm;
         }
@@ -420,6 +444,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                PrimaryContactPhone = a.PrimaryContactPhone,
                                                StateName = a.Card.StateName,
                                                GLAccountNumber = a.Card.GLAccountDisplayNumber,
+                                               Field1 = a.Field1,
+                                               Field2 = a.Field2,
+                                               Field3 = a.Field3,
+                                               Field4 = a.Field4,
+                                               Field5 = a.Field5,
+                                               Field6 = a.Field6,
+                                               Field7 = a.Field7,
+                                               Field8 = a.Field8,
+                                               Field9 = a.Field9,
+                                               Field10 = a.Field10,
                                            });
 
 
