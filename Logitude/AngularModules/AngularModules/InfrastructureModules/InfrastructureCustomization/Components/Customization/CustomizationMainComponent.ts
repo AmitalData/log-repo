@@ -186,7 +186,7 @@ export class CustomizationMainComponent {
                 var logWindow = new LogitudeWindow();
                 logWindow.Title = "Custom Fields: " + this.selectedRow.DefaultText;
                 logWindow.IsFillScreen_115 = true;
-                logWindow.WindowArgs = { ObjectTableId: table.Id, ObjectTableName: table.Name }; //this.selectedRow.ObjectTableID;
+                logWindow.WindowArgs = { ObjectTableId: table.Id, ObjectTableName: table.Name, MaxNumberOfCustomFields: table.MaxNumberOfCustomFields }; //this.selectedRow.ObjectTableID;
                 logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/CustomFieldsComponent');
             });
         }

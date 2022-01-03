@@ -37,11 +37,14 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
+using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.CommonDataModel.CustomFilters;
+		  
+using WebFreight.Web.Controllers.CommonDataModel.ApiHelpers;
 		  
 namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 { 
@@ -77,6 +80,13 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				    entityList = iQueryableEntityList.FirstOrDefault();
 
 			    }
+				if (entityList != null)
+				{
+                	CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                	customFieldResolver.SetCustomFieldsValues("ShippingAgent",  authToken.Tenant, new List<ShippingAgentList> { entityList }.Cast<object>().ToList());
+ 	
+					entityList = ShippingAgentAPiHelper.ApplyFilters(entityList, authToken.Tenant);
+				}
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 				               
@@ -109,6 +119,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				entityLists = entityLists.OrderBy(d => d.Id);
 				List<ShippingAgentList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                customFieldResolver.SetCustomFieldsValues("ShippingAgent", authToken.Tenant, listResult.Cast<object>().ToList());
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
             }
@@ -214,6 +226,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 }
 
 
+                ShippingAgentAPiHelper.AddFilters(queryOperations, tenant);
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
 
@@ -231,7 +244,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				                
 				ShippingAgentCustomFilter customfilters = new ShippingAgentCustomFilter(tenant);
                 entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
-	
+	            entityPocos = ShippingAgentAPiHelper.ApplyFilters(entityPocos, tenant);
+
                 entityPocos = genericFilter.GetFilteredQuery<ShippingAgent>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<ShippingAgentList> entityLists = shippingAgentQuery.GetIQueryableEntityList(entityPocos);
@@ -323,6 +337,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 				}
 			   List<ShippingAgentList> listResult = entityLists.ToList();
+               CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+               customFieldResolver.SetCustomFieldsValues("ShippingAgent", authToken.Tenant, listResult.Cast<object>().ToList());
 
                response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
