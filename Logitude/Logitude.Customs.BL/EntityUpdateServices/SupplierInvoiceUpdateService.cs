@@ -35,6 +35,7 @@ using Logitude.Customs.Def.Messaging.Customs;
 using Logitude.Customs.BL.TraceEvents;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Logitude.Customs.BL.Messaging.Maman;
+using Logitude.Customs.BL.BL;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -176,6 +177,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         //}
         protected override void OnUpdating(SupplierInvoicePM entityPM, SupplierInvoice entityPOCO)
         {
+            var sIModificationByCustomerCommissionService = new SIModificationByCustomerCommissionService(declaration:_DeclarationPM, supplierInvoicePM: entityPM);
+            sIModificationByCustomerCommissionService.EnsureCommission();
             if (_DeclarationPM != null && _DeclarationPM.IsCourierDeclaration)
             {
                 bool pHaveChange = entityPM.InvoiceAmountInUSD != entityPOCO.InvoiceAmountInUSD;
