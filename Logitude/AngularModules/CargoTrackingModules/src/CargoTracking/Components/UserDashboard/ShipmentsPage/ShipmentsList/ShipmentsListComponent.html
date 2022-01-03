@@ -54,6 +54,8 @@
                         [MultipleSelectionList]="ShipmentMoreFilters" [Title]="'More Filters'"
                         (SelectionChanged)="SelectionMoreFilterChangedHandler($event)" [UseFixedTitle]="true">
                     </multiple-selection>
+                    
+                    <button (click)="ExportToExcelClick()">Export To Excell</button>
                 </div>
                 <div class="sort-by-div">
                     <multiple-selection #sortByMultipleSelection class="multipe-select sort-by-multiple-selection"

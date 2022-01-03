@@ -20,6 +20,9 @@ import { filter } from 'rxjs/operators';
 import { ShipmentDirections } from '../ShipmentDetails/ShipmentDetailsComponent';
 import { ReplaySubject } from 'rxjs';
 import { SharedService } from 'src/CargoTracking/Services/Others/SharedService';
+import { LogitudeGridExportToExcelComponent } from 'src/CargoTracking/Services/Others/LogitudeGridExportToExcelComponent';
+import { QueryColumnPM } from 'src/CargoTracking/Services/Others/QueryColumnPM';
+import { ApiQueryFilters } from 'src/CargoTracking/Services/Others/ApiQueryFilters';
 
 @Component({
     selector: 'ShipmentsListComponent',
@@ -41,7 +44,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     searchForm;
     mobileSearchForm;
     Shipments: CargoTrackingShipmentList[] = [];
-
+    public QueryColumns: QueryColumnPM[] = [];
+    public filterAgrs: ApiQueryFilters = new ApiQueryFilters();
     isLoading: boolean = false;
     isFilter1Expanded: boolean = false;
     isFilter2Expanded: boolean = false;
@@ -87,6 +91,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     InvitedCustomers: any[] = [];
     InvitedCustomersDictionary: {} = {};
     MoreFilterMobileValue: MoreFilter = new MoreFilter();
+    public LogitudeGridExportToExcelComponent:LogitudeGridExportToExcelComponent;
     constructor(private router: Router,
         private route: ActivatedRoute,
         private formBuilder: FormBuilder,
@@ -99,6 +104,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         public sharedService: SharedService) {
         this.InitComponent();
         this.SetDefaultBackgroundColor();
+        this.LogitudeGridExportToExcelComponent = new LogitudeGridExportToExcelComponent();
     }
 
     ngOnInit(): void {
@@ -110,6 +116,10 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.fillFeltersDictionary();
         this.setViews();
     }
+    public ExportToExcelClick(){
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ShipmentNumber",'Text', 'Shipment Number'));
+         this.LogitudeGridExportToExcelComponent.ExportToExcelExcute("CargoTrackingShipment",this.filterAgrs,this.QueryColumns);
+     }
 
     private GetCompanyLoginsFromCache() {
         SessionInfo.LoggedUserCompanyLogins = JSON.parse(sessionStorage.getItem("LoggedUserCompanyLogins"));
