@@ -463,12 +463,9 @@ using Simplog.Data.ShipmentsModel;
 						if(myToCountryPM != null)
 						{ 
 
-						 
-							if(!IsUpdate)
-							{								
+						 								
 								temp.ToAddressCountryId = myToCountryPM.Id;
 						  
-							}  
 
 							
 						} 

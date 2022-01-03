@@ -691,27 +691,27 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
         }
         private string GetMainCarriageFromPortId()
         {
-            if (!string.IsNullOrEmpty(shipmentPM.MainCarriageFromPortId))
-                return shipmentPM.MainCarriageFromPortId;
-
             if(shipmentPM.MainCarriageLegs.Count > 0)
             {
                 var mainCarriageLeg = shipmentPM.MainCarriageLegs.FirstOrDefault();
                 return mainCarriageLeg?.FromPortId;
             }
 
+            if (!string.IsNullOrEmpty(shipmentPM.MainCarriageFromPortId))
+                return shipmentPM.MainCarriageFromPortId; 
+
             return "";
         }
         private string GetMainCarriageToPortId()
         {
-            if (!string.IsNullOrEmpty(shipmentPM.MainCarriageToPortId))
-                return shipmentPM.MainCarriageToPortId;
-
             if (shipmentPM.MainCarriageLegs.Count > 0)
             {
                 var mainCarriageLeg = shipmentPM.MainCarriageLegs.LastOrDefault();
                 return mainCarriageLeg?.ToPortId;
             }
+
+            if (!string.IsNullOrEmpty(shipmentPM.MainCarriageToPortId))
+                return shipmentPM.MainCarriageToPortId;
 
             return "";
         }
