@@ -1567,7 +1567,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             if (filter.AccountsIds != null && filter.AccountsIds.Count() > 0)
                 tenantTransactions.Where(transaction => filter.AccountsIds.Contains(transaction.AccountId));
             if (!filter.IsReconciled)
-                tenantTransactions = tenantTransactions.Where(transaction =>!transaction.IsReconciled);
+            {
+                tenantTransactions = tenantTransactions.Where(transaction =>!transaction.IsExternalReconcile);
+            }
 
             return tenantTransactions;
         }
