@@ -192,7 +192,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 					Mas.Transshipment1ATD,
 					Mas.Transshipment3ETD,
 					Mas.Transshipment2ETD,
-					Mas.Transshipment1ETD";
+					Mas.Transshipment1ETD,
+                    ConsigneeCard.LocalName,
+                    ShipperCard.LocalName";
 
 
             string sqlQuery = string.Join(Environment.NewLine, " SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED ", selectScript, fromScript, joinScript, whereScript, groupByScript);
@@ -210,11 +212,17 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             string shipmentFields = !string.IsNullOrEmpty(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName) ? cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName : "*";
 
             shipmentFields = " P." + shipmentFields.Replace(",", " ,P.");
-            string updatedShipmentFields = shipmentFields.Replace("P.ConsigneeName", "(case when P.DirectionId = 'E' AND P.ConsigneeId IS NOT NULL then ConsigneeCard.EnglishName when" +
-                " P.DirectionId = 'E' AND P.ConsigneeId IS NULL then P.ConsigneeName end) as ConsigneeName");
+            string updatedShipmentFields = shipmentFields.Replace("P.ConsigneeName", $@"(case 
+                    when P.DirectionId = 'E' AND P.ConsigneeId IS NOT NULL AND ConsigneeCard.LocalName IS NOT NULL then ConsigneeCard.LocalName 
+                    when P.DirectionId = 'E' AND P.ConsigneeId IS NOT NULL then ConsigneeCard.EnglishName 
+                    when P.DirectionId = 'E' AND P.ConsigneeId IS NULL then P.ConsigneeName end)
+                as ConsigneeName");
 
-            updatedShipmentFields = updatedShipmentFields.Replace("P.ShipperName", "(case when (P.DirectionId = 'I' OR P.ShipmentLevelCode = 'A') AND P.ShipperId IS NOT NULL then ShipperCard.EnglishName when" +
-                " (P.DirectionId = 'I' OR P.ShipmentLevelCode = 'A') AND P.ShipperId IS NULL then P.ShipperName end) as ShipperName");
+            updatedShipmentFields = updatedShipmentFields.Replace("P.ShipperName", $@"(case 
+                when (P.DirectionId = 'I' OR P.ShipmentLevelCode = 'A') AND P.ShipperId IS NOT NULL AND ShipperCard.LocalName IS NOT NULL then ShipperCard.LocalName 
+                when (P.DirectionId = 'I' OR P.ShipmentLevelCode = 'A') AND P.ShipperId IS NOT NULL then ShipperCard.EnglishName 
+                when (P.DirectionId = 'I' OR P.ShipmentLevelCode = 'A') AND P.ShipperId IS NULL then P.ShipperName end)
+            as ShipperName");
 
             var shipmentComputedFields =
                  "com.ContainersNumbers as ContainersNumbers," +
@@ -379,7 +387,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 					Mas.Transshipment1ATD,
 					Mas.Transshipment3ETD,
 					Mas.Transshipment2ETD,
-					Mas.Transshipment1ETD";
+					Mas.Transshipment1ETD,
+                    ShipperCard.LocalName,
+                    ConsigneeCard.LocalName";
 
 
             string sqlQuery = " SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED " + selectScript + fromScript + joinScript + whereScript + groupByScript;
@@ -435,6 +445,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 " '' as CustomsDeclarationNumber," +
                 $@" (
                     case 
+                    when DirectionId = 'I' and ShipperCard.LocalName is not null then ShipperCard.LocalName
                     when DirectionId = 'I' and ShipperCard.EnglishName is not null then ShipperCard.EnglishName 
                     when DirectionId = 'I' and ShipperCard.EnglishName is null then CasualSupplierName  
                     end
@@ -446,6 +457,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 " '' as CustomFileId," +
                 $@" (
                     case 
+                    when DirectionId = 'E' and ConsigneeCard.LocalName is not null then ConsigneeCard.LocalName 
                     when DirectionId = 'E' and ConsigneeCard.EnglishName is not null then ConsigneeCard.EnglishName 
                     when DirectionId = 'E' and ConsigneeCard.EnglishName is null then CasualImporterName  
                     end
