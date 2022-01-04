@@ -8008,7 +8008,7 @@ namespace WebFreight.Web.ReportsWebServices
                                  TransportMode = myShipment.TransportModeName,
                                  ValueOfGoods = myShipment.ValueOfGoods,
                                  FlightNumber = myShipment.MainCarriageCarrierCode + myShipment.MainCarriageCarrierNumber,
-
+                                 
                                  ChargeTypeId = myItem.ChargesTypeId,
                                  ChargeTypeCode = myItem.ChargesType == null ? null : myItem.ChargesType.Code,
                                  ChargeTypeName = myItem.ChargesType == null ? null : myItem.ChargesType.EnglishName,
@@ -8368,6 +8368,7 @@ namespace WebFreight.Web.ReportsWebServices
                     record.FlightNumber = a.FlightNumber;
                     record.ChargeGroupCode = a.ChargeGroupCode;
                     record.ChargeGroupName = a.ChargeGroupName;
+                    record.AccountingClosed = a.IsAccountingClosed;
 
                     totalData.ShipmentAnalysisRecordList.Add(record);
                 }

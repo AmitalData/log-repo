@@ -138,5 +138,8 @@ namespace WebFreight.Web.DataProviders
         public string House { get; set; }
         public string ContainersNumbers { get; set; }
         public string AccountManagerName { get; set; }
+        public string ShipmentStatus { get; set; }
+        public bool AccountingClosed { get; set; }
+
     }
 }

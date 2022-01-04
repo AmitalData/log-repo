@@ -246,6 +246,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.Direction = myShipment.DirectionName;
                             myRecord.House = myShipment.House;
                             myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
+                            myRecord.ShipmentStatus = myShipment.ShipmentStatusName;
+                            myRecord.AccountingClosed = myShipment.IsAccountingClosed;
 
                             if (!string.IsNullOrEmpty(myShipment.BranchId))
                             {
@@ -304,6 +306,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;
                         myRecord.House = myShipment.House;
                         myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
+                        myRecord.ShipmentStatus = myShipment.ShipmentStatusName;
+                        myRecord.AccountingClosed = myShipment.IsAccountingClosed;
 
                         Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
                         if (myCurrency != null)
@@ -386,6 +390,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;
                         myRecord.House = myShipment.House;
                         myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
+                        myRecord.ShipmentStatus = myShipment.ShipmentStatusName;
+                        myRecord.AccountingClosed = myShipment.IsAccountingClosed;
 
                         Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
                         if (myCurrency != null)
@@ -646,6 +652,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.House = myShipment.House;
                                     myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
                                     myRecord.AccountManagerName = myShipment.AccountManagerUserName;
+                                    myRecord.ShipmentStatus = myShipment.ShipmentStatusName;
+                                    myRecord.AccountingClosed = myShipment.IsAccountingClosed;
 
                                     myRecord.OpenPayables = myRecord.Payables;
 
@@ -730,6 +738,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.House = myShipment.House;
                                     myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
                                     myRecord.AccountManagerName = myShipment.AccountManagerUserName;
+                                    myRecord.ShipmentStatus = myShipment.ShipmentStatusName;
+                                    myRecord.AccountingClosed = myShipment.IsAccountingClosed;
 
                                     myRecord.OpenReceivables = myRecord.Receivables;
 
@@ -813,6 +823,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.Salesman = myShipment.SalesmanUserName;
                                 myRecord.Direction = myShipment.DirectionName;
                                 myRecord.AccountManagerName = myShipment.AccountManagerUserName;
+                                myRecord.ShipmentStatus = myShipment.ShipmentStatusName;
+                                myRecord.AccountingClosed = myShipment.IsAccountingClosed;
 
                                 myRecord.Payables = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
                                 myRecord.InvoiceNumber = invoice.InvoiceNumber;
@@ -948,6 +960,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.Salesman = myShipment.SalesmanUserName;
                                     myRecord.Direction = myShipment.DirectionName;
                                     myRecord.AccountManagerName = myShipment.AccountManagerUserName;
+                                    myRecord.ShipmentStatus = myShipment.ShipmentStatusName;
+                                    myRecord.AccountingClosed = myShipment.IsAccountingClosed;
 
                                     myRecord.Receivables = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
                                     myRecord.InvoiceNumber = invoice.InvoiceNumber;
