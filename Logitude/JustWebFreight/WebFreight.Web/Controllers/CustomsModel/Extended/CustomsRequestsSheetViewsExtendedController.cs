@@ -59,7 +59,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 CustomsRequestsSheetListQueryService customsRequestsSheetQuery = new CustomsRequestsSheetListQueryService(context);
                 var summary = customsRequestsSheetQuery.GetStatistics(tenant);
                 
-                var customRabbitMQQueue = new CustomRabbitMQQueue();
+                /*var customRabbitMQQueue = new CustomRabbitMQQueue();
                 var _CustomsAnalyzeQueueServices = customRabbitMQQueue.GetAllQueueDetails().Where(r => r.AnalyzeQueueService != AnalyzeMQQueueServiceEnum.none).ToList();
                 foreach (var item in _CustomsAnalyzeQueueServices)
                 {
@@ -73,7 +73,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                             InterfaceTypeName = item.Name
                         });
                     }
-                }
+                }*/
 
                 return Request.CreateResponse(HttpStatusCode.OK, summary);
 
