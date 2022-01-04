@@ -863,7 +863,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
         <div body>
             <div  class="no-data-available" *ngIf="cargoTrackingShipmentPM.DocumentsFilings && cargoTrackingShipmentPM.DocumentsFilings.length == 0 " style="margin-top:10px">No Documents defined for this shipment</div>
             <a *ngIf="cargoTrackingShipmentPM.DocumentsFilings?.length > 0 " href="javascript:;" style="color: var(--MainColor)"
-                (click)="ExternalDownloadAllClick(cargoTrackingShipmentPM.SecurityKey)">Download all</a>
+                (click)="DownloadAllClick(cargoTrackingShipmentPM.SecurityKey)">Download all</a>
             <div *ngIf="cargoTrackingShipmentPM.DocumentsFilings?.length > 0 " class="hide-mobile hide-tablet" style="min-width: 720px;width: calc(100% - 100px);">
 
                 <table class="row-hover" style="width: 100%;">
