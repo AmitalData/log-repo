@@ -84,6 +84,8 @@ export class DeclarationReferantDataList {
 	IsManualPayment: boolean;
 	Commodity: string;
 	LastStatusRemarks: string;
+	ReferantUserName: string;
+	DepartmentName: string;
 	
 }
  
