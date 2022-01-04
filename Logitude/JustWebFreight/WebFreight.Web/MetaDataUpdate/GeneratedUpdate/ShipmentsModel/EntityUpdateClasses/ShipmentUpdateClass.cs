@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "d8c025a91d593af254b2c09df860de4e";
+		public const string HashString = "e0c590ebd02215171be9b4a6e493b7c6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -48805,6 +48805,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 		   Feature ShipmentFeature_ContainerStatusSimulator = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ContainerStatusSimulator", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ContainerStatusSimulator", NameTextCodeDefaultText = @"Container Status Simulator" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShipmentObjectTable);
 
 		   Feature ShipmentFeature_UpdateUnassignedData = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UpdateUnassignedData", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.UpdateUnassignedData", NameTextCodeDefaultText = @"Update Unassigned Data" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShipmentObjectTable);
+
+		   Feature ShipmentFeature_DeparturesArrivals = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeparturesArrivals", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.DeparturesArrivals", NameTextCodeDefaultText = @"Departures and Arrivals" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShipmentObjectTable);
 
    
 	    
