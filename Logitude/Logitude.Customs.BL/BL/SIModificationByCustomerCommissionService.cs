@@ -22,7 +22,7 @@ namespace Logitude.Customs.BL.BL
         //    supplierInvoicePM = supplierInvoicePM;
         //}
 
-        internal void EnsureReductionByVendorCommission(DeclarationPM declarationPM, SupplierInvoicePM supplierInvoicePM,bool throwExceptionCheckb4SendDec)
+        public void EnsureReductionByVendorCommission(DeclarationPM declarationPM, SupplierInvoicePM supplierInvoicePM,bool throwExceptionCheckb4SendDec)
         {
             var context = CustomContext.GetContext(supplierInvoicePM.Tenant);
             string customerId = declarationPM?.CustomerId;
