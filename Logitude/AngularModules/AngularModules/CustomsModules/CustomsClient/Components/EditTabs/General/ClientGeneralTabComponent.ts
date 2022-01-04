@@ -1,5 +1,5 @@
 import {Component}  from '@angular/core';
-import { ClientPM } from 'Customs/Entitypms/ClientPM';
+import { ClientPM } from 'Customs/EntityPMs/ClientPM';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {AppTool} from '../../../../../Infrastructure/Tools';
 

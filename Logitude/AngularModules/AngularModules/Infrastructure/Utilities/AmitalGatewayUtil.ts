@@ -27,7 +27,7 @@ import { EntityPMService } from '../Services/EntityPMService';
 import { CourierMasterPMService } from '../../Customs/Services/StandardPMs/CourierMasterPMService';
 import { ServiceResponse } from '../DataContracts/ServiceResponse';
 import { DeclarationWebService } from '../../Customs/Services/WebServices/DeclarationWebService';
-import { ClientPM } from 'Customs/Entitypms/ClientPM';
+import { ClientPM } from 'Customs/EntityPMs/ClientPM';
 
 
 export class AmitalGatewayUtil {

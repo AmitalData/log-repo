@@ -8,7 +8,7 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 
 
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-import { ClientPM } from 'Customs/Entitypms/ClientPM';
+import { ClientPM } from 'Customs/EntityPMs/ClientPM';
 
 @Injectable()
 

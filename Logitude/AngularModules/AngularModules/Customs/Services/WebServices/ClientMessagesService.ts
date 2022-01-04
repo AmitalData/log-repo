@@ -12,9 +12,9 @@ import {AddAddressContactForClientRequestParams} from '../../DataContract/Reques
 import {ClientSearchRequestParams} from '../../DataContract/RequestParams/ClientSearchRequestParams';
 import {CreateClientRequestParams} from '../../DataContract/RequestParams/CreateClientRequestParams';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import { ClientAddressPM } from 'Customs/Entitypms/ClientAddressPM';
-import { ClientPM } from 'Customs/Entitypms/ClientPM';
-import { ClientsAddressCommTypePM } from 'Customs/Entitypms/ClientsAddressCommTypePM';
+import { ClientAddressPM } from 'Customs/EntityPMs/ClientAddressPM';
+import { ClientPM } from 'Customs/EntityPMs/ClientPM';
+import { ClientsAddressCommTypePM } from 'Customs/EntityPMs/ClientsAddressCommTypePM';
 
 @Injectable()
 

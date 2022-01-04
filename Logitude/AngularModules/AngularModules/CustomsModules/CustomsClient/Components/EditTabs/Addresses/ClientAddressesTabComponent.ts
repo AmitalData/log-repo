@@ -12,8 +12,8 @@ import {INF_MSG_GenericResponseData} from '../../../../../Customs/DataContract/R
 import { ClaimGeneralTabComponent } from '../../../../CustomsClaim/Components/EditTabs/General/ClaimGeneralTabComponent';
 import {AddAddressContactForClientRequestParams, ClientAddress, ClientsAddressCommunicationResult, OperationTypes} from '../../../../../Customs/DataContract/RequestParams/AddAddressContactForClientRequestParams';
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
-import { ClientAddressPM } from 'Customs/Entitypms/ClientAddressPM';
-import { ClientPM } from 'Customs/Entitypms/ClientPM';
+import { ClientAddressPM } from 'Customs/EntityPMs/ClientAddressPM';
+import { ClientPM } from 'Customs/EntityPMs/ClientPM';
 
 @Component({
     

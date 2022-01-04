@@ -14,7 +14,7 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { CustomSendOptionsArgs, SendRequestVIA } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-import { ClientPM } from 'Customs/Entitypms/ClientPM';
+import { ClientPM } from 'Customs/EntityPMs/ClientPM';
 
 @Component({
     selector: 'NewClientComponent',

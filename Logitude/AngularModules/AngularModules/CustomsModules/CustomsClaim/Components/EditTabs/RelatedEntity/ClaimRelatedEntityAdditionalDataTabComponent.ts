@@ -17,7 +17,6 @@ import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
 import { ClientMessagesService } from '../../../../../Customs/Services/WebServices/ClientMessagesService';
-import { ClientPMService } from '../../../../../Customs/Services/StandardPMs/ClientPMService';
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 

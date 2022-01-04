@@ -11,9 +11,9 @@ import { ClientMessagesService } from '../../../../../Customs/Services/WebServic
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
-import { ClientDrivingLicensePM } from 'Customs/Entitypms/ClientDrivingLicensePM';
-import { ClientDrivingLicenseTypePM } from 'Customs/Entitypms/ClientDrivingLicenseTypePM';
-import { ClientPM } from 'Customs/Entitypms/ClientPM';
+import { ClientDrivingLicensePM } from 'Customs/EntityPMs/ClientDrivingLicensePM';
+import { ClientDrivingLicenseTypePM } from 'Customs/EntityPMs/ClientDrivingLicenseTypePM';
+import { ClientPM } from 'Customs/EntityPMs/ClientPM';
 
 @Component({
     

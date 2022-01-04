@@ -7,12 +7,14 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {ClientPM} from './ClientPM';
+import {ClientDrivingLicenseTypePM} from './ClientDrivingLicenseTypePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import { ClientDrivingLicenseTypePM } from './ClientDrivingLicenseTypePM';
+import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class ClientDrivingLicensePM {
 
@@ -135,4 +137,4 @@ export class ClientDrivingLicensePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

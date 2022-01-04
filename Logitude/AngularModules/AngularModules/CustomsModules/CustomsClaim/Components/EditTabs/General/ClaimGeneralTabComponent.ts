@@ -14,12 +14,12 @@ import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
 import { ClientMessagesService } from '../../../../../Customs/Services/WebServices/ClientMessagesService';
 import { ClaimPMService } from '../../../../../Customs/Services/StandardPMs/ClaimPMService';
-import { ClientPMService } from '../../../../../Customs/Services/StandardPMs/ClientPMService';
 import { Validator } from '../../../../../Infrastructure/Validators/Validator';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
-import { ClientAddressPM } from 'Customs/Entitypms/ClientAddressPM';
-import { ClientPM } from 'Customs/Entitypms/ClientPM';
-import { ClientsAddressCommTypePM } from 'Customs/Entitypms/ClientsAddressCommTypePM';
+import { ClientAddressPM } from 'Customs/EntityPMs/ClientAddressPM';
+import { ClientPM } from 'Customs/EntityPMs/ClientPM';
+import { ClientsAddressCommTypePM } from 'Customs/EntityPMs/ClientsAddressCommTypePM';
+import { ClientPMService } from 'Customs/Services/StandardPMs/ClientPMService';
 
 @Component({
     

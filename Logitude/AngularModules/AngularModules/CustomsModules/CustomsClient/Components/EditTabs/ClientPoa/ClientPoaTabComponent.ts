@@ -12,7 +12,7 @@ import {INF_MSG_GenericResponseData} from '../../../../../Customs/DataContract/R
 import { ClaimGeneralTabComponent } from '../../../../CustomsClaim/Components/EditTabs/General/ClaimGeneralTabComponent';
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
-import { ClientPM } from 'Customs/Entitypms/ClientPM';
+import { ClientPM } from 'Customs/EntityPMs/ClientPM';
 
 @Component({
     
