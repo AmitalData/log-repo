@@ -289,5 +289,36 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return advancedFilters;
 
         }
+        public AdvancedQueryFilterPM GetSingleByObjectFieldCodeAndTenant(string objectFieldId, int tenant,string queryCode,string loggedUserId)
+        {
+            AdvancedQueryFilterPM advancedFilters = (from a in repository.context.AdvancedQueryFilters.Include("ObjectField").Include("Query").Include("Query.ObjectTable")
+                                                     where a.Tenant == tenant && a.ObjectFieldId == objectFieldId && a.QueryCode == queryCode && a.UserId == loggedUserId
+                                                     select new AdvancedQueryFilterPM()
+                                                     {
+                                                         DisplayInList = a.ObjectField.DisplayInList,
+                                                         Id = a.Id,
+                                                         IndexOrder = a.IndexOrder,
+                                                         IsCustomFilter = a.ObjectField.IsCustomFilter,
+                                                         IsPredefined = a.IsPredefined,
+                                                         ObjectFieldId = a.ObjectFieldId,
+                                                         ObjectFieldName = a.ObjectField.FieldName,
+                                                         Operator = a.Operator,
+                                                         PredefinedValue = a.PredefinedValue,
+                                                         PredefinedValue2 = a.PredefinedValue2,
+                                                         QueryCode = a.QueryCode,
+                                                         QueryId = a.QueryId,
+                                                         QueryObjectTableName = a.Query.ObjectTable.Name,
+                                                         QueryUserId = a.Query.UserId,
+                                                         Tenant = a.Tenant,
+                                                         DataTypeCode = a.ObjectField.DataTypeCode,
+                                                         ObjectFieldOperator = a.ObjectField.Operator,
+                                                         UserId = a.UserId,
+                                                         ObjectFieldCode = a.ObjectFieldCode,
+                                                     }).FirstOrDefault();
+
+
+            return advancedFilters;
+
+        }
     }
 }

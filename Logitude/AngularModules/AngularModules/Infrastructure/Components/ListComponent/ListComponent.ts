@@ -894,7 +894,10 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             if (myObjectTableName.startsWith(this.ObjectTable.ClientModuleName + '.')) {
                                 myObjectTableName = myObjectTableName.substr((this.ObjectTable.ClientModuleName + '.').length)
                             }
-                            let isCustomsObjectTableWith=(myObjectTableName == "DeclarationCargoSplit" || myObjectTableName == "DeclarationReferantData")?true:false;
+                            let isCustomsObjectTableWith=false;
+                            if(this.ObjectTable.ClientModuleName=="Customs"){
+                              isCustomsObjectTableWith=true
+                            }
                             var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/FiltersMenu/" + /*this.ObjectTable.Name*/myObjectTableName + "FiltersMenuComponent";
                             if (isCustomsObjectTableWith) {
                                 myComponentPath = "./CustomsModules";
