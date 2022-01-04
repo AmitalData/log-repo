@@ -146,6 +146,9 @@ export class CargoTrackingShipmentList {
 	IsImporterApprovalRequried: boolean;
 	TenantDeclarationMessage: string;
 	IsOperationalClosed: boolean;
+	ApprovedDate: Date;
+	DenyDate: Date;
+	DenyReason: string;
 	
 }
  

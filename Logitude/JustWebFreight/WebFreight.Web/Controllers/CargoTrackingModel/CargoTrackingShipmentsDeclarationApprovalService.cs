@@ -51,6 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             {
                 UpdateDeclarationVersion(cloudData);
 
+                cloudData.IsImporterApprovalRequried = false;
                 cloudData.ApproveDateTime = TenantServerConfigration.GetCurrentDateTime(declarationApprovalArgs.Tenant);
                 SubmitCloudData(declarationApprovalArgs, cloudData);
             }
@@ -134,7 +135,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             ShipmentAdditionalCloudData cloudData = GetCloudDataBySecurityKey(declarationApprovalArgs);
             if (cloudData != null)
             {
+                cloudData.IsImporterApprovalRequried = false;
                 cloudData.DenyReason = declarationApprovalArgs.DenyReason;
+                //cloudData.DenyDate = TenantServerConfigration.GetCurrentDateTime(declarationApprovalArgs.Tenant);
                 SubmitCloudData(declarationApprovalArgs, cloudData);
             }
         }
