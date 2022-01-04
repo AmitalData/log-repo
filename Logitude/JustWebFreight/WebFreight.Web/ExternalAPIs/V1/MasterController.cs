@@ -383,7 +383,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
         private ShipmentPM UpdatePartners(IShipmentsContext shipmentsContext, ShipmentPM shipmentPM)
         {
-            ExternalAPIShipmentPartnersUpdate externalAPIShipmentPartnersUpdate = new ExternalAPIShipmentPartnersUpdate(shipmentsContext, shipmentPM);
+            ExternalAPIShipmentPartnersModifier externalAPIShipmentPartnersUpdate = new ExternalAPIShipmentPartnersModifier(shipmentsContext, shipmentPM);
             return externalAPIShipmentPartnersUpdate.UpdatePartners();
         }
         private void UpdateNotify1Partner(Shipment shipmentPOCO, ShipmentPM shipmentPM)

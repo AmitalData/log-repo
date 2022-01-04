@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
 {
-    public class ExternalAPIShipmentPartnersUpdate
+    public class ExternalAPIShipmentPartnersModifier
     {
         private IShipmentsContext shipmentsContext;
         private Shipment shipment;
@@ -19,17 +19,10 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
         private Type shipmentType;
         private Type shipmentPMType;
         private AddressRepository addressRepository;
-        public ExternalAPIShipmentPartnersUpdate(IShipmentsContext shipmentsContext, ShipmentPM shipmentPM)
+        public ExternalAPIShipmentPartnersModifier(IShipmentsContext shipmentsContext, ShipmentPM shipmentPM)
         {
-            this.shipmentsContext = shipmentsContext;
-            this.shipmentPM = shipmentPM;
-            this.shipmentType = typeof(Shipment);
-            this.shipmentPMType = typeof(ShipmentPM);
-            this.addressRepository = new AddressRepository(shipmentPM.Tenant);
-            this.GetShipmentPoco();
-            this.SetPatrnerPropertiesNames();
+            this.Initialize(shipmentsContext, shipmentPM);
         }
-
 
         public ShipmentPM UpdatePartners()
         {
@@ -38,13 +31,21 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
 
             foreach (string partnerIdProperty in patrnerProperties.Values)
             {
-                if (IsPartnerValueChanged(partnerIdProperty))
-                {
-                    UpdatePartnerAddressAndContact(partnerIdProperty);
-                }
+                UpdatePartner(partnerIdProperty);
             }
 
             return shipmentPM;
+        }
+
+        private void Initialize(IShipmentsContext shipmentsContext, ShipmentPM shipmentPM)
+        {
+            this.shipmentsContext = shipmentsContext;
+            this.shipmentPM = shipmentPM;
+            this.shipmentType = typeof(Shipment);
+            this.shipmentPMType = typeof(ShipmentPM);
+            this.addressRepository = new AddressRepository(shipmentPM.Tenant);
+            this.GetShipmentPoco();
+            this.SetPatrnerPropertiesNames();
         }
 
         private void GetShipmentPoco()
@@ -68,6 +69,21 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
 
         }
 
+        private void UpdatePartner(string partnerIdProperty)
+        {
+            if (!IsPartnerValueChanged(partnerIdProperty))
+                return;
+
+            PropertyInfo partnerPMProperty = this.shipmentPMType.GetProperty(partnerIdProperty);
+            var partnerPMPropertyValue = partnerPMProperty.GetValue(shipmentPM);
+            if (partnerPMPropertyValue == null)
+                return;
+
+            Card card = CardRepository.GetSingleCard(partnerPMPropertyValue.ToString(), shipmentPM.Tenant, false);
+            this.MapPartnerContact(card, partnerIdProperty);
+            this.MapPartnerAddress(card, partnerIdProperty);
+        }
+
         private bool IsPartnerValueChanged(string partnerIdProperty)
         {
             PropertyInfo partnerPocoProperty = this.shipmentType.GetProperty(partnerIdProperty);
@@ -83,18 +99,6 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                 return false;
 
             return true;
-        }
-
-        private void UpdatePartnerAddressAndContact(string partnerIdProperty)
-        {
-            PropertyInfo partnerPMProperty = this.shipmentPMType.GetProperty(partnerIdProperty);
-            var partnerPMPropertyValue = partnerPMProperty.GetValue(shipmentPM);
-            if (partnerPMPropertyValue == null)
-                return;
-
-            Card card = CardRepository.GetSingleCard(partnerPMPropertyValue.ToString(), shipmentPM.Tenant, false);
-            this.MapPartnerContact(card, partnerIdProperty);
-            this.MapPartnerAddress(card, partnerIdProperty);
         }
 
         private void MapPartnerContact(Card card,string partnerIdProperty)
