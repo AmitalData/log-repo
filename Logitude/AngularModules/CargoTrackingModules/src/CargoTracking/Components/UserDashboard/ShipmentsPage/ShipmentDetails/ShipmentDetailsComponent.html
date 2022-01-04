@@ -232,13 +232,12 @@
                         </div>
                     </app-tooltip>
 
-                    <div class="date-wrapper">
-                        <span class="date" style="margin-top:9px"> {{card.Date | date: 'dd'}}</span>
-                        <span style="width:10px"> </span>
 
-                        <span class="date" style="display:inline-flex;flex-direction:column-reverse">
-                            <span class="date-span">{{card.Date | date: 'MMM'}}</span>
-                            <span class="date-span">{{card.Date | date: 'HH:mm' | dateTimeFormat}}</span>
+                    <div class="date">
+                        {{(card.Date || card.ExpectedDate) | date: 'dd'}}
+                        <span style="display:inline-flex;flex-direction:column-reverse">
+                            <span style="flex:50%">{{(card.Date || card.ExpectedDate)  | date: 'MMM'}}</span>
+                            <span style="flex:50%">{{(card.Date || card.ExpectedDate) | date: 'HH:mm' | dateTimeFormat}}</span>
                         </span>
                     </div>
 
@@ -246,7 +245,7 @@
                         <span >
                             <span > {{card.Title}}</span>
                             <span style="width:3px"></span>
-                            <span *ngIf="card.IsDimmed" style="font-size: 12px;"> (Expected)</span>
+                            <span *ngIf="card.IsDimmed || (!card.Date && card.ExpectedDate)" style="font-size: 12px;"> (Expected)</span>
                         </span>
                     </div>
 
