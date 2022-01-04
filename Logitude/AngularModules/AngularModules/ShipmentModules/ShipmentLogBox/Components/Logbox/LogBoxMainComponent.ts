@@ -418,11 +418,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     SetPrivateLabelDirectionFilters(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
 
-        if (!shipmentsQueriesCountsArgs.DirectionId && this.ShowDirectionFilters) {
-            this.ExecludeImportShipmentsFilters(shipmentsQueriesCountsArgs);
-        } else {
-            this.SetPrivateLabelDriectionId(shipmentsQueriesCountsArgs);
-        }
+        this.SetPrivateLabelDriectionId(shipmentsQueriesCountsArgs);
 
         if (!this.IsCustomsActivated && !this.IsExportActivated) {
             this.SetDefalutFilter(shipmentsQueriesCountsArgs);
@@ -433,11 +429,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         this.SetCustomShipmentFilters(shipmentsQueriesCountsArgs);
         this.SetExportShipmentFilters(shipmentsQueriesCountsArgs);
     }
-
-    private ExecludeImportShipmentsFilters(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
-        shipmentsQueriesCountsArgs.DirectionId = 'I';
-        shipmentsQueriesCountsArgs.DirectionOperator = 'NotEqual';
-    }
+     
 
     SetFilterOptions(directionId: string, directionOperator: string, shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
         this.SelectedDirectionFilter = directionId;;
@@ -1031,18 +1023,22 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     FilterPrivateLabelShipments() {
 
-        if (this.ShowDirectionFilters && this.isPrivateLabel) {
-            this.filterAgrs.addAdditionalFilter("DirectionId", "I", null, null, "NotEqual", true, true, false, "String");
-        } else {
-            if (this.IsCustomsActivated) {
-                this.filterAgrs.addAdditionalFilter("DirectionId", "C", null, null, "Equal", true, true, false, "String");
-            }
-            if (this.IsExportActivated) {
-                this.filterAgrs.addAdditionalFilter("DirectionId", "E", null, null, "Equal", true, true, false, "String");
-            }
+        if (!this.ShowDirectionFilters && this.isPrivateLabel) {
+
+            this.SetPrivateLabelAdditionalFilter();
         }
 
     }
+    private SetPrivateLabelAdditionalFilter() {
+        if (this.IsCustomsActivated) {
+            this.filterAgrs.addAdditionalFilter("DirectionId", "C", null, null, "Equal", true, true, false, "String");
+        }
+
+        if (this.IsExportActivated) {
+            this.filterAgrs.addAdditionalFilter("DirectionId", "E", null, null, "Equal", true, true, false, "String");
+        }
+    }
+
     private FilterLogboxShipments() {
         if (this.isLogbox) {
             this.filterAgrs.addAdditionalFilter("DirectionId", "E", null, null, "NotEqual", true, true, false, "String");

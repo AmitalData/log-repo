@@ -31,11 +31,16 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         }
         public bool IsShipmentsAllowedForLogBox()
         {
-            return (IsCustomsShipmentsAllowedForLogBox() || IsExportShipmentsAllowedForLogBox());
+            return (IsCustomsShipmentsAllowedForLogBox() || IsExportShipmentsAllowedForLogBox() || IsImportShipmentsAllowedForLogBox());
         }
+        public bool IsImportShipmentsAllowedForLogBox()
+        {
+            return (tenantPM.CustomerTenantShareImportFile && shipmentPM.DirectionId.ToUpper() == "I");
+        }
+
         public bool IsCustomsShipmentsAllowedForLogBox()
         {
-            return(tenantPM.CustomerTenantShareCustomsFile && customerTenantAccessInfo.IsCustomsActivated && shipmentPM.DirectionId.ToUpper() == "C") ;
+            return (tenantPM.CustomerTenantShareCustomsFile && customerTenantAccessInfo.IsCustomsActivated && shipmentPM.DirectionId.ToUpper() == "C");
         }
         public bool IsExportShipmentsAllowedForLogBox()
         {
