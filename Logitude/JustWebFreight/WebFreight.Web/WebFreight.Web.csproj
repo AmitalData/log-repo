@@ -1008,6 +1008,7 @@
     <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingTransportModeController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingWatermarkController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\AgentAPiHelper.cs" />
+    <Compile Include="Controllers\CommonDataModel\ApiHelpers\CustomAgentAPiHelper.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\ShippingAgentAPiHelper.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\CommunicationLogExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\CargoTrackingTenantMilestoneDefinitionExtendedController.cs" />
