@@ -35,7 +35,8 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;eeab&quot;"
+ 
+  Code="&quot;c431&quot;" 
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5099,6 +5100,11 @@
       DefaultText="&quot;Automations&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.Others.EntityStatus&quot;"
+      DefaultText="&quot;Entity Status&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -7172,6 +7178,7 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+ 
     <Feature
       Code="&quot;General.Features.CustomizationSettings&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
@@ -7181,5 +7188,16 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+ 
+    <Feature
+      Code="&quot;ENTITYSTATUS&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.ENTITYSTATUS&quot;"
+      FeatureDefaultText="&quot;Entity Status&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+ 
   </AdditionalFeatures>
 </entity>
