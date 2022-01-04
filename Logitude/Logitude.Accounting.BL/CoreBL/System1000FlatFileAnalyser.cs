@@ -647,7 +647,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             var rec = new VendorLineDTO();
             rec.RawLine = rawLine;
-            rec.VendorCode = rawLine.Substring(2 - 1, 15);
+            rec.VendorCode = rawLine.Substring(2 - 1, 15).TrimStart('0'); 
 
             rec.SentDeductionFileNum = rawLine.Substring(17 - 1, 9);
             rec.SentVATNum = rawLine.Substring(26 - 1, 9);
