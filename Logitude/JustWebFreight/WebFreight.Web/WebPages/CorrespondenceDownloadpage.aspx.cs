@@ -78,7 +78,7 @@ namespace WebFreight.Web.WebPages
 
                     Document myDoc = up.GetFileExtensionBySecurityId(securityId, tenant);
                     documentExtension = myDoc.Extension;
-                    filename = filestrings[2] != null ? filestrings[2]: myDoc.FileName;
+                    filename = filestrings[3] != null ? filestrings[3]: myDoc.FileName;
 
                     if (!string.IsNullOrEmpty(documentExtension))
                     {

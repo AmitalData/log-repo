@@ -31,7 +31,7 @@ export class DocumentDownloadService {
     public ExternalDownloadPage(securityId: string, tenant: number, fileName: string)
     {
         var link = ServiceHelper.GetAppURL(this.baseUrl)
-            + `WebPages/CorrespondenceDownloadpage.aspx?Id=${securityId}~${tenant}~${fileName}`;
+            + `WebPages/CorrespondenceDownloadpage.aspx?Id=${securityId}~${tenant}~${null}~${fileName}`;
         var win = window.open(link, '_blank');
 
         if (win) {
