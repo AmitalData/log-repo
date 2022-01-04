@@ -2755,9 +2755,16 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                 }).ToList();
             return objectfields;
         }
-
-
-
-
+        public List<ObjectFieldList> GetObjectFieldByName(string objectfieldName,string querySection)
+        {
+            List<ObjectFieldList> objectfields = (from a in repository.context.ObjectFields
+                                                  where (a.Tenant == 0 && a.FieldName== objectfieldName && a.ValidForQuerySection1 == querySection)
+                                                  select new ObjectFieldList()
+                                                  {
+                                                      FieldCode = a.FieldCode,
+                                                      Id = a.Id,
+                                                  }).ToList();
+            return objectfields;
+        }
     }
 }
