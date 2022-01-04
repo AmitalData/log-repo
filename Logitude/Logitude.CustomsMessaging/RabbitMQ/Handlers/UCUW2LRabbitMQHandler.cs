@@ -13,11 +13,11 @@ using System.Xml.Serialization;
 
 namespace Logitude.CustomsMessaging.RabbitMQ.Handlers
 {
-    public class UCUW2L_OpenDeclarationAnalyzerQueue : CustomAnalyzerQueueBase
+    public class UCUW2LRabbitMQHandler : CustomAnalyzerQueueBase
     {
         //private DeclarationPM _DeclarationPM;
 
-        public UCUW2L_OpenDeclarationAnalyzerQueue(QueueDetails queueDetails)
+        public UCUW2LRabbitMQHandler(QueueDetails queueDetails)
             : base(queueDetails)
         {
 

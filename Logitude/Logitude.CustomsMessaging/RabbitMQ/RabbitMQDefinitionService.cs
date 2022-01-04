@@ -53,7 +53,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
                     return new UCBUD2LT_ConnectDocToTicketQService(queue);
                     break;
                 case AnalyzeMQQueueServiceEnum.DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceResponseService:
-                    return new /*UCUW2L_OpenDeclarationsQService*/UCUW2L_OpenDeclarationAnalyzerQueue(queue);
+                    return new /*UCUW2L_OpenDeclarationsQService*/UCUW2LRabbitMQHandler(queue);
                     break;
                 default:
 
