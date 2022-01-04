@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "d8c025a91d593af254b2c09df860de4e";
+		public const string HashString = "fed2dd410e2e5050ecab5cbe27e8b631";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -12829,7 +12829,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "ConsigneeNotImporterId",
 					  						ObjectTableName =  "Shipment",
 					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Customer",
+					  						LookUpTableName =  "Card",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -12893,7 +12893,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "ShipperNotExporterId",
 					  						ObjectTableName =  "Shipment",
 					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Customer",
+					  						LookUpTableName =  "Card",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
