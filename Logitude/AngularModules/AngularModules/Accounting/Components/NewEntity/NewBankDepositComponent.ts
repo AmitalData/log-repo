@@ -287,16 +287,15 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
     }
         return isValid;
     }
-    IsMonthOpenForAccountingDate()
-    {
+    IsMonthOpenForAccountingDate() {
         var valid = true;
         if (this.accountingPeriod == null) {
             valid = false;
             //errorsList.Add(transText);
         }
-        else if(this.EntityPM.AccountingDate) {
+        else if (this.EntityPM.AccountingDate) {
             var accountingDateMonth = this.EntityPM.AccountingDate.getMonth() + 1;
-
+            var accountingDateYear = this.EntityPM.AccountingDate.getFullYear();
             if (accountingDateMonth > this.accountingPeriod.ClosedMonth) {
                 //Valid ... AccountingDateMonth must be greater than close Mounth
             }
@@ -307,11 +306,8 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
                 valid = false;
                 //errorsList.Add(transText); //ClosedMonth Must B
             }
-            if (accountingDateMonth == this.accountingPeriod.OpenMonth) {
+            if (accountingDateYear < this.accountingPeriod.Year || (accountingDateYear == this.accountingPeriod.Year && accountingDateMonth <= this.accountingPeriod.OpenMonth)) {
                 //valid ... accountingDateMonth can be  equal to OpenMonth
-            }
-            else if (accountingDateMonth < this.accountingPeriod.OpenMonth) {
-                //valid ... accountingDateMonth can be  less than OpenMonth
             }
             else {
                 valid = false;
