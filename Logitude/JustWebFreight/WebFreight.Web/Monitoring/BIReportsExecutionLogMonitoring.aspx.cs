@@ -57,7 +57,7 @@ namespace WebFreight.Web.Monitoring
                     return (from a in commonDataContext.BIReportsExecutionLogs
                             where a.CreateDate > twoDaysBefore
                             &&  ((a.StatusCode == "W"
-                            && (EntityFunctions.DiffMinutes(a.CreateDate, todayDateTime) > 5) || a.StatusCode == "F"))
+                            && (EntityFunctions.DiffMinutes(a.CreateDate, todayDateTime) > 5)) || a.StatusCode == "F")
                             select a).Any();
 
                 }

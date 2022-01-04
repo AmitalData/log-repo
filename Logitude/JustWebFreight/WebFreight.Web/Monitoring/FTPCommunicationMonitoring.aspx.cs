@@ -73,8 +73,8 @@ namespace WebFreight.Web.Monitoring
 
             return (from a in commonDataContext.CommunicationLogs
                     where a.CreateDateUTC > twoDaysBefore
-                    && a.QueueName == "FTPCommunicationLogQueue" && ((a.CommunicationStatusTypeCode == "W"
-                    && (EntityFunctions.DiffMinutes(a.CreateDateUTC, todayDateTime) > 5) || a.CommunicationStatusTypeCode == "F"))
+                    && a.QueueName == "FTPCommunicationLogQueue" && (a.CommunicationStatusTypeCode == "W"
+                    && EntityFunctions.DiffMinutes(a.CreateDateUTC, todayDateTime) > 5)
                     select a).Any();
 
         }

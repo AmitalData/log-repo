@@ -71,11 +71,13 @@ namespace WebFreight.Web.Monitoring
             DateTime todayDateTime = DateTime.Now;
             DateTime twoDaysBefore = todayDateTime.AddDays(-2);
             IWebFreightContext context = WebFreightContext.GetContext(0);
+
             return (from a in context.QueueMessages
-                    where a.CreateDateTime > twoDaysBefore
-                    && a.QueueDefinitionCode == "SchedularQueue" && ((a.Status == 0
-                    && (EntityFunctions.DiffMinutes(a.CreateDateTime, todayDateTime) > 5) || a.Status == -1))
-                    select a).Any();
+                      where a.CreateDateTime > twoDaysBefore
+                      && a.QueueDefinitionCode == "SchedularQueue" && ((a.Status == 0
+                      && (EntityFunctions.DiffMinutes(a.CreateDateTime, todayDateTime) > 5)) || a.Status == -1)
+                      select a).Any();
+
 
         }
 
