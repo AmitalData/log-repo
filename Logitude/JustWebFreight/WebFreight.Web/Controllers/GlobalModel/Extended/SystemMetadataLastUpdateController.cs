@@ -29,7 +29,7 @@ namespace WebFreight.Web.Controllers.GlobalModel
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);   
 
                 string entityName = "SystemMetadataLastUpdates_" + tenant;
                 MetaDataLastUpdateDates metadatalastUpdates = null;
