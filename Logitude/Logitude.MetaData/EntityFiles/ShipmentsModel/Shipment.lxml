@@ -107714,5 +107714,14 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;DeparturesArrivals&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Shipment.Features.DeparturesArrivals&quot;"
+      FeatureDefaultText="&quot;Departures and Arrivals&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
