@@ -157,7 +157,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
 
             if (filteredShipmentPackageList != null && filteredShipmentPackageList.Count > 0)
             {
-                List<ReportGroupData> myDataList = new List<ReportGroupData>();
+                //List<ReportGroupData> myDataList = new List<ReportGroupData>();
                 foreach (ShipmentJoinPackageList shipmentPackage in filteredShipmentPackageList)
                 {
                     ReportGroupData myDataRecord = new ReportGroupData();
@@ -243,12 +243,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
 
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipmentPackage, myDataRecord);
 
-                    myDataList.Add(myDataRecord);
+                    myDataProvider.NoGroupDataList.Add(myDataRecord);
                 }
 
-                if (myDataList.Count > 0)
+                if (myDataProvider.NoGroupDataList.Count > 0)
                 {
-                    List<ReportGroup> commodityAgentResults = (from p in myDataList
+                    List<ReportGroup> commodityAgentResults = (from p in myDataProvider.NoGroupDataList
                                                                group p by new { p.CommodityNumber, p.CustomAgentImportId, p.CustomAgentImportName } 
                                                                into g
                                                                orderby g.Key.CommodityNumber 
@@ -260,7 +260,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                                                                    ReportGroupDataList = g.ToList(),
                                                                }).ToList();
 
-                    List<ReportGroup> masterCommodityAgentResults = (from p in myDataList
+                    List<ReportGroup> masterCommodityAgentResults = (from p in myDataProvider.NoGroupDataList
                                                                      group p by new { p.Master, p.CommodityNumber, p.CustomAgentImportId, p.CustomAgentImportName,
                                                                      p.CommodityName ,p.MasterLong, p.ATD, p.ETD, p.FlightNumber } 
                                                                      into g
@@ -279,7 +279,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                                                                          FlightNumber = g.Key.FlightNumber,
                                                                      }).ToList();
 
-                    List<ReportGroup> reference4Results = (from p in myDataList
+                    List<ReportGroup> reference4Results = (from p in myDataProvider.NoGroupDataList
                                                            group p by new { p.PackageReference4 } 
                                                            into g
                                                            orderby g.Key.PackageReference4
