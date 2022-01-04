@@ -13,23 +13,23 @@ namespace Logitude.Customs.BL.BL
 {
     public class SIModificationByCustomerCommissionService
     {
-        private readonly DeclarationPM _declarationPM;
-        private readonly SupplierInvoicePM _supplierInvoicePM;
+        //private readonly DeclarationPM declarationPM;
+        //private readonly SupplierInvoicePM supplierInvoicePM;
 
-        public SIModificationByCustomerCommissionService(DeclarationPM declaration, SupplierInvoicePM supplierInvoicePM)
-        {
-            this._declarationPM = declaration;
-            this._supplierInvoicePM = supplierInvoicePM;
-        }
+        //public SIModificationByCustomerCommissionService()
+        //{
+        //    declarationPM = declaration;
+        //    supplierInvoicePM = supplierInvoicePM;
+        //}
 
-        internal void EnsureCommission()
+        internal void EnsureReductionByVendorCommission(DeclarationPM declarationPM, SupplierInvoicePM supplierInvoicePM,bool throwExceptionCheckb4SendDec)
         {
-            var context = CustomContext.GetContext(_supplierInvoicePM.Tenant);
-            string customerId = _declarationPM?.CustomerId;
-            if (_declarationPM == null)
+            var context = CustomContext.GetContext(supplierInvoicePM.Tenant);
+            string customerId = declarationPM?.CustomerId;
+            if (declarationPM == null)
             {
                 var declarationRepository = new DeclarationRepository(context);
-                var dec = declarationRepository.GetSingle(_supplierInvoicePM.DeclarationId, _supplierInvoicePM.Tenant);
+                var dec = declarationRepository.GetSingle(supplierInvoicePM.DeclarationId, supplierInvoicePM.Tenant);
                 customerId = dec.CustomerId;
 
             }
@@ -39,16 +39,16 @@ namespace Logitude.Customs.BL.BL
             }
 
             var query = new VendorCommissionListQueryService(context);
-            var commissions = query.GetCommissionsForCustomer(customerId, _supplierInvoicePM.Tenant);
+            var commissions = query.GetCommissionsForCustomer(customerId, supplierInvoicePM.Tenant);
 
 
 
-            if (!string.IsNullOrWhiteSpace(this._supplierInvoicePM.VendorId) /*&& this.declarationPM.CustomerId*/ &&
-                this._supplierInvoicePM.InvoiceAmount.HasValue &&
-                !string.IsNullOrWhiteSpace(this._supplierInvoicePM.InvoiceCurrencyTypeCode))
+            if (!string.IsNullOrWhiteSpace(supplierInvoicePM.VendorId) /*&& declarationPM.CustomerId*/ &&
+                supplierInvoicePM.InvoiceAmount.HasValue &&
+                !string.IsNullOrWhiteSpace(supplierInvoicePM.InvoiceCurrencyTypeCode))
             {
 
-                var commissionList = commissions.Where(d => d.VendorId == this._supplierInvoicePM.VendorId).ToList();
+                var commissionList = commissions.Where(d => d.VendorId == supplierInvoicePM.VendorId).ToList();
 
                 foreach (var commission in commissionList)
                 {
@@ -56,20 +56,22 @@ namespace Logitude.Customs.BL.BL
                     {
 
                         //init new mod values
-                        var newCurrency = this._supplierInvoicePM.InvoiceCurrencyTypeCode;
+                        var newCurrency = supplierInvoicePM.InvoiceCurrencyTypeCode;
 
-                        var newAmount = this.precisionRound(
-                            number: (commission.CommisionPercentage.Value / 100) * this._supplierInvoicePM.InvoiceAmount.Value,
+                        var newAmount = precisionRound(
+                            number: (commission.CommisionPercentage.Value / 100) * supplierInvoicePM.InvoiceAmount.Value,
                             digitsAfterPoint: 2);
 
                         // if commission found:
                         // 1- update Field VendorCommisionPercentage.SupplierInvoice
-                        _supplierInvoicePM.VendorComissionPercentage = commission.CommisionPercentage;
-                        Debug.WriteLine("[!] invoice commission changed to:", _supplierInvoicePM.VendorComissionPercentage);
+                        supplierInvoicePM.VendorComissionPercentage = commission.CommisionPercentage;
+                        Debug.WriteLine("[!] invoice commission changed to:", supplierInvoicePM.VendorComissionPercentage);
 
                         // 2- In case there’s mod record , update it
-                        var modType = _supplierInvoicePM.SupplierInvoiceModifications
-                            .FirstOrDefault(d => d.TypeCode == commission.ModificationsTypeCode);
+                        var modType = supplierInvoicePM.SupplierInvoiceModifications
+                            .Where(r=>r.ChangeSetOp!= Simplog.Server.Infrastructure.ChangeSetOperation.Delete)//ensure !!! itzik on delete - create !!!!!
+                            .FirstOrDefault(d => d.TypeCode == commission.ModificationsTypeCode)
+                            ;
                         if (modType != null)
                         {
                             // 3- In case there’s record with same type 
@@ -91,19 +93,23 @@ namespace Logitude.Customs.BL.BL
                         }
                         else
                         {
+                            if (throwExceptionCheckb4SendDec)
+                            {
+                                throw new Exception("הפחתות התאמות לפי אחוז עמלה לספק -חשבון ספק לא מעודכן");
+                            }
                             //In case there’s no mod record I10, create a record in SupplierInvoiceModification 
-                            var newMod = new SupplierInvoiceModificationPM(/*this.EntityPM*/);
-                            newMod.Tenant = _supplierInvoicePM.Tenant;
-                            newMod.DeclarationId = _supplierInvoicePM.DeclarationId;
-                            newMod.InvoiceCounterKey = _supplierInvoicePM.InvoiceCounterKey;
+                            var newMod = new SupplierInvoiceModificationPM(/*EntityPM*/);
+                            newMod.Tenant = supplierInvoicePM.Tenant;
+                            newMod.DeclarationId = supplierInvoicePM.DeclarationId;
+                            newMod.InvoiceCounterKey = supplierInvoicePM.InvoiceCounterKey;
                             newMod.TypeCode = commission.ModificationsTypeCode;
                             newMod.TypeName = commission.ModificationsTypeName;
                             newMod.CurrencyTypeCode = newCurrency;
-                            newMod.CurrencyTypeName = _supplierInvoicePM.InvoiceCurrencyTypeName;
+                            newMod.CurrencyTypeName = supplierInvoicePM.InvoiceCurrencyTypeName;
                             newMod.Amount = newAmount;
                             newMod.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
 
-                            _supplierInvoicePM.SupplierInvoiceModifications.Add(newMod);
+                            supplierInvoicePM.SupplierInvoiceModifications.Add(newMod);
 
 
                         }

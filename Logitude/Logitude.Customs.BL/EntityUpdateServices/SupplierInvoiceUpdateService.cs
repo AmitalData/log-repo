@@ -177,8 +177,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         //}
         protected override void OnUpdating(SupplierInvoicePM entityPM, SupplierInvoice entityPOCO)
         {
-            var sIModificationByCustomerCommissionService = new SIModificationByCustomerCommissionService(declaration:_DeclarationPM, supplierInvoicePM: entityPM);
-            sIModificationByCustomerCommissionService.EnsureCommission();
+            var sIModificationByCustomerCommissionService = new SIModificationByCustomerCommissionService();
+            sIModificationByCustomerCommissionService.EnsureReductionByVendorCommission(_DeclarationPM, entityPM,false);
             if (_DeclarationPM != null && _DeclarationPM.IsCourierDeclaration)
             {
                 bool pHaveChange = entityPM.InvoiceAmountInUSD != entityPOCO.InvoiceAmountInUSD;
