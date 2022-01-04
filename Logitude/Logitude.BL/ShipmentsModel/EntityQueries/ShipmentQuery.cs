@@ -128,7 +128,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return null;
         }
 
-        public ShipmentPM MapShipmentToShipmentPM(ShipmentPM shipmentPM, Shipment shipment, IQueryable<ShipmentMasterData> shipmentMasterDataList, ShipmentMasterData masterData, bool withComposition,bool localName)
+        public ShipmentPM MapShipmentToShipmentPM(ShipmentPM shipmentPM, Shipment shipment, IQueryable<ShipmentMasterData> shipmentMasterDataList, ShipmentMasterData masterData, bool withComposition, bool byLocalName = false)
         {
             int tenant = shipment.Tenant;
             ICommonDataContext myCommonContext = CommonDataContext.GetContext(shipment.Tenant);
@@ -206,7 +206,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     if (cardObject != null)
                     {
                         shipmentPM.MainCarriageCarrierCode = cardObject.Code;
-                        shipmentPM.MainCarriageCarrierName = cardObject.EnglishName;
+                        shipmentPM.MainCarriageCarrierName = byLocalName && !string.IsNullOrEmpty(cardObject.LocalName) ? cardObject.LocalName : cardObject.EnglishName;
                         shipmentPM.MainCarriageCarrierTypeName = cardObject?.PartnerType?.Name;
                         shipmentPM.MainCarriageCarrierWebSite = cardObject.Website;
 
@@ -847,7 +847,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                 if (card != null)
                 {
-                    shipmentPM.CustomerName = card.EnglishName;
+                    shipmentPM.CustomerName = byLocalName && !string.IsNullOrEmpty(card.LocalName) ? card.LocalName : card.EnglishName;
                     shipmentPM.CustomerNote = card.Notes;
 
                     if (card.PartnerTypeId == "CS")
@@ -879,7 +879,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipment.FreightForwarderId != null)
             {
                 Card loadedCard = CardRepository.GetSingleCard(shipment.FreightForwarderId, shipment.Tenant, true);
-                shipmentPM.FreightForwarderName = loadedCard.EnglishName;
+                shipmentPM.FreightForwarderName = byLocalName && !string.IsNullOrEmpty(loadedCard.LocalName) ? loadedCard.LocalName : loadedCard.EnglishName;
                 shipmentPM.FreightForwarderNote = loadedCard.Notes;
             }
             #endregion
@@ -895,7 +895,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipment.ShipperId != null)
             {
                 Card loadedCard = CardRepository.GetSingleCard(shipment.ShipperId, shipment.Tenant, true);
-                shipmentPM.ShipperName = loadedCard.EnglishName;
+                shipmentPM.ShipperName = byLocalName && !string.IsNullOrEmpty(loadedCard.LocalName) ? loadedCard.LocalName : loadedCard.EnglishName;
                 shipmentPM.ShipperNote = loadedCard.Notes;
 
                 if (!string.IsNullOrEmpty(shipment.ShipperAddressId))
@@ -934,7 +934,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipment.ConsigneeId != null)
             {
                 Card loadedCard = CardRepository.GetSingleCard(shipment.ConsigneeId, shipment.Tenant, true);
-                shipmentPM.ConsigneeName = loadedCard.EnglishName;
+                shipmentPM.ConsigneeName = byLocalName && !string.IsNullOrEmpty(loadedCard.LocalName) ? loadedCard.LocalName : loadedCard.EnglishName;
                 shipmentPM.ConsigneeNote = loadedCard.Notes;
                 shipmentPM.ConsigneeVatNumber = loadedCard.VatNumber;
 
@@ -973,7 +973,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipment.AgentId != null)
             {
                 Card loadedCard = CardRepository.GetSingleCard(shipment.AgentId, shipment.Tenant, true);
-                shipmentPM.AgentName = loadedCard.EnglishName;
+                shipmentPM.AgentName = byLocalName && !string.IsNullOrEmpty(loadedCard.LocalName) ? loadedCard.LocalName : loadedCard.EnglishName;
                 shipmentPM.AgentNote = loadedCard.Notes;
 
                 if (!string.IsNullOrEmpty(shipment.AgentAddressId))
@@ -997,7 +997,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Card loadedCard = CardRepository.GetSingleCard(shipment.IssuingCarrierAgentId, shipment.Tenant, true);
                 if (loadedCard != null)
                 {
-                    shipmentPM.IssuingCarrierAgentName = loadedCard.EnglishName;
+                    shipmentPM.IssuingCarrierAgentName = byLocalName && !string.IsNullOrEmpty(loadedCard.LocalName) ? loadedCard.LocalName : loadedCard.EnglishName;
                     shipmentPM.IssuingCarrierAgentNote = loadedCard.Notes;
                 }
                 if (!string.IsNullOrEmpty(shipment.IssuingCarrierAddressId))
@@ -1019,7 +1019,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipment.CustomAgentExportId != null)
             {
                 Card loadedCard = CardRepository.GetSingleCard(shipment.CustomAgentExportId, shipment.Tenant, true);
-                shipmentPM.CustomAgentExportName = loadedCard.EnglishName;
+                shipmentPM.CustomAgentExportName = byLocalName && !string.IsNullOrEmpty(loadedCard.LocalName) ? loadedCard.LocalName : loadedCard.EnglishName;
                 shipmentPM.CustomAgentExportNote = loadedCard.Notes;
             }
             #endregion
@@ -1032,7 +1032,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipment.CustomAgentImportId != null)
             {
                 Card loadedCard = CardRepository.GetSingleCard(shipment.CustomAgentImportId, shipment.Tenant, true);
-                shipmentPM.CustomAgentImportName = loadedCard.EnglishName;
+                shipmentPM.CustomAgentImportName = byLocalName && !string.IsNullOrEmpty(loadedCard.LocalName) ? loadedCard.LocalName : loadedCard.EnglishName;
                 shipmentPM.CustomAgentImportNote = loadedCard.Notes;
             }
             #endregion
@@ -1044,7 +1044,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipment.Notify1Id != null)
             {
                 Card loadedCard = CardRepository.GetSingleCard(shipment.Notify1Id, shipment.Tenant, true);
-                shipmentPM.Notify1Name = loadedCard.EnglishName;
+                shipmentPM.Notify1Name = byLocalName && !string.IsNullOrEmpty(loadedCard.LocalName) ? loadedCard.LocalName : loadedCard.EnglishName;
                 shipmentPM.Notify1Note = loadedCard.Notes;
 
                 if (!string.IsNullOrEmpty(shipment.Notify1AddressId))
@@ -1073,7 +1073,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipment.Notify2Id != null)
             {
                 Card loadedCard = CardRepository.GetSingleCard(shipment.Notify2Id, shipment.Tenant, true);
-                shipmentPM.Notify2Name = loadedCard.EnglishName;
+                shipmentPM.Notify2Name = byLocalName && !string.IsNullOrEmpty(loadedCard.LocalName) ? loadedCard.LocalName : loadedCard.EnglishName;
                 shipmentPM.Notify2Note = loadedCard.Notes;
 
                 if (!string.IsNullOrEmpty(shipment.Notify2AddressId))
@@ -1099,7 +1099,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipment.ShipperNotExporterId != null)
             {
                 Card loadedCard = CardRepository.GetSingleCard(shipment.ShipperNotExporterId, shipment.Tenant, true);
-                shipmentPM.ShipperNotExporterName = loadedCard.EnglishName;
+                shipmentPM.ShipperNotExporterName = byLocalName && !string.IsNullOrEmpty(loadedCard.LocalName) ? loadedCard.LocalName : loadedCard.EnglishName;
                 shipmentPM.ShipperNotExporterNote = loadedCard.Notes;
             }
             #endregion
@@ -1111,7 +1111,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipment.ConsigneeNotImporterId != null)
             {
                 Card loadedCard = CardRepository.GetSingleCard(shipment.ConsigneeNotImporterId, shipment.Tenant, true);
-                shipmentPM.ConsigneeNotImporterName = loadedCard.EnglishName;
+                shipmentPM.ConsigneeNotImporterName = byLocalName && !string.IsNullOrEmpty(loadedCard.LocalName) ? loadedCard.LocalName : loadedCard.EnglishName;
                 shipmentPM.ConsigneeNotImporterNote = loadedCard.Notes;
             }
             #endregion
@@ -1124,7 +1124,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipment.CustomClearancePointId != null)
             {
                 Card loadedCard = CardRepository.GetSingleCard(shipment.CustomClearancePointId, shipment.Tenant, true);
-                shipmentPM.CustomClearancePointName = loadedCard.EnglishName;
+                shipmentPM.CustomClearancePointName = byLocalName && !string.IsNullOrEmpty(loadedCard.LocalName) ? loadedCard.LocalName : loadedCard.EnglishName;
                 shipmentPM.CustomClearancePointNote = loadedCard.Notes;
             }
             #endregion
@@ -1137,7 +1137,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipment.ColoaderId != null)
             {
                 Card loadedCard = CardRepository.GetSingleCard(shipment.ColoaderId, shipment.Tenant, true);
-                shipmentPM.ColoaderName = loadedCard.EnglishName;
+                shipmentPM.ColoaderName = byLocalName && !string.IsNullOrEmpty(loadedCard.LocalName) ? loadedCard.LocalName : loadedCard.EnglishName;
                 shipmentPM.ColoaderNote = loadedCard.Notes;
             }
             #endregion
@@ -1150,7 +1150,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipment.FreelancerId != null)
             {
                 Card loadedCard = CardRepository.GetSingleCard(shipment.FreelancerId, shipment.Tenant, true);
-                shipmentPM.FreelancerName = loadedCard.EnglishName;
+                shipmentPM.FreelancerName = byLocalName && !string.IsNullOrEmpty(loadedCard.LocalName) ? loadedCard.LocalName : loadedCard.EnglishName;
 
             }
             #endregion
@@ -1163,7 +1163,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipment.ConsolidatorId != null)
             {
                 Card loadedCard = CardRepository.GetSingleCard(shipment.ConsolidatorId, shipment.Tenant, true);
-                shipmentPM.ConsolidatorName = loadedCard.EnglishName;
+                shipmentPM.ConsolidatorName = byLocalName && !string.IsNullOrEmpty(loadedCard.LocalName) ? loadedCard.LocalName : loadedCard.EnglishName;
                 shipmentPM.ConsolidatorNote = loadedCard.Notes;
             }
             #endregion
@@ -1177,7 +1177,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipment.ReleasingAgentId != null)
             {
                 Card loadedCard = CardRepository.GetSingleCard(shipment.ReleasingAgentId, shipment.Tenant, true);
-                shipmentPM.ReleasingAgentName = loadedCard.EnglishName;
+                shipmentPM.ReleasingAgentName = byLocalName && !string.IsNullOrEmpty(loadedCard.LocalName) ? loadedCard.LocalName: loadedCard.EnglishName;
                 shipmentPM.ReleasingAgentNote = loadedCard.Notes;
             }
             #endregion
@@ -1734,7 +1734,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Card cardObject = CardRepository.GetSingleCard(shipment.WarehouseLegWarehouseId, shipment.Tenant, true);
                 if (cardObject != null)
                 {
-                    shipmentPM.WarehouseLegTerminalName = cardObject.EnglishName;
+                    shipmentPM.WarehouseLegTerminalName = byLocalName && !string.IsNullOrEmpty(cardObject.LocalName) ? cardObject.LocalName : cardObject.EnglishName;
                     shipmentPM.WarehouseLegAddressCountryCode = cardObject.CountryCode;
                     shipmentPM.WarehouseLegAddressCountryName = cardObject.CountryName;
                 }
@@ -13767,7 +13767,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                              .Include("MainCarriageCarrierCard.PartnerType")
                                              .FirstOrDefault();
 
-            MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, false);
+            MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, false,true);
 
             CreateShipmentPMForCargoTracking(tenant, shipment, shipmentPM);
 

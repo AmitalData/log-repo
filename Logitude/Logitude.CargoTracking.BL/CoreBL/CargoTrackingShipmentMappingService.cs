@@ -157,7 +157,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         private ShipmentOrderPM GetShipmentOrder()
         {
             ShipmentOrderQueryService shipmentOrderQuery = new ShipmentOrderQueryService(cargoShipmentPM.Tenant);
-            shipmentOrderPM = shipmentOrderQuery.GetSingle(cargoShipmentPM.EntityId, true, false);
+            shipmentOrderPM = shipmentOrderQuery.GetSinglePMForCargo(cargoShipmentPM.EntityId, cargoShipmentPM.Tenant);
             return shipmentOrderPM;
         }
         private ShipmentPM GetShipmentPM()
