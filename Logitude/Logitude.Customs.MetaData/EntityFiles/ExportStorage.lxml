@@ -2186,13 +2186,13 @@
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
-    TabName="&quot;Request Sheets&quot;"
-    TabLocalName="&quot;גיליון בקשה&quot;"
+    TabName="&quot;Request Sheet&quot;"
+    TabLocalName="&quot;גליון בקשות&quot;"
     ObjectTableName="&quot;Customs.ExportStorage&quot;"
     Code="&quot;ESRS&quot;"
-    ControlPath="&quot; &quot;"
+    ControlPath="&quot;&quot;"
     TextCode="&quot;Customs.ExportStorage.TH.RequestSheets&quot;"
-    IsPackagable="false"
+    IsPackagable="true"
     IndexOrder="1"
     HtmlComponentURL="&quot;./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent&quot;"
     HtmlComponentName="&quot;RequestSheetTabComponent&quot;"
