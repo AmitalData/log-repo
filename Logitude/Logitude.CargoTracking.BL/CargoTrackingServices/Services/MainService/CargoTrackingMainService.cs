@@ -410,7 +410,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             if (tableName == "CargoTrackingShipments" && !bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.IsUpdateFromBuild && !isInnerCargoTracking)
             {
                 bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.ForwardingShipmentsIds = GetForwardingShipmentsIds(bulkDataPreperation.SelectedDataTable);
-                syncService.IncremantalSyncShipmentMilstones(bulkDataPreperation.CargoTrackingUpdateDataBaseArgs);
+                syncService.IncremantalSyncShipmentMilstones(bulkDataPreperation);
             }
             return bulkDataPreperation;
         }
@@ -965,7 +965,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 syncService.BuildSyncShipmentMilstones(updateCargoTrackingRecords);
                 return;
             }
-            syncService.SyncCurrentMistones(updateCargoTrackingRecords);
         }
 
         private void BuildShipmentsNew(UpdateCargoTrackingRecords updateCargoTrackingRecords)
