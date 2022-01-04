@@ -28,7 +28,7 @@ import { EntityListService } from '../../../Infrastructure/Services/EntityListSe
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { ChildDirective } from '../../../Infrastructure/Directives/ChildDirective';
 import { ContactInputTemplateArgs } from '../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
-import { ShipmentSubTypeListService } from '../../../Shipment/services/standardlists/shipmentsubtypelistservice';
+import { ShipmentSubTypeListService } from '../../../Shipment/Services/StandardLists/ShipmentSubTypeListService';
 import { ShipmentSubTypeList } from '../../../Shipment/EntityLists/ShipmentSubTypeList';
 import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
