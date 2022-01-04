@@ -50,10 +50,10 @@ namespace Logitude.CustomsMessaging.RabbitMQ
             switch (queue.AnalyzeQueueService)
             {
                 case AnalyzeMQQueueServiceEnum.UniCourierBatchSendUCBUD2LT_MsgResponseService:
-                    return new UCBUD2LT_ConnectDocToTicketQService(queue);
+                    return new /*UCBUD2LT_ConnectDocToTicketQService*/UCBUD2LT_RabbitMQHandler(queue);
                     break;
                 case AnalyzeMQQueueServiceEnum.DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceResponseService:
-                    return new /*UCUW2L_OpenDeclarationsQService*/UCUW2LRabbitMQHandler(queue);
+                    return new /*UCUW2L_OpenDeclarationsQService*/UCUW2L_RabbitMQHandler(queue);
                     break;
                 default:
 

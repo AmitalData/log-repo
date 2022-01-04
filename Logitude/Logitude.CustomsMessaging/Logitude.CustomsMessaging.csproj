@@ -321,7 +321,8 @@
     <Compile Include="MessagingServices\Unifreight_L2US01_US2L01_SivugMessagingService.cs" />
     <Compile Include="MessagingServices\VE_8326_ImporterDeclarationMessagingService.cs" />
     <Compile Include="MessagingServices\VP_NG_2690_VehicleInMessagingService.cs" />
-    <Compile Include="RabbitMQ\Handlers\UCUW2LRabbitMQHandler.cs" />
+    <Compile Include="RabbitMQ\Handlers\UCBUD2LT_RabbitMQHandler.cs" />
+    <Compile Include="RabbitMQ\Handlers\UCUW2L_RabbitMQHandler.cs" />
     <Compile Include="RabbitMQ\RabbitMQDefinitionService.cs" />
     <Compile Include="RabbitMQ\RabbitmqConnection.cs" />
     <Compile Include="RabbitMQ\RabbitmqHelper.cs" />
