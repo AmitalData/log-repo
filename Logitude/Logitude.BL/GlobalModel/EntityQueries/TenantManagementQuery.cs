@@ -932,6 +932,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
                        ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
                        WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
+                       PrivateLabelId = a.GlobalTenant != null ? a.GlobalTenant.PrivateLabelId : "",
+                       PrivateLabelName = a.GlobalTenant != null ? a.GlobalTenant.TenantManagmentPrivateLabel != null ? a.GlobalTenant.TenantManagmentPrivateLabel.PrivateLabelName : "" : "",
                    };
         }
 
