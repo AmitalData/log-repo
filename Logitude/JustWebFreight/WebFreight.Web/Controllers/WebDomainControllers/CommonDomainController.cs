@@ -12,6 +12,7 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.QuoteModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityLists;
+using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BookingLib.Data.EntityLists;
 using Logitude.CRM.BL.EntityPMs;
 using Logitude.CRM.BL.EntityQueryServices;
@@ -2573,6 +2574,74 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             try
             {
                 SecurityUtility.AuthenticationOnTenant(id);
+                TenantQuery tenantQuery = new TenantQuery(id);
+                TenantPM tenantPM = tenantQuery.GetTenantFromDB(id);
+                return Request.CreateResponse(HttpStatusCode.OK, tenantPM.EcommerceSupportEmail);
+
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetTenantLogoUriByShipmentSecurityKey(int tenant, string securityKey)
+        {
+            try
+            {
+                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                if (!shipmentQuery.IsTenantHaveShipmentBySecurityKey(securityKey, tenant))
+                {
+                    throw new AutenticationException("Sorry! this user is not authorized!");
+                }
+
+                string result = "";
+                BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = "logo" + tenant,
+                    FolderName = "logos",
+                    Extension = "jpg",
+                    Tenant = tenant,
+                };
+
+                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                byte[] datainByte = storageservice.Read(fileInfo);
+
+
+                if (datainByte != null)
+                {
+                    int height = LogitudeSettings.WorkEnvironment != "cloud" && tenant == 1245 ? 170 : 114;
+
+                    datainByte = ResizeImage(datainByte, 290, height, "jpg");
+                    string base64String = System.Convert.ToBase64String(datainByte, 0, datainByte.Length);
+                    result = "data:image/jpg;base64," + base64String;
+                    return Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+
+                else return null;
+
+
+            }
+
+            catch (Exception e)
+            {
+                ExceptionHandler.HandleException(e, DateTime.Now, tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "BrandingController : GetTenantLogoUri Method", null);
+                return null;
+            }
+
+
+        }
+
+        public HttpResponseMessage GetTenantEcommerceSupportEmailByShipmentSecurityKey(int id, string securityKey)
+        {
+            try
+            {
+                ShipmentQuery shipmentQuery = new ShipmentQuery(id);
+                if (!shipmentQuery.IsTenantHaveShipmentBySecurityKey(securityKey, id)) {
+                    throw new AutenticationException("Sorry! this user is not authorized!");
+                }
+
                 TenantQuery tenantQuery = new TenantQuery(id);
                 TenantPM tenantPM = tenantQuery.GetTenantFromDB(id);
                 return Request.CreateResponse(HttpStatusCode.OK, tenantPM.EcommerceSupportEmail);

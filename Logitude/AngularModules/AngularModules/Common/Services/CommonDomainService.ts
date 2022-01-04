@@ -1138,6 +1138,43 @@ export class CommonDomainService {
         });
     }
 
+    GetTenantLogoUriByShipmentSecurityKey(Id: number, securityKey: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetTenantLogoUriByShipmentSecurityKey?tenant=' + Id + '&securityKey=' + securityKey;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeadersWithoutToken()).pipe(map(response => {
+
+                var myResult = response;
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    GetTenantEcommerceSupportEmailByShipmentSecurityKey(id: number, securityKey: string) {
+
+
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetTenantEcommerceSupportEmailByShipmentSecurityKey?' + 'id=' + id + '&securityKey=' + securityKey, ServiceHelper.GetHttpHeadersWithoutToken()).pipe(map(response => {
+                var pm = response;
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = pm;
+                return serviceResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
     MapJsonToAccountingSettingPM(jsonPM: any, mapParent: boolean = true, entityPM: AccountingSettingPM = null) {
         if (!entityPM) {
 

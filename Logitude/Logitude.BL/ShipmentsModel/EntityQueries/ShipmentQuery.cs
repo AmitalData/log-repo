@@ -13410,6 +13410,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return null;
         }
 
+        public bool IsTenantHaveShipmentBySecurityKey(string shipmentSecurityKey, int tenant)
+        {
+            if (string.IsNullOrEmpty(shipmentSecurityKey)) return false;
+
+            return (from a in repository.context.Shipments
+                      where a.SecurityKey == shipmentSecurityKey && !a.IsCancelled && a.Tenant == tenant
+                      select a).Any();
+        }
+
         public IQueryable<ShipmentList> GetShipmentListsByCustomerIdsAndDates(List<string> customerIds, DateTime? fromDate, DateTime? toDate, int tenant)
         {
 
