@@ -314,8 +314,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             //externalAPIShipmentValidator.UpdatePayablesChangeSet(MasterPM);
                             //externalAPIShipmentValidator.UpdateReceivablesChangeSet(MasterPM);
 
-                            this.UpdatePartners(MyContext, MasterPM);
-
+                            MasterPM = this.UpdatePartners(MyContext, MasterPM);
                             MasterPM.HasUnassignedData = apiUnassignedDataHandler.HasUnassignedData;
                             MasterPM = apiUnassignedDataHandler.AddMasterShipmentUnassignedData(entity, MasterPM);
 
@@ -381,13 +380,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 throw new ApplicationException("Main Carriage Carrier is required when sending MAWB");
             }
         }
-        private void UpdatePartners(IShipmentsContext shipmentsContext, ShipmentPM shipmentPM)
+
+        private ShipmentPM UpdatePartners(IShipmentsContext shipmentsContext, ShipmentPM shipmentPM)
         {
-            Shipment shipmentPOCO = shipmentsContext.Shipments.Where(d => d.Id == shipmentPM.Id && d.Tenant == shipmentPM.Tenant).FirstOrDefault();
-            if (shipmentPOCO != null)
-            {
-                this.UpdateNotify1Partner(shipmentPOCO, shipmentPM);
-            }
+            ExternalAPIShipmentPartnersUpdate externalAPIShipmentPartnersUpdate = new ExternalAPIShipmentPartnersUpdate(shipmentsContext, shipmentPM);
+            return externalAPIShipmentPartnersUpdate.UpdatePartners();
         }
         private void UpdateNotify1Partner(Shipment shipmentPOCO, ShipmentPM shipmentPM)
         {
