@@ -139,6 +139,7 @@
     <Compile Include="AmitalContextUtil.cs" />
     <Compile Include="BL\CacheHelper.cs" />
     <Compile Include="BL\CalculateDeclarationCourierStatus.cs" />
+    <Compile Include="BL\SIModificationByCustomerCommissionService.cs" />
     <Compile Include="CloseTables\CustomsCargoSealStatus.cs" />
     <Compile Include="CloseTables\CustomsAutonomyKeywordDetails.cs" />
     <Compile Include="CloseTables\CustomRabbitMQQueue.cs" />
