@@ -2532,32 +2532,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
-                string result = "";
-                BlobFileInfo fileInfo = new BlobFileInfo()
-                {
-                    FileName = "logo" + tenant,
-                    FolderName = "logos",
-                    Extension = "jpg",
-                    Tenant = tenant,
-                };
+                string result = GetTenantLogoUriBase64(tenant);
 
-                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-                byte[] datainByte = storageservice.Read(fileInfo);
-
-
-                if (datainByte != null)
-                {
-                    int height = LogitudeSettings.WorkEnvironment != "cloud" && tenant == 1245 ? 170 : 114;
-
-                    datainByte = ResizeImage(datainByte, 290, height, "jpg");
-                    string base64String = System.Convert.ToBase64String(datainByte, 0, datainByte.Length);
-                    result = "data:image/jpg;base64," + base64String;
-                    return Request.CreateResponse(HttpStatusCode.OK, result);
-                }
-
-                else return null;
-
-
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
             catch (Exception e)
@@ -2592,36 +2569,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
                 if (!shipmentQuery.IsTenantHaveShipmentBySecurityKey(securityKey, tenant))
-                {
                     throw new AutenticationException("Sorry! this user is not authorized!");
-                }
+                
+                string result = GetTenantLogoUriBase64(tenant);
 
-                string result = "";
-                BlobFileInfo fileInfo = new BlobFileInfo()
-                {
-                    FileName = "logo" + tenant,
-                    FolderName = "logos",
-                    Extension = "jpg",
-                    Tenant = tenant,
-                };
-
-                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-                byte[] datainByte = storageservice.Read(fileInfo);
-
-
-                if (datainByte != null)
-                {
-                    int height = LogitudeSettings.WorkEnvironment != "cloud" && tenant == 1245 ? 170 : 114;
-
-                    datainByte = ResizeImage(datainByte, 290, height, "jpg");
-                    string base64String = System.Convert.ToBase64String(datainByte, 0, datainByte.Length);
-                    result = "data:image/jpg;base64," + base64String;
-                    return Request.CreateResponse(HttpStatusCode.OK, result);
-                }
-
-                else return null;
-
-
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
             catch (Exception e)
@@ -2631,6 +2583,30 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
 
 
+        }
+
+        private string GetTenantLogoUriBase64(int tenant)
+        {
+            string result = null;
+            BlobFileInfo fileInfo = new BlobFileInfo()
+            {
+                FileName = "logo" + tenant,
+                FolderName = "logos",
+                Extension = "jpg",
+                Tenant = tenant,
+            };
+
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            byte[] datainByte = storageservice.Read(fileInfo);
+
+            if (datainByte == null) return result;
+
+            int height = LogitudeSettings.WorkEnvironment != "cloud" && tenant == 1245 ? 170 : 114;
+            datainByte = ResizeImage(datainByte, 290, height, "jpg");
+            string base64String = System.Convert.ToBase64String(datainByte, 0, datainByte.Length);
+            result = "data:image/jpg;base64," + base64String;
+
+            return result;
         }
 
         public HttpResponseMessage GetTenantEcommerceSupportEmailByShipmentSecurityKey(int id, string securityKey)

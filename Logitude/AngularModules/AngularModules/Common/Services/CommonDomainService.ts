@@ -1139,10 +1139,8 @@ export class CommonDomainService {
     }
 
     GetTenantLogoUriByShipmentSecurityKey(Id: number, securityKey: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
-        var url = this._apiUrl + '/GetTenantLogoUriByShipmentSecurityKey?tenant=' + Id + '&securityKey=' + securityKey;
+        
+        let url = this._apiUrl + '/GetTenantLogoUriByShipmentSecurityKey?tenant=' + Id + '&securityKey=' + securityKey;
 
         return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeadersWithoutToken()).pipe(map(response => {
@@ -1159,12 +1157,10 @@ export class CommonDomainService {
 
     GetTenantEcommerceSupportEmailByShipmentSecurityKey(id: number, securityKey: string) {
 
-
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        let url = this._apiUrl + '/GetTenantEcommerceSupportEmailByShipmentSecurityKey?' + 'id=' + id + '&securityKey=' + securityKey;
 
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetTenantEcommerceSupportEmailByShipmentSecurityKey?' + 'id=' + id + '&securityKey=' + securityKey, ServiceHelper.GetHttpHeadersWithoutToken()).pipe(map(response => {
+            return this._http.get(url, ServiceHelper.GetHttpHeadersWithoutToken()).pipe(map(response => {
                 var pm = response;
 
                 var serviceResponse: ServiceResponse;
