@@ -337,7 +337,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             ARPaymentTracing.Trace(theEntityPm, paymentPoco, isNewEntity);
 
-            UpdateChequeOrPaymentRefField(theEntityPm);
+           // UpdateChequeOrPaymentRefField(theEntityPm);
 
             if (mapComposition)
             {
@@ -454,12 +454,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             foreach (ARPaymentInvoicePM item in invoicesIds)
             {
-                this.UpdateARInvoicePaymentRefreneces(item);
+                this.UpdateARInvoicePaymentRefreneces(item, theEntityPm);
             }
         }
 
-        private void UpdateARInvoicePaymentRefreneces(ARPaymentInvoicePM item)
-        {
+        private void UpdateARInvoicePaymentRefreneces(ARPaymentInvoicePM item, ARPaymentPM changedARPaymentPM)
+        { 
             List<ARInvoicePayment> allConnectedItems = invoicePaymentRepository.GetARInvoicePaymentByInvoiceId(item.ARInvoiceId, item.Tenant).ToList();
 
             string paymentRefrenece = "";
@@ -467,20 +467,22 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (allConnectedItems.Count > 0)
             {
-                 
-
-                ARPayment aRPayment = null;
                 foreach (ARInvoicePayment aRInvoicePayment in allConnectedItems)
                 {
-                    aRPayment=  paymentRepository.GetSingleARPayment(aRInvoicePayment.ARPaymentId, aRInvoicePayment.Tenant);
-                    
-                    if(aRPayment != null)
+                    ARPayment aRPayment = paymentRepository.GetSingleARPayment(aRInvoicePayment.ARPaymentId, aRInvoicePayment.Tenant);
+
+                    if (aRPayment != null && aRPayment.ChequeOrPaymentRef != null)
                     {
                         paymentRefrenece = aRPayment.ChequeOrPaymentRef == null? paymentRefrenece:  paymentRefrenece + aRPayment.ChequeOrPaymentRef+',';
-                         if(aRPayment.ChequeOrPaymentRef != null)
-                        { 
-                            Ids.Add(aRPayment.ChequeOrPaymentRef); 
+                        if (aRPayment.Id == changedARPaymentPM.PaymentInvoices[0].ARPaymentId)
+                        {
+                            Ids.Add(changedARPaymentPM.ChequeOrPaymentRef);
                         }
+                        else
+                        { 
+                            Ids.Add(aRPayment.ChequeOrPaymentRef);
+                        } 
+                      
                     } 
                 }
             }

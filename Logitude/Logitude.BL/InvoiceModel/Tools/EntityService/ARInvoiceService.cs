@@ -611,6 +611,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new ARInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "ARInvoice", Tenant = entityPM.Tenant , EntityId = entityPM.Id });
 
                 ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
+                this.CalculatePaymentReferences(entityPM, invoice);
                 invoiceRepository.Update(invoice);
                 invoiceRepository.SubmitChanges();
 
@@ -662,6 +663,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.GetForeignFields();
             this.RunStoredProcedures();
             this.AfterServiceFinished();
+        }
+
+        private void CalculatePaymentReferences(ARInvoicePM entityPM, ARInvoice invoice)
+        {
+            var invoicesIds = entityPM.InvoicePayments;
+            //invoice.PaymentReferences = this.GetPaymentReferences(invoicesIds);
+
+
+            //foreach (ARInvoicePaymentPM item in invoicesIds)
+            //{
+            //    this.UpdateARInvoicePaymentRefreneces(item, theEntityPm);
+            //}
         }
 
         private void ARInvoiceStockNumber()

@@ -1176,6 +1176,9 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ARInvoicesRegionalTaxPercentageNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ARInvoicesRegionalTaxPercentageNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesRegionalTaxPercentageNewId,0,'Fact_ARInvoices','[Regional Tax Percentage]','Regional Tax Percentage','Decimal','false',0,0,'false','false','true','Money','false','false','false','ARInvoice.RegionalTaxPercentage','false','false')  
+declare @Fact_ARInvoicesPaymentReferencesNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ARInvoicesPaymentReferencesNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesPaymentReferencesNewId,0,'Fact_ARInvoices','[Payment References]','Payment References','Text','false',0,1000,'false','false','true','General','false','false','false','ARInvoice.PaymentReferences','false','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_ChargesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesNewId OUTPUT,'DWObjectTable' 
