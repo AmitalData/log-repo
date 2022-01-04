@@ -12,6 +12,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
+using Simplog.Server.Infrastructure.DataContracts;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -109,8 +110,26 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             TruckerPM securedPm = new TruckerPM();
             SecuredMapping.GetMappedPM(trucker, securedPm, "Trucker", tenant);
-
+            if (securedPm != null && trucker != null)
+            {
+                Trucker entityPoco = (from s in repository.context.Truckers where s.Id == securedPm.Id select s).FirstOrDefault();
+                MapCustomFields(securedPm, entityPoco);
+            }
             return securedPm;
+        }
+
+        private void MapCustomFields(TruckerPM trucker, Trucker entityPoco)
+        {
+            trucker.Field1 = new CustomFieldClass("Field1", "Trucker", entityPoco.Field1);
+            trucker.Field2 = new CustomFieldClass("Field2", "Trucker", entityPoco.Field2);
+            trucker.Field3 = new CustomFieldClass("Field3", "Trucker", entityPoco.Field3);
+            trucker.Field4 = new CustomFieldClass("Field4", "Trucker", entityPoco.Field4);
+            trucker.Field5 = new CustomFieldClass("Field5", "Trucker", entityPoco.Field5);
+            trucker.Field6 = new CustomFieldClass("Field6", "Trucker", entityPoco.Field6);
+            trucker.Field7 = new CustomFieldClass("Field7", "Trucker", entityPoco.Field7);
+            trucker.Field8 = new CustomFieldClass("Field8", "Trucker", entityPoco.Field8);
+            trucker.Field9 = new CustomFieldClass("Field9", "Trucker", entityPoco.Field9);
+            trucker.Field10 = new CustomFieldClass("Field10", "Trucker", entityPoco.Field10);
         }
 
         public IQueryable<TruckerPM> GetTruckerPMsByTenant(int tenant)
@@ -270,7 +289,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   PrimaryContactEmail = a.PrimaryContactEmail,
                                                   PrimaryContactPhone = a.PrimaryContactPhone,
                                                   StateName = a.Card.StateName,
-                                                  GLAccountNumber = a.Card.GLAccountDisplayNumber
+                                                  GLAccountNumber = a.Card.GLAccountDisplayNumber,
+                                                  Field1 = a.Field1,
+                                                  Field2 = a.Field2,
+                                                  Field3 = a.Field3,
+                                                  Field4 = a.Field4,
+                                                  Field5 = a.Field5,
+                                                  Field6 = a.Field6,
+                                                  Field7 = a.Field7,
+                                                  Field8 = a.Field8,
+                                                  Field9 = a.Field9,
+                                                  Field10 = a.Field10,
                                               });
 
 
@@ -329,6 +358,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     },
                                 }).FirstOrDefault();
 
+            TruckerPM securedPm = new TruckerPM();
+            SecuredMapping.GetMappedPM(trucker, securedPm, "Trucker", tenant);
+            if (securedPm != null && trucker != null)
+            {
+                Trucker entityPoco = (from s in repository.context.Truckers where s.Id == securedPm.Id select s).FirstOrDefault();
+                MapCustomFields(securedPm, entityPoco);
+            }
             return trucker;
         }
 
