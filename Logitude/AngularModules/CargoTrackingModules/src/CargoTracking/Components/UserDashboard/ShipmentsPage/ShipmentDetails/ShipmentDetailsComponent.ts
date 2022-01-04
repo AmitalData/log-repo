@@ -25,7 +25,7 @@ import { MilestoneCodes } from 'src/CargoTracking/Constants/MilestoneCodes';
 
 const mobileScreenMaxWidth = 470;
 
-const approvalResponseMessage = 'לקוח יקר, הצהרה זו אושרה בתאריך';
+const approvalResponseMessage = 'לקוח יקר, הצהרה זו םושרה בתםריך';
 const declineResponseMessage = 'לקוח יקר, הצהרה זו נדחתה';
 
 @Component({
@@ -708,27 +708,12 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     {
         this.router.navigate(['cargo-tracking', 'shipments']);
     }
-    ExternalDownloadAllClick(securityKey: string) {
-        this.documentDownloadService.ExternalDownloadAllDocuments(securityKey, this.cargoTrackingShipmentPM.ShipmentNumber, this.cargoTrackingShipmentPM.ForwardingShipmentHeaderId,this.tenant);
-    }
-    ExternalDownloadDocument(securityId: string) {
-        this.documentDownloadService.ExternalDownloadPage(securityId,this.tenant);
-    }
 
-    InternalDownloadDocument(documentId: string, documentTypeName: string) {
-        if (documentId)
-            this.documentDownloadService.DownloadPage(documentId, this.cargoTrackingShipmentPM.ShipmentNumber + '-' + documentTypeName);
+    DownloadAllClick(securityKey: string) {
+        this.documentDownloadService.ExternalDownloadAllDocuments(securityKey, this.cargoTrackingShipmentPM.ForwardingShipmentHeaderId,this.tenant);
     }
-
     DownloadDocument(item) {
-        if (this.isSharedLink)
-            this.ExternalDownloadDocument(item.SecurityId);
-        else
-            this.InternalDownloadDocument(item.DocumentId, item.DocumentTypeName);
-    }
-
-    DownloadAllClick(entityId: string, securityKey: string) {
-        this.documentDownloadService.DownloadAllPages(entityId, securityKey);
+        this.documentDownloadService.ExternalDownloadPage(item.SecurityId, this.tenant, this.cargoTrackingShipmentPM.ShipmentNumber + '_' + item.DocumentTypeName);
     }
 
     ShowMoreLinkClicked() {

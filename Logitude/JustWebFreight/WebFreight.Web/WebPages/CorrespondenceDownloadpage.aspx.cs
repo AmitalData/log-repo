@@ -81,7 +81,7 @@ namespace WebFreight.Web.WebPages
 
                     Document myDoc = up.GetFileExtensionBySecurityId(securityId, tenant);
                     documentExtension = myDoc.Extension;
-                    filename = myDoc.FileName;
+                    filename = filestrings[3] != null ? filestrings[3]: myDoc.FileName;
 
                     if (!string.IsNullOrEmpty(documentExtension))
                     {
@@ -270,8 +270,10 @@ namespace WebFreight.Web.WebPages
                     Uploader up = new Uploader();
                 Shipment shipment = rep.getSingleShipmentBySecurityIdAndId(EntityId,SecurityKey, tenant);
                 string compressedFileName = "Documents";
+                string shipmentNumber = null;
                 if (domainName == "cargo") {
                     compressedFileName = $"{shipment.ShipmentNumber}_Documents";
+                    shipmentNumber = shipment.ShipmentNumber;
                 }
                 if (shipment != null)
                 {
@@ -296,8 +298,8 @@ namespace WebFreight.Web.WebPages
                     var ItemNum = 0;
                     foreach (DocumentsFilingPM document in documents)
                     {
-                        document.CalculatedFileName = cargoTrackingShipmentNumber != null ? cargoTrackingShipmentNumber + '_' + document.DocumentTypeName : document.CalculatedFileName;
 
+                        document.CalculatedFileName = domainName == "cargo" ? shipmentNumber + '_' + document.DocumentTypeName : document.CalculatedFileName;
                         if (document.DirectionCode == "O" && document.DoucmentTypeTemplateFormatCode == "M")
                         {
                             continue;
