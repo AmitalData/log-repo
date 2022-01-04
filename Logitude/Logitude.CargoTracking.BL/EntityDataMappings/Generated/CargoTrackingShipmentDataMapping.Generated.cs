@@ -133,7 +133,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         PoNumber, 
 	         DescriptionOfGoods, 
 	         SupplyDateTime, 
-	         IsOperationalClosed,
+	         IsOperationalClosed, 
+	         DenyDate,
 	      }
 
 
@@ -265,7 +266,10 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         ActivatedForDeclarationApprove, 
 	         IsImporterApprovalRequried, 
 	         TenantDeclarationMessage, 
-	         IsOperationalClosed,
+	         IsOperationalClosed, 
+	         ApprovedDate, 
+	         DenyDate, 
+	         DenyReason,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -817,6 +821,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsOperationalClosed))
             {
 				entityPOCO.IsOperationalClosed = entityPM.IsOperationalClosed;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DenyDate))
+            {
+				entityPOCO.DenyDate = entityPM.DenyDate;
 			}
 			}
 
@@ -1373,6 +1382,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.IsOperationalClosed = entityPOCO.IsOperationalClosed;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DenyDate))
+            {
+					entityPM.DenyDate = entityPOCO.DenyDate;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingShipmentPM entityPM, CargoTrackingShipmentPM oldEntityPM)
@@ -1922,6 +1936,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsOperationalClosed))
             {
                 oldEntityPM.IsOperationalClosed = entityPM.IsOperationalClosed;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DenyDate))
+            {
+                oldEntityPM.DenyDate = entityPM.DenyDate;
             }
 			
 		}

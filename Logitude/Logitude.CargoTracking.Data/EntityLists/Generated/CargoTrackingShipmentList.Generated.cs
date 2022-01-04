@@ -290,6 +290,12 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public string TenantDeclarationMessage  { get; set; }
        [DataMember]
        public bool? IsOperationalClosed  { get; set; }
+       [DataMember]
+       public DateTime? ApprovedDate  { get; set; }
+       [DataMember]
+       public DateTime? DenyDate  { get; set; }
+       [DataMember]
+       public string DenyReason  { get; set; }
    }
 
 }
