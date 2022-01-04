@@ -16,19 +16,19 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         private TenantPM tenantPM;
         private ShipmentPM shipmentPM;
         private CustomerTenantAccessInfo customerTenantAccessInfo;
-         
+
         public PrivateLabelShipmentService(TenantPM tenantPM, ShipmentPM shipmentPM, CustomerTenantAccessInfo customerTenantAccessInfo)
         {
             this.tenantPM = tenantPM;
             this.shipmentPM = shipmentPM;
             this.customerTenantAccessInfo = customerTenantAccessInfo;
-        } 
+        }
         public PrivateLabelShipmentService(ShipmentPM shipmentPM, CustomerTenantAccessInfo customerTenantAccessInfo)
         {
             this.tenantPM = this.GetTenantPM(shipmentPM.Tenant);
             this.shipmentPM = shipmentPM;
             this.customerTenantAccessInfo = customerTenantAccessInfo;
-        } 
+        }
         public bool IsShipmentsAllowedForLogBox()
         {
             return (IsCustomsShipmentsAllowedForLogBox() || IsExportShipmentsAllowedForLogBox() || IsImportShipmentsAllowedForLogBox());
@@ -39,14 +39,14 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         }
 
         public bool IsCustomsShipmentsAllowedForLogBox()
-        { 
-            return(tenantPM.CustomerTenantShareCustomsFile && customerTenantAccessInfo.IsCustomsActivated && shipmentPM.DirectionId.ToUpper() == "C") ;
-        } 
+        {
+            return (tenantPM.CustomerTenantShareCustomsFile && customerTenantAccessInfo.IsCustomsActivated && shipmentPM.DirectionId.ToUpper() == "C");
+        }
         public bool IsExportShipmentsAllowedForLogBox()
         {
             return (tenantPM.CustomerTenantShareExportFile && customerTenantAccessInfo.IsExportActivated && shipmentPM.DirectionId.ToUpper() == "E");
-          
-        } 
+
+        }
         private TenantPM GetTenantPM(int tenant)
         {
             TenantPM TenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
