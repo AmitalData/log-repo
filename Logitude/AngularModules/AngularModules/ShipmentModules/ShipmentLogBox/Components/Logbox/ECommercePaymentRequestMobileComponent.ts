@@ -151,14 +151,14 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
                 //});
                 var service = new CommonDomainService();
-                service.GetTenantLogoUri(this.Tenant).subscribe((myLogoResult: any) => {
+                service.GetTenantLogoUriByShipmentSecurityKey(this.Tenant, this.SecurityKey).subscribe((myLogoResult: any) => {
 
                     this.CompanyLogo = myLogoResult.Result;
                     this.StopBusyIndicator();
 
                 });
                 //GetTenantEcommerceSupportEmail
-                service.GetTenantEcommerceSupportEmail(this.Tenant).subscribe((myTenant: any) => {
+                service.GetTenantEcommerceSupportEmailByShipmentSecurityKey(this.Tenant, this.SecurityKey).subscribe((myTenant: any) => {
                     if (myTenant.Result) {
                         this.EcommerceSupportEmail = myTenant.Result;
                     }
