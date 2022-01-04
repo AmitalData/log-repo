@@ -1,7 +1,9 @@
-﻿using Logitude.Customs.BL.Messaging;
+﻿using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.Messaging;
 using Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue;
 using Logitude.Customs.BL.Messaging.ILOVS;
 using Logitude.Customs.BL.Messaging.Maman;
+using Logitude.CustomsMessaging.RabbitMQ.Handlers;
 using Logitude.Server.Tools.Utils;
 using System;
 using System.Collections.Generic;
@@ -9,10 +11,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.Customs.BL.CloseTables
+namespace Logitude.CustomsMessaging.RabbitMQ
 {
 
-#if false
+
     public class CustomRabbitMQQueue
     {
    
@@ -51,7 +53,7 @@ namespace Logitude.Customs.BL.CloseTables
                     return new UCBUD2LT_ConnectDocToTicketQService(queue);
                     break;
                 case AnalyzeMQQueueServiceEnum.DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceResponseService:
-                    return new UCUW2L_OpenDeclarationsQService(queue);
+                    return new /*UCUW2L_OpenDeclarationsQService*/UCUW2L_OpenDeclarationAnalyzerQueue(queue);
                     break;
                 default:
 
@@ -61,25 +63,7 @@ namespace Logitude.Customs.BL.CloseTables
         }
  
     }
-
-
-
-#endif
-    public enum AnalyzeMQQueueServiceEnum
-    {
-        none,
-        UniCourierBatchSendUCBUD2LT_MsgResponseService,
-        DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceResponseService
-    }
- 
-    public class QueueDetails
-    {
-        public string Code { get; set; }
-        public string Name { get; set; }
-        public int Priority { get; set; }
-        public AnalyzeMQQueueServiceEnum AnalyzeQueueService { get;  set; }
-
-    }
+   
 
 
  

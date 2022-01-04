@@ -136,6 +136,7 @@
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -320,6 +321,8 @@
     <Compile Include="MessagingServices\Unifreight_L2US01_US2L01_SivugMessagingService.cs" />
     <Compile Include="MessagingServices\VE_8326_ImporterDeclarationMessagingService.cs" />
     <Compile Include="MessagingServices\VP_NG_2690_VehicleInMessagingService.cs" />
+    <Compile Include="RabbitMQ\Handlers\UCUW2L_OpenDeclarationsQService.cs" />
+    <Compile Include="RabbitMQ\RabbitMQDefinitionService.cs" />
     <Compile Include="RabbitMQ\RabbitmqConnection.cs" />
     <Compile Include="RabbitMQ\RabbitmqHelper.cs" />
     <Compile Include="RabbitMQ\RabbitPublishService.cs" />

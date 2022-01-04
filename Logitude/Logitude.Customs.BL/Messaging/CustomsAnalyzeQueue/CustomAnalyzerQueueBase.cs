@@ -517,9 +517,9 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.D;//default !!
         }
         public string ErrorMessage { get; set; }
-        public CommStatusEnum MyCommStatusEnum { get; internal set; }
-        public string EntityID { get; internal set; }
-        public string ObjectTableID { get; internal set; }
-        public string EntityReference { get; internal set; }
+        public CommStatusEnum MyCommStatusEnum { get; set; }
+        public string EntityID { get; set; }
+        public string ObjectTableID { get; set; }
+        public string EntityReference { get; set; }
     }
 }
