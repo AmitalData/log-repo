@@ -893,6 +893,12 @@ class JournalLineModel extends BaseComponent {
         }
     }
 
+    get JournalId() { return this.JournalLinePM.JournalId; }
+    set JournalId(value: string) {
+        if (this.JournalLinePM.JournalId != value) {
+            this.JournalLinePM.JournalId = value;
+        }
+    }
 
   OnSelectedItemChanged($event) {
     console.log($event);
@@ -1398,19 +1404,19 @@ class JournalLineModel extends BaseComponent {
         this.isMouseIn = true;
         if (this.currencyRate) {
             this.timerToken = setTimeout(() => {
-                var item = document.getElementById("tooltip-" + this.Line);
+                var item = document.getElementById("tooltip-" + this.JournalId + this.Line);
                 if (AppTool.IsNullOrEmpty(item))
                     return;
                 var itemRect = item.getBoundingClientRect();
 
                 if (this.isMouseIn) {
-                    document.getElementById("tooltip-body-" + this.Line).style.position = "fixed";
-                    document.getElementById("tooltip-body-" + this.Line).style.top = (itemRect.top - 35) + 'px';
-                    document.getElementById("tooltip-body-" + this.Line).style.left = (itemRect.left + 60) + 'px';
-                    document.getElementById("tooltip-body-" + this.Line).style.visibility = "visible";
+                    document.getElementById("tooltip-body-" + this.JournalId + this.Line).style.position = "fixed";
+                    document.getElementById("tooltip-body-" + this.JournalId + this.Line).style.top = (itemRect.top - 35) + 'px';
+                    document.getElementById("tooltip-body-" + this.JournalId + this.Line).style.left = (itemRect.left + 60) + 'px';
+                    document.getElementById("tooltip-body-" + this.JournalId + this.Line).style.visibility = "visible";
 
                     this.timerToken = setTimeout(() => {
-                        document.getElementById("tooltip-body-" + this.Line).style.visibility = "hidden";
+                        document.getElementById("tooltip-body-" + this.JournalId + this.Line).style.visibility = "hidden";
 
                     }, 2500);
                 }
@@ -1423,7 +1429,7 @@ class JournalLineModel extends BaseComponent {
         if (this.currencyRate) {
 
             this.timerToken = setTimeout(() => {
-                document.getElementById("tooltip-body-" + this.Line).style.visibility = "hidden";
+                document.getElementById("tooltip-body-" + this.JournalId + this.Line).style.visibility = "hidden";
 
             }, 400);
 
