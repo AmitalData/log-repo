@@ -5,27 +5,28 @@
         list-style: none;
     }
 
-        .P-button-drop-menu li span {
-            text-align: right;
-            display: block;
-            clear: both;
-            font-family: arial;
-            color: #444;
-            text-decoration: none;
-            height: 22px;
-            line-height: 23px; /*make text center*/
-            padding-right: 10px;
-            padding-left: 5px;
-            /*
+    .P-button-drop-menu li span {
+        text-align: right;
+        display: block;
+        clear: both;
+        font-family: arial;
+        color: #444;
+        text-decoration: none;
+        height: 22px;
+        line-height: 23px;
+        /*make text center*/
+        padding-right: 10px;
+        padding-left: 5px;
+        /*
                 margin: 5px;
                 text-align: center;
             */
-        }
+    }
 
-            .P-button-drop-menu li span:hover {
-                background: #D3D3D3;
-                cursor: pointer;
-            }
+    .P-button-drop-menu li span:hover {
+        background: #D3D3D3;
+        cursor: pointer;
+    }
 </style>
 <table>
     <tr>
@@ -37,21 +38,13 @@
         </td>
         <!--(ChosenListItemsChanged)="OnChosenListItemsChanged()"-->
         <td style="width:250px; vertical-align:middle;">
-            <MultiSelectLOV [DataContext]="DataContext"
-                            [PlaceHolder]="'רפרנט'"
-                            [LayoutDirection]="'rtl'"
-                            [LOVListComponentPropName]="'LOVListUsers'"
-                            (ChosenListItemsChanged)="SelectedValueChangedEmitUser()"
-                            [ChosenListHeader]="'רפרנטים שנבחרו'"
-                            [ButtonAddLabel]="'בחר'">
+            <MultiSelectLOV [DataContext]="DataContext" [PlaceHolder]="'רפרנט'" [LayoutDirection]="'rtl'"
+                [LOVListComponentPropName]="'LOVListUsers'" (ChosenListItemsChanged)="SelectedValueChangedEmitUser()"
+                [ChosenListHeader]="'רפרנטים שנבחרו'" [ButtonAddLabel]="'בחר'">
                 <span class="class-MultiSelectLOV-content">
-                    <LogLov [ObjectFieldName]="'ReferentUserId'"
-                            [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext"
-                            [HideColumns]="true"
-                            [LookUpTableName]="'User'"
-                            [DisplayMemberPath]="'LocalName'"
-                           >
+                    <LogLov [ObjectFieldName]="'ReferentUserId'" [ObjectTableName]="ObjectTableName"
+                        [DataContext]="DataContext" [HideColumns]="true" [LookUpTableName]="'User'"
+                        [DisplayMemberPath]="'LocalName'">
                     </LogLov>
                 </span>
                 <!--[QueryFilterItems]="LoadingContactFilterItems"-->
@@ -60,21 +53,14 @@
         <td style="width:20px; vertical-align:middle; font-size:11px; color : #6E7172;">
         </td>
         <td style="width:250px; vertical-align:middle;">
-            <MultiSelectLOV [DataContext]="DataContext"
-                            [PlaceHolder]="'קוד חוליה'"
-                            [LayoutDirection]="'rtl'"
-                            [LOVListComponentPropName]="'LOVListDepartment'"
-                            (ChosenListItemsChanged)="SelectedValueChangedEmitDepartment()"
-                            [ChosenListHeader]="'חוליות שנבחרו'"
-                            [ButtonAddLabel]="'בחר'">
+            <MultiSelectLOV [DataContext]="DataContext" [PlaceHolder]="'קוד חוליה'" [LayoutDirection]="'rtl'"
+                [LOVListComponentPropName]="'LOVListDepartment'"
+                (ChosenListItemsChanged)="SelectedValueChangedEmitDepartment()" [ChosenListHeader]="'חוליות שנבחרו'"
+                [ButtonAddLabel]="'בחר'">
                 <span class="class-MultiSelectLOV-content">
-                    <LogLov [ObjectFieldName]="'DepartmentId'"
-                            [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext"
-                            [HideColumns]="true"
-                            [LookUpTableName]="'Department'"
-                            [DisplayMemberPath]="'LocalName'"
-                            [DisplayFieldsFromList]="'Code,LocalName'">
+                    <LogLov [ObjectFieldName]="'DepartmentId'" [ObjectTableName]="ObjectTableName"
+                        [DataContext]="DataContext" [HideColumns]="true" [LookUpTableName]="'Department'"
+                        [DisplayMemberPath]="'LocalName'" [DisplayFieldsFromList]="'Code,LocalName'">
 
                     </LogLov>
                 </span>
@@ -84,22 +70,42 @@
         </td>
         <td style="width:117px; vertical-align:middle;">
             <ul class="FiltersMenu">
-                <li (click)="itemClicked('All')" (mouseover)="itemMouseOver('All')" [class.SelectedFilter]="SelectedValue === 'All'">
+                <li (click)="itemClicked('All')" (mouseover)="itemMouseOver('All')"
+                    [class.SelectedFilter]="SelectedValue === 'All'">
                     All
                 </li>
-                <li (click)="itemClicked('A')" (mouseover)="itemMouseOver('A')" (mouseleave)="itemMouseLeave('A')" [class.SelectedFilter]="SelectedValue === 'A'" title="Air">
-                    <img [id]="TransportFilter_A" class="CenterCenter" src="./Images/TransportModes/A_g.png" style="top: 1px;" />
+                <li (click)="itemClicked('A')" (mouseover)="itemMouseOver('A')" (mouseleave)="itemMouseLeave('A')"
+                    [class.SelectedFilter]="SelectedValue === 'A'" title="Air">
+                    <img [id]="TransportFilter_A" class="CenterCenter" src="./Images/TransportModes/A_g.png"
+                        style="top: 1px;" />
                 </li>
-                <li (click)="itemClicked('O')" (mouseover)="itemMouseOver('O')" (mouseleave)="itemMouseLeave('O')" [class.SelectedFilter]="SelectedValue === 'O'" title="Ocean">
-                    <img [id]="TransportFilter_O" class="CenterCenter" src="./Images/TransportModes/O_g.png" style="top: 1px;" />
+                <li (click)="itemClicked('O')" (mouseover)="itemMouseOver('O')" (mouseleave)="itemMouseLeave('O')"
+                    [class.SelectedFilter]="SelectedValue === 'O'" title="Ocean">
+                    <img [id]="TransportFilter_O" class="CenterCenter" src="./Images/TransportModes/O_g.png"
+                        style="top: 1px;" />
                 </li>
-                <li (click)="itemClicked('L')" (mouseover)="itemMouseOver('L')" (mouseleave)="itemMouseLeave('L')" [class.SelectedFilter]="SelectedValue === 'L'" title="Inland">
-                    <img [id]="TransportFilter_I" class="CenterCenter" src="./Images/TransportModes/I_g.png" style="top: 1px;" />
+                <li (click)="itemClicked('L')" (mouseover)="itemMouseOver('L')" (mouseleave)="itemMouseLeave('L')"
+                    [class.SelectedFilter]="SelectedValue === 'L'" title="Inland">
+                    <img [id]="TransportFilter_I" class="CenterCenter" src="./Images/TransportModes/I_g.png"
+                        style="top: 1px;" />
                 </li>
             </ul>
         </td>
-        <td style="width:1px; vertical-align:middle; font-size:11px; color : #6E7172;">
+        <td style="width:5px; vertical-align:middle; font-size:11px; color : #6E7172;">
         </td>
+        <td style="width:10px; vertical-align:middle; font-size:11px; color : #6E7172;">
+            <div *ngIf="CurrentScreenIsWorkSpace">
+                <button id="{{ ObjectTableName+'-Save' | IdGeneratorPipe}}" *ngIf="!apiQueryFiltersChanged "
+                    class="Button" (click)="PreventDoubleClickSaveFilters($event)">
+                    <img src="./Images/Buttons/Save.png">
+                </button> 
+                <button id="{{ ObjectTableName+'-Save' | IdGeneratorPipe}}" *ngIf="apiQueryFiltersChanged "
+                    class="EntityChangesButton" (click)="PreventDoubleClickSaveFilters($event)">
+                    <img src="./Images/Buttons/Save.Red.png">
+                </button>
+            </div>
+        </td>
+
         <!--<td *ngIf="false">
             (click)="ButtonClick($event)"
             <courier-filter-button #MyDropdownMenuFilterComponent>

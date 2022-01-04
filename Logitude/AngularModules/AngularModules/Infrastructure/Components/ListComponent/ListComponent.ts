@@ -894,7 +894,6 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             if (myObjectTableName.startsWith(this.ObjectTable.ClientModuleName + '.')) {
                                 myObjectTableName = myObjectTableName.substr((this.ObjectTable.ClientModuleName + '.').length)
                             }
-                            debugger;
                             let isCustomsObjectTableWith=false;
                             if(this.ObjectTable.ClientModuleName=="Customs"){
                               isCustomsObjectTableWith=true
