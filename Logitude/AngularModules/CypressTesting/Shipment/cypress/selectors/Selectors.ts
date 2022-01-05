@@ -242,7 +242,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentOnCarriageToPort = '#Shipment_OnCarriageToPortId';
   public static readonly OnCarriageOKBtn = '#OnCarriageOKBtn';
   public static readonly EditOnCarriage_Number = '[id^=Edit-OnCarriage]'
-  public static readonly MainCarrigeVessel = 'input[id^=Shipment_MainCarriageVesselId_]';
+  public static readonly MainCarrigeVessel = 'input[id^=Shipment_MainCarriageVesselName]';
   public static readonly MainCarrigeVoyageNo = 'input[id^=Shipment_MainCarriageCarrierNumber_]';
   public static readonly AddWarehouseLegPickups = '#Add-WarehouseLeg_Pickups';
   public static readonly WarehouseLegTerminal = '#Shipment_WarehouseLegWarehouseId';

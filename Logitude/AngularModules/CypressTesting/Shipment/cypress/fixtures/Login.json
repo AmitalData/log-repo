@@ -1,6 +1,6 @@
 {
-  "url": "https://system.logitudeworld.com/",
-  "email": "releasetesting1@mail.com",
+  "url": "https://test.logitudeworld.com/test/",
+  "email": "specflowstable@mail.com",
   "password": "!Cypress1",
   "customerCareEmail": "specflowtest_customercare@logitudeworld.com",
   "customerCarePassword": "Spec_Flow_CC21",
