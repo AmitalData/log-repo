@@ -364,7 +364,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     externalAPIShipmentValidator.UpdateReceivablesChangeSet(directPM);
                     externalAPIShipmentValidator.ValidateCustomsFields(directPM);
                     externalAPIShipmentValidator.ValidateInActiveCarriers(directPM);
-                    this.UpdatePartners(MyContext, directPM);
+                    directPM = this.UpdatePartners(MyContext, directPM);
                     ComputeHelper.ComputeTotals(directPM);
                     mappingService.UpdatePickups(directPM);
                     mappingService.UpdateDeliveries(directPM);
@@ -643,30 +643,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
             return false;
         }
-        private void UpdatePartners(IShipmentsContext shipmentsContext, ShipmentPM shipmentPM)
+        private ShipmentPM UpdatePartners(IShipmentsContext shipmentsContext, ShipmentPM shipmentPM)
         {
-            Shipment shipmentPOCO = shipmentsContext.Shipments.Where(d => d.Id == shipmentPM.Id && d.Tenant == shipmentPM.Tenant).FirstOrDefault();
-            if(shipmentPOCO != null)
-            {
-                this.UpdateNotify1Partner(shipmentPOCO, shipmentPM);
-            }
-        }
-        private void UpdateNotify1Partner(Shipment shipmentPOCO, ShipmentPM shipmentPM)
-        {
-            if(shipmentPOCO.Notify1Id != shipmentPM.Notify1Id)
-            {
-                Card card = CardRepository.GetSingleCard(shipmentPM.Notify1Id, shipmentPM.Tenant, false);
-                this.MapNotify1Fields(shipmentPM, card);                
-            }
-        }
-        private void MapNotify1Fields(ShipmentPM shipmentPM, Card card)
-        {
-            if(card != null)
-            {
-                AddressRepository addressRepository = new AddressRepository(shipmentPM.Tenant);
-                shipmentPM.Notify1AddressId = addressRepository.GetMainAddressId(card.Id, shipmentPM.Tenant);
-                shipmentPM.Notify1ContactId = card.PrimaryContactId;
-            }
+            ExternalAPIShipmentPartnersModifier externalAPIShipmentPartnersUpdate = new ExternalAPIShipmentPartnersModifier(shipmentsContext,shipmentPM);
+            return externalAPIShipmentPartnersUpdate.UpdatePartners();
         }
         private void InitOceanOrInlandPackages(Direct entity)
         {

@@ -439,8 +439,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             externalAPIMainCarriageLegsHelper.ValidateRoutingsSeriesDates();
 
                             AddressRepository addressRepository = new AddressRepository(authToken.Tenant);
-                            this.ValidateAndSetCustomerData(HousePM, addressRepository, authToken.Tenant);                            
-                            this.UpdatePartners(MyContext, HousePM);
+                            this.ValidateAndSetCustomerData(HousePM, addressRepository, authToken.Tenant);
+                            HousePM = this.UpdatePartners(MyContext, HousePM);
 
                             ExternalAPIShipmentValidator externalAPIShipmentValidator = new ExternalAPIShipmentValidator(HousePM, authToken.Tenant);
                             externalAPIShipmentValidator.ValidateUpdateShipmentPackages(HousePM);
@@ -489,32 +489,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
-        
-        private void UpdatePartners(IShipmentsContext shipmentsContext, ShipmentPM shipmentPM)
+
+        private ShipmentPM UpdatePartners(IShipmentsContext shipmentsContext, ShipmentPM shipmentPM)
         {
-            Shipment shipmentPOCO = shipmentsContext.Shipments.Where(d => d.Id == shipmentPM.Id && d.Tenant == shipmentPM.Tenant).FirstOrDefault();
-            if (shipmentPOCO != null)
-            {
-                this.UpdateNotify1Partner(shipmentPOCO, shipmentPM);
-            }
+            ExternalAPIShipmentPartnersModifier externalAPIShipmentPartnersUpdate = new ExternalAPIShipmentPartnersModifier(shipmentsContext, shipmentPM);
+            return externalAPIShipmentPartnersUpdate.UpdatePartners();
         }
-        private void UpdateNotify1Partner(Shipment shipmentPOCO, ShipmentPM shipmentPM)
-        {
-            if (shipmentPOCO.Notify1Id != shipmentPM.Notify1Id)
-            {
-                Card card = CardRepository.GetSingleCard(shipmentPM.Notify1Id, shipmentPM.Tenant, false);
-                this.MapNotify1Fields(shipmentPM, card);
-            }
-        }
-        private void MapNotify1Fields(ShipmentPM shipmentPM, Card card)
-        {
-            if (card != null)
-            {
-                AddressRepository addressRepository = new AddressRepository(shipmentPM.Tenant);
-                shipmentPM.Notify1AddressId = addressRepository.GetMainAddressId(card.Id, shipmentPM.Tenant);
-                shipmentPM.Notify1ContactId = card.PrimaryContactId;
-            }
-        }
+
         private void SetPrepaidCollectIds(ShipmentPM entityPM)
         {
             if (!string.IsNullOrEmpty(entityPM.IncotermId))
