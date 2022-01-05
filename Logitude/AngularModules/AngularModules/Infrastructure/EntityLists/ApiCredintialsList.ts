@@ -15,6 +15,7 @@ export class ApiCredintialsList {
 		CreateDate: Date;
 		UpdateDate: Date;
 		AllowedIPs: string;
+		TokenExpirationTime: number;
 		CreatedBy: string;
 		UpdatedBy: string;
 		maskedPrimaryAccessKey: string;

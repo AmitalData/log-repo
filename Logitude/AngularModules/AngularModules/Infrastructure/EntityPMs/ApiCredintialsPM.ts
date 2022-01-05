@@ -65,6 +65,11 @@ export class ApiCredintialsPM {
     public set AllowedIPs(newValue: string) { if (this.allowedIPs != newValue) { this.allowedIPs = newValue; this.MarkAsDirty("AllowedIPs"); } }
        
 	 
+    private tokenExpirationTime: number;
+    public get TokenExpirationTime() { return this.tokenExpirationTime; }
+    public set TokenExpirationTime(newValue: number) { if (this.tokenExpirationTime != newValue) { this.tokenExpirationTime = newValue; this.MarkAsDirty("TokenExpirationTime"); } }
+       
+	 
     private createdBy: string;
     public get CreatedBy() { return this.createdBy; }
     public set CreatedBy(newValue: string) { if (this.createdBy != newValue) { this.createdBy = newValue; this.MarkAsDirty("CreatedBy"); } }

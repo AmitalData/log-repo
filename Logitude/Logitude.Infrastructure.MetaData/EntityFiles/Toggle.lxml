@@ -39,8 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-
-  Code="&quot;5b72&quot;"
+  Code="&quot;e08c&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -663,19 +662,21 @@
       Name="&quot;Open Format RTL&quot;"
       SearchFields="&quot;OPF,Open Format RTL&quot;"
       Description="&quot;Open Format RTL Issues&quot;" />
-
     <Record
       Code="&quot;CUS&quot;"
       Name="&quot;Customization&quot;"
       SearchFields="&quot;CUS,Customization&quot;"
       Description="&quot;Customization screen and actions&quot;" />
-
     <Record
       Code="&quot;EST&quot;"
       Name="&quot;Entity Status&quot;"
       Description="&quot;Allow to Display and Edit Entity Status&quot;"
       SearchFields="&quot;EST,Entity Status,Allow to Display and Edit Entity Status&quot;" />
-
+    <Record
+      Code="&quot;AVT&quot;"
+      Name="&quot;API Credential Valid Key Token&quot;"
+      SearchFields="&quot;AVT,API Credential Valid Key Token&quot;"
+      Description="&quot;API Credential Valid Key Token&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
