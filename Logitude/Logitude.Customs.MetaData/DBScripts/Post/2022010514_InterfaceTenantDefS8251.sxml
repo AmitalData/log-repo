@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs">
+	<Sql Version="1">
+	</Sql>
+
+	<Oracle Version="1">
+		<![CDATA[
+update INTERFACETENANTDEFINITIONS set active=
+ case 
+ when ((select companytype from CustomsSettingS where companytype='B')  in ('B')) then 0
+ ELSE 1
+ END
+ where code ='8251';
+  
+    ]]>
+	</Oracle>
+</Script>
