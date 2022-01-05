@@ -21,6 +21,7 @@ using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using Simplog.Data.ShipmentsModel;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using WebFreight.Web.Helpers.APIHelpers;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
 {
@@ -29,11 +30,13 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
         private int tenant;
         private ShipmentPM shipmentPM;
         private VesselRepository vesselRepository;
+        private CardQuery cardQuery;
         public ExternalAPIShipmentValidator(ShipmentPM shipmentPM, int tenant)
         {
             this.tenant = tenant;
             this.shipmentPM = shipmentPM;
             this.vesselRepository = new VesselRepository(tenant);
+            this.cardQuery = new CardQuery(tenant);
         }
 
         public void ValidateUnitCodes()
@@ -340,6 +343,48 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                 scope.Complete();
             }
         }
+
+        public void ValidateInActiveCarriers(ShipmentPM entityPM)
+        {
+            this.ValidateInActiveCard(entityPM.MainCarriageCarrierId, "MainCarriageCarrier");
+            this.ValidateInActiveCard(entityPM.Transshipment1CarrierId, "Transshipment1Carrier");
+            this.ValidateInActiveCard(entityPM.Transshipment2CarrierId, "Transshipment2Carrier");
+            this.ValidateInActiveCard(entityPM.Transshipment3CarrierId, "Transshipment3Carrier");
+            this.ValidateInActiveCard(entityPM.PreCarriageCarrierId, "PreCarriageCarrier");
+            this.ValidateInActiveCard(entityPM.OnCarriageCarrierId, "OnCarriageCarrier");
+            this.ValidateInActiveCard(entityPM.PreForwardingCarrierId, "PreForwardingCarrier");
+            this.ValidateInActiveCard(entityPM.OnForwardingCarrierId, "OnForwardingCarrier");
+            this.ValidateInActiveCarriersPickUps(entityPM);
+            this.ValidateInActiveCarriersDeliveries(entityPM);
+        }
+
+        private void ValidateInActiveCard(string carrierId, string carrierFieldName)
+        {
+            CarrierCard card = this.cardQuery.GetSingleCarrierCard(carrierId, tenant);
+            if(card == null)
+            {
+                return;
+            }
+            var inActive = card.InActive;
+            var carrierCode = card.Code;
+            if (inActive)
+                throw new ApplicationException("The " + carrierFieldName + " with the code " + carrierCode + " is inactive and cannot be used.");
+        }
+        private void ValidateInActiveCarriersPickUps(ShipmentPM entityPM)
+        {
+            foreach (ShipmentPickUpPM shipmentPickUp in entityPM.ShipmentPickUps)
+            {
+                this.ValidateInActiveCard(shipmentPickUp.CarrierId,  "PickUpCarrier");
+            }
+        }
+        private void ValidateInActiveCarriersDeliveries(ShipmentPM entityPM)
+        {
+            foreach (ShipmentDeliveryPM shipmentDelivery in entityPM.ShipmentDeliveries)
+            {
+                this.ValidateInActiveCard(shipmentDelivery.CarrierId, "DeliveryCarrier");
+            }
+        }
+
         public void ValidatePartnersDueToDirection()
         {
             switch (shipmentPM.DirectionId)
@@ -785,9 +830,15 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
 
             if (string.IsNullOrEmpty(shipmentPM.PreCarriageVesselId))
                 return;
-
+            
             Vessel preCarriageVessel = this.vesselRepository.GetSingleVessel(shipmentPM.PreCarriageVesselId,tenant);
-            shipmentPM.PreCarriageVesselName = preCarriageVessel?.EnglishName;
+            if (preCarriageVessel == null)
+                return;
+
+            if (string.IsNullOrEmpty(preCarriageVessel.EnglishName))
+                return;
+
+            shipmentPM.PreCarriageVesselName = preCarriageVessel.EnglishName;
         }
 
         private void ValidateOnCarriageVessel()
@@ -811,7 +862,13 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                 return;
 
             Vessel onCarriageVessel = this.vesselRepository.GetSingleVessel(shipmentPM.OnCarriageVesselId, tenant);
-            shipmentPM.OnCarriageVesselName = onCarriageVessel?.EnglishName;
+            if (onCarriageVessel == null)
+                return;
+
+            if (string.IsNullOrEmpty(onCarriageVessel.EnglishName))
+                return;
+
+            shipmentPM.OnCarriageVesselName = onCarriageVessel.EnglishName;
         }
 
         private void UpdateDeliveryPackagesChangeSet(ShipmentPM entityPM)

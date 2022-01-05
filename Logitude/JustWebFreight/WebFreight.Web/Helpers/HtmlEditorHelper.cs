@@ -5887,7 +5887,7 @@ namespace WebFreight.Web.Helpers
             if(sharedTenant.IsCargoTrackWebAccessActivated == true)
             {
                 var cargoURL = GetCargoTrackingSystemURL(sharedLinkHTMLArgs, myUrl);
-                pageLink = cargoURL + "cargo-tracking/shipment-link?" +
+                pageLink = cargoURL + "cargo-tracking/declaration-link?" +
                     "SecurityKey=" + sharedLinkHTMLArgs.Key +
                     "&Tenant=" + sharedLinkHTMLArgs.Tenant +
                     "&Panel=" + "DocumentsPanel";

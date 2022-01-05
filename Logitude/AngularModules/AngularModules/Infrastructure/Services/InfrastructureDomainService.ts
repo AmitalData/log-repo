@@ -873,6 +873,7 @@ export class InfrastructureDomainService {
 
         return entityList;
     }
+
 }
 
 export class FeaturesUpdateHelper {

@@ -2604,6 +2604,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 FromPortCode = shipmentPM.MainCarriageFromPortCode,
                 ToPortCode = shipmentPM.MainCarriageToPortCode,
                 VesselId = shipmentPM.MainCarriageVesselId,
+                VesselName = shipmentPM.MainCarriageVesselName,
                 CarrierId = shipmentPM.MainCarriageCarrierId,
                 CarrierNumber = shipmentPM.MainCarriageCarrierNumber,
                 CarrierName = shipmentPM.MainCarriageCarrierName,
@@ -2625,6 +2626,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     FromPortCode = shipmentPM.Transshipment1FromPortCode,
                     ToPortCode = shipmentPM.Transshipment1ToPortCode,
                     VesselId = shipmentPM.Transshipment1VesselId,
+                    VesselName = shipmentPM.Transshipment1VesselName,
                     CarrierId = shipmentPM.Transshipment1CarrierId,
                     CarrierNumber = shipmentPM.Transshipment1CarrierNumber,
                     CarrierName = shipmentPM.Transshipment1CarrierName,
@@ -2647,6 +2649,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     FromPortCode = shipmentPM.Transshipment2FromPortCode,
                     ToPortCode = shipmentPM.Transshipment2ToPortCode,
                     VesselId = shipmentPM.Transshipment2VesselId,
+                    VesselName = shipmentPM.Transshipment2VesselName,
                     CarrierId = shipmentPM.Transshipment2CarrierId,
                     CarrierNumber = shipmentPM.Transshipment2CarrierNumber,
                     CarrierName = shipmentPM.Transshipment2CarrierName,
@@ -2670,6 +2673,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     FromPortCode = shipmentPM.Transshipment3FromPortCode,
                     ToPortCode = shipmentPM.Transshipment3ToPortCode,
                     VesselId = shipmentPM.Transshipment3VesselId,
+                    VesselName = shipmentPM.Transshipment3VesselName,
                     CarrierId = shipmentPM.Transshipment3CarrierId,
                     CarrierNumber = shipmentPM.Transshipment3CarrierNumber,
                     CarrierName = shipmentPM.Transshipment3CarrierName,
@@ -13408,6 +13412,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             return null;
+        }
+
+        public bool IsTenantHaveShipmentBySecurityKey(string shipmentSecurityKey, int tenant)
+        {
+            if (string.IsNullOrEmpty(shipmentSecurityKey)) return false;
+
+            return (from a in repository.context.Shipments
+                      where a.SecurityKey == shipmentSecurityKey && !a.IsCancelled && a.Tenant == tenant
+                      select a).Any();
         }
 
         public IQueryable<ShipmentList> GetShipmentListsByCustomerIdsAndDates(List<string> customerIds, DateTime? fromDate, DateTime? toDate, int tenant)

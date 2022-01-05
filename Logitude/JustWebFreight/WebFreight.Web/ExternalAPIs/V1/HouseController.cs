@@ -121,6 +121,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     externalAPIShipmentValidator.ValidateUnitCodes();
                     externalAPIShipmentValidator.ValidatePickupDeliveryPackages();
                     externalAPIShipmentValidator.ValidatePartnersDueToDirection();
+                    externalAPIShipmentValidator.ValidateInActiveCarriers(entityPM);
 
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
@@ -443,6 +444,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                             ExternalAPIShipmentValidator externalAPIShipmentValidator = new ExternalAPIShipmentValidator(HousePM, authToken.Tenant);
                             externalAPIShipmentValidator.ValidateUpdateShipmentPackages(HousePM);
+                            externalAPIShipmentValidator.ValidateInActiveCarriers(HousePM);
                             //externalAPIShipmentValidator.UpdatePickupDeliveryPackagesChangeSet(HousePM);
                             //externalAPIShipmentValidator.UpdatePayablesChangeSet(HousePM);
                             //externalAPIShipmentValidator.UpdateReceivablesChangeSet(HousePM);

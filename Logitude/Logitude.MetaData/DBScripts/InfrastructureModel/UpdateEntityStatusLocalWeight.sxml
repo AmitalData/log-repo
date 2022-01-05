@@ -1,0 +1,10 @@
+﻿<Script DBType="Main" Module="Infrastructure">
+  <Sql Version="1">
+    <![CDATA[
+    
+update EntityStatus set StatusLocalWeight = StatusWeight
+
+ 
+    ]]>
+  </Sql>
+</Script>

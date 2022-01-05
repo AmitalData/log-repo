@@ -675,7 +675,7 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                         {
                             shipmentPM.MainCarriageCarrierId = item.CarrierId != null ? item.CarrierId : shipmentPM.MainCarriageCarrierId;
                             shipmentPM.MainCarriageVesselId = item.VesselId;
-                            shipmentPM.MainCarriageVesselName = this.GetVesselName(item.VesselId);
+                            shipmentPM.MainCarriageVesselName = this.GetVesselName(item.VesselId,item.VesselName);
                             shipmentPM.MainCarriageCarrierNumber = item.CarrierNumber != null ? item.CarrierNumber : shipmentPM.MainCarriageCarrierNumber; 
                             shipmentPM.Master = item.MasterNumber;
                             shipmentPM.MainCarriageFromPortId = item.FromPortId;
@@ -697,7 +697,7 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                         {
                             shipmentPM.Transshipment1CarrierId = item.CarrierId;
                             shipmentPM.Transshipment1VesselId = item.VesselId;
-                            shipmentPM.Transshipment1VesselName = this.GetVesselName(item.VesselId);
+                            shipmentPM.Transshipment1VesselName = this.GetVesselName(item.VesselId, item.VesselName);
                             shipmentPM.Transshipment1CarrierNumber = item.CarrierNumber;
                             shipmentPM.Transshipment1AdditionalMAWBOBLBL = item.MasterNumber;
                             shipmentPM.Transshipment1FromPortId = item.FromPortId;
@@ -719,7 +719,7 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                         {
                             shipmentPM.Transshipment2CarrierId = item.CarrierId;
                             shipmentPM.Transshipment2VesselId = item.VesselId;
-                            shipmentPM.Transshipment2VesselName = this.GetVesselName(item.VesselId);
+                            shipmentPM.Transshipment2VesselName = this.GetVesselName(item.VesselId, item.VesselName);
                             shipmentPM.Transshipment2CarrierNumber = item.CarrierNumber;
                             shipmentPM.Transshipment2AdditionalMAWBOBLBL = item.MasterNumber;
                             shipmentPM.Transshipment2FromPortId = item.FromPortId;
@@ -741,7 +741,7 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                         {
                             shipmentPM.Transshipment3CarrierId = item.CarrierId;
                             shipmentPM.Transshipment3VesselId = item.VesselId;
-                            shipmentPM.Transshipment3VesselName = this.GetVesselName(item.VesselId);
+                            shipmentPM.Transshipment3VesselName = this.GetVesselName(item.VesselId, item.VesselName);
                             shipmentPM.Transshipment3CarrierNumber = item.CarrierNumber;
                             shipmentPM.Transshipment3AdditionalMAWBOBLBL = item.MasterNumber;
                             shipmentPM.Transshipment3FromPortId = item.FromPortId;
@@ -765,16 +765,19 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
             this.ValidateActualDates();
         }
 
-        private string GetVesselName(string vesselId)
+        private string GetVesselName(string vesselId,string vesselName)
         {
             if (string.IsNullOrEmpty(vesselId))
-            {
-                return "";
-            }
+                return vesselName;
 
             Vessel vessel = this.vesselRepository.GetSingleVessel(vesselId, tenant);
+            if(vessel== null)
+                return vesselName;
 
-            return vessel?.EnglishName;
+            if (!string.IsNullOrEmpty(vessel.EnglishName))
+                return vessel.EnglishName;
+
+            return vesselName;
         }
 
         private void Reset()
