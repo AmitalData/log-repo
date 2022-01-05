@@ -2805,7 +2805,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string CarrierId { get; set; }
         public string CarrierName { get; set; }
         public string CarrierNumber { get; set; }
-        public string VesselId { get; set; }        
+        public string VesselId { get; set; }
+        public string VesselName { get; set; }
         public string MasterNumber { get; set; }
         public DateTime? ETD { get; set; }
         public DateTime? ETA { get; set; }

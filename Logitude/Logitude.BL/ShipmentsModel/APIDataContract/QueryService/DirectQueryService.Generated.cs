@@ -684,7 +684,9 @@ using Simplog.Data.ShipmentsModel;
 					   					   temp.UnassignedConsigneeAddress = AddressService51.AddressCustomDataMapping(MyEntityPM.UnassignedConsigneeAddressId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
-				   					
+				   
+				   temp.PreCarriageVesselName = MyEntityPM.PreCarriageVesselName;
+				   temp.OnCarriageVesselName = MyEntityPM.OnCarriageVesselName;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -2250,6 +2252,18 @@ using Simplog.Data.ShipmentsModel;
 
 					}
 			
+					
+                    							
+						temp.PreCarriageVesselName = MyEntity.PreCarriageVesselName;
+
+					 
+
+					
+                    							
+						temp.OnCarriageVesselName = MyEntity.OnCarriageVesselName;
+
+					 
+
 										   
 					return temp;
 		    }

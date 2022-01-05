@@ -830,9 +830,15 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
 
             if (string.IsNullOrEmpty(shipmentPM.PreCarriageVesselId))
                 return;
-
+            
             Vessel preCarriageVessel = this.vesselRepository.GetSingleVessel(shipmentPM.PreCarriageVesselId,tenant);
-            shipmentPM.PreCarriageVesselName = preCarriageVessel?.EnglishName;
+            if (preCarriageVessel == null)
+                return;
+
+            if (string.IsNullOrEmpty(preCarriageVessel.EnglishName))
+                return;
+
+            shipmentPM.PreCarriageVesselName = preCarriageVessel.EnglishName;
         }
 
         private void ValidateOnCarriageVessel()
@@ -856,7 +862,13 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                 return;
 
             Vessel onCarriageVessel = this.vesselRepository.GetSingleVessel(shipmentPM.OnCarriageVesselId, tenant);
-            shipmentPM.OnCarriageVesselName = onCarriageVessel?.EnglishName;
+            if (onCarriageVessel == null)
+                return;
+
+            if (string.IsNullOrEmpty(onCarriageVessel.EnglishName))
+                return;
+
+            shipmentPM.OnCarriageVesselName = onCarriageVessel.EnglishName;
         }
 
         private void UpdateDeliveryPackagesChangeSet(ShipmentPM entityPM)
