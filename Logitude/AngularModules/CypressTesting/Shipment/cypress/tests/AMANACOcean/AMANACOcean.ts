@@ -63,14 +63,12 @@ When("the user click {string} in {string} view", (MarkAs, AMANACView) => {
 
 Then("the shipment should appear in the {string} view in the AMANAC workspace", (AMANACView) => {
     Actions.AMANACView(shipmentDetails.TransportMode, AMANACView);
-    //Actions.SearchAShipmentInNullSearch(shipmentDetails.ShipmentNumber);
     BaseAssertion.AssertElementContain(ShipmentSelectors.AMANACShipmentNumber(shipmentDetails.ShipmentNumber), shipmentDetails.ShipmentNumber);
     cy.Click(ShipmentSelectors.CloseAMANACView, null);
 });
 
 Then("should not appear in the {string} view in the AMANAC workspace", (AMANACView) => {
     Actions.AMANACView(shipmentDetails.TransportMode, AMANACView);
-    //Actions.SearchAShipmentInNullSearch(shipmentDetails.ShipmentNumber);
     BaseAssertion.AssertElementNotExist(ShipmentSelectors.AMANACShipmentNumber(shipmentDetails.ShipmentNumber));
     cy.Click(ShipmentSelectors.CloseAMANACView, null);
 });
@@ -145,4 +143,3 @@ When("the user retransfer the shipment", () => {
     cy.Click(BaseSelectors.Backbutton, null);
 });
 //#endregion
-
