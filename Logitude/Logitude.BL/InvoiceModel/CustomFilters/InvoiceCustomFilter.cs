@@ -8,6 +8,7 @@ using System;
 using Simplog.Data.Helpers;
 using System.Data.Entity.Core.Objects;
 using Simplog.Data.InvoiceModel;
+using Logitude.BL.ShipmentsModel.CustomFilters;
 
 namespace Logitude.BL.InvoiceModel.CustomFilters
 {
@@ -30,6 +31,11 @@ namespace Logitude.BL.InvoiceModel.CustomFilters
             {
                 if (item.IsCustom)
                 {
+                    if (item.FieldName == "DigitalQuickSearch")
+                    {
+                        queryableData = DigitalCustomFilter.ApplyDigitalQuickSearchFilter(item, queryableData);
+                    }
+
                     if (item.FieldName == "OpenConstituentInvoices")
                     {
                         queryableData = queryableData.Where(d => d.IsClosed == false && d.IsCancelled == false && d.IsConstituentInvoice == true && string.IsNullOrEmpty(d.ConsolidationInvoiceId) && d.StatusCode != "VD");
