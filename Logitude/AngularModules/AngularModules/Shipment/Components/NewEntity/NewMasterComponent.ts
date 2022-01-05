@@ -57,6 +57,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
     public AgentDependencyProperty1IsList: boolean = false;
     @ViewChild(ChildDirective) Child: ChildDirective;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsChooseVesselVisible: boolean = false;
     constructor() {
         super();
       this.SessionIndex = this.CurrentSession.SessionIndex;
@@ -376,7 +377,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
         this.UIProperties.SetEnabled("MainCarriageCarrierNumber", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("Master", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("MAWBOBLDate", this.ObjectTableName, isScreenEnabled);
-        this.UIProperties.SetEnabled("MainCarriageVesselId", this.ObjectTableName, isScreenEnabled);
+        this.UIProperties.SetEnabled("MainCarriageVesselName", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("FreightPrepaidCollectId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("OtherPrepaidCollectId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("Notes", this.ObjectTableName, isScreenEnabled);
@@ -709,6 +710,11 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
     }
 
     SetUIProperties() {
+        this.IsChooseVesselVisible = false;
+        if (this.TransportModeId == "O") {
+            this.IsChooseVesselVisible = true;
+        }
+
         this.SetUIProperties_Agent();
         this.SetUIProperties_Ports();
         this.SetUIProperties_MasterField();
@@ -1122,6 +1128,23 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
         if (this.EntityPM.MainCarriageVesselId != newValue) {
             this.EntityPM.MainCarriageVesselId = newValue;
         }
+    }
+
+    get MainCarriageVesselName() { return this.EntityPM.MainCarriageVesselName; }
+    set MainCarriageVesselName(newValue: string) {
+        if (this.EntityPM.MainCarriageVesselName != newValue) {
+            this.EntityPM.MainCarriageVesselName = newValue;
+            this.MainCarriageVesselId = null;
+        }
+    }
+
+    ChooseVesselClicked() {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 775;
+        logitudeWindow.Height = 570;
+        logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, IdProperty: "MainCarriageVesselId", NameProperty: "MainCarriageVesselName" };
+        logitudeWindow.Title = "Vessel Search";
+        logitudeWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/ChooseVesselComponent");
     }
 
     get Notes() { return this.EntityPM.Notes; }
