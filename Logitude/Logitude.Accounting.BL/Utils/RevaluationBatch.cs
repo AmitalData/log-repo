@@ -265,10 +265,14 @@ namespace Logitude.Accounting.BL.Utils
                         {
                             JournalLineList journalLine_credit;
                             if (createRevaluationJournalinDetail)
-                                journalLine_credit = lineList.FirstOrDefault<JournalLineList>(l => l.ActionCode == "1" && l.CurrencyId == item.CurrencyId);
-                            else
+                            {
                                 journalLine_credit = lineList.FirstOrDefault<JournalLineList>(l => l.ActionCode == "1" && l.CurrencyId == item.CurrencyId && l.DebitAccountId == gLAccountPM.Id);
-                            if (journalLine_credit == null)
+                            }
+                            else
+                            {
+                                journalLine_credit = lineList.FirstOrDefault<JournalLineList>(l => l.ActionCode == "1" && l.CurrencyId == item.CurrencyId);
+                            }
+                           if (journalLine_credit == null)
                             {
                                 journalLine_credit = new JournalLineList
                                 {
@@ -284,6 +288,7 @@ namespace Logitude.Accounting.BL.Utils
                                     Reference1 = revaluation.RevaluationNumber.ToString(),
 //                                  Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", gLAccountPM.Tenant),
                                     Notes = TranslateTextsClassTranslate("Revaluations.Q.Revaluation", 0, useLocal),
+                                    DebitAccountId = createRevaluationJournalinDetail? gLAccountPM.Id:null,
                                 };
                                 LogMessagingUtil.Instance.AppendLine("Credit Difference = " + difference);
                                 lineList.Add(journalLine_credit);
