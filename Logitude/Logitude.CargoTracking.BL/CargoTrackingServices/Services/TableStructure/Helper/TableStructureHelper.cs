@@ -170,6 +170,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                
                 }
             }
+            tableIndexsCommand += "CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipments] ON [dbo].[CargoTrackingShipments] ([EntityType], [ForwardingShipmentHeaderId]) INCLUDE ([ArrivalDate], [ArrivalDone], [ArrivalEstimationDate], [BookingDate], [CreateDate], [CreatedDone], [DepartureDate], [DepartureDone], [DepartureEstimationDate], [FromWarehouseDate], [FromWarehouseDone], [FromWarehouseEstimationDate], [FromWarehouseNotes], [PickupDate], [PickupDone], [PickupEstimationDate])";
+            tableIndexsCommand += "CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipmentSearches] ON [dbo].[CargoTrackingShipmentSearches] ([Tenant]) INCLUDE ([SearchFields], [ShipmentId])";
             tableIndexsCommand += " End \n";
             return tableIndexsCommand;
         }
