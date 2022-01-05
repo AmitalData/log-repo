@@ -472,6 +472,13 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             LogMessagingUtil.Instance.AppendLine("declaration retrieve from db");
 
+            var sIModificationByCustomerCommissionService = new SIModificationByCustomerCommissionService();
+            foreach (var currSupplierInvoices in _DeclarationPM.SupplierInvoices)
+            {
+                sIModificationByCustomerCommissionService.EnsureReductionByVendorCommission(_DeclarationPM, currSupplierInvoices, true);
+
+            }
+
             req.Declaration = Getdeclaration(_DeclarationPM);
             LogMessagingUtil.Instance.AppendLine("declaration build" + requestParams.AppicationId);
             _context = null;
