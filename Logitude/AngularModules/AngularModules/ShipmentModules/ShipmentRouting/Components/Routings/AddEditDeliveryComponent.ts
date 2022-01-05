@@ -508,6 +508,10 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
             this.SavedEntityNumber = this.EntityPM.PickUpDeliveryNumber;
 
             if (this.IsNewEntity) {
+                if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0] != null) {
+                    this.AddContainerAutomatically();
+                }
+
                 ServiceLocator.SendTotangoUserActivity("Container F/U", "Added Delivery");
                 this.ShipmentPM.AddDelivery(this.EntityPM);
                 this.isEntityAdded = true;
@@ -564,6 +568,9 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
         var isValid: boolean = errors.length == 0 ? true : false;
 
         return isValid;
+    }
+    AddContainerAutomatically() {
+
     }
 
     OnSaveCompleted(isSaveSuccess: boolean, isClosingWindow: boolean) {
