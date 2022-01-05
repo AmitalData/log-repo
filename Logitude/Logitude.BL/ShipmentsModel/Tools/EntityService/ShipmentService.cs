@@ -1401,7 +1401,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private bool IsImportShipmentsAllowedForLogBox(Tenant loggedTenant, ShipmentPM entityPM)
         {
-            if (entityPM.DirectionId.ToUpper() == "I" && !loggedTenant.LogBoxTenantSetting.CustomerTenantShareImportFile)
+            if (entityPM.DirectionId.ToUpper() == "I")
                 return false;
             return true;
         }
