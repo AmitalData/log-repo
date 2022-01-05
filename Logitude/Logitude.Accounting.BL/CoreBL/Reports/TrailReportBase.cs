@@ -662,18 +662,18 @@ trailReportParam.ChartOfAccountsTypeCodeList.Count > 0
                 case ReportLevel.ChartofaccountType:
                     if (trailReportParam.ChartOfAccountsIdList.Count > 0)
                     {
-                        ///throw new Exception("in  ChartofaccountType level - ChartOfAccountsIdList  is not  allowed !!!");
+                       // throw new Exception("in  ChartofaccountType level - ChartOfAccountsIdList  is not  allowed !!!");
                     }
                     if (trailReportParam.ChartOfAccountsTypeCodeList.Count > 0)
                     {
-                        ///throw new Exception("in  ChartofaccountType level - ChartOfAccountsTypeCodeList  is not  allowed !!!");
+                        // throw new Exception("in  ChartofaccountType level - ChartOfAccountsTypeCodeList  is not  allowed !!!");
                     }
 
                     break;
                 case ReportLevel.Chartofaccount:
                     if (trailReportParam.ChartOfAccountsIdList.Count > 0)
                     {
-                        //throw new Exception("in  ChartofaccountType level - ChartOfAccountsIdList  is not  allowed !!!");
+                        ///throw new Exception("in  ChartofaccountType level - ChartOfAccountsIdList  is not  allowed !!!");
                     }
 
                     break;
