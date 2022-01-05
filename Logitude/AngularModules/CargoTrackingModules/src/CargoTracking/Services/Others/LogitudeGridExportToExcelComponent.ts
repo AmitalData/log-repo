@@ -1,15 +1,23 @@
 // import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
+import { Injectable } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
 import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
+import { MessageWindowComponent } from 'src/Infrastructure/Components/MessageWindow/MessageWindowComponent';
 import { ApiQueryFilters } from './ApiQueryFilters';
 import { FilterItem } from './FilterItem';
 import { LogboxShipmentExportExcelService } from './LogboxShipmentExportExcelService';
 import { QueryColumnPM } from './QueryColumnPM';
 
-export class LogitudeGridExportToExcelComponent {
+@Injectable()
+export class LogitudeGridExportToExcelService {
     public filterAgrs: ApiQueryFilters;
     public QueryColumns: QueryColumnPM[] = [];
     public ObjectTableName: string;
+    constructor(
+        private logboxShipmentExportExcelService: LogboxShipmentExportExcelService,
+        public dialog: MatDialog
+    ) {}
     ExportToExcelExcute(
         ObjectTableName: string,
         filterAgrs: ApiQueryFilters,
@@ -19,55 +27,59 @@ export class LogitudeGridExportToExcelComponent {
         this.filterAgrs = filterAgrs;
         if (this.filterAgrs) this.filterAgrs.GetAll = true;
         this.QueryColumns = QueryColumns;
-        var windowArgs: any = {};
         const args = this.GetExportToExcelArgs();
-        console.log('args', args);
-
-        var logboxShipmentExportExcelService: LogboxShipmentExportExcelService = new LogboxShipmentExportExcelService();
-            logboxShipmentExportExcelService.GetQueryToExcelData(args).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) this.CompleteExcelData(myResponse.Result);
-                else this.CompleteExcelData("Faild");
+        var matDialog = this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: 'Export to excell',
+                isLoading: true,
+            },
+        });
+        this.logboxShipmentExportExcelService
+            .GetQueryToExcelData(args)
+            .subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError)
+                    this.CompleteExcelData(myResponse.Result, matDialog);
+                else this.CompleteExcelData('Faild', matDialog);
             });
-        // windowArgs.tenant = Number(sessionStorage.getItem("LoggedUserTenant"));
-        // windowArgs.ObjectTableName = this.ObjectTableName;
-        // windowArgs.QueryName = this.ObjectTableName;
-        // windowArgs.QueryType = "LogitudeGrid";
-        // var logitudeWindow = new LogitudeWindow();
-        // logitudeWindow.Width = 500;
-        // logitudeWindow.Height = 200;
-        // logitudeWindow.Title = "Exporting View Data List To Excel File";
-        // logitudeWindow.WindowArgs = windowArgs;
-        // logitudeWindow.Show('./Infrastructure/Components/Export2ExcelControl/Export2ExcelControl');
     }
 
     public btnSaveToFileVisibile: boolean;
     FileName: string;
-    CompleteExcelData(myResult: string) {
-        if (myResult == "Faild") {
-            // this.btnRetryVisibile = true;
-            // this.busyExportingVisibile = false;
-            this.btnSaveToFileVisibile = false;
-        }
-        else {
+    CompleteExcelData(
+        myResult: string,
+        matDialogRef: MatDialogRef<MessageWindowComponent, any>
+    ) {
+        if (myResult == 'Faild') {
+            matDialogRef.componentInstance.isLoading = false;
+            matDialogRef.componentInstance.description =
+                'Export to excell failed!';
+        } else {
             this.FileName = myResult;
-            // this.btnRetryVisibile = false;
-            // this.busyExportingVisibile = false;
-            this.btnSaveToFileVisibile = true;
+            const url = this.getFileURL(this.FileName);
+            matDialogRef.componentInstance.isLoading = false;
+            matDialogRef.componentInstance.link = url;
         }
     }
 
-    SaveExcelFile(tenant: number, FileName: string, OTName: string) {
+    getFileURL(FileName: string) {
         var tempDate = new Date();
-        var MyDate = tempDate.getDate() + "-" + (tempDate.getMonth() + 1) + "-" + tempDate.getFullYear();
-        var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + FileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() +  "&qname=" + null + "_" + MyDate;
-        //if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
-        //    AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseOpenNewBrowser(url);
-        //} else
-        {
-            window.open(url);
-        }
-        
-        // this.CurrentSession.CloseCurrentWindow();
+        var MyDate =
+            tempDate.getDate() +
+            '-' +
+            (tempDate.getMonth() + 1) +
+            '-' +
+            tempDate.getFullYear();
+        var url =
+            ServiceHelper.GetLogitudeURL() +
+            'WebPages/DawnLoadExcelPage.aspx?fileName=' +
+            FileName +
+            '&tempId=' +
+            ServiceHelper.GetLDocumentDownloadToken() +
+            '&qname=' +
+            'cargoTracking' +
+            '_' +
+            MyDate;
+        return url;
     }
 
     GetExportToExcelArgs() {

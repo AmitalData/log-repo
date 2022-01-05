@@ -20,9 +20,9 @@ import { filter } from 'rxjs/operators';
 import { ShipmentDirections } from '../ShipmentDetails/ShipmentDetailsComponent';
 import { ReplaySubject } from 'rxjs';
 import { SharedService } from 'src/CargoTracking/Services/Others/SharedService';
-import { LogitudeGridExportToExcelComponent } from 'src/CargoTracking/Services/Others/LogitudeGridExportToExcelComponent';
 import { QueryColumnPM } from 'src/CargoTracking/Services/Others/QueryColumnPM';
 import { ApiQueryFilters } from 'src/CargoTracking/Services/Others/ApiQueryFilters';
+import { LogitudeGridExportToExcelService } from 'src/CargoTracking/Services/Others/LogitudeGridExportToExcelComponent';
 
 @Component({
     selector: 'ShipmentsListComponent',
@@ -91,7 +91,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     InvitedCustomers: any[] = [];
     InvitedCustomersDictionary: {} = {};
     MoreFilterMobileValue: MoreFilter = new MoreFilter();
-    public LogitudeGridExportToExcelComponent:LogitudeGridExportToExcelComponent;
     constructor(private router: Router,
         private route: ActivatedRoute,
         private formBuilder: FormBuilder,
@@ -101,10 +100,10 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         public dialog: MatDialog,
         private searchService: CargoTrackingSearchService,
         private milestonesService: CargoTrackingMilestoneService,
-        public sharedService: SharedService) {
+        public sharedService: SharedService,
+        private logitudeGridExportToExcelService: LogitudeGridExportToExcelService) {
         this.InitComponent();
         this.SetDefaultBackgroundColor();
-        this.LogitudeGridExportToExcelComponent = new LogitudeGridExportToExcelComponent();
     }
 
     ngOnInit(): void {
@@ -117,9 +116,65 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.setViews();
     }
     public ExportToExcelClick(){
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ShipmentNumber",'Text', 'Shipment Number'));
-         this.LogitudeGridExportToExcelComponent.ExportToExcelExcute("CargoTrackingShipment",this.filterAgrs,this.QueryColumns);
-     }
+        
+        this.buildFilterArgs();
+        this.buildQueryColumns();
+         this.logitudeGridExportToExcelService.ExportToExcelExcute("CargoTrackingShipment",this.filterAgrs,this.QueryColumns);
+    }
+
+    private buildFilterArgs() {
+        this.filterAgrs = new ApiQueryFilters(); 
+        this.filterAgrs.addAdditionalFilter("Tenant", this.ShipmentSearchInput.Tenant, null, null, "Equals", false, false, false, "string");
+        this.filterAgrs.addAdditionalFilter("HasException", this.ShipmentSearchInput.HasException, null, null, "Equals", true, false, false, "boolean");
+        this.filterAgrs.addAdditionalFilter("OrdersOnly", this.ShipmentSearchInput.OrdersOnly, null, null, "Equals", true, false, false, "boolean");
+        this.filterAgrs.addAdditionalFilter("EstimatedArrivalOnly", this.ShipmentSearchInput.EstimatedArrivalOnly, null, null, "Equals", true, false, false, "boolean");
+        this.filterAgrs.addAdditionalFilter("OperationalOpenedOnly", this.ShipmentSearchInput.OperationalOpenedOnly, null, null, "Equals", true, false, false, "boolean");
+        this.filterAgrs.addAdditionalFilter("SearchText", this.ShipmentSearchInput.SearchText, null, null, "Equals", false, false, false, "string");
+        this.filterAgrs.Tenant = this.ShipmentSearchInput.Tenant;
+        this.filterAgrs.SortDirection = this.ShipmentSearchInput.SortType;
+        this.filterAgrs.SortBy = this.ShipmentSearchInput.SortFieldName;
+        
+        if (this.ShipmentSearchInput.CustomersIds.length > 0) {
+            this.filterAgrs.addAdditionalFilter("CustomersIds", this.ShipmentSearchInput.CustomersIds.join("_"), null, null, "Equals", false, false, false, "string");
+        }
+        if (this.ShipmentSearchInput.MilestonesCodes.length > 0) {
+            this.filterAgrs.addAdditionalFilter("MilestonesCodes", this.ShipmentSearchInput.MilestonesCodes.join("_"), null, null, "Equals", false, false, false, "string");
+        }
+
+        if (this.ShipmentSearchInput.TransportModeCodes.length > 0) {
+            this.filterAgrs.addAdditionalFilter("TransportModeCodes", this.ShipmentSearchInput.TransportModeCodes.join("_"), null, null, "Equals", false, false, false, "string");
+        }
+
+        if (this.ShipmentSearchInput.DirectionCodes.length > 0) {
+            this.filterAgrs.addAdditionalFilter("DirectionCodes", this.ShipmentSearchInput.DirectionCodes.join("_"), null, null, "Equals", false, false, false, "string");
+        }
+    }
+
+    private buildQueryColumns(){
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ShipmentNumber",'Text', 'Shipment Number'));
+        // this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ReferenceNo",'Text', 'Reference No'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("TransportModeId",'Text', 'Transport Mode'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("DirectionId",'Text', 'Direction'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("House",'Text', 'House'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("Master",'Text', 'Master'));
+        // this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("",'Text', 'Client'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ConsigneeName",'Text', 'Consignee'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("CurrentMilestoneDate",'DateTime', 'Current Milestone Date'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("CurrentMilestoneName",'Text', 'Current Milestone Name'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("FromPortName",'Text', 'From Port'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ToPortName",'Text', 'To Port'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ArrivalDate",'DateTime', 'ATD'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ArrivalEstimationDate",'DateTime', 'ETA'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("DepartureDate",'DateTime', 'ATD'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("DepartureEstimationDate",'DateTime', 'ETD'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("GrossWeight",'Number', 'Weight'));
+        // this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("",'Text', 'DECLEARATION STATUS'));
+        // this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("",'Text', 'TOTAL TAXES'));
+        // this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("",'Text', 'INCOTERM'));
+        // this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("",'Text', 'HAS EXPETION'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("CurrentMilestoneExceptions",'Text', 'Exception Description'));
+        // this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("",'Text', 'Is Order'));
+    }
 
     private GetCompanyLoginsFromCache() {
         SessionInfo.LoggedUserCompanyLogins = JSON.parse(sessionStorage.getItem("LoggedUserCompanyLogins"));

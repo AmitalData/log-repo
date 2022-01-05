@@ -7,10 +7,8 @@ import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse
 
 @Injectable()
 export class LogboxShipmentExportExcelService {
-    private _httpClient: HttpClient;
     private _apiUrl: string;
-    constructor() {
-        this._httpClient = ServiceHelper.HttpClient;
+    constructor(private _httpClient: HttpClient) {
         this._apiUrl =
             ServiceHelper.GetLogitudeURL() + 'api/LogitudeGridExportToExcel';
     }

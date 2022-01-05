@@ -934,3 +934,10 @@ h1{
     padding-top: 5px;
     text-transform: capitalize;
 }
+
+.export-to-excell{
+    text-decoration: none;
+    display: inline-block;
+    float: right;
+    margin-right: 30px;
+}

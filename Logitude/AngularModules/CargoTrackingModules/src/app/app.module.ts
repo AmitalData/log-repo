@@ -52,6 +52,8 @@ import { SharedService } from 'src/CargoTracking/Services/Others/SharedService';
 import { CustomLabelComponent } from 'src/Infrastructure/Components/CustomLabel/CustomLabel.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { LogboxShipmentExportExcelService } from 'src/CargoTracking/Services/Others/LogboxShipmentExportExcelService';
+import { LogitudeGridExportToExcelService } from 'src/CargoTracking/Services/Others/LogitudeGridExportToExcelComponent';
 
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;
@@ -126,6 +128,8 @@ export function getBaseUrl() {
         DatePipe,
         DateTimeFormatPipe,
         SharedService,
+        LogboxShipmentExportExcelService,
+        LogitudeGridExportToExcelService,
         { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] },
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} }
