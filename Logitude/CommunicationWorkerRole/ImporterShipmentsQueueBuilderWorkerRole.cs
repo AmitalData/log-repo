@@ -249,7 +249,7 @@ namespace CommunicationWorkerRole
                                             List<string> ImportIdsList = new List<string>();
 
                                             TenantQuery tenantQuery = new TenantQuery(tenant);
-                                            TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
+                                            TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
                                             CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                                             foreach (var item in ShipmentsIds)
                                             {
@@ -263,9 +263,7 @@ namespace CommunicationWorkerRole
                                                     if (customerTenantAccess != null && customerTenantAccess.HasAccess)
                                                     {
                                                         if (privateLabelShipmentService.IsShipmentsAllowedForLogBox())
-                                                            IdsList.Add(item);
-                                                        else if (Shipment.DirectionId == "I" && !string.IsNullOrEmpty(Shipment.CustomFileId))
-                                                            ImportIdsList.Add(item);
+                                                            IdsList.Add(item); 
                                                     }
                                                 }
                                             }

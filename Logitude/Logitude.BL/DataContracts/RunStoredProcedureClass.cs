@@ -142,7 +142,7 @@ namespace Logitude.BL.DataContracts
             {
 
                 var tenantQuery = new TenantQuery(tenant);
-                var tenantPM = tenantQuery.GetSinglePM(tenant);
+                var tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
                 var ShipmentQuery = new ShipmentQuery(tenant);
                 var entityPM = ShipmentQuery.GetSinglePMWithoutComposition(shipmentId, tenant);
                 if (entityPM != null && tenantPM != null)

@@ -44,7 +44,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     public DontShowLogboxToolTip: boolean = false;
     public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
     public _ShipmentPMService: ShipmentPMService;
-    private CurrentSession = SessionLocator.SelectedSession; 
+    private CurrentSession = SessionLocator.SelectedSession;
     public _UserLastSettingsPMService: UserLastSettingsPMService;
     public _UserLastSettingsExtendedPMService: UserLastSettingsExtendedPMService;
     RefTemplateWidth: string = '220px';
@@ -53,7 +53,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         "ShortName": true,
         "LongName": false
     }
-    private entityResourceService: EntityResourceService; 
+    private entityResourceService: EntityResourceService;
 
     public IsPrivateLabelExportActivated: boolean = false;
     public IsPrivateLabelCustomsActivated: boolean = false;
@@ -63,15 +63,15 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     public ShowDirectionFilters: boolean = false;
 
     public customerTenantAccessRequestExtendedPMService: CustomerTenantAccessRequestExtendedPMService;
-  
+
     public isLogbox: boolean = SystemEnvironmentService.IsLogBox();
 
     public HasQueryFiltersHighlightColor: boolean = false;
- 
+
     constructor(private _entityListService: EntityListService) {
         this.InitializeServices();
-        this.LoadEntityResource("Shipment"); 
-    } 
+        this.LoadEntityResource("Shipment");
+    }
 
     private InitializeServices() {
         this.myShipmentDomainService = new ShipmentDomainService();
@@ -84,7 +84,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         this.customerTenantAccessRequestExtendedPMService = new CustomerTenantAccessRequestExtendedPMService();
     }
 
- 
+
     ngOnInit() {
         this.DontShowLogboxToolTip = SessionLocator.LoggedUserPM.ShowLogBoxToolTip;
         this.ShowDirectionFilters = SessionLocator.PrivateLableSettings ? false : true;
@@ -158,7 +158,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
         var tenant = SessionLocator.Tenant;
         this.customerTenantAccessRequestExtendedPMService.getByForwarderId(tenant, hybridPartnerId).subscribe((res: any) => {
-            if (!res.HasError) { 
+            if (!res.HasError) {
                 this.SetDitections(res);
             }
         });
@@ -166,13 +166,13 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     private SetDitections(res: any) {
         this.IsCustomsActivated = (res.Result.IsCustoms && this.IsPrivateLabelCustomsActivated);
-        this.IsExportActivated = (res.Result.IsExport && this.IsPrivateLabelExportActivated); 
-        this.SetDirectionsFilters(); 
+        this.IsExportActivated = (res.Result.IsExport && this.IsPrivateLabelExportActivated);
+        this.SetDirectionsFilters();
     }
     private HasOneDirectionFilter() {
         return !(this.IsExportActivated && this.IsCustomsActivated);
     }
-  
+
 
     private getAgentShipmentsLabel(agentName: string) {
         let agentShipmentsLabel = "";
@@ -410,7 +410,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             return tempo;
         },
     };
-     
+
     private SetDirectionFilter(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
         shipmentsQueriesCountsArgs.DirectionId = 'E';
         shipmentsQueriesCountsArgs.DirectionOperator = 'NotEqual';
@@ -427,7 +427,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         if (!this.IsCustomsActivated && !this.IsExportActivated) {
             this.SetDefalutFilter(shipmentsQueriesCountsArgs);
         }
-         
+
     }
     private SetPrivateLabelDriectionId(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
         this.SetCustomShipmentFilters(shipmentsQueriesCountsArgs);
@@ -458,7 +458,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         }
     }
 
-    private SetDefalutFilter(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) { 
+    private SetDefalutFilter(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
         this.IsCustomsActivated = true;
         this.SetFilterOptions('C', 'Equal', shipmentsQueriesCountsArgs);
         this.ShowDirectionFilters = false;
@@ -791,15 +791,15 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
         return logboxShipmentExportExcelArgs;
     }
- 
+
 
     onMouseEnter(label, id) {
         if (!this.HasQueryFiltersHighlightColor) return;
         var element = document.getElementById(id);
         if (element && (label == this.SelectedFilter)) {
-            this.SetQueryFilterOptions(element, "1"); 
-        } else if (element) { 
-            this.SetQueryFilterOptions(element, "0.5"); 
+            this.SetQueryFilterOptions(element, "1");
+        } else if (element) {
+            this.SetQueryFilterOptions(element, "0.5");
         }
 
     }
@@ -857,7 +857,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     SelectedRow: any;
     SelectedRowIndex: any;
     RowSelectedTimerToken: any;
-  
+
     onRowSelected(CurrentRow) {
         if (this.RowSelectedTimerToken) {
             clearTimeout(this.RowSelectedTimerToken);
