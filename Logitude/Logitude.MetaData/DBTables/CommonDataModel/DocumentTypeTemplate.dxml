@@ -237,6 +237,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsSystem"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="LastUpdatedByUserId"
     ReferencedTable="Users"

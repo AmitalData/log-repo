@@ -332,6 +332,7 @@ namespace Logitude.Update
                             TemplateBodyjson = SourceDocumentTypeHtmlTemplate.TemplateBodyjson,
                             TemplateHeaderHeight = SourceDocumentTypeHtmlTemplate.TemplateHeaderHeight,
                             TemplateHeaderHtml = SourceDocumentTypeHtmlTemplate.TemplateHeaderHtml,
+                            IsSystem = SourceDocumentTypeHtmlTemplate.IsSystem,
 
 
 
@@ -372,6 +373,7 @@ namespace Logitude.Update
                             TemplateBodyjson = SourceDocumentTypeReportTemplate.TemplateBodyjson,
                             TemplateHeaderHeight = SourceDocumentTypeReportTemplate.TemplateHeaderHeight,
                             TemplateHeaderHtml = SourceDocumentTypeReportTemplate.TemplateHeaderHtml,
+                            IsSystem = SourceDocumentTypeHtmlTemplate.IsSystem,
 
                         };
                         DestinationDocumentTypeTemplateRepository.Add(AmitalDocumentTypeReportTemplate);

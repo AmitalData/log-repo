@@ -61,7 +61,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.IsEnabledForCustomers)
                 .IsRequired();
 
-
+            this.Property(t => t.IsSystem)
+                .IsRequired();
 
             this.Property(t => t.InternalRemarks)
                .HasMaxLength(500)
@@ -191,7 +192,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AutomationId).HasColumnName("AutomationId");
 
             this.Property(t => t.AttachedExternalDocumentsIds).HasColumnName("AttachedExternalDocumentsIds");
-
+            this.Property(t => t.IsSystem).HasColumnName("IsSystem");
 
 
             if (dbms == "oracle")

@@ -17,217 +17,224 @@ import { CustomFieldClass } from '../../Infrastructure/DataContracts/CustomField
 
 export class DocumentTypeTemplatePM {
 
-    @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
-    public UIProperties: UIProperties;
-    constructor() {
-        this.UIProperties = new UIProperties(this);
-        this.IsDirty = false;
-    }
-
-
+      @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
+      public UIProperties: UIProperties;
+	  constructor() {
+          this.UIProperties = new UIProperties(this); 
+          this.IsDirty = false;
+      }
+ 	 
+    
     private id: string;
     public get Id() { return this.id; }
     public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
-
-
+       
+	 
     private tenant: number;
     public get Tenant() { return this.tenant; }
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
-
-
+       
+	 
     private templateBody: string;
     public get TemplateBody() { return this.templateBody; }
     public set TemplateBody(newValue: string) { if (this.templateBody != newValue) { this.templateBody = newValue; this.MarkAsDirty("TemplateBody"); } }
-
-
+       
+	 
     private templateType: string;
     public get TemplateType() { return this.templateType; }
     public set TemplateType(newValue: string) { if (this.templateType != newValue) { this.templateType = newValue; this.MarkAsDirty("TemplateType"); } }
-
-
+       
+	 
     private lastUpdatedByUserId: string;
     public get LastUpdatedByUserId() { return this.lastUpdatedByUserId; }
     public set LastUpdatedByUserId(newValue: string) { if (this.lastUpdatedByUserId != newValue) { this.lastUpdatedByUserId = newValue; this.MarkAsDirty("LastUpdatedByUserId"); } }
-
-
+       
+	 
     private documentTypeId: string;
     public get DocumentTypeId() { return this.documentTypeId; }
     public set DocumentTypeId(newValue: string) { if (this.documentTypeId != newValue) { this.documentTypeId = newValue; this.MarkAsDirty("DocumentTypeId"); } }
-
-
+       
+	 
     private description: string;
     public get Description() { return this.description; }
     public set Description(newValue: string) { if (this.description != newValue) { this.description = newValue; this.MarkAsDirty("Description"); } }
-
-
+       
+	 
     private lastUpdateDate: Date;
     public get LastUpdateDate() { return this.lastUpdateDate; }
     public set LastUpdateDate(newValue: Date) { if (this.lastUpdateDate != newValue) { this.lastUpdateDate = newValue; this.MarkAsDirty("LastUpdateDate"); } }
-
-
+       
+	 
     private lastUpdateByUserName: string;
     public get LastUpdateByUserName() { return this.lastUpdateByUserName; }
     public set LastUpdateByUserName(newValue: string) { if (this.lastUpdateByUserName != newValue) { this.lastUpdateByUserName = newValue; this.MarkAsDirty("LastUpdateByUserName"); } }
-
-
+       
+	 
     private isDefault: boolean;
     public get IsDefault() { return this.isDefault; }
     public set IsDefault(newValue: boolean) { if (this.isDefault != newValue) { this.isDefault = newValue; this.MarkAsDirty("IsDefault"); } }
-
-
+       
+	 
     private inActive: boolean;
     public get InActive() { return this.inActive; }
     public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
-
-
+       
+	 
     private editorTool: string;
     public get EditorTool() { return this.editorTool; }
     public set EditorTool(newValue: string) { if (this.editorTool != newValue) { this.editorTool = newValue; this.MarkAsDirty("EditorTool"); } }
-
-
+       
+	 
     private verticalShift: number;
     public get VerticalShift() { return this.verticalShift; }
     public set VerticalShift(newValue: number) { if (this.verticalShift != newValue) { this.verticalShift = newValue; this.MarkAsDirty("VerticalShift"); } }
-
-
+       
+	 
     private horizontalShift: number;
     public get HorizontalShift() { return this.horizontalShift; }
     public set HorizontalShift(newValue: number) { if (this.horizontalShift != newValue) { this.horizontalShift = newValue; this.MarkAsDirty("HorizontalShift"); } }
-
-
+       
+	 
     private subject: string;
     public get Subject() { return this.subject; }
     public set Subject(newValue: string) { if (this.subject != newValue) { this.subject = newValue; this.MarkAsDirty("Subject"); } }
-
-
+       
+	 
     private templateBodyHtml: string;
     public get TemplateBodyHtml() { return this.templateBodyHtml; }
     public set TemplateBodyHtml(newValue: string) { if (this.templateBodyHtml != newValue) { this.templateBodyHtml = newValue; this.MarkAsDirty("TemplateBodyHtml"); } }
-
-
+       
+	 
     private templateBodyjson: string;
     public get TemplateBodyjson() { return this.templateBodyjson; }
     public set TemplateBodyjson(newValue: string) { if (this.templateBodyjson != newValue) { this.templateBodyjson = newValue; this.MarkAsDirty("TemplateBodyjson"); } }
-
-
+       
+	 
     private language: string;
     public get Language() { return this.language; }
     public set Language(newValue: string) { if (this.language != newValue) { this.language = newValue; this.MarkAsDirty("Language"); } }
-
-
+       
+	 
     private originalTemplateId: string;
     public get OriginalTemplateId() { return this.originalTemplateId; }
     public set OriginalTemplateId(newValue: string) { if (this.originalTemplateId != newValue) { this.originalTemplateId = newValue; this.MarkAsDirty("OriginalTemplateId"); } }
-
-
+       
+	 
     private contactEmail: string;
     public get ContactEmail() { return this.contactEmail; }
     public set ContactEmail(newValue: string) { if (this.contactEmail != newValue) { this.contactEmail = newValue; this.MarkAsDirty("ContactEmail"); } }
-
-
+       
+	 
     private internalRemarks: string;
     public get InternalRemarks() { return this.internalRemarks; }
     public set InternalRemarks(newValue: string) { if (this.internalRemarks != newValue) { this.internalRemarks = newValue; this.MarkAsDirty("InternalRemarks"); } }
-
-
+       
+	 
     private templateFooterHtml: string;
     public get TemplateFooterHtml() { return this.templateFooterHtml; }
     public set TemplateFooterHtml(newValue: string) { if (this.templateFooterHtml != newValue) { this.templateFooterHtml = newValue; this.MarkAsDirty("TemplateFooterHtml"); } }
-
-
+       
+	 
     private templateHeaderHtml: string;
     public get TemplateHeaderHtml() { return this.templateHeaderHtml; }
     public set TemplateHeaderHtml(newValue: string) { if (this.templateHeaderHtml != newValue) { this.templateHeaderHtml = newValue; this.MarkAsDirty("TemplateHeaderHtml"); } }
-
-
+       
+	 
     private countryCode: string;
     public get CountryCode() { return this.countryCode; }
     public set CountryCode(newValue: string) { if (this.countryCode != newValue) { this.countryCode = newValue; this.MarkAsDirty("CountryCode"); } }
-
-
+       
+	 
     private isCopiedAtSignup: boolean;
     public get IsCopiedAtSignup() { return this.isCopiedAtSignup; }
     public set IsCopiedAtSignup(newValue: boolean) { if (this.isCopiedAtSignup != newValue) { this.isCopiedAtSignup = newValue; this.MarkAsDirty("IsCopiedAtSignup"); } }
-
-
+       
+	 
     private isEnabledForCustomers: boolean;
     public get IsEnabledForCustomers() { return this.isEnabledForCustomers; }
     public set IsEnabledForCustomers(newValue: boolean) { if (this.isEnabledForCustomers != newValue) { this.isEnabledForCustomers = newValue; this.MarkAsDirty("IsEnabledForCustomers"); } }
-
-
+       
+	 
     private originalTemplateName: string;
     public get OriginalTemplateName() { return this.originalTemplateName; }
     public set OriginalTemplateName(newValue: string) { if (this.originalTemplateName != newValue) { this.originalTemplateName = newValue; this.MarkAsDirty("OriginalTemplateName"); } }
-
-
+       
+	 
     private documentTypeCode: string;
     public get DocumentTypeCode() { return this.documentTypeCode; }
     public set DocumentTypeCode(newValue: string) { if (this.documentTypeCode != newValue) { this.documentTypeCode = newValue; this.MarkAsDirty("DocumentTypeCode"); } }
-
-
+       
+	 
     private documentTypeName: string;
     public get DocumentTypeName() { return this.documentTypeName; }
     public set DocumentTypeName(newValue: string) { if (this.documentTypeName != newValue) { this.documentTypeName = newValue; this.MarkAsDirty("DocumentTypeName"); } }
-
-
+       
+	 
     private isHideDocumentName: boolean;
     public get IsHideDocumentName() { return this.isHideDocumentName; }
     public set IsHideDocumentName(newValue: boolean) { if (this.isHideDocumentName != newValue) { this.isHideDocumentName = newValue; this.MarkAsDirty("IsHideDocumentName"); } }
-
-
+       
+	 
     private countryName: string;
     public get CountryName() { return this.countryName; }
     public set CountryName(newValue: string) { if (this.countryName != newValue) { this.countryName = newValue; this.MarkAsDirty("CountryName"); } }
-
-
+       
+	 
     private from: string;
     public get From() { return this.from; }
     public set From(newValue: string) { if (this.from != newValue) { this.from = newValue; this.MarkAsDirty("From"); } }
-
-
+       
+	 
     private replyTo: string;
     public get ReplyTo() { return this.replyTo; }
     public set ReplyTo(newValue: string) { if (this.replyTo != newValue) { this.replyTo = newValue; this.MarkAsDirty("ReplyTo"); } }
-
-
+       
+	 
     private templateHeaderHeight: number;
     public get TemplateHeaderHeight() { return this.templateHeaderHeight; }
     public set TemplateHeaderHeight(newValue: number) { if (this.templateHeaderHeight != newValue) { this.templateHeaderHeight = newValue; this.MarkAsDirty("TemplateHeaderHeight"); } }
-
-
+       
+	 
     private templateFooterHeight: number;
     public get TemplateFooterHeight() { return this.templateFooterHeight; }
     public set TemplateFooterHeight(newValue: number) { if (this.templateFooterHeight != newValue) { this.templateFooterHeight = newValue; this.MarkAsDirty("TemplateFooterHeight"); } }
-
-
+       
+	 
     private templateTechnologyCode: string;
     public get TemplateTechnologyCode() { return this.templateTechnologyCode; }
     public set TemplateTechnologyCode(newValue: string) { if (this.templateTechnologyCode != newValue) { this.templateTechnologyCode = newValue; this.MarkAsDirty("TemplateTechnologyCode"); } }
-
-
+       
+	 
     private objectTableId: string;
     public get ObjectTableId() { return this.objectTableId; }
     public set ObjectTableId(newValue: string) { if (this.objectTableId != newValue) { this.objectTableId = newValue; this.MarkAsDirty("ObjectTableId"); } }
-
-
+       
+	 
     private cC: string;
     public get CC() { return this.cC; }
     public set CC(newValue: string) { if (this.cC != newValue) { this.cC = newValue; this.MarkAsDirty("CC"); } }
-
-
+       
+	 
     private bCC: string;
     public get BCC() { return this.bCC; }
     public set BCC(newValue: string) { if (this.bCC != newValue) { this.bCC = newValue; this.MarkAsDirty("BCC"); } }
-
-
+       
+	 
     private to: string;
     public get To() { return this.to; }
     public set To(newValue: string) { if (this.to != newValue) { this.to = newValue; this.MarkAsDirty("To"); } }
-
+       
+	 
     private automationId: string;
     public get AutomationId() { return this.automationId; }
     public set AutomationId(newValue: string) { if (this.automationId != newValue) { this.automationId = newValue; this.MarkAsDirty("AutomationId"); } }
-
+       
+	 
+    private isSystem: boolean;
+    public get IsSystem() { return this.isSystem; }
+    public set IsSystem(newValue: boolean) { if (this.isSystem != newValue) { this.isSystem = newValue; this.MarkAsDirty("IsSystem"); } }
+       
+	 
     private attachedExternalDocumentsIds: string;
     public get AttachedExternalDocumentsIds() { return this.attachedExternalDocumentsIds; }
     public set AttachedExternalDocumentsIds(newValue: string) { if (this.attachedExternalDocumentsIds != newValue) { this.attachedExternalDocumentsIds = newValue; this.MarkAsDirty("AttachedExternalDocumentsIds"); } }
@@ -281,4 +288,4 @@ export class DocumentTypeTemplatePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

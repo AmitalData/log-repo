@@ -53,6 +53,7 @@ using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel;
 using WebFreight.Web.Helpers.AutomationModel;
 using Microsoft.VisualStudio.Services.Common;
 using WebFreight.Web.Helpers.QuoteTemplate;
+using Logitude.BL.CommonDataModel.ExternalService;
 
 namespace WebFreight.Web.MetaDataUpdate
 {
@@ -2168,150 +2169,154 @@ namespace WebFreight.Web.MetaDataUpdate
                                             select a).FirstOrDefault();
 
                     if (documentType == null)
+                    {
+                        List<DocumentTypeCustomField> zeroCustomFields = tenantZeroCustomFields.Where(d => d.DocumentTypeId == docType.Id).ToList();
+                        DocumentType newDocType = new DocumentType()
                         {
-                            List<DocumentTypeCustomField> zeroCustomFields = tenantZeroCustomFields.Where(d => d.DocumentTypeId == docType.Id).ToList();
-                            DocumentType newDocType = new DocumentType()
-                            {
-                                Id = IdCounter.GetNumber("DocumentType", tenant).ToString(),
-                                Code = docType.Code.Trim(),
-                                Name = docType.Name,
-                                IsOcean = docType.IsOcean,
-                                IsAir = docType.IsAir,
-                                IsInland = docType.IsInland,
-                                IsDocIn = docType.IsDocIn,
-                                IsDocOut = false,
-                                FollowUpTypeId = docType.FollowUpTypeId,
-                                Tenant = tenant,
-                                ObjectTableId = docType.ObjectTableId,
-                                SearchFields = docType.SearchFields,
-                                IsMaster = docType.IsMaster,
-                                IsDirect = docType.IsDirect,
-                                IsHouse = docType.IsHouse,
-                                TemplateFormatCode = docType.TemplateFormatCode,
-                                IsCustomerView = docType.IsCustomerView,
-                                IsAgentView = docType.IsAgentView,
-                                DocumentTypeCategoryCode = docType.DocumentTypeCategoryCode,
-                                CountryCode = docType.CountryCode,
-                                Subject = docType.Subject,
-                                IsEnabledForCustomers = true,
-                                Notes = docType.Notes,
-                                DocumentTypeDefaultHTMLTemplateId = docType.DocumentTypeDefaultHTMLTemplateId,
-                                DocumentTypeDefaultReportTemplateId = docType.DocumentTypeDefaultReportTemplateId,
-                                IsSystemAdditionalPrintingFields = docType.IsSystemAdditionalPrintingFields,
-                                PrintingFieldsScreenCode = docType.PrintingFieldsScreenCode,
-                                OrderBy = docType.OrderBy,
-                                OnPrintPopulateDateFieldName = docType.OnPrintPopulateDateFieldName ,
-                                OnSendPopulateDateFieldName = docType.OnSendPopulateDateFieldName,
-                                OnUploadPopulateDateFieldName = docType.OnUploadPopulateDateFieldName,
-                            };
-                            documentTypeRepository.Add(newDocType);
+                            Id = IdCounter.GetNumber("DocumentType", tenant).ToString(),
+                            Code = docType.Code.Trim(),
+                            Name = docType.Name,
+                            IsOcean = docType.IsOcean,
+                            IsAir = docType.IsAir,
+                            IsInland = docType.IsInland,
+                            IsDocIn = docType.IsDocIn,
+                            IsDocOut = false,
+                            FollowUpTypeId = docType.FollowUpTypeId,
+                            Tenant = tenant,
+                            ObjectTableId = docType.ObjectTableId,
+                            SearchFields = docType.SearchFields,
+                            IsMaster = docType.IsMaster,
+                            IsDirect = docType.IsDirect,
+                            IsHouse = docType.IsHouse,
+                            TemplateFormatCode = docType.TemplateFormatCode,
+                            IsCustomerView = docType.IsCustomerView,
+                            IsAgentView = docType.IsAgentView,
+                            DocumentTypeCategoryCode = docType.DocumentTypeCategoryCode,
+                            CountryCode = docType.CountryCode,
+                            Subject = docType.Subject,
+                            IsEnabledForCustomers = true,
+                            Notes = docType.Notes,
+                            DocumentTypeDefaultHTMLTemplateId = docType.DocumentTypeDefaultHTMLTemplateId,
+                            DocumentTypeDefaultReportTemplateId = docType.DocumentTypeDefaultReportTemplateId,
+                            IsSystemAdditionalPrintingFields = docType.IsSystemAdditionalPrintingFields,
+                            PrintingFieldsScreenCode = docType.PrintingFieldsScreenCode,
+                            OrderBy = docType.OrderBy,
+                            OnPrintPopulateDateFieldName = docType.OnPrintPopulateDateFieldName ,
+                            OnSendPopulateDateFieldName = docType.OnSendPopulateDateFieldName,
+                            OnUploadPopulateDateFieldName = docType.OnUploadPopulateDateFieldName,
+                        };
+                        documentTypeRepository.Add(newDocType);
 
-                            foreach (DocumentTypeCopyPM copy in docType.DocumentTypeCopies)
+                        foreach (DocumentTypeCopyPM copy in docType.DocumentTypeCopies)
+                        {
+                            if (!copy.InActive)
                             {
-                                if (!copy.InActive)
+                                DocumentTypeCopy newCopy = new DocumentTypeCopy()
                                 {
-                                    DocumentTypeCopy newCopy = new DocumentTypeCopy()
-                                    {
-                                        Id = IdCounter.GetNumber("DocumentTypeCopy", tenant).ToString(),
-                                        Code = copy.Code,
-                                        Name = copy.Name,
-                                        Tenant = tenant,
-                                        IndexOrder = copy.IndexOrder,
-                                        IsSelectedByDefault = copy.IsSelectedByDefault,
-                                        DocumentTypeId = newDocType.Id,
-                                    };
-                                    documentTypeCopyRepository.Add(newCopy);
-                                }
-                            }
-                            foreach (DocumentTypeCustomField customField in zeroCustomFields)
-                            {
-                                DocumentTypeCustomField newCustomField = new DocumentTypeCustomField()
-                                {
-                                    DocumentTypeId = newDocType.Id,
-                                    DefaultValue = customField.DefaultValue,
-                                    FieldCode = customField.FieldCode,
-                                    FieldDataTypeCode = customField.FieldDataTypeCode,
-                                    Id = IdCounter.GetNumber("DocumentTypeCustomField", tenant).ToString(),
-                                    InActive = customField.InActive,
-                                    IndexOrder = customField.IndexOrder,
-                                    IsRequired = customField.IsRequired,
-                                    MultiLine = customField.MultiLine,
-                                    Name = customField.Name,
+                                    Id = IdCounter.GetNumber("DocumentTypeCopy", tenant).ToString(),
+                                    Code = copy.Code,
+                                    Name = copy.Name,
                                     Tenant = tenant,
+                                    IndexOrder = copy.IndexOrder,
+                                    IsSelectedByDefault = copy.IsSelectedByDefault,
+                                    DocumentTypeId = newDocType.Id,
                                 };
-                                documentTypeCustomFieldRepository.Add(newCustomField);
+                                documentTypeCopyRepository.Add(newCopy);
                             }
-
-                            List<DocumentTypeTemplatePM> documentTypeTemplateList = documentTypeTemplateQuery.GetDocumentTypeTemplatesByDocumentTypeId(docType.Id, 0).ToList();
-                            foreach (DocumentTypeTemplatePM a in documentTypeTemplateList)
-                            {
-                                DocumentTypePM documenttype = tenantZeroDocumentTypes.Values.Where(d => d.Id == a.DocumentTypeId && d.Tenant == 0).FirstOrDefault();
-
-                                bool isDefault = (from doc in tenantZeroDocumentTypes.Values
-                                                  where doc.DocumentTypeDefaultHTMLTemplateId == a.Id || doc.DocumentTypeDefaultReportTemplateId == a.Id
-                                                  select doc).Any();
-
-
-                                if (((a.IsEnabledForCustomers && a.IsCopiedAtSignup) || automationDocumentTypeIds.Contains(docType.Id)) && (sameCountry || (string.IsNullOrEmpty(a.CountryCode?.Trim()) || a.CountryCode == countryCode)))
-                                {
-                                    DocumentTypeTemplate newtemplate = new DocumentTypeTemplate()
-                                    {
-                                        Id = IdCounter.GetNumber("DocumentTypeTemplate", tenant).ToString(),
-                                        Tenant = tenant,
-                                        TemplateBody = a.TemplateBody,
-                                        TemplateType = a.TemplateType,
-                                        HorizontalShift = a.HorizontalShift,
-                                        InActive = a.InActive,
-                                        Description = a.Description,
-                                        DocumentTypeId = newDocType.Id,
-                                        EditorTool = a.EditorTool,
-                                        CountryCode = a.CountryCode,
-                                        Subject = a.CountryCode,
-                                        Language = a.Language,
-                                        OriginalTemplateId = a.Id,
-                                        VerticalShift = a.VerticalShift,
-                                        InternalRemarks = a.InternalRemarks,
-                                        IsEnabledForCustomers = true,
-                                        TemplateBodyHtml = a.TemplateBodyHtml,
-                                        TemplateFooterHtml = a.TemplateFooterHtml,
-                                        TemplateHeaderHtml = a.TemplateHeaderHtml,
-                                       TemplateFooterHeight = a.TemplateFooterHeight,
-                                       TemplateHeaderHeight = a.TemplateHeaderHeight,
-                                       CC  = a.CC,
-                                       From = a.From,
-                                       ReplyTo = a.ReplyTo,
-                                       To =  a.To,
-
-
-                                    };
-                                    if (isDefault)
-                                    {
-                                        if (newtemplate.TemplateType == "P")
-                                        {
-                                            newDocType.DocumentTypeDefaultReportTemplateId = newtemplate.Id;
-                                        }
-                                        else
-                                        {
-                                            newDocType.DocumentTypeDefaultHTMLTemplateId = newtemplate.Id;
-                                        }
-                                    }
-                                    newDocType.IsDocOut = documenttype.IsDocOut;
-
-                                    documentTypeTemplateRepository.Add(newtemplate);
-
-
-                                }
-                            }
-
                         }
-                        else
+                        foreach (DocumentTypeCustomField customField in zeroCustomFields)
                         {
-
-                            documentType.OnPrintPopulateDateFieldName = docType.OnPrintPopulateDateFieldName;
-                            documentType.OnSendPopulateDateFieldName = docType.OnSendPopulateDateFieldName;
-                            documentType.OnUploadPopulateDateFieldName = docType.OnUploadPopulateDateFieldName;
-                            documentTypeRepository.Update(documentType);
+                            DocumentTypeCustomField newCustomField = new DocumentTypeCustomField()
+                            {
+                                DocumentTypeId = newDocType.Id,
+                                DefaultValue = customField.DefaultValue,
+                                FieldCode = customField.FieldCode,
+                                FieldDataTypeCode = customField.FieldDataTypeCode,
+                                Id = IdCounter.GetNumber("DocumentTypeCustomField", tenant).ToString(),
+                                InActive = customField.InActive,
+                                IndexOrder = customField.IndexOrder,
+                                IsRequired = customField.IsRequired,
+                                MultiLine = customField.MultiLine,
+                                Name = customField.Name,
+                                Tenant = tenant,
+                            };
+                            documentTypeCustomFieldRepository.Add(newCustomField);
                         }
+
+                        List<DocumentTypeTemplatePM> documentTypeTemplateList = documentTypeTemplateQuery.GetDocumentTypeTemplatesByDocumentTypeId(docType.Id, 0).ToList();
+                        foreach (DocumentTypeTemplatePM a in documentTypeTemplateList)
+                        {
+                            DocumentTypePM documenttype = tenantZeroDocumentTypes.Values.Where(d => d.Id == a.DocumentTypeId && d.Tenant == 0).FirstOrDefault();
+
+                            bool isDefault = (from doc in tenantZeroDocumentTypes.Values
+                                              where doc.DocumentTypeDefaultHTMLTemplateId == a.Id || doc.DocumentTypeDefaultReportTemplateId == a.Id
+                                              select doc).Any();
+
+
+                            if ((((a.IsEnabledForCustomers && a.IsCopiedAtSignup) || a.IsSystem) || automationDocumentTypeIds.Contains(docType.Id)) && (sameCountry || (string.IsNullOrEmpty(a.CountryCode?.Trim()) || a.CountryCode == countryCode)))
+                            {
+                                DocumentTypeTemplate newtemplate = new DocumentTypeTemplate()
+                                {
+                                    Id = IdCounter.GetNumber("DocumentTypeTemplate", tenant).ToString(),
+                                    Tenant = tenant,
+                                    TemplateBody = a.TemplateBody,
+                                    TemplateType = a.TemplateType,
+                                    HorizontalShift = a.HorizontalShift,
+                                    InActive = a.InActive,
+                                    Description = a.Description,
+                                    DocumentTypeId = newDocType.Id,
+                                    EditorTool = a.EditorTool,
+                                    CountryCode = a.CountryCode,
+                                    Subject = a.CountryCode,
+                                    Language = a.Language,
+                                    OriginalTemplateId = a.Id,
+                                    VerticalShift = a.VerticalShift,
+                                    InternalRemarks = a.InternalRemarks,
+                                    IsEnabledForCustomers = true,
+                                    TemplateBodyHtml = a.TemplateBodyHtml,
+                                    TemplateFooterHtml = a.TemplateFooterHtml,
+                                    TemplateHeaderHtml = a.TemplateHeaderHtml,
+                                    TemplateFooterHeight = a.TemplateFooterHeight,
+                                    TemplateHeaderHeight = a.TemplateHeaderHeight,
+                                    CC  = a.CC,
+                                    From = a.From,
+                                    ReplyTo = a.ReplyTo,
+                                    To =  a.To,
+                                    LastUpdateDate = a.LastUpdateDate,
+
+
+                                };
+                                if (isDefault)
+                                {
+                                    if (newtemplate.TemplateType == "P")
+                                    {
+                                        newDocType.DocumentTypeDefaultReportTemplateId = newtemplate.Id;
+                                    }
+                                    else
+                                    {
+                                        newDocType.DocumentTypeDefaultHTMLTemplateId = newtemplate.Id;
+                                    }
+                                }
+                                newDocType.IsDocOut = documenttype.IsDocOut;
+
+                                documentTypeTemplateRepository.Add(newtemplate);
+
+
+                            }
+                        }
+
+                    }
+                    else
+                    {
+
+                        documentType.OnPrintPopulateDateFieldName = docType.OnPrintPopulateDateFieldName;
+                        documentType.OnSendPopulateDateFieldName = docType.OnSendPopulateDateFieldName;
+                        documentType.OnUploadPopulateDateFieldName = docType.OnUploadPopulateDateFieldName;
+                        documentTypeRepository.Update(documentType);
+
+                        CopyDocumentTypeTemplateService copyDocumentTypeTemplateService = new CopyDocumentTypeTemplateService(tenant, tenantZeroDocumentTypes);
+                        copyDocumentTypeTemplateService.Execute(documentType, docType);
+                    }
                     //}
 
                 }

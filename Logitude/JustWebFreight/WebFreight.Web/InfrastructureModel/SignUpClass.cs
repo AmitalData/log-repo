@@ -1967,7 +1967,7 @@ namespace WebFreight.Web.InfrastructureModel
             AutomationHelper automationHelper = new AutomationHelper();
             List<string> automationDocumentTypeTemplateIds = automationHelper.GetAutomationDocumentTypeTemplateIds(tenant);
 
-            documentTypeTemplateList = documentTypeTemplateList.Where(d => (d.IsCopiedAtSignup && d.IsEnabledForCustomers) || automationDocumentTypeTemplateIds.Contains(d.Id)).ToList();
+            documentTypeTemplateList = documentTypeTemplateList.Where(d => (d.IsCopiedAtSignup && d.IsEnabledForCustomers) || d.IsSystem || automationDocumentTypeTemplateIds.Contains(d.Id)).ToList();
             
             foreach (DocumentTypePM documenttype in tenantZeroDocumentType)
             {
@@ -2002,6 +2002,11 @@ namespace WebFreight.Web.InfrastructureModel
 
             if (documentTypeDefaultHTMLTemplate == null)
             {
+                documentTypeDefaultHTMLTemplate = documentTypeTemplates.Where(d => d.CountryCode == coutryCode && d.TemplateType == "M").FirstOrDefault();
+            }
+
+            if (documentTypeDefaultHTMLTemplate == null)
+            {
                 documentTypeDefaultHTMLTemplate = documentTypeTemplates.Where(d => d.TemplateType == "M" && d.OriginalTemplateId == documenttype.DocumentTypeDefaultHTMLTemplateId).FirstOrDefault();
             }
 
@@ -2017,6 +2022,11 @@ namespace WebFreight.Web.InfrastructureModel
         {
             DocumentTypeTemplate documentTypeDefaultReportTemplate = documentTypeTemplates.Where(d => d.CountryCode == coutryCode && d.TemplateType == "P" && d.OriginalTemplateId == documenttype.DocumentTypeDefaultReportTemplateId).FirstOrDefault();
 
+            if (documentTypeDefaultReportTemplate == null)
+            {
+                documentTypeDefaultReportTemplate = documentTypeTemplates.Where(d => d.CountryCode == coutryCode && d.TemplateType == "P").FirstOrDefault();
+
+            }
             if (documentTypeDefaultReportTemplate == null)
             {
                 documentTypeDefaultReportTemplate = documentTypeTemplates.Where(d => d.TemplateType == "P" && d.OriginalTemplateId == documenttype.DocumentTypeDefaultReportTemplateId).FirstOrDefault();
@@ -2060,6 +2070,7 @@ namespace WebFreight.Web.InfrastructureModel
                 CC = documentTypeTemplatePM.CC,
                 ReplyTo = documentTypeTemplatePM.ReplyTo,
                 To = documentTypeTemplatePM.To,
+                IsSystem = documentTypeTemplatePM.IsSystem,
             };
         }
 
