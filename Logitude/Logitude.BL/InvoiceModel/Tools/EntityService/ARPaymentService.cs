@@ -335,13 +335,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             ARPaymentValidator.Validate(paymentPM, paymentPoco, isNewEntity, objectContext, PaymentCashbook);
 
-            ARPaymentTracing.Trace(theEntityPm, paymentPoco, isNewEntity);
-
-            ARPaymentReferencesService ARPaymentReferencesService = new ARPaymentReferencesService(this.objectContext);
-            ARPaymentReferencesService.CalculateARInvoicePaymentRefeneces(theEntityPm);
-
-           // ARPaymentReferencesService.CalculateARInvoicePaymentRefeneces(theEntityPm, invoiceRepository);
-            //UpdateChequeOrPaymentRefField(theEntityPm);
+            ARPaymentTracing.Trace(theEntityPm, paymentPoco, isNewEntity); 
 
             if (mapComposition)
             {
@@ -409,9 +403,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.VoidARPaymentInFullAccounting(theEntityPm, setVoided);
 
-            this.InitializeTransferComponents();
+            this.InitializeTransferComponents(); 
 
-            ARPaymentMapping.MapEntity(theEntityPm, paymentPoco, isNewEntity);
+            ARPaymentReferencesService ARPaymentReferencesService = new ARPaymentReferencesService(this.objectContext);
+            ARPaymentReferencesService.UpdateConnectedARInvoicePaymentRefeneces(theEntityPm);
+
+            // ARPaymentReferencesService.CalculateARInvoicePaymentRefeneces(theEntityPm, invoiceRepository);
+            //UpdateChequeOrPaymentRefField(theEntityPm);
+
+            ARPaymentMapping.MapEntity(theEntityPm, paymentPoco, isNewEntity); 
+
             paymentRepository.Update(paymentPoco);
             paymentRepository.SubmitChanges();
             invoicePaymentRepository.SubmitChanges();

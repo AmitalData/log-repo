@@ -25,51 +25,68 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.invoicePaymentRepository = new ARInvoicePaymentRepository(this.objectContext);
         }
 
-        internal void CalculateARInvoicePaymentRefeneces(ARPaymentPM theEntityPm)
+        internal void UpdateConnectedARInvoicePaymentRefeneces(ARPaymentPM aRPaymentPM)
         {
-            var invoicesIds = theEntityPm.PaymentInvoices;
+            List<ARPaymentInvoicePM> PaymentInvoices = aRPaymentPM.PaymentInvoices;
 
-            foreach (ARPaymentInvoicePM item in invoicesIds)
+            foreach (ARPaymentInvoicePM item in PaymentInvoices)
             {
-                this.UpdateARInvoicePaymentRefreneces(item, theEntityPm);
-            }
+                this.UpdateARInvoicePaymentRefreneces(item, aRPaymentPM);
+            } 
 
         }
-
+          
         private void UpdateARInvoicePaymentRefreneces(ARPaymentInvoicePM item, ARPaymentPM aRPaymentPM)
         {
-            List<ARInvoicePayment> allConnectedItems = invoicePaymentRepository.GetARInvoicePaymentByInvoiceId(item.ARInvoiceId, item.Tenant).ToList();
+            List<ARInvoicePayment> allConnectedARInvoicePayment = invoicePaymentRepository.GetARInvoicePaymentByInvoiceId(item.ARInvoiceId, item.Tenant).ToList();
+            string paymentRefrenece = CalculateARInvoicePaymentRefreneces(aRPaymentPM, allConnectedARInvoicePayment);  
+            UpdateConnectedARInvoice(item, paymentRefrenece);
+        }
 
-            string paymentRefrenece = "";
-            List<string> Ids = new List<string>();
+        private void UpdateConnectedARInvoice(ARPaymentInvoicePM item, string paymentRefrenece)
+        {
+            ARInvoice invoice = invoiceRepository.GetSingleInvoice(item.ARInvoiceId);
+            invoice.PaymentReferences = paymentRefrenece;
+            invoiceRepository.Update(invoice);
+        }
 
-            if (allConnectedItems.Count > 0)
+        private string CalculateARInvoicePaymentRefreneces(ARPaymentPM aRPaymentPM, List<ARInvoicePayment> allConnectedARInvoicePayment)
+        {
+            List<string> chequeOrPaymentRefList = new List<string>();
+
+            if (allConnectedARInvoicePayment.Count > 0)
             {
-                foreach (ARInvoicePayment aRInvoicePayment in allConnectedItems)
+                chequeOrPaymentRefList = GetChequeOrPaymentRefList(aRPaymentPM, allConnectedARInvoicePayment);
+            }
+
+            string paymentrefreece = string.Join(",", chequeOrPaymentRefList);
+            return paymentrefreece; 
+        }
+
+        private List<string> GetChequeOrPaymentRefList(ARPaymentPM aRPaymentPM, List<ARInvoicePayment> allConnectedARInvoicePayment)
+        {
+            List<string> chequeOrPaymentRefList = new List<string>();
+
+            foreach (ARInvoicePayment aRInvoicePayment in allConnectedARInvoicePayment)
+            {
+                ARPayment aRPayment = paymentRepository.GetSingleARPayment(aRInvoicePayment.ARPaymentId, aRInvoicePayment.Tenant);
+
+                if (aRPayment != null && aRPayment.ChequeOrPaymentRef != null)
                 {
-                    ARPayment aRPayment = paymentRepository.GetSingleARPayment(aRInvoicePayment.ARPaymentId, aRInvoicePayment.Tenant);
 
-                    if (aRPayment != null && aRPayment.ChequeOrPaymentRef != null)
+                    if (aRPayment.Id == aRPaymentPM.PaymentInvoices[0].ARPaymentId)
                     {
-                        paymentRefrenece = aRPayment.ChequeOrPaymentRef == null ? paymentRefrenece : paymentRefrenece + aRPayment.ChequeOrPaymentRef + ',';
-                        if (aRPayment.Id == aRPaymentPM.PaymentInvoices[0].ARPaymentId)
-                        {
-                            Ids.Add(aRPaymentPM.ChequeOrPaymentRef);
-                        }
-                        else
-                        {
-                            Ids.Add(aRPayment.ChequeOrPaymentRef);
-                        }
-
+                        chequeOrPaymentRefList.Add(aRPaymentPM.ChequeOrPaymentRef);
                     }
+                    else
+                    {
+                        chequeOrPaymentRefList.Add(aRPayment.ChequeOrPaymentRef);
+                    }
+
                 }
             }
 
-            paymentRefrenece = string.Join(",", Ids);
-
-            var ar = invoiceRepository.GetSingleInvoice(item.ARInvoiceId);
-            ar.PaymentReferences = paymentRefrenece;
-            invoiceRepository.Update(ar);
+            return chequeOrPaymentRefList;
         }
 
         internal void CalculatePaymentReferences(ARInvoicePM entityPM, ARInvoice invoice)
@@ -78,9 +95,32 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             invoice.PaymentReferences = this.GetPaymentReferences(invoicesIds);
         }
 
+
         private string GetPaymentReferences(List<ARInvoicePaymentPM> invoicesIds)
         {
-            throw new NotImplementedException();
-        }
+            var invoiceId = invoicesIds[0].ARInvoiceId;
+            string paymentRefrenece = "";
+            List<string> Ids = new List<string>();
+
+            foreach (ARInvoicePaymentPM aRInvoicePayment in invoicesIds)
+            {
+                if ((int)aRInvoicePayment.ChangeSetOp != 3)
+                {
+                    ARPayment aRPayment = paymentRepository.GetSingleARPayment(aRInvoicePayment.ARPaymentId, aRInvoicePayment.Tenant);
+
+                    if (aRPayment != null && aRPayment.ChequeOrPaymentRef != null)
+                    {
+                        Ids.Add(aRPayment.ChequeOrPaymentRef);
+                    }
+
+                }
+
+
+            }
+            paymentRefrenece = string.Join(",", Ids); 
+
+            return paymentRefrenece;
+        } 
+
     }
 }
