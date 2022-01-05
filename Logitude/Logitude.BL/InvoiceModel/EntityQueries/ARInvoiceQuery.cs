@@ -45,7 +45,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             ARInvoicePM entityPM = null;
 
             ARInvoice entityPOCO =
-                (from a in repository.context.ARInvoices.Include("ProfitCurrency").Include("InvoiceCurrency").Include("Status").Include("LocalCurrency").Include("BillTo").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("SATInvoiceStatus").Include("SATTransferStatus").Include("Branch")
+                (from a in repository.context.ARInvoices.Include("Status").Include("ARInvoiceType").Include("ProfitCurrency").Include("InvoiceCurrency").Include("Status").Include("LocalCurrency").Include("BillTo").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("SATInvoiceStatus").Include("SATTransferStatus").Include("Branch")
                  where a.Id == id && a.Tenant == tenant
                  select a).FirstOrDefault();
 
@@ -129,9 +129,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             return entityPM;
         }
-
-      
-
 
         public ARInvoicePM GetReadyForTransferOrErrorInTransferInvoicePM(int tenant)
         {
@@ -1710,6 +1707,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
                 entityPM = new ARInvoicePM()
                 {
+                    StatusName = entityPOCO.Status == null ? null : entityPOCO.Status.Name,
+                    ARInvoiceTypeName = entityPOCO.ARInvoiceType == null ? null : entityPOCO.ARInvoiceType.Name,
                     ProfitCurrencyExchangeRate = entityPOCO.ProfitCurrencyExchangeRate,
                     ProfitCurrencyId = entityPOCO.ProfitCurrencyId,
                     SubTotalInInvoiceCurrency = entityPOCO.SubTotalInInvoiceCurrency,

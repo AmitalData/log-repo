@@ -83,6 +83,11 @@ export class ARInvoicePM {
     public set ARInvoiceTypeCode(newValue: string) { if (this.aRInvoiceTypeCode != newValue) { this.aRInvoiceTypeCode = newValue; this.MarkAsDirty("ARInvoiceTypeCode"); } }
        
 	 
+    private aRInvoiceTypeName: string;
+    public get ARInvoiceTypeName() { return this.aRInvoiceTypeName; }
+    public set ARInvoiceTypeName(newValue: string) { if (this.aRInvoiceTypeName != newValue) { this.aRInvoiceTypeName = newValue; this.MarkAsDirty("ARInvoiceTypeName"); } }
+       
+	 
     private mainEntityStatus: string;
     public get MainEntityStatus() { return this.mainEntityStatus; }
     public set MainEntityStatus(newValue: string) { if (this.mainEntityStatus != newValue) { this.mainEntityStatus = newValue; this.MarkAsDirty("MainEntityStatus"); } }
