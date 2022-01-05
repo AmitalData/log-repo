@@ -427,7 +427,7 @@ cargoTrackingShipmentPM.ArrivalDate |
                 </div>
                 <div *ngIf="cargoTrackingShipmentPM.EntityType != 'O'">
                     <div class="title">total value nis</div>
-                    <div class="description"></div>
+                    <div class="description">{{this.cargoTrackingShipmentPM.CustomsData.TotalValueInNIS||0 | number}} ₪</div>
                 </div>
                 <div *ngIf="cargoTrackingShipmentPM.EntityType != 'O'">
                     <div class="title">total taxes</div>
