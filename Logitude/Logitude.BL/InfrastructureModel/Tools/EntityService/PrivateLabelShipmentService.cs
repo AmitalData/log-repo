@@ -47,7 +47,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             return (tenantPM.CustomerTenantShareExportFile && customerTenantAccessInfo.IsExportActivated && shipmentPM.DirectionId.ToUpper() == "E");
 
         }
-        private TenantPM GetTenantPM(int tenant) 
+        private TenantPM GetTenantPM(int tenant) { 
             TenantPM TenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
             return TenantPM;
         }
