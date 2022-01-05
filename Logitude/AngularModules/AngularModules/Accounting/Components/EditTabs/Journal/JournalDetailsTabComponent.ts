@@ -816,6 +816,7 @@ class JournalLineModel extends BaseComponent {
     accountingDayMustBeInRange: string = TextCodeTranslator.Translate("Journal.O.TheAccountingDayMustBeInRange");
     public IsCurrencyEnabled :boolean =true;
     public isValid: boolean = true;
+    public SessionIndex: number;
 
     public __UserCanSetRateManually: boolean = false; // user can set rate manually by insert forign amount with local amount empty (see WI 24999)
     private CurrentSession = SessionLocator.SelectedSession;
@@ -861,6 +862,7 @@ class JournalLineModel extends BaseComponent {
         //#endregion
         this.glaccountListService = new GLAccountListService();
         this.SetCurrencyFieldEnabilityForCopyJournal();
+        this.SessionIndex  = SessionLocator.Index;
     }
     SetCurrencyFieldEnabilityForCopyJournal() {
 
@@ -890,13 +892,6 @@ class JournalLineModel extends BaseComponent {
     set Line(value: number) {
         if (this.JournalLinePM.Line != value) {
             this.JournalLinePM.Line = value;
-        }
-    }
-
-    get JournalId() { return this.JournalLinePM.JournalId; }
-    set JournalId(value: string) {
-        if (this.JournalLinePM.JournalId != value) {
-            this.JournalLinePM.JournalId = value;
         }
     }
 
@@ -1404,19 +1399,18 @@ class JournalLineModel extends BaseComponent {
         this.isMouseIn = true;
         if (this.currencyRate) {
             this.timerToken = setTimeout(() => {
-                var item = document.getElementById("tooltip-" + this.JournalId + this.Line);
+                var item = document.getElementById("tooltip-" + this.SessionIndex + this.Line);
                 if (AppTool.IsNullOrEmpty(item))
                     return;
                 var itemRect = item.getBoundingClientRect();
-
                 if (this.isMouseIn) {
-                    document.getElementById("tooltip-body-" + this.JournalId + this.Line).style.position = "fixed";
-                    document.getElementById("tooltip-body-" + this.JournalId + this.Line).style.top = (itemRect.top - 35) + 'px';
-                    document.getElementById("tooltip-body-" + this.JournalId + this.Line).style.left = (itemRect.left + 60) + 'px';
-                    document.getElementById("tooltip-body-" + this.JournalId + this.Line).style.visibility = "visible";
+                    document.getElementById("tooltip-body-" + this.SessionIndex + this.Line).style.position = "fixed";
+                    document.getElementById("tooltip-body-" + this.SessionIndex + this.Line).style.top = (itemRect.top - 35) + 'px';
+                    document.getElementById("tooltip-body-" + this.SessionIndex + this.Line).style.left = (itemRect.left + 60) + 'px';
+                    document.getElementById("tooltip-body-" + this.SessionIndex + this.Line).style.visibility = "visible";
 
                     this.timerToken = setTimeout(() => {
-                        document.getElementById("tooltip-body-" + this.JournalId + this.Line).style.visibility = "hidden";
+                        document.getElementById("tooltip-body-" + this.SessionIndex + this.Line).style.visibility = "hidden";
 
                     }, 2500);
                 }
@@ -1429,7 +1423,7 @@ class JournalLineModel extends BaseComponent {
         if (this.currencyRate) {
 
             this.timerToken = setTimeout(() => {
-                document.getElementById("tooltip-body-" + this.JournalId + this.Line).style.visibility = "hidden";
+                document.getElementById("tooltip-body-" + this.SessionIndex + this.Line).style.visibility = "hidden";
 
             }, 400);
 
