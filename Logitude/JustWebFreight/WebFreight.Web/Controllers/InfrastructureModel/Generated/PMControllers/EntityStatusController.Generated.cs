@@ -56,8 +56,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                SecurityUtility.CheckContactFeature("EntityStatus", "READ", authToken.Tenant);
                 EntityStatusQuery entityStatusQuery = new EntityStatusQuery(authToken.Tenant);
                 EntityStatusPM entityStatusPM = entityStatusQuery.GetSinglePM(id, authToken.Tenant);
                 
@@ -88,8 +86,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("EntityStatus", "NEW", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("EntityStatus", entityPM.Tenant, authToken.Tenant);
                 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
                         EntityStatusService service = new EntityStatusService(MyContext, entityPM.Tenant);
@@ -137,8 +133,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("EntityStatus", "UPDATE", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("EntityStatus", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "EntityStatus" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "EntityStatusPM" + entityPM.Id + entityPM.Tenant;
