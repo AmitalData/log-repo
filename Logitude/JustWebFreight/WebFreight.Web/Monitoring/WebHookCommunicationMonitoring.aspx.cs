@@ -74,7 +74,7 @@ namespace WebFreight.Web.Monitoring
             return (from a in context.QueueMessages
                     where a.CreateDateTime > twoDaysBefore
                     && a.QueueDefinitionCode == "WebHookCommunicationLogQueue" && ((a.Status == 0
-                    && (EntityFunctions.DiffMinutes(a.CreateDateTime, todayDateTime) > 5) || a.Status == -1))
+                    && (EntityFunctions.DiffMinutes(a.CreateDateTime, todayDateTime) > 5)) || a.Status == -1)
                     select a).Any();
 
         }

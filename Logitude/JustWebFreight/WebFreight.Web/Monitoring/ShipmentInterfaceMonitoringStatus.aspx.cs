@@ -72,10 +72,13 @@ namespace WebFreight.Web.Monitoring
             ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
 
             return (from a in commonDataContext.CommunicationLogs
-                         where a.CreateDateUTC > twoDaysBefore
-                         && a.Subject == "Shipment Interface" && ((a.CommunicationStatusTypeCode == "W"
-                         && (EntityFunctions.DiffMinutes(a.CreateDateUTC, todayDateTime) > 5) || a.CommunicationStatusTypeCode == "F"))
-                         select a).Any();
+                    where a.CreateDateUTC > twoDaysBefore
+                    && a.Subject == "Shipment Interface"
+                    && ((a.CommunicationStatusTypeCode == "W" && (EntityFunctions.DiffMinutes(a.CreateDateUTC, todayDateTime) > 5)) || a.CommunicationStatusTypeCode == "F")
+                    select a).Any();
+
+
+
 
         }
 
