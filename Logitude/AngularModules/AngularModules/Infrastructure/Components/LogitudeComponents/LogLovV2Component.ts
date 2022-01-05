@@ -237,6 +237,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         if (this.SelectedItem?.PartnerTypeId == "SL") {
             tablename = "ShippingLine";
         }
+        if (this.SelectedItem?.PartnerTypeId == "AL") {
+            tablename = "Airline";
+        }
+        if (this.SelectedItem?.PartnerTypeId == "TR") {
+            tablename = "Trucker";
+        }
         return tablename;
     }
 
