@@ -206,7 +206,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public TenantPM GetSinglePM(int id)
         {
-            string entityName = "TenantPM" + id;
+            string entityName = "TenantPM" + id; 
 
             TenantPM entity;
             if (true)//HttpContext.Current != null)
@@ -355,8 +355,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         LTLRatio = tt.LTLRatio,
                         IsQuotesRequestActivatedInShared = tt.IsQuotesRequestActivatedInShared,
                         AutomaticallyCloseDays = tt.AutomaticallyCloseDays,
-                    };
-
+                    }; 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
                         IGlobalContext globalObjectContext = GlobalContext.GetContext();
@@ -365,10 +364,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         tenant.TemporalStartDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalStartDate;
                         tenant.TemporalEndDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalEndDate;
                         //tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
-                    }
-
-                    this.GetTenantOtherFields(tenant);
-
+                    } 
+                    this.GetTenantOtherFields(tenant); 
                     entity = tenant;
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
