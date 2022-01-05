@@ -510,7 +510,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         if (cardObject != null)
                         {
                             shipmentPM.Transshipment1CarrierCode = cardObject.Code;
-                            shipmentPM.Transshipment1CarrierName = cardObject.EnglishName;
+                            shipmentPM.Transshipment1CarrierName = byLocalName && !string.IsNullOrEmpty(cardObject.LocalName) ? cardObject.LocalName : cardObject.EnglishName;
                             shipmentPM.Transshipment1CarrierWebSite = cardObject.Website;
                         }
                     }
@@ -562,7 +562,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         if (cardObject != null)
                         {
                             shipmentPM.Transshipment2CarrierCode = cardObject.Code;
-                            shipmentPM.Transshipment2CarrierName = cardObject.EnglishName;
+                            shipmentPM.Transshipment2CarrierName = byLocalName && !string.IsNullOrEmpty(cardObject.LocalName) ? cardObject.LocalName : cardObject.EnglishName;
                             shipmentPM.Transshipment2CarrierWebSite = cardObject.Website;
                         }
                     }
@@ -616,7 +616,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         if (cardObject != null)
                         {
                             shipmentPM.Transshipment3CarrierCode = cardObject.Code;
-                            shipmentPM.Transshipment3CarrierName = cardObject.EnglishName;
+                            shipmentPM.Transshipment3CarrierName = byLocalName && !string.IsNullOrEmpty(cardObject.LocalName) ? cardObject.LocalName : cardObject.EnglishName;
                             shipmentPM.Transshipment3CarrierWebSite = cardObject.Website;
                         }
                     }

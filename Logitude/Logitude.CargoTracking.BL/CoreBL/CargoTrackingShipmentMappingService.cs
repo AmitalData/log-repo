@@ -60,7 +60,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             cargoShipmentPM.CustomsBrokerReference = shipmentPM?.CustomFileNumber;
             cargoShipmentPM.ContainersNumbers = shipmentPM?.ContainersNumbers;
             cargoShipmentPM.IncotermName = shipmentOrderPM != null ? shipmentOrderPM.IncotermCode : shipmentPM?.IncotermCode;
-            cargoShipmentPM.WarehouseLegEnglishName = shipmentPM?.WarehouseLegEnglishName;
+            cargoShipmentPM.WarehouseLegName = !string.IsNullOrEmpty(shipmentPM?.WarehouseLegLocalName) ? shipmentPM?.WarehouseLegLocalName : shipmentPM?.WarehouseLegEnglishName;
             cargoShipmentPM.ImportManifest = shipmentPM?.ImportManifest;
             cargoShipmentPM.TotalTax = shipmentPM?.TotalTax;
             cargoShipmentPM.ShipmentTypeName = shipmentPM?.ShipmentTypeName;
