@@ -103,7 +103,6 @@
     <None Include="DBTables\CargoTrackingShipmentSearch.dxml" />
     <None Include="DBTables\CargoTrackingTransportMode.dxml" />
     <None Include="DBTables\CargoTrackingWatermark.dxml" />
-    <None Include="EntityFiles\CargoReferencesSyncQueue.lxml" />
     <None Include="EntityFiles\CargoTrackingCard.lxml" />
     <None Include="EntityFiles\CargoTrackingCountry.lxml" />
     <None Include="EntityFiles\CargoTrackingHeaderEntityType.lxml" />
