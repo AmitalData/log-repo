@@ -1304,20 +1304,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                             }
                         }
-                        else if (!string.IsNullOrEmpty(OldCustomerId) && customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && customerTenantAccessInfo.CustomerTenant != 0 && IsImporterTenantHasExportFeatureForExportShipments(customerTenantAccessInfo.CustomerTenant, entityPM))
-                        {
-                            var ImporterTenant = entityPM.CustomerTenantNumber;
-                            IQueueService queueservice = new DbQueueService();
-                            if (IsShipmentMatchDigitalQueueConditions(entityPM))
-                            {
-                                queueservice.InitializeQueue("ImportersDigitalShipmentQueue", 0);
-                            }
-                            else
-                            {
-                                queueservice.InitializeQueue("ImportersShipmentQueue", 0);
-                            }
-                            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CustomerId", !string.IsNullOrEmpty(OldCustomerId) ? OldCustomerId : entityPM.CustomerId }, { "CustomerChanged", CustomerChanged } }, tenant, null, entityPM.CustomerId);
-                        }
+                        
+                       
                     }
                     OpenForwarderShipmentQueue();
 
