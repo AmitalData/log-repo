@@ -632,7 +632,8 @@
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [TabIndex]="-1">
                                                 <div style="height: 100%; width: 100%;">
-                                                    <Hyperlink *ngIf="item.LastStatusName" (click)="ViewStatusesClicked(item)">{{item.LastStatusName}}</Hyperlink>
+                                                    <Hyperlink *ngIf="item.ContainerStatusName && item.ContainerStatusSourceCode == 'OIN'" (click)="ViewContainerEntity(item)">{{item.ContainerStatusName}}</Hyperlink>
+                                                    <Hyperlink *ngIf="item.LastStatusName && item.ContainerStatusSourceCode == 'INT'" (click)="ViewStatusesClicked(item)">{{item.LastStatusName}}</Hyperlink>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>

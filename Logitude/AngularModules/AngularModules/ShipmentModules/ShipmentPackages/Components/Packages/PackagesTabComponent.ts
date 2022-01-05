@@ -1893,6 +1893,20 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
     }
 
+    ViewContainerEntity(item: ShipmentPackageItem) {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Container";
+        logWindow.IsFillScreen = true;
+        var containerEntityId = item.EntityPM?.ContainerEntityId;
+        if (!AppTool.IsNullOrEmpty(containerEntityId)) {
+            logWindow.ShowEditComponent(containerEntityId, "Container");
+            logWindow.ComponentLoaded.subscribe(comp => {
+                logWindow.WindowClosed.subscribe(s => {
+                });
+            });
+        }
+    }
+
     ViewStatusesClicked(item: ShipmentPackageItem) {
         if (item) {
             var logitudeWindow = new LogitudeWindow();
@@ -3058,6 +3072,10 @@ export class ShipmentPackageItem extends BaseComponent {
     }
 
     get LastStatusName() { return this.EntityPM.LastStatusName; }
+    get ContainerStatusName() { return this.EntityPM.ContainerStatusName; }
+    get ContainerStatusSourceCode() {
+        return this.EntityPM.ContainerStatusSourceCode;
+    }
 
     public MethodsList: any[] = [];
     FillMethodsList() {
