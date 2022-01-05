@@ -365,24 +365,27 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private void MapTheLastStatusName(ShipmentPackagePM package, IWebFreightContext webFreightContext)
         {
-             if (!string.IsNullOrEmpty(package.LastStatusCode))
+            if (string.IsNullOrEmpty(package.LastStatusCode))
             {
-                if (package.ContainerStatusSourceCode == "INT")
-                {
-                    package.LastStatusName = (from d in repository.context.INTTRAStatuses
-                                              where d.Code == package.LastStatusCode
-                                              select d.Name).FirstOrDefault();
+                return;
+            }
+            var inttra = "INT";
+            var oceanInsights = "OIN";
+            if (package.ContainerStatusSourceCode == inttra)
+            {
+                package.LastStatusName = (from d in repository.context.INTTRAStatuses
+                                          where d.Code == package.LastStatusCode
+                                          select d.Name).FirstOrDefault();
 
-                }
-                else if (package.ContainerStatusSourceCode == "OIN")
-                {
-                    var statusId = (from d in repository.context.Containers
-                                    where d.Id == package.ContainerEntityId
-                                    select d.StatusId).FirstOrDefault();
-                    package.ContainerStatusName = (from d in webFreightContext.EntityStatus
-                                                   where d.Id == statusId
-                                                   select d.Name).FirstOrDefault();
-                }
+            }
+            else if (package.ContainerStatusSourceCode == oceanInsights)
+            {
+                var statusId = (from d in repository.context.Containers
+                                where d.Id == package.ContainerEntityId
+                                select d.StatusId).FirstOrDefault();
+                package.ContainerStatusName = (from d in webFreightContext.EntityStatus
+                                               where d.Id == statusId
+                                               select d.Name).FirstOrDefault();
             }
         }
 
