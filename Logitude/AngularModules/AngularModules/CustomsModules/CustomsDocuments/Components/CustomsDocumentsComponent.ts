@@ -278,7 +278,7 @@ export class CustomsDocumentsComponent
         if (this.CustomsDocumentsTicketViewModels == null) {
             this.CustomsDocumentsTicketViewModels = [];
         }
-        //debugger;
+        //
         if (this.ParentEntityCode_args == "DeclarationCancellation") {
             if (this.reload_cancelDoc && !this.RefreshDocsScreen) {
                 this.reload_cancelDoc = false; return;

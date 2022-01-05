@@ -1112,7 +1112,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
     SavingPromise(isChromeMode: boolean): Promise<boolean> {
 
-        debugger;
+        
         return new Promise((resolve) => {
             if (this.IsNewEntity) {
                 this.supplierInvoicePMService.insert(this.EntityPM).subscribe((myResult:any) => {
