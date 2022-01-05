@@ -337,7 +337,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             ARPaymentTracing.Trace(theEntityPm, paymentPoco, isNewEntity);
 
-           // UpdateChequeOrPaymentRefField(theEntityPm);
+            ARPaymentReferencesService ARPaymentReferencesService = new ARPaymentReferencesService(this.objectContext);
+            ARPaymentReferencesService.CalculateARInvoicePaymentRefeneces(theEntityPm);
+
+           // ARPaymentReferencesService.CalculateARInvoicePaymentRefeneces(theEntityPm, invoiceRepository);
+            //UpdateChequeOrPaymentRefField(theEntityPm);
 
             if (mapComposition)
             {
