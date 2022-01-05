@@ -55,10 +55,7 @@ namespace Logitude.BL.CommonDataModel.ExternalService
         {
             List<DocumentTypeTemplatePM> tenantZeroDocumentTypeTemplatePMs = documentTypeTemplateQuery.GetDocumentTypeTemplatesByDocumentTypeId(tenantZeroDocumentTypePM.Id, 0);
             List<DocumentTypeTemplatePM> currentTenantDocumentTypeTemplatePMs = documentTypeTemplateQuery.GetDocumentTypeTemplatesByDocumentTypeId(currentTenantDocumentType.Id, tenant);
-            if(tenantZeroDocumentTypeTemplatePMs.Count() > 0)
-            {
 
-            }
             foreach (DocumentTypeTemplatePM tenantZeroDocumentTypeTemplatePM in tenantZeroDocumentTypeTemplatePMs)
             {
                 CopyTenantZeroDocumentTypeTemplateToCurrentTenant(currentTenantDocumentType, currentTenantDocumentTypeTemplatePMs, tenantZeroDocumentTypeTemplatePM);
