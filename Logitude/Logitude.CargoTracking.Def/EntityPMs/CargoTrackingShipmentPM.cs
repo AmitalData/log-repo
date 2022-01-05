@@ -48,7 +48,7 @@ namespace Logitude.CargoTracking.Def.EntityPMs
         public string FutureMilstoneName { get; set; }
 
         [DataMember]
-        public string WarehouseLegEnglishName { get; set; }
+        public string WarehouseLegName { get; set; }
         [DataMember]
         public string TotalTax { get; set; }
         [DataMember]
