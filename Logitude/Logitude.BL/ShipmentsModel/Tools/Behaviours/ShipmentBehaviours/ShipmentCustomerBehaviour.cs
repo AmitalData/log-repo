@@ -66,7 +66,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
             else
             {
-                this.CheckCustomerValue();
+                //this.CheckCustomerValue();
             }
         }
 
