@@ -281,6 +281,10 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public Address UnassignedShipperAddress { get; set; }
     
     public Address UnassignedConsigneeAddress { get; set; }
+    
+    public string PreCarriageVesselName { get; set; }
+    
+    public string OnCarriageVesselName { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 
