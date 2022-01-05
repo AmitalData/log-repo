@@ -63,6 +63,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     public ValidationErrorsList: string[] = [];
     public OkButtonLabel: string;
     public SessionIndex: number;
+    public IsChooseVesselVisible: boolean = false;
     @ViewChild(ChildDirective) Child: ChildDirective;
 
     private CurrentSession = SessionLocator.SelectedSession;
@@ -492,7 +493,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.UIProperties.SetEnabled("MainCarriageCarrierId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("MainCarriageCarrierNumber", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("Master", this.ObjectTableName, isScreenEnabled);
-        this.UIProperties.SetEnabled("MainCarriageVesselId", this.ObjectTableName, isScreenEnabled);
+        this.UIProperties.SetEnabled("MainCarriageVesselName", this.ObjectTableName, isScreenEnabled);
 
         // General
         this.UIProperties.SetEnabled("IncotermId", this.ObjectTableName, isScreenEnabled);
@@ -1082,11 +1083,13 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     SetUIProperties_VesselField() {
         var isFieldVisible = false;
         var isFieldEnabled = false;
+        this.IsChooseVesselVisible = false;
 
         if (!AppTool.IsNullOrEmpty(this.ShipmentLevelCode)) {
             if (this.ShipmentLevelCode != "H") {
                 if (this.TransportModeId == "O") {
                     isFieldVisible = true;
+                    this.IsChooseVesselVisible = true;
 
                     if (this.IsScreenEnabled) {
                         if (this.ShipmentTypeId == "FCLD") {
@@ -1097,8 +1100,8 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             }
         }
 
-        this.UIProperties.SetEnabled("MainCarriageVesselId", this.ObjectTableName, isFieldEnabled);
-        this.UIProperties.SetVisibility("MainCarriageVesselId", this.ObjectTableName, isFieldVisible);
+        this.UIProperties.SetEnabled("MainCarriageVesselName", this.ObjectTableName, isFieldEnabled);
+        this.UIProperties.SetVisibility("MainCarriageVesselName", this.ObjectTableName, isFieldVisible);
     }
     SetUIProperties_OrderDetails() {
         var isFieldsEnabled = false;
@@ -2946,6 +2949,23 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         if (this.EntityPM.MainCarriageVesselId != newValue) {
             this.EntityPM.MainCarriageVesselId = newValue;
         }
+    }
+
+    get MainCarriageVesselName() { return this.EntityPM.MainCarriageVesselName; }
+    set MainCarriageVesselName(newValue: string) {
+        if (this.EntityPM.MainCarriageVesselName != newValue) {
+            this.EntityPM.MainCarriageVesselName = newValue;
+            this.MainCarriageVesselId = null;
+        }
+    }
+
+    ChooseVesselClicked() {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 775;
+        logitudeWindow.Height = 570;
+        logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, IdProperty: "MainCarriageVesselId", NameProperty: "MainCarriageVesselName" };
+        logitudeWindow.Title = "Vessel Search";
+        logitudeWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/ChooseVesselComponent");
     }
 
     //Inland Domestic Main Carriage
