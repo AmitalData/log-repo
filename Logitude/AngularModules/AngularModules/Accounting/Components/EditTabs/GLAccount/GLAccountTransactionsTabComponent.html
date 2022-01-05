@@ -320,6 +320,17 @@
 
 
 </style>
+<style>
+    .flex-container{
+        height: calc(100% - 130px);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .flex-container > div{
+        width: 100%;
+    }
+</style>
 
 <!-- Alert -->
 <!--<div *ngIf="showAlert" class="alert-animation SaveAlert">
@@ -327,14 +338,14 @@
     Journal <a *ngIf="ReconciliationId" href="#" (click)="OpenReconciliation(EntityPM.JournalId)">{{EntityPM.JournalNumber}}</a> was created successfully
 </div>-->
 
-<table>
+<table style="height: 130px;">
     <tr>
         <td>
             <div class="TableHolder">
                 <div *ngIf="isControlAccount" class="Warning" style="width: 300px;">{{
                                 'GLAccounts.O.GLAccountIsControl' | TextCodeTranslationPipe }}</div>
                 <table>
-               
+
 
                     <!-- Filters and Balance -->
                     <tr style="height: 0px;">
@@ -582,10 +593,10 @@ currency.BalanceForeign
                                                       </tr>
                                                   </table>
                                               </td>
-                                               
+
                                             </tr>
 
-                                          
+
 
 
                                         </table>
@@ -643,25 +654,6 @@ currency.BalanceForeign
                         </td>
                     </tr>
 
-                    <!-- Transactions Grid -->
-                    <tr>
-                        <td colspan="5" style="height: 100%; padding-bottom: 87px;">
-                            <div class="GeneratedGridContainer">
-                                <logitude-grid *ngIf="!UsingLogGridV2" GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
-                                               [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="columns"
-                                               [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent" (DataLoaded)="OnDataLoaded($event)"
-                                               [IsCustomTemplate]="true">
-                                </logitude-grid>
-                                <logitude-grid-v2 *ngIf="UsingLogGridV2" GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
-                                               [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="columns"
-                                               [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent" (DataLoaded)="OnDataLoaded($event)"
-                                               [IsCustomTemplate]="true">
-                                </logitude-grid-v2>
-
-                            </div>
-                        </td>
-                    </tr>
-
                     <tr>
                         <td>
                             <div></div>
@@ -677,64 +669,85 @@ currency.BalanceForeign
 
 </table>
 
-<!-- Footer -->
-<div style="position: absolute; left: 0px; bottom: 0px; right: 0px;">
-    <div class="tab-footer">
-        <div style="width: 300px;" [style.float]="isRTL ? 'right' : 'left'">
-            <div class="footer-title">
-                {{'Accounting.General.O.TotalInLocalCurrency' | TextCodeTranslationPipe}}
-            </div>
-            <div class="">
-                <div class="footer-cell" [style.float]="isRTL ? 'right' : 'left'" style="padding-bottom:3px">
-                    <!-- Basel syas: the total is equal to close amount -->
-                    <div style="font-size: 15px; color:#21a373;direction: ltr;" [class.red]="LTBSummery.EndBalanceLocal<=0"
-                        *ngIf="LTBSummery.EndBalanceLocal != undefined">{{LTBSummery.EndBalanceLocal |
-                        NumbersPipe:'N2'}} {{TenantCurrency}}</div>
-                </div>
+<div class="flex-container">
 
-            </div>
-            <div   style="width: 300px;display:flex; flex-direction: row" >
-                <div class="footer-title" style="font-size:12px;margin-right:10px">
-                    {{'Accounting.General.O.Difference' | TextCodeTranslationPipe}}
-                </div>
-                <div >
-                    <div style="font-size: 12px;direction: ltr;" [class.red]="GetDifferenceAmount()<0" [style.color]="GetDifferenceAmount()==0 ? 'black' :'#21a373' "
-                         *ngIf="LTBSummery.EndBalanceLocal != undefined"> {{GetDifferenceAmount() | NumbersPipe:'N2'}}  {{TenantCurrency}}</div>
-                </div>
-            </div>
+    <!-- grid -->
+    <div style="flex-grow: 1000;">
+        <div class="GeneratedGridContainer">
+            <logitude-grid *ngIf="!UsingLogGridV2" GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
+                           [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="columns"
+                           [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent" (DataLoaded)="OnDataLoaded($event)"
+                           [IsCustomTemplate]="true">
+            </logitude-grid>
+            <logitude-grid-v2 *ngIf="UsingLogGridV2" GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
+                           [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="columns"
+                           [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent" (DataLoaded)="OnDataLoaded($event)"
+                           [IsCustomTemplate]="true">
+            </logitude-grid-v2>
+
         </div>
-     
-        <div float-start style="width: calc(100% - 300px); overflow: auto;" *ngIf="TenantCurrency != EntityPM.CurrencyCode">
-            <div class="footer-title">
-                {{'Accounting.General.O.TotalInCurrencies' | TextCodeTranslationPipe}}
-            </div>
-            <div class="footer-cell" float-start *ngFor="let currency of LTBSummery.EndBalanceForeignList; let i=index;">
-
-                <div *ngIf="i>0" style="border-left: 1px solid #c1c1c1;width: 2px; margin: 0px 15px; height: 37px"
-                    [style.float]="isRTL ? 'right' : 'left'"></div>
-
-                <div style="float:right;">
-                    <div>
-                        <span style="font-size: 13px; color:#707070; padding-right: 20px; float: left;">{{currency.CurrencyCode}}</span>
-                        <span style="font-size: 13px; color:#21a373;text-align: right;float: right;direction: ltr;"
-                            [class.red]="currency.BalanceForeign<=0">
-                            {{currency.BalanceForeign | NumbersPipe:'N2'}}
-                            <!--{{currency.CurrencySign}}-->
-                        </span>
-                    </div>
-                    <div style="clear: both;"></div>
-                    <div>
-                        <span style="font-size: 13px; color:#707070; padding-right: 20px;float: left;">{{TenantCurrency}}</span>
-                        <span style="font-size: 13px; color:#21a373;text-align: right;float: right;direction: ltr;"
-                            [class.red]="currency.BalanceForeign<=0">
-                            {{currency.BalanceLocal | NumbersPipe:'N2'}}
-                            <!-- -oldway=>{{CalculateLocalAmount(currency.CurrencyId , currency.BalanceForeign) | NumbersPipe:'N2'}} -->
-                            <!--{{TenantCurrencySign}}-->
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
+
+    <!-- Footer -->
+    <div>
+        <div class="tab-footer">
+            <div style="width: 300px;" [style.float]="isRTL ? 'right' : 'left'">
+                <div class="footer-title">
+                    {{'Accounting.General.O.TotalInLocalCurrency' | TextCodeTranslationPipe}}
+                </div>
+                <div class="">
+                    <div class="footer-cell" [style.float]="isRTL ? 'right' : 'left'" style="padding-bottom:3px">
+                        <!-- Basel syas: the total is equal to close amount -->
+                        <div style="font-size: 15px; color:#21a373;direction: ltr;" [class.red]="LTBSummery.EndBalanceLocal<=0"
+                            *ngIf="LTBSummery.EndBalanceLocal != undefined">{{LTBSummery.EndBalanceLocal |
+                            NumbersPipe:'N2'}} {{TenantCurrency}}</div>
+                    </div>
+
+                </div>
+                <div   style="width: 300px;display:flex; flex-direction: row" >
+                    <div class="footer-title" style="font-size:12px;margin-right:10px">
+                        {{'Accounting.General.O.Difference' | TextCodeTranslationPipe}}
+                    </div>
+                    <div >
+                        <div style="font-size: 12px;direction: ltr;" [class.red]="GetDifferenceAmount()<0" [style.color]="GetDifferenceAmount()==0 ? 'black' :'#21a373' "
+                            *ngIf="LTBSummery.EndBalanceLocal != undefined"> {{GetDifferenceAmount() | NumbersPipe:'N2'}}  {{TenantCurrency}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div float-start style="width: calc(100% - 300px); overflow: auto;" *ngIf="TenantCurrency != EntityPM.CurrencyCode">
+                <div class="footer-title">
+                    {{'Accounting.General.O.TotalInCurrencies' | TextCodeTranslationPipe}}
+                </div>
+                <div class="footer-cell" float-start *ngFor="let currency of LTBSummery.EndBalanceForeignList; let i=index;">
+
+                    <div *ngIf="i>0" style="border-left: 1px solid #c1c1c1;width: 2px; margin: 0px 15px; height: 37px"
+                        [style.float]="isRTL ? 'right' : 'left'"></div>
+
+                    <div style="float:right;">
+                        <div>
+                            <span style="font-size: 13px; color:#707070; padding-right: 20px; float: left;">{{currency.CurrencyCode}}</span>
+                            <span style="font-size: 13px; color:#21a373;text-align: right;float: right;direction: ltr;"
+                                [class.red]="currency.BalanceForeign<=0">
+                                {{currency.BalanceForeign | NumbersPipe:'N2'}}
+                                <!--{{currency.CurrencySign}}-->
+                            </span>
+                        </div>
+                        <div style="clear: both;"></div>
+                        <div>
+                            <span style="font-size: 13px; color:#707070; padding-right: 20px;float: left;">{{TenantCurrency}}</span>
+                            <span style="font-size: 13px; color:#21a373;text-align: right;float: right;direction: ltr;"
+                                [class.red]="currency.BalanceForeign<=0">
+                                {{currency.BalanceLocal | NumbersPipe:'N2'}}
+                                <!-- -oldway=>{{CalculateLocalAmount(currency.CurrencyId , currency.BalanceForeign) | NumbersPipe:'N2'}} -->
+                                <!--{{TenantCurrencySign}}-->
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 </div>
