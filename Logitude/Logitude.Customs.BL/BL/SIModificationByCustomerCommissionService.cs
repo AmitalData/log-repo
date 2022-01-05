@@ -24,6 +24,11 @@ namespace Logitude.Customs.BL.BL
 
         public void EnsureReductionByVendorCommission(DeclarationPM declarationPM, SupplierInvoicePM supplierInvoicePM,bool throwExceptionCheckb4SendDec)
         {
+
+            if (supplierInvoicePM.ChangeSetOp== Simplog.Server.Infrastructure.ChangeSetOperation.Delete)
+            {
+                return;
+            }
             var context = CustomContext.GetContext(supplierInvoicePM.Tenant);
             string customerId = declarationPM?.CustomerId;
             if (declarationPM == null)
