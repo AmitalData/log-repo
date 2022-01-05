@@ -52,10 +52,6 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.IsClosed).HasColumnName("IsClosed").IsRequired();
 
             this.Property(t => t.ResponseStatusCode).HasColumnName("ResponseStatusCode").HasMaxLength(2).IsUnicode(false);
-
-            this.Property(t => t.Direction).HasColumnName("Direction").HasMaxLength(1).IsUnicode(false);
-
-            this.Property(t => t.TransportModeId).HasColumnName("TransportModeId").HasMaxLength(1).IsUnicode(false);
         }
     }
 }
