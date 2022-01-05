@@ -143,7 +143,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
 
         public static string GetRabbitMQCode(int currTenant)
         {
-            //throw new NotImplementedException();
+            ////CEREATE FROM GWSFLOGITUDE > GGGFRABBITMQ
             var uri = new Uri(LogitudeSettings.LogitudeURL);
             var branchEnv = uri.LocalPath.Trim(@"\"[0]).Trim(@"/"[0]);
             string UnifreightEnvironmentID =

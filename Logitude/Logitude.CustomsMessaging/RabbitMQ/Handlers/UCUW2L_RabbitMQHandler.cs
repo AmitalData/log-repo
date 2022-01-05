@@ -13,6 +13,7 @@ using System.Xml.Serialization;
 
 namespace Logitude.CustomsMessaging.RabbitMQ.Handlers
 {
+    //CEREATE FROM GWSFLOGITUDE > GGGFRABBITMQ
     public class UCUW2L_RabbitMQHandler : CustomAnalyzerQueueBase
     {
         //private DeclarationPM _DeclarationPM;

@@ -172,6 +172,7 @@ namespace CustomsWorkerRole
             
             try
             {
+                //GWSFLOGITUDE > GGGFRABBITMQ
                 string rabbitMQCode = RabbitmqHelper.GetRabbitMQCode(currTenant);
                 //var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123"  };
                 factory.RequestedHeartbeat = TimeSpan.FromSeconds(600);
