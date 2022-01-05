@@ -7,11 +7,11 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 {
     public static class DigitalCustomFilter
     {
-        public static IQueryable<ShipmentDataView> ApplyDigitalQuickSearchFilter(QueryFilterItem item, IQueryable<ShipmentDataView> shipments)
+        public static IQueryable<T> ApplyDigitalQuickSearchFilter<T>(QueryFilterItem item, IQueryable<T> data)
         {
             string[] fields = item.FieldValue == null ? null : item.FieldValue.ToString().Split(',');
             string dynamicLinqExpression = BuildDynamicQuickSearchExpression(fields, item.FieldValue2);
-            return shipments.Where(dynamicLinqExpression);
+            return data.Where(dynamicLinqExpression);
         }
 
         private static string BuildDynamicQuickSearchExpression(string[] fields, object searchValue)
