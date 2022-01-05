@@ -236,11 +236,11 @@
 
 
                     <div class="date-wrapper">
-                        <span class="date" style="margin-top:9px"> {{card.Date | date: 'dd'}}</span>
+                        <span class="date" style="margin-top:9px"> {{card.Date || card.ExpectedDate | date: 'dd'}}</span>
                         <span style="width:10px"> </span>
                         <span class="date" style="display:inline-flex;flex-direction:column-reverse">
-                            <span class="date-span">{{card.Date | date: 'MMM'}}</span>
-                            <span class="date-span">{{card.Date | date: 'HH:mm' | dateTimeFormat}}</span>
+                            <span class="date-span">{{card.Date || card.ExpectedDate | date: 'MMM'}}</span>
+                            <span class="date-span">{{card.Date || card.ExpectedDate | date: 'HH:mm' | dateTimeFormat}}</span>
                         </span>
                     </div>
 
