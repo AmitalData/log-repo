@@ -337,6 +337,7 @@ namespace CustomsWorkerRole
             //    }
             //}
         }
+#if false
         private void WorkUntil_AnalyzeQueue_Empty_Db_NOTINUSE()
         {
             Logger.LogMe("START", false, "RabbitMQLog");
@@ -494,6 +495,8 @@ namespace CustomsWorkerRole
             }
         }
 
+
+#endif
         private void Exec(CustomRabbitMQQueue customRabbitMQQueue, QueueDetails queue, AnalyzeQueueRepository analyzeQueueRepository, string communicationLogId, int tenant , string message, out string log, out bool success)
         {
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
