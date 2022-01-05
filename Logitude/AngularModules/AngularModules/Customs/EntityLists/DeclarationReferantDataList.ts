@@ -86,6 +86,7 @@ export class DeclarationReferantDataList {
 	LastStatusRemarks: string;
 	ReferantUserName: string;
 	DepartmentName: string;
+	PackageTypeCode: string;
 	
 }
  
