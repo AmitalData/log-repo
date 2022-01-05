@@ -3,14 +3,25 @@
 	<Sql Version="1">
 	</Sql>
 
-	<Oracle Version="1">
+	<Oracle Version="2">
 		<![CDATA[
-update INTERFACETENANTDEFINITIONS set active=
+		            declare
+ n int := 0;
+begin
+  select count(*) into n
+  from INTERFACETENANTDEFINITIONS
+ where code='8251';
+  if n = 0 then
+  insert into INTERFACETENANTDEFINITIONS values ('1-999','1','8251','','2','0','1',''); 
+  else
+  update INTERFACETENANTDEFINITIONS set active=
  case 
  when ((select companytype from CustomsSettingS where companytype='B')  in ('B')) then 0
  ELSE 1
  END
  where code ='8251';
+ end if;
+end;
   
     ]]>
 	</Oracle>
