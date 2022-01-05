@@ -102569,6 +102569,38 @@
         IsCloseField="false"
         IsCompositKey="false"
         IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;PreCarriageVesselName&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;PreCarriageVesselName&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;OnCarriageVesselName&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;OnCarriageVesselName&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
     </DataContract>
     <DataContract
       Name="&quot;Customs&quot;"
