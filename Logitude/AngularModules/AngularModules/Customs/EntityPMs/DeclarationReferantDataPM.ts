@@ -224,6 +224,11 @@ export class DeclarationReferantDataPM {
     public set IsManualPayment(newValue: boolean) { if (this.isManualPayment != newValue) { this.isManualPayment = newValue; this.MarkAsDirty("IsManualPayment"); } }
        
 	 
+    private packageTypeCode: string;
+    public get PackageTypeCode() { return this.packageTypeCode; }
+    public set PackageTypeCode(newValue: string) { if (this.packageTypeCode != newValue) { this.packageTypeCode = newValue; this.MarkAsDirty("PackageTypeCode"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		

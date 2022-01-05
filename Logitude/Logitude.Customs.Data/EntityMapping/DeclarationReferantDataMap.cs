@@ -88,6 +88,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.ForwarderId).HasColumnName("ForwarderId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.IsManualPayment).HasColumnName("IsManualPayment");
+
+            this.Property(t => t.PackageTypeCode).HasColumnName("PackageTypeCode").HasMaxLength(2).IsUnicode(false);
         }
     }
 }

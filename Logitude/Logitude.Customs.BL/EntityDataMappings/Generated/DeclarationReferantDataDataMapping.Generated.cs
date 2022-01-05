@@ -54,7 +54,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FclLcl, 
 	         PackageQuantity, 
 	         ForwarderId, 
-	         IsManualPayment,
+	         IsManualPayment, 
+	         PackageTypeCode,
 	      }
 
 
@@ -100,7 +101,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ForwarderId, 
 	         ForwarderName, 
 	         FclLclName, 
-	         IsManualPayment,
+	         IsManualPayment, 
+	         PackageTypeCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -267,6 +269,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsManualPayment))
             {
 				entityPOCO.IsManualPayment = entityPM.IsManualPayment;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PackageTypeCode))
+            {
+				entityPOCO.PackageTypeCode = entityPM.PackageTypeCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -440,6 +447,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsManualPayment = entityPOCO.IsManualPayment;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PackageTypeCode))
+            {
+					entityPM.PackageTypeCode = entityPOCO.PackageTypeCode;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationReferantDataPM entityPM, DeclarationReferantDataPM oldEntityPM)
@@ -604,6 +616,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsManualPayment))
             {
                 oldEntityPM.IsManualPayment = entityPM.IsManualPayment;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PackageTypeCode))
+            {
+                oldEntityPM.PackageTypeCode = entityPM.PackageTypeCode;
             }
 			
 		}
