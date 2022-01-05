@@ -93,7 +93,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.LastStatusRemarks).HasColumnName("LastStatusRemarks").HasMaxLength(1000).IsUnicode(true);
 
-            this.Property(t => t.PackageTypeCode).HasColumnName("PackageTypeCode").HasMaxLength(2).IsUnicode(false);
+            this.Property(t => t.PackageTypeCode).HasColumnName("PackageTypeCode").HasMaxLength(4).IsUnicode(false);
         }
     }
 }
