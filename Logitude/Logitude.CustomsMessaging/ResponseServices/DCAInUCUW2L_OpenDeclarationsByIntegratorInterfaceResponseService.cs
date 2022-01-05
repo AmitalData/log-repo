@@ -84,14 +84,43 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var context = CustomContext.GetContext(requestParams.Tenant);
 
                 CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(context);
-                List<CustomsRequestsSheetPM> customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(requestParams.Tenant, "UCUDO", "", "", null, null, courierMasterID, true);
+                var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
 
-                if(customsRequestsSheetPMList== null || customsRequestsSheetPMList.Count==0)
+                List<CustomsRequestsSheetPM> customsRequestsSheetPMList = customsRequestsSheetQueryService
+                    //.GetRequestInProgress(requestParams.Tenant, "UCUDO", "", "", null, null, courierMasterID, true);
+                    .GetRequestInProgress(requestParams.Tenant, "UCUDO", objectTableId, courierMasterID, null, null, null, true);
+
+                if (customsRequestsSheetPMList== null || customsRequestsSheetPMList.Count==0)
                 {
-                    customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(requestParams.Tenant, "UCUW2L", "", "", null, null, courierMasterID, true);
-                    customsRequestsSheetPMList = customsRequestsSheetPMList.Where(x => x.Id != requestParams.PBId).ToList();
-                    if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0 )
+                    //customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(requestParams.Tenant, "UCUW2L", "", "", null, null, courierMasterID, true);
+                    //customsRequestsSheetPMList = customsRequestsSheetPMList.Where(x => x.Id != requestParams.PBId).ToList();
+                    //if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0 )
                     {
+
+                        AppendLogLine("open UCUDO  ??");
+
+                        string GeneralKey = GetGeneralLockKey(courierMasterID);
+                        var concurrentKiller = new ConcurrentKiller();
+                        
+                        bool haveUCUDOInProgress = false;
+                        try
+                        {
+
+                            using (var scope = TransactionFactory.GetNewTransaction())//open new Transaction  because if not the Transaction  wil invalidad
+                            {
+                                concurrentKiller.FreeLockIfCreated15MinOld(GeneralKey, requestParams.Tenant);
+                                concurrentKiller.LockOrCrashOnCommitDueUnique(GeneralKey, requestParams.Tenant);
+                                haveUCUDOInProgress = false;
+                                AppendLogLine("UCUDO:concurrentKiller: Ok");
+                                scope.Complete();
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            AppendLogLine("UCUDO:concurrentKiller:Have in the middle in the last 15 min- not open  UCUDO");
+                            haveUCUDOInProgress = true;
+                        }
+
 
                         var messagingService = new DCAInUCUDO_UpdateOpenDeclarationsMessagingService();
                         UpdateOpenDeclarationsRequestParams requestParams2 = new UpdateOpenDeclarationsRequestParams()
@@ -102,8 +131,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             LoggingEntityId = courierMasterID,
 
                         };
+                        if (!haveUCUDOInProgress)
+                        {
+                            string message = messagingService.CreateCRS(requestParams.Tenant, requestParams.LoggingUserId, requestParams2);
+                            AppendLogLine($"UCUDO  opened {message}");
 
-                        string message = messagingService.CreateCRS(requestParams.Tenant, requestParams.LoggingUserId, requestParams2);
+                        }
                     }
                 }
 
@@ -131,7 +164,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
            // }
         }
 
-        
+        private void AppendLogLine(string mess)
+        {
+            LogMessagingUtil.Instance.AppendLine(mess);
+        }
+
+        public static string GetGeneralLockKey(string courierMasterId)
+        {
+            return $"UCUDO:{courierMasterId}";
+        }
+
     }
     public class ConnectDocumentsfilingService
     {
