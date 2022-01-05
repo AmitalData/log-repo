@@ -263,9 +263,7 @@ namespace CommunicationWorkerRole
                                                     if (customerTenantAccess != null && customerTenantAccess.HasAccess)
                                                     {
                                                         if (privateLabelShipmentService.IsShipmentsAllowedForLogBox())
-                                                            IdsList.Add(item);
-                                                        else if (Shipment.DirectionId == "I" && !string.IsNullOrEmpty(Shipment.CustomFileId))
-                                                            ImportIdsList.Add(item);
+                                                            IdsList.Add(item); 
                                                     }
                                                 }
                                             }
