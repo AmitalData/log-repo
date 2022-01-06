@@ -45,7 +45,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     mobileSearchForm;
     Shipments: CargoTrackingShipmentList[] = [];
     public QueryColumns: QueryColumnPM[] = [];
-    public filterAgrs: ApiQueryFilters = new ApiQueryFilters();
+    private filterAgrs: ApiQueryFilters = new ApiQueryFilters();
     isLoading: boolean = false;
     isFilter1Expanded: boolean = false;
     isFilter2Expanded: boolean = false;
@@ -168,9 +168,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("DepartureDate",'DateTime', 'ATD'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("DepartureEstimationDate",'DateTime', 'ETD'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("GrossWeight",'Number', 'Weight'));
-        // this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("",'Text', 'DECLEARATION STATUS'));
-        // this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("",'Text', 'TOTAL TAXES'));
-        // this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("",'Text', 'INCOTERM'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("HasException",'Text', 'Has Exception'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("CurrentMilestoneExceptions",'Text', 'Exception Description'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("IsOrder",'Text', 'Is Order'));

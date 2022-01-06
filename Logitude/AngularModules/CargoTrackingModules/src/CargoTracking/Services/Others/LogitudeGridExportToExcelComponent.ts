@@ -14,6 +14,7 @@ export class LogitudeGridExportToExcelService {
     public filterAgrs: ApiQueryFilters;
     public QueryColumns: QueryColumnPM[] = [];
     public ObjectTableName: string;
+    failedResponse = 'Faild';
     constructor(
         private logboxShipmentExportExcelService: LogboxShipmentExportExcelService,
         public dialog: MatDialog
@@ -28,18 +29,26 @@ export class LogitudeGridExportToExcelService {
         if (this.filterAgrs) this.filterAgrs.GetAll = true;
         this.QueryColumns = QueryColumns;
         const args = this.GetExportToExcelArgs();
-        var matDialog = this.dialog.open(MessageWindowComponent, {
+        var matDialog = this.openDialog();
+        this.getQueryToExcelData(args, matDialog);
+    }
+
+    openDialog() {
+        return this.dialog.open(MessageWindowComponent, {
             data: {
                 title: 'Export to excell',
                 isLoading: true,
             },
         });
+    }
+
+    getQueryToExcelData(args : LogboxShipmentExportExcelArgs, matDialogRef: MatDialogRef<MessageWindowComponent, any>) {
         this.logboxShipmentExportExcelService
             .GetQueryToExcelData(args)
             .subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError)
-                    this.CompleteExcelData(myResponse.Result, matDialog);
-                else this.CompleteExcelData('Faild', matDialog);
+                    this.CompleteExcelData(myResponse.Result, matDialogRef);
+                else this.CompleteExcelData(this.failedResponse, matDialogRef);
             });
     }
 
@@ -49,7 +58,7 @@ export class LogitudeGridExportToExcelService {
         myResult: string,
         matDialogRef: MatDialogRef<MessageWindowComponent, any>
     ) {
-        if (myResult == 'Faild') {
+        if (myResult == this.failedResponse) {
             matDialogRef.componentInstance.isLoading = false;
             matDialogRef.componentInstance.description =
                 'Export to excell failed!';
@@ -61,7 +70,7 @@ export class LogitudeGridExportToExcelService {
         }
     }
 
-    getFileURL(FileName: string) {
+    getFileURL(fileName: string) {
         var tempDate = new Date();
         var MyDate =
             tempDate.getDate() +
@@ -72,7 +81,7 @@ export class LogitudeGridExportToExcelService {
         var url =
             ServiceHelper.GetLogitudeURL() +
             'WebPages/DawnLoadExcelPage.aspx?fileName=' +
-            FileName +
+            fileName +
             '&tempId=' +
             ServiceHelper.GetLDocumentDownloadToken() +
             '&qname=' +

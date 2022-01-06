@@ -149,6 +149,7 @@
     <Compile Include="EntityPOCOs\CargoTrackingShipmentSearch.cs" />
     <Compile Include="EntityPOCOs\CargoTrackingTransportMode.cs" />
     <Compile Include="EntityPOCOs\CargoTrackingWatermark.cs" />
+    <Compile Include="Enums\ShipmentDirections.cs" />
     <Compile Include="ICargoTrackingContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CargoTrackingCardRepository.cs" />

@@ -27,35 +27,35 @@ export class ApiQueryFilters {
         IsCacheOnClient: boolean = false,
         ForceEnableAdd: boolean = false
     ) {
-        let params = new ApiQueryFiltersAddParams();
-        params.FieldName = FieldName;
-        params.FieldValue = FieldValue;
-        params.FieldValue2 = FieldValue2;
-        params.FieldValue3 = FieldValue3;
-        params.Operator = Operator;
-        params.IsCustom = IsCustom;
-        params.DisplayInList = DisplayInList;
-        params.IsCustomField = IsCustomField;
-        params.FieldDataType = FieldDataType;
-        params.IgnoreFilter = IgnoreFilter;
-        params.IsCacheOnClient = IsCacheOnClient;
-        params.ForceEnableAdd = ForceEnableAdd;
-        this.pushAdditionalFilter(params);
+        let apiQueryFiltersAddParams = new ApiQueryFiltersAddParams();
+        apiQueryFiltersAddParams.FieldName = FieldName;
+        apiQueryFiltersAddParams.FieldValue = FieldValue;
+        apiQueryFiltersAddParams.FieldValue2 = FieldValue2;
+        apiQueryFiltersAddParams.FieldValue3 = FieldValue3;
+        apiQueryFiltersAddParams.Operator = Operator;
+        apiQueryFiltersAddParams.IsCustom = IsCustom;
+        apiQueryFiltersAddParams.DisplayInList = DisplayInList;
+        apiQueryFiltersAddParams.IsCustomField = IsCustomField;
+        apiQueryFiltersAddParams.FieldDataType = FieldDataType;
+        apiQueryFiltersAddParams.IgnoreFilter = IgnoreFilter;
+        apiQueryFiltersAddParams.IsCacheOnClient = IsCacheOnClient;
+        apiQueryFiltersAddParams.ForceEnableAdd = ForceEnableAdd;
+        this.pushAdditionalFilter(apiQueryFiltersAddParams);
     }
-    myReplace(myString: string) {
-        var myNewString = '';
-        for (var i = 0; i < myString.length; i++) {
-            if (myString[i] == '"') {
-                myNewString = myNewString + '\\"';
+    replaceStr(text: string) {
+        var replacedText = '';
+        for (var i = 0; i < text.length; i++) {
+            if (text[i] == '"') {
+                replacedText = replacedText + '\\"';
             } else {
-                myNewString = myNewString + myString[i];
+                replacedText = replacedText + text[i];
             }
         }
-        return myNewString;
+        return replacedText;
     }
-    removeAdditionalFilter(FieldName: string) {
+    removeAdditionalFilter(fieldName: string) {
         var item = this.AdditionalFilters.filter(
-            (d) => d.FieldName == FieldName && d.IsLookUpfilter == true
+            (d) => d.FieldName == fieldName && d.IsLookUpfilter == true
         )[0];
         if (item) {
             var index = this.AdditionalFilters.indexOf(item);
@@ -63,42 +63,24 @@ export class ApiQueryFilters {
         }
     }
 
-    pushAdditionalFilter(params: ApiQueryFiltersAddParams) {
-        if (!params.IsCacheOnClient) {
-            if (typeof params.FieldValue === 'string') {
-                if (params.FieldValue)
-                    params.FieldValue = this.myReplace(params.FieldValue);
-                if (params.FieldName != 'ImportersFilter')
-                    params.FieldValue = encodeURIComponent(params.FieldValue);
-            }
-            if (typeof params.FieldValue2 === 'string') {
-                if (params.FieldValue)
-                    params.FieldValue2 = this.myReplace(params.FieldValue2);
-                params.FieldValue2 = encodeURIComponent(params.FieldValue2);
-            }
-            if (typeof params.FieldValue3 === 'string') {
-                if (params.FieldValue)
-                    params.FieldValue3 = this.myReplace(params.FieldValue3);
-                params.FieldValue3 = encodeURIComponent(params.FieldValue3);
-            }
-        }
+    pushAdditionalFilter(apiQueryFiltersAddParams: ApiQueryFiltersAddParams) {
         var existedItem = this.AdditionalFilters.find(
-            (d) => d.FieldName == params.FieldName
+            (d) => d.FieldName == apiQueryFiltersAddParams.FieldName
         );
-        if (!existedItem || params.ForceEnableAdd) {
+        if (!existedItem || apiQueryFiltersAddParams.ForceEnableAdd) {
             var item = new FilterItem(
-                params.FieldName,
-                params.FieldValue,
-                params.FieldValue2,
-                params.FieldValue3,
-                params.Operator,
-                params.IsCustom,
-                params.DisplayInList,
-                params.IsCustomField,
-                params.FieldDataType,
-                params.IgnoreFilter,
-                params.IsCacheOnClient,
-                params.IsLookUpFilter
+                apiQueryFiltersAddParams.FieldName,
+                apiQueryFiltersAddParams.FieldValue,
+                apiQueryFiltersAddParams.FieldValue2,
+                apiQueryFiltersAddParams.FieldValue3,
+                apiQueryFiltersAddParams.Operator,
+                apiQueryFiltersAddParams.IsCustom,
+                apiQueryFiltersAddParams.DisplayInList,
+                apiQueryFiltersAddParams.IsCustomField,
+                apiQueryFiltersAddParams.FieldDataType,
+                apiQueryFiltersAddParams.IgnoreFilter,
+                apiQueryFiltersAddParams.IsCacheOnClient,
+                apiQueryFiltersAddParams.IsLookUpFilter
             );
             this.AdditionalFilters.push(item);
         }

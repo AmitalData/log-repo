@@ -1,6 +1,7 @@
 ﻿using Logitude.CargoTracking.BL.CoreBL;
 using Logitude.CargoTracking.Data;
 using Logitude.CargoTracking.Data.EntityLists;
+using Logitude.CargoTracking.Data.Enums;
 using Logitude.CargoTracking.Def.DataContracts;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -59,22 +60,23 @@ namespace WebFreight.Web.AccountingModel.DomainServices
 
         private string GetClientName(CargoTrackingShipmentList shipment) {
             string client = "";
+            const string CustomsEntityType = "C";
             switch (shipment.DirectionId)
             {
-                case "I":
+                case ShipmentDirections.Import:
                     {
                         client = shipment.ShipperName;
                         break;
                     }
 
-                case "E":
+                case ShipmentDirections.Export:
                     {
                         client = shipment.ConsigneeName;
                         break;
                     }
             }
 
-            if (shipment.EntityType == "C")
+            if (shipment.EntityType == CustomsEntityType)
             {
                 client = shipment.ShipperName;
             }
