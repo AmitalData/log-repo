@@ -410,10 +410,10 @@ cargoTrackingShipmentPM.ArrivalDate |
         <div class="title">Incoterms</div>
         <div class="description">{{ShipmentPM?.IncotermName}}</div>
     </div>-->
-                <div>
+                <div *ngIf="(cargoTrackingShipmentPM.EntityType != 'O' && cargoTrackingShipmentPM.NumberOfPackages) || (cargoTrackingShipmentPM.EntityType == 'O' && cargoTrackingShipmentPM.ShipmentOrderQuantity) ">
                     <div class="title">quantity</div>
-                    <div *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" class="description">{{ cargoTrackingShipmentPM.NumberOfPackages || 0}} Units</div>
-                    <div *ngIf="cargoTrackingShipmentPM.EntityType == 'O'" class="description">{{ cargoTrackingShipmentPM.ShipmentOrderQuantity || 0}} Units</div>
+                    <div *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" class="description">{{ cargoTrackingShipmentPM.NumberOfPackages}} Units</div>
+                    <div *ngIf="cargoTrackingShipmentPM.EntityType == 'O'" class="description">{{ cargoTrackingShipmentPM.ShipmentOrderQuantity}} Units</div>
 
                 </div>
                 <div>
