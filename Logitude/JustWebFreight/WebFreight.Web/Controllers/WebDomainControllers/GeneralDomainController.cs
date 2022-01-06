@@ -40,7 +40,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
                 GeneralDomainService service = new GeneralDomainService();
                 List<FieldsTranslations> result = service.GetTranslationsByParam(tenant, typeCode, tableId, translationLanguageCode);
 
@@ -60,7 +60,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
                 ObjectFieldRepository objectFieldsRepository = new ObjectFieldRepository(tenant);
                 ObjectFieldQuery objectFieldsQuery = new ObjectFieldQuery(objectFieldsRepository);
                 List<ObjectFieldPM> result = objectFieldsQuery.GetStandardFieldsFortableID(tableId, tenant, tenant);
@@ -81,7 +81,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+               
                 ObjectFieldRepository ObjectFieldsRepository = new ObjectFieldRepository(tenant);
                 //this.ChangeConnectionString(tenant);
                 ObjectFieldQuery objectFieldsQuery = new ObjectFieldQuery(ObjectFieldsRepository);
@@ -102,7 +102,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+             
                 DataTypeRepository dataTypeRepository = new DataTypeRepository(tenant);
                 List<FieldDataType> result = dataTypeRepository.GetDataTypes().Where(d => d.Code != "Byte[]" && d.Code != "Emails" && d.Code != "Constant" && d.Code != "List" && d.Code != "SigDouble" && d.Code != "UnsDecimal" && d.Code != "UnsInteger").ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -163,7 +163,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
+               
                 GeneralDomainService domain = new GeneralDomainService();
                 List<FieldsTranslations> result = domain.GetTranslationsForExport(tenant).Where(a => a.TypeCode == typeCode).ToList();
 
@@ -182,7 +182,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
                 string queryId = filters.queryId;
                 int tenant = (int)filters.Tenant;
                 string userid = filters.userid;
@@ -393,7 +393,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                             foreach (FieldsTranslations entity in args.Items)
                             {
-                                SecurityUtility.AuthenticationOnTenant(entity.Tenant);
                                 service.UpdateFieldTranslation(entity);
                             }
                         }
@@ -417,7 +416,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 TextCodeTypesRepository repository = new TextCodeTypesRepository(tenant);
                 IQueryable<TextCodeType> result = repository.GetTextCodeTypes();
 
@@ -441,7 +440,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
                 GeneralDomainService service = new GeneralDomainService();
                 List<FieldsTranslations> result = service.GetAllFieldsTranslationsByFilters(tenant, language, objectTableId, textCodeType);
 
@@ -646,7 +644,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
                 ObjectFieldRepository objectFieldsRepository = new ObjectFieldRepository(tenant);
 
                 List<ObjectFieldModification> result = objectFieldsRepository.GetAllObjectFieldModificationByTenant(tenant);
