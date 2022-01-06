@@ -33,6 +33,9 @@ using Logitude.CustomsMessaging.MessagingServices;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Xml;
+using Logitude.CustomsMessaging.RabbitMQ;
+using Logitude.Customs.BL.CloseTables;
+using Simplog.Global.Data.GlobalModel.Repositories;
 //using System.Windows.Interactivity;
 
 namespace AmitalCustomsWindowsService.Tester
@@ -287,6 +290,21 @@ namespace AmitalCustomsWindowsService.Tester
 
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var rabbitMQReceiveWR = new RabbitMQReceiveWR();
+            var customRabbitMQQueue = new CustomRabbitMQQueue();
+            var allQueueDetails = customRabbitMQQueue.GetAllQueueDetails()
+             .Where(r => r.AnalyzeQueueService != AnalyzeMQQueueServiceEnum.none)
+            .ToList();
+            AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
+            string log = "";
+            bool success = false;
+            var c=allQueueDetails.FirstOrDefault(r => r.Code == "uw2l");
+            rabbitMQReceiveWR.Exec(
+                customRabbitMQQueue, c,
+                analyzeQueueRepository,
+                "NYC1MMYLAEOS6QWZ44GZPA00000000",3,"", out log, out success);
+            ;
+            return;
             clsTester.TestUpdateLOGITUDE_FILE();
             //clsTester.GetListByCourierHAWB();
 
