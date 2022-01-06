@@ -102,7 +102,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             var partnerCard = new PartnerCard()
             {
                 Type = partnerType,
-                Name = user.Contact?.EnglishName,
+                Name = !string.IsNullOrEmpty(user.Contact?.LocalName) ? user.Contact?.LocalName : user.Contact?.EnglishName,
                 Address = GetAddressFromContact(user.Contact),
                 PhoneNumber = user.Contact?.BusinessPhone,
                 Mobile = user.Contact?.Mobile,

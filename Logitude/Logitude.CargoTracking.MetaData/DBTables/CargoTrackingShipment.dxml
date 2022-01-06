@@ -725,6 +725,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="DenyDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="EntityType"
     ReferencedTable="CargoTrackingHeaderEntityTypes"

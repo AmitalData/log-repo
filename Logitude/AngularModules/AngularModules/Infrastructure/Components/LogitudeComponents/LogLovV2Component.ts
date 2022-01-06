@@ -37,6 +37,7 @@ import { SessionInfo } from '../../Utilities/SessionInfo';
 import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 @Component({
     selector: 'LogLov',
@@ -46,11 +47,12 @@ import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSec
     inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', 'LookUpTableName', 'DisplayMemberPath', 'SelectedValuePath','IsDisabled',
         'PlaceHolder', 'DependencyFilter1Value', 'DependencyFilter2Value', 'DependencyFilter3Value', "HideColumns", "HideLastColumn", "DependencyFilter1IsList",
         "DependencyFilter2IsList", "DependencyFilter3IsList", "DependencyFilter1IsListExact", "DependencyFilter2IsListExact", "DependencyFilter3IsListExact",
-         "AutoFocus", "IsTenantZeroSearch", "ShowInActive", "FocusOnMe", "IsFreeText", "AlwaysEnabled", "IgnoreCustomFieldCheck", "IsDecendingSort","CustomizedWidth"],
+        "AutoFocus", "IsTenantZeroSearch", "ShowInActive", "FocusOnMe", "IsFreeText", "AlwaysEnabled", "IgnoreCustomFieldCheck", "IsDecendingSort", "CustomizedWidth",
+        "ShowInActivePopUpWindow"],
 })
 
 export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
-
+    
     private forceFocus: any;
     @Input()
     public get ForceFocus() {
@@ -182,30 +184,106 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
     public set SelectedValue(newValue: any) {
         if (this.selectedValue != newValue) {
-            this.selectedValue = newValue;
-
-
-            if (!this.isSelectedFromList || this.IsFreeText) {//&& !this.isFirstTime) {
-
-                if (this.uiProperty != null) {
-                    //this.uiProperty.UIPropertyChanged.emit("valuechanges"); // caused "a changed was made after it was checked in generatedComponent"
-                }
-                this.ValueChanged.emit(this.selectedValue);
-                var lookup = window.ObjectTables.filter(d => d.Name === this.LookUpTableName)[0];
-                if (!newValue) {
-                    this.ForceShowValidation = true;
-                    this.deleteSearchText = true;
-                }
-                else {
-                    this.ForceShowValidation = false;
-                }
-                this.GetSingle(lookup);
-                this.isSelectedFromList = false;
+            if (this.ShowInActivePopUpWindow && this.SelectedItem?.InActive) {
+                this.ShowInactivePopUpConfirmWindow(newValue);
             }
-
-            this.isSelectedFromList = false;
+            else {
+                this.SetSelectedValue(newValue);
+            }
         }
     }
+
+    ShowInactivePopUpConfirmWindow(newValue: any) {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 500;
+        confirmWindow.Height = 190;
+        confirmWindow.ShowCancelButton = false;
+        confirmWindow.YesButtonText = "Confirm";
+        confirmWindow.NoButtonText = "Cancel";
+        confirmWindow.Title = "Activate shipping line";
+        confirmWindow.Show("This shipping line is marked as inactive, would you like to re-activate it?");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.SetSelectedValue(newValue);
+                this.SetSelectedItemInActiveField();
+            }
+            else if (confirmWindow.No) {
+                this.OnDeleteValue();
+            }
+        });
+    }
+   
+    SetSelectedItemInActiveField() {
+        this.UpdateSelectedEntity(this.SelectedItem?.Id);
+    }
+
+    UpdateSelectedEntity(id: string) {
+        var tablename = this.GetTableName();
+        this.entityPMService.getSingle(tablename, id).then((response: any) => {
+            response.subscribe((myResponse: any) => {
+                var entity = myResponse.Result;
+                entity["InActive"] = false;
+                this.entityPMService.update(tablename, entity).then((res: any) => {
+                    res.subscribe((response: any) => {
+                        CachedDataManager.RefreshTableData(tablename, true);
+                    });
+                });
+            });
+        });
+    }
+
+    GetTableName(): string  {
+        var tablename = this.GetObjectTableName(this.LookUpTableName);
+        if (this.SelectedItem?.PartnerTypeId == "SL") {
+            tablename = "ShippingLine";
+        }
+        if (this.SelectedItem?.PartnerTypeId == "AL") {
+            tablename = "Airline";
+        }
+        if (this.SelectedItem?.PartnerTypeId == "TR") {
+            tablename = "Trucker";
+        }
+        return tablename;
+    }
+
+    ResetSelectedValueInput() {
+        this.SearchTextNgModel = null;
+        this.OldSearchInput = null;
+        this.DisplayValue = null;
+        this.SelectedItem = null;
+        this.SelectedItemObject = null;
+        this.isSelectedFromList = false;
+        this.DataContext[this.ObjectFieldName] = null;
+        this.SetSelectedValue(null);
+        this.ValidateField(true);
+        this.SetToolTipInfo();
+        this.SelectedItemChanged.emit(this.SelectedItem);
+        this.ValueChanged.emit(this.selectedValue);
+    }
+
+    SetSelectedValue(newValue: any) {
+        this.selectedValue = newValue;
+
+        if (!this.isSelectedFromList || this.IsFreeText) {//&& !this.isFirstTime) {
+            if (this.uiProperty != null) {
+                //this.uiProperty.UIPropertyChanged.emit("valuechanges"); // caused "a changed was made after it was checked in generatedComponent"
+            }
+            this.ValueChanged.emit(this.selectedValue);
+            var lookup = window.ObjectTables.filter(d => d.Name === this.LookUpTableName)[0];
+            if (!newValue) {
+                this.ForceShowValidation = true;
+                this.deleteSearchText = true;
+            }
+            else {
+                this.ForceShowValidation = false;
+            }
+            this.GetSingle(lookup);
+            this.isSelectedFromList = false;
+        }
+
+        this.isSelectedFromList = false;
+    }
+
     @Input() RunToggleMode: boolean;
     @Input() AutoCompleteSearchWindow: boolean;
     @Input() ForceShowAddLink: boolean;
@@ -260,7 +338,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     ItemsNgStyles: any[];
     DropDownWidth: number = 300;
     DropDownHeight: number = 257;
-
+    ShowInActivePopUpWindow: boolean;
     public isLoading: boolean = false;
     public isLoadingZero: boolean = false;
     Widths: number[];
@@ -1989,10 +2067,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     OnAllDataSelect(item: any) {
-
         this.CopySelectedItem(item.Id)
-
-
     }
 
     OnDropDownMouseOver() {
@@ -3383,7 +3458,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         }
 
         this.SetDisplayMemberPath();
-    }
+    }  
 }
 
 export class EntityArgs {

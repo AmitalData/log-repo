@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PriceStepUpdateClass
    {  		
-		public const string HashString = "1380d455ec240af4d1eec3c371866a4c";
+		public const string HashString = "ace8c4de28fc0cfce98d98eaa745d17b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -778,7 +778,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllPricesStepsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PriceStepTextCode_0.Id, NameTextCodeCode = PriceStepTextCode_0.Code, ObjectTableName = "PriceStep", Code = "AllPricesSteps",  QueryGroupCode = "ff18", IndexOrder = 0, Tenant = 0, ObjectTableId = PriceStepObjectTable.Id, QuerySection = "PriceSteps", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PriceStepFeature_0.Id,FeatureUniqeCode= PriceStepFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query AllPricesStepsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PriceStepTextCode_0.Id, NameTextCodeCode = PriceStepTextCode_0.Code, ObjectTableName = "PriceStep", Code = "AllPricesSteps",  QueryGroupCode = "ff18", IndexOrder = 0, Tenant = 0, ObjectTableId = PriceStepObjectTable.Id, QuerySection = "PriceStep", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PriceStepFeature_0.Id,FeatureUniqeCode= PriceStepFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn AllPricesStepsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPricesStepsQuery.Id,QueryCode = AllPricesStepsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "PriceStep.Name" , ColumnWidth = 200 }, addedQueryColumns);
 

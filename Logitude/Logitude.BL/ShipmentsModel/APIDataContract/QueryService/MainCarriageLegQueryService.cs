@@ -34,7 +34,8 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                     temp.ATA = item.ATA;
                     temp.CarrierNumber = item.CarrierNumber;
                     temp.MasterNumber = item.MasterNumber;
-                    
+                    temp.VesselName = item.VesselName;
+
                     if (item.CarrierId != null)
                     {
                         CardQueryService Service = new CardQueryService(Tenant);
@@ -95,6 +96,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                     //if (!IsUpdate)
                     //{
                     temp.CarrierNumber = item.CarrierNumber;
+                    temp.VesselName = item.VesselName;
                     //}
 
                     temp.ETD = item.ETD;

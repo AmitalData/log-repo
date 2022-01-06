@@ -345,7 +345,7 @@
                                 </div>
                                 <span class="hide-mobile"
                                     (click)="OpenReferencesMessageWindow(shipment.CustomerReference?.split(','), false); $event.stopPropagation()"
-                                    *ngIf="references?.length > 4"
+                                    *ngIf="references?.length > 3"
                                     [attr.src]="SetMoreReferenceText(shipment.CustomerReference)">
                                     <img src="./assets/images/icons/info.png" alt=" "
                                         style="margin-right: 6px; margin-top: 6px" />
@@ -362,17 +362,12 @@
                                 </div>
                                 <div class="value uppercase truncateText">{{ shipment.ShipmentNumber }}</div>
 
-                                <div class="subtitle" [attr.src]="SetConsignmentNumber(shipment)">
+                                <div class="subtitle">
                                     {{SetMasterOrHouseLabel(shipment)}}
                                     <!-- Consignment No. -->
                                 </div>
                                 <div class="value uppercase truncateText">
-                                    <span
-                                        *ngIf="shipment.EntityType == 'C' && !shipment.ForwardingShipmentHeaderId && shipment.House">{{shipment.House}}</span>
-                                    <span>{{shipment.Master}}</span>
-                                    <span *ngIf="shipment.EntityType == 'C' && shipment.ForwardingShipmentHeaderId">
-                                        {{GetConsignmentNumberForCustomsForwardingShipment(shipment)}} </span>
-                                    <span *ngIf="shipment.EntityType != 'C'">{{ConsignmentNumber}}</span>
+                                    <span>{{SetMasterOrHouseValue(shipment)}}</span>
                                 </div>
                             </div>
                         </div>
@@ -407,8 +402,10 @@
                         <div class="column col-md-2 sender hide-mobile" style="width: 12%;">
                             <div>
                                 <div class="subtitle">QUANTITY & WEIGHT </div>
-                                <div class="value truncateText">
-                                    <span *ngIf="shipment.NumberOfPackages">{{shipment.NumberOfPackages }} Units </span><span *ngIf="shipment.NumberOfPackages && shipment.GrossWeight"> / </span><span *ngIf="shipment.GrossWeight">{{shipment.GrossWeight}} {{shipment.GrossWeightUnitCode}}</span>
+                                <div class="value weight-quantity"  [attr.src]="SetQuantityAndWeight(shipment)" [matTooltip]="(shipment.NumberOfPackages? shipment.NumberOfPackages + ' Units ' :'' ) + (shipment.NumberOfPackages && shipment.GrossWeight? ' / ':'') +(shipment.GrossWeight?shipment.GrossWeight+' '+shipment.GrossWeightUnitCode:'')">
+                                    {{(shipment.NumberOfPackages? shipment.NumberOfPackages:'')|number}}
+                                    {{ (shipment.NumberOfPackages? ' Units ' :'' ) + (shipment.NumberOfPackages && shipment.GrossWeight? ' / ':'') }}
+                                    {{(shipment.GrossWeight?shipment.GrossWeight:'')|number}} {{(shipment.GrossWeight?shipment.GrossWeightUnitCode:'') }}
                                 </div>
 
                                 <div class="subtitle hide-mobile" [attr.src]="SetEstimationORActualDate(shipment)">

@@ -11553,6 +11553,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Container&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -17188,7 +17189,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <field
     Id="&quot;e66e01a7-f65e-4b9d-8f00-ca1f3cbb140b&quot;"
     FieldName="&quot;ShipmentDeliveryTruckerId&quot;"
@@ -17335,7 +17335,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <field
     Id="&quot;0b7b372c-c4cc-4178-8a4c-772a36e6a9b0&quot;"
     FieldName="&quot;Containers&quot;"
@@ -17407,7 +17406,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <field
     Id="&quot;1cd49da5-0516-432b-a08d-fb8ea7775c96&quot;"
     FieldName="&quot;Leg1VesselId&quot;"
@@ -17773,7 +17771,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <Query
     Code="&quot;All Containers&quot;"
     TextCode="&quot;All Containers&quot;"

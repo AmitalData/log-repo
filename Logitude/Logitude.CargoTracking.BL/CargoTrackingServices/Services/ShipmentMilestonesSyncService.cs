@@ -109,39 +109,39 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             //ExcuteSqlScript(buildCargoArgs, sql);
 
 
-            SyncCurrentMistones(updateCargoTrackingRecords);
+            sql = BuildScriptToSetCurrentMistonesByWeight(updateCargoTrackingRecords.Milestones);
+            ExcuteSqlScript(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs, sql);
 
             //sql = DisconnectShipments(buildCargoArgs);
             //ExcuteSqlScriptForSourceDatabase(cargoArgs, sql);
         }
-        public void SyncCurrentMistones(UpdateCargoTrackingRecords updateCargoTrackingRecords)
+        public void IncremantalSyncShipmentMilstones(BulkDataPreperation bulkDataPreperation)
         {
 
-            var sql = BuildScriptToSetCurrentMistonesByWeight(updateCargoTrackingRecords);
-            ExcuteSqlScript(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs, sql);
-        }
-        public void IncremantalSyncShipmentMilstones(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs)
-        {
-
-            var buildCargoArgs = cargoTrackingDataBaseArgs.BuildCargoArgs;
+            var buildCargoArgs = bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs;
 
             var sql = BuildScriptForUpdatingForwardingShipmentMilstonesFromShipmentOrder();
-            sql = AddWhereInIds(sql, cargoTrackingDataBaseArgs.ForwardingShipmentsIds, " and ForwardingShipment.");
+            sql = AddWhereInIds(sql, bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.ForwardingShipmentsIds, " and ForwardingShipment.EntityId");
             ExcuteSqlScript(buildCargoArgs, sql);
 
 
 
             sql = BuildScriptForUpdatingCustomsShipmentMilstones();
-            sql = AddWhereInIds(sql, cargoTrackingDataBaseArgs.ForwardingShipmentsIds, " and ForwardingShipment.");
+            sql = AddWhereInIds(sql, bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.ForwardingShipmentsIds, " and ForwardingShipment.EntityId");
             ExcuteSqlScript(buildCargoArgs, sql);
 
+            sql = BuildScriptToSetCurrentMistonesByWeight(bulkDataPreperation.Milestones);
+            sql = AddWhereInIds(sql, bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.ForwardingShipmentsIds, " where ForwardingShipmentHeaderId");
+            ExcuteSqlScript(bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs, sql);
+            sql = BuildScriptToSetCurrentMistonesByWeight(bulkDataPreperation.Milestones);
+            sql = AddWhereInIds(sql, bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.ForwardingShipmentsIds, " where EntityId");
+            ExcuteSqlScript(bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs, sql);
 
-            
         }
 
         private string AddWhereInIds(string sql, List<string> shipmentsIds, string prefix)
         {
-            var inQuery = $" {prefix}EntityId in(";
+            var inQuery = $" {prefix} in(";
             if(shipmentsIds.Count <= 0)
             {
                 inQuery += "'--')";
@@ -166,9 +166,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             }
         }
 
-        private string BuildScriptToSetCurrentMistonesByWeight(UpdateCargoTrackingRecords updateCargoTrackingRecords)
+        private string BuildScriptToSetCurrentMistonesByWeight(List<CargoTrackingMilestoneList> milestones)
         {
-            var Milestones = updateCargoTrackingRecords.Milestones.Where(e => e.Weight != null).OrderByDescending(e => e.Weight).ToList();
+            var Milestones = milestones.Where(e => e.Weight != null).OrderByDescending(e => e.Weight).ToList();
             var doneCases = GetCurrentMistonesQueryDoneCases(Milestones);
             var dateCases = GetCurrentMistonesQueryDateCases(Milestones);
             var query = $@" update CargoTrackingShipments set 

@@ -130,10 +130,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public CardPM GetSinglePMFromCache(string id, int tenant)
         {
             string entityKeyString = $"GetSinglePMFromCache({id},{tenant})";
-            var res=CacheManager.GetOrInsertNewObject<CardPM>(entityKeyString, () =>
-             {
-                 return this.GetSinglePM(id, tenant);
-             });
+            var res = CacheManager.GetOrInsertNewObject<CardPM>(entityKeyString, () =>
+               {
+                   return this.GetSinglePM(id, tenant);
+               });
             return res;
         }
 
@@ -194,7 +194,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       InvoiceCurrencyId = a.InvoiceCurrencyId,
                                       VatTypeId = a.VatTypeId,
                                       SearchFields = a.SearchFields,
-                                      Prefix = al.Prefix,                                     
+                                      Prefix = al.Prefix,
                                       ImageDetailId = a.ImageDetailId,
                                       AccountNumber = a.AccountNumber,
                                       BankName = a.BankName,
@@ -366,21 +366,21 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public List<CardPM> GetAllCardPMsByTenant(int tenant)
         {
             List<CardPM> cardPMs = (from a in repository.context.Cards
-                                        where a.Tenant == tenant
-                                        select new CardPM()
-                                        {
-                                            Id = a.Id,
-                                            Tenant = a.Tenant,
-                                            EnglishName = a.EnglishName,
-                                            Code = a.Code,
-                                            PartnerTypeId = a.PartnerTypeId
+                                    where a.Tenant == tenant
+                                    select new CardPM()
+                                    {
+                                        Id = a.Id,
+                                        Tenant = a.Tenant,
+                                        EnglishName = a.EnglishName,
+                                        Code = a.Code,
+                                        PartnerTypeId = a.PartnerTypeId
 
-                                        }).ToList();
+                                    }).ToList();
             return cardPMs;
         }
         public CardPM GetSinglePMByCode(string code, int tenant)
         {
-            var cardId = repository.GetCardIdByCode(code,tenant);
+            var cardId = repository.GetCardIdByCode(code, tenant);
             return GetSinglePM(cardId, tenant);
 
         }
@@ -388,12 +388,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public CardList GetSingleByGLAccount(string glAccountId, int tenant, bool fromCache)
         {
 
-            string entityKeyString= $"GetSingleByGLAccount({glAccountId},{tenant})";
+            string entityKeyString = $"GetSingleByGLAccount({glAccountId},{tenant})";
             CardList cardList = CacheManager.GetOrInsertNewObject<CardList>(entityKeyString,
-                ()=>
+                () =>
                 {
                     return JustGetSingleByGLAccount(glAccountId, tenant);
-                }, supressForceInsert:fromCache);
+                }, supressForceInsert: fromCache);
             return cardList;
         }
 
@@ -474,18 +474,18 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             AddressRepository addressRepository = new AddressRepository(tenant);
             IQueryable<CardList> carriers = from a in repository.context.Cards
-                                         where a.Tenant == tenant && (a.PartnerTypeId == "AL" || a.PartnerTypeId == "SL" || a.PartnerTypeId == "TR")
-                                         select new CardList()
-                                         {
-                                             Id = a.Id,
-                                             Code = a.Code,
-                                             EnglishName = a.EnglishName,
-                                             VatNumber = a.VatNumber,
-                                             CountryCode = a.CountryCode,
-                                             CountryName = a.CountryName,
-                                             CityName = a.CityName,
-                                             GLAccountId = a.GLAccountId
-                                         };
+                                            where a.Tenant == tenant && (a.PartnerTypeId == "AL" || a.PartnerTypeId == "SL" || a.PartnerTypeId == "TR")
+                                            select new CardList()
+                                            {
+                                                Id = a.Id,
+                                                Code = a.Code,
+                                                EnglishName = a.EnglishName,
+                                                VatNumber = a.VatNumber,
+                                                CountryCode = a.CountryCode,
+                                                CountryName = a.CountryName,
+                                                CityName = a.CityName,
+                                                GLAccountId = a.GLAccountId
+                                            };
 
             return carriers;
         }
@@ -2213,32 +2213,32 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return cardList;
         }
 
-        public List<CardList> GetCardPMsByGLAccountId(string glAccountId,int tenant)
+        public List<CardList> GetCardPMsByGLAccountId(string glAccountId, int tenant)
         {
             IQueryable<CardList> IQueryable_cards = from a in repository.context.Cards.Include("CreditLimitAmount").Include("PaymentTerm")
                                                     where a.Tenant == tenant && a.GLAccountId == glAccountId
-                                         select new CardList()
-                                         {
-                                             Id = a.Id,
-                                             Code = a.Code,
-                                             EnglishName = a.EnglishName,
-                                             LocalName = a.LocalName,
-                                             VatNumber = a.VatNumber,
-                                             CountryCode = a.CountryCode,
-                                             CountryName = a.CountryName,
-                                             CreditLimitAmount = a.Customer==null?null: a.Customer.CreditLimitAmount,
-                                             AccountingPartnerCreditLimit = a.AccountingPartner== null?null : a.AccountingPartner.CreditLimit, 
-                                             Tenant = a.Tenant,
-                                             CityName = a.CityName,
-                                             GLAccountId = a.GLAccountId,
-                                             PartnerTypeId = a.PartnerTypeId,
-                                             BusinessPhone = a.Phone,
-                                             SalesmanUserId = a.SalesmanUserId,
-                                             CollectorId = a.CollectorId,
-                                             PaymentTermId = a.PaymentTermId,
-                                             PaymentTermLocalName = a.PaymentTerm.LocalName,
-                                             PaymentTermEnglishName = a.PaymentTerm.EnglishName
-                                         };
+                                                    select new CardList()
+                                                    {
+                                                        Id = a.Id,
+                                                        Code = a.Code,
+                                                        EnglishName = a.EnglishName,
+                                                        LocalName = a.LocalName,
+                                                        VatNumber = a.VatNumber,
+                                                        CountryCode = a.CountryCode,
+                                                        CountryName = a.CountryName,
+                                                        CreditLimitAmount = a.Customer == null ? null : a.Customer.CreditLimitAmount,
+                                                        AccountingPartnerCreditLimit = a.AccountingPartner == null ? null : a.AccountingPartner.CreditLimit,
+                                                        Tenant = a.Tenant,
+                                                        CityName = a.CityName,
+                                                        GLAccountId = a.GLAccountId,
+                                                        PartnerTypeId = a.PartnerTypeId,
+                                                        BusinessPhone = a.Phone,
+                                                        SalesmanUserId = a.SalesmanUserId,
+                                                        CollectorId = a.CollectorId,
+                                                        PaymentTermId = a.PaymentTermId,
+                                                        PaymentTermLocalName = a.PaymentTerm.LocalName,
+                                                        PaymentTermEnglishName = a.PaymentTerm.EnglishName
+                                                    };
 
 
             List<CardList> cards = IQueryable_cards.ToList();
@@ -2253,21 +2253,21 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public List<CardList> GetCardsByGLAccountIds(List<string> glAccountIds, int tenant)
         {
             List<CardList> cards = (from a in repository.context.Cards
-                                                    where a.Tenant == tenant && glAccountIds.Contains( a.GLAccountId)
-                                                    select new CardList()
-                                                    {
-                                                        Id = a.Id,
-                                                        Code = a.Code,
-                                                        EnglishName = a.EnglishName,
-                                                        LocalName = a.LocalName,
-                                                        VatNumber = a.VatNumber,
-                                                        CountryCode = a.CountryCode,
-                                                        CountryName = a.CountryName,
-                                                        Tenant = a.Tenant,
-                                                        CityName = a.CityName,
-                                                        GLAccountId = a.GLAccountId,
-                                                        PartnerTypeId = a.PartnerTypeId,
-                                                    }).ToList();
+                                    where a.Tenant == tenant && glAccountIds.Contains(a.GLAccountId)
+                                    select new CardList()
+                                    {
+                                        Id = a.Id,
+                                        Code = a.Code,
+                                        EnglishName = a.EnglishName,
+                                        LocalName = a.LocalName,
+                                        VatNumber = a.VatNumber,
+                                        CountryCode = a.CountryCode,
+                                        CountryName = a.CountryName,
+                                        Tenant = a.Tenant,
+                                        CityName = a.CityName,
+                                        GLAccountId = a.GLAccountId,
+                                        PartnerTypeId = a.PartnerTypeId,
+                                    }).ToList();
             return cards;
         }
 
@@ -2340,9 +2340,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public IQueryable<Card> GetAllCards()
         {
             IQueryable<Card> cards = (from a in repository.context.Cards select a);
-                                       
 
-            return cards ;
+
+            return cards;
         }
 
         public IQueryable<CardList> GetCardsByTenant(int tenant)
@@ -2383,10 +2383,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return cards;
         }
 
-        public bool IsCardExisitByCardId(string cardId,int tenant)
+        public bool IsCardExisitByCardId(string cardId, int tenant)
         {
             bool isCardExisit = (from a in repository.context.Cards
-                                 where a.Tenant == tenant && a.Id == cardId 
+                                 where a.Tenant == tenant && a.Id == cardId
                                  select a).Any();
             return isCardExisit;
         }
@@ -2397,6 +2397,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return isCardExisit;
         }
+
+        public CarrierCard GetSingleCarrierCard(string cardId, int tenant)
+        {
+            var card = (from a in repository.context.Cards
+                        where a.Tenant == tenant && a.Id == cardId
+                        select new CarrierCard
+                        {
+                            Code = a.Code,
+                            InActive = a.InActive,
+                        }).FirstOrDefault();
+            return card;
+        }
+
     }
 
     public class ShortPartnersDetails
@@ -2404,5 +2417,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public string PartnerId { get; set; }
         public string PartnerName { get; set; }
         public bool InActive { get; set; }
+    }
+    public class CarrierCard
+    {
+        public string Code { get; set; }
+        public bool InActive { get; set; }
+
     }
 }

@@ -174,6 +174,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 LTLRatio = a.LTLRatio,
                                                 IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
                                                 AutomaticallyCloseDays = a.AutomaticallyCloseDays,
+                                                EnableDeliveryOptions = a.EnableDeliveryOptions,
                                             });
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -206,7 +207,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public TenantPM GetSinglePM(int id)
         {
-            string entityName = "TenantPM" + id;
+            string entityName = "TenantPM" + id; 
 
             TenantPM entity;
             if (true)//HttpContext.Current != null)
@@ -355,8 +356,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         LTLRatio = tt.LTLRatio,
                         IsQuotesRequestActivatedInShared = tt.IsQuotesRequestActivatedInShared,
                         AutomaticallyCloseDays = tt.AutomaticallyCloseDays,
-                    };
-
+                        EnableDeliveryOptions = tt.EnableDeliveryOptions,
+                    }; 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
                         IGlobalContext globalObjectContext = GlobalContext.GetContext();
@@ -365,10 +366,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         tenant.TemporalStartDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalStartDate;
                         tenant.TemporalEndDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalEndDate;
                         //tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
-                    }
-
-                    this.GetTenantOtherFields(tenant);
-
+                    } 
+                    this.GetTenantOtherFields(tenant); 
                     entity = tenant;
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
@@ -526,6 +525,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     LTLRatio = tt.LTLRatio,
                     IsQuotesRequestActivatedInShared = tt.IsQuotesRequestActivatedInShared,
                     AutomaticallyCloseDays = tt.AutomaticallyCloseDays,
+                    EnableDeliveryOptions = tt.EnableDeliveryOptions,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -679,7 +679,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            LTLRatio = a.LTLRatio,
                                            IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
                                            AutomaticallyCloseDays = a.AutomaticallyCloseDays,
-
+                                           EnableDeliveryOptions = a.EnableDeliveryOptions,
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -829,7 +829,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        LTLRatio = a.LTLRatio,
                                        IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
                                        AutomaticallyCloseDays = a.AutomaticallyCloseDays,
-
+                                       EnableDeliveryOptions = a.EnableDeliveryOptions,
                                    }).FirstOrDefault();
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -991,6 +991,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                LTLRatio = a.LTLRatio,
                                                IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
                                                AutomaticallyCloseDays = a.AutomaticallyCloseDays,
+                                               EnableDeliveryOptions = a.EnableDeliveryOptions,
 
                                            }).FirstOrDefault();
 
@@ -1155,6 +1156,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            LTLRatio = a.LTLRatio,
                                            IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
                                            AutomaticallyCloseDays = a.AutomaticallyCloseDays,
+                                           EnableDeliveryOptions = a.EnableDeliveryOptions,
 
                                        }).FirstOrDefault();
 
@@ -1307,6 +1309,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        LTLRatio = a.LTLRatio,
                                        IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
                                        AutomaticallyCloseDays = a.AutomaticallyCloseDays,
+                                       EnableDeliveryOptions = a.EnableDeliveryOptions,
 
                                    }).FirstOrDefault();
                 if (tenant != null)
@@ -1478,6 +1481,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     LTLRatio = myPOCO.LTLRatio,
                     IsQuotesRequestActivatedInShared = myPOCO.IsQuotesRequestActivatedInShared,
                     AutomaticallyCloseDays = myPOCO.AutomaticallyCloseDays,
+                    EnableDeliveryOptions = myPOCO.EnableDeliveryOptions,
 
                 };
 
@@ -1600,6 +1604,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
                                                 IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
                                                 AutomaticallyCloseDays = a.AutomaticallyCloseDays,
+                                                EnableDeliveryOptions = a.EnableDeliveryOptions,
                                             };
             return result;
         }

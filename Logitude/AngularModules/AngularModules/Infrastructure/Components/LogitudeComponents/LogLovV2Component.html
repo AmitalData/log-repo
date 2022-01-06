@@ -707,7 +707,8 @@
                                     (click)="OnAllDataSelect(item)"
                                     (mouseover)="OnLiMouseOver($event)"
                                     (mouseleave)="OnLiMouseLeave($event)"
-                                   >
+                                    [class.InActive]="item.InActive || item.Inactive">
+
                                    <!--the style was like this but because of bug 48807 i changed it height:20px; font-size:10px; width:100%; position:relative;display: table;-->
                                     <div style="height:16px; font-size:10px; width:100%; position:relative;" (mouseover)="OnLiMouseOver($event)" (mouseleave)="OnLiMouseLeave($event)">
                                         <div *ngFor="let col of headerColumns; let colIndex = index"

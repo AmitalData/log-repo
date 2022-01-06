@@ -111,5 +111,6 @@ export class TenantList {
 		IsQuotesRequestActivatedInShared: boolean;
 		IsCargoTrackWebAccessActivated: boolean;
 		AutomaticallyCloseDays: number;
+		EnableDeliveryOptions: boolean;
 	
 }

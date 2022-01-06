@@ -60,7 +60,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             cargoShipmentPM.CustomsBrokerReference = shipmentPM?.CustomFileNumber;
             cargoShipmentPM.ContainersNumbers = shipmentPM?.ContainersNumbers;
             cargoShipmentPM.IncotermName = shipmentOrderPM != null ? shipmentOrderPM.IncotermCode : shipmentPM?.IncotermCode;
-            cargoShipmentPM.WarehouseLegEnglishName = shipmentPM?.WarehouseLegEnglishName;
+            cargoShipmentPM.WarehouseLegName = !string.IsNullOrEmpty(shipmentPM?.WarehouseLegLocalName) ? shipmentPM?.WarehouseLegLocalName : shipmentPM?.WarehouseLegEnglishName;
             cargoShipmentPM.ImportManifest = shipmentPM?.ImportManifest;
             cargoShipmentPM.TotalTax = shipmentPM?.TotalTax;
             cargoShipmentPM.ShipmentTypeName = shipmentPM?.ShipmentTypeName;
@@ -131,6 +131,9 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         {
             ShipmentAdditionalCloudData cloudData = GetShipmentCloud(cargoShipmentPM);
             cargoShipmentPM.IsImporterApprovalRequried = cloudData?.IsImporterApprovalRequried ?? false;
+            cargoShipmentPM.ApprovedDate = cloudData?.ApproveDateTime;
+            //cargoShipmentPM.DenyDate = cloudData?.DenyDate;
+            cargoShipmentPM.DenyReason = cloudData?.DenyReason;
         }
 
         private ShipmentAdditionalCloudData GetShipmentCloud(CargoTrackingShipmentPM cargoShipmentPM)
@@ -157,7 +160,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         private ShipmentOrderPM GetShipmentOrder()
         {
             ShipmentOrderQueryService shipmentOrderQuery = new ShipmentOrderQueryService(cargoShipmentPM.Tenant);
-            shipmentOrderPM = shipmentOrderQuery.GetSingle(cargoShipmentPM.EntityId, true, false);
+            shipmentOrderPM = shipmentOrderQuery.GetSinglePMForCargo(cargoShipmentPM.EntityId, cargoShipmentPM.Tenant);
             return shipmentOrderPM;
         }
         private ShipmentPM GetShipmentPM()

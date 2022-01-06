@@ -408,7 +408,10 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         }
         return value;
     }
-
+    QuantityAndWeight:string;
+    public SetQuantityAndWeight(shipment: CargoTrackingShipmentList){
+        this.QuantityAndWeight = (shipment.NumberOfPackages? shipment.NumberOfPackages + ' Units ' :'' ) + (shipment.NumberOfPackages && shipment.GrossWeight? ' / ':'') +(shipment.GrossWeight?shipment.GrossWeight+' '+shipment.GrossWeightUnitCode:'');
+    }
     private SetSupplierOrCleintValueByEntityType(shipment: CargoTrackingShipmentList, value: any) {
         if (shipment.EntityType == this.EntityType_Customs) {
             value = shipment.ShipperName;
@@ -578,63 +581,45 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.references = reference != null ? reference.split(',') : null;
 
     }
+    masterLabel = 'Master';
+    houseLabel = 'House';
     SetMasterOrHouseLabel(shipment: CargoTrackingShipmentList) {
-        this.MasterOrHouseLabel = '';
-        var isShipmentDirectOrder = shipment.ShipmentLevelCode == ShipmentLevelCodes.Direct && shipment.EntityType == ShipmentEntityTypes.Order;
-        var isShipmentHouseOrder = shipment.ShipmentLevelCode == ShipmentLevelCodes.House && shipment.EntityType == ShipmentEntityTypes.Order;
-
-        if (shipment.ForwardingShipmentLevelCode == ShipmentLevelCodes.Direct || isShipmentDirectOrder)
-            this.SetMasterOrHouseLabelForDirect(shipment);
-
-        else if (shipment.ForwardingShipmentLevelCode == ShipmentLevelCodes.House || isShipmentHouseOrder)
-            this.SetMasterOrHouseLabelForHouse(shipment);
-
-        else if (shipment.EntityType == ShipmentEntityTypes.Customs && !shipment.ForwardingShipmentHeaderId)
-            this.SetMasterOrHouseLabelForCustoms(shipment);
-        return this.MasterOrHouseLabel;
+        if(shipment.EntityType == ShipmentEntityTypes.Customs && shipment.ForwardingShipmentHeaderId && shipment.ForwardingShipmentLevelCode == ShipmentLevelCodes.House && shipment.ForwardingHouse){
+            return this.houseLabel;
+        }else if(shipment.EntityType == ShipmentEntityTypes.Customs && shipment.ForwardingShipmentHeaderId && shipment.ForwardingShipmentLevelCode == ShipmentLevelCodes.Direct && shipment.ForwardingMaster){
+            return this.masterLabel;
+        }else if(shipment.EntityType == ShipmentEntityTypes.Forwarding && shipment.ShipmentLevelCode == ShipmentLevelCodes.House && shipment.House){
+            return this.houseLabel;
+        }else if(shipment.EntityType == ShipmentEntityTypes.Forwarding && shipment.ShipmentLevelCode == ShipmentLevelCodes.Direct && shipment.Master){
+            return this.masterLabel;
+        }else if(shipment.House ){
+            return this.houseLabel;
+        }else if(shipment.Master ){
+            return this.masterLabel;
+        }
+        return null;
 
     }
-    private SetMasterOrHouseLabelForCustoms(shipment: CargoTrackingShipmentList) {
-        if (shipment.House)
-            this.MasterOrHouseLabel = "House";
-        else if (shipment.Master)
-            this.MasterOrHouseLabel = "Master";
-    }
-
-    private SetMasterOrHouseLabelForHouse(shipment: CargoTrackingShipmentList) {
-        if (shipment.House)
-            this.MasterOrHouseLabel = "House";
-        else if (shipment.Master)
-            this.MasterOrHouseLabel = "Master";
-    }
-
-    private SetMasterOrHouseLabelForDirect(shipment: CargoTrackingShipmentList) {
-        if (shipment.Master)
-            this.MasterOrHouseLabel = "Master";
-        else if (shipment.House != null)
-            this.MasterOrHouseLabel = "House";
-    }
-
-    SetConsignmentNumber(shipment: CargoTrackingShipmentList) {
-        if (shipment.ShipmentLevelCode == 'D') {
-            this.ConsignmentNumber = shipment.Master != null ? shipment.Master : shipment.House;
+    SetMasterOrHouseValue(shipment: CargoTrackingShipmentList) {
+        if(shipment.EntityType == ShipmentEntityTypes.Customs && shipment.ForwardingShipmentHeaderId && shipment.ForwardingShipmentLevelCode == ShipmentLevelCodes.House && shipment.ForwardingHouse){
+            return shipment.ForwardingHouse;
+        }else if(shipment.EntityType == ShipmentEntityTypes.Customs && shipment.ForwardingShipmentHeaderId && shipment.ForwardingShipmentLevelCode == ShipmentLevelCodes.Direct && shipment.ForwardingMaster){
+            return shipment.ForwardingMaster;
+        }else if(shipment.EntityType == ShipmentEntityTypes.Forwarding && shipment.ShipmentLevelCode == ShipmentLevelCodes.House && shipment.House){
+            return shipment.House;
+        }else if(shipment.EntityType == ShipmentEntityTypes.Forwarding && shipment.ShipmentLevelCode == ShipmentLevelCodes.Direct && shipment.Master){
+            return shipment.Master;
+        }else if(shipment.House ){
+            return shipment.House;
+        }else if(shipment.Master ){
+            return shipment.Master;
         }
 
-        else if (shipment.ShipmentLevelCode == 'H') {
-            this.ConsignmentNumber = shipment.House != null ? shipment.House : shipment.Master;;
-        }
-    }
+        return null;
 
-    GetConsignmentNumberForCustomsForwardingShipment(shipment: CargoTrackingShipmentList) {
-        if (shipment.ForwardingShipmentLevelCode == 'D') {
-            this.ConsignmentNumber = shipment.ForwardingMaster;
-        }
-
-        else if (shipment.ForwardingShipmentLevelCode == 'H') {
-            this.ConsignmentNumber = shipment.ForwardingHouse;
-        }
-        return this.ConsignmentNumber;
     }
+    
+
     SetEstimationORActualDate(shipment: CargoTrackingShipmentList) {
         if (shipment.ArrivalDate != null) {
             this.TitleOfEstimationORActualDate = 'ATA'
@@ -1041,12 +1026,14 @@ export enum SortOptions {
 
 export enum ShipmentLevelCodes {
     House = 'H',
-    Direct = 'D'
+    Direct = 'D',
+    Customs = 'A'
 }
 
 export enum ShipmentEntityTypes {
     Order = 'O',
-    Customs = 'C'
+    Customs = 'C',
+    Forwarding = 'F'
 }
 export enum MoreFilterCodes {
     ExceptionOnly = 'ExceptionOnly',
@@ -1068,5 +1055,6 @@ export enum shipmentTypeCodes {
     InLand = 'I'
 
 }
+
 
 
