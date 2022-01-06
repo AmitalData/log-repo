@@ -76,11 +76,6 @@ export class SupplierInvoiceMoreTabComponent extends BaseComponent {
     FillGridData() {
         this.TypeCodeFilterItems = new ApiQueryFilters();
         this.TypeCodeFilterItems.addAdditionalFilter("Code", "I02", null, null, "NotContains", false, false, false, "string", false, true); //Task 36745: Supplier Invoice Modifications - Logic for Code "I02" CALL#302294
-        if(this.declarationPM.Direction == "E"){
-            this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantInvoiceExport", true, null, null, "Equals", false, false, false, "boolean");
-        }else{
-            this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantInvoice", true, null, null, "Equals", false, false, false, "boolean");
-        }
         this.ModificationsList = new ObservableCollection([]);
         for (let item of this.InvoicePM.SupplierInvoiceModifications) {
             if (item.TypeCode != "I02" && item.TypeCode != "67" && item.TypeCode != "144") {
@@ -96,6 +91,7 @@ export class SupplierInvoiceMoreTabComponent extends BaseComponent {
         if (this.declarationPM.Direction == "E") {
             this.TypeCodeFilterItems = new ApiQueryFilters();
             this.TypeCodeFilterItems.addAdditionalFilter("Code", "160", null, null, "NotContains", false, false, false, "string", false, true);
+
             this.UCRList = new ObservableCollection([]);
             for (let item of this.InvoicePM.SupplierInvoiceUCRs) {
                      this.UCRList.Insert(new UCRItemModel(item));
@@ -106,9 +102,11 @@ export class SupplierInvoiceMoreTabComponent extends BaseComponent {
             for (let item of this.InvoicePM.SupplierInvoicePayments) {
                 this.PaymentsList.Insert(new PaymentItemModel(item));
             }
-
-
-
+        }
+        if(this.declarationPM.Direction == "E"){
+            this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantInvoiceExport", true, null, null, "Equals", false, false, false, "boolean",false,true);
+        }else{
+            this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantInvoice", true, null, null, "Equals", false, false, false, "boolean",false,true);
         }
 
     }

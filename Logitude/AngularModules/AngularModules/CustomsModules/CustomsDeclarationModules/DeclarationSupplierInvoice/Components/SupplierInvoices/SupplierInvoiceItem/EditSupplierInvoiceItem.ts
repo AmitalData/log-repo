@@ -60,13 +60,11 @@ export class EditSupplierInvoiceItem extends BaseComponent {
         this.CustomsBookTypeFilterItems = new ApiQueryFilters();
         this.CustomsBookTypeFilterItems.addAdditionalFilter("Code", "2", null, null, "Exclude", false, false, false, "string", false, true);
         this.TypeCodeFilterItems = new ApiQueryFilters();
-        debugger;
         if (this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E") {
-            this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantGoodsItemExport", true, null, null, "Equals", false, false, false, "boolean");
+            this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantGoodsItemExport", true, null, null, "Equals", false, false, false, "boolean",false,true);
         } else {
-            this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantGoodsItem", true, null, null, "Equals", false, false, false, "boolean");
+            this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantGoodsItem", true, null, null, "Equals", false, false, false, "boolean",false,true);
         }
-
         this.BuildTabs();
 
         // Initilize lists
@@ -98,6 +96,7 @@ export class EditSupplierInvoiceItem extends BaseComponent {
         }
         console.log("--> EditSupplierInvoiceItem window argument passed: ", args);
         this.CheckRequrierdFieldsForSend();
+        
     }
 
     FillGridsData() {
