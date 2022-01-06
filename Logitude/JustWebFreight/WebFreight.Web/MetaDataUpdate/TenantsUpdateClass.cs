@@ -2152,6 +2152,12 @@ namespace WebFreight.Web.MetaDataUpdate
             string countryCode = GetCurrentTenantCountryCode(tenant);
             bool sameCountry = false;
 
+            DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(documentTypeTemplateRepository);
+            List<DocumentTypeTemplatePM> allSystemTenantZeroDocumentTypeTemplatePMs = documentTypeTemplateQuery.GetDocumentTypeTemplatePMsByTenant(0).Where(t => t.IsSystem).ToList();
+            List<DocumentTypeTemplatePM> allSystemCurrentTenantDocumentTypeTemplatePMs = documentTypeTemplateQuery.GetDocumentTypeTemplatePMsByTenant(tenant).Where(t => t.IsSystem).ToList();
+
+            CopyDocumentTypeTemplateService copyDocumentTypeTemplateService = new CopyDocumentTypeTemplateService(new CopyDocumentTypeTemplateArgs { Tenant = tenant, AllTenantZeroDocumentTypes = tenantZeroDocumentTypes, AllSystemTenantZeroDocumentTypeTemplatePMs = allSystemTenantZeroDocumentTypeTemplatePMs, AllSystemCurrentTenantDocumentTypeTemplatePMs = allSystemCurrentTenantDocumentTypeTemplatePMs, CountryCode = countryCode });
+
             foreach (DocumentTypePM docType in tenantZeroDocumentTypes.Values)
             {
                 AutomationHelper automationHelper = new AutomationHelper();
@@ -2159,7 +2165,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 sameCountry = docType.CountryCode == countryCode;
                 if (((!docType.InActive && docType.IsCopiedAtSignup && docType.IsEnabledForCustomers) || automationDocumentTypeIds.Contains(docType.Id)) && (string.IsNullOrEmpty(docType.CountryCode?.Trim()) || sameCountry))
                 {
-                    DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(documentTypeTemplateRepository);
+                    
 
 
                     //if (!currentTenantDocumentTypes.Keys.Contains(docType.Code + docType.ObjectTableId))
@@ -2283,7 +2289,7 @@ namespace WebFreight.Web.MetaDataUpdate
                                     ReplyTo = a.ReplyTo,
                                     To =  a.To,
                                     LastUpdateDate = a.LastUpdateDate,
-
+                                    IsSystem = a.IsSystem,
 
                                 };
                                 if (isDefault)
@@ -2314,7 +2320,6 @@ namespace WebFreight.Web.MetaDataUpdate
                         documentType.OnUploadPopulateDateFieldName = docType.OnUploadPopulateDateFieldName;
                         documentTypeRepository.Update(documentType);
 
-                        CopyDocumentTypeTemplateService copyDocumentTypeTemplateService = new CopyDocumentTypeTemplateService(tenant, tenantZeroDocumentTypes);
                         copyDocumentTypeTemplateService.Execute(documentType, docType);
                     }
                     //}

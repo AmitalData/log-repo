@@ -15,83 +15,106 @@ namespace Logitude.BL.CommonDataModel.ExternalService
     public class CopyDocumentTypeTemplateService
     {
         private readonly int tenant;
-        private readonly DocumentOutRepository documentOutRepository;
-        private readonly DocumentTypeTemplateQuery documentTypeTemplateQuery;
+        private readonly IQueryable<DocumentOut> documentOuts;
         private readonly DocumentTypeTemplateRepository documentTypeTemplateRepository;
-        private readonly Dictionary<string, DocumentTypePM> tenantZeroDocumentTypes;
+        private readonly Dictionary<string, DocumentTypePM> allTenantZeroDocumentTypes;
+        private readonly List<DocumentTypeTemplatePM> allSystemTenantZeroDocumentTypeTemplatePMs;
+        private readonly List<DocumentTypeTemplatePM> allSystemCurrentTenantDocumentTypeTemplatePMs;
         private readonly string countryCode;
-        public CopyDocumentTypeTemplateService(int tenant, Dictionary<string, DocumentTypePM> tenantZeroDocumentTypes)
+        private bool documentTypeShouldChange = false;
+        public CopyDocumentTypeTemplateService(CopyDocumentTypeTemplateArgs copyDocumentTypeTemplateArgs)
         {
-            this.tenant = tenant;
+            tenant = copyDocumentTypeTemplateArgs.Tenant;
+            allTenantZeroDocumentTypes = copyDocumentTypeTemplateArgs.AllTenantZeroDocumentTypes;
+            allSystemTenantZeroDocumentTypeTemplatePMs = copyDocumentTypeTemplateArgs.AllSystemTenantZeroDocumentTypeTemplatePMs;
+            allSystemCurrentTenantDocumentTypeTemplatePMs = copyDocumentTypeTemplateArgs.AllSystemCurrentTenantDocumentTypeTemplatePMs;
+            countryCode = copyDocumentTypeTemplateArgs.CountryCode;
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
-            documentOutRepository = new DocumentOutRepository(commonContext);
+            DocumentOutRepository documentOutRepository = new DocumentOutRepository(commonContext);
+            documentOuts = documentOutRepository.GetDocumentOuts(tenant);
             documentTypeTemplateRepository = new DocumentTypeTemplateRepository(commonContext);
-            documentTypeTemplateQuery = new DocumentTypeTemplateQuery(documentTypeTemplateRepository);
-            this.tenantZeroDocumentTypes = tenantZeroDocumentTypes;
-            countryCode = GetCurrentTenantCountryCode(tenant);
-        }
-
-        private string GetCurrentTenantCountryCode(int tenant)
-        {
-            string countryCode = "";
-            TenantQuery tenantQuery = new TenantQuery(tenant);
-            TenantPM currentTenant = tenantQuery.GetSinglePM(tenant);
-            if (currentTenant == null) return countryCode;
-            if (currentTenant.AddressId == null) return countryCode;
-
-            ICommonDataContext objectContext = CommonDataContext.GetContext(currentTenant.Id);
-            AddressRepository addressRepository = new AddressRepository(objectContext);
-            AddressQuery addressQuery = new AddressQuery(addressRepository);
-            AddressPM address = addressQuery.GetSinglePM(currentTenant.AddressId, currentTenant.Id);
-            if (address != null)
-            {
-                countryCode = address.CountryCode;
-            }
-
-            return countryCode;
         }
 
         public void Execute(DocumentType currentTenantDocumentType, DocumentTypePM tenantZeroDocumentTypePM)
         {
-            List<DocumentTypeTemplatePM> tenantZeroDocumentTypeTemplatePMs = documentTypeTemplateQuery.GetDocumentTypeTemplatesByDocumentTypeId(tenantZeroDocumentTypePM.Id, 0);
-            List<DocumentTypeTemplatePM> currentTenantDocumentTypeTemplatePMs = documentTypeTemplateQuery.GetDocumentTypeTemplatesByDocumentTypeId(currentTenantDocumentType.Id, tenant);
+            List<DocumentTypeTemplatePM> tenantZeroDocumentTypeTemplatePMs = allSystemTenantZeroDocumentTypeTemplatePMs.Where(t => t.DocumentTypeId == tenantZeroDocumentTypePM.Id).ToList();
+            List<DocumentTypeTemplatePM> currentTenantDocumentTypeTemplatePMs = allSystemCurrentTenantDocumentTypeTemplatePMs.Where(t => t.DocumentTypeId == currentTenantDocumentType.Id).ToList();
 
             foreach (DocumentTypeTemplatePM tenantZeroDocumentTypeTemplatePM in tenantZeroDocumentTypeTemplatePMs)
             {
-                CopyTenantZeroDocumentTypeTemplateToCurrentTenant(currentTenantDocumentType, currentTenantDocumentTypeTemplatePMs, tenantZeroDocumentTypeTemplatePM);
+                CopyTenantZeroDocumentTypeTemplateToCurrentTenant(currentTenantDocumentType, allSystemCurrentTenantDocumentTypeTemplatePMs, tenantZeroDocumentTypeTemplatePM);
             }
+
+            if (documentTypeShouldChange) SetDefaultDocumentType(currentTenantDocumentType, tenantZeroDocumentTypePM);
 
             documentTypeTemplateRepository.SubmitChanges();
         }
 
-        private void CopyTenantZeroDocumentTypeTemplateToCurrentTenant(DocumentType currentTenantDocumentType, List<DocumentTypeTemplatePM> currentTenantDocumentTypeTemplatePMs, DocumentTypeTemplatePM tenantZeroDocumentTypeTemplatePM)
+        private void SetDefaultDocumentType(DocumentType currentTenantDocumentType, DocumentTypePM tenantZeroDocumentTypePM)
         {
-            DocumentTypeTemplatePM currentDocumentTypeTemplatePM = currentTenantDocumentTypeTemplatePMs.Where(d => d.OriginalTemplateId == tenantZeroDocumentTypeTemplatePM.Id).FirstOrDefault();
-            if (currentDocumentTypeTemplatePM == null)
+            SetDefaultReportDocumentType(currentTenantDocumentType, tenantZeroDocumentTypePM);
+            SetDefaultHtmlDocumentType(currentTenantDocumentType, tenantZeroDocumentTypePM);
+        }
+
+        private void SetDefaultReportDocumentType(DocumentType currentTenantDocumentType, DocumentTypePM tenantZeroDocumentTypePM)
+        {
+            DocumentTypeTemplatePM tenantZeroDefaultDocumentTypeReportTemplatePM = allSystemTenantZeroDocumentTypeTemplatePMs.Where(d => d.Id == tenantZeroDocumentTypePM.DocumentTypeDefaultReportTemplateId).FirstOrDefault();
+            if (tenantZeroDefaultDocumentTypeReportTemplatePM != null && !documentOuts.Where(d => d.DocumentTemplateId == currentTenantDocumentType.DocumentTypeDefaultReportTemplateId).Any())
             {
-                CreateNewDocumentTypeTemplateToCurrentTenant(currentTenantDocumentType, tenantZeroDocumentTypeTemplatePM);
-            }
-            else if (tenantZeroDocumentTypeTemplatePM.IsSystem && tenantZeroDocumentTypeTemplatePM.LastUpdateDate != currentDocumentTypeTemplatePM.LastUpdateDate)
-            {
-                UpdateCurrentTenantDocumentTypeTemplate(currentTenantDocumentType, tenantZeroDocumentTypeTemplatePM, currentDocumentTypeTemplatePM);
+                currentTenantDocumentType.DocumentTypeDefaultReportTemplateId = GetDefaultDocumentType(tenantZeroDefaultDocumentTypeReportTemplatePM);
             }
         }
 
-        private void CreateNewDocumentTypeTemplateToCurrentTenant(DocumentType currentTenantDocumentType, DocumentTypeTemplatePM tenantZeroDocumentTypeTemplatePM)
+        private void SetDefaultHtmlDocumentType(DocumentType currentTenantDocumentType, DocumentTypePM tenantZeroDocumentTypePM)
         {
-            bool sameCountry = currentTenantDocumentType.CountryCode == countryCode;
-            DocumentTypePM documentTypePM = tenantZeroDocumentTypes.Values.Where(d => d.Id == tenantZeroDocumentTypeTemplatePM.DocumentTypeId && d.Tenant == 0).FirstOrDefault();
+            DocumentTypeTemplatePM tenantZeroDefaultDocumentTypeHtmlTemplatePM = allSystemTenantZeroDocumentTypeTemplatePMs.Where(d => d.Id == tenantZeroDocumentTypePM.DocumentTypeDefaultReportTemplateId).FirstOrDefault();
+            if (tenantZeroDefaultDocumentTypeHtmlTemplatePM != null && !documentOuts.Where(d => d.DocumentTemplateId == currentTenantDocumentType.DocumentTypeDefaultHTMLTemplateId).Any())
+            {
+                currentTenantDocumentType.DocumentTypeDefaultHTMLTemplateId = GetDefaultDocumentType(tenantZeroDefaultDocumentTypeHtmlTemplatePM);
+            }
+        }
 
-            if (!tenantZeroDocumentTypeTemplatePM.IsSystem) return;
-            if (!sameCountry && !(tenantZeroDocumentTypeTemplatePM.CountryCode == countryCode) && !string.IsNullOrEmpty(tenantZeroDocumentTypeTemplatePM.CountryCode?.Trim())) return;
+        private string GetDefaultDocumentType(DocumentTypeTemplatePM tenantZeroDefaultDocumentTypeTemplatePM)
+        {
+            DocumentTypeTemplatePM currentDefaultDocumentTypeTemplatePM = allSystemCurrentTenantDocumentTypeTemplatePMs.Where(d => d.OriginalTemplateId == tenantZeroDefaultDocumentTypeTemplatePM.Id && d.CountryCode == countryCode).FirstOrDefault();
+            if (currentDefaultDocumentTypeTemplatePM != null) return currentDefaultDocumentTypeTemplatePM.Id;
+            
+            currentDefaultDocumentTypeTemplatePM = allSystemCurrentTenantDocumentTypeTemplatePMs.Where(d => d.CountryCode == countryCode).FirstOrDefault();
+            if (currentDefaultDocumentTypeTemplatePM != null) return currentDefaultDocumentTypeTemplatePM.Id;
+            
+            currentDefaultDocumentTypeTemplatePM = allSystemCurrentTenantDocumentTypeTemplatePMs.Where(d => string.IsNullOrEmpty(d.CountryCode)).FirstOrDefault();
+            if (currentDefaultDocumentTypeTemplatePM != null) return currentDefaultDocumentTypeTemplatePM.Id;
 
-            DocumentTypeTemplate newtemplate = CreateNewInstanceDocumentTypeTemplate(currentTenantDocumentType, tenantZeroDocumentTypeTemplatePM);
+            return "";
+        }
 
-            bool hasDefaultTemplate = !string.IsNullOrEmpty(currentTenantDocumentType.DocumentTypeDefaultReportTemplateId);
-            if (!hasDefaultTemplate && newtemplate.TemplateType == "P") currentTenantDocumentType.DocumentTypeDefaultReportTemplateId = newtemplate.Id;
-            else if (!hasDefaultTemplate) currentTenantDocumentType.DocumentTypeDefaultHTMLTemplateId = newtemplate.Id;
+        private void CopyTenantZeroDocumentTypeTemplateToCurrentTenant(DocumentType currentTenantDocumentType, List<DocumentTypeTemplatePM> allSystemCurrentTenantDocumentTypeTemplatePMs, DocumentTypeTemplatePM tenantZeroDocumentTypeTemplatePM)
+        {
+            DocumentTypeTemplatePM currentDocumentTypeTemplatePM = allSystemCurrentTenantDocumentTypeTemplatePMs.Where(d => d.OriginalTemplateId == tenantZeroDocumentTypeTemplatePM.Id).FirstOrDefault();
+            DocumentTypeTemplate documentTypeTemplate = null;
+            if (currentDocumentTypeTemplatePM == null)
+            {
+                documentTypeTemplate = CreateNewDocumentTypeTemplateToCurrentTenant(currentTenantDocumentType, tenantZeroDocumentTypeTemplatePM, currentDocumentTypeTemplatePM);
+            }
+            else if (tenantZeroDocumentTypeTemplatePM.LastUpdateDate != currentDocumentTypeTemplatePM.LastUpdateDate)
+            {
+                documentTypeTemplate = UpdateCurrentTenantDocumentTypeTemplate(currentTenantDocumentType, tenantZeroDocumentTypeTemplatePM, currentDocumentTypeTemplatePM);
+            }
+        }
 
-            documentTypeTemplateRepository.Add(newtemplate);
+        private DocumentTypeTemplate CreateNewDocumentTypeTemplateToCurrentTenant(DocumentType currentTenantDocumentType, DocumentTypeTemplatePM tenantZeroDocumentTypeTemplatePM, DocumentTypeTemplatePM currentDocumentTypeTemplatePM)
+        {
+            DocumentTypePM documentTypePM = allTenantZeroDocumentTypes.Values.Where(d => d.Id == tenantZeroDocumentTypeTemplatePM.DocumentTypeId && d.Tenant == 0).FirstOrDefault();
+
+            if (!(tenantZeroDocumentTypeTemplatePM.CountryCode == countryCode) && !string.IsNullOrEmpty(tenantZeroDocumentTypeTemplatePM.CountryCode?.Trim())) return null;
+
+            DocumentTypeTemplate newDocumentTypeTemplate = CreateNewInstanceDocumentTypeTemplate(currentTenantDocumentType, tenantZeroDocumentTypeTemplatePM);
+            
+            allSystemCurrentTenantDocumentTypeTemplatePMs.Add(CreateNewInstanceDocumentTypeTemplatePM(newDocumentTypeTemplate));
+            documentTypeTemplateRepository.Add(newDocumentTypeTemplate);
+            documentTypeShouldChange = true;
+
+            return newDocumentTypeTemplate;
         }
 
         private DocumentTypeTemplate CreateNewInstanceDocumentTypeTemplate(DocumentType currentTenantDocumentType, DocumentTypeTemplatePM tenantZeroDocumentTypeTemplatePM)
@@ -127,20 +150,54 @@ namespace Logitude.BL.CommonDataModel.ExternalService
                 IsSystem = true,
             };
         }
-
-        private void UpdateCurrentTenantDocumentTypeTemplate(DocumentType currentTenantDocumentType, DocumentTypeTemplatePM tenantZeroDocumentTypeTemplatePM, DocumentTypeTemplatePM currentDocumentTypeTemplatePM)
+        private DocumentTypeTemplatePM CreateNewInstanceDocumentTypeTemplatePM(DocumentTypeTemplate newDocumentTypeTemplate)
         {
-            bool sameCountry = currentTenantDocumentType.CountryCode == countryCode;
-            if (!tenantZeroDocumentTypeTemplatePM.IsSystem) return;
-            if (!sameCountry && !(tenantZeroDocumentTypeTemplatePM.CountryCode == countryCode) && !string.IsNullOrEmpty(tenantZeroDocumentTypeTemplatePM.CountryCode?.Trim())) return;
-
-            DocumentTypeTemplate currentDocumentTypeTemplate = documentTypeTemplateRepository.GetSingleDocumentTypeTemplate(currentDocumentTypeTemplatePM.Id, currentDocumentTypeTemplatePM.Tenant);
-            MapCurrentDocumentTypeTemplate(tenantZeroDocumentTypeTemplatePM, currentDocumentTypeTemplate, currentTenantDocumentType);
-
-            documentTypeTemplateRepository.Update(currentDocumentTypeTemplate);
+            return new DocumentTypeTemplatePM()
+            {
+                Id = newDocumentTypeTemplate.Id,
+                Tenant = newDocumentTypeTemplate.Tenant,
+                TemplateBody = newDocumentTypeTemplate.TemplateBody,
+                TemplateType = newDocumentTypeTemplate.TemplateType,
+                HorizontalShift = newDocumentTypeTemplate.HorizontalShift,
+                InActive = newDocumentTypeTemplate.InActive,
+                Description = newDocumentTypeTemplate.Description,
+                DocumentTypeId = newDocumentTypeTemplate.Id,
+                EditorTool = newDocumentTypeTemplate.EditorTool,
+                CountryCode = newDocumentTypeTemplate.CountryCode,
+                Subject = newDocumentTypeTemplate.CountryCode,
+                Language = newDocumentTypeTemplate.Language,
+                OriginalTemplateId = newDocumentTypeTemplate.Id,
+                VerticalShift = newDocumentTypeTemplate.VerticalShift,
+                InternalRemarks = newDocumentTypeTemplate.InternalRemarks,
+                IsEnabledForCustomers = newDocumentTypeTemplate.IsEnabledForCustomers,
+                TemplateBodyHtml = newDocumentTypeTemplate.TemplateBodyHtml,
+                TemplateFooterHtml = newDocumentTypeTemplate.TemplateFooterHtml,
+                TemplateHeaderHtml = newDocumentTypeTemplate.TemplateHeaderHtml,
+                TemplateFooterHeight = newDocumentTypeTemplate.TemplateFooterHeight,
+                TemplateHeaderHeight = newDocumentTypeTemplate.TemplateHeaderHeight,
+                CC = newDocumentTypeTemplate.CC,
+                From = newDocumentTypeTemplate.From,
+                ReplyTo = newDocumentTypeTemplate.ReplyTo,
+                To = newDocumentTypeTemplate.To,
+                LastUpdateDate = newDocumentTypeTemplate.LastUpdateDate,
+                IsSystem = newDocumentTypeTemplate.IsSystem,
+            };
         }
 
-        private void MapCurrentDocumentTypeTemplate(DocumentTypeTemplatePM tenantZeroDocumentTypeTemplatePM, DocumentTypeTemplate currentDocumentTypeTemplate, DocumentType currentTenantDocumentType)
+        private DocumentTypeTemplate UpdateCurrentTenantDocumentTypeTemplate(DocumentType currentTenantDocumentType, DocumentTypeTemplatePM tenantZeroDocumentTypeTemplatePM, DocumentTypeTemplatePM currentDocumentTypeTemplatePM)
+        {
+            if (!(tenantZeroDocumentTypeTemplatePM.CountryCode == countryCode) && !string.IsNullOrEmpty(tenantZeroDocumentTypeTemplatePM.CountryCode?.Trim())) return null;
+
+            DocumentTypeTemplate currentDocumentTypeTemplate = documentTypeTemplateRepository.GetSingleDocumentTypeTemplate(currentDocumentTypeTemplatePM.Id, currentDocumentTypeTemplatePM.Tenant);
+            MapCurrentDocumentTypeTemplate(tenantZeroDocumentTypeTemplatePM, currentDocumentTypeTemplate, currentTenantDocumentType, currentDocumentTypeTemplatePM);
+
+            documentTypeTemplateRepository.Update(currentDocumentTypeTemplate);
+            documentTypeShouldChange = true;
+
+            return currentDocumentTypeTemplate;
+        }
+
+        private void MapCurrentDocumentTypeTemplate(DocumentTypeTemplatePM tenantZeroDocumentTypeTemplatePM, DocumentTypeTemplate currentDocumentTypeTemplate, DocumentType currentTenantDocumentType, DocumentTypeTemplatePM currentDocumentTypeTemplatePM)
         {
             currentDocumentTypeTemplate.TemplateBody = tenantZeroDocumentTypeTemplatePM.TemplateBody;
             currentDocumentTypeTemplate.TemplateType = tenantZeroDocumentTypeTemplatePM.TemplateType;
@@ -164,29 +221,15 @@ namespace Logitude.BL.CommonDataModel.ExternalService
             currentDocumentTypeTemplate.ReplyTo = tenantZeroDocumentTypeTemplatePM.ReplyTo;
             currentDocumentTypeTemplate.LastUpdateDate = tenantZeroDocumentTypeTemplatePM.LastUpdateDate;
             currentDocumentTypeTemplate.IsSystem = true;
-
-            bool isCurrentDefaultTemplate = GetIsCurrentDefaultTemplate(currentDocumentTypeTemplate, currentTenantDocumentType);
-            if (isCurrentDefaultTemplate)
-                SetDefaultDocumentTypeTemplate(currentTenantDocumentType, currentDocumentTypeTemplate);
         }
+    }
 
-        private static bool GetIsCurrentDefaultTemplate(DocumentTypeTemplate currentDocumentTypeTemplate, DocumentType currentTenantDocumentType)
-        {
-            return currentTenantDocumentType.DocumentTypeDefaultReportTemplateId == currentDocumentTypeTemplate.Id
-                || currentTenantDocumentType.DocumentTypeDefaultHTMLTemplateId == currentDocumentTypeTemplate.Id;
-        }
-
-        private void SetDefaultDocumentTypeTemplate(DocumentType currentTenantDocumentType, DocumentTypeTemplate currentDocumentTypeTemplatePM)
-        {
-            IQueryable<DocumentOut> documentOuts = documentOutRepository.GetDocumentOuts(currentDocumentTypeTemplatePM.Tenant);
-            if (currentDocumentTypeTemplatePM.TemplateType == "P" && !documentOuts.Where(d => d.DocumentTemplateId == currentDocumentTypeTemplatePM.Id).Any())
-            {
-                currentTenantDocumentType.DocumentTypeDefaultReportTemplateId = currentDocumentTypeTemplatePM.Id;
-            }
-            else if (!documentOuts.Where(d => d.EmailTemplateId == currentDocumentTypeTemplatePM.Id).Any())
-            {
-                currentTenantDocumentType.DocumentTypeDefaultHTMLTemplateId = currentDocumentTypeTemplatePM.Id;
-            }
-        }
+    public class CopyDocumentTypeTemplateArgs
+    {
+        public int Tenant { get; set; }
+        public Dictionary<string, DocumentTypePM> AllTenantZeroDocumentTypes { get; set; }
+        public List<DocumentTypeTemplatePM> AllSystemTenantZeroDocumentTypeTemplatePMs { get; set; }
+        public List<DocumentTypeTemplatePM> AllSystemCurrentTenantDocumentTypeTemplatePMs { get; set; }
+        public string CountryCode { get; set; }
     }
 }
