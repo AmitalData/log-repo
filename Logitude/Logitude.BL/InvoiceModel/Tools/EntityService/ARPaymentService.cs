@@ -403,15 +403,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.VoidARPaymentInFullAccounting(theEntityPm, setVoided);
 
-            this.InitializeTransferComponents(); 
+            this.InitializeTransferComponents();  
+
+            ARPaymentMapping.MapEntity(theEntityPm, paymentPoco, isNewEntity);
+
 
             ARPaymentReferencesService ARPaymentReferencesService = new ARPaymentReferencesService(this.objectContext);
             ARPaymentReferencesService.UpdateConnectedARInvoicePaymentRefeneces(theEntityPm);
-
-            // ARPaymentReferencesService.CalculateARInvoicePaymentRefeneces(theEntityPm, invoiceRepository);
-            //UpdateChequeOrPaymentRefField(theEntityPm);
-
-            ARPaymentMapping.MapEntity(theEntityPm, paymentPoco, isNewEntity); 
 
             paymentRepository.Update(paymentPoco);
             paymentRepository.SubmitChanges();

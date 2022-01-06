@@ -69,25 +69,33 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             foreach (ARInvoicePayment aRInvoicePayment in allConnectedARInvoicePayment)
             {
-                ARPayment aRPayment = paymentRepository.GetSingleARPayment(aRInvoicePayment.ARPaymentId, aRInvoicePayment.Tenant);
-
-                if (aRPayment != null && aRPayment.ChequeOrPaymentRef != null)
-                {
-
-                    if (aRPayment.Id == aRPaymentPM.PaymentInvoices[0].ARPaymentId)
-                    {
-                        chequeOrPaymentRefList.Add(aRPaymentPM.ChequeOrPaymentRef);
-                    }
-                    else
-                    {
-                        chequeOrPaymentRefList.Add(aRPayment.ChequeOrPaymentRef);
-                    }
-
-                }
+                CalculatePaymentRefList(aRPaymentPM, chequeOrPaymentRefList, aRInvoicePayment);
             }
 
             return chequeOrPaymentRefList;
         }
+
+        private void CalculatePaymentRefList(ARPaymentPM aRPaymentPM, List<string> chequeOrPaymentRefList, ARInvoicePayment aRInvoicePayment)
+        {
+            ARPayment aRPayment = paymentRepository.GetSingleARPayment(aRInvoicePayment.ARPaymentId, aRInvoicePayment.Tenant); 
+             
+            GetARPaymentPaymentRef(aRPaymentPM, chequeOrPaymentRefList, aRPayment);
+             
+        }
+
+        private static bool hasPaymentRefValue(ARPayment aRPayment)
+        {
+            return aRPayment != null && !string.IsNullOrEmpty(aRPayment.ChequeOrPaymentRef);
+        }
+
+        private static void GetARPaymentPaymentRef(ARPaymentPM aRPaymentPM, List<string> chequeOrPaymentRefList, ARPayment aRPayment)
+        {
+            if (hasPaymentRefValue(aRPayment))
+            {
+                chequeOrPaymentRefList.Add(aRPayment.ChequeOrPaymentRef);
+            }
+        }
+ 
 
         internal void CalculatePaymentReferences(ARInvoicePM entityPM, ARInvoice invoice)
         {
@@ -97,30 +105,41 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
 
         private string GetPaymentReferences(List<ARInvoicePaymentPM> invoicesIds)
-        {
-            var invoiceId = invoicesIds[0].ARInvoiceId;
-            string paymentRefrenece = "";
-            List<string> Ids = new List<string>();
+        { 
+            List<string> chequeOrPaymentRefList = new List<string>();
 
             foreach (ARInvoicePaymentPM aRInvoicePayment in invoicesIds)
             {
-                if ((int)aRInvoicePayment.ChangeSetOp != 3)
-                {
-                    ARPayment aRPayment = paymentRepository.GetSingleARPayment(aRInvoicePayment.ARPaymentId, aRInvoicePayment.Tenant);
-
-                    if (aRPayment != null && aRPayment.ChequeOrPaymentRef != null)
-                    {
-                        Ids.Add(aRPayment.ChequeOrPaymentRef);
-                    }
-
-                }
-
+                CalculatePaymentRefList(chequeOrPaymentRefList, aRInvoicePayment);
 
             }
-            paymentRefrenece = string.Join(",", Ids); 
+            string paymentRefrenece = string.Join(",", chequeOrPaymentRefList);
 
             return paymentRefrenece;
-        } 
+        }
 
+        private void CalculatePaymentRefList(List<string> chequeOrPaymentRefList, ARInvoicePaymentPM aRInvoicePayment)
+        {
+            if (IsConnectedPayment(aRInvoicePayment))
+            {
+                InsertPaymentRef(chequeOrPaymentRefList, aRInvoicePayment);
+
+            }
+        }
+
+        private static bool IsConnectedPayment(ARInvoicePaymentPM aRInvoicePayment)
+        {
+            return (int)aRInvoicePayment.ChangeSetOp != 3;
+        }
+
+        private void InsertPaymentRef(List<string> Ids, ARInvoicePaymentPM aRInvoicePayment)
+        {
+            ARPayment aRPayment = paymentRepository.GetSingleARPayment(aRInvoicePayment.ARPaymentId, aRInvoicePayment.Tenant);
+
+            if (hasPaymentRefValue(aRPayment))
+            {
+                Ids.Add(aRPayment.ChequeOrPaymentRef);
+            }
+        }
     }
 }
