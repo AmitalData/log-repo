@@ -15,8 +15,6 @@ import { ARInvoiceDetails } from '../../models/ARInvoiceDetails';
 import { AccountingSelectors } from "../../selectors/Selectors";
 import { ARPaymentDetails } from '../../models/ARPaymentDetails';
 import { ReceivableDetails } from "../../../../Shipment/cypress/models/ReceivableDetails"
-import { AccountingURLs } from '../../constants/URLs';
-import { RestAPI } from '../../../../Base/cypress/constants/RestAPI';
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import * as ARPaymentActions from '../../actions/ARPaymentActions';
 
@@ -168,6 +166,15 @@ Then("the invoice should create successfully", () => {
     ARInvoiceNumber = interception.response.body.InvoiceNumber;
   })
 });
+
+Then ("approve button does not exist", () => {
+  BaseAssertion.AssertElementNotExist(AccountingSelectors.ARInvoiceApproveButton)
+});
+
+Then ("status value as {string}", (statusValue) => {
+  BaseAssertion.AssertElementContain(ShipmentSelectors.ARInvoiceStatus, statusValue)
+
+});
 //#endregion
 Given("the user in the Docsout tab in invoice",()=>{
   cy.Navigate(AccountingSelectors.ARInvoiceTHDocsOutTab,true)
@@ -190,7 +197,6 @@ Given("a consolidation invoice with the following details", (dataTable) => {
   const ARInvoiceData = Assists.CreateInstance<ARInvoiceDetails>(dataTable, true)
   ARInvoiceData.Partner = customerCode
   AccountingActions.FillconsolidationInvoiceDetails(ARInvoiceData)
-
 });
 
 When("create consolidation invoice", () => {
@@ -203,27 +209,41 @@ Then("the consolidation invoice should create successfully", () => {
     cy.log(draftConsolidationInvoiceNumber)
   })
 });
+Then ("status value as {string}", (statusValue) => {
+  BaseAssertion.AssertElementContain(ShipmentSelectors.ARInvoiceStatus, statusValue)
+});
 //#endregion
+//#startregoin
+Given("user is in the Constituent workspace", () => {
+  cy.Click(ShipmentSelectors.HouseHyperLink,"CNS" ,true)
+});
+Then("the status of Constituent invoice is {string}",(statusValue) => {
+  BaseAssertion.AssertElementContain(ShipmentSelectors.ARInvoiceStatus, statusValue)
+  cy.Click(ShipmentSelectors.Backbutton + BaseSelectors.LastElement, "A/R Invoice", true)
+});
+//#endregoin
 //#region back to Accounting workspace
 Given("the user back to Accounting workspace", () => {
   cy.BackButton(BaseSelectors.ContainsAccounting)
 });
 //#endregion
+
 //#region add receivable
 Given("a receivable with the following details", (dataTable) => {
   ShipmentActions.OpenShipment(shipmentNumber);
   const ReceivableData = Assists.CreateSet<ReceivableDetails>(dataTable);
   ShipmentActions.FillReceivablesTab(ReceivableData)
 });
+
 When("add receivable", () => {
   ShipmentActions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
-
 });
 
 Then("the receivable should add successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
 });
 //#endregion
+
 //#region Edit Consolidation Invoice
 Given("the user navigates to draft consolidation invoice", () => {
   cy.BackButton(BaseSelectors.ContainsShipment + shipmentNumber)
@@ -257,9 +277,18 @@ Then("the status of AR Payment value should be {string}", (statusValue) => {
   BaseAssertion.AssertElementContain(AccountingSelectors.ARPaymentStatus, statusValue)
 });
 
+Then ("status value as {string}", (statusValue) => {
+  BaseAssertion.AssertElementContain(ShipmentSelectors.ARInvoiceStatus, statusValue)
+});
 //#endregion
 
 //#region Connect to Payment
+Given("the user in accounting workspace",() => {
+  cy.BackButton("Draft Invoices")
+  cy.BackButton(BaseSelectors.ContainsAccounting)
+});
+
+
 Given("a payment with the following details", (dataTable) => {
   cy.BackButton("Draft Invoices")
   cy.BackButton(BaseSelectors.ContainsAccounting)

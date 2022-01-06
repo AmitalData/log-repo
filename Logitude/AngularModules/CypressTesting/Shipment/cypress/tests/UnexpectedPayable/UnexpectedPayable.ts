@@ -16,16 +16,11 @@ let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
 //#endregion
 
+//#region Create direct export air shipment
 Given("the user logged in and navigates to shipments workspace", () => {
   cy.Login();
   Actions.NavigatesToShipmentsWorkspace()
 });
-
-//#region Create direct export air shipment
-Given("the user navigates to shipments workspace", () => {
-  Actions.NavigatesToShipmentsWorkspace()
-});
-
 Given("a direct shipment with the following details", (dataTable) => {
   shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
   Actions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
