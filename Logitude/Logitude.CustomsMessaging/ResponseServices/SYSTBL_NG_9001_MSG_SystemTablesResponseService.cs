@@ -457,6 +457,16 @@ ID List :
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
                                                         newExt.MyModificationAndDiscountType.IsRelevantGoodsItem = true;
                                                     }
+                                                    if (dr["IsRelevantGoodsItemExport"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyModificationAndDiscountType.IsRelevantGoodsItemExport = true;
+                                                    }
+                                                    if (dr["IsRelevantInvoiceExport"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyModificationAndDiscountType.IsRelevantInvoiceExport = true;
+                                                    }
                                                     extList.Add(newExt);
                                                 });
                         return extList;
