@@ -44,6 +44,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         UpdatedBy = a.UpdatedBy,
                         UsedFor = a.UsedFor,
                         Tenant = a.Tenant,
+                        TokenExpirationTime = a.TokenExpirationTime,
                         //ComputingPartnerId = a.ComputingPartnerId,
                     });
         }
@@ -66,6 +67,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                            UpdatedBy = a.UpdatedBy,
                                            UsedFor = a.UsedFor,
                                            Tenant = a.Tenant,
+                                           TokenExpirationTime = a.TokenExpirationTime,
                                            //ComputingPartnerId = a.ComputingPartnerId,
                                        }).FirstOrDefault();
 
@@ -92,6 +94,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              UpdatedBy = a.UpdatedBy,
                                              UsedFor = a.UsedFor,
                                              Tenant = a.Tenant,
+                                             TokenExpirationTime = a.TokenExpirationTime,
                                              //ComputingPartnerId = a.ComputingPartnerId,
                                          }).FirstOrDefault();
 
@@ -116,6 +119,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         UpdatedBy = a.UpdatedBy,
                         UsedFor = a.UsedFor,
                         Tenant = a.Tenant,
+                        TokenExpirationTime = a.TokenExpirationTime,
                         //ComputingPartnerId = a.ComputingPartnerId,
                     });
         }
@@ -137,6 +141,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        UpdatedBy = a.UpdatedBy,
                        UsedFor = a.UsedFor,
                        Tenant = a.Tenant,
+                       TokenExpirationTime = a.TokenExpirationTime,
                        //ComputingPartnerId = a.ComputingPartnerId,
                    };
         }

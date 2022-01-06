@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 {
    public class ApiCredintialsUpdateClass
    {  		
-		public const string HashString = "5250a1176991ed756a9560699b0d9081";
+		public const string HashString = "075e0578861f00d5be1e0a1ace648734";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	             				    ObjectTableName =  "ApiCredintials",
 			      				    IsNew =  false,
 			      				    DBTableName =  "ApiCredintials",
-			      				    OldDBTableName =  "ApiCredintials",
 			      				    ObjectTableSingular =  "API Credentials",
 			      				    ObjectTablePlural =  "API Credentials",
 			      				    HasCustomFilter =  false,
@@ -145,7 +144,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "HashedPrimaryAccessKey",
-					  						OldFieldName =  "HashedPrimaryAccessKey",
 					  						ObjectTableName =  "ApiCredintials",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -212,7 +210,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "HashedSeconderyAccessKey",
-					  						OldFieldName =  "HashedSeconderyAccessKey",
 					  						ObjectTableName =  "ApiCredintials",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -279,7 +276,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "UsedFor",
-					  						OldFieldName =  "UsedFor",
 					  						ObjectTableName =  "ApiCredintials",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -344,7 +340,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "ApiCredintials",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -407,7 +402,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "UpdateDate",
-					  						OldFieldName =  "UpdateDate",
 					  						ObjectTableName =  "ApiCredintials",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -470,7 +464,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "AllowedIPs",
-					  						OldFieldName =  "AllowedIPs",
 					  						ObjectTableName =  "ApiCredintials",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -535,7 +528,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "CreatedBy",
-					  						OldFieldName =  "CreatedBy",
 					  						ObjectTableName =  "ApiCredintials",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -600,7 +592,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "UpdatedBy",
-					  						OldFieldName =  "UpdatedBy",
 					  						ObjectTableName =  "ApiCredintials",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -665,7 +656,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "maskedPrimaryAccessKey",
-					  						OldFieldName =  "maskedPrimaryAccessKey",
 					  						ObjectTableName =  "ApiCredintials",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -730,7 +720,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "maskedSeconderyAccessKey",
-					  						OldFieldName =  "maskedSeconderyAccessKey",
 					  						ObjectTableName =  "ApiCredintials",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -814,6 +803,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SearchFields",
 					  						ListPropertyPath =  "SearchFields",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -831,6 +821,64 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "TokenExpirationTime",
+					  						ObjectTableName =  "ApiCredintials",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "TokenExpirationTime",
+					  						ListPropertyPath =  "TokenExpirationTime",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ApiCredintials",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "TokenExpirationTime",
+					  						DefaultText =  "Token Expiration Time",
+					  						ListFieldLable =  "TokenExpirationTimeListLable",
+					  						ListLableDefaultText =  "Token Expiration Time",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -905,7 +953,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable ApiCredintialsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ApiCredintials" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> ApiCredintialsObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ApiCredintials").ToList();
+		       
+	      
+
+	         Screen ApiCredintialsApiCredintialsHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ApiCredintials.HeaderScreen", Name = "ApiCredintialsHeaderScreen", ObjectTableId = ApiCredintialsObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    ApiCredintialsObjectTable.HeaderScreenId = ApiCredintialsApiCredintialsHeaderScreenScreen0.Id;
+		    ApiCredintialsObjectTable.HeaderScreenCode = ApiCredintialsApiCredintialsHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

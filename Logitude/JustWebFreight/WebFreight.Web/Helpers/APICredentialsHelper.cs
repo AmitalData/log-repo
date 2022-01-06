@@ -28,6 +28,7 @@ namespace WebFreight.Web.Helpers
 
             if (Partner != null)
             {
+                userData.TokenExpirationTime = Partner.TokenExpirationTime;
                 userData.Tenant = Partner.Tenant;
                 if (Partner.Tenant == 0)
                 {

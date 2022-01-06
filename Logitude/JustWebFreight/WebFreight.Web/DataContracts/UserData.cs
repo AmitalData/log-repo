@@ -125,5 +125,6 @@ namespace WebFreight.Web.DataContracts
         public bool HasError { get; set; }
         public string Token { get; set; }
         public string DocumentDownloadToken { get; set; }
+        public int? TokenExpirationTime { get; set; }
     }
 }

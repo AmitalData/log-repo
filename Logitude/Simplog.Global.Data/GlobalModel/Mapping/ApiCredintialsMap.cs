@@ -35,8 +35,9 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.UpdatedBy).HasColumnName("UpdatedBy");
             this.Property(t => t.maskedPrimaryAccessKey).HasColumnName("maskedPrimaryAccessKey");
             this.Property(t => t.maskedSeconderyAccessKey).HasColumnName("maskedSeconderyAccessKey");
+            this.Property(t => t.TokenExpirationTime).HasColumnName("TokenExpirationTime");
             //this.Property(t => t.ComputingPartnerId).HasColumnName("ComputingPartnerId");
-            
+
 
 
         }

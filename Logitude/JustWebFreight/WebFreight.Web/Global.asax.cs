@@ -710,7 +710,7 @@ namespace WebFreight.Web
                         {
                             if (!authToken.InActive)
                             {
-                                if(authToken.ClientType == "Web")
+                                if (authToken.ClientType == "Web")
                                 {
                                     if (authToken.ExpirationDate != null)
                                     {
@@ -721,23 +721,23 @@ namespace WebFreight.Web
                                             HttpContext.Current.Items.Add("Session", "SessionExpiration");
                                             return;
                                         }
-                    
+
                                     }
 
 
-									if (GetContactPasswordFromCache(authToken.Email) == authToken.Password)
-									{
-										HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
-									}
-									else
-									{
-										ContactPasswordRepository contactPasswordRep = new ContactPasswordRepository();
-										ContactPassword contactPassword = contactPasswordRep.GetSingleContactPassword(authToken.Email);
-										if (contactPassword != null && contactPassword.Password == authToken.Password)
-											HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
+                                    if (GetContactPasswordFromCache(authToken.Email) == authToken.Password)
+                                    {
+                                        HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
+                                    }
+                                    else
+                                    {
+                                        ContactPasswordRepository contactPasswordRep = new ContactPasswordRepository();
+                                        ContactPassword contactPassword = contactPasswordRep.GetSingleContactPassword(authToken.Email);
+                                        if (contactPassword != null && contactPassword.Password == authToken.Password)
+                                            HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
 
-									}
-								}
+                                    }
+                                }
 
                                 else HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
                             }
@@ -745,9 +745,10 @@ namespace WebFreight.Web
 
                         }
                         else
-                            HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
-                        
-                    
+                        {
+                            HandleAPIAuthenticationToken(authToken);
+                        }
+
                     }
                     else
                     {
@@ -784,6 +785,16 @@ namespace WebFreight.Web
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", authenticateduser, "", ip);
 
             }
+        }
+
+        private static void HandleAPIAuthenticationToken(AuthenticationToken authToken)
+        {
+            if (authToken.ExpirationDate != null && (DateTime)authToken.ExpirationDate < DateTime.Now)
+            {
+                HttpContext.Current.Items.Add("APICredintial", "APICredintialExpired");
+                return;
+            }
+            HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
         }
 
         private static object _lock = new object();

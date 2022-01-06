@@ -108,12 +108,8 @@ namespace WebFreight.Web.Security
                 string email = HttpContext.Current.User.Identity.Name;
 
                 if (HttpContext.Current.Items!=null)
-                { 
-                    string val = HttpContext.Current.Items["Session"] as string;
-                    if (val == "SessionExpiration")
-                    {
-                        throw new Exception("Sorry! this user is not authorized! due to session expiration");
-                    }
+                {
+                    CheckHttpContextCurrentItems();
                 }
 
                 ContactInfo contactinfo = GetContactInfo(email, tenant);
@@ -996,11 +992,7 @@ namespace WebFreight.Web.Security
 
                 if (HttpContext.Current.Items != null)
                 {
-                    string val = HttpContext.Current.Items["Session"] as string;
-                    if (val == "SessionExpiration")
-                    {
-                        throw new Exception("Sorry! this user is not authorized! due to session expiration");
-                    }
+                    CheckHttpContextCurrentItems();
                 }
 
 
@@ -1014,6 +1006,32 @@ namespace WebFreight.Web.Security
                 }
             }
             throw new AutenticationException("Sorry! this user is not authorized!");
+        }
+
+        private static void CheckHttpContextCurrentItems()
+        {
+            CheckSessionExpiration();
+            CheckAPICredintialExpiration();
+        }
+
+        private static void CheckSessionExpiration()
+        {
+            if (!HttpContext.Current.Items.Contains("Session")) return;
+            string sessionItem = HttpContext.Current.Items["Session"] as string;
+            if (sessionItem == "SessionExpiration")
+            {
+                throw new Exception("Sorry! this user is not authorized! due to session expiration");
+            }
+        }
+
+        private static void CheckAPICredintialExpiration()
+        {
+            if (!HttpContext.Current.Items.Contains("APICredintial")) return;
+            string aPICredintialItem = HttpContext.Current.Items["APICredintial"] as string;
+            if (aPICredintialItem == "APICredintialExpired")
+            {
+                throw new Exception("Sorry! this user is not authorized! due to api credintial expiration");
+            }
         }
 
         public static void RedirectToHttps(bool IsEndResponse=true)

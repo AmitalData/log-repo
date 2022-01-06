@@ -404,25 +404,25 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "QBT,QBO Tax Id Calculations", 
                 Description = "QBO Tax Id Calculations", 
 			});
-			 
+
             all.Add(new ToggleDetails()
-            {    
- 
-                Code = "ODA", 
-                Name = "On Update Document Automation Tab", 
-                SearchFields = "ODA,On Update Document Automation Tab", 
-                Description = "On Update Document Automation Tab", 
-			});
-			 
+            {
+
+                Code = "ODA",
+                Name = "On Update Document Automation Tab",
+                SearchFields = "ODA,On Update Document Automation Tab",
+                Description = "On Update Document Automation Tab",
+            });
+
             all.Add(new ToggleDetails()
-            {    
- 
-                Code = "AEV", 
-                Name = "Automation Event Creation", 
-                SearchFields = "AEV,Automation Event Creation", 
-                Description = "Automation Event Creation", 
-			});
-			 
+            {
+
+                Code = "AEV",
+                Name = "Automation Event Creation",
+                SearchFields = "AEV,Automation Event Creation",
+                Description = "Automation Event Creation",
+            });
+
             all.Add(new ToggleDetails()
             {    
                 Code = "OPS", 
@@ -462,8 +462,8 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "OPF,Open Format RTL", 
                 Description = "Open Format RTL Issues", 
 			});
-
 			 
+
             all.Add(new ToggleDetails()
             {    
                 Code = "CUS", 
@@ -479,7 +479,14 @@ namespace Logitude.Infrastructure.BL
                 Description = "Allow to Display and Edit Entity Status", 
                 SearchFields = "EST,Entity Status,Allow to Display and Edit Entity Status", 
 			});
-
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "AVT", 
+                Name = "API Credential Valid Key Token", 
+                SearchFields = "AVT,API Credential Valid Key Token", 
+                Description = "API Credential Valid Key Token", 
+			});
 			
             return all;
        }

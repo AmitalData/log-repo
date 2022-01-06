@@ -62,7 +62,10 @@ namespace WebFreight.Web
                 #endregion
 
                 AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(0);
-                AuthenticationToken Primaryauthentication = new AuthenticationToken() { APICredentialID = apiCredintialsId, CreateDate = DateTime.Now, Email = "system@tenant" + data.Tenant + ".com", Password = PrimaryhashedKey, Token = data.Token, Tenant = data.Tenant, APIToken = true };
+                DateTime? authenticationTokenExpirationDate = null;
+                bool haveAPICredintialValidKeyTokenFeature = FeatureToggleHelper.HasFeatureToggle("AVT", data.Tenant);
+                if (data.TokenExpirationTime != null && haveAPICredintialValidKeyTokenFeature) authenticationTokenExpirationDate = DateTime.Now.AddHours((double)data.TokenExpirationTime);
+                AuthenticationToken Primaryauthentication = new AuthenticationToken() { APICredentialID = apiCredintialsId, CreateDate = DateTime.Now, Email = "system@tenant" + data.Tenant + ".com", Password = PrimaryhashedKey, Token = data.Token, Tenant = data.Tenant, APIToken = true, ExpirationDate = authenticationTokenExpirationDate };
                 //AuthenticationToken Secondaryauthentication = new AuthenticationToken() { CreateDate = DateTime.Now, Email = "system@tenant" + data.Tenant + ".com", Password = SecondaryhashedKey, Token = Secondarytoken, Tenant = data.Tenant, APIToken = true };
                 authenticationTokenRepository.Add(Primaryauthentication);
                 //authenticationTokenRepository.Add(Secondaryauthentication);
