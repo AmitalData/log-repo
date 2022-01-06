@@ -542,6 +542,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
                 var newCard = new MilestoneCard();
                 var CurrentMilestoneExceptions= this.cargoTrackingShipmentPM.CurrentMilestoneExceptions;
                 newCard.Date = milstone.Done ? (milstone.Date || milstone.EstimationDate) : (milstone.EstimationDate || milstone.Date);
+                newCard.ExpectedDate = milstone.Date ? null : milstone.EstimationDate;
                 newCard.Code = 'No. ' + milstone.Code;
                 newCard.Title = milstone.Name;
                 newCard.Description = milstone.Notes;
