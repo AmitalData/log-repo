@@ -48,13 +48,13 @@ namespace WebFreight.Web.Helpers
             byte[] xmlFilters = exportToExcelArgs.XmlFilters;
             string typename = exportToExcelArgs.TypeName;
 
-             FilterSerializer filterSerializer = new FilterSerializer();
+            FilterSerializer filterSerializer = new FilterSerializer();
             QueryRepository queryRep = new QueryRepository(tenant);
             QueryColumnRepository queryColumnRep = new QueryColumnRepository(tenant);
             QueryQuery queryQuery = new QueryQuery(queryRep);
-            QueryPM query = exportToExcelArgs.QueryPM!=null ? exportToExcelArgs.QueryPM: queryQuery.GetSingleQueryPM(exportToExcelArgs.QueryCode, tenant);
+            QueryPM query = exportToExcelArgs.QueryPM != null ? exportToExcelArgs.QueryPM : queryQuery.GetSingleQueryPM(exportToExcelArgs.QueryCode, tenant);
             QueryColumnQuery queryColumnQuery = new QueryColumnQuery(queryColumnRep);
-            List<QueryColumnPM> queryColumns = exportToExcelArgs.QueryColumns!=null ? exportToExcelArgs.QueryColumns :queryColumnQuery.GetQueryColumnsByQueryCodeAndUser(tenant, exportToExcelArgs.UserId, query.UniqueCode).OrderBy(q => q.IndexOrder).ToList();
+            List<QueryColumnPM> queryColumns = exportToExcelArgs.QueryColumns != null ? exportToExcelArgs.QueryColumns : queryColumnQuery.GetQueryColumnsByQueryCodeAndUser(tenant, exportToExcelArgs.UserId, query.UniqueCode).OrderBy(q => q.IndexOrder).ToList();
 
             if (exportToExcelArgs.QueryColumns == null)
             {
@@ -292,17 +292,6 @@ namespace WebFreight.Web.Helpers
                 if (stop == false)
                 {
                     MethodsInfo = getMethodsInfo("WebFreight.Web.AccountingModel.DomainServices.AccountingDomainService", query);
-                    if (MethodsInfo != null)
-                    {
-                        getListMethodInfo = MethodsInfo.ListMethodInfo;
-                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
-                        context = MethodsInfo.context;
-                        stop = true;
-                    }
-                }
-                if (stop == false)
-                {
-                    MethodsInfo = getMethodsInfo("WebFreight.Web.CargoTrackingModel.DomainServices.CargoTrackingDomainService", query);
                     if (MethodsInfo != null)
                     {
                         getListMethodInfo = MethodsInfo.ListMethodInfo;
@@ -639,7 +628,7 @@ namespace WebFreight.Web.Helpers
             TextCodeRepository textCodeRepoitory = new TextCodeRepository(tenant);
             TenantRepository tenantRepoitory = new TenantRepository(tenant);
             var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
-            string queryName =!string.IsNullOrEmpty(query.DisplayText) ? query.DisplayText : TranslateTextsClass.Translate(query.NameTextCodeCode, tenant).Replace(" ", "_") + "_" + query.ObjectTableName + "s";
+            string queryName = !string.IsNullOrEmpty(query.DisplayText) ? query.DisplayText : TranslateTextsClass.Translate(query.NameTextCodeCode, tenant).Replace(" ", "_") + "_" + query.ObjectTableName + "s";
 
             queryName = ExportToExcelHelper.GetValidFileName(queryName);//queryName.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "").Replace("'", "");
             queryName = queryName.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "").Replace("'", "");
@@ -664,7 +653,7 @@ namespace WebFreight.Web.Helpers
                             string text = !string.IsNullOrWhiteSpace(column.ObjectFieldListLabelTextCodeCode) ? column.ObjectFieldListLabelTextCodeCode : column.ObjectFieldFullNameTextCodeCode;
                             System.Xml.Linq.XElement col = new System.Xml.Linq.XElement(text);
                             string value = " ";
-                            
+
                             if (query.EditWizardName == "LogBoxMainComponent")
                             {
                                 value = ResoloveLogBoxShipmentFieldValue(entity, column);
@@ -723,7 +712,7 @@ namespace WebFreight.Web.Helpers
 
         private string ResoloveLogBoxShipmentFieldValue(object entity, QueryColumnPM column)
         {
-            string value = string.Empty ;
+            string value = string.Empty;
             if (column.ObjectFieldName == "Task") value = GetLogBoxTaskFieldValue(entity);
             else if (column.ObjectFieldName == "CustomerReference")
             {
@@ -736,7 +725,7 @@ namespace WebFreight.Web.Helpers
             else if (column.ObjectFieldName.Contains("ShipmentNumber_"))
             {
                 if (column.ObjectFieldName.Split('_')[1] == "MyShipments") value = GetPropertyValue(entity, "CustomerReference1");
-                else value= GetPropertyValue(entity, "ForwarderShipmentNumber");
+                else value = GetPropertyValue(entity, "ForwarderShipmentNumber");
             }
             else
             {
@@ -748,10 +737,10 @@ namespace WebFreight.Web.Helpers
             }
 
 
-            return string.IsNullOrEmpty(value) ? " ":value;
+            return string.IsNullOrEmpty(value) ? " " : value;
         }
 
-        private  string GetLogBoxTaskFieldValue(object entity)
+        private string GetLogBoxTaskFieldValue(object entity)
         {
             string value = string.Empty;
             if (GetPropertyValue(entity, "IsRequestedDocuments") == "True" || (!string.IsNullOrEmpty(GetPropertyValue(entity, "RequestedDocumentsCount")) && GetPropertyValue(entity, "RequestedDocumentsCount") != "0"))
@@ -788,7 +777,7 @@ namespace WebFreight.Web.Helpers
 
             }
 
-            return (string.IsNullOrEmpty(result) || string.IsNullOrWhiteSpace(result)) ? "":result ;
+            return (string.IsNullOrEmpty(result) || string.IsNullOrWhiteSpace(result)) ? "" : result;
         }
 
         private static string GetValidFileName(string fileName)
@@ -907,7 +896,7 @@ public class ExportToExcelArgs
     public string TypeName { get; set; }
 
     public QueryPM QueryPM { get; set; }
-    public  List<QueryColumnPM> QueryColumns { get; set; }
-    
+    public List<QueryColumnPM> QueryColumns { get; set; }
+
 
 }

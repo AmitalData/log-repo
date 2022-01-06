@@ -1013,6 +1013,7 @@
     <Compile Include="Controllers\CommonDataModel\Extended\DocumentDownloadTokenController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ExcelReportController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\LogitudeGridExportToExcelController.cs" />
+	<Compile Include="Controllers\CommonDataModel\Extended\MixPanelController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ReportExecutionLogExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ShippingLineExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\HorseViewsController.Generated.cs" />
@@ -2688,6 +2689,11 @@
     <Compile Include="Helpers\DocumentTypeTemplateDefultAttachmentService.cs" />
     <Compile Include="Helpers\DWObjectTableAdditionalConditionService.cs" />
     <Compile Include="Helpers\MixPanel\AuthenticationMixPanelService.cs" />
+	<Compile Include="Helpers\MixPanel\events\LogBoxActionsEvent.cs" />
+    <Compile Include="Helpers\MixPanel\MixPanelActionsEvent.cs" />
+    <Compile Include="Helpers\MixPanel\IMixPanelActionsService.cs" />
+    <Compile Include="Helpers\MixPanel\MixPanelActionsService.cs" />
+    <Compile Include="Helpers\MixPanel\MixPanelFactory.cs" />
     <Compile Include="Helpers\PODMobileDocumentsFilingService.cs" />
     <Compile Include="Helpers\PrivateLabelsBrandingDataService.cs" />
     <Compile Include="Helpers\QuotesRequestService.cs" />
@@ -5844,6 +5850,7 @@
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\AgingReportDataProviderLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\InterestReportLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\LedgerTransactionReportLoader.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\Accounting\TaxDeductionReportPerVendorService.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\Utilities\QueryOperationsFilterValueGetter.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\StatementReportManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\UserDefinedReportManager.cs" />
