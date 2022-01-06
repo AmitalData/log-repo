@@ -1011,6 +1011,7 @@
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\CustomAgentAPiHelper.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\ShippingAgentAPiHelper.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\TruckerAPiHelper.cs" />
+    <Compile Include="Controllers\CommonDataModel\ApiHelpers\VendorAPiHelper.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\CommunicationLogExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\CargoTrackingTenantMilestoneDefinitionExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\CarrierAreaExtendedController.cs" />

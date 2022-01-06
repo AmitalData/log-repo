@@ -42,7 +42,8 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.CommonDataModel.CustomFilters;
-		  
+using WebFreight.Web.Controllers.CommonDataModel.ApiHelpers;
+
 namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 { 
 
@@ -78,7 +79,15 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 			    }
 
-				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
+                if (entityList != null)
+                {
+                    CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                    customFieldResolver.SetCustomFieldsValues("Trucker", authToken.Tenant, new List<VendorList> { entityList }.Cast<object>().ToList());
+
+                    entityList = VendorAPiHelper.ApplyFilters(entityList, authToken.Tenant);
+                }
+
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 				               
                 return Request.CreateResponse(HttpStatusCode.OK,  entityList);
             }
@@ -108,9 +117,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 			    IQueryable<VendorList> entityLists = vendorQuery.GetIQueryableEntityList(entityPocos);
 				entityLists = entityLists.OrderBy(d => d.Id);
 				List<VendorList> listResult = entityLists.ToList();
-				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
-										
-				return Request.CreateResponse(HttpStatusCode.OK, listResult);
+				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                customFieldResolver.SetCustomFieldsValues("Vendor", authToken.Tenant, listResult.Cast<object>().ToList());
+
+                return Request.CreateResponse(HttpStatusCode.OK, listResult);
             }
             catch (Exception ex)
             {
@@ -213,7 +224,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                     }
                 }
 
-
+                TruckerAPiHelper.AddFilters(queryOperations, tenant);
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
 
@@ -231,7 +242,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				                
 				VendorCustomFilter customfilters = new VendorCustomFilter(tenant);
                 entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
-	
+                entityPocos = VendorAPiHelper.ApplyFilters(entityPocos, tenant);
+
                 entityPocos = genericFilter.GetFilteredQuery<Vendor>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<VendorList> entityLists = vendorQuery.GetIQueryableEntityList(entityPocos);
@@ -323,8 +335,10 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 				}
 			   List<VendorList> listResult = entityLists.ToList();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                customFieldResolver.SetCustomFieldsValues("Vendor", authToken.Tenant, listResult.Cast<object>().ToList());
 
-               response.Result = listResult;
+                response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 			   PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
                

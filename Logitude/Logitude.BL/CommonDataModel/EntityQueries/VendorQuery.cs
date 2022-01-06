@@ -12,6 +12,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
+using Simplog.Server.Infrastructure.DataContracts;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -112,7 +113,26 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             VendorPM securedPm = new VendorPM();
             SecuredMapping.GetMappedPM(vendor, securedPm, "Vendor", tenant);
 
+            if (securedPm != null && vendor != null)
+            {
+                Vendor entityPoco = (from s in repository.context.Vendors where s.Id == securedPm.Id select s).FirstOrDefault();
+                MapCustomFields(securedPm, entityPoco);
+            }
             return securedPm;
+        }
+
+        private void MapCustomFields(VendorPM vendorPM, Vendor vendor)
+        {
+            vendorPM.Field1 = new CustomFieldClass("Field1", "Vendor", vendor.Field1);
+            vendorPM.Field2 = new CustomFieldClass("Field2", "Vendor", vendor.Field2);
+            vendorPM.Field3 = new CustomFieldClass("Field3", "Vendor", vendor.Field3);
+            vendorPM.Field4 = new CustomFieldClass("Field4", "Vendor", vendor.Field4);
+            vendorPM.Field5 = new CustomFieldClass("Field5", "Vendor", vendor.Field5);
+            vendorPM.Field6 = new CustomFieldClass("Field6", "Vendor", vendor.Field6);
+            vendorPM.Field7 = new CustomFieldClass("Field7", "Vendor", vendor.Field7);
+            vendorPM.Field8 = new CustomFieldClass("Field8", "Vendor", vendor.Field8);
+            vendorPM.Field9 = new CustomFieldClass("Field9", "Vendor", vendor.Field9);
+            vendorPM.Field10 = new CustomFieldClass("Field10", "Vendor", vendor.Field10);
         }
 
         public VendorPM GetSingleVendorPM(string id, int tenant)
@@ -157,6 +177,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    MetodoPagoCode = a.Card.MetodoPagoCode,
                                    UsoCFDICode = a.Card.UsoCFDICode,
                                    CreatedByPartner = a.Card.CreatedByPartner,
+
                                    Card = new CardPM()
                                    {
                                        Id = a.Id,
@@ -431,7 +452,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  PrimaryContactPhone = a.PrimaryContactPhone,
                                                  CreatedByPartner = a.Card.CreatedByPartner,
                                                  StateName = a.Card.StateName,
-                                                 GLAccountNumber = a.Card.GLAccountDisplayNumber
+                                                 GLAccountNumber = a.Card.GLAccountDisplayNumber,
+                                                 Field1 = a.Field1,
+                                                 Field2 = a.Field2,
+                                                 Field3 = a.Field3,
+                                                 Field4 = a.Field4,
+                                                 Field5 = a.Field5,
+                                                 Field6 = a.Field6,
+                                                 Field7 = a.Field7,
+                                                 Field8 = a.Field8,
+                                                 Field9 = a.Field9,
+                                                 Field10 = a.Field10,
                                              });
 
 
@@ -513,6 +544,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             VendorPM securedPm = new VendorPM();
             SecuredMapping.GetMappedPM(vendor, securedPm, "Vendor", tenant);
 
+
+            if (securedPm != null && vendor != null)
+            {
+                Vendor entityPoco = (from s in repository.context.Vendors where s.Id == securedPm.Id select s).FirstOrDefault();
+                MapCustomFields(securedPm, entityPoco);
+            }
             return securedPm;
         }
     }
