@@ -52,5 +52,8 @@ namespace WebFreight.Web.DataProviders
         public string FlightNumber { get; set; }
         public string ChargeGroupName { get; set; }
         public string ChargeGroupCode { get; set; }
+        public bool AccountingClosed { get; set; }
+        public double? ExchangeRate { get; set; }
+
     }
 }
