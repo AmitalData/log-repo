@@ -497,7 +497,7 @@ namespace CustomsWorkerRole
 
 
 #endif
-        private void Exec(CustomRabbitMQQueue customRabbitMQQueue, QueueDetails queue, AnalyzeQueueRepository analyzeQueueRepository, string communicationLogId, int tenant , string message, out string log, out bool success)
+        public void Exec(CustomRabbitMQQueue customRabbitMQQueue, QueueDetails queue, AnalyzeQueueRepository analyzeQueueRepository, string communicationLogId, int tenant , string message, out string log, out bool success)
         {
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {

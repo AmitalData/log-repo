@@ -51,7 +51,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                      select a);
             if (lastDay)//bad solution - need time !!!
             {
-                DateTime dateTime = DateTime.Now.AddHours(24);
+                DateTime dateTime = DateTime.Now.AddDays(-1);// 
                 q = q.Where(r => r.CreateDate > dateTime);
             }
             var log = q.FirstOrDefault();
