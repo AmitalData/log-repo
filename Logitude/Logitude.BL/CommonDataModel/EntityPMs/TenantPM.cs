@@ -419,5 +419,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         public int? AutomaticallyCloseDays { get; set; }
 
+        public bool EnableDeliveryOptions { get; set; }
+
     }
 }

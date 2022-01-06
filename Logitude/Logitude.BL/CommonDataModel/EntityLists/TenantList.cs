@@ -113,7 +113,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool IsQuotesRequestActivatedInShared { get; set; }
         public bool IsCargoTrackWebAccessActivated { get; set; }
         public int? AutomaticallyCloseDays { get; set; }
-
+        public bool EnableDeliveryOptions { get; set; }
 
     }
 }
