@@ -82,7 +82,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 if (entityList != null)
                 {
                     CustomFieldResolver customFieldResolver = new CustomFieldResolver();
-                    customFieldResolver.SetCustomFieldsValues("Trucker", authToken.Tenant, new List<VendorList> { entityList }.Cast<object>().ToList());
+                    customFieldResolver.SetCustomFieldsValues("Vendor", authToken.Tenant, new List<VendorList> { entityList }.Cast<object>().ToList());
 
                     entityList = VendorAPiHelper.ApplyFilters(entityList, authToken.Tenant);
                 }
