@@ -51,4 +51,16 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="IsRelevantInvoiceExport"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsRelevantGoodsItemExport"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
 </Table>

@@ -31,7 +31,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                      SearchFields = a.SearchFields,
                                                                      Inactive = a.Inactive,
                                                                      IsRelevantGoodsItem = a.IsRelevantGoodsItem,
-                                                                     IsRelevantInvoice = a.IsRelevantInvoice
+                                                                     IsRelevantInvoice = a.IsRelevantInvoice,
+                                                                     IsRelevantGoodsItemExport= a.IsRelevantGoodsItemExport,
+                                                                     IsRelevantInvoiceExport= a.IsRelevantInvoiceExport,
                                                                  });
             return query;
         }
