@@ -29,14 +29,14 @@ export class CargoReferencesSyncQueuePM {
     public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
        
 	 
-    private shipmentId: string;
-    public get ShipmentId() { return this.shipmentId; }
-    public set ShipmentId(newValue: string) { if (this.shipmentId != newValue) { this.shipmentId = newValue; this.MarkAsDirty("ShipmentId"); } }
+    private forwardingShipmentId: string;
+    public get ForwardingShipmentId() { return this.forwardingShipmentId; }
+    public set ForwardingShipmentId(newValue: string) { if (this.forwardingShipmentId != newValue) { this.forwardingShipmentId = newValue; this.MarkAsDirty("ForwardingShipmentId"); } }
        
 	 
-    private shipmentType: string;
-    public get ShipmentType() { return this.shipmentType; }
-    public set ShipmentType(newValue: string) { if (this.shipmentType != newValue) { this.shipmentType = newValue; this.MarkAsDirty("ShipmentType"); } }
+    private shipmentNeedUpdateType: string;
+    public get ShipmentNeedUpdateType() { return this.shipmentNeedUpdateType; }
+    public set ShipmentNeedUpdateType(newValue: string) { if (this.shipmentNeedUpdateType != newValue) { this.shipmentNeedUpdateType = newValue; this.MarkAsDirty("ShipmentNeedUpdateType"); } }
        
 	 
     private tenant: number;

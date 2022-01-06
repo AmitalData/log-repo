@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CargoReferencesSyncQueueUpdateClass
    {  		
-		public const string HashString = "42bc7b188c854357cd81740cd7ec28a8";
+		public const string HashString = "6b442d8da30f6e32f8b271da57ec8e47";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CargoReferencesSyncQueue",
-			      				    Code =  "d9d5",
+			      				    Code =  "436e",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "",
@@ -143,7 +143,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "ShipmentId",
+					 						FieldName =  "ForwardingShipmentId",
 					  						ObjectTableName =  "CargoReferencesSyncQueue",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -161,8 +161,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ShipmentId",
-					  						ListPropertyPath =  "ShipmentId",
+					  						PMPropertyPath =  "ForwardingShipmentId",
+					  						ListPropertyPath =  "ForwardingShipmentId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -179,7 +179,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ShipmentId",
+					  						FullFieldLable =  "ForwardingShipmentId",
 					  						DefaultText =  "ShipmentId",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -199,7 +199,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "ShipmentType",
+					 						FieldName =  "ShipmentNeedUpdateType",
 					  						ObjectTableName =  "CargoReferencesSyncQueue",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -217,8 +217,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ShipmentType",
-					  						ListPropertyPath =  "ShipmentType",
+					  						PMPropertyPath =  "ShipmentNeedUpdateType",
+					  						ListPropertyPath =  "ShipmentNeedUpdateType",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  true,
 					  						UniqueField =  false,
@@ -235,7 +235,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ShipmentType",
+					  						FullFieldLable =  "ShipmentNeedUpdateType",
 					  						DefaultText =  "ShipmentType",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,

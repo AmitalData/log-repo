@@ -21,10 +21,10 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
         [Key]
         [Column("Id")]
 	    public string Id { get; set; }
-        [Column("ShipmentId")]
-	    public string ShipmentId { get; set; }
-        [Column("ShipmentType")]
-	    public string ShipmentType { get; set; }
+        [Column("ForwardingShipmentId")]
+	    public string ForwardingShipmentId { get; set; }
+        [Column("ShipmentNeedUpdateType")]
+	    public string ShipmentNeedUpdateType { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
     }

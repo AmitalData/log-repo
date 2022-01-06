@@ -12,14 +12,16 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="ShipmentId"
+    Name="ForwardingShipmentId"
+    OldNames="ShipmentId"
     Type="varchar"
     Size="30">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="ShipmentType"
+    Name="ShipmentNeedUpdateType"
+    OldNames="ShipmentType"
     Type="varchar"
     Size="1">
     <Constraints

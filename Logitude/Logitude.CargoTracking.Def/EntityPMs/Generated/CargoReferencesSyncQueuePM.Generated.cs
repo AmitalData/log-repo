@@ -43,48 +43,48 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
-	  private string shipmentId ;
+	  private string forwardingShipmentId ;
 	  	  
        
 	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string ShipmentId  
+       public string ForwardingShipmentId  
 	   {
 	    
 	     get
 		{
-		   return shipmentId;
+		   return forwardingShipmentId;
 		 }
 		 set
 		 {
-		   if(shipmentId != value)
+		   if(forwardingShipmentId != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentId",OldValue=shipmentId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForwardingShipmentId",OldValue=forwardingShipmentId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   shipmentId=value;
+		   forwardingShipmentId=value;
 		   }
 			
 		 }
 	   }
-	  private string shipmentType ;
+	  private string shipmentNeedUpdateType ;
 	  	  
        
 	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string ShipmentType  
+       public string ShipmentNeedUpdateType  
 	   {
 	    
 	     get
 		{
-		   return shipmentType;
+		   return shipmentNeedUpdateType;
 		 }
 		 set
 		 {
-		   if(shipmentType != value)
+		   if(shipmentNeedUpdateType != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentType",OldValue=shipmentType,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentNeedUpdateType",OldValue=shipmentNeedUpdateType,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   shipmentType=value;
+		   shipmentNeedUpdateType=value;
 		   }
 			
 		 }

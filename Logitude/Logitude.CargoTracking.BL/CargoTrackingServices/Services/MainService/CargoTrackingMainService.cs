@@ -2,6 +2,7 @@
 using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services.QueueServices;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelper;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableLogic;
@@ -41,6 +42,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         const int ShipmentTable_GetShipmentOrders = 3;
         const int GeneralTable_WithoutCustomCondition = 0;
         ShipmentMilestonesSyncService syncService = new ShipmentMilestonesSyncService();
+        CargoReferencesSyncQueueService cargoReferencesSyncQueueService = new CargoReferencesSyncQueueService();
 
 
         public RecordUpdated UpdateCargoTrackingDataBase(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs)
@@ -411,6 +413,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             {
                 bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.ForwardingShipmentsIds = GetForwardingShipmentsIds(bulkDataPreperation.SelectedDataTable);
                 syncService.IncremantalSyncShipmentMilstones(bulkDataPreperation);
+                cargoReferencesSyncQueueService.InsertToQueue(bulkDataPreperation);
             }
             return bulkDataPreperation;
         }

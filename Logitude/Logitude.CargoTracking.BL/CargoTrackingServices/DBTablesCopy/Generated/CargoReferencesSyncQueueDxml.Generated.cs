@@ -12,10 +12,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='Id' Type='varchar' Size='15'>"+
 "    <Constraints PrimaryKey='true' Nullable='false' />"+
 "  </Column>"+
-"  <Column Name='ShipmentId' Type='varchar' Size='30'>"+
+"  <Column Name='ForwardingShipmentId' OldNames='ShipmentId' Type='varchar' Size='30'>"+
 "    <Constraints Nullable='false' />"+
 "  </Column>"+
-"  <Column Name='ShipmentType' Type='varchar' Size='1'>"+
+"  <Column Name='ShipmentNeedUpdateType' OldNames='ShipmentType' Type='varchar' Size='1'>"+
 "    <Constraints Nullable='false' />"+
 "  </Column>"+
 "  <Column Name='Tenant' Type='int'>"+

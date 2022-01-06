@@ -100,6 +100,7 @@
     <Compile Include="CargoTrackingServices\HelperClasses\SetTableLogicArgs.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\SplittedDataArguments.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\UpdateCargoTrackingRecords.cs" />
+    <Compile Include="CargoTrackingServices\Services\QueueServices\CargoReferencesSyncQueueService.cs" />
     <Compile Include="CargoTrackingServices\Services\CargoTrackingSetLogic\CargoTrackingShipmentsOrderLogicService.cs" />
     <Compile Include="CargoTrackingServices\Services\CargoTrackingSetLogic\ShareTableLogic.cs" />
     <Compile Include="CargoTrackingServices\Services\CustomMapping\CargoTrackingShipmentsMappingService.cs" />
