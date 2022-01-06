@@ -124,12 +124,9 @@ using Simplog.Data.ShipmentsModel;
 						if(myPackageTypePM != null)
 						{ 
 
-						 
-							if(!IsUpdate|| string.IsNullOrEmpty(item.Id))
-							{								
+						 								
 								temp.PackageTypeId = myPackageTypePM.Id;
 						  
-							}  
 
 							
 						} 

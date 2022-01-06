@@ -549,7 +549,12 @@ h1{
     transition: 1s all ;
     /* padding: 20px; */
 }
-
+.weight-quantity{
+    white-space: nowrap; 
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
 .clear-addvance-filter-div{
     float: right;
     cursor: pointer;

@@ -122,6 +122,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         externalAPIShipmentValidator.ValidatePartnersDueToDirection();
                         externalAPIShipmentValidator.ValidatePreAndOnCarrageFields();
                         externalAPIShipmentValidator.ValidateCustomsFields(entityPM);
+                        externalAPIShipmentValidator.ValidateInActiveCarriers(entityPM);
                         this.SetClosurePropertiers(entityPM);
                         this.SetMasterNumberProperties(entityPM);
                         this.SetPrepaidCollectIds(entityPM);
@@ -325,8 +326,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 entity = apiUnassignedDataHandler.HandleUnassignedDirectShipmentData(entity);
 
                 ShipmentPM directPM = mappingService.DirectDataMappingAndValidatin(entity, tenant, computingPartnerCode, true);
-                mappingService.UpdatePickups(directPM);
-                mappingService.UpdateDeliveries(directPM);
 
                 if (directPM != null)
                 {
@@ -364,8 +363,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     externalAPIShipmentValidator.UpdatePayablesChangeSet(directPM);
                     externalAPIShipmentValidator.UpdateReceivablesChangeSet(directPM);
                     externalAPIShipmentValidator.ValidateCustomsFields(directPM);
-                    this.UpdatePartners(MyContext, directPM);
+                    externalAPIShipmentValidator.ValidateInActiveCarriers(directPM);
+                    directPM = this.UpdatePartners(MyContext, directPM);
                     ComputeHelper.ComputeTotals(directPM);
+                    mappingService.UpdatePickups(directPM);
+                    mappingService.UpdateDeliveries(directPM);
 
                     directPM.HasUnassignedData = apiUnassignedDataHandler.HasUnassignedData;
                     directPM = apiUnassignedDataHandler.AddDirectShipmentUnassignedData(entity, directPM);
@@ -593,22 +595,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 }
             }
         }
-        private bool IsInlandDomesticShipment(Direct entity)
-        {
-            bool isInland = false;
-            bool isDomestic = false;
-            if (entity.Direction != null)
-            {
-                isDomestic = entity.Direction.Code == "D" ? true : false;
-            }
-
-            if (entity.TransportMode != null)
-            {
-                isInland = entity.TransportMode.Code == "I" ? true : false;
-            }
-
-            return isDomestic && isInland;
-        }
         private bool IsInlandDomesticShipment(ShipmentPM entityPM)
         {
             return entityPM.DirectionId == "D" && entityPM.TransportModeId == "I";
@@ -657,30 +643,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
             return false;
         }
-        private void UpdatePartners(IShipmentsContext shipmentsContext, ShipmentPM shipmentPM)
+        private ShipmentPM UpdatePartners(IShipmentsContext shipmentsContext, ShipmentPM shipmentPM)
         {
-            Shipment shipmentPOCO = shipmentsContext.Shipments.Where(d => d.Id == shipmentPM.Id && d.Tenant == shipmentPM.Tenant).FirstOrDefault();
-            if(shipmentPOCO != null)
-            {
-                this.UpdateNotify1Partner(shipmentPOCO, shipmentPM);
-            }
-        }
-        private void UpdateNotify1Partner(Shipment shipmentPOCO, ShipmentPM shipmentPM)
-        {
-            if(shipmentPOCO.Notify1Id != shipmentPM.Notify1Id)
-            {
-                Card card = CardRepository.GetSingleCard(shipmentPM.Notify1Id, shipmentPM.Tenant, false);
-                this.MapNotify1Fields(shipmentPM, card);                
-            }
-        }
-        private void MapNotify1Fields(ShipmentPM shipmentPM, Card card)
-        {
-            if(card != null)
-            {
-                AddressRepository addressRepository = new AddressRepository(shipmentPM.Tenant);
-                shipmentPM.Notify1AddressId = addressRepository.GetMainAddressId(card.Id, shipmentPM.Tenant);
-                shipmentPM.Notify1ContactId = card.PrimaryContactId;
-            }
+            ExternalAPIShipmentPartnersModifier externalAPIShipmentPartnersUpdate = new ExternalAPIShipmentPartnersModifier(shipmentsContext,shipmentPM);
+            return externalAPIShipmentPartnersUpdate.UpdatePartners();
         }
         private void InitOceanOrInlandPackages(Direct entity)
         {
@@ -692,21 +658,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
             {
                 if (item.PackageType != null)
                 {
-                    if (entity.ShipmentType != null && (entity.ShipmentType.Code.Contains("FCL") || entity.ShipmentType.Code.Contains("FTL")))
+                    if (entity.ShipmentType != null && (entity.ShipmentType.Code.Contains("LCL") || entity.ShipmentType.Code.Contains("LTL")))
                     {
                         if (item.Pieces == null || item.Pieces == 0)
                         {
                             item.Pieces = 1;
                         }
                     }
-                }
-            }
-
-            if (entity.ShipmentType != null)
-            {
-                if (this.IsInlandDomesticShipment(entity))
-                {
-                    entity.OceanOrInlandPackages = null;
                 }
             }
         }

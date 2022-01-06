@@ -24,6 +24,10 @@ import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
 import { MilestoneCodes } from 'src/CargoTracking/Constants/MilestoneCodes';
 
 const mobileScreenMaxWidth = 470;
+
+const approvalResponseMessage = 'לקוח יקר, הצהרה זו אושרה בתאריך';
+const declineResponseMessage = 'לקוח יקר, הצהרה זו נדחתה';
+
 @Component({
     selector: 'ShipmentDetailsComponent',
     templateUrl: './ShipmentDetailsComponent.html',
@@ -76,7 +80,11 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     public OverviewPanelTitle: string;
     public TypeTitle: string;
     isSharedLink: boolean = false;
+    isDeclaration: boolean = false;
+    hasApprovalDeclineResponse: boolean = false;
     noShipmentFound: boolean = false;
+    approvalMessage: string;
+
     PartnerCardTypesOfShipmentTransportMode = {
         'A': "AIRLINES",
         'I': "TRUCKER",
@@ -96,6 +104,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     {
         const isCustomShipment = this.cargoTrackingShipmentPM.EntityType == this.EntityType_Customs;
         return isCustomShipment
+            && this.isDeclaration
             && this.cargoTrackingShipmentPM.ActivatedForDeclarationApprove
             && this.cargoTrackingShipmentPM.IsImporterApprovalRequried;
     }
@@ -138,6 +147,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
 
         const data: Data = this.route.snapshot.data;
         this.isSharedLink = data?.isSharedLink;
+        this.isDeclaration = data?.isDeclaration;
         if(this.isSharedLink){
             this.GetBrandingData();
         }
@@ -222,6 +232,39 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
                 this.ScrollToPanel(this.focusOnPanel);
 
         }, 200);
+
+
+        this.SetDeclarationMessage();
+    }
+
+    private SetDeclarationMessage()
+    {
+        if (this.isSharedLink && this.isDeclaration) {
+            const isCustomShipment = this.cargoTrackingShipmentPM.EntityType == this.EntityType_Customs;
+            this.hasApprovalDeclineResponse = isCustomShipment && this.cargoTrackingShipmentPM.ActivatedForDeclarationApprove && !this.cargoTrackingShipmentPM.IsImporterApprovalRequried;
+
+            if (this.hasApprovalDeclineResponse) {
+                if (this.cargoTrackingShipmentPM.ApprovedDate)
+                    this.SetApprovedDeclarationMessage();
+                else
+                    this.SetDeniedDeclarationMessage();
+
+            } else {
+                this.approvalMessage = this.cargoTrackingShipmentPM.TenantDeclarationMessage;
+            }
+
+        }
+    }
+
+    private SetDeniedDeclarationMessage()
+    {
+        this.approvalMessage = declineResponseMessage + '\n"' + this.cargoTrackingShipmentPM.DenyReason+'"';
+    }
+
+    private SetApprovedDeclarationMessage()
+    {
+        const approvedDate = this.datePipe.transform(this.cargoTrackingShipmentPM.ApprovedDate, 'dd/MM/yyyy, HH:mm');
+        this.approvalMessage = approvalResponseMessage + ' ' + approvedDate;
     }
 
     private GetBrandingData()
@@ -498,7 +541,8 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
             {
                 var newCard = new MilestoneCard();
                 var CurrentMilestoneExceptions= this.cargoTrackingShipmentPM.CurrentMilestoneExceptions;
-                newCard.Date = milstone.Done ? milstone.Date : (milstone.EstimationDate || milstone.Date);
+                newCard.Date = milstone.Done ? (milstone.Date || milstone.EstimationDate) : (milstone.EstimationDate || milstone.Date);
+                newCard.ExpectedDate = milstone.Date ? null : milstone.EstimationDate;
                 newCard.Code = 'No. ' + milstone.Code;
                 newCard.Title = milstone.Name;
                 newCard.Description = milstone.Notes;
@@ -735,7 +779,11 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         this.cargoTrackingShipmentExtendedService.PostDeclarationApprovalResponse(args)
             .subscribe(
 
-                res => { this.ShowDeclarationApprovedMessage(); RootContext.StopBusyIndicator();},
+                res => {
+                    this.ShowDeclarationApprovedMessage();
+                    this.GetMainShipmentByShipmentSecurityKey();
+                     RootContext.StopBusyIndicator();
+                    },
                 err => { this.ShowFailureMessage(err); RootContext.StopBusyIndicator();}
             );
 
@@ -781,6 +829,8 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
                         showOkButton: true
                     }
                 });
+                this.GetMainShipmentByShipmentSecurityKey();
+
             }, (error) =>
             {
                 RootContext.StopBusyIndicator();
@@ -833,6 +883,7 @@ export class MilestoneCard
 {
     Code: string;
     Date: Date;
+    ExpectedDate: Date;
     Title: string;
     Description: string;
     IsActive: boolean;

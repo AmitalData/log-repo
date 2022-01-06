@@ -288,7 +288,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return entityPM;
         }
 
-        public List<ShipmentDeliveryPM> GetShipmentDeliveryPMsByTenantAndShipment(string shipmentId, int tenant, bool getEmptyContainerReturn=false)
+        public List<ShipmentDeliveryPM> GetShipmentDeliveryPMsByTenantAndShipment(string shipmentId, int tenant, bool getEmptyContainerReturn=false, bool byLocalName = false)
         {
             IQueryable<ShipmentPickUpDelivery> iQueryable = (from d in repository.context.ShipmentPickUpDeliveries.Include("FromPort").Include("ToPort").Include("CarrierCard").Include("TransportMode")
                                                              where d.ShipmentId == shipmentId && d.Tenant == tenant
@@ -402,7 +402,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             {
                                 string location = "";
 
-                                if (address.IsLocalLanguage && !string.IsNullOrEmpty(card.LocalName))
+                                if ((address.IsLocalLanguage || byLocalName) && !string.IsNullOrEmpty(card.LocalName))
                                 {
                                     location = card.LocalName + Environment.NewLine;
                                 }
@@ -497,7 +497,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             {
                                 string location = "";
 
-                                if (address.IsLocalLanguage && !string.IsNullOrEmpty(card.LocalName))
+                                if ((address.IsLocalLanguage || byLocalName) && !string.IsNullOrEmpty(card.LocalName))
                                 {
                                     location = card.LocalName + Environment.NewLine;
                                 }

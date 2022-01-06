@@ -373,36 +373,6 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
 
         this.OnCustomerChanged();
     }
-    //UpdateShipmentUnassignedFields(partnerCode) {
-    //    if (this.EntityPM.HasUnassignedData) {
-    //        var fieldName: string;
-    //        var replacedId: string;
-
-    //        if (partnerCode == "SHIPR") {
-    //            fieldName = "Shipper";
-    //            replacedId = this.EntityPM.ShipperId;
-    //        }
-    //        else if (partnerCode == "CONSI") {
-    //            fieldName = "Consignee";
-    //            replacedId = this.EntityPM.ConsigneeId;
-    //        }
-
-    //        if (fieldName) {
-    //            var unassignedField: ShipmentUnassignedFieldPM = this.EntityPM.ShipmentUnassignedFields.filter(d => d.FieldName == fieldName)[0];
-    //            if (unassignedField) {
-    //                unassignedField.ReplacedDataId = replacedId;
-    //            }
-    //        }
-    //    }
-    //}
-    //private ComputeHasUnassignedField() {
-    //    this.EntityPM.HasUnassignedData = false;
-
-    //    var myList: ShipmentUnassignedFieldPM[] = this.EntityPM.ShipmentUnassignedFields.filter(s => AppTool.IsNullOrEmpty(s.ReplacedDataId));
-    //    if (myList.length > 0) {
-    //        this.EntityPM.HasUnassignedData = true;
-    //    }
-    //}
 
     public UpdateSalesmanId: string = null;
     public UpdateSalesmanName: string = null;
@@ -1077,7 +1047,7 @@ export class PartnerItem extends BaseComponent {
     }
 
     get IsCustomer() {
-        return (this.PartnerId == this.EntityPM.CustomerId) ? true : false;
+        return (this.PartnerId == this.EntityPM.CustomerId && this.PartnerCustomerTypeCode == this.EntityPM.ShipmentCustomerTypeCode) ? true : false;
     }
 
     SetAsCustomer() {
@@ -1195,6 +1165,27 @@ export class PartnerItem extends BaseComponent {
             case "CONSL": { return "ConsolidatorId"; }
             case "REAGT": { return "ReleasingAgentId"; }
             default: { return null; }
+        }
+    }
+
+    get PartnerCustomerTypeCode() {
+        switch (this.Code) {
+            case "SHIPR": { return "SHI"; }
+            case "CONSI": { return "CON"; }
+            case "AGENT": { return "AGT"; }            
+            case "ISSAG": { return "IGT"; }
+            case "CSAEX": { return "CAE"; }
+            case "CSAIM": { return "CAI"; }
+            case "NOTF1": { return "NT1"; }
+            case "NOTF2": { return "NT2"; }
+            case "SHPNT": { return "SNE"; }
+            case "CONNT": { return "CNI"; }
+            case "FRTFR": { return "FOR"; }
+            case "COLOD": { return "COL"; }
+            case "CLERN": { return "CCP"; }
+            case "CONSL": { return "CSD"; }
+            case "REAGT": { return "REA"; }
+            default: { return "OTH"; }
         }
     }
 

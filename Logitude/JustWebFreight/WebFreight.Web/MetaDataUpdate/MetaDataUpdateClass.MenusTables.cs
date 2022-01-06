@@ -146,6 +146,8 @@ namespace WebFreight.Web.MetaDataUpdate
 
             Feature timeZonesFeature = tenantFeatures.Where(d => d.Code == "TIMEZONES" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature automationFeature = tenantFeatures.Where(d => d.Code == "General.Features.Automations" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature entityStatus = tenantFeatures.Where(d => d.Code == "ENTITYSTATUS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+
             #endregion
 
             #region Main Menus
@@ -272,7 +274,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTHS", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 32, CategoryTypeCode = "Oth", TextCode = "General.MC.Others.Horses", Icon = "Horses.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Horse").FirstOrDefault().Id, FeatureId = HorseFeature.Id, FeatureUniqeCode = HorseFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "UDRM", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 33, CategoryTypeCode = "ACC", TextCode = "General.MC.Others.UserDefinedReport", Icon = "UserDefinedReport.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "UserDefinedReport").FirstOrDefault().Id, FeatureId = UserDefinedReportFeature.Id, FeatureUniqeCode = UserDefinedReportFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "RELO", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 34, CategoryTypeCode = "Oth", TextCode = "General.MH.ReportExecutionLogs", Icon = "DocumentTypes.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "ReportExecutionLog").FirstOrDefault().Id, FeatureId = ReportExecutionLogFeature.Id, FeatureUniqeCode = ReportExecutionLogFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
-
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTCO", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 35, CategoryTypeCode = "Oth", TextCode = "General.MC.Others.EntityStatus", Icon = "ComputingPartners.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "EntityStatus").FirstOrDefault().Id, FeatureId = entityStatus.Id, FeatureUniqeCode = entityStatus.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+        
             if (/*LogitudeSettings.IsCostomsDeploy*/ tenantObjectTables.Where(o => o.Name == "BatchTaskExecution").Any())
             {
                 AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "BTEX", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 25, CategoryTypeCode = "Oth", TextCode = "General.MC.Others.BTEX", Icon = "DocumentTypes.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "BatchTaskExecution").FirstOrDefault().Id, FeatureId = btexFeature.Id, FeatureUniqeCode = btexFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);

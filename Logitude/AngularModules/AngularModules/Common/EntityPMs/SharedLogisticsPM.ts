@@ -60,6 +60,11 @@ export class SharedLogisticsPM {
     public set InviteeName(newValue: string) { if (this.inviteeName != newValue) { this.inviteeName = newValue; this.MarkAsDirty("InviteeName"); } }
        
 	 
+    private uRLprivateCargoTracking: string;
+    public get URLprivateCargoTracking() { return this.uRLprivateCargoTracking; }
+    public set URLprivateCargoTracking(newValue: string) { if (this.uRLprivateCargoTracking != newValue) { this.uRLprivateCargoTracking = newValue; this.MarkAsDirty("URLprivateCargoTracking"); } }
+       
+	 
 
     public OldEntityPM: SharedLogisticsPM;
 		

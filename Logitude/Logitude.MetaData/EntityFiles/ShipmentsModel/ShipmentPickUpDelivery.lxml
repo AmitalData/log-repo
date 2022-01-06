@@ -36,7 +36,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment Pickup Delivery&quot;"
-  Code="&quot;eb4c&quot;"
+  Code="&quot;5a6d&quot;"
   Name="&quot;ShipmentPickUpDelivery&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -4634,7 +4634,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ChangeSetOp&quot;"
         FieldName="&quot;ChangeSet&quot;"

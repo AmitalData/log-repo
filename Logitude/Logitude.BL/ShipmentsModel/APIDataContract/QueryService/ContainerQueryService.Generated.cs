@@ -132,12 +132,9 @@ using Simplog.Data.ShipmentsModel;
 						if(myContainerTypePM != null)
 						{ 
 
-						 
-							if(!IsUpdate|| string.IsNullOrEmpty(item.Id))
-							{								
+						 								
 								temp.PackageTypeId = myContainerTypePM.Id;
 						  
-							}  
 
 							
 						} 
@@ -145,12 +142,10 @@ using Simplog.Data.ShipmentsModel;
 					}
 			
 					
-                    
-					if(!IsUpdate|| string.IsNullOrEmpty(item.Id))
-					{							
+                    							
 						temp.ContainerNumber = item.ContainerNumber;
 
-										}  
+					 
 
 					
                     							

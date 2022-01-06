@@ -30,12 +30,10 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 throw ex;
             }
         }
-
         public string GetShipmentIdByNumber(string shipmentNumber, int tenant)
         {
             return query.GetEntitiyIdByShipmentNumber(shipmentNumber, tenant);
         }
-
         public ShipmentPM DirectCustomDataMappingAndValidatin(Direct MyEntity, int Tenant, string ComputingPartnerCode = "")
         {
             try
@@ -198,23 +196,59 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 throw ex;
             }
         }
-        public void UpdatePickups(ShipmentPM temp)
+        public void UpdatePickups(ShipmentPM shipment)
         {
-            foreach (ShipmentPickUpPM item in temp.ShipmentPickUps)
+            if (shipment == null)
+                return;
+
+            if (shipment.ShipmentPickUps == null)
+                return;
+
+            if (shipment.ShipmentPickUps.Count == 0)
+                return;
+
+            this.UpdateNotDeletedShipmentPickUps(shipment);
+        }
+        public void UpdateDeliveries(ShipmentPM shipment)
+        {
+            if (shipment == null)
+                return;
+
+            if (shipment.ShipmentDeliveries == null)
+                return;
+
+            if (shipment.ShipmentDeliveries.Count == 0)
+                return;
+
+            this.UpdateNotDeletedShipmentDeliveries(shipment);
+        }
+        private void UpdateNotDeletedShipmentPickUps(ShipmentPM shipment)
+        {
+            List<ShipmentPickUpPM> updatedShipmentPickUps = shipment.ShipmentPickUps.FindAll(pickUp => pickUp.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete);
+            foreach (ShipmentPickUpPM pickUp in updatedShipmentPickUps)
             {
-                item.PickUpDeliveryTypeCode = "PICK";
-                this.ValidateAndSetPickupFromSide(item);
-                this.ValidateAndSetPickupToSide(item);
+                this.MapAndValidateShipmentPickUp(pickUp);
             }
         }
-        public void UpdateDeliveries(ShipmentPM temp)
+        private void MapAndValidateShipmentPickUp(ShipmentPickUpPM pickUp)
         {
-            foreach (ShipmentDeliveryPM item in temp.ShipmentDeliveries)
+            pickUp.PickUpDeliveryTypeCode = "PICK";
+            this.ValidateAndSetPickupFromSide(pickUp);
+            this.ValidateAndSetPickupToSide(pickUp);
+        }
+        private void UpdateNotDeletedShipmentDeliveries(ShipmentPM shipment)
+        {
+            List<ShipmentDeliveryPM> updatedShipmentDelivery = shipment.ShipmentDeliveries.FindAll(delivery => delivery.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete);
+            foreach (ShipmentDeliveryPM delivery in updatedShipmentDelivery)
             {
-                item.PickUpDeliveryTypeCode = "DELV";
-                this.ValidateAndSetDeliveryFromSide(item);
-                this.ValidateAndSetDeliveryToSide(item);
+                this.MapAndValidateShipmentDelivery(delivery);
             }
+        }
+        private void MapAndValidateShipmentDelivery(ShipmentDeliveryPM delivery)
+        {
+            delivery.PickUpDeliveryTypeCode = "DELV";
+            this.ValidateAndSetDeliveryFromSide(delivery);
+            this.ValidateAndSetDeliveryToSide(delivery);
         }
         private bool IsInlandDomesticShipment(ShipmentPM entityPM)
         {

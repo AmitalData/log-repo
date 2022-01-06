@@ -1103,6 +1103,7 @@
     <Compile Include="DataProviders\RoutingDataProvider.cs" />
     <Compile Include="DataProviders\UserDefinedReportDataProvider.cs" />
     <Compile Include="ExternalAPIs\ExternalAPIsHelpers\ExternalAPIMainCarriageLegsHelper.cs" />
+    <Compile Include="ExternalAPIs\ExternalAPIsHelpers\ExternalAPIShipmentPartnersModifier.cs" />
     <Compile Include="ExternalAPIs\ExternalAPIsHelpers\ExternalAPIShipmentValidator.cs" />
     <Compile Include="ExternalAPIs\ExternalAPIsHelpers\ExternalAPIXMLEntityValidator.cs" />
     <Compile Include="ExternalAPIs\RatesUpdateController.cs" />

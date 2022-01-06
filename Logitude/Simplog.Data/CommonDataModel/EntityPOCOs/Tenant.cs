@@ -199,5 +199,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool IsCargoTrackWebAccessActivated { get; set; }
 
         public int? AutomaticallyCloseDays { get; set; }
+        public bool EnableDeliveryOptions { get; set; }
+
     }
 }

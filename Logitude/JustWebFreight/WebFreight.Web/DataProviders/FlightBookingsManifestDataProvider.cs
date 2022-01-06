@@ -17,12 +17,14 @@ namespace WebFreight.Web.DataProviders
         public List<ReportGroup> CommodityAgentGroupList { get; set; }
         public List<ReportGroup> MasterCommodityAgentGroupList { get; set; }
         public List<ReportGroup> Reference4GroupList { get; set; }
+        public List<ReportGroupData> NoGroupDataList { get; set; }
 
         public FlightBookingsManifestDataProvider()
         {
             this.CommodityAgentGroupList = new List<ReportGroup>();
             this.MasterCommodityAgentGroupList = new List<ReportGroup>();
             this.Reference4GroupList = new List<ReportGroup>();
+            this.NoGroupDataList = new List<ReportGroupData>();
         }
     }
 

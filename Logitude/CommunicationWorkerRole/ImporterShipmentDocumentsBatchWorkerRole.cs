@@ -189,7 +189,7 @@ namespace CommunicationWorkerRole
                                         CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                                         CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, ForwarderShipment.CustomerId);
                                         var tenantQuery = new TenantQuery(ForwarderShipment.Tenant);
-                                        var tenantPM = tenantQuery.GetSinglePM(ForwarderShipment.Tenant);
+                                        var tenantPM = TenantQuery.GetSingleTenantPM(ForwarderShipment.Tenant, false);  
                                         TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
                                         if (customerTenantAccessInfo != null)
                                         {

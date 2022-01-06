@@ -22,7 +22,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public string InvoiceNumber { get; set; }
         public string ARInvoiceTypeCode { get; set; }
-        
+        public string ARInvoiceTypeName { get; set; }
+
+
         public string MainEntityStatus { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
