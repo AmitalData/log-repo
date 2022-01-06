@@ -11,12 +11,13 @@ export class MessageWindowComponent {
     message = "";
     date: Date = null;
     description = "";
+    link = "";
     title = "Message";
     showOkButton: boolean = false;
     showCancelButton: boolean = false;
     showTextBox: boolean = false;
     showMultilineTextBox: boolean = false;
-
+    isLoading: boolean = false;
 
     private _TextBoxValue : string;
     public get TextBoxValue() : string {
@@ -37,6 +38,8 @@ export class MessageWindowComponent {
         this.showTextBox = data?.showTextBox;
         this.showMultilineTextBox = data?.showMultilineTextBox;
         this.title = data?.title != null ? data?.title : this.title;
+        this.link = data?.link;
+        this.isLoading = data?.isLoading;
     }
 
 

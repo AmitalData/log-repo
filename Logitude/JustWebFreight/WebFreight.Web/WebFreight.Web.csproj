@@ -969,6 +969,7 @@
     <Content Include="App_Code\AngularJS_App_Code\DocumentTypeCopyExtendedController.cs" />
     <Content Include="App_Code\DocumentFileController.cs" />
     <Content Include="App_Code\AuthnController.cs" />
+    <Compile Include="AccountingModel\DomainServices\CargoTrackingDomainService.Shipment.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.PortTimeZone.cs" />
     <Compile Include="CommonDataModel\LogitudeGridExportToExcel\LogitudeGridExportToExcelArguments.cs" />
     <Compile Include="CommonDataModel\LogitudeGridExportToExcel\LogitudeGridExportToExcelHelper.cs" />
@@ -1017,7 +1018,7 @@
     <Compile Include="Controllers\CommonDataModel\Extended\DocumentDownloadTokenController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ExcelReportController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\LogitudeGridExportToExcelController.cs" />
-    <Compile Include="Controllers\CommonDataModel\Extended\MixPanelController.cs" />
+	<Compile Include="Controllers\CommonDataModel\Extended\MixPanelController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ReportExecutionLogExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ShippingLineExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\HorseViewsController.Generated.cs" />
@@ -1074,7 +1075,7 @@
     <Compile Include="Controllers\ShipmentsModel\ApiHelpers\ContainerAPiHelper.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\LogboxShipmentExportExcelController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentCargoTrackingController.cs" />
-    <Compile Include="Controllers\ShipmentsModel\ForwarderOExportShipmentsController.cs" />
+	<Compile Include="Controllers\ShipmentsModel\ForwarderOExportShipmentsController.cs" />
     <Compile Include="Controllers\ShipmentsModel\ForwarderAExportShipmentsController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AccountingInformationIdentifierViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\DocumentApprovalController.cs" />
@@ -1108,7 +1109,7 @@
     <Compile Include="DataProviders\LogitudeCRMReportDataProvider.cs" />
     <Compile Include="DataProviders\ProductItemLine.Shared.cs" />
     <Compile Include="DataProviders\RoutingDataProvider.cs" />
-    <Compile Include="DataProviders\TaxDeductionReportPerVendorDataProvider.cs" />
+	<Compile Include="DataProviders\TaxDeductionReportPerVendorDataProvider.cs" />
     <Compile Include="DataProviders\UserDefinedReportDataProvider.cs" />
     <Compile Include="ExternalAPIs\ExternalAPIsHelpers\ExternalAPIMainCarriageLegsHelper.cs" />
     <Compile Include="ExternalAPIs\ExternalAPIsHelpers\ExternalAPIShipmentPartnersModifier.cs" />
@@ -2698,7 +2699,7 @@
     <Compile Include="Helpers\DocumentTypeTemplateDefultAttachmentService.cs" />
     <Compile Include="Helpers\DWObjectTableAdditionalConditionService.cs" />
     <Compile Include="Helpers\MixPanel\AuthenticationMixPanelService.cs" />
-    <Compile Include="Helpers\MixPanel\events\LogBoxActionsEvent.cs" />
+	<Compile Include="Helpers\MixPanel\events\LogBoxActionsEvent.cs" />
     <Compile Include="Helpers\MixPanel\MixPanelActionsEvent.cs" />
     <Compile Include="Helpers\MixPanel\IMixPanelActionsService.cs" />
     <Compile Include="Helpers\MixPanel\MixPanelActionsService.cs" />
@@ -7147,7 +7148,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BookingModel\DomainServices\Generated\" />
-    <Folder Include="CargoTrackingModel\" />
+    <Folder Include="CargoTrackingModel\DomainServices\" />
     <Folder Include="Controllers\ShipmentOrderModel\Extended\" />
     <Folder Include="CRMModel\Controllers\Generated\" />
     <Folder Include="CustomModel\Tools\TraceEvents\" />

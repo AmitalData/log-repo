@@ -1,4 +1,4 @@
-import { HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SessionInfo } from '../../Infrastructure/Utilities/SessionInfo';
 import { CargoTrackingBrandingData } from '../DataContracts/CargoTrackingBrandingData';
 import { CargoTrackingBrandingDataRequest } from '../DataContracts/CargoTrackingBrandingDataRequest';
@@ -6,7 +6,7 @@ import { CargoTrackingImage } from '../DataContracts/CargoTrackingImage';
 
 export  class ServiceHelper{
 
-
+    public static HttpClient: HttpClient;
    public static favIcon: HTMLLinkElement = document.querySelector('#appIcon');
     private static testDomain: string;
     
@@ -24,6 +24,24 @@ export  class ServiceHelper{
             return baseUrl
         }
 
+    }
+
+    public static GetLogitudeURL() {
+
+        var logitude_url = location.href.replace('index.html', '');
+
+        if (location.href.indexOf('localhost') > -1) {
+            logitude_url = 'http://localhost:9996/';//test.logitudeworld.com/test/';//
+        }
+
+        else {
+            var urlArr = location.href.split("/index.html");
+            var url = urlArr[0];
+            url = url.replace(url.substring(url.lastIndexOf('/'), url.length), "");
+            logitude_url = url + "/";
+        }
+
+        return logitude_url;
     }
 
     public static GetcargoTrackingDataRequest(baseUrl:string)

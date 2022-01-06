@@ -1,6 +1,6 @@
 ﻿<Script DBType="Main" Module="Quote" AOT="true" TargetTableName="Quotes" BatchSize ="5000">
-  <Sql Version="1">
-    <![CDATA[ 
+	<Sql Version="1">
+		<![CDATA[ 
 
 		If(OBJECT_ID('tempdb..#temp ')  Is Not Null)
 		Begin
@@ -75,7 +75,7 @@
 		drop table #temp_QuoteComputedFields
     
     ]]>
-  </Sql>
+	</Sql>
 </Script>
 
 

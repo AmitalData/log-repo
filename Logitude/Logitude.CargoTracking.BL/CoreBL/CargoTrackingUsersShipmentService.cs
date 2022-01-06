@@ -19,7 +19,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
             };
         }
 
-        private List<CargoTrackingShipmentList> GetUserShipments( CargoTrackingShipmentSearchInput shipmentSearchInput)
+        public List<CargoTrackingShipmentList> GetUserShipments( CargoTrackingShipmentSearchInput shipmentSearchInput)
         {
             CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentSearchInput);
             var shipments = shipmentSearchQuery.GetFilteredShipments( shipmentSearchInput);
@@ -27,7 +27,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
             cargoTrackingShipmentQueryService.SetFutureMilstone(shipments);
             return shipments;
         }
-        private int GetAllShipmentsCountForFirstPageOnly( CargoTrackingShipmentSearchInput shipmentSearchInput)
+        public int GetAllShipmentsCountForFirstPageOnly( CargoTrackingShipmentSearchInput shipmentSearchInput)
         {
             var isNotFirstPage = shipmentSearchInput.PageIndex != 0;
             if (isNotFirstPage)
