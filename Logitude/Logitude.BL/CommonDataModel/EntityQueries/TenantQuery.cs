@@ -174,6 +174,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 LTLRatio = a.LTLRatio,
                                                 IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
                                                 AutomaticallyCloseDays = a.AutomaticallyCloseDays,
+                                                EnableDeliveryOptions = a.EnableDeliveryOptions,
                                             });
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -355,6 +356,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         LTLRatio = tt.LTLRatio,
                         IsQuotesRequestActivatedInShared = tt.IsQuotesRequestActivatedInShared,
                         AutomaticallyCloseDays = tt.AutomaticallyCloseDays,
+                        EnableDeliveryOptions = tt.EnableDeliveryOptions,
                     }; 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
@@ -523,6 +525,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     LTLRatio = tt.LTLRatio,
                     IsQuotesRequestActivatedInShared = tt.IsQuotesRequestActivatedInShared,
                     AutomaticallyCloseDays = tt.AutomaticallyCloseDays,
+                    EnableDeliveryOptions = tt.EnableDeliveryOptions,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -676,7 +679,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            LTLRatio = a.LTLRatio,
                                            IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
                                            AutomaticallyCloseDays = a.AutomaticallyCloseDays,
-
+                                           EnableDeliveryOptions = a.EnableDeliveryOptions,
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -826,7 +829,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        LTLRatio = a.LTLRatio,
                                        IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
                                        AutomaticallyCloseDays = a.AutomaticallyCloseDays,
-
+                                       EnableDeliveryOptions = a.EnableDeliveryOptions,
                                    }).FirstOrDefault();
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -988,6 +991,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                LTLRatio = a.LTLRatio,
                                                IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
                                                AutomaticallyCloseDays = a.AutomaticallyCloseDays,
+                                               EnableDeliveryOptions = a.EnableDeliveryOptions,
 
                                            }).FirstOrDefault();
 
@@ -1152,6 +1156,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            LTLRatio = a.LTLRatio,
                                            IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
                                            AutomaticallyCloseDays = a.AutomaticallyCloseDays,
+                                           EnableDeliveryOptions = a.EnableDeliveryOptions,
 
                                        }).FirstOrDefault();
 
@@ -1304,6 +1309,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        LTLRatio = a.LTLRatio,
                                        IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
                                        AutomaticallyCloseDays = a.AutomaticallyCloseDays,
+                                       EnableDeliveryOptions = a.EnableDeliveryOptions,
 
                                    }).FirstOrDefault();
                 if (tenant != null)
@@ -1475,6 +1481,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     LTLRatio = myPOCO.LTLRatio,
                     IsQuotesRequestActivatedInShared = myPOCO.IsQuotesRequestActivatedInShared,
                     AutomaticallyCloseDays = myPOCO.AutomaticallyCloseDays,
+                    EnableDeliveryOptions = myPOCO.EnableDeliveryOptions,
 
                 };
 
@@ -1597,6 +1604,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
                                                 IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
                                                 AutomaticallyCloseDays = a.AutomaticallyCloseDays,
+                                                EnableDeliveryOptions = a.EnableDeliveryOptions,
                                             };
             return result;
         }
