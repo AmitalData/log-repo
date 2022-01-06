@@ -681,7 +681,7 @@ export class CargoTrackingShipmentMappedPM {
     public FutureMilstoneName: string;
 
 
-    public WarehouseLegEnglishName: string;
+    public WarehouseLegName: string;
     public TotalTax: string;
     public ShipmentTypeName: string;
     public ShipmentOrderQuantity: number;
