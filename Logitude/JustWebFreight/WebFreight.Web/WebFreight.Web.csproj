@@ -1070,6 +1070,8 @@
     <Compile Include="Controllers\ShipmentsModel\ApiHelpers\ContainerAPiHelper.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\LogboxShipmentExportExcelController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentCargoTrackingController.cs" />
+	<Compile Include="Controllers\ShipmentsModel\ForwarderOExportShipmentsController.cs" />
+    <Compile Include="Controllers\ShipmentsModel\ForwarderAExportShipmentsController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AccountingInformationIdentifierViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\DocumentApprovalController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ContainerViewsController.Generated.cs" />
@@ -2641,6 +2643,7 @@
     <Compile Include="Helpers\AutomationModel\OnUpdateDocumentService.cs" />
     <Compile Include="Helpers\AutomationModel\WebHookAutomationService.cs" />
     <Compile Include="Helpers\CrmWebServicesValidator.cs" />
+    <Compile Include="Helpers\DataWarehouse\FactQuoteBusinessUnitFilter.cs" />
     <Compile Include="Helpers\DocumentFile.cs" />
     <Compile Include="Helpers\DocumentDownloadTokenService.cs" />
     <Compile Include="Helpers\ContainerStatuses\ContainerStatusesConnecterAnalyzer.cs" />
