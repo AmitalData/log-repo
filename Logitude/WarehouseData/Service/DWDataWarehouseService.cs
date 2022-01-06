@@ -342,6 +342,8 @@ namespace WarehouseData.Service
                     + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OnCarriageFromPortId DEFAULT '-1' FOR OnCarriageFromPortId"
                     + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OnCarriageCarrierId DEFAULT '-1' FOR OnCarriageCarrierId"
                     + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PreCarriageCarrierId DEFAULT '-1' FOR PreCarriageCarrierId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment2VesselId DEFAULT '-1' FOR Transshipment2VesselId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment3VesselId DEFAULT '-1' FOR Transshipment3VesselId"
                         ;
 
                     break;
