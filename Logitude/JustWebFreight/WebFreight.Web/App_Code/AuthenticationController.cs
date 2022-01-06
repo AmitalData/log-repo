@@ -1458,7 +1458,7 @@ namespace WebFreight.Web
                     if (!user.HasError && (parameters.IsMobileLogin || parameters.GetToken))
                     {
                         bool IsTwoFactorAuthenticationRequired = false;
-                        if (!parameters.IsAngularLogin && !parameters.IsMobileLogin && parameters.IsUser)
+                        if (!parameters.IsAngularLogin && !parameters.IsMobileLogin && parameters.IsUser && !customerCare)
                         {
                             IsTwoFactorAuthenticationRequired = CheckLoginSecurityPolicy(tenant, user, logitudeUser, commonDataContext);
                         }
