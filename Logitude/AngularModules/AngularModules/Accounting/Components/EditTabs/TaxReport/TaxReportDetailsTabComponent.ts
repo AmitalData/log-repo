@@ -22,6 +22,7 @@ import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
+import { TaxReportLineTransmitStatusListService } from 'Accounting/Services/StandardLists/TaxReportLineTransmitStatusListService';
 declare var window: any;
 
 @Component({
@@ -42,6 +43,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private _TaxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
     private _TaxReportLineStatusListService: TaxReportLineStatusListService = new TaxReportLineStatusListService();
+    private taxReportLineTransmitStatusListService: TaxReportLineTransmitStatusListService = new TaxReportLineTransmitStatusListService();
     public TaxReportColumnsReady: EventEmitter<any> = new EventEmitter();
     public QueryColumns: QueryColumnPM[] = [];
   IsTesterButtonVisibile: boolean = false;
@@ -140,12 +142,13 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         this.BuildColumns();
         this.buildQueryColumns();
         this.GetStatuses();
+        this.GetTransmitStatuses();
         this.CD.detectChanges();
         // this.FillGrids();
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
         this.GetReportCounter();
     }
-    
+
     public Export2ExcelClicked(){
         this.LogitudeGridExportToExcelComponent.ExportToExcelExcute('TaxReportLine',this.ListFilters,this.QueryColumns);
     }
@@ -318,6 +321,10 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         }
 
 
+        if (this.SelectedTransmitStatusItems.length > 0)
+            this.AddTransmitStatusFilter(filters);
+
+
         this.ListFilters = filters;
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
 
@@ -326,6 +333,12 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
     private timerToken: any;
     searchText: string = "";
+
+    AddTransmitStatusFilter(filters: ApiQueryFilters)
+    {
+        filters.addAdditionalFilter("TransmitStatusCode", this.SelectedTransmitStatusItems.join(','), null, null, "InList", false, false, false, "string");
+    }
+
     TextChanged(searchtext) {
 
         this.timerToken = setTimeout(() => {
@@ -377,6 +390,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
     }
 
+    public TransmitStatuses = [];
+    public SelectedTransmitStatusItems = [];
     StatusItems = [];
     SelectedStatusItems = [];
     GetStatuses() {
@@ -400,6 +415,22 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             this.ShowErrorMsg = __errorsCount >= 1;
             this.errorsCount = __errorsCount;
         });
+    }
+
+    GetTransmitStatuses() {
+        this.taxReportLineTransmitStatusListService.getAll().subscribe((response:any) => {
+            this.TransmitStatuses = response.Result;
+        });
+    }
+    PushTransmitStatus(status) {
+        this.SelectedTransmitStatusItems.push(status.Code);
+        this.FilterLines();
+    }
+    PopTransmitStatus(status) {
+        var itemIndex = this.SelectedTransmitStatusItems.indexOf(status.Code);
+        if (itemIndex > -1)
+            this.SelectedTransmitStatusItems.splice(itemIndex, 1);
+        this.FilterLines();
     }
     //#endregion
 
@@ -427,7 +458,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             ServerSideSortable: true
 
         });
-        
+
         this.columns.push({
             FieldName: 'Line',
             DataTypeCode: 'String',
@@ -436,7 +467,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
-        
+
 
         this.columns.push({
             FieldName: 'LineTypeCode',
@@ -446,7 +477,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
-        
+
 
         this.columns.push({
             FieldName: 'VatNumber',
@@ -548,7 +579,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             ServerSideSortable: true,
             IsCustomTemplate: true,
       });
-      
+
         this.columns.push({
             FieldName: 'IsManuallyChanged',
             DataTypeCode: 'boolean',
@@ -586,7 +617,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.
             GetQueryColumn(SessionLocator.LoggedUserPM.DontShowLocal ? 'StatusEnglishName' : 'StatusLocalName','Text',TextCodeTranslator.Translate("TaxReportLine.F.StatusEnglishName")));
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("JournalNumber",'Text',TextCodeTranslator.Translate("TaxReportLine.F.JournalNumber")));
-    } 
+    }
     DataSource = {
         pageSize: 30,
         rowCount: null,
