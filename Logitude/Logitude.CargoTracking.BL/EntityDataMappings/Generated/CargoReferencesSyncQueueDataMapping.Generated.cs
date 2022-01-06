@@ -23,8 +23,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
           { 
 		     None,  
 	         Id, 
-	         ForwardingShipmentId, 
-	         ShipmentNeedUpdateType, 
+	         ShipmentId, 
+	         ShipmentType, 
 	         Tenant,
 	      }
 
@@ -33,8 +33,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
           { 
 		     None,  
 	         Id, 
-	         ForwardingShipmentId, 
-	         ShipmentNeedUpdateType, 
+	         ShipmentId, 
+	         ShipmentType, 
 	         Tenant,
 	      }
 
@@ -44,14 +44,14 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	    public void PMToPOCO(CargoReferencesSyncQueuePM entityPM, CargoReferencesSyncQueue entityPOCO)
         {
 			 
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwardingShipmentId))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentId))
             {
-				entityPOCO.ForwardingShipmentId = entityPM.ForwardingShipmentId;
+				entityPOCO.ShipmentId = entityPM.ShipmentId;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentNeedUpdateType))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentType))
             {
-				entityPOCO.ShipmentNeedUpdateType = entityPM.ShipmentNeedUpdateType;
+				entityPOCO.ShipmentType = entityPM.ShipmentType;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
@@ -68,14 +68,14 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.Id = entityPOCO.Id;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForwardingShipmentId))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShipmentId))
             {
-					entityPM.ForwardingShipmentId = entityPOCO.ForwardingShipmentId;
+					entityPM.ShipmentId = entityPOCO.ShipmentId;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShipmentNeedUpdateType))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShipmentType))
             {
-					entityPM.ShipmentNeedUpdateType = entityPOCO.ShipmentNeedUpdateType;
+					entityPM.ShipmentType = entityPOCO.ShipmentType;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
@@ -89,14 +89,14 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwardingShipmentId))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentId))
             {
-                oldEntityPM.ForwardingShipmentId = entityPM.ForwardingShipmentId;
+                oldEntityPM.ShipmentId = entityPM.ShipmentId;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentNeedUpdateType))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentType))
             {
-                oldEntityPM.ShipmentNeedUpdateType = entityPM.ShipmentNeedUpdateType;
+                oldEntityPM.ShipmentType = entityPM.ShipmentType;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))

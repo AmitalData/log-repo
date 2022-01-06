@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CargoReferencesSyncQueueUpdateClass
    {  		
-		public const string HashString = "6b442d8da30f6e32f8b271da57ec8e47";
+		public const string HashString = "1edfc9d0bfe370bab6715bb3f274d8fa";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,11 +119,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CargoReferencesSyncQueue",
-			      				    Code =  "436e",
+			      				    Code =  "bdc3",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
-			      				    ClientModuleName =  "",
-			      				    ServerModuleName =  "",
+			      				    ClientModuleName =  "CargoTracking",
+			      				    ServerModuleName =  "CargoTracking",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -143,7 +143,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "ForwardingShipmentId",
+					 						FieldName =  "ShipmentId",
 					  						ObjectTableName =  "CargoReferencesSyncQueue",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -161,8 +161,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ForwardingShipmentId",
-					  						ListPropertyPath =  "ForwardingShipmentId",
+					  						PMPropertyPath =  "ShipmentId",
+					  						ListPropertyPath =  "ShipmentId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -179,7 +179,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ForwardingShipmentId",
+					  						FullFieldLable =  "ShipmentId",
 					  						DefaultText =  "ShipmentId",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -199,7 +199,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "ShipmentNeedUpdateType",
+					 						FieldName =  "ShipmentType",
 					  						ObjectTableName =  "CargoReferencesSyncQueue",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -217,8 +217,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ShipmentNeedUpdateType",
-					  						ListPropertyPath =  "ShipmentNeedUpdateType",
+					  						PMPropertyPath =  "ShipmentType",
+					  						ListPropertyPath =  "ShipmentType",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  true,
 					  						UniqueField =  false,
@@ -235,7 +235,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ShipmentNeedUpdateType",
+					  						FullFieldLable =  "ShipmentType",
 					  						DefaultText =  "ShipmentType",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
