@@ -15,6 +15,8 @@ export class ModificationAndDiscountTypeList {
 	Inactive: boolean;
 	IsRelevantGoodsItem: boolean;
 	IsRelevantInvoice: boolean;
+	IsRelevantInvoiceExport: boolean;
+	IsRelevantGoodsItemExport: boolean;
 	
 }
  

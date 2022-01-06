@@ -59,6 +59,16 @@ export class ModificationAndDiscountTypePM {
     public set IsRelevantInvoice(newValue: boolean) { if (this.isRelevantInvoice != newValue) { this.isRelevantInvoice = newValue; this.MarkAsDirty("IsRelevantInvoice"); } }
        
 	 
+    private isRelevantInvoiceExport: boolean;
+    public get IsRelevantInvoiceExport() { return this.isRelevantInvoiceExport; }
+    public set IsRelevantInvoiceExport(newValue: boolean) { if (this.isRelevantInvoiceExport != newValue) { this.isRelevantInvoiceExport = newValue; this.MarkAsDirty("IsRelevantInvoiceExport"); } }
+       
+	 
+    private isRelevantGoodsItemExport: boolean;
+    public get IsRelevantGoodsItemExport() { return this.isRelevantGoodsItemExport; }
+    public set IsRelevantGoodsItemExport(newValue: boolean) { if (this.isRelevantGoodsItemExport != newValue) { this.isRelevantGoodsItemExport = newValue; this.MarkAsDirty("IsRelevantGoodsItemExport"); } }
+       
+	 
 
     public OldEntityPM: ModificationAndDiscountTypePM;
 		

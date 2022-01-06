@@ -181,6 +181,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isRelevantInvoiceExport ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsRelevantInvoiceExport  
+	   {
+	    
+	     get
+		{
+		   return isRelevantInvoiceExport;
+		 }
+		 set
+		 {
+		   if(isRelevantInvoiceExport != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsRelevantInvoiceExport",OldValue=isRelevantInvoiceExport,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isRelevantInvoiceExport=value;
+		   }
+			
+		 }
+	   }
+	  private bool isRelevantGoodsItemExport ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsRelevantGoodsItemExport  
+	   {
+	    
+	     get
+		{
+		   return isRelevantGoodsItemExport;
+		 }
+		 set
+		 {
+		   if(isRelevantGoodsItemExport != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsRelevantGoodsItemExport",OldValue=isRelevantGoodsItemExport,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isRelevantGoodsItemExport=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
