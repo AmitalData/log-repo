@@ -540,8 +540,15 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         }
     }
 
+    private filterWithAllCustomersWhenCustomersNotSelected(){
+        let filter = Object.assign({}, this.ShipmentSearchInput);
+        filter.CustomersIds = filter.CustomersIds.length == 0 ? this.InvitedCustomers.map(d => d.CardId) : filter.CustomersIds;
+        return filter;
+    }
+
     private LoadShipmentsCounter() {
-        this.searchService.GetUserShipmentsCounter(this.ShipmentSearchInput).subscribe((counter: any) => {
+        let filter = this.filterWithAllCustomersWhenCustomersNotSelected();
+        this.searchService.GetUserShipmentsCounter(filter).subscribe((counter: any) => {
             this.ShipmentsCounter = counter;
             this.BuildToggleFilters();
             this.SetShipmentsScrollPosition();
@@ -550,11 +557,13 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
 
     private InitiateShipmentDataSource() {
-        this.ShipmentsDataSource = new ShipmentDataSource(this.changeDetector, this.searchService, this.ShipmentSearchInput, this);
+        let filter = this.filterWithAllCustomersWhenCustomersNotSelected();
+        this.ShipmentsDataSource = new ShipmentDataSource(this.changeDetector, this.searchService, filter, this);
     }
 
     private ReloadShipments() {
-        this.ShipmentsDataSource.ReloadData(this.ShipmentSearchInput);
+        let filter = this.filterWithAllCustomersWhenCustomersNotSelected();
+        this.ShipmentsDataSource.ReloadData(filter);
         this.ResetShipmentsScrollbarPosition();
     }
 
