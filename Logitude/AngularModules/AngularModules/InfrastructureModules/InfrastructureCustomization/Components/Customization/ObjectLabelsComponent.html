@@ -77,7 +77,7 @@
                     <td style="width:2px"></td>
                     <td>
                         <div class="MediaFill">
-                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="TabsList" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
+                            <logitude-edit-grid [UseVirtuallization]="true" GridWidth="100%" GridHeight="100%" [ItemSource]="TabsList" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
                                 <!-- Code -->
                                 <log-column [width]="'250'" [header]="'Code'" [Alignment]="'left'">
                                     <ng-template let-item>

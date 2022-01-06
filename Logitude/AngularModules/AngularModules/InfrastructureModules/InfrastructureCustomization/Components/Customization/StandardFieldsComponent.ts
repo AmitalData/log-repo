@@ -11,7 +11,10 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
-import {ObjectFieldPMService} from '../../../../Infrastructure/Services/StandardPMs/ObjectFieldPMService';
+import { ObjectFieldPMService } from '../../../../Infrastructure/Services/StandardPMs/ObjectFieldPMService';
+import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
+
+
 declare var window: any;
 
 @Component({
