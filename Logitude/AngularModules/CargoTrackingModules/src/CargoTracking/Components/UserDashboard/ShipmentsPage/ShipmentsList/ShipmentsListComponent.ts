@@ -152,12 +152,12 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
     private buildQueryColumns(){
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ShipmentNumber",'Text', 'Shipment Number'));
-        // this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ReferenceNo",'Text', 'Reference No'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("CustomerReference",'Text', 'Reference No'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("TransportModeId",'Text', 'Transport Mode'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("DirectionId",'Text', 'Direction'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("House",'Text', 'House'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("Master",'Text', 'Master'));
-        // this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("",'Text', 'Client'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("Client",'Text', 'Client'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ConsigneeName",'Text', 'Consignee'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("CurrentMilestoneDate",'DateTime', 'Current Milestone Date'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("CurrentMilestoneName",'Text', 'Current Milestone Name'));
@@ -171,9 +171,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         // this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("",'Text', 'DECLEARATION STATUS'));
         // this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("",'Text', 'TOTAL TAXES'));
         // this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("",'Text', 'INCOTERM'));
-        // this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("",'Text', 'HAS EXPETION'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("HasException",'Text', 'Has Exception'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("CurrentMilestoneExceptions",'Text', 'Exception Description'));
-        // this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("",'Text', 'Is Order'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("IsOrder",'Text', 'Is Order'));
     }
 
     private GetCompanyLoginsFromCache() {

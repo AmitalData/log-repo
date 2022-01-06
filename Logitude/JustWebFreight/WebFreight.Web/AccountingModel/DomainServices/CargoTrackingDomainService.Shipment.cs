@@ -7,20 +7,20 @@ using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using WebFreight.Web.Security;
 
 namespace WebFreight.Web.AccountingModel.DomainServices
 {
     public partial class AccountingDomainService
     {
-        private ICargoTrackingContext context;
-        public List<CargoTrackingShipmentList> GetCargoTrackingShipmentFilters(byte[] xmlFilters, int tenant)
+        public List<CustomCargoTrackingShipmentList> GetCargoTrackingShipmentFilters(byte[] xmlFilters, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
             CargoTrackingUsersShipmentService usersShipmentService = new CargoTrackingUsersShipmentService();
             CargoTrackingShipmentSearchInput filter = buildCargoTrackingShipmentFilters(queryOperations);
-            return usersShipmentService.GetUserShipments(filter);
+            return usersShipmentService.GetUserShipments(filter).Select(x => MapCargoTrackingShipmentList(x)).ToList();
         }
 
         public int GetCargoTrackingShipmentFiltersCount(byte[] xmlFilters, int tenant)
@@ -29,8 +29,56 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
             CargoTrackingUsersShipmentService usersShipmentService = new CargoTrackingUsersShipmentService();
             CargoTrackingShipmentSearchInput filter = buildCargoTrackingShipmentFilters(queryOperations);
-            var xxx = usersShipmentService.GetAllShipmentsCountForFirstPageOnly(filter);
             return usersShipmentService.GetAllShipmentsCountForFirstPageOnly(filter);
+        }
+
+        private CustomCargoTrackingShipmentList MapCargoTrackingShipmentList(CargoTrackingShipmentList cargoTrackingShipmentList)
+        {
+            CustomCargoTrackingShipmentList customCargoTrackingShipmentList = new CustomCargoTrackingShipmentList();
+            customCargoTrackingShipmentList.TransportModeId = cargoTrackingShipmentList.TransportModeId;
+            customCargoTrackingShipmentList.CustomerReference = cargoTrackingShipmentList.CustomerReference;
+            customCargoTrackingShipmentList.DirectionId = cargoTrackingShipmentList.DirectionId;
+            customCargoTrackingShipmentList.House = cargoTrackingShipmentList.House;
+            customCargoTrackingShipmentList.Master = cargoTrackingShipmentList.Master;
+            customCargoTrackingShipmentList.ConsigneeName = cargoTrackingShipmentList.ConsigneeName;
+            customCargoTrackingShipmentList.CurrentMilestoneDate = cargoTrackingShipmentList.CurrentMilestoneDate;
+            customCargoTrackingShipmentList.CurrentMilestoneName = cargoTrackingShipmentList.CurrentMilestoneName;
+            customCargoTrackingShipmentList.FromPortName = cargoTrackingShipmentList.FromPortName;
+            customCargoTrackingShipmentList.ToPortName = cargoTrackingShipmentList.ToPortName;
+            customCargoTrackingShipmentList.ArrivalDate = cargoTrackingShipmentList.ArrivalDate;
+            customCargoTrackingShipmentList.ArrivalEstimationDate = cargoTrackingShipmentList.ArrivalEstimationDate;
+            customCargoTrackingShipmentList.DepartureDate = cargoTrackingShipmentList.DepartureDate;
+            customCargoTrackingShipmentList.DepartureEstimationDate = cargoTrackingShipmentList.DepartureEstimationDate;
+            customCargoTrackingShipmentList.GrossWeight = cargoTrackingShipmentList.GrossWeight;
+            customCargoTrackingShipmentList.CurrentMilestoneExceptions = cargoTrackingShipmentList.CurrentMilestoneExceptions;
+            customCargoTrackingShipmentList.IsOrder = cargoTrackingShipmentList.EntityType == "O";
+            customCargoTrackingShipmentList.HasException = cargoTrackingShipmentList.CurrentMilestoneExceptions != null;
+            customCargoTrackingShipmentList.Client = GetClientName(cargoTrackingShipmentList);
+            return customCargoTrackingShipmentList;
+        }
+
+        private string GetClientName(CargoTrackingShipmentList shipment) {
+            string client = "";
+            switch (shipment.DirectionId)
+            {
+                case "I":
+                    {
+                        client = shipment.ShipperName;
+                        break;
+                    }
+
+                case "E":
+                    {
+                        client = shipment.ConsigneeName;
+                        break;
+                    }
+            }
+
+            if (shipment.EntityType == "C")
+            {
+                client = shipment.ShipperName;
+            }
+            return client;
         }
 
         private CargoTrackingShipmentSearchInput buildCargoTrackingShipmentFilters(QueryOperations queryOperations) {
@@ -82,5 +130,14 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             filter.PageSize = queryOperations.PageSize;
             return filter;
         }
+    }
+
+    public class CustomCargoTrackingShipmentList : CargoTrackingShipmentList {
+        [DataMember]
+        public bool IsOrder { get; set; }
+        [DataMember]
+        public bool HasException { get; set; }
+        [DataMember]
+        public string Client { get; set; }
     }
 }
