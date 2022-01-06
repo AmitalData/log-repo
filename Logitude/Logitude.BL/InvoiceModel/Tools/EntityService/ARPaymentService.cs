@@ -450,52 +450,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.GetPaymentForeignFields();
             this.BuildEntitiesNumbers();
         }
-
-        private void UpdateChequeOrPaymentRefField(ARPaymentPM theEntityPm)
-        {
-            var invoicesIds = theEntityPm.PaymentInvoices;
-
-            foreach (ARPaymentInvoicePM item in invoicesIds)
-            {
-                this.UpdateARInvoicePaymentRefreneces(item, theEntityPm);
-            }
-        }
-
-        private void UpdateARInvoicePaymentRefreneces(ARPaymentInvoicePM item, ARPaymentPM changedARPaymentPM)
-        { 
-            List<ARInvoicePayment> allConnectedItems = invoicePaymentRepository.GetARInvoicePaymentByInvoiceId(item.ARInvoiceId, item.Tenant).ToList();
-
-            string paymentRefrenece = "";
-            List<string> Ids = new List<string>();
-
-            if (allConnectedItems.Count > 0)
-            {
-                foreach (ARInvoicePayment aRInvoicePayment in allConnectedItems)
-                {
-                    ARPayment aRPayment = paymentRepository.GetSingleARPayment(aRInvoicePayment.ARPaymentId, aRInvoicePayment.Tenant);
-
-                    if (aRPayment != null && aRPayment.ChequeOrPaymentRef != null)
-                    {
-                        paymentRefrenece = aRPayment.ChequeOrPaymentRef == null? paymentRefrenece:  paymentRefrenece + aRPayment.ChequeOrPaymentRef+',';
-                        if (aRPayment.Id == changedARPaymentPM.PaymentInvoices[0].ARPaymentId)
-                        {
-                            Ids.Add(changedARPaymentPM.ChequeOrPaymentRef);
-                        }
-                        else
-                        { 
-                            Ids.Add(aRPayment.ChequeOrPaymentRef);
-                        } 
-                      
-                    } 
-                }
-            }
-
-            paymentRefrenece = string.Join(",", Ids);
-
-            var ar = invoiceRepository.GetSingleInvoice(item.ARInvoiceId);
-            ar.PaymentReferences = paymentRefrenece;
-            invoiceRepository.Update(ar);
-        }
+  
 
         private void HandleSATTranserStatus(ARPaymentPM theEntityPm)
         {
