@@ -610,10 +610,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new ARInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "ARInvoice", Tenant = entityPM.Tenant , EntityId = entityPM.Id });
 
-                ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
-
-                ARPaymentReferencesService ARPaymentReferencesService = new ARPaymentReferencesService(this.objectContext);
-                ARPaymentReferencesService.CalculatePaymentReferences(entityPM, invoice);
+                ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId); 
 
                  
                 invoiceRepository.Update(invoice);
@@ -646,6 +643,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 entityAutomationService.RunAutomation();
             }
 
+
+
+            ARPaymentReferencesService ARPaymentReferencesService = new ARPaymentReferencesService(this.objectContext);
+            invoice.PaymentReferences = ARPaymentReferencesService.GetARInvoicePaymentRefreneces(invoice); 
+              
             invoiceRepository.Update(invoice);
             invoiceRepository.SubmitChanges();
 
