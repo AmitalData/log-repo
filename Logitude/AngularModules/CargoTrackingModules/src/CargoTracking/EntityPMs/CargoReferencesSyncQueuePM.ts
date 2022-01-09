@@ -44,6 +44,11 @@ export class CargoReferencesSyncQueuePM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
+    private syncTo: string;
+    public get SyncTo() { return this.syncTo; }
+    public set SyncTo(newValue: string) { if (this.syncTo != newValue) { this.syncTo = newValue; this.MarkAsDirty("SyncTo"); } }
+       
+	 
 
     public OldEntityPM: CargoReferencesSyncQueuePM;
 		

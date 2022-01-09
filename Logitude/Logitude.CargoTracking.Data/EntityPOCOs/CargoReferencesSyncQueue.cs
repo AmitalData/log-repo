@@ -27,6 +27,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public string ShipmentType { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
+        [Column("SyncTo")]
+	    public string SyncTo { get; set; }
     }
 }
 	 

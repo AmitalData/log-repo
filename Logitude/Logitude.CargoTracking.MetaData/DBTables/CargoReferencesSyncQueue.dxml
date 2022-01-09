@@ -33,4 +33,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="SyncTo"
+    OldNames="test"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="false" />
+  </Column>
 </Table>

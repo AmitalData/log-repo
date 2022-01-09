@@ -112,6 +112,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private string syncTo ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SyncTo  
+	   {
+	    
+	     get
+		{
+		   return syncTo;
+		 }
+		 set
+		 {
+		   if(syncTo != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SyncTo",OldValue=syncTo,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   syncTo=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

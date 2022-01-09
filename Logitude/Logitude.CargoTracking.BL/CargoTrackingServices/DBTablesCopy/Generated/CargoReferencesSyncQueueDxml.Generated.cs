@@ -21,6 +21,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='Tenant' Type='int'>"+
 "    <Constraints Nullable='false' />"+
 "  </Column>"+
+"  <Column Name='SyncTo' OldNames='test' Type='varchar' Size='30'>"+
+"    <Constraints Nullable='false' />"+
+"  </Column>"+
 "</Table>";
 		
 		   return dxmlFile;

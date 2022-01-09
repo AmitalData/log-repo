@@ -14,8 +14,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.QueueServices
         const int ShipmentTable_GetAllCustomsShipmentsThatContainForwardingShipments = 1;
         const int ShipmentTable_GetAllNonCustomShipmentsThatContainForwardingShipments = 2;
         const int ShipmentTable_GetShipmentOrders = 3;
-        const string ForwardingCode = "F";
-        const string OrderCode = "O";
+
         const string QueueTableName = "CargoReferencesSyncQueues";
         public void InsertToQueue(BulkDataPreperation bulkDataPreperation)
         {
@@ -77,15 +76,17 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.QueueServices
             var row = referencesDateTable.NewRow();
             row["Tenant"] = shipmentRow["Tenant"];
             row["ShipmentId"] = shipmentRow["Id"];
-            row["ShipmentType"] = ForwardingCode;
+            row["SyncTo"] = shipmentRow["CustomFileId"];
+            row["ShipmentType"] = Codes.ForwardingType;
             return row;
         }
         private DataRow CreateQueueRowFromOrderRecord(DataTable referencesDateTable, DataRow shipmentRow)
         {
             var row = referencesDateTable.NewRow();
             row["Tenant"] = shipmentRow["Tenant"];
-            row["ShipmentId"] = shipmentRow["ShipmentId"]; 
-            row["ShipmentType"] = OrderCode;
+            row["ShipmentId"] = shipmentRow["Id"]; 
+            row["SyncTo"] = shipmentRow["ShipmentId"]; 
+            row["ShipmentType"] = Codes.OrderType;
             return row;
         }
 

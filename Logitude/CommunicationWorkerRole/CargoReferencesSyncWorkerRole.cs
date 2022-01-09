@@ -13,6 +13,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Logitude.CargoTracking.Data.EntityPOCOs;
 using System.Data.Entity;
+using Logitude.CargoTracking.BL.CargoTrackingServices;
 
 namespace CommunicationWorkerRole
 {
@@ -47,15 +48,32 @@ namespace CommunicationWorkerRole
 
         private void SyncConnectedSepments()
         {
-            var ForwardingShipmentIds = GetTop100fromQueue();
-            if (ForwardingShipmentIds.Count <= 0)
-                return;
-            var forwardingHasCustom = GetAllForwardingHasCustom(ForwardingShipmentIds);
+            SyncOrderReferencesToForwarding();
+            var forwardingHasCustom = GetAllOrderHasForwarding(ForwardingShipmentIds);
         }
 
+        private void SyncOrderReferencesToForwarding()
+        {
+            var OrderShipmentQueue = GetTop_100_OrderReferencesQueue();
+            if (OrderShipmentQueue.Count <= 0)
+                return;
+            var Seatches = GetSearchesByShipmentIds(OrderShipmentQueue.Select(e=>e.ShipmentId).ToList());
+
+        }
+
+        
+
+        private List<CargoReferencesSyncQueue> GetTop_100_OrderReferencesQueue()
+        {
+            return cargoContext.CargoReferencesSyncQueues.Take(100).Where(e => e.ShipmentType == Codes.OrderType).ToList();
+        }
+        private List<CargoTrackingShipmentSearch> GetSearchesByShipmentIds(List<string> ShipmentIds)
+        {
+            return cargoContext.CargoTrackingShipmentSearches.Where(e => ShipmentIds.Contains(e.ShipmentId)).ToList();
+        }
         private object GetAllForwardingHasCustom(List<string> forwardingShipmentIds)
         {
-            var t = cargoContext.CargoTrackingShipments.Include("").Where(e => e.CustomsShipmentHeaderId != null & forwardingShipmentIds.Contains(e.EntityId));
+            return cargoContext.CargoReferencesSyncQueues.Take(100).Where(e=>e.ShipmentType == Codes.ForwardingType).ToList();
         }
 
         private List<string> GetTop100fromQueue()
@@ -72,7 +90,7 @@ namespace CommunicationWorkerRole
 
             ThreadId = Guid.NewGuid().ToString();
             BatchServiceCode = "CargoReferencesSync";
-            currentContext = CargoTrackingContext.GetContext(0);
+            cargoContext = CargoTrackingContext.GetContext(0);
             return base.OnStart();
         }
 

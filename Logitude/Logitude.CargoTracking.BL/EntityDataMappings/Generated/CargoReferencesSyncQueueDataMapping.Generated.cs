@@ -25,7 +25,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         Id, 
 	         ShipmentId, 
 	         ShipmentType, 
-	         Tenant,
+	         Tenant, 
+	         SyncTo,
 	      }
 
 
@@ -35,7 +36,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         Id, 
 	         ShipmentId, 
 	         ShipmentType, 
-	         Tenant,
+	         Tenant, 
+	         SyncTo,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -57,6 +59,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
 				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SyncTo))
+            {
+				entityPOCO.SyncTo = entityPM.SyncTo;
 			}
 			}
 
@@ -83,6 +90,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.Tenant = entityPOCO.Tenant;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SyncTo))
+            {
+					entityPM.SyncTo = entityPOCO.SyncTo;
+            }
+
 		}
 
 		public void PMToOldPM(CargoReferencesSyncQueuePM entityPM, CargoReferencesSyncQueuePM oldEntityPM)
@@ -102,6 +114,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
                 oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SyncTo))
+            {
+                oldEntityPM.SyncTo = entityPM.SyncTo;
             }
 			
 		}
