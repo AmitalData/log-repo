@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Invoice" TargetTableName="ARInvoices">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
  declare @Id as varchar(15)
 declare @PaymentReferences varchar(1000)
@@ -23,12 +23,12 @@ Begin
 End
 
 
-If (OBJECT_ID('tempdb..#temp_ARInvoices2') Is Not Null)
+If (OBJECT_ID('tempdb..#temp_ARInvoicesModification') Is Not Null)
 Begin
-    Drop Table #temp_ARInvoices2
+    Drop Table #temp_ARInvoicesModification
 End
 
-CREATE TABLE #temp_ARInvoices2
+CREATE TABLE #temp_ARInvoicesModification
 (
     Id varchar(15) not null,
     PaymentReferences varchar(1000)
@@ -95,16 +95,19 @@ BEGIN
         DEALLOCATE ARInvoicePaymentsCURSOR
 
         set @PaymentReferences = @CalculatedPaymentReferences; 
-		insert into #temp_ARInvoices2 (Id, PaymentReferences) values (@Id, @PaymentReferences)
+		insert into #temp_ARInvoicesModification (Id, PaymentReferences) values (@Id, @PaymentReferences)
 		 
         set @Count = @Count + 1;
         if (@Count = 1000)
         begin
             update ARInvoices
-            set PaymentReferences = #temp_ARInvoices2.PaymentReferences
+            set PaymentReferences = #temp_ARInvoicesModification.PaymentReferences
             FROM ARInvoices
-                INNER JOIN #temp_ARInvoices2
-                    on ARInvoices.Id = #temp_ARInvoices2.Id
+                INNER JOIN #temp_ARInvoicesModification
+                    on ARInvoices.Id = #temp_ARInvoicesModification.Id
+					
+				truncate table #temp_ARInvoicesModification
+				set @Count = 0
         end
 
         FETCH NEXT FROM ARInvoicesCursor
@@ -120,13 +123,13 @@ END
 if (@Count > 0)
 begin
     update ARInvoices
-    set PaymentReferences = #temp_ARInvoices2.PaymentReferences
+    set PaymentReferences = #temp_ARInvoicesModification.PaymentReferences
     FROM ARInvoices
-        INNER JOIN #temp_ARInvoices2
-            on ARInvoices.Id = #temp_ARInvoices2.Id
+        INNER JOIN #temp_ARInvoicesModification
+            on ARInvoices.Id = #temp_ARInvoicesModification.Id
 
 end
-drop table #temp_ARInvoices2
+drop table #temp_ARInvoicesModification
 drop table #temp_ARInvoices
 drop table #temp_ARInvoicePayments
 drop table #temp_ARPayments 
