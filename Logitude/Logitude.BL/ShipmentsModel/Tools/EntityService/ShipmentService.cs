@@ -413,6 +413,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         ShipmentValidating.ValidateRoutingDates(entityPM, initializer.ShipmentPickUpsChangeSet, initializer.ShipmentDeliveriesChangeSet);
                     }
 
+                    if (entityPM.ShipmentDirectionConverted && entityPM.ShipmentConvertedNewNumber)
+                    {
+                        this.ChangePickupDliveryNumbersOnShipmentDirectionConverted();
+                    }
+
                     this.UpdateShipmentProductItems();
                     this.ComputeIsHTSMissingField();
                     this.UpdateShipmentPackagesCollection();
@@ -434,26 +439,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.initializer.HandleStandalone();
                     this.InitializeBookingData();
                     this.RemoveDeletedItemsFromEntityPM();
-
-                    //if (this.initializer.PackageContainerIdUpdated)
-                    //{
-                    //    //this.UpdateShipmentPackagesCollection();
-
-                    //    ShipmentPickUpPM shipmentPickUp = entityPM.ShipmentPickUps.Where(d => d.ChangeSetOp == ChangeSetOperation.Update).FirstOrDefault();
-                    //    if(shipmentPickUp != null)
-                    //    {
-                    //        this.UpdateShipmentPickUp(shipmentPickUp);
-                    //    }
-
-                    //    else
-                    //    {
-                    //        ShipmentDeliveryPM shipmentDelivery = entityPM.ShipmentDeliveries.Where(d => d.ChangeSetOp == ChangeSetOperation.Update).FirstOrDefault();
-                    //        if (shipmentDelivery != null)
-                    //        {
-                    //            this.UpdateShipmentDelivery(shipmentDelivery);
-                    //        }
-                    //    }
-                    //}
 
                     if (entityPM.WarehouseStorageFreeDays != entityPoco.WarehouseStorageFreeDays)
                     {
@@ -542,18 +527,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
                     this.UpdateShipmentFollowUpsCollection();
                     UpdateStandaloneShipments();
-
+                    
                     ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext);
                     this.ComputeAgentComputed(entityPM, entityPoco);
-                    //this.CopyForwarderShipmentPackagesFromStandalone();
                     entityRepository.Update(entityPoco);
                     entityRepository.SubmitChanges();
                     shipmentAdditionalCloudDataRepository.SubmitChanges();
                     followUpRepository.SubmitChanges();
                     shipmentPickUpDeliveryRepository.SubmitChanges();
+                    
                     if (entityPM.IsStandalonePickupDelivery) {
                         this.CopyForwarderShipmentPackagesFromStandalone();
                     }
+
                     UpdateMasterHouses();
                     RunStoredProcedures();
                     GetForeignFields();
@@ -563,9 +549,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     UpdatePayablesLinesVatAmounts();
                     RemoveDeletedPackagesItemsFromEntityPM();
                     RunAutomationThatDependencyOnLastEntityUpdate();
-
-
-
                     #endregion
                 }
 
@@ -7397,6 +7380,65 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             isUpdated = shipmentPackagePM.Weight != shipmentPickUpDeliveryPackagePM.Weight ? true : isUpdated;
             isUpdated = shipmentPackagePM.ShipperSeal != shipmentPickUpDeliveryPackagePM.ShipperSeal ? true : isUpdated;
             return isUpdated;
+        }
+
+        private void ChangePickupDliveryNumbersOnShipmentDirectionConverted()
+        {
+            if(entityPM.ShipmentPickUps.Count > 0)
+            {
+                this.ChangePickupsNumbers();
+            }
+
+            if (entityPM.ShipmentDeliveries.Count > 0)
+            {
+                this.ChangeDeliveriesNumbers();
+            }
+        }
+        private void ChangePickupsNumbers()
+        {
+            foreach(ShipmentPickUpPM pickUp in entityPM.ShipmentPickUps.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete))
+            {
+                pickUp.PickUpDeliveryNumber = this.GetNewPickupDeliveryNumber(pickUp.PickUpDeliveryNumber, !string.IsNullOrEmpty(pickUp.ParentPickUpDeliveryId));
+                pickUp.ChangeSetOp = ChangeSetOperation.Update;
+            }
+        }
+        private void ChangeDeliveriesNumbers()
+        {
+            foreach (ShipmentDeliveryPM delivery in entityPM.ShipmentDeliveries.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete))
+            {
+                delivery.PickUpDeliveryNumber = this.GetNewPickupDeliveryNumber(delivery.PickUpDeliveryNumber, !string.IsNullOrEmpty(delivery.ParentPickUpDeliveryId));
+                delivery.ChangeSetOp = ChangeSetOperation.Update;
+            }
+        }
+        private string GetNewPickupDeliveryNumber(string oldNumber, bool isChild)
+        {
+            string newNumber = oldNumber;
+            int slashesCount = oldNumber.Count(t => t == '/');
+
+            if (slashesCount <= 2)
+            {
+                string[] numberArray = oldNumber.Split('/');
+                newNumber = entityPM.ShipmentNumber + "/" + Convert.ToInt32(numberArray[1]);
+
+                if (isChild && numberArray.Length > 2)
+                {
+                    newNumber = entityPM.ShipmentNumber + "/" + Convert.ToInt32(numberArray[1]) + "/" + Convert.ToInt32(numberArray[2]);
+                }
+            }
+
+            else
+            {
+                string actualickupdeliveryNumber = oldNumber.Replace(entityPM.OldShipmentNumber + "/", "");
+                string[] numberArray = actualickupdeliveryNumber.Split('/');
+                newNumber = entityPM.ShipmentNumber + "/" + Convert.ToInt32(numberArray[0]);
+                
+                if (isChild && numberArray.Length > 1)
+                {
+                    newNumber = entityPM.ShipmentNumber + "/" + Convert.ToInt32(numberArray[0]) + "/" + Convert.ToInt32(numberArray[1]);
+                }
+            }
+
+            return newNumber;
         }
     }
 
