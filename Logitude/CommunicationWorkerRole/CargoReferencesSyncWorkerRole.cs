@@ -9,12 +9,16 @@ using Newtonsoft.Json;
 using System;
 using System.Net;
 using System.Threading;
+using System.Linq;
+using System.Collections.Generic;
+using Logitude.CargoTracking.Data.EntityPOCOs;
+using System.Data.Entity;
 
 namespace CommunicationWorkerRole
 {
     public class CargoReferencesSyncWorkerRole : WorkerEntryPoint
     {
-        private ICargoTrackingContext currentContext;
+        private ICargoTrackingContext cargoContext;
         public override void Run()
         {
             while (IsRunning)
@@ -43,7 +47,20 @@ namespace CommunicationWorkerRole
 
         private void SyncConnectedSepments()
         {
+            var ForwardingShipmentIds = GetTop100fromQueue();
+            if (ForwardingShipmentIds.Count <= 0)
+                return;
+            var forwardingHasCustom = GetAllForwardingHasCustom(ForwardingShipmentIds);
+        }
 
+        private object GetAllForwardingHasCustom(List<string> forwardingShipmentIds)
+        {
+            var t = cargoContext.CargoTrackingShipments.Include("").Where(e => e.CustomsShipmentHeaderId != null & forwardingShipmentIds.Contains(e.EntityId));
+        }
+
+        private List<string> GetTop100fromQueue()
+        {
+             return cargoContext.CargoReferencesSyncQueues.Take(100).Select(e=>e.ShipmentId).ToList();
         }
 
         public override bool OnStart()
