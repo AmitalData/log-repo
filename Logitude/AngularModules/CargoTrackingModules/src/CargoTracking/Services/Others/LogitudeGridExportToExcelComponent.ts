@@ -1,5 +1,5 @@
 // import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
 import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
@@ -15,10 +15,15 @@ export class LogitudeGridExportToExcelService {
     public QueryColumns: QueryColumnPM[] = [];
     public ObjectTableName: string;
     failedResponse = 'Faild';
+    private _apiUrl: string;
     constructor(
         private logboxShipmentExportExcelService: LogboxShipmentExportExcelService,
-        public dialog: MatDialog
-    ) {}
+        public dialog: MatDialog,
+         @Inject('BASE_URL') baseUrl: string
+    ) {
+        this._apiUrl =
+            ServiceHelper.GetAppURL(baseUrl);
+    }
     ExportToExcelExcute(
         ObjectTableName: string,
         filterAgrs: ApiQueryFilters,
@@ -79,7 +84,7 @@ export class LogitudeGridExportToExcelService {
             '-' +
             tempDate.getFullYear();
         var url =
-            ServiceHelper.GetLogitudeURL() +
+            this._apiUrl +
             'WebPages/DawnLoadExcelPage.aspx?fileName=' +
             fileName +
             '&tempId=' +
