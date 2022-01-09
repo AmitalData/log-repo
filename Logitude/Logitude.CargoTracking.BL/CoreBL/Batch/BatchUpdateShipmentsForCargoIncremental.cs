@@ -19,7 +19,7 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
     {
         const int ShipmentBulkSize = 1000;
         const int OffsetTimeToSeperateIncrementalExcutionOfShipments = 1 * 60 * 1000;
-        const int DefaultMonthsBefore = -3;
+        const int DefaultMonthsBefore = 3;
         public BatchUpdateShipmentsForCargoIncremental(BatchTaskExecutionPM batchTaskExecution) : base(batchTaskExecution)
         {
         }
@@ -74,7 +74,8 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
             var tenantManagement = MyContext.TenantManagements.Find(tenant);
             if (!tenantManagement.PermissionBuildMonths.HasValue)
             {
-                return DateTime.Now.AddMinutes(DefaultMonthsBefore);
+                
+                return DateTime.Now.AddDays(DefaultMonthsBefore * 30 * -1);
             }
             var days = tenantManagement.PermissionBuildMonths.Value * 30 * -1;
             return DateTime.Now.AddDays(days);
