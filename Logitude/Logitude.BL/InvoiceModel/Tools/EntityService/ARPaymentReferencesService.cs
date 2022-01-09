@@ -21,23 +21,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.invoiceRepository = new ARInvoiceRepository(this.objectContext); 
         } 
         internal void UpdateConnectedARInvoicePaymentRefeneces(ARPaymentPM aRPaymentPM)
-        {
-            ARInvoicePayment aRInvoicePayment = GetARInvoicePayment(aRPaymentPM);
+        {  
+            List<string> arInvoicesIds = aRPaymentPM.PaymentInvoices.GroupBy(d => d.ARInvoiceId).Select(d => d.FirstOrDefault().ARInvoiceId).ToList(); 
 
-            if (aRInvoicePayment == null || aRInvoicePayment.ARInvoiceId == null) return;
-
-            var arInvoiceId = aRInvoicePayment.ARInvoiceId;
-            string paymentRefreneces = CalculateARInvoicePaymentsRefreneces(arInvoiceId);
-            UpdateARInvoice(arInvoiceId, paymentRefreneces);
-
-
+            foreach (string arInvoiceId in arInvoicesIds)
+            {
+                UpdateARInvoicePaymentRefreneces(arInvoiceId);
+            }
         }
 
-        private ARInvoicePayment GetARInvoicePayment(ARPaymentPM aRPaymentPM)
+        private void UpdateARInvoicePaymentRefreneces(string arInvoiceId)
         {
-            return (from a in objectContext.ARInvoicePayments.Include("ARPayment")
-                    where a.ARPaymentId == aRPaymentPM.Id
-                    select a).FirstOrDefault();
+            string paymentRefreneces = CalculateARInvoicePaymentsRefreneces(arInvoiceId);
+            UpdateARInvoice(arInvoiceId, paymentRefreneces);
         }
 
         private string CalculateARInvoicePaymentsRefreneces(string arInvoiceId)
@@ -58,8 +54,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         internal string GetARInvoicePaymentRefreneces(ARInvoice invoice)
         {
             var arInvoiceId = invoice.Id; 
-            string paymentrefreece = CalculateARInvoicePaymentsRefreneces(arInvoiceId);
-            return paymentrefreece;
+            string paymentRefreneces = CalculateARInvoicePaymentsRefreneces(arInvoiceId);
+            return paymentRefreneces;
         }
         
     }
