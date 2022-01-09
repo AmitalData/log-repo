@@ -170,8 +170,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                
                 }
             }
-            tableIndexsCommand += "CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipments] ON [dbo].[CargoTrackingShipments] ([EntityType], [ForwardingShipmentHeaderId]) INCLUDE ([ArrivalDate], [ArrivalDone], [ArrivalEstimationDate], [BookingDate], [CreateDate], [CreatedDone], [DepartureDate], [DepartureDone], [DepartureEstimationDate], [FromWarehouseDate], [FromWarehouseDone], [FromWarehouseEstimationDate], [FromWarehouseNotes], [PickupDate], [PickupDone], [PickupEstimationDate])";
-            tableIndexsCommand += "CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipmentSearches] ON [dbo].[CargoTrackingShipmentSearches] ([Tenant]) INCLUDE ([SearchFields], [ShipmentId])";
+            tableIndexsCommand += "IF NOT EXISTS (SELECT name FROM sysindexes WHERE name = 'IX_CargoTrackingShipments_EntityType_ForwardingShipmentHeaderId') CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipments_EntityType_ForwardingShipmentHeaderId] ON [dbo].[CargoTrackingShipments] ([EntityType], [ForwardingShipmentHeaderId]) INCLUDE ([ArrivalDate], [ArrivalDone], [ArrivalEstimationDate], [BookingDate], [CreateDate], [CreatedDone], [DepartureDate], [DepartureDone], [DepartureEstimationDate], [FromWarehouseDate], [FromWarehouseDone], [FromWarehouseEstimationDate], [FromWarehouseNotes], [PickupDate], [PickupDone], [PickupEstimationDate])";
+            tableIndexsCommand += "IF NOT EXISTS (SELECT name FROM sysindexes WHERE name = 'IX_CargoTrackingShipmentSearches_Tenant') CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipmentSearches_Tenant] ON [dbo].[CargoTrackingShipmentSearches] ([Tenant]) INCLUDE ([SearchFields], [ShipmentId])";
             tableIndexsCommand += " End \n";
             return tableIndexsCommand;
         }

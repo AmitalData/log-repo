@@ -50,7 +50,8 @@ export class ShipmentDataSource extends DataSource<any | undefined>  {
     {
         this.subscription.add(collectionViewer.viewChange.subscribe(range =>
         {
-            // the following 4 lines of code added by Rabaia in order to inhance the performance of the CargoTracking. if you have Problem with it please talk to me --Rabaia 
+            // the following 4 lines of code added by Rabaia in order to inhance the performance of the CargoTracking.
+            // if you have Problem with it please talk to me --Rabaia 
             if (this.timer) {
                 clearTimeout(this.timer);
             }
