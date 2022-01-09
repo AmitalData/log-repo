@@ -1020,5 +1020,10 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
             return ShipmentMasterDatas;
         }
+
+        public string GetShipmentProjectNumber(string id, int tenant)
+        {
+            return (from record in context.Shipments where record.Id == id && record.Tenant == tenant select record.ProjectNumber).FirstOrDefault();
+        }
     }
 }
