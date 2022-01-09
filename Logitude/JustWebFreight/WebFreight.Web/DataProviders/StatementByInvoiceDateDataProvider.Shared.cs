@@ -71,6 +71,8 @@ namespace WebFreight.Web.DataProviders
             public int DueAge { get; set; }
             public string Customer { get; set; }
             public string Salesman { get; set; }
+            public string ShipperRef1 { get; set; }
+            public string ShipperRef2 { get; set; }
         }
     }
 }

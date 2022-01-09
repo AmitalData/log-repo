@@ -43,6 +43,8 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
     public timer: any;
     public timerInterval: number = 1000;
     public ObjectTableName: string = "InterestReport";
+    public CategoryValue: string = null;
+    public CategoryIndex: string = null;
     public CreateInvoiceText: string = TextCodeTranslator.Translate("InterestReport.O.CreateInvoice");
     constructor(private CD: ChangeDetectorRef) {
     super();
@@ -383,16 +385,17 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
     }
     else filters.addAdditionalFilter("InterestReportStatusCode", "1,9", null, null, "InList", false, false, false, "string");
 
-    var categoryValue = null;
-    var categoryIndex = null;
-    if (this.SelectedCategory) {
-        categoryIndex = this.SelectedCategory.replace(' ', '') + "Id"; // remove space from selected category
 
-        if (categoryIndex)
-            categoryValue = this.DataContext[categoryIndex]; // select the value from the context
+    this.CategoryIndex = null;
+    this.CategoryValue = null;
+    if (this.SelectedCategory) {
+        this.CategoryIndex = this.SelectedCategory.replace(' ', '') + "Id"; // remove space from selected category
+
+        if (this.CategoryIndex)
+            this.CategoryValue = this.DataContext[this.CategoryIndex]; // select the value from the context
     }
 
-    filters.addAdditionalFilter(categoryIndex, categoryValue, null, null, "Equals", false, false, false, "string");
+      filters.addAdditionalFilter(this.CategoryIndex, this.CategoryValue, null, null, "Equals", false, false, false, "string");
   
     filters.SortBy = sortingCol;
     filters.SortDirection = sortingDir;
@@ -659,7 +662,12 @@ else{
     this.selectedItems.Collection.forEach((item) => {
       interestReportArgs.SelectedIds.push(item.Id);
     });
-    interestReportArgs.ExcludedIds = this.ExcludedItems.Collection;
+      interestReportArgs.ExcludedIds = this.ExcludedItems.Collection;
+      interestReportArgs.CategoryIndex = this.CategoryIndex;
+      interestReportArgs.CategoryValue = this.CategoryValue;
+
+      interestReportArgs.ExcludedIds = this.ExcludedItems.Collection;
+
     return interestReportArgs;
   }
     CancelButtonClicked() {

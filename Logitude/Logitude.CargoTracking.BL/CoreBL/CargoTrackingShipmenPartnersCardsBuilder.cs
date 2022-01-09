@@ -41,8 +41,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                 new PartnerCardMetaData("Custom Agent Import", "CustomAgentImportId", "CustomAgentImportName"),
                 new PartnerCardMetaData("Custom Agent Export", "CustomAgentExportId", "CustomAgentExportName"),
                 new PartnerCardMetaData("Issuing Carrier's Agent", "IssuingCarrierAgentId", "IssuingCarrierAgentName"),
-                new PartnerCardMetaData("Agent", "AgentName", "AgentId"),
-                new PartnerCardMetaData("Agent", "AgentName", "AgentId", true),
+                new PartnerCardMetaData("Agent", "AgentId", "AgentName"),
+                new PartnerCardMetaData("Agent", "AgentId", "AgentName", true),
                 new PartnerCardMetaData("Customer", "CustomerId", "CustomerName"),
                 new PartnerCardMetaData("Freight Forwarder", "FreightForwarderId", "FreightForwarderName"),
                 new PartnerCardMetaData("consignee", "ConsigneeId", "ConsigneeName"),
@@ -102,7 +102,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             var partnerCard = new PartnerCard()
             {
                 Type = partnerType,
-                Name = user.Contact?.EnglishName,
+                Name = !string.IsNullOrEmpty(user.Contact?.LocalName) ? user.Contact?.LocalName : user.Contact?.EnglishName,
                 Address = GetAddressFromContact(user.Contact),
                 PhoneNumber = user.Contact?.BusinessPhone,
                 Mobile = user.Contact?.Mobile,

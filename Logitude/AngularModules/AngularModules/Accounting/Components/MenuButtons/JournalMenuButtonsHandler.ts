@@ -38,6 +38,7 @@ export class JournalMenuButtonsHandler {
     private _documentTypePMService: DocumentTypePMExtendedService = new DocumentTypePMExtendedService();
     private _exportDocumentService: ExportDocumentService = new ExportDocumentService();
     private CurrentSession = SessionLocator.SelectedSession;
+    private CancelledStatusCode: string = "5";
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
@@ -70,7 +71,7 @@ export class JournalMenuButtonsHandler {
 
                         case "JournalSave": // save and close
                             {
-                                if (this.EntityPM.StatusCode == "2" || this.EntityPM.StatusCode == "3") {
+                                if (this.EntityPM.StatusCode == "2" || this.EntityPM.StatusCode == "3" || this.EntityPM.StatusCode == this.CancelledStatusCode ) {
                                     button.IsDisabled = true;
                                 }
 
@@ -81,7 +82,7 @@ export class JournalMenuButtonsHandler {
                             }
                         case "JournalApprove":
                             {
-                                if (this.EntityPM.StatusCode == "3" || this.EntityPM.StatusCode == "2" ) {
+                                if (this.EntityPM.StatusCode == "3" || this.EntityPM.StatusCode == "2" || this.EntityPM.StatusCode == this.CancelledStatusCode  ) {
                                     button.IsDisabled = true;
                                 }
 
@@ -96,7 +97,7 @@ export class JournalMenuButtonsHandler {
                                     button.IsHidden = true;
                                 }
 
-                               else if (this.EntityPM.StatusCode == "3") {
+                               else if (this.EntityPM.StatusCode == "3" || this.EntityPM.StatusCode == this.CancelledStatusCode ) {
                                     button.IsDisabled = true;
                                 }
 
@@ -163,6 +164,7 @@ export class JournalMenuButtonsHandler {
         const ApprovedStatusCode = "2";
         const VoidedStatusCode = "3";
 
+
         let IsVoidButtonEnabled: Boolean = this.EntityPM.AccountingEntityCode == JournalAccountingEntity ||
             this.EntityPM.AccountingEntityCode == RevaluationAccountingEntity ||
             this.EntityPM.AccountingEntityCode == AdjustmentAccountingEntity;
@@ -183,6 +185,9 @@ export class JournalMenuButtonsHandler {
             button.IsDisabled = true;
 
         if (this.EntityPM.StatusCode == VoidedStatusCode)
+            button.IsDisabled = true;
+
+        if (this.EntityPM.StatusCode == this.CancelledStatusCode)
             button.IsDisabled = true;
 
     }

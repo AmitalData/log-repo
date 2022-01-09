@@ -18,8 +18,8 @@
         <div class="search-bar">
             <form class="search-form" [formGroup]="searchForm" (ngSubmit)="LoadScreenData()">
 
-                <div class="search-text" [class.hide-mobile]="!SearchText">
-                    <input #input type="text " class="gray " [(ngModel)]="SearchText" placeholder="Free search ..."
+                <div class="search-text" [class.hide-mobile]="!ShipmentSearchInput.SearchText">
+                    <input #input type="text " class="gray " [(ngModel)]="ShipmentSearchInput.SearchText" placeholder="Free search ..."
                         formControlName="SearchText" name="SearchText " />
                 </div>
 
@@ -42,16 +42,16 @@
             <div class="flex-row-space-between">
                 <div>
                     <multiple-selection #shipmentTypeMultipleSelection class="multipe-select"
-                        [MultipleSelectionList]="ToggleFilters.slice(0, 0).concat(ToggleFilters.slice(3,6))"
-                        [Title]="'Transportation Type'" (SelectionChanged)="SelectionChangedHandler($event)"
+                        [MultipleSelectionList]="ShipmentTypeFilters"
+                        [Title]="'Transportation Type'" (SelectionChanged)="ShipmentTypeChangedHandler($event)"
                         [UseFixedTitle]="true">
                     </multiple-selection>
                     <multiple-selection #shipmentDirectionMultipleSelection class="multipe-select"
-                        [MultipleSelectionList]="ToggleFilters.slice(0,3)" [Title]="'Shipment Direction'"
-                        (SelectionChanged)="SelectionChangedHandler($event)" [UseFixedTitle]="true"> 
+                        [MultipleSelectionList]="ShipmentDirectionFilters" [Title]="'Shipment Direction'"
+                        (SelectionChanged)="ShipmentDirectionChangedHandler($event)" [UseFixedTitle]="true"> 
                     </multiple-selection>
                     <multiple-selection #shipmentMoreFiltersMultipleSelection class="multipe-select"
-                        [MultipleSelectionList]="ToggleFilters.slice(6,9)" [Title]="'More Filters'"
+                        [MultipleSelectionList]="ShipmentMoreFilters" [Title]="'More Filters'"
                         (SelectionChanged)="SelectionMoreFilterChangedHandler($event)" [UseFixedTitle]="true">
                     </multiple-selection>
                 </div>
@@ -88,13 +88,13 @@
 
     </div>
 
-    <div class="mobile-toolbar mobile-only" *ngIf="SearchText">
+    <div class="mobile-toolbar mobile-only" *ngIf="ShipmentSearchInput.SearchText">
         <div class="search-text">
-            <input #input type="text " class="gray " [(ngModel)]="SearchText" (click)="ShowSearchPanel()"
+            <input #input type="text " class="gray " [(ngModel)]="ShipmentSearchInput.SearchText" (click)="ShowSearchPanel()"
                 placeholder="Free search ..." name="SearchText0" />
         </div>
         <!-- <IconButton [IconName]="'delete'" (IconClicked)="''"></IconButton> -->
-        <i class="las la-times la-2x" (click)="SearchText = '';PanelSearchText = '';LoadScreenData()"></i>
+        <i class="las la-times la-2x" (click)="ShipmentSearchInput.SearchText = '';LoadScreenData()"></i>
     </div>
 
     <div class="mobile-search-panel mobile-only" *ngIf="ShowMobileSearch">
@@ -106,11 +106,11 @@
 
 
                 <i class="las la-search" style="color:#AAA;transform: scaleX(-1);"></i>
-                <input #mobileSearch type="text " autocomplete="off" class="gray " [(ngModel)]="PanelSearchText"
+                <input #mobileSearch type="text " autocomplete="off" class="gray " [(ngModel)]="ShipmentSearchInput.SearchText"
                     style="display: inline-block;" placeholder="By shipment References" name="PanelSearchText"
                     formControlName="PanelSearchText" />
-                <i *ngIf="PanelSearchText" class="las la-times la-2x" style="font-size: 22px;padding-top: 4px;"
-                    (click)="PanelSearchText = ''"></i>
+                <i *ngIf="ShipmentSearchInput.SearchText" class="las la-times la-2x" style="font-size: 22px;padding-top: 4px;"
+                    (click)="ShipmentSearchInput.SearchText = ''"></i>
                 <!-- <i *ngIf="PanelSearchText" class="las la-long-arrow-alt-right la-2x" style="padding-top: 4px;" (click)="HideSearchPanel()"></i> -->
             </div>
 
@@ -128,30 +128,36 @@
 
     <!-- PC: Search Filters -->
     <div class="selected-filters"
-        *ngIf="SelectedFilters.length > 0 || SelectedInvitedCustomers.length > 0 || hasException || appliedSelectedFilterMilestonesStatus.length > 0
-        ||ordersOnly || estimatedArrivalOnly
-        ">
+        *ngIf="CheckFiltersExists()">
         <ul>
-            <li *ngFor="let filter of SelectedFilters" (click)="DeselectFilter(filter)">
-                {{filter.Name}}
+            <li *ngFor="let code of ShipmentSearchInput.TransportModeCodes" (click)="DeselectTransportModeFilter(code)">
+                {{ShipmentShipmentTypeFiltersDictionary[code].Name}}
+                <span class="filter-close-btn">×</span>
+            </li>
+            <li *ngFor="let code of ShipmentSearchInput.DirectionCodes" (click)="DeselectDirectionFilter(code)">
+                {{ShipmentDirectionFiltersDictionary[code].Name}}
                 <span class="filter-close-btn">×</span>
             </li>
 
-            <li *ngFor="let customer of SelectedInvitedCustomers" (click)="UnselectCustomer(customer)">
-                {{customer.Name}}
+            <li *ngFor="let customerId of ShipmentSearchInput.CustomersIds" (click)="UnselectCustomer(customerId)">
+                {{InvitedCustomersDictionary[customerId].Name}}
                 <span class="filter-close-btn">×</span>
             </li>
-            <li *ngIf="hasException" (click)="OnHasExceptionChanged(false)"> Exceptions Only
+            <li *ngIf="ShipmentSearchInput.HasException" (click)="ClearHasExceptionChanged(false)"> Exceptions Only
                 <span class="filter-close-btn">×</span>
             </li>
-            <li *ngIf="ordersOnly" (click)="OnOrdersOnlyChanged(false)"> Orders Only
+            <li *ngIf="ShipmentSearchInput.OperationalOpenedOnly" (click)="ClearOperationalOpenedOnlyChanged(false)"> Operational Opened Only
                 <span class="filter-close-btn">×</span>
             </li>
-            <li *ngIf="estimatedArrivalOnly" (click)="OnEstimatedArrivalOnlyChanged(false)"> Estimated Arrival Only
+            <li *ngIf="ShipmentSearchInput.OrdersOnly" (click)="ClearOrdersOnlyChanged(false)"> SHO Only
+
                 <span class="filter-close-btn">×</span>
             </li>
-            <li *ngFor="let state of appliedSelectedFilterMilestonesStatus" (click)="UnselectMiletone(state)">
-                {{state.EnglishName}}
+            <li *ngIf="ShipmentSearchInput.EstimatedArrivalOnly" (click)="ClearEstimatedArrivalOnlyChanged(false)"> Estimated Arrival Only
+                <span class="filter-close-btn">×</span>
+            </li>
+            <li *ngFor="let code of ShipmentSearchInput.MilestonesCodes" (click)="UnselectMiletone(code)">
+                {{MilestonesStatusDictionary[code].EnglishName}}
                 <span class="filter-close-btn">×</span>
             </li>
 
@@ -182,7 +188,7 @@
     </div>
     <!-- Row Count -->
     <div class="row-count" *ngIf="ShipmentsCount != 0">
-        {{ShipmentsCount | number}} {{SelectedFilters.length == 0 ? 'Results' : 'Filtered search results'}}
+        {{ShipmentsCount | number}} {{!CheckFiltersExists() ? 'Results' : 'Filtered search results'}}
     </div>
 
     <!-- Shipments List -->
@@ -285,7 +291,7 @@
                                             </g>
                                         </g>
                                     </svg>
-                                    <span *ngIf="shipment.EntityType==='O'" class="order-icon">Order</span>
+                                    <span *ngIf="shipment.EntityType==='O'" class="order-icon">SHO</span>
                                 </div>
 
                                 <svg *ngIf="shipment.DirectionId !='R'"
@@ -339,7 +345,7 @@
                                 </div>
                                 <span class="hide-mobile"
                                     (click)="OpenReferencesMessageWindow(shipment.CustomerReference?.split(','), false); $event.stopPropagation()"
-                                    *ngIf="references?.length > 4"
+                                    *ngIf="references?.length > 3"
                                     [attr.src]="SetMoreReferenceText(shipment.CustomerReference)">
                                     <img src="./assets/images/icons/info.png" alt=" "
                                         style="margin-right: 6px; margin-top: 6px" />
@@ -352,21 +358,16 @@
                         <!-- Shipment Number -->
                         <div class="column col-md-2 hide-mobile" style="width: 12%;">
                             <div>
-                                <div class="subtitle">{{shipment.EntityType==='O' ? 'Order Number' : 'Shipment Number'}}
+                                <div class="subtitle">{{shipment.EntityType==='O' ? 'SHO Number' : 'Shipment Number'}}
                                 </div>
                                 <div class="value uppercase truncateText">{{ shipment.ShipmentNumber }}</div>
 
-                                <div class="subtitle" [attr.src]="SetConsignmentNumber(shipment)">
+                                <div class="subtitle">
                                     {{SetMasterOrHouseLabel(shipment)}}
                                     <!-- Consignment No. -->
                                 </div>
                                 <div class="value uppercase truncateText">
-                                    <span
-                                        *ngIf="shipment.EntityType == 'C' && !shipment.ForwardingShipmentHeaderId && shipment.House">{{shipment.House}}</span>
-                                    <span>{{shipment.Master}}</span>
-                                    <span *ngIf="shipment.EntityType == 'C' && shipment.ForwardingShipmentHeaderId">
-                                        {{GetConsignmentNumberForCustomsForwardingShipment(shipment)}} </span>
-                                    <span *ngIf="shipment.EntityType != 'C'">{{ConsignmentNumber}}</span>
+                                    <span>{{SetMasterOrHouseValue(shipment)}}</span>
                                 </div>
                             </div>
                         </div>
@@ -401,9 +402,10 @@
                         <div class="column col-md-2 sender hide-mobile" style="width: 12%;">
                             <div>
                                 <div class="subtitle">QUANTITY & WEIGHT </div>
-                                <div class="value truncateText">
-                                    {{shipment.NumberOfPackages || 0}} Units <br>
-                                    {{shipment.GrossWeight || 0}} {{shipment.GrossWeightUnitCode}}
+                                <div class="value weight-quantity"  [attr.src]="SetQuantityAndWeight(shipment)" [matTooltip]="(shipment.NumberOfPackages? shipment.NumberOfPackages + ' Units ' :'' ) + (shipment.NumberOfPackages && shipment.GrossWeight? ' / ':'') +(shipment.GrossWeight?shipment.GrossWeight+' '+shipment.GrossWeightUnitCode:'')">
+                                    {{(shipment.NumberOfPackages? shipment.NumberOfPackages:'')|number}}
+                                    {{ (shipment.NumberOfPackages? ' Units ' :'' ) + (shipment.NumberOfPackages && shipment.GrossWeight? ' / ':'') }}
+                                    {{(shipment.GrossWeight?shipment.GrossWeight:'')|number}} {{(shipment.GrossWeight?shipment.GrossWeightUnitCode:'') }}
                                 </div>
 
                                 <div class="subtitle hide-mobile" [attr.src]="SetEstimationORActualDate(shipment)">
@@ -513,7 +515,11 @@
     <div class="filters-sidebar" *ngIf="sharedService.isAdvancedFilterOpened$ | async">
         <div class="header">
             <div class="title">Advanced Filters</div>
+            
             <div class="close-btn hide-mobile" (click)="sharedService.updateValue(false)">×</div>
+            <div class="clear-addvance-filter-div" matTooltip="Clear Advanced Filters"  (click)="ClearAdvancedFilters()">
+                <svg class="clear-addvance-filter-svg"   width="24" height="24" viewBox="0 0 24 24"><path d="M14.73,20.83L17.58,18L14.73,15.17L16.15,13.76L19,16.57L21.8,13.76L23.22,15.17L20.41,18L23.22,20.83L21.8,22.24L19,19.4L16.15,22.24L14.73,20.83M13,19.88C13.04,20.18 12.94,20.5 12.71,20.71C12.32,21.1 11.69,21.1 11.3,20.71L7.29,16.7C7.06,16.47 6.96,16.16 7,15.87V10.75L2.21,4.62C1.87,4.19 1.95,3.56 2.38,3.22C2.57,3.08 2.78,3 3,3V3H17V3C17.22,3 17.43,3.08 17.62,3.22C18.05,3.56 18.13,4.19 17.79,4.62L13,10.75V19.88M5.04,5L9,10.06V15.58L11,17.58V10.05L14.96,5H5.04Z"/></svg>
+            </div>
         </div>
         <ul>
             <li [class.expanded]="isFilter2Expanded">
@@ -524,7 +530,7 @@
                 <div class="expanded-list" [class.show]="isFilter2Expanded">
 
 
-                    <div class="checkbox-filteritem" *ngFor="let customer of FiltersInvitedCustomers">
+                    <div class="checkbox-filteritem" *ngFor="let customer of InvitedCustomers">
                         <CheckBox [Bind]="'IsSelected'" [Value]="customer.IsSelected"
                             (ValueChanged)="OnCustomerValueChanged($event, customer)" [Text]="customer.Name"
                             [DataContext]="customer"></CheckBox>
@@ -564,8 +570,8 @@
 
 
                     <div class="checkbox-filteritem"
-                        *ngFor="let item of ToggleFilters.slice(0, 0).concat(ToggleFilters.slice(3,6))">
-                        <CheckBox [Value]="selectedShipmentTypesFilter.includes(item)" [Text]="item.Name"
+                        *ngFor="let item of ShipmentTypeFilters">
+                        <CheckBox [Value]="item.IsSelected"  [Text]="item.Name"
                             (ValueChanged)="OnShipmentTypeFilterChanged($event, item)"></CheckBox>
                     </div>
 
@@ -584,8 +590,8 @@
                 <div class="expanded-list" [class.show]="isShipmentDirectionFilterExpanded">
 
 
-                    <div class="checkbox-filteritem" *ngFor="let item of ToggleFilters.slice(0,3)">
-                        <CheckBox [Value]="selectedShipmentDirectionsFilter.includes(item)" [Text]="item.Name"
+                    <div class="checkbox-filteritem" *ngFor="let item of ShipmentDirectionFilters">
+                        <CheckBox [Value]="item.IsSelected" [Text]="item.Name"
                             (ValueChanged)="OnShipmentDirectionFilterChanged($event, item)"></CheckBox>
                     </div>
 
@@ -599,15 +605,20 @@
                 <div class="more-filter-toggle">
                     <div class="flex-row-space-between">
                         <label>Exception Only</label>
-                        <mat-slide-toggle color="primary" [(ngModel)]="hasExceptionAdvancedFilter" ></mat-slide-toggle>
+                        <mat-slide-toggle color="primary" [(ngModel)]="this.MoreFilterMobileValue.HasException" ></mat-slide-toggle>
                     </div>
                     <div class="flex-row-space-between">
-                        <label>Orders Only</label>
-                        <mat-slide-toggle color="primary" [(ngModel)]="OrdersOnlyAdvancedFilter" ></mat-slide-toggle>
+                        <label>SHO Only</label>
+                        <mat-slide-toggle color="primary" [(ngModel)]="this.MoreFilterMobileValue.OrdersOnly" ></mat-slide-toggle>
+
                     </div>
                     <div class="flex-row-space-between">
                         <label>Estimated Arrival Only</label>
-                        <mat-slide-toggle color="primary" [(ngModel)]="EstimatedArrivalOnlyAdvancedFilter"></mat-slide-toggle>
+                        <mat-slide-toggle color="primary" [(ngModel)]="this.MoreFilterMobileValue.EstimatedArrivalOnly"></mat-slide-toggle>
+                    </div>
+                    <div class="flex-row-space-between">
+                        <label>Operational Opened Only</label>
+                        <mat-slide-toggle color="primary" [(ngModel)]="this.MoreFilterMobileValue.OperationalOpenedOnly"></mat-slide-toggle>
                     </div>
                     
                     
@@ -616,9 +627,10 @@
             </li>
         </ul>
         <div class="filters-footer">
-            <a href="javascript:;" (click)="ClearAdvancedFilters()">Clear Selection</a>
+            <!-- <a href="javascript:;" (click)="ClearAdvancedFilters()">Clear Selection</a> -->
             <button (click)="ApplyFilterButtonClicked()">Apply Filters</button>
         </div>
+        <div class="filters-sidebar-close-space" (click)="sharedService.updateValue(false)"></div>
     </div>
 
     <!-- Progress Indicator -->
@@ -642,18 +654,18 @@
         <div class="title uppercase">Sort By</div>
         <ul class="sort-by-menu">
             <li (click)="sortBySelectionChangedHandler(SortOptions.CMD)"
-                [ngClass]="{'sort-item-selected': sortField == SortOptions.CMD}">Current Status Date</li>
+                [ngClass]="{'sort-item-selected': ShipmentSearchInput.SortFieldName == SortOptions.CMD}">Current Status Date</li>
             <li (click)="sortBySelectionChangedHandler(SortOptions.ATA)"
-                [ngClass]="{'sort-item-selected': sortField == SortOptions.ATA}">ATA/ETA</li>
+                [ngClass]="{'sort-item-selected': ShipmentSearchInput.SortFieldName == SortOptions.ATA}">ATA/ETA</li>
             <li (click)="sortBySelectionChangedHandler(SortOptions.ATD)"
-                [ngClass]="{'sort-item-selected': sortField == SortOptions.ATD}">ATD/ETD</li>
+                [ngClass]="{'sort-item-selected': ShipmentSearchInput.SortFieldName == SortOptions.ATD}">ATD/ETD</li>
         </ul>
         <div class="title uppercase">Sort Direction</div>
         <ul class="sort-direction-menu">
             <li (click)="sortBySelectionChangedHandler(SortOptions.ASC)"
-                [ngClass]="{'sort-item-selected': isSortDescending == SortOptions.ASC}"><span>Ascending</span></li>
+                [ngClass]="{'sort-item-selected': ShipmentSearchInput.SortType == SortOptions.ASC}"><span>Ascending</span></li>
             <li (click)="sortBySelectionChangedHandler(SortOptions.DESC)"
-                [ngClass]="{'sort-item-selected': isSortDescending == SortOptions.DESC}"><span>Descending</span></li>
+                [ngClass]="{'sort-item-selected': ShipmentSearchInput.SortType == SortOptions.DESC}"><span>Descending</span></li>
         </ul>
     </div>
 
@@ -670,9 +682,9 @@
     <ul>
         <li><img src="./assets/images/icons/star@1x.png" alt=""></li>
         <li (click)="ToggleSearchPanel()"><img src="./assets/images/icons/search@1x.png" alt=""></li>
-        <li (click)="sharedService.updateValue(true); mapFiltersInvitedCustomers()"><img
+        <li (click)="sharedService.updateValue(true);"><img
                 src="./assets/images/icons/filter-sort.svg" alt=""></li>
         <li (click)="showMobileSortMenu = !showMobileSortMenu"><img src="./assets/images/icons/sort@1x-white.png"
-                [class.FlipImgVert]="isSortDescending == SortOptions.ASC" alt=""></li>
+                [class.FlipImgVert]="ShipmentSearchInput.SortType == SortOptions.ASC" alt=""></li>
     </ul>
 </div>

@@ -549,7 +549,22 @@ h1{
     transition: 1s all ;
     /* padding: 20px; */
 }
-.filters-sidebar::after{
+.weight-quantity{
+    white-space: nowrap; 
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+.clear-addvance-filter-div{
+    float: right;
+    cursor: pointer;
+}
+.clear-addvance-filter-svg{
+    /* position: relative; */
+    top: 4px;
+    /* fill: var(--MainColor); */
+}
+.filters-sidebar-close-space{
     content: "";
     background: #00000021;
     top: 0;
@@ -888,15 +903,17 @@ h1{
     display: inline-block;
 }
 
-.order-icon{
+.order-icon {
     position: absolute;
-    top:73px;
+    top: 56px;
     display: block;
     background: #000;
     color: #FFF;
     width: 65px;
     border-radius: 14px;
     text-align: center;
+    font-size: 12px;
+    line-height: 20px;
 }
 
 ::ng-deep .mat-tooltip {

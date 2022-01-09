@@ -1,4 +1,79 @@
 
+If(OBJECT_ID('tempdb..#TempPartnerAddressContactDetails') Is Not Null) Begin  Drop Table #TempPartnerAddressContactDetails End 
+
+   declare @DIM_AddressesTable TABLE(Id  varchar(15) NOT NULL UNIQUE CLUSTERED,Id_Number int NOT NULL PRIMARY KEY NONCLUSTERED);
+   declare @DIM_ContactsTable TABLE(Id  varchar(15) NOT NULL UNIQUE CLUSTERED,Id_Number int NOT NULL PRIMARY KEY NONCLUSTERED);
+
+   INSERT INTO @DIM_AddressesTable (Id, Id_Number) SELECT Id, Id_Number FROM NewDIM_Addresses
+   INSERT INTO @DIM_ContactsTable (Id, Id_Number) SELECT Id, Id_Number FROM  NewDIM_Contacts 
+
+
+SELECT dw_Shipments.Id as Id	, ShipperAddress.Id_Number as ShipperAddressId ,ShipperContact.Id_Number as ShipperContactId,ShipperNotExporterAddress.Id_Number as ShipperNotExporterAddressId ,ShipperNotExporterContact.Id_Number as ShipperNotExporterContactId ,
+	 FreelancerAddress.Id_Number as FreelancerAddressId ,FreelancerContact.Id_Number as FreelancerContactId ,ReleasingAgentAddress.Id_Number as ReleasingAgentAddressId ,ReleasingAgentContact.Id_Number as ReleasingAgentContactId,
+	 CustomerAddress.Id_Number as CustomerAddressId ,CustomerContact.Id_Number as CustomerContactId ,ConsigneeAddress.Id_Number as ConsigneeAddressId ,ConsigneeContact.Id_Number as ConsigneeContactId, 
+	 AgentAddress.Id_Number as AgentAddressId ,AgentContact.Id_Number as AgentContactId ,CustomAgentExportAddress.Id_Number as CustomAgentExportAddressId ,CustomAgentExportContact.Id_Number as CustomAgentExportContactId,
+	 CustomAgentImportAddress.Id_Number as CustomAgentImportAddressId, CustomAgentImportContact.Id_Number as CustomAgentImportContactId ,Notify1Address.Id_Number as Notify1AddressId ,Notify1Contact.Id_Number as Notify1ContactId,
+	 Notify2Address.Id_Number as Notify2AddressId ,Notify2Contact.Id_Number as Notify2ContactId ,FreightForwarderAddress.Id_Number as FreightForwarderAddressId ,FreightForwarderContact.Id_Number as FreightForwarderContactId,
+	 ConsigneeNotImporterAddress.Id_Number as ConsigneeNotImporterAddressId ,ConsigneeNotImporterContact.Id_Number as ConsigneeNotImporterContactId ,CustomClearancePointAddress.Id_Number as CustomClearancePointAddressId ,CustomClearancePointContact.Id_Number as CustomClearancePointContactId ,
+	 ColoaderAddress.Id_Number as ColoaderAddressId ,ColoaderContact.Id_Number as ColoaderContactId ,ConsolidatorAddress.Id_Number as ConsolidatorAddressId ,ConsolidatorContact.Id_Number as ConsolidatorContactId
+	 INTO #TempPartnerAddressContactDetails
+      FROM dw_Shipments  
+
+   inner JOIN @DIM_AddressesTable ShipperAddress ON dw_Shipments.ShipperAddressId = ShipperAddress.Id
+   inner JOIN @DIM_ContactsTable ShipperContact ON dw_Shipments.ShipperContactId = ShipperContact.Id   
+
+   inner JOIN @DIM_AddressesTable ShipperNotExporterAddress ON dw_Shipments.ShipperNotExporterAddressId = ShipperNotExporterAddress.Id
+   inner JOIN @DIM_ContactsTable ShipperNotExporterContact ON dw_Shipments.ShipperNotExporterContactId = ShipperNotExporterContact.Id
+
+   inner JOIN @DIM_AddressesTable FreelancerAddress ON dw_Shipments.FreelancerAddressId = FreelancerAddress.Id
+   inner JOIN @DIM_ContactsTable FreelancerContact ON dw_Shipments.FreelancerContactId = FreelancerContact.Id
+
+   inner JOIN @DIM_AddressesTable ReleasingAgentAddress ON dw_Shipments.ReleasingAgentAddressId = ReleasingAgentAddress.Id
+   inner JOIN @DIM_ContactsTable ReleasingAgentContact ON dw_Shipments.ReleasingAgentContactId = ReleasingAgentContact.Id
+
+   inner JOIN @DIM_AddressesTable CustomerAddress ON dw_Shipments.CustomerAddressId = CustomerAddress.Id
+   inner JOIN @DIM_ContactsTable CustomerContact ON dw_Shipments.CustomerContactId = CustomerContact.Id
+
+   inner JOIN @DIM_AddressesTable ConsigneeAddress ON dw_Shipments.ConsigneeAddressId = ConsigneeAddress.Id
+   inner JOIN @DIM_ContactsTable ConsigneeContact ON dw_Shipments.ConsigneeContactId = ConsigneeContact.Id
+
+   inner JOIN @DIM_AddressesTable AgentAddress ON dw_Shipments.AgentAddressId = AgentAddress.Id
+   inner JOIN @DIM_ContactsTable AgentContact ON dw_Shipments.AgentContactId = AgentContact.Id
+
+   inner JOIN @DIM_AddressesTable CustomAgentExportAddress ON dw_Shipments.CustomAgentExportAddressId = CustomAgentExportAddress.Id
+   inner JOIN @DIM_ContactsTable CustomAgentExportContact ON dw_Shipments.CustomAgentExportContactId = CustomAgentExportContact.Id
+
+   inner JOIN @DIM_AddressesTable CustomAgentImportAddress ON dw_Shipments.CustomAgentImportAddressId = CustomAgentImportAddress.Id
+   inner JOIN @DIM_ContactsTable CustomAgentImportContact ON dw_Shipments.CustomAgentImportContactId = CustomAgentImportContact.Id
+
+   inner JOIN @DIM_AddressesTable Notify1Address ON dw_Shipments.Notify1AddressId = Notify1Address.Id
+   inner JOIN @DIM_ContactsTable Notify1Contact ON dw_Shipments.Notify1ContactId = Notify1Contact.Id
+
+   inner JOIN @DIM_AddressesTable Notify2Address ON dw_Shipments.Notify2AddressId = Notify2Address.Id
+   inner JOIN @DIM_ContactsTable Notify2Contact ON dw_Shipments.Notify2ContactId = Notify2Contact.Id
+
+   inner JOIN @DIM_AddressesTable FreightForwarderAddress ON dw_Shipments.FreightForwarderAddressId = FreightForwarderAddress.Id
+   inner JOIN @DIM_ContactsTable FreightForwarderContact ON dw_Shipments.FreightForwarderContactId = FreightForwarderContact.Id
+
+   inner JOIN @DIM_AddressesTable ConsigneeNotImporterAddress ON dw_Shipments.ConsigneeNotImporterAddressId = ConsigneeNotImporterAddress.Id
+   inner JOIN @DIM_ContactsTable ConsigneeNotImporterContact ON dw_Shipments.ConsigneeNotImporterContactId = ConsigneeNotImporterContact.Id
+
+   inner JOIN @DIM_AddressesTable CustomClearancePointAddress ON dw_Shipments.CustomClearancePointAddressId = CustomClearancePointAddress.Id
+   inner JOIN @DIM_ContactsTable CustomClearancePointContact ON dw_Shipments.CustomClearancePointContactId = CustomClearancePointContact.Id
+
+   inner JOIN @DIM_AddressesTable ColoaderAddress ON dw_Shipments.ColoaderAddressId = ColoaderAddress.Id
+   inner JOIN @DIM_ContactsTable ColoaderContact ON dw_Shipments.ColoaderContactId = ColoaderContact.Id
+
+   inner JOIN @DIM_AddressesTable ConsolidatorAddress ON dw_Shipments.ConsolidatorAddressId = ConsolidatorAddress.Id
+   inner JOIN @DIM_ContactsTable ConsolidatorContact ON dw_Shipments.ConsolidatorContactId = ConsolidatorContact.Id
+
+	 where dw_Shipments.IsCancelled = 0 and dw_Shipments.ShipmentLevelCode in ('H','D' , 'C') and   $LastCounterWhere$
+
+   ALTER TABLE #TempPartnerAddressContactDetails ADD PRIMARY KEY CLUSTERED (Id) 
+
+
+
+
 
    declare @Id as varchar(15)
    declare @SourceTenant as int
@@ -342,13 +417,11 @@
    declare @ConsolidatorAddress as int
    declare @ConsolidatorContact as int
    declare @ShipmentSubType as int
-   declare @DIM_AddressesTable TABLE(Id  varchar(15) NOT NULL UNIQUE CLUSTERED,Id_Number int NOT NULL PRIMARY KEY NONCLUSTERED);
-   declare @DIM_ContactsTable TABLE(Id  varchar(15) NOT NULL UNIQUE CLUSTERED,Id_Number int NOT NULL PRIMARY KEY NONCLUSTERED);
+
    declare @PODReceivedDate as datetime
    declare @ComputedMainCarriageATA as datetime
-
-   INSERT INTO @DIM_AddressesTable (Id, Id_Number) SELECT Id, Id_Number FROM NewDIM_Addresses
-   INSERT INTO @DIM_ContactsTable (Id, Id_Number) SELECT Id, Id_Number FROM NewDIM_Contacts 
+   declare @Transshipment2Vessel as int
+   declare @Transshipment3Vessel as int
 
 
 	DECLARE ShipmentsCursor CURSOR READ_ONLY
@@ -389,15 +462,20 @@
 	 dw_Shipments.PreForwardingCarrierNumber, PreForwardingCarrier.Id_Number, PreForwardingFromPort.Id_Number,PreForwardingToPort.Id_Number, PreForwardingTransportModes.Name,
 	  fromPort.Id_Number, toPort.Id_Number, dw_ShipmentMasterDatas.OnCarriageATA, dw_ShipmentMasterDatas.OnCarriageATD, dw_ShipmentMasterDatas.OnCarriageETD, dw_ShipmentMasterDatas.OnCarriageETA,
 	  dw_Shipments.PlannedCargoReadyDate,  dw_Shipments.ApprovedCargoReadyDate, dw_Shipments.Notify1Reference2,  HandlerUser.Id_Number, AccountingClosedByUser.Id_Number, dw_Shipments.IsStandalonePickupDelivery, 
-   	  ShipperAddressTable.Id_Number,ShipperContactTable.Id_Number,ShipperNotExporterAddressTable.Id_Number,ShipperNotExporterContactTable.Id_Number,
-	 FreelancerAddressTable.Id_Number,FreelancerContactTable.Id_Number,ReleasingAgentAddressTable.Id_Number,ReleasingAgentContactTable.Id_Number,
-	 CustomerAddressTable.Id_Number,CustomerContactTable.Id_Number,ConsigneeAddressTable.Id_Number,ConsigneeContactTable.Id_Number,
-	 AgentAddressTable.Id_Number,AgentContactTable.Id_Number,CustomAgentExportAddressTable.Id_Number,CustomAgentExportContactTable.Id_Number,
-	 CustomAgentImportAddressTable.Id_Number,CustomAgentImportContactTable.Id_Number,Notify1AddressTable.Id_Number,Notify1ContactTable.Id_Number,
-	 Notify2AddressTable.Id_Number,Notify2ContactTable.Id_Number,FreightForwarderAddressTable.Id_Number,FreightForwarderContactTable.Id_Number,
-	 ConsigneeNotImporterAddressTable.Id_Number,ConsigneeNotImporterContactTable.Id_Number,CustomClearancePointAddressTable.Id_Number,CustomClearancePointContactTable.Id_Number,
-	 ColoaderAddressTable.Id_Number,ColoaderContactTable.Id_Number,ConsolidatorAddressTable.Id_Number,ConsolidatorContactTable.Id_Number,
-	  NewDIM_ShipmentSubTypes.Id_Number, dw_Shipments.PODReceivedDate, dw_ShipmentMasterDatas.MainCarriageFinalDestinationATA
+   	 
+	 
+     PartnerAddressContactDetails.ShipperAddressId,PartnerAddressContactDetails.ShipperContactId,PartnerAddressContactDetails.ShipperNotExporterAddressId,PartnerAddressContactDetails.ShipperNotExporterContactId,
+	 PartnerAddressContactDetails.FreelancerAddressId,PartnerAddressContactDetails.FreelancerContactId,PartnerAddressContactDetails.ReleasingAgentAddressId,PartnerAddressContactDetails.ReleasingAgentContactId,
+	 PartnerAddressContactDetails.CustomerAddressId,PartnerAddressContactDetails.CustomerContactId,PartnerAddressContactDetails.ConsigneeAddressId,PartnerAddressContactDetails.ConsigneeContactId,
+	 PartnerAddressContactDetails.AgentAddressId,PartnerAddressContactDetails.AgentContactId,PartnerAddressContactDetails.CustomAgentExportAddressId,PartnerAddressContactDetails.CustomAgentExportContactId,PartnerAddressContactDetails.
+	 CustomAgentImportAddressId,PartnerAddressContactDetails.CustomAgentImportContactId,PartnerAddressContactDetails.Notify1AddressId,PartnerAddressContactDetails.Notify1ContactId,
+	 PartnerAddressContactDetails.Notify2AddressId,PartnerAddressContactDetails.Notify2ContactId,PartnerAddressContactDetails.FreightForwarderAddressId,PartnerAddressContactDetails.FreightForwarderContactId,
+	 PartnerAddressContactDetails.ConsigneeNotImporterAddressId,PartnerAddressContactDetails.ConsigneeNotImporterContactId,PartnerAddressContactDetails.CustomClearancePointAddressId,PartnerAddressContactDetails.CustomClearancePointContactId,
+	 PartnerAddressContactDetails.ColoaderAddressId,PartnerAddressContactDetails.ColoaderContactId,PartnerAddressContactDetails.ConsolidatorAddressId,PartnerAddressContactDetails.ConsolidatorContactId,
+
+	 
+	 
+	 NewDIM_ShipmentSubTypes.Id_Number, dw_Shipments.PODReceivedDate, dw_ShipmentMasterDatas.MainCarriageFinalDestinationATA, Transshipment2Vessel.Id_Number ,Transshipment3Vessel.Id_Number
 
 	 
 
@@ -490,54 +568,9 @@
    inner JOIN NewDIM_Users HandlerUser ON dw_Shipments.HandlerUserId = HandlerUser.Id
    inner JOIN NewDIM_Users AccountingClosedByUser ON dw_ShipmentComputedFields.AccountingClosedByUserId = AccountingClosedByUser.Id
    inner JOIN NewDIM_ShipmentSubTypes   ON dw_Shipments.ShipmentSubTypeId = NewDIM_ShipmentSubTypes.Id
-
-    inner JOIN @DIM_AddressesTable ShipperAddressTable ON dw_Shipments.ShipperAddressId = ShipperAddressTable.Id
-   inner JOIN @DIM_ContactsTable ShipperContactTable ON dw_Shipments.ShipperContactId = ShipperContactTable.Id   
-
-   inner JOIN @DIM_AddressesTable ShipperNotExporterAddressTable ON dw_Shipments.ShipperNotExporterAddressId = ShipperNotExporterAddressTable.Id
-   inner JOIN @DIM_ContactsTable ShipperNotExporterContactTable ON dw_Shipments.ShipperNotExporterContactId = ShipperNotExporterContactTable.Id
-
-   inner JOIN @DIM_AddressesTable FreelancerAddressTable ON dw_Shipments.FreelancerAddressId = FreelancerAddressTable.Id
-   inner JOIN @DIM_ContactsTable FreelancerContactTable ON dw_Shipments.FreelancerContactId = FreelancerContactTable.Id
-
-   inner JOIN @DIM_AddressesTable ReleasingAgentAddressTable ON dw_Shipments.ReleasingAgentAddressId = ReleasingAgentAddressTable.Id
-   inner JOIN @DIM_ContactsTable ReleasingAgentContactTable ON dw_Shipments.ReleasingAgentContactId = ReleasingAgentContactTable.Id
-
-  inner JOIN @DIM_AddressesTable CustomerAddressTable ON dw_Shipments.CustomerAddressId = CustomerAddressTable.Id
-   inner JOIN @DIM_ContactsTable CustomerContactTable ON dw_Shipments.CustomerContactId = CustomerContactTable.Id
-
-   inner JOIN @DIM_AddressesTable ConsigneeAddressTable ON dw_Shipments.ConsigneeAddressId = ConsigneeAddressTable.Id
-   inner JOIN @DIM_ContactsTable ConsigneeContactTable ON dw_Shipments.ConsigneeContactId = ConsigneeContactTable.Id
-
-   inner JOIN @DIM_AddressesTable AgentAddressTable ON dw_Shipments.AgentAddressId = AgentAddressTable.Id
-   inner JOIN @DIM_ContactsTable AgentContactTable ON dw_Shipments.AgentContactId = AgentContactTable.Id
-
-   inner JOIN @DIM_AddressesTable CustomAgentExportAddressTable ON dw_Shipments.CustomAgentExportAddressId = CustomAgentExportAddressTable.Id
-   inner JOIN @DIM_ContactsTable CustomAgentExportContactTable ON dw_Shipments.CustomAgentExportContactId = CustomAgentExportContactTable.Id
-
-   inner JOIN @DIM_AddressesTable CustomAgentImportAddressTable ON dw_Shipments.CustomAgentImportAddressId = CustomAgentImportAddressTable.Id
-   inner JOIN @DIM_ContactsTable CustomAgentImportContactTable ON dw_Shipments.CustomAgentImportContactId = CustomAgentImportContactTable.Id
-
-   inner JOIN @DIM_AddressesTable Notify1AddressTable ON dw_Shipments.Notify1AddressId = Notify1AddressTable.Id
-   inner JOIN @DIM_ContactsTable Notify1ContactTable ON dw_Shipments.Notify1ContactId = Notify1ContactTable.Id
-
-   inner JOIN @DIM_AddressesTable Notify2AddressTable ON dw_Shipments.Notify2AddressId = Notify2AddressTable.Id
-   inner JOIN @DIM_ContactsTable Notify2ContactTable ON dw_Shipments.Notify2ContactId = Notify2ContactTable.Id
-
-   inner JOIN @DIM_AddressesTable FreightForwarderAddressTable ON dw_Shipments.FreightForwarderAddressId = FreightForwarderAddressTable.Id
-   inner JOIN @DIM_ContactsTable FreightForwarderContactTable ON dw_Shipments.FreightForwarderContactId = FreightForwarderContactTable.Id
-
-   inner JOIN @DIM_AddressesTable ConsigneeNotImporterAddressTable ON dw_Shipments.ConsigneeNotImporterAddressId = ConsigneeNotImporterAddressTable.Id
-   inner JOIN @DIM_ContactsTable ConsigneeNotImporterContactTable ON dw_Shipments.ConsigneeNotImporterContactId = ConsigneeNotImporterContactTable.Id
-
-   inner JOIN @DIM_AddressesTable CustomClearancePointAddressTable ON dw_Shipments.CustomClearancePointAddressId = CustomClearancePointAddressTable.Id
-   inner JOIN @DIM_ContactsTable CustomClearancePointContactTable ON dw_Shipments.CustomClearancePointContactId = CustomClearancePointContactTable.Id
-
-   inner JOIN @DIM_AddressesTable ColoaderAddressTable ON dw_Shipments.ColoaderAddressId = ColoaderAddressTable.Id
-   inner JOIN @DIM_ContactsTable ColoaderContactTable ON dw_Shipments.ColoaderContactId = ColoaderContactTable.Id
-
-   inner JOIN @DIM_AddressesTable ConsolidatorAddressTable ON dw_Shipments.ConsolidatorAddressId = ConsolidatorAddressTable.Id
-   inner JOIN @DIM_ContactsTable ConsolidatorContactTable ON dw_Shipments.ConsolidatorContactId = ConsolidatorContactTable.Id
+   inner JOIN #TempPartnerAddressContactDetails PartnerAddressContactDetails ON dw_Shipments.Id = PartnerAddressContactDetails.Id
+   inner JOIN NewDIM_Vessels Transshipment2Vessel ON dw_ShipmentMasterDatas.Transshipment2VesselId = Transshipment2Vessel.Id
+   inner JOIN NewDIM_Vessels Transshipment3Vessel ON dw_ShipmentMasterDatas.Transshipment3VesselId = Transshipment3Vessel.Id
   
    
 	 where dw_Shipments.IsCancelled = 0 and dw_Shipments.ShipmentLevelCode in ('H','D' , 'C') and   $LastCounterWhere$
@@ -587,7 +620,7 @@
 	  @CustomClearancePointAddress,@CustomClearancePointContact,
 	  @ColoaderAddress,@ColoaderContact,
 	  @ConsolidatorAddress,@ConsolidatorContact,
-	  @ShipmentSubType, @PODReceivedDate, @ComputedMainCarriageATA
+	  @ShipmentSubType, @PODReceivedDate, @ComputedMainCarriageATA,@Transshipment2Vessel,@Transshipment3Vessel
 	  
 
 
@@ -776,7 +809,7 @@
 	   [Custom Agent Import Address],[Custom Agent Import Contact],[Notify1 Address],[Notify1 Contact],
 	   [Notify2 Address],[Notify2 Contact],[Freight Forwarder Address],[Freight Forwarder Contact],
 	   [Consignee Not Importer Address],[Consignee Not Importer Contact],[Custom Clearance Point Address],[Custom Clearance Point Contact],
-	   [Coloader Address],[Coloader Contact],[Consolidator Address],[Consolidator Contact],[IsInland Domestic Shipment],[Is Standalone Pickup Delivery],[Shipment Sub Type], [POD Received Date],[Main Carriage Final Destination ATA]
+	   [Coloader Address],[Coloader Contact],[Consolidator Address],[Consolidator Contact],[IsInland Domestic Shipment],[Is Standalone Pickup Delivery],[Shipment Sub Type], [POD Received Date],[Main Carriage Final Destination ATA],[Transshipment 2 Vessel],[Transshipment 3 Vessel]
 	  ) 
 
       values(@Id, @SourceTenant,@ParentTenant,@Direction,@TransportMode, @DirectHouse, @Type, @OBLType, @Department ,@Branch , @ShipmentNumber , @House ,@Master , @Shipper,  @Consignee , @Agent,@Customer,@Incoterm ,@TotalGrossWeightInKG,@TotalChargeableWeightInKG, @TotalVolumeInCBM,  @NumberOfPackages, @DangerousGoods, @NumberOfContainers, @Salesman , @AccountManager ,    @TotalProfitInLocalCurrency , @TotalProfitInProfitCurrency , @LocalCurrency,@ProfitCurrency ,@OperationallyClosed,@AccountingClosed, @ComputedStatus, @Location,  @MainCarriageFromPort , @FinalDestination , @IsDeparted , @MainCarriageATD  ,@IsArrived , @ArrivedDate   , @IsCustomsCleared , 1 ,dbo.GetDateFormateAsNumber(@CreateDate)    ,dbo.GetDateFormateAsNumber(@LastUpdateDate)   , dbo.GetDateFormateAsNumber(@OperationalDate),dbo.GetDateFormateAsNumber(@OperationalCloseDate),dbo.GetDateFormateAsNumber(@AccountingCloseDate) ,@OpenReceivablesInLocalCurrency , @OpenReceivablesInProfitCurrency ,@AccountedReceivablesInLocalCurrency,@AccountedReceivablesInProfitCurrency, @OpenPayablesInLocalCurrency ,@OpenPayablesInProfitCurrency , @AccountedPayablesInLocalCurrency ,@AccountedPayablesInProfitCurrency , @AgentReference1, @AgentReference2,@AMSBL ,@ConsigneeReference1,@ConsigneeReference2,@CreatedBy,@CustomAgent,@CustomerReference1,@CustomerReference2,dbo.GetDateFormateAsNumber(@FirstPickupDate)   ,@FreightPC, dbo.GetDateFormateAsNumber(@CarrierDate)   ,@Carrier,@CarrierNumber,@MainHarmonize,@OtherChargePC,@ProjectNumber,@ShipperReference1,@ShipperReference2,@TEU,@ValueOfGoods,@ValueOfGoodsCurrency,@Warehouse,@FreightForwarder ,  @BookingConfirmationNumber,@MainCarriageATA , dbo.GetDateFormateAsNumber(@MAWBOBLDate) ,@MAWBOBLDate , dbo.GetDateFormateAsNumber(@ComputedStatusDate) , @CustomsDeclarationNumber ,dbo.GetDateFormateAsNumber(@FirstOperationalCloseDate) ,  @EstimatedFinalArrivalDate , @ActualFinalArrivalDate , REPLACE(@Routing,',','>'), @DescriptionOfGoods, @PreCarriageETD ,  @MainCarriageETA , @MainCarriageETD,@MoveType ,@Vessel,@SpecialServices ,@FirstPickupETA, @FirstPickupETD, @MasterShipmentNumber , @ARInvoices,[CustomFieldValuesVariable],@CreateDate,@LastUpdateDate,@OperationalDate,@CutoffDate ,@Consolidator,@ConsolidatorRef1, @ShipmentNotes, @Notify1, @Notify1Ref1, @Notify2, @Notify2Ref1, @Coloader, @ColoaderRef1, @ShipperNotExporter, @ShipperNotExporterRef1, @ReleasingAgent , @ReleasingAgentRef1 ,
@@ -802,7 +835,7 @@
 	  @CustomAgentImportAddress ,@CustomAgentImportContact ,@Notify1Address ,@Notify1Contact ,
 	  @Notify2Address ,@Notify2Contact ,@FreightForwarderAddress ,@FreightForwarderContact ,
 	  @ConsigneeNotImporterAddress ,@ConsigneeNotImporterContact ,@CustomClearancePointAddress ,@CustomClearancePointContact ,
-	  @ColoaderAddress ,@ColoaderContact ,@ConsolidatorAddress ,@ConsolidatorContact ,@IsInlandDomesticShipment, @IsStandalonePickupDelivery,@ShipmentSubType, @PODReceivedDate,@ComputedMainCarriageATA
+	  @ColoaderAddress ,@ColoaderContact ,@ConsolidatorAddress ,@ConsolidatorContact ,@IsInlandDomesticShipment, @IsStandalonePickupDelivery,@ShipmentSubType, @PODReceivedDate,@ComputedMainCarriageATA,@Transshipment2Vessel,@Transshipment3Vessel
 	  	  )
 	END TRY 
 BEGIN CATCH  
@@ -849,7 +882,7 @@ END CATCH
 	  @CustomAgentImportAddress ,@CustomAgentImportContact ,@Notify1Address ,@Notify1Contact ,
 	  @Notify2Address ,@Notify2Contact ,@FreightForwarderAddress ,@FreightForwarderContact ,
 	  @ConsigneeNotImporterAddress ,@ConsigneeNotImporterContact ,@CustomClearancePointAddress ,@CustomClearancePointContact ,
-	  @ColoaderAddress ,@ColoaderContact ,@ConsolidatorAddress ,@ConsolidatorContact,@ShipmentSubType, @PODReceivedDate,@ComputedMainCarriageATA
+	  @ColoaderAddress ,@ColoaderContact ,@ConsolidatorAddress ,@ConsolidatorContact,@ShipmentSubType, @PODReceivedDate,@ComputedMainCarriageATA, @Transshipment2Vessel,@Transshipment3Vessel
  
 
 
@@ -857,7 +890,7 @@ END CATCH
 	CLOSE ShipmentsCursor
 	DEALLOCATE ShipmentsCursor
 
-
+	If(OBJECT_ID('tempdb..#TempPartnerAddressContactDetails') Is Not Null) Begin  Drop Table #TempPartnerAddressContactDetails End 
    
 
 

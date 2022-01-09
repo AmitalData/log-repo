@@ -85,39 +85,90 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             };
 
 
-
-        public void SyncShipmentMilstones(BulkDataPreperation bulkDataPreperation)
+        
+        public void BuildSyncShipmentMilstones(UpdateCargoTrackingRecords updateCargoTrackingRecords)
         {
-            var buildCargoArgs = bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs;
+
+            var buildCargoArgs = updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs;
+
             // move fields from order to forwarding
             // & if fields of forwarding is empty, fill their values from order
             var sql = BuildScriptForUpdatingForwardingShipmentMilstonesFromShipmentOrder();
             ExcuteSqlScript(buildCargoArgs, sql);
 
-            sql = BuildScriptForUpdatingOrderShipmentMilstones();
-            ExcuteSqlScript(buildCargoArgs, sql);
+            //sql = BuildScriptForUpdatingOrderShipmentMilstones();
+            //ExcuteSqlScript(buildCargoArgs, sql);
 
 
             // customs
+
             sql = BuildScriptForUpdatingCustomsShipmentMilstones();
-            ExcuteSqlScript(buildCargoArgs, sql);
+            ExecuteByTenant(updateCargoTrackingRecords, sql, " where CustomShipment.Tenant =");
 
-            sql = BuildScriptForUpdatingForwardingShipmentMilstonesFromCustoms();
-            ExcuteSqlScript(buildCargoArgs, sql);
+            //sql = BuildScriptForUpdatingForwardingShipmentMilstonesFromCustoms();
+            //ExcuteSqlScript(buildCargoArgs, sql);
 
-            // current
-            //sql = BuildScriptToSetCurrentMistones();
-            sql = BuildScriptToSetCurrentMistonesByWeight(bulkDataPreperation);
-            ExcuteSqlScript(buildCargoArgs, sql);
 
+            sql = BuildScriptToSetCurrentMistonesByWeight(updateCargoTrackingRecords.Milestones);
+            ExcuteSqlScript(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs, sql);
 
             //sql = DisconnectShipments(buildCargoArgs);
             //ExcuteSqlScriptForSourceDatabase(cargoArgs, sql);
         }
-
-        private string BuildScriptToSetCurrentMistonesByWeight(BulkDataPreperation bulkDataPreperation)
+        public void IncremantalSyncShipmentMilstones(BulkDataPreperation bulkDataPreperation)
         {
-            var Milestones = bulkDataPreperation.Milestones.Where(e => e.Weight != null).OrderByDescending(e => e.Weight).ToList();
+
+            var buildCargoArgs = bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs;
+
+            var sql = BuildScriptForUpdatingForwardingShipmentMilstonesFromShipmentOrder();
+            sql = AddWhereInIds(sql, bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.ForwardingShipmentsIds, " and ForwardingShipment.EntityId");
+            ExcuteSqlScript(buildCargoArgs, sql);
+
+
+
+            sql = BuildScriptForUpdatingCustomsShipmentMilstones();
+            sql = AddWhereInIds(sql, bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.ForwardingShipmentsIds, " and ForwardingShipment.EntityId");
+            ExcuteSqlScript(buildCargoArgs, sql);
+
+            sql = BuildScriptToSetCurrentMistonesByWeight(bulkDataPreperation.Milestones);
+            sql = AddWhereInIds(sql, bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.ForwardingShipmentsIds, " where ForwardingShipmentHeaderId");
+            ExcuteSqlScript(bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs, sql);
+            sql = BuildScriptToSetCurrentMistonesByWeight(bulkDataPreperation.Milestones);
+            sql = AddWhereInIds(sql, bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.ForwardingShipmentsIds, " where EntityId");
+            ExcuteSqlScript(bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs, sql);
+
+        }
+
+        private string AddWhereInIds(string sql, List<string> shipmentsIds, string prefix)
+        {
+            var inQuery = $" {prefix} in(";
+            if(shipmentsIds.Count <= 0)
+            {
+                inQuery += "'--')";
+                return inQuery;
+            }
+
+            foreach (var id in shipmentsIds)
+            {
+                inQuery += $"'{id}',";
+            }
+            inQuery = inQuery.Remove(inQuery.Length - 1);
+            inQuery += ")";
+            return sql + " " + inQuery;
+        }
+
+        private void ExecuteByTenant(UpdateCargoTrackingRecords updateCargoTrackingRecords, string sql, string whereCondition)
+        {
+            foreach (var id in updateCargoTrackingRecords.AllTenantIds)
+            {
+                var queryWithTenantCondition = sql + " " + whereCondition + " " + id;
+                ServiceHelper.ExecuteSql(queryWithTenantCondition, updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
+            }
+        }
+
+        private string BuildScriptToSetCurrentMistonesByWeight(List<CargoTrackingMilestoneList> milestones)
+        {
+            var Milestones = milestones.Where(e => e.Weight != null).OrderByDescending(e => e.Weight).ToList();
             var doneCases = GetCurrentMistonesQueryDoneCases(Milestones);
             var dateCases = GetCurrentMistonesQueryDateCases(Milestones);
             var query = $@" update CargoTrackingShipments set 
@@ -168,7 +219,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 case CargoTrackingMilestoneValues.AssignedToTrucker: return $"WHEN [AssignedTruckerDone] = 1 THEN {CargoTrackingMilestoneValues.AssignedToTrucker}  ";
                 case CargoTrackingMilestoneValues.DeliveryOut: return $"WHEN [DeliveryDone] = 1 THEN {CargoTrackingMilestoneValues.DeliveryOut}  ";
                 case CargoTrackingMilestoneValues.Delivered: return $"WHEN [DeliveredDone] = 1 THEN {CargoTrackingMilestoneValues.Delivered}  ";
-                //case CargoTrackingMilestoneValues.Invoiced: return $"WHEN [CreatedDone] = 1 THEN {CargoTrackingMilestoneValues.Invoiced}  ";
+                    //case CargoTrackingMilestoneValues.Invoiced: return $"WHEN [CreatedDone] = 1 THEN {CargoTrackingMilestoneValues.Invoiced}  ";
             }
             return "";
         }

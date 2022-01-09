@@ -151,7 +151,7 @@
                                                         <td style="width: 135px; min-width: 135px;max-width: 135px;">{{VolumetricWeightLabel}}</td>
                                                         <td style="width: 110px;min-width: 110px;">{{GrossWeightLabel}}</td>
 
-                                                        <td style="width: 125px;min-width:125px;max-width: 125px;">Description Of Goods</td>
+                                                        <td style="width: 125px;min-width:125px;max-width: 125px;" [ngStyle]="IsContainerShipment ? {'min-width.px':190, 'max-width.px':190, 'width.px':190} : {}" >Description Of Goods</td>
                                                         <td style="width: 85px;min-width :85px">Release QTY</td>
                                                         <td style="width: 60px;min-width :60px">Entry #</td>
                                                         <td style="width: 80px;min-width :80px">In Stock</td>
@@ -261,11 +261,11 @@
 
 
 
-                                                                                <td class="GridViewCell" style="width:125px; min-width: 125px; max-width: 125px; position: relative;">
+                                                                                <td class="GridViewCell" style="width:125px; min-width: 125px; max-width: 125px; position: relative;" [ngStyle]="IsContainerShipment ? {'min-width.px':190, 'max-width.px':190, 'width.px':190} : {}">
 
 
 
-                                                                                    <div style="width:125px;max-width:125px">{{item.Description}}</div>
+                                                                                    <div style="width:125px;max-width:125px"  [ngStyle]="IsContainerShipment ? {'max-width.px':190, 'min-width.px':190, 'width.px':190} : {}" title={{item.Description}}>{{item.Description}}</div>
 
 
 

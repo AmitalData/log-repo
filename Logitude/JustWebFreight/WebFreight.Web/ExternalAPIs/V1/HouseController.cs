@@ -33,6 +33,7 @@ using WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers;
 using WebFreight.Web.Helpers.APIHelpers;
 using WebFreight.Web.Helpers.ExternalAPIHelpers;
 using WebFreight.Web.Security;
+using Container = Logitude.BL.ShipmentsModel.APIDataContract.ApiV1.Container;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
@@ -107,6 +108,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     ExternalAPIXMLEntityValidator externalAPIXMLEntityValidator = new ExternalAPIXMLEntityValidator(authToken.Tenant);
                     externalAPIXMLEntityValidator.ValidateHouseEntity(entity, MyContext);
                     this.InitOceanOrInlandPackages(entity);
+                    this.InitContainers(entity);
 
                     APIUnassignedDataHandler apiUnassignedDataHandler = new APIUnassignedDataHandler(authToken.Tenant, computingPartnerCode);
                     entity = apiUnassignedDataHandler.HandleUnassignedHouseShipmentData(entity);
@@ -119,6 +121,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     externalAPIShipmentValidator.ValidateUnitCodes();
                     externalAPIShipmentValidator.ValidatePickupDeliveryPackages();
                     externalAPIShipmentValidator.ValidatePartnersDueToDirection();
+                    externalAPIShipmentValidator.ValidateInActiveCarriers(entityPM);
 
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
@@ -263,7 +266,18 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 }
             }
         }
+        private void InitContainers(House entity)
+        {
+            if (entity.Containers == null)
+            {
+                return;
+            }
 
+            foreach (Container item in entity.Containers)
+            {
+                item.Pieces = 1;
+            }
+        }
         private void ValidateAndSetCustomerData(ShipmentPM entityPM, AddressRepository addressRepository, int tenant)
         {
             if (!string.IsNullOrEmpty(entityPM.CustomerId))
@@ -388,6 +402,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                         HouseQueryService mappingService = new HouseQueryService(authToken.Tenant);
 
+                        this.InitOceanOrInlandPackages(entity);
+                        this.InitContainers(entity);
+
                         APIUnassignedDataHandler apiUnassignedDataHandler = new APIUnassignedDataHandler(authToken.Tenant, computingPartnerCode);
                         entity = apiUnassignedDataHandler.HandleUnassignedHouseShipmentData(entity);
 
@@ -423,8 +440,14 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                             AddressRepository addressRepository = new AddressRepository(authToken.Tenant);
                             this.ValidateAndSetCustomerData(HousePM, addressRepository, authToken.Tenant);
+                            HousePM = this.UpdatePartners(MyContext, HousePM);
 
-                            this.UpdatePartners(MyContext, HousePM);
+                            ExternalAPIShipmentValidator externalAPIShipmentValidator = new ExternalAPIShipmentValidator(HousePM, authToken.Tenant);
+                            externalAPIShipmentValidator.ValidateUpdateShipmentPackages(HousePM);
+                            externalAPIShipmentValidator.ValidateInActiveCarriers(HousePM);
+                            //externalAPIShipmentValidator.UpdatePickupDeliveryPackagesChangeSet(HousePM);
+                            //externalAPIShipmentValidator.UpdatePayablesChangeSet(HousePM);
+                            //externalAPIShipmentValidator.UpdateReceivablesChangeSet(HousePM);
 
                             HousePM.HasUnassignedData = apiUnassignedDataHandler.HasUnassignedData;
                             HousePM = apiUnassignedDataHandler.AddHouseShipmentUnassignedData(entity, HousePM);
@@ -466,32 +489,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
-        
-        private void UpdatePartners(IShipmentsContext shipmentsContext, ShipmentPM shipmentPM)
+
+        private ShipmentPM UpdatePartners(IShipmentsContext shipmentsContext, ShipmentPM shipmentPM)
         {
-            Shipment shipmentPOCO = shipmentsContext.Shipments.Where(d => d.Id == shipmentPM.Id && d.Tenant == shipmentPM.Tenant).FirstOrDefault();
-            if (shipmentPOCO != null)
-            {
-                this.UpdateNotify1Partner(shipmentPOCO, shipmentPM);
-            }
+            ExternalAPIShipmentPartnersModifier externalAPIShipmentPartnersUpdate = new ExternalAPIShipmentPartnersModifier(shipmentsContext, shipmentPM);
+            return externalAPIShipmentPartnersUpdate.UpdatePartners();
         }
-        private void UpdateNotify1Partner(Shipment shipmentPOCO, ShipmentPM shipmentPM)
-        {
-            if (shipmentPOCO.Notify1Id != shipmentPM.Notify1Id)
-            {
-                Card card = CardRepository.GetSingleCard(shipmentPM.Notify1Id, shipmentPM.Tenant, false);
-                this.MapNotify1Fields(shipmentPM, card);
-            }
-        }
-        private void MapNotify1Fields(ShipmentPM shipmentPM, Card card)
-        {
-            if (card != null)
-            {
-                AddressRepository addressRepository = new AddressRepository(shipmentPM.Tenant);
-                shipmentPM.Notify1AddressId = addressRepository.GetMainAddressId(card.Id, shipmentPM.Tenant);
-                shipmentPM.Notify1ContactId = card.PrimaryContactId;
-            }
-        }
+
         private void SetPrepaidCollectIds(ShipmentPM entityPM)
         {
             if (!string.IsNullOrEmpty(entityPM.IncotermId))
@@ -504,6 +508,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     entityPM.OtherPrepaidCollectId = myIncoterm.OtherCharges;
                 }
             }
-        }
+        }       
     }
 }

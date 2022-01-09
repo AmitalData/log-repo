@@ -76,6 +76,7 @@ export class LedgerTransactionList {
 	AccountDisplayNumber: string;
 	PaymentValueDate: Date;
 	PaymentChequeStatus: string;
+	JournalCreatedByUser: string;
 	
 }
  

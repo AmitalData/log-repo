@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class TraceEventUpdateClass
    {  		
-		public const string HashString = "d4ed5e3322eadbdbecd2ab3aff8863d6";
+		public const string HashString = "1f7ddb828867664d1429d0d607a4dc9a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Trace Event",
-			      				    Code =  "3c28",
+			      				    Code =  "2f0b",
 			      				    Name =  "TraceEvent",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",

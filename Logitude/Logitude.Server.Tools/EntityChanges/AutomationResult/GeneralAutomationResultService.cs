@@ -399,8 +399,16 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
         {
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("AutomationQueue", automationQueueArgs.Tenant);
-            queueservice.Send(new Dictionary<string, string>() {{ "EntityChangeId", automationQueueArgs.EntityChangeId }, { "Tenant", automationQueueArgs.Tenant.ToString() }, { "Type", automationQueueArgs.AutomationType }, { "EntityId", automationQueueArgs.EntityId }, { "AutomationId", automationQueueArgs.AutomationId } , { "ExternalId", automationQueueArgs.ExternalId } , { "ExecutedImmediately", automationQueueArgs.ExecutedImmediately.ToString() } }, automationQueueArgs.Tenant, automationQueueArgs.AutomationDelayTime, null, null, null);
+            string extraDetails = GetAutomationExtraDetails(automationQueueArgs);
+            queueservice.Send(new Dictionary<string, string>() { { "EntityChangeId", automationQueueArgs.EntityChangeId }, { "Tenant", automationQueueArgs.Tenant.ToString() }, { "Type", automationQueueArgs.AutomationType }, { "EntityId", automationQueueArgs.EntityId }, { "AutomationId", automationQueueArgs.AutomationId }, { "ExternalId", automationQueueArgs.ExternalId }, { "ExtraDetails", extraDetails }, { "ExecutedImmediately", automationQueueArgs.ExecutedImmediately.ToString() } }, automationQueueArgs.Tenant, automationQueueArgs.AutomationDelayTime, null, null, null);
 
+        }
+
+        private static string GetAutomationExtraDetails(AutomationQueueArgs automationQueueArgs)
+        {
+            string extraDetails = "";
+            if (automationQueueArgs.ExtraDetails != null) extraDetails = LogitudeXmlSerializer.SerializeObjectToXmlString(automationQueueArgs.ExtraDetails, true);
+            return extraDetails;
         }
 
         public TimeSpan? GetAutomationDelayTime(DelaytimeDetails delaytimeDetails, List<Field> automationFieldLists, int tenant)
@@ -559,7 +567,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
         public string ExternalId { get; set; }
         public TimeSpan? AutomationDelayTime { get; set; }
         public bool ExecutedImmediately { get; set; }
-
+        public object ExtraDetails { get; set; }
 
 
     }

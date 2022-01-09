@@ -82,7 +82,8 @@ export class StimulsoftViewerComponent implements OnInit {
     ViewerContentDivId: string;
 
     TemplateType: string = "R";
-
+    TemplateTypeName: string = "PDF Template";
+    
     SelectedReportsTemplateList: ReportsTemplateList;
     ReportsTemplatesLists: ReportsTemplateList[] = [];
     public documentTypeTemplatePMService: DocumentTypeTemplatePMService;
@@ -154,7 +155,7 @@ export class StimulsoftViewerComponent implements OnInit {
         if (AppTool.IsNullOrEmpty(templateType))
             return;
         this.TemplateType = templateType;
-        document.getElementById("templateType").innerHTML = templateType == "E" ? "Excel Template" : "PDF Template";
+        this.TemplateTypeName = templateType == "E" ? "Excel Template" : "PDF Template";
     }
 
 
@@ -917,7 +918,7 @@ export class StimulsoftViewerComponent implements OnInit {
         var defulatReportId = this.GetDefaultTemplate(this.StimulsoftArgData.ReportsPreviewComponent.Report);
         this.StimulsoftArgData.DefaultTemplateId = defulatReportId;
         this.LoadReportTemplate(defulatReportId, false);
-        document.getElementById("templateType").innerHTML = text;
+        this.TemplateTypeName = text;
     }
 
 

@@ -113,73 +113,73 @@ using Simplog.Data.InvoiceModel;
 						
 					}
                     
-					if(!IsUpdate)// && item.Tenant != null)
-					{							//throw new ApplicationException("Tenant Can't be update"); 
-							temp.Tenant = item.Tenant;
+					if(!IsUpdate)
+					{							
+						temp.Tenant = item.Tenant;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.LineNumber != null)
-					{							//throw new ApplicationException("LineNumber Can't be update"); 
-							temp.LineNumber = item.LineNumber;
+					if(!IsUpdate)
+					{							
+						temp.LineNumber = item.LineNumber;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.ChequeNumber))
-					{							//throw new ApplicationException("ChequeNumber Can't be update"); 
-							temp.ChequeNumber = item.ChequeNumber;
+					if(!IsUpdate)
+					{							
+						temp.ChequeNumber = item.ChequeNumber;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.ValueDate != null)
-					{							//throw new ApplicationException("ValueDate Can't be update"); 
-							temp.ValueDate = item.ValueDate;
+					if(!IsUpdate)
+					{							
+						temp.ValueDate = item.ValueDate;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.LocalAmount != null)
-					{							//throw new ApplicationException("LocalAmount Can't be update"); 
-							temp.LocalAmount = item.LocalAmount;
+					if(!IsUpdate)
+					{							
+						temp.LocalAmount = item.LocalAmount;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.ForeignAmount != null)
-					{							//throw new ApplicationException("ForeignAmount Can't be update"); 
-							temp.ForeignAmount = item.ForeignAmount;
+					if(!IsUpdate)
+					{							
+						temp.ForeignAmount = item.ForeignAmount;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.BankBranch))
-					{							//throw new ApplicationException("BankBranch Can't be update"); 
-							temp.BankBranch = item.BankBranch;
+					if(!IsUpdate)
+					{							
+						temp.BankBranch = item.BankBranch;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.BankAccount))
-					{							//throw new ApplicationException("BankAccount Can't be update"); 
-							temp.BankAccount = item.BankAccount;
+					if(!IsUpdate)
+					{							
+						temp.BankAccount = item.BankAccount;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Bank))
-					{							//throw new ApplicationException("Bank Can't be update"); 
-							temp.BankId = item.Bank;
+					if(!IsUpdate)
+					{							
+						temp.BankId = item.Bank;
 
 										}  
 
@@ -194,7 +194,7 @@ using Simplog.Data.InvoiceModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("ChequeStatus Can't be update"); 
+							{								
 								temp.StatusCode = myChequeStatusPM.Code;
 						  
 							}  

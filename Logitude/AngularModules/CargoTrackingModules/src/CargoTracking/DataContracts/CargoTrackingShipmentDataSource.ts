@@ -3,7 +3,7 @@ import { AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
 import { ShipmentsListComponent } from '../Components/UserDashboard/ShipmentsPage/ShipmentsList/ShipmentsListComponent';
-import { CargoTrackingShipmentFilters } from './CargoTrackingShipmentFilters';
+import { CargoTrackingShipmentSearchInput } from './CargoTrackingShipmentFilters';
 
 export class ShipmentDataSource extends DataSource<any | undefined>  {
     private pageSize = 50;
@@ -11,11 +11,11 @@ export class ShipmentDataSource extends DataSource<any | undefined>  {
     private fetchedPages = new Set<number>();
     private dataStream = new BehaviorSubject<(any | undefined)[]>(this.cachedShipments);
     private subscription = new Subscription();
-
+    timer = null;
     constructor(
         public ChangeDetector: ChangeDetectorRef,
         public ShipmentSearchService: CargoTrackingSearchService,
-        public ShipmentsFilters: CargoTrackingShipmentFilters,
+        public ShipmentsFilters: CargoTrackingShipmentSearchInput,
         private parent: ShipmentsListComponent,
         public ShipmentsCount = 1
     )
@@ -50,13 +50,22 @@ export class ShipmentDataSource extends DataSource<any | undefined>  {
     {
         this.subscription.add(collectionViewer.viewChange.subscribe(range =>
         {
-            const startPage = this.GetPageForIndex(range.start);
-            const endPage = this.GetPageForIndex(range.end - 1);
-            for (let i = startPage; i <= endPage; i++) {
-                this.FetchPage(i);
+            // the following 4 lines of code added by Rabaia in order to inhance the performance of the CargoTracking. if you have Problem with it please talk to me --Rabaia 
+            if (this.timer) {
+                clearTimeout(this.timer);
             }
+            this.timer = setTimeout(() => this.HandleRange(range), 400); 
+            
         }));
         return this.dataStream;
+    }
+
+    HandleRange(range:any): void {
+        const startPage = this.GetPageForIndex(range.start);
+        const endPage = this.GetPageForIndex(range.end - 1);
+        for (let i = startPage; i <= endPage; i++) {
+            this.FetchPage(i);
+        }
     }
 
     disconnect(): void
@@ -79,7 +88,9 @@ export class ShipmentDataSource extends DataSource<any | undefined>  {
 
     private GetShipmentsPage(page: number)
     {
-        this.ShipmentSearchService.GetUserShipments(page, this.pageSize, this.ShipmentsFilters)
+        this.ShipmentsFilters.PageIndex = page;
+        this.ShipmentsFilters.PageSize = this.pageSize;
+        this.ShipmentSearchService.GetUserShipments( this.ShipmentsFilters)
             .subscribe((shipmentsResponse: any) =>
             {
                 this.parent.ShipmentsLoadingError = "";

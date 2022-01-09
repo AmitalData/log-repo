@@ -636,6 +636,7 @@
     <Compile Include="QuoteModel\Tools\EntityService\QuoteTemplateSettingDataBuilder.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\PickUpDeliveryFromToType.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\PickUpDeliveryFromToTypeQueryService.Generated.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\QueryService\PickupDeliveryService.cs" />
     <Compile Include="ShipmentsModel\CustomFilters\ContainerCustomFilter.cs" />
     <Compile Include="ShipmentsModel\CustomFilters\DigitalCustomFilter.cs" />
     <Compile Include="ShipmentsModel\DigitalModels\ShipmentAdditionalFields.cs" />

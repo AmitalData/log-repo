@@ -34,6 +34,8 @@ import { GLAccountList } from '../../../../Accounting/EntityLists/GLAccountList'
 import { PartnerTypeList } from 'Common/EntityLists/PartnerTypeList';
 import { EntityListService } from 'Infrastructure/Services/EntityListService';
 import { BankTransferPaymentArguments } from 'Invoice/DataContracts/BankTransferPaymentArguments';
+import { AccountingPaymentMethodPMService } from 'Invoice/Services/StandardPMs/AccountingPaymentMethodPMService';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 declare var window: any;
 @Component({
 
@@ -41,6 +43,7 @@ declare var window: any;
 })
 
 export class NewARPaymentComponent extends BaseComponent implements OnInit {
+    DefaultSelectedPaymentMethodCode = "BT";
     public DataContext: NewARPaymentComponent = this;
     public ObjectTableName: string = "ARPayment";
     public newARPaymentPM: ARPaymentPM = new ARPaymentPM();
@@ -60,6 +63,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     public accountingActivated: boolean;
     private _glaService: GLAccountListService = new GLAccountListService();
     _PartnerTypeListService: PartnerTypeListService = new PartnerTypeListService();
+    _AccountingPaymentMethodListService = new AccountingPaymentMethodListService();
     private CurrentSession = SessionLocator.SelectedSession;
     DisplayFieldsFromList:string;
     DisplayLocalFieldsFromList:string;
@@ -359,9 +363,22 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         if(this.preselectedPaymentMethodCode)
             this.newARPaymentPM.ForceUsingBankTransferMethod = true;
 
+        if(SessionLocator.TenantPM.AccountingActivated)
+            this.SetDefalutPaymentMethod();
+        
         this.LoadData();
         this.SetUIProperties();
         this.IsVisible = true;
+    }
+    SetDefalutPaymentMethod() {
+        var filter = new ApiQueryFilters(true);
+        filter.addAdditionalFilter("Code", this.DefaultSelectedPaymentMethodCode, null, null, "Equal", false, false, false, "string");
+        this._AccountingPaymentMethodListService.getByFilters(filter).subscribe(e=>{
+            if(e && !e.HasError && e.Result.length > 0){
+                    this.AccountingPaymentMethodId = e.Result[0].Id;
+                    this.AccountingPaymentMethodCode = this.DefaultSelectedPaymentMethodCode;
+            }
+        });
     }
 
     public TipoCadenaPagoList: TipoCadenaPagoClass[] = [];

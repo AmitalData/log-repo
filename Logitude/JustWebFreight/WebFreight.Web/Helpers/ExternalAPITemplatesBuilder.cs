@@ -304,6 +304,173 @@ namespace WebFreight.Web.Helpers
               </Direct>
                ");
             }
+            if (!this.XMLRequestTexts.ContainsKey("PatchDirect"))
+            {
+                this.XMLRequestTexts.Add("PatchDirect", "[	\r\n" +
+                    "  {\"op\": \"replace\",	\r\n" +
+                    "	\"path\": \"/Customer\",	\r\n" +
+                    "	\"value\": {\"Code\": 89086	}\r\n	},\r\n" +
+                    "	{\"op\": \"replace\",\r\n" +
+                    "	\"path\": \"/Shipper\",		\r\n" +
+                    "   \"value\": {\"Code\": 89086	}\r\n	},\r\n" +
+                    "	{\"op\": \"replace\",\r\n" +
+                    "   \"path\": \"/Consignee\",	\r\n" +
+                    "	\"value\": {\"Code\": 89088}	},\r\n" +
+                    "	{\"op\": \"replace\",	\r\n" +
+                    "	\"path\": \"/MainCarriageFromPort\",	\r\n" +
+                    "	\"value\": {\"Code\": \"GBLHR\"	}\r\n	},	\r\n" +
+                    "   {\"op\": \"replace\",\r\n" +
+                    " 	\"path\": \"/MainCarriageToPort\",\r\n" +
+                    "	\"value\": {\"Code\": \"GBLHR\"}\r\n	},\r\n" +
+                    "	{\"op\": \"replace\",\r\n" +
+                    "   \"path\": \"/CutoffDate\",	\r\n" +
+                    "	\"value\": \"2021-12-21T00:00:00\"	},	\r\n" +
+                    "   {\"op\": \"replace\",	\r\n" +
+                    "	\"path\": \"/PickUps\",	\r\n" +
+                    "	\"value\": [	\r\n" +
+                    "		{ \r\n" +
+                    "               \"Id\": \"1-1351597\",\r\n " +
+                    "				\"Seal\": null,\r\n " +
+                    "				\"Notes\": null,\r\n " +
+                    "				\"Seal2\": null,\r\n " +
+                    "				\"Width\": 2,\r\n " +
+                    "				\"Height\": 3,\r\n " +
+                    "				\"Length\": 1,\r\n " +
+                    "				\"Pieces\": 11,\r\n " +
+                    "				\"Volume\": 0,\r\n " +
+                    "				\"IMDGCode\": null,\r\n " +
+                    "				\"UnNumber\": null,\r\n " +
+                    "				\"Harmonize\": null,\r\n " +
+                    "				\"FlashPoint\": null,\r\n " +
+                    "				\"Reference1\": null,\r\n " +
+                    "				\"Reference2\": null,\r\n " +
+                    "				\"Reference3\": null,\r\n " +
+                    "				\"Reference4\": null,\r\n " +
+                    "				\"ClassNumber\": null,\r\n " +
+                    "				\"GrossWeight\": 44,\r\n " +
+                    "				\"IsDangerous\": false,\r\n " +
+                    "				\"PackageType\": \r\n " +
+                    "                  {\"Code\": null,\r\n " +
+                    "					\"LocalName\": null,\r\n " +
+                    "					\"EnglishName\": null,\r\n " +
+                    "					\"PartnerCode\": null,\r\n " +
+                    "					\"ComputingPartnerCode\": null\r\n " +
+                    "     				},\r\n " +
+                    " 				\"Temperature\": null,\r\n " +
+                    "				\"Ventilation\": null,\r\n " +
+                    "				\"changeSetOp\": \"Update\",\r\n " +
+                    "				\"InsidePackages\": null,\r\n " +
+                    "				\"PackagingGroup\": null,\r\n " +
+                    "				\"CommodityNumber\": null,\r\n " +
+                    "				\"ContainerNumber\": null,\r\n " +
+                    "				\"MaterialDescription\": null,\r\n " +
+                    "				\"ComputingPartnerCode\": null}, \r\n " +
+                    "               {\"Id\": \"1-1351598\",\r\n " +
+                    "				\"Seal\": null,	\r\n " +
+                    "   			\"Notes\": null,\r\n " +
+                    "				\"Seal2\": null,\r\n " +
+                    "				\"Width\": 8,\r\n " +
+                    "				\"Height\": 9,\r\n " +
+                    "				\"Length\": 7,\r\n " +
+                    "				\"Pieces\": 14,	\r\n " +
+                    "		    	\"Volume\": 0.007,\r\n " +
+                    "				\"IMDGCode\": null,\r\n " +
+                    "				\"UnNumber\": null,\r\n " +
+                    "				\"Harmonize\": null,\r\n " +
+                    "				\"FlashPoint\": null,\r\n " +
+                    "				\"Reference1\": null,\r\n " +
+                    "				\"Reference2\": null,\r\n " +
+                    "				\"Reference3\": null,\r\n " +
+                    "				\"Reference4\": null,\r\n " +
+                    "				\"ClassNumber\": null,\r\n " +
+                    "				\"GrossWeight\": 10,\r\n " +
+                    "				\"IsDangerous\": false,\r\n " +
+                    "				\"PackageType\": {	\r\n " +
+                    "				    \"Code\": null,	\r\n " +
+                    "				    \"LocalName\": null,\r\n " +
+                    "				    \"EnglishName\": null,\r\n " +
+                    "					\"PartnerCode\": null,\r\n " +
+                    "					\"ComputingPartnerCode\": null},\r\n " +
+                    "				\"Temperature\": null,\r\n " +
+                    "				\"Ventilation\": null,\r\n " +
+                    "				\"changeSetOp\": \"Update\",\r\n " +
+                    "				\"InsidePackages\": null,\r\n " +
+                    "				\"PackagingGroup\": null,\r\n " +
+                    "				\"CommodityNumber\": null,\r\n " +
+                    "				\"ContainerNumber\": null,\r\n " +
+                    "				\"MaterialDescription\": null,\r\n " +
+                    "				\"ComputingPartnerCode\": null},\r\n " +
+                    "   			{\"Id\": \"null\",\r\n " +
+                    "				\"Seal\": null,	\r\n " +
+                    "   			\"Notes\": null,\r\n " +
+                    "				\"Seal2\": null,\r\n " +
+                    "				\"Width\": 13,\r\n " +
+                    "				\"Height\": 14,\r\n " +
+                    "				\"Length\": 12,\r\n " +
+                    "				\"Pieces\": 15,\r\n " +
+                    "				\"Volume\": 0.007,\r\n " +
+                    "				\"IMDGCode\": null,\r\n " +
+                    "				\"UnNumber\": null,\r\n " +
+                    "				\"Harmonize\": null,\r\n " +
+                    "				\"FlashPoint\": null,\r\n " +
+                    "				\"Reference1\": null,\r\n " +
+                    "				\"Reference2\": null,\r\n " +
+                    "				\"Reference3\": null,\r\n " +
+                    "				\"Reference4\": null,\r\n " +
+                    "				\"ClassNumber\": null,\r\n " +
+                    "				\"GrossWeight\": 100,\r\n " +
+                    "				\"IsDangerous\": false,\r\n " +
+                    "				\"PackageType\": \r\n " +
+                    "                   {\"Code\": null,\r\n " +
+                    "					\"LocalName\": null,\r\n " +
+                    "					\"EnglishName\": null,\r\n " +
+                    "					\"PartnerCode\": null,\r\n " +
+                    "					\"ComputingPartnerCode\": null},\r\n " +
+                    "				\"Temperature\": null,\r\n " +
+                    "				\"Ventilation\": null,\r\n " +
+                    "				\"changeSetOp\": \"Insert\",\r\n " +
+                    "				\"InsidePackages\": null,\r\n " +
+                    "				\"PackagingGroup\": null,\r\n " +
+                    "				\"CommodityNumber\": null,\r\n " +
+                    "				\"ContainerNumber\": null,\r\n " +
+                    "				\"MaterialDescription\": null,\r\n " +
+                    "				\"ComputingPartnerCode\": null},\r\n " +
+                    "			    {\"Id\": \"1-1351651\",\r\n " +
+                    "               \"Seal\": null,\r\n " +
+                    "				\"Notes\": null,\r\n " +
+                    "				\"Seal2\": null,\r\n " +
+                    "				\"Width\": null,\r\n " +
+                    "				\"Height\": null,\r\n " +
+                    "				\"Length\": null,\r\n " +
+                    "				\"Pieces\": null,\r\n " +
+                    "				\"Volume\": null,\r\n " +
+                    "				\"IMDGCode\": null,\r\n " +
+                    "				\"UnNumber\": null,	\r\n " +
+                    "   			\"Harmonize\": null,\r\n " +
+                    "				\"FlashPoint\": null,\r\n " +
+                    "				\"Reference1\": null,\r\n " +
+                    "				\"Reference2\": null,\r\n " +
+                    "				\"Reference3\": null,\r\n " +
+                    "				\"Reference4\": null,\r\n " +
+                    "				\"ClassNumber\": null,\r\n " +
+                    "				\"GrossWeight\": null,\r\n " +
+                    "				\"PackageType\": {\r\n " +
+                    "					\"Code\": null,\r\n " +
+                    "					\"LocalName\": null,\r\n " +
+                    "					\"EnglishName\": null,\r\n " +
+                    "					\"PartnerCode\": null,\r\n " +
+                    "					\"ComputingPartnerCode\": null},\r\n " +
+                    "				\"Temperature\": null,\r\n " +
+                    "				\"Ventilation\": null,\r\n " +
+                    "				\"changeSetOp\": \"Delete\",\r\n " +
+                    "				\"InsidePackages\": null,\r\n " +
+                    "				\"PackagingGroup\": null,\r\n " +
+                    "				\"CommodityNumber\": null,\r\n " +
+                    "				\"ContainerNumber\": null,\r\n " +
+                    "				\"MaterialDescription\": null,\r\n " +
+                    "				\"ComputingPartnerCode\": null}]\r\n " +
+                    "	}]");
+            }
         }
 
         private void AddMasterAPIsRequestText()

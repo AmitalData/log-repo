@@ -142,25 +142,25 @@ using Simplog.Data.CommonDataModel;
 						
 					}
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Name))
-					{							//throw new ApplicationException("Name Can't be update"); 
-							temp.Name = MyEntity.Name;
+					if(!IsUpdate)
+					{							
+						temp.Name = MyEntity.Name;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Address1))
-					{							//throw new ApplicationException("Address1 Can't be update"); 
-							temp.Address1 = MyEntity.Address1;
+					if(!IsUpdate)
+					{							
+						temp.Address1 = MyEntity.Address1;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Address2))
-					{							//throw new ApplicationException("Address2 Can't be update"); 
-							temp.Address2 = MyEntity.Address2;
+					if(!IsUpdate)
+					{							
+						temp.Address2 = MyEntity.Address2;
 
 										}  
 
@@ -175,7 +175,7 @@ using Simplog.Data.CommonDataModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("Country Can't be update"); 
+							{								
 								temp.CountryId = myCountryPM.Id;
 						  
 							}  
@@ -187,33 +187,33 @@ using Simplog.Data.CommonDataModel;
 			
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.City))
-					{							//throw new ApplicationException("City Can't be update"); 
-							temp.City = MyEntity.City;
+					if(!IsUpdate)
+					{							
+						temp.City = MyEntity.City;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ZipCode))
-					{							//throw new ApplicationException("ZipCode Can't be update"); 
-							temp.ZipCode = MyEntity.ZipCode;
+					if(!IsUpdate)
+					{							
+						temp.ZipCode = MyEntity.ZipCode;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PhoneNumber))
-					{							//throw new ApplicationException("PhoneNumber Can't be update"); 
-							temp.PhoneNumber = MyEntity.PhoneNumber;
+					if(!IsUpdate)
+					{							
+						temp.PhoneNumber = MyEntity.PhoneNumber;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.FaxNumber))
-					{							//throw new ApplicationException("FaxNumber Can't be update"); 
-							temp.FaxNumber = MyEntity.FaxNumber;
+					if(!IsUpdate)
+					{							
+						temp.FaxNumber = MyEntity.FaxNumber;
 
 										}  
 
@@ -228,7 +228,7 @@ using Simplog.Data.CommonDataModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("State Can't be update"); 
+							{								
 								temp.StateId = myStatePM.Id;
 						  
 							}  
@@ -240,9 +240,9 @@ using Simplog.Data.CommonDataModel;
 			
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ExternalId))
-					{							//throw new ApplicationException("ExternalId Can't be update"); 
-							temp.ExternalId = MyEntity.ExternalId;
+					if(!IsUpdate)
+					{							
+						temp.ExternalId = MyEntity.ExternalId;
 
 										}  
 
@@ -257,7 +257,7 @@ using Simplog.Data.CommonDataModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("AddressType Can't be update"); 
+							{								
 								temp.AddressTypeId = myAddressTypePM.Id;
 						  
 							}  

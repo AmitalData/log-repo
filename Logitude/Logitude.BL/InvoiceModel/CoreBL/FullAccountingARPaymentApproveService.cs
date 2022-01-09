@@ -78,13 +78,15 @@ namespace Logitude.BL.InvoiceModel.CoreBL
 
         private void AddARPaymentJounal()
         {
-            ARPaymentsJournalRepository arPaymentsJournalRepository = new ARPaymentsJournalRepository(tenant);
-            ARPaymentsJournal arPaymentsJournal = new ARPaymentsJournal();
-            arPaymentsJournal.Tenant = tenant;
-            arPaymentsJournal.IsVoided = false;
-            arPaymentsJournal.PaymentId = paymentPM.Id;
-            arPaymentsJournalRepository.Add(arPaymentsJournal);
-            arPaymentsJournalRepository.SubmitChanges();
+            if (!paymentPM.SetVoided) {
+                ARPaymentsJournalRepository arPaymentsJournalRepository = new ARPaymentsJournalRepository(tenant);
+                ARPaymentsJournal arPaymentsJournal = new ARPaymentsJournal();
+                arPaymentsJournal.Tenant = tenant;
+                arPaymentsJournal.IsVoided = false;
+                arPaymentsJournal.PaymentId = paymentPM.Id;
+                arPaymentsJournalRepository.Add(arPaymentsJournal);
+                arPaymentsJournalRepository.SubmitChanges();
+            }
         }
 
         private void AddChequesOrCashToCashbook()
@@ -224,7 +226,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         public void AddNewBankTransfers()
         {
             int LineNumberCounter = GetInitialLineNumberForBankTransfer(paymentPM);
-            if (paymentPM.ARPaymentBankTranfers.Any()) {
+            if (paymentPM.ARPaymentBankTranfers != null && paymentPM.ARPaymentBankTranfers.Any()) {
                 foreach (ARPaymentBankTranferPM bankTransfer in paymentPM.ARPaymentBankTranfers)
                 {
                     ARPaymentBankTranferPM aRPaymentBankTranferPM = InitializeARPaymentBankTransfer(paymentPM, bankTransfer, ref LineNumberCounter);
@@ -543,7 +545,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
 
         private void CheckAbiltiyOfCreatingAutomaticReconcileForJournal()
         {
-            if ((paymentPM.ARPaymentChequeReplicas.Count() > 1 || paymentPM.ARPaymentBankTranfers.Count() > 1) && paymentPM.PaymentInvoices.Count() > 0)
+            if ((paymentPM.ARPaymentChequeReplicas.Count() > 1 || (paymentPM.ARPaymentBankTranfers != null && paymentPM.ARPaymentBankTranfers.Count() > 1)) && paymentPM.PaymentInvoices.Count() > 0)
             {
                 //  throw new Exception("Can't Perform ARPayment Reconciliation  in multiple Cheques case");
             } 
@@ -655,7 +657,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
 
         private int CreateDebitLinesForEachBankTransfer(JournalPM journal, int counter)
         {
-            if (paymentPM.ARPaymentBankTranfers.Count > 0)
+            if (paymentPM.ARPaymentBankTranfers != null && paymentPM.ARPaymentBankTranfers.Count > 0)
                 CreateJournalLineForEachBankTransfer(ref counter, "2");
             return counter;
         }
@@ -670,7 +672,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 JournalId = journal.Id,
                 Line = ++counter,
                 ActionCode = actionCode,
-                ActionTypeCodeEnum = actionCode == "2" ? MyJournalActionTypeEnum.Debit : MyJournalActionTypeEnum.Credit,
+                ActionTypeCodeEnum = actionCode == "2" ? JournalActionTypeEnum.Debit : JournalActionTypeEnum.Credit,
                 DocumentDate = paymentPM.RegisterDate.Value,
                 AccountingDate = paymentPM.RegisterDate.Value,
                 DueDate = arPaymentcheque.ValueDate,
@@ -699,7 +701,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
 
         private void CreateCreditLinesForEachBankTransfer(ref int counter)
         {
-            if (paymentPM.ARPaymentBankTranfers.Count > 0)
+            if (paymentPM.ARPaymentBankTranfers != null && paymentPM.ARPaymentBankTranfers.Count > 0)
                 CreateJournalLineForEachBankTransfer(ref counter, "1");
         }
 
@@ -729,7 +731,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 Line = ++counter,
                 JournalId = journal.Id,
                 ActionCode = "1",//- Credit
-                ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit,
+                ActionTypeCodeEnum = JournalActionTypeEnum.Credit,
                 CreditAccountId = paymentGLAccount != null ? paymentGLAccount.Id : null,
                 DocumentDate = paymentPM.RegisterDate.Value,
                 AccountingDate = paymentPM.RegisterDate.Value,
@@ -765,7 +767,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 JournalId = journal.Id,
                 Line = ++counter,
                 ActionCode = "2",
-                ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit,
+                ActionTypeCodeEnum = JournalActionTypeEnum.Debit,
                 DocumentDate = paymentPM.RegisterDate.Value,
                 AccountingDate = paymentPM.RegisterDate.Value,
                 DueDate = paymentPM.ValueDate.Value,
@@ -876,6 +878,10 @@ namespace Logitude.BL.InvoiceModel.CoreBL
 
         private void CreateJournalLineForEachBankTransfer(ref int counter, string actionCode)
         {
+            if (paymentPM.ARPaymentBankTranfers == null)
+            {
+                return;
+            }
             foreach (ARPaymentBankTranferPM bankTransfer in paymentPM.ARPaymentBankTranfers)
             {
                 JournalLinePM journalLine = MapPaymentBankTransferJournalLineFields(bankTransfer, actionCode, ref counter);
@@ -891,7 +897,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 JournalId = journal.Id,
                 Line = ++counter,
                 ActionCode = actionCode,
-                ActionTypeCodeEnum = actionCode == "2" ? MyJournalActionTypeEnum.Debit : MyJournalActionTypeEnum.Credit,
+                ActionTypeCodeEnum = actionCode == "2" ? JournalActionTypeEnum.Debit : JournalActionTypeEnum.Credit,
                 DocumentDate = paymentPM.RegisterDate.Value,
                 AccountingDate = paymentPM.RegisterDate.Value,
                 DueDate = cheque.ValueDate,
@@ -917,7 +923,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 JournalId = journal.Id,
                 Line = ++counter,
                 ActionCode = actionCode,
-                ActionTypeCodeEnum = actionCode == "2" ? MyJournalActionTypeEnum.Debit : MyJournalActionTypeEnum.Credit,
+                ActionTypeCodeEnum = actionCode == "2" ? JournalActionTypeEnum.Debit : JournalActionTypeEnum.Credit,
                 DocumentDate = paymentPM.RegisterDate.Value,
                 AccountingDate = paymentPM.RegisterDate.Value,
                 DueDate = bankTransfer.ValueDate,

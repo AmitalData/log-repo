@@ -263,16 +263,6 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
         this.myConsigneeAddressList = newValue;
     }   
 
-    private SetCustomer() {
-        if (this.EntityPM.ShipmentCustomerTypeCode == "SHI" && this.IsShipperVisible) {
-            this.EntityPM.CustomerId = this.UpdatedShipperId;
-        }
-
-        else if (this.EntityPM.ShipmentCustomerTypeCode == "CON" && this.IsConsigneeVisible) {
-            this.EntityPM.CustomerId = this.UpdatedConsigneeId;
-        }
-    }
-
     LoadAddress(addressId: string, partner: string) {
         this.myAddressListService.getSingle(addressId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
@@ -339,18 +329,16 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
 
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
-            this.SetCustomer();
 
             if (this.IsShipperVisible && !AppTool.IsNullOrEmpty(this.UpdatedShipperId)) {
-                this.UpdateShipper();
-                this.UpdateCustomer();
+                this.UpdateShipper();                
             }
 
             if (this.IsConsigneeVisible && !AppTool.IsNullOrEmpty(this.UpdatedConsigneeId)) {
                 this.UpdateConsignee();
-                this.UpdateCustomer();
             }
 
+            this.UpdateCustomer();
             this.ComputeHasUnassignedField();
             this.RefreshPartnerTab();
             this.CurrentSession.CloseCurrentWindowEmit("ok");
@@ -404,18 +392,19 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
             this.EntityPM.ConsigneePickAddressId = this.consigneeCard.PickAddressId;
         }
     }
-
     private UpdateCustomer() {
         if (AppTool.IsNullOrEmpty(this.EntityPM.ShipmentCustomerTypeCode))
             return;
 
-        if (this.EntityPM.ShipmentCustomerTypeCode == "SHI") {
+        if (this.EntityPM.ShipmentCustomerTypeCode == "SHI" && !AppTool.IsNullOrEmpty(this.UpdatedShipperId)) {
             this.EntityPM.CustomerId = this.UpdatedShipperId;
-            this.EntityPM.CustomerContactId = this.UpdatedShipperId;
+            this.EntityPM.CustomerContactId = this.UpdatedShipperContactId;
             this.EntityPM.CustomerAddressId = this.UpdatedShipperAddressId
-        } else if (this.EntityPM.ShipmentCustomerTypeCode == "CON"){
+        }
+
+        else if (this.EntityPM.ShipmentCustomerTypeCode == "CON" && !AppTool.IsNullOrEmpty(this.UpdatedConsigneeId)) {
             this.EntityPM.CustomerId = this.UpdatedConsigneeId;
-            this.EntityPM.CustomerContactId = this.UpdatedConsigneeId;
+            this.EntityPM.CustomerContactId = this.UpdatedConsigneeContactId;
             this.EntityPM.CustomerAddressId = this.UpdatedConsigneeAddressId
         }
     }
@@ -431,11 +420,6 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
     private myCloner: Cloner;
     private Clone() {
         this.myCloner = new Cloner(this.DataContext);
-        //this.myCloner.AddField('CeficClass');
-        //this.myCloner.AddField('KelmerCode');
-        //this.myCloner.AddField('EMS');
-        //this.myCloner.AddField('ProperShippingName');
-        //this.myCloner.AddField('MarinePollutant');
         this.myCloner.AddEntity(this.EntityPM);
     }
 

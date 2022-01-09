@@ -2939,7 +2939,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                             {
                                 AccountingDate = j.AccountingDate,
                                 //ActionName = "4", 
-                                ActionTypeCodeEnum = MyJournalActionTypeEnum.DebitAndCredit,
+                                ActionTypeCodeEnum = JournalActionTypeEnum.DebitAndCredit,
                                 ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                                 CreditAccountId = creditCard,
                                 DebitAccountId = debitCard,
@@ -2960,7 +2960,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                             {
                                 AccountingDate = j.AccountingDate,
                                 //ActionName = "4", 
-                                ActionTypeCodeEnum = MyJournalActionTypeEnum.DebitCreditAndVatdeduction,
+                                ActionTypeCodeEnum = JournalActionTypeEnum.DebitCreditAndVatdeduction,
                                 ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                                 CreditAccountId = creditCard,
                                 DebitAccountId = debitCard,
@@ -2983,7 +2983,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                             {
                                 AccountingDate = j.AccountingDate,
                                 //ActionName = "1", 
-                                ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit,
+                                ActionTypeCodeEnum = JournalActionTypeEnum.Credit,
                                 ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                                 CreditAccountId = creditCard,
                                 DebitAccountId = null,
@@ -3005,7 +3005,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                                {
                                    AccountingDate = j.AccountingDate,
                                    //ActionName = "2", 
-                                   ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit,
+                                   ActionTypeCodeEnum = JournalActionTypeEnum.Debit,
                                    ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                                    //CreditAccountId = "35", 
 
@@ -3087,7 +3087,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                     {
                       AccountingDate = j.AccountingDate,
                       //ActionName = "1", 
-                      ActionTypeCodeEnum= MyJournalActionTypeEnum.Credit,
+                      ActionTypeCodeEnum= JournalActionTypeEnum.Credit,
                       ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                       CreditAccountId = GetCreditAccountId(),
                       //DebitAccountId = "35",
@@ -3112,7 +3112,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                     {
                       AccountingDate = j.AccountingDate,
                       //ActionName = "2", 
-                      ActionTypeCodeEnum= MyJournalActionTypeEnum.Debit,
+                      ActionTypeCodeEnum= JournalActionTypeEnum.Debit,
                       ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert, 
                       //CreditAccountId = "35", 
                       CurrencyId =GetCurrencyId("USD"),
@@ -3137,7 +3137,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                     {
                       AccountingDate = j.AccountingDate,
                       //ActionName = "4", 
-                      ActionTypeCodeEnum= MyJournalActionTypeEnum.DebitCreditAndVatdeduction,
+                      ActionTypeCodeEnum= JournalActionTypeEnum.DebitCreditAndVatdeduction,
                       ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                       CreditAccountId = GetCreditAccountId(),
                       DebitAccountId = GetDebitAccountId(),

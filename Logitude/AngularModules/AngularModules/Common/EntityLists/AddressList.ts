@@ -7,28 +7,28 @@
 //------------------------------------------------------------------------------
 
 export class AddressList {
-    Id: string;
-    Tenant: number;
-    Address1: string;
-    Address2: string;
-    Description: string;
-    City: string;
-    ZipCode: string;
-    FaxNumber: string;
-    PhoneNumber: string;
-    Name: string;
-    AddressTypeId: string;
-    CountryId: string;
-    CardId: string;
-    StateCode: string;
-    StateName: string;
-    CountryCode: string;
-    CountryName: string;
-    CountryEC: boolean;
-    IsLocalLanguage: boolean;
-    InActive: boolean;
-    SearchFields: string;
-    StateId: string;
-    ATTN: string;
-    UnassigedFieldName: string;
+   		Id: string;
+		Tenant: number;
+		Address1: string;
+		Address2: string;
+		Description: string;
+		City: string;
+		ZipCode: string;
+		FaxNumber: string;
+		PhoneNumber: string;
+		Name: string;
+		AddressTypeId: string;
+		CountryId: string;
+		CardId: string;
+		StateCode: string;
+		StateName: string;
+		CountryCode: string;
+		CountryName: string;
+		CountryEC: boolean;
+		IsLocalLanguage: boolean;
+		InActive: boolean;
+		SearchFields: string;
+		StateId: string;
+		ATTN: string;
+	
 }

@@ -166,17 +166,17 @@ using Simplog.Data.CommonDataModel;
 						
 					}
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EnglishName))
-					{							//throw new ApplicationException("EnglishName Can't be update"); 
-							temp.EnglishName = MyEntity.EnglishName;
+					if(!IsUpdate)
+					{							
+						temp.EnglishName = MyEntity.EnglishName;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.LocalName))
-					{							//throw new ApplicationException("LocalName Can't be update"); 
-							temp.LocalName = MyEntity.LocalName;
+					if(!IsUpdate)
+					{							
+						temp.LocalName = MyEntity.LocalName;
 
 										}  
 
@@ -186,9 +186,8 @@ using Simplog.Data.CommonDataModel;
 					   
 						 
 						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
-						{
-								//throw new ApplicationException("Code Can't be update"); 
-								temp.Code = MyEntity.Code;
+						{								
+							temp.Code = MyEntity.Code;
 								
 						
 						}  
@@ -205,7 +204,7 @@ using Simplog.Data.CommonDataModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("MainAddress Can't be update"); 
+							{								
 								temp.MainAddressId = myMainAddressPM.Id;
 						  
 							}  
@@ -217,9 +216,9 @@ using Simplog.Data.CommonDataModel;
 			
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.VatNumber))
-					{							//throw new ApplicationException("VatNumber Can't be update"); 
-							temp.VatNumber = MyEntity.VatNumber;
+					if(!IsUpdate)
+					{							
+						temp.VatNumber = MyEntity.VatNumber;
 
 										}  
 
@@ -229,9 +228,8 @@ using Simplog.Data.CommonDataModel;
 					   
 						 
 						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PartnerCode))
-						{
-								//throw new ApplicationException("PartnerCode Can't be update"); 
-								temp.Code = MyEntity.PartnerCode;
+						{								
+							temp.Code = MyEntity.PartnerCode;
 								
 						
 						}  
@@ -239,41 +237,41 @@ using Simplog.Data.CommonDataModel;
 						
 					}
                     
-					if(!IsUpdate)// && (MyEntity.IsDisconnectedFromGLAccount != temp.IsDisconnectedFromGLAccount))
-					{							//throw new ApplicationException("IsDisconnectedFromGLAccount Can't be update"); 
-							temp.IsDisconnectedFromGLAccount = MyEntity.IsDisconnectedFromGLAccount;
+					if(!IsUpdate)
+					{							
+						temp.IsDisconnectedFromGLAccount = MyEntity.IsDisconnectedFromGLAccount;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ReceivablesAccountingCard))
-					{							//throw new ApplicationException("ReceivablesAccountingCard Can't be update"); 
-							temp.ReceivablesAccountingCard = MyEntity.ReceivablesAccountingCard;
+					if(!IsUpdate)
+					{							
+						temp.ReceivablesAccountingCard = MyEntity.ReceivablesAccountingCard;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PayablesAccountingCard))
-					{							//throw new ApplicationException("PayablesAccountingCard Can't be update"); 
-							temp.PayablesAccountingCard = MyEntity.PayablesAccountingCard;
+					if(!IsUpdate)
+					{							
+						temp.PayablesAccountingCard = MyEntity.PayablesAccountingCard;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ICAO))
-					{							//throw new ApplicationException("ICAO Can't be update"); 
-							temp.ICAO = MyEntity.ICAO;
+					if(!IsUpdate)
+					{							
+						temp.ICAO = MyEntity.ICAO;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && (MyEntity.AllowUnassignedEntry != temp.AllowUnassignedEntry))
-					{							//throw new ApplicationException("AllowUnassignedEntry Can't be update"); 
-							temp.AllowUnassignedEntry = MyEntity.AllowUnassignedEntry;
+					if(!IsUpdate)
+					{							
+						temp.AllowUnassignedEntry = MyEntity.AllowUnassignedEntry;
 
 										}  
 

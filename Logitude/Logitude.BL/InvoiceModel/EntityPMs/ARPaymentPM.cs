@@ -256,6 +256,8 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string ReconcileExternalPagesIds { get; set; }
 
         public bool UpdateAmountAndStatuses { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string BillToCode { get; set; }
 
     }
 }

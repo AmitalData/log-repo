@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logitude.ShipmentOrderModule.Data.EntityPOCOs;
+using Logitude.ShipmentOrderModule.BL.EntityDataMappings;
 
 namespace Logitude.ShipmentOrderModule.BL.EntityQueryServices
 {
@@ -24,7 +25,17 @@ namespace Logitude.ShipmentOrderModule.BL.EntityQueryServices
         {
             return context.ShipmentOrders.Where(a => a.Tenant == tenant && a.OrderNumber == orderNumber).Select(a => a.Id).FirstOrDefault();
         }
-
+        public ShipmentOrderPM GetSinglePMForCargo(string id, int tenant)
+        {
+            var mapping = new ShipmentOrderDataMapping();
+            return context.ShipmentOrders.Where(a => a.Tenant == tenant && a.Id == id).ToList().Select(a =>
+            {
+                var shipmentOrderPM = new ShipmentOrderPM();
+                mapping.POCOToPM(shipmentOrderPM,a);
+                mapping.CustomLocalPOCOToPM(shipmentOrderPM, a);
+                return shipmentOrderPM;
+            }).FirstOrDefault();
+        }
         private static ShipmentOrderPM MapPocoToPM(ShipmentOrder shipmentOrder)
         {
             return new ShipmentOrderPM

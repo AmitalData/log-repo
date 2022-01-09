@@ -109,7 +109,48 @@ using Simplog.Data.ShipmentsModel;
 					 temp.Packages = PackageService5.PackageDataMapping(item.ShipmentPickUpDeliveryPackages,Tenant,ComputingPartnerName);
 				}
 
-							 					
+							  
+
+			  
+				   if(item.PickUpDeliveryFromTypeCode != null)
+				   {
+					   PickUpDeliveryFromToTypeQueryService PickUpDeliveryFromToTypeService5 = new PickUpDeliveryFromToTypeQueryService(Tenant);
+					   					   temp.FromType = PickUpDeliveryFromToTypeService5.GetPickUpDeliveryFromToTypeByCode(item.PickUpDeliveryFromTypeCode,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(item.PickUpDeliveryToTypeCode != null)
+				   {
+					   PickUpDeliveryFromToTypeQueryService PickUpDeliveryFromToTypeService6 = new PickUpDeliveryFromToTypeQueryService(Tenant);
+					   					   temp.ToType = PickUpDeliveryFromToTypeService6.GetPickUpDeliveryFromToTypeByCode(item.PickUpDeliveryToTypeCode,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   
+				   temp.FromCity = item.FromAddressCity;
+				   temp.FromZipCode = item.FromAddressZipCode; 
+
+			  
+				   if(item.FromAddressCountryId != null)
+				   {
+					   CountryQueryService CountryService7 = new CountryQueryService(Tenant);
+					   					   temp.FromCountry = CountryService7.GetCountryById(item.FromAddressCountryId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   
+				   temp.ToCity = item.ToAddressCity;
+				   temp.ToZipCode = item.ToAddressZipCode; 
+
+			  
+				   if(item.ToAddressCountryId != null)
+				   {
+					   CountryQueryService CountryService8 = new CountryQueryService(Tenant);
+					   					   temp.ToCountry = CountryService8.GetCountryById(item.ToAddressCountryId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   
+				   temp.ChangeSetOp = item.ChangeSet;					
 					MyList.Add(temp);
 				}
 					
@@ -163,26 +204,26 @@ using Simplog.Data.ShipmentsModel;
 
 						
 					}
-                    							//throw new ApplicationException("ATD Can't be update"); 
-							temp.ATD = item.ATD;
+                    							
+						temp.ATD = item.ATD;
 
 					 
 
 					
-                    							//throw new ApplicationException("ATA Can't be update"); 
-							temp.ATA = item.ATA;
+                    							
+						temp.ATA = item.ATA;
 
 					 
 
 					
-                    							//throw new ApplicationException("ETD Can't be update"); 
-							temp.ETD = item.ETD;
+                    							
+						temp.ETD = item.ETD;
 
 					 
 
 					
-                    							//throw new ApplicationException("ETA Can't be update"); 
-							temp.ETA = item.ETA;
+                    							
+						temp.ETA = item.ETA;
 
 					 
 
@@ -195,12 +236,9 @@ using Simplog.Data.ShipmentsModel;
 						if(myFromPortPM != null)
 						{ 
 
-						 
-							if(!IsUpdate)
-							{								//throw new ApplicationException("FromPort Can't be update"); 
+						 								
 								temp.FromPortId = myFromPortPM.Id;
 						  
-							}  
 
 							
 						} 
@@ -216,12 +254,9 @@ using Simplog.Data.ShipmentsModel;
 						if(myToPortPM != null)
 						{ 
 
-						 
-							if(!IsUpdate)
-							{								//throw new ApplicationException("ToPort Can't be update"); 
+						 								
 								temp.ToPortId = myToPortPM.Id;
 						  
-							}  
 
 							
 						} 
@@ -237,12 +272,9 @@ using Simplog.Data.ShipmentsModel;
 						if(myFromPartnerCardPM != null)
 						{ 
 
-						 
-							if(!IsUpdate)
-							{								//throw new ApplicationException("FromPartnerCard Can't be update"); 
+						 								
 								temp.FromPartnerCardId = myFromPartnerCardPM.Id;
 						  
-							}  
 
 							
 						} 
@@ -258,12 +290,9 @@ using Simplog.Data.ShipmentsModel;
 						if(myToPartnerCardPM != null)
 						{ 
 
-						 
-							if(!IsUpdate)
-							{								//throw new ApplicationException("ToPartnerCard Can't be update"); 
+						 								
 								temp.ToPartnerCardId = myToPartnerCardPM.Id;
 						  
-							}  
 
 							
 						} 
@@ -279,12 +308,9 @@ using Simplog.Data.ShipmentsModel;
 						if(myCarrierPM != null)
 						{ 
 
-						 
-							if(!IsUpdate)
-							{								//throw new ApplicationException("Carrier Can't be update"); 
+						 								
 								temp.CarrierId = myCarrierPM.Id;
 						  
-							}  
 
 							
 						} 
@@ -292,58 +318,48 @@ using Simplog.Data.ShipmentsModel;
 					}
 			
 					
+                    							
+						temp.TruckNumber = item.TruckNumber;
+
+					 
+
+					
+                    							
+						temp.Driver = item.Driver;
+
+					 
+
+					
+                    							
+						temp.TrailerNumber = item.TrailerNumber;
+
+					 
+
+					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.TruckNumber))
-					{							//throw new ApplicationException("TruckNumber Can't be update"); 
-							temp.TruckNumber = item.TruckNumber;
+					if(!IsUpdate)
+					{							
+						temp.TransportModeCode = item.TransportModeCode;
 
 										}  
 
 					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Driver))
-					{							//throw new ApplicationException("Driver Can't be update"); 
-							temp.Driver = item.Driver;
+                    							
+						temp.Notes = item.Notes;
 
-										}  
+					 
+
+					
+                    							
+						temp.CarrierNumber = item.TruckerNumber;
+
+					 
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.TrailerNumber))
-					{							//throw new ApplicationException("TrailerNumber Can't be update"); 
-							temp.TrailerNumber = item.TrailerNumber;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.TransportModeCode))
-					{							//throw new ApplicationException("TransportModeCode Can't be update"); 
-							temp.TransportModeCode = item.TransportModeCode;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Notes))
-					{							//throw new ApplicationException("Notes Can't be update"); 
-							temp.Notes = item.Notes;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.TruckerNumber))
-					{							//throw new ApplicationException("TruckerNumber Can't be update"); 
-							temp.CarrierNumber = item.TruckerNumber;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.PickUpReference))
-					{							//throw new ApplicationException("PickUpReference Can't be update"); 
-							temp.PickUpDeliveryNumber = item.PickUpReference;
+					if(!IsUpdate)
+					{							
+						temp.PickUpDeliveryNumber = item.PickUpReference;
 
 										}  
 
@@ -351,19 +367,118 @@ using Simplog.Data.ShipmentsModel;
 
 					if(item.Packages != null && item.Packages.Count > 0)
 					{
-						PackageQueryService PackageService5 = new PackageQueryService(Tenant);
-						  
-						if(!IsUpdate)
-						{								//throw new ApplicationException("Packages Can't be update"); 
-								temp.ShipmentPickUpDeliveryPackages = PackageService5.PackageDataMappingAndValidatin(item.Packages,Tenant,ComputingPartnerName,IsUpdate);
+						PackageQueryService PackageService9 = new PackageQueryService(Tenant);
+						 								
+							temp.ShipmentPickUpDeliveryPackages = PackageService9.PackageDataMappingAndValidatin(item.Packages,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
-						}  
 
 						
 					}
 
-								 					   
+								 
+					PickUpDeliveryFromToTypeQueryService FromTypePickUpDeliveryFromToTypeService = new PickUpDeliveryFromToTypeQueryService(Tenant);
+					if(item.FromType != null)
+					{
+						var myFromTypePM = FromTypePickUpDeliveryFromToTypeService.PickUpDeliveryFromToTypeDataMappingAndValidatin(item.FromType,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myFromTypePM != null)
+						{ 
+
+						 								
+								temp.PickUpDeliveryFromTypeCode = myFromTypePM.Code;
+						  
+
+							
+						} 
+
+					}
+			
+					
+					PickUpDeliveryFromToTypeQueryService ToTypePickUpDeliveryFromToTypeService = new PickUpDeliveryFromToTypeQueryService(Tenant);
+					if(item.ToType != null)
+					{
+						var myToTypePM = ToTypePickUpDeliveryFromToTypeService.PickUpDeliveryFromToTypeDataMappingAndValidatin(item.ToType,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myToTypePM != null)
+						{ 
+
+						 								
+								temp.PickUpDeliveryToTypeCode = myToTypePM.Code;
+						  
+
+							
+						} 
+
+					}
+			
+					
+                    							
+						temp.FromAddressCity = item.FromCity;
+
+					 
+
+					
+                    							
+						temp.FromAddressZipCode = item.FromZipCode;
+
+					 
+
+					
+					CountryQueryService FromCountryCountryService = new CountryQueryService(Tenant);
+					if(item.FromCountry != null)
+					{
+						var myFromCountryPM = FromCountryCountryService.CountryDataMappingAndValidatin(item.FromCountry,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myFromCountryPM != null)
+						{ 
+
+						 								
+								temp.FromAddressCountryId = myFromCountryPM.Id;
+						  
+
+							
+						} 
+
+					}
+			
+					
+                    							
+						temp.ToAddressCity = item.ToCity;
+
+					 
+
+					
+                    							
+						temp.ToAddressZipCode = item.ToZipCode;
+
+					 
+
+					
+					CountryQueryService ToCountryCountryService = new CountryQueryService(Tenant);
+					if(item.ToCountry != null)
+					{
+						var myToCountryPM = ToCountryCountryService.CountryDataMappingAndValidatin(item.ToCountry,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myToCountryPM != null)
+						{ 
+
+						 								
+								temp.ToAddressCountryId = myToCountryPM.Id;
+						  
+
+							
+						} 
+
+					}
+			
+					
+                    							
+						temp.ChangeSet = item.ChangeSetOp;
+
+					 
+
+										   
 						MyList.Add(temp);
 					}
 						

@@ -93,6 +93,12 @@ export class PickupPackagesTabComponent {
 
     private IsShipmentStatuesDelivered() {
         var deliverdStausName = "Delivered";
+        var IsDeliveryOptionsEnabled = SessionLocator.TenantPM != null ? SessionLocator.TenantPM.EnableDeliveryOptions : false;
+
+        if (!IsDeliveryOptionsEnabled) {
+            return false;
+        }
+
         if (this.ShipmentPM.StatusName == (deliverdStausName)) {
             return true;
         }

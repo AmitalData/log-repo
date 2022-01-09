@@ -30,6 +30,15 @@ namespace Logitude.Accounting.Data.Repositories
                                       select a ).FirstOrDefault();
             return interestReport;
         }
+
+        public InterestReport GetSingleByARInvoiceId(string invoiceId, int tenant)
+        {
+            InterestReport interestReport = (from a in context.InterestReports
+                                             where a.Tenant == tenant && a.ARinvoiceId==invoiceId
+                                             select a).FirstOrDefault();
+            return interestReport;
+        }
+
         public InterestReport GetSingleByCusstomerAndStatudNotCancelledOrFailed(string ReportNumber, string CustomerId, int tenant)
         {
             InterestReport interestReport = (from a in context.InterestReports

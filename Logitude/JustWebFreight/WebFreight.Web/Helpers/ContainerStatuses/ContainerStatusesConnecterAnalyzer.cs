@@ -59,6 +59,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         private string objectTableName = "Container";
         private ShipmentPM shipmentPM;
         private PortRepository portRepository;
+        private VesselRepository vesselRepository;
         private PortTimeZoneRepository portTimeZoneRepository;
         private ComputingPartnerTranslationHelper computingPartnerTranslator;
         private string oceanInsightsId;
@@ -707,6 +708,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             this.shipmentRepository = new ShipmentRepository(shipmentContext);
             this.shipmentQuery = new ShipmentQuery(shipmentRepository);
             this.portRepository = new PortRepository(logitudeTenant.Value);
+            this.vesselRepository = new VesselRepository(logitudeTenant.Value);
             this.portTimeZoneRepository = new PortTimeZoneRepository(logitudeTenant.Value);
             this.computingPartnerTranslator = new ComputingPartnerTranslationHelper(logitudeTenant.Value);
         }
@@ -1156,14 +1158,19 @@ namespace WebFreight.Web.Helpers.Analyzers
                 container.EstimatedTrans4VesselDeparture = containerUpdatedFields.EstimatedTrans4VesselDeparture;
                 container.ActualTrans4VesselDeparture = containerUpdatedFields.ActualTrans4VesselDeparture;
                 container.Leg1Vessel = containerUpdatedFields.Leg1Vessel;
+                container.Leg1VesselId = containerUpdatedFields.Leg1VesselId;
                 container.Leg1Voyage = containerUpdatedFields.Leg1Voyage;
                 container.Leg2Vessel = containerUpdatedFields.Leg2Vessel;
+                container.Leg2VesselId = containerUpdatedFields.Leg2VesselId;
                 container.Leg2Voyage = containerUpdatedFields.Leg2Voyage;
                 container.Leg3Vessel = containerUpdatedFields.Leg3Vessel;
+                container.Leg3VesselId = containerUpdatedFields.Leg3VesselId;
                 container.Leg3Voyage = containerUpdatedFields.Leg3Voyage;
                 container.Leg4Vessel = containerUpdatedFields.Leg4Vessel;
+                container.Leg4VesselId = containerUpdatedFields.Leg4VesselId;
                 container.Leg4Voyage = containerUpdatedFields.Leg4Voyage;
                 container.Leg5Vessel = containerUpdatedFields.Leg5Vessel;
+                container.Leg5VesselId = containerUpdatedFields.Leg5VesselId;
                 container.Leg5Voyage = containerUpdatedFields.Leg5Voyage;
                 container.PODLocation = containerUpdatedFields.PODLocation;
                 container.EstimatedPODVesselArrival = containerUpdatedFields.EstimatedPODVesselArrival;
@@ -1258,15 +1265,11 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.LIFLocation = this.GetTranslatedPortCode(lif_loc_locode);
             containerUpdatedFields.EmptyReturnLocation = this.GetTranslatedPortCode(empty_return_loc_locode);
             containerUpdatedFields.AvailabilityLocation = this.GetTranslatedPortCode(availability_locode);
-            containerUpdatedFields.Leg1Vessel = leg1_vessel_name;
+            this.HandleVesselLegs(containerUpdatedFields);
             containerUpdatedFields.Leg1Voyage = leg1_voyage;
-            containerUpdatedFields.Leg2Vessel = leg2_vessel_name;
             containerUpdatedFields.Leg2Voyage = leg2_voyage;
-            containerUpdatedFields.Leg3Vessel = leg3_vessel_name;
             containerUpdatedFields.Leg3Voyage = leg3_voyage;
-            containerUpdatedFields.Leg4Vessel = leg4_vessel_name;
             containerUpdatedFields.Leg4Voyage = leg4_voyage;
-            containerUpdatedFields.Leg5Vessel = leg5_vessel_name;
             containerUpdatedFields.Leg5Voyage = leg5_voyage;
             containerUpdatedFields.CustomsReleaseState = customs_release_state;
             containerUpdatedFields.CarrierReleaseState = carrier_release_state;
@@ -1338,6 +1341,32 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.AvailablityDate = this.ComputeAvailablityDate();
             return containerUpdatedFields;
         }
+
+        private void HandleVesselLegs(ContainerUpdatedFields containerUpdatedFields)
+        {
+            var vesselLeg1 = GetVessel(leg1_vessel_name);
+            var vesselLeg2 = GetVessel(leg2_vessel_name);
+            var vesselLeg3 = GetVessel(leg3_vessel_name);
+            var vesselLeg4 = GetVessel(leg4_vessel_name);
+            var vesselLeg5 = GetVessel(leg5_vessel_name);
+            containerUpdatedFields.Leg1Vessel = vesselLeg1 == null? leg1_vessel_name: vesselLeg1.EnglishName;
+            containerUpdatedFields.Leg1VesselId = vesselLeg1?.Id;
+            containerUpdatedFields.Leg2Vessel = vesselLeg2 == null ? leg2_vessel_name : vesselLeg2.EnglishName;
+            containerUpdatedFields.Leg2VesselId = vesselLeg2?.Id;
+            containerUpdatedFields.Leg3Vessel = vesselLeg3 == null ? leg3_vessel_name : vesselLeg3.EnglishName;
+            containerUpdatedFields.Leg3VesselId = vesselLeg3?.Id;
+            containerUpdatedFields.Leg4Vessel = vesselLeg4 == null ? leg4_vessel_name : vesselLeg4.EnglishName;
+            containerUpdatedFields.Leg4VesselId = vesselLeg4?.Id;
+            containerUpdatedFields.Leg5Vessel = vesselLeg5 == null ? leg5_vessel_name : vesselLeg5.EnglishName;
+            containerUpdatedFields.Leg5VesselId = vesselLeg5?.Id;
+        }
+
+        private Vessel GetVessel(string vesselName)
+        {
+            Vessel vessel = vesselRepository.GetSingleVesselByName(vesselName, this.logitudeTenant.Value);
+            return vessel;
+        }
+
         private DateTime? ComputeMainCarriageETD()
         {
             if (!string.IsNullOrEmpty(ETD_last))
@@ -1530,11 +1559,11 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 return AnalyzeXMLDateValue(ATD_actual, pol_loc_timezone);
             }
-            else if (!string.IsNullOrEmpty(ATD_detected))
-            {
-                return AnalyzeXMLDateValue(ATD_detected, pol_loc_timezone);
+            //else if (!string.IsNullOrEmpty(ATD_detected))
+            //{
+            //    return AnalyzeXMLDateValue(ATD_detected, pol_loc_timezone);
 
-            }
+            //}
             return null;
         }
         private DateTime? ComputeEstimatedTrans1VesselArrival()
@@ -1556,10 +1585,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 return AnalyzeXMLDateValue(tsp1_vslarrival_actual, tsp1_loc_timezone);
             } 
-            else if (!string.IsNullOrEmpty(tsp1_vslarrival_detected))
-            {
-                return AnalyzeXMLDateValue(tsp1_vslarrival_detected, tsp1_loc_timezone);
-            }
+            //else if (!string.IsNullOrEmpty(tsp1_vslarrival_detected))
+            //{
+            //    return AnalyzeXMLDateValue(tsp1_vslarrival_detected, tsp1_loc_timezone);
+            //}
 
             return null;
         }
@@ -1623,10 +1652,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 return AnalyzeXMLDateValue(tsp1_vsldeparture_actual, tsp1_loc_timezone);
             }
-            else if (!string.IsNullOrEmpty(tsp1_vsldeparture_detected))
-            {
-                return AnalyzeXMLDateValue(tsp1_vsldeparture_detected, tsp1_loc_timezone);
-            }
+            //else if (!string.IsNullOrEmpty(tsp1_vsldeparture_detected))
+            //{
+            //    return AnalyzeXMLDateValue(tsp1_vsldeparture_detected, tsp1_loc_timezone);
+            //}
 
             return null;
         }
@@ -1649,10 +1678,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 return AnalyzeXMLDateValue(tsp2_vslarrival_actual, tsp2_loc_timezone);
             }
-            else if (!string.IsNullOrEmpty(tsp2_vslarrival_detected))
-            {
-                return AnalyzeXMLDateValue(tsp2_vslarrival_detected, tsp2_loc_timezone);
-            }
+            //else if (!string.IsNullOrEmpty(tsp2_vslarrival_detected))
+            //{
+            //    return AnalyzeXMLDateValue(tsp2_vslarrival_detected, tsp2_loc_timezone);
+            //}
 
             return null;
         }
@@ -1716,10 +1745,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 return AnalyzeXMLDateValue(tsp2_vsldeparture_actual, tsp2_loc_timezone);
             }
-            else if (!string.IsNullOrEmpty(tsp2_vsldeparture_detected))
-            {
-                return AnalyzeXMLDateValue(tsp2_vsldeparture_detected, tsp2_loc_timezone);
-            }
+            //else if (!string.IsNullOrEmpty(tsp2_vsldeparture_detected))
+            //{
+            //    return AnalyzeXMLDateValue(tsp2_vsldeparture_detected, tsp2_loc_timezone);
+            //}
 
             return null;
         }
@@ -1742,10 +1771,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 return AnalyzeXMLDateValue(tsp3_vslarrival_actual, tsp3_loc_timezone);
             }
-            else if (!string.IsNullOrEmpty(tsp3_vslarrival_detected))
-            {
-                return AnalyzeXMLDateValue(tsp3_vslarrival_detected, tsp3_loc_timezone);
-            }
+            //else if (!string.IsNullOrEmpty(tsp3_vslarrival_detected))
+            //{
+            //    return AnalyzeXMLDateValue(tsp3_vslarrival_detected, tsp3_loc_timezone);
+            //}
 
             return null;
         }
@@ -1809,10 +1838,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 return AnalyzeXMLDateValue(tsp3_vsldeparture_actual, tsp3_loc_timezone);
             }
-            else if (!string.IsNullOrEmpty(tsp3_vsldeparture_detected))
-            {
-                return AnalyzeXMLDateValue(tsp3_vsldeparture_detected, tsp3_loc_timezone);
-            }
+            //else if (!string.IsNullOrEmpty(tsp3_vsldeparture_detected))
+            //{
+            //    return AnalyzeXMLDateValue(tsp3_vsldeparture_detected, tsp3_loc_timezone);
+            //}
 
             return null;
         }
@@ -1835,10 +1864,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 return AnalyzeXMLDateValue(tsp4_vslarrival_actual, tsp4_loc_timezone);
             }
-            else if (!string.IsNullOrEmpty(tsp4_vslarrival_detected))
-            {
-                return AnalyzeXMLDateValue(tsp4_vslarrival_detected, tsp4_loc_timezone);
-            }
+            //else if (!string.IsNullOrEmpty(tsp4_vslarrival_detected))
+            //{
+            //    return AnalyzeXMLDateValue(tsp4_vslarrival_detected, tsp4_loc_timezone);
+            //}
 
             return null;
         }
@@ -1902,10 +1931,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 return AnalyzeXMLDateValue(tsp4_vsldeparture_actual, tsp4_loc_timezone);
             }
-            else if (!string.IsNullOrEmpty(tsp4_vsldeparture_detected))
-            {
-                return AnalyzeXMLDateValue(tsp4_vsldeparture_detected, tsp4_loc_timezone);
-            }
+            //else if (!string.IsNullOrEmpty(tsp4_vsldeparture_detected))
+            //{
+            //    return AnalyzeXMLDateValue(tsp4_vsldeparture_detected, tsp4_loc_timezone);
+            //}
 
             return null;
         }
@@ -1929,10 +1958,10 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 return AnalyzeXMLDateValue(ATA_actual, pod_loc_timezone);
             }
-            else if (!string.IsNullOrEmpty(ATA_detected))
-            {
-                return AnalyzeXMLDateValue(ATA_detected, pod_loc_timezone);
-            }
+            //else if (!string.IsNullOrEmpty(ATA_detected))
+            //{
+            //    return AnalyzeXMLDateValue(ATA_detected, pod_loc_timezone);
+            //}
 
             return null;
         }
@@ -2598,14 +2627,19 @@ namespace WebFreight.Web.Helpers.Analyzers
         public DateTime? EstimatedTrans4VesselDeparture { get; set; }
         public DateTime? ActualTrans4VesselDeparture { get; set; }
         public string Leg1Vessel { get; set; }
+        public string Leg1VesselId { get; set; }
         public string Leg1Voyage { get; set; }
         public string Leg2Vessel { get; set; }
+        public string Leg2VesselId { get; set; }
         public string Leg2Voyage { get; set; }
         public string Leg3Vessel { get; set; }
+        public string Leg3VesselId { get; set; }
         public string Leg3Voyage { get; set; }
         public string Leg4Vessel { get; set; }
+        public string Leg4VesselId { get; set; }
         public string Leg4Voyage { get; set; }
         public string Leg5Vessel { get; set; }
+        public string Leg5VesselId { get; set; }
         public string Leg5Voyage { get; set; }
         public string PODLocation { get; set; }
         public DateTime? EstimatedPODVesselArrival { get; set; }

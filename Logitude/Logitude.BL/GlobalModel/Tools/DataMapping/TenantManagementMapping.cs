@@ -161,6 +161,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.LastTariffUsageDate = entityPM.LastTariffUsageDate;
             entityPOCO.LastWeekCreatedTariffs = entityPM.LastWeekCreatedTariffs;
             entityPOCO.LastMonthCreatedTariffs = entityPM.LastMonthCreatedTariffs;
+            entityPOCO.PermissionBuildMonths = entityPM.PermissionBuildMonths;
             entityPOCO.ScheduledTasksLimitPerReport = entityPM.ScheduledTasksLimitPerReport;
             entityPOCO.WhatsAppMessagingPhoneNumber = entityPM.WhatsAppMessagingPhoneNumber;
 

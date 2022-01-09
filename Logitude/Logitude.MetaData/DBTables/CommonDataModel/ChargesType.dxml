@@ -98,14 +98,14 @@
   <Column
     Name="EnglishName"
     Type="varchar"
-    Size="40">
+    Size="80">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
     Name="LocalName"
     Type="nvarchar"
-    Size="40">
+    Size="80">
     <Constraints
       Nullable="true" />
   </Column>
@@ -243,7 +243,7 @@
     Type="varchar"
     Size="15">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="IsBackToBack"

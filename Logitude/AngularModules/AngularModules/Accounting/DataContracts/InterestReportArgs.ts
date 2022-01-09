@@ -10,6 +10,9 @@ export class InterestReportArguments {
   public tempId:string;
   public InvoiceDate:Date;
   public securityId:string;
+  public CategoryValue: string;
+  public CategoryIndex: string;
+
   public Entities:any[];
   public ShowPrintedInvoice:boolean;
     public AttachReportWithEachInvoice: boolean;

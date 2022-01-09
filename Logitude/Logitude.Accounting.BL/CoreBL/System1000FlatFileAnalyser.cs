@@ -70,23 +70,32 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                     }
                     scope.Complete();
+                    String errorLines = "";
                     if (MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.Count > 0)
                     {
-                        string text = MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.FirstOrDefault();
-                        throw new ApplicationException($"{text}");
+                        MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.ForEach(item => errorLines += item.ToString() + "\n");
                     }
+
                     if (MyResultLoadFlatFile.ErrorRowList.Count > 0)
                     {
-                        string text = MyResultLoadFlatFile.ErrorRowList.FirstOrDefault();
-                        throw new ApplicationException($"{text}");
+                        MyResultLoadFlatFile.ErrorRowList.ForEach(item => errorLines += item.ToString() + "\n");
                     }
+
                     if (MyResultLoadFlatFile.ExceptionVendorList.Count > 0)
                     {
-                        string text = MyResultLoadFlatFile.ExceptionVendorList.FirstOrDefault();
-                        throw new ApplicationException($"{text}");
+                        MyResultLoadFlatFile.ExceptionVendorList.ForEach(item => errorLines += item.ToString() + "\n");
                     }
 
-
+                    if (!String.IsNullOrEmpty(errorLines))
+                    {
+                        string goodLines = "";
+                        MyResultLoadFlatFile.SuccessVendorList.ForEach(item => goodLines += item.ToString() + "\n");
+                        if (!String.IsNullOrEmpty(goodLines))
+                        {
+                            errorLines += "Updated successfully:\n" + goodLines + "\n" + "\nErrors:";
+                        }
+                        throw new ApplicationException($"{errorLines}");
+                    }
                 }
             }
             catch (Exception e)
@@ -645,7 +654,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             var rec = new VendorLineDTO();
             rec.RawLine = rawLine;
-            rec.VendorCode = rawLine.Substring(2 - 1, 15);
+            rec.VendorCode = rawLine.Substring(2 - 1, 15).TrimStart('0'); 
 
             rec.SentDeductionFileNum = rawLine.Substring(17 - 1, 9);
             rec.SentVATNum = rawLine.Substring(26 - 1, 9);

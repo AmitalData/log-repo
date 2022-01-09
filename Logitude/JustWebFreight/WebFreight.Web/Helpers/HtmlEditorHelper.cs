@@ -1420,7 +1420,7 @@ namespace WebFreight.Web.Helpers
                 return document.DocumentNode.SelectNodes("//span")?.Where(n => n.InnerText.Contains("[") && n.InnerText.Contains("[") && (n.LastChild.Name != "span" || n.FirstChild.Name != "span"));
             }
            
-           return document.DocumentNode.SelectNodes("//span").Where(n => n.InnerText.Contains("[") && n.InnerText.Contains("["));
+           return document.DocumentNode.SelectNodes("//span")?.Where(n => n.InnerText.Contains("[") && n.InnerText.Contains("["));
         
         }
 
@@ -5887,7 +5887,7 @@ namespace WebFreight.Web.Helpers
             if(sharedTenant.IsCargoTrackWebAccessActivated == true)
             {
                 var cargoURL = GetCargoTrackingSystemURL(sharedLinkHTMLArgs, myUrl);
-                pageLink = cargoURL + "cargo-tracking/shipment-link?" +
+                pageLink = cargoURL + "cargo-tracking/declaration-link?" +
                     "SecurityKey=" + sharedLinkHTMLArgs.Key +
                     "&Tenant=" + sharedLinkHTMLArgs.Tenant +
                     "&Panel=" + "DocumentsPanel";

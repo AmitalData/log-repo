@@ -36,7 +36,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment Pickup Delivery&quot;"
-  Code="&quot;ea73&quot;"
+  Code="&quot;5a6d&quot;"
   Name="&quot;ShipmentPickUpDelivery&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -2020,7 +2020,7 @@
     NavigationPropertyName="PickUpDeliveryType"
     IsPrimaryKey="false"
     HasDataBaseField="true"
-    HasPMField="false"
+    HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
@@ -2097,7 +2097,7 @@
     NavigationPropertyName="PickUpDeliveryFromType"
     IsPrimaryKey="false"
     HasDataBaseField="true"
-    HasPMField="false"
+    HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
@@ -2174,7 +2174,7 @@
     NavigationPropertyName="PickUpDeliveryToType"
     IsPrimaryKey="false"
     HasDataBaseField="true"
-    HasPMField="false"
+    HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
@@ -2324,7 +2324,7 @@
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
-    HasPMField="false"
+    HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
@@ -2400,7 +2400,7 @@
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
-    HasPMField="false"
+    HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
@@ -2479,7 +2479,7 @@
     NavigationPropertyName="FromAddressCountry"
     IsPrimaryKey="false"
     HasDataBaseField="true"
-    HasPMField="false"
+    HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
@@ -2555,7 +2555,7 @@
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
-    HasPMField="false"
+    HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
@@ -2631,7 +2631,7 @@
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
-    HasPMField="false"
+    HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
@@ -2710,7 +2710,7 @@
     NavigationPropertyName="ToAddressCountry"
     IsPrimaryKey="false"
     HasDataBaseField="true"
-    HasPMField="false"
+    HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
@@ -3639,6 +3639,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;StandaloneShipmentNumber&quot;"
     ListPropertyPath="&quot;StandaloneShipmentNumber&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -3665,6 +3666,75 @@
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;9b6644c7-704b-4b3e-afa5-af1928d08e92&quot;"
+    FieldName="&quot;ChangeSet&quot;"
+    OldNames="ChangeSet"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;ShipmentPickUpDelivery&quot;"
+    FieldsDataType="&quot;Text&quot;"
+    MinLength="0"
+    MaxLength="50"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="50"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;ChangeSet&quot;"
+    ListPropertyPath="&quot;ChangeSet&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;ChangeSet&quot;"
+    DefaultText="&quot;ChangeSet&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="true"
     GenerateInList="false"
     IsFixedLength="false"
     EnableAutoFill="false"
@@ -3816,7 +3886,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ToPort&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3832,7 +3902,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;FromPartnerCard&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3848,7 +3918,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ToPartnerCard&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3864,7 +3934,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Carrier&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3880,7 +3950,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;TruckNumber&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3896,7 +3966,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Driver&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3912,7 +3982,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;TrailerNumber&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3928,7 +3998,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;TransportModeCode&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3960,7 +4030,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;TruckerNumber&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -3976,7 +4046,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;DeliveryReference&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4009,7 +4079,146 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;FromType&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;PickUpDeliveryFromTypeCode&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;PickUpDeliveryFromToType&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="true"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;ToType&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;PickUpDeliveryToTypeCode&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;PickUpDeliveryFromToType&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="true"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;FromCity&quot;"
+        FieldName="&quot;FromAddressCity&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;nText&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;FromZipCode&quot;"
+        FieldName="&quot;FromAddressZipCode&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;FromCountry&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;FromAddressCountryId&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Country&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="true"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;ToCity&quot;"
+        FieldName="&quot;ToAddressCity&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;nText&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;ToZipCode&quot;"
+        FieldName="&quot;ToAddressZipCode&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;ToCountry&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;ToAddressCountryId&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Country&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="true"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;ChangeSetOp&quot;"
+        FieldName="&quot;ChangeSet&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
     </DataContract>
     <DataContract
       Name="&quot;PickUp&quot;"
@@ -4108,7 +4317,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ToPort&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4124,7 +4333,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;FromPartnerCard&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4140,7 +4349,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ToPartnerCard&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4156,7 +4365,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Carrier&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4172,7 +4381,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;TruckNumber&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4188,7 +4397,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Driver&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4204,7 +4413,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;TrailerNumber&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4220,7 +4429,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;TransportModeCode&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4252,7 +4461,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;TruckerNumber&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4268,7 +4477,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;PickUpReference&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -4301,7 +4510,146 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;FromType&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;PickUpDeliveryFromTypeCode&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;PickUpDeliveryFromToType&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="true"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;ToType&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;PickUpDeliveryToTypeCode&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;PickUpDeliveryFromToType&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="true"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;FromCity&quot;"
+        FieldName="&quot;FromAddressCity&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;nText&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;FromZipCode&quot;"
+        FieldName="&quot;FromAddressZipCode&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;FromCountry&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;FromAddressCountryId&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Country&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="true"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;ToCity&quot;"
+        FieldName="&quot;ToAddressCity&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;nText&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;ToZipCode&quot;"
+        FieldName="&quot;ToAddressZipCode&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;ToCountry&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;ToAddressCountryId&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Country&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="true"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;ChangeSetOp&quot;"
+        FieldName="&quot;ChangeSet&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>

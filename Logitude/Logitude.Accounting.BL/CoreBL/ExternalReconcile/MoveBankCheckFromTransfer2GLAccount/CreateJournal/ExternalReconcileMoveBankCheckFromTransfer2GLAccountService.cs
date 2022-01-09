@@ -234,7 +234,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             journalLineDebitTransfer.Tenant = journal.Tenant;
             journalLineDebitTransfer.JournalId = journal.Id;
             journalLineDebitTransfer.Line = 1;
-            journalLineDebitTransfer.ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit;
+            journalLineDebitTransfer.ActionTypeCodeEnum = JournalActionTypeEnum.Debit;
             //journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit;
             journalLineDebitTransfer.DocumentDate = myReconcileExternalPageLinePM.ReferenceDate;
             journalLineDebitTransfer.DueDate = myReconcileExternalPageLinePM.ReferenceDate;
@@ -262,7 +262,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             journalLineCreditBankGLId.Tenant = journal.Tenant;
             journalLineCreditBankGLId.JournalId = journal.Id;
             journalLineCreditBankGLId.Line = 1;
-            journalLineCreditBankGLId.ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit;
+            journalLineCreditBankGLId.ActionTypeCodeEnum = JournalActionTypeEnum.Credit;
 
             journalLineCreditBankGLId.DocumentDate = myReconcileExternalPageLinePM.ReferenceDate;
             journalLineCreditBankGLId.DueDate = myReconcileExternalPageLinePM.ReferenceDate;

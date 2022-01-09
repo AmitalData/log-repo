@@ -22,7 +22,7 @@ import {ChargesGroupPMService} from './Services/StandardPMs/ChargesGroupPMServic
 import { CustomPickListPMService } from './Services/StandardPMs/CustomPickListPMService';
 import { BluesnapContractPMService } from './Services/StandardPMs/BluesnapContractPMService';
 
-//import {EntityStatusPMService} from './Services/StandardPMs/EntityStatusPMService';
+import {EntityStatusPMService} from './Services/StandardPMs/EntityStatusPMService';
 //import {EventTypeCategoryPMService} from './Services/StandardPMs/EventTypeCategoryPMService';
 import {EventTypePMService} from './Services/StandardPMs/EventTypePMService';
 import {GeneralEntitiesService} from './Services/StandardPMs/GeneralEntitiesService';
@@ -97,6 +97,7 @@ import { PriceStepPMService } from './Services/StandardPMs/PriceStepPMService';
 import { HelpResourceListService } from './Services/StandardLists/HelpResourceListService';
 import { HelpResourcePMService } from './Services/StandardPMs/HelpResourcePMService';
 import { MultiEntityUpdateLogPMService } from './Services/StandardPMs/MultiEntityUpdateLogPMService';
+import { EntityStatusTypeListService } from './Services/StandardLists/EntityStatusTypeListService';
 
 export class ModuleProviders {
     
@@ -132,7 +133,7 @@ export class ModuleProviders {
             case "BusinessHoursHolidayPMService": { myResult = new BusinessHoursHolidayPMService(); break; }
             case "ChargesGroupPMService": { myResult = new ChargesGroupPMService(); break; }
             case "CustomPickListPMService": { myResult = new CustomPickListPMService(); break; }
-            //case "EntityStatusPMService": { myResult = new EntityStatusPMService(); break; }
+            case "EntityStatusPMService": { myResult = new EntityStatusPMService(); break; }
             //case "EventTypeCategoryPMService": { myResult = new EventTypeCategoryPMService(); break; }
             case "EventTypePMService": { myResult = new EventTypePMService(); break; }
             case "GeneralEntitiesService": { myResult = new GeneralEntitiesService(); break; }
@@ -200,6 +201,7 @@ export class ModuleProviders {
             case "HelpResourcePMService": { myResult = new HelpResourcePMService(); break; }
             case "BIReportFolderExtendedListService": { myResult = new BIReportFolderExtendedListService(); break; }
             case "MultiEntityUpdateLogPMService": { myResult = new MultiEntityUpdateLogPMService(); break; }
+            case "EntityStatusTypeListService": { myResult = new EntityStatusTypeListService(); break; } 
         }
 
         return myResult;

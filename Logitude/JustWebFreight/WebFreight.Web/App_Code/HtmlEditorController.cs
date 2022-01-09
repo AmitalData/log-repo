@@ -2,6 +2,7 @@
 using Logitude.BL.Helpers;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
@@ -214,7 +215,7 @@ namespace WebFreight.Web.App_Code
                     DocumentPopulateAutomaticDateUpdateService documentPopulateAutomaticDateUpdateService = new DocumentPopulateAutomaticDateUpdateService();
                     documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = filter.EntityId, ObjectTableName = filter.ObjectTableName, ChildObjectTableId = filter.ChildObjectTableId, ChildEntityId = filter.ChildEntityId, DocumentTypeCode = filter.DocumentTypeCode, ProcessType = "Send", Tenant = filter.Tenant });
 
-
+                    RunAutomation(filter, reslut, "OnDocumentUpdate");
                 }
                 else throw new Exception("Sorry you’re not authenticated to send this email");
                 return Request.CreateResponse(HttpStatusCode.OK, reslut);
@@ -224,6 +225,18 @@ namespace WebFreight.Web.App_Code
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+
+        private void RunAutomation(SendHtmlFilter filter, string documentId, string automationType)
+        {
+            GeneralEntityChangeService generalEntityChangeService = new GeneralEntityChangeService();
+            EntityDetails entityDetails = generalEntityChangeService.GetEntityDetails(filter.EntityId, filter.ObjectTableName, filter.Tenant);
+
+            bool isHaveAutomation = generalEntityChangeService.CheckIfEntityHaveAutomation(entityDetails.CombinedObjectTableName, automationType, filter.Tenant);
+            if (!isHaveAutomation) return;
+
+            MainEntityChangeService mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { EntityPM = entityDetails.EntityPM, ProcessType = automationType, ObjectTableName = entityDetails.ObjectTableName, EntityId = filter.EntityId, Tenant = filter.Tenant, StartDate = DateTime.Now, ExtraDetails = new OnUpdateDocumentDetails { Type = "Send", DocumentId = documentId, DocumentTypeId = filter.DocumentTypeId }, OtherObjectTableName = entityDetails.OtherObjectTableName });
+            mainEntityChangeService.AddEntityChange();
         }
 
         //Pdf Document Template Html

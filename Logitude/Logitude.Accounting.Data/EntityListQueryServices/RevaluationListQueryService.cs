@@ -41,6 +41,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                      Message = a.Message,
                                                      Status = a.Status,
                                                      StatusName = a.RevaluationStatus != null ? a.RevaluationStatus.LocalName : a.RevaluationStatus.Name,
+                                                     RevaluationsGLAccountId = a.RevaluationsGLAccountId,
+                                                     RevaluationsGLAccountName = a.RevaluationGLAccount != null ? a.RevaluationGLAccount.LocalName : null,
                                                  });
             return query;
         }

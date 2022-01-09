@@ -57,7 +57,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         }
         private void BuildShipmentOrderRoute(ShipmentOrderPM shipmentOrderPM)
         {
-            if (shipmentOrderPM.GatewayId == null)
+            if (shipmentOrderPM.GatewayId != null)
                 BuildShipmentOrderGatewayRoute(shipmentOrderPM);
             else
                 BuildShipmentOrderNonGatwayRoute(shipmentOrderPM);
@@ -218,11 +218,27 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
 
         private void BuildShipmentOrderGatewayRoute(ShipmentOrderPM shipmentOrderPM)
         {
-            BuildShipmentOrderOriginRoute(shipmentOrderPM);
+            if(shipmentOrderPM.GatewayCode == shipmentOrderPM.OriginPortCode || shipmentOrderPM.GatewayCode == shipmentOrderPM.DestinationPortCode)
+            {
+                BuildShipmentOrderOriginRouteToDestinationRoute(shipmentOrderPM);
+                return;
+            }
 
+            BuildShipmentOrderOriginRoute(shipmentOrderPM);
             BuildShipmentOrderDestinationRoute(shipmentOrderPM);
         }
+        private void BuildShipmentOrderOriginRouteToDestinationRoute(ShipmentOrderPM shipmentOrderPM)
+        {
+            var step = new RoutingStep()
+            {
+                TransportModeCode = shipmentOrderPM.TransportModeId,
+                Description = "MainCarriageLeg",
+                FromPortLabel = shipmentOrderPM.OriginPortCode,
+                ToPortLabel = shipmentOrderPM.DestinationPortCode
+            };
 
+            routingSteps.Add(step);
+        }
         private void BuildShipmentOrderDestinationRoute(ShipmentOrderPM shipmentOrderPM)
         {
             var step = new RoutingStep()

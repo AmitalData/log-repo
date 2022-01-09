@@ -203,6 +203,7 @@
     <None Include="DBScripts\GlobalModel\AddCollaborationToolContainerWRsBatchService.sxml" />
     <None Include="DBScripts\InfrastructureModel\202111301850_UpdateContainerEntityStatuesNames.sxml" />
     <None Include="DBScripts\InfrastructureModel\202111081530_FillEntityStatusTypes.sxml" />
+    <None Include="DBScripts\InfrastructureModel\UpdateEntityStatusLocalWeight.sxml" />
     <None Include="DBScripts\InvoiceModel\202111041254_FillARPaymentBankTranferFromARPayment.sxml" />
     <None Include="DBScripts\InvoiceModel\202109051322_FillARInvoiceShipmentsDataBackward.sxml" />
     <None Include="DBScripts\InvoiceModel\202109051324_FillAPInvoiceShipmentsDataBackward.sxml" />
@@ -566,13 +567,15 @@
     <None Include="DBScripts\ShipmentModel\202109021032_FillDomesticFromToAdPartner.sxml" />
     <None Include="DBScripts\ShipmentModel\202111071410_FillContainersShipmentCreateDate.sxml" />
     <None Include="DBScripts\ShipmentModel\202109221248_FillContainersPortsIdsData.sxml" />
+    <None Include="DBScripts\ShipmentModel\202112261340_FillVesselNamesFieldsOnMaster.soxml" />
+    <None Include="DBScripts\ShipmentModel\202112261340_FillVesselNamesFieldsOnShipment.soxml" />
     <None Include="DBScripts\ShipmentModel\202117101748_UpdateAutomaticLastUpdateDateOnShipmentSubTypes.sxml" />
     <None Include="DBScripts\ShipmentModel\202122031108_UpdateFollowUpForwardingEvents.sxml" />
     <None Include="DBScripts\ShipmentModel\202201031148_FillProratedAmountTable.sxml" />
     <None Include="DBScripts\ShipmentModel\DeleteShipmentAssginedtoCustomsAgentId.sxml" />
     <None Include="DBScripts\ShipmentModel\FillAccountingClosedByUserInShipmentComputedFields.sxml" />
     <None Include="DBScripts\ShipmentModel\UpdateshipmentsCalculateDocumentsKPIFields.sxml" />
-    <None Include="DBScripts\ShipmentModel\UpdateShipmentsCalculateSendDocumentField.sxml" />
+    <None Include="DBScripts\ShipmentModel\UpdateShipmentsCalculateSendDocumentField.soxml" />
     <None Include="DBTables\CommonDataModel\CardSearch.dxml" />
     <None Include="DBTables\CommonDataModel\CargoTrackingCard.dxml" />
     <None Include="DBTables\CommonDataModel\CargoTrackingShipmentSearchField.dxml" />

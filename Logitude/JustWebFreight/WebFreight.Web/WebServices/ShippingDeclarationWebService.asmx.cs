@@ -2240,36 +2240,6 @@ namespace WebFreight.Web.WebServices
                         }
                     }
 
-                    Address toAddress = null;
-                    if (shipment.MainCarriageToAddressId != null)
-                    {
-                        toAddress = addressRepository.GetSingleAddress(shipment.MainCarriageToAddressId, shipment.Tenant);
-                        if (toAddress != null)
-                        {
-                            myDataProvider.ToLocation = toAddress.City + " " + (toAddress.Country != null ? toAddress.Country.Code : "");
-
-                            if (!string.IsNullOrEmpty(myDataProvider.ToLocation))
-                            {
-                                myDataProvider.ToLocation_Label = "Place of Discharge";
-                            }
-
-                            else
-                            {
-                                myDataProvider.ToLocation_Label = "";
-                            }
-
-                            myDataProvider.FinalLocation = toAddress.City + " " + (toAddress.Country != null ? toAddress.Country.Code : "");
-
-                            Country toCountry = commonContext.Countries.Where(a => a.Id == toAddress.CountryId).FirstOrDefault();
-                            if (toCountry != null)
-                            {
-                                myDataProvider.ToLocationCountryCode = toCountry.Code;
-
-                            }
-                        }
-                    }
-
-
                     if (shipment.MainCarriageFromPartnerId != null)
                     {
                         Card fromPartner = commonContext.Cards.Where(d => d.Id == shipment.MainCarriageFromPartnerId && d.Tenant == shipment.Tenant).FirstOrDefault();
@@ -2295,7 +2265,8 @@ namespace WebFreight.Web.WebServices
                     {
                         Card toPartner = commonContext.Cards.Where(d => d.Id == shipment.MainCarriageToPartnerId && d.Tenant == shipment.Tenant).FirstOrDefault();
 
-                        if(toPartner != null)
+                        Address toAddress = addressRepository.GetSingleAddress(shipment.MainCarriageToAddressId, shipment.Tenant);
+                        if (toPartner != null)
                         {
                             myDataProvider.ToPartnerName = toPartner.EnglishName;
 
@@ -2311,6 +2282,36 @@ namespace WebFreight.Web.WebServices
                             }
                         }
                     }
+
+                    switch (shipment.InlandDomesticToTypeCode)
+                    {
+                        case "PART":
+                            {
+                                this.SetToLocationFromInlanDomesticPartner(myDataProvider);
+                                break;
+                            }
+
+                        case "PORT":
+                            {
+                                myDataProvider.ToLocation = shipment.MainCarriageToPortName;
+                                break;
+                            }
+
+                        case "CASL":
+                            {
+                                this.SetToLocationFromInlanDomesticCasual(myDataProvider);
+                                break;
+                            }
+                    }
+
+                    myDataProvider.FinalLocation = myDataProvider.ToLocation;
+                    myDataProvider.ToLocation_Label = "";
+
+                    if (!string.IsNullOrEmpty(myDataProvider.ToLocation))
+                    {
+                        myDataProvider.ToLocation_Label = "Place of Discharge";
+                    }
+                    
                     #endregion
                 }
 
@@ -3807,6 +3808,7 @@ namespace WebFreight.Web.WebServices
                 }
 
                 this.FillPickUpDeliveryAddresses(myFirstPickup, myLastDelivery, myDataProvider);
+                this.MapRoutingDataProvider(myDataProvider);
             }
 
             try
@@ -4844,6 +4846,67 @@ namespace WebFreight.Web.WebServices
             }
 
             return handlerUser.EnglishName;
+        }
+
+        private void SetToLocationFromInlanDomesticPartner(ShippingDeclarationDataProvider myDataProvider)
+        {
+            Address toAddress = addressRepository.GetSingleAddress(shipment.MainCarriageToAddressId, tenant);
+            if (toAddress != null)
+            {
+                myDataProvider.ToLocation = toAddress.City + " " + (toAddress.Country != null ? toAddress.Country.Code : "");
+                myDataProvider.ToLocationCountryCode = toAddress.Country != null ? toAddress.Country.Code : "";
+            }
+        }
+
+        private void SetToLocationFromInlanDomesticCasual(ShippingDeclarationDataProvider myDataProvider)
+        {
+            myDataProvider.ToLocation = shipment.InlandDomesticToCity;
+
+            if (!string.IsNullOrEmpty(shipment.InlandDomesticToCountryId))
+            {
+                Country country = countryRepository.GetSingleCountry(shipment.InlandDomesticToCountryId, tenant);
+                if (country != null)
+                {
+                    myDataProvider.ToLocation += " " + country.Code;
+                    myDataProvider.ToLocationCountryCode = country.Code;
+                }
+            }
+        }
+
+        private void MapRoutingDataProvider(ShippingDeclarationDataProvider shippingDeclarationDataProvider)
+        {
+            RoutingDataProvider routingDataProvider = new RoutingDataProvider(this.shipment);
+            this.GetPreForwardingData(shippingDeclarationDataProvider, routingDataProvider);
+            this.GetOnForwardingData(shippingDeclarationDataProvider, routingDataProvider);
+            this.GetPreCarriageData(shippingDeclarationDataProvider, routingDataProvider);
+            this.GetOnCarriageData(shippingDeclarationDataProvider, routingDataProvider);
+        }
+
+        private void GetPreForwardingData(ShippingDeclarationDataProvider shippingDeclarationDataProvider, RoutingDataProvider routingDataProvider)
+        {
+            shippingDeclarationDataProvider.PreForwardingATD = routingDataProvider.PreForwardingATD;
+            shippingDeclarationDataProvider.PreForwardingATA = routingDataProvider.PreForwardingATA;
+        }
+        private void GetOnForwardingData(ShippingDeclarationDataProvider shippingDeclarationDataProvider, RoutingDataProvider routingDataProvider)
+        {
+            shippingDeclarationDataProvider.OnForwardingFrom = routingDataProvider.OnForwardingFrom;
+            shippingDeclarationDataProvider.OnForwardingETD = routingDataProvider.OnForwardingETD;
+            shippingDeclarationDataProvider.OnForwardingATD = routingDataProvider.OnForwardingATD;
+            shippingDeclarationDataProvider.OnForwardingATA = routingDataProvider.OnForwardingATA;
+            shippingDeclarationDataProvider.OnForwardingCarrierCode = routingDataProvider.OnForwardingCarrierCode;
+            shippingDeclarationDataProvider.OnForwardingCarrierNumber = routingDataProvider.OnForwardingCarrierNumber;
+        }
+        private void GetPreCarriageData(ShippingDeclarationDataProvider shippingDeclarationDataProvider, RoutingDataProvider routingDataProvider)
+        {
+            shippingDeclarationDataProvider.PreCarriageATD = routingDataProvider.PreCarriageATD;
+            shippingDeclarationDataProvider.PreCarriageATA = routingDataProvider.PreCarriageATA;
+        }
+        private void GetOnCarriageData(ShippingDeclarationDataProvider shippingDeclarationDataProvider, RoutingDataProvider routingDataProvider)
+        {
+            shippingDeclarationDataProvider.OnCarriageFrom = routingDataProvider.OnCarriageFrom;
+            shippingDeclarationDataProvider.OnCarriageETD = routingDataProvider.OnCarriageETD;
+            shippingDeclarationDataProvider.OnCarriageATD = routingDataProvider.OnCarriageATD;
+            shippingDeclarationDataProvider.OnCarriageATA = routingDataProvider.OnCarriageATA;
         }
     }
 }

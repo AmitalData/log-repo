@@ -123,9 +123,8 @@ using Simplog.Data.InfrastructureModel;
 					   
 						 
 						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EventTypeCode))
-						{
-								//throw new ApplicationException("EventTypeCode Can't be update"); 
-								temp.Code = MyEntity.EventTypeCode;
+						{								
+							temp.Code = MyEntity.EventTypeCode;
 								
 						
 						}  
@@ -133,9 +132,9 @@ using Simplog.Data.InfrastructureModel;
 						
 					}
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EventTypeName))
-					{							//throw new ApplicationException("EventTypeName Can't be update"); 
-							temp.EnglishName = MyEntity.EventTypeName;
+					if(!IsUpdate)
+					{							
+						temp.EnglishName = MyEntity.EventTypeName;
 
 										}  
 
@@ -150,7 +149,7 @@ using Simplog.Data.InfrastructureModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("EventTypeStatusEntity Can't be update"); 
+							{								
 								temp.EntityStatusId = myEventTypeStatusEntityPM.Id;
 						  
 							}  
@@ -162,17 +161,17 @@ using Simplog.Data.InfrastructureModel;
 			
 					
                     
-					if(!IsUpdate)// && (MyEntity.EventTypeCustomerView != temp.IsCustomerView))
-					{							//throw new ApplicationException("EventTypeCustomerView Can't be update"); 
-							temp.IsCustomerView = MyEntity.EventTypeCustomerView;
+					if(!IsUpdate)
+					{							
+						temp.IsCustomerView = MyEntity.EventTypeCustomerView;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && (MyEntity.EventTypeAgentView != temp.IsAgentView))
-					{							//throw new ApplicationException("EventTypeAgentView Can't be update"); 
-							temp.IsAgentView = MyEntity.EventTypeAgentView;
+					if(!IsUpdate)
+					{							
+						temp.IsAgentView = MyEntity.EventTypeAgentView;
 
 										}  
 

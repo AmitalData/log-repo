@@ -32,6 +32,7 @@ namespace WebFreight.Web.Helpers
         public string EventTypeCode { get; set; }
         public bool IsCRM { get; set; }
         public string DocumentTypeCode { get; set; }
+        public string DocumentTypeId { get; set; }
         public string HeaderHtml { get; set; }
         public string FooterHtml { get; set; }
 

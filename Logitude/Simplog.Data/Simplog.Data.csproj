@@ -591,6 +591,7 @@
     <Compile Include="Helpers\AutomationEvent.cs" />
     <Compile Include="Helpers\AutomationFollowUp.cs" />
     <Compile Include="Helpers\AutomationQueuedTask.cs" />
+    <Compile Include="Helpers\AutomationOnUpdateDocument.cs" />
     <Compile Include="Helpers\AutomationSendDocument.cs" />
     <Compile Include="Helpers\AutomationSendInterface.cs" />
     <Compile Include="Helpers\DocumentDefultAttachment.cs" />

@@ -47,6 +47,8 @@ namespace WebFreight.Web.ReportsWebServices
         private CountryRepository countryRepository;
         private ICommonDataContext commonContext;
         private IWebFreightContext webFreightContext;
+        private ContactRepository contactRepository;
+        private AddressRepository addressRepository;
 
         [WebMethod]
         public byte[] GetProfitData(string shipmentId, int tenant, string accountingCurrencyId, string currentUser)
@@ -85,7 +87,7 @@ namespace WebFreight.Web.ReportsWebServices
             ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
             CurrencyRepository currencyRepository = new CurrencyRepository(commonContext);
-            AddressRepository addressRepository = new AddressRepository(commonContext);
+            addressRepository = new AddressRepository(commonContext);
             VatTypeRepository vatTypeRepository = new VatTypeRepository(commonContext);
             VatTypeQuery vatTypeQuery = new VatTypeQuery(vatTypeRepository);
             List<Currency> listCurrency = currencyRepository.GetCurrencies(tenant).ToList();
@@ -94,6 +96,7 @@ namespace WebFreight.Web.ReportsWebServices
             countryRepository = new CountryRepository(commonContext);
             TenantRepository tenantRepository = new TenantRepository(tenant);
             Tenant tenantSettings = (from a in commonContext.Tenants where a.Id == tenant select a).FirstOrDefault();
+            contactRepository = new ContactRepository(commonContext);
 
             provider.IssueDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
@@ -565,7 +568,7 @@ namespace WebFreight.Web.ReportsWebServices
                 provider.AgentAddress = varAgentAddress;
                 provider.ShipperAddress = varShipperAddress;
                 provider.ConsigneeAddress = varConsigneeAddress;
-
+                this.FillCustomerFields(provider, shipmentPM);
                 #endregion
 
                 #region Lables
@@ -594,26 +597,15 @@ namespace WebFreight.Web.ReportsWebServices
                             carrierLable = "Shipping line";
                             carrierNumberLabel = "Vessel/Voyage No";
 
-                            string vesselName = String.Empty;
-                            if (!string.IsNullOrEmpty(shipmentPM.MainCarriageVesselId))
+                            if (!string.IsNullOrEmpty(shipmentPM.MainCarriageVesselName))
                             {
-                                VesselRepository vesselRepository = new VesselRepository(tenant);
-                                Vessel vessel = vesselRepository.GetSingleVessel(shipmentPM.MainCarriageVesselId, tenant);
-                                if (vessel != null)
-                                {
-                                    vesselName = vessel.EnglishName;
-                                }
-                            }
-
-                            if (!string.IsNullOrEmpty(vesselName))
-                            {
-                                carrierNumber = vesselName + "/" + shipmentPM.MainCarriageCarrierCode + shipmentPM.MainCarriageCarrierNumber;
+                                carrierNumber = shipmentPM.MainCarriageVesselName + "/" + shipmentPM.MainCarriageCarrierCode + shipmentPM.MainCarriageCarrierNumber;
                             }
                             else
                             {
                                 carrierNumber = shipmentPM.MainCarriageCarrierCode + shipmentPM.MainCarriageCarrierNumber;
 
-                            }
+                            }                            
                             break;
                         }
 
@@ -1130,6 +1122,19 @@ namespace WebFreight.Web.ReportsWebServices
             return provider;
         }
 
+        private void FillCustomerFields(ShipmentProfitDataProvider provider, ShipmentPM shipmentPM)
+        {
+            provider.CustomerName = ServiceStringConvertor(shipmentPM.CustomerName);
+            if (!string.IsNullOrEmpty(shipmentPM.CustomerAddressId))
+            {
+                Address address = addressRepository.GetSingleAddress(shipmentPM.CustomerAddressId, shipmentPM.Tenant);
+                provider.CustomerAddress = DataProviders.General.GetAddress(address);
+            }
+            Contact customerContact = contactRepository.GetSingleContact(shipmentPM.CustomerContactId, tenant);
+            provider.CustomerContactName = customerContact?.EnglishName;
+            provider.CustomerContactEmail = customerContact?.Email;
+        }
+
         private void ComputeOriginCountryAndLocationVariables(ShipmentProfitInvoicesDataProvider provider, Shipment shipment, ShipmentMasterData masterData)
         {
             string originPortId = null;
@@ -1210,14 +1215,10 @@ namespace WebFreight.Web.ReportsWebServices
 
         private string GetCarrierNumberByVessel(ShipmentMasterData shipmentMasterData)
         {
-            if (!string.IsNullOrEmpty(shipmentMasterData.MainCarriageVesselId))
+            if (!string.IsNullOrEmpty(shipmentMasterData.MainCarriageVesselName))            
             {
-                Vessel maincarriagevessel = (from a in commonContext.Vessels
-                                             where a.Id == shipmentMasterData.MainCarriageVesselId
-                                             select a).FirstOrDefault();
-
-               if(maincarriagevessel != null)
-                    return maincarriagevessel.EnglishName + " " + shipmentMasterData.MainCarriageCarrierNumber;
+               if(shipmentMasterData.MainCarriageVesselName != null)
+                    return shipmentMasterData.MainCarriageVesselName + " " + shipmentMasterData.MainCarriageCarrierNumber;
             }
             return null;
         }

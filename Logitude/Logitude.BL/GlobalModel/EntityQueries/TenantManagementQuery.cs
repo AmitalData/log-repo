@@ -236,6 +236,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
                                                      BackgroundId = a.BackgroundId,
                                                      ShipmentHeaderImageId = a.ShipmentHeaderImageId,
+                                                     PermissionBuildMonths = a.PermissionBuildMonths,
                                                      ComapnylogoId = a.ComapnylogoId,
                                                      InvertedLogoId = a.InvertedLogoId,
                                                      BrowserIconId = a.BrowserIconId,
@@ -439,6 +440,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   InvertedLogoId = a.InvertedLogoId,
                                                   BrowserIconId = a.BrowserIconId,
                                                   ShipmentHeaderImageId = a.ShipmentHeaderImageId,
+                                                  PermissionBuildMonths = a.PermissionBuildMonths,
                                                   NoPaymentForChildTenants = a.NoPaymentForChildTenants,
                                                   LastEbookingSentDate = a.LastEbookingSentDate,
                                                   LastSISentDate = a.LastSISentDate,

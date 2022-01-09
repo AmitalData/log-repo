@@ -122,6 +122,9 @@ namespace Simplog.Data.Helpers
 
         [DataMember]
         public AutomationCreateTask AutomationCreateTask { get; set; }
+
+        [DataMember]
+        public AutomationOnUpdateDocument AutomationOnUpdateDocument { get; set; }
     }
 
 

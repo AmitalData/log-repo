@@ -19,6 +19,9 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using Simplog.Data.ShipmentsModel;
+using Logitude.BL.ShipmentsModel.EntityQueries;
+using WebFreight.Web.Helpers.APIHelpers;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
 {
@@ -26,10 +29,14 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
     {
         private int tenant;
         private ShipmentPM shipmentPM;
+        private VesselRepository vesselRepository;
+        private CardQuery cardQuery;
         public ExternalAPIShipmentValidator(ShipmentPM shipmentPM, int tenant)
         {
             this.tenant = tenant;
             this.shipmentPM = shipmentPM;
+            this.vesselRepository = new VesselRepository(tenant);
+            this.cardQuery = new CardQuery(tenant);
         }
 
         public void ValidateUnitCodes()
@@ -108,26 +115,27 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
         }
         public void ValidatePickupDeliveryPackages()
         {
-            if (this.IsOceanInsightFeatureToggleExistInTenant())
+            if (!this.IsOceanInsightFeatureToggleExistInTenant())
             {
-                if (this.IsShipmentHasPickup())
+                return;
+            }
+            if (this.IsShipmentHasPickup())
+            {
+                foreach (ShipmentPickUpPM pickUp in shipmentPM.ShipmentPickUps)
                 {
-                    foreach (ShipmentPickUpPM pickUp in shipmentPM.ShipmentPickUps)
+                    if (pickUp.ShipmentPickUpDeliveryPackages != null && pickUp.ShipmentPickUpDeliveryPackages.Count > 0)
                     {
-                        if (pickUp.ShipmentPickUpDeliveryPackages != null && pickUp.ShipmentPickUpDeliveryPackages.Count > 0)
-                        {
-                            throw new ApplicationException("Creating Pickup package details is not permitted from the API");
-                        }
+                        throw new ApplicationException("Creating Pickup package details is not permitted from the API");
                     }
                 }
-                if (this.IsShipmentHasDelivery())
+            }
+            if (this.IsShipmentHasDelivery())
+            {
+                foreach (ShipmentDeliveryPM delivery in shipmentPM.ShipmentDeliveries)
                 {
-                    foreach (ShipmentDeliveryPM delivery in shipmentPM.ShipmentDeliveries)
+                    if (delivery.ShipmentPickUpDeliveryPackages != null && delivery.ShipmentPickUpDeliveryPackages.Count > 0)
                     {
-                        if (delivery.ShipmentPickUpDeliveryPackages != null && delivery.ShipmentPickUpDeliveryPackages.Count > 0)
-                        {
-                            throw new ApplicationException("Creating Delivery package details is not permitted from the API");
-                        }
+                        throw new ApplicationException("Creating Delivery package details is not permitted from the API");
                     }
                 }
             }
@@ -335,6 +343,48 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                 scope.Complete();
             }
         }
+
+        public void ValidateInActiveCarriers(ShipmentPM entityPM)
+        {
+            this.ValidateInActiveCard(entityPM.MainCarriageCarrierId, "MainCarriageCarrier");
+            this.ValidateInActiveCard(entityPM.Transshipment1CarrierId, "Transshipment1Carrier");
+            this.ValidateInActiveCard(entityPM.Transshipment2CarrierId, "Transshipment2Carrier");
+            this.ValidateInActiveCard(entityPM.Transshipment3CarrierId, "Transshipment3Carrier");
+            this.ValidateInActiveCard(entityPM.PreCarriageCarrierId, "PreCarriageCarrier");
+            this.ValidateInActiveCard(entityPM.OnCarriageCarrierId, "OnCarriageCarrier");
+            this.ValidateInActiveCard(entityPM.PreForwardingCarrierId, "PreForwardingCarrier");
+            this.ValidateInActiveCard(entityPM.OnForwardingCarrierId, "OnForwardingCarrier");
+            this.ValidateInActiveCarriersPickUps(entityPM);
+            this.ValidateInActiveCarriersDeliveries(entityPM);
+        }
+
+        private void ValidateInActiveCard(string carrierId, string carrierFieldName)
+        {
+            CarrierCard card = this.cardQuery.GetSingleCarrierCard(carrierId, tenant);
+            if(card == null)
+            {
+                return;
+            }
+            var inActive = card.InActive;
+            var carrierCode = card.Code;
+            if (inActive)
+                throw new ApplicationException("The " + carrierFieldName + " with the code " + carrierCode + " is inactive and cannot be used.");
+        }
+        private void ValidateInActiveCarriersPickUps(ShipmentPM entityPM)
+        {
+            foreach (ShipmentPickUpPM shipmentPickUp in entityPM.ShipmentPickUps)
+            {
+                this.ValidateInActiveCard(shipmentPickUp.CarrierId,  "PickUpCarrier");
+            }
+        }
+        private void ValidateInActiveCarriersDeliveries(ShipmentPM entityPM)
+        {
+            foreach (ShipmentDeliveryPM shipmentDelivery in entityPM.ShipmentDeliveries)
+            {
+                this.ValidateInActiveCard(shipmentDelivery.CarrierId, "DeliveryCarrier");
+            }
+        }
+
         public void ValidatePartnersDueToDirection()
         {
             switch (shipmentPM.DirectionId)
@@ -390,6 +440,84 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
             this.ValidatePreCarriageDates();
             this.ValidatePreCarriageVessel();
             this.ValidateOnCarriageVessel();
+            this.MapPreCarriageVesselName();
+            this.MapOnCarriageVesselName();
+        }
+        public void UpdatePickupDeliveryPackagesChangeSet(ShipmentPM entityPM)
+        {
+            this.UpdatePickupPackagesChangeSet(entityPM);
+            this.UpdateDeliveryPackagesChangeSet(entityPM);
+        }
+        public void ValidateUpdateShipmentPackages(ShipmentPM entityPM)
+        {
+            if (!(entityPM.ShipmentPackages.Count > 0))
+            {
+                return;
+            }
+
+            foreach (ShipmentPackagePM item in entityPM.ShipmentPackages)
+            {
+                item.ChangeSetOp = this.GetChangeSet(item.ChangeSet);
+                this.ValidateShipmentPackageItem(item, entityPM);
+            }
+        }
+        public void UpdatePayablesChangeSet(ShipmentPM entityPM)
+        {
+            if (entityPM.ShipmentPayables.Count == 0)
+            {
+                return;
+            }
+
+            foreach (ShipmentPayablePM payable in entityPM.ShipmentPayables)
+            {
+                payable.ChangeSetOp = this.GetChangeSet(payable.ChangeSet);
+            }
+        }
+        public void UpdateReceivablesChangeSet(ShipmentPM entityPM)
+        {
+            if (entityPM.ShipmentReceivables.Count == 0)
+            {
+                return;
+            }
+
+            foreach (ShipmentReceivablePM receivable in entityPM.ShipmentReceivables)
+            {
+                receivable.ChangeSetOp = this.GetChangeSet(receivable.ChangeSet);
+            }
+        }
+        public ShipmentPM ValidateInlandDomesticShipment(ShipmentPM entityPM)
+        {
+            ValidateInlandDomesticShipmentFromTypeCode(entityPM);
+            ValidateInlandDomesticShipmentToTypeCode(entityPM);
+            entityPM = SetInlandDomesticShipmentFromPartners(entityPM);
+            entityPM = SetInlandDomesticShipmentToPartners(entityPM);
+            ValidateInlandDomesticMainCarriageDates(entityPM);
+
+            return entityPM;
+        }
+        public void ValidateCustomsFields(ShipmentPM shipmentPM)
+        {
+            if (!this.IsAddingCustomsFields(shipmentPM))
+            {
+                return;
+            }
+            if (shipmentPM.CustomsClearanceDate != null)
+            {
+                shipmentPM.IncludesCustoms = true;
+                return;
+            }
+            if (shipmentPM.DeclarationDate == null && !string.IsNullOrEmpty(shipmentPM.DeclarationNumber))
+            {
+                throw new ApplicationException("Declaration Date Field Is Required");
+            }
+            shipmentPM.IncludesCustoms = true;
+        }
+        public  void ValidateShipmentPackageDimensionsAndVolume(ShipmentPackagePM shipmentPackagePM, ShipmentPM entityPM)
+        {
+            if (IsOneOfTheDimensionsNotNull(shipmentPackagePM))
+            {
+                shipmentPackagePM.Volume = ComputeHelper.ComputeVolume(shipmentPackagePM, entityPM);
+            }
         }
         private void ValidateOperationalClosed()
         {
@@ -430,7 +558,8 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                 bool hasOpenReceivables = false;
                 if (shipmentPM.ShipmentReceivables.Count() > 0)
                 {
-                    if (shipmentPM.ShipmentReceivables.Where(p => p.TotalAmount != null && p.TotalAmount != 0).Any())
+                    if (shipmentPM.ShipmentReceivables.Where(p => p.TotalAmount != null && p.TotalAmount != 0 
+                                                       && p.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).Any())
                     {
                         hasOpenReceivables = true;
                     }
@@ -440,7 +569,8 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                 {
                     if (shipmentPM.ShipmentPayables.Count() > 0)
                     {
-                        if (shipmentPM.ShipmentPayables.Where(p => p.ExpectedAmount != null && p.ExpectedAmount != 0).Any())
+                        if (shipmentPM.ShipmentPayables.Where(p => p.ExpectedAmount != null && p.ExpectedAmount != 0 
+                                                        && p.ChangeSetOp !=Simplog.Server.Infrastructure.ChangeSetOperation.Delete).Any())
                         {
                             hasOpenPayables = true;
                         }
@@ -487,11 +617,23 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
         }
         private bool IsShipmentHasPickup()
         {
-            return shipmentPM.ShipmentPickUps != null && shipmentPM.ShipmentPickUps.Count > 0;
+            if (shipmentPM.ShipmentPickUps == null)
+                return false;
+
+            if (shipmentPM.ShipmentPickUps.Count == 0)
+                return false;
+
+            return true;
         }
         private bool IsShipmentHasDelivery()
         {
-            return shipmentPM.ShipmentDeliveries != null && shipmentPM.ShipmentDeliveries.Count > 0;
+            if (shipmentPM.ShipmentDeliveries == null)
+                return false;
+
+            if (shipmentPM.ShipmentDeliveries.Count == 0)
+                return false;
+
+            return true;
         }
         private void ValidatePreCarrageFields()
         {
@@ -596,36 +738,32 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
             if (shipmentPM.PreCarriageToPortId != mainCarriageFromPortId)
                 throw new ApplicationException("PreCarriageToPort Must Be Same As MainCarriageFromPort");
         }
-
         private string GetMainCarriageFromPortId()
         {
-            if (!string.IsNullOrEmpty(shipmentPM.MainCarriageFromPortId))
-                return shipmentPM.MainCarriageFromPortId;
-
             if(shipmentPM.MainCarriageLegs.Count > 0)
             {
                 var mainCarriageLeg = shipmentPM.MainCarriageLegs.FirstOrDefault();
                 return mainCarriageLeg?.FromPortId;
             }
 
+            if (!string.IsNullOrEmpty(shipmentPM.MainCarriageFromPortId))
+                return shipmentPM.MainCarriageFromPortId; 
+
             return "";
         }
-
-
         private string GetMainCarriageToPortId()
         {
-            if (!string.IsNullOrEmpty(shipmentPM.MainCarriageToPortId))
-                return shipmentPM.MainCarriageToPortId;
-
             if (shipmentPM.MainCarriageLegs.Count > 0)
             {
                 var mainCarriageLeg = shipmentPM.MainCarriageLegs.LastOrDefault();
                 return mainCarriageLeg?.ToPortId;
             }
 
+            if (!string.IsNullOrEmpty(shipmentPM.MainCarriageToPortId))
+                return shipmentPM.MainCarriageToPortId;
+
             return "";
         }
-
         private void ValidateOnCarrageFromPortField()
         {
             if (string.IsNullOrEmpty(shipmentPM.OnCarriageFromPortId) || string.IsNullOrEmpty(shipmentPM.OnCarriageFromPortId))
@@ -684,6 +822,25 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                 throw new ApplicationException("PreCarriage should not have Vessel");
 
         }
+
+        private void MapPreCarriageVesselName()
+        {
+            if (string.IsNullOrEmpty(shipmentPM.PreCarriageToPortId) || string.IsNullOrEmpty(shipmentPM.PreCarriageFromPortId))
+                return;
+
+            if (string.IsNullOrEmpty(shipmentPM.PreCarriageVesselId))
+                return;
+            
+            Vessel preCarriageVessel = this.vesselRepository.GetSingleVessel(shipmentPM.PreCarriageVesselId,tenant);
+            if (preCarriageVessel == null)
+                return;
+
+            if (string.IsNullOrEmpty(preCarriageVessel.EnglishName))
+                return;
+
+            shipmentPM.PreCarriageVesselName = preCarriageVessel.EnglishName;
+        }
+
         private void ValidateOnCarriageVessel()
         {
             if (string.IsNullOrEmpty(shipmentPM.OnCarriageFromPortId) || string.IsNullOrEmpty(shipmentPM.OnCarriageFromPortId))
@@ -695,5 +852,276 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
             if (!string.IsNullOrEmpty(shipmentPM.OnCarriageVesselId))
                 throw new ApplicationException("OnCarriage should not have Vessel");
         }
+
+        private void MapOnCarriageVesselName()
+        {
+            if (string.IsNullOrEmpty(shipmentPM.OnCarriageFromPortId) || string.IsNullOrEmpty(shipmentPM.OnCarriageFromPortId))
+                return;
+
+            if (string.IsNullOrEmpty(shipmentPM.OnCarriageVesselId))
+                return;
+
+            Vessel onCarriageVessel = this.vesselRepository.GetSingleVessel(shipmentPM.OnCarriageVesselId, tenant);
+            if (onCarriageVessel == null)
+                return;
+
+            if (string.IsNullOrEmpty(onCarriageVessel.EnglishName))
+                return;
+
+            shipmentPM.OnCarriageVesselName = onCarriageVessel.EnglishName;
+        }
+
+        private void UpdateDeliveryPackagesChangeSet(ShipmentPM entityPM)
+        {
+            if (entityPM.ShipmentDeliveries.Count == 0)
+            {
+                return;
+            }
+
+            foreach (ShipmentDeliveryPM shipmentDelivery in entityPM.ShipmentDeliveries)
+            {
+                shipmentDelivery.ChangeSetOp = this.GetChangeSet(shipmentDelivery.ChangeSet);
+
+                foreach (ShipmentPickUpDeliveryPackagePM item in shipmentDelivery.ShipmentPickUpDeliveryPackages)
+                {
+                    item.ChangeSetOp = this.GetChangeSet(item.ChangeSet);
+                }
+            }
+        }
+        private void UpdatePickupPackagesChangeSet(ShipmentPM entityPM)
+        {
+            if (entityPM.ShipmentPickUps.Count == 0)
+            {
+                return;
+            }
+
+            foreach (ShipmentPickUpPM shipmentPickUp in entityPM.ShipmentPickUps)
+            {
+                shipmentPickUp.ChangeSetOp = this.GetChangeSet(shipmentPickUp.ChangeSet);
+
+                foreach (ShipmentPickUpDeliveryPackagePM item in shipmentPickUp.ShipmentPickUpDeliveryPackages)
+                {
+                    item.ChangeSetOp = this.GetChangeSet(item.ChangeSet);
+                }
+            }
+        }
+        private void ValidateShipmentPackageItem(ShipmentPackagePM item, ShipmentPM entityPM)
+        {
+            if (item.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Delete)
+                return;
+
+            this.ValidateShipmentPackageDimensionsAndVolume(item, entityPM);
+
+            if (!item.IsContainer)
+            {
+                if (item.InsideShipmentPackages != null && item.InsideShipmentPackages.Count > 0)
+                {
+                    throw new ApplicationException("Inside Packages allowed in FCL/FTL shipments only");
+                }
+            }
+            else
+            {
+                this.ValidateInsidePackage(item, entityPM);
+            }
+            item.VolumetricWeight = ComputeHelper.ComputeVolumetricWeight(item, entityPM);
+        }
+        private void ValidateInsidePackage(ShipmentPackagePM item, ShipmentPM entityPM)
+        {
+            if (!(item.InsideShipmentPackages != null && item.InsideShipmentPackages.Count > 0))
+            {
+                return;
+            }
+
+            item.Weight = 0;
+            item.Volume = 0;
+            item.InsideShipmentPackages.ForEach(inside =>
+            {
+                if (inside.Weight != null)
+                {
+                    item.Weight += inside.Weight;
+                }
+
+                if (inside.Volume != null)
+                {
+                    item.Volume += inside.Volume;
+                }
+
+                if (inside.Quantity == null)
+                {
+                    throw new ApplicationException("Inside Packages Quantity is required");
+                }
+
+                inside.Volume = ComputeHelper.ComputeInsideVolume(inside, entityPM);
+                inside.VolumetricWeight = ComputeHelper.ComputeInsideVolumetricWeight(inside, entityPM);
+            });
+        }
+        private bool IsOneOfTheDimensionsNotNull(ShipmentPackagePM shipmentPackagePM)
+        {
+            if (shipmentPackagePM.Width != null)
+            {
+                return true;
+            }
+            if (shipmentPackagePM.Height != null)
+            {
+                return true;
+            }
+            if (shipmentPackagePM.Length != null)
+            {
+                return true;
+            }
+            return false;
+        }
+        private Simplog.Server.Infrastructure.ChangeSetOperation GetChangeSet(string ChangeSet)
+        {
+            Simplog.Server.Infrastructure.ChangeSetOperation changeSetOperation = Simplog.Server.Infrastructure.ChangeSetOperation.None;
+            if(!string.IsNullOrEmpty(ChangeSet))
+            {
+                switch (ChangeSet.ToLower())
+                {
+                    case "insert":
+                        {
+                            changeSetOperation = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                            break;
+                        }
+
+                    case "update":
+                        {
+                            changeSetOperation = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                            break;
+                        }
+
+                    case "delete":
+                        {
+                            changeSetOperation = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
+                            break;
+                        }
+                }
+            }
+
+            return changeSetOperation;
+        }
+        private void ValidateInlandDomesticShipmentFromTypeCode(ShipmentPM entityPM)
+        {
+            bool isCityOrCountryNull = string.IsNullOrEmpty(entityPM.InlandDomesticFromCity) || string.IsNullOrEmpty(entityPM.InlandDomesticFromCountryId);
+            string[] inlandDomesticFromTypeCodes = { "CASL", "PART", "PORT" };
+            if (string.IsNullOrEmpty(entityPM.InlandDomesticFromTypeCode))
+            {
+                throw new ApplicationException("InlandDomesticFromTypeCode Field is Required");
+            }
+            if (entityPM.InlandDomesticFromTypeCode == "CASL" && isCityOrCountryNull)
+            {
+                throw new ApplicationException("InlandDomesticFrom City And Country Fields are Required");
+            }
+            else if (entityPM.InlandDomesticFromTypeCode == "PART" && (string.IsNullOrEmpty(entityPM.MainCarriageFromPartnerId)))
+            {
+                throw new ApplicationException("MainCarriageFromPartner Field is Required");
+            }
+            else if (entityPM.InlandDomesticFromTypeCode == "PORT" && string.IsNullOrEmpty(entityPM.MainCarriageFromPortId))
+            {
+                throw new ApplicationException("FromPort Field is Required");
+            }
+            else if (!inlandDomesticFromTypeCodes.Contains(entityPM.InlandDomesticFromTypeCode))
+            {
+                throw new ApplicationException("Invalid InlandDomesticFromTypeCode");
+            }
+        }
+        private void ValidateInlandDomesticShipmentToTypeCode(ShipmentPM entityPM)
+        {
+            bool isCityOrCountryNull = string.IsNullOrEmpty(entityPM.InlandDomesticToCity) || string.IsNullOrEmpty(entityPM.InlandDomesticToCountryId);
+            string[] inlandDomesticToTypeCodes = { "CASL", "PART", "PORT" };
+            if (string.IsNullOrEmpty(entityPM.InlandDomesticToTypeCode))
+            {
+                throw new ApplicationException("InlandDomesticToTypeCode Field is Required");
+            }
+            if (entityPM.InlandDomesticToTypeCode == "CASL" && isCityOrCountryNull)
+            {
+                throw new ApplicationException("InlandDomestic To City And Country Fields are Required");
+            }
+            else if (entityPM.InlandDomesticToTypeCode == "PART" && string.IsNullOrEmpty(entityPM.MainCarriageToPartnerId))
+            {
+                throw new ApplicationException("MainCarriageToPartner Field is Required");
+            }
+            else if (entityPM.InlandDomesticToTypeCode == "PORT" && string.IsNullOrEmpty(entityPM.MainCarriageToPortId))
+            {
+                throw new ApplicationException("ToPort Field is Required");
+            }
+            else if (!inlandDomesticToTypeCodes.Contains(entityPM.InlandDomesticToTypeCode))
+            {
+                throw new ApplicationException("Invalid InlandDomesticToTypeCode");
+            }
+        }
+        private ShipmentPM SetInlandDomesticShipmentFromPartners(ShipmentPM entityPM)
+        {
+            if (entityPM.InlandDomesticFromTypeCode == "CASL")
+            {
+                entityPM.MainCarriageFromPartnerId = null;
+                entityPM.MainCarriageFromPortId = null;
+            }
+            else if (entityPM.InlandDomesticFromTypeCode == "PART")
+            {
+                entityPM.InlandDomesticFromCity = null;
+                entityPM.InlandDomesticFromCountryId = null;
+                entityPM.MainCarriageFromPortId = null;
+            }
+            else if (entityPM.InlandDomesticFromTypeCode == "PORT")
+            {
+                entityPM.InlandDomesticFromCity = null;
+                entityPM.InlandDomesticFromCountryId = null;
+                entityPM.MainCarriageFromPartnerId = null;
+            }
+            return entityPM;
+        }
+        private ShipmentPM SetInlandDomesticShipmentToPartners(ShipmentPM entityPM)
+        {
+            if (entityPM.InlandDomesticToTypeCode == "CASL")
+            {
+                entityPM.MainCarriageToPartnerId = null;
+                entityPM.MainCarriageToPortId = null;
+            }
+            else if (entityPM.InlandDomesticToTypeCode == "PART")
+            {
+                entityPM.InlandDomesticToCity = null;
+                entityPM.InlandDomesticToCountryId = null;
+                entityPM.MainCarriageToPortId = null;
+            }
+            else if (entityPM.InlandDomesticToTypeCode == "PORT")
+            {
+                entityPM.InlandDomesticToCity = null;
+                entityPM.InlandDomesticToCountryId = null;
+                entityPM.MainCarriageToPartnerId = null;
+            }
+            return entityPM;
+        }
+        private void ValidateInlandDomesticMainCarriageDates(ShipmentPM entityPM)
+        {
+            if (!this.IsRoutingLegDatesValid(entityPM.MainCarriageETD, entityPM.MainCarriageETA))
+            {
+                throw new ApplicationException("Main-Carriage expected departure must be less than Main-Carriage expected arrival");
+            }
+
+            if (!this.IsRoutingLegDatesValid(entityPM.MainCarriageATD, entityPM.MainCarriageATA))
+            {
+                throw new ApplicationException("Main-Carriage actual departure must be less than Main-Carriage actual arrival");
+            }
+
+        }
+        private bool IsAddingCustomsFields(ShipmentPM shipmentPM)
+        {
+            if (shipmentPM.CustomsClearanceDate != null)
+            {
+                return true;
+            }
+            if (shipmentPM.DeclarationDate != null)
+            {
+                return true;
+            }
+            if (!string.IsNullOrEmpty(shipmentPM.DeclarationNumber))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
     }
 }

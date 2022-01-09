@@ -83,6 +83,11 @@ export class ARInvoicePM {
     public set ARInvoiceTypeCode(newValue: string) { if (this.aRInvoiceTypeCode != newValue) { this.aRInvoiceTypeCode = newValue; this.MarkAsDirty("ARInvoiceTypeCode"); } }
        
 	 
+    private aRInvoiceTypeName: string;
+    public get ARInvoiceTypeName() { return this.aRInvoiceTypeName; }
+    public set ARInvoiceTypeName(newValue: string) { if (this.aRInvoiceTypeName != newValue) { this.aRInvoiceTypeName = newValue; this.MarkAsDirty("ARInvoiceTypeName"); } }
+       
+	 
     private mainEntityStatus: string;
     public get MainEntityStatus() { return this.mainEntityStatus; }
     public set MainEntityStatus(newValue: string) { if (this.mainEntityStatus != newValue) { this.mainEntityStatus = newValue; this.MarkAsDirty("MainEntityStatus"); } }
@@ -1100,6 +1105,16 @@ export class ARInvoicePM {
     private globalTaxCalculation: string;
     public get GlobalTaxCalculation() { return this.globalTaxCalculation; }
     public set GlobalTaxCalculation(newValue: string) { if (this.globalTaxCalculation != newValue) { this.globalTaxCalculation = newValue; this.MarkAsDirty("GlobalTaxCalculation"); } }
+       
+	 
+    private interestReportNumber: string;
+    public get InterestReportNumber() { return this.interestReportNumber; }
+    public set InterestReportNumber(newValue: string) { if (this.interestReportNumber != newValue) { this.interestReportNumber = newValue; this.MarkAsDirty("InterestReportNumber"); } }
+       
+	 
+    private interestReportId: string;
+    public get InterestReportId() { return this.interestReportId; }
+    public set InterestReportId(newValue: string) { if (this.interestReportId != newValue) { this.interestReportId = newValue; this.MarkAsDirty("InterestReportId"); } }
        
 	 
 

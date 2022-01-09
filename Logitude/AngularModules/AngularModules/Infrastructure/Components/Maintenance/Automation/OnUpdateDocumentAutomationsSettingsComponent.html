@@ -1,0 +1,130 @@
+<table>
+    <tr>
+        <td>
+            <div class="MediaFillAbsolute" style="top: 5px; border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:6px;">
+                <table>
+                    <tr style="height:25px">
+                        <td>
+                            <div style="background-color:#EDEDED;height:25px;border-top:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black">
+
+                                <table>
+                                    <tr>
+                                        <td style="width:100px">
+                                            <p style="font-size:11px;margin-left:5px;margin-top:1px;color:#000000">On Document Update</p>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                        <td style="width:95px;">
+                                            <div style="width:95px"> Include Inactive</div>
+                                        </td>
+                                        <td style="width:20px">
+                                            <div class="CheckBox">
+                                                <input class="LeftCenter" style="text-align:center" (change)="CheckboxInCludeInActiveClick()" [attr.id]="'IncludeInactiveOnDocumentUpDateCheckBoxKey'" type="checkbox" />
+                                                <label class="LeftCenter" [attr.for]="'IncludeInactiveOnDocumentUpDateCheckBoxKey'"></label>
+                                            </div>
+                                        </td>
+
+                                        <td style="width:20px">
+                                            <div style="width:20px">
+
+                                            </div>
+                                        </td>
+                                        <td class="CellStretched" style="width:25px; min-width:25px; max-width:25px; position: relative;">
+                                            <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddDocumentUpdateAutomation()"></IconButton>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="height:3px">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <ScrollViewer>
+                                <div class="SimpleGridView">
+                                    <div class="SimpleGridViewHeader">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 80px; min-width: 80px;">Order</td>
+                                                <td style="width: 100px; min-width: 100px;">Name</td>
+                                                <td style="width: 140px; min-width:140px">Result</td>
+                                                <td style="width: 130px; min-width:130px">Description</td>
+                                                <td style="width: 90px; min-width: 90px">Create Date</td>
+                                                <td style="width: 110px; min-width: 110px">Create By</td>
+                                                <td style="width: 90px; min-width: 90px">Update Date</td>
+                                                <td style="width: 110px; min-width: 110px">Update By</td>
+                                                <td style="width: 50px; min-width: 50px">inactive</td>
+                                                <td style="width: 30px; min-width: 30px"></td>
+                                                <td style="width: 100%; min-width: 100%"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="SimpleGridViewBody">
+                                        <table>
+                                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of OnDocumentUpdateAutomationList">
+                                                <td>
+                                                    <table>
+                                                        <tr style="height:25px;" (click)="AutomationDocumentUpdateListChangeSelected(item)" [class.RowSelected]="item === OnDocumentUpdateAutomationListSelected">
+                                                            <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px; position: relative;">
+                                                                {{item.Order}}
+                                                            </td>
+                                                            <td [attr.title]="item.Name" class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
+                                                                {{item.Name}}
+                                                            </td>
+                                                            <td [attr.title]="item.ResultName" class="GridViewCell" style="width: 140px; min-width: 140px; max-width: 140px; position: relative;">
+                                                                {{item.ResultName}}
+                                                            </td>
+                                                            <td class="GridViewCell" style="width:130px; min-width:130px; max-width:130px; position: relative;">
+                                                                {{item.Description}}
+                                                            </td>
+                                                            <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px; position: relative;">
+                                                                {{item.CreateDate | DateTimeToDatePipe}}
+                                                            </td>
+                                                            <td class="GridViewCell" style="width: 110px; min-width: 110px; max-width: 110px; position: relative;">
+                                                                {{item.CreatedByUserName}}
+                                                            </td>
+                                                            <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px; position: relative;">
+                                                                {{item.UpdateDate | DateTimeToDatePipe}}
+                                                            </td>
+                                                            <td class="GridViewCell" style="width: 110px; min-width: 110px; max-width: 110px; position: relative;">
+                                                                {{item.UpdatedByUserName}}
+                                                            </td>
+                                                            <td class="CellStretched" style="width:50px; min-width:50px; max-width:50px; position: relative;">
+                                                                <div style="width:50px">
+                                                                    <img class="CenterCenter" style="width:20px;height:20px" *ngIf="item.Inactive" src="./Images/Icons/MiniGreenTick.png" />
+                                                                </div>
+                                                            </td>
+                                                            <td class="CellStretched" style="width:30px; min-width:30px; max-width:30px; position: relative;">
+                                                                <div class="EditButton" (click)="EditDocumentUpdateAutomation(item)" style="display:inline;width:18px;">
+                                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" style="display: block;margin-left:7px"></IconButton>
+                                                                </div>
+                                                            </td>
+                                                            <td class="CellStretched" style="width:100%;min-width:100%;max-width:100%;position:relative">
+                                                                <div *ngIf="item.IsShowArrowUpDown" class="CenterCenter" style="width:100%;vertical-align:middle;">
+                                                                    <img (click)="ArrowUpAutomationButtonClicked(item)" [attr.title]="'Up'" style="width:20px;height:20px;margin-left:7px" src="./Images/arrow-up-n.png" />
+                                                                    <img (click)="ArrowDownAutomationButtonClicked(item)" [attr.title]="'View'" style="width:20px;height:20px;margin-left:-10px" src="./Images/arrow-down-n.png" />
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="11"></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ScrollViewer>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>

@@ -2895,6 +2895,98 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool? isOperationalClosed ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? IsOperationalClosed  
+	   {
+	    
+	     get
+		{
+		   return isOperationalClosed;
+		 }
+		 set
+		 {
+		   if(isOperationalClosed != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsOperationalClosed",OldValue=isOperationalClosed,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   isOperationalClosed=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? approvedDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? ApprovedDate  
+	   {
+	    
+	     get
+		{
+		   return approvedDate;
+		 }
+		 set
+		 {
+		   if(approvedDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ApprovedDate",OldValue=approvedDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   approvedDate=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? denyDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? DenyDate  
+	   {
+	    
+	     get
+		{
+		   return denyDate;
+		 }
+		 set
+		 {
+		   if(denyDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DenyDate",OldValue=denyDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   denyDate=value;
+		   }
+			
+		 }
+	   }
+	  private string denyReason ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DenyReason  
+	   {
+	    
+	     get
+		{
+		   return denyReason;
+		 }
+		 set
+		 {
+		   if(denyReason != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DenyReason",OldValue=denyReason,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   denyReason=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

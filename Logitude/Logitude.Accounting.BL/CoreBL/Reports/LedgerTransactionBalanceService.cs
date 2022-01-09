@@ -99,7 +99,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 {
                     if (_Param.DateTypeCode == TaxReportFilterDateTypeCode)
                     {
-                        list = GetLedgerTransactinByTaxReportFilter();                       
+                        list = GetLedgerTransactinByTaxReportFilter();
+                        Response.TotalRowCount = _Param.TaxReportTotalCount;
                     }
                     else
                     {
@@ -196,7 +197,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 Response.MyLedgerTransactionList = list;
             }
             this.Response.TookMS = sw.ElapsedMilliseconds;
-            this.Response.TotalRowCount = list.Count();
+          
             Debug.WriteLine("Response.TookMS:" + Response.TookMS.ToString());
         }
        

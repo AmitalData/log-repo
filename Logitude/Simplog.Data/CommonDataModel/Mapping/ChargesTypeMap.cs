@@ -10,8 +10,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
         {
             this.HasKey(t => t.Id);
             this.Property(t => t.Code).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.EnglishName).IsRequired().HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.LocalName).HasMaxLength(40).IsUnicode(true);
+            this.Property(t => t.EnglishName).IsRequired().HasMaxLength(80).IsUnicode(false);
+            this.Property(t => t.LocalName).HasMaxLength(80).IsUnicode(true);
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ChargesGroupCode).IsRequired().HasMaxLength(5).IsUnicode(false);
             this.Property(t => t.VatTypeId).HasMaxLength(15).IsUnicode(false);

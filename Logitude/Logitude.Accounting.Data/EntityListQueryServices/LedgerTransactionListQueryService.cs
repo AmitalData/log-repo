@@ -19,6 +19,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
     public partial class LedgerTransactionListQueryService
     {
         private const string CreditTypeJournalLine = "1";
+        public bool displayNotReconciledOnly = false;
         private IQueryable<LedgerTransactionList> GetIqueryableList(IQueryable<LedgerTransaction> iQueryable)
         {
             IQueryable<LedgerTransactionList> query = (from a in iQueryable.Include("JournalLine").Include("Account").Include("Currency").Include("Journal")
@@ -76,7 +77,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            OppositeAccountDisplayNumber = a.OppositeAccount != null ? a.OppositeAccount.DisplayNumber : null,
                                                            OriginalAmount = 0,
                                                            CalculatedForeignAmount = a.ForeignAmountCredit != 0 ? a.ForeignAmountCredit : a.ForeignAmountDebit,
-                                                           CalculatedLocalAmount = a.LocalAmountCredit != 0 ? a.LocalAmountCredit : a.LocalAmountDebit
+                                                           CalculatedLocalAmount = a.LocalAmountCredit != 0 ? a.LocalAmountCredit : a.LocalAmountDebit,
+                                                           JournalCreatedByUser = a.JournalLine.Journal.CreatedByUser.Contact.DontShowLocalLabels ? a.JournalLine.Journal.CreatedByUser.Contact.EnglishName : a.JournalLine.Journal.CreatedByUser.Contact.LocalName,
 
                                                        });
 
@@ -604,7 +606,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             const int MaxTotal = 99001;
 
             if (getOpenReconciliations == true)
-                query2 = OpenReconciliationFilter(AccountId, query2, MaxTotal);
+                query2 = OpenReconciliationFilter(AccountId, query2, displayNotReconciledOnly);
             else
                 query2 = ReconciliationFilter(AccountId, query2);
 
@@ -701,17 +703,15 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         }
 
         private static IQueryable<LedgerTransactionList> OpenReconciliationFilter(string AccountId, IQueryable<LedgerTransactionList> query2
-            , int MaxTotal
-            )
+           , bool DisplayNotReconciledOnly
+
+           )
         {
-            query2 = query2
-                .Where(rec => rec.IsReconciled == false)
-                .Where(rec => rec.IsExternalReconcile == false)
-                .Where(rec => rec.InReconcileProgress == false)// Seee CreateJournalReconcileService!!!
-                .Where(rec => rec.AccountId == AccountId)
-                //.OrderBy(rec => rec.AccountingDate)
-                //.Take(MaxTotal);
-                ;
+
+                query2 = query2.Where(rec => rec.IsReconciled == false)
+
+              .Where(rec => rec.InReconcileProgress == false)
+              .Where(rec => rec.AccountId == AccountId);
             return query2;
         }
         private static IQueryable<LedgerTransactionList> FilterOpenTransactionsForExternalReconcile(string AccountId, IQueryable<LedgerTransactionList> query2)
@@ -766,7 +766,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             IQueryable<LedgerTransactionList> query2 = GetFilteredList(queryOperations, tenant);
             const int MaxTotal = 99001;
 
-            query2 = OpenReconciliationFilter(AccountId, query2, MaxTotal);
+            query2 = OpenReconciliationFilter(AccountId, query2, displayNotReconciledOnly);
 
             LedgerTransactionSorterArgs args = new LedgerTransactionSorterArgs()
             {
@@ -1441,7 +1441,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             LedgerTransactionSorterArgs args = new LedgerTransactionSorterArgs()
             {
                 Tenant = tenant,
-                AccountId = accountId,
+                AccountId = accountId != null ? accountId : transferAccountId,
                 QueryOperations = queryOperations,
                 Transactions = resultedList,
             };
@@ -1484,10 +1484,22 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
             IQueryable<LedgerTransactionList> ledgerTransactions = GetFilteredList(queryOperations, tenant);
 
+            if (accountId is null)
+            {
+                IQueryable<LedgerTransactionList> openTransactions = GetAllTransactionsForTransferAccount(tenant, transferAccountId, ledgerTransactions);
+                return openTransactions.OrderByDescending(d => d.DocumentDate);
+            }
+            else if (transferAccountId is null)
+            {
+                IQueryable<LedgerTransactionList> openTransactions = GetTransactionsForNormalAccount(tenant, accountId, ledgerTransactions);
+                return openTransactions.OrderByDescending(d => d.DocumentDate);
+            }
+
             IQueryable<LedgerTransactionList> accountOpenTransaction = GetTransactionsForNormalAccount(tenant, accountId, ledgerTransactions);
             IQueryable<LedgerTransactionList> transferAccountOpenTransaction = GetAllTransactionsForTransferAccount(tenant, transferAccountId, ledgerTransactions);
 
             IQueryable<LedgerTransactionList> resultedList = accountOpenTransaction.Union(transferAccountOpenTransaction).OrderByDescending(d => d.DocumentDate);
+            
             return resultedList;
         }
 
@@ -1554,7 +1566,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             if (filter.AccountsIds != null && filter.AccountsIds.Count() > 0)
                 tenantTransactions.Where(transaction => filter.AccountsIds.Contains(transaction.AccountId));
             if (!filter.IsReconciled)
-                tenantTransactions = tenantTransactions.Where(transaction =>!transaction.IsReconciled);
+            {
+                tenantTransactions = tenantTransactions.Where(transaction =>!transaction.IsExternalReconcile);
+            }
 
             return tenantTransactions;
         }

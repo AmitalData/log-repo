@@ -16,6 +16,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
         public Port FromPort { get; set; }
         public Port ToPort { get; set; }
         public Vessel Vessel { get; set; }
+        public string VesselName { get; set; }
         public string CarrierNumber { get; set; }
         public string MasterNumber { get; set; }
         public DateTime? ETD { get; set; }

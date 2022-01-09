@@ -407,6 +407,14 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
+                Code = "ODA", 
+                Name = "On Update Document Automation Tab", 
+                SearchFields = "ODA,On Update Document Automation Tab", 
+                Description = "On Update Document Automation Tab", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
                 Code = "AEV", 
                 Name = "Automation Event Creation", 
                 SearchFields = "AEV,Automation Event Creation", 
@@ -435,6 +443,22 @@ namespace Logitude.Infrastructure.BL
                 Name = "FixHtmlResolverVariable", 
                 SearchFields = "FHR,FixHtmlResolverVariable", 
                 Description = "Fix Html Resolver Variable", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "OPF", 
+                Name = "Open Format RTL", 
+                SearchFields = "OPF,Open Format RTL", 
+                Description = "Open Format RTL Issues", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "EST", 
+                Name = "Entity Status", 
+                Description = "Allow to Display and Edit Entity Status", 
+                SearchFields = "EST,Entity Status,Allow to Display and Edit Entity Status", 
 			});
 			
             return all;

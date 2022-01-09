@@ -50,6 +50,7 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
                 EventDateTime = traceEventPM.EventDateTime,
                 LogDateTime = traceEventPM.LogDateTime,
                 Notes = traceEventPM.Notes,
+                IsAddedManually = traceEventPM.IsAddedManually,
             };
 
             if (traceEventPM.UserId != null)
@@ -66,7 +67,7 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
 
             return traceEvent;
         }
-        public List<TraceEventPM> EventCustomDataMappingAndValidatin(Direct myEntity, List<Event> eventList, int tenant, string computingPartnerName)
+        public List<TraceEventPM> EventCustomDataMappingAndValidatin(Direct myEntity, List<Event> eventList, int tenant, string computingPartnerName, bool IsUpdate = false)
         {
             try
             {
@@ -78,7 +79,7 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
                 throw ex;
             }
         }
-        public List<TraceEventPM> EventCustomDataMappingAndValidatin(House myEntity, List<Event> eventList, int tenant, string computingPartnerName)
+        public List<TraceEventPM> EventCustomDataMappingAndValidatin(House myEntity, List<Event> eventList, int tenant, string computingPartnerName, bool IsUpdate = false)
         {
             try
             {
@@ -90,7 +91,7 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
                 throw ex;
             }
         }
-        public List<TraceEventPM> EventCustomDataMappingAndValidatin(Master myEntity, List<Event> eventList, int tenant, string computingPartnerName)
+        public List<TraceEventPM> EventCustomDataMappingAndValidatin(Master myEntity, List<Event> eventList, int tenant, string computingPartnerName, bool IsUpdate = false)
         {
             try
             {

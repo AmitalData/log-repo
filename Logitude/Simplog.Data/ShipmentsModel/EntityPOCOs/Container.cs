@@ -294,6 +294,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string HandlerId { get; set; }
         [ForeignKey("HandlerId")]
         public virtual User Handler { get; set; }
+
         public string CustomerId { get; set; }
         [ForeignKey("CustomerId")]
         public virtual Card CustomerCard { get; set; }
@@ -311,5 +312,24 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string StatusId { get; set; }
         public DateTime? CancelledDate { get; set; }
         public bool IsCancelled { get; set; }
+        public string ShipmentDeliveryTruckerId { get; set; }
+        [ForeignKey("ShipmentDeliveryTruckerId")]
+        public virtual Card TruckerCard { get; set; }
+        public string Leg1VesselId { get; set; }
+        [ForeignKey("Leg1VesselId")]
+        public virtual Vessel Vessel1Leg { get; set; }
+        public string Leg2VesselId { get; set; }
+        [ForeignKey("Leg2VesselId")]
+        public virtual Vessel Vessel2Leg { get; set; }
+        public string Leg3VesselId { get; set; }
+        [ForeignKey("Leg3VesselId")]
+        public virtual Vessel Vessel3Leg { get; set; }
+        public string Leg4VesselId { get; set; }
+        [ForeignKey("Leg4VesselId")]
+        public virtual Vessel Vessel4Leg { get; set; }
+        public string Leg5VesselId { get; set; }
+        [ForeignKey("Leg5VesselId")]
+        public virtual Vessel Vessel5Leg { get; set; }
+
     }
 }

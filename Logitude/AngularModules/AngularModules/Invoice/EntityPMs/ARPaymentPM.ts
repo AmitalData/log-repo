@@ -738,6 +738,10 @@ export class ARPaymentPM {
         this.presetValueDate = v;
     }
 
+    private billToCode: string;
+    public get BillToCode() { return this.billToCode; }
+    public set BillToCode(newValue: string) { if (this.billToCode != newValue) { this.billToCode = newValue; this.MarkAsDirty("BillToCode"); } }
+
     BankTransferPaymentArguments: BankTransferPaymentArguments;
 
     private updateAmountAndStatuses: boolean;

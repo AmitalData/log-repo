@@ -65,6 +65,15 @@ namespace Logitude.Accounting.BL
                 EnglishName = "Failed", 
                 LocalName = "נכשל", 
 			});
+			 
+            all.Add(new JournalStatusTypeDetails()
+            {    
+                JournalStatusID = "5", 
+                EnglishName = "Cancelled", 
+                SearchFields = "5,Cancelled,מבוטל", 
+                LocalName = "מבוטל", 
+                Inactive = false, 
+			});
 			
             return all;
        }

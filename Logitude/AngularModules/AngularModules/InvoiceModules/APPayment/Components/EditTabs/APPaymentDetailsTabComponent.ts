@@ -37,7 +37,7 @@ import { ThrowStmt } from '@angular/compiler';
 import { LedgerTransactionPM } from 'Accounting/EntityPMs/LedgerTransactionPM';
 
 @Component({
-    
+
     templateUrl: './APPaymentDetailsTabComponent.html',
 })
 
@@ -144,7 +144,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.PaymentChequePMService.GetPaymentChequeByPaymentIdAndChequeNumber(this.EntityPM.ChequeOrPaymentRef, this.EntityPM.Id).subscribe((myResult:ServiceResponse) => {
                 var myResponse: ServiceResponse = myResult;
                 if (myResponse != null) {
-        
+
                     var res = myResponse.Result;
                     var entityId = res.Id;
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
@@ -156,9 +156,9 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                             });
                         });
                 }
-        
+
             });
-        
+
         }
     }
 
@@ -210,14 +210,14 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
             this.BackCompletedEvent = this.entityArgs.EditComponent.BackCompleted.subscribe((isBackCompleted: boolean) => {
                 if (isBackCompleted && isSaveCompleted && this.entityArgs.EditComponent.EntityPM.StatusCode == "AD") {
-                    if(this.ReconcileInternalTrans){
+                    if (this.IsFullAccounting && this.ReconcileInternalTrans && this.ReconcileInternalTrans.length > 0) {
                         const paymentNo = this.entityArgs.EditComponent.EntityPM.PaymentNo;
                         this.CurrentSession.FireEvent({Name: "InternalReconcileAPPaymentCreated", PaymentNumber: paymentNo});
                     }
                 }
             });
-            
-            
+
+
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
@@ -241,11 +241,11 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     VendorChanged(vednor:CardList){
         this.vendor = vednor;
         this.LoadTaxPercentage();
-        
+
     }
     private IsTaxUpdated = false;
     private LoadTaxPercentage() {
-        if (this.IsFullAccounting) 
+        if (this.IsFullAccounting)
         {
             const nonIsraeliVendor = this.vendor ? this.vendor.CountryCode != "IL" : false;
             if(nonIsraeliVendor) {
@@ -425,7 +425,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
     // BuildScreenData
     private BuildScreenData() {
-        if(this.EntityPM.ReconcileInternalTrans) {
+        if (this.IsFullAccounting && this.EntityPM.ReconcileInternalTrans && this.ReconcileInternalTrans.length > 0) {
             this.VendorId = this.EntityPM.VendorId;
             this.AmountInPaymentCurrency = this.EntityPM.AmountInPaymentCurrency;
             this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, false);
@@ -750,7 +750,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     }
     set VendorId(value: string) {
         if (this.EntityPM != null) {
-            if (this.EntityPM.VendorId != value || this.EntityPM.ReconcileInternalTrans) {
+            if (this.EntityPM.VendorId != value || (this.IsFullAccounting && this.EntityPM.ReconcileInternalTrans && this.ReconcileInternalTrans.length > 0)) {
                 this.EntityPM.VendorId = value;
                 this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, true);
                 this.PaymentCurrencyId = null;
@@ -1368,7 +1368,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
     get AmountInPaymentCurrency() { return this.EntityPM.AmountInPaymentCurrency; }
     set AmountInPaymentCurrency(value: number) {
-        if (this.EntityPM.AmountInPaymentCurrency != value || this.EntityPM.ReconcileInternalTrans) {
+        if (this.EntityPM.AmountInPaymentCurrency != value || (this.IsFullAccounting && this.EntityPM.ReconcileInternalTrans && this.ReconcileInternalTrans.length > 0)) {
             this.EntityPM.AmountInPaymentCurrency = AppTool.Round(value, 2);
             this.ComputeLocalAmount();
             this.UpdateSummary();
@@ -1785,7 +1785,7 @@ export class APPaymentInvoiceArgs extends BaseComponent {
             }
         }
 
-        if(this.trigger.EntityPM.ReconcileInternalTrans) {
+        if (this.trigger.IsFullAccounting && this.trigger.EntityPM.ReconcileInternalTrans && this.trigger.EntityPM.ReconcileInternalTrans.length > 0) {
             this.CheckBoxEnabled = false;
         }
     }

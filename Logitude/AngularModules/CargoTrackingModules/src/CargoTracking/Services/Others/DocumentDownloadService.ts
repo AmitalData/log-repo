@@ -17,10 +17,10 @@ export class DocumentDownloadService {
 
     }
 
-    public ExternalDownloadAllDocuments(securityId: string, tenant: number)
+    public ExternalDownloadAllDocuments(securityId: string, forwardingShipmentId: string, tenant: number)
     {
         var link = ServiceHelper.GetAppURL(this.baseUrl)
-            + `WebPages/CorrespondenceDownloadpage.aspx?DA=1&securitykey=${securityId}::CS:${tenant}`;
+            + `WebPages/CorrespondenceDownloadpage.aspx?DA=1&securitykey=${securityId}::CS:${tenant}:${forwardingShipmentId ? forwardingShipmentId : ""}:cargo`;
         var win = window.open(link, '_blank');
 
         if (win) {

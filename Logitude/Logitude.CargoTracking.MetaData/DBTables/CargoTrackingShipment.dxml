@@ -719,6 +719,18 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsOperationalClosed"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DenyDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="EntityType"
     ReferencedTable="CargoTrackingHeaderEntityTypes"
@@ -735,7 +747,7 @@
     Columns="Tenant,SecurityKey" />
   <Index
     Columns="CustomerId" />
-<Index
+  <Index
     Columns="CustomsShipmentHeaderId" />
   <UniqueConstraint
     Columns="EntityType,EntityId,Tenant" />

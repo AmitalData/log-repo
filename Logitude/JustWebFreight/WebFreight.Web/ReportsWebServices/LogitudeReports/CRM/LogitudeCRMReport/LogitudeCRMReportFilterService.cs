@@ -32,6 +32,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
             SetResellerFilter(iQueryOperations);
             SetShowNetFilter(iQueryOperations);
             SetExchangeRateFilter(iQueryOperations);
+            SetYearFilter(iQueryOperations);
             return logitudeCRMReportFilter;
         }
 
@@ -97,6 +98,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
             if (queryFilterItem != null && queryFilterItem.FieldValue != null)
             {
                 logitudeCRMReportFilter.ExchangeRate = decimal.Parse(queryFilterItem.FieldValue.ToString());
+            }
+        }
+
+        private void SetYearFilter(QueryOperations iQueryOperations)
+        {
+            QueryFilterItem queryFilterItem = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "Year").FirstOrDefault();
+            if (queryFilterItem != null && queryFilterItem.FieldValue != null)
+            {
+                logitudeCRMReportFilter.Year = int.Parse(queryFilterItem.FieldValue.ToString());
             }
         }
 

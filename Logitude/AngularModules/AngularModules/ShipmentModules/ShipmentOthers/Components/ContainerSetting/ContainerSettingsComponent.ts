@@ -19,6 +19,7 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
     private CurrentSession = SessionLocator.SelectedSession;
     public ValidationErrorsList: string[];
     public reloadingTranslation: boolean;
+    public ClosingContainerToolTipMessage: string = "How many days after the Actual Empty Return Date to wait before automatically closing the container."; 
 
     constructor() {
         super();

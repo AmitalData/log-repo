@@ -195,6 +195,9 @@
     <Reference Include="Logitude.Infrastructure.Data">
       <HintPath>..\..\Logitude.Infrastructure.Data\bin\Debug\Logitude.Infrastructure.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Marvin.JsonPatch, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Marvin.JsonPatch.2.2.0\lib\net45\Marvin.JsonPatch.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Client, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.AspNet.SignalR.Client.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Client.dll</HintPath>
@@ -957,6 +960,7 @@
     <Content Include="App_Code\AngularJS_App_Code\Common\CommunicationLogStepController.cs" />
     <Content Include="App_Code\PodSecurityController.cs" />
     <Content Include="App_Code\BrandingController.cs" />
+    <Compile Include="AccountingModel\DomainServices\AccountingDomainService.TaxReportLines.cs" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.LedgerTransactionReconcile.cs" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.InterestReportLinesByDate.cs" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.GLAccountLedgerTransaction.cs" />
@@ -1099,6 +1103,7 @@
     <Compile Include="DataProviders\RoutingDataProvider.cs" />
     <Compile Include="DataProviders\UserDefinedReportDataProvider.cs" />
     <Compile Include="ExternalAPIs\ExternalAPIsHelpers\ExternalAPIMainCarriageLegsHelper.cs" />
+    <Compile Include="ExternalAPIs\ExternalAPIsHelpers\ExternalAPIShipmentPartnersModifier.cs" />
     <Compile Include="ExternalAPIs\ExternalAPIsHelpers\ExternalAPIShipmentValidator.cs" />
     <Compile Include="ExternalAPIs\ExternalAPIsHelpers\ExternalAPIXMLEntityValidator.cs" />
     <Compile Include="ExternalAPIs\RatesUpdateController.cs" />
@@ -2633,6 +2638,7 @@
       <DependentUpon>HealthProb.aspx</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AdvancedDateResolver.cs" />
+    <Compile Include="Helpers\AutomationModel\OnUpdateDocumentService.cs" />
     <Compile Include="Helpers\AutomationModel\WebHookAutomationService.cs" />
     <Compile Include="Helpers\CrmWebServicesValidator.cs" />
     <Compile Include="Helpers\DocumentFile.cs" />
@@ -3443,6 +3449,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\TimeManagementUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\WarehouseLibUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\ObjectFields\MetaDataUpdateClass.InvoiceModel.cs" />
+    <Content Include="Monitoring\AdvancedGenericInterfaceMonitoringStatus.aspx" />
     <Content Include="Monitoring\AgentSharedManifestMonitoring.aspx" />
     <Content Include="Monitoring\AnalyzeQueue.aspx" />
     <Content Include="Monitoring\AzureDevOpsQueue.aspx" />
@@ -3456,6 +3463,7 @@
     <Content Include="Monitoring\ForwarderShipmentQueue.aspx" />
     <Content Include="Monitoring\LogBoxApprovePaymentQueue.aspx" />
     <Content Include="Monitoring\LogBoxDocumentsQueue.aspx" />
+    <Content Include="Monitoring\CToolQueue.aspx" />
     <Content Include="Monitoring\LogBoxImporterApprovalReceivedQueue.aspx" />
     <Content Include="Monitoring\LogBoxShipmentQueue.aspx" />
     <Content Include="Monitoring\LogBoxQueue.aspx" />
@@ -3551,6 +3559,7 @@
     <Content Include="Monitoring\ReportExecutionLogWaitingStatus.aspx" />
     <Content Include="Monitoring\ReportExecutionRunTimeMonitoring.aspx" />
     <Content Include="Monitoring\SATCommunicationWaitingStatus.aspx" />
+    <Content Include="Monitoring\ShipmentInterfaceMonitoringStatus.aspx" />
     <Content Include="Monitoring\SignupLeadMonitoringPage.aspx" />
     <Content Include="Monitoring\StorageBackup.aspx" />
     <Content Include="QuickbooksOnlineAuth2.aspx" />
@@ -5514,6 +5523,13 @@
     <Compile Include="MetaDataUpdate\UpdateClasses\TariffModuleUpdate.cs" />
     <Compile Include="MetaDataUpdate\UpdateClasses\TimeManagementUpdate.cs" />
     <Compile Include="MetaDataUpdate\UpdateClasses\WarehouseUpdate.cs" />
+    <Compile Include="Monitoring\AdvancedGenericInterfaceMonitoringStatus.aspx.cs">
+      <DependentUpon>AdvancedGenericInterfaceMonitoringStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\AdvancedGenericInterfaceMonitoringStatus.aspx.designer.cs">
+      <DependentUpon>AdvancedGenericInterfaceMonitoringStatus.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Monitoring\AgentSharedManifestMonitoring.aspx.cs">
       <DependentUpon>AgentSharedManifestMonitoring.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5604,6 +5620,13 @@
     </Compile>
     <Compile Include="Monitoring\LogBoxDocumentsQueue.aspx.designer.cs">
       <DependentUpon>LogBoxDocumentsQueue.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\CToolQueue.aspx.cs">
+      <DependentUpon>CToolQueue.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\CToolQueue.aspx.designer.cs">
+      <DependentUpon>CToolQueue.aspx</DependentUpon>
     </Compile>
     <Compile Include="Monitoring\LogBoxImporterApprovalReceivedQueue.aspx.cs">
       <DependentUpon>LogBoxImporterApprovalReceivedQueue.aspx</DependentUpon>
@@ -5730,6 +5753,13 @@
     </Compile>
     <Compile Include="Monitoring\SATCommunicationWaitingStatus.aspx.designer.cs">
       <DependentUpon>SATCommunicationWaitingStatus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\ShipmentInterfaceMonitoringStatus.aspx.cs">
+      <DependentUpon>ShipmentInterfaceMonitoringStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\ShipmentInterfaceMonitoringStatus.aspx.designer.cs">
+      <DependentUpon>ShipmentInterfaceMonitoringStatus.aspx</DependentUpon>
     </Compile>
     <Compile Include="Monitoring\SignupLeadMonitoringPage.aspx.cs">
       <DependentUpon>SignupLeadMonitoringPage.aspx</DependentUpon>

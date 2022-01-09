@@ -139,8 +139,6 @@ namespace Logitude.Accounting.BL
                 
                 if (
                     JournalPOCO.StatusCode == ((int)JournalStatusTypePM.StatusCodeEnum.Voided).ToString() ||
-                    JournalPOCO.StatusCode == ((int)JournalStatusTypePM.StatusCodeEnum.Draft).ToString() ||
-                    JournalPOCO.StatusCode == ((int)JournalStatusTypePM.StatusCodeEnum.WaitingforApprove).ToString() ||
                     JournalPOCO.StatusCode == ((int)JournalStatusTypePM.StatusCodeEnum.Failed).ToString()
                     )
                 {
@@ -220,6 +218,7 @@ namespace Logitude.Accounting.BL
                     journalApproveParser.ParseIt();//throw exception if not valid !!!!
 
                     break;
+
                 case JournalStatusTypePM.StatusCodeEnum.Voided:
                     //var JournalStornoService = new JournalStornoService(journalPM);
                     if (string.IsNullOrWhiteSpace(JournalPOCO.QueueId))
@@ -252,6 +251,11 @@ namespace Logitude.Accounting.BL
 
                     break;
 
+                case JournalStatusTypePM.StatusCodeEnum.Cancelled:
+                    {
+                        CancelJournal(journalPM);
+                        break;
+                    }
 
                 default:
                     break;
@@ -259,8 +263,12 @@ namespace Logitude.Accounting.BL
 
         }
 
-
-
+        private void CancelJournal(JournalPM journalPM)
+        {
+            journalPM.IsVoided = true;
+            journalPM.VoidedByUserId = journalPM.UpdatedByUserId = this.GetLogContactId(journalPM);
+            journalPM.VoidDate = DateTime.UtcNow;
+        }
 
         public virtual string TranslateTextsClassTranslate(string textCodeCode, int tenant, bool getLocalDefaultText)
         {

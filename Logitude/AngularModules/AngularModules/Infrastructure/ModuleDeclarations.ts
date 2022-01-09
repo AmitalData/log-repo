@@ -121,7 +121,9 @@ import {AddEditAutomationsComponent} from './Components/Maintenance/Automation/A
 import { ChooseSpecificUserComponent } from './Components/Maintenance/Automation/ChooseSpecificUserComponent';
 import {DelayAutomationconditionsComponent} from './Components/Maintenance/Automation/DelayAutomationconditionsComponent';
 import {ViewAutomationHistoryComponent} from './Components/Maintenance/Automation/ViewAutomationHistoryComponent';
-import {AuditAutomationTabComponent} from './Components/Maintenance/Automation/AuditAutomationTabComponent';
+import { AuditAutomationTabComponent } from './Components/Maintenance/Automation/AuditAutomationTabComponent';
+import { OnUpdateDocumentAutomationsSettingsComponent } from './Components/Maintenance/Automation/OnUpdateDocumentAutomationsSettingsComponent';
+import { DocumentAttachmentsComponent } from './Components/Maintenance/Automation/DocumentAttachmentsComponent';
 
 
 import {SelectDocumentTypesComponent} from './Components/Maintenance/Automation/SelectDocumentTypesComponent';
@@ -188,6 +190,7 @@ import { SendInterfaceResultComponent } from './Components/Maintenance/Automatio
 import { FTPAutomationDetailsComponent } from './Components/Maintenance/Automation/AutomationResult/FTPAutomationDetailsComponent';
 import { ToolTipFloatDirective } from './Utilities/RTLDirectives/ToolTipFloatDirective';
 import { SendDocumentResultComponent } from './Components/Maintenance/Automation/AutomationResult/SendDocumentResultComponent';
+import { OnUpdateDocumentResultComponent } from './Components/Maintenance/Automation/AutomationResult/OnUpdateDocumentResultComponent';
 import { AdvancedAutomationSendInterfaceDetailsComponent } from './Components/Maintenance/Automation/AutomationResult/AdvancedAutomationSendInterfaceDetailsComponent';
 import { WebHookAutomationDetailsComponent } from './Components/Maintenance/Automation/AutomationResult/WebHookAutomationDetailsComponent';
 
@@ -320,6 +323,7 @@ export const ControlsComponents =
         AuditAutomationTabComponent,
         AutomationsConditionsViewDetailsComponent,
         CreateTaskResultComponent,
+        OnUpdateDocumentResultComponent,
         EventCreationResultComponent,
         AdvancedAutomationSendInterfaceDetailsComponent,
         WebHookAutomationDetailsComponent,
@@ -353,7 +357,8 @@ export const Components =
         ChooseSpecificUserComponent,
         DelayAutomationconditionsComponent,
         ViewAutomationHistoryComponent,
-
+        OnUpdateDocumentAutomationsSettingsComponent,
+        DocumentAttachmentsComponent,
 
         NewViewComponent,
         Export2ExcelControl,
@@ -452,7 +457,8 @@ export class ModuleDeclarations {
             case 'DelayAutomationconditionsComponent': { myResult = DelayAutomationconditionsComponent; break; }
             case 'ViewAutomationHistoryComponent': { myResult = ViewAutomationHistoryComponent; break; }
             case 'AutomationConditionsDetailsComponent': { myResult = AutomationConditionsDetailsComponent; break; }
-                 
+            case 'OnUpdateDocumentAutomationsSettingsComponent': { myResult = OnUpdateDocumentAutomationsSettingsComponent; break; }
+            case 'DocumentAttachmentsComponent': { myResult = DocumentAttachmentsComponent; break;}
 
             case 'NewViewComponent': { myResult = NewViewComponent; break; }
             case 'Export2ExcelControl': { myResult = Export2ExcelControl; break; }
@@ -519,6 +525,7 @@ export class ModuleDeclarations {
             case 'SendDocumentResultComponent': { myResult = SendDocumentResultComponent; break; } 
             case 'PrivateLabelLoginProcessComponent': { myResult = PrivateLabelLoginProcessComponent; break; } 
             case 'CreateTaskResultComponent': { myResult = CreateTaskResultComponent; break; }
+            case 'OnUpdateDocumentResultComponent': { myResult = OnUpdateDocumentResultComponent; break; } 
             case 'EventCreationResultComponent': { myResult = EventCreationResultComponent; break; }
             case 'AdvancedAutomationSendInterfaceDetailsComponent': { myResult = AdvancedAutomationSendInterfaceDetailsComponent; break; }
             case 'WebHookAutomationDetailsComponent': { myResult = WebHookAutomationDetailsComponent; break; }

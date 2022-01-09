@@ -123,8 +123,8 @@ namespace Logitude.UnitTest.Accounting.UniTests
             var theCreatedJournal = myExternalReconcileJournalService.TheJournalPM;
             Assert.IsNotNull(theCreatedJournal.JournalLines);
             Assert.AreEqual(4, theCreatedJournal.JournalLines.Count);
-            Assert.AreEqual(2, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit));
-            Assert.AreEqual(2, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit));
+            Assert.AreEqual(2, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Credit));
+            Assert.AreEqual(2, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Debit));
 
             Assert.AreEqual(0, theCreatedJournal.JournalLines.Count(r => string.IsNullOrWhiteSpace(r.DebitAccountId)));
             Assert.AreEqual(0, theCreatedJournal.JournalLines.Count(r => string.IsNullOrWhiteSpace(r.CreditAccountId)));
@@ -135,7 +135,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             ///* חייב את בנק לשלם ב 102.1 - JLINE1
             Assert.AreEqual(1, theCreatedJournal.JournalLines.Count(r =>
             r.ForeignAmount == myLedgerTransactionTransferInCredit.ForeignAmountCredit &&
-            r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit &&
+            r.ActionTypeCodeEnum == JournalActionTypeEnum.Debit &&
             r.DebitAccountId == myBankAccountPM.TransferGLAcccountId
             && r.AccountingDate== r.DueDate && r.DocumentDate== myReconcileExternalPageLinePM.ReferenceDate
             ));
@@ -143,7 +143,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             ///*זכה את העוש ב 100 - JLINE2
             Assert.AreEqual(1, theCreatedJournal.JournalLines.Count(r =>
            r.ForeignAmount == myLedgerTransactionTransferInCredit.ForeignAmountCredit &&
-           r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit &&
+           r.ActionTypeCodeEnum == JournalActionTypeEnum.Credit &&
            r.CreditAccountId == myBankAccountPM.GLAccountId
            && r.AccountingDate == r.DueDate && r.DocumentDate == myReconcileExternalPageLinePM.ReferenceDate
            ));
@@ -153,7 +153,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             //*זכה את הבנק עוש ב  שקל - JLINE3
             Assert.AreEqual(1, theCreatedJournal.JournalLines.Count(r =>
                     r.ForeignAmount == bankFees &&
-                    r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit &&
+                    r.ActionTypeCodeEnum == JournalActionTypeEnum.Credit &&
                     r.CreditAccountId == myBankAccountPM.GLAccountId
                     && r.AccountingDate == r.DueDate && r.DocumentDate == myReconcileExternalPageLinePM.ReferenceDate
                     ));
@@ -161,7 +161,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             ///* חייב את כ ההפרשים ב שקל - JLINE4
             Assert.AreEqual(1, theCreatedJournal.JournalLines.Count(r =>
                     r.ForeignAmount == bankFees &&
-                    r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit &&
+                    r.ActionTypeCodeEnum == JournalActionTypeEnum.Debit &&
                     r.DebitAccountId == adjustGLAccountId
                     && r.AccountingDate == r.DueDate && r.DocumentDate == myReconcileExternalPageLinePM.ReferenceDate
                     ));
@@ -285,8 +285,8 @@ namespace Logitude.UnitTest.Accounting.UniTests
             var theCreatedJournal = myExternalReconcileJournalService.TheJournalPM;
             Assert.IsNotNull(theCreatedJournal.JournalLines);
             Assert.AreEqual(4, theCreatedJournal.JournalLines.Count);
-            Assert.AreEqual(2, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit));
-            Assert.AreEqual(2, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit));
+            Assert.AreEqual(2, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Credit));
+            Assert.AreEqual(2, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Debit));
 
             Assert.AreEqual(0, theCreatedJournal.JournalLines.Count(r => string.IsNullOrWhiteSpace(r.DebitAccountId)));
             Assert.AreEqual(0, theCreatedJournal.JournalLines.Count(r => string.IsNullOrWhiteSpace(r.CreditAccountId)));
@@ -297,7 +297,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             ///* חייב את בנק לשלם ב 102.1 - JLINE1
             Assert.AreEqual(1, theCreatedJournal.JournalLines.Count(r =>
             r.ForeignAmount == myLedgerTransactionTransferInCredit.ForeignAmountCredit &&
-            r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit &&
+            r.ActionTypeCodeEnum == JournalActionTypeEnum.Debit &&
             r.DebitAccountId == myBankAccountPM.TransferGLAcccountId
             && r.AccountingDate == r.DueDate && r.DocumentDate == myReconcileExternalPageLinePM.ReferenceDate
             ));
@@ -305,7 +305,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             ///*זכה את העוש ב 100 - JLINE2
             Assert.AreEqual(1, theCreatedJournal.JournalLines.Count(r =>
            r.ForeignAmount == myLedgerTransactionTransferInCredit.ForeignAmountCredit &&
-           r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit &&
+           r.ActionTypeCodeEnum == JournalActionTypeEnum.Credit &&
            r.CreditAccountId == myBankAccountPM.GLAccountId
            && r.AccountingDate == r.DueDate && r.DocumentDate == myReconcileExternalPageLinePM.ReferenceDate
            ));
@@ -315,7 +315,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             //*חייב את הבנק עוש ב  שקל - JLINE3
             Assert.AreEqual(1, theCreatedJournal.JournalLines.Count(r =>
                     r.ForeignAmount == Math.Abs(bankFees) &&
-                    r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit &&
+                    r.ActionTypeCodeEnum == JournalActionTypeEnum.Debit &&
                     r.DebitAccountId == myBankAccountPM.GLAccountId
                     && r.AccountingDate == r.DueDate && r.DocumentDate == myReconcileExternalPageLinePM.ReferenceDate
                     ));
@@ -323,7 +323,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             ///* זכה את כ ההפרשים ב שקל - JLINE4
             Assert.AreEqual(1, theCreatedJournal.JournalLines.Count(r =>
                     r.ForeignAmount == Math.Abs(bankFees) &&
-                    r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit &&
+                    r.ActionTypeCodeEnum == JournalActionTypeEnum.Credit &&
                     r.CreditAccountId == adjustGLAccountId
                     && r.AccountingDate == r.DueDate && r.DocumentDate == myReconcileExternalPageLinePM.ReferenceDate
                     ));

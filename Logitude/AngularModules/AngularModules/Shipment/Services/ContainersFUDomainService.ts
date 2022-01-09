@@ -49,4 +49,5 @@ export class ContainersFUSummary {
     public InTransit: number;
     public ArrivedNotDelivered: number;
     public DeliveredNotReturned: number;
+    public ContainersCount: number;
 }

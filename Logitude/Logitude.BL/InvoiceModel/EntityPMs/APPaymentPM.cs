@@ -199,6 +199,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ExternalPaymentNotes { get; set; }
         public List<LedgerTransactionPM> ReconcileInternalTrans { get; set; }
-        
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+
+        public string VendorCode { get; set; }
+
     }
 }

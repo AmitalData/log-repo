@@ -253,5 +253,12 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public virtual EntityStatus OperationalStatus { get; set; }
         public virtual EntityStatus BillingStatus { get; set; }
+
+        public string MainCarriageVesselName { get; set; }
+        public string Transshipment1VesselName { get; set; }
+        public string Transshipment2VesselName { get; set; }
+        public string Transshipment3VesselName { get; set; }
+        public string PreCarriageVesselName { get; set; }
+        public string OnCarriageVesselName { get; set; }
     }
 }

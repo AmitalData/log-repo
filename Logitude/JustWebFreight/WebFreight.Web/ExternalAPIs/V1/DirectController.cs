@@ -30,6 +30,9 @@ using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.CommonDataModel.APIDataContract.QueryService;
 using Logitude.BL.CommonDataModel.EntityLists;
+using Marvin.JsonPatch;
+using Container = Logitude.BL.ShipmentsModel.APIDataContract.ApiV1.Container;
+using Simplog.Data.ShipmentsModel.Repositories;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
@@ -100,6 +103,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         ExternalAPIXMLEntityValidator externalAPIXMLEntityValidator = new ExternalAPIXMLEntityValidator(authToken.Tenant);
                         externalAPIXMLEntityValidator.ValidateDirectEntity(entity);
                         this.InitOceanOrInlandPackages(entity);
+                        this.InitContainers(entity);
 
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
 
@@ -117,14 +121,14 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         externalAPIShipmentValidator.ValidatePickupDeliveryPackages();
                         externalAPIShipmentValidator.ValidatePartnersDueToDirection();
                         externalAPIShipmentValidator.ValidatePreAndOnCarrageFields();
-
+                        externalAPIShipmentValidator.ValidateCustomsFields(entityPM);
+                        externalAPIShipmentValidator.ValidateInActiveCarriers(entityPM);
                         this.SetClosurePropertiers(entityPM);
                         this.SetMasterNumberProperties(entityPM);
                         this.SetPrepaidCollectIds(entityPM);
 
                         AddressRepository addressRepository = new AddressRepository(entityPM.Tenant);
                         this.ValidateAndSetCustomerData(entityPM, addressRepository, authToken.Tenant);
-                        this.ValidateCustomsFields(entityPM);
 
                         if (!IsInlandDomesticShipment(entityPM))
                         {
@@ -136,7 +140,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                     {
                                         item.IsContainer = true;
                                     }
-                                    this.ValidateShipmentPackageDimensionsAndVolume(item, entityPM);
+                                    externalAPIShipmentValidator.ValidateShipmentPackageDimensionsAndVolume(item, entityPM);
 
                                     if (!item.IsContainer)
                                     {
@@ -180,7 +184,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         }
                         else
                         {
-                            entityPM = this.ValidateInlandDomesticShipment(entityPM);
+                            entityPM = externalAPIShipmentValidator.ValidateInlandDomesticShipment(entityPM);
                             this.UpdateRoutingPartnersAddresses(entityPM);
                         }
 
@@ -247,89 +251,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    string computingPartnerCode = "";
-                    if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
-                    {
-                        computingPartnerCode = entity.ComputingPartnerCode;
-                    }
-                    if (entity.TransportMode != null && entity.TransportMode.Code == "A")
-                    {
-                        this.ValidateMasterNumberAndCarrier(entity);
-                    }
-
-                    if (FeatureToggleHelper.HasFeatureToggle("API", authToken.Tenant))
-                    {
-                        IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
-                        DirectQueryService mappingService = new DirectQueryService(authToken.Tenant);
-
-                        APIUnassignedDataHandler apiUnassignedDataHandler = new APIUnassignedDataHandler(authToken.Tenant, computingPartnerCode);
-                        entity = apiUnassignedDataHandler.HandleUnassignedDirectShipmentData(entity);
-
-                        ShipmentPM directPM = mappingService.DirectDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode, true);
-
-                        if (directPM != null)
-                        {
-                            directPM.ConcurrencyGUID = entity.ConcurrencyGUID;
-                            directPM.IsExternalAPI = true;
-
-                            if (directPM.IsOperationalClosed)
-                            {
-                                throw new ApplicationException("Can't update operationally closed shipments");
-                            }
-
-                            if (directPM.IsCancelled)
-                            {
-                                throw new ApplicationException("Can't update cancelled shipments");
-                            }
-                            if (!IsInlandDomesticShipment(directPM))
-                            {
-                                ExternalAPIMainCarriageLegsHelper externalAPIMainCarriageLegsHelper = new ExternalAPIMainCarriageLegsHelper(directPM, authToken.Tenant);
-                                externalAPIMainCarriageLegsHelper.ValidateMainCarriageLegs();
-                                externalAPIMainCarriageLegsHelper.MapTransshipments();
-
-                                AddressRepository addressRepository = new AddressRepository(authToken.Tenant);
-                                this.ValidateAndSetCustomerData(directPM, addressRepository, authToken.Tenant);
-                                this.ValidateUpdateShipmentPackages(directPM);
-
-                                ExternalAPIShipmentValidator externalAPIShipmentValidator = new ExternalAPIShipmentValidator(directPM, authToken.Tenant);
-                                externalAPIShipmentValidator.ValidatePreAndOnCarrageFields();
-                            }
-                            else
-                            {
-                                directPM = this.ValidateInlandDomesticShipment(directPM);
-                                this.UpdateRoutingPartnersAddresses(directPM);
-                            }
-
-                            this.ValidateCustomsFields(directPM);
-                            this.UpdatePartners(MyContext, directPM);
-                            ComputeHelper.ComputeTotals(directPM);
-
-                            directPM.HasUnassignedData = apiUnassignedDataHandler.HasUnassignedData;
-                            directPM = apiUnassignedDataHandler.AddDirectShipmentUnassignedData(entity, directPM);
-
-                            ShipmentService service = new ShipmentService(MyContext, directPM, SecurityUtility.GetAuthenticatedUser());
-                            service.Update(true);
-
-                            if (entity.AddManualEvents != null && entity.AddManualEvents.Count > 0)
-                            {
-                                EventQueryService eventQueryService = new EventQueryService(authToken.Tenant);
-                                eventQueryService.CreateShipmentTraceEvents(directPM, entity.AddManualEvents, true, "");
-                            }
-                        }
-
-                        MyContext = ShipmentsContext.GetContext(authToken.Tenant);
-                        mappingService = new DirectQueryService(authToken.Tenant);
-                        var result = mappingService.GetDirectById(directPM.Id, authToken.Tenant, null);
-                        APIHelper.AddCommunicationLog("D", entity, result, "Shipment", directPM.Id, "Direct API", authToken.Tenant);
-                        return Request.CreateResponse(HttpStatusCode.OK, result);
-                    }
-
-                    else
-                    {
-                        throw new ApplicationException("Update is not allowed");
-                    }
+                    return Request.CreateResponse(HttpStatusCode.OK, this.UpdateDirectShipment(entity, authToken.Tenant));
                 }
-
                 catch (Exception ex)
                 {
                     var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
@@ -342,6 +265,130 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 var apiExceptionResult = ApiExceptionHandler.HandleModelException(ModelState);
                 APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Shipment", null, "Direct API");
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+            }
+        }
+
+        public HttpResponseMessage Patch(string id ,JsonPatchDocument<Direct> directPatchEntity)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, this.UpdateDirectShipmentByPatchUpdate(id, directPatchEntity));
+                }
+                catch (Exception ex)
+                {
+                    var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+                    APIHelper.AddCommunicationLog("F", directPatchEntity, apiExceptionResult.Exception, "Shipment", null, "Direct API");
+                    return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+                }
+            }
+            else
+            {
+                var apiExceptionResult = ApiExceptionHandler.HandleModelException(ModelState);
+                APIHelper.AddCommunicationLog("F", directPatchEntity, apiExceptionResult.Exception, "Shipment", null, "Direct API");
+                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+            }
+        }
+
+        private Direct UpdateDirectShipmentByPatchUpdate(string id, JsonPatchDocument<Direct> directPatchEntity)
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            Direct directShipment = this.GetDirectShipment(id, authToken.Tenant);
+            directPatchEntity.ApplyTo(directShipment);
+
+            return this.UpdateDirectShipment(directShipment,authToken.Tenant);
+        }
+
+        private Direct UpdateDirectShipment(Direct entity,int tenant)
+        {
+            string computingPartnerCode = "";
+            if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
+            {
+                computingPartnerCode = entity.ComputingPartnerCode;
+            }
+            if (entity.TransportMode != null && entity.TransportMode.Code == "A")
+            {
+                this.ValidateMasterNumberAndCarrier(entity);
+            }
+
+            if (FeatureToggleHelper.HasFeatureToggle("API", tenant))
+            {
+                IShipmentsContext MyContext = ShipmentsContext.GetContext(tenant);
+                DirectQueryService mappingService = new DirectQueryService(tenant);
+
+                this.InitOceanOrInlandPackages(entity);
+                this.InitContainers(entity);
+
+                APIUnassignedDataHandler apiUnassignedDataHandler = new APIUnassignedDataHandler(tenant, computingPartnerCode);
+                entity = apiUnassignedDataHandler.HandleUnassignedDirectShipmentData(entity);
+
+                ShipmentPM directPM = mappingService.DirectDataMappingAndValidatin(entity, tenant, computingPartnerCode, true);
+
+                if (directPM != null)
+                {
+                    ExternalAPIShipmentValidator externalAPIShipmentValidator = new ExternalAPIShipmentValidator(directPM, tenant);
+                    directPM.ConcurrencyGUID = entity.ConcurrencyGUID;
+                    directPM.IsExternalAPI = true;
+
+                    if (directPM.IsOperationalClosed)
+                    {
+                        throw new ApplicationException("Can't update operationally closed shipments");
+                    }
+
+                    if (directPM.IsCancelled)
+                    {
+                        throw new ApplicationException("Can't update cancelled shipments");
+                    }
+                    if (!IsInlandDomesticShipment(directPM))
+                    {
+                        ExternalAPIMainCarriageLegsHelper externalAPIMainCarriageLegsHelper = new ExternalAPIMainCarriageLegsHelper(directPM, tenant);
+                        externalAPIMainCarriageLegsHelper.ValidateMainCarriageLegs();
+                        externalAPIMainCarriageLegsHelper.MapTransshipments();
+
+                        AddressRepository addressRepository = new AddressRepository(tenant);
+                        this.ValidateAndSetCustomerData(directPM, addressRepository, tenant);
+                        externalAPIShipmentValidator.ValidatePreAndOnCarrageFields();
+                    }
+                    else
+                    {
+                        directPM = externalAPIShipmentValidator.ValidateInlandDomesticShipment(directPM);
+                        this.UpdateRoutingPartnersAddresses(directPM);
+                    }
+
+                    externalAPIShipmentValidator.ValidateUpdateShipmentPackages(directPM);
+                    externalAPIShipmentValidator.UpdatePickupDeliveryPackagesChangeSet(directPM);
+                    externalAPIShipmentValidator.UpdatePayablesChangeSet(directPM);
+                    externalAPIShipmentValidator.UpdateReceivablesChangeSet(directPM);
+                    externalAPIShipmentValidator.ValidateCustomsFields(directPM);
+                    externalAPIShipmentValidator.ValidateInActiveCarriers(directPM);
+                    directPM = this.UpdatePartners(MyContext, directPM);
+                    ComputeHelper.ComputeTotals(directPM);
+                    mappingService.UpdatePickups(directPM);
+                    mappingService.UpdateDeliveries(directPM);
+
+                    directPM.HasUnassignedData = apiUnassignedDataHandler.HasUnassignedData;
+                    directPM = apiUnassignedDataHandler.AddDirectShipmentUnassignedData(entity, directPM);
+
+                    ShipmentService service = new ShipmentService(MyContext, directPM, SecurityUtility.GetAuthenticatedUser());
+                    service.Update(true);
+
+                    if (entity.AddManualEvents != null && entity.AddManualEvents.Count > 0)
+                    {
+                        EventQueryService eventQueryService = new EventQueryService(tenant);
+                        eventQueryService.CreateShipmentTraceEvents(directPM, entity.AddManualEvents, true, "");
+                    }
+                }
+
+                var result = mappingService.GetDirectById(directPM.Id, tenant, null);
+                APIHelper.AddCommunicationLog("D", entity, result, "Shipment", directPM.Id, "Direct API", tenant);
+                return result;
+            }
+            else
+            {
+                throw new ApplicationException("Update is not allowed");
             }
         }
 
@@ -428,49 +475,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
             {
                 entityPM.MainCarriageToPortAddress = "Port Of: " + port.EnglishName;
             }
-        }
-
-        private ShipmentPM SetInlandDomesticShipmentFromPartners(ShipmentPM entityPM)
-        {
-            if (entityPM.InlandDomesticFromTypeCode == "CASL")
-            {
-                entityPM.MainCarriageFromPartnerId = null;
-                entityPM.MainCarriageFromPortId = null;
-            }
-            else if (entityPM.InlandDomesticFromTypeCode == "PART")
-            {
-                entityPM.InlandDomesticFromCity = null;
-                entityPM.InlandDomesticFromCountryId = null;
-                entityPM.MainCarriageFromPortId = null;
-            }
-            else if (entityPM.InlandDomesticFromTypeCode == "PORT")
-            {
-                entityPM.InlandDomesticFromCity = null;
-                entityPM.InlandDomesticFromCountryId = null;
-                entityPM.MainCarriageFromPartnerId = null;
-            }
-            return entityPM;
-        }
-        private ShipmentPM SetInlandDomesticShipmentToPartners(ShipmentPM entityPM)
-        {
-            if (entityPM.InlandDomesticToTypeCode == "CASL")
-            {
-                entityPM.MainCarriageToPartnerId = null;
-                entityPM.MainCarriageToPortId = null;
-            }
-            else if (entityPM.InlandDomesticToTypeCode == "PART")
-            {
-                entityPM.InlandDomesticToCity = null;
-                entityPM.InlandDomesticToCountryId = null;
-                entityPM.MainCarriageToPortId = null;
-            }
-            else if (entityPM.InlandDomesticToTypeCode == "PORT")
-            {
-                entityPM.InlandDomesticToCity = null;
-                entityPM.InlandDomesticToCountryId = null;
-                entityPM.MainCarriageToPartnerId = null;
-            }
-            return entityPM;
         }
         private void SetCustomerTypeCode(ShipmentPM entityPM)
         {
@@ -591,203 +595,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 }
             }
         }
-        private ShipmentPM ValidateInlandDomesticShipment(ShipmentPM entityPM)
-        {
-            ValidateInlandDomesticShipmentFromTypeCode(entityPM);
-            ValidateInlandDomesticShipmentToTypeCode(entityPM);
-            entityPM = SetInlandDomesticShipmentFromPartners(entityPM);
-            entityPM = SetInlandDomesticShipmentToPartners(entityPM);
-            ValidateInlandDomesticMainCarriageDates(entityPM);
-
-            return entityPM;
-        }        
-        private void ValidateInlandDomesticShipmentToTypeCode(ShipmentPM entityPM)
-        {
-            bool isCityOrCountryNull = string.IsNullOrEmpty(entityPM.InlandDomesticToCity) || string.IsNullOrEmpty(entityPM.InlandDomesticToCountryId);
-            string[] inlandDomesticToTypeCodes = { "CASL", "PART", "PORT" };
-            if (string.IsNullOrEmpty(entityPM.InlandDomesticToTypeCode))
-            {
-                throw new ApplicationException("InlandDomesticToTypeCode Field is Required");
-            }
-            if (entityPM.InlandDomesticToTypeCode == "CASL" && isCityOrCountryNull)
-            {
-                throw new ApplicationException("InlandDomestic To City And Country Fields are Required");
-            }
-            else if (entityPM.InlandDomesticToTypeCode == "PART" && string.IsNullOrEmpty(entityPM.MainCarriageToPartnerId))
-            {
-                throw new ApplicationException("MainCarriageToPartner Field is Required");
-            }
-            else if (entityPM.InlandDomesticToTypeCode == "PORT" && string.IsNullOrEmpty(entityPM.MainCarriageToPortId))
-            {
-                throw new ApplicationException("ToPort Field is Required");
-            }
-            else if (!inlandDomesticToTypeCodes.Contains(entityPM.InlandDomesticToTypeCode))
-            {
-                throw new ApplicationException("Invalid InlandDomesticToTypeCode");
-            }
-        }
-        private void ValidateInlandDomesticShipmentFromTypeCode(ShipmentPM entityPM)
-        {
-            bool isCityOrCountryNull = string.IsNullOrEmpty(entityPM.InlandDomesticFromCity) || string.IsNullOrEmpty(entityPM.InlandDomesticFromCountryId);
-            string[] inlandDomesticFromTypeCodes = { "CASL", "PART", "PORT" };
-            if (string.IsNullOrEmpty(entityPM.InlandDomesticFromTypeCode))
-            {
-                throw new ApplicationException("InlandDomesticFromTypeCode Field is Required");
-            }
-            if (entityPM.InlandDomesticFromTypeCode == "CASL" && isCityOrCountryNull)
-            {
-                throw new ApplicationException("InlandDomesticFrom City And Country Fields are Required");
-            }
-            else if (entityPM.InlandDomesticFromTypeCode == "PART" && (string.IsNullOrEmpty(entityPM.MainCarriageFromPartnerId)))
-            {
-                throw new ApplicationException("MainCarriageFromPartner Field is Required");
-            }
-            else if (entityPM.InlandDomesticFromTypeCode == "PORT" && string.IsNullOrEmpty(entityPM.MainCarriageFromPortId))
-            {
-                throw new ApplicationException("FromPort Field is Required");
-            }
-            else if (!inlandDomesticFromTypeCodes.Contains(entityPM.InlandDomesticFromTypeCode))
-            {
-                throw new ApplicationException("Invalid InlandDomesticFromTypeCode");
-            }
-        }        
-        private void ValidateCustomsFields(ShipmentPM shipmentPM)
-        {
-            if (!this.IsAddingCustomsFields(shipmentPM))
-            {
-                return;
-            }
-            if (shipmentPM.CustomsClearanceDate != null)
-            {
-                shipmentPM.IncludesCustoms = true;
-                return;
-            }
-            if (shipmentPM.DeclarationDate == null && !string.IsNullOrEmpty(shipmentPM.DeclarationNumber))
-            {
-                throw new ApplicationException("Declaration Date Field Is Required");
-            }
-            shipmentPM.IncludesCustoms = true;
-        }     
-
-        private void ValidateInlandDomesticMainCarriageDates(ShipmentPM entityPM)
-        {
-            if (!this.IsRoutingLegDatesValid(entityPM.MainCarriageETD, entityPM.MainCarriageETA))
-            {
-                throw new ApplicationException("Main-Carriage expected departure must be less than Main-Carriage expected arrival");
-            }
-
-            if (!this.IsRoutingLegDatesValid(entityPM.MainCarriageATD, entityPM.MainCarriageATA))
-            {
-                throw new ApplicationException("Main-Carriage actual departure must be less than Main-Carriage actual arrival");
-            }
-
-        }
-        private void ValidateShipmentPackageDimensionsAndVolume(ShipmentPackagePM shipmentPackagePM, ShipmentPM entityPM)
-        {
-            double? calculatedVolume = ComputeHelper.ComputeVolume(shipmentPackagePM, entityPM);
-
-            if (IsOneOfTheDimensionsNotNull(shipmentPackagePM))
-            {
-                shipmentPackagePM.Volume = calculatedVolume;
-            }
-
-        }
-        private void ValidateUpdateShipmentPackages(ShipmentPM entityPM)
-        {
-            if (!(entityPM.ShipmentPackages.Count > 0))
-            {
-                return;
-            }
-            foreach (ShipmentPackagePM item in entityPM.ShipmentPackages)
-            {
-                this.ValidateShipmentPackageItem(item, entityPM);
-            }
-
-        }
-        private void ValidateShipmentPackageItem(ShipmentPackagePM item, ShipmentPM entityPM)
-        {
-            this.ValidateShipmentPackageDimensionsAndVolume(item, entityPM);
-
-            if (!item.IsContainer)
-            {
-                if (item.InsideShipmentPackages != null && item.InsideShipmentPackages.Count > 0)
-                {
-                    throw new ApplicationException("Inside Packages allowed in FCL/FTL shipments only");
-                }
-            }
-            else
-            {
-                this.ValidateInsidePackage(item, entityPM);
-            }
-            item.VolumetricWeight = ComputeHelper.ComputeVolumetricWeight(item, entityPM);
-            item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-        }
-        private void ValidateInsidePackage(ShipmentPackagePM item, ShipmentPM entityPM)
-        {
-            if (!(item.InsideShipmentPackages != null && item.InsideShipmentPackages.Count > 0))
-            {
-                return;
-            }
-
-            item.Weight = 0;
-            item.Volume = 0;
-            item.InsideShipmentPackages.ForEach(inside =>
-            {
-                if (inside.Weight != null)
-                {
-                    item.Weight += inside.Weight;
-                }
-
-                if (inside.Volume != null)
-                {
-                    item.Volume += inside.Volume;
-                }
-
-                if (inside.Quantity == null)
-                {
-                    throw new ApplicationException("Inside Packages Quantity is required");
-                }
-
-                inside.Volume = ComputeHelper.ComputeInsideVolume(inside, entityPM);
-                inside.VolumetricWeight = ComputeHelper.ComputeInsideVolumetricWeight(inside, entityPM);
-            });
-        }
-        private bool IsInlandDomesticShipment(Direct entity)
-        {
-            bool isInland = false;
-            bool isDomestic = false;
-            if (entity.Direction != null)
-            {
-                isDomestic = entity.Direction.Code == "D" ? true : false;
-            }
-
-            if (entity.TransportMode != null)
-            {
-                isInland = entity.TransportMode.Code == "I" ? true : false;
-            }
-
-            return isDomestic && isInland;
-        }
         private bool IsInlandDomesticShipment(ShipmentPM entityPM)
         {
             return entityPM.DirectionId == "D" && entityPM.TransportModeId == "I";
-        }
-        private bool IsAddingCustomsFields(ShipmentPM shipmentPM)
-        {
-            if (shipmentPM.CustomsClearanceDate != null)
-            {
-                return true;
-            }
-            if (shipmentPM.DeclarationDate != null)
-            {
-                return true;
-            }
-            if (!string.IsNullOrEmpty(shipmentPM.DeclarationNumber))
-            {
-                return true;
-            }
-
-            return false;
         }
         private bool IsSentCustomerAShipmentPatrner(ShipmentPM entityPM)
         {
@@ -833,60 +643,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
             return false;
         }
-        private bool IsRoutingLegDatesValid(DateTime? fisrtDate, DateTime? secondeDate)
+        private ShipmentPM UpdatePartners(IShipmentsContext shipmentsContext, ShipmentPM shipmentPM)
         {
-            bool isValid = true;
-
-            if (fisrtDate != null && secondeDate != null)
-            {
-                if (fisrtDate > secondeDate.Value.AddHours(24))
-                {
-                    isValid = false;
-                }
-            }
-            return isValid;
-        }
-        private bool IsOneOfTheDimensionsNotNull(ShipmentPackagePM shipmentPackagePM)
-        {
-            if (shipmentPackagePM.Width != null)
-            {
-                return true;
-            }
-            if (shipmentPackagePM.Height != null)
-            {
-                return true;
-            }
-            if (shipmentPackagePM.Length != null)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private void UpdatePartners(IShipmentsContext shipmentsContext, ShipmentPM shipmentPM)
-        {
-            Shipment shipmentPOCO = shipmentsContext.Shipments.Where(d => d.Id == shipmentPM.Id && d.Tenant == shipmentPM.Tenant).FirstOrDefault();
-            if(shipmentPOCO != null)
-            {
-                this.UpdateNotify1Partner(shipmentPOCO, shipmentPM);
-            }
-        }
-        private void UpdateNotify1Partner(Shipment shipmentPOCO, ShipmentPM shipmentPM)
-        {
-            if(shipmentPOCO.Notify1Id != shipmentPM.Notify1Id)
-            {
-                Card card = CardRepository.GetSingleCard(shipmentPM.Notify1Id, shipmentPM.Tenant, false);
-                this.MapNotify1Fields(shipmentPM, card);                
-            }
-        }
-        private void MapNotify1Fields(ShipmentPM shipmentPM, Card card)
-        {
-            if(card != null)
-            {
-                AddressRepository addressRepository = new AddressRepository(shipmentPM.Tenant);
-                shipmentPM.Notify1AddressId = addressRepository.GetMainAddressId(card.Id, shipmentPM.Tenant);
-                shipmentPM.Notify1ContactId = card.PrimaryContactId;
-            }
+            ExternalAPIShipmentPartnersModifier externalAPIShipmentPartnersUpdate = new ExternalAPIShipmentPartnersModifier(shipmentsContext,shipmentPM);
+            return externalAPIShipmentPartnersUpdate.UpdatePartners();
         }
         private void InitOceanOrInlandPackages(Direct entity)
         {
@@ -898,7 +658,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             {
                 if (item.PackageType != null)
                 {
-                    if (entity.ShipmentType != null && (entity.ShipmentType.Code.Contains("FCL") || entity.ShipmentType.Code.Contains("FTL")))
+                    if (entity.ShipmentType != null && (entity.ShipmentType.Code.Contains("LCL") || entity.ShipmentType.Code.Contains("LTL")))
                     {
                         if (item.Pieces == null || item.Pieces == 0)
                         {
@@ -907,14 +667,18 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     }
                 }
             }
-
-            if (entity.ShipmentType != null)
+        }
+        private void InitContainers(Direct entity)
+        {
+            if (entity.Containers == null)
             {
-                if (this.IsInlandDomesticShipment(entity))
-                {
-                    entity.OceanOrInlandPackages = null;
-                }
+                return;
             }
+
+            foreach (Container item in entity.Containers)
+            {
+                item.Pieces = 1;
+            }                     
         }
         private void SetClosurePropertiers(ShipmentPM entityPM)
         {
@@ -953,6 +717,16 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     entityPM.OtherPrepaidCollectId = myIncoterm.OtherCharges;
                 }
             }
+        }
+        private Direct GetDirectShipment(string id,int tenant)
+        {
+            if (id == null)
+                throw new Exception("ShipmentId is required");
+
+            DirectQueryService Service = new DirectQueryService(tenant);
+            Direct directShipment = Service.GetDirectById(id, tenant, "");
+
+            return directShipment;
         }
     }
 }

@@ -179,7 +179,7 @@ export class DeliveryMainTabComponent extends BaseComponent {
         var isEmptyContainerVisible = false;
 
         if (this.IsFCLEntity) {
-            if (this.ShipmentPM.DirectionId == "I") {
+            if (this.ShipmentPM.DirectionId == "I" || this.ShipmentPM.DirectionId == "R") {
                 isEmptyContainerVisible = true;
             }
         }

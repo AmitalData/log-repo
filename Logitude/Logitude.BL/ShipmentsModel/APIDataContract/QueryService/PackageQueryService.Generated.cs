@@ -60,7 +60,8 @@ using Simplog.Data.ShipmentsModel;
 				   temp.ContainerNumber = item.ContainerNumber;
 				   temp.Volume = item.Volume;
 				   temp.Weight = item.Weight;
-				   temp.Description = item.Description;					
+				   temp.Description = item.Description;
+				   temp.ChangeSetOp = item.ChangeSet;					
 					MyList.Add(temp);
 				}
 					
@@ -122,7 +123,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myPackageTypePM != null)
 						{ 
 
-						 								//throw new ApplicationException("PackageType Can't be update"); 
+						 								
 								temp.PackageTypeId = myPackageTypePM.Id;
 						  
 
@@ -132,32 +133,38 @@ using Simplog.Data.ShipmentsModel;
 					}
 			
 					
-                    							//throw new ApplicationException("Quantity Can't be update"); 
-							temp.Quantity = item.Quantity;
+                    							
+						temp.Quantity = item.Quantity;
 
 					 
 
 					
-                    							//throw new ApplicationException("ContainerNumber Can't be update"); 
-							temp.ContainerNumber = item.ContainerNumber;
+                    							
+						temp.ContainerNumber = item.ContainerNumber;
 
 					 
 
 					
-                    							//throw new ApplicationException("Volume Can't be update"); 
-							temp.Volume = item.Volume;
+                    							
+						temp.Volume = item.Volume;
 
 					 
 
 					
-                    							//throw new ApplicationException("Weight Can't be update"); 
-							temp.Weight = item.Weight;
+                    							
+						temp.Weight = item.Weight;
 
 					 
 
 					
-                    							//throw new ApplicationException("Description Can't be update"); 
-							temp.Description = item.Description;
+                    							
+						temp.Description = item.Description;
+
+					 
+
+					
+                    							
+						temp.ChangeSet = item.ChangeSetOp;
 
 					 
 
