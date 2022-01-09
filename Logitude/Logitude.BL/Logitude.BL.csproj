@@ -630,6 +630,7 @@
     <Compile Include="InvoiceModel\Tools\Behaviours\ARInvoiceBehaviours\ARInvoiceShipmentsDataBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\EntityAutomationAPInvoiceMappingPMFields.cs" />
     <Compile Include="InvoiceModel\Tools\DataMapping\ARPaymentBankTranferMapping.cs" />
+    <Compile Include="InvoiceModel\Tools\EntityService\ARPaymentReferencesService.cs" />
     <Compile Include="InvoiceModel\Tools\FullAccountingARPaymentValidatorArguments.cs" />
     <Compile Include="InvoiceModel\Tools\Initializers\APInvoiceServiceInitializer.cs" />
     <Compile Include="InvoiceModel\Tools\Initializers\ARInvoiceServiceInitializer.cs" />

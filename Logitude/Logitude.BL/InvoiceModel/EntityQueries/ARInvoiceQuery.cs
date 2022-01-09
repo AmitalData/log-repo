@@ -1420,6 +1420,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             PaidDate  = a.PaidDate,
                             PartnerId = a.PartnerId,
                             GlobalTaxCalculation = a.GlobalTaxCalculation,
+                            PaymentReferences=a.PaymentReferences,
                         };
 
             return query;
@@ -1569,6 +1570,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              MasterShipmentNumbers = entity.MasterShipmentNumbers,
                              HouseNumbers = entity.HouseNumbers,
                              GlobalTaxCalculation = entity.GlobalTaxCalculation,
+                             PaymentReferences = entity.PaymentReferences,
                          };
 
             return result;
@@ -1690,6 +1692,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               MasterShipmentNumbers = a.MasterShipmentNumbers,
                                               HouseNumbers = a.HouseNumbers,
                                               GlobalTaxCalculation = a.GlobalTaxCalculation,
+                                              PaymentReferences = a.PaymentReferences,
                                           }).ToList();
             return invoices;
         }
@@ -1817,7 +1820,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     MasterShipmentNumbers = entityPOCO.MasterShipmentNumbers,
                     HouseNumbers = entityPOCO.HouseNumbers,
                     GlobalTaxCalculation = entityPOCO.GlobalTaxCalculation,
-
+                    PaymentReferences = entityPOCO.PaymentReferences,
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
@@ -1829,7 +1832,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 CardRepository myCardRepository = new CardRepository(myCommonContext);
                 Card myBillTo = myCardRepository.GetSingleCard(entityPOCO.BillToId, tenant);
                 SetInterestReportFields(entityPM);
-
                 if (myBillTo != null)
                 {
                     entityPM.BillToName = myBillTo.EnglishName;
@@ -2007,7 +2009,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             return securedEntityPM;
         }
-        
         private void SetInterestReportFields(ARInvoicePM invoice)
         {
             InterestReport interestReport = new InterestReport();
@@ -2179,6 +2180,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              PartnerId = entity.PartnerId,
                              PartnerName = entity.Partner.EnglishName,
                              GlobalTaxCalculation = entity.GlobalTaxCalculation,
+                             PaymentReferences = entity.PaymentReferences,
                          };
 
             return result;
