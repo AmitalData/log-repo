@@ -369,9 +369,9 @@
 
                                             <tr>
                                                 <td>
-                                                  
+
                                                    <div></div>
-                                                
+
                                                 </td>
                                             </tr>
 
@@ -387,7 +387,7 @@
                         </td>
                     </tr>
 
-                    <tr style="height: 20px;">
+                    <tr style="height: 30px;">
                         <td>
                           <div>
                             <div *ngIf="IsTesterButtonVisibile">
@@ -401,8 +401,51 @@
                     <tr style="height: 20px;">
                       <td>
 
+                         <!-- TransmitStatus filter  -->
+                         <div float-start style="padding: 0 15px;" class="noselect">
+                            <dropdown-button [Dropdownbutton_TextCode]="'TaxReportLine.F.TransmitStatusCode'">
+                              <div class="class-dropdown-content">
+                                <div style="width:250px;">
+                                  <table>
+                                    <tr style="height:5px;">
+                                      <td>
+                                        <div></div>
+                                      </td>
+                                    </tr>
+
+                                    <tr style="height: 25px;"
+                                        *ngFor="let status of TransmitStatuses; let i=index;">
+                                      <td>
+                                        <div style="margin-right:5px;">
+
+                                          <CheckBox style="margin-right:5px;float:right;"
+                                                    (Checked)="$event == true ? PushTransmitStatus(status) : PopTransmitStatus(status)">
+                                          </CheckBox>
+
+                                          <span [title]="showLocals ? status.LocalName : status.EnglishName"
+                                                style="margin-right:5px;float:right; width: 200px;text-overflow: ellipsis;overflow: hidden;">
+                                            {{showLocals ? status.LocalName : status.EnglishName}}
+                                          </span>
+
+                                        </div>
+                                      </td>
+
+
+
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        <div></div>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </div>
+                              </div>
+                            </dropdown-button>
+                          </div>
+
                         <!-- Filters -->
-                        <div *ngIf="reportCounters" float-start class="noselect">
+                        <div *ngIf="reportCounters" float-start class="noselect" style="min-width: 653px;">
 
                           <ul class="FiltersMenu">
 
@@ -487,7 +530,7 @@
                         <div [style.float]="isRTL ? 'left' : 'right'" style="padding: 4px; width: 250px;">
                           <SearchTextBox [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
                         </div>
-                       
+
                         <!-- Buttons -->
                         <div style="width: 30px;margin-top: 4px;margin-left: 10px;" [style.float]="isRTL ? 'left' : 'right'">
                           <IconButton [Name]="'Excel'" (click)="Export2ExcelClicked()" [disabled]="false"></IconButton>
@@ -512,7 +555,7 @@
                                     [autoLoad]="true"
                                     [QueryChangeEvent]="onQueryChangeEvent"
                                     [IsCustomTemplate]="true"
-                                   
+
                                     [CustomColumnsReady]="TaxReportColumnsReady">
                                 </logitude-grid>
                             </div>

@@ -5,18 +5,18 @@
     <span class="x-split-button">
         <!--width: 100px  height: 30  -->
         <button [disabled]="IsDisabled"
-                class="Button" 
+                class="Button"
                 [attr.id]="_DropdownButtonComponentId"
-                style="width: 75px;"
+                style="min-width: 75px;width: fit-content;"
                 (click)="dropdowndisplayToggle()">
             <span>{{Dropdownbutton_Text}} </span>&#9660;
         </button>
-        
+
         <!--background-color : aquamarine;-->
         <div [attr.id]="_DropdownButtonComponentMenuId"
              [ngStyle]="{'display': _DropdownDisplay  }"
              style="position: fixed;z-index: 1;border: .5px solid  #45494A;border-radius: 3px;background-color: #F2F2F2;text-shadow: 1px 1px white">
-     
+
             <ng-content select=".class-dropdown-content"></ng-content>
 
         </div>
