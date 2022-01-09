@@ -14,6 +14,7 @@ import {ShippingLineListService} from '../../../../Common/Services/StandardLists
 import {ShippingLineList} from '../../../../Common/EntityLists/ShippingLineList';
 import {PartnersDomainService} from '../../../../Common/Services/PartnersDomainService';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
+import { VatNumberValidator, VATValidatorArgs } from '../../../../Infrastructure/Validators/VatNumberValidator';
 
 @Component({
     
@@ -76,6 +77,7 @@ export class NewShippingLineComponent extends BaseComponent implements OnInit {
         this.IsEditEnabled = false;
         this.ZeroExistsMessageVisibility = false;
         this.LoadShippingLineListMethod();
+        this.SetUIProperties_VAT();
     }
 
     // Properties 
@@ -90,6 +92,18 @@ export class NewShippingLineComponent extends BaseComponent implements OnInit {
     get IsEditEnabled() { return this.isEditEnabled; }
     set IsEditEnabled(value: boolean) {
         this.isEditEnabled = value;
+    }
+
+    get VatNumber() { return this.ShippingLinePM.VatNumber; }
+    set VatNumber(value: string) {
+        if (this.ShippingLinePM.VatNumber != value) {
+            this.ShippingLinePM.VatNumber = value;
+            this.SetUIProperties_VAT();
+        }
+    }
+    private SetUIProperties_VAT() {
+        var vatErrors = this.ValidateVatNumber();
+        this.UIProperties.SetRequired("VatNumber", this.ObjectTableName, vatErrors.length > 0 ? true : false);
     }
 
     get Code() { return this.ShippingLinePM.Code; }
@@ -182,15 +196,29 @@ export class NewShippingLineComponent extends BaseComponent implements OnInit {
     OkButtonClicked() {
         var errors: string[] = [];
         Validator.TryValidateObject(this.DataContext.ShippingLinePM, this.ObjectTableName, errors);
+        var vatErrors = this.ValidateVatNumber();
+        vatErrors?.forEach(item => {
+            errors.push(item);
+        });
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {
 
             this.SubmitCreatingShippingLine();
         }
-
     }
 
+    ValidateVatNumber(): string[] {
+        var args = new VATValidatorArgs();
+        args.VATNumber = this.VatNumber;
+        args.CountryId = this.ShippingLinePM.CountryId;
+        args.CountryName = this.ShippingLinePM.CountryName;
+        args.CountryEnglishName = this.ShippingLinePM.CountryName;
+        args.SetReady = false;
+        VatNumberValidator.ValidateVatFormat(args);
+        VatNumberValidator.ValidateVatMandatory(args);
+        return args.Errors;
+    }
     SubmitCreatingShippingLine() {
 
         this.CurrentSession.StartBusyIndicatorSaving();
