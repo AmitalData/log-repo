@@ -291,6 +291,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             VendorPM securedPm = new VendorPM();
             SecuredMapping.GetMappedPM(vendor, securedPm, "Vendor", tenant);
 
+            if (securedPm != null && vendor != null)
+            {
+                Vendor entityPoco = (from s in repository.context.Vendors where s.Id == securedPm.Id select s).FirstOrDefault();
+                MapCustomFields(securedPm, entityPoco);
+            }
             return securedPm;
         }
 

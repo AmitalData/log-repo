@@ -31,7 +31,7 @@
   IsSaveButtonVisible="true"
   IsComposition="false"
   EnableSecurity="true"
-  AllowCustomFields="false"
+  AllowCustomFields="true"
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="10"
