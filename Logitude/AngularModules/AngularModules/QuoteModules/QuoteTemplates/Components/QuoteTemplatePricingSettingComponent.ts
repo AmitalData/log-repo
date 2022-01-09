@@ -872,8 +872,13 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
     private MapIsUsedFieldToCurrentDBFields() {
         this.QuoteTemplatePricesTableSettingsData.forEach((item) => {
+            if(this.InExcludedQuoteTemplatePricesPackagesTableSettingsData(item.Name)) return;
             this.QuoteTemplateSettingPM[item.Name] = item.InUse;
         });
+    }
+    ExcludedQuoteTemplatePricesPackagesTableSettingsData:string[]=["ShowTotalInSaleCurrencyContainers","ShowTotalInSaleCurrencyPackages","ShowTotalInLocalCurrencyContainers","ShowTotalInLocalCurrencyPackages"];
+    InExcludedQuoteTemplatePricesPackagesTableSettingsData(item: string): boolean {
+        return this.ExcludedQuoteTemplatePricesPackagesTableSettingsData.some(x=>x==item);
     }
 
     SaveOthers(textDesignPmLists: any[], textCodeDataLists:any[]) {
