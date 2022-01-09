@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class VendorUpdateClass
    {  		
-		public const string HashString = "2f6669284b81b7e4a6a95616b0153e9f";
+		public const string HashString = "31813ebb2406c8b094f2cd08dc9fc09c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -93,7 +93,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTablePlural =  "Vendors",
 			      				    DescriptionDefaultText =  "Add and manage information about Suppliers and Vendors you work with. Specify communication, address and billing details and create list of contacts.",
 			      				    HasCustomFilter =  true,
-			      				    HasCustomFields =  false,
+			      				    HasCustomFields =  true,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -117,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
-			      				    MaxNumberOfCustomFields =  0,
+			      				    MaxNumberOfCustomFields =  10,
 			      				    NewWizardControlName =  "Simplog.FreightLib.NewVendorCommand",
 			      				    DefaultText =  "Vendor",
 			      				    NewButtonLocalDefaultText =  "הוסף ספק",
