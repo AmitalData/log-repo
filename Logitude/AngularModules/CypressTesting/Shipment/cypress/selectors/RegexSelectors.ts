@@ -122,4 +122,12 @@ export class RegexSelectors {
     public static HouseCheckBox(houseNumber: string): string {
         return "[data-cy='CheckBox_" + houseNumber + "']";
     }
+
+    public static PickupDeliveryFromType(fromType: string): string {
+        return "#" + fromType + "_FromRadio";
+    }
+
+    public static PickupDeliveryToType(toType: string): string {
+        return "#" + toType + "_ToRadio";
+    }
 }
