@@ -20,20 +20,26 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.objectContext = objectContext;
             this.invoiceRepository = new ARInvoiceRepository(this.objectContext); 
         } 
-        internal void UpdateConnectedARInvoicePaymentRefeneces(ARPaymentPM aRPaymentPM) 
-        { 
-            List<ARPaymentInvoicePM> PaymentInvoices = aRPaymentPM.PaymentInvoices; 
-            foreach (ARPaymentInvoicePM PaymentInvoice in PaymentInvoices)
-            {
-                UpdateARInvoicePaymentRefrences(PaymentInvoice);
-            }  
-        } 
-        private void UpdateARInvoicePaymentRefrences(ARPaymentInvoicePM paymentInvoice)
+        internal void UpdateConnectedARInvoicePaymentRefeneces(ARPaymentPM aRPaymentPM)
         {
-            var arInvoiceId = paymentInvoice.ARInvoiceId;
+            ARInvoicePayment aRInvoicePayment = GetARInvoicePayment(aRPaymentPM);
+
+            if (aRInvoicePayment == null || aRInvoicePayment.ARInvoiceId == null) return;
+
+            var arInvoiceId = aRInvoicePayment.ARInvoiceId;
             string paymentRefreneces = CalculateARInvoicePaymentsRefreneces(arInvoiceId);
             UpdateARInvoice(arInvoiceId, paymentRefreneces);
+
+
         }
+
+        private ARInvoicePayment GetARInvoicePayment(ARPaymentPM aRPaymentPM)
+        {
+            return (from a in objectContext.ARInvoicePayments.Include("ARPayment")
+                    where a.ARPaymentId == aRPaymentPM.Id
+                    select a).FirstOrDefault();
+        }
+
         private string CalculateARInvoicePaymentsRefreneces(string arInvoiceId)
         {
             List<string> invoicesPayment = (from a in objectContext.ARInvoicePayments.Include("ARPayment")
