@@ -7399,6 +7399,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             foreach(ShipmentPickUpPM pickUp in entityPM.ShipmentPickUps.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete))
             {
                 pickUp.PickUpDeliveryNumber = this.GetNewPickupDeliveryNumber(pickUp.PickUpDeliveryNumber, !string.IsNullOrEmpty(pickUp.ParentPickUpDeliveryId));
+                pickUp.ChangeSetOp = ChangeSetOperation.Update;
             }
         }
         private void ChangeDeliveriesNumbers()
@@ -7406,6 +7407,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             foreach (ShipmentDeliveryPM delivery in entityPM.ShipmentDeliveries.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete))
             {
                 delivery.PickUpDeliveryNumber = this.GetNewPickupDeliveryNumber(delivery.PickUpDeliveryNumber, !string.IsNullOrEmpty(delivery.ParentPickUpDeliveryId));
+                delivery.ChangeSetOp = ChangeSetOperation.Update;
             }
         }
         private string GetNewPickupDeliveryNumber(string oldNumber, bool isChild)
