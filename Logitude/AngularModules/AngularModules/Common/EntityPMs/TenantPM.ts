@@ -740,6 +740,11 @@ export class TenantPM {
     public set AutomaticallyCloseDays(newValue: number) { if (this.automaticallyCloseDays != newValue) { this.automaticallyCloseDays = newValue; this.MarkAsDirty("AutomaticallyCloseDays"); } }
        
 	 
+    private enableDeliveryOptions: boolean;
+    public get EnableDeliveryOptions() { return this.enableDeliveryOptions; }
+    public set EnableDeliveryOptions(newValue: boolean) { if (this.enableDeliveryOptions != newValue) { this.enableDeliveryOptions = newValue; this.MarkAsDirty("EnableDeliveryOptions"); } }
+       
+	 
 
     public OldEntityPM: TenantPM;
 		

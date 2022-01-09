@@ -11,7 +11,10 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
-import {ObjectFieldPMService} from '../../../../Infrastructure/Services/StandardPMs/ObjectFieldPMService';
+import { ObjectFieldPMService } from '../../../../Infrastructure/Services/StandardPMs/ObjectFieldPMService';
+import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
+
+
 declare var window: any;
 
 @Component({
@@ -101,7 +104,7 @@ export class TabItem {
     public ObjectTablePM: ObjectTablePM;
     public ObjectTableId: string;
     public Header: string;
-    public FieldsItemsSource: StandardFieldItem[];
+    public FieldsItemsSource: ObservableCollection;
     private myService: GeneralDomainService;
     public EntityTranslations: FieldsTranslations[];
     private CurrentSession = SessionLocator.SelectedSession;
@@ -109,7 +112,7 @@ export class TabItem {
         this.ObjectTablePM = objectTablePM;
         this.ObjectTableId = objectTablePM.Id;
         this.myService = new GeneralDomainService();
-
+        this.FieldsItemsSource = new ObservableCollection([]);
         this.SetTabHeader();
     }
 
@@ -143,22 +146,24 @@ export class TabItem {
     }
 
     public BuildItemsSource(searchText: string = null) {
-        this.FieldsItemsSource = [];
-
+        this.FieldsItemsSource = new ObservableCollection([]);
+        var temp: StandardFieldItem[] = [];
         if (AppTool.IsNullOrEmpty(searchText)) {
             this.loadedFields.forEach((item) => {
-                this.FieldsItemsSource.push(new StandardFieldItem(item, this.loadedFields, this.EntityTranslations));
+
+                temp.push(new StandardFieldItem(item, this.loadedFields, this.EntityTranslations));
             });
         }
 
         else {
             this.loadedFields.forEach((item) => {
                 if (!AppTool.IsNullOrEmpty(item.FullNameTextCodeDefaultText) && item.FullNameTextCodeDefaultText.toUpperCase().indexOf(searchText.toUpperCase()) > -1) {
-                    this.FieldsItemsSource.push(new StandardFieldItem(item, this.loadedFields, this.EntityTranslations));
+                    temp.push(new StandardFieldItem(item, this.loadedFields, this.EntityTranslations));
                 }
             });
         }
 
+        this.FieldsItemsSource.InsertCollection(temp);
         this.CurrentSession.StopBusyIndicator();
     }
 

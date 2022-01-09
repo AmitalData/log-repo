@@ -247,7 +247,7 @@
                         <span>
                             <span> {{card.Title}}</span>
                             <span style="width:3px"></span>
-                            <span *ngIf="card.IsDimmed || (!card.Date && card.ExpectedDate)" style="font-size: 12px;"> (Expected)</span>
+                            <span *ngIf="card.IsDimmed || card.ExpectedDate" style="font-size: 12px;"> (Expected)</span>
                         </span>
                     </div>
 
@@ -513,9 +513,9 @@ cargoTrackingShipmentPM.ArrivalDate |
                 <div *ngIf=" cargoTrackingShipmentPM.EntityType != 'O'">
                     <div class="title">storage site</div>
                     <div class="description TextTrimming">
-                        {{cargoTrackingShipmentPM?.WarehouseLegEnglishName}}
-                        <a *ngIf="cargoTrackingShipmentPM && cargoTrackingShipmentPM.WarehouseLegEnglishName && cargoTrackingShipmentPM.WarehouseLegEnglishName.length > 18"
-                           (click)="ShowMoreWindow(cargoTrackingShipmentPM.WarehouseLegEnglishName)"
+                        {{cargoTrackingShipmentPM?.WarehouseLegName}}
+                        <a *ngIf="cargoTrackingShipmentPM && cargoTrackingShipmentPM.WarehouseLegName && cargoTrackingShipmentPM.WarehouseLegName.length > 18"
+                           (click)="ShowMoreWindow(cargoTrackingShipmentPM.WarehouseLegName)"
                            style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
                     </div>
                 </div>

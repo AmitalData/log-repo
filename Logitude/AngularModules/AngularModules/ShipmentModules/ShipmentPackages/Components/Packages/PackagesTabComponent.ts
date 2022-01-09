@@ -2211,6 +2211,12 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
     private IsShipmentStatuesDelivered() {
         var deliverdStausName = "Delivered";
+        var IsDeliveryOptionsEnabled = SessionLocator.TenantPM != null ? SessionLocator.TenantPM.EnableDeliveryOptions : false;
+
+        if (!IsDeliveryOptionsEnabled) {
+            return false;
+        }
+
         if (this.EntityPM.StatusName == (deliverdStausName)) {
             return true;
         }
