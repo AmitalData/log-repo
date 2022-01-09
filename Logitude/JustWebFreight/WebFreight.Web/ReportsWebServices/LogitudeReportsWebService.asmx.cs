@@ -7965,7 +7965,7 @@ namespace WebFreight.Web.ReportsWebServices
                                  TransportMode = myShipment.TransportModeName,
                                  ValueOfGoods = myShipment.ValueOfGoods,
                                  FlightNumber = myShipment.MainCarriageCarrierCode + myShipment.MainCarriageCarrierNumber,
-
+                                 ExchangeRate = myItem.ProfitCurrencyExchangeRate,
                                  ChargeTypeId = myItem.ChargesTypeId,
                                  ChargeTypeCode = myItem.ChargesType == null ? null : myItem.ChargesType.Code,
                                  ChargeTypeName = myItem.ChargesType == null ? null : myItem.ChargesType.EnglishName,
@@ -8008,7 +8008,7 @@ namespace WebFreight.Web.ReportsWebServices
                                  TransportMode = myShipment.TransportModeName,
                                  ValueOfGoods = myShipment.ValueOfGoods,
                                  FlightNumber = myShipment.MainCarriageCarrierCode + myShipment.MainCarriageCarrierNumber,
-
+                                 ExchangeRate = myItem.ProfitCurrencyExchangeRate,
                                  ChargeTypeId = myItem.ChargesTypeId,
                                  ChargeTypeCode = myItem.ChargesType == null ? null : myItem.ChargesType.Code,
                                  ChargeTypeName = myItem.ChargesType == null ? null : myItem.ChargesType.EnglishName,
@@ -8049,7 +8049,8 @@ namespace WebFreight.Web.ReportsWebServices
                                 d.ValueOfGoods,
                                 d.FlightNumber,
                                 d.ChargeGroupCode,
-                                d.ChargeGroupName
+                                d.ChargeGroupName,
+                                d.ExchangeRate,
                             })
 
                             .Select(s => new ShipmentsReceivablesPayablesList()
@@ -8087,6 +8088,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 Receivables_ACCT = s.Sum(k => k.Receivables_ACCT),
                                 ChargeGroupCode = s.Key.ChargeGroupCode,
                                 ChargeGroupName = s.Key.ChargeGroupName,
+                                ExchangeRate = s.Key.ExchangeRate,
                             }).ToList();
             }
 
@@ -8368,6 +8370,8 @@ namespace WebFreight.Web.ReportsWebServices
                     record.FlightNumber = a.FlightNumber;
                     record.ChargeGroupCode = a.ChargeGroupCode;
                     record.ChargeGroupName = a.ChargeGroupName;
+                    record.AccountingClosed = a.IsAccountingClosed;
+                    record.ExchangeRate = a.ExchangeRate;
 
                     totalData.ShipmentAnalysisRecordList.Add(record);
                 }

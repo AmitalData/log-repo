@@ -275,6 +275,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.Salesman = myShipment.SalesmanUserName;
                             myRecord.CustomerExternalID = customerExternalID;
                             myRecord.Shipper = myShipment.ShipperName;
+                            myRecord.ShipmentStatus = myShipment.ShipmentStatusName;
+                            myRecord.AccountingClosed = myShipment.IsAccountingClosed;
                             myRecord.ShipperNotExporter = myShipment.ShipperNotExporterName;
                             myRecord.Consignee = myShipment.ConsigneeName;
                             myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
@@ -330,6 +332,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.InvoiceDate = invoice.InvoiceDate;
                         myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;
                         myRecord.Shipper = myShipment.ShipperName;
+                        myRecord.ShipmentStatus = myShipment.ShipmentStatusName;
+                        myRecord.AccountingClosed = myShipment.IsAccountingClosed;
                         myRecord.ShipperNotExporter = myShipment.ShipperNotExporterName;
                         myRecord.Consignee = myShipment.ConsigneeName;
                         myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
@@ -408,6 +412,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.InvoiceDate = invoice.InvoiceDate;
                         myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;
                         myRecord.Shipper = myShipment.ShipperName;
+                        myRecord.ShipmentStatus = myShipment.ShipmentStatusName;
+                        myRecord.AccountingClosed = myShipment.IsAccountingClosed;
                         myRecord.ShipperNotExporter = myShipment.ShipperNotExporterName;
                         myRecord.Consignee = myShipment.ConsigneeName;
                         myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
@@ -697,6 +703,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.OpenPayables = myRecord.Payables;
                                     myRecord.CustomerExternalID = customerExternalID;
                                     myRecord.Shipper = myShipment.ShipperName;
+                                    myRecord.ShipmentStatus = myShipment.ShipmentStatusName;
+                                    myRecord.AccountingClosed = myShipment.IsAccountingClosed;
                                     myRecord.ShipperNotExporter = myShipment.ShipperNotExporterName;
                                     myRecord.Consignee = myShipment.ConsigneeName;
                                     myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
@@ -783,6 +791,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.OpenReceivables = myRecord.Receivables;
                                     myRecord.CustomerExternalID = customerExternalID;
                                     myRecord.Shipper = myShipment.ShipperName;
+                                    myRecord.ShipmentStatus = myShipment.ShipmentStatusName;
+                                    myRecord.AccountingClosed = myShipment.IsAccountingClosed;
                                     myRecord.ShipperNotExporter = myShipment.ShipperNotExporterName;
                                     myRecord.Consignee = myShipment.ConsigneeName;
                                     myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
@@ -872,6 +882,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;
                                 myRecord.CustomerExternalID = customerExternalID;
                                 myRecord.Shipper = myShipment.ShipperName;
+                                myRecord.ShipmentStatus = myShipment.ShipmentStatusName;
+                                myRecord.AccountingClosed = myShipment.IsAccountingClosed;
                                 myRecord.ShipperNotExporter = myShipment.ShipperNotExporterName;
                                 myRecord.Consignee = myShipment.ConsigneeName;
                                 myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
@@ -1011,6 +1023,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;
                                 myRecord.CustomerExternalID = customerExternalID;
                                 myRecord.Shipper = myShipment.ShipperName;
+                                myRecord.ShipmentStatus = myShipment.ShipmentStatusName;
+                                myRecord.AccountingClosed = myShipment.IsAccountingClosed;
                                 myRecord.ShipperNotExporter = myShipment.ShipperNotExporterName;
                                 myRecord.Consignee = myShipment.ConsigneeName;
                                 myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
