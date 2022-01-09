@@ -6,8 +6,7 @@
   Module="CargoTracking">
   <Column
     Name="Id"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />

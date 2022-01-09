@@ -28,7 +28,7 @@ namespace Logitude.CargoTracking.Data.Repositories
 
 		 
 		
-		public  CargoReferencesSyncQueue GetSingle(string id, int tenant)
+		public  CargoReferencesSyncQueue GetSingle(int id, int tenant)
         {
             return (from a in context.CargoReferencesSyncQueues
                     where a.Id == id && a.Tenant == tenant

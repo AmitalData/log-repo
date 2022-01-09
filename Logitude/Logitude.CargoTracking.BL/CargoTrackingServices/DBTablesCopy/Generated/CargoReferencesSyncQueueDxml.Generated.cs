@@ -9,7 +9,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
       
         public string  GetCargoReferencesSyncQueueDxml (){
 		    string dxmlFile = "<Table Name='CargoReferencesSyncQueues' Schema='dbo' DBType='CargoTracking' Module='CargoTracking'>"+
-"  <Column Name='Id' Type='varchar' Size='15'>"+
+"  <Column Name='Id' Type='int'>"+
 "    <Constraints PrimaryKey='true' Nullable='false' />"+
 "  </Column>"+
 "  <Column Name='ShipmentId' OldNames='ForwardingShipmentId' Type='varchar' Size='30'>"+

@@ -24,9 +24,9 @@ export class CargoReferencesSyncQueuePM {
       }
  	 
     
-    private id: string;
+    private id: number;
     public get Id() { return this.id; }
-    public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
+    public set Id(newValue: number) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
        
 	 
     private shipmentId: string;

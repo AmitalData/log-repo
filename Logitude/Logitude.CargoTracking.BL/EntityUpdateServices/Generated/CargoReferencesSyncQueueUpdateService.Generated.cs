@@ -55,19 +55,15 @@ namespace Logitude.CargoTracking.BL.EntityUpdateServices
         }
 
 		
-		protected override void FillDefaultValuesOnCreate(CargoReferencesSyncQueuePM entityPM)
-        {     
-  
-		
-		    entityPM.Id = IdCounter.GetNumber("CargoReferencesSyncQueue", entityPM.Tenant); 
-					
-	    }
-        
+	    protected override void FillDefaultValuesOnCreate(CargoReferencesSyncQueuePM entityPM)
+        {
+ 
+		}
 		protected override void FillDefaultValuesOnUpdate(CargoReferencesSyncQueuePM entityPM)
-        {       
-           
-        }
-		  
+		{
+ 
+		}
+		
 		 
 	 
    }

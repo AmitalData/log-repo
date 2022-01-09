@@ -8,7 +8,8 @@
 
 export class CargoReferencesSyncQueueList {
    
-	Id: string;
+	Id: number;
+	ShipmentId: string;
 	Tenant: number;
 	
 }

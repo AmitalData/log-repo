@@ -12,7 +12,7 @@ namespace Logitude.CargoTracking.Data.EntityKeys
 {
    public partial class CargoReferencesSyncQueueKeys : EntityKeyFields
    {
-   	  public string Id  { get; set; }
+   	  public int Id  { get; set; }
 	  
 				 
 	    			   

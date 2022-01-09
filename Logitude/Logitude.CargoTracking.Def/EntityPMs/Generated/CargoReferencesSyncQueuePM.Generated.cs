@@ -18,14 +18,14 @@ namespace Logitude.CargoTracking.Def.EntityPMs
    [DataContract]
    public partial class CargoReferencesSyncQueuePM : EntityPM
    {
-   	  private string id ;
+   	  private int id ;
 	  
        [Key]
 	  
        
 	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Id  
+       public int Id  
 	   {
 	    
 	     get
@@ -36,7 +36,7 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 		 {
 		   if(id != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   id=value;
 		   }

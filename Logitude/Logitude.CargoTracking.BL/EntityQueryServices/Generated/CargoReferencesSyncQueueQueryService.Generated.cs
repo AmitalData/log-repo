@@ -48,7 +48,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             mapping = new CargoReferencesSyncQueueDataMapping();
         }
 		 
-		public  CargoReferencesSyncQueuePM GetSingle(string id,bool getComposition, bool getFromCache)
+		public  CargoReferencesSyncQueuePM GetSingle(int id,bool getComposition, bool getFromCache)
         {
              EntityKeys = new CargoReferencesSyncQueueKeys(){ Id = id };
 
