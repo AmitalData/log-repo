@@ -92,6 +92,13 @@ export class NewShippingLineComponent extends BaseComponent implements OnInit {
         this.isEditEnabled = value;
     }
 
+    get VatNumber() { return this.ShippingLinePM.VatNumber; }
+    set VatNumber(value: string) {
+        if (this.ShippingLinePM.VatNumber != value) {
+            this.ShippingLinePM.VatNumber = value;
+        }
+    }
+
     get Code() { return this.ShippingLinePM.Code; }
     set Code(value: string) {
         if (this.ShippingLinePM.Code != value) {

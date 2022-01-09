@@ -208,7 +208,7 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
         }
         
 
-        this.UIProperties.SetVisibility("VatNumber", this.ObjectTableName, this.IsCustomerPartner);
+        //this.UIProperties.SetVisibility("VatNumber", this.ObjectTableName, this.IsCustomerPartner);
         this.UIProperties.SetVisibility("SalesmanUserId", this.ObjectTableName, this.IsCustomerPartner);
 
         this.SetUIProperties_Code();

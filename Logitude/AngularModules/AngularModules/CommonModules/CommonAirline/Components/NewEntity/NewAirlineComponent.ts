@@ -88,6 +88,13 @@ export class NewAirlineComponent extends BaseComponent implements OnInit {
         this.isSaveEnabled = value;
     }
 
+    get VatNumber() { return this.AirlinePM.VatNumber; }
+    set VatNumber(value: string) {
+        if (this.AirlinePM.VatNumber != value) { 
+            this.AirlinePM.VatNumber = value;
+        }
+    }
+
     get Code() { return this.AirlinePM.Code; }
     set Code(value: string) {
         if (this.AirlinePM.Code != value) {
