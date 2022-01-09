@@ -514,7 +514,7 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
             this.SavedEntityNumber = this.EntityPM.PickUpDeliveryNumber;
             
             if (this.IsNewEntity) {
-                if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0] != null) {
+                if (this.IsFCLEntity && SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0] != null) {
                     this.proceedToSave = false;
                     this.AddContainerAutomatically(isClosingWindow);
                 }
@@ -644,6 +644,10 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
                     }
                 });
             }
+        }
+
+        else {
+            this.ContinueSaving(isClosingWindow);
         }
     }
     ShowSelectContainerWindow(isClosingWindow: boolean) {
