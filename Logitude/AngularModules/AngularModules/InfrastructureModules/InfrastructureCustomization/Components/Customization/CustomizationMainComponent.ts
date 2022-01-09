@@ -163,16 +163,20 @@ export class CustomizationMainComponent {
     LabelsClicked() {
         var table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.selectedRow.ObjectTableID)[0];
 
-        if (table != null) {
-            this.entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe((response: any) => {
-                var logWindow = new LogitudeWindow();
-                logWindow.Title = "Object Labels: " + this.selectedRow.DefaultText;
-                logWindow.IsFillScreen = true;
-                logWindow.WindowArgs = this.selectedRow;
-                logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/ObjectLabelsComponent');
-            });
-        }
+        if (table == null) return;
+
+        this.entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe((response: any) => {
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.IsFillScreen = true;
+            logitudeWindow.Title = "Translate Labels: " + this.selectedRow.DefaultText;
+            let windowArgs: any = {};
+            windowArgs.TranslationLanguageCode = this.selectedRow.TranslationLanguageCode;
+            windowArgs.ObjectTableId = this.selectedRow.ObjectTableID;
+            logitudeWindow.WindowArgs = windowArgs;
+            logitudeWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/TranslationLabels/TranslateLabelsComponent');
+        });
     }
+
 
     ScreensLayoutClicked() {
         var table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.selectedRow.ObjectTableID)[0];

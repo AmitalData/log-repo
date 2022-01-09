@@ -83,7 +83,7 @@
                                 <table>
 
                                     <!-- Tables -->
-                                    <tr style="height: 1px;">
+                                    <tr *ngIf="!IsFromCustomizedScreen" style="height: 1px;">
                                         <td>
                                             <div class="BoxSection">
                                                 <div class="BoxSectionHead">Tables</div>
@@ -100,14 +100,14 @@
                                         </td>
                                     </tr>
 
-                                    <tr style="height: 5px;">
+                                    <tr *ngIf="!IsFromCustomizedScreen" style="height: 5px;">
                                         <td>
                                             <div></div>
                                         </td>
                                     </tr>
 
                                     <!-- Spell Checked -->
-                                    <tr style="height: 1px;">
+                                    <tr *ngIf="!IsFromCustomizedScreen" style="height: 1px;">
                                         <td>
                                             <div class="BoxSection">
                                                 <div class="BoxSectionHead">Spell Checked</div>
@@ -123,14 +123,14 @@
                                         </td>
                                     </tr>
 
-                                    <tr style="height: 5px;">
+                                    <tr *ngIf="!IsFromCustomizedScreen" style="height: 5px;">
                                         <td>
                                             <div></div>
                                         </td>
                                     </tr>
 
                                     <!-- Check Date -->
-                                    <tr style="height: 1px;">
+                                    <tr *ngIf="!IsFromCustomizedScreen" style="height: 1px;">
                                         <td>
                                             <div class="BoxSection">
                                                 <div class="BoxSectionHead">Check Date</div>
@@ -148,7 +148,7 @@
                                         </td>
                                     </tr>
 
-                                    <tr style="height: 5px;">
+                                    <tr *ngIf="!IsFromCustomizedScreen" style="height: 5px;">
                                         <td>
                                             <div></div>
                                         </td>
@@ -223,7 +223,7 @@
                                 </log-column>
 
                                 <!-- Is Translated  -->
-                                <log-column [width]="'90'" [header]="'Translated'" [Alignment]="'left'">
+                                <log-column *ngIf="!IsFromCustomizedScreen" [width]="'90'" [header]="'Translated'" [Alignment]="'left'">
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate [Alignment]="'left'" [CellColor]="item.CellBackgroundColor">
                                             <div style="width: 100%; text-align: left;" class="TextTrimming">
@@ -234,7 +234,7 @@
                                 </log-column>
 
                                 <!-- Translated By  -->
-                                <log-column [width]="'100'" [header]="'Translated by'" [Alignment]="'left'">
+                                <log-column *ngIf="!IsFromCustomizedScreen" [width]="'100'" [header]="'Translated by'" [Alignment]="'left'">
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate [Alignment]="'left'" [CellColor]="item.CellBackgroundColor">
                                             <div style="width: 100%; text-align: left;" class="TextTrimming">
@@ -245,7 +245,7 @@
                                 </log-column>
 
                                 <!-- Translated Date  -->
-                                <log-column [width]="'100'" [header]="'Translate Date'" [Alignment]="'left'">
+                                <log-column *ngIf="!IsFromCustomizedScreen" [width]="'100'" [header]="'Translate Date'" [Alignment]="'left'">
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate [Alignment]="'left'" [CellColor]="item.CellBackgroundColor">
                                             <div style="width: 100%; text-align: left;" class="TextTrimming">
