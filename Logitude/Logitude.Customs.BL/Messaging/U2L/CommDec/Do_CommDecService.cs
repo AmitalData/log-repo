@@ -30,14 +30,14 @@ using Unifreight.BL.EntityPMs.UGenerated;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 using Logitude.CustomsMessaging;
-using Logitude.CustomsMessaging.MessagingServices;
+//using Logitude.CustomsMessaging.MessagingServices;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.Customs.Data.EntityKeys;
 using Logitude.Server.Tools.Utils;
 
-namespace Logitude.CustomsMessaging.U2L.CommDec
+namespace Logitude.Customs.BL.Messaging.U2L.CommDec
 {
-    public class CommDecService : UnifreightGenericService
+    public class Do_CommDecService : UnifreightGenericService
     {
         private LOGICOMMDEC _LOGICOMMDEC;
         private LogitudeCommDecFile _LogitudeCommDecFile;
@@ -66,7 +66,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
         private string mode;
         private bool IsProcedureCurrentCodeChanged = false;
 
-        public CommDecService()
+        public Do_CommDecService()
             : base(
             "1.000.000001",
             System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name,
@@ -96,21 +96,21 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             //  {
             AppendLogLine("!string.IsNullOrEmpty(defValue) && defValue=='B'");
 
-            var messagingService = new DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceMessagingService();
-            DCAInUCUW2LRequestParams requestParams = new DCAInUCUW2LRequestParams()
-            {
-                LOGICOMMDEC = xmlLOGICOMMDEC,
-                MoreParams = MoreParams,
-                LoggingUserId = user,
-                Tenant = _tenant
-            };
+            //var messagingService = new DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceMessagingService();
+            //DCAInUCUW2LRequestParams requestParams = new DCAInUCUW2LRequestParams()
+            //{
+            //    LOGICOMMDEC = xmlLOGICOMMDEC,
+            //    MoreParams = MoreParams,
+            //    LoggingUserId = user,
+            //    Tenant = _tenant
+            //};
 
-            string message = messagingService.CreateCRS(_tenant, user, requestParams);
-            AppendLogLine("message : " + message);
+            //string message = messagingService.CreateCRS(_tenant, user, requestParams);
+            //AppendLogLine("message : " + message);
 
-            if (message == "SUCCESS")
-                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
-            else
+            //if (message == "SUCCESS")
+            //    MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
+            //else
                 MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.TecinicalFailure;
 
 
@@ -565,7 +565,6 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     }
                 }
             }
-
             this._LOGICUSTFILE = XmlGenericUtil<LOGICUSTFILE>.DeSerializeObject(xmlLOGICUSTFILE);
             if (_LOGICUSTFILE.LogitudeCustomsFile == null || _LOGICUSTFILE.LogitudeCustomsFile.Length != 1)
             {
@@ -1029,8 +1028,8 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 }
             }
         }
- 
-      
+
+
 
         private void CalcIsAutonomy()
         {
@@ -1249,6 +1248,10 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                                 {
 
 
+
+
+
+
                                     CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(_context);
                                     List<CustomsRequestsSheetPM> customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(_tenant, "UCUDO", "", "", null, null, _CourierDeclarationPMPMDiferentMaster.CourierMasterId, true);
 
@@ -1268,6 +1271,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                                         }
                                         catch (Exception)
                                         {
+
                                             AppendLogLine("UCUDO:concurrentKiller:Have in the middle in the last 15 min- not open  UCUDO");
                                             haveUCUDOInProgress = true;
                                         }
@@ -1276,25 +1280,29 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                                         //customsRequestsSheetPMList = customsRequestsSheetPMList.Where(x => x.Id != _PBId).ToList();
                                         //  if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0)
                                         //  {
-                                        if (!haveUCUDOInProgress)
-                                        {
-                                            var messagingService = new DCAInUCUDO_UpdateOpenDeclarationsMessagingService();
-                                            UpdateOpenDeclarationsRequestParams requestParams2 = new UpdateOpenDeclarationsRequestParams()
-                                            {
 
-                                                LoggingUserId = Curruser,
-                                                Tenant = _tenant,
-                                                LoggingEntityId = _CourierDeclarationPMPMDiferentMaster.CourierMasterId,
+                                        //if (!haveUCUDOInProgress)
+                                        //{
 
-                                            };
+                                        //    var messagingService = new DCAInUCUDO_UpdateOpenDeclarationsMessagingService();
 
-                                            string message = messagingService.CreateCRS(_tenant, Curruser, requestParams2);
+                                        //    UpdateOpenDeclarationsRequestParams requestParams2 = new UpdateOpenDeclarationsRequestParams()
+                                        //    {
 
-                                        }
+                                        //        LoggingUserId = Curruser,
+                                        //        Tenant = _tenant,
+                                        //        LoggingEntityId = _CourierDeclarationPMPMDiferentMaster.CourierMasterId,
+
+                                        //    };
+
+                                        //    string message = messagingService.CreateCRS(_tenant, Curruser, requestParams2);
+
                                         //}
+
                                     }
                                 }
                             }
+
                             catch (DbEntityValidationException ex)
                             {
                                 var FormatedException = ExceptionFormatUtil.GetFormated(ex);
