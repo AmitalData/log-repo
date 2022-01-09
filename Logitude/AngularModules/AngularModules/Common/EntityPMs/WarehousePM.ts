@@ -485,6 +485,56 @@ export class WarehousePM {
     public set BillToId(newValue: string) { if (this.billToId != newValue) { this.billToId = newValue; this.MarkAsDirty("BillToId"); } }
        
 	 
+    private field1: CustomFieldClass;
+    public get Field1() {if(!this.field1){ this.field1 = new CustomFieldClass(null, "Field1", "Warehouse");} return this.field1; }
+    public set Field1(newValue: CustomFieldClass) {  this.field1 = newValue; this.MarkAsDirty("Field1");  }
+       
+	 
+    private field2: CustomFieldClass;
+    public get Field2() {if(!this.field2){ this.field2 = new CustomFieldClass(null, "Field2", "Warehouse");} return this.field2; }
+    public set Field2(newValue: CustomFieldClass) {  this.field2 = newValue; this.MarkAsDirty("Field2");  }
+       
+	 
+    private field3: CustomFieldClass;
+    public get Field3() {if(!this.field3){ this.field3 = new CustomFieldClass(null, "Field3", "Warehouse");} return this.field3; }
+    public set Field3(newValue: CustomFieldClass) {  this.field3 = newValue; this.MarkAsDirty("Field3");  }
+       
+	 
+    private field4: CustomFieldClass;
+    public get Field4() {if(!this.field4){ this.field4 = new CustomFieldClass(null, "Field4", "Warehouse");} return this.field4; }
+    public set Field4(newValue: CustomFieldClass) {  this.field4 = newValue; this.MarkAsDirty("Field4");  }
+       
+	 
+    private field5: CustomFieldClass;
+    public get Field5() {if(!this.field5){ this.field5 = new CustomFieldClass(null, "Field5", "Warehouse");} return this.field5; }
+    public set Field5(newValue: CustomFieldClass) {  this.field5 = newValue; this.MarkAsDirty("Field5");  }
+       
+	 
+    private field6: CustomFieldClass;
+    public get Field6() {if(!this.field6){ this.field6 = new CustomFieldClass(null, "Field6", "Warehouse");} return this.field6; }
+    public set Field6(newValue: CustomFieldClass) {  this.field6 = newValue; this.MarkAsDirty("Field6");  }
+       
+	 
+    private field7: CustomFieldClass;
+    public get Field7() {if(!this.field7){ this.field7 = new CustomFieldClass(null, "Field7", "Warehouse");} return this.field7; }
+    public set Field7(newValue: CustomFieldClass) {  this.field7 = newValue; this.MarkAsDirty("Field7");  }
+       
+	 
+    private field8: CustomFieldClass;
+    public get Field8() {if(!this.field8){ this.field8 = new CustomFieldClass(null, "Field8", "Warehouse");} return this.field8; }
+    public set Field8(newValue: CustomFieldClass) {  this.field8 = newValue; this.MarkAsDirty("Field8");  }
+       
+	 
+    private field9: CustomFieldClass;
+    public get Field9() {if(!this.field9){ this.field9 = new CustomFieldClass(null, "Field9", "Warehouse");} return this.field9; }
+    public set Field9(newValue: CustomFieldClass) {  this.field9 = newValue; this.MarkAsDirty("Field9");  }
+       
+	 
+    private field10: CustomFieldClass;
+    public get Field10() {if(!this.field10){ this.field10 = new CustomFieldClass(null, "Field10", "Warehouse");} return this.field10; }
+    public set Field10(newValue: CustomFieldClass) {  this.field10 = newValue; this.MarkAsDirty("Field10");  }
+       
+	 
 
     public OldEntityPM: WarehousePM;
 		
