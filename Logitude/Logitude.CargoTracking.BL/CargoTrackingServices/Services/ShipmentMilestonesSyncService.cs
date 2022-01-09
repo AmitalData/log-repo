@@ -175,7 +175,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                             CurrentMilestoneCode = 
                                 CASE
 		                            {doneCases}
-		                            ELSE '{CargoTrackingMilestoneValues.Created}'
+		                            ELSE NULL
 	                            END,
                             CurrentMilestoneDate = 
                                 CASE
