@@ -576,6 +576,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             entityPM.VolumeUnitCode = "CBF";
             entityPM.Notes = entityAM.Notes;
             entityPM.OrderIsDangerouseGoods = entityAM.IsDangerouseOfGoods;
+            entityPM.PrivateLabelAgentName = entityAM.AgentName;
             if (!string.IsNullOrEmpty(entityAM.ForwardingPartnerTenant))
             {
                 int ForwardingPartnerTenant = int.Parse(entityAM.ForwardingPartnerTenant);
@@ -793,7 +794,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 return Responce;
             }
 
-            entityPM.AgentId = GetCardId(entityAM, entityAM.Agent);
+            //entityPM.AgentId = GetCardId(entityAM, entityAM.Agent);
             entityPM.ConsigneeId = GetCardId(entityAM, entityAM.Consignee); 
 
 

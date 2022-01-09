@@ -194,6 +194,7 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
 						 dbo.EntityStatus.StatusWeight AS ShipmentStatusWeight,
 						 dbo.Shipments.StatusDate as ShipmentStatusDate,
 						 dbo.Shipments.StatusLocation as ShipmentStatusLocation,
+						 dbo.Shipments.PrivateLabelAgentName AS PrivateLabelAgentName,
 	
 						 ShipmentMasterDataEntityStatus.Id AS ShipmentMasterDataStatusId,
                          ShipmentMasterDataEntityStatus.Name AS ShipmentMasterDataStatusName,

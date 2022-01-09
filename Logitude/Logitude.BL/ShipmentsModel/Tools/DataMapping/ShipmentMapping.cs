@@ -2158,6 +2158,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.CustomsDeclarationNumber = entityPM.CustomsDeclarationNumber;
             entityPoco.ShipperName = entityPM.ShipperName;
             entityPoco.ConsigneeName = entityPM.ConsigneeName;
+            entityPoco.PrivateLabelAgentName = entityPM.AgentName ?? entityPM.PrivateLabelAgentName;
 
             if (!entityPM.IsHybrid || entityPM.DontAddToImportersQueue)
             {

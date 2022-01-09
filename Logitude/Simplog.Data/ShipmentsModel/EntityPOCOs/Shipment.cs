@@ -722,5 +722,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public virtual Card DestinationWarehouseCard { get; set; }
         public string PreForwardingVesselName { get; set; }
         public string OnForwardingVesselName { get; set; }
+        public string PrivateLabelAgentName { get; set; }
     }
 }

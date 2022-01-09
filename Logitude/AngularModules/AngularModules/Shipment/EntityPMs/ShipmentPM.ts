@@ -4151,6 +4151,10 @@ export class ShipmentPM {
     public get HasUnassignedData() { return this.hasUnassignedData; }
     public set HasUnassignedData(newValue: boolean) { if (this.hasUnassignedData != newValue) { this.hasUnassignedData = newValue; this.MarkAsDirty("HasUnassignedData"); } }
 
+    private privateLabelAgentName: string;
+    public get PrivateLabelAgentName() { return this.privateLabelAgentName; }
+    public set PrivateLabelAgentName(newValue: string) { if (this.privateLabelAgentName != newValue) { this.privateLabelAgentName = newValue; this.MarkAsDirty("PrivateLabelAgentName"); } }
+
 
     private notify1Reference: string;
     public get Notify1Reference() { return this.notify1Reference; }

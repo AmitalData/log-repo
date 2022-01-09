@@ -490,5 +490,6 @@ export class ShipmentList {
 		HasUnassignedData: boolean;
 		DestinationWarehouseId: string;
 		DestinationWarehouseName: string;
+		PrivateLabelAgentName: string;
 	
-}
+}
