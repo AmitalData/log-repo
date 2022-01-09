@@ -8,7 +8,7 @@
 
                     <li *ngIf="CustomerTenantAccessVisibility" [class.SelectedPageMenu]="SelectedItem == 'LOBO'" (click)="SelectedItem = 'LOBO'">Access Management</li>
 
-                    <li [class.SelectedPageMenu]="SelectedItem == 'CATR'" (click)="SelectedItem = 'CATR'">Cargo Tracking</li>
+                    <li *ngIf="SharedCargoTrackingVisibility" [class.SelectedPageMenu]="SelectedItem == 'CATR'" (click)="SelectedItem = 'CATR'">Cargo Tracking</li>
                 </ul>
             </td>
         </tr>
