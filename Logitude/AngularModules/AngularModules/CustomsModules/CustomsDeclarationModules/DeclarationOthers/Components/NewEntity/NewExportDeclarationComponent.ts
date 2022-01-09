@@ -99,7 +99,7 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
         var errors: string[] = [];
         this.ValidationErrorsList = [];
         if (!this.ExportFile) {
-            errors.push("עליך להזין מספר תיק יצום");
+            errors.push("עליך להזין מספר תיק יצוא");
         }
 
         if (!this.CustomerId) {
