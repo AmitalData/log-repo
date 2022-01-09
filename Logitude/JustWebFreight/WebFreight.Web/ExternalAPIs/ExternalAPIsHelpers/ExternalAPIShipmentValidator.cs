@@ -974,7 +974,7 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
         private Simplog.Server.Infrastructure.ChangeSetOperation GetChangeSet(string ChangeSet)
         {
             Simplog.Server.Infrastructure.ChangeSetOperation changeSetOperation = Simplog.Server.Infrastructure.ChangeSetOperation.None;
-            if(!string.IsNullOrEmpty(ChangeSet))
+            if (!string.IsNullOrEmpty(ChangeSet))
             {
                 switch (ChangeSet.ToLower())
                 {
@@ -996,6 +996,11 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                             break;
                         }
                 }
+
+            }
+            else
+            {
+                changeSetOperation = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             }
 
             return changeSetOperation;
