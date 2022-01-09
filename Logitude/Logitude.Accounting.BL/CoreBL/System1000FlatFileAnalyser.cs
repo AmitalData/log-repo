@@ -70,25 +70,32 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                     }
                     scope.Complete();
+                    String errorLines = "";
                     if (MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.Count > 0)
                     {
-                        String errorLines = "";
                         MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.ForEach(item => errorLines += item.ToString() + "\n");
-                        throw new ApplicationException($"{errorLines}");
-                    }
-                    if (MyResultLoadFlatFile.ErrorRowList.Count > 0)
-                    {
-                        String errorLines = "";
-                        MyResultLoadFlatFile.ErrorRowList.ForEach(item => errorLines += item.ToString() + "\n");
-                        throw new ApplicationException($"{errorLines}");
-                    }
-                    if (MyResultLoadFlatFile.ExceptionVendorList.Count > 0)
-                    {
-                        String errorLines = "";
-                        MyResultLoadFlatFile.ExceptionVendorList.ForEach(item => errorLines += item.ToString() + "\n");
-                        throw new ApplicationException($"{errorLines}");
                     }
 
+                    if (MyResultLoadFlatFile.ErrorRowList.Count > 0)
+                    {
+                        MyResultLoadFlatFile.ErrorRowList.ForEach(item => errorLines += item.ToString() + "\n");
+                    }
+
+                    if (MyResultLoadFlatFile.ExceptionVendorList.Count > 0)
+                    {
+                        MyResultLoadFlatFile.ExceptionVendorList.ForEach(item => errorLines += item.ToString() + "\n");
+                    }
+
+                    if (!String.IsNullOrEmpty(errorLines))
+                    {
+                        string goodLines = "";
+                        MyResultLoadFlatFile.SuccessVendorList.ForEach(item => goodLines += item.ToString() + "\n");
+                        if (!String.IsNullOrEmpty(goodLines))
+                        {
+                            errorLines += "Updated successfully:\n" + goodLines + "\n" + "\nErrors:";
+                        }
+                        throw new ApplicationException($"{errorLines}");
+                    }
                 }
             }
             catch (Exception e)
