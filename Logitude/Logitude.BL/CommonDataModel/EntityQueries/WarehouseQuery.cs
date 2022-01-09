@@ -136,16 +136,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         private void MapCustomFields(WarehousePM warehousePM, Warehouse warehouse)
         {
-            warehousePM.Field1 = new CustomFieldClass("Field1", "Vendor", warehouse.Field1);
-            warehousePM.Field2 = new CustomFieldClass("Field2", "Vendor", warehouse.Field2);
-            warehousePM.Field3 = new CustomFieldClass("Field3", "Vendor", warehouse.Field3);
-            warehousePM.Field4 = new CustomFieldClass("Field4", "Vendor", warehouse.Field4);
-            warehousePM.Field5 = new CustomFieldClass("Field5", "Vendor", warehouse.Field5);
-            warehousePM.Field6 = new CustomFieldClass("Field6", "Vendor", warehouse.Field6);
-            warehousePM.Field7 = new CustomFieldClass("Field7", "Vendor", warehouse.Field7);
-            warehousePM.Field8 = new CustomFieldClass("Field8", "Vendor", warehouse.Field8);
-            warehousePM.Field9 = new CustomFieldClass("Field9", "Vendor", warehouse.Field9);
-            warehousePM.Field10 = new CustomFieldClass("Field10", "Vendor", warehouse.Field10);
+            warehousePM.Field1 = new CustomFieldClass("Field1", "Warehouse", warehouse.Field1);
+            warehousePM.Field2 = new CustomFieldClass("Field2", "Warehouse", warehouse.Field2);
+            warehousePM.Field3 = new CustomFieldClass("Field3", "Warehouse", warehouse.Field3);
+            warehousePM.Field4 = new CustomFieldClass("Field4", "Warehouse", warehouse.Field4);
+            warehousePM.Field5 = new CustomFieldClass("Field5", "Warehouse", warehouse.Field5);
+            warehousePM.Field6 = new CustomFieldClass("Field6", "Warehouse", warehouse.Field6);
+            warehousePM.Field7 = new CustomFieldClass("Field7", "Warehouse", warehouse.Field7);
+            warehousePM.Field8 = new CustomFieldClass("Field8", "Warehouse", warehouse.Field8);
+            warehousePM.Field9 = new CustomFieldClass("Field9", "Warehouse", warehouse.Field9);
+            warehousePM.Field10 = new CustomFieldClass("Field10", "Warehouse", warehouse.Field10);
         }
  
 
