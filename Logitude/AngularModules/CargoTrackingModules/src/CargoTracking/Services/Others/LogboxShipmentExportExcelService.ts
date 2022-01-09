@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { defer } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
@@ -8,9 +8,9 @@ import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse
 @Injectable()
 export class LogboxShipmentExportExcelService {
     private _apiUrl: string;
-    constructor(private _httpClient: HttpClient) {
+    constructor(private _httpClient: HttpClient, @Inject('BASE_URL') baseUrl: string) {
         this._apiUrl =
-            ServiceHelper.GetLogitudeURL() + 'api/LogitudeGridExportToExcel';
+            ServiceHelper.GetAppURL(baseUrl) + 'api/LogitudeGridExportToExcel';
     }
 
     GetQueryToExcelData(logboxShipmentExportExcelArgs: any) {
