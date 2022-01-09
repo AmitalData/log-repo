@@ -61,7 +61,11 @@ namespace Logitude.BL.CommonDataModel.ExternalService
             DocumentTypeTemplatePM tenantZeroDefaultDocumentTypeReportTemplatePM = allSystemTenantZeroDocumentTypeTemplatePMs.Where(d => d.Id == tenantZeroDocumentTypePM.DocumentTypeDefaultReportTemplateId).FirstOrDefault();
             if (tenantZeroDefaultDocumentTypeReportTemplatePM != null && !documentOuts.Where(d => d.DocumentTemplateId == currentTenantDocumentType.DocumentTypeDefaultReportTemplateId).Any())
             {
-                currentTenantDocumentType.DocumentTypeDefaultReportTemplateId = GetDefaultDocumentType(tenantZeroDefaultDocumentTypeReportTemplatePM);
+                currentTenantDocumentType.DocumentTypeDefaultReportTemplateId = GetDefaultDocumentType(tenantZeroDefaultDocumentTypeReportTemplatePM, currentTenantDocumentType.DocumentTypeDefaultReportTemplateId);
+            }
+            if (allSystemCurrentTenantDocumentTypeTemplatePMs.Where(d => d.TemplateType == "P").Count() == 1)
+            {
+                currentTenantDocumentType.DocumentTypeDefaultReportTemplateId = allSystemCurrentTenantDocumentTypeTemplatePMs.Where(d => d.TemplateType == "P").FirstOrDefault().Id;
             }
         }
 
@@ -70,11 +74,15 @@ namespace Logitude.BL.CommonDataModel.ExternalService
             DocumentTypeTemplatePM tenantZeroDefaultDocumentTypeHtmlTemplatePM = allSystemTenantZeroDocumentTypeTemplatePMs.Where(d => d.Id == tenantZeroDocumentTypePM.DocumentTypeDefaultReportTemplateId).FirstOrDefault();
             if (tenantZeroDefaultDocumentTypeHtmlTemplatePM != null && !documentOuts.Where(d => d.DocumentTemplateId == currentTenantDocumentType.DocumentTypeDefaultHTMLTemplateId).Any())
             {
-                currentTenantDocumentType.DocumentTypeDefaultHTMLTemplateId = GetDefaultDocumentType(tenantZeroDefaultDocumentTypeHtmlTemplatePM);
+                currentTenantDocumentType.DocumentTypeDefaultHTMLTemplateId = GetDefaultDocumentType(tenantZeroDefaultDocumentTypeHtmlTemplatePM, currentTenantDocumentType.DocumentTypeDefaultHTMLTemplateId);
+            }
+            if (allSystemCurrentTenantDocumentTypeTemplatePMs.Where(d => d.TemplateType != "P").Count() == 1)
+            {
+                currentTenantDocumentType.DocumentTypeDefaultHTMLTemplateId = allSystemCurrentTenantDocumentTypeTemplatePMs.Where(d => d.TemplateType != "P").FirstOrDefault().Id;
             }
         }
 
-        private string GetDefaultDocumentType(DocumentTypeTemplatePM tenantZeroDefaultDocumentTypeTemplatePM)
+        private string GetDefaultDocumentType(DocumentTypeTemplatePM tenantZeroDefaultDocumentTypeTemplatePM, string currentTenantDocumentTypeDefaultTemplate)
         {
             DocumentTypeTemplatePM currentDefaultDocumentTypeTemplatePM = allSystemCurrentTenantDocumentTypeTemplatePMs.Where(d => d.OriginalTemplateId == tenantZeroDefaultDocumentTypeTemplatePM.Id && d.CountryCode == countryCode).FirstOrDefault();
             if (currentDefaultDocumentTypeTemplatePM != null) return currentDefaultDocumentTypeTemplatePM.Id;
@@ -85,7 +93,7 @@ namespace Logitude.BL.CommonDataModel.ExternalService
             currentDefaultDocumentTypeTemplatePM = allSystemCurrentTenantDocumentTypeTemplatePMs.Where(d => string.IsNullOrEmpty(d.CountryCode)).FirstOrDefault();
             if (currentDefaultDocumentTypeTemplatePM != null) return currentDefaultDocumentTypeTemplatePM.Id;
 
-            return "";
+            return currentTenantDocumentTypeDefaultTemplate;
         }
 
         private void CopyTenantZeroDocumentTypeTemplateToCurrentTenant(DocumentType currentTenantDocumentType, List<DocumentTypeTemplatePM> allSystemCurrentTenantDocumentTypeTemplatePMs, DocumentTypeTemplatePM tenantZeroDocumentTypeTemplatePM)
