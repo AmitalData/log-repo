@@ -452,6 +452,7 @@ namespace WebFreight.Web.ReportsWebServices
                 #endregion
 
                 #region Other Fields
+                provider.ProjectNumber = ServiceStringConvertor(shipmentPM.ProjectNumber);
                 provider.Notes = ServiceStringConvertor(shipmentPM.Notes);
                 provider.ShipmentNumber = ServiceStringConvertor(shipmentPM.ShipmentNumber);
                 provider.DescriptionOfGoods = ServiceStringConvertor(shipmentPM.DescriptionOfGoods);

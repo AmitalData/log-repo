@@ -95,6 +95,7 @@ namespace WebFreight.Web.DataProviders
 
         public class InvoicePayments
         {
+            public string ProjectNumber { get; set; }
             public string InvoiceNumber { get; set; }
             public string Reference { get; set; }
             public double? AmountPaid { get; set; }
