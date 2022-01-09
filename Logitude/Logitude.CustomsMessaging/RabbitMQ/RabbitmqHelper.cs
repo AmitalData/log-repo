@@ -1,4 +1,5 @@
 ﻿using RabbitMQ.Client;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -132,10 +133,29 @@ namespace Logitude.CustomsMessaging.RabbitMQ
         public static ConnectionFactory GetConnectionFactory()
         {
             //var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
-            return (new ConnectionFactory() { HostName = ConfigurationManager.AppSettings["RabbitmqHost"], UserName = ConfigurationManager.AppSettings["RabbitmqUsername"], Password = ConfigurationManager.AppSettings["RabbitmqPassword"] }); ;
+
+            string HostName = ConfigurationManager.AppSettings["RabbitmqHost"] ?? throw new Exception("HostName is null set ConfigurationManager.AppSettings RabbitmqHost"); ;
+            string UserName = ConfigurationManager.AppSettings["RabbitmqUsername"];
+            string Password = ConfigurationManager.AppSettings["RabbitmqPassword"];
+
+            return (new ConnectionFactory() { HostName = HostName, UserName = UserName, Password = Password }); ;
         }
 
-        public static bool DeclareQueue(RabbitmqConnection connection, string queuename, out string errMessage)
+        public static string GetRabbitMQCode(int currTenant)
+        {
+            ////CEREATE FROM GWSFLOGITUDE > GGGFRABBITMQ
+            var uri = new Uri(LogitudeSettings.LogitudeURL);
+            var branchEnv = uri.LocalPath.Trim(@"\"[0]).Trim(@"/"[0]);
+            string UnifreightEnvironmentID =
+                "aminet_" + branchEnv + "_" + currTenant.ToString();
+            UnifreightEnvironmentID = UnifreightEnvironmentID.ToLower();
+            if (UnifreightEnvironmentID== "aminet_prod_3")
+            {
+                UnifreightEnvironmentID = "aminet_courier_3";
+            }
+            return UnifreightEnvironmentID.ToLower();
+        }
+        public static bool DeclareQueue(RabbitmqConnection connection, string queuename, bool withPriority, out string errMessage)
         {
             errMessage = "";
             try
@@ -143,6 +163,10 @@ namespace Logitude.CustomsMessaging.RabbitMQ
                 var args = new Dictionary<string, object>();
                 //lazy = store messages to disk => no lost messages in case on rabbitmq restart 
                 args.Add("x-queue-mode", "lazy");
+                if (withPriority)
+                {
+                    args.Add("x-max-priority", 10);
+                }
                 connection.Channel.QueueDeclare(queue: queuename,
                                     durable: true,
                                     exclusive: false,
@@ -158,13 +182,17 @@ namespace Logitude.CustomsMessaging.RabbitMQ
             }
         }
 
-        public static void DeclareQueue(IModel channel, string queuename)
+        public static void DeclareQueue(IModel channel, string queuename,bool withPriority)
         {
             try
             {
                 var args = new Dictionary<string, object>();
                 //lazy = store messages to disk => no lost messages in case on rabbitmq restart 
                 args.Add("x-queue-mode", "lazy");
+                if (withPriority)
+                {
+                    args.Add("x-max-priority", 10);
+                }
                 channel.QueueDeclare(queue: queuename,
                                     durable: true,
                                     exclusive: false,

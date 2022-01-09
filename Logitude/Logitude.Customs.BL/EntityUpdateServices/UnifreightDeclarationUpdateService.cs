@@ -455,7 +455,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
 
                 ex.ChangeExceptionMessage("UnifrightDeclarationUpdateService Exception");
-                LogMessagingUtil.Instance.AppendLine("Update2: Exception, file: " + _CCUFILEMPM.CUSTOMFILENO + "\n" + ex.Message); 
+                LogMessagingUtil.Instance.AppendLine("Update2: Exception, file: " + _CCUFILEMPM?.CUSTOMFILENO + "\n" + ex.Message); 
                 throw;
                 //throw new BusinessErrorException("") ;
             }
