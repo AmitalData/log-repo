@@ -1,13 +1,14 @@
-
-Feature: Create standalone shipment from Pickup
-    The user creates a Direct Import Ocean FCL shipment,Create standalone shipment when pickup from partner to port with the same countries,
-    Create standalone shipment when the pickup is FullResponsibility and "To/From" are partners with different countries,
-    Create standalone shipment when the pickup is FullResponsibility and "To/From" are partners with same countries,
-    Create standalone shipment when the pickup is not FullResponsibility and "To/From" are partners with same countries
-    Create standalone shipment when the pickup is FullResponsibility and from Partner to Casual Address with same countries,
-    Create standalone shipment when the pickup is FullResponsibility and from port to port with same countries,
-    Create standalone shipment when the pickup is FullResponsibility and from Casual Address to Casual Address with same countries,
-    Create standalone shipment when the pickup is FullResponsibility and from Casual Address to port with same countries
+@devrelease
+Feature: Create standalone shipment From Pickup
+    The user creates a direct import ocean FCL shipment,
+    create standalone shipment when pickup from partner to port with the same countries,
+    create standalone shipment when the pickup is FullResponsibility and from partner to partner with different countries,
+    create standalone shipment when the pickup is FullResponsibility and from partner to partner with same countries,
+    create standalone shipment when the pickup is not FullResponsibility and from partner to partner with same countries
+    create standalone shipment when the pickup is FullResponsibility and from Partner to casual address with same countries,
+    create standalone shipment when the pickup is FullResponsibility and from port to port with same countries,
+    create standalone shipment when the pickup is FullResponsibility and from casual address to casual address with same countries,
+    create standalone shipment when the pickup is FullResponsibility and from casual address to port with same countries
 
     Scenario: Create import ocean FCL shipment
         Given the user logged in and navigates to shipments workspace
@@ -34,12 +35,12 @@ Feature: Create standalone shipment from Pickup
         And save the pickup
         When create standalone shipment
         Then a domestic inland shipment should create
-        And the cancel ,operational close Shipment,convert to custom file and Send Response action in more button shouldn't be dim
+        And the cancel, operational close Shipment, convert to custom file and Send Response actions in more button shouldn't be dim
         And all other actions should be dim
         And all fields should be dim in pickup window
         And the link of standalon should display
 
-    Scenario: Create standalone shipment when the pickup is FullResponsibility and "To/From" are partners with different countries
+    Scenario: Create standalone shipment when the pickup is FullResponsibility and from partner to partner with different countries
         Given the user in the shipment's routong tab
         And add a new pickup leg with the following details
             | FullResponsibility | True                      |
@@ -51,7 +52,7 @@ Feature: Create standalone shipment from Pickup
         When click create Standalone Shipment
         Then a validation message with "Both Addresses must be in the same country since the direction is Domestic" error should appear
 
-    Scenario: Create standalone shipment when the pickup is FullResponsibility and "To/From" are partners with same countries
+    Scenario: Create standalone shipment when the pickup is FullResponsibility and from partner to partner with same countries
         Given the user in the shipment's routong tab
         And add a new pickup leg with the following details
             | From        | Partner        |
@@ -61,12 +62,12 @@ Feature: Create standalone shipment from Pickup
         And save the pickup
         When create standalone shipment
         Then a domestic inland shipment should create
-        And the cancel ,operational close Shipment,convert to custom file and Send Response action in more button shouldn't be dim
+        And the cancel, operational close Shipment, convert to custom file and Send Response actions in more button shouldn't be dim
         And all other actions should be dim
         And all fields should be dim in pickup window
         And the link of standalon should display
 
-    Scenario: Create standalone shipment when the pickup is not FullResponsibility and "To/From" are partners with same countries
+    Scenario: Create standalone shipment when the pickup is not FullResponsibility and from partner to partner with same countries
         Given the user in the shipment's routong tab
         And add a new pickup leg with the following details
             | From        | Partner        |
@@ -77,7 +78,7 @@ Feature: Create standalone shipment from Pickup
         When save the pickup
         Then the Create Standalone Shipment button Should be dim
 
-    Scenario: Create standalone shipment when the pickup is FullResponsibility and from Partner to Casual Address with same countries
+    Scenario: Create standalone shipment when the pickup is FullResponsibility and from partner to casual address with same countries
         Given the user in the shipment's routong tab
         And  add a new pickup leg with the following details
             | From        | Partner            |
@@ -88,7 +89,7 @@ Feature: Create standalone shipment from Pickup
         And save the pickup
         When create standalone shipment
         Then a domestic inland shipment should create
-        And the cancel ,operational close Shipment,convert to custom file and Send Response action in more button shouldn't be dim
+        And the cancel, operational close Shipment, convert to custom file and Send Response actions in more button shouldn't be dim
         And all other actions should be dim
         And all fields should be dim in pickup window
         And the link of standalon should display
@@ -103,11 +104,10 @@ Feature: Create standalone shipment from Pickup
         And save the pickup
         When create standalone shipment
         Then a domestic inland shipment should create
-        And the cancel ,operational close Shipment,convert to custom file and Send Response action in more button shouldn't be dim
+        And the cancel, operational close Shipment, convert to custom file and Send Response actions in more button shouldn't be dim
         And all other actions should be dim
         And all fields should be dim in pickup window
         And the link of standalon should display
-
 
     Scenario: Create standalone shipment when the pickup is FullResponsibility and from Casual Address to Casual Address with same countries
         Given the user in the shipment's routong tab
@@ -121,14 +121,12 @@ Feature: Create standalone shipment from Pickup
         And save the pickup
         When create standalone shipment
         Then a domestic inland shipment should create
-        And the cancel ,operational close Shipment,convert to custom file and Send Response action in more button shouldn't be dim
+        And the cancel, operational close Shipment, convert to custom file and Send Response actions in more button shouldn't be dim
         And all other actions should be dim
         And all fields should be dim in pickup window
         And the link of standalon should display
 
-
-
-    Scenario: Create standalone shipment when the pickup is FullResponsibility and from Casual Address to port with same countries
+    Scenario: Create standalone shipment when the pickup is FullResponsibility and from casual address to port with same countries
         Given the user in the shipment's routong tab
         And add a new pickup leg with the following details
             | From        | CasualAddress      |
@@ -139,8 +137,7 @@ Feature: Create standalone shipment from Pickup
         And save the pickup
         When create standalone shipment
         Then a domestic inland shipment should create
-        And the cancel ,operational close Shipment,convert to custom file and Send Response action in more button shouldn't be dim
+        And the cancel, operational close Shipment, convert to custom file and Send Response actions in more button shouldn't be dim
         And all other actions should be dim
         And all fields should be dim in pickup window
         And the link of standalon should display
-

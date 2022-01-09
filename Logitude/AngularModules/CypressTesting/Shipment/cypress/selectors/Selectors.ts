@@ -433,7 +433,6 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly RedButton = ".RedButton:last"
   //#endregion
   //#region Delivery Leg standalone
-  public static readonly SavePickupDelivery = "#SaveBtn"
   public static readonly EditDelivery = "#Edit-Delivery"
   public static readonly EditPickUp = "#Edit-PickUp"
   public static readonly DeliveryToPartnerName = "#ShipmentPickUpDelivery_ToPartnerCardId"
@@ -460,9 +459,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly StandaloneShipmentHyperlink=".HyperlinkButtonControl"
   public static readonly ComponentBusyIndicator = "div[id^='EditComponentBusyIndicator']:last";
   public static readonly FullResponsibilityCheckBox = "#CheckBox_0_8_LBL"
-  public static readonly Printbutton = "#printbutton"
-  public static readonly AddDelivaryButton = ".Button"
-  
+  public static readonly Printbutton = "#printbutton"  
 //#endregion
   //#region Shipment view
   public static readonly ShipmentList = "#Shipments-O-Q";

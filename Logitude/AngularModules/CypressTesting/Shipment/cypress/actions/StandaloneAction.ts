@@ -4,49 +4,49 @@ import * as BaseAssertion from '../../../Base/cypress/actions/Assertion';
 import { URLs } from '../constants/URLs';
 import { RestAPI } from '../../../Base/cypress/constants/RestAPI';
 import { RequestAliases } from '../../../Base/cypress/constants/RequestAliases';
-import { PickupDelivaryDeteails } from "../models/PickupDelivaryDeteails";
+import { PickupDelivaryDetails } from "../models/PickupDelivaryDetails";
 import { RegexSelectors } from "../selectors/RegexSelectors";
 import { ShipmentConstants } from '../constants/constants'
 
+let fromType = null
+let toType = null
 
-export function FillALLPickUpDelivaryDetails(pickupdelivaryDeteails: PickupDelivaryDeteails) {
-   FillPickupDeliveryRouting(pickupdelivaryDeteails)
-   FillFromPickupDelivary(pickupdelivaryDeteails)
-   FillToPickupDelivary(pickupdelivaryDeteails)
+export function FillPickUpDelivaryDetails(pickupdelivaryDetails: PickupDelivaryDetails) {
+   FillPickupDeliveryRouting(pickupdelivaryDetails)
+   FillPickupDelivaryFromTypeDetails(pickupdelivaryDetails)
+   FillPickupDelivaryToTypeDetails(pickupdelivaryDetails)
 }
 
-export function FillPickupDeliveryRouting(pickupdelivaryDeteails: PickupDelivaryDeteails) {
-   let fromType = RegexSelectors.PickupDeliveryFromType(pickupdelivaryDeteails.From)
+export function FillPickupDeliveryRouting(pickupdelivaryDetails: PickupDelivaryDetails) {
+   fromType = RegexSelectors.PickupDeliveryFromType(pickupdelivaryDetails.From)
    cy.ClickRadio(fromType)
-   let toType = RegexSelectors.PickupDeliveryToType(pickupdelivaryDeteails.To)
+   toType = RegexSelectors.PickupDeliveryToType(pickupdelivaryDetails.To)
    cy.ClickRadio(toType)
 }
 
-export function FillFromPickupDelivary(pickupdelivaryDeteails: PickupDelivaryDeteails) {
-   if (pickupdelivaryDeteails.From == ShipmentConstants.Partner) {
-      cy.FillLogLov(ShipmentSelectors.DeliveryFromPartnerName, pickupdelivaryDeteails.FromPartner, true)
-
+export function FillPickupDelivaryFromTypeDetails(pickupdelivaryDetails: PickupDelivaryDetails) {
+   if (pickupdelivaryDetails.From == ShipmentConstants.Partner) {
+      cy.FillLogLov(ShipmentSelectors.DeliveryFromPartnerName, pickupdelivaryDetails.FromPartner, true)
    }
-   else if (pickupdelivaryDeteails.From == ShipmentConstants.Port) {
-      cy.FillLogLov(ShipmentSelectors.PickUpDeliveryFromPort, pickupdelivaryDeteails.FromPort, true)
+   else if (pickupdelivaryDetails.From == ShipmentConstants.Port) {
+      cy.FillLogLov(ShipmentSelectors.PickUpDeliveryFromPort, pickupdelivaryDetails.FromPort, true)
    }
    else {
-      cy.FillLogLov(ShipmentSelectors.DeliveryFromCountryName, pickupdelivaryDeteails.FromCountry, true)
-      cy.FillLogTextBox(ShipmentSelectors.DeliveryFromCityName, pickupdelivaryDeteails.FromCity)
+      cy.FillLogLov(ShipmentSelectors.DeliveryFromCountryName, pickupdelivaryDetails.FromCountry, true)
+      cy.FillLogTextBox(ShipmentSelectors.DeliveryFromCityName, pickupdelivaryDetails.FromCity)
    }
 }
 
-export function FillToPickupDelivary(pickupdelivaryDeteails: PickupDelivaryDeteails) {
-   if (pickupdelivaryDeteails.To == ShipmentConstants.Partner) {
-      cy.FillLogLov(ShipmentSelectors.DeliveryToPartnerName, pickupdelivaryDeteails.ToPartner, true)
-
+export function FillPickupDelivaryToTypeDetails(pickupdelivaryDetails: PickupDelivaryDetails) {
+   if (pickupdelivaryDetails.To == ShipmentConstants.Partner) {
+      cy.FillLogLov(ShipmentSelectors.DeliveryToPartnerName, pickupdelivaryDetails.ToPartner, true)
    }
-   else if (pickupdelivaryDeteails.To == ShipmentConstants.Port) {
-      cy.FillLogLov(ShipmentSelectors.PickUpDeliveryToPort, pickupdelivaryDeteails.ToPort, true)
+   else if (pickupdelivaryDetails.To == ShipmentConstants.Port) {
+      cy.FillLogLov(ShipmentSelectors.PickUpDeliveryToPort, pickupdelivaryDetails.ToPort, true)
    }
    else {
-      cy.FillLogTextBox(ShipmentSelectors.DeliveryToCityName, pickupdelivaryDeteails.ToCity)
-      cy.FillLogLov(ShipmentSelectors.DeliveryToCountryName, pickupdelivaryDeteails.ToCountry, true)
+      cy.FillLogTextBox(ShipmentSelectors.DeliveryToCityName, pickupdelivaryDetails.ToCity)
+      cy.FillLogLov(ShipmentSelectors.DeliveryToCountryName, pickupdelivaryDetails.ToCountry, true)
    }
 }
 
@@ -93,10 +93,8 @@ export function AssertShipmentePickupDelivaryWindowDisabled() {
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryATADate, BaseSelectors.BeDisabled)
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryATATime, BaseSelectors.BeDisabled)
 }
-export function AssertShipmenteDelivaryWindowDisabled(){
+
+export function AssertShipmenteDelivaryWindowDisabled() {
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryEmptyDeliveryContainer, BaseSelectors.BeDisabled)
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryEmptyDeliveryDepotReference, BaseSelectors.BeDisabled)
 }
-
-
-

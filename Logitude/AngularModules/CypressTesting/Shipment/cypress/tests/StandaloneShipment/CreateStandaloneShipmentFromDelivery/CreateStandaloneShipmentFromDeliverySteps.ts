@@ -2,7 +2,7 @@ import * as Actions from "../../../actions/Actions";
 import * as StandaloneAction from "../../../actions/StandaloneAction";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { ShipmentDetails } from "../../../models/ShipmentDetails";
-import { PickupDelivaryDeteails } from "../../../models/PickupDelivaryDeteails";
+import { PickupDelivaryDetails } from "../../../models/PickupDelivaryDetails";
 import * as BaseAssertion from "../../../../../Base/cypress/actions/Assertion";
 import * as Assists from "../../../../../Base/cypress/assists/Assists";
 import { RequestAliases } from "../../../../../Base/cypress/constants/RequestAliases";
@@ -13,7 +13,7 @@ import { BaseSelectors } from '../../../../../Base/cypress/selectors/BaseSelecto
 import { ShipmentConstants } from "../../../constants/constants";
 
 let shipmentDetails: ShipmentDetails;
-let PickupDelivarytData: PickupDelivaryDeteails;
+let PickupDelivarytData: PickupDelivaryDetails;
 let shipmentNumber: string;
 
 Given("the user logged in and navigates to shipments workspace", () => {
@@ -40,30 +40,30 @@ Then("the shipment should create successfully", () => {
 
 Given("the user open the shipment and navigate to RoutingsTab workspace", () => {
   Actions.OpenShipment(shipmentNumber);
-  cy.Click(ShipmentSelectors.RoutingsTab,null)
-  cy.Click(ShipmentSelectors.AddDelivery,null)
-  cy.Click(ShipmentSelectors.AddDelivaryButton, ShipmentConstants.AddDelivery)
+  cy.Click(ShipmentSelectors.RoutingsTab, null)
+  cy.Click(ShipmentSelectors.AddDelivery, null)
+  cy.Click(BaseSelectors.Button, ShipmentConstants.AddDelivery)
 });
 
 Given("unchecked the FullResponsibility", () => {
-  cy.Click(ShipmentSelectors.FullResponsibilityCheckBox,null)
+  cy.Click(ShipmentSelectors.FullResponsibilityCheckBox, null)
 })
 
-Given("the user in the shipment's  routings tab", () => {
-  cy.Click(ShipmentSelectors.CloseBtn,null)
-  cy.Click(ShipmentSelectors.RoutingToggle,null)
-  cy.Click(ShipmentSelectors.Delivery,null)
-  cy.Click(ShipmentSelectors.AddDelivaryButton, ShipmentConstants.AddDelivery)
+Given("the user in the shipment's routings tab", () => {
+  cy.Click(ShipmentSelectors.CloseBtn, null)
+  cy.Click(ShipmentSelectors.RoutingToggle, null)
+  cy.Click(ShipmentSelectors.Delivery, null)
+  cy.Click(BaseSelectors.Button, ShipmentConstants.AddDelivery)
 })
 
 Given("add a new Delivery leg with the following details", (dataTable) => {
-  PickupDelivarytData = Assists.CreateInstance<PickupDelivaryDeteails>(dataTable, true);
-  StandaloneAction.FillALLPickUpDelivaryDetails(PickupDelivarytData);
+  PickupDelivarytData = Assists.CreateInstance<PickupDelivaryDetails>(dataTable, true);
+  StandaloneAction.FillPickUpDelivaryDetails(PickupDelivarytData);
 });
 
 Given("save the Delivery", () => {
   cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
-  cy.Click(ShipmentSelectors.SavePickupDelivery,null)
+  cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
   BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });
 
@@ -80,7 +80,7 @@ Then("a domestic inland shipment should create", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ShipmentStandaloneRequest, 200);
 });
 
-Then("the cancel ,operational close Shipment,convert to custom file and Send Response action in more button shouldn't be dim", () => {
+Then("the cancel, operational close Shipment, convert to custom file and Send Response actions in more button shouldn't be dim", () => {
   cy.Click(BaseSelectors.ToggleButtonClass + BaseSelectors.LastElement, null)
   StandaloneAction.AssertShipmenteMenuButtonsEnabled()
 })
@@ -106,42 +106,3 @@ Then("a validation message with {string} error should appear", (validationMessag
 Then("the Create Standalone Shipment button Should be dim", () => {
   BaseAssertion.AssertElementNotVisible(ShipmentSelectors.Printbutton)
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
