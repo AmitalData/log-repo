@@ -55,10 +55,12 @@ export class PhysicalCheckListActionBarComponent
 
   
     CloseMarkChecks() {
+        SessionLocator.SelectedSession.StartBusyIndicator("");
         var checkList = this._physicalChecksCloseSharedDataService._SelectedItems.Collection.join(',');
-        debugger;
         this._PhysicalCheckWebService.PostCloseMarkPhysicalChecks(checkList, SessionLocator.Tenant)
             .subscribe((myResponse: ServiceResponse) => {
+
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 if (!myResponse.HasError) {
                     let messageWindow = new MessageWindow();
                     messageWindow.Width = 300;

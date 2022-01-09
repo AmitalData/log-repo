@@ -110,6 +110,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string Commodity { get; set; }
         [Column("LastStatusRemarks")]
 	    public string LastStatusRemarks { get; set; }
+        [ForeignKey("PackageType")]
+        [Column("PackageTypeCode")]
+	    public string PackageTypeCode { get; set; }
+	      
+        public virtual PackingType PackageType { get; set; }
     }
 }
 	 
