@@ -63,6 +63,7 @@ export class DocumentTypeTemplateViewModel {
     public TemplateHeaderHeight: number;
     public TemplateFooterHeight: number;
     public TemplateTechnologyCode: string;
+    public IsSystem: boolean;
 
 
 
@@ -146,8 +147,9 @@ export class DocumentTypeTemplateViewModel {
 
 				this.From = documentTypeTemplate.From;
 			    this.ReplyTo = documentTypeTemplate.ReplyTo;
-        this.CC = documentTypeTemplate.CC;
-        this.To = documentTypeTemplate.To;
+                this.CC = documentTypeTemplate.CC;
+                this.To = documentTypeTemplate.To;
+                this.IsSystem = documentTypeTemplate.IsSystem;
 
                 if (documentTypeTemplate.InActive) {
                     this.LableSetactive = "Mark as active";

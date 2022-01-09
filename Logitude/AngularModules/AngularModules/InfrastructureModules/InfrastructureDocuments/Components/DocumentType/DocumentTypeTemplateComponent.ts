@@ -34,7 +34,8 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
     public PageType: string;
     IsShowDeflutCoulm: boolean = false;
     IsShowOriginalTemplateColum: boolean = false; 
-    IsEnableEdit: boolean = false; 
+    IsEnableEdit: boolean = false;
+    Tenant: number = SessionInfo.LoggedUserTenant;
     public documentTypeTemplatePMService: DocumentTypeTemplatePMService;
     CurrentDocumentTypeTemplatePM: DocumentTypeTemplateViewModel;
     DocumentTypeTemplates: DocumentTypeTemplatePM[];
