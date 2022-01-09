@@ -1500,7 +1500,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 if (this.entityPM.ShipmentLevelCode != "D")
                 {
-                    UpdateShipmentProfitClass.UpdatePayables(entityPM.Id, entityPM.Tenant, false);
+                    UpdateShipmentProfitClass.UpdatePayables(entityPM.Id, entityPM.Tenant, false, null);
 
                     // Ayman: Please don't remove
                     if (this.entityPM.ShipmentLevelCode == "C")

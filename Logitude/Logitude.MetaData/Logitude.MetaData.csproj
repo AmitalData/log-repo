@@ -574,6 +574,7 @@
     <None Include="DBScripts\ShipmentModel\202112261340_FillVesselNamesFieldsOnShipment.soxml" />
     <None Include="DBScripts\ShipmentModel\202117101748_UpdateAutomaticLastUpdateDateOnShipmentSubTypes.sxml" />
     <None Include="DBScripts\ShipmentModel\202122031108_UpdateFollowUpForwardingEvents.sxml" />
+    <None Include="DBScripts\ShipmentModel\202201031148_FillProratedAmountTable.sxml" />
     <None Include="DBScripts\ShipmentModel\DeleteShipmentAssginedtoCustomsAgentId.sxml" />
     <None Include="DBScripts\ShipmentModel\FillAccountingClosedByUserInShipmentComputedFields.sxml" />
     <None Include="DBScripts\ShipmentModel\UpdateshipmentsCalculateDocumentsKPIFields.sxml" />
@@ -1059,6 +1060,7 @@
     <None Include="DBTables\ShipmentsModel\OceanInsightsRequestsCount.dxml" />
     <None Include="DBTables\ShipmentsModel\OceanInsightsStatuses.dxml" />
     <None Include="DBTables\ShipmentsModel\OtherParticipantId.dxml" />
+    <None Include="DBTables\ShipmentsModel\PayableProratedAmount.dxml" />
     <None Include="DBTables\ShipmentsModel\PickUpDeliveryFromToType.dxml" />
     <None Include="DBTables\ShipmentsModel\PickUpDeliveryPackageHarmonize.dxml" />
     <None Include="DBTables\ShipmentsModel\PickUpDeliveryTransportMode.dxml" />
@@ -1638,6 +1640,7 @@
     <None Include="EntityFiles\ShipmentsModel\ManifestStatus.lxml" />
     <None Include="EntityFiles\ShipmentsModel\MessagingStockUsageHistory.lxml" />
     <None Include="EntityFiles\ShipmentsModel\OtherParticipantId.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\PayableProratedAmount.lxml" />
     <None Include="EntityFiles\ShipmentsModel\PickUpDeliveryFromToType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\PickUpDeliveryPackageHarmonize.lxml">
       <SubType>Designer</SubType>

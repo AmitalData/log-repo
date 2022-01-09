@@ -570,7 +570,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 if (entityPM.ShipmentId != null)
                 {
-                    UpdateShipmentProfitClass.UpdatePayables(entityPM.ShipmentId, entityPM.Tenant,true);
+                    UpdateShipmentProfitClass.UpdatePayables(entityPM.ShipmentId, entityPM.Tenant,true, entityPM.Id);
                     UpdateShipmentProfitClass.UpdateProfit(entityPM.ShipmentId, entityPM.Tenant);
                 }
             }
