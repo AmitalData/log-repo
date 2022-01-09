@@ -6,7 +6,7 @@ namespace WebFreight.Web.DataProviders
     public class PreAlertDataProvider : BaseDataProvider
     {
         public string BranchSignature { get; set; }
-        public string ClientName { get; set; }        
+        public string ClientName { get; set; }
         public string Company { get; set; }
         public string OriginAgent { get; set; }
         public string ContactDetails { get; set; }
@@ -164,14 +164,42 @@ namespace WebFreight.Web.DataProviders
         public DateTime? PreCarriageATD { get; set; }
         public string PreCarriageCarrierCode { get; set; }
         public string PreCarriageCarrierNumber { get; set; }
+        public string PreCarriageFrom { get; set; }
+        public string PreCarriageTo { get; set; }
+        public DateTime? PreCarriageETA { get; set; }
+        public DateTime? PreCarriageATA { get; set; }
+
         public DateTime? PreForwardingETD { get; set; }
         public DateTime? PreForwardingATD { get; set; }
         public string PreForwardingCarrierCode { get; set; }
         public string PreForwardingCarrierNumber { get; set; }
+        public string PreForwardingFrom { get; set; }
+        public string PreForwardingTo { get; set; }
+        public DateTime? PreForwardingETA { get; set; }
+        public DateTime? PreForwardingATA { get; set; }
+
+
+        public string OnForwardingFrom { get; set; }
+        public string OnForwardingTo { get; set; }
+        public DateTime? OnForwardingETD { get; set; }
+        public DateTime? OnForwardingETA { get; set; }
+        public DateTime? OnForwardingATD { get; set; }
+        public DateTime? OnForwardingATA { get; set; }
+        public string OnForwardingCarrierCode { get; set; }
+        public string OnForwardingCarrierNumber { get; set; }
+
+        public string OnCarriageFrom { get; set; }
+        public string OnCarriageTo { get; set; }
+        public DateTime? OnCarriageETD { get; set; }
+        public DateTime? OnCarriageETA { get; set; }
+        public DateTime? OnCarriageATD { get; set; }
+        public DateTime? OnCarriageATA { get; set; }
+        public string OnCarriageCarrierCode { get; set; }
+        public string OnCarriageCarrierNumber { get; set; }
         public DateTime? PickupETD { get; set; }
         public DateTime? PickupATD { get; set; }
         public DateTime? MainCarriageATD { get; set; }
-        public DateTime?  MainCarriageATA { get; set; }
+        public DateTime? MainCarriageATA { get; set; }
         public DateTime? Transhipment1ATD { get; set; }
         public string Transshipment1CarrierCode { get; set; }
         public string Transshipment1CarrierNumber_New { get; set; }
@@ -188,7 +216,7 @@ namespace WebFreight.Web.DataProviders
         public string CustomerName { get; set; }
         public string CustomerAddress { get; set; }
         public string AgentName { get; set; }
-        public string AgentPrimaryContactName { get; set; }        
+        public string AgentPrimaryContactName { get; set; }
         public int? TotalQuantity { get; set; } //  It must display the total number of packages in a certain shipment.
         public DateTime? Transshipment1ETD_DateTime { get; set; }
         public DateTime? Transshipment2ETD_DateTime { get; set; }
@@ -274,7 +302,7 @@ namespace WebFreight.Web.DataProviders
     {
         public string FileNumber { get; set; } // shipment number.
         public string HAWB { get; set; }
-     
+
         public string ShipperName { get; set; }
         public string ShipperAddress { get; set; }
         public string ConsigneeName { get; set; }
