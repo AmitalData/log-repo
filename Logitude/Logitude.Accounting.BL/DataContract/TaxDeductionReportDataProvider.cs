@@ -40,6 +40,7 @@ namespace Logitude.Accounting.BL.DataContract
         public List<APPayment> cancelledPayments;
         private List<LedgerTransaction> oppositeAccountTransactions;
         public List<TaxDeductionReportLine> deductionLines;
+        private TenantPM tenantPM;
         int? ReportYear;
         List<CardList> transactionsVendors;
         List<Address> addresses;
@@ -48,17 +49,18 @@ namespace Logitude.Accounting.BL.DataContract
         TaxDeductionReportPM taxDeductionReport;
         List<GLAccountList> mainGLAccounts;
         List<GLAccountCurrency> accountCurrencies;
-        public TaxDeductionReportDataProvider(TaxDeductionReportPM  report,int tenant)
+        TaxDeductionPerVendorReportParameters taxDeductionPerVendorReportParameters;
+        public TaxDeductionReportDataProvider(TaxDeductionReportPM report, int tenant, TaxDeductionPerVendorReportParameters TaxDeductionPerVendorReportParameters)
         {
             Tenant = tenant;
+            taxDeductionPerVendorReportParameters = TaxDeductionPerVendorReportParameters;
+            ReportYear = report != null ? report.TaxYear : null;
 
-            ReportYear = report.TaxYear;
-           
-            startDate = report.ByMonth? new DateTime((int)report.TaxYear, (int) report.Month.Value.Month, 1,0,0,0) :   new DateTime((int)report.TaxYear, 1, 1,0,0,0);
-            endDate = report.ByMonth ? new DateTime((int)report.TaxYear, (int)report.Month.Value.Month, DateTime.DaysInMonth((int)report.TaxYear, report.Month.Value.Month),23,59,59) : new DateTime((int)report.TaxYear , 12, 31,23,59,59);
             this.taxDeductionReport = report;
-            reportMonth = report.Month;
-            taxDeductionReport.ErrorMessage = null;
+            SetDates();
+            reportMonth = report != null ? report.Month : null;
+            SetErrorMessage();
+
             invoiceContext = InvoiceContext.GetContext(tenant);
             commoncontext = CommonDataContext.GetContext(tenant);
             accountingContext = AccountingContext.GetContext(tenant);
@@ -69,18 +71,47 @@ namespace Logitude.Accounting.BL.DataContract
             mainGLAccounts = new List<GLAccountList>();
             accountCurrencies = new List<GLAccountCurrency>();
         }
+        private void SetErrorMessage()
+        {
+            if (taxDeductionReport != null)
+            {
+                taxDeductionReport.ErrorMessage = null;
+            }
+        }
+        private void SetDates()
+        {
+            if (taxDeductionPerVendorReportParameters != null)
+            {
+                startDate = taxDeductionPerVendorReportParameters.FromDate;
+                endDate = taxDeductionPerVendorReportParameters.ToDate;
+            }
+            else
+            {
+                startDate = taxDeductionReport.ByMonth ? new DateTime((int)taxDeductionReport.TaxYear, (int)taxDeductionReport.Month.Value.Month, 1, 0, 0, 0) : new DateTime((int)taxDeductionReport.TaxYear, 1, 1, 0, 0, 0);
+                endDate = taxDeductionReport.ByMonth ? new DateTime((int)taxDeductionReport.TaxYear, (int)taxDeductionReport.Month.Value.Month, DateTime.DaysInMonth((int)taxDeductionReport.TaxYear, taxDeductionReport.Month.Value.Month), 23, 59, 59) : new DateTime((int)taxDeductionReport.TaxYear, 12, 31, 23, 59, 59);
+
+            }
+        }
         TaxDeductionReportData taxDeductionReportData;
         public TaxDeductionReportData GetTaxDeductionReportData()
         {
             taxDeductionReportData = new TaxDeductionReportData();
             taxDeductionReportData.TaxYear = ReportYear.ToString();
+            tenantPM = GetTenantPM();
             setting = GetFullAccountingPMForTenant();
             taxDeductionReportData.SettingDeductionFileNumber = setting.DeductionFileNumber;
             taxDeductionReportData.deductionLines = GetTaxReportDeductionLines();
 
-            taxDeductionReportData.ByVendorList = FillGroupByVendorList(taxDeductionReportData.deductionLines); // 60
-            taxDeductionReportData.ByMonthList = FillGroupedByMonthList(taxDeductionReportData.deductionLines, taxDeductionReportData); // 80
-            taxDeductionReportData = FillTotalForCompany(taxDeductionReportData.deductionLines, taxDeductionReportData); // 70
+            taxDeductionReportData.ByVendorList = FillGroupByVendorList(taxDeductionReportData.deductionLines);
+            if (taxDeductionPerVendorReportParameters == null)
+            {
+                taxDeductionReportData.ByMonthList = FillGroupedByMonthList(taxDeductionReportData.deductionLines, taxDeductionReportData);
+                taxDeductionReportData = FillTotalForCompany(taxDeductionReportData.deductionLines, taxDeductionReportData);
+            }
+            taxDeductionReportData.FromDate = startDate;
+            taxDeductionReportData.ToDate = endDate;
+            taxDeductionReportData.TenantAddress1 = tenantPM.InvoiceSection1;
+            taxDeductionReportData.TenantAddress2 = tenantPM.InvoiceSection2;
             return taxDeductionReportData;
         }
         private List<TaxDeductionReportLine> GetTaxReportDeductionLines()
@@ -461,6 +492,10 @@ namespace Logitude.Accounting.BL.DataContract
             List<CardList> mainCards = GetMainAccountsCards();
             vendors = vendors.Concat(transactionsVendors).Concat(mainCards).ToList();
             gLAccounts = gLAccounts.Concat(transactionsOppositGLAccounts).Concat(transactionsGLAccounts).Concat(mainGLAccounts).ToList();
+            if (taxDeductionPerVendorReportParameters != null && taxDeductionPerVendorReportParameters.VendorId != null)
+            {
+                groupeddeductionLines = groupeddeductionLines.Where(d => d.VendorId == taxDeductionPerVendorReportParameters.VendorId).ToList();
+            }
             foreach (TaxDeductionReportLine item in groupeddeductionLines)
             {
               //  var deductionPercentage = item.TaxDeductionLocalAmount ==0 ? 0 : item.TaxDeductionLocalAmount / (item.TaxDeductionLocalAmount + (decimal) item.AmountInLocalCurrency);
@@ -477,7 +512,7 @@ namespace Logitude.Accounting.BL.DataContract
                 {
                     List<CardList> selectedVendors = GetSelectedVendorsList(vendors, item.VendorId);
                     //    List<CardList> selectedVendors = vendors.Where(d => d.GLAccountId == item.VendorId).Distinct().ToList();
-                    ValidateGLAccountVendors(selectedVendors, gLAccount);
+                    if (taxDeductionPerVendorReportParameters == null) ValidateGLAccountVendors(selectedVendors, gLAccount);
                     groupedbyVendor = SetGLAccountFields(gLAccount, groupedbyVendor);
                     groupedbyVendor = SetVendorVatNumberAndAddress(selectedVendors, groupedbyVendor);
                     if (selectedVendors.Count > 0)
@@ -489,6 +524,7 @@ namespace Logitude.Accounting.BL.DataContract
                     }
                         groupedbyVendor.SumOfAmountInLocalCurrency = item.AmountInLocalCurrency.Value;
                         groupedbyVendor.SumOfTaxDeductionLocalAmount = item.TaxDeductionLocalAmount.Value;
+                       groupedbyVendor.TotalAmount =(decimal?)groupedbyVendor.SumOfAmountInLocalCurrency + groupedbyVendor.SumOfTaxDeductionLocalAmount;
                     if (groupedbyVendor.SumOfAmountInLocalCurrency > 0)
                     {
                         byVendorList.Add(groupedbyVendor);
@@ -502,7 +538,7 @@ namespace Logitude.Accounting.BL.DataContract
                 }
 
             }
-            if(taxDeductionReport.ErrorMessage != null)
+            if (taxDeductionPerVendorReportParameters == null && taxDeductionReport.ErrorMessage != null)
             {
                 throw new Exception(taxDeductionReport.ErrorMessage);
             }
@@ -513,7 +549,8 @@ namespace Logitude.Accounting.BL.DataContract
             List<string> mainAccountsIds = mainGLAccounts.Select(d => d.Id).ToList();
             return GetVendorsByAccountsIds(mainAccountsIds);
         }
-        private ByVendorList SetVendorVatNumberAndAddress(List<CardList> selectedVendors, ByVendorList groupedbyVendor) {
+        private ByVendorList SetVendorVatNumberAndAddress(List<CardList> selectedVendors, ByVendorList groupedbyVendor)
+        {
             string cardsCodes = "";
             if (selectedVendors.Count > 1)
             {
@@ -522,41 +559,54 @@ namespace Logitude.Accounting.BL.DataContract
                 {
                     cardsCodes = cardsCodes + item.Code + ",";
                     Address address = addresses.Where(d => d.CardId == item.Id).FirstOrDefault();
+                    groupedbyVendor.CardAddress1 = address.Address1;
                     if (groupedbyVendor.VATNumber == null && item.VatNumber != null)
                     {
                         groupedbyVendor.VATNumber = item.VatNumber;
                     }
-                    if (groupedbyVendor.VendorAddress == null || groupedbyVendor.VendorCity ==null)
+                    if (groupedbyVendor.VendorAddress == null || groupedbyVendor.VendorCity == null)
                     {
-                        groupedbyVendor.VendorAddress = address!= null? address.Name: null;
-                        groupedbyVendor.VendorCity =address!= null? address.City: null;
+                        groupedbyVendor.VendorAddress = address != null ? address.Name : null;
+                        groupedbyVendor.VendorCity = address != null ? address.City : null;
                     }
                     if (groupedbyVendor.VATNumber != null && address != null)
                     {
                         break;
                     }
                 }
-               
+
             }
-            else if(selectedVendors.Count == 1)
+            else if (selectedVendors.Count == 1)
             {
                 cardsCodes = selectedVendors[0].Code;
                 groupedbyVendor.VATNumber = selectedVendors[0].VatNumber;
                 Address address = addresses.Where(d => d.CardId == selectedVendors[0].Id).FirstOrDefault();
                 groupedbyVendor.VendorAddress = address != null ? address.Name : null;
                 groupedbyVendor.VendorCity = address != null ? address.City : null;
+                groupedbyVendor.CardAddress1 = address.Address1;
             }
             if (groupedbyVendor.VATNumber == null)
             {
                 groupedbyVendor.VATNumber = GetVendorVatNumberFromMainAccount(groupedbyVendor);
-                if (groupedbyVendor.VATNumber == null)
-                    taxDeductionReport.ErrorMessage = taxDeductionReport.ErrorMessage + Environment.NewLine + (selectedVendors.Count>1? " Vendor GLAccount " + groupedbyVendor.DisplayNumber + " is connected to more than one Operational Vendor Card and none of them contain a VAT number" + cardsCodes : TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutVatNumber", Tenant) + ", " + TextCodesTranslator.TranslateText("Card.F.Code", Tenant) + ":" + selectedVendors[0].Code) ;
+            }
+
+            if (taxDeductionPerVendorReportParameters == null)
+            {
+                SetErrorMessage(groupedbyVendor,selectedVendors, cardsCodes);
+            }
+            return groupedbyVendor;
+        }
+
+        private void SetErrorMessage(ByVendorList groupedbyVendor, List<CardList> selectedVendors, string cardsCodes)
+        {
+            if (groupedbyVendor.VATNumber == null)
+            {
+                taxDeductionReport.ErrorMessage = taxDeductionReport.ErrorMessage + Environment.NewLine + (selectedVendors.Count > 1 ? " Vendor GLAccount " + groupedbyVendor.DisplayNumber + " is connected to more than one Operational Vendor Card and none of them contain a VAT number" + cardsCodes : TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutVatNumber", Tenant) + ", " + TextCodesTranslator.TranslateText("Card.F.Code", Tenant) + ":" + selectedVendors[0].Code);
             }
             if (groupedbyVendor.VendorAddress == null && groupedbyVendor.VendorCity == null)
             {
-                taxDeductionReport.ErrorMessage = taxDeductionReport.ErrorMessage + Environment.NewLine + (selectedVendors.Count>1? " Vendor GLAccount " + groupedbyVendor.DisplayNumber + " is connected to more than one Operational Vendor Card and none of them contain an address" + cardsCodes : TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutAddress", Tenant) + ", " + TextCodesTranslator.TranslateText("Card.F.Code", Tenant) + ":" + selectedVendors[0].Code);
+                taxDeductionReport.ErrorMessage = taxDeductionReport.ErrorMessage + Environment.NewLine + (selectedVendors.Count > 1 ? " Vendor GLAccount " + groupedbyVendor.DisplayNumber + " is connected to more than one Operational Vendor Card and none of them contain an address" + cardsCodes : TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutAddress", Tenant) + ", " + TextCodesTranslator.TranslateText("Card.F.Code", Tenant) + ":" + selectedVendors[0].Code);
             }
-            return groupedbyVendor;
         }
 
         private void DeleteVendorFromTaxDeductionReportLines(string vendorId)
@@ -659,7 +709,7 @@ namespace Logitude.Accounting.BL.DataContract
         }
        private ByVendorList SetGLAccountFields(GLAccountList gLAccount , ByVendorList groupedbyVendor)
         {
-            ValidateGLAccountDeductionTypeFields(gLAccount);
+            if (taxDeductionPerVendorReportParameters == null) ValidateGLAccountDeductionTypeFields(gLAccount);
             groupedbyVendor.DisplayNumber = gLAccount.DisplayNumber;
 
             groupedbyVendor.Occupation = gLAccount.Occupation;
@@ -670,7 +720,8 @@ namespace Logitude.Accounting.BL.DataContract
             groupedbyVendor.DeductionFileNumber = gLAccount.DeductionFileNumber;
             groupedbyVendor.DeductionType = gLAccount.DeductionTypeId;
             groupedbyVendor.EnglishName = gLAccount.EnglishName;
-            groupedbyVendor.EndYearBalance = GetEndYearBalance(gLAccount.Id);
+            if (taxDeductionPerVendorReportParameters == null)
+                groupedbyVendor.EndYearBalance = GetEndYearBalance(gLAccount.Id);
 
             return groupedbyVendor;
         }
@@ -763,7 +814,7 @@ namespace Logitude.Accounting.BL.DataContract
         private List<TotalForCompany> FillCompanyTotalForPDFReport(TaxDeductionReportData taxDeduction)
         {
             FullAccountingSettingPM setting = GetFullAccountingPMForTenant();
-            TenantPM tenantPM = GetTenantPM();
+            tenantPM = GetTenantPM();
             List<TotalForCompany> totals = new List<TotalForCompany>();
             TotalForCompany totalForCompany = new TotalForCompany()
             {

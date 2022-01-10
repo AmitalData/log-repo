@@ -46,7 +46,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             List<string> linesArray = new List<string>();
             //GLAccountQueryService queryService = new GLAccountQueryService(tenant);
-            TaxDeductionReportDataProvider deductionReportDataProvider = new TaxDeductionReportDataProvider(taxDeductionReportPM,tenant);
+            TaxDeductionReportDataProvider deductionReportDataProvider = new TaxDeductionReportDataProvider(taxDeductionReportPM,tenant,null);
             TaxDeductionReportData data = deductionReportDataProvider.GetTaxDeductionReportData();
             //TaxDeductionReportData data = queryService.GetTaxDeductionReportData(taxDeductionReportPM.TaxYear, tenant);
             string xml = LogitudeXmlSerializer.SerializeObjectToXmlString(data);

@@ -1,5 +1,6 @@
 ﻿
 using HtmlAgilityPack;
+using Logitude.Accounting.BL.DataContract;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -1276,6 +1277,12 @@ namespace WebFreight.Web.Helpers
                         dataProvider = myDataService.Load();
                         break;
                     }
+                case "PRVR":
+                    {
+                        TaxDeductionReportPerVendorService dataService = new TaxDeductionReportPerVendorService(filters, reportFliter.tenant);
+                        dataProvider = dataService.GetData();
+                        break;
+                    }
                     #endregion
             }
             return dataProvider;
@@ -1327,6 +1334,14 @@ namespace WebFreight.Web.Helpers
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "Statistics By Customer", Name = "StatisticsByClientDataProvider", BusinessObjectValue = reportDataProvider };
                         stimulReportDataProviderDetails.Logo = reportDataProvider.Logo;
 
+                        break;
+                    }
+                case "PRVR":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(TaxDeductionReportData));
+                        TaxDeductionReportData reportDataProvider = (TaxDeductionReportData)serializer.Deserialize(memorystream);
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "PRVR", Name = "TaxDeductionReportData", BusinessObjectValue = reportDataProvider };
+                       
                         break;
                     }
 
