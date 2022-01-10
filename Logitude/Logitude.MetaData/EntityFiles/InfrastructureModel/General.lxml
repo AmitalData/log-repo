@@ -35,8 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
- 
-  Code="&quot;c431&quot;" 
+  Code="&quot;e4df&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -7178,7 +7177,6 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
- 
     <Feature
       Code="&quot;General.Features.CustomizationSettings&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
@@ -7188,7 +7186,6 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
- 
     <Feature
       Code="&quot;ENTITYSTATUS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
@@ -7198,6 +7195,14 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
- 
+    <Feature
+      Code="&quot;SHAREDCARGOTRACKING&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.SHAREDCARGOTRACKING&quot;"
+      FeatureDefaultText="&quot;Shared Cargo Tracking&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
