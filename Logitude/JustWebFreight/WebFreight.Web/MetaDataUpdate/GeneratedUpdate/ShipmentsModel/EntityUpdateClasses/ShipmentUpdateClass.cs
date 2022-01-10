@@ -79,8 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
- 
-		public const string HashString = "c5a57cf672abb15ae3a6533b5a3b94ea";
+		public const string HashString = "7b4dac8e83a4eccb10a628c5abc6c8b1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -9884,7 +9883,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "MainCarriageATA",
 					  						DefaultText =  "Main Carriage ATA",
 					  						ListFieldLable =  "MainCarriageATAListLable",
-					  						ListLableDefaultText =  "MainCarriage ATA",
+					  						ListLableDefaultText =  "Main Carriage ATA",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -17501,9 +17500,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MainCarriageFinalDestinationATA",
-					  						DefaultText =  "Main Carriage ATA",
+					  						DefaultText =  "Main Carriage Final ATA",
 					  						ListFieldLable =  "MainCarriageFinalDestinationATAListLable",
-					  						ListLableDefaultText =  "Main Carriage ATA",
+					  						ListLableDefaultText =  "Main Carriage Final ATA",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -47705,6 +47704,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "PrivateLabelAgentName",
 					  						ListPropertyPath =  "PrivateLabelAgentName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
