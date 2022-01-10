@@ -813,13 +813,13 @@ export class InvoiceItemVehicleLine extends BaseComponent {
         this.parent = Parent;
         this.invoiceItem = Item;
 
-        if (this.RichbitFileNumber != null && this.VehicleChassisNumber == null) {
+        /*if (this.RichbitFileNumber != null && this.VehicleChassisNumber == null) {
             this.UIProperties.SetEnabled("VehicleChassisNumber", "Customs.SupplierInvoiceItemVehicle", false);
-        }
+        }*/
 
-        if (this.RichbitFileNumber == null && this.VehicleChassisNumber != null) {
+        /*if (this.RichbitFileNumber == null && this.VehicleChassisNumber != null) {
             this.UIProperties.SetEnabled("RichbitFileNumber", "Customs.SupplierInvoiceItemVehicle", false);
-        }
+        }*/
        
 
     }
@@ -974,7 +974,7 @@ export class InvoiceItemVehicleLine extends BaseComponent {
 
                         this.entityPM.VehicleId = this.vehicle.Id;
                         this.RichbitFileStatus = this.vehicle.StatusName;
-                        this.UIProperties.SetEnabled("RichbitFileNumber", "Customs.SupplierInvoiceItemVehicle", false);
+                        //this.UIProperties.SetEnabled("RichbitFileNumber", "Customs.SupplierInvoiceItemVehicle", false);
                         this.vehicle.DeclarationId = this.invoiceItem.DeclarationId;
                         this.oldVehicle = this.vehicle;
                         this.parent.EnableOkButton = true;
@@ -986,9 +986,9 @@ export class InvoiceItemVehicleLine extends BaseComponent {
                     this.vehicleSelected = true;
 
                     this.valid = true;
-                    this.UIProperties.SetEnabled("RichbitFileNumber", "Customs.SupplierInvoiceItemVehicle", false);
+                    //this.UIProperties.SetEnabled("RichbitFileNumber", "Customs.SupplierInvoiceItemVehicle", false);
                     //this.UIProperties.SetValidity("VehicleChassisNumber", "Customs.SupplierInvoiceItemVehicle", true, null);
-                    this.entityPM.RichbitFileNumber = null;
+                    //this.entityPM.RichbitFileNumber = null;
                     this.entityPM.VehicleId = null;
                     this.RichbitFileStatus = null;
                     this.parent.EnableOkButton = true;
@@ -1070,7 +1070,7 @@ export class InvoiceItemVehicleLine extends BaseComponent {
                         this.parent.EnableOkButton = true;
 
                         //this.UIProperties.SetValidity("RichbitFileNumber", "Customs.SupplierInvoiceItemVehicle", true, null);
-                        this.UIProperties.SetEnabled("VehicleChassisNumber", "Customs.SupplierInvoiceItemVehicle", false);
+                        //this.UIProperties.SetEnabled("VehicleChassisNumber", "Customs.SupplierInvoiceItemVehicle", false);
 
                         this.entityPM.VehicleChassisNumber = this.vehicle.VehicleChassisNumber;
                         this.entityPM.RichbitFileStatus = this.vehicle.StatusName;
@@ -1091,8 +1091,8 @@ export class InvoiceItemVehicleLine extends BaseComponent {
                     this.parent.EnableOkButton = true;
 
                     //this.UIProperties.SetValidity("RichbitFileNumber", "Customs.SupplierInvoiceItemVehicle", true, null);
-                    this.UIProperties.SetEnabled("VehicleChassisNumber", "Customs.SupplierInvoiceItemVehicle", false);
-                    this.entityPM.VehicleChassisNumber = null;
+                    //this.UIProperties.SetEnabled("VehicleChassisNumber", "Customs.SupplierInvoiceItemVehicle", false);
+                    //this.entityPM.VehicleChassisNumber = null;
                     this.entityPM.VehicleId = null;
                     this.RichbitFileStatus = null;
                     if (this.oldVehicle != null) {
@@ -1146,7 +1146,7 @@ export class InvoiceItemVehicleLine extends BaseComponent {
     }
 
     OnRichbitFileNumbernLostFocus(logCellTemplate: any, RichbitFileNumbernTextBox: any) {
-
+        debugger;
         if (this.RichbitFileNumber) {
             if (!this.vehicleSelected)
                 this.SetChassisNumber(logCellTemplate, RichbitFileNumbernTextBox);
@@ -1162,7 +1162,7 @@ export class InvoiceItemVehicleLine extends BaseComponent {
     }
 
     OnVehicleChassisNumberLostFocus(logCellTemplate: any, VehicleChassisNumberTextBox: any) {
-
+        debugger;
         if (this.VehicleChassisNumber) {
             if (!this.vehicleSelected)
                 this.SetFileNumber(logCellTemplate, VehicleChassisNumberTextBox);
