@@ -63,7 +63,7 @@
                                     <!--From Date-->
                                     <td style="width:70px;">From Date</td>
                                     <td style="width:120px;">
-                                        <LogDatePicker [ObjectFieldName]="'FromDate'" [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                        <AdvancedDatePicker [NoObjectField]="true" [ObjectFieldName]="'FromDate'" [SelectedDateValue]="FromDate" [DataContext]="DataContext" [ShowToolTip]="true" [InputType]="'date'" [TimeMode]="'12'"></AdvancedDatePicker>
                                     </td>
 
                                     <td style="width:10px;">
@@ -73,7 +73,7 @@
                                     <!--To Date-->
                                     <td style="width:60px;">To Date</td>
                                     <td style="width:120px;">
-                                        <LogDatePicker [ObjectFieldName]="'DueDate'" [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                        <AdvancedDatePicker [NoObjectField]="true" [ObjectFieldName]="'DueDate'" [SelectedDateValue]="DueDate" [DataContext]="DataContext" [ShowToolTip]="true" [InputType]="'date'" [TimeMode]="'12'"></AdvancedDatePicker>
                                     </td>
 
                                     <td style="width: 20px;"><div></div></td>
