@@ -138,7 +138,9 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  IsManualPayment = a.IsManualPayment,
                                                                  ReferantUserName="",
                                                                  DepartmentName="",
-                                                                
+                                                                 Commodity=a.Commodity,
+                                                                 LastStatusRemarks=a.LastStatusRemarks,
+
                                                                  
                                                               }) ;
                                                                 
