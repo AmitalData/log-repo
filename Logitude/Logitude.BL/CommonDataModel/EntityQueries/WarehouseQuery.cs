@@ -12,6 +12,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
+using Simplog.Server.Infrastructure.DataContracts;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -125,8 +126,28 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             WarehousePM securedPm = new WarehousePM();
             SecuredMapping.GetMappedPM(warehouse, securedPm, "Warehouse", tenant);
 
+            if (securedPm != null && warehouse != null)
+            {
+                Warehouse entityPoco = (from s in repository.context.Warehouses where s.Id == securedPm.Id select s).FirstOrDefault();
+                MapCustomFields(securedPm, entityPoco);
+            }
             return securedPm;
         }
+
+        private void MapCustomFields(WarehousePM warehousePM, Warehouse warehouse)
+        {
+            warehousePM.Field1 = new CustomFieldClass("Field1", "Warehouse", warehouse.Field1);
+            warehousePM.Field2 = new CustomFieldClass("Field2", "Warehouse", warehouse.Field2);
+            warehousePM.Field3 = new CustomFieldClass("Field3", "Warehouse", warehouse.Field3);
+            warehousePM.Field4 = new CustomFieldClass("Field4", "Warehouse", warehouse.Field4);
+            warehousePM.Field5 = new CustomFieldClass("Field5", "Warehouse", warehouse.Field5);
+            warehousePM.Field6 = new CustomFieldClass("Field6", "Warehouse", warehouse.Field6);
+            warehousePM.Field7 = new CustomFieldClass("Field7", "Warehouse", warehouse.Field7);
+            warehousePM.Field8 = new CustomFieldClass("Field8", "Warehouse", warehouse.Field8);
+            warehousePM.Field9 = new CustomFieldClass("Field9", "Warehouse", warehouse.Field9);
+            warehousePM.Field10 = new CustomFieldClass("Field10", "Warehouse", warehouse.Field10);
+        }
+ 
 
         public WarehousePM GetSingleWarehousePM(string id, int tenant)
         {
@@ -213,9 +234,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             WarehousePM securedPm = new WarehousePM();
             SecuredMapping.GetMappedPM(warehouse, securedPm, "Warehouse", tenant);
 
+            if (securedPm != null && warehouse != null)
+            {
+                Warehouse entityPoco = (from s in repository.context.Warehouses where s.Id == securedPm.Id select s).FirstOrDefault();
+                MapCustomFields(securedPm, entityPoco);
+            }
             return securedPm;
         }
-
         public IQueryable<WarehousePM> GetWarehousePMsByTenant(int tenant)
         {
             return from a in repository.context.Warehouses.Include("Card")
