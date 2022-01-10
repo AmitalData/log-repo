@@ -496,6 +496,11 @@ export class UserPM {
     public set SignatureImageId(newValue: string) { if (this.signatureImageId != newValue) { this.signatureImageId = newValue; this.MarkAsDirty("SignatureImageId"); } }
        
 	 
+    private isHRUser: boolean;
+    public get IsHRUser() { return this.isHRUser; }
+    public set IsHRUser(newValue: boolean) { if (this.isHRUser != newValue) { this.isHRUser = newValue; this.MarkAsDirty("IsHRUser"); } }
+       
+	 
 
     public OldEntityPM: UserPM;
 		
