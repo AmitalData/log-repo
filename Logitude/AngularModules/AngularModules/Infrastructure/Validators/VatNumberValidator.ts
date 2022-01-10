@@ -45,7 +45,11 @@ export class VatNumberValidator {
         }
     }
     public static ValidateVatMandatory(args: VATValidatorArgs) {
-        //if (args.IsCustomer) {
+
+        var myTenant = InfraSettings.TenantPM;
+        if (!myTenant.ApplyVATForAllPartners && !args.IsCustomer) {
+            return;
+        }
         if (AppTool.IsNullOrEmpty(args.VATNumber)) {
             if (InfraSettings.TenantPM.VatMandatoryTypeCode != "MNT") {
                 var isValidatingField = false;
@@ -76,8 +80,8 @@ export class VatNumberValidator {
                     }
                 }
             }
+        
         }
-        //}
     }
 }
 

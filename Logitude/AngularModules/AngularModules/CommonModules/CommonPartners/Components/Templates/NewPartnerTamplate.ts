@@ -932,7 +932,9 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
     }
     private ValidateCustomerFields(errors: string[]) {
         //if (this.IsCustomerPartner) {
-        // if (this.IsCustomer) {
+        if (!SessionLocator.TenantPM.ApplyVATForAllPartners && !args.IsCustomer) {
+            return;
+        }
         var args = new VATValidatorArgs();
         args.VATNumber = this.VatNumber;
         args.IsCustomer = this.EntityPM.IsCustomer;
