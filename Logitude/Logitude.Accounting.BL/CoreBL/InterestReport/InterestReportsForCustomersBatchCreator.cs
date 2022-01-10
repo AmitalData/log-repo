@@ -58,7 +58,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             {
                 BatchTaskExecutionQueryService batchTaskExecutionQueryService = new BatchTaskExecutionQueryService(tenant);
                 BatchTaskExecutionPM batchTaskExecutionPM = batchTaskExecutionQueryService.GetSingle(interestLastBatchService.CreateReportsBatchId, false, false);
-                if (batchTaskExecutionPM.StatusCode != "D" && batchTaskExecutionPM.StatusCode != "F")
+                if (batchTaskExecutionPM != null && batchTaskExecutionPM.StatusCode != "D" && batchTaskExecutionPM.StatusCode != "F")
                 {
                     exists = true;
                 }
