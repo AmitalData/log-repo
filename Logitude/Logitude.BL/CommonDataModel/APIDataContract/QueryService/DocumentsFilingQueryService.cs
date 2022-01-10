@@ -80,8 +80,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 
             if (MyEntity.EntityType.Name == "Shipment")
             {
-                ShipmentRepository shipmentRepository = new ShipmentRepository(Tenant);
-                return shipmentRepository.GetShipmentIdByShipmentNumber(MyEntity.EntityNumber, Tenant);
+                return GetShipmentIdByShipmentNumber(MyEntity.EntityNumber, Tenant);
             }
             if (MyEntity.EntityType.Name == "Ticket")
             {
@@ -95,6 +94,18 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             }
 
             return null;
+        }
+
+        public  string GetShipmentIdByShipmentNumber(string shipmentNumber, int tenant)
+        {
+            string shipmentId = string.Empty;
+            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+            shipmentId =  shipmentRepository.GetShipmentIdByShipmentNumber(shipmentNumber, tenant);
+            if(string.IsNullOrEmpty(shipmentId) && !string.IsNullOrEmpty(shipmentNumber) && shipmentNumber.ToUpper().StartsWith("A/") && FeatureToggleHelper.HasFeatureToggle("DFF ", tenant))
+            {
+                shipmentId = shipmentRepository.GetShipmentIdByShipmentNumber(("AF/" + shipmentNumber.Substring(2)) , tenant);
+            }
+            return shipmentId;
         }
     }
 }
