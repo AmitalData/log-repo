@@ -415,7 +415,7 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<Container> Containers { get; set; }
         public IDbSet<ContainerStatus> ContainerStatuses { get; set; }
         public IDbSet<ContainerStatusSource> ContainerStatusSources { get; set; }
-
+        public IDbSet<PayableProratedAmount> PayableProratedAmounts { get; set; }
 
 
         [DbFunction("ShipmentsContext", "udf_ShipmentSearch")]
