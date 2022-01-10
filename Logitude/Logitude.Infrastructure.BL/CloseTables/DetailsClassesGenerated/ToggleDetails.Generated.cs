@@ -460,6 +460,14 @@ namespace Logitude.Infrastructure.BL
                 Description = "Allow to Display and Edit Entity Status", 
                 SearchFields = "EST,Entity Status,Allow to Display and Edit Entity Status", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "DFF", 
+                SearchFields = "DFF,support forwarding file format in External Document", 
+                Name = "support forwarding file format in External Document", 
+                Description = "Support forwarding file format in External Document", 
+			});
 			
             return all;
        }
