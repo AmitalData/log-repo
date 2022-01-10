@@ -66,6 +66,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="MamanSuspendedCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ErrorPlace"
     ReferencedTable="PendingErrorPlaces"

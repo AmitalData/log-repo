@@ -18,6 +18,7 @@ export class CourierPendingReasonList {
 	Tenant: number;
 	UnifreightStatusCode: string;
 	ErrorPlaceName: string;
+	MamanSuspendedCode: string;
 	
 }
  

@@ -250,6 +250,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string mamanSuspendedCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MamanSuspendedCode  
+	   {
+	    
+	     get
+		{
+		   return mamanSuspendedCode;
+		 }
+		 set
+		 {
+		   if(mamanSuspendedCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MamanSuspendedCode",OldValue=mamanSuspendedCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   mamanSuspendedCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
