@@ -274,5 +274,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string LayoutDirection { get; set; }
         [DataMember]
         public string SignatureImageId { get; set; }
+
+        [DataMember]
+        public bool IsHRUser { get; set; }
     }
 }

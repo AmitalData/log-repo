@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class VendorUpdateClass
    {  		
-		public const string HashString = "31813ebb2406c8b094f2cd08dc9fc09c";
+		public const string HashString = "b51304ad245f669f0dee770ef69e00a2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -114,7 +114,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
 			      				    EnableSecurity =  true,
-			      				    AllowCustomFields =  false,
+			      				    AllowCustomFields =  true,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  10,

@@ -43,7 +43,7 @@ export class NewRoleComponent extends BaseComponent {
 
     private BuildQueryFilters() {
         this.ParentRoleQueryFilters = new ApiQueryFilters();
-        this.ParentRoleQueryFilters.addAdditionalFilter("Code", "CUCA", null, null, "Exclude", false, false, false, "string", false, true, true);
+        this.ParentRoleQueryFilters.addAdditionalFilter("Code", "CUCA,HRAD", null, null, "Exclude", false, false, false, "string", false, true, true);        
     }
 
     SetWindowArgs(args: any) {
