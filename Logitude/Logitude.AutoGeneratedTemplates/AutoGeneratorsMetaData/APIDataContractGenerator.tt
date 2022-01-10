@@ -130,6 +130,8 @@ private void WriteApiDataContractQueryServiceMethod(dynamic entity,dynamic Maine
    var CPName = ((XElement)entity).Attributes().Where(a => a.Name == "ComputingPartnerName").FirstOrDefault(); 
    var TableName = ((XElement)Mainentity).Attributes().Where(a => a.Name == "DBTableName").FirstOrDefault().Value;
     var ObjectTableName = ((XElement)Mainentity).Attributes().Where(a => a.Name == "ObjectTableName").FirstOrDefault().Value.Trim('"'); 
+	   var IncludeTenant0Data = ((XElement)entity).Attributes().Where(a => a.Name == "IncludeTenant0Data").FirstOrDefault() != null ? 
+	                            ((XElement)entity).Attributes().Where(a => a.Name == "IncludeTenant0Data").FirstOrDefault().Value.Trim('"') : "false";
 	string DCName =  Name != null ? Name.Value.Trim('"') : "";//entity.Name.Trim('"');
 	if(DCName == "PickUp"){
 	ObjectTableName = "ShipmentPickUp";
@@ -163,6 +165,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.<#= DCVersion #>;
 using Logitude.BL.QuoteModel.APIDataContract.<#= DCVersion #>;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -438,11 +442,20 @@ using <#=myspacestring#>
 						
 						
 					}
-					
-					   <#+}
-					   }#>
-					   
+					<#+}}#>
+
+					<#+if(IncludeTenant0Data == "True"){#>
+
 					if(temp == null)
+					{             
+					
+				    	temp =  Get<#=DCName #>FromTenantZero( MyEntity, Tenant)   ;
+								
+					}
+				
+					<#+} #>
+
+			  	   if(temp == null)
 					{   <#+
 					     if(Keys.Count == 0)
 						 {
@@ -459,6 +472,7 @@ using <#=myspacestring#>
 						#>
 
 					} 
+				 
 					<#+if(HasConcarancyCheck == true || IsMulty == true){#>
 					 
 					if(IsUpdate == true)
@@ -643,7 +657,50 @@ using <#=myspacestring#>
                 throw ex;
             } 
         }
-		 
+
+
+	<#+if(IncludeTenant0Data == "True"){#>
+  public <#=ObjectTableName#>PM Get<#=DCName #>FromTenantZero(<#=DCName #> MyEntity,int Tenant)
+        {
+		    try
+            {
+					var temp = new <#=ObjectTableName#>PM();
+					<#=ObjectTableName#>Service service = new <#=ObjectTableName#>Service(context, Tenant);
+					
+					<#+if(ObjectTableName == "Port"){#>
+
+					if (!string.IsNullOrEmpty(MyEntity.Code))
+					{
+						temp = query.GetSinglePMByCombinedCode(MyEntity.Code, 0);
+					}
+
+					<#+}else{#>
+
+					f (!string.IsNullOrEmpty(MyEntity.Code))
+					{
+						temp = query.GetSinglePMByCode(MyEntity.Code, 0);
+					}
+
+					<#+}#>
+
+					if (temp != null)
+					{
+				    	temp.Tenant = Tenant;
+						service.Create(temp);
+					}
+
+
+		return temp;	
+		    }
+       catch (Exception ex)
+            {
+
+                throw ex;
+            } 
+
+		 }
+					<#+}#>
+					   
    }
 }
 <#+

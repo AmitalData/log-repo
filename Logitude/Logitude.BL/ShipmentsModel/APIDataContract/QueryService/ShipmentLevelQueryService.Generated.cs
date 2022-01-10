@@ -10,6 +10,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -80,11 +82,13 @@ using Simplog.Data.ShipmentsModel;
 					if (!string.IsNullOrEmpty(MyEntity.Code))
 					{
 						temp = query.GetSinglePM(MyEntity.Code);
-					} 					   
-					if(temp == null)
+					} 
+					
+			  	   if(temp == null)
 					{   
 					    throw new ApplicationException("ShipmentLevel with Code " + MyEntity.Code + " doesn't exist");
 					} 
+				 
 					
 					if(string.IsNullOrEmpty(temp.Code))
 					{
@@ -115,6 +119,8 @@ using Simplog.Data.ShipmentsModel;
                 throw ex;
             } 
         }
-		 
+
+
+						   
    }
 }
