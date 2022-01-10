@@ -356,6 +356,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     InlandWeightRoundingCode = a.InlandWeightRoundingCode,
                                                     GLAccountNumber = a.Card.GLAccountDisplayNumber,
                                                     StorageFreeDays = a.Card.StorageFreeDays,
+                                                    Field1 = a.Field1,
+                                                    Field2 = a.Field2,
+                                                    Field3 = a.Field3,
+                                                    Field4 = a.Field4,
+                                                    Field5 = a.Field5,
+                                                    Field6 = a.Field6,
+                                                    Field7 = a.Field7,
+                                                    Field8 = a.Field8,
+                                                    Field9 = a.Field9,
+                                                    Field10 = a.Field10,
+
                                                 });
 
 
