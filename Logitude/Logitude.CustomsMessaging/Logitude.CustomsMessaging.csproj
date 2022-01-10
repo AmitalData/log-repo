@@ -168,6 +168,7 @@
     <Compile Include="Dca\DcaDirect9200TenantService.cs" />
     <Compile Include="Dca\DedicatedCourierDCAService.cs" />
     <Compile Include="Dca\RemoveOldOrphanedFilesFromBackupService.cs" />
+    <Compile Include="Dca\WaitingTester.cs" />
     <Compile Include="FakeMessagingServices\Courier\Fake_1770_MN_MSG1_MANIFESTResponse.cs" />
     <Compile Include="FakeMessagingServices\DCASincroService.cs" />
     <Compile Include="FakeMessagingServices\Fake_2754_MSG10004_ImportDeclarationResponse.cs" />
@@ -267,6 +268,7 @@
     <Compile Include="MessagingServices\DF_MSG2892_ImportDeclarationAmendmentMessagingService.cs" />
     <Compile Include="FakeMessagingServices\Fake_TSH_MSG6_AgentPaymentMessageService.cs" />
     <Compile Include="MessagingServices\DF_NG_2755_MSG12001_SubmitExportDeclarationMessagingService.cs" />
+    <Compile Include="MessagingServices\NG_9100_MSG_OutgoingMessageRequestMessagingService.cs" />
     <Compile Include="MessagingServices\SaveCC_MSG2450_ContainerizationMessageMessagingService.cs" />
     <Compile Include="MessagingServices\GP_1030_GatepassRequestMessageMessagingService.cs" />
     <Compile Include="MessagingServices\MN_MSG8370_CargoSplitMessagingService.cs" />
@@ -344,6 +346,7 @@
     <Compile Include="RequestServices\DF_NG_2751_MSG10000_ExportDeclarationRequestService.cs" />
     <Compile Include="RequestServices\DF_MSG2892_ImportDeclarationAmendmentRequestService.cs" />
     <Compile Include="RequestServices\DF_NG_2755_MSG12001_SubmitExportDeclarationRequestService .cs" />
+    <Compile Include="RequestServices\NG_9100_MSG_OutgoingMessageRequest_RequestService.cs" />
     <Compile Include="RequestServices\SaveCC_MSG2450_ContainerizationMessageRequestService.cs" />
     <Compile Include="RequestServices\GP_1030_GatepassRequestMessageRequestService.cs" />
     <Compile Include="RequestServices\MN_MSG8370_CargoSplitRequestService.cs" />
@@ -391,8 +394,12 @@
     <Compile Include="ResponseServices\DF_NG_2757_MSG10004_ExportDeclarationResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_5117_ImportDeclerationAmendmentReplyResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsgResponseService.cs" />
+
     <Compile Include="ResponseServices\MultiUpdateBatchUCBCMSS_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UpdateAllCertificateBatchUCB_MsgResponseService.cs" />
+
+    <Compile Include="ResponseServices\NG_9101_MSG_OutgoingMessageResponse_ResponseService.cs" />
+
     <Compile Include="ResponseServices\SaveCC_MSG2450_ContainerizationMessageResponseService.cs" />
     <Compile Include="ResponseServices\SaveDF_MSG5002_DeclarationCancellationRequestMsgResponseService.cs" />
     <Compile Include="ResponseServices\DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceResponseService.cs" />

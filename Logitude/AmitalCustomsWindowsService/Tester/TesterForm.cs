@@ -291,6 +291,7 @@ namespace AmitalCustomsWindowsService.Tester
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
  
+
             var rabbitMQReceiveWR = new RabbitMQReceiveWR();
             var customRabbitMQQueue = new CustomRabbitMQQueue();
             var allQueueDetails = customRabbitMQQueue.GetAllQueueDetails()
@@ -307,6 +308,10 @@ namespace AmitalCustomsWindowsService.Tester
             ;
             return;
              clsTester.TestUnifreightFUStatusTaskService();
+
+            Logitude.CustomsMessaging.Dca.WaitingTester.SendWaiting();
+            //clsTester.TestUpdateLOGITUDE_FILE();
+
             //clsTester.GetListByCourierHAWB();
 
             return;
