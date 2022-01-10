@@ -953,7 +953,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
 
                     <details-menu [Show]="item.ShowDetailsMenu" [Toggle]="'ShowDetailsMenu'" [DataContext]="item"
                                   [MenuTitle]="item.DocumentTypeName" [Buttons]="[{Code: 'download', Name:'Download'}]"
-                                  (ButtonClicked)="InternalDownloadDocument(item.DocumentId,item.DocumentTypeName)"></details-menu>
+                                  (ButtonClicked)="DownloadDocument(item)"></details-menu>
                 </div>
             </div>
         </div>
