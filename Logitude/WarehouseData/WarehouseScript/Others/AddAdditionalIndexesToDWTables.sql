@@ -1,4 +1,14 @@
 
+
+IF (OBJECT_ID ('dw_ARInvoices', 'U')  IS NOT NULL)
+BEGIN
+CREATE NONCLUSTERED INDEX [IX_ARInvoice_ConsolidationInvoiceId] ON [dbo].[dw_ARInvoices] ([ConsolidationInvoiceId])
+
+CREATE NONCLUSTERED INDEX [IX_ARInvoice_IsConsolidationInvoice_Id] ON [dbo].[dw_ARInvoices] ([IsConsolidationInvoice],[Id])
+end
+
+
+
 IF (OBJECT_ID ('dw_Addresses', 'U')  IS NOT NULL)
 BEGIN
 CREATE NONCLUSTERED INDEX [IX_dw_Addresses_AddressTypeId_CardId] ON[dbo].[dw_Addresses]([AddressTypeId],[CardId])
