@@ -70,6 +70,16 @@
 	declare @ConsolidationId as varchar(15)
 	declare @RegionalTaxPercentage  as float 
 
+
+
+	   declare @ConsolidationInvoiceTable TABLE(Id  varchar(15) NOT NULL  PRIMARY KEY NONCLUSTERED ,InvoiceNumber varchar(25) , InvoiceDate datetime , StatusCode varchar(2) , DraftNumber varchar(20));
+
+      INSERT INTO @ConsolidationInvoiceTable (Id, InvoiceNumber ,InvoiceDate , StatusCode , DraftNumber) SELECT Id, InvoiceNumber , InvoiceDate ,StatusCode ,DraftNumber  FROM dw_ARInvoices where IsConsolidationInvoice = 1 or Id = '-1'
+
+
+ 
+
+
 	DECLARE ARInvoicesCursor CURSOR READ_ONLY
 	FOR
 	SELECT dw_ARInvoices.Id,dw_ARInvoices.Tenant, SourceTenant.[Tenant Number], ParentTenant.[Tenant Number], dw_ARInvoiceTypes.Name,dw_ARInvoices.InvoiceNumber,
@@ -104,7 +114,7 @@
     inner JOIN NewDIM_Currencies ForiegnCurrency ON dw_ARInvoiceLines.ForiegnCurrencyId = ForiegnCurrency.Id   
     inner JOIN NewDIM_VatTypes ON dw_ARInvoiceLines.VatTypeId = NewDIM_VatTypes.Id
     inner JOIN dw_CustomObjectFields  ON dw_ARInvoices.Tenant = dw_CustomObjectFields.Tenant and dw_CustomObjectFields.ObjectTableName = 'ARInvoice' 
-	inner JOIN dw_ARInvoices ConsolidationInvoice  ON ConsolidationInvoice.Id = dw_ARInvoices.ConsolidationInvoiceId
+	inner JOIN @ConsolidationInvoiceTable ConsolidationInvoice   ON ConsolidationInvoice.Id = dw_ARInvoices.ConsolidationInvoiceId
 	inner JOIN NewDIM_Partners Partner ON dw_ARInvoices.PartnerId = Partner.Id 
 
 	where dw_ARInvoices.IsConsolidationInvoice = 0 and dw_ARInvoices.Id != '-1'
