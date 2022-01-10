@@ -40,6 +40,8 @@ namespace Logitude.BL.CommonDataModel.ExternalService
             List<DocumentTypeTemplatePM> tenantZeroDocumentTypeTemplatePMs = allSystemTenantZeroDocumentTypeTemplatePMs.Where(t => t.DocumentTypeId == tenantZeroDocumentTypePM.Id).ToList();
             List<DocumentTypeTemplatePM> currentTenantDocumentTypeTemplatePMs = allSystemCurrentTenantDocumentTypeTemplatePMs.Where(t => t.DocumentTypeId == currentTenantDocumentType.Id).ToList();
 
+            if (!string.IsNullOrEmpty(tenantZeroDocumentTypePM.CountryCode) && currentTenantDocumentType.CountryCode != tenantZeroDocumentTypePM.CountryCode) return;
+
             foreach (DocumentTypeTemplatePM tenantZeroDocumentTypeTemplatePM in tenantZeroDocumentTypeTemplatePMs)
             {
                 CopyTenantZeroDocumentTypeTemplateToCurrentTenant(currentTenantDocumentType, allSystemCurrentTenantDocumentTypeTemplatePMs, tenantZeroDocumentTypeTemplatePM);
