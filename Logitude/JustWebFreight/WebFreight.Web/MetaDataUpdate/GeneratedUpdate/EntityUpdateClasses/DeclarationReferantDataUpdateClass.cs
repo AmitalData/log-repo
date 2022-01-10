@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
-		public const string HashString = "a8695dbc0aa94226d7477e60fff76403";
+		public const string HashString = "1f66d80ac80007d4fd6978daac2b2ac2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4929,6 +4929,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Commodity",
 					  						ListPropertyPath =  "Commodity",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -4990,6 +4991,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LastStatusRemarks",
 					  						ListPropertyPath =  "LastStatusRemarks",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -5008,10 +5010,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastStatusRemarks",
 					  						DefaultText =  "Last Status Remarks",
-					  						FullLocalDefaultText =  "הערות לסטטוס אחרון",
+					  						FullLocalDefaultText =  "הערות סטטוס אחרון",
 					  						ListFieldLable =  "LastStatusRemarksListLable",
 					  						ListLableDefaultText =  "Last Status Remarks",
-					  						ListLocalDefaultText =  "הערות לסטטוס אחרון",
+					  						ListLocalDefaultText =  "הערות סטטוס אחרון",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
