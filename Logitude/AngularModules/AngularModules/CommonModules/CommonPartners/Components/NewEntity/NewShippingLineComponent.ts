@@ -210,6 +210,7 @@ export class NewShippingLineComponent extends BaseComponent implements OnInit {
 
     ValidateVatNumber(): string[] {
         var args = new VATValidatorArgs();
+        args.PartnerTypeId = "SL";
         args.VATNumber = this.VatNumber;
         args.CountryId = this.ShippingLinePM.CountryId;
         args.CountryName = this.ShippingLinePM.CountryName;

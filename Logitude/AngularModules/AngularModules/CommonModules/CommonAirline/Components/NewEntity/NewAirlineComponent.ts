@@ -203,6 +203,7 @@ export class NewAirlineComponent extends BaseComponent implements OnInit {
 
     ValidateVatNumber(): string[] {
         var args = new VATValidatorArgs();
+        args.PartnerTypeId ="AL";
         args.VATNumber = this.VatNumber;
         args.CountryId = this.AirlinePM.CountryId;
         args.CountryName = this.AirlinePM.CountryName;
