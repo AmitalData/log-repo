@@ -14,11 +14,14 @@ using System.Collections.Generic;
 using Logitude.CargoTracking.Data.EntityPOCOs;
 using System.Data.Entity;
 using Logitude.CargoTracking.BL.CargoTrackingServices;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace CommunicationWorkerRole
 {
     public class CargoReferencesSyncWorkerRole : WorkerEntryPoint
     {
+        const string ShipmentSearchesTableName = "CargoTrackingShipmentSearches";
         private ICargoTrackingContext cargoContext;
         public override void Run()
         {
@@ -37,7 +40,8 @@ namespace CommunicationWorkerRole
             }
             try
             {
-                SyncConnectedSepments();
+                SyncConnectedShepments();
+                Thread.Sleep(1000);
             }
             catch (Exception ex)
             {
@@ -46,41 +50,128 @@ namespace CommunicationWorkerRole
 
         }
 
-        private void SyncConnectedSepments()
+        private void SyncConnectedShepments()
         {
             SyncOrderReferencesToForwarding();
-            var forwardingHasCustom = GetAllOrderHasForwarding(ForwardingShipmentIds);
+            SyncForwardingReferencesToCustome();
         }
 
         private void SyncOrderReferencesToForwarding()
         {
-            var OrderShipmentQueue = GetTop_100_OrderReferencesQueue();
-            if (OrderShipmentQueue.Count <= 0)
+            var orderShipmentQueue = GetTop_100_OrderReferencesQueue();
+            if (orderShipmentQueue.Count <= 0)
                 return;
-            var Seatches = GetSearchesByShipmentIds(OrderShipmentQueue.Select(e=>e.ShipmentId).ToList());
+            var orderSeatches = GetSearchesByShipmentIds(orderShipmentQueue.Select(e=>e.ShipmentId).ToList());
+            var newForwardingSearches = GetNewSearches(orderShipmentQueue,orderSeatches);
+            AddSearchesByBulk(newForwardingSearches);
+            RemoveQueueRecords(orderShipmentQueue);
+        }
+
+       
+
+        private void SyncForwardingReferencesToCustome()
+        {
+            var forwardingShipmentQueue = GetTop_100_ForwardingReferencesQueue();
+            if (forwardingShipmentQueue.Count <= 0)
+                return;
+            var forwardingSeatches = GetSearchesByShipmentIds(forwardingShipmentQueue.Select(e => e.ShipmentId).ToList());
+            var newCustomeSearches = GetNewSearches(forwardingShipmentQueue, forwardingSeatches);
+            AddSearchesByBulk(newCustomeSearches);
+            RemoveQueueRecords(forwardingShipmentQueue);
 
         }
 
-        
+
+
+        private void AddSearchesByBulk(List<CargoTrackingShipmentSearch> newForwardingSearches)
+        {
+            var cargoTrackingShipmentSearchDataTable = CreateCargoTrackingShipmentSearchDataTable();
+            FillCargoTrackingShipmentSearchDataTable(cargoTrackingShipmentSearchDataTable,newForwardingSearches);
+            using (SqlBulkCopy bulkCopy = new SqlBulkCopy(cargoContext.GetConnection().ConnectionString))
+            {
+                bulkCopy.DestinationTableName = ShipmentSearchesTableName;
+                bulkCopy.WriteToServer(cargoTrackingShipmentSearchDataTable);
+            }
+        }
+
+        private void FillCargoTrackingShipmentSearchDataTable(DataTable cargoTrackingShipmentSearchDataTable, List<CargoTrackingShipmentSearch> newForwardingSearches)
+        {
+            foreach (var item in newForwardingSearches)
+            {
+                cargoTrackingShipmentSearchDataTable.Rows.Add(CreateDataRow(cargoTrackingShipmentSearchDataTable, item));
+            }
+        }
+
+        private DataRow CreateDataRow(DataTable cargoTrackingShipmentSearchDataTable, CargoTrackingShipmentSearch item)
+        {
+            var row  = cargoTrackingShipmentSearchDataTable.NewRow();
+            row["Tenant"] = item.Tenant;
+            row["SearchFields"] = item.SearchFields;
+            row["ShipmentDate"] = item.ShipmentDate;
+            row["Id"] = DBNull.Value;
+            row["ShipmentId"] = item.ShipmentId;
+            row["IsPublic"] = item.IsPublic;
+            row["ReferenceType"] = item.ReferenceType;
+            return row;
+        }
+
+        private DataTable CreateCargoTrackingShipmentSearchDataTable()
+        {
+            var datatable = new DataTable();
+            datatable.Columns.Add("Tenant",typeof(int));
+            datatable.Columns.Add("SearchFields", typeof(string));
+            datatable.Columns.Add("ShipmentDate", typeof(DateTime));
+            datatable.Columns.Add("Id", typeof(int));
+            datatable.Columns.Add("ShipmentId", typeof(string));
+            datatable.Columns.Add("IsPublic", typeof(bool));
+            datatable.Columns.Add("ReferenceType", typeof(string));
+            return datatable;
+        }
+
+        private List<CargoTrackingShipmentSearch> GetNewSearches(List<CargoReferencesSyncQueue> orderShipmentQueue, List<CargoTrackingShipmentSearch> orderSeatches)
+        {
+            var shipmentQueueDictionary = orderShipmentQueue.ToDictionary(e => e.ShipmentId, e => e);
+            var searchesGroupByShipmentId = orderSeatches.GroupBy(e => e.ShipmentId);
+            var results = new List<CargoTrackingShipmentSearch>();
+            foreach (var group in searchesGroupByShipmentId)
+            {
+                results.AddRange(CreateSearches(shipmentQueueDictionary, group));
+            }
+            return results;
+        }
+
+        private List<CargoTrackingShipmentSearch> CreateSearches(Dictionary<string, CargoReferencesSyncQueue> orderShipmentQueueDictionary, IGrouping<string, CargoTrackingShipmentSearch> group)
+        {
+            var shipmentQueueItem = orderShipmentQueueDictionary[group.Key];
+            var results = new List<CargoTrackingShipmentSearch>();
+            foreach (var item in group)
+            {
+                item.Id = 0;
+                item.ShipmentId = shipmentQueueItem.SyncTo;
+                results.Add(item);
+            }
+            return results;
+        }
 
         private List<CargoReferencesSyncQueue> GetTop_100_OrderReferencesQueue()
         {
             return cargoContext.CargoReferencesSyncQueues.Take(100).Where(e => e.ShipmentType == Codes.OrderType).ToList();
         }
+        private List<CargoReferencesSyncQueue> GetTop_100_ForwardingReferencesQueue()
+        {
+            return cargoContext.CargoReferencesSyncQueues.Take(100).Where(e => e.ShipmentType == Codes.ForwardingType).ToList();
+        }
         private List<CargoTrackingShipmentSearch> GetSearchesByShipmentIds(List<string> ShipmentIds)
         {
-            return cargoContext.CargoTrackingShipmentSearches.Where(e => ShipmentIds.Contains(e.ShipmentId)).ToList();
-        }
-        private object GetAllForwardingHasCustom(List<string> forwardingShipmentIds)
-        {
-            return cargoContext.CargoReferencesSyncQueues.Take(100).Where(e=>e.ShipmentType == Codes.ForwardingType).ToList();
+            return cargoContext.CargoTrackingShipmentSearches.AsNoTracking().Where(e => ShipmentIds.Contains(e.ShipmentId)).ToList();
         }
 
-        private List<string> GetTop100fromQueue()
+        private void RemoveQueueRecords(List<CargoReferencesSyncQueue> orderShipmentQueue)
         {
-             return cargoContext.CargoReferencesSyncQueues.Take(100).Select(e=>e.ShipmentId).ToList();
+            var ids = GetIdsAsString(orderShipmentQueue.Select(e => e.Id).ToList());
+            var query = $"delete from CargoReferencesSyncQueues where id in ({ids}) ";
+            cargoContext.GetActiveDbContext().Database.ExecuteSqlCommand(query);
         }
-
         public override bool OnStart()
         {
 
@@ -92,6 +183,18 @@ namespace CommunicationWorkerRole
             BatchServiceCode = "CargoReferencesSync";
             cargoContext = CargoTrackingContext.GetContext(0);
             return base.OnStart();
+        }
+        private string GetIdsAsString(List<int> Ids)
+        {
+            var ids = "";
+            foreach (var item in Ids)
+            {
+                ids += $"'{item}',";
+            }
+            if (Ids.Count > 0)
+                ids = ids.Substring(0, ids.Length - 1);
+            return ids;
+
         }
 
     }

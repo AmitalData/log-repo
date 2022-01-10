@@ -18,10 +18,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.QueueServices
         const string QueueTableName = "CargoReferencesSyncQueues";
         public void InsertToQueue(BulkDataPreperation bulkDataPreperation)
         {
-            InsertForwardingIdsToUpdateCustoms(bulkDataPreperation);
+            InsertShipmentIdsToUpdateConnectedShipment(bulkDataPreperation);
         }
 
-        private void InsertForwardingIdsToUpdateCustoms(BulkDataPreperation bulkDataPreperation)
+        private void InsertShipmentIdsToUpdateConnectedShipment(BulkDataPreperation bulkDataPreperation)
         {
             var shipmentsQueryType = bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.CurrentCondition;
             var shipmentsDataTabel = bulkDataPreperation.SelectedDataTable;
@@ -64,7 +64,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.QueueServices
         private void InsertAsBullk(BulkDataPreperation bulkDataPreperation, DataTable referencesDateTable)
         {
             using (SqlBulkCopy bulkCopy = new SqlBulkCopy(
-                    bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.DestinationConnectionString, SqlBulkCopyOptions.KeepIdentity))
+                    bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.DestinationConnectionString))
             {
                 bulkCopy.DestinationTableName = QueueTableName;
                 bulkCopy.WriteToServer(referencesDateTable);
@@ -74,6 +74,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.QueueServices
         private DataRow CreateQueueRowFromForwardingRecord(DataTable referencesDateTable, DataRow shipmentRow)
         {
             var row = referencesDateTable.NewRow();
+            row["Id"] = DBNull.Value;
             row["Tenant"] = shipmentRow["Tenant"];
             row["ShipmentId"] = shipmentRow["Id"];
             row["SyncTo"] = shipmentRow["CustomFileId"];
@@ -83,6 +84,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.QueueServices
         private DataRow CreateQueueRowFromOrderRecord(DataTable referencesDateTable, DataRow shipmentRow)
         {
             var row = referencesDateTable.NewRow();
+            row["Id"] = DBNull.Value;
             row["Tenant"] = shipmentRow["Tenant"];
             row["ShipmentId"] = shipmentRow["Id"]; 
             row["SyncTo"] = shipmentRow["ShipmentId"]; 
@@ -93,9 +95,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.QueueServices
         private DataTable GetReferencesDateTable()
         {
             var table = new DataTable();
+            table.Columns.Add("Id", typeof(int));
             table.Columns.Add("ShipmentId", typeof(string));
             table.Columns.Add("ShipmentType", typeof(string));
-            table.Columns.Add("Tenant", typeof(string));
+            table.Columns.Add("Tenant", typeof(int));
+            table.Columns.Add("SyncTo", typeof(string));
             return table;
         }
     }
