@@ -865,6 +865,7 @@ namespace MeatadataGeneratorTool.Helpers
             DataContractViewModel DataContract = new DataContractViewModel(table, false);
             DataContract.DCName = GetAttributeStringValue(fieldNode.Attributes["Name"]);
             DataContract.DCVersion = GetAttributeStringValue(fieldNode.Attributes["Version"]);
+            DataContract.IncludeTenant0Data = GetAttributeBoolValue(fieldNode.Attributes["IncludeTenant0Data"]);
             DataContract.ComputingPartnerName = GetAttributeStringValue(fieldNode.Attributes["ComputingPartnerName"]);
             foreach (XmlNode fNode in fieldNode.ChildNodes)
             {

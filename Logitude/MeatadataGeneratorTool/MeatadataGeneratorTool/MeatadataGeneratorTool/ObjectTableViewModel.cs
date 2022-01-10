@@ -2007,7 +2007,7 @@ namespace MeatadataGeneratorTool
 
             DCWindow = new Window();
             DCWindow.Width = 500;
-            DCWindow.Height = 185;
+            DCWindow.Height = 235;
             DCWindow.Content = DataContractControl;
             DCWindow.Show();
         }

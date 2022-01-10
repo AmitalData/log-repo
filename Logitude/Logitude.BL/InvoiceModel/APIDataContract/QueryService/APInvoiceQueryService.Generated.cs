@@ -10,6 +10,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -223,11 +225,13 @@ using Simplog.Data.InvoiceModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-										   
-					if(temp == null)
+					
+					
+			  	   if(temp == null)
 					{   
 					    throw new ApplicationException("APInvoice with Id " + MyEntity.Id + " doesn't exist");
 					} 
+				 
 										 
 					if(IsUpdate == true)
 					{
@@ -781,6 +785,8 @@ using Simplog.Data.InvoiceModel;
                 throw ex;
             } 
         }
-		 
+
+
+						   
    }
 }

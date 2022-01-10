@@ -10,6 +10,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -146,11 +148,20 @@ using Simplog.Data.CommonDataModel;
 						
 					}
 					
-					   					   
+					
 					if(temp == null)
+					{             
+					
+				    	temp =  GetPortFromTenantZero( MyEntity, Tenant)   ;
+								
+					}
+				
+					
+			  	   if(temp == null)
 					{   
 					    throw new ApplicationException("Port with Code " + MyEntity.Code + " doesn't exist");
 					} 
+				 
 					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -250,6 +261,38 @@ using Simplog.Data.CommonDataModel;
                 throw ex;
             } 
         }
-		 
+
+
+	  public PortPM GetPortFromTenantZero(Port MyEntity,int Tenant)
+        {
+		    try
+            {
+					var temp = new PortPM();
+					PortService service = new PortService(context, Tenant);
+					
+					
+					if (!string.IsNullOrEmpty(MyEntity.Code))
+					{
+						temp = query.GetSinglePMByCombinedCode(MyEntity.Code, 0);
+					}
+
+					
+					if (temp != null)
+					{
+				    	temp.Tenant = Tenant;
+						service.Create(temp);
+					}
+
+
+		return temp;	
+		    }
+       catch (Exception ex)
+            {
+
+                throw ex;
+            } 
+
+		 }
+										   
    }
 }

@@ -10,6 +10,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -127,11 +129,12 @@ using Simplog.Data.CommonDataModel;
 						
 					}
 					
-					   					   
-					if(temp == null)
+					
+			  	   if(temp == null)
 					{   
 					    throw new ApplicationException("Incoterm with Code " + MyEntity.Code + " doesn't exist");
 					} 
+				 
 					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -191,6 +194,8 @@ using Simplog.Data.CommonDataModel;
                 throw ex;
             } 
         }
-		 
+
+
+						   
    }
 }

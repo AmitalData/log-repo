@@ -493,4 +493,4 @@ export class ShipmentList {
 		ShippingAgent: string;
 		PrivateLabelAgentName: string;
 	
-}
+}
