@@ -49,7 +49,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("IsChange")]
 	    public bool IsChange { get; set; }
         [Column("IsMultiCustomers")]
-	    public bool IsMultiCustomers { get; set; }
+	    public string IsMultiCustomers { get; set; }
         [Column("IsMultiExportFiles")]
 	    public bool IsMultiExportFiles { get; set; }
     }

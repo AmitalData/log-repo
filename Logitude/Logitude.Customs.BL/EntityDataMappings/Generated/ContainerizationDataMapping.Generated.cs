@@ -55,7 +55,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         HataraStatusName, 
 	         ConnectedDeclarations, 
 	         NotConnectedDeclarations, 
-	         IsChange,
+	         IsChange, 
+	         IsMultiCustomers,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -107,6 +108,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsChange))
             {
 				entityPOCO.IsChange = entityPM.IsChange;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMultiCustomers))
+            {
+				entityPOCO.IsMultiCustomers = entityPM.IsMultiCustomers;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -165,6 +171,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsChange = entityPOCO.IsChange;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsMultiCustomers))
+            {
+					entityPM.IsMultiCustomers = entityPOCO.IsMultiCustomers;
+            }
+
 		}
 
 		public void PMToOldPM(ContainerizationPM entityPM, ContainerizationPM oldEntityPM)
@@ -216,6 +227,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.IsChange = entityPM.IsChange;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMultiCustomers))
+            {
+                oldEntityPM.IsMultiCustomers = entityPM.IsMultiCustomers;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(ContainerizationPM entityPM)
@@ -228,6 +244,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.IsMultiCustomers)) //T4 find type == nText 
+            {
+                entityPM.IsMultiCustomers = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.IsMultiCustomers));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

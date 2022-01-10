@@ -56,6 +56,10 @@ import {CustomsShipperFiltersMenuComponent} from './Components/FiltersMenu/Custo
 import { GLAccountSelectComponent } from './Components/AccountingTab/GLAccountSelectWindow/GLAccountSelectComponent';
 import { NewHorseComponent } from './Components/Maintenance/Horse/NewHorseComponent';
 import { HorseGeneralTabComponent } from './Components/Maintenance/Horse/HorseGeneralTabComponent';
+import { EnglishNameListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/EnglishNameListHeaderTemplate';
+import { CityNameListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/CityNameListHeaderTemplate';
+import { CodeListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/CodeListHeaderTemplate';
+import { StartWorkingListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/StartWorkingListHeaderTemplate';
 
 export const Components =
     [
@@ -117,6 +121,10 @@ export const Components =
         TransmissionLogAuditTabComponent,
         NewHorseComponent,
         HorseGeneralTabComponent,
+        CodeListHeaderTemplate,
+        CityNameListHeaderTemplate,
+        EnglishNameListHeaderTemplate,
+        StartWorkingListHeaderTemplate,
     ];
 
 export class ModuleDeclarations {
@@ -185,6 +193,12 @@ export class ModuleDeclarations {
             case "TransmissionLogAuditTabComponent": { myResult = TransmissionLogAuditTabComponent; break; }
             case "NewHorseComponent": { myResult = NewHorseComponent; break; }
             case "HorseGeneralTabComponent": { myResult = HorseGeneralTabComponent; break; }
+            case "CodeListHeaderTemplate": { myResult = CodeListHeaderTemplate; break; }
+            case "CityNameListHeaderTemplate": { myResult = CityNameListHeaderTemplate; break; }
+            case "EnglishNameListHeaderTemplate": { myResult = EnglishNameListHeaderTemplate; break; }
+            case "StartWorkingListHeaderTemplate": { myResult = StartWorkingListHeaderTemplate; break; }
+
+
         }
 
         return myResult;

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ContainerizationUpdateClass
    {  		
-		public const string HashString = "43abc98e7aa4c2c22607c51eca94ac0b";
+		public const string HashString = "41c2f9818cb653e6153fe80f040317e6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -466,9 +466,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "HataraStatus",
 					  						ObjectTableName =  "Customs.Containerization",
 					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Customs.DeclarationStatusType",
+					  						LookUpTableName =  "Customs.ContainerizationHataraStatus",
 					  						MinLength =  0,
-					  						MaxLength =  2,
+					  						MaxLength =  3,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -476,7 +476,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  2,
+					  						SystemMaxLength =  3,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
@@ -1192,7 +1192,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "IsMultiCustomers",
 					  						ObjectTableName =  "Customs.Containerization",
-					  						FieldsDataType =  "Boolean",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
@@ -1228,6 +1228,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsMultiCustomers",
 					  						DefaultText =  "Is Multi Customers",
+					  						FullLocalDefaultText =  "לקוח",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1283,7 +1284,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsMultiExportFiles",
-					  						DefaultText =  "Is Multi Customers",
+					  						DefaultText =  "Is Multi Export Files",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1443,7 +1444,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
       
              ScreenField CustomsContainerizationCustomsContainerizationHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ContainerizationCustomsContainerizationHeaderScreenScreen0.Id,ScreenCode = ContainerizationCustomsContainerizationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Containerization.ContainerizationNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField CustomsContainerizationCustomsContainerizationHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ContainerizationCustomsContainerizationHeaderScreenScreen0.Id,ScreenCode = ContainerizationCustomsContainerizationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Containerization.ImporterName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomsContainerizationCustomsContainerizationHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ContainerizationCustomsContainerizationHeaderScreenScreen0.Id,ScreenCode = ContainerizationCustomsContainerizationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Containerization.IsMultiCustomers", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField CustomsContainerizationCustomsContainerizationHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ContainerizationCustomsContainerizationHeaderScreenScreen0.Id,ScreenCode = ContainerizationCustomsContainerizationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Containerization.ContainerizationDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          

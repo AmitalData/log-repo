@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -39,11 +40,11 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.Tenant == tenant && exportFiles.Contains(a.Id)
                     select a.ExportFile).Distinct().ToList();
         }
-        public List<string> GetContainerizationImporters(int tenant, string importers)
+        public List<Card> GetContainerizationImporters(int tenant, string importers)
         {
             return (from a in context.Declarations
                     where a.Tenant == tenant && importers.Contains(a.Id)
-                    select a.CustomerId).Distinct().ToList();
+                    select a.CustomerCard).Distinct().ToList();
         }
     }
 

@@ -388,6 +388,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string isMultiCustomers ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string IsMultiCustomers  
+	   {
+	    
+	     get
+		{
+		   return isMultiCustomers;
+		 }
+		 set
+		 {
+		   if(isMultiCustomers != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsMultiCustomers",OldValue=isMultiCustomers,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   isMultiCustomers=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
