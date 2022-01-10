@@ -23,7 +23,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                   PeekWay = new NG_9100_MSG_OutgoingMessageRequestPeekWay()
                   {
                       Peek_Way = 3,
-                      Take = 99,
+                      Take = 100,
                   },
             };
 
