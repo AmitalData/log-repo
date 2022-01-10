@@ -290,7 +290,20 @@ namespace Logitude.CustomsMessaging.RequestServices
             LogMessagingUtil.Instance.AppendLine("declaration retrieve from db");
 
              req.Response = new UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference.Response();
+
             req.Response.Declaration =  Getdeclaration(_DeclarationPM , _DeclarationPMOrg);
+            this.MyRequestSheetParam = new RequestSheetParam();
+            this.MyRequestSheetParam.CustomFileNo = _DeclarationPMOrg.CustomFileNo;
+            this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+            this.MyRequestSheetParam.EntityId1 = _DeclarationPMOrg.Id;
+            if (_DeclarationPM.AmedmentType == "2")
+            {
+                this.MyRequestSheetParam.RequestDescription = "סגירת הצהרת יצוא" + _DeclarationPMOrg.DeclarationNumber + " " + _DeclarationPMOrg.VersionId;
+            }
+            else
+            {
+                this.MyRequestSheetParam.RequestDescription = "תיקון הצהרת יצוא" + _DeclarationPMOrg.DeclarationNumber + " " + _DeclarationPMOrg.VersionId;
+            }
 
             req.Response.FunctionalReferenceID = new ResponseFunctionalReferenceIDType { Value = string.IsNullOrEmpty(_DeclarationPM.AmendmentRequestNumber) ? GetNextAmendmentRequestNumber() : _DeclarationPM.AmendmentRequestNumber
             };
@@ -819,11 +832,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private DeclarationDMExtensions GetDMExtensions(DeclarationPM declarationPM)
         {
-            this.MyRequestSheetParam = new RequestSheetParam();
-            this.MyRequestSheetParam.CustomFileNo = _DeclarationPMOrg.CustomFileNo;
-            this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-            this.MyRequestSheetParam.EntityId1 = declarationPM.Id;
-            this.MyRequestSheetParam.RequestDescription = "תיקון הצהרת יצוא" + declarationPM.DeclarationNumber + " " + declarationPM.VersionId;
+           
 
             var DMExtensions = new DeclarationDMExtensions();
             DMExtensions.AgentFileReferenceID = SetIDTypeValue<AgentFileReferenceIDType>(_DeclarationPMOrg.CustomFileNo); //new AgentFileReferenceIDType() { Value = declarationPM.CustomFileNo };
