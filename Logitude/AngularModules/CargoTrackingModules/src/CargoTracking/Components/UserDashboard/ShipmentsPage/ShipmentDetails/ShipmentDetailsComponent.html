@@ -410,10 +410,10 @@ cargoTrackingShipmentPM.ArrivalDate |
         <div class="title">Incoterms</div>
         <div class="description">{{ShipmentPM?.IncotermName}}</div>
     </div>-->
-                <div>
+                <div *ngIf="(cargoTrackingShipmentPM.EntityType != 'O' && cargoTrackingShipmentPM.PackagesQuantity) || (cargoTrackingShipmentPM.EntityType == 'O' && cargoTrackingShipmentPM.ShipmentOrderQuantity)">
                     <div class="title">quantity</div>
-                    <div *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" class="description">{{ cargoTrackingShipmentPM.NumberOfPackages || 0}} Units</div>
-                    <div *ngIf="cargoTrackingShipmentPM.EntityType == 'O'" class="description">{{ cargoTrackingShipmentPM.ShipmentOrderQuantity || 0}} Units</div>
+                    <div *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" class="description">{{ cargoTrackingShipmentPM.PackagesQuantity}} Units</div>
+                    <div *ngIf="cargoTrackingShipmentPM.EntityType == 'O'" class="description">{{ cargoTrackingShipmentPM.ShipmentOrderQuantity}} Units</div>
 
                 </div>
                 <div>
@@ -473,7 +473,7 @@ cargoTrackingShipmentPM.ArrivalDate |
         <div body>
 
             <div class="data-cards" *ngIf="cargoTrackingShipmentPM">
-                <div  *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" class="hide-mobile" style="width:170px">
+                <div *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" class="hide-mobile" style="width:170px">
 
                     <div class="title" *ngIf="cargoTrackingShipmentPM.TransportModeId == 'A'">PACKAGE TYPE</div>
                     <div class="title" *ngIf="cargoTrackingShipmentPM.TransportModeId != 'A'">CONTAINER TYPE</div>
@@ -492,11 +492,10 @@ cargoTrackingShipmentPM.ArrivalDate |
                     <div class="title" *ngIf="cargoTrackingShipmentPM.TransportModeId == 'A'">Shipment Type</div>
                     <div class="description">{{cargoTrackingShipmentPM?.ShipmentTypeName}}</div>
                 </div>
-                <div>
+                <div *ngIf="cargoTrackingShipmentPM.PackagesQuantity || cargoTrackingShipmentPM.ShipmentOrderQuantity">
                     <div class="title">quantity</div>
-                    <div *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" class="description">{{cargoTrackingShipmentPM?.NumberOfPackages || 0}} Units</div>
-                    <div *ngIf="cargoTrackingShipmentPM.EntityType == 'O'" class="description">{{ cargoTrackingShipmentPM.ShipmentOrderQuantity || 0}} Units</div>
-
+                    <div *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" class="description">{{cargoTrackingShipmentPM?.PackagesQuantity}} Units</div>
+                    <div *ngIf="cargoTrackingShipmentPM.EntityType == 'O'" class="description">{{ cargoTrackingShipmentPM.ShipmentOrderQuantity}} Units</div>
                 </div>
                 <div>
                     <div class="title">weight</div>
@@ -558,7 +557,7 @@ cargoTrackingShipmentPM.ArrivalDate |
                     </div>
                 </div>
                 <div *ngIf=" cargoTrackingShipmentPM.EntityType == 'O'  && cargoTrackingShipmentPM?.House !=null && cargoTrackingShipmentPM?.House.length > 0">
-                            <div class="title">house </div>
+                    <div class="title">house </div>
                     <div class="description">
                         {{cargoTrackingShipmentPM?.House}}
                     </div>
