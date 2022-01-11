@@ -7,7 +7,7 @@
   <Column
     Name="Code"
     Type="varchar"
-    Size="50">
+    Size="40">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -39,5 +39,11 @@
     Size="200">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="UseRabbitMQ"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
 </Table>
