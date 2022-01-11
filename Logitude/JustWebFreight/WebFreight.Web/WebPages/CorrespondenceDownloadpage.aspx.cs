@@ -79,8 +79,11 @@ namespace WebFreight.Web.WebPages
 
                     Document myDoc = up.GetFileExtensionBySecurityId(securityId, tenant);
                     documentExtension = myDoc.Extension;
-                    filename = filestrings[3] != null ? filestrings[3]: myDoc.FileName;
-
+filename = myDoc.FileName;
+                    if (filestrings.Length >= 4)
+                    {
+                        filename = filestrings[3] != null ? filestrings[3] : myDoc.FileName;
+                    }
                     if (!string.IsNullOrEmpty(documentExtension))
                     {
                         _DatainByte = up.DownloadFile(myDoc.Id, documentExtension, "", myDoc.Tenant);
