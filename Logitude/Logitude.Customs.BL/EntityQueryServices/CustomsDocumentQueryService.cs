@@ -14,6 +14,7 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Customs.Data.Repsitories;
 using Simplog.Server.Infrastructure;
+using Unifreight.Data.AmitalModel.Repsitories;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -262,11 +263,20 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 if (type.ObjectTableId == objectTable.Id)
                 {
                     string DocumentsFilingId = null;
-                    DocumentDeclarationId =
-     documentRepository.GetDocumentIdByDocumentType(type.Id, objectTable.Id, declarationId, tenant,out DocumentsFilingId);
+                    bool checkDeleted = true;
+                    if (!checkDeleted)
+                    {
+                        DocumentDeclarationId =
+         documentRepository.GetDocumentIdByDocumentType(type.Id, objectTable.Id, declarationId, tenant, out DocumentsFilingId);
 
+                    }
+                    else
+                    {
+                        var res = GetDocumentIdByDocumentTypeNotDeleted(declarationId, tenant, type, objectTable, documentRepository);
+                        DocumentsFilingId = res.DocumentsFilingId;
+                        DocumentDeclarationId = res.DocumentId;
 
-
+                    }
                     DocumentsMetaDataTypeRepository TypesRepo = new DocumentsMetaDataTypeRepository(tenant);
                     var pocoMDType = TypesRepo.GetSingleDocumentsMetaDataTypeByCode("VER", tenant);
                     if (pocoMDType != null)
@@ -286,6 +296,35 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return DocumentDeclarationId;
         }
 
+        private static ResultByDocumentType GetDocumentIdByDocumentTypeNotDeleted(string declarationId, int tenant, DocumentType type, ObjectTable objectTable, DocumentsFilingRepository documentRepository)
+        {
+            string DocumentsFilingId;
+            string documentTypeId = type.Id;
+            var dtoList = documentRepository.GetByEntity(objectTable.Id, declarationId, tenant);
+            dtoList = dtoList.Where(a => a.DocumentTypeId == documentTypeId).ToList();
+            var list = dtoList.Select(r => r.Id).ToList();
+            var gDMFILINGRepository = new GDMFILINGRepository(tenant);
+            var filingNotDeletedList = gDMFILINGRepository.GetNotDeleted(list);
+            var filingNotDeleted=filingNotDeletedList.FirstOrDefault();
+            if (filingNotDeleted==null)
+            {
+                return null;
+            }
+            var rec4DocumentTypeId=dtoList.FirstOrDefault(r => r.Id == filingNotDeleted.COMID);
+            if (rec4DocumentTypeId == null) return null;
+            DocumentsFilingId = filingNotDeleted.COMID;
+            return new ResultByDocumentType()
+            {
+                DocumentId= rec4DocumentTypeId.DocumentId,
+                DocumentsFilingId = DocumentsFilingId
+            };
+        }
+        public class ResultByDocumentType
+        {
+            public string DocumentsFilingId { get; set; }
+            public string DocumentId { get; set; }
+            
+        }
         public List<CustomsDocumentPM> GetDeclarationDocumentWithConnectNotValid(string parentEntityId, string parentEntityCode, int tenant)
         {
             using (var s = (this.context as DbContextBase).CreateLogger()) 
