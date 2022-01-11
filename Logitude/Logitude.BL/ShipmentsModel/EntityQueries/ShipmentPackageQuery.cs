@@ -365,20 +365,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private void MapTheLastStatusName(ShipmentPackagePM package, IWebFreightContext webFreightContext)
         {
-            if (string.IsNullOrEmpty(package.LastStatusCode))
-            {
-                return;
-            }
             var inttra = "INT";
             var oceanInsights = "OIN";
-            if (package.ContainerStatusSourceCode == inttra)
+            if (package.ContainerStatusSourceCode == inttra && package.LastStatusCode != null)
             {
                 package.LastStatusName = (from d in repository.context.INTTRAStatuses
                                           where d.Code == package.LastStatusCode
                                           select d.Name).FirstOrDefault();
 
             }
-            else if (package.ContainerStatusSourceCode == oceanInsights)
+            else if (package.ContainerStatusSourceCode == oceanInsights && package.ContainerEntityId != null)
             {
                 var statusId = (from d in repository.context.Containers
                                 where d.Id == package.ContainerEntityId
