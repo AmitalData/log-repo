@@ -111,6 +111,10 @@ namespace External_API_Load_Testing
                         var resultData = response.Content.ReadAsStringAsync().Result;
                         CreatedShipment.Text = resultData;
                     }
+                    else
+                    {
+                        CreatedShipment.Text = response.Content.ReadAsStringAsync().Result;
+                    }
                 }
             }
             catch (Exception ex)
@@ -123,7 +127,7 @@ namespace External_API_Load_Testing
 
         private async Task PeriodByMinutes(int index)
         {
-            int msToMin = 6000; 
+            int msToMin = 1000; 
             if (index != 0)
             {
                 await Task.Delay((int.Parse(PeriodMin.Text)) * msToMin);

@@ -55,12 +55,14 @@ namespace External_API_Load_Testing
             this.NumberOfShipments.Name = "NumberOfShipments";
             this.NumberOfShipments.Size = new System.Drawing.Size(238, 27);
             this.NumberOfShipments.TabIndex = 0;
+            this.NumberOfShipments.Text = "1";
             // 
             // JsonText
             // 
             this.JsonText.Location = new System.Drawing.Point(33, 323);
             this.JsonText.Multiline = true;
             this.JsonText.Name = "JsonText";
+            this.JsonText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.JsonText.Size = new System.Drawing.Size(731, 200);
             this.JsonText.TabIndex = 2;
             // 
@@ -80,9 +82,9 @@ namespace External_API_Load_Testing
             this.label2.Font = new System.Drawing.Font("Tahoma", 9F);
             this.label2.Location = new System.Drawing.Point(356, 205);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(141, 22);
+            this.label2.Size = new System.Drawing.Size(104, 22);
             this.label2.TabIndex = 4;
-            this.label2.Text = "Period (minutes)";
+            this.label2.Text = "Period (sec)";
             // 
             // CreatedShipment
             // 
@@ -107,6 +109,7 @@ namespace External_API_Load_Testing
             this.PeriodMin.Name = "PeriodMin";
             this.PeriodMin.Size = new System.Drawing.Size(238, 27);
             this.PeriodMin.TabIndex = 8;
+            this.PeriodMin.Text = "0";
             // 
             // label5
             // 
@@ -200,7 +203,7 @@ namespace External_API_Load_Testing
             // 
             this.createErrorMsg.AutoSize = true;
             this.createErrorMsg.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.createErrorMsg.Location = new System.Drawing.Point(605, 584);
+            this.createErrorMsg.Location = new System.Drawing.Point(29, 526);
             this.createErrorMsg.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.createErrorMsg.Name = "createErrorMsg";
             this.createErrorMsg.Size = new System.Drawing.Size(0, 20);
@@ -220,7 +223,7 @@ namespace External_API_Load_Testing
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(800, 946);
+            this.ClientSize = new System.Drawing.Size(800, 840);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.createErrorMsg);
             this.Controls.Add(this.create);
