@@ -51,7 +51,7 @@
 <div *ngIf="isLoading"> <br> Loading...</div>
 
 <!-- Shipment Details -->
-<div *ngIf="!isLoading && !noShipmentFound" class="shipment-details-container" [class.auto-overflow]="isSharedLink" [class.special-padding]="isSharedLink">
+<div *ngIf="!isLoading && !noShipmentFound && !(isDeclaration && !DeclarationApprovalEnabled)" class="shipment-details-container" [class.auto-overflow]="isSharedLink" [class.special-padding]="isSharedLink">
 
     <div class="back-to-shipments" *ngIf="!isSharedLink" style="padding: 16px 76px 0px 90px;background: RGB(242,244,247);">
         <a style="color: var(--MainColor);" href="javascript:;" (click)="BackLinkClicked()">Back to shipments</a>
@@ -621,7 +621,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
 
     </panel>
 
-    <panel  *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" style="order: 5;" [Title]="'Customs Data'" [Name]="'CustomsDataPanel'" [HaveDetailsSection]="true"
+    <panel  *ngIf="cargoTrackingShipmentPM.EntityType != 'O' && DeclarationApprovalEnabled" style="order: 5;" [Title]="'Customs Data'" [Name]="'CustomsDataPanel'" [HaveDetailsSection]="true"
            [AlwaysExpanded]="true" [ShowWhitePanelOnMobile]="true" [DetailsTitle]="'Tax Details'">
 
         <div body>
@@ -864,7 +864,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
     </panel>
 
 
-    <panel *ngIf="cargoTrackingShipmentPM.EntityType != 'O' " style="order: 5;" [Title]="'Documents'" [Name]="'DocumentsPanel'" [ShowWhitePanelOnMobile]="cargoTrackingShipmentPM.DocumentsFilings?.length === 0">
+    <panel *ngIf="cargoTrackingShipmentPM.EntityType != 'O' && DeclarationApprovalEnabled " style="order: 5;" [Title]="'Documents'" [Name]="'DocumentsPanel'" [ShowWhitePanelOnMobile]="cargoTrackingShipmentPM.DocumentsFilings?.length === 0">
 
         <div body>
             <div  class="no-data-available" *ngIf="cargoTrackingShipmentPM.DocumentsFilings && cargoTrackingShipmentPM.DocumentsFilings.length == 0 " style="margin-top:10px">No Documents defined for this shipment</div>
