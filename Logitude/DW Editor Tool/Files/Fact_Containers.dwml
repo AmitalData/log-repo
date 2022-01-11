@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<entity Id="&quot;0f109a5c-214b-4e5e-9add-7d5a959e00eb&quot;" Code="&quot;Fact_Containers&quot;" Name="&quot;Fact_Containers&quot;" TypeCode="&quot;Fact&quot;" IsClosed="false" DataViewName="&quot;factContainers&quot;" HasPivotColumn="false" RecordType="&quot;Containers&quot;" DisplayName="&quot;Containers&quot;" ObjectTableName="&quot;Container&quot;" HasCustomFields="false" MaxNumberOfCustomFields="0">
+  <fields />
+</entity>
