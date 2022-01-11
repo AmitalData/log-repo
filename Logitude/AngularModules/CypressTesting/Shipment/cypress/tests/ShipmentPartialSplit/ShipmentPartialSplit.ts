@@ -12,7 +12,7 @@ import * as Assists from "../../../../Base/cypress/assists/Assists";
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
 let FirstShipmentID: string;
-let packageDetailsList, partialSplitDetails, expectedPackagesDetailList
+let packageDetailsList, partialSplitDetails
 
 //#region  Create Direct Shipment
 Given("the user logged in and navigates to shipments workspace", () => {
@@ -71,7 +71,7 @@ Then("the direct shipment should split into two shipment with packages with the 
 
     //#region Validate for new shipment 
     Actions.ValidateShipmentNumber(shipmentNumber)
-    Actions.ValidatePackageDetails(ShipmentSelectors.ShipmentPackagesTab, expectedPackagesDetailList[0], ShipmentSelectors.Shipment_GrossWeight, true)
+    Actions.ValidatePackageDetails(ShipmentSelectors.ShipmentPackagesTab, expectedPackagesDetailList[0], ShipmentSelectors.ShipmentGrossWeight, true)
     Actions.ValidateShipmentEventActions(ShipmentSelectors.ShipmentEventTab, "Split From Shipment: " + shipmentNumber)
     //#endregion
 
@@ -82,5 +82,3 @@ Then("the direct shipment should split into two shipment with packages with the 
 
 });
 //#endregion
-
-
