@@ -172,6 +172,11 @@ export class AddEditCourierPendingReasonComponent
         this.EntityPM.Inactive = newValue;
     }
 
+    public get MamanSuspendedCode() { return this.EntityPM.MamanSuspendedCode; }
+    public set MamanSuspendedCode(newValue: string) {
+        this.EntityPM.MamanSuspendedCode = newValue;
+    }
+
     public get ErrorPlace() { return this.EntityPM.ErrorPlace; }
     public set ErrorPlace(newValue: string) {
         this.EntityPM.ErrorPlace = newValue;
