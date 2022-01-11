@@ -91,7 +91,6 @@ export class ShipmentSelectors extends RegexSelectors {
   //#endregion
 
   //#region General tab
-  public static readonly ShipmentGrossWeight = '#Shipment_GrossWeightInKG';
   public static readonly ShipmentMoveType = '#Shipment_MoveTypeId';
   public static readonly ShipmentValueOfGoods = '#Shipment_ValueOfGoods';
   //#endregion
