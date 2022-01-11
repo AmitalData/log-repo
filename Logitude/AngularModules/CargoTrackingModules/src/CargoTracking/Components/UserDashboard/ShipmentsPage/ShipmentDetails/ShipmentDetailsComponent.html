@@ -32,8 +32,14 @@
 </div>
 
 
+<!-- No Supported For Declaration -->
+<div class="no-result-div" *ngIf="!isLoading && isDeclaration && !DeclarationApprovalEnabled">
+    <img src="./assets/images/misc/No results@1x.png" alt=" " />
+    <div class="title" style="color: rgb(224, 36, 83);">Declaration approval is not supported yet</div>
+</div>
+
 <!-- No Shipments found -->
-<div class="no-result-div" *ngIf="!isLoading && noShipmentFound">
+<div class="no-result-div" *ngIf="!isLoading && noShipmentFound && !(isDeclaration && !DeclarationApprovalEnabled)">
     <img src="./assets/images/misc/No results@1x.png" alt=" " />
     <div class="title">No Shipment Found</div>
     <p *ngIf="isSharedLink">
@@ -45,7 +51,7 @@
 <div *ngIf="isLoading"> <br> Loading...</div>
 
 <!-- Shipment Details -->
-<div *ngIf="!isLoading && !noShipmentFound" class="shipment-details-container" [class.auto-overflow]="isSharedLink" [class.special-padding]="isSharedLink">
+<div *ngIf="!isLoading && !noShipmentFound && !(isDeclaration && !DeclarationApprovalEnabled)" class="shipment-details-container" [class.auto-overflow]="isSharedLink" [class.special-padding]="isSharedLink">
 
     <div class="back-to-shipments" *ngIf="!isSharedLink" style="padding: 16px 76px 0px 90px;background: RGB(242,244,247);">
         <a style="color: var(--MainColor);" href="javascript:;" (click)="BackLinkClicked()">Back to shipments</a>
@@ -182,7 +188,7 @@
     </div>
 
     <!-- Declaration Approval -->
-    <panel *ngIf="isDeclaration && cargoTrackingShipmentPM.ActivatedForDeclarationApprove" [ShowWhitePanelOnMobile]="true">
+    <panel *ngIf="isDeclaration && DeclarationApprovalEnabled" [ShowWhitePanelOnMobile]="true">
 
         <div body class="declaration-approval">
 
@@ -198,7 +204,7 @@
 
 
     <!-- Milestones Slider -->
-    <div *ngIf="!(isDeclaration && cargoTrackingShipmentPM.ActivatedForDeclarationApprove)" style="order: 2;" #SliderWrapper class="slider-wrapper" [ngClass]="NoMilstonesFound ? 'slider-wrapper no-milestones': 'slider-wrapper'"
+    <div *ngIf="!isDeclaration" style="order: 2;" #SliderWrapper class="slider-wrapper" [ngClass]="NoMilstonesFound ? 'slider-wrapper no-milestones': 'slider-wrapper'"
          (wheel)="onMousewheelOnMilestonesSlider($event)" (pan)="logPan($event)">
 
         <!-- Milestones -->
@@ -272,19 +278,19 @@
     <!-- Panels Navigator -->
     <div style="order: 1;" class="PanelsNavigator">
         <div class="panels-wrapper">
-            <button *ngIf="!(isDeclaration && cargoTrackingShipmentPM.ActivatedForDeclarationApprove)"  [class.active]="selectedNavButton=='Overview'"
+            <button *ngIf="!isDeclaration"  [class.active]="selectedNavButton=='Overview'"
                     (click)="PanelsNavigatorClicked('Overview')">
                 <span class="hide-mobile">{{OverviewPanelTitle }}</span>
                 <span class="mobile-only">Overview</span>
             </button>
-            <button  *ngIf="!(isDeclaration && cargoTrackingShipmentPM.ActivatedForDeclarationApprove)" [class.active]="selectedNavButton=='Cargo'" (click)="PanelsNavigatorClicked('Cargo')">
+            <button  *ngIf="!isDeclaration" [class.active]="selectedNavButton=='Cargo'" (click)="PanelsNavigatorClicked('Cargo')">
                 Cargo
             </button>
             <button *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" [class.active]="selectedNavButton=='CustomsDataPanel'"
                     (click)="PanelsNavigatorClicked('CustomsDataPanel')">
                 Customs
             </button>
-            <button *ngIf="!(isDeclaration && cargoTrackingShipmentPM.ActivatedForDeclarationApprove)"  [class.active]="selectedNavButton=='RoutingPanel'"
+            <button *ngIf="!isDeclaration"  [class.active]="selectedNavButton=='RoutingPanel'"
                     (click)="PanelsNavigatorClicked('RoutingPanel')">
                 Routing
             </button>
@@ -296,7 +302,7 @@
                     (click)="PanelsNavigatorClicked('ConnectedOrdersPanel')">
                     Connected SHO's
             </button>
-            <button  *ngIf="!(isDeclaration && cargoTrackingShipmentPM.ActivatedForDeclarationApprove)" [class.active]="selectedNavButton=='PartnersPanel'"
+            <button  *ngIf="!isDeclaration" [class.active]="selectedNavButton=='PartnersPanel'"
                     (click)="PanelsNavigatorClicked('PartnersPanel')">
                 Partners
             </button>
@@ -305,7 +311,7 @@
 
 
     <!-- PANELS -->
-    <panel *ngIf="!(isDeclaration && cargoTrackingShipmentPM.ActivatedForDeclarationApprove)" style="order: 3;margin-top: 10px" [Title]="OverviewPanelTitle" [ShowWhitePanelOnMobile]="true" [Name]="'Overview'">
+    <panel *ngIf="!isDeclaration" style="order: 3;margin-top: 10px" [Title]="OverviewPanelTitle" [ShowWhitePanelOnMobile]="true" [Name]="'Overview'">
 
         <div body>
             <div class="data-cards" *ngIf="cargoTrackingShipmentPM" id="overview-data-cards">
@@ -468,7 +474,7 @@ cargoTrackingShipmentPM.ArrivalDate |
 
     </panel>
 
-    <panel *ngIf="!(isDeclaration && cargoTrackingShipmentPM.ActivatedForDeclarationApprove)" style="order: 4;" [Title]="'Cargo Information'" [Name]="'Cargo'" [HaveDetailsSection]=" cargoTrackingShipmentPM.EntityType != 'O'"
+    <panel *ngIf="!isDeclaration" style="order: 4;" [Title]="'Cargo Information'" [Name]="'Cargo'" [HaveDetailsSection]=" cargoTrackingShipmentPM.EntityType != 'O'"
            [ShowWhitePanelOnMobile]="true"
 
            [DetailsTitle]="cargoTrackingShipmentPM.TransportModeId != 'A' ? 'Container List' : 'Packages List'"
@@ -620,7 +626,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
 
     </panel>
 
-    <panel  *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" style="order: 5;" [Title]="'Customs Data'" [Name]="'CustomsDataPanel'" [HaveDetailsSection]="true"
+    <panel  *ngIf="cargoTrackingShipmentPM.EntityType != 'O' && DeclarationApprovalEnabled" style="order: 5;" [Title]="'Customs Data'" [Name]="'CustomsDataPanel'" [HaveDetailsSection]="true"
            [AlwaysExpanded]="true" [ShowWhitePanelOnMobile]="true" [DetailsTitle]="'Tax Details'">
 
         <div body>
@@ -719,7 +725,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
 
     </panel>
 
-    <panel *ngIf="!(isDeclaration && cargoTrackingShipmentPM.ActivatedForDeclarationApprove)" style="order: 7;" [Title]="'Routing'" [Name]="'RoutingPanel'" [ShowWhitePanelOnMobile]="cargoTrackingShipmentPM.RoutingSteps?.length === 0">
+    <panel *ngIf="!isDeclaration" style="order: 7;" [Title]="'Routing'" [Name]="'RoutingPanel'" [ShowWhitePanelOnMobile]="cargoTrackingShipmentPM.RoutingSteps?.length === 0">
 
         <div body>
             <div class="slider-wrapper" id="RoutingSliderWrapper" #RoutingSliderWrapper style="background:rgba(59, 59, 59, 0.00);padding-bottom:10px"
@@ -863,7 +869,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
     </panel>
 
 
-    <panel *ngIf="cargoTrackingShipmentPM.EntityType != 'O' " style="order: 5;" [Title]="'Documents'" [Name]="'DocumentsPanel'" [ShowWhitePanelOnMobile]="cargoTrackingShipmentPM.DocumentsFilings?.length === 0">
+    <panel *ngIf="cargoTrackingShipmentPM.EntityType != 'O' && DeclarationApprovalEnabled " style="order: 5;" [Title]="'Documents'" [Name]="'DocumentsPanel'" [ShowWhitePanelOnMobile]="cargoTrackingShipmentPM.DocumentsFilings?.length === 0">
 
         <div body>
             <div  class="no-data-available" *ngIf="cargoTrackingShipmentPM.DocumentsFilings && cargoTrackingShipmentPM.DocumentsFilings.length == 0 " style="margin-top:10px">No Documents defined for this shipment</div>
@@ -996,7 +1002,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
 
 
 
-    <panel *ngIf="!(isDeclaration && cargoTrackingShipmentPM.ActivatedForDeclarationApprove)" style="order: 8;" [Title]="'Partners'" [Name]="'PartnersPanel'" TransparentBackground="true" [ShowWhitePanelOnMobile]="cargoTrackingShipmentPM.PartnerCards?.length === 0">
+    <panel *ngIf="!isDeclaration" style="order: 7;" [Title]="'Partners'" [Name]="'PartnersPanel'" TransparentBackground="true" [ShowWhitePanelOnMobile]="cargoTrackingShipmentPM.PartnerCards?.length === 0">
 
         <div body>
             <div  class="no-data-available" *ngIf="cargoTrackingShipmentPM.PartnerCards?.length == 0 " style="margin-top:10px">No Partners defined for this shipment</div>

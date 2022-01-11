@@ -108,6 +108,23 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
             && this.cargoTrackingShipmentPM.ActivatedForDeclarationApprove
             && this.cargoTrackingShipmentPM.IsImporterApprovalRequried;
     }
+    get DeclarationApprovalDisabled()
+    {
+        return !this.cargoTrackingShipmentPM.ActivatedForDeclarationApprove
+                ||
+                (!this.cargoTrackingShipmentPM.IsImporterApprovalRequried && !this.cargoTrackingShipmentPM.ApprovedDate);
+    }
+    get DeclarationApprovalEnabled()
+    {
+        return this.cargoTrackingShipmentPM.ActivatedForDeclarationApprove
+                &&
+                (
+                    this.cargoTrackingShipmentPM.IsImporterApprovalRequried
+                    ||
+                    (!this.cargoTrackingShipmentPM.IsImporterApprovalRequried && this.cargoTrackingShipmentPM.ApprovedDate)
+                );
+    }
+
     constructor(private router: Router,
         private route: ActivatedRoute,
         private cargoTrackingShipmentService: CargoTrackingShipmentService,
