@@ -32,8 +32,14 @@
 </div>
 
 
+<!-- No Supported For Declaration -->
+<div class="no-result-div" *ngIf="!isLoading && isDeclaration && !DeclarationApprovalEnabled">
+    <img src="./assets/images/misc/No results@1x.png" alt=" " />
+    <div class="title" style="color: rgb(224, 36, 83);">Declaration approval is not supported yet</div>
+</div>
+
 <!-- No Shipments found -->
-<div class="no-result-div" *ngIf="!isLoading && noShipmentFound">
+<div class="no-result-div" *ngIf="!isLoading && noShipmentFound && !(isDeclaration && !DeclarationApprovalEnabled)">
     <img src="./assets/images/misc/No results@1x.png" alt=" " />
     <div class="title">No Shipment Found</div>
     <p *ngIf="isSharedLink">
