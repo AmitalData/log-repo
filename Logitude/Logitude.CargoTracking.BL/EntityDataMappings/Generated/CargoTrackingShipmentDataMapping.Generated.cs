@@ -1952,6 +1952,14 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
                 return;
 
             }
+            if (!String.IsNullOrWhiteSpace(entityPM.ConsigneeName)) //T4 find type == nText 
+            {
+                entityPM.ConsigneeName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ConsigneeName));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ShipperName)) //T4 find type == nText 
+            {
+                entityPM.ShipperName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ShipperName));
+            }
             if (!String.IsNullOrWhiteSpace(entityPM.FromWarehouseNotes)) //T4 find type == nText 
             {
                 entityPM.FromWarehouseNotes = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.FromWarehouseNotes));
