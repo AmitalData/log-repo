@@ -118,7 +118,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
 
     get ShowNotSupportedDeclarationMessage(){ return this.isDeclarationLink && !this.DeclarationApprovalEnabled;  }
 
-    get IsOrderShipment(){ return this.cargoTrackingShipmentPM.EntityType != orderShipmentTypeCode; }
+    get IsOrderShipment(){ return this.cargoTrackingShipmentPM.EntityType == orderShipmentTypeCode; }
 
     constructor(private router: Router,
         private route: ActivatedRoute,

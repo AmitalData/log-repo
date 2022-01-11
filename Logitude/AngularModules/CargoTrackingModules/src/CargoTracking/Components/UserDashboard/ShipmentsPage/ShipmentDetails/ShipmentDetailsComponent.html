@@ -358,12 +358,12 @@
                             <div class="description">{{cargoTrackingShipmentPM.ShipmentOrderPONumber}}</div>
                         </div>
                         <div
-                            *ngIf="cargoTrackingShipmentPM.ForwardingMaster && IsOrderShipment">
+                            *ngIf="cargoTrackingShipmentPM.ForwardingMaster && !IsOrderShipment">
                             <div class="title">Master</div>
                             <div class="description">{{cargoTrackingShipmentPM?.ForwardingMaster}}</div>
                         </div>
                         <div
-                            *ngIf="cargoTrackingShipmentPM.ForwardingHouse  && IsOrderShipment">
+                            *ngIf="cargoTrackingShipmentPM.ForwardingHouse  && !IsOrderShipment">
                             <div class="title">House</div>
                             <div class="description">{{cargoTrackingShipmentPM?.ForwardingHouse}}</div>
                         </div>
@@ -471,9 +471,9 @@
             <div class="description">{{ShipmentPM?.IncotermName}}</div>
         </div>-->
                         <div
-                            *ngIf="(IsOrderShipment && cargoTrackingShipmentPM.PackagesQuantity) || (cargoTrackingShipmentPM.EntityType == 'O' && cargoTrackingShipmentPM.ShipmentOrderQuantity)">
+                            *ngIf="(!IsOrderShipment && cargoTrackingShipmentPM.PackagesQuantity) || (cargoTrackingShipmentPM.EntityType == 'O' && cargoTrackingShipmentPM.ShipmentOrderQuantity)">
                             <div class="title">quantity</div>
-                            <div *ngIf="IsOrderShipment" class="description">{{
+                            <div *ngIf="!IsOrderShipment" class="description">{{
                                 cargoTrackingShipmentPM.PackagesQuantity}} Units</div>
                             <div *ngIf="cargoTrackingShipmentPM.EntityType == 'O'" class="description">{{
                                 cargoTrackingShipmentPM.ShipmentOrderQuantity}} Units</div>
@@ -488,16 +488,16 @@
                                 <span *ngIf="!cargoTrackingShipmentPM.GrossWeightUnitCode"> KG</span>
                             </div>
                         </div>
-                        <div *ngIf="IsOrderShipment">
+                        <div *ngIf="!IsOrderShipment">
                             <div class="title">total value nis</div>
                             <div class="description" *ngIf="this.cargoTrackingShipmentPM.CustomsData">
                                 {{this.cargoTrackingShipmentPM?.CustomsData.TotalValueInNIS||0 | number}} ₪</div>
                         </div>
-                        <div *ngIf="IsOrderShipment">
+                        <div *ngIf="!IsOrderShipment">
                             <div class="title">total taxes</div>
                             <div class="description">{{cargoTrackingShipmentPM?.TotalTax}}</div>
                         </div>
-                        <div *ngIf="IsOrderShipment">
+                        <div *ngIf="!IsOrderShipment">
                             <div class="title">declaration status</div>
                             <div class="description"></div>
                         </div>
@@ -529,7 +529,7 @@
 
             <!-- Cargo -->
             <panel *ngIf="!ShowShipmentAsDeclaration" style="order: 4;" [Title]="'Cargo Information'" [Name]="'Cargo'"
-                [HaveDetailsSection]=" IsOrderShipment" [ShowWhitePanelOnMobile]="true"
+                [HaveDetailsSection]=" !IsOrderShipment" [ShowWhitePanelOnMobile]="true"
                 [DetailsTitle]="cargoTrackingShipmentPM.TransportModeId != 'A' ? 'Container List' : 'Packages List'"
                 [InputDetailsSectionToggleEvent]="DetailsSectionToggleEvent"
                 (OutputDetailsSectionToggleEvent)="ChangeShowDetailsSectionValue($event)">
@@ -537,12 +537,12 @@
                 <div body>
 
                     <div class="data-cards" *ngIf="cargoTrackingShipmentPM">
-                        <div *ngIf="IsOrderShipment" class="hide-mobile" style="width:170px">
+                        <div *ngIf="!IsOrderShipment" class="hide-mobile" style="width:170px">
 
                             <div class="title" *ngIf="cargoTrackingShipmentPM.TransportModeId == 'A'">PACKAGE TYPE</div>
                             <div class="title" *ngIf="cargoTrackingShipmentPM.TransportModeId != 'A'">CONTAINER TYPE
                             </div>
-                            <div *ngIf="IsOrderShipment" style="width:170px">
+                            <div *ngIf="!IsOrderShipment" style="width:170px">
                                 <div *ngFor="let package of cargoTrackingShipmentPM.Packages.slice(0,2), let i = index"
                                     style="display:flex;flex-direction:row">
                                     <div class="description TextTrimming"> {{package.PackageTypeName}}</div>
@@ -555,7 +555,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div *ngIf=" IsOrderShipment">
+                        <div *ngIf=" !IsOrderShipment">
                             <div class="title" *ngIf="cargoTrackingShipmentPM.TransportModeId != 'A'">fcl / lcl</div>
                             <div class="title" *ngIf="cargoTrackingShipmentPM.TransportModeId == 'A'">Shipment Type
                             </div>
@@ -564,7 +564,7 @@
                         <div
                             *ngIf="cargoTrackingShipmentPM.PackagesQuantity || cargoTrackingShipmentPM.ShipmentOrderQuantity">
                             <div class="title">quantity</div>
-                            <div *ngIf="IsOrderShipment" class="description">
+                            <div *ngIf="!IsOrderShipment" class="description">
                                 {{cargoTrackingShipmentPM?.PackagesQuantity}} Units</div>
                             <div *ngIf="cargoTrackingShipmentPM.EntityType == 'O'" class="description">{{
                                 cargoTrackingShipmentPM.ShipmentOrderQuantity}} Units</div>
@@ -582,7 +582,7 @@
                             <div style="display:inline" class="description">{{cargoTrackingShipmentPM.Volume || 0 }}
                             </div><span style="display:inline"> CBM</span>
                         </div>
-                        <div *ngIf=" IsOrderShipment">
+                        <div *ngIf=" !IsOrderShipment">
                             <div class="title">storage site</div>
                             <div class="description TextTrimming">
                                 {{cargoTrackingShipmentPM?.WarehouseLegName}}
@@ -592,7 +592,7 @@
                             </div>
                         </div>
                         <div class="hide-mobile"
-                            *ngIf="cargoTrackingShipmentPM.TransportModeId != 'A' && IsOrderShipment">
+                            *ngIf="cargoTrackingShipmentPM.TransportModeId != 'A' && !IsOrderShipment">
                             <div class="title">containers</div>
                             <div class="description">
                                 <div *ngFor="let container of ContainersNumbers?.slice(0,2), let i = index">
@@ -608,7 +608,7 @@
                             </div>
                         </div>
 
-                        <div *ngIf=" IsOrderShipment">
+                        <div *ngIf=" !IsOrderShipment">
                             <div class="title">Import Manifest</div>
                             <div class="description">
                                 {{cargoTrackingShipmentPM?.ImportManifest}}
