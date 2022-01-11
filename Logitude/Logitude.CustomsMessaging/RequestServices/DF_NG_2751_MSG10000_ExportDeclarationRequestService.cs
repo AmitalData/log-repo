@@ -1566,7 +1566,10 @@ namespace Logitude.CustomsMessaging.RequestServices
             var DMExtensions = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDMExtensions();
             if (!string.IsNullOrEmpty(supplierInvoiceItemPM.DutyRegimeProtocolCode))
                 DMExtensions.DutyRegimeProtocolCode = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDMExtensionsDutyRegimeProtocolCode() { Value = supplierInvoiceItemPM.DutyRegimeProtocolCode };
-
+            if (!string.IsNullOrEmpty(supplierInvoiceItemPM.TradeAgreementCode))
+            {
+                DMExtensions.DutyRegimeCode = new DutyTaxFeeDutyRegimeCodeType() { Value= supplierInvoiceItemPM.TradeAgreementCode };
+            }
             return DMExtensions;
         }
 
