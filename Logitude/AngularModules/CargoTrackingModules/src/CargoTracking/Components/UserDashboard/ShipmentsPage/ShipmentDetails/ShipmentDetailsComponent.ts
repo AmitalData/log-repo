@@ -28,6 +28,7 @@ const mobileScreenMaxWidth = 470;
 const approvalResponseMessage = 'לקוח יקר, הצהרה זו אושרה בתאריך';
 const declineResponseMessage = 'לקוח יקר, הצהרה זו נדחתה';
 
+const orderShipmentTypeCode = 'O';
 @Component({
     selector: 'ShipmentDetailsComponent',
     templateUrl: './ShipmentDetailsComponent.html',
@@ -80,7 +81,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     public OverviewPanelTitle: string;
     public TypeTitle: string;
     isSharedLink: boolean = false;
-    isDeclaration: boolean = false;
+    isDeclarationLink: boolean = false;
     hasApprovalDeclineResponse: boolean = false;
     noShipmentFound: boolean = false;
     approvalMessage: string;
@@ -100,30 +101,24 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     {
         return this._tenant || CargoTrackingBrandingData.Tenant;
     }
-    get ShowDeclarationApproval()
-    {
-        const isCustomShipment = this.cargoTrackingShipmentPM.EntityType == this.EntityType_Customs;
-        return isCustomShipment
-            && this.isDeclaration
-            && this.cargoTrackingShipmentPM.ActivatedForDeclarationApprove
-            && this.cargoTrackingShipmentPM.IsImporterApprovalRequried;
-    }
-    get DeclarationApprovalDisabled()
-    {
-        return !this.cargoTrackingShipmentPM.ActivatedForDeclarationApprove
-                ||
-                (!this.cargoTrackingShipmentPM.IsImporterApprovalRequried && !this.cargoTrackingShipmentPM.ApprovedDate);
-    }
+
     get DeclarationApprovalEnabled()
     {
-        return this.cargoTrackingShipmentPM.ActivatedForDeclarationApprove
-                &&
-                (
-                    this.cargoTrackingShipmentPM.IsImporterApprovalRequried
-                    ||
-                    (!this.cargoTrackingShipmentPM.IsImporterApprovalRequried && this.cargoTrackingShipmentPM.ApprovedDate)
-                );
+        const isCustomShipment = this.cargoTrackingShipmentPM.EntityType == this.EntityType_Customs;
+        return isCustomShipment && this.cargoTrackingShipmentPM.ActivatedForDeclarationApprove;
     }
+
+    get ShowShipmentAsDeclaration() {  return this.isDeclarationLink && this.DeclarationApprovalEnabled; }
+
+    get ShowNoShipmentFoundMessage(){
+        const noDeclarationShipmentFound = this.isDeclarationLink && this.DeclarationApprovalEnabled && this.noShipmentFound;
+        const noNormalShipmentFound = !this.isDeclarationLink && this.noShipmentFound;
+        return noDeclarationShipmentFound || noNormalShipmentFound;
+    }
+
+    get ShowNotSupportedDeclarationMessage(){ return this.isDeclarationLink && !this.DeclarationApprovalEnabled;  }
+
+    get IsOrderShipment(){ return this.cargoTrackingShipmentPM.EntityType != orderShipmentTypeCode; }
 
     constructor(private router: Router,
         private route: ActivatedRoute,
@@ -164,7 +159,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
 
         const data: Data = this.route.snapshot.data;
         this.isSharedLink = data?.isSharedLink;
-        this.isDeclaration = data?.isDeclaration;
+        this.isDeclarationLink = data?.isDeclaration;
         if(this.isSharedLink){
             this.GetBrandingData();
         }
@@ -256,7 +251,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
 
     private SetDeclarationMessage()
     {
-        if (this.isSharedLink && this.isDeclaration) {
+        if (this.isSharedLink && this.isDeclarationLink) {
             const isCustomShipment = this.cargoTrackingShipmentPM.EntityType == this.EntityType_Customs;
             this.hasApprovalDeclineResponse = isCustomShipment && this.cargoTrackingShipmentPM.ActivatedForDeclarationApprove && !this.cargoTrackingShipmentPM.IsImporterApprovalRequried;
 
