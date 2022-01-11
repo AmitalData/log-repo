@@ -74,7 +74,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		public  List<EntityStatus>  AllEntityStatuses { get; set; }
 		Dictionary<string, QueryGroup> tenantQueryGroups {get; set; }
 		 
-	   	CargoTrackingCardUpdateClass  CargoTrackingCardUpdateClass = new CargoTrackingCardUpdateClass();
+	   	CargoReferencesSyncQueueUpdateClass  CargoReferencesSyncQueueUpdateClass = new CargoReferencesSyncQueueUpdateClass();
+		CargoTrackingCardUpdateClass  CargoTrackingCardUpdateClass = new CargoTrackingCardUpdateClass();
 		CargoTrackingCountryUpdateClass  CargoTrackingCountryUpdateClass = new CargoTrackingCountryUpdateClass();
 		CargoTrackingHeaderEntityTypeUpdateClass  CargoTrackingHeaderEntityTypeUpdateClass = new CargoTrackingHeaderEntityTypeUpdateClass();
 		CargoTrackingIncrementalStatUpdateClass  CargoTrackingIncrementalStatUpdateClass = new CargoTrackingIncrementalStatUpdateClass();
@@ -241,7 +242,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				return TablesHashStrings;
 
 			TablesHashStrings = new Dictionary<string, string>();
- 			TablesHashStrings.Add("CargoTrackingCard",  CargoTrackingCardUpdateClass.HashString);
+ 			TablesHashStrings.Add("CargoReferencesSyncQueue",  CargoReferencesSyncQueueUpdateClass.HashString);
+			TablesHashStrings.Add("CargoTrackingCard",  CargoTrackingCardUpdateClass.HashString);
 			TablesHashStrings.Add("CargoTrackingCountry",  CargoTrackingCountryUpdateClass.HashString);
 			TablesHashStrings.Add("CargoTrackingHeaderEntityType",  CargoTrackingHeaderEntityTypeUpdateClass.HashString);
 			TablesHashStrings.Add("CargoTrackingIncrementalStat",  CargoTrackingIncrementalStatUpdateClass.HashString);
@@ -258,6 +260,39 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
         public void CreateAllObjectTablesMetadata()
         {
    
+			if(MetadataUpdateUtility.IsChangedMetadataTable("CargoReferencesSyncQueue", ObjectTables, CargoReferencesSyncQueueUpdateClass.HashString))
+			{
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("CargoReferencesSyncQueue");
+					CargoReferencesSyncQueueUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					List<ObjectField> addedFields = new List<ObjectField>();
+					List<TextCode> addedTextCodes = new List<TextCode>();
+					CargoReferencesSyncQueueUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository, addedFields, addedTextCodes);
+					SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+					SqlBulkInsert.BulkInsert("ObjectFields", addedFields);					
+					//this.ObjectContext.TextCodes.AddRange(addedTextCodes);
+					//this.ObjectContext.ObjectFields.AddRange(addedFields);
+					//this.ObjectContext.SaveChanges();
+					CargoReferencesSyncQueueUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters,tenantQueryGroups);
+					//this.ObjectContext.SaveChanges();
+					CargoReferencesSyncQueueUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					CargoReferencesSyncQueueUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					CargoReferencesSyncQueueUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					//this.ObjectContext.SaveChanges();
+					CargoReferencesSyncQueueUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					CargoReferencesSyncQueueUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					CargoReferencesSyncQueueUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					scope.Complete();
+				}
+			}
+
 			if(MetadataUpdateUtility.IsChangedMetadataTable("CargoTrackingCard", ObjectTables, CargoTrackingCardUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -668,6 +703,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
         public void CreateAllObjectTables()
         {
    
+	   	   CargoReferencesSyncQueueUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+	
 	   	   CargoTrackingCardUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
 	   	   CargoTrackingCountryUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
@@ -698,6 +735,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
         public void CreateAllObjectFields()
         {
    
+	   	   //CargoReferencesSyncQueueUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
 	   	   //CargoTrackingCardUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
 	   	   //CargoTrackingCountryUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
@@ -727,6 +766,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		public void CreateAllQueries()
         {
    
+	   	   CargoReferencesSyncQueueUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
+	
 	   	   CargoTrackingCardUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
 	   	   CargoTrackingCountryUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
@@ -756,6 +797,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		public void CreateAllScreens()
         {
    
+	   	   CargoReferencesSyncQueueUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
+	
 	   	   CargoTrackingCardUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
 	   	   CargoTrackingCountryUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
@@ -785,6 +828,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		public void CreateAllTabs()
         {
    
+	   	   CargoReferencesSyncQueueUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
+	
 	   	   CargoTrackingCardUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   CargoTrackingCountryUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
@@ -814,6 +859,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		public void CreateAllEventTypes()
         {
    
+	   	   CargoReferencesSyncQueueUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
+	
 	   	   CargoTrackingCardUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
 	
 	   	   CargoTrackingCountryUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
@@ -843,6 +890,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		public void CreateAllFeatures()
         {
    
+	   	   CargoReferencesSyncQueueUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
 	   	   CargoTrackingCardUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   CargoTrackingCountryUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
@@ -871,6 +920,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		public void CreateAdditionalTextCodes()
         {
    
+	   	   CargoReferencesSyncQueueUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
 	   	   CargoTrackingCardUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   CargoTrackingCountryUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
@@ -899,6 +950,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		public void CreateAllMenuButtons()
         {
    
+	   	   CargoReferencesSyncQueueUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
+	
 	   	   CargoTrackingCardUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
 	   	   CargoTrackingCountryUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
@@ -928,6 +981,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		public void CreateAllClosedTables()
         {
    
+	   
 	   
 	   
 	   	   CargoTrackingHeaderEntityTypeUpdateClass.FillCargoTrackingHeaderEntityType();

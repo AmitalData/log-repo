@@ -199,6 +199,7 @@
     <None Include="DBScripts\GlobalModel\202110271507_AddMultiEntityUpdateWR.sxml" />
     <None Include="DBScripts\GlobalModel\AddCollaborationToolContainerWRsBatchService.sxml" />
     <None Include="DBScripts\CommonModel\UpdateAutomaticLastUpdateDateOnVatType.sxml" />
+    <None Include="DBScripts\GlobalModel\AddCargoReferencesSyncWorkerRole.sxml" />
     <None Include="DBScripts\GlobalModel\AddUpdatePortTimeZoneWRBatchService.sxml" />
     <None Include="DBScripts\GlobalModel\DeleteTenantManagmentPrivateLabelsConstraint.sxml" />
     <None Include="DBScripts\GlobalModel\PODImageConverterServiceBatchService.sxml" />
