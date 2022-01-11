@@ -164,6 +164,7 @@ namespace WebFreight.Web.DataProviders
         public string BillToCity { get; set; }
         public string BillToCountry { get; set; }
         public string BillToState { get; set; }
+        public string BillToIndustry { get; set; }
 
         public string Via1 { get; set; }
         public string Via2 { get; set; }
