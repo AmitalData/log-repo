@@ -286,7 +286,7 @@
             <button  *ngIf="!isDeclaration" [class.active]="selectedNavButton=='Cargo'" (click)="PanelsNavigatorClicked('Cargo')">
                 Cargo
             </button>
-            <button *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" [class.active]="selectedNavButton=='CustomsDataPanel'"
+            <button *ngIf="cargoTrackingShipmentPM.EntityType != 'O' || (isDeclaration && DeclarationApprovalEnabled)" [class.active]="selectedNavButton=='CustomsDataPanel'"
                     (click)="PanelsNavigatorClicked('CustomsDataPanel')">
                 Customs
             </button>
@@ -294,7 +294,7 @@
                     (click)="PanelsNavigatorClicked('RoutingPanel')">
                 Routing
             </button>
-            <button *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" [class.active]="selectedNavButton=='DocumentsPanel'"
+            <button *ngIf="cargoTrackingShipmentPM.EntityType != 'O' || (isDeclaration && DeclarationApprovalEnabled)" [class.active]="selectedNavButton=='DocumentsPanel'"
                     (click)="PanelsNavigatorClicked('DocumentsPanel')">
                 Documents
             </button>
@@ -626,7 +626,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
 
     </panel>
 
-    <panel  *ngIf="cargoTrackingShipmentPM.EntityType != 'O' && DeclarationApprovalEnabled" style="order: 5;" [Title]="'Customs Data'" [Name]="'CustomsDataPanel'" [HaveDetailsSection]="true"
+    <panel  *ngIf="cargoTrackingShipmentPM.EntityType != 'O' || (isDeclaration && DeclarationApprovalEnabled)" style="order: 5;" [Title]="'Customs Data'" [Name]="'CustomsDataPanel'" [HaveDetailsSection]="true"
            [AlwaysExpanded]="true" [ShowWhitePanelOnMobile]="true" [DetailsTitle]="'Tax Details'">
 
         <div body>
@@ -869,7 +869,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
     </panel>
 
 
-    <panel *ngIf="cargoTrackingShipmentPM.EntityType != 'O' && DeclarationApprovalEnabled " style="order: 5;" [Title]="'Documents'" [Name]="'DocumentsPanel'" [ShowWhitePanelOnMobile]="cargoTrackingShipmentPM.DocumentsFilings?.length === 0">
+    <panel *ngIf="cargoTrackingShipmentPM.EntityType != 'O' || (isDeclaration && DeclarationApprovalEnabled)" style="order: 5;" [Title]="'Documents'" [Name]="'DocumentsPanel'" [ShowWhitePanelOnMobile]="cargoTrackingShipmentPM.DocumentsFilings?.length === 0">
 
         <div body>
             <div  class="no-data-available" *ngIf="cargoTrackingShipmentPM.DocumentsFilings && cargoTrackingShipmentPM.DocumentsFilings.length == 0 " style="margin-top:10px">No Documents defined for this shipment</div>
