@@ -61,13 +61,43 @@ namespace CommunicationWorkerRole
             var orderShipmentQueue = GetTop_100_OrderReferencesQueue();
             if (orderShipmentQueue.Count <= 0)
                 return;
-            var orderSeatches = GetSearchesByShipmentIds(orderShipmentQueue.Select(e=>e.ShipmentId).ToList());
-            var newForwardingSearches = GetNewSearches(orderShipmentQueue,orderSeatches);
+            var orderSeatches = GetSearchesByShipmentIds(orderShipmentQueue.Select(e => e.ShipmentId).ToList());
+            var newForwardingSearches = GetNewSearches(orderShipmentQueue, orderSeatches);
             AddSearchesByBulk(newForwardingSearches);
+            AddCustomSearches(orderShipmentQueue);
             RemoveQueueRecords(orderShipmentQueue);
         }
 
-       
+        private void AddCustomSearches(List<CargoReferencesSyncQueue> orderShipmentQueue)
+        {
+            var customShipmentQueue = GetCustomIdsFromForwording(orderShipmentQueue);
+            if (customShipmentQueue.Count <= 0)
+                return;
+            var customSeatches = GetSearchesByShipmentIds(customShipmentQueue.Select(e => e.ShipmentId).ToList());
+            var newCustomSearches = GetNewSearches(customShipmentQueue, customSeatches);
+            AddSearchesByBulk(newCustomSearches);
+        }
+
+        private List<CargoReferencesSyncQueue> GetCustomIdsFromForwording(List<CargoReferencesSyncQueue> orderShipmentQueue)
+        {
+            var ForwordingIds = orderShipmentQueue.Select(e => e.SyncTo).ToList();
+            var CustomShipmentQueueQuery = cargoContext.CargoTrackingShipments.Where(e => ForwordingIds.Contains(e.EntityId) && e.CustomsShipmentHeaderId != null);
+            var CustomShipmentQueue = (from e in CustomShipmentQueueQuery select 
+                                       new {
+                                            ShipmentId = e.EntityId,
+                                            SyncTo = e.CustomsShipmentHeaderId,
+                                            Tenant = e.Tenant
+                                        }).ToList();
+
+            return CustomShipmentQueue.Select(e => new CargoReferencesSyncQueue()
+            {
+                ShipmentId = e.ShipmentId,
+                SyncTo = e.SyncTo,
+                Tenant = e.Tenant
+            }).ToList();
+
+
+        }
 
         private void SyncForwardingReferencesToCustome()
         {
@@ -86,7 +116,7 @@ namespace CommunicationWorkerRole
         private void AddSearchesByBulk(List<CargoTrackingShipmentSearch> newForwardingSearches)
         {
             var cargoTrackingShipmentSearchDataTable = CreateCargoTrackingShipmentSearchDataTable();
-            FillCargoTrackingShipmentSearchDataTable(cargoTrackingShipmentSearchDataTable,newForwardingSearches);
+            FillCargoTrackingShipmentSearchDataTable(cargoTrackingShipmentSearchDataTable, newForwardingSearches);
             using (SqlBulkCopy bulkCopy = new SqlBulkCopy(cargoContext.GetConnection().ConnectionString))
             {
                 bulkCopy.DestinationTableName = ShipmentSearchesTableName;
@@ -104,7 +134,7 @@ namespace CommunicationWorkerRole
 
         private DataRow CreateDataRow(DataTable cargoTrackingShipmentSearchDataTable, CargoTrackingShipmentSearch item)
         {
-            var row  = cargoTrackingShipmentSearchDataTable.NewRow();
+            var row = cargoTrackingShipmentSearchDataTable.NewRow();
             row["Tenant"] = item.Tenant;
             row["SearchFields"] = item.SearchFields;
             row["ShipmentDate"] = item.ShipmentDate;
@@ -118,7 +148,7 @@ namespace CommunicationWorkerRole
         private DataTable CreateCargoTrackingShipmentSearchDataTable()
         {
             var datatable = new DataTable();
-            datatable.Columns.Add("Tenant",typeof(int));
+            datatable.Columns.Add("Tenant", typeof(int));
             datatable.Columns.Add("SearchFields", typeof(string));
             datatable.Columns.Add("ShipmentDate", typeof(DateTime));
             datatable.Columns.Add("Id", typeof(int));
@@ -128,10 +158,10 @@ namespace CommunicationWorkerRole
             return datatable;
         }
 
-        private List<CargoTrackingShipmentSearch> GetNewSearches(List<CargoReferencesSyncQueue> orderShipmentQueue, List<CargoTrackingShipmentSearch> orderSeatches)
+        private List<CargoTrackingShipmentSearch> GetNewSearches(List<CargoReferencesSyncQueue> shipmentQueue, List<CargoTrackingShipmentSearch> seatches)
         {
-            var shipmentQueueDictionary = orderShipmentQueue.ToDictionary(e => e.ShipmentId, e => e);
-            var searchesGroupByShipmentId = orderSeatches.GroupBy(e => e.ShipmentId);
+            var shipmentQueueDictionary = shipmentQueue.ToDictionary(e => e.ShipmentId, e => e);
+            var searchesGroupByShipmentId = seatches.GroupBy(e => e.ShipmentId);
             var results = new List<CargoTrackingShipmentSearch>();
             foreach (var group in searchesGroupByShipmentId)
             {
