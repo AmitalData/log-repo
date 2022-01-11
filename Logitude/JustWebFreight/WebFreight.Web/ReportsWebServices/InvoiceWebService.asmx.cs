@@ -1359,8 +1359,8 @@ namespace WebFreight.Web.ReportsWebServices
                         CustomerPM customer = customerQuery.GetSinglePM(billToCard.Id, tenant);
                         if (customer != null)
                         {
-
                             customFieldResolver.SetDataProviderCustomFieldsValues("Customer", tenant, customer, invoicedataprovider);
+                            invoicedataprovider.BillToIndustry = customer.IndustryName;
                         }
                     }
 
@@ -2997,7 +2997,7 @@ namespace WebFreight.Web.ReportsWebServices
                         invoiceDataProvider.BillTo_LocalName = billToCard.LocalName != null ? billToCard.LocalName : "";
                         invoiceDataProvider.BillToCustomerCode = billToCard.Code;
                         invoiceDataProvider.BillToSalesMan = GetBillToSalesManUserName(billToCard);
-
+                        
                         if (!string.IsNullOrEmpty(entityPOCO.BillToAddressId))
                         {
                             Address billToAddress = addressRepository.GetSingleAddress(entityPOCO.BillToAddressId, tenant);
@@ -3048,6 +3048,7 @@ namespace WebFreight.Web.ReportsWebServices
                             if (customerPM != null)
                             {
                                 customFieldResolver.SetDataProviderCustomFieldsValues("Customer", tenant, customerPM, invoiceDataProvider);
+                                invoiceDataProvider.BillToIndustry = customerPM.IndustryName;
                             }
                         }
 
