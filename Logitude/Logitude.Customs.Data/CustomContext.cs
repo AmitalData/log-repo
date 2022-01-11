@@ -230,6 +230,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ContainerizationMap());
 	
+            modelBuilder.Configurations.Add(new ContainerizationHataraStatusMap());
+	
             modelBuilder.Configurations.Add(new ContainerizationStatusCodeMap());
 	
             modelBuilder.Configurations.Add(new ContainerTypeMap());
@@ -1828,6 +1830,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<Containerization> Containerizations 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ContainerizationHataraStatus> ContainerizationHataraStatuses 
 	 {
 	      get; set;
 	 

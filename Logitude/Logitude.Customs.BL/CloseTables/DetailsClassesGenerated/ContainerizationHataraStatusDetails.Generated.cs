@@ -1,0 +1,54 @@
+
+   
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.CloseTablesClasses;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL
+{
+   public class ContainerizationHataraStatusDetails : ContainerizationHataraStatus, ICloseTable<ContainerizationHataraStatus, ContainerizationHataraStatusDetails>
+   {
+       public List<ContainerizationHataraStatusDetails> GetAll()
+       {
+		    var all = new List<ContainerizationHataraStatusDetails>();  
+            all.Add(new ContainerizationHataraStatusDetails()
+            {    
+                Code = "1", 
+                Name = "המכלה הותרה", 
+                SearchFields = "המכלה הותרה", 
+			});
+			 
+            all.Add(new ContainerizationHataraStatusDetails()
+            {    
+                Code = "2", 
+                Name = "המכלה טרם הותרה", 
+                SearchFields = "המכלה טרם הותרה", 
+			});
+			
+            return all;
+       }
+
+	    public void MapPoco(ContainerizationHataraStatus newPoco)
+        {   
+		    newPoco.Code = this.Code;  
+		    newPoco.Name = this.Name;  
+			newPoco.SearchFields = GetSearchFields(this);    
+        }
+
+		public string GetSearchFields(ContainerizationHataraStatus rec)
+        {   
+           return String.Concat(rec.Code,",",rec.Name,",");
+        }
+   }
+}
+
