@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationCargoSplitUpdateClass
    {  		
-		public const string HashString = "ec54cf0bf7dc6d42061e5de7e8e69250";
+		public const string HashString = "19b2dbd7fc6d4ecd41ab467be7dda7a7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -97,11 +97,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    DBTableName =  "Customs.DeclarationCargoSplits",
 			      				    ObjectTableSingular =  "Customs.DeclarationCargoSplit",
 			      				    ObjectTablePlural =  "Customs.DeclarationCargoSplits",
-			      				    HasCustomFilter =  false,
+			      				    HasCustomFilter =  true,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
-			      				    HasFiltersMenu =  false,
+			      				    HasFiltersMenu =  true,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  true,
 			      				    KeyPropertyPath =  "Id",
@@ -136,7 +136,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ServerModuleName =  "Customs",
 			      				    NewWizardComponentPath =  "./CustomsModules/CustomsDeclarationCargoSplit/Components/EditTabs/General/CargoSplitGeneralTabComponent",
 			      				    NoTS =  false,
-			      				    HasMenuButtons =  true,
+			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
@@ -1437,7 +1437,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
@@ -1500,7 +1500,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
@@ -1565,9 +1565,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn OpenCargoSplitsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCargoSplitsQuery.Id,QueryCode = OpenCargoSplitsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.DeclarationCargoSplit.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn OpenCargoSplitsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCargoSplitsQuery.Id,QueryCode = OpenCargoSplitsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.DeclarationCargoSplit.ResponseStatusName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OpenCargoSplitsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCargoSplitsQuery.Id,QueryCode = OpenCargoSplitsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.DeclarationCargoSplit.Direction" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenCargoSplitsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCargoSplitsQuery.Id,QueryCode = OpenCargoSplitsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.DeclarationCargoSplit.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OpenCargoSplitsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCargoSplitsQuery.Id,QueryCode = OpenCargoSplitsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.DeclarationCargoSplit.TransportModeId" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn OpenCargoSplitsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCargoSplitsQuery.Id,QueryCode = OpenCargoSplitsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.DeclarationCargoSplit.ResponseStatusName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn OpenCargoSplitsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCargoSplitsQuery.Id,QueryCode = OpenCargoSplitsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Customs.DeclarationCargoSplit.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
 
              AdvancedQueryFilter OpenCargoSplitsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.DeclarationCargoSplit.IsClosed", PredefinedValue = "false",PredefinedValue2 = null, QueryId = OpenCargoSplitsQuery.Id,QueryCode = OpenCargoSplitsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
@@ -1593,9 +1597,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ClosedCargoSplitsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCargoSplitsQuery.Id,QueryCode = ClosedCargoSplitsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.DeclarationCargoSplit.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn ClosedCargoSplitsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCargoSplitsQuery.Id,QueryCode = ClosedCargoSplitsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.DeclarationCargoSplit.ResponseStatusName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ClosedCargoSplitsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCargoSplitsQuery.Id,QueryCode = ClosedCargoSplitsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.DeclarationCargoSplit.Direction" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ClosedCargoSplitsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCargoSplitsQuery.Id,QueryCode = ClosedCargoSplitsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.DeclarationCargoSplit.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ClosedCargoSplitsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCargoSplitsQuery.Id,QueryCode = ClosedCargoSplitsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.DeclarationCargoSplit.TransportModeId" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ClosedCargoSplitsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCargoSplitsQuery.Id,QueryCode = ClosedCargoSplitsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.DeclarationCargoSplit.ResponseStatusName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn ClosedCargoSplitsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCargoSplitsQuery.Id,QueryCode = ClosedCargoSplitsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Customs.DeclarationCargoSplit.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
 
              AdvancedQueryFilter ClosedCargoSplitsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.DeclarationCargoSplit.IsClosed", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ClosedCargoSplitsQuery.Id,QueryCode = ClosedCargoSplitsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
@@ -1621,9 +1629,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn AllCargoSplitsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCargoSplitsQuery.Id,QueryCode = AllCargoSplitsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.DeclarationCargoSplit.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn AllCargoSplitsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCargoSplitsQuery.Id,QueryCode = AllCargoSplitsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.DeclarationCargoSplit.ResponseStatusName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllCargoSplitsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCargoSplitsQuery.Id,QueryCode = AllCargoSplitsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.DeclarationCargoSplit.Direction" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllCargoSplitsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCargoSplitsQuery.Id,QueryCode = AllCargoSplitsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.DeclarationCargoSplit.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllCargoSplitsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCargoSplitsQuery.Id,QueryCode = AllCargoSplitsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.DeclarationCargoSplit.TransportModeId" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllCargoSplitsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCargoSplitsQuery.Id,QueryCode = AllCargoSplitsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.DeclarationCargoSplit.ResponseStatusName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn AllCargoSplitsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCargoSplitsQuery.Id,QueryCode = AllCargoSplitsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Customs.DeclarationCargoSplit.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
