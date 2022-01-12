@@ -337,35 +337,8 @@ namespace Logitude.BL.InvoiceModel.Tools
                             line.Amount = Decimal.Parse(lines[i].InvoiceCurrencyAmount + "");
                             line.AmountSpecified = true;
                             line.DetailType = LineDetailTypeEnum.AccountBasedExpenseLineDetail;
-                            line.DetailTypeSpecified = true;
-                            if (lines[i].VatPercentage != 0)
-                            {
-                                line.AnyIntuitObject = new AccountBasedExpenseLineDetail
-                                {
-                                    AccountRef = new ReferenceType
-                                    {
-                                        Value = PayablesExternalChargesTypesCode[i]
-                                    },
-                                    TaxCodeRef = new ReferenceType
-                                    {
-                                        Value = ExternalVatTypesCode[i]
-                                    },
-                                };
-                            }
-                            else
-                            {
-                                line.AnyIntuitObject = new AccountBasedExpenseLineDetail
-                                {
-                                    AccountRef = new ReferenceType
-                                    {
-                                        Value = PayablesExternalChargesTypesCode[i]
-                                    },
-                                    TaxCodeRef = new ReferenceType
-                                    {
-                                        Value = ExternalVatTypesCode[i]
-                                    },
-                                };
-                            }
+                            line.DetailTypeSpecified = true;                    
+                            line.AnyIntuitObject = this.GetAccountBasedExpenseLineDetail(i);
 
                         }
                         else if (AccountingSystemCode == "QBO")
@@ -374,13 +347,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                             line.AmountSpecified = true;
                             line.DetailType = LineDetailTypeEnum.AccountBasedExpenseLineDetail;
                             line.DetailTypeSpecified = true;
-                            line.AnyIntuitObject = new AccountBasedExpenseLineDetail
-                            {
-                                AccountRef = new ReferenceType
-                                {
-                                    Value = PayablesExternalChargesTypesCode[i]
-                                }
-                            };
+                            line.AnyIntuitObject = this.GetAccountBasedExpenseLineDetail(i);
                         }
                         lineList.Add(line);
                     }
@@ -431,31 +398,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                             line.AmountSpecified = true;
                             line.DetailType = LineDetailTypeEnum.AccountBasedExpenseLineDetail;
                             line.DetailTypeSpecified = true;
-                            if (lines[i].VatPercentage != 0)
-                            {
-                                line.AnyIntuitObject = new AccountBasedExpenseLineDetail
-                                {
-                                    AccountRef = new ReferenceType
-                                    {
-                                        Value = PayablesExternalChargesTypesCode[i]
-                                    },
-                                    TaxCodeRef = new ReferenceType
-                                    {
-                                        Value = ExternalVatTypesCode[i]
-                                    },
-                                };
-                            }
-                            else
-                            {
-                                line.AnyIntuitObject = new AccountBasedExpenseLineDetail
-                                {
-                                    AccountRef = new ReferenceType
-                                    {
-                                        Value = PayablesExternalChargesTypesCode[i]
-                                    },
-
-                                };
-                            }
+                            line.AnyIntuitObject = this.GetAccountBasedExpenseLineDetail(i);
 
                         }
                         else if (AccountingSystemCode == "QBO")
@@ -465,13 +408,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                             line.AmountSpecified = true;
                             line.DetailType = LineDetailTypeEnum.AccountBasedExpenseLineDetail;
                             line.DetailTypeSpecified = true;
-                            line.AnyIntuitObject = new AccountBasedExpenseLineDetail
-                            {
-                                AccountRef = new ReferenceType
-                                {
-                                    Value = PayablesExternalChargesTypesCode[i]
-                                },
-                            };
+                            line.AnyIntuitObject = this.GetAccountBasedExpenseLineDetail(i);
                         }
                         lineList.Add(line);
                     }
@@ -707,6 +644,23 @@ namespace Logitude.BL.InvoiceModel.Tools
             {
                 return GlobalTaxCalculationEnum.NotApplicable;
             }
+        }
+
+        private AccountBasedExpenseLineDetail GetAccountBasedExpenseLineDetail(int index)
+        {
+            AccountBasedExpenseLineDetail anyIntuitObject = new AccountBasedExpenseLineDetail
+            {
+                AccountRef = new ReferenceType
+                {
+                    Value = PayablesExternalChargesTypesCode[index]
+                },
+                TaxCodeRef = new ReferenceType
+                {
+                    Value = ExternalVatTypesCode[index]
+                },
+            };
+
+            return anyIntuitObject;
         }
     }
 }
