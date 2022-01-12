@@ -78,18 +78,6 @@
       INSERT INTO @ConsolidationInvoiceTable (Id, InvoiceNumber ,InvoiceDate , StatusCode , DraftNumber) SELECT Id, InvoiceNumber , InvoiceDate ,StatusCode ,DraftNumber  FROM dw_ARInvoices where IsConsolidationInvoice = 1 or Id = '-1'
 
 
- 
-
-
-
-
-	   declare @ConsolidationInvoiceTable TABLE(Id  varchar(15) NOT NULL  PRIMARY KEY NONCLUSTERED ,InvoiceNumber varchar(25) , InvoiceDate datetime , StatusCode varchar(2) , DraftNumber varchar(20));
-
-      INSERT INTO @ConsolidationInvoiceTable (Id, InvoiceNumber ,InvoiceDate , StatusCode , DraftNumber) SELECT Id, InvoiceNumber , InvoiceDate ,StatusCode ,DraftNumber  FROM dw_ARInvoices where IsConsolidationInvoice = 1 or Id = '-1'
-
-
- 
-
 
 	DECLARE ARInvoicesCursor CURSOR READ_ONLY
 	FOR

@@ -151,6 +151,20 @@ declare @DIM_ContactsPhoneNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_ContactsPhoneNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_ContactsPhoneNewId,0,'DIM_Contacts','[Phone]','Phone','Text','false',0,25,'false','false','true','false','false','false','false','false')  
 ------------------------------------------------------------------------------------
+declare @DIM_ContainerStatusesNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ContainerStatusesNewId OUTPUT,'DWObjectTable' 
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn,HasCustomFields,MaxNumberOfCustomFields) Values(@DIM_ContainerStatusesNewId,0,'','DIM_ContainerStatuses','DIM_ContainerStatuses','Dimension','true','[Name]','false','false',0)  
+--Fields --
+declare @DIM_ContainerStatusesCodeNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ContainerStatusesCodeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_ContainerStatusesCodeNewId,0,'DIM_ContainerStatuses','[Code]','Code','Text','true',0,3,'false','false','true','[Name]','false','false','false','true','false')  
+declare @DIM_ContainerStatusesNameNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ContainerStatusesNameNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_ContainerStatusesNameNewId,0,'DIM_ContainerStatuses','[Name]','Name','Text','true',0,100,'true','false','true','[Code]','false','false','false','false','false')  
+declare @DIM_ContainerStatusesAutomaticLastUpdateDateNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ContainerStatusesAutomaticLastUpdateDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_ContainerStatusesAutomaticLastUpdateDateNewId,0,'DIM_ContainerStatuses','[Automatic Last Update Date]','Last Update Date','DateTime','false',0,0,'false','false','true','false','false','false','true','false')  
+------------------------------------------------------------------------------------
 declare @DIM_CountriesNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_CountriesNewId OUTPUT,'DWObjectTable' 
 insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_CountriesNewId,0,'','DIM_Countries','DIM_Countries','Dimension','false','[Name]','false')  

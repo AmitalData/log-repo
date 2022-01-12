@@ -133,6 +133,7 @@
     <None Include="Files\DIM_Addresses.dwml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Files\DIM_ContainerStatuses.dwml" />
     <None Include="Files\DIM_Countries.dwml" />
     <None Include="Files\DIM_InvoiceMainTypes.dwml" />
     <None Include="Files\DIM_InvoiceStatus.dwml" />
