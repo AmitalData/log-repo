@@ -21,6 +21,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {PackagesTabComponent, ShipmentPackageItem} from '../../../ShipmentPackages/Components/Packages/PackagesTabComponent';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
 
 @Component({    
     templateUrl: './AddEditOnCarriageComponent.html',
@@ -42,6 +43,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
     public IsOkButtonEnabled: boolean = true;
     private SaveCompletedEvent: any = null;
     public IsChooseVesselVisible: boolean = false;
+    public IsVesselFreeTextVisible: boolean = false;
     constructor() {
         super();
         this.InitServices();
@@ -62,6 +64,11 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         this.FatherComponent = args['FatherComponent'];
         this.LegType = args['LegType'];
         this.Clone();
+
+        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "VSL")[0];
+        if (featureToggle) {
+            this.IsVesselFreeTextVisible = true;
+        }
 
         this.SetDefaultValues();
         this.SetUIProperties();
@@ -194,6 +201,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         this.UIProperties.SetEnabled("OnCarriageCarrierId", this.ObjectTableName, isTransportFieldEnabled);
         this.UIProperties.SetEnabled("OnCarriageCarrierNumber", this.ObjectTableName, isCarrierNumberFieldEnabled);
         this.UIProperties.SetEnabled("OnCarriageVesselName", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("OnCarriageVesselId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("OnCarriageETD", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("OnCarriageETA", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("OnCarriageATD", this.ObjectTableName, this.IsEditingEnabled);
@@ -201,6 +209,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         this.UIProperties.SetEnabled("SplitOnCarriage", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("OnCarriageAdditionalTransportModeCode", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetVisibility("OnCarriageVesselName", this.ObjectTableName, this.OnCarriageTransportModeId == "O" ? true : false);
+        this.UIProperties.SetVisibility("OnCarriageVesselId", this.ObjectTableName, this.OnCarriageTransportModeId == "O" ? true : false);
         this.IsChooseVesselVisible = this.OnCarriageTransportModeId == "O" ? true : false;
 
         this.SetUIProperties_Carriage_RequiredFields();
@@ -225,14 +234,15 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         this.UIProperties.SetEnabled("OnForwardingCarrierId", this.ObjectTableName, isTransportFieldEnabled);
         this.UIProperties.SetEnabled("OnForwardingCarrierNumber", this.ObjectTableName, isCarrierNumberFieldEnabled);
         this.UIProperties.SetEnabled("OnForwardingVesselName", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("OnForwardingVesselId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("OnForwardingETD", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("OnForwardingETA", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("OnForwardingATD", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("OnForwardingATA", this.ObjectTableName, this.IsEditingEnabled);        
         this.UIProperties.SetEnabled("OnForwardingAdditionalTransportModeCode", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetVisibility("OnForwardingVesselName", this.ObjectTableName, this.OnForwardingTransportModeId == "O" ? true : false);
+        this.UIProperties.SetVisibility("OnForwardingVesselId", this.ObjectTableName, this.OnForwardingTransportModeId == "O" ? true : false);
         this.IsChooseVesselVisible = this.OnForwardingTransportModeId == "O" ? true : false;
-
 
         this.SetUIProperties_Forwarding_RequiredFields();
         this.SetUIProperties_Forwarding_ValidateActualDates();
@@ -282,11 +292,13 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         this.UIProperties.SetEnabled("OnCarriageCarrierId", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("OnCarriageCarrierNumber", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("OnCarriageVesselName", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("OnCarriageVesselId", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("OnCarriageETD", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("OnCarriageETA", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("OnCarriageATD", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("OnCarriageATA", this.ObjectTableName, false);
         this.UIProperties.SetVisibility("OnCarriageVesselName", this.ObjectTableName, this.OnCarriageTransportModeId == "O" ? true : false);
+        this.UIProperties.SetVisibility("OnCarriageVesselId", this.ObjectTableName, this.OnCarriageTransportModeId == "O" ? true : false);
         this.UIProperties.SetEnabled("SplitOnCarriage", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("OnCarriageAdditionalTransportModeCode", this.ObjectTableName, false);
         this.IsChooseVesselVisible = this.OnCarriageTransportModeId == "O" ? true : false;
@@ -460,11 +472,28 @@ export class AddEditOnCarriageComponent extends BaseComponent {
             this.EntityPM.OnCarriageVesselId = value;            
         }
     }
+
+    private onCarriageVessel: VesselList;
+    get OnCarriageVessel() { return this.onCarriageVessel; }
+    set OnCarriageVessel(value: VesselList) {
+        if (this.onCarriageVessel != value) {
+            this.onCarriageVessel = value;
+        }
+
+        this.OnCarriageVesselName = null;
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.OnCarriageVesselName = value.EnglishName;
+        }
+    }
+
     get OnCarriageVesselName() { return this.EntityPM.OnCarriageVesselName; }
     set OnCarriageVesselName(newValue: string) {
         if (this.EntityPM.OnCarriageVesselName != newValue) {
             this.EntityPM.OnCarriageVesselName = newValue;
-            this.OnCarriageVesselId = null;
+
+            if (this.IsVesselFreeTextVisible) {
+                this.OnCarriageVesselId = null;
+            }
         }
     }
 
@@ -673,11 +702,27 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         }
     }
 
+    private onForwardingVessel: VesselList;
+    get OnForwardingVessel() { return this.onForwardingVessel; }
+    set OnForwardingVessel(value: VesselList) {
+        if (this.onForwardingVessel != value) {
+            this.onForwardingVessel = value;
+        }
+
+        this.OnForwardingVesselName = null;
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.OnForwardingVesselName = value.EnglishName;
+        }
+    }
+
     get OnForwardingVesselName() { return this.EntityPM.OnForwardingVesselName; }
     set OnForwardingVesselName(newValue: string) {
         if (this.EntityPM.OnForwardingVesselName != newValue) {
             this.EntityPM.OnForwardingVesselName = newValue;
-            this.OnForwardingVesselId = null;
+
+            if (this.IsVesselFreeTextVisible) {
+                this.OnForwardingVesselId = null;
+            }
         }
     }
 
