@@ -208,7 +208,7 @@ Given("navigates payables tab", () => {
 });
 
 Then("the link of the invoice should be exsit", () => {
-  cy.Click(BaseSelectors.TooltipButton + BaseSelectors.FirstElement, null)
+  cy.Click(BaseSelectors.TooltipButton + BaseSelectors.LastElement, null)
   BaseAssertion.AssertElementContain(BaseSelectors.HyperlinkButtonControl, invoiceNumber)
 });
 
@@ -240,7 +240,7 @@ Then("delete payable button should appear", () => {
 
 //#region Assert message window appear
 When("press on delete all button", () => {
-  cy.Click(ShipmentSelectors.DeleteAll, null)
+  cy.Click(ShipmentSelectors.DeleteAll, null, true)
 });
 
 Then("{string} should appear as a message window", (message) => {
