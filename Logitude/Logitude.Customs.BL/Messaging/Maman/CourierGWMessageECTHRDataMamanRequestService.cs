@@ -162,8 +162,8 @@ namespace Logitude.Customs.BL.Messaging.Maman
             //Get Trucker details - Task 49270
             string distributorHP = "";
             string distributorName = "";
-            DeclarationCourierStatusRepository declarationCourierStatusRepository = new DeclarationCourierStatusRepository(myDeclarationPM.Tenant);
-            var declarationCourierStatus = declarationCourierStatusRepository.GetSingle(myDeclarationPM.Id, myDeclarationPM.Tenant);
+            DeclarationCourierStatusQueryService declarationCourierQueryService = new DeclarationCourierStatusQueryService(myDeclarationPM.Tenant);
+            var declarationCourierStatus = declarationCourierQueryService.GetSingle(myDeclarationPM.Id, false,false);
             if (!string.IsNullOrWhiteSpace(declarationCourierStatus.TruckerId))
             {
                 CardRepository cardRep = new CardRepository(myDeclarationPM.Tenant);
@@ -172,6 +172,21 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 {
                     distributorHP = card.VatNumber;
                     distributorName = card.EnglishName;
+                }
+            }
+            string MamanSuspendedCode = "";
+            var courierPendingReasonRepository = new CourierPendingReasonRepository(myDeclarationPM.Tenant);
+            var courierPendingListWithMamanSuspendedCode = courierPendingReasonRepository.GetPendingReasonsWithMamanSuspendedCode(myDeclarationPM.Tenant);
+            if (!string.IsNullOrEmpty(declarationCourierStatus.CourierPendingReasonList))
+            {
+                var pendingCounted=courierPendingListWithMamanSuspendedCode.Count(x => declarationCourierStatus.CourierPendingReasonList.Contains(x.Code));   //MamanSuspendedCode=declarationPendingWithMamanSuspendCode = declarationCourierStatus.CourierPendingReasonList;
+                if(pendingCounted == 1)
+                {
+                    MamanSuspendedCode= courierPendingListWithMamanSuspendedCode.Where(x => declarationCourierStatus.CourierPendingReasonList.Contains(x.Code)).FirstOrDefault().MamanSuspendedCode;
+                }
+                if(pendingCounted > 2)
+                {
+                    MamanSuspendedCode = "9999";
                 }
             }
             string aw8 = null;
@@ -211,7 +226,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 //Task 46455:
                 DestLineCode = "9999999999",
                 DeclarationId = myDeclarationPM.DeclarationNumber,
-                CustomIkuv = myDeclarationPM.CourierCustomStatusCode=="1"?"3": (!string.IsNullOrEmpty(myDeclarationPM.CourierSuspentionCode)? myDeclarationPM.CourierSuspentionCode:),//task 49300
+                CustomIkuv = myDeclarationPM.CourierCustomStatusCode=="1"?"3": (!string.IsNullOrEmpty(myDeclarationPM.CourierSuspentionCode)? myDeclarationPM.CourierSuspentionCode: MamanSuspendedCode),//task 49300
                 //CustomIkuv = myDeclarationPM.CourierSuspentionReasonCode,
                 //Task 46455
                 DistributorHP = distributorHP,
