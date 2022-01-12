@@ -63,16 +63,16 @@ Given("add a new Delivery leg with the following details", (dataTable) => {
 
 Given("save the Delivery", () => {
   cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
-  cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+  cy.Click(BaseSelectors.SaveButton + BaseSelectors.LastElement, null)
   BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });
 
 When("click create Standalone Shipment", () => {
-  cy.Click(ShipmentSelectors.Printbutton, ShipmentConstants.CreateStandaloneShipment)
+  cy.Click(ShipmentSelectors.RedButton + BaseSelectors.LastElement, ShipmentConstants.CreateStandaloneShipment)
 })
 
 When("create standalone shipment", () => {
-  cy.Click(ShipmentSelectors.Printbutton, ShipmentConstants.CreateStandaloneShipment)
+  cy.Click(ShipmentSelectors.RedButton + BaseSelectors.LastElement, ShipmentConstants.CreateStandaloneShipment)
   StandaloneAction.CreateStandaloneShipment()
 })
 

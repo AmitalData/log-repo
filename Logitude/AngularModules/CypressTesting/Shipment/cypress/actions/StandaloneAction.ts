@@ -52,7 +52,7 @@ export function FillPickupDelivaryToTypeDetails(pickupdelivaryDetails: PickupDel
 
 export function CreateStandaloneShipment() {
    cy.DefineRequestWait(RestAPI.POST, URLs.Shipment, RequestAliases.ShipmentStandaloneRequest)
-   cy.Click(ShipmentSelectors.RedButton + BaseSelectors.LastElement, null)
+   cy.Click(ShipmentSelectors.CreateShipmentButton + BaseSelectors.LastElement, null)
 }
 
 export function AssertShipmenteMenuButtonsEnabled() {
