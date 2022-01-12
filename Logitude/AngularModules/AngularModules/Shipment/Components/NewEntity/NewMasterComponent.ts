@@ -36,6 +36,7 @@ import { ShipmentSubTypeListService } from '../../services/standardlists/shipmen
 import { ShipmentSubTypeList } from '../../EntityLists/ShipmentSubTypeList';
 import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
+import { VesselList } from '../../../Common/EntityLists/VesselList';
 
 @Component({
     templateUrl: './NewMasterComponent.html',
@@ -58,6 +59,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
     @ViewChild(ChildDirective) Child: ChildDirective;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsChooseVesselVisible: boolean = false;
+    public IsVesselFreeTextVisible: boolean = false;
     constructor() {
         super();
       this.SessionIndex = this.CurrentSession.SessionIndex;
@@ -128,6 +130,11 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
             this.IsCopyFromShipment = args.IsCopyFromShipment;
             this.IsBuildFromQuote = args.IsBuildFromQuote;
             this.IsMasterCreatedFromHouse = args.IsMasterCreatedFromHouse;
+
+            var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "VSL")[0];
+            if (featureToggle) {
+                this.IsVesselFreeTextVisible = true;
+            }
 
             this.BuildFiltersLists();
             this.SetUIProperties();
@@ -378,6 +385,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
         this.UIProperties.SetEnabled("Master", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("MAWBOBLDate", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("MainCarriageVesselName", this.ObjectTableName, isScreenEnabled);
+        this.UIProperties.SetEnabled("MainCarriageVesselId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("FreightPrepaidCollectId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("OtherPrepaidCollectId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("Notes", this.ObjectTableName, isScreenEnabled);
@@ -1130,11 +1138,27 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
         }
     }
 
+    private mainCarriageVessel: VesselList;
+    get MainCarriageVessel() { return this.mainCarriageVessel; }
+    set MainCarriageVessel(value: VesselList) {
+        if (this.mainCarriageVessel != value) {
+            this.mainCarriageVessel = value;
+        }
+
+        this.MainCarriageVesselName = null;
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.MainCarriageVesselName = value.EnglishName;
+        }
+    }
+
     get MainCarriageVesselName() { return this.EntityPM.MainCarriageVesselName; }
     set MainCarriageVesselName(newValue: string) {
         if (this.EntityPM.MainCarriageVesselName != newValue) {
             this.EntityPM.MainCarriageVesselName = newValue;
-            this.MainCarriageVesselId = null;
+
+            if (this.IsVesselFreeTextVisible) {
+                this.MainCarriageVesselId = null;
+            }
         }
     }
 

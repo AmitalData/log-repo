@@ -155,12 +155,12 @@
                                             </tr>
 
                                             <!-- OnCarriageVesselName -->
-                                            <tr class="FormFieldRow">
+                                            <tr class="FormFieldRow" *ngIf="OnCarriageTransportModeId == 'O'">
                                                 <td>
                                                     <LogLabel [ObjectFieldName]="'OnCarriageVesselName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Vessel'"></LogLabel>
                                                 </td>
 
-                                                <td>
+                                                <td *ngIf="IsVesselFreeTextVisible">
                                                     <table>
                                                         <tr>
                                                             <td>
@@ -173,6 +173,16 @@
                                                             </td>
                                                         </tr>
                                                     </table>
+                                                </td>
+
+                                                <td *ngIf="!IsVesselFreeTextVisible">
+                                                    <LogLov [ObjectFieldName]="'OnCarriageVesselId'"
+                                                            [SelectedValue]="OnCarriageVesselId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Vessel'"
+                                                            (SelectedItemChanged)="OnCarriageVessel = $event">
+                                                    </LogLov>
                                                 </td>
                                             </tr>
 
@@ -539,12 +549,12 @@
                                             </tr>
 
                                             <!-- OnForwardingVesselName -->
-                                            <tr class="FormFieldRow">
+                                            <tr class="FormFieldRow" *ngIf="OnForwardingTransportModeId == 'O'">
                                                 <td>
                                                     <LogLabel [ObjectFieldName]="'OnForwardingVesselName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Vessel'"></LogLabel>
                                                 </td>
 
-                                                <td>
+                                                <td *ngIf="IsVesselFreeTextVisible">
                                                     <table>
                                                         <tr>
                                                             <td>
@@ -557,6 +567,16 @@
                                                             </td>
                                                         </tr>
                                                     </table>
+                                                </td>
+
+                                                <td *ngIf="!IsVesselFreeTextVisible">
+                                                    <LogLov [ObjectFieldName]="'OnForwardingVesselId'"
+                                                            [SelectedValue]="OnForwardingVesselId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Vessel'"
+                                                            (SelectedItemChanged)="OnForwardingVessel = $event">
+                                                    </LogLov>
                                                 </td>
                                             </tr>
 

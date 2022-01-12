@@ -460,6 +460,14 @@ namespace Logitude.Infrastructure.BL
                 Description = "Allow to Display and Edit Entity Status", 
                 SearchFields = "EST,Entity Status,Allow to Display and Edit Entity Status", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "VSL", 
+                Name = "Vessel Free Text", 
+                SearchFields = "VSL,Vessel Free Text", 
+                Description = "Vessel Free Text", 
+			});
 			
             return all;
        }
