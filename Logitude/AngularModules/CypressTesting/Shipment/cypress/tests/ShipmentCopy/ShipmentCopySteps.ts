@@ -68,7 +68,7 @@ When("navigates packages tab", () => {
 
 Then("the direct shipment should should has the following package details", (dataTable) => {
   let packageDetailsList = Assists.CreateSet<PackagesDetails>(dataTable);
-  Actions.ValidatePackageDetails(ShipmentSelectors.ShipmentPackagesTab, packageDetailsList[0], ShipmentSelectors.Shipment_GrossWeight, true)
+  Actions.ValidatePackageDetails(ShipmentSelectors.ShipmentPackagesTab, packageDetailsList[0], ShipmentSelectors.ShipmentGrossWeight, true)
 });
 //#endregion
 
