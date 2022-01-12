@@ -714,6 +714,18 @@ namespace WebFreight.Web.Helpers.Analyzers
         }
         private bool IsUpdatingShipmentAndContainer()
         {
+            if (shipmentPM.IsOperationalClosed)
+            {
+                return false;
+            }
+            if (!IsTheSamePOLLocation())
+            {
+                return false;
+            }
+            if (!IsTheSamePODLocation())
+            {
+                return false;
+            }
             if (this.eventCode != null && this.eventCode != "20" &&
                                 (Int32.Parse(this.eventCode) >= 0 && Int32.Parse(this.eventCode) <= 31)
                                 && !string.IsNullOrEmpty(this.container_number))
@@ -724,6 +736,28 @@ namespace WebFreight.Web.Helpers.Analyzers
             return false;
         }
 
+        private bool IsTheSamePOLLocation()
+        {
+            var pOLLocation = this.GetTranslatedPortCode(pol_loc_locode);
+            var polPortId = this.GetPortId(pOLLocation);
+            if (shipmentPM.MainCarriageFromPortId == polPortId)
+            {
+                return true;
+            }
+
+            return false;
+        }
+        private bool IsTheSamePODLocation()
+        {
+            var pODLocation = this.GetTranslatedPortCode(pod_loc_locode);
+            var podPortId = this.GetPortId(pODLocation);
+            if (shipmentPM.MainCarriageToPortId != podPortId)
+            {
+                return true;
+            }
+
+            return false;
+        }
         private void GetShipmentById(LogitudeOceanInsightsRequest oceanInsight)
         {
             shipmentPM = shipmentQuery.GetSinglePM(oceanInsight?.ShipmentId, logitudeTenant.Value);
