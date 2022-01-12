@@ -232,18 +232,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (pagePOCO.StatusCode != null && (pagePM.StatusCode == "3" && pagePOCO.StatusCode != "3"))
             {
                 OnPageCanceled(pagePM, pagePOCO);
-            }
-
-            if (pagePOCO.StatusCode != null && (pagePM.StatusCode == "1" && pagePOCO.StatusCode == "3"))
+            } 
+            else if (pagePOCO.StatusCode != null && (pagePM.StatusCode == "1" && pagePOCO.StatusCode == "3"))
             {
                 OnPageRestored(pagePM);
             }
+            else
+            {
+                UpdatePaymentCheques(pagePM);
 
-            UpdatePaymentCheques(pagePM);
-
-            ExternalPageAdditionalDataPM additionalData = GetOrCreateEntityAdditionalData(pagePM);
-            UpdateAdditionalDataLastPage(pagePM, additionalData);
-
+                ExternalPageAdditionalDataPM additionalData = GetOrCreateEntityAdditionalData(pagePM);
+                UpdateAdditionalDataLastPage(pagePM, additionalData);
+            }
         }
 
         private void OnPageRestored(ReconcileExternalPagePM pagePM)
