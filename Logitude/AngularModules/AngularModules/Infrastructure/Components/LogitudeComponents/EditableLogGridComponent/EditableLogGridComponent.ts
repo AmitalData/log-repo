@@ -1905,7 +1905,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                     this.ViewPortRowCount = this.rowCount;
                 }
                 else {
-                    this.ViewPortRowCount = (this.viewportSize - this.HeaderHeight) > 0 ? (this.viewportSize - this.HeaderHeight) : 30; // + this.extraRows;
+                    this.ViewPortRowCount = (this.viewportSize - this.HeaderHeight) > 0 ? (this.viewportSize - Math.ceil(this.HeaderHeight / this.rowHeight) ): 30; // + this.extraRows;
                 }
                 var top = 0;
                 var Bodytop = this.HeaderHeight;
