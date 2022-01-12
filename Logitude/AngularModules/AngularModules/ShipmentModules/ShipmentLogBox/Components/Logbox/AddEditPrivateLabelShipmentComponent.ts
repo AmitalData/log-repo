@@ -973,12 +973,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                     if (!myResult.HasError) {
                         ServiceLocator.SendTotangoUserActivity("LogBox", "New Shipment");
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                        if (!this.IsDSVTenant) {
-                            //  this.ConnectDocumentsFilings(myResult.Result.Id);
-                            this.CurrentSession.SessionEvent.emit({ Name: "ReloadShipments" });
-                            this.CurrentSession.CurrentWindow.Close("");
-
-                        } else this.CurrentSession.CloseCurrentWindowEmit("MyShipmentAdded");
+                        this.CurrentSession.CloseCurrentWindowEmit("MyShipmentAdded");
 
                     }
                     else {
