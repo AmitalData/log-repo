@@ -1093,8 +1093,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         newWindow.Show(newWindowComponentPath);
         newWindow.WindowClosed.subscribe(($event: any) => {
             if ($event == "MyShipmentAdded") {
-                this.SelectedFilter = "My Shipments";
-                this.RefreshBtnClick();
+                this.MenuFiltersClicked('My Shipments', 'myShipment');
             }
         });
     }
@@ -1152,10 +1151,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     FirstRowSelectedTimerToken: any;
     OnFirstRowSelected(event) {
-        if (this.FirstRowSelectedTimerToken) {
-            clearTimeout(this.FirstRowSelectedTimerToken);
-        }
-        this.FirstRowSelectedTimerToken = setTimeout(() => this.FirstShipmentSelectedEvent(event), 500);
+        this.onRowSelected(event);
     }
 
     FirstShipmentSelectedEvent(event) {

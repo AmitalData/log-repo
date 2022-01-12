@@ -277,7 +277,7 @@ export class ShipmentPMService {
         var callTime = new Date();
 
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetByCustomerReferences1or3?CustomerReference=' + CustomerReference + '&IsForwarderShipment=' + IsForwarderShipment, ServiceHelper.GetHttpFullHeaders()).pipe(
+            return this._http.get(this._apiUrl + '/GetByCustomerReferences1or3?CustomerReference1=' + CustomerReference + '&IsForwarderShipment=' + IsForwarderShipment, ServiceHelper.GetHttpFullHeaders()).pipe(
                 map((response: HttpResponse<any>) => {
 
                 var servertime = response.headers.get('ServerExecutionTime');
