@@ -184,7 +184,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 {
                     MamanSuspendedCode= courierPendingListWithMamanSuspendedCode.Where(x => declarationCourierStatus.CourierPendingReasonList.Contains(x.Code)).FirstOrDefault().MamanSuspendedCode;
                 }
-                if(pendingCounted > 2)
+                if(pendingCounted > 1)
                 {
                     MamanSuspendedCode = "9999";
                 }
