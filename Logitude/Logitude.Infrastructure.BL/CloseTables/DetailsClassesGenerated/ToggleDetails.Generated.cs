@@ -495,6 +495,14 @@ namespace Logitude.Infrastructure.BL
                 Name = "support forwarding file format in External Document", 
                 Description = "Support forwarding file format in External Document", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "VSL", 
+                Name = "Vessel Free Text", 
+                SearchFields = "VSL,Vessel Free Text", 
+                Description = "Vessel Free Text", 
+			});
 			
             return all;
        }

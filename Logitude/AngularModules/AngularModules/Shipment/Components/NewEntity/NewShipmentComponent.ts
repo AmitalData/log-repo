@@ -46,6 +46,7 @@ import { ShipmentSubTypeList } from '../../EntityLists/ShipmentSubTypeList';
 import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { CountryListService } from '../../../Common/Services/StandardLists/CountryListService';
+import { VesselList } from '../../../Common/EntityLists/VesselList';
 
 @Component({
     templateUrl: './NewShipmentComponent.html',
@@ -65,7 +66,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     public SessionIndex: number;
     public IsChooseVesselVisible: boolean = false;
     @ViewChild(ChildDirective) Child: ChildDirective;
-
+    public IsVesselFreeTextVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     private PropertyChangedEvent: any = null;
     constructor() {
@@ -263,6 +264,12 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.IsCreatedFromMasterHouses = args.IsCreatedFromMasterHouses;
             this.IsCreatedFromCustomerOverview = args.IsCreatedFromCustomerOverview;
             this.SetStandAloneShipmentWindowArgs(args);
+
+            var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "VSL")[0];
+            if (featureToggle) {
+                this.IsVesselFreeTextVisible = true;
+            }
+
             this.ShowShipmentLevels = false;
             this.BuildFiltersLists();
             this.SetUIProperties();
@@ -494,6 +501,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.UIProperties.SetEnabled("MainCarriageCarrierNumber", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("Master", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("MainCarriageVesselName", this.ObjectTableName, isScreenEnabled);
+        this.UIProperties.SetEnabled("MainCarriageVesselId", this.ObjectTableName, isScreenEnabled);
 
         // General
         this.UIProperties.SetEnabled("IncotermId", this.ObjectTableName, isScreenEnabled);
@@ -1101,7 +1109,9 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         }
 
         this.UIProperties.SetEnabled("MainCarriageVesselName", this.ObjectTableName, isFieldEnabled);
+        this.UIProperties.SetEnabled("MainCarriageVesselId", this.ObjectTableName, isFieldEnabled);
         this.UIProperties.SetVisibility("MainCarriageVesselName", this.ObjectTableName, isFieldVisible);
+        this.UIProperties.SetVisibility("MainCarriageVesselId", this.ObjectTableName, isFieldVisible);
     }
     SetUIProperties_OrderDetails() {
         var isFieldsEnabled = false;
@@ -2951,11 +2961,27 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         }
     }
 
+    private mainCarriageVessel: VesselList;
+    get MainCarriageVessel() { return this.mainCarriageVessel; }
+    set MainCarriageVessel(value: VesselList) {
+        if (this.mainCarriageVessel != value) {
+            this.mainCarriageVessel = value;
+        }
+
+        this.MainCarriageVesselName = null;
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.MainCarriageVesselName = value.EnglishName;
+        }
+    }
+
     get MainCarriageVesselName() { return this.EntityPM.MainCarriageVesselName; }
     set MainCarriageVesselName(newValue: string) {
         if (this.EntityPM.MainCarriageVesselName != newValue) {
             this.EntityPM.MainCarriageVesselName = newValue;
-            this.MainCarriageVesselId = null;
+
+            if (this.IsVesselFreeTextVisible) {
+                this.MainCarriageVesselId = null;
+            }
         }
     }
 

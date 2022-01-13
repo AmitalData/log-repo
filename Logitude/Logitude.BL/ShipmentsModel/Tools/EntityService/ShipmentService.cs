@@ -101,7 +101,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private ShipmentStoragePricingRepository shipmentStoragePricingRepository;
         private ShipmentProductItemRepository shipmentProductItemRepository;
         private ShipmentUnassignedFieldRepository shipmentUnassignedFieldRepository;
-
+        private PayableProratedAmountRepository payableProratedAmountRepository;
         List<ShipmentPM> housesList = new List<ShipmentPM>();
         private ShipmentBehaviourFacade shipmentBehaviourFacade;
         private ShipmentContainerStatusRepository shipmentContainerStatusRepository;
@@ -149,6 +149,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.shipmentStoragePricingRepository = new ShipmentStoragePricingRepository(objectContext);
             this.shipmentProductItemRepository = new ShipmentProductItemRepository(objectContext);
             this.shipmentUnassignedFieldRepository = new ShipmentUnassignedFieldRepository(objectContext);
+            this.payableProratedAmountRepository = new PayableProratedAmountRepository(objectContext);
             this.SetHybridPartner(this.tenant);
         }
 
@@ -6126,6 +6127,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 calculateProfit = true;
                 calculatePayables = true;
                 calculateReceivables = true;
+
+                List<PayableProratedAmount> proratedAmounts = payableProratedAmountRepository.GetPayableProratedAmountsByShipmentId(houseShipment.Id, tenant);
+                foreach (PayableProratedAmount item in proratedAmounts)
+                {
+                    payableProratedAmountRepository.Remove(item);
+                }
 
                 List<ShipmentPayable> myPayables = shipmentPayableRepository.GetConsoleChildPayables(houseShipment.Id, tenant);
                 foreach (ShipmentPayable item in myPayables)

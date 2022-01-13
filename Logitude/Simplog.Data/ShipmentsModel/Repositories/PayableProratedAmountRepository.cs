@@ -34,6 +34,12 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                     select a).FirstOrDefault();
         }
 
+        public List<PayableProratedAmount>  GetPayableProratedAmountsByShipmentId(string shipmentId, int tenant)
+        {
+            return (from a in context.PayableProratedAmounts
+                    where a.ShipmentId == shipmentId && a.Tenant == tenant
+                    select a).ToList();
+        }
         public List<PayableProratedAmount> GetPayableProratedAmountsByPayableId(string payableId, int tenant)
         {
             return (from a in context.PayableProratedAmounts

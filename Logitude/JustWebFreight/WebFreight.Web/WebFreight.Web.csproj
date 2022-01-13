@@ -1012,10 +1012,8 @@
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\CustomAgentAPiHelper.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\ShippingAgentAPiHelper.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\TruckerAPiHelper.cs" />
- 
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\VendorAPiHelper.cs" />
- 
-    <Compile Include="Controllers\CommonDataModel\ApiHelpers\WarehouseAPiHelper.cs" /> 
+    <Compile Include="Controllers\CommonDataModel\ApiHelpers\WarehouseAPiHelper.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\CommunicationLogExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\CargoTrackingTenantMilestoneDefinitionExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\CarrierAreaExtendedController.cs" />
@@ -6030,6 +6028,27 @@
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.ShipmentCustomsTransmission.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.ShipmentPackageItem.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.ShipmentCustomsMessageType.cs" />
+    <Content Include="Stimulsoft\fonts\century-gothic\GOTHIC.TTF" />
+    <Content Include="Stimulsoft\fonts\century-gothic\GOTHICB.TTF" />
+    <Content Include="Stimulsoft\fonts\century-gothic\GOTHICBI.TTF" />
+    <Content Include="Stimulsoft\fonts\century-gothic\GOTHICI.TTF" />
+    <Content Include="Stimulsoft\fonts\didot\GFSDidot-Regular.ttf" />
+    <Content Include="Stimulsoft\fonts\garamond\GARA.TTF" />
+    <Content Include="Stimulsoft\fonts\garamond\GARABD.TTF" />
+    <Content Include="Stimulsoft\fonts\garamond\GARAIT.TTF" />
+    <Content Include="Stimulsoft\fonts\lucida-bright\LBRITE.TTF" />
+    <Content Include="Stimulsoft\fonts\lucida-bright\LBRITED.TTF" />
+    <Content Include="Stimulsoft\fonts\lucida-bright\LBRITEDI.TTF" />
+    <Content Include="Stimulsoft\fonts\lucida-bright\LBRITEI.TTF" />
+    <Content Include="Stimulsoft\fonts\monaco\Monaco.ttf" />
+    <Content Include="Stimulsoft\fonts\optima\Optima_Medium.ttf" />
+    <Content Include="Stimulsoft\fonts\optima\OPTIMA.TTF" />
+    <Content Include="Stimulsoft\fonts\optima\OPTIMA_B.TTF" />
+    <Content Include="Stimulsoft\fonts\optima\Optima_Italic.ttf" />
+    <Content Include="Stimulsoft\fonts\perpetua\PERBI___.TTF" />
+    <Content Include="Stimulsoft\fonts\perpetua\PERB____.TTF" />
+    <Content Include="Stimulsoft\fonts\perpetua\PERI____.TTF" />
+    <Content Include="Stimulsoft\fonts\perpetua\PER_____.TTF" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\ShipmentsController.cs" />
@@ -6127,6 +6146,7 @@
     <Compile Include="Stimulsoft\Designer.aspx.designer.cs">
       <DependentUpon>Designer.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Stimulsoft\fonts\StimulsoftFontsService.cs" />
     <Compile Include="SystemLogsModel\DomainServices\BatchServicesLogDomainService.cs" />
     <Compile Include="SystemLogsModel\EntityList\BatchServicesLogList.cs" />
     <Compile Include="SystemLogsModel\EntityList\ContactActivityLogList.cs" />

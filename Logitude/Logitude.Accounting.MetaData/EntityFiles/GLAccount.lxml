@@ -17811,6 +17811,12 @@
       LocalDefaultText="&quot;ראשי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.UnsavedChangesSaveBeforeContinue&quot;"
+      DefaultText="&quot;You have Unsaved changes, please save them before you continue&quot;"
+      LocalDefaultText="&quot;קיימים שינויים שטרם נשמרו, אנא בצע שמירה לפני היציאה.&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
