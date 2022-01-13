@@ -273,9 +273,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     else
                     {
                         var res = GetDocumentIdByDocumentTypeNotDeleted(declarationId, tenant, type, objectTable, documentRepository);
-                        DocumentsFilingId = res.DocumentsFilingId;
-                        DocumentDeclarationId = res.DocumentId;
-
+                        if (res != null)
+                        {
+                            DocumentsFilingId = res.DocumentsFilingId;
+                            DocumentDeclarationId = res.DocumentId;
+                        }
                     }
                     DocumentsMetaDataTypeRepository TypesRepo = new DocumentsMetaDataTypeRepository(tenant);
                     var pocoMDType = TypesRepo.GetSingleDocumentsMetaDataTypeByCode("VER", tenant);
