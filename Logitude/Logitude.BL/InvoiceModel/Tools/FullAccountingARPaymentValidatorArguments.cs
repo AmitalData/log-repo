@@ -25,5 +25,7 @@ namespace Logitude.BL.InvoiceModel.Tools
         public string Branch { get; set; }
         public string Account { get; set; }
         public string Bank { get; set; }
+        public bool IsFromReconcileScreen { get; set; }
+
     }
 }
