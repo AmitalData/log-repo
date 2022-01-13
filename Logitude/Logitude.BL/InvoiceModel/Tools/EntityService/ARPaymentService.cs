@@ -335,7 +335,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             ARPaymentValidator.Validate(paymentPM, paymentPoco, isNewEntity, objectContext, PaymentCashbook);
 
-            ARPaymentTracing.Trace(theEntityPm, paymentPoco, isNewEntity);
+            ARPaymentTracing.Trace(theEntityPm, paymentPoco, isNewEntity); 
 
             if (mapComposition)
             {
@@ -403,12 +403,17 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.VoidARPaymentInFullAccounting(theEntityPm, setVoided);
 
-            this.InitializeTransferComponents();
+            this.InitializeTransferComponents();  
 
             ARPaymentMapping.MapEntity(theEntityPm, paymentPoco, isNewEntity);
+             
+
             paymentRepository.Update(paymentPoco);
             paymentRepository.SubmitChanges();
             invoicePaymentRepository.SubmitChanges();
+
+            ARPaymentReferencesService ARPaymentReferencesService = new ARPaymentReferencesService(this.objectContext);
+            ARPaymentReferencesService.UpdateConnectedARInvoicePaymentRefeneces(theEntityPm);
 
             if (!theEntityPm.IsFullAccounting)
                 UpdatePaymentOpenAmount();
@@ -438,13 +443,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (string.IsNullOrEmpty(theEntityPm.GLAccountId))
                     throw new ApplicationException("Hey! no glaccount provided!!");
 
-                if (theEntityPm.StatusCode != "VD" && theEntityPm.ARPaymentChequeReplicas.Count ==0)
+                if (theEntityPm.StatusCode != "VD" && theEntityPm.ARPaymentChequeReplicas.Count == 0)
                     CreateReconciliationForARPayment(theEntityPm);
             }
             this.TraceConnected();
             this.GetPaymentForeignFields();
             this.BuildEntitiesNumbers();
         }
+  
 
         private void HandleSATTranserStatus(ARPaymentPM theEntityPm)
         {

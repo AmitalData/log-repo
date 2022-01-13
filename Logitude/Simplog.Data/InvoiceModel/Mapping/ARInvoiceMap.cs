@@ -26,8 +26,9 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.CreatedByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.PaymentTermId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.PrepaidCollectId).HasMaxLength(1).IsUnicode(false);
-            this.Property(t => t.DraftNumber).HasMaxLength(20).IsUnicode(false);
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            this.Property(t => t.DraftNumber).HasMaxLength(20).IsUnicode(false); 
+            this.Property(t => t.PaymentReferences).HasMaxLength(1000).IsUnicode(false);
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS"); 
             if (dbms == "oracle")
             {
                 this.Property(t => t.SearchFields).HasMaxLength(2000).IsUnicode(true);
@@ -205,6 +206,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.MasterShipmentNumbers).HasColumnName("MasterShipmentNumbers");
             this.Property(t => t.HouseNumbers).HasColumnName("HouseNumbers");
             this.Property(t => t.GlobalTaxCalculation).HasColumnName("GlobalTaxCalculation");
+            this.Property(t => t.PaymentReferences).HasColumnName("PaymentReferences");
 
             // Relationships
             this.HasOptional(t => t.BillToAddress).WithMany().HasForeignKey(d => d.BillToAddressId);
