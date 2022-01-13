@@ -44,6 +44,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private APInvoiceTotalVATRepository invoiceTotalVatRepository;
         private List<ShipmentPayable> allPayables;
         private ShipmentPayableRepository shipmentPayableRepository;
+        private PayableProratedAmountRepository payableProratedAmountRepository;
         private DateTime todayDateTime;
         public APInvoiceMultipleShortService(IInvoiceContext objectContext, APInvoiceMultipleShortPM entityPM)
         {
@@ -56,6 +57,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.invoiceLineRepository = new APInvoiceLineRepository(objectContext);
             this.invoiceTotalVatRepository = new APInvoiceTotalVATRepository(objectContext);
             this.shipmentPayableRepository = new ShipmentPayableRepository(shipmentsContext);
+            this.payableProratedAmountRepository = new PayableProratedAmountRepository(shipmentsContext);
             this.todayDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
             this.allPayables = new List<ShipmentPayable>();
             this.GetLoggedContact();
@@ -450,6 +452,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (myPayable.ShipmentPayableAmountTypeCode == "NEXP")
                 {
                     List<ShipmentPayable> ChildPayables = shipmentPayableRepository.GetChildPayablesByParentPayable(myPayable.Id, tenant);
+                    List<string> payablesId = ChildPayables.Select(s => s.Id).ToList();
+
+                    List<PayableProratedAmount> payableProratedAmounts = payableProratedAmountRepository.GetPayableProratedAmountsByPayablesIds(payablesId, tenant);
+                    foreach (PayableProratedAmount item in payableProratedAmounts)
+                    {
+                        payableProratedAmountRepository.Remove(item);
+                    }
+
                     foreach (ShipmentPayable myChild in ChildPayables)
                     {
                         shipmentPayableRepository.Remove(myChild);
@@ -511,6 +521,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
 
                     List<ShipmentPayable> ChildPayables = shipmentPayableRepository.GetChildPayablesByParentPayable(payable.Id, tenant);
+                    List<string> payablesId = ChildPayables.Select(s => s.Id).ToList();
+
+                    List<PayableProratedAmount> payableProratedAmounts = payableProratedAmountRepository.GetPayableProratedAmountsByPayablesIds(payablesId, tenant);
+                    foreach (PayableProratedAmount item in payableProratedAmounts)
+                    {
+                        payableProratedAmountRepository.Remove(item);
+                    }
+
                     foreach (ShipmentPayable myChild in ChildPayables)
                     {
                         myChild.ShipmentPayableLineStatusCode = payable.ShipmentPayableLineStatusCode;
