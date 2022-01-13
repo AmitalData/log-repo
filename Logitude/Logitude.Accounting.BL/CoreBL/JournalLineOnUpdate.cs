@@ -11,6 +11,7 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -132,7 +133,10 @@ namespace Logitude.Accounting.BL.CoreBL
                 
                 haveChange = (journalLinePM.CreditAccountId != creditIVerifyGLAccountManager.AccountId ||
                     journalLinePM.CreditControlAccountId != creditIVerifyGLAccountManager.ControlAccountId);
-               
+                if (haveChange)
+                {
+                    Debug.WriteLine("FixCredit!! due haveChange ");
+                }
                 journalLinePM.CreditAccountId = creditIVerifyGLAccountManager.AccountId;
             }
             journalLinePM.CreditControlAccountId = creditIVerifyGLAccountManager.ControlAccountId;
@@ -174,6 +178,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         haveChange = (journalLinePM.DebitAccountId != debitIVerifyGLAccountManager.AccountId ||
                             journalLinePM.DebitControlAccountId != debitIVerifyGLAccountManager.ControlAccountId);
+                        if (haveChange)
+                        {
+                            Debug.WriteLine("FixDebit!! due haveChange ");
+                        }
                     }
 
                     
