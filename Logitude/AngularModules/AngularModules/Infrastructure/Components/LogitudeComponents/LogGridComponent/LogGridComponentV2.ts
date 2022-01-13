@@ -515,6 +515,10 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
             this.onRowSelected(1, 1, row.rowData, row.rowIndex);
         else if (this.selectedRow.$id < firstRowAppear || this.selectedRow.$id > firstRowAppear + this.viewportSize)
             this.onRowSelected(1, 1, row.rowData, row.rowIndex);
+        else if (elem.scrollTop == 0) {
+            this.onRowSelected(1, 1, row.rowData, row.rowIndex);
+        }
+
         return true;
     }
 
