@@ -35,14 +35,10 @@ Feature: Cancel standalone shipment
 
     Scenario: Cancel standalone shipment
         Given the user in standalone shipment
-        When cancel the standalone shipment with "Cancel The Shipment" Note
+        When cancel the standalone shipment with "Cancel Thestandalone shipment" Note
         Then the shipment should cancel successfully
         And the shipment should not connected with pickup
         And all fiellds in pickup should not be dim
 
 
-    Scenario: Reactivate standalone shipment
-        Given the user in the standalone shipment
-        When reactivate the shipment with "Reactivate The Shipment" Note
-        Then the shipment should reactivate successfully
-        And many options in more button should not be dim
+    

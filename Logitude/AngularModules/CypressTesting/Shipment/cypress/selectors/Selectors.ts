@@ -86,6 +86,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly DocsInTabb = '#ShipmentTHDocsIn';
   public static readonly EventsTab = '#ShipmentTHEvents';
   public static readonly ConnectionsTab = '#ShipmentTHConnections';
+  public static readonly ConnectionsShipmentTab =  '[id^=ShipmentTHConnections]'
   public static readonly CustomsTab = '#ShipmentTHCustoms';
   public static readonly StartWithPayablesTab = '[id^=ShipmentTHPayables]'
   //#endregion

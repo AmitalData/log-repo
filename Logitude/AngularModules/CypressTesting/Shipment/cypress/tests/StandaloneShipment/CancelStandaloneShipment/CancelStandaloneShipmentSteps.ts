@@ -15,6 +15,8 @@ import { ShipmentConstants } from "../../../constants/constants";
 let shipmentDetails: ShipmentDetails;
 let PickupDelivarytData: PickupDelivaryDetails;
 let shipmentNumber: string;
+let StandaloneShipmentNumber: string;
+let EventNote ; 
 
 Given("the user logged in and navigates to shipments workspace", () => {
   cy.Login()
@@ -28,9 +30,56 @@ Given("a direct shipment with the following details", (dataTable) => {
   cy.FillLogLov(ShipmentSelectors.ShipmentShipper, shipmentDetails.Shipper, true)
 });
 
+Given("the user open the shipment and navigate to RoutingsTab workspace", () => {
+  Actions.OpenShipment(shipmentNumber);
+  cy.Click(ShipmentSelectors.RoutingsTab, null)
+  cy.Click(ShipmentSelectors.AddPickUp, null)
+  cy.Click(BaseSelectors.Button, ShipmentConstants.AddPickUp)
+});
+
+  
+Given("add a new pickup leg with the following details", (dataTable) => {
+  PickupDelivarytData = Assists.CreateInstance<PickupDelivaryDetails>(dataTable, true);
+  StandaloneAction.FillPickUpDelivaryDetails(PickupDelivarytData);
+});
+  
+Given("save the pickup", () => {
+  cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
+  cy.Click(BaseSelectors.SaveButton + BaseSelectors.LastElement, null)
+  BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+});
+
+Given("the user in standalone shipment",()=>{
+  cy.Click(BaseSelectors.HyperlinkButtonControl, StandaloneShipmentNumber, true)
+})
+
 When("create shipment", () => {
   Actions.CreateShipment(shipmentDetails.ShipmentLevel);
 });
+
+When("cancel the standalone shipment with {string} Note", (note) => {
+  EventNote = note
+  Actions.CancelShipment(note);
+});
+
+When("create standalone shipment", () => {
+  cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, ShipmentConstants.CreateStandaloneShipment)
+  StandaloneAction.CreateStandaloneShipment()
+})
+
+Then("the shipment should cancel successfully", () => {
+  BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+  Actions.ValidateCancelIconExist(true);
+}); 
+
+Then("the shipment should not connected with pickup",()=>{
+  cy.Click(ShipmentSelectors.ConnectionsShipmentTab+BaseSelectors.LastElement,null,true);
+  cy.Navigate(ShipmentSelectors.Backbutton + BaseSelectors.LastElement, true)
+})
+
+Then("all fiellds in pickup should not be dim",()=>{
+  StandaloneAction.AssertShipmenteMenuButtonsEnabled()
+})
 
 Then("the shipment should create successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
@@ -38,47 +87,24 @@ Then("the shipment should create successfully", () => {
   })
 });
 
-Given("the user open the shipment and navigate to RoutingsTab workspace", () => {
-    Actions.OpenShipment(shipmentNumber);
-    cy.Click(ShipmentSelectors.RoutingsTab, null)
-    cy.Click(ShipmentSelectors.AddPickUp, null)
-    cy.Click(BaseSelectors.Button, ShipmentConstants.AddPickUp)
-  });
+Then("a domestic inland shipment should create", () => {
+  BaseAssertion.AssertStatusCode(RequestAliases.ShipmentStandaloneRequest, 200);
+});
   
-  Given("add a new pickup leg with the following details", (dataTable) => {
-    PickupDelivarytData = Assists.CreateInstance<PickupDelivaryDetails>(dataTable, true);
-    StandaloneAction.FillPickUpDelivaryDetails(PickupDelivarytData);
-  });
-  
-  Given("save the pickup", () => {
-    cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
-    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
-    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
-  });
+Then("the cancel, operational close Shipment, convert to custom file and Send Response actions in more button shouldn't be dim", () => {
+  cy.Click(BaseSelectors.ToggleButtonClass + BaseSelectors.LastElement, null)
+  StandaloneAction.AssertShipmenteMenuButtonsEnabled()
+})
 
-  When("create standalone shipment", () => {
-    cy.Click(ShipmentSelectors.Printbutton, ShipmentConstants.CreateStandaloneShipment)
-    StandaloneAction.CreateStandaloneShipment()
-  })
-  
-  Then("a domestic inland shipment should create", () => {
-    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentStandaloneRequest, 200);
-  });
-  
-  Then("the cancel, operational close Shipment, convert to custom file and Send Response actions in more button shouldn't be dim", () => {
-    cy.Click(BaseSelectors.ToggleButtonClass + BaseSelectors.LastElement, null)
-    StandaloneAction.AssertShipmenteMenuButtonsEnabled()
-  })
-  
-  Then("all other actions should be dim", () => {
-    StandaloneAction.AssertShipmenteMenuButtonsDisabled()
-  })
-  
-  Then("all fields should be dim in pickup window", () => {
-    cy.Navigate(ShipmentSelectors.Backbutton + BaseSelectors.LastElement, true)
-    StandaloneAction.AssertShipmentePickupDelivaryWindowDisabled()
-  })
-  
-  Then("the link of standalon should display", () => {
-    BaseAssertion.AssertElementExist(ShipmentSelectors.StandaloneShipmentHyperlink)
-  })
+Then("all other actions should be dim", () => {
+  StandaloneAction.AssertShipmenteMenuButtonsDisabled()
+})
+
+Then("all fields should be dim in pickup window", () => {
+  cy.Navigate(ShipmentSelectors.Backbutton + BaseSelectors.LastElement, true)
+  StandaloneAction.AssertShipmentePickupDelivaryWindowDisabled()
+})
+
+Then("the link of standalon should display", () => {
+  BaseAssertion.AssertElementExist(ShipmentSelectors.StandaloneShipmentHyperlink)
+})
