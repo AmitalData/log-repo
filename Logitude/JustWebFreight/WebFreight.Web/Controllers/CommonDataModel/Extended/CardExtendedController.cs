@@ -162,8 +162,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             GLAccountPM glacountToDeleteCardDataFrom;
             glacountToDeleteCardDataFrom = GetMainForSingleCurrencyGLAccount(glaccount);
             if (glacountToDeleteCardDataFrom != null)
+            {
                 mainGLAccount = glacountToDeleteCardDataFrom;
-            return GetSingleGLAccountCardsData(mainGLAccount.CardsDataId);
+                return GetSingleGLAccountCardsData(mainGLAccount.CardsDataId);
+            }
+            return null;
         }
         private GLAccountCardsDataPM GetSingleGLAccountCardsData(string id)
         {
