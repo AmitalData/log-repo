@@ -24,6 +24,7 @@ namespace CommunicationWorkerRole
         const string ShipmentSearchesTableName = "CargoTrackingShipmentSearches";
         const string OrderPreFix = "Order ";
         const string ForwardingPreFix = "Forwarding ";
+        const int MaxShepmentsNumberPerTime = 100;
         private ICargoTrackingContext cargoContext;
         const int MaximumNumberOfConcurrentConnections = 12;
         public override bool OnStart()
@@ -69,7 +70,7 @@ namespace CommunicationWorkerRole
 
         private void SyncOrderReferencesToForwarding()
         {
-            var orderShipmentQueue = GetTop_100_OrderReferencesQueue();
+            var orderShipmentQueue = GetOrderReferencesQueue();
             if (orderShipmentQueue.Count <= 0)
                 return;
             orderShipmentQueue.AddRange(GetSameShipmants(orderShipmentQueue));
@@ -95,9 +96,9 @@ namespace CommunicationWorkerRole
             return list;
         }
 
-        private List<CargoReferencesSyncQueue> GetTop_100_OrderReferencesQueue()
+        private List<CargoReferencesSyncQueue> GetOrderReferencesQueue()
         {
-            return cargoContext.CargoReferencesSyncQueues.Take(100).Where(e => e.ShipmentType == Codes.OrderType).ToList();
+            return cargoContext.CargoReferencesSyncQueues.Take(MaxShepmentsNumberPerTime).Where(e => e.ShipmentType == Codes.OrderType).ToList();
         }
         private List<CargoTrackingShipmentSearch> GetSearchesByShipmentIds(List<string> ShipmentIds)
         {
@@ -175,7 +176,7 @@ namespace CommunicationWorkerRole
 
         private void SyncForwardingReferencesToCustome()
         {
-            var forwardingShipmentQueue = GetTop_100_ForwardingReferencesQueue();
+            var forwardingShipmentQueue = GetForwardingReferencesQueue();
             if (forwardingShipmentQueue.Count <= 0)
                 return;
             forwardingShipmentQueue.AddRange(GetSameShipmants(forwardingShipmentQueue));
@@ -265,9 +266,9 @@ namespace CommunicationWorkerRole
             return referenceType;
         }
 
-        private List<CargoReferencesSyncQueue> GetTop_100_ForwardingReferencesQueue()
+        private List<CargoReferencesSyncQueue> GetForwardingReferencesQueue()
         {
-            return cargoContext.CargoReferencesSyncQueues.Take(100).Where(e => e.ShipmentType == Codes.ForwardingType).ToList();
+            return cargoContext.CargoReferencesSyncQueues.Take(MaxShepmentsNumberPerTime).Where(e => e.ShipmentType == Codes.ForwardingType).ToList();
         }
 
 
