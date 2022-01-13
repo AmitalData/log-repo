@@ -870,7 +870,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                 Status = "D",
                 LoggingUserId = this.loggedContactId,
                 LoggingObjectTableId = objectTableId,
-                LoggingEntityId = string.IsNullOrEmpty(container_number) ? oceanInsight?.ShipmentId : containerId,
+                LoggingEntityId = IsUpdatingShipmentAndContainer() ? (string.IsNullOrEmpty(container_number) ? oceanInsight?.ShipmentId : containerId) : null,
                 LoggingEntityReference = string.IsNullOrEmpty(container_number) ? oceanInsight?.BLNumber : container_number,
                 Subject = communicationLogSubject,
                 FolderName = communicationLogTo.ToLower(),
