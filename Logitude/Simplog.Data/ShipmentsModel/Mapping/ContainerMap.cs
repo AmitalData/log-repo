@@ -47,6 +47,10 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Leg3VesselId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Leg4VesselId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Leg5VesselId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ExceptionDescription).HasMaxLength(2000).IsUnicode(true);
+            this.Property(t => t.ExceptionResolvedDescription).HasMaxLength(2000).IsUnicode(true);
+            this.Property(t => t.LastExceptionDescription).HasMaxLength(2000).IsUnicode(true);
+
             this.ToTable("Containers");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
@@ -75,7 +79,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CurrentLocation).HasColumnName("CurrentLocation");
             this.Property(t => t.DestinationLocation).HasColumnName("DestinationLocation");
             this.Property(t => t.DepartureLocation).HasColumnName("DepartureLocation");
-
             this.Property(t => t.ShipmentFirstPickupFrom).HasColumnName("ShipmentFirstPickupFrom");
             this.Property(t => t.ShipmentFirstPickupTo).HasColumnName("ShipmentFirstPickupTo");
             this.Property(t => t.ShipmentPreCarriageFromId).HasColumnName("ShipmentPreCarriageFromId");
@@ -94,7 +97,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ShipmentLastDeliveryTo).HasColumnName("ShipmentLastDeliveryTo");
             this.Property(t => t.PreCarriageLocation).HasColumnName("PreCarriageLocation");
             this.Property(t => t.PreCarriageETD).HasColumnName("PreCarriageETD");
-            this.Property(t => t.PreCarriageATD).HasColumnName("PreCarriageATD");//
+            this.Property(t => t.PreCarriageATD).HasColumnName("PreCarriageATD");
             this.Property(t => t.POLLocation).HasColumnName("POLLocation");
             this.Property(t => t.EstimatedPOLArrival).HasColumnName("EstimatedPOLArrival");
             this.Property(t => t.ActualPOLArrival).HasColumnName("ActualPOLArrival");
@@ -102,9 +105,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ActualPOLLoaded).HasColumnName("ActualPOLLoaded");
             this.Property(t => t.EstimatedPOLVesselDeparture).HasColumnName("EstimatedPOLVesselDeparture");
             this.Property(t => t.ActualPOLVesselDeparture).HasColumnName("ActualPOLVesselDeparture");
-
             this.Property(t => t.TransshipmentCount).HasColumnName("TransshipmentCount");
-            this.Property(t => t.Transshipment1Location).HasColumnName("Transshipment1Location");//
+            this.Property(t => t.Transshipment1Location).HasColumnName("Transshipment1Location");
             this.Property(t => t.EstimatedTrans1VesselArrival).HasColumnName("EstimatedTrans1VesselArrival");
             this.Property(t => t.ActualTransshipment1VesselArrival).HasColumnName("ActualTransshipment1VesselArrival");
             this.Property(t => t.EstimatedTransshipment1Discharge).HasColumnName("EstimatedTransshipment1Discharge");
@@ -113,8 +115,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ActualTransshipment1Loaded).HasColumnName("ActualTransshipment1Loaded");
             this.Property(t => t.EstimatedTrans1VesselDeparture).HasColumnName("EstimatedTransshipment1VesselDeparture");
             this.Property(t => t.ActualTrans1VesselDeparture).HasColumnName("ActualTransshipment1VesselDeparture");
-
-            this.Property(t => t.Transshipment2Location).HasColumnName("Transshipment2Location");//
+            this.Property(t => t.Transshipment2Location).HasColumnName("Transshipment2Location");
             this.Property(t => t.EstimatedTrans2VesselArrival).HasColumnName("EstimatedTrans2VesselArrival");
             this.Property(t => t.ActualTransshipment2VesselArrival).HasColumnName("ActualTransshipment2VesselArrival");
             this.Property(t => t.EstimatedTransshipment2Discharge).HasColumnName("EstimatedTransshipment2Discharge");
@@ -123,8 +124,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ActualTransshipment2Loaded).HasColumnName("ActualTransshipment2Loaded");
             this.Property(t => t.EstimatedTrans2VesselDeparture).HasColumnName("EstimatedTransshipment2VesselDeparture");
             this.Property(t => t.ActualTrans2VesselDeparture).HasColumnName("ActualTransshipment1Vesse2Departure");
-
-            this.Property(t => t.Transshipment3Location).HasColumnName("Transshipment3Location");//
+            this.Property(t => t.Transshipment3Location).HasColumnName("Transshipment3Location");
             this.Property(t => t.EstimatedTrans3VesselArrival).HasColumnName("EstimatedTrans3VesselArrival");
             this.Property(t => t.ActualTransshipment3VesselArrival).HasColumnName("ActualTransshipment3VesselArrival");
             this.Property(t => t.EstimatedTransshipment3Discharge).HasColumnName("EstimatedTransshipment3Discharge");
@@ -133,8 +133,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ActualTransshipment3Loaded).HasColumnName("ActualTransshipment3Loaded");
             this.Property(t => t.EstimatedTrans3VesselDeparture).HasColumnName("EstimatedTransshipment3VesselDeparture");
             this.Property(t => t.ActualTrans3VesselDeparture).HasColumnName("ActualTransshipment3VesselDeparture");
-
-            this.Property(t => t.Transshipment4Location).HasColumnName("Transshipment4Location");//
+            this.Property(t => t.Transshipment4Location).HasColumnName("Transshipment4Location");
             this.Property(t => t.EstimatedTrans4VesselArrival).HasColumnName("EstimatedTrans4VesselArrival");
             this.Property(t => t.ActualTransshipment4VesselArrival).HasColumnName("ActualTransshipment4VesselArrival");
             this.Property(t => t.EstimatedTransshipment4Discharge).HasColumnName("EstimatedTransshipment4Discharge");
@@ -143,7 +142,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ActualTransshipment4Loaded).HasColumnName("ActualTransshipment4Loaded");
             this.Property(t => t.EstimatedTrans4VesselDeparture).HasColumnName("EstimatedTransshipment4VesselDeparture");
             this.Property(t => t.ActualTrans4VesselDeparture).HasColumnName("ActualTransshipment4VesselDeparture");
-
             this.Property(t => t.Leg1Vessel).HasColumnName("Leg1Vessel");
             this.Property(t => t.Leg1Voyage).HasColumnName("Leg1Voyage");
             this.Property(t => t.Leg2Vessel).HasColumnName("Leg2Vessel");
@@ -154,7 +152,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Leg4Voyage).HasColumnName("Leg4Voyage");
             this.Property(t => t.Leg5Vessel).HasColumnName("Leg5Vessel");
             this.Property(t => t.Leg5Voyage).HasColumnName("Leg5Voyage");
-
             this.Property(t => t.PODLocation).HasColumnName("PODLocation");
             this.Property(t => t.EstimatedPODVesselArrival).HasColumnName("EstimatedPODVesselArrival");
             this.Property(t => t.ActualPODVesselArrival).HasColumnName("ActualPODVesselArrival");
@@ -188,7 +185,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.TerminalId).HasColumnName("TerminalId");
             this.Property(t => t.LastFreeDayDate).HasColumnName("LastFreeDayDate");
             this.Property(t => t.TerminalAddressId).HasColumnName("TerminalAddressId");
-
             this.Property(t => t.ShipmentPickupETA).HasColumnName("ShipmentPickupETA");
             this.Property(t => t.ShipmentPickupETD).HasColumnName("ShipmentPickupETD");
             this.Property(t => t.ShipmentPickupATA).HasColumnName("ShipmentPickupATA");
@@ -230,8 +226,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.OPClosed).HasColumnName("OPClosed");
             this.Property(t => t.ShipmentTypeId).HasColumnName("ShipmentTypeId");
             this.Property(t => t.ShipmentCreateDate).HasColumnName("ShipmentCreateDate");
-            this.Property(t => t.PODReceivedOnDate).HasColumnName("PODReceivedOnDate");
-            
+            this.Property(t => t.PODReceivedOnDate).HasColumnName("PODReceivedOnDate");            
             this.Property(t => t.IsAutomaticUpdates).HasColumnName("IsAutomaticUpdates");
             this.Property(t => t.IsClosed).HasColumnName("IsClosed");
             this.Property(t => t.ClosedDate).HasColumnName("ClosedDate");
@@ -244,11 +239,15 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Leg3VesselId).HasColumnName("Leg5VesselId");
             this.Property(t => t.Leg4VesselId).HasColumnName("Leg4VesselId");
             this.Property(t => t.Leg5VesselId).HasColumnName("Leg5VesselId");
+            this.Property(t => t.ExceptionDescription).HasColumnName("ExceptionDescription");
+            this.Property(t => t.ExceptionResolvedDescription).HasColumnName("ExceptionResolvedDescription");
+            this.Property(t => t.ExceptionDate).HasColumnName("ExceptionDate");
+            this.Property(t => t.HasException).HasColumnName("HasException");
+            this.Property(t => t.LastExceptionDescription).HasColumnName("LastExceptionDescription");
 
             this.HasOptional(t => t.CarrierCard).WithMany().HasForeignKey(d => d.MainCarriageCarrierId).WillCascadeOnDelete(false); 
             this.HasOptional(t => t.ShipmentPackage).WithMany().HasForeignKey(d => d.ShipmentPackagesId).WillCascadeOnDelete(false);
             this.HasOptional(t => t.VesselCard).WithMany().HasForeignKey(d => d.MainCarriageVesselId).WillCascadeOnDelete(false); 
-
             this.HasOptional(t => t.ShipmentPreCarriageFromPort).WithMany().HasForeignKey(d => d.ShipmentPreCarriageFromId); 
             this.HasOptional(t => t.ShipmentPreCarriageToPort).WithMany().HasForeignKey(d => d.ShipmentPreCarriageToId);
             this.HasOptional(t => t.ShipmentMainCarriageFromPort).WithMany().HasForeignKey(d => d.ShipmentMainCarriageFromId); 

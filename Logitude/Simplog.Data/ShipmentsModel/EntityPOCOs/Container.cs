@@ -23,7 +23,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ShipmentPackagesId { get; set; }
         [ForeignKey("ShipmentPackagesId")]
         public virtual ShipmentPackage ShipmentPackage { get; set; }
-
         public string MainCarriageCarrierId { get; set; }
         [ForeignKey("MainCarriageCarrierId")]
         public virtual Card CarrierCard { get; set; }
@@ -330,6 +329,10 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string Leg5VesselId { get; set; }
         [ForeignKey("Leg5VesselId")]
         public virtual Vessel Vessel5Leg { get; set; }
-
+        public string ExceptionDescription { get; set; }
+        public string ExceptionResolvedDescription { get; set; }        
+        public DateTime? ExceptionDate { get; set; }
+        public bool HasException { get; set; }
+        public string LastExceptionDescription { get; set; }
     }
 }
