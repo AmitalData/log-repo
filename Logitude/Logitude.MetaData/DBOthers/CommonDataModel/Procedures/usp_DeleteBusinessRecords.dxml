@@ -64,13 +64,14 @@ delete from WarehouseReleases where Tenant = @Tenant
 
 delete from Shipments where Tenant = @Tenant
 
-delete from TariffSettings
-delete from TariffProducts
-delete from TariffLinesContainersPrices 
-delete from TariffLines
-delete from TariffSurchargesUpdateMethods
-delete from TariffSurchargesUpdates
-delete from Tariffs
+delete from TariffLinesContainersPrices where Tenant = @Tenant
+delete from TariffLines where Tenant = @Tenant
+delete from TariffSurchargesUpdateMethods where Tenant = @Tenant
+delete from TariffSurchargesUpdates where Tenant = @Tenant
+delete from TariffVersionAllInCharges where Tenant = @Tenant
+delete from TariffVersionUploadedExcels where Tenant = @Tenant
+delete from TariffVersions where Tenant = @Tenant
+delete from Tariffs where Tenant = @Tenant
 
 delete from ARInvoiceLines where Tenant = @Tenant
 delete from ARInvoiceEntities where Tenant = @Tenant
