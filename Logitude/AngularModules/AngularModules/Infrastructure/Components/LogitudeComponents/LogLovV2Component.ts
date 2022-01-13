@@ -52,7 +52,7 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 })
 
 export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
-    
+
     private forceFocus: any;
     @Input()
     public get ForceFocus() {
@@ -212,7 +212,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             }
         });
     }
-   
+
     SetSelectedItemInActiveField() {
         this.UpdateSelectedEntity(this.SelectedItem?.Id);
     }
@@ -2208,6 +2208,9 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         args.IsAddDisabled = this.isAddDisabled;
         args.IsEditDisabled = this.isEditDisabled;
         args.DisplayFieldsFromList = this.DisplayFieldsFromList;
+        args.DisplayLocalFieldsFromList = this.DisplayLocalFieldsFromList;
+        args.LanguageFilterValue = this.LanguageFilterValue;
+        args.ShowLanguageFilter = this.ShowLanguageFilter;
         var tablename = TextCodeTranslator.TranslateTablePlural(this.GetObjectTableName(this.LookUpTableName));
 
         if (tablename == "Cards") {
@@ -3458,7 +3461,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         }
 
         this.SetDisplayMemberPath();
-    }  
+    }
 }
 
 export class EntityArgs {

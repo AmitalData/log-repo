@@ -27,8 +27,10 @@ import {ImportEntityArgs} from '../../../Common/Components/Maintenance/TenantImp
 import {CachedDataManager} from '../../Utilities/CachedDataManager';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 
+const localLanguageCode = 'L';
+const englishLanguageCode = 'E';
 @Component({
-    
+
 
     selector: 'LogSearchWindow',
     templateUrl: './LogSearchWindowComponent.html',
@@ -36,14 +38,14 @@ import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator'
     inputs: ['DependencyFilter1Value', 'DependencyFilter2Value', 'DependencyFilter3Value',
         "DependencyFilter1IsList", "DependencyFilter2IsList", "DependencyFilter3IsList",
         "DependencyFilter1IsListExact", "DependencyFilter2IsListExact", "DependencyFilter3IsListExact",
-            "IsTenantZeroSearch", "ShowInActive"], 
+            "IsTenantZeroSearch", "ShowInActive"],
 })
 
 export class LogSearchWindowComponent extends BaseComponent implements OnInit, OnDestroy {
 
     @Output() SearchFieldchangeevent = new EventEmitter();
     @Output() ItemSelected = new EventEmitter();
-    
+
     private _entityListService: EntityListService
     private entityPMService: EntityPMService
     public SearchText: string = "Search";
@@ -91,11 +93,14 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     IsAddBtnVisible: boolean = true;
     IsAddUSWarehouseVisible: boolean = false;
     DisplayFieldsFromList: string = null;
+    DisplayLocalFieldsFromList: string = null;
     PseventRowSelectEventSub: any;
     private CurrentSession = SessionLocator.SelectedSession;
     DontApplyVirtualization: boolean = false;
     ConstantPageSize: number = 100;
     UsingLogGridV2: boolean = false;
+    LanguageFilterValue: string;
+    ShowLanguageFilter: boolean = SessionLocator?.LoggedUserPM?.ShowLocalNameInLOV && SessionLocator?.TenantPM?.AccountingActivated;
 
 
 
@@ -125,7 +130,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     ngOnDestroy() {
         this.PseventRowSelectEventSub.unsubscribe();
         //this.CurrentSession.PseventRowSelectEvent.unsubscribe(); // this line commented, it cause object unsubscribed error
-    } 
+    }
 
     SetWindowArgs(args: CustomEntityArgs) {
         this.ObjectTableName = args.ObjectTableName; // lookup table
@@ -167,6 +172,9 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         }
 
         this.DisplayFieldsFromList = args.DisplayFieldsFromList;
+        this.DisplayLocalFieldsFromList = args.DisplayLocalFieldsFromList;
+        this.LanguageFilterValue = args.LanguageFilterValue;
+        this.ShowLanguageFilter = SessionLocator.TenantPM.AccountingActivated && args.ShowLanguageFilter;
 
         if (this.IsTenantZeroSearch) {
             this.IsAllDataVisible = true;
@@ -182,7 +190,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
                 if (this.DependencyFilter1Value.toString().split(',').length > 1)
                 {
                     //* there is more than one dep
-                   
+
                     //  show toggle button and filter list by dep fields
                     var types: string[] = this.DependencyFilter1Value.toString().split(',');
                     this.LovPartnerTypes = this.PartnerTypes.filter(d => types.indexOf(d.Id) > -1);
@@ -198,7 +206,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
                     //* there is only one dep
 
                     //show single add button
-                    if (!this.IsAddDisabled) 
+                    if (!this.IsAddDisabled)
                         this.IsAddBtnVisible = true;
                 }
 
@@ -214,13 +222,13 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
                 }
 
             }
-           
+
         }
 
         else
         {
             if (!this.IsAddDisabled) {
-                this.IsAddBtnVisible = true; 
+                this.IsAddBtnVisible = true;
 
                 if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString()) && !SessionLocator.LoggedUserPM.IsCustomerCare) {
                     if (this.ObjectTableName == "ChargesType") {
@@ -252,7 +260,10 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
 
         var objectTableId = this.ObjectTableId;
         var lookupFields: any[];
-        if (this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined) {
+        if (this.DisplayLocalFieldsFromList && this.LanguageFilterValue == localLanguageCode) {
+            var fields: string[] = this.DisplayLocalFieldsFromList.split(',');
+            lookupFields = window.ObjectFields.filter(d => d.ObjectTableId == this.LookUpTable.Id && fields.lastIndexOf(d.FieldName) > -1);
+        } else if (this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined) {
             var fields: string[] = this.DisplayFieldsFromList.split(',');
             lookupFields = window.ObjectFields.filter(d => d.ObjectTableId == this.LookUpTable.Id && fields.lastIndexOf(d.FieldName) > -1);
         }
@@ -317,9 +328,9 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     IsUseCardSearchMechanism() {
         var result: boolean = false;
         if (this.ObjectTableName == "Card") {
-           
+
                 result = true;
-           
+
         }
         return result;
 
@@ -338,7 +349,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         },
     };
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
-        
+
         //if (filters == null) {
         if (this.QueryFilterItems != null && this.QueryFilterItems != undefined) {
             filters = this.QueryFilterItems;
@@ -355,7 +366,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         filters.SortDirection = sortingDir;
         filters.Tenant = this.TenantPM.Id;
 
-   
+
         if (filters.AdditionalFilters.filter(a => a.FieldName == "SearchFields").length > 0 || filters.AdditionalFilters.filter(a => a.FieldName == "CardSearchField").length > 0) {
             filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "SearchFields");
             filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "CardSearchField");
@@ -396,7 +407,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         //if (x.length == 0) {
         //    filters.addAdditionalFilter("InActive", false, null, null, "Equals", false, true, false, "Boolean");
         //}
-        
+
         var rowsObjectTable = this.ObjectTableName;
         //if (this.UseCompactSearch) {
         //    filters.addAdditionalFilter("CompactSearchField", searchfields, null, null, "Contains", false, false, false, null);
@@ -458,7 +469,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         //if (x.length == 0) {
         //    filters.addAdditionalFilter("InActive", false, null, null, "Equals", false, true, false, "Boolean");
         //}
-        
+
         var rowsObjectTable = this.ObjectTableName;
 
         //if (this.UseCompactSearch) {
@@ -470,7 +481,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
       //  }
     }
 
-    //#endregion 
+    //#endregion
 
     //#region Dependency
     SetDependencyProperties(apiQueryFilters: ApiQueryFilters) {
@@ -617,13 +628,13 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     }
 
     //#endregion
-    
-    //#region Buttons + Handlers 
+
+    //#region Buttons + Handlers
 
     AddButtonClicked() {
         //if (this.isAddDisabled)
         //    return;
-        
+
         this.NewEntityMethod(this.ObjectTableName);
     }
     NewEntityMethod(objectTableName) {
@@ -802,7 +813,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
             this.SearchFieldchangeevent.emit("");
         }
 
-        
+
     }
     onRowSelected($event) {
         if (this.preventSelect == false) {
@@ -814,7 +825,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
                 var args = selectedEntityId + ',' + entityList.Tenant;
                 // Close windoew with Args
                 this.CurrentSession.CloseCurrentWindowEmit(args);
-            } 
+            }
         }
         else {
             this.preventSelect = false;
@@ -848,6 +859,14 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
             this.TextChanged(this.searchFields);
         });
     }
+
+    @Output() columnsReadyEvent = new EventEmitter();
+    SwitchLanguage(languageCode: string) {
+        this.LanguageFilterValue = languageCode;
+        this.BuildColumns();
+        this.columnsReadyEvent.emit({Columns: this.columns1});
+
+    }
 }
 
 export class CustomEntityArgs {
@@ -873,7 +892,10 @@ export class CustomEntityArgs {
     public IsAddDisabled: boolean = true;
     public IsEditDisabled: boolean = true;
     public DisplayFieldsFromList: string = null;
+    public DisplayLocalFieldsFromList: string = null;
+    public LanguageFilterValue: string;
     public HideEdit: boolean;
+    public ShowLanguageFilter: boolean;
 
 
 }
