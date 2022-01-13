@@ -389,7 +389,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             //update amounts
             if (theEntityPm.IsFullAccounting == true)
-                UpdateFullAccountPaymentAmount(theEntityPm, gla.ReconcileMethodCode == "0");
+                UpdateFullAccountPaymentAmount(theEntityPm);
 
 
             // PaymentCheque And CashBook
@@ -440,7 +440,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             // Full Accounting => Reconciliation
             if (theEntityPm.IsFullAccounting == true)
             {
-                if (string.IsNullOrEmpty(theEntityPm.GLAccountId))
+                if (string.IsNullOrEmpty(theEntityPm.GLAccountId) && !theEntityPm.UpdateAmountAndStatuses)
                     throw new ApplicationException("Hey! no glaccount provided!!");
 
                 if (theEntityPm.StatusCode != "VD" && theEntityPm.ARPaymentChequeReplicas.Count == 0)
@@ -2152,7 +2152,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             return amount2reconcile;
         }
 
-        void UpdateFullAccountPaymentAmount(ARPaymentPM paymentPM, bool useLocalRecoMethod)
+        void UpdateFullAccountPaymentAmount(ARPaymentPM paymentPM)
         {
             //
             // update payment amount:

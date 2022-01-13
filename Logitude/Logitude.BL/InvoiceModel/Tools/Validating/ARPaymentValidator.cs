@@ -217,7 +217,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 Branch = entityPM.BankBranch,
                 Account = entityPM.Account,
                 Bank = entityPM.Bank,
-                IsNewEntity = isNew
+                IsNewEntity = isNew,
+                IsFromReconcileScreen = entityPM.UpdateAmountAndStatuses,
             };
 
             ValidateFullAccounting(arpaymentValidatorArgs);
@@ -480,7 +481,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     }
                 }
                 GLAccountPM glAccount = getGLAccount(arguments.BillToId, arguments.Tenant);
-                if (glAccount == null)
+                if (glAccount == null && !arguments.IsFromReconcileScreen)
                 {
 
                     string msg = TranslateTextsClass.Translate("ARPayment.M.BillToGLAccount", arguments.Tenant, useLocal);
