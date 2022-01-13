@@ -100,7 +100,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     ConstantPageSize: number = 100;
     UsingLogGridV2: boolean = false;
     LanguageFilterValue: string;
-    ShowLanguageFilter: boolean = SessionLocator?.LoggedUserPM?.ShowLocalNameInLOV;
+    ShowLanguageFilter: boolean = SessionLocator?.LoggedUserPM?.ShowLocalNameInLOV && SessionLocator?.TenantPM?.AccountingActivated;
 
 
 
@@ -174,7 +174,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         this.DisplayFieldsFromList = args.DisplayFieldsFromList;
         this.DisplayLocalFieldsFromList = args.DisplayLocalFieldsFromList;
         this.LanguageFilterValue = args.LanguageFilterValue;
-        this.ShowLanguageFilter = args.ShowLanguageFilter;
+        this.ShowLanguageFilter = SessionLocator.TenantPM.AccountingActivated && args.ShowLanguageFilter;
 
         if (this.IsTenantZeroSearch) {
             this.IsAllDataVisible = true;
