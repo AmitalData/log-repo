@@ -108,6 +108,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string TransportModeId  { get; set; }
        [DataMember]
        public string Direction  { get; set; }
+       [DataMember]
+       public string DeclarationOfficeName  { get; set; }
    }
 
 }
