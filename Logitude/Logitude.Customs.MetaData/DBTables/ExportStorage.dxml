@@ -126,7 +126,7 @@
   <Column
     Name="ExportDealIdentification"
     Type="nvarchar"
-    Size="4">
+    Size="16">
     <Constraints
       Nullable="true" />
   </Column>
