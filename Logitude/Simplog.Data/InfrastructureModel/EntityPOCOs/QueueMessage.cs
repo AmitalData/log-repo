@@ -28,5 +28,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         [Column("TenantPriority")]
         public int? TenantPriority { get; set; }
 
+        [Column("UseRabbitMQ")]
+        public bool UseRabbitMQ { get; set; }
     }
 }
