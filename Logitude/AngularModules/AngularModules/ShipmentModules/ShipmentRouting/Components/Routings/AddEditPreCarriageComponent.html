@@ -109,12 +109,12 @@
                             </tr>
 
                             <!-- PreCarriageVesselName -->
-                            <tr class="FormFieldRow">
+                            <tr class="FormFieldRow" *ngIf="PreCarriageTransportModeId == 'O'">
                                 <td>
                                     <LogLabel [ObjectFieldName]="'PreCarriageVesselName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Vessel'"></LogLabel>
                                 </td>
 
-                                <td>
+                                <td *ngIf="IsVesselFreeTextVisible">
                                     <table>
                                         <tr>
                                             <td>
@@ -127,6 +127,16 @@
                                             </td>
                                         </tr>
                                     </table>
+                                </td>
+
+                                <td *ngIf="!IsVesselFreeTextVisible">
+                                    <LogLov [ObjectFieldName]="'PreCarriageVesselId'"
+                                            [SelectedValue]="PreCarriageVesselId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Vessel'"
+                                            (SelectedItemChanged)="PreCarriageVessel = $event">
+                                    </LogLov>
                                 </td>
                             </tr>
 
@@ -356,12 +366,12 @@
                             </tr>
 
                             <!-- PreForwardingVesselName -->
-                            <tr class="FormFieldRow">
+                            <tr class="FormFieldRow" *ngIf="PreForwardingTransportModeId == 'O'">
                                 <td>
                                     <LogLabel [ObjectFieldName]="'PreForwardingVesselName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Vessel'"></LogLabel>
                                 </td>
 
-                                <td>
+                                <td *ngIf="IsVesselFreeTextVisible">
                                     <table>
                                         <tr>
                                             <td>
@@ -374,6 +384,16 @@
                                             </td>
                                         </tr>
                                     </table>
+                                </td>
+
+                                <td *ngIf="!IsVesselFreeTextVisible">
+                                    <LogLov [ObjectFieldName]="'PreForwardingVesselId'"
+                                            [SelectedValue]="PreForwardingVesselId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Vessel'"
+                                            (SelectedItemChanged)="PreForwardingVessel = $event">
+                                    </LogLov>
                                 </td>
                             </tr>
 

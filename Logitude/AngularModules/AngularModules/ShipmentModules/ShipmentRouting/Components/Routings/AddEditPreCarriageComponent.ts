@@ -15,6 +15,8 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
+import { VesselList } from '../../../../Common/EntityLists/VesselList';
 
 @Component({
     templateUrl: './AddEditPreCarriageComponent.html',
@@ -32,6 +34,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
     public IsOkButtonEnabled: boolean = true;
     private SaveCompletedEvent: any = null;
     public IsChooseVesselVisible: boolean = false;
+    public IsVesselFreeTextVisible: boolean = false;
     constructor() {
         super();
         this.InitServices();
@@ -50,6 +53,11 @@ export class AddEditPreCarriageComponent extends BaseComponent {
         this.FatherComponent = args['FatherComponent'];
         this.LegType = args['LegType'];
         this.Clone();
+
+        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "VSL")[0];
+        if (featureToggle) {
+            this.IsVesselFreeTextVisible = true;
+        }
 
         this.SetDefaultValues();
         this.SetUIProperties();
@@ -120,11 +128,13 @@ export class AddEditPreCarriageComponent extends BaseComponent {
         this.UIProperties.SetEnabled("PreCarriageCarrierId", this.ObjectTableName, isTransportFieldEnabled);
         this.UIProperties.SetEnabled("PreCarriageCarrierNumber", this.ObjectTableName, isCarrierNumberFieldEnabled);
         this.UIProperties.SetEnabled("PreCarriageVesselName", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("PreCarriageVesselId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("PreCarriageETD", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("PreCarriageETA", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("PreCarriageATD", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("PreCarriageATA", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetVisibility("PreCarriageVesselName", this.ObjectTableName, this.PreCarriageTransportModeId == "O" ? true : false);
+        this.UIProperties.SetVisibility("PreCarriageVesselId", this.ObjectTableName, this.PreCarriageTransportModeId == "O" ? true : false);
         this.IsChooseVesselVisible = this.PreCarriageTransportModeId == "O" ? true : false;
 
         this.SetUIProperties_Carriage_RequiredFields();
@@ -149,11 +159,13 @@ export class AddEditPreCarriageComponent extends BaseComponent {
         this.UIProperties.SetEnabled("PreForwardingCarrierId", this.ObjectTableName, isTransportFieldEnabled);
         this.UIProperties.SetEnabled("PreForwardingCarrierNumber", this.ObjectTableName, isCarrierNumberFieldEnabled);
         this.UIProperties.SetEnabled("PreForwardingVesselName", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("PreForwardingVesselId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("PreForwardingETD", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("PreForwardingETA", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("PreForwardingATD", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("PreForwardingATA", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetVisibility("PreForwardingVesselName", this.ObjectTableName, this.PreForwardingTransportModeId == "O" ? true : false);
+        this.UIProperties.SetVisibility("PreForwardingVesselId", this.ObjectTableName, this.PreForwardingTransportModeId == "O" ? true : false);
         this.IsChooseVesselVisible = this.PreForwardingTransportModeId == "O" ? true : false;
 
         this.SetUIProperties_Forwarding_RequiredFields();
@@ -204,11 +216,13 @@ export class AddEditPreCarriageComponent extends BaseComponent {
         this.UIProperties.SetEnabled("PreCarriageCarrierId", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("PreCarriageCarrierNumber", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("PreCarriageVesselName", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("PreCarriageVesselId", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("PreCarriageETD", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("PreCarriageETA", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("PreCarriageATD", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("PreCarriageATA", this.ObjectTableName, false);
         this.UIProperties.SetVisibility("PreCarriageVesselName", this.ObjectTableName, this.PreCarriageTransportModeId == "O" ? true : false);
+        this.UIProperties.SetVisibility("PreCarriageVesselId", this.ObjectTableName, this.PreCarriageTransportModeId == "O" ? true : false);
         this.IsChooseVesselVisible = this.PreCarriageTransportModeId == "O" ? true : false;
     }
 
@@ -379,11 +393,27 @@ export class AddEditPreCarriageComponent extends BaseComponent {
         }
     }
 
+    private preCarriageVessel: VesselList;
+    get PreCarriageVessel() { return this.preCarriageVessel; }
+    set PreCarriageVessel(value: VesselList) {
+        if (this.preCarriageVessel != value) {
+            this.preCarriageVessel = value;
+        }
+
+        this.PreCarriageVesselName = null;
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.PreCarriageVesselName = value.EnglishName;
+        }
+    }
+
     get PreCarriageVesselName() { return this.EntityPM.PreCarriageVesselName; }
     set PreCarriageVesselName(newValue: string) {
         if (this.EntityPM.PreCarriageVesselName != newValue) {
             this.EntityPM.PreCarriageVesselName = newValue;
-            this.PreCarriageVesselId = null;
+
+            if (this.IsVesselFreeTextVisible) {
+                this.PreCarriageVesselId = null;
+            }
         }
     }
 
@@ -553,11 +583,27 @@ export class AddEditPreCarriageComponent extends BaseComponent {
         }
     }
 
+    private preForwardingVessel: VesselList;
+    get PreForwardingVessel() { return this.preForwardingVessel; }
+    set PreForwardingVessel(value: VesselList) {
+        if (this.preForwardingVessel != value) {
+            this.preForwardingVessel = value;
+        }
+
+        this.PreForwardingVesselName = null;
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.PreForwardingVesselName = value.EnglishName;
+        }
+    }
+
     get PreForwardingVesselName() { return this.EntityPM.PreForwardingVesselName; }
     set PreForwardingVesselName(newValue: string) {
         if (this.EntityPM.PreForwardingVesselName != newValue) {
             this.EntityPM.PreForwardingVesselName = newValue;
-            this.PreForwardingVesselId = null;
+
+            if (this.IsVesselFreeTextVisible) {
+                this.PreForwardingVesselId = null;
+            }
         }
     }
 

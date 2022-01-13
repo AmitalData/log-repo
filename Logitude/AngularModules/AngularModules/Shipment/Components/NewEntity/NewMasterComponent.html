@@ -484,7 +484,8 @@
                                                                         <td [style.width.px]="LabelColumnWidth">
                                                                             <LogLabel [ObjectFieldName]="'MainCarriageVesselName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                         </td>
-                                                                        <td [style.width.px]="ControlColumnWidth">
+
+                                                                        <td [style.width.px]="ControlColumnWidth" *ngIf="IsVesselFreeTextVisible">
                                                                             <table>
                                                                                 <tr>
                                                                                     <td>
@@ -497,6 +498,16 @@
                                                                                     </td>
                                                                                 </tr>
                                                                             </table>
+                                                                        </td>
+
+                                                                        <td [style.width.px]="ControlColumnWidth" *ngIf="!IsVesselFreeTextVisible">
+                                                                            <LogLov [ObjectFieldName]="'MainCarriageVesselId'"
+                                                                                    [SelectedValue]="MainCarriageVesselId"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [LookUpTableName]="'Vessel'"
+                                                                                    (SelectedItemChanged)="MainCarriageVessel = $event">
+                                                                            </LogLov>
                                                                         </td>
                                                                     </tr>
 
