@@ -876,6 +876,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     List<ShipmentPayable> childPayables = shipmentPayableRepository.GetChildPayablesByParentPayable(payable.Id, tenant);
                     List<string> payablesId = childPayables.Select(s => s.Id).ToList();
+
+                    List<PayableProratedAmount> payableProratedAmounts = payableProratedAmountRepository.GetPayableProratedAmountsByPayablesIds(payablesId, tenant);
+                    foreach (PayableProratedAmount item in payableProratedAmounts)
+                    {
+                        payableProratedAmountRepository.Remove(item);
+                    }
+                    
                     foreach (ShipmentPayable insideItem in childPayables)
                     {
                         shipmentPayableRepository.Remove(insideItem);
@@ -883,12 +890,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                     allPayables.Remove(payable);
                     shipmentPayableRepository.Remove(payable);
-
-                    List<PayableProratedAmount> payableProratedAmounts = payableProratedAmountRepository.GetPayableProratedAmountsByPayablesIds(payablesId, tenant);
-                    foreach (PayableProratedAmount item in payableProratedAmounts)
-                    {
-                        payableProratedAmountRepository.Remove(item);
-                    }
                 }
 
                 else
