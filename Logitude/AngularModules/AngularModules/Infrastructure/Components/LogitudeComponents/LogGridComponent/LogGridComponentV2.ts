@@ -145,7 +145,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
 
 
     constructor(private _elementRef: ElementRef, private cd: ChangeDetectorRef) {
-        //setTimeout(() => this.cd.markForCheck(), 10); 
+        //setTimeout(() => this.cd.markForCheck(), 10);
         if (this.CurrentSession == null) {
             this.LogGridId = "LogGrid_-1_-1";
             this.LogGridRowsId = "LogGridRows_-1_-1";
@@ -279,7 +279,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
         else {
             this.GridLeft = rec.left;
         }
-        //console.log("OnMyMouseDown $event.clientX : " + $event.clientX); 
+        //console.log("OnMyMouseDown $event.clientX : " + $event.clientX);
         this.lastDownX = ($event.clientX - this.GridLeft);
         //var tr = $event.currentTarget.arentElement.id;
         this.ColIndex = +($event.currentTarget.parentElement.id.split(',')[1]);//+(arg.split(',')[1]);
@@ -302,7 +302,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
             }
             this.ColIndex = +($event.currentTarget.id.split(',')[1]);//+(arg.split(',')[1]);
             this.lastDownX = $event.clientX - this.GridLeft;
-            //var d = document.getElementById(this.ColumnId + 'Mask'); 
+            //var d = document.getElementById(this.ColumnId + 'Mask');
             //d.style.display = "block";
             this.ShadowTitle = $event.currentTarget.innerHTML;
         }
@@ -341,8 +341,8 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
     OnMyMouseMove(e) {
         if (this.isResizing) {
             //console.log("this.GridLeft : " + this.GridLeft);
-            //console.log("e.clientX : " + e.clientX); 
-            //console.log("this.lastDownX : " + this.lastDownX); 
+            //console.log("e.clientX : " + e.clientX);
+            //console.log("this.lastDownX : " + this.lastDownX);
             var NewX = (e.clientX - this.GridLeft);
             var lastDelta = NewX - this.lastDownX;
             if (this.RTL) {
@@ -364,7 +364,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
                 }
 
                 var ColsArr = this.columns;
-                //var leftPadd = 0; 
+                //var leftPadd = 0;
                 for (var i = this.ColIndex + 1; i < ColsArr.length; i++) {
                     var leftPadd = 0;//10;
                     //for (var j = 0; j < i; j++) {
@@ -506,7 +506,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
         d.style.width = width + 'px';
         d.style.display = "block";
     }
-    
+
     onFirstRowSelected(row: any) {
         let elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
         let firstRowAppear = Math.floor(elem.scrollTop / this.rowHeight);
@@ -853,7 +853,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
             }
         }
         if (this.ColumnsReady) {
-            this.ColumnsReadySub = this.ColumnsReady.subscribe((res) => {
+            this.ColumnsReadySub = this.ColumnsReady.subscribe((data) => {
                 var index = 0
                 var left = 0;
                 if (this.IsSpotLight == true) {
@@ -862,6 +862,9 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
                 //if (this.ShowArrow == true) {
                 //    left += 25;
                 //}
+                if(data && data.Columns)
+                    this.columns = data.Columns;
+
                 this.TotalWidth = 0;
                 this.columns.forEach((value, key) => {
                     this.ColumnsQueryCode = value.QueryCode;
@@ -1248,7 +1251,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
     sortingCol: string = ''; //'CreateDateTime';
     AfterServerSort: boolean = false;
     ServerSort(colDef, id, forced: boolean = false) {
-       
+
         if (forced == false) {
             this.selectedRow = null;
             this.MySelectedRowIndex = null;
@@ -1331,7 +1334,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
             //this.myReloadData();
             //this.CurrentSession.StartBusyIndicator("Loading ...");
             this.virtualRowMetaData.rowsCount = 0;
-            this.controller = new VirtualRowControllerV2(this.virtualRowMetaData); 
+            this.controller = new VirtualRowControllerV2(this.virtualRowMetaData);
             this.init(true);
             var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
             if (elem) {
@@ -1419,7 +1422,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
         this.rowsPerPage = this.dataSource.pageSize;
 
         //this.rows = [];
-        
+
         var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
 
         if (elem) {
@@ -1449,10 +1452,10 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
                 this.dataSource.pageSize = this.viewportSize * 3;
             }
             if (this.controller) {
-                this.controller.disconnect(); 
+                this.controller.disconnect();
             }
-            
-            this.controller = new VirtualRowControllerV2(this.virtualRowMetaData); 
+
+            this.controller = new VirtualRowControllerV2(this.virtualRowMetaData);
             this.controller.setDataSource(this.dataSource);
             //this.controller.ClearCache();
             //if (!this.DontApplyVirtualization) {
@@ -1793,7 +1796,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
                 }
             }
             this.cd.detectChanges();
-        
+
     };
     HScrollPosition: number = -1;
     HorizantalScrollValue: string = "0px";
@@ -1934,7 +1937,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
         this.cd = null;
         if (this.FiltersChangedsubscription) {
             this.FiltersChangedsubscription.unsubscribe();
-        } 
+        }
         if (this.requestedRowsReadySub) {
             this.requestedRowsReadySub.unsubscribe();
         }
