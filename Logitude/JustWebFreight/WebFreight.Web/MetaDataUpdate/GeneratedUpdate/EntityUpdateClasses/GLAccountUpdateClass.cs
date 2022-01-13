@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "4492ddf078b5ac5172b05207b36d8ca9";
+		public const string HashString = "082611c4718a40137ff32f8da1319fff";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -12665,6 +12665,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountsOCustomerGLaccountDefinedSplit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CustomerGLaccountDefinedSplit", DefaultText = "The customer GLaccount is already defined as a split by currency Account",LocalDefaultText = @"לא ניתן להוסיף את כרטיס פיצול זה מכיוון שהוא מוגדר ככרטיס ראש", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountsONegativePostponedChequesCommission = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.NegativePostponedChequesCommission", DefaultText = "Please enter positive values only in the postponed cheques commission",LocalDefaultText = @"Please enter positive values only in the postponed cheques commission", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOUnsavedChangesSaveBeforeContinue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.UnsavedChangesSaveBeforeContinue", DefaultText = "You have Unsaved changes, please save them before you continue",LocalDefaultText = @"קיימים שינויים שטרם נשמרו, אנא בצע שמירה לפני היציאה.", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
