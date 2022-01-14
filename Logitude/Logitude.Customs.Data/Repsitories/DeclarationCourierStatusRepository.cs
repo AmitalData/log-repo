@@ -242,6 +242,17 @@ namespace Logitude.Customs.Data.Repsitories
             return declarations;
 
         }
+        public List<DeclarationCourierStatus> GetDeclarationsByIdsExpectDecWithHatraDate(List<string> declarationIds, int tenant)
+        {
+
+            List<DeclarationCourierStatus> declarations = (from a in context.DeclarationCourierStatuses
+                                                           where declarationIds.Contains(a.DeclarationId)
+                                                           where a.Tenant == tenant && a.Declaration.HatraDate == null
+                                                           select a).ToList();
+
+            return declarations;
+
+        }
         public DeclarationCourierStatus GetDeclarationsById(string declarationIds, int tenant)
         {
 

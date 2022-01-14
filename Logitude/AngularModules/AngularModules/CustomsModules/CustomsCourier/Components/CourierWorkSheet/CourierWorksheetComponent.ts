@@ -322,7 +322,6 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     }
 
     SendALLCorrectManifest(courierDeclarationStatusCode: string) {
-        debugger;
         if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
@@ -1976,7 +1975,6 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             if (!AppTool.IsNullOrEmpty(currentScreenCode)) {
 
                 if (objectTableName == "Customs.Declaration") {
-                    debugger;
                     if (currentScreenCode == "DEGC" && selected.IsAmendment == true) currentScreenCode = "DCCR";
 
                     SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = true;
