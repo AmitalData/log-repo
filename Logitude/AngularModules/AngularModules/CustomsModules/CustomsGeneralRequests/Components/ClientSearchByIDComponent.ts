@@ -51,6 +51,10 @@ export class ClientSearchByIDComponent
         this.IndicationPerClassificationList = new ObservableCollection([]);
     }
 
+    SetWindowArgs(menuArg: any) {
+        this.OnMassageDisplayMethod();
+    }
+
     @ViewChild(CustomMessageWrapperComponent)
     SuperCustomMessageWrapperComponent: CustomMessageWrapperComponent = new CustomMessageWrapperComponent();
     ngAfterViewInit() {
