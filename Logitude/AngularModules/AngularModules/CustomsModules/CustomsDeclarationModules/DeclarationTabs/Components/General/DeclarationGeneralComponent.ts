@@ -1054,7 +1054,44 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     }
 
 
+    SearchClient(type, item) {
 
+        if (this.IsDisplayOnly) {
+            return;
+        }
+
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
+        this.CurrentSession.StopBusyIndicator();
+
+        var importerCode: string;
+        var passportNumber: string;
+        var passportTypeCode: string;
+        var passportCountryCode: string;
+
+        var isExternalId: boolean = true;
+        var isPassport: boolean = false;
+
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+
+        var logWindow = new LogitudeWindow();
+        windowArgs.Mode = "DeclarationGeneralComponent";
+        windowArgs.ImporterCode = importerCode;
+        windowArgs.IsExternalId = isExternalId;
+        windowArgs.IsPassport = isPassport;
+        windowArgs.PassportNumber = passportNumber;
+        windowArgs.PassportTypeCode = passportTypeCode;
+        windowArgs.PassportCountryCode = passportCountryCode;
+        logWindow.Width = 850;
+        logWindow.Height = 820;
+        logWindow.Title = TextCodeTranslator.Translate("Customs.General.O.ClientSearchByIDQuery");
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnCustomFilesScreenWindowClosed(type, $event));
+        logWindow.Show('./CustomsModules/CustomsGeneralRequests/Components/ClientSearchByIDComponent');
+
+    }
     SearchImporter(type, item) {
 
         if (this.IsDisplayOnly) {
