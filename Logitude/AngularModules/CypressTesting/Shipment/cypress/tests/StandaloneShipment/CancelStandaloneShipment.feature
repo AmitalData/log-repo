@@ -16,7 +16,6 @@ Feature: Cancel standalone shipment
         When create shipment
         Then the shipment should create successfully
 
-
     Scenario: Create standalone shipment when the pickup is FullResponsibility and from partner to casual address with same countries
      Given the user open the shipment and navigate to RoutingsTab workspace
         And add a new pickup leg with the following details
@@ -31,7 +30,6 @@ Feature: Cancel standalone shipment
         And all other actions should be dim
         And all fields should be dim in pickup window
         And the link of standalon should display
-
 
     Scenario: Cancel standalone shipment
         Given the user in standalone shipment

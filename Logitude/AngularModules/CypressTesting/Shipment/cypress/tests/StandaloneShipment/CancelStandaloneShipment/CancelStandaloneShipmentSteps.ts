@@ -36,8 +36,7 @@ Given("the user open the shipment and navigate to RoutingsTab workspace", () => 
   cy.Click(ShipmentSelectors.AddPickUp, null)
   cy.Click(BaseSelectors.Button, ShipmentConstants.AddPickUp)
 });
-
-  
+ 
 Given("add a new pickup leg with the following details", (dataTable) => {
   PickupDelivarytData = Assists.CreateInstance<PickupDelivaryDetails>(dataTable, true);
   StandaloneAction.FillPickUpDelivaryDetails(PickupDelivarytData);
