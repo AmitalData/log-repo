@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PhysicalCheckUpdateClass
    {  		
-		public const string HashString = "5be8926cd69aae32fdd913958dc04f1f";
+		public const string HashString = "f5a24dbd254353ef391e74dd17b3c644";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3389,9 +3389,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn OpenChecksQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.PhysicalCheck.LimitDate" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.PhysicalCheck.Direction" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.PhysicalCheck.Direction" , ColumnWidth = 30 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.PhysicalCheck.TransportModeId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.PhysicalCheck.TransportModeId" , ColumnWidth = 60 }, addedQueryColumns);
 
 			 QueryColumn OpenChecksQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Customs.PhysicalCheck.ContainerNubmer" , ColumnWidth = 110 }, addedQueryColumns);
 
@@ -3428,9 +3428,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ClosedChecksQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.PhysicalCheck.LimitDate" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn ClosedChecksQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.PhysicalCheck.Direction" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ClosedChecksQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.PhysicalCheck.Direction" , ColumnWidth = 30 }, addedQueryColumns);
 
-			 QueryColumn ClosedChecksQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.PhysicalCheck.TransportModeId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ClosedChecksQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.PhysicalCheck.TransportModeId" , ColumnWidth = 60 }, addedQueryColumns);
 
 			 QueryColumn ClosedChecksQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.PhysicalCheck.ContainerNubmer" , ColumnWidth = 110 }, addedQueryColumns);
 
@@ -3467,9 +3467,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ByUpcomingChecksQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.PhysicalCheck.LimitDate" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn ByUpcomingChecksQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.PhysicalCheck.Direction" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ByUpcomingChecksQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.PhysicalCheck.Direction" , ColumnWidth = 30 }, addedQueryColumns);
 
-			 QueryColumn ByUpcomingChecksQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.PhysicalCheck.TransportModeId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ByUpcomingChecksQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.PhysicalCheck.TransportModeId" , ColumnWidth = 60 }, addedQueryColumns);
 
 			 QueryColumn ByUpcomingChecksQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.PhysicalCheck.ContainerNubmer" , ColumnWidth = 110 }, addedQueryColumns);
 
