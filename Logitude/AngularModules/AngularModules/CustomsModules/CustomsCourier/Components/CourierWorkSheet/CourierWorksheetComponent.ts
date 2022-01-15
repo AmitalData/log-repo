@@ -2192,8 +2192,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             this.RefreshButtonClicked();
         });
     }
-    ClosePendingMethod(){
-        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+    ClosePendingMethod() {
         if (this.IsDisplayOnly) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
@@ -2207,25 +2206,34 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
         currRequestParams.Tenant = SessionLocator.Tenant;
         currRequestParams.CourierMasterId = this.entityPM.Id;
-        currRequestParams.MAWB = this.entityPM.MAWB;       
+        currRequestParams.MAWB = this.entityPM.MAWB;
+        let text = "נא אשר מחיקת PENDING לכל";
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.DeclarationsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
+            let text = "נא אשר מחיקת Pending לכל הרשומות המסומנות";
         }
-        currRequestParams.PendingCode=new Array();
-        if(this.SelectedPendingCodeFilter.Key=='A' && this._PendingCodes.length>1){
-            this._PendingCodes.forEach(x=> currRequestParams.PendingCode.push(x.Key));
-        }else{
+        currRequestParams.PendingCode = new Array();
+        if (this.SelectedPendingCodeFilter.Key == 'A' && this._PendingCodes.length > 1) {
+            this._PendingCodes.forEach(x => currRequestParams.PendingCode.push(x.Key));
+        } else {
             currRequestParams.PendingCode.push(this.SelectedPendingCodeFilter.Key);
         }
         //currRequestParams.PendingCode=this.SelectedPendingCodeFilter.Key;
-        this._CourierMasterService.PostSendClosePending(currRequestParams)
-        .subscribe((res:any) => {
-            SessionLocator.SelectedSession.StopBusyIndicator();
-            var myMessageWindow = new MessageWindow();
-            myMessageWindow.Show(res.Result);
-            myMessageWindow.WindowClosed.subscribe(s => {
-                this.RefreshButtonClicked();
-            });
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show(text);
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+                this._CourierMasterService.PostSendClosePending(currRequestParams)
+                    .subscribe((res: any) => {
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+                        var myMessageWindow = new MessageWindow();
+                        myMessageWindow.Show(res.Result);
+                        myMessageWindow.WindowClosed.subscribe(s => {
+                            this.RefreshButtonClicked();
+                        });
+                    });
+            }
         });
     }
     ChangeStorageSiteMethod() {
