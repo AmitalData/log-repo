@@ -17,6 +17,8 @@ let shipmentDetails: ShipmentDetails;
 let PickupDelivarytData: PickupDelivaryDetails;
 let shipmentNumber: string;
 let containerDetailsList
+
+//#region create direct shipment
 Given("the user logged in and navigates to shipments workspace", () => {
   cy.Login()
   Actions.NavigatesToShipmentsWorkspace()
@@ -38,8 +40,9 @@ Then("the shipment should create successfully", () => {
     shipmentNumber = interception.response.body.ShipmentNumber
   })
 });
+//#endregion
 
-//#region Add Containers
+//#region Add Packages
 Given("the user open the shipment and navigate to packages workspace", () => {
   Actions.OpenShipment(shipmentNumber);
   cy.Navigate(ShipmentSelectors.PackagesTab);
@@ -59,6 +62,7 @@ Then("the direct shipment should save successfully", () => {
 });
 //#endregion
 
+//#region Add pickup
 Given("the user in shipment routing tab",()=>{
   cy.Click(ShipmentSelectors.RoutingsTab, null)
   cy.Click(ShipmentSelectors.AddPickUp, null)
@@ -71,12 +75,14 @@ Given("add a new pickup leg with the following details", (dataTable) => {
 });
 
 Given("the user in the pickup packages select all container",()=>{
-  cy.Click(ShipmentSelectors.PickUpDeliveryPackages,null)
- // cy.get(".TabTitleRow").find(".Button").contains("Add Container")
-  cy.Click(BaseSelectors.Button, ShipmentConstants.AddContainer,true)
-  cy.get(ShipmentSelectors.LogitudeCheckBox).eq(1).click();
-  cy.get(ShipmentSelectors.LogitudeCheckBox).eq(2).click();
-  //CheckBox_0_1_LBL
-  //CheckBox_0_2_LBL
-  //CheckBox_0_3_LBL
+  StandaloneAction.AddPcakagesInPickupDelivary()
 })
+
+When("click create standalone shipment",()=>{
+  cy.Click(ShipmentSelectors.RedButton + BaseSelectors.LastElement, ShipmentConstants.CreateStandaloneShipment)
+})
+
+Then("a validation message with {string} error should appear", (validationMessage) => {
+  BaseAssertion.AssertElementContain(BaseSelectors.SingleError, validationMessage)
+});
+//#endregion

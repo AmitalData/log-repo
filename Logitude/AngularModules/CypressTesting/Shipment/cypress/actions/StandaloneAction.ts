@@ -98,3 +98,14 @@ export function AssertShipmenteDelivaryWindowDisabled() {
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryEmptyDeliveryContainer, BaseSelectors.BeDisabled)
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryEmptyDeliveryDepotReference, BaseSelectors.BeDisabled)
 }
+
+export function AddPcakagesInPickupDelivary() {
+   cy.Click(ShipmentSelectors.PickUpDeliveryPackages,null)
+   cy.Click(ShipmentSelectors.AddContainerFromPickup,null,true)
+   cy.get(ShipmentSelectors.LogitudeCheckBox).eq(1).click();
+   cy.get(ShipmentSelectors.LogitudeCheckBox).eq(2).click();
+   cy.get(ShipmentSelectors.LogitudeCheckBox).eq(3).click();
+   cy.Click(BaseSelectors.RedButton, ShipmentConstants.Ok)
+}
+
+  

@@ -37,6 +37,6 @@ Feature:  Can't create standalon from pickup which has many containers
             | ToPartner   | Israeli Tenant |
         And the user in the pickup packages select all container
         When click create standalone shipment
-        Then A validation message should appear Can't Create a Stand Alone Shipment Since Pickup has more than one Container
+        Then a validation message with "Can't Create a Stand Alone Shipment Since Pickup has more than one Container" error should appear
 
 
