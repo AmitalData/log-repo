@@ -499,7 +499,7 @@ namespace WebFreight.Web.InfrastructureModel
                 AddQuoteStages(tenant, quoteStageRepository, tenantZeroQuoteStages);
                 AddChargesTypes(tenant, chargesTypeRepository, tenantZeroChargesTypes, currentTenantMeasurement, tenantZeroVatTypes, currentTenantVatTypes);
                 AddChargesGroups(tenant, chargesGroupRepository, tenantZeroChargesGroups);
-                AddQuoteChargesGroups(tenant, quoteChargesGroupRepository, tenantZeroQuoteChargesGroups);
+                CopyQuoteChargesGroupsFromTenantZero(tenant, quoteChargesGroupRepository, tenantZeroQuoteChargesGroups);
                 AddRanks(tenant, rankRepository);
                 AddPackageTypes(tenant, packageTypeRepository, measurementRepository, tenantZeroPackageTypes);
                 AddOpportunityTypes(tenant, opportunityTypeRepository, tenantZeroOpportunityTypes);
@@ -2312,28 +2312,31 @@ namespace WebFreight.Web.InfrastructureModel
             theChargesGroupRepository.SubmitChanges();
         }
 
-        public static void AddQuoteChargesGroups(int theTenant, QuoteChargesGroupRepository theChargesGroupRepository, List<QuoteChargesGroupPM> tenantZeroChargesGroups)
+        public static void CopyQuoteChargesGroupsFromTenantZero(int theTenant, QuoteChargesGroupRepository theChargesGroupRepository, List<QuoteChargesGroupPM> tenantZeroChargesGroups)
         {
-            foreach (QuoteChargesGroupPM a in tenantZeroChargesGroups)
+            foreach (QuoteChargesGroupPM quoteChargesGroup in tenantZeroChargesGroups)
             {
-                string localName = !string.IsNullOrEmpty(a.LocalName) ? a.LocalName : a.Name;
-                QuoteChargesGroup chargesGroup = new QuoteChargesGroup()
-                {
-                    Id = IdCounter.GetNumber("QuoteChargesGroup", theTenant).ToString(),
-                    Tenant = theTenant,
-                    Code = a.Code,
-                    Name = a.Name,
-                    LocalName = localName,
-                    SearchFields = a.SearchFields,
-                    ViewOrder = a.ViewOrder,
-
-                };
-                theChargesGroupRepository.Add(chargesGroup);
-
+                AddQuoteChargesGroup(quoteChargesGroup, theTenant, theChargesGroupRepository);
             }
             theChargesGroupRepository.SubmitChanges();
         }
 
+        private static void AddQuoteChargesGroup(QuoteChargesGroupPM quoteChargesGroup, int theTenant, QuoteChargesGroupRepository theChargesGroupRepository)
+        {
+            string localName = !string.IsNullOrEmpty(quoteChargesGroup.LocalName) ? quoteChargesGroup.LocalName : quoteChargesGroup.Name;
+            QuoteChargesGroup chargesGroup = new QuoteChargesGroup()
+            {
+                Id = IdCounter.GetNumber("QuoteChargesGroup", theTenant).ToString(),
+                Tenant = theTenant,
+                Code = quoteChargesGroup.Code,
+                Name = quoteChargesGroup.Name,
+                LocalName = localName,
+                SearchFields = quoteChargesGroup.SearchFields,
+                ViewOrder = quoteChargesGroup.ViewOrder,
+
+            };
+            theChargesGroupRepository.Add(chargesGroup);
+        }
 
         public static void AddRanks(int theTenant, RankRepository theRankRepository)
         {
