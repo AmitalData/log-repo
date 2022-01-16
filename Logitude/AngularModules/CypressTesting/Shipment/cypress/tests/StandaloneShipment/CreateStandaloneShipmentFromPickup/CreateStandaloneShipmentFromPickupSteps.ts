@@ -91,7 +91,7 @@ Then("all other actions should be dim", () => {
 
 Then("all fields should be dim in pickup window", () => {
   cy.Navigate(ShipmentSelectors.Backbutton + BaseSelectors.LastElement, true)
-  StandaloneAction.AssertShipmentePickupDelivaryWindowDisabled()
+  StandaloneAction.AssertShipmentPickupDelivaryWindowFields(BaseSelectors.BeDisabled)
 })
 
 Then("the link of standalon should display", () => {
