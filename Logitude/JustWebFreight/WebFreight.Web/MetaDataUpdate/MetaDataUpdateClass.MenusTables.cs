@@ -147,6 +147,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature timeZonesFeature = tenantFeatures.Where(d => d.Code == "TIMEZONES" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature automationFeature = tenantFeatures.Where(d => d.Code == "General.Features.Automations" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature entityStatus = tenantFeatures.Where(d => d.Code == "ENTITYSTATUS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature quoteChargesGroupFeature = tenantFeatures.Where(d => d.Code == "QUOTECHARGESGROUP" && d.FeatureTypeCode == "MENU").FirstOrDefault();
 
             #endregion
 
@@ -223,6 +224,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTBL", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 14, CategoryTypeCode = "Bil", TextCode = "General.MC.Billings.BankAccountLites", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "BankAccountLite").FirstOrDefault().Id, FeatureId = BankAccountLiteMenuFeature.Id, FeatureUniqeCode = BankAccountLiteMenuFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             //AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "BLCG", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 8, CategoryTypeCode = "Bil", TextCode = "General.MC.Billings.ChargesGroups", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "ChargesGroup").FirstOrDefault().Id, FeatureId = chargesGroupFeature.Id }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "BLRP", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 9, CategoryTypeCode = "Bil", TextCode = "General.MC.Billings.AccountingPaymentMethods", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "AccountingPaymentMethod").FirstOrDefault().Id, FeatureId = AccountingPaymentMethodFeature.Id, FeatureUniqeCode = AccountingPaymentMethodFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "QTCG", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 15, CategoryTypeCode = "Bil", TextCode = "General.MC.Billings.QuoteChargesGroups", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "QuoteChargesGroup").FirstOrDefault().Id, FeatureId = quoteChargesGroupFeature.Id, FeatureUniqeCode = quoteChargesGroupFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
 
             #endregion
 

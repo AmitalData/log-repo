@@ -21,6 +21,8 @@ import {BusinessHoursHolidayPMService} from './Services/StandardPMs/BusinessHour
 import {ChargesGroupPMService} from './Services/StandardPMs/ChargesGroupPMService';
 import { CustomPickListPMService } from './Services/StandardPMs/CustomPickListPMService';
 import { BluesnapContractPMService } from './Services/StandardPMs/BluesnapContractPMService';
+import { QuoteChargesGroupListService } from './Services/StandardLists/QuoteChargesGroupListService';
+import { QuoteChargesGroupPMService } from './Services/StandardPMs/QuoteChargesGroupPMService';
 
 import {EntityStatusPMService} from './Services/StandardPMs/EntityStatusPMService';
 //import {EventTypeCategoryPMService} from './Services/StandardPMs/EventTypeCategoryPMService';
@@ -124,7 +126,9 @@ export class ModuleProviders {
             case "PrepaidCollectListService": { myResult = new PrepaidCollectListService(); break; }
             case "RatesTableListService": { myResult = new RatesTableListService(); break; }
             case "ObjectFieldListService": { myResult = new ObjectFieldListService(); break; }
-                
+            case "QuoteChargesGroupListService": { myResult = new QuoteChargesGroupListService(); break; }
+            case "QuoteChargesGroupPMService": { myResult = new QuoteChargesGroupPMService(); break; }
+
             //case "SharedLogisticsInvitationStatusListService": { myResult = new SharedLogisticsInvitationStatusListService(); break; }
             case "TenantManagementListService": { myResult = new TenantManagementListService(); break; }
             case "TransportModeListService": { myResult = new TransportModeListService(); break; }

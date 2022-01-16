@@ -921,6 +921,7 @@
     <None Include="DBTables\InfrastructureModel\QueueDefinition.dxml" />
     <None Include="DBTables\InfrastructureModel\QueueMessage.dxml" />
     <None Include="DBTables\InfrastructureModel\QueueMessageMoreDetails.dxml" />
+    <None Include="DBTables\InfrastructureModel\QuoteChargesGroup.dxml" />
     <None Include="DBTables\InfrastructureModel\RatesTable.dxml" />
     <None Include="DBTables\InfrastructureModel\RuleConditionField.dxml" />
     <None Include="DBTables\InfrastructureModel\RuleNotificationType.dxml" />
@@ -1125,6 +1126,7 @@
     <None Include="EntityFiles\InfrastructureModel\EntityStatusType.lxml" />
     <None Include="EntityFiles\InfrastructureModel\MultiEntityUpdateLog.lxml" />
     <None Include="EntityFiles\InfrastructureModel\QueryExportExecutionLog.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\QuoteChargesGroup.lxml" />
     <None Include="EntityFiles\InfrastructureModel\WorkerRoleName.lxml" />
     <None Include="EntityFiles\InvoiceModel\ARPaymentBankTranfer.lxml">
       <SubType>Component</SubType>

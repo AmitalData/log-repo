@@ -1,15 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="ChargesGroups"
+  Name="QuoteChargesGroups"
   Schema="dbo"
   DBType="Main"
   Module="Infrastructure">
   <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
+    Name="Id"
+    Type="varchar"
+    Size="15">
     <Constraints
-      Nullable="true" />
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Column
     Name="Code"
@@ -26,22 +33,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Id"
-    Type="varchar"
-    Size="15"
-    DefaultValue="''">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Tenant"
-    Type="int"
-    DefaultValue="0">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="LocalName"
     Type="nvarchar"
     Size="40">
@@ -50,9 +41,15 @@
   </Column>
   <Column
     Name="ViewOrder"
-    Type="int"
-    DefaultValue="0">
+    Type="int">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
 </Table>

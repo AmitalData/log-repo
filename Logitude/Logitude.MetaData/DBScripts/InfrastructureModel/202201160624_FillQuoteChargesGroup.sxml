@@ -1,0 +1,69 @@
+﻿<Script DBType="Main" Module="Infrastructure">
+  <Sql Version="1">
+    <![CDATA[
+	
+		If(OBJECT_ID('tempdb..#ChargesQuoteTemp') Is Not Null)
+		Begin
+			Drop Table #ChargesQuoteTemp
+		End
+
+		CREATE TABLE #ChargesQuoteTemp (
+			Code varchar(5)  null,
+			Name varchar(40) null,
+			LocalName varchar(40)  null,
+   			ViewOrder  int,
+			SearchFields varchar(max),
+			Tenant  int,
+		);
+
+		INSERT INTO #ChargesQuoteTemp (Code,Name,LocalName,ViewOrder,SearchFields, Tenant) 
+		SELECT Code,Name,LocalName,ViewOrder,SearchFields, Tenant
+		FROM ChargesGroups 
+
+
+		declare @Tenant as int
+		declare @QuoteChargesGroupId as varchar(15)
+		BEGIN 
+			DECLARE TenantsCursor CURSOR READ_ONLY
+			FOR
+			SELECT Id
+			FROM Tenants
+			OPEN TenantsCursor FETCH NEXT FROM TenantsCursor INTO @Tenant        
+			WHILE @@FETCH_STATUS = 0
+				BEGIN
+
+					declare @Code as varchar(5)
+					declare @Name as varchar(40)
+					declare @LocalName as varchar(40)
+					declare @ViewOrder int
+					declare @SearchFields as varchar(max)
+					DECLARE ChargesGroupCursor CURSOR READ_ONLY
+					FOR
+					SELECT Code,Name,LocalName,ViewOrder,SearchFields
+					From #ChargesQuoteTemp where Tenant = @Tenant     
+					OPEN ChargesGroupCursor FETCH NEXT FROM ChargesGroupCursor INTO @Code,@Name,@LocalName,@ViewOrder,@SearchFields
+					WHILE @@FETCH_STATUS = 0
+					BEGIN
+						if not exists (select Id from QuoteChargesGroups where Tenant = @Tenant and Code =  @Code)
+						begin 
+						EXECUTE usp_GetNextTableIdValue @QuoteChargesGroupId OUTPUT,'QuoteChargesGroup'
+								insert into QuoteChargesGroups(Code, Name, SearchFields, Id, Tenant, LocalName, ViewOrder)
+								values(@Code,@Name, @SearchFields, @QuoteChargesGroupId, @Tenant,@LocalName,@ViewOrder)   
+						end     
+					FETCH NEXT FROM ChargesGroupCursor  INTO @Code,@Name,@LocalName,@ViewOrder,@SearchFields
+					End
+					CLOSE ChargesGroupCursor
+					DEALLOCATE ChargesGroupCursor
+				FETCH NEXT FROM TenantsCursor INTO @Tenant      
+				END
+			CLOSE TenantsCursor
+			DEALLOCATE TenantsCursor
+		END
+
+		If(OBJECT_ID('tempdb..#ChargesQuoteTemp') Is Not Null)
+		Begin
+			Drop Table #ChargesQuoteTemp
+		End
+    ]]>
+  </Sql>
+</Script>
