@@ -10,8 +10,6 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using Simplog.Global.Data.GlobalModel.Repositories;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Simplog.Global.Data.GlobalModel;
@@ -22,6 +20,7 @@ using WebFreight.Web.DataContracts;
 using Logitude.ShipmentOrderModule.BL.EntityQueryServices;
 using Logitude.ShipmentOrderModule.Def.EntityAMs;
 using CommunicationWorkerRole.EntityMapping;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 
 namespace CommunicationWorkerRole.Services.ImporterShipmentOrders
 {
@@ -31,12 +30,11 @@ namespace CommunicationWorkerRole.Services.ImporterShipmentOrders
         private readonly QueueResponse queueResponse;
         private IWebFreightContext webFreightContext;
         private IGlobalContext objectContext;
-        private ObjectFieldRepository objectFieldRepository;
         private ObjectTableRepository objectTableRepository;
-        private APILogsRepository aPILogsRepository;
         private APILogsService apiLogsService;
         private SettingQuery settingQuery;
         private ShipmentOrderQueryService shipmentOrderQueryService;
+        private APILogsQuery aPILogsQuery;
         private ShipmentOrderAmMap shipmentOrderAmMap;
 
         private string shipmentOrderId;
@@ -78,11 +76,10 @@ namespace CommunicationWorkerRole.Services.ImporterShipmentOrders
             objectContext = GlobalContext.GetContext();
 
             apiLogsService = new APILogsService(webFreightContext, tenant.Value);
-            objectFieldRepository = new ObjectFieldRepository(tenant.Value);
-            aPILogsRepository = new APILogsRepository(webFreightContext);
             objectTableRepository = new ObjectTableRepository(webFreightContext);
             settingQuery = new SettingQuery(new SettingRepository(objectContext));
             shipmentOrderQueryService = new ShipmentOrderQueryService(tenant.Value);
+            aPILogsQuery = new APILogsQuery(tenant.Value);
             shipmentOrderAmMap = new ShipmentOrderAmMap();
         }
 
@@ -147,7 +144,7 @@ namespace CommunicationWorkerRole.Services.ImporterShipmentOrders
             APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
             if (EXC == null)
             {
-                return;   
+                return;
             }
             var Failmsg = EXC.ErrorType + " Fail To Send Shipment Updates To Importer Tenant " + DateTime.Now;
             APILogsUtility.UpdateAPILogStatus(apiLog.Id, tenant.Value, "F", queueResponse.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(EXC), null, "");
@@ -221,45 +218,14 @@ namespace CommunicationWorkerRole.Services.ImporterShipmentOrders
 
         private void BuildApiLog()
         {
-            isNewLog = true;
-            APILogs apiLogs = aPILogsRepository.GetSingleAPILogsByCorrelationId(messageId, tenant.Value);
-            if (apiLogs == null)
-            {
-                apiLog = SetApiLogDefaultFields(CreateNewApiLogInstance());
-                return;
-            }
             isNewLog = false;
-            apiLog = SetApiLogDefaultFields(GetApiLogInstance(apiLogs));
+            apiLog = aPILogsQuery.GetSingleByCorrelationIdAndTenant(messageId, tenant.Value);
+            if (apiLog != null) return;
+
+            isNewLog = true;
+            apiLog = CreateNewApiLogInstance();
         }
 
-        private APILogsPM SetApiLogDefaultFields(APILogsPM aPILogsPM)
-        {
-            aPILogsPM.ObjectTableId = objectTable.Id;
-            aPILogsPM.Tenant = tenant.Value;
-            return aPILogsPM;
-        }
-
-        private APILogsPM GetApiLogInstance(APILogs apiLogs)
-        {
-            return new APILogsPM()
-            {
-                Id = apiLogs.Id,
-                CorrelationId = apiLogs.CorrelationId,
-                CreateDate = apiLogs.CreateDate,
-                CreateDateUTC = apiLogs.CreateDateUTC,
-                Direction = apiLogs.Direction,
-                EntityId = apiLogs.EntityId,
-                LastUpdateDate = apiLogs.LastUpdateDate,
-                LastUpdateDateUTC = apiLogs.LastUpdateDateUTC,
-                NumberOfRetries = apiLogs.NumberOfRetries++,
-                ObjectTableId = apiLogs.ObjectTableId,
-                ExpirationDate = apiLogs.ExpirationDate,
-                Refrence = apiLogs.Refrence,
-                Status = "I",
-                Tenant = apiLogs.Tenant,
-                QueueMessageMoreDetailsId = apiLogs.QueueMessageMoreDetailsId
-            };
-        }
 
         private APILogsPM CreateNewApiLogInstance()
         {
@@ -275,7 +241,9 @@ namespace CommunicationWorkerRole.Services.ImporterShipmentOrders
                 NumberOfRetries = 1,
                 ExpirationDate = DateTime.Now.AddDays(90),
                 Status = "I",
-                QueueMessageMoreDetailsId = messageId
+                QueueMessageMoreDetailsId = messageId,
+                ObjectTableId = objectTable.Id,
+                Tenant = tenant.Value
             };
         }
     }
