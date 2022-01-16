@@ -8,7 +8,7 @@ import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
-let eventNote;
+let EventNote;
 
 //#region  Create Direct Shipment
 Given("the user logged in and navigates to shipments workspace", () => {
@@ -39,25 +39,25 @@ Given("the user open the shipment", () => {
 });
 
 When("cancel the shipment with {string} Note", (note) => {
-  eventNote = note
+  EventNote = note
   Actions.CancelShipment(note);
 });
 
 Then("the shipment should cancel successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
   Actions.ValidateCancelIconExist(true);
-  Actions.ValidateShipmentEventActions(ShipmentSelectors.EventsTab, eventNote);
+  Actions.ValidateShipmentEventActions(ShipmentSelectors.EventsTab, EventNote);
   Actions.ValidateShipmentFields(true);
 });
 
 When("reactivate the shipment with {string} Note", (note) => {
-  eventNote = note
+  EventNote = note
   Actions.ReactiveShipment(note);
 })
 
 Then("the shipment should reactivate successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
   Actions.ValidateCancelIconExist(false);
-  Actions.ValidateShipmentEventActions(ShipmentSelectors.EventsTab, eventNote);
+  Actions.ValidateShipmentEventActions(ShipmentSelectors.EventsTab, EventNote);
   Actions.ValidateShipmentFields(false);
 })
