@@ -589,3 +589,7 @@ li a {
         padding-top: 50px;
     }
 }
+
+.per-line{
+    white-space: pre-line
+}

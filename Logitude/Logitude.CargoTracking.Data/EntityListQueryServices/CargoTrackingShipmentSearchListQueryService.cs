@@ -69,16 +69,19 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             var searchesGroupDictionary = shipmentSearchs.GroupBy(e => e.ShipmentId).ToDictionary(e => e.Key, e => e);
             foreach (var item in shipments)
             {
-                item.ConnectedShipmetNumberSearchs = GetSearchesFromGroupsDictionary(item, searchesGroupDictionary);
+                item.ConnectedShipmentsNumbers = GetSearchesFromGroupsDictionary(item, searchesGroupDictionary);
             }
 
         }
 
-        private List<CargoTrackingShipmentSearch> GetSearchesFromGroupsDictionary(CargoTrackingShipmentList item, Dictionary<string, IGrouping<string, CargoTrackingShipmentSearch>> searchesGroupDictionary)
+        private string GetSearchesFromGroupsDictionary(CargoTrackingShipmentList item, Dictionary<string, IGrouping<string, CargoTrackingShipmentSearch>> searchesGroupDictionary)
         {
+
             if (!searchesGroupDictionary.ContainsKey(item.EntityId))
-                return new List<CargoTrackingShipmentSearch>();
-            return searchesGroupDictionary[item.EntityId].ToList();
+                return null;
+            var connectedShipmentsNumbers = searchesGroupDictionary[item.EntityId].ToList();
+            var maxConnectedShipmentsNumbers = connectedShipmentsNumbers.GroupBy(e => e.ReferenceType).Select(e => e.Max(f=>f.SearchFields)).ToList();
+            return string.Join("\n", maxConnectedShipmentsNumbers);
         }
 
         private static IQueryable<CargoTrackingShipmentSearch> GetShipmentsSearchEntities(string searchText, int tenant)

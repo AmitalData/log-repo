@@ -149,6 +149,7 @@ export class CargoTrackingShipmentList {
 	ApprovedDate: Date;
 	DenyDate: Date;
 	DenyReason: string;
+	ConnectedShipmentsNumbers: string;
 	
 }
  
