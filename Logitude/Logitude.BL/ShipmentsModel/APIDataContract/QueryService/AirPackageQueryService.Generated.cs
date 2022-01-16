@@ -188,12 +188,10 @@ using Simplog.Data.ShipmentsModel;
 					 
 
 					
-                    
-					if(!IsUpdate|| string.IsNullOrEmpty(item.Id))
-					{							
+                    							
 						temp.CommodityNumber = item.CommodityNumber;
 
-										}  
+					 
 
 					
                     							
