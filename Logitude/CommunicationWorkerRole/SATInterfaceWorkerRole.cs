@@ -33,6 +33,7 @@ using Simplog.Data.InvoiceModel;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.InvoiceModel.Tools;
+using CommunicationWorkerRole.Services.SAT;
 
 namespace CommunicationWorkerRole
 {
@@ -380,8 +381,13 @@ namespace CommunicationWorkerRole
 					Simplog.Data.InvoiceModel.EntityPOCOs.SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(waitingCommLog.Tenant);
 					if (satSetting != null)
 					{
-
-						SendProfact33Request(waitingCommLog, communicationLogRep, datainByte, satSetting);
+						if (satSetting.SATInterfaceCode == "PROF40")
+						{
+							SATProfact40Service sATProfact40Service = new SATProfact40Service(context, queueservice);
+							sATProfact40Service.SendRequest(new SATProfact40ServiceArgs { WaitingCommLog = waitingCommLog, CommunicationLogRep = communicationLogRep, DatainByte = datainByte, SatSetting = satSetting });
+						}
+						else
+							SendProfact33Request(waitingCommLog, communicationLogRep, datainByte, satSetting);
 
 
 					}
@@ -390,7 +396,6 @@ namespace CommunicationWorkerRole
 
 			}
 		}
-
 
 		private void SendProfact33Request(CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, byte[] datainByte, Simplog.Data.InvoiceModel.EntityPOCOs.SATInterfaceSetting satSetting)
 		{
@@ -430,7 +435,7 @@ namespace CommunicationWorkerRole
 							additional.QRImage = Convert.ToBase64String(resultadoTimbre.CodigoBidimensional);//imagedetail.Id;//
 						}
 
-                        payment.SATApprovalDate = GetSATApprovalDateFromComplemento(waitingCommLog, comprobante.Complemento);
+                        payment.SATApprovalDate = GetSATApprovalDateFromComplemento(waitingCommLog, comprobante.Complemento.Any);
                          
 						payment.SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(additional);
 						payment.SATXML = resultadoTimbre.Xml;
@@ -438,7 +443,7 @@ namespace CommunicationWorkerRole
                         payment.TransmissionError = null;
                         arpaymentRep.Update(payment);
 						arpaymentRep.SubmitChanges();
-						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment, comprobante, arinvoiceRep, arpaymentRep);
+						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment, comprobante.Complemento.Any[0], arinvoiceRep, arpaymentRep);
 
 						Encoding encoding = Encoding.UTF8;
 						byte[] xmlfile = encoding.GetBytes(resultadoTimbre.Xml);
@@ -473,7 +478,7 @@ namespace CommunicationWorkerRole
 						}
 
 						Profact.TimbraCFDI33.Comprobante resultComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(resultadoTimbre.Xml);
-                        invoice.SATApprovalDate = GetSATApprovalDateFromComplemento(waitingCommLog, resultComprobante.Complemento);
+                        invoice.SATApprovalDate = GetSATApprovalDateFromComplemento(waitingCommLog, resultComprobante.Complemento.Any);
                          
 
 						invoice.SATXML = resultadoTimbre.Xml;
@@ -609,14 +614,14 @@ namespace CommunicationWorkerRole
 							additional.QRImage = Convert.ToBase64String(resultadoConsulta.CodigoBidimensional);//imagedetail.Id;//
 						}
 
-                        payment.SATApprovalDate = GetSATApprovalDateFromComplemento(waitingCommLog, paymentComprobante.Complemento);
+                        payment.SATApprovalDate = GetSATApprovalDateFromComplemento(waitingCommLog, paymentComprobante.Complemento.Any);
                         payment.SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(additional);
 						payment.SATXML = resultadoConsulta.Xml;
 						payment.SATTransferStatusCode = "TD";
                         payment.TransmissionError = null;
                         arpaymentRep.Update(payment);
 						arpaymentRep.SubmitChanges();
-						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment, paymentComprobante, arinvoiceRep, arpaymentRep);
+						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment, paymentComprobante.Complemento.Any[0], arinvoiceRep, arpaymentRep);
 
 						Encoding encoding = Encoding.UTF8;
 						byte[] xmlfile = encoding.GetBytes(resultadoConsulta.Xml);
@@ -678,7 +683,7 @@ namespace CommunicationWorkerRole
 
 						Profact.TimbraCFDI33.Comprobante invoiceComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(resultadoConsulta.Xml);
 
-                        invoice.SATApprovalDate  = GetSATApprovalDateFromComplemento(waitingCommLog, invoiceComprobante.Complemento);
+                        invoice.SATApprovalDate  = GetSATApprovalDateFromComplemento(waitingCommLog, invoiceComprobante.Complemento.Any);
 
                       
 
@@ -730,11 +735,11 @@ namespace CommunicationWorkerRole
 			}
 		}
 
-        private DateTime GetSATApprovalDateFromComplemento(CommunicationLog waitingCommLog, Profact.TimbraCFDI33.ComprobanteComplemento complemento)
+        private DateTime GetSATApprovalDateFromComplemento(CommunicationLog waitingCommLog, XmlElement[] anycomplemento)
         {
-            if (complemento.Any != null)
+            if (anycomplemento != null)
             {
-                List<System.Xml.XmlElement> myLXmlComplementos = complemento.Any.ToList<System.Xml.XmlElement>();
+                List<System.Xml.XmlElement> myLXmlComplementos = anycomplemento.ToList<System.Xml.XmlElement>();
                 var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
                 if (timbreFiscalDigitalElement != null)
                 {
@@ -961,8 +966,10 @@ namespace CommunicationWorkerRole
 				Simplog.Data.InvoiceModel.EntityPOCOs.SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(waitingCommLog.Tenant);
 				if (satSetting != null)
 				{
-
-					SendProfactCancellation33(waitingCommLog, communicationLogRep, arinvoiceRep, invoice, satSetting);
+					if (satSetting.SATInterfaceCode == "PROF40")
+						SATInvoiceProfact40CancellationService.SendRequest(new SATInvoiceProfact40CancellationServiceArgs { WaitingCommLog = waitingCommLog, CommunicationLogRep = communicationLogRep, ARInvoice = invoice, ARInvoiceRep = arinvoiceRep, SatSetting = satSetting });
+					else
+						SendProfactCancellation33(waitingCommLog, communicationLogRep, arinvoiceRep, invoice, satSetting);
 
 				}
 			}
@@ -1080,7 +1087,10 @@ namespace CommunicationWorkerRole
 				Simplog.Data.InvoiceModel.EntityPOCOs.SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(waitingCommLog.Tenant);
 				if (satSetting != null)
 				{
-					SendPaymentProfactCancellation33(waitingCommLog, communicationLogRep, arPaymentRep, payment, satSetting, arInvoiceRep);
+					if (satSetting.SATInterfaceCode == "PROF40")
+						SATPaymentProfact40CancellationService.SendRequest(new SATPaymentProfact40CancellationServiceArgs { WaitingCommLog = waitingCommLog, CommunicationLogRep = communicationLogRep, ARPaymentRep = arPaymentRep, ARPayment = payment, ARInvoiceRep = arInvoiceRep, SatSetting = satSetting });
+					else
+						SendPaymentProfactCancellation33(waitingCommLog, communicationLogRep, arPaymentRep, payment, satSetting, arInvoiceRep);
 				}
 			}
 		}
@@ -1089,6 +1099,7 @@ namespace CommunicationWorkerRole
 		private void SendPaymentProfactCancellation33(CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, Simplog.Data.InvoiceModel.Repositories.ARPaymentRepository arPaymentRep, Simplog.Data.InvoiceModel.EntityPOCOs.ARPayment payment, Simplog.Data.InvoiceModel.EntityPOCOs.SATInterfaceSetting satSetting, ARInvoiceRepository arInvoiceRep)
 		{
 			SATInterfaceHelper sATInterfaceHelper = new SATInterfaceHelper();
+
 
 			Profact.TimbraCFDI33.Comprobante comprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(payment.SATXML);
 			bool isProduction = satSetting.Token != "mvpNUXmQfK8=";
@@ -1133,7 +1144,7 @@ namespace CommunicationWorkerRole
                         arPaymentRep.Update(payment);
 						arPaymentRep.SubmitChanges();
 
-						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment, comprobante, arInvoiceRep, arPaymentRep);
+						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment, comprobante.Complemento.Any[0], arInvoiceRep, arPaymentRep);
 
 					}
 					else

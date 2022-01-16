@@ -37,6 +37,7 @@ using System.Xml.Serialization;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Logitude.BL.Resolvers;
+using Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40;
 
 namespace Logitude.BL.InvoiceModel.Tools
 {
@@ -61,7 +62,9 @@ namespace Logitude.BL.InvoiceModel.Tools
                     case "PROF33":
                         SendProfactoXML33(entityPM, entityPoco, satSetting);
                         break;
-
+                    case "PROF40":
+                        SendProfactoXML40(entityPM, entityPoco, satSetting);
+                        break;
                     case "CONT":
                         SendContpaqFile(entityPM);
                         break;
@@ -364,8 +367,14 @@ namespace Logitude.BL.InvoiceModel.Tools
 
 
         #region SendInvoiceProfactoXML
+        private void SendProfactoXML40(ARInvoicePM arInvoicePM, ARInvoice arInvoice, SATInterfaceSetting satSetting)
+        {
+            if (!satSetting.IsARInvoiceTransferEnabled && FeatureToggleHelper.HasFeatureToggle("CPT", arInvoicePM.Tenant))
+                return;
 
-
+            SATInvoiceProfact40Service sATInvoiceProfact40Service = new SATInvoiceProfact40Service(arInvoicePM, arInvoice, satSetting);
+            sATInvoiceProfact40Service.SendProfactoXML();
+        }
         private void SendProfactoXML33(ARInvoicePM entityPM, ARInvoice entityPoco, SATInterfaceSetting satSetting)
         {
 
@@ -1397,6 +1406,9 @@ namespace Logitude.BL.InvoiceModel.Tools
                     case "PROF33":
                         HandleProfactInvoiceCancellation(entityPM, entityPoco);
                         break;
+                    case "PROF40":
+                        HandleProfact40InvoiceCancellation(entityPM, entityPoco);
+                        break;
                     case "CONT":
                         //SendContpaqCancellation(entityPM);
                         break;
@@ -1406,6 +1418,11 @@ namespace Logitude.BL.InvoiceModel.Tools
             }
         }
 
+        private void HandleProfact40InvoiceCancellation(ARInvoicePM aRInvoicePM, ARInvoice aRInvoice)
+        {
+            SATCancelInvoiceProfact40Service saTCancelInvoiceProfact40Service = new SATCancelInvoiceProfact40Service(aRInvoicePM,  aRInvoice);
+            saTCancelInvoiceProfact40Service.SendRequest();
+        }
 
         private void HandleProfactInvoiceCancellation(ARInvoicePM entityPM, ARInvoice entityPoco)
         {
@@ -1726,7 +1743,14 @@ namespace Logitude.BL.InvoiceModel.Tools
 
         public void SendPaymentProfactoXML(string paymentId, int tenant)
         {
-
+            SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(tenant);
+            SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(tenant);
+            if (satSetting != null && satSetting.SATInterfaceCode == "PROF40")
+            {
+                SATPaymentProfact40Service sATPaymentProfact40Service = new SATPaymentProfact40Service(paymentId, tenant);
+                sATPaymentProfact40Service.SendRequest();
+                return;
+            }
             ComputingPartnerTranslationHelper computingPartnerHelper = new ComputingPartnerTranslationHelper(tenant);
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             TenantRepository tenantRepository = new TenantRepository(commonContext);
@@ -2138,6 +2162,9 @@ namespace Logitude.BL.InvoiceModel.Tools
                     case "PROF33":
                         HandleProfactPaymentCancellation(entityPM, entityPoco);
                         break;
+                    case "PROF40":
+                        HandleProfact40PaymentCancellation(entityPM, entityPoco);
+                        break;
                     case "CONT":
                         //SendContpaqCancellation(entityPM);
                         break;
@@ -2145,6 +2172,12 @@ namespace Logitude.BL.InvoiceModel.Tools
                 }
 
             }
+        }
+
+        private void HandleProfact40PaymentCancellation(ARPaymentPM aRPaymentPM, ARPayment aRPayment)
+        {
+            SATCancelPaymentProfact40Service saTCancelPaymentProfact40Service = new SATCancelPaymentProfact40Service(aRPaymentPM, aRPayment);
+            saTCancelPaymentProfact40Service.SendRequest();
         }
 
         private void HandleProfactPaymentCancellation(ARPaymentPM entityPM, ARPayment entityPoco)
@@ -2169,6 +2202,13 @@ namespace Logitude.BL.InvoiceModel.Tools
 
         public static Profact.TimbraCFDI.ResultadoConsultaEstatusSAT GetSATStatus(int tenant, string entitySATXML)
         {
+            SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(tenant);
+            SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(tenant);
+            if (satSetting != null && satSetting.SATInterfaceCode == "PROF40")
+            {
+                return SATBaseProfact40Service.GetSATStatus(tenant, entitySATXML);
+            }
+
             Profact.TimbraCFDI.ResultadoConsultaEstatusSAT resultadoConsultaEstatusSAT = null;
             Profact.TimbraCFDI33.Conector conector = GetProfactConnector(tenant);
             Profact.TimbraCFDI33.Comprobante comprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(entitySATXML);
@@ -2241,9 +2281,17 @@ namespace Logitude.BL.InvoiceModel.Tools
 
         #endregion
 
-        public void UpdatePaymentInvoicesSATStatus(ARPayment payment, Profact.TimbraCFDI33.Comprobante paymentComprobante, ARInvoiceRepository arinvoiceRep, ARPaymentRepository arpaymentRep)
+        public void UpdatePaymentInvoicesSATStatus(ARPayment payment, XmlElement comprobanteXmlPagos, ARInvoiceRepository arinvoiceRep, ARPaymentRepository arpaymentRep)
         {
             int tenant = payment.Tenant;
+            SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(tenant);
+            SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(tenant);
+            if(satSetting != null && satSetting.SATInterfaceCode == "PROF40")
+            {
+                SATPaymentProfact40Service sATPaymentProfact40Service = new SATPaymentProfact40Service(payment, comprobanteXmlPagos, arinvoiceRep);
+                sATPaymentProfact40Service.UpdateStatus();
+                return;
+            }
             ARPaymentQuery paymentQuery = new ARPaymentQuery(tenant);
             ARPaymentPM entityPM = paymentQuery.GetSinglePM(payment.Id, tenant);
 
@@ -2254,7 +2302,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                                                         select a).ToList();
 
             List<ARInvoiceSATDetails> currentPaymentInvoiceDetails = GetCurrentPaymentInvoicesDetails(currentPaymentARInvoices);
-            XmlElement xmlPagos = paymentComprobante.Complemento.Any[0];
+            XmlElement xmlPagos = comprobanteXmlPagos;
             Profact.TimbraCFDI33.Complementos.Pagos10.Pagos pagos = Profact.TimbraCFDI.XMLUtilerias.DeserializaObjeto<Profact.TimbraCFDI33.Complementos.Pagos10.Pagos>(xmlPagos.OuterXml);
             Profact.TimbraCFDI33.Complementos.Pagos10.PagosPago pagoItem = pagos.Pago[0];
             List<Profact.TimbraCFDI33.Complementos.Pagos10.PagosPagoDoctoRelacionado> doctos = pagoItem.DoctoRelacionado.ToList();

@@ -1,0 +1,118 @@
+﻿using Logitude.BL.DataContracts;
+using Logitude.BL.InvoiceModel.Tools;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
+using Profact.TimbraCFDI;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
+using Simplog.Data.InvoiceModel.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CommunicationWorkerRole.Services.SAT
+{
+	public class SATInvoiceProfact40CancellationService
+	{
+		public static void SendRequest(SATInvoiceProfact40CancellationServiceArgs args)
+		{
+			CommunicationLog waitingCommLog = args.WaitingCommLog;
+			CommunicationLogRepository communicationLogRep = args.CommunicationLogRep;
+			Simplog.Data.InvoiceModel.EntityPOCOs.SATInterfaceSetting satSetting = args.SatSetting;
+			Simplog.Data.InvoiceModel.EntityPOCOs.ARInvoice invoice = args.ARInvoice;
+			ARInvoiceRepository arinvoiceRep = args.ARInvoiceRep;
+
+			Profact.TimbraCFDI40.Comprobante comprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI40.Comprobante>(invoice.SATXML);
+			bool isProduction = satSetting.Token != "mvpNUXmQfK8=";
+			Profact.TimbraCFDI40.Conector conector = new Profact.TimbraCFDI40.Conector(isProduction);
+			
+			conector.EstableceCredenciales(satSetting.Token);
+
+			if (comprobante.Complemento.Any != null)
+			{
+				List<System.Xml.XmlElement> myLXmlComplementos = comprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+				var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
+				if (timbreFiscalDigitalElement != null)
+				{
+					Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
+
+					string rfcEmisor = comprobante.Emisor.Rfc.Trim();
+
+					string folioFiscal = digitalTi.UUID.Trim();
+
+					ResultadoCancelacion resultadoCancelacion = conector.CancelaCFDI(rfcEmisor, folioFiscal);
+
+					if (resultadoCancelacion.Exitoso)
+					{
+						waitingCommLog.CommunicationStatusTypeCode = "D";
+						waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+						waitingCommLog.DoneDateUTC = DateTime.UtcNow;
+						waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+						waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
+						communicationLogRep.Update(waitingCommLog);
+						communicationLogRep.SubmitChanges();
+
+						invoice.SATTransferStatusCode = "TD";
+						invoice.TransmissionError = null;
+						arinvoiceRep.Update(invoice);
+						arinvoiceRep.SubmitChanges();
+					}
+					else
+					{
+						string transError = resultadoCancelacion.Descripcion;
+						if ((transError == "Comprobante ya está en proceso de cancelación" && resultadoCancelacion.TipoExcepcion == "EstatusSat") || transError == "El comprobante será cancelado")
+
+						{
+							waitingCommLog.CommunicationStatusTypeCode = "D";
+							waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+							waitingCommLog.DoneDateUTC = DateTime.UtcNow;
+							waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+							waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
+							communicationLogRep.Update(waitingCommLog);
+							communicationLogRep.SubmitChanges();
+
+							invoice.SATTransferStatusCode = "CS";
+							arinvoiceRep.Update(invoice);
+							arinvoiceRep.SubmitChanges();
+						}
+						else
+						{
+							if (waitingCommLog.Retries == 4)
+							{
+								if (!string.IsNullOrEmpty(resultadoCancelacion.Descripcion) && invoice != null)
+								{
+									transError = resultadoCancelacion.Descripcion.Replace("Error en la validación de estructura xsd:", "").ToString().Trim();
+									if (!string.IsNullOrEmpty(resultadoCancelacion.TipoExcepcion))
+									{
+										transError += Environment.NewLine + resultadoCancelacion.TipoExcepcion;
+									}
+									if (transError != invoice.TransmissionError || invoice.SATTransferStatusCode != "TE")
+									{
+										invoice.SATTransferStatusCode = "TE";
+										invoice.TransmissionError = transError;
+										arinvoiceRep.Update(invoice);
+										arinvoiceRep.SubmitChanges();
+									}
+								}
+							}
+
+							throw new Exception("Failed," + transError);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	public class SATInvoiceProfact40CancellationServiceArgs
+	{
+		public CommunicationLog WaitingCommLog { get; set; }
+		public CommunicationLogRepository CommunicationLogRep { get; set; }
+		public Simplog.Data.InvoiceModel.EntityPOCOs.SATInterfaceSetting SatSetting { get; set; }
+		public Simplog.Data.InvoiceModel.EntityPOCOs.ARInvoice ARInvoice { get; set; }
+		public ARInvoiceRepository ARInvoiceRep { get; set; }
+	}
+}
