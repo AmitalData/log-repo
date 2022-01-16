@@ -367,7 +367,7 @@
     <None Include="DBScripts\InvoiceModel\2021137249_UpdateAutomaticLastUpdateDateOnPaymentTerms.sxml" />
     <None Include="DBScripts\InvoiceModel\202108081200_UpdateCancledARInvoiceLinesConnectedToReceivable.sxml" />
     <None Include="DBScripts\InvoiceModel\202108081230_FillARInvoiceChargesConstraints.sxml" />
-    <None Include="DBScripts\InvoiceModel\20220103148001_FillARInvoicesPaymentReferences.sxml" />
+    <None Include="DBScripts\InvoiceModel\20220103148001_FillARInvoicesPaymentReferences.soxml" />
     <None Include="DBScripts\QuoteModel\202103071310_RemoveQuoteComputedFileds.sxml">
       <SubType>Designer</SubType>
     </None>
