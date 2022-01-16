@@ -228,7 +228,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
                 .Select(a => new OpportunityPeriodSummary
                 {
                     NumberOfUsers = a.Sum(b => b.NumberOfUsers),
-                    IsNewCustomer = a.Where(b => b.IsNewCustomer != null).OrderByDescending(b => b.ActualClosingDate).FirstOrDefault()?.IsNewCustomer,
+                    IsNewCustomer = a.Where(b => b.IsNewCustomer != null).OrderBy(b => b.IsNewCustomer).FirstOrDefault()?.IsNewCustomer,
                     NewIncome = CalculateNetValue(a.Sum(b => b.Total), resellerCommission),
                 }).ToList();
         }
