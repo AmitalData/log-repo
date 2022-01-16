@@ -71,6 +71,6 @@ Feature: AMANAC Ocean Shipment Validations, Marked as Blocked, Marked as Not Blo
         Then a validation message "Transferred Successfully" should appear
         And should not appear in the "New Transfer" view in the AMANAC workspace
         And AMANAC and customs transmissions statuses should be as following
-            | Status   | Sent         |
-            | LastSent | Today        |
+            | Status   | Sent       |
+            | LastSent | Today      |
             | SentBy   | LoggedUser |

@@ -906,7 +906,7 @@ export function FillShippingLineInOrdersTab(ShippingLine: string) {
 export function FillVoyageNoVesselInRoutingsTab(VoyageNo: string, Vessel: string) {
     NavigateToEditMAinCarriage()
     cy.FillLogTextBox(ShipmentSelectors.MainCarrigeVoyageNo, VoyageNo)
-    cy.FillLogTextBox(ShipmentSelectors.MainCarrigeVessel, Vessel)
+    cy.FillLogLov(ShipmentSelectors.MainCarrigeVessel + BaseSelectors.LastElement, Vessel, true)
     cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
 }
 
