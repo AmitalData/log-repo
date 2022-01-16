@@ -62,7 +62,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         this.myDomainService = new TariffDomainService();
         this.myChargesTypeListService = new ChargesTypeListService();
         this.SetUIProperties();
-        this.Date = DateTool.GetCurrentDateAsUtc();        
+        this.Date = DateTool.GetCurrentDateAsUtc();
         this.GetTariffProducts();
 
         this.dimenstionShipment = new ShipmentPM();
@@ -79,7 +79,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
                 if (tariffSetting != null) {
                     this.ContainerDefaults = tariffSetting.ContainerDefaults;
-                    this.CurrencyId = tariffSetting.DefaultCurrencyId;                    
+                    this.CurrencyId = tariffSetting.DefaultCurrencyId;
                 }
 
                 this.LoadContainers();
@@ -490,25 +490,27 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         this.GrossWeightPerTon = weigh_Ton;
     }
     ComputeChargeableWeight_Kg() {
-        var weigh_Kg: number = null;
-        if (this.ChargeableWeight != null) {
-            var factorOfConvert: number = 1;
+        if (!this.IsShipment && !this.IsQuote) {
+            var weigh_Kg: number = null;
+            if (this.ChargeableWeight != null) {
+                var factorOfConvert: number = 1;
 
-            if (!AppTool.IsNullOrEmpty(this.WeightCode)) {
-                switch (this.WeightCode.toUpperCase()) {
-                    case "KG": { factorOfConvert = 1; break; }
-                    case "LB": { factorOfConvert = 0.45359237; break; }
-                    case "MT": { factorOfConvert = 1000; break; }
+                if (!AppTool.IsNullOrEmpty(this.WeightCode)) {
+                    switch (this.WeightCode.toUpperCase()) {
+                        case "KG": { factorOfConvert = 1; break; }
+                        case "LB": { factorOfConvert = 0.45359237; break; }
+                        case "MT": { factorOfConvert = 1000; break; }
+                    }
                 }
+
+                weigh_Kg = this.ChargeableWeight * factorOfConvert;
             }
 
-            weigh_Kg = this.ChargeableWeight * factorOfConvert;
+            if (weigh_Kg != null) {
+                weigh_Kg = AppTool.Round(weigh_Kg, 3);
+            }
+            this.ChargeableWeightInKG = weigh_Kg;
         }
-
-        if (weigh_Kg != null) {
-            weigh_Kg = AppTool.Round(weigh_Kg, 3);
-        }
-        this.ChargeableWeightInKG = weigh_Kg;
     }
     ComputeVolume_CBM() {
         var volume_CBM: number = null;
@@ -598,7 +600,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     }
 
     ComputeVolumetricWeight() {
-        this.weight = AppTool.ComputePackageVolumetricWeight(null, null, null, null, this.Volume, this.ChargeableWeight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode, this.WeightCode);
+        if (!this.IsShipment && !this.IsQuote) {
+            this.weight = AppTool.ComputePackageVolumetricWeight(null, null, null, null, this.Volume, this.ChargeableWeight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode, this.WeightCode);
+        }
     }
     ComputeVolume() {
         this.volume = AppTool.ComputePackageVolume(null, null, null, null, this.ChargeableWeight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode);
@@ -945,7 +949,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
                 var isDuplicate = this.CheckTariffPayablesDuplicate();
                 var isSellerDifferentFromMainCarrier = this.CheckTariffSellerAndShipmentMainCarrier(item);
-                if (isDuplicate && !isSellerDifferentFromMainCarrier ) {
+                if (isDuplicate && !isSellerDifferentFromMainCarrier) {
                     // override
                     var confirmWindow = new ConfirmWindow();
                     confirmWindow.Show("This generate will update on the existing lines.");
@@ -960,18 +964,18 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                     });
                 }
                 else if (!isDuplicate && isSellerDifferentFromMainCarrier) {
-                      // override
-                      var confirmWindow = new ConfirmWindow();
-                       confirmWindow.Show("Confirm adding a price check with a different Carrier than the main carriage carrier.");
-                       confirmWindow.WindowClosed.subscribe((event: any) => {
-                          if (confirmWindow.Yes) {
+                    // override
+                    var confirmWindow = new ConfirmWindow();
+                    confirmWindow.Show("Confirm adding a price check with a different Carrier than the main carriage carrier.");
+                    confirmWindow.WindowClosed.subscribe((event: any) => {
+                        if (confirmWindow.Yes) {
                             this.CurrentSession.StartBusyIndicatorLoading();
                             this.OverrideTariffPayablesOfShipment();
-                          }
-                          if (confirmWindow.No) {
+                        }
+                        if (confirmWindow.No) {
                             //nothing
-                          }
-                       });      
+                        }
+                    });
                 }
                 else if (isDuplicate && isSellerDifferentFromMainCarrier) {
                     var confirmWindow = new ConfirmWindow();
@@ -987,9 +991,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                     });
                 }
                 else {
-                       this.CurrentSession.StartBusyIndicatorLoading();
-                       this.AssignTariffPayablesToShipment();
-                     }
+                    this.CurrentSession.StartBusyIndicatorLoading();
+                    this.AssignTariffPayablesToShipment();
+                }
             }
         }
     }
@@ -1061,7 +1065,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             if (shipment != null) {
                 if (shipment.MainCarriageCarrierId == item.SellerId || shipment.MainCarriageCarrierId == null) {
                     isDifferentFromCarrier = false;
-                }         
+                }
             }
         });
         return isDifferentFromCarrier;
@@ -1154,7 +1158,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             }
         });
 
-        this.OnAmountChanged(); 
+        this.OnAmountChanged();
     }
 
     OnAmountChanged() {
@@ -1284,9 +1288,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 });
             } else if (isDuplicate && isSellerDifferentFromMainCarrier) {
                 // override
-                 var confirmWindow = new ConfirmWindow();
-                 confirmWindow.Show("Confirm adding a price check with a different Carrier than the main carriage carrier.Also,This generate will update on the existing lines.");
-                 confirmWindow.WindowClosed.subscribe((event: any) => {
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Show("Confirm adding a price check with a different Carrier than the main carriage carrier.Also,This generate will update on the existing lines.");
+                confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
                         this.CurrentSession.StartBusyIndicatorLoading();
                         this.OverrideTariffQuoteCharges();
@@ -1294,7 +1298,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                     if (confirmWindow.No) {
                         //nothing
                     }
-                 });
+                });
             }
             else {
                 var freightChrage = this.CheckFreightDuplicate();
@@ -1357,15 +1361,15 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             chargeItem.SetSaleQuantity();
             var costQuantity: number = chargeItem.CostQuantity;
 
-        if (costQuantity != null && costQuantity != 0) {
-            if (chargeItem.CostMeasurementCode == "PRVL" || chargeItem.CostMeasurementCode == "PRFR") {
-                chargeItem.CostUnitPrice = (costAmount / costQuantity) * 100;
-            }
-            else {
-                chargeItem.CostUnitPrice = (costAmount / costQuantity);
+            if (costQuantity != null && costQuantity != 0) {
+                if (chargeItem.CostMeasurementCode == "PRVL" || chargeItem.CostMeasurementCode == "PRFR") {
+                    chargeItem.CostUnitPrice = (costAmount / costQuantity) * 100;
+                }
+                else {
+                    chargeItem.CostUnitPrice = (costAmount / costQuantity);
 
-            }
-            chargeItem.SaleUnitPrice = chargeItem.CostUnitPrice;
+                }
+                chargeItem.SaleUnitPrice = chargeItem.CostUnitPrice;
             }
             chargeItem.ComputeSalePrice();
             chargeItem.ComputeSaleAmounts();
@@ -1402,17 +1406,17 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
             var costQuantity: number = chargeItem.CostQuantity;
             if (costQuantity != null && costQuantity != 0) {
-            if (chargeItem.CostMeasurementCode == "PRVL" || chargeItem.CostMeasurementCode == "PRFR") {
-                chargeItem.CostUnitPrice = (costAmount / costQuantity) * 100;
-            }
-            else {
-                chargeItem.CostUnitPrice = (costAmount / costQuantity);
-            }
+                if (chargeItem.CostMeasurementCode == "PRVL" || chargeItem.CostMeasurementCode == "PRFR") {
+                    chargeItem.CostUnitPrice = (costAmount / costQuantity) * 100;
+                }
+                else {
+                    chargeItem.CostUnitPrice = (costAmount / costQuantity);
+                }
                 chargeItem.SaleUnitPrice = chargeItem.CostUnitPrice;
             }
             chargeItem.ComputeSalePrice();
             chargeItem.ComputeSaleAmounts();
-            chargeItem.ComputeCostInSalePrice();  
+            chargeItem.ComputeCostInSalePrice();
             chargeItem.ComputeCostInSalePrice1();
             chargeItem.ComputeCostInSalePrice2();
             chargeItem.ComputeCostInSalePrice3();
@@ -1446,14 +1450,14 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         this.TariffList_Quote.forEach(payable => {
             var quote: QuotePM = this.FatherComponent.EntityPM;
             if (quote != null) {
-                if (quote.MainCarriageCarrierId == item.SellerId || quote.MainCarriageCarrierId == null  ) {
+                if (quote.MainCarriageCarrierId == item.SellerId || quote.MainCarriageCarrierId == null) {
                     isDifferentFromCarrier = false;
                 }
             }
         });
         return isDifferentFromCarrier;
     }
-    AddNewTariffQuoteCharge(item: any, isOFC: boolean, isSurcharge : boolean) {
+    AddNewTariffQuoteCharge(item: any, isOFC: boolean, isSurcharge: boolean) {
         this.myChargesTypeListService.getSingleFromCache(item.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var chargesType: ChargesTypeList = myResponse.Result;
@@ -1509,13 +1513,13 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                                 chargePM.CostQuantity = 1;
                             }
                             else {
-                                 chargePM.CostUnitPrice= item.ContainersPrices[0].Price_WithoutQuantity;
+                                chargePM.CostUnitPrice = item.ContainersPrices[0].Price_WithoutQuantity;
                                 chargePM.CostQuantity = this.FatherComponent.EntityPM.TEU;
                             }
                         }
                     }
                 }
-              
+
                 chargePM.CostMeasurementCode = measurementCode;
                 chargePM.SaleMeasurementCode = measurementCode;
                 chargePM.CostMeasurementId = measurementId;
@@ -1543,7 +1547,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 costAmount = 0;
             }
         }
-  
+
         if (packageId == this.FatherComponent.EntityPM.PackageType1Id) {
             chargePM.CostContainerType1UnitPrice = costAmount;
         }
