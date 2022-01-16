@@ -343,7 +343,7 @@ namespace CommunicationWorkerRole
 
             if (Debugger.IsAttached && LogitudeSettings.WorkerRoleName == "production")
             {
-                //throw new Exception("Production worker role should not be run in Debug mode! To debug the worker role in production please use a custom worker name");// 
+                throw new Exception("Production worker role should not be run in Debug mode! To debug the worker role in production please use a custom worker name");// 
             }
         }
 
