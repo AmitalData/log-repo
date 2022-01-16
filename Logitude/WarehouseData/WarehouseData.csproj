@@ -206,6 +206,7 @@
     <Content Include="WarehouseScript\BuildWarehouse\BuildFactChargesTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildFactContainerTable.sql" />
     <Content Include="WarehouseScript\BuildWarehouse\BuildFactInvoicesTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -287,6 +288,7 @@
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateFactChargesTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateFactContainerTable.sql" />
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateFactInvoicesTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
