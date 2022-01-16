@@ -335,6 +335,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
 
                 //this.ReloadCertificateTickets(false);
             }
+            this.RefreshEntity();
         });
     }
 
