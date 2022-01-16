@@ -25,19 +25,19 @@ using Unifreight.Data.AmitalModel;
 
 namespace Logitude.Customs.BL.Messaging.U2L.Entry
 {
-    public class ExportEntryService : UnifreightGenericService
+    public class ExportStorageService : UnifreightGenericService
     {
-        private LOGIENTRY _LOGIENTRY;
-        private LogitudeEntry _LogitudeEntry;
-        private Def.EntityPMs.SupplierInvoicePM _MySupplierInvoicePM;
+        private LOGIEXPORTSTORAGE _LOGIEXPORTSTORAGE;
+        private LogitudeExportStorage _LogitudeExportStorage;
         private ICustomContext _context;
         private GTRTRANQueryService _GTRTRANQueryService;
         private AmitalContext _AmitalContext;
-        public const string UpsertActionConst = "Logitude.Customs.BL.Messaging.U2L.ExportEntry.ExportEntryService.Upsert()";
-        private DeclarationPM _MyDeclarationPM;
+        public const string UpsertActionConst = "Logitude.Customs.BL.Messaging.U2L.ExportStorage.ExportStorageService.Upsert()";
         private Stopwatch _Stopwatch;
+        private ExportStoragePM _MyExportStoragePM;
+        public Boolean suppressNewTrans;
 
-        public ExportEntryService()
+        public ExportStorageService()
             : base(
             "1.000.000001",
             System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name,
@@ -48,58 +48,102 @@ namespace Logitude.Customs.BL.Messaging.U2L.Entry
         }
 
         public override void ProccessGenericRequest(
-              string xmlLOGIENTRY,
+              string xmlLOGIEXPORTSTORAGE,
               ref string MoreParams,
               out string MessageOut)
         {
             MessageOut = "";
-            _Stopwatch = Stopwatch.StartNew();
-            MyCommunicationsParams.Subject = "ExportEntryService ";
-
-            DeserilazeObject(xmlLOGIENTRY);
-            AppendLogLine("DeserilazeObject:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-
-            CheckIntegrity();
-            AppendLogLine("CheckIntegrity:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-            MyGenericResponseObj.Stage = "GetContext";
-            _context = CustomContext.GetContext(ResolvedTenant());
-            var myQueryService = new DeclarationQueryService(_context);
-
-            MyGenericResponseObj.Stage = "GetSingle";
-            this._MyDeclarationPM = myQueryService.GetSingle(this._LogitudeEntry.logitude_file, true, false);
-            if (this._MyDeclarationPM == null)
+            try
             {
-                throw new BusinessErrorException("Id is " + this._LogitudeEntry.logitude_file + " but not found");
+
+                _Stopwatch = Stopwatch.StartNew();
+                MyCommunicationsParams.Subject = "ExportStorageService ";
+
+                DeserilazeObject(xmlLOGIEXPORTSTORAGE);
+                AppendLogLine("DeserilazeObject:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
+                CheckIntegrity();
+                AppendLogLine("CheckIntegrity:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                MyGenericResponseObj.Stage = "GetContext";
+                _context = CustomContext.GetContext(ResolvedTenant());
+                var myQueryService = new ExportStorageQueryService(_context);
+                if (!String.IsNullOrWhiteSpace(this._LogitudeExportStorage.Id))
+                {
+                    MyGenericResponseObj.Stage = "GetSingle";
+                    this._MyExportStoragePM = myQueryService.GetSingle(this._LogitudeExportStorage.Id, true, false);
+                    if (this._MyExportStoragePM == null)
+                    {
+                        throw new BusinessErrorException("Id is " + this._LogitudeExportStorage.Id + " but not found");
+                    }
+                    AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                }
+                ICustomContext dbContext = CustomContext.GetContext(ResolvedTenant());
+                MyCommunicationsParams.Tenant = ResolvedTenant();
+                MyGenericResponseObj.Stage = "Upsert";
+                Upsert(suppressNewTrans);
+                MyGenericResponseObj.Stage = "Done";
+                AppendLogLine("Upsert Storage Data:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                MyGenericResponseObj.ApplicationId = _MyExportStoragePM.Id;
+                //MyGenericResponseObj.ResponseXml = xml;
+                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
+                MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
             }
-            AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-            ICustomContext dbContext = CustomContext.GetContext(ResolvedTenant());
-            MyGenericResponseObj.Stage = "Get Entry Data for file " + this._MyDeclarationPM.CustomFileNo;
-            DeclarationSRMapping declarationSRMapping = new DeclarationSRMapping();
-            var xml = GetEntryData(this._MyDeclarationPM);
-            if (String.IsNullOrWhiteSpace(xml))
+            catch (DbEntityValidationException ex)
             {
+                var formatedException = ExceptionFormatUtil.GetFormated(ex);
+
+                InsertLogLine(0, "ProccessRequest():Exception " + formatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                Debug.WriteLine("ProccessRequest():Exception " + formatedException.ToString(), true);
                 MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
-                MyGenericResponseObj.Message = "Get Entry Data returned null";
-                return;
-            }
-            MyGenericResponseObj.Stage = "Get Entry Data Done ";
-            AppendLogLine("Get Entry Data:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-            MyGenericResponseObj.ApplicationId = _MyDeclarationPM.Id;
-            MyGenericResponseObj.ResponseXml = xml;
-            MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
-            MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
+                MyGenericResponseObj.Message = "Error while ExportStorageUpdateService.Update " + formatedException.Message;
+                MyGenericResponseObj.ErrorDescription = formatedException.ToString();
+                if (formatedException.InnerException != null)
+                {
+                    MyGenericResponseObj.InnerException = formatedException.InnerException.ToString();
+                }
 
+                MessageOut = MyGenericResponseObj.ErrorDescription;
+            }
+            catch (Exception e)
+            {
+                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.TecinicalFailure;
+                MyGenericResponseObj.Message = "Exception: " + e.Message;
+                MyGenericResponseObj.ErrorDescription = e.ToString();
+                if (e.InnerException != null)
+                {
+                    MyGenericResponseObj.InnerException = e.InnerException.ToString();
+                }
+                MessageOut = MyGenericResponseObj.ErrorDescription;
+            }
+            finally
+            {
+                try
+                {
+                    if (!String.IsNullOrWhiteSpace(MyCommunicationsParams.LoggingEntityId))
+                    {
+                        MyCommunicationsParams.LoggingObjectTableId = GetLoggingObjectTableId("Customs.ExportStorage");
+                    }
+                }
+                catch (Exception)
+                {
+                }
+            }
         }
 
-        private string GetEntryData(DeclarationPM declarationPM)
+        protected override int ResolvedTenant() 
+        {
+            return int.Parse(_LOGIEXPORTSTORAGE.LogitudeExportStorage[0].Tenant);
+        }
+
+        private string GetExportStorageData(ExportStoragePM exportStoragePM)
         {
             int quantity = 0;
-            var myLOGIENTRY = new LOGIENTRY();
-            myLOGIENTRY.LogitudeEntry = new LogitudeEntry[] { new LogitudeEntry() };
+            var myLOGIEXPORTSTORAGE = new LOGIEXPORTSTORAGE();
+            myLOGIEXPORTSTORAGE.LogitudeExportStorage = new LogitudeExportStorage[] { new LogitudeExportStorage() };
             if (declarationPM.Consignments != null && declarationPM.Consignments.Count() > 0)
             {
-                myLOGIENTRY.LogitudeEntry[0].country = new country[] { new country() };
-                myLOGIENTRY.LogitudeEntry[0].country[0].countryid = declarationPM.Consignments.FirstOrDefault().OriginCountryCode;
+                myLOGIEXPORTSTORAGE.LogitudeExportStorage[0].country = new country[] { new country() };
+                myLOGIEXPORTSTORAGE.LogitudeExportStorage[0].country[0].countryid = declarationPM.Consignments.FirstOrDefault().OriginCountryCode;
                 foreach (var Consignment in declarationPM.Consignments)
                 {
                     if (Consignment.ConsignmentPackages != null)
@@ -118,13 +162,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.Entry
                     }
                 }
             }
-            myLOGIENTRY.LogitudeEntry[0].reshimon_num = declarationPM.DeclarationNumber;
+            myLOGIEXPORTSTORAGE.LogitudeExportStorage[0].reshimon_num = declarationPM.DeclarationNumber;
             
             if (declarationPM.TaxationDateTime.HasValue)
             {
-                myLOGIENTRY.LogitudeEntry[0].TaxationDateTime = declarationPM.TaxationDateTime.Value.Date.ToString("dd.MM.yy");
+                myLOGIEXPORTSTORAGE.LogitudeExportStorage[0].TaxationDateTime = declarationPM.TaxationDateTime.Value.Date.ToString("dd.MM.yy");
             }
-            myLOGIENTRY.LogitudeEntry[0].quantity = quantity.ToString();
+            myLOGIEXPORTSTORAGE.LogitudeExportStorage[0].quantity = quantity.ToString();
             SupplierInvoicePM primaryInvoice = new SupplierInvoicePM();
 
             if (declarationPM.SupplierInvoices != null && declarationPM.SupplierInvoices.Count() > 0)
@@ -132,21 +176,21 @@ namespace Logitude.Customs.BL.Messaging.U2L.Entry
                 primaryInvoice = declarationPM.SupplierInvoices.Where(d => d.IsPrimarySupplierInvoice).FirstOrDefault();
                 if (primaryInvoice != null)
                 {
-                    if (primaryInvoice.TotalFreightInFreightCurrency.HasValue) myLOGIENTRY.LogitudeEntry[0].freight_rate = primaryInvoice.TotalFreightInFreightCurrency.Value.ToString();
-                    myLOGIENTRY.LogitudeEntry[0].freight_currency = new freight_currency[] { new freight_currency() };
-                    myLOGIENTRY.LogitudeEntry[0].freight_currency[0].freight_currencyid = primaryInvoice.FreightCurrencyTypeCode;
+                    if (primaryInvoice.TotalFreightInFreightCurrency.HasValue) myLOGIEXPORTSTORAGE.LogitudeExportStorage[0].freight_rate = primaryInvoice.TotalFreightInFreightCurrency.Value.ToString();
+                    myLOGIEXPORTSTORAGE.LogitudeExportStorage[0].freight_currency = new freight_currency[] { new freight_currency() };
+                    myLOGIEXPORTSTORAGE.LogitudeExportStorage[0].freight_currency[0].freight_currencyid = primaryInvoice.FreightCurrencyTypeCode;
                     if (primaryInvoice.InsruancePercentage.HasValue)
                     {
-                        myLOGIENTRY.LogitudeEntry[0].insurance_type = "1";
-                        myLOGIENTRY.LogitudeEntry[0].insurance_percent = primaryInvoice.InsruancePercentage.Value.ToString();
+                        myLOGIEXPORTSTORAGE.LogitudeExportStorage[0].insurance_type = "1";
+                        myLOGIEXPORTSTORAGE.LogitudeExportStorage[0].insurance_percent = primaryInvoice.InsruancePercentage.Value.ToString();
                     }
                     else if (primaryInvoice.InsuranceAmount.HasValue)
                     {
-                        myLOGIENTRY.LogitudeEntry[0].insurance_type = "2";
-                        myLOGIENTRY.LogitudeEntry[0].insurance_amount = primaryInvoice.InsuranceAmount.Value.ToString();
+                        myLOGIEXPORTSTORAGE.LogitudeExportStorage[0].insurance_type = "2";
+                        myLOGIEXPORTSTORAGE.LogitudeExportStorage[0].insurance_amount = primaryInvoice.InsuranceAmount.Value.ToString();
                     }
-                    myLOGIENTRY.LogitudeEntry[0].insurance_amount_currency = new insurance_amount_currency[] { new insurance_amount_currency() };
-                    myLOGIENTRY.LogitudeEntry[0].insurance_amount_currency[0].insurance_amount_currencyid = primaryInvoice.InsruanceCurrencyTypeCode;
+                    myLOGIEXPORTSTORAGE.LogitudeExportStorage[0].insurance_amount_currency = new insurance_amount_currency[] { new insurance_amount_currency() };
+                    myLOGIEXPORTSTORAGE.LogitudeExportStorage[0].insurance_amount_currency[0].insurance_amount_currencyid = primaryInvoice.InsruanceCurrencyTypeCode;
 
                     if (primaryInvoice.SupplierInvoiceModifications != null && primaryInvoice.SupplierInvoiceModifications.Count() > 0) // moran 25.5.16 - AMI-56711
                     {
@@ -154,8 +198,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.Entry
                         SupplierInvoiceModificationPM agent_fee = primaryInvoice.SupplierInvoiceModifications.Where(d => d.TypeCode == "160").FirstOrDefault();
                         if (agent_fee != null && agent_fee.Amount.HasValue)
                         {
-                            myLOGIENTRY.LogitudeEntry[0].agent_fee = agent_fee.Amount.Value.ToString();
-                            myLOGIENTRY.LogitudeEntry[0].agent_fee_currency = agent_fee.CurrencyTypeCode;
+                            myLOGIEXPORTSTORAGE.LogitudeExportStorage[0].agent_fee = agent_fee.Amount.Value.ToString();
+                            myLOGIEXPORTSTORAGE.LogitudeExportStorage[0].agent_fee_currency = agent_fee.CurrencyTypeCode;
                         }*/
                     }
 
@@ -255,7 +299,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Entry
                     }
                     invoices.Add(mySupplierInvoice);
                 }
-                myLOGIENTRY.LogitudeEntry[0].SupplierInvoice = invoices.ToArray();
+                myLOGIEXPORTSTORAGE.LogitudeExportStorage[0].SupplierInvoice = invoices.ToArray();
                 // moran 25.5.16 - AMI-56624 -->
 
                 var customsDocumentQueryService = new CustomsDocumentQueryService(_context);
@@ -295,13 +339,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.Entry
                             customsDocuments.Add(myCustomsDocument);
                         }
                     }
-                    myLOGIENTRY.LogitudeEntry[0].CustomsDocuments = customsDocuments.ToArray();
+                    myLOGIEXPORTSTORAGE.LogitudeExportStorage[0].CustomsDocuments = customsDocuments.ToArray();
                 }
 
                 // moran 25.5.16 - AMI-56624 <--
             }
             
-            var xml = XmlGenericUtil<LOGIENTRY>.SerializeObject(myLOGIENTRY);
+            var xml = XmlGenericUtil<LOGIEXPORTSTORAGE>.SerializeObject(myLOGIEXPORTSTORAGE);
             return xml;
         }
 
@@ -313,7 +357,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Entry
                 return ("");
             }
 
-            using (_AmitalContext = AmitalContext.GetContext(_MyDeclarationPM.Tenant))
+            using (_AmitalContext = AmitalContext.GetContext(_MyExportStoragePM.Tenant))
             {
                 _GTRTRANQueryService = new GTRTRANQueryService(_AmitalContext);
                 var myGTRTRANPM = _GTRTRANQueryService.GetSingle(partnerID, tableID, partnerCode, null, true);
@@ -327,73 +371,79 @@ namespace Logitude.Customs.BL.Messaging.U2L.Entry
 
         }
 
-        private void DeserilazeObject(string xmlLOGIENTRY)
+        private void DeserilazeObject(string xmlLOGIEXPORTSTORAGE)
         {
 
             MyGenericResponseObj.Stage = "Initalize ProccessRequest";
-            AppendLogLine("ExportEntryService.ProccessRequest");
+            AppendLogLine("ExportStorageService.ProccessRequest");
 
             AppendLogLine("Deserialize(DataIn1) ..");
 
 
-            if (string.IsNullOrWhiteSpace(xmlLOGIENTRY))
+            if (string.IsNullOrWhiteSpace(xmlLOGIEXPORTSTORAGE))
             {
                 throw new BusinessErrorException("DataIn1 is missing");
             }
-            if (xmlLOGIENTRY.Length > 1000)
+            if (xmlLOGIEXPORTSTORAGE.Length > 1000)
             {
-                AppendLogLine("XmlIn=" + xmlLOGIENTRY.Substring(0, 1000));
+                AppendLogLine("XmlIn=" + xmlLOGIEXPORTSTORAGE.Substring(0, 1000));
                 AppendLogLine(".Substring(0, 1000)");
             }
             else
             {
-                AppendLogLine("XmlIn=" + xmlLOGIENTRY);
+                AppendLogLine("XmlIn=" + xmlLOGIEXPORTSTORAGE);
             }
 
 
             AppendLogLine("Tring DeserilazeObject");
             MyGenericResponseObj.Stage = "Trying DeserilazeObject";
-            this._LOGIENTRY = XmlGenericUtil<LOGIENTRY>.DeSerializeObject(xmlLOGIENTRY);
+            this._LOGIEXPORTSTORAGE = XmlGenericUtil<LOGIEXPORTSTORAGE>.DeSerializeObject(xmlLOGIEXPORTSTORAGE);
 
-            if (_LOGIENTRY.LogitudeEntry == null || _LOGIENTRY.LogitudeEntry.Length != 1)
+            if (_LOGIEXPORTSTORAGE.LogitudeExportStorage == null || _LOGIEXPORTSTORAGE.LogitudeExportStorage.Length != 1)
             {
-                throw new BusinessErrorException("_LOGIENTRY.Entry.Length != 1");
+                throw new BusinessErrorException("_LOGIEXPORTSTORAGE.LogitudeExportStorage.Length != 1");
             }
-            this._LogitudeEntry = _LOGIENTRY.LogitudeEntry[0];
+            this._LogitudeExportStorage = _LOGIEXPORTSTORAGE.LogitudeExportStorage[0];
         }
 
         private void CheckIntegrity()
         {
             MyGenericResponseObj.Stage = "Check integrity ";
 
-            if (String.IsNullOrWhiteSpace(this._LogitudeEntry.logitude_file))
+            if (String.IsNullOrWhiteSpace(this._LogitudeExportStorage.StorageNo))
             {
-                throw new BusinessErrorException("Id is missing");
+                throw new BusinessErrorException("StorageNo is missing");
             }
-            AppendLogLine("Id = " + this._LogitudeEntry.logitude_file);
+            AppendLogLine("StorageNo = " + this._LogitudeExportStorage.StorageNo);
         }
 
         public override string GetAssemblyQualifiedName()
         {
-            var xml = "";
-            var amitalObjExample = new LOGIENTRY();
-            var myAmitalEntry = new LogitudeEntry();
-
-
-            myAmitalEntry.logitude_file = "1-1";
-            myAmitalEntry.tenant = "1";
-
-
-            amitalObjExample.LogitudeEntry = new LogitudeEntry[] { myAmitalEntry };
-
-            xml = XmlGenericUtil<LOGIENTRY>.SerializeObject(amitalObjExample);
-
-            return xml;
+            return this.GetType().Name;
         }
 
         public override string GetExampleDataIn1()
         {
-            throw new NotImplementedException();
+            var xml = "";
+            var amitalObjExample = new LOGIEXPORTSTORAGE();
+            var myAmitalExportStorage = new LogitudeExportStorage();
+            myAmitalExportStorage.FirstCargoId = "11202A23";
+            myAmitalExportStorage.CargoType = "1";
+            myAmitalExportStorage.CargoTypeCode = "1";
+            myAmitalExportStorage.ExportDealIdentification = "A123";
+            myAmitalExportStorage.ExporterFileNumber = "123456";
+            myAmitalExportStorage.ExporterNumber = "10011837";
+            myAmitalExportStorage.SecondCargoId = "132256";
+            myAmitalExportStorage.ShipCode = "10001142";
+            myAmitalExportStorage.StorageNo = "555";
+            myAmitalExportStorage.Tenant = "1";
+            myAmitalExportStorage.ThirdCargoId = "22334";
+
+            amitalObjExample.LogitudeExportStorage = new LogitudeExportStorage[] { myAmitalExportStorage };
+
+            xml = XmlGenericUtil<LOGIEXPORTSTORAGE>.SerializeObject(amitalObjExample);
+
+            return xml;
         }
 
         public override string GetExampleDataIn2()

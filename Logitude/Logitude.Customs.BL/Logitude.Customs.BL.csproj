@@ -1963,6 +1963,7 @@
     <Compile Include="EntityUpdateServices\SupplierInvoiceItemsPriceUpdateService.cs" />
     <Compile Include="EntityUpdateServices\SupplierInvoiceItemVehicleUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeficitDecisionUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ExportStorageUpdateService.cs" />
     <Compile Include="EntityUpdateServices\UIMessageUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ValidCustomsItemUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\ValidCustomsItemUpdateService.Generated.cs" />
@@ -2183,7 +2184,7 @@
     <Compile Include="Messaging\U2L\CourierStatus\CourierStatusService.cs" />
     <Compile Include="Messaging\U2L\Courier\CourierPendingReasonService.cs" />
     <Compile Include="Messaging\U2L\DeclarationDocuments\DeclarationDocumentsService.cs" />
-    <Compile Include="Messaging\U2L\ExportEntry\ExportEntryService.cs" />
+    <Compile Include="Messaging\U2L\ExportStorage\ExportStorageService.cs" />
     <Compile Include="Messaging\U2L\FritzDeclaration\FritzDeclarationCls\FritzDeclaration.cs">
       <DependentUpon>FritzDeclaration.xsd</DependentUpon>
     </Compile>

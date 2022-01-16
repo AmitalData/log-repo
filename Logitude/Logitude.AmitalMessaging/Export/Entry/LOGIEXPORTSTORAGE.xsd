@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/LOGIEXPORTSTORAGE" elementFormDefault="qualified" targetNamespace="http://tempuri.org/LOGIEXPORTSTORAGE" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="LOGIEXPORTSTORAGE">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="LogitudeExportStorage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LogitudeExportStorage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="Id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="StorageNo" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Tenant" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ExportFileNo" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="DeclarationId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="OpenDate" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ExportDealIdentification" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ExporterNumber" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ExporterFileNumber" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ShipCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CargoTypeCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="FirstCargoId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="SecondCargoId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ThirdCargoId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CargoType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Id" type="xs:string" />
+  <xs:element name="StorageNo" type="xs:string" />
+  <xs:element name="Tenant" type="xs:string" />
+  <xs:element name="ExportFileNo" type="xs:string" />
+  <xs:element name="DeclarationId" type="xs:string" />
+  <xs:element name="OpenDate" type="xs:string" />
+  <xs:element name="ExportDealIdentification" type="xs:string" />
+  <xs:element name="ExporterNumber" type="xs:string" />
+  <xs:element name="ExporterFileNumber" type="xs:string" />
+  <xs:element name="ShipCode" type="xs:string" />
+  <xs:element name="CargoTypeCode" type="xs:string" />
+  <xs:element name="FirstCargoId" type="xs:string" />
+  <xs:element name="SecondCargoId" type="xs:string" />
+  <xs:element name="ThirdCargoId" type="xs:string" />
+  <xs:element name="CargoType" type="xs:string" />
+</xs:schema>

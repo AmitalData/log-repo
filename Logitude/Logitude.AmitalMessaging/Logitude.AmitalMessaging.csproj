@@ -132,6 +132,9 @@
     <Compile Include="Customs\MasterCourier\LOGIMASTERCOUR.cs">
       <DependentUpon>LOGIMASTERCOUR.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Export\Entry\LOGIEXPORTSTORAGE.cs">
+      <DependentUpon>LOGIEXPORTSTORAGE.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Infrastructure\FuStatus\gfusts.cs">
       <DependentUpon>gfusts.xsd</DependentUpon>
     </Compile>
@@ -271,6 +274,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Export\Entry\LOGIEXPORTSTORAGE.dtd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Export\Entry\LOGIEXPORTSTORAGE.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Infrastructure\FuStatus\gfusts.dtd" />
