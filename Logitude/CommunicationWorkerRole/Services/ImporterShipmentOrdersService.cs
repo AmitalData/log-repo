@@ -42,7 +42,6 @@ namespace CommunicationWorkerRole.Services.ImporterShipmentOrders
         private string messageId;
         private ObjectTable objectTable;
         private APILogsPM apiLog;
-        private bool isNewLog;
         private string URI = "http://localhost:9996/api/";//"http://localhost:9996/api/";
         private string token;
         private APICredentialsParameters APICredentialsParam = new APICredentialsParameters()
@@ -104,11 +103,10 @@ namespace CommunicationWorkerRole.Services.ImporterShipmentOrders
         public void ExecuteQueue()
         {
             if (queueService == null || queueResponse == null || tenant == null || string.IsNullOrEmpty(shipmentOrderId)) return;
-            BuildApiLog();
+            GetApiLog();
             GetToken();
             try
             {
-                SendApiLog("Start Building Queues For ImporterShipmentOrders Controller");
                 ShipmentOrderAM shipmentOrderAM = GetShipmentOrderAM();
                 SendShipmentAM(shipmentOrderAM);
                 queueService.Complete();
@@ -136,6 +134,9 @@ namespace CommunicationWorkerRole.Services.ImporterShipmentOrders
                 {
                     HandleRequestError(result);
                 }
+                var ResponseData = result.Result.Content.ReadAsStringAsync().Result;
+                var Donemsg = "Updates Of Shipment Sent To Importer Successfully " + DateTime.Now;
+                APILogsUtility.UpdateAPILogStatus(apiLog.Id, tenant.Value, "D", queueResponse.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, ResponseData, null, "");
             }
         }
 
@@ -193,7 +194,6 @@ namespace CommunicationWorkerRole.Services.ImporterShipmentOrders
             }
 
             queueService.CompleteAsFailed();
-            SendApiLog("Build Documents Queues");
             APILogsUtility.UpdateAPILogStatus(apiLog.Id, tenant.Value, "F", queueResponse.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, null, errorMessage, (errorMessage.Length >= 250 ? errorMessage.Substring(0, 249) : errorMessage));
         }
 
@@ -207,25 +207,13 @@ namespace CommunicationWorkerRole.Services.ImporterShipmentOrders
             return errorMessage;
         }
 
-        private void SendApiLog(string subject)
+        private void GetApiLog()
         {
-            if (!isNewLog) return;
-            apiLog.Subject = subject;
-            apiLog.BatchNumber = messageId;
-            //apiLog.CustomerId = CustomerId;
-            apiLogsService.Create(apiLog);
-        }
-
-        private void BuildApiLog()
-        {
-            isNewLog = false;
             apiLog = aPILogsQuery.GetSingleByCorrelationIdAndTenant(messageId, tenant.Value);
             if (apiLog != null) return;
-
-            isNewLog = true;
             apiLog = CreateNewApiLogInstance();
+            apiLogsService.Create(apiLog);
         }
-
 
         private APILogsPM CreateNewApiLogInstance()
         {
@@ -243,7 +231,9 @@ namespace CommunicationWorkerRole.Services.ImporterShipmentOrders
                 Status = "I",
                 QueueMessageMoreDetailsId = messageId,
                 ObjectTableId = objectTable.Id,
-                Tenant = tenant.Value
+                Tenant = tenant.Value,
+                BatchNumber = messageId,
+                Subject = "Start Building Queues For ImporterShipmentOrders Controller"
             };
         }
     }

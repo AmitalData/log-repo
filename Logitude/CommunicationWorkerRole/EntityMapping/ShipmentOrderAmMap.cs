@@ -16,6 +16,7 @@ namespace CommunicationWorkerRole.EntityMapping
             shipmentOrderAM.Id = shipmentOrder.Id;
             shipmentOrderAM.CustomerShipmentNumber = shipmentOrder.CustomerShipmentNumber;
             shipmentOrderAM.CustomerTenantNumber = shipmentOrder.CustomerTenantNumber.Value;
+            shipmentOrderAM.Volume = shipmentOrder.Volume;
 
             return shipmentOrderAM;
         }
