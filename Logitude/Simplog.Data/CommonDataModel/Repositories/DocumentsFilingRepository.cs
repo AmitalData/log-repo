@@ -141,7 +141,22 @@ namespace Simplog.Data.CommonDataModel.Repositories
             }
             return q;
         }
-
+        public List<DocumentsFilingDTO> GetByEntity(string objectTableId, string entityId, int tenant)
+        {
+            var q = (from a in context.DocumentsFilings
+                     where
+                     //a.DocumentTypeId == documentTypeId && 
+                     a.Tenant == tenant && a.ObjectTableId == objectTableId && a.EntityId == entityId
+                     select new DocumentsFilingDTO()
+                     {
+                         Id = a.Id,
+                         DocumentTypeId=a.DocumentTypeId,
+                         DocumentId=a.DocumentId
+                     });
+            var allForEntity = q.ToList();
+            return allForEntity;
+        }
+        
         public string GetDocumentIdByDocumentType(string documentTypeId, string objectTableId, string entityId, int tenant ,out string DocumentsFilingId)
         {
             (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
@@ -344,4 +359,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
 
     }
+    public class DocumentsFilingDTO
+    {
+        public string Id { get; internal set; }
+        public string DocumentTypeId { get; internal set; }
+        public string DocumentId { get; internal set; }
+    }
+
 }
