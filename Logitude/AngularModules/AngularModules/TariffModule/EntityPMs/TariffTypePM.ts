@@ -44,6 +44,11 @@ export class TariffTypePM {
     public set TransportModeCode(newValue: string) { if (this.transportModeCode != newValue) { this.transportModeCode = newValue; this.MarkAsDirty("TransportModeCode"); } }
        
 	 
+    private directionCode: string;
+    public get DirectionCode() { return this.directionCode; }
+    public set DirectionCode(newValue: string) { if (this.directionCode != newValue) { this.directionCode = newValue; this.MarkAsDirty("DirectionCode"); } }
+       
+	 
 
     public OldEntityPM: TariffTypePM;
 		

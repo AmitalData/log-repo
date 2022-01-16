@@ -428,6 +428,21 @@ export class TariffPM {
     public set FreightChargeId(newValue: string) { if (this.freightChargeId != newValue) { this.freightChargeId = newValue; this.MarkAsDirty("FreightChargeId"); } }
        
 	 
+    private customsBrokerId: string;
+    public get CustomsBrokerId() { return this.customsBrokerId; }
+    public set CustomsBrokerId(newValue: string) { if (this.customsBrokerId != newValue) { this.customsBrokerId = newValue; this.MarkAsDirty("CustomsBrokerId"); } }
+       
+	 
+    private customsBrokerName: string;
+    public get CustomsBrokerName() { return this.customsBrokerName; }
+    public set CustomsBrokerName(newValue: string) { if (this.customsBrokerName != newValue) { this.customsBrokerName = newValue; this.MarkAsDirty("CustomsBrokerName"); } }
+       
+	 
+    private customsBrokerPartnerTypeId: string;
+    public get CustomsBrokerPartnerTypeId() { return this.customsBrokerPartnerTypeId; }
+    public set CustomsBrokerPartnerTypeId(newValue: string) { if (this.customsBrokerPartnerTypeId != newValue) { this.customsBrokerPartnerTypeId = newValue; this.MarkAsDirty("CustomsBrokerPartnerTypeId"); } }
+       
+	 
 
     public OldEntityPM: TariffPM;
 		

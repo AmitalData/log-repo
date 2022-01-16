@@ -68,6 +68,22 @@ namespace Logitude.TariffModule.BL.CLoseTable
                 Code = "OFS", 
                 SearchFields = "OFS,Ocean FCL Surcharges Cost", 
 			});
+			 
+            all.Add(new TariffTypeDetails()
+            {    
+                DirectionCode = "E", 
+                Name = "Export Customs Charges Cost", 
+                Code = "ECC", 
+                SearchFields = "ECC,Export Customs Charges Cost", 
+			});
+			 
+            all.Add(new TariffTypeDetails()
+            {    
+                DirectionCode = "I", 
+                Name = "Import Customs Charges Cost", 
+                Code = "ICC", 
+                SearchFields = "ICC,Import Customs Charges Cost", 
+			});
 			
             return all;
        }

@@ -35,7 +35,7 @@
   </Column>
   <Column
     Name="DirectionCode"
-    Type="varchar"
+    Type="char"
     Size="1">
     <Constraints
       Nullable="true" />

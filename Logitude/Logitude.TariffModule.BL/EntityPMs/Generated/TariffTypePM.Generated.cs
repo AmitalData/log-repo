@@ -112,6 +112,29 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string directionCode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DirectionCode  
+	   {
+	    
+	     get
+		{
+		   return directionCode;
+		 }
+		 set
+		 {
+		   if(directionCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DirectionCode",OldValue=directionCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   directionCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

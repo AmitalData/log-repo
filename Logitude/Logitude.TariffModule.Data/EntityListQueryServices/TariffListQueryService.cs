@@ -45,6 +45,8 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
                                                 UpdatedByUserName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact != null ? a.UpdatedByUser.Contact.EnglishName : "" : "",
                                                 TariffNumber = a.TariffNumber,
                                                 LastUsedDate = a.LastUsedDate,
+                                                TypeCode = a.TypeCode,
+                                                CustomsBrokerName = a.CustomsBroker != null ? a.CustomsBroker.EnglishName : "",
                                             });
             return query;
         }
@@ -69,7 +71,7 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
 
             foreach (EntityLastActivity lastActivity in lastActivities)
             {
-                Tariff a = (from d in entities.Include("UpdatedByUser.Contact").Include("CreatedByUser.Contact").Include("Seller")
+                Tariff a = (from d in entities.Include("UpdatedByUser.Contact").Include("CreatedByUser.Contact").Include("Seller").Include("CustomsBroker")
                             where d.Id == lastActivity.EntityId
                             select d).FirstOrDefault();
 
@@ -99,6 +101,7 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
                         LastActivityByUserName = lastActivity.User.Contact.EnglishName,
                         CurrencyId = a.CurrencyId,
                         LastUsedDate = a.LastUsedDate,
+                        CustomsBrokerName = a.CustomsBroker != null ? a.CustomsBroker.EnglishName : "",
                     };
 
                     TariffType tariffType = GetTariffType(a.TypeCode, tenant);

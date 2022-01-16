@@ -6301,7 +6301,48 @@
     DefaultSortName="&quot;CreateDate&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">
-    <QueryColumns />
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;Import Customs Charges Cost&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;TariffNumber&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;Import Customs Charges Cost&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;Name&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;Import Customs Charges Cost&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;CustomsBrokerName&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;Import Customs Charges Cost&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;Notes&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;Import Customs Charges Cost&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;CreatedByUserName&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;Import Customs Charges Cost&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;CreateDate&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;Import Customs Charges Cost&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;UpdatedByUserName&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;Import Customs Charges Cost&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;UpdateDate&quot;"
+        ColumnWidth="150" />
+    </QueryColumns>
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;Import Customs Charges Cost&quot;"
