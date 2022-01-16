@@ -79,7 +79,7 @@ namespace Logitude.CargoTracking.Data.Repositories
             return shipmentsSearchEntities;
         }
 
-        internal List<CargoTrackingShipmentSearch> GetConnectedShipmentNumbersByShipmentIds(List<string> shipmentIds)
+        public List<CargoTrackingShipmentSearch> GetConnectedShipmentNumbersByShipmentIds(List<string> shipmentIds)
         {
             return currentContext.CargoTrackingShipmentSearches.Where(e => shipmentIds.Contains(e.ShipmentId) && (e.ReferenceType == ForwardingShipmentNumberType || e.ReferenceType == OrderShipmentNumberType)).ToList();
         }

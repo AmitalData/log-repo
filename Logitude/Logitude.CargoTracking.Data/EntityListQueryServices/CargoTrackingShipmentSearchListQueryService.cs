@@ -21,6 +21,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
     public partial class CargoTrackingShipmentSearchListQueryService
     {
+        public const string OrderType = "O";
         private IQueryable<CargoTrackingShipmentSearchList> GetIqueryableList(IQueryable<CargoTrackingShipmentSearch> iQueryable)
         {
             IQueryable<CargoTrackingShipmentSearchList> query = (from a in iQueryable
@@ -62,10 +63,10 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             return shipments;
         }
 
-        private void AddSearchsToShipments(List<CargoTrackingShipmentList> shipments, int tenant)
+        public void AddSearchsToShipments(List<CargoTrackingShipmentList> shipments, int tenant)
         {
             CargoTrackingShipmentSearchRepository repo = new CargoTrackingShipmentSearchRepository(tenant);
-            List<CargoTrackingShipmentSearch> shipmentSearchs = repo.GetConnectedShipmentNumbersByShipmentIds(shipments.Select(e=>e.EntityId).ToList());
+            List<CargoTrackingShipmentSearch> shipmentSearchs = repo.GetConnectedShipmentNumbersByShipmentIds(shipments.Where(e => e.EntityType != OrderType).Select(e=>e.EntityId).ToList());
             var searchesGroupDictionary = shipmentSearchs.GroupBy(e => e.ShipmentId).ToDictionary(e => e.Key, e => e);
             foreach (var item in shipments)
             {
