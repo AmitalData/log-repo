@@ -23,7 +23,7 @@ export class DeclarationCargoSplitFiltersMenuComponent
         if (this.apiQueryFilters.AdditionalFilters.length > 0) {
             this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "Direction");
         }
-        
+
         if (filter == "A") {
             this.apiQueryFilters.addAdditionalFilter("Direction", filter, null, null, "NotEqual", false, false, false, "string");
         } else {
