@@ -822,7 +822,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
                 var selectedEntityId = $event.rowData[this.ObjectTable.KeyPropertyPath];
                 //console.log("row clicked : ", entityList, selectedEntityId);
                 this.Args.SelectedItem = entityList;
-                var args = selectedEntityId + ',' + entityList.Tenant;
+                var args = selectedEntityId + ',' + entityList.Tenant + ',' + this.LanguageFilterValue;
                 // Close windoew with Args
                 this.CurrentSession.CloseCurrentWindowEmit(args);
             }
