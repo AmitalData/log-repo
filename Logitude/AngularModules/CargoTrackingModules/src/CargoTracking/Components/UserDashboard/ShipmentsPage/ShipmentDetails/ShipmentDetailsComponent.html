@@ -1180,7 +1180,7 @@
                             </div> -->
                                 <div>
                                     <div class="partner-type-label">{{partnerCard.Type}}</div>
-                                    <div class="partner-name">
+                                    <div *ngIf="partnerCard.Name != null" class="partner-name">
                                         <custom-label [width]="195">{{partnerCard.Name}}</custom-label>
                                     </div>
                                 </div>
