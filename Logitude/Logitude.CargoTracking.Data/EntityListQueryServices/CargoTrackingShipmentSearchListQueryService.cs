@@ -58,8 +58,27 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
             CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(context);
             List<CargoTrackingShipmentList> shipments = shipmentsQuery.GetShipments(shipmentsIds, tenant);
-
+            AddSearchsToShipments(shipments, tenant);
             return shipments;
+        }
+
+        private void AddSearchsToShipments(List<CargoTrackingShipmentList> shipments, int tenant)
+        {
+            CargoTrackingShipmentSearchRepository repo = new CargoTrackingShipmentSearchRepository(tenant);
+            List<CargoTrackingShipmentSearch> shipmentSearchs = repo.GetConnectedShipmentNumbersByShipmentIds(shipments.Select(e=>e.EntityId).ToList());
+            var searchesGroupDictionary = shipmentSearchs.GroupBy(e => e.ShipmentId).ToDictionary(e => e.Key, e => e);
+            foreach (var item in shipments)
+            {
+                item.ConnectedShipmetNumberSearchs = GetSearchesFromGroupsDictionary(item, searchesGroupDictionary);
+            }
+
+        }
+
+        private List<CargoTrackingShipmentSearch> GetSearchesFromGroupsDictionary(CargoTrackingShipmentList item, Dictionary<string, IGrouping<string, CargoTrackingShipmentSearch>> searchesGroupDictionary)
+        {
+            if (!searchesGroupDictionary.ContainsKey(item.EntityId))
+                return new List<CargoTrackingShipmentSearch>();
+            return searchesGroupDictionary[item.EntityId].ToList();
         }
 
         private static IQueryable<CargoTrackingShipmentSearch> GetShipmentsSearchEntities(string searchText, int tenant)
