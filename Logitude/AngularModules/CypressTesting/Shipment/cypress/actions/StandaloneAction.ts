@@ -76,43 +76,25 @@ export function AssertShipmenteMenuButtonsDisabled() {
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentBSplitShipment + BaseSelectors.LastElement, BaseSelectors.BeDisabled)
 }
 
-export function AssertShipmentePickupDelivaryWindowDisabled() {
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryCarrier, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryCarrierNumber, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryDriver, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryTruckNumber, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryTrailerNumber, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryByRail, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryByTruck, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryATDDate, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryATDTime, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryETDDate, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryETDTime, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryETATime, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryETADate, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryATADate, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryATATime, BaseSelectors.BeDisabled)
+export function AssertShipmentPickupDelivaryWindowFields(condition) {
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryCarrier, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryCarrierNumber, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryDriver, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryTruckNumber, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryTrailerNumber, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryByRail, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryByTruck, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryATDDate, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryATDTime, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryETDDate, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryETDTime, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryETATime, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryETADate, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryATADate, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryATATime, condition)
 }
 
 export function AssertShipmenteDelivaryWindowDisabled() {
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryEmptyDeliveryContainer, BaseSelectors.BeDisabled)
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryEmptyDeliveryDepotReference, BaseSelectors.BeDisabled)
-}
-
-export function AssertShipmentePickupDelivaryWindowEnabled() {
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryCarrier, BaseSelectors.NotBeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryCarrierNumber, BaseSelectors.NotBeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryDriver, BaseSelectors.NotBeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryTruckNumber, BaseSelectors.NotBeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryTrailerNumber, BaseSelectors.NotBeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryByRail, BaseSelectors.NotBeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryByTruck, BaseSelectors.NotBeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryATDDate, BaseSelectors.NotBeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryATDTime, BaseSelectors.NotBeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryETDDate, BaseSelectors.NotBeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryETDTime, BaseSelectors.NotBeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryETATime, BaseSelectors.NotBeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryETADate, BaseSelectors.NotBeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryATADate, BaseSelectors.NotBeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryATATime, BaseSelectors.NotBeDisabled)
 }

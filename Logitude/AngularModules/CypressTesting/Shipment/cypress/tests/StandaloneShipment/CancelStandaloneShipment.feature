@@ -17,7 +17,7 @@ Feature: Cancel standalone shipment
         Then the shipment should create successfully
 
     Scenario: Create standalone shipment when the pickup is FullResponsibility and from partner to casual address with same countries
-     Given the user open the shipment and navigate to RoutingsTab workspace
+        Given the user open the shipment and navigate to RoutingsTab workspace
         And add a new pickup leg with the following details
             | From        | Partner        |
             | FromPartner | Israeli Tenant |
@@ -37,6 +37,3 @@ Feature: Cancel standalone shipment
         Then the shipment should cancel successfully
         And the shipment should not connected with pickup
         And all fiellds in pickup should not be dim
-
-
-    

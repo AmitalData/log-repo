@@ -158,7 +158,7 @@ export function PartialSplitShipment(packagesDetails: PackagesDetails) {
 
 export function CancelShipment(note: string) {
     cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
-    cy.Click(ShipmentSelectors.CancelShipmentButton+BaseSelectors.LastElement, null,true);
+    cy.Click(ShipmentSelectors.CancelShipmentButton + BaseSelectors.LastElement, null, true);
     cy.FillLogTextBox(ShipmentSelectors.ShipmentEventNote, note)
     UpdateShipment(ShipmentSelectors.ConfirmActionButton);
 }
