@@ -118,7 +118,7 @@ namespace CommunicationWorkerRole
 
         private void SetShipmentCustomField(ShipmentPM shipment, KeyValuePair<string, string> shipmentField)
         {
-            CustomFieldClass customFieldValue = new()
+            CustomFieldClass customFieldValue = new CustomFieldClass()
             {
                 FieldName = shipmentField.Key,
                 TableName = "Shipment",
