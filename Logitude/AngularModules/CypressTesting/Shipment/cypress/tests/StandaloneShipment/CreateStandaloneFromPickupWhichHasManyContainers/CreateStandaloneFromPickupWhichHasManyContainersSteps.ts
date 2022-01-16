@@ -71,5 +71,12 @@ Given("add a new pickup leg with the following details", (dataTable) => {
 });
 
 Given("the user in the pickup packages select all container",()=>{
-  cy.Click(BaseSelectors.Button, ShipmentConstants.AddContainer)
+  cy.Click(ShipmentSelectors.PickUpDeliveryPackages,null)
+ // cy.get(".TabTitleRow").find(".Button").contains("Add Container")
+  cy.Click(BaseSelectors.Button, ShipmentConstants.AddContainer,true)
+  cy.get(ShipmentSelectors.LogitudeCheckBox).eq(1).click();
+  cy.get(ShipmentSelectors.LogitudeCheckBox).eq(2).click();
+  //CheckBox_0_1_LBL
+  //CheckBox_0_2_LBL
+  //CheckBox_0_3_LBL
 })

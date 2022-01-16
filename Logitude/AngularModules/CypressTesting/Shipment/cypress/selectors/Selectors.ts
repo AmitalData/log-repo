@@ -203,6 +203,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PickUpDeliveryETATime = '#time_ShipmentPickUpDelivery_ETA';
   public static readonly PickUpDeliveryATATime = '#time_ShipmentPickUpDelivery_ATA';
   public static readonly PickUpDeliverynote = '#ShipmentPickUpDelivery_Notes';
+  public static readonly PickUpDeliveryPackages = '#ShipmentPickUpDeliveryTHPackages';s
   public static readonly ShipmentRatio = '#Shipment_Ratio';
   public static readonly ShipmentGrossWeightUnitCode = '#Shipment_GrossWeightUnitCode';
   public static readonly ValidationSummary = '.LeftCenter';
