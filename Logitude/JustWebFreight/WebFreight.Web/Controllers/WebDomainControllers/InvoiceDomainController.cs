@@ -41,6 +41,7 @@ using System.Net.Http;
 using System.Transactions;
 using System.Web;
 using System.Web.Http;
+using System.Xml;
 using WebFreight.Web.CommonDataModel.DomainServices;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
@@ -1586,9 +1587,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             aRPaymentRepository.Update(payment);
                             aRPaymentRepository.SubmitChanges();
 
-                            Profact.TimbraCFDI33.Comprobante comprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(payment.SATXML);
+                            XmlElement comprobanteComplementoXMLElement = GetcomprobanteComplementoXMLElement(payment.SATXML, tenant);
                             SATInterfaceHelper sATInterfaceHelper = new SATInterfaceHelper();
-                            sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment, comprobante, arInvoiceRepository, aRPaymentRepository);
+                            sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment, comprobanteComplementoXMLElement, arInvoiceRepository, aRPaymentRepository);
                         }
                         /*
 						 * Catalog EstadoCancelacion
@@ -1614,6 +1615,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
+        }
+
+        private XmlElement GetcomprobanteComplementoXMLElement(string paymentsATXML, int tenant)
+        {
+            SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(tenant);
+            SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(tenant);
+            if (satSetting != null && satSetting.SATInterfaceCode == "PROF40")
+            {
+                return  LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI40.Comprobante>(paymentsATXML).Complemento.Any[0];
+            }
+            return LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(paymentsATXML).Complemento.Any[0];
         }
 
         public HttpResponseMessage GetARInvoiceSATCancellationStatus(string invoiceId)
