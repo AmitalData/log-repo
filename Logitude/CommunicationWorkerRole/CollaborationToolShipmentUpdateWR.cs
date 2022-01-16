@@ -7,6 +7,7 @@ using Logitude.Server.Tools.Messages;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
 using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -86,10 +87,16 @@ namespace CommunicationWorkerRole
 
                 foreach (KeyValuePair<string, string> entry in entryFields)
                 {
-                    PropertyInfo propertyInfo = shipment.GetType().GetProperty(entry.Key);
-                    Type t = Nullable.GetUnderlyingType(propertyInfo.PropertyType) ?? propertyInfo.PropertyType;
-                    object safeValue = (entry.Value == null) ? null : Convert.ChangeType(entry.Value, t);
-                    propertyInfo.SetValue(shipment, safeValue, null);
+
+                    var fieldTypeName = GetTypeName(shipment, entry.Key);
+                    if (fieldTypeName == "CustomFieldClass")
+                    {
+                        SetShipmentCustomField(shipment, entry);
+                    }
+                    else
+                    {
+                        SetValue(shipment, entry.Key, entry.Value);
+                    }
                 }
 
                 ShipmentService myService = new ShipmentService(shipmentRepository.context, shipment, "system@tenant" + shipment.Tenant + ".com");
@@ -100,6 +107,39 @@ namespace CommunicationWorkerRole
             {
                 ExceptionHandler.HandleException(e, DateTime.Now, 1, null, "Shipment Update Error", null, null);
             }
+        }
+
+        private string GetTypeName(object model, string field)
+        {
+            PropertyInfo propertyInfo = model.GetType().GetProperty(field);
+            Type type = Nullable.GetUnderlyingType(propertyInfo.PropertyType) ?? propertyInfo.PropertyType;
+            return type.Name;
+        }
+
+        private void SetShipmentCustomField(ShipmentPM shipment, KeyValuePair<string, string> shipmentField)
+        {
+            CustomFieldClass customFieldValue = new()
+            {
+                FieldName = shipmentField.Key,
+                TableName = "Shipment",
+                Value = shipmentField.Value
+            };
+
+            SetValue(shipment, shipmentField.Key, customFieldValue);
+        }
+
+        private void SetValue(object model, string field, object value)
+        {
+            PropertyInfo propertyInfo = model.GetType().GetProperty(field);
+            propertyInfo.SetValue(model, value, null);
+        }
+
+        private void SetValue(object model, string field, string value)
+        {
+            PropertyInfo propertyInfo = model.GetType().GetProperty(field);
+            Type type = Nullable.GetUnderlyingType(propertyInfo.PropertyType) ?? propertyInfo.PropertyType;
+            object safeValue = (string.IsNullOrEmpty(value)) ? null : Convert.ChangeType(value, type);
+            propertyInfo.SetValue(model, safeValue, null);
         }
         #endregion
     }
