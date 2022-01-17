@@ -387,6 +387,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         [DataMember]
         public string UsoCFDICode { get; set; }
+        [DataMember]
+        public string RegimenFiscalCode { get; set; }
 
         [DataMember]
         public string ZipCode { get; set; }

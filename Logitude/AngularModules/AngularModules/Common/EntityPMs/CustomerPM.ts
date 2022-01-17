@@ -1373,6 +1373,11 @@ export class CustomerPM {
     public set UsoCFDICode(newValue: string) { if (this.usoCFDICode != newValue) { this.usoCFDICode = newValue; this.MarkAsDirty("UsoCFDICode"); } }
        
 	 
+    private regimenFiscalCode: string;
+    public get RegimenFiscalCode() { return this.regimenFiscalCode; }
+    public set RegimenFiscalCode(newValue: string) { if (this.regimenFiscalCode != newValue) { this.regimenFiscalCode = newValue; this.MarkAsDirty("RegimenFiscalCode"); } }
+       
+	 
     private customerTenant: number;
     public get CustomerTenant() { return this.customerTenant; }
     public set CustomerTenant(newValue: number) { if (this.customerTenant != newValue) { this.customerTenant = newValue; this.MarkAsDirty("CustomerTenant"); } }

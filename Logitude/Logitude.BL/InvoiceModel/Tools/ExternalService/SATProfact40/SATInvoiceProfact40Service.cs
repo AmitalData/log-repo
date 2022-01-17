@@ -143,6 +143,11 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 throw new ApplicationException("Company Vat Number is required");
             }
 
+            if (string.IsNullOrEmpty(currentTenant.Company))
+            {
+                throw new ApplicationException("Company Name is required");
+            }
+
             if (arInvoicePM.InvoiceDate == null)
             {
                 throw new ApplicationException("Invoice Date is required");
@@ -231,6 +236,13 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 comprobante.TipoCambioSpecified = true;
             }
 
+            comprobante.InformacionGlobal = new Profact.TimbraCFDI40.ComprobanteInformacionGlobal
+            {
+                Periodicidad = "",
+                Meses = "",
+                Año = new short()
+            };
+            comprobante.Exportacion = "01";
             comprobante.Moneda = invoiceCurrency.Code;
             comprobante.Serie = serie;
             comprobante.Version = "4.0";
@@ -263,6 +275,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             comprobante.Receptor = new Profact.TimbraCFDI40.ComprobanteReceptor();
             //comprobante.Receptor.Rfc = billToCard.VatNumber;
             comprobante.Receptor.Nombre = billToCard.EnglishName;
+            comprobante.Receptor.RegimenFiscalReceptor = arInvoicePM.RegimenFiscalCode;
+            comprobante.Receptor.DomicilioFiscalReceptor = billToAddress.ZipCode;
 
             string billToCountryCode = (billToAddress != null ? (billToAddress.Country != null ? billToAddress.Country.Code : null) : null);
             if (billToAddress.Country != null)
@@ -345,6 +359,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 if (!allChargesTypes.First(c => c.Id == line.ChargesTypeId).IsExpense)
                 {
                     Profact.TimbraCFDI40.ComprobanteConcepto concepto = new Profact.TimbraCFDI40.ComprobanteConcepto();
+                    concepto.ObjetoImp = "02";
                     concepto.Cantidad = Math.Abs((line.Quantity != null ? ((decimal)line.Quantity.Value) : 0));
                     concepto.Unidad = "SERVICIO";
                     //concepto.noIdentificacion = "1";
@@ -442,6 +457,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                             {
                                 Importe = sATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0))),
                                 Impuesto = "002",
+                                Base = sATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0))),
                                 TasaOCuota = total_tasaOCuota,
                                 TipoFactor = _totaltipoFactor,//(totalVat.VATPercent == 0 ? "Exento" : "Tasa"),
                             };

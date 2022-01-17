@@ -2341,6 +2341,13 @@ namespace Simplog.Data.CommonDataModel.Mocks
                 throw new NotImplementedException();
             }
         }
+        public IDbSet<RegimenFiscal> RegimenFiscals
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
         public IDbSet<ReportsTemplate> ReportsTemplates
         {
             get

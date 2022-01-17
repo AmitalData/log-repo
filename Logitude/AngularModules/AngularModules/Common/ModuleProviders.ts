@@ -88,6 +88,7 @@ import {LoginPolicyListService} from './Services/StandardLists/LoginPolicyListSe
 import {MetodoPagoListService} from './Services/StandardLists/MetodoPagoListService';
 import {CustomerTenantAccessPMService} from './Services/StandardPMs/CustomerTenantAccessPMService';
 import {UsoCFDIListService} from './Services/StandardLists/UsoCFDIListService';
+import {RegimenFiscalListService} from './Services/StandardLists/RegimenFiscalListService';
 import {ReportsTemplateListService} from './Services/StandardLists/ReportsTemplateListService';
 import {ReportsTemplatesVersionListService} from './Services/StandardLists/ReportsTemplatesVersionListService';
 import {AccountingSettingPMService} from './Services/StandardPMs/AccountingSettingPMService';
@@ -392,6 +393,7 @@ export class ModuleProviders {
             case "FeaturePackageTypeListService": { myResult = new FeaturePackageTypeListService(); break; }
             case "MetodoPagoListService": { myResult = new MetodoPagoListService(); break; }
             case "UsoCFDIListService": { myResult = new UsoCFDIListService(); break; }
+            case "RegimenFiscalListService": { myResult = new RegimenFiscalListService(); break; }
             case "ComputingPartnerPMService": { myResult = new ComputingPartnerPMService(); break; }
             case "ComputingPartnerTranslationPMService": { myResult = new ComputingPartnerTranslationPMService(); break; }
             case "CustomerTenantAccessMenuButtonsHandler": { myResult = new CustomerTenantAccessMenuButtonsHandler(); break; }

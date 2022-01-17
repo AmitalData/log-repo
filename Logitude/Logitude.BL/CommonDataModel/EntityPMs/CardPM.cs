@@ -186,6 +186,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
 
         public string UsoCFDICode { get; set; }
+        public string RegimenFiscalCode { get; set; }
         public bool IsInternationalPartner { get; set; }
         public bool IsAutonomy { get; set; }
 

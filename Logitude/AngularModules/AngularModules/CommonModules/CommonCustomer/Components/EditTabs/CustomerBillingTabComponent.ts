@@ -317,6 +317,13 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
         }
     }
 
+    get RegimenFiscalCode() { return this.EntityPM.RegimenFiscalCode; }
+    set RegimenFiscalCode(newValue: string) {
+        if (this.EntityPM.RegimenFiscalCode != newValue) {
+            this.EntityPM.RegimenFiscalCode = newValue;
+        }
+    }
+
     get SATForeignRFC() { return this.EntityPM.SATForeignRFC; }
     set SATForeignRFC(newValue: string) {
         if (this.EntityPM.SATForeignRFC != newValue) {

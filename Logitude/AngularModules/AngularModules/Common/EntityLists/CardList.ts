@@ -89,6 +89,7 @@ export class CardList {
 		SATForeignRFC: string;
 		MetodoPagoCode: string;
 		UsoCFDICode: string;
+		RegimenFiscalCode: string;
 		FirmCode: string;
 		StateName: string;
 		IsInternationalPartner: boolean;

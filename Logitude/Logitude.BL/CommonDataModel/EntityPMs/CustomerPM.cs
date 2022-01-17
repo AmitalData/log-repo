@@ -1000,6 +1000,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public string UsoCFDICode { get; set; }
+        [DataMember]
+        public string RegimenFiscalCode { get; set; }
 
         [DataMember]
         public int CustomerTenant { get; set; }

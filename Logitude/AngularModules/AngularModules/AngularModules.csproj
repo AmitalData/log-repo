@@ -398,6 +398,7 @@
     <TypeScriptCompile Include="Common\DataContracts\DocumentFile.ts" />
     <TypeScriptCompile Include="Common\EntityLists\PortTimeZoneList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\ProductItemList.ts" />
+    <TypeScriptCompile Include="Common\EntityLists\RegimenFiscalList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\ReportExecutionLogList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\UnassignedEntityList.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\PortTimeZonePMInitService.ts" />
@@ -413,6 +414,7 @@
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\ShippingLineExtendedPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\PortTimeZoneListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\ProductItemListService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardLists\RegimenFiscalListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\ReportExecutionLogListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\PortTimeZonePMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\ReportExecutionLogPMService.ts" />
