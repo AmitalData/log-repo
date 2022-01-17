@@ -63,4 +63,6 @@
     Columns="Tenant" />
   <Index
     Columns="SearchFields" />
+	<Index
+    Columns="ReferenceType" />
 </Table>

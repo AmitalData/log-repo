@@ -19,6 +19,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Logitude.CargoTracking.BL.CoreBL;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.CargoTracking.BL.CargoTrackingServices;
 
 namespace Logitude.CargoTracking.BL.EntityQueryServices
 {
@@ -51,9 +52,29 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             var milestoneDictionary = GetMilestonesDictionaryByCode();
             cargoShipmentMapper.MapCargoTrackingShipmentFields(cargoShipmentPM, milestoneDictionary);
 
+            AddSearchsToShipments(new List<CargoTrackingShipmentPM>() { cargoShipmentPM }, tenant);
             return cargoShipmentPM;
         }
+        public void AddSearchsToShipments(List<CargoTrackingShipmentPM> shipments, int tenant)
+        {
+            CargoTrackingShipmentSearchRepository repo = new CargoTrackingShipmentSearchRepository(tenant);
+            List<CargoTrackingShipmentSearch> shipmentSearchs = repo.GetConnectedShipmentNumbersByShipmentIds(shipments.Where(e=>e.EntityType != Codes.OrderType).Select(e => e.EntityId).ToList());
+            var searchesGroupDictionary = shipmentSearchs.GroupBy(e => e.ShipmentId).ToDictionary(e => e.Key, e => e);
+            foreach (var item in shipments)
+            {
+                item.ConnectedShipmentsNumbers = GetSearchesFromGroupsDictionary(item, searchesGroupDictionary);
+            }
 
+        }
+        private string GetSearchesFromGroupsDictionary(CargoTrackingShipmentPM item, Dictionary<string, IGrouping<string, CargoTrackingShipmentSearch>> searchesGroupDictionary)
+        {
+
+            if (!searchesGroupDictionary.ContainsKey(item.EntityId))
+                return null;
+            var connectedShipmentsNumbers = searchesGroupDictionary[item.EntityId].ToList();
+            var maxConnectedShipmentsNumbers = connectedShipmentsNumbers.GroupBy(e => e.ReferenceType).Select(e => e.Max(f => f.SearchFields)).ToList();
+            return string.Join("\n", maxConnectedShipmentsNumbers);
+        }
         public CargoTrackingShipmentPM GetMainShipmentByShipmentSecurityKey(string securityKey, int tenant)
         {
             CargoTrackingShipmentPM cargoShipmentPM = GetMainShipmentWithoutMapping(securityKey, tenant);

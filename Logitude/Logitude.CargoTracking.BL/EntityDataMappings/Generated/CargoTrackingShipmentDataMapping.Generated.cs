@@ -269,7 +269,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         IsOperationalClosed, 
 	         ApprovedDate, 
 	         DenyDate, 
-	         DenyReason,
+	         DenyReason, 
+	         ConnectedShipmentsNumbers,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
