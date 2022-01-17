@@ -1067,6 +1067,7 @@
     <Compile Include="EntityQueryServices\ClientsPoaQueryService.cs" />
     <Compile Include="EntityQueryServices\ContainerizationQueryService.cs" />
     <Compile Include="EntityQueryServices\DeclarationReferantDataQueryService.cs" />
+    <Compile Include="EntityQueryServices\ExportStorageQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\AmedmentTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AmendCancellRequestInitiatorQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AmendmentFieldStatusTypeQueryService.Generated.cs" />
@@ -2194,7 +2195,7 @@
     <Compile Include="Messaging\U2L\CourierStatus\CourierStatusService.cs" />
     <Compile Include="Messaging\U2L\Courier\CourierPendingReasonService.cs" />
     <Compile Include="Messaging\U2L\DeclarationDocuments\DeclarationDocumentsService.cs" />
-    <Compile Include="Messaging\U2L\ExportStorage\ExportStorageService.cs" />
+    <Compile Include="Messaging\U2L\ExportStorage\ExportStorageUpsertService.cs" />
     <Compile Include="Messaging\U2L\FritzDeclaration\FritzDeclarationCls\FritzDeclaration.cs">
       <DependentUpon>FritzDeclaration.xsd</DependentUpon>
     </Compile>

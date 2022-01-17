@@ -188,6 +188,12 @@ namespace WebFreight.Web.CustomWebServices
             _UnityContainer.RegisterType<UnifreightGenericService, Logitude.Customs.BL.Messaging.U2L.CommDecReferantData.CommDecReferantDataService>(curr);
 
 
+
+            curr = "Logitude.Customs.BL.Messaging.U2L.ExportStorage.ExportStorageUpsertService";
+            _AllIUnifreightGenericService.Add(curr);
+            _UnityContainer.RegisterType<UnifreightGenericService, Logitude.Customs.BL.Messaging.U2L.ExportStorage.ExportStorageUpsertService>(curr);
+
+
         }
 
         private static void AddSendDirectMessageService()

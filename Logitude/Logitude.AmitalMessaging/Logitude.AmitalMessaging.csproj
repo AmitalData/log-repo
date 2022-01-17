@@ -62,6 +62,7 @@
     <Compile Include="Customs\CustomFile\DeclarationReferantData\LOGIDECREFERANTDATA.cs">
       <DependentUpon>LOGIDECREFERANTDATA.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Customs\CustomFile\ExportStorageDTD\LogitudeStorage.cs" />
     <Compile Include="Customs\CustomFile\FileAdditionalData.cs" />
     <Compile Include="Customs\CustomFile\CargoQueryContext.cs" />
     <Compile Include="Customs\CustomFile\CellFile\LOGICELLFILE.cs">
