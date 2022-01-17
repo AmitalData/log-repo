@@ -369,9 +369,30 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     //                    this._MyDeclarationPM.Consignments[0].OriginCountryCode = null;
                 }
 
-                if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.CargoDescription)) this._MyDeclarationPM.Consignments[0].CargoDescription = _LogitudeCommDecFile.CargoDescription;
+                if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.CargoDescription))
+                {
+                    if(_LogitudeCommDecFile.CargoDescription.Length > 255)
+                    {
+                        AppendLogLine("_LogitudeCommDecFile.CargoDescription.Substring(0, 255)");
+                        _LogitudeCommDecFile.CargoDescription = _LogitudeCommDecFile.CargoDescription.Substring(0, 255);
+                    }
+                    this._MyDeclarationPM.Consignments[0].CargoDescription = _LogitudeCommDecFile.CargoDescription;
+
+                }
                 //this._MyDeclarationPM.Consignments[0].ManifestDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCommDecFile.ManifestDate, "LogitudeCommDecFile.ManifestDate");
-                if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.ArrivalDateTime)) this._MyDeclarationPM.Consignments[0].UnloadDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCommDecFile.ArrivalDateTime, "LogitudeCommDecFile.ArrivalDateTime");
+                if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.ArrivalDateTime))
+                {
+                    try
+                    {
+                        this._MyDeclarationPM.Consignments[0].UnloadDate = 
+                            AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCommDecFile.ArrivalDateTime, "LogitudeCommDecFile.ArrivalDateTime");
+                    }
+                    catch (Exception)
+                    {
+                        AppendLogLine("Consignments[0].UnloadDate not saved - _LogitudeCommDecFile.ArrivalDateTime format not valid");
+                    }
+
+                }
 
                 if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.OriginCountryId))
                 {
