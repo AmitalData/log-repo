@@ -23,7 +23,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         {
             IQueryable<ExportStorageList> query = (from en in iQueryable
                                                    
-                                                   join declaration in context.Declarations.Select(r => new { r.Id, r.DeclarationStatusTypeCode, r.CustomFileNo })
+                                                   join declaration in context.Declarations.Select(r => new { r.Id, r.DeclarationStatusTypeCode, r.CustomFileNo, r.DeclarationNumber })
                                                    on en.DeclarationId equals declaration.Id
                                                    join status in context.DeclarationStatusTypes.Select(r => new { r.Code, r.LocalName })
                                                    on declaration.DeclarationStatusTypeCode equals status.Code
@@ -104,6 +104,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        Declaration_ID = en.DeclarationId,
 
                                                        DeclarationCustomFileNo = declaration.CustomFileNo,
+
+                                                       DeclarationNumber = declaration.DeclarationNumber,
                                                    });
             return query;
         }
