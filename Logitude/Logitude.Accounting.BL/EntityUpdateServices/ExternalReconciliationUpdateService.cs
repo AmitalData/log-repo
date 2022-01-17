@@ -312,7 +312,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             foreach (BankDepositLinePM depLine in depositPM.BankDepositLines)
             {
                 var isChequeComesFromDebitTransaction = transactionPM.Reference2 == null && transactionPM.SourceId == depLine.DepositId;
-                var isTransactionBelongsToCheque = transactionPM.Reference2 == depLine.ChequeNumber;
+                var isTransactionBelongsToCheque = (transactionPM.Reference1 == depLine.ChequeNumber) || (transactionPM.Reference2 == depLine.ChequeNumber);
 
                 if (isChequeComesFromDebitTransaction || isTransactionBelongsToCheque)
                     ReturnChequeToBankAccount(entityPM.Tenant, depLine.ARPaymentChequeId);
