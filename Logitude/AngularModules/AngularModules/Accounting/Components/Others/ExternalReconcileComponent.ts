@@ -282,10 +282,14 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
     private MakeAdjustment()
     {
-        if (this.ExtPageSelectedLines.Length >= 1 && this.TransactionSelectedLines.Length >= 0) {
-            this.AdjustBankFeeWithNewJournalScreen();
-        }
-        this.CheckAdjustLedgerTransactionsOnly();
+        const hasCrossYearLines = this.CheckIfHasCrossYearLines();
+
+        if (hasCrossYearLines)
+            return this.ShowCrossYearConfirmationDialogForAdjust();
+
+
+            this.AdjustReconcile();
+
     }
 
     private CheckAdjustLedgerTransactionsOnly() {
@@ -327,6 +331,29 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             if (confirmWindow.Yes)
                 this.SubmitChanges(reconciliation);
         });
+    }
+
+    private ShowCrossYearConfirmationDialogForAdjust()
+    {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = CrossYearConfirmationDialogWidth;
+        confirmWindow.Show(TextCodeTranslator.Translate("ExternalReconciliation.O.CrossYearConfirmMsg"));
+        confirmWindow.WindowClosed.subscribe((event: any) =>
+        {
+            if (confirmWindow.Yes)
+                {
+                    this.AdjustReconcile();
+                }
+        });
+
+    }
+
+    private AdjustReconcile()
+    {
+        if (this.ExtPageSelectedLines.Length >= 1 && this.TransactionSelectedLines.Length >= 0) {
+            this.AdjustBankFeeWithNewJournalScreen();
+        }
+        this.CheckAdjustLedgerTransactionsOnly();
     }
 
     private CheckIfHasCrossYearLines()
