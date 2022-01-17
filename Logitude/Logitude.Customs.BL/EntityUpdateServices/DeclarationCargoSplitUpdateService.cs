@@ -50,11 +50,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var context = CustomContext.GetContext(entityPM.Tenant);
             DeclarationQueryService myDeclarationQueryService = new DeclarationQueryService(context);
             DeclarationPM declarationPM = myDeclarationQueryService.GetSingle(entityPM.DeclarationId, true, false);
-            if(declarationPM != null)
-            {
-                entityPM.Direction = declarationPM.Direction;
-                entityPM.TransportModeId=declarationPM.TransportModeId;
-            }
         }
     }
 }

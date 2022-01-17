@@ -1,7 +1,8 @@
-import { Component, ElementRef } from "@angular/core";
+import { ChangeDetectorRef, Component, ElementRef } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { EntityArgs } from "Infrastructure/DataContracts/EntityArgs";
+import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { NewQuoteDataShareService } from "QuoteOPM/Components/NewEntity/Services/new-quote-data-share/new-quote-data-share.service";
 import { NewQuoteDataService } from "QuoteOPM/Components/NewEntity/Services/new-quote-data/new-quote-data.service";
 import { NewQuoteHandleLinkedDataService } from "QuoteOPM/Components/NewEntity/Services/new-quote-handle-linked-data/new-quote-handle-linked-data.service";
@@ -23,6 +24,7 @@ export class QuoteOPDataTabComponent extends BaseComponent {
     public ObjectTableName: string = "QuoteOP";
     public DataContext = this;
     public IsSubjectVisible: boolean = false;
+    public isSubmit: boolean = true;
 
 
     constructor(
@@ -38,15 +40,14 @@ export class QuoteOPDataTabComponent extends BaseComponent {
 
     
     ngOnInit() {
-        this.EntityPM = this.entityArgs.EntityPM;
-        this.insertFromEntityService.EntityPM = this.EntityPM;
+        this.initIentity();
+        this.EntityPM.DisableMarkAsDirty = true;
         this.setLeftSideData();
-        this.dataShareService.EntityPM = this.EntityPM;
         this.dataShareService.newQuoteRef = this.elmRef;
         this.dataShareService.formGroup = this.formGroup;
     }
     
-
+    
     ngAfterViewInit() {        
         this.formGroup.controls.properties.valueChanges.subscribe(()=> {
             this.handleLinkedDataService.addProperty();
@@ -56,7 +57,21 @@ export class QuoteOPDataTabComponent extends BaseComponent {
         this.formGroup.controls.packages.valueChanges.subscribe(()=> {
             this.handleLinkedDataService.attachPackages()
         })
-
+        
+        setTimeout(() => this.EntityPM.DisableMarkAsDirty = false, 2000);
+                
+        SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe(async ()=> {
+            SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM()
+            await SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.OnReloadEntityPM()
+            setTimeout(() => this.initIentity(), 1000);
+        });
+    }
+    
+    
+    private initIentity() {
+        this.EntityPM = this.entityArgs.EntityPM;
+        this.insertFromEntityService.EntityPM = this.EntityPM;
+        this.dataShareService.EntityPM = this.EntityPM;
     }
 
 
@@ -72,13 +87,16 @@ export class QuoteOPDataTabComponent extends BaseComponent {
         this.setShipmentType(ctrls);        
     }
 
+
     private async setShipmentType(ctrls) {
         ctrls.shipmentType.setValue(await this.newQuoteDataService.getShipmentTypeById(this.EntityPM.ShipmentSubTypeId));
     }
 
+
     private async setTransportMode(ctrls) {
         ctrls.transportMode.setValue(await this.newQuoteDataService.getTransportModeById(this.EntityPM.TransportModeId));
     }
+
 
     private async setDirection(ctrls) {
         ctrls.direction.setValue(await this.newQuoteDataService.getDirectionById(this.EntityPM.DirectionId));

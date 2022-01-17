@@ -87,11 +87,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         mess.AppendLine($"יש להוסיף בדיקה לשדר מצהר תקינים ושדר הצהרה תקינים שרק הצהרות שלא שולמו ישלחו  {requestParams.AppicationId} ");
                     }
-                    
+
                 }
                 if (listPoco.Count > 0)
                 {
-                    
+
 
 
                     listPoco.Select(r => r.DeclarationId).ToList().ChunkBy(100)
@@ -119,7 +119,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.Succeeded = true;
         }
 
-      
+
 
         private static void Create2750CRS(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationCourierStatus> listPoco)
         {
@@ -130,7 +130,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
                     {
-                        
+
                         var requestParams2750 = new GenericRequestParams()
                         {
                             Tenant = requestParams.Tenant,
@@ -174,16 +174,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-        private static void UpdateCOURIERDECLARATIONSTATUSCODE_Inprogress(GenericRequestParams requestParams,  List<string> listDeclarationIdCreateCRS)
+        private static void UpdateCOURIERDECLARATIONSTATUSCODE_Inprogress(GenericRequestParams requestParams, List<string> listDeclarationIdCreateCRS)
         {
-//            listDeclarationIdCreateCRS.ChunkBy(100)
-//.ForEach(list100 =>
-//{
-//string inList = String.Join(",", list100.Select(declarationId => $"'{declarationId}'").ToArray());
-//string updateSql = $"Update DeclarationCourierStatuses set COURIERDECLARATIONSTATUSCODE='I' where DECLARATIONID in ({inList}) ";
+            //            listDeclarationIdCreateCRS.ChunkBy(100)
+            //.ForEach(list100 =>
+            //{
+            //string inList = String.Join(",", list100.Select(declarationId => $"'{declarationId}'").ToArray());
+            //string updateSql = $"Update DeclarationCourierStatuses set COURIERDECLARATIONSTATUSCODE='I' where DECLARATIONID in ({inList}) ";
 
-//CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
-//});
+            //CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
+            //});
         }
 
         private static List<DeclarationCourierStatus> GetByMasterIDCourierDeclarationStatusCode(DCAInUCB2750WithResponseContentHeader customResponse, GenericRequestParams requestParams, DeclarationCourierStatusRepository repo)
@@ -196,7 +196,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 customResponse.SelectedStatusValue,
                 customResponse.SelectedTotalInvoiceValue,
                 customResponse.SelectedFastIndividualProcessValue,
-                customResponse.SelectedCustomStatusValue);
+                customResponse.SelectedCustomStatusValue,
+                customResponse.SelectedFinalReleaseValue);
             }
             else
             {
@@ -205,14 +206,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 customResponse.SelectedStatusValue,
                 customResponse.SelectedTotalInvoiceValue,
                 customResponse.SelectedFastIndividualProcessValue,
-                customResponse.SelectedCustomStatusValue);
+                customResponse.SelectedCustomStatusValue,
+                customResponse.SelectedFinalReleaseValue);
                 if (customResponse.CourierDeclarationStatusCode == "RV")
                 {
                     var listPM2 = repo.GetByMasterIDCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId, "V", customResponse.SelectedBOLValue,
                     customResponse.SelectedStatusValue,
                     customResponse.SelectedTotalInvoiceValue,
                     customResponse.SelectedFastIndividualProcessValue,
-                    customResponse.SelectedCustomStatusValue);
+                    customResponse.SelectedCustomStatusValue,
+                    customResponse.SelectedFinalReleaseValue);
                     listPoco = listPoco.Concat(listPM2).ToList();
                 }
             }

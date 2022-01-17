@@ -68,7 +68,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     mess.AppendLine($"סומנו בצד הלקוח ");
 
-                    listPoco = repo.GetDeclarationsByIds(customResponse.ClientFilterDeclarationsList, requestParams.Tenant);
+                    listPoco = repo.GetDeclarationsByIdsExpectDecWithHatraDate(customResponse.ClientFilterDeclarationsList, requestParams.Tenant);
                 }
                 else
                 {
@@ -138,14 +138,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                customResponse.SelectedStatusValue,
                customResponse.SelectedTotalInvoiceValue,
                customResponse.SelectedFastIndividualProcessValue,
-               customResponse.SelectedCustomStatusValue);
+               customResponse.SelectedCustomStatusValue,
+               customResponse.SelectedFinalReleaseValue);
             if (customResponse.CourierDeclarationStatusCode == "RV")
             {
                 var listPM2 = qs.GetByMasterIDCourierManifestStatusCode(requestParams.Tenant, requestParams.AppicationId, "V", customResponse.SelectedBOLValue,
                 customResponse.SelectedStatusValue,
                 customResponse.SelectedTotalInvoiceValue,
                 customResponse.SelectedFastIndividualProcessValue,
-                customResponse.SelectedCustomStatusValue);
+                customResponse.SelectedCustomStatusValue,
+                customResponse.SelectedFinalReleaseValue);
                 listPM = listPM.Concat(listPM2).ToList();
             }
 

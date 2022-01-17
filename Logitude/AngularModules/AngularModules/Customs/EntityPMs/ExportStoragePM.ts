@@ -149,6 +149,16 @@ export class ExportStoragePM {
     public set DeclarationStatusTypeCode(newValue: string) { if (this.declarationStatusTypeCode != newValue) { this.declarationStatusTypeCode = newValue; this.MarkAsDirty("DeclarationStatusTypeCode"); } }
        
 	 
+    private declaration_ID: string;
+    public get Declaration_ID() { return this.declaration_ID; }
+    public set Declaration_ID(newValue: string) { if (this.declaration_ID != newValue) { this.declaration_ID = newValue; this.MarkAsDirty("Declaration_ID"); } }
+       
+	 
+    private declarationCustomFileNo: string;
+    public get DeclarationCustomFileNo() { return this.declarationCustomFileNo; }
+    public set DeclarationCustomFileNo(newValue: string) { if (this.declarationCustomFileNo != newValue) { this.declarationCustomFileNo = newValue; this.MarkAsDirty("DeclarationCustomFileNo"); } }
+       
+	 
 
     public OldEntityPM: ExportStoragePM;
 		

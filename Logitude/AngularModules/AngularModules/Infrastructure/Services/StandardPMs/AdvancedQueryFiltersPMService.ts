@@ -11,6 +11,8 @@ import {ServiceHelper} from '../../Utilities/ServiceHelper';
 
 import {AdvancedQueryFilterPM} from '../../EntityPMs/AdvancedQueryFilterPM';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
+import { PerformanceLogger } from 'Infrastructure/Utilities/PerformanceLogger';
 
 @Injectable()
 export class AdvancedQueryFiltersPMService {
@@ -57,6 +59,7 @@ export class AdvancedQueryFiltersPMService {
         });
     }
 
+
     getuseradvancedqueryfilterbytenantobjecttablequery(tenant: number, objecttableCode: string, queryCode: string, userid: string) {
 
 
@@ -72,6 +75,7 @@ export class AdvancedQueryFiltersPMService {
         });
 
     }
+
 
     insert(entityPM: AdvancedQueryFilterPM) {
 
@@ -119,6 +123,59 @@ export class AdvancedQueryFiltersPMService {
 
             }
         });
+    }
+
+    update(entityPM: AdvancedQueryFilterPM) {
+
+        var callTime = new Date();
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var validator: ClassLevelValidator;
+
+            validator = new ClassLevelValidator();
+
+            var errorsArray = validator.Validate("AnalyzeQueue", entityPM);
+
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            if (errorsArray.length == 0) {
+                var mappedEntity: AdvancedQueryFilterPM;
+                mappedEntity = this.MapJsonToEntityPM(entityPM, false);
+
+                return ServiceHelper.HttpClient.put(ServiceHelper.GetLogitudeURL() + 'api/advancedqueryfilters', JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+                    .pipe(
+                        map((response: HttpResponse<any>) => {
+
+
+                            var pm = response.body;
+                            if (pm) {
+                                var mappedResult: AdvancedQueryFilterPM;
+                                mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                                serviceResponse.Result = mappedResult;
+                            }
+
+                            var servertime = response.headers.get('ServerExecutionTime');
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AnalyzeQueue", "SaveChanges", "");
+
+                            return serviceResponse;
+
+                        }), catchError(ServiceHelper.HandleServiceError));
+            }
+            else {
+
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
+
+                return of(serviceResponse);
+
+            }
+        });
+
     }
 
     delete(entityPM: AdvancedQueryFilterPM) {
@@ -203,5 +260,6 @@ export class AdvancedQueryFiltersPMService {
 
         return entityPM;
     }
+
     
 }

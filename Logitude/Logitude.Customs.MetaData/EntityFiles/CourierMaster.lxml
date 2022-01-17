@@ -488,7 +488,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;SearchFields&quot;"
     DefaultText="&quot;Search ...&quot;"
-    FullLocalDefaultText="&quot;שטר מטען ראשי/שטר מטען פנימי/קידומת חברת תעופה&quot;"
+    FullLocalDefaultText="&quot;ש.מ.ר/ש.מ.פ,/חב' תעופה/אינטגרטור&quot;"
     ListFieldLable="&quot;SearchFieldsListLable&quot;"
     ListLableDefaultText="&quot;Search ...&quot;"
     HelpTextCode="&quot;SearchFields&quot;"
@@ -5445,6 +5445,18 @@
       Code="&quot;Customs.CourierMaster.O.FlightOpenDeclarations&quot;"
       DefaultText="&quot;Flight Open Declarations&quot;"
       LocalDefaultText="&quot;הצהרות פתוחות לפי טיסה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CourierMaster.CourierCustomStatus.FinalRelease&quot;"
+      DefaultText="&quot;Final release&quot;"
+      LocalDefaultText="&quot;התרה סופית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CourierMaster.CourierCustomStatus.NotReleased&quot;"
+      DefaultText="&quot;Not Released&quot;"
+      LocalDefaultText="&quot;ללא התרה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

@@ -33,6 +33,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool IsRelevantGoodsItem { get; set; }
         [Column("IsRelevantInvoice")]
 	    public bool IsRelevantInvoice { get; set; }
+        [Column("IsRelevantInvoiceExport")]
+	    public bool IsRelevantInvoiceExport { get; set; }
+        [Column("IsRelevantGoodsItemExport")]
+	    public bool IsRelevantGoodsItemExport { get; set; }
     }
 }
 	 

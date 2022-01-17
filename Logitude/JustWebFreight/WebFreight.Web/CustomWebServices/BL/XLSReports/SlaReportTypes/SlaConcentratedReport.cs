@@ -81,7 +81,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports.SlaReportTypes
             {
                 concentratedReportData.SlaDaysCount.EightPlusDays++;
             }
-            if (days >= 0 && days < 2) // get 1-2
+            if (days > 0 && days < 2) // get 1-2
             {
                 concentratedReportData.SlaDaysCount.OneToTwoDays++;
             }

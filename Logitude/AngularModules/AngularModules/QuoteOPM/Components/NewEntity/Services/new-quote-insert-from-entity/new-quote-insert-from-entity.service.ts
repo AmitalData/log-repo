@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { PackageTypeList } from 'Common/EntityLists/PackageTypeList';
 import { CardPM } from 'Common/EntityPMs/CardPM';
 import { ContactPM } from 'Common/EntityPMs/ContactPM';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
@@ -18,12 +19,15 @@ export class NewQuoteInsertFromEntityService {
     private newQuoteDataService: NewQuoteDataService,
   ) { }
 
-  partnerInsert(partnerRef: NewQuotePartnerComponent) {
-    this.setPartner(partnerRef);
-    this.setContact(partnerRef);
+  async partnerInsert(partnerRef: NewQuotePartnerComponent) {
+    if (!this.EntityPM) return;
+
     partnerRef.partnerform.controls.reference1.setValue(this.EntityPM[partnerRef.capitalizeType + 'Reference1']);
     // partnerRef.partnerform.controls[partnerRef.capitalizeType + 'Note'].setValue(this.EntityPM[partnerRef.capitalizeType + 'Note']);
-
+    await Promise.all([
+      this.setPartner(partnerRef),
+      this.setContact(partnerRef)
+    ]);
   }
 
 
@@ -45,21 +49,28 @@ export class NewQuoteInsertFromEntityService {
   }
 
 
-  propertiesInsert(propRef: NewQuotePropertiesComponent) {
-    const dataExist: boolean = !!this.EntityPM && !!this.EntityPM.ToPortId;
+  async propertiesInsert(propRef: NewQuotePropertiesComponent) {
+    const dataExist: boolean = !!this.EntityPM?.ToPortId;
     if (!dataExist) return;
+
+    let promises: Promise<any>[] = [];
 
     this.EntityPM.QuoteProperties.forEach((prop: QuoteOPPropertiesPM, i: number) => {
       if (propRef.formArray.length < i + 1)
         propRef.formArray.push(propRef.propForm)
 
       const propCtrl = (propRef.formArray.at(i) as FormGroup).controls;
-      this.setFromPort(prop, propCtrl);
-      this.setToPort(prop, propCtrl);
-      this.setCarrier(prop, propCtrl);
-      this.setIncoterm(prop, propCtrl);
-      this.setSpecialService(prop, propCtrl);
+
+      promises = promises.concat([
+        this.setFromPort(prop, propCtrl),
+        this.setToPort(prop, propCtrl),
+        this.setCarrier(prop, propCtrl),
+        this.setIncoterm(prop, propCtrl),
+        this.setSpecialService(prop, propCtrl),
+      ]);
     });
+
+    await Promise.all(promises);
   }
 
 
@@ -96,9 +107,11 @@ export class NewQuoteInsertFromEntityService {
     const fromPort = await this.newQuoteDataService.getPortsById(this.EntityPM.DirectionId, this.EntityPM.TransportModeId, prop.FromPortId);
     propCtrl.fromPort.setValue(fromPort);
   }
-  
+
 
   async generalInsert(generalRef: NewQuoteGeneralComponent) {
+    if (!this.EntityPM) return;
+
     const dataExist: boolean = !!this.EntityPM?.ExpirationDate;
     if (!dataExist) return;
 
@@ -114,6 +127,8 @@ export class NewQuoteInsertFromEntityService {
 
 
   async expectedOrderInsert(expectedOrderRef: NewQuoteExpectedOrderComponent): Promise<void> {
+    if (!this.EntityPM) return;
+
     const dataExist: boolean = !!this.EntityPM?.ExpirationDate;
     if (!dataExist) return;
 
@@ -122,7 +137,9 @@ export class NewQuoteInsertFromEntityService {
     expectedOrderRef.formGroup.controls.descriptionOfGoods.setValue(this.EntityPM.DescriptionOfGoods);
     expectedOrderRef.formGroup.controls.notes.setValue(this.EntityPM.Notes);
 
-    await this.insertPackages(expectedOrderRef);
+    await Promise.all(
+     this.insertPackages(expectedOrderRef)
+    );
 
     expectedOrderRef.calcChargeableWeight();
   }
@@ -140,19 +157,26 @@ export class NewQuoteInsertFromEntityService {
   }
 
 
-  private async insertPackages(expectedOrderRef: NewQuoteExpectedOrderComponent) {
-    await this.EntityPM.QuotePackages.forEach(async (pack, i) => {
+  private insertPackages(expectedOrderRef: NewQuoteExpectedOrderComponent): Promise<any>[] {
+    let promises: Promise<any>[] = [];
+
+    this.EntityPM.QuotePackages.forEach(async (pack, i) => {
       if (expectedOrderRef.formArray.length < i + 1)
         expectedOrderRef.addPackage(false);
 
       const packCtrl = (expectedOrderRef.formArray.at(i) as FormGroup).controls;
       packCtrl.volume.setValue(pack.Volume);
       packCtrl.grossWeight.setValue(pack.GrossWeight);
-      packCtrl.packageType.setValue(await this.newQuoteDataService.getPackageTypeById(pack.PackageTypeId));
       packCtrl.Ldimension.setValue(pack.Length);
       packCtrl.Wdimension.setValue(pack.Width);
       packCtrl.Hdimension.setValue(pack.Height);
       packCtrl.quantity.setValue(pack.Quantity);
+
+      const packageTypePromise: Promise<PackageTypeList> = this.newQuoteDataService.getPackageTypeById(pack.PackageTypeId)
+      promises.push(packageTypePromise);
+      packCtrl.packageType.setValue(await packageTypePromise);
     });
+
+    return promises;
   }
 }

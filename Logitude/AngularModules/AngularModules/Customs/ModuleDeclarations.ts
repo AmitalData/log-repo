@@ -28,6 +28,7 @@ import {CustomsSpotlightComponent} from './Components/Spotlight/CustomsSpotlight
 import { ReferantSpotlightDataTemplate } from './Components/Spotlight/ReferantSpotlightDataTemplate';
 import { DeclarationReferantDataListActionBarComponent } from './Components/ListActionBar/DeclarationReferantDataListActionBarComponent';
 import { PhysicalCheckListActionBarComponent } from './Components/ListActionBar/PhysicalCheckListActionBarComponent';
+import { ExportStorageShortTitleComponent } from './Components/ShortTitles/ExportStorageShortTitleComponent';
 
 export const CustomsControlsComponents =
     [
@@ -53,6 +54,7 @@ export const Components =
         DeclarationShortTitleComponent,
      
         ExportStorgeShortTitleComponent,
+        ExportStorageShortTitleComponent,
      
   
       
@@ -92,6 +94,7 @@ export class ModuleDeclarations {
                         //short titles
             case "DeclarationShortTitleComponent": {myResult = DeclarationShortTitleComponent; break;}
             case "ExportStorgeShortTitleComponent": { myResult = ExportStorgeShortTitleComponent; break; }
+            case "ExportStorageShortTitleComponent": { myResult = ExportStorageShortTitleComponent; break; }
 
            
 

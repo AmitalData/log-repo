@@ -1,14 +1,10 @@
 import {Component}  from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {ClientsAddressCommTypePM} from '../../../../../Customs/EntityPMs/ClientsAddressCommTypePM';
 import {AppTool} from '../../../../../Infrastructure/Tools';
 import {ObservableCollection} from '../../../../../Infrastructure/Utilities/ObservableCollection';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
-import {ClientAddressPM} from '../../../../../Customs/EntityPMs/ClientAddressPM';
-import {ClientPM} from '../../../../../Customs/EntityPMs/ClientPM';
 import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
-import {ClientPMService} from '../../../../../Customs/Services/StandardPMs/ClientPMService';
 import { CustomSendOptionsArgs } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { Validator } from '../../../../../Infrastructure/Validators/Validator';
 import {AddAddressContactForClientRequestParams, ClientAddress, ClientsAddressCommunicationResult, OperationTypes} from '../../../../../Customs/DataContract/RequestParams/AddAddressContactForClientRequestParams';
@@ -16,6 +12,10 @@ import { CustomMessageProgressComponent } from '../../../../CustomsControls/Comp
 import {INF_MSG_GenericResponseData} from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClientMessagesService} from '../../../../../Customs/Services/WebServices/ClientMessagesService';
+import { ClientAddressPM } from 'Customs/EntityPMs/ClientAddressPM';
+import { ClientPM } from 'Customs/EntityPMs/ClientPM';
+import { ClientsAddressCommTypePM } from 'Customs/EntityPMs/ClientsAddressCommTypePM';
+import { ClientPMService } from 'Customs/Services/StandardPMs/ClientPMService';
 
 @Component({ 
     

@@ -7,7 +7,6 @@ import { AppTool } from '../../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { CourierMasterPM } from '../../../../Customs/EntityPMs/CourierMasterPM';
-import { CourierMasterService } from '../../../../Customs/Services/Others/CourierMasterService';
 import { CourierMasterValidator } from '../../../../Customs/Validators/CourierMasterValidator';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -33,6 +32,7 @@ import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { SendClosePendingRequestParams } from 'Customs/DataContract/RequestParams/SendClosePendingRequestParams';
+import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
 
 @Component({
     
@@ -87,6 +87,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     _SelectedTotalInvoiceValue: string = 'A';
     _SelectedFastIndividualProcessValue: string = 'A';
     _SelectedCustomStatusValue: string = 'A';
+    _SelectedFinalReleaseValue: string = 'A';
 
     _SelectedMNFValue: string = 'A'; // ALL/Complete/Wrong
     _SelectedDECValue: string = 'A'; // ALL/Complete/Wrong_SelectedItems
@@ -322,6 +323,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     }
 
     SendALLCorrectManifest(courierDeclarationStatusCode: string) {
+        debugger;
         if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
@@ -362,6 +364,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         currRequestParams.SelectedTotalInvoiceValue = this._SelectedTotalInvoiceValue;
         currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
         currRequestParams.SelectedCustomStatusValue = this._SelectedCustomStatusValue;
+        currRequestParams.SelectedFinalReleaseValue = this._SelectedFinalReleaseValue;
+
 
         this._CourierMasterService.PostSendALLCorrectManifest(currRequestParams)
             .subscribe((res:any) => {
@@ -483,6 +487,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         currRequestParams.SelectedTotalInvoiceValue = this._SelectedTotalInvoiceValue;
         currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
         currRequestParams.SelectedCustomStatusValue = this._SelectedCustomStatusValue;
+        currRequestParams.SelectedFinalReleaseValue = this._SelectedFinalReleaseValue;
 
         this._CourierMasterService.PostSendALLCorrectDec(currRequestParams)
             .subscribe((res:any) => {
@@ -653,6 +658,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     _PAY_C_Total = 0;
     _PAY_R_Total = 0;
     _PAY_I_Total = 0;
+    _DecWithoutHaTra = 0;
+
     _PendingCodes: KeyValuePair[] = [];
 
     private _SelectedDECToBatchSendButtonText: string = "";
@@ -821,6 +828,10 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                         }
                         case "ACC_WS": {
                             this._ACC_WS_Total = item.Value;
+                            break;
+                        }
+                        case "DecWithoutHaTra": {
+                            this._DecWithoutHaTra = item.Value;
                             break;
                         }
                         /*
@@ -1011,7 +1022,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             FieldName: 'CourierCustomStatusName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierCustomStatusName"),
-            Styles: { width: '75px' },
+            Styles: { width: '120px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -1253,7 +1264,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             FieldName: 'CourierCustomStatusName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierCustomStatusName"),
-            Styles: { width: '75px' },
+            Styles: { width: '120px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -1647,10 +1658,12 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             }
             case "N": {
                 filters.addAdditionalFilter("CourierCustomStatusCode", "2", "1", null, "NotEqual", false, false, false, "string");
- 
                 break;
             }
         }
+
+        if(this._SelectedFinalReleaseValue !== 'A')             
+            filters.addAdditionalFilter("IsClosedForFollowUp", this._SelectedFinalReleaseValue === 'Y', null, null, "Equals", false, false, false, "Boolean");
     }
 
     ViewInitCompleted($event) {
@@ -1804,67 +1817,50 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
     SelectedBOLValueClick(value: string) {
         this._SelectedBOLValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
-            this.IsFiltered = false;
-        }
-        else {
-            this.IsFiltered = true;
-        }
-        this.RefreshList();
+        this.selectedFilterClick();
     }
 
     SelectedTotalInvoiceValue(value: string) {
         this._SelectedTotalInvoiceValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
-            this.IsFiltered = false;
-        }
-        else {
-            this.IsFiltered = true;
-        }
-        this.RefreshList();
+        this.selectedFilterClick();
     }
 
     SelectedStatusValueClick(value: string) {
         this._SelectedStatusValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
-            this.IsFiltered = false;
-        }
-        else {
-            this.IsFiltered = true;
-        }
-        this.RefreshList();
+        this.selectedFilterClick();
     }
 
     SelectedAvailableValueClick(value: string) {
         this._SelectedAvailableValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
-            this.IsFiltered = false;
-        }
-        else {
-            this.IsFiltered = true;
-        }
-        this.RefreshList();
+        this.selectedFilterClick();
     }
 
     SelectedFastIndividualProcessValueClick(value: string) {
         this._SelectedFastIndividualProcessValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
-            this.IsFiltered = false;
-        }
-        else {
-            this.IsFiltered = true;
-        }
-        this.RefreshList();
+        this.selectedFilterClick();
     }
 
     SelectedCustomStatusValueClick(value: string) {
          this._SelectedCustomStatusValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
-            this.IsFiltered = false;
-        }
-        else {
-            this.IsFiltered = true;
-        }
+        this.selectedFilterClick();
+    }
+
+    SelectedFinalReleaseValueClick(value: string) {
+        this._SelectedFinalReleaseValue = value;
+        this.selectedFilterClick();
+    }
+
+    selectedFilterClick() {        
+        this.IsFiltered = [
+            this._SelectedBOLValue, 
+            this._SelectedTotalInvoiceValue, 
+            this._SelectedStatusValue, 
+            this._SelectedAvailableValue, 
+            this._SelectedFastIndividualProcessValue, 
+            this._SelectedCustomStatusValue, 
+            this._SelectedFinalReleaseValue
+        ].some(filter => filter !== 'A');
+        
         this.RefreshList();
     }
 
@@ -1880,6 +1876,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         this._SelectedTotalInvoiceValue = 'A';
         this._SelectedFastIndividualProcessValue = 'A';
         this._SelectedCustomStatusValue = 'A';
+        this._SelectedFinalReleaseValue = 'A';
         this.IsFiltered = false;
         this.RefreshList();
     }
@@ -2195,8 +2192,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             this.RefreshButtonClicked();
         });
     }
-    ClosePendingMethod(){
-        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+    ClosePendingMethod() {
         if (this.IsDisplayOnly) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
@@ -2210,25 +2206,34 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
         currRequestParams.Tenant = SessionLocator.Tenant;
         currRequestParams.CourierMasterId = this.entityPM.Id;
-        currRequestParams.MAWB = this.entityPM.MAWB;       
+        currRequestParams.MAWB = this.entityPM.MAWB;
+        let text = "נא אשר מחיקת PENDING לכל";
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.DeclarationsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
+            let text = "נא אשר מחיקת Pending לכל הרשומות המסומנות";
         }
-        currRequestParams.PendingCode=new Array();
-        if(this.SelectedPendingCodeFilter.Key=='A' && this._PendingCodes.length>1){
-            this._PendingCodes.forEach(x=> currRequestParams.PendingCode.push(x.Key));
-        }else{
+        currRequestParams.PendingCode = new Array();
+        if (this.SelectedPendingCodeFilter.Key == 'A' && this._PendingCodes.length > 1) {
+            this._PendingCodes.forEach(x => currRequestParams.PendingCode.push(x.Key));
+        } else {
             currRequestParams.PendingCode.push(this.SelectedPendingCodeFilter.Key);
         }
         //currRequestParams.PendingCode=this.SelectedPendingCodeFilter.Key;
-        this._CourierMasterService.PostSendClosePending(currRequestParams)
-        .subscribe((res:any) => {
-            SessionLocator.SelectedSession.StopBusyIndicator();
-            var myMessageWindow = new MessageWindow();
-            myMessageWindow.Show(res.Result);
-            myMessageWindow.WindowClosed.subscribe(s => {
-                this.RefreshButtonClicked();
-            });
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show(text);
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+                this._CourierMasterService.PostSendClosePending(currRequestParams)
+                    .subscribe((res: any) => {
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+                        var myMessageWindow = new MessageWindow();
+                        myMessageWindow.Show(res.Result);
+                        myMessageWindow.WindowClosed.subscribe(s => {
+                            this.RefreshButtonClicked();
+                        });
+                    });
+            }
         });
     }
     ChangeStorageSiteMethod() {
@@ -2377,6 +2382,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         currRequestParams.SelectedTotalInvoiceValue = this._SelectedTotalInvoiceValue;
         currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
         currRequestParams.SelectedCustomStatusValue = this._SelectedCustomStatusValue;
+        currRequestParams.SelectedFinalReleaseValue = this._SelectedFinalReleaseValue;
         if (sendMode == 'VX') currRequestParams.IsCreateNewDocumentVersion = true;
 
         this._CourierMasterService.PostSendUnCorrectDocuments(currRequestParams)

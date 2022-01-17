@@ -29,6 +29,7 @@ import { defer, of } from 'rxjs';
 import { CustomsDocumentsDataProvider } from '../../../../CustomsDocuments/Components/CustomsDocumentsDataProvider';
 import { CustDocRelatedDocsWebService } from '../../../../../Customs/Services/WebServices/CustDocRelatedDocsWebService';
 import { CustDocsTicketWebService } from '../../../../../Customs/Services/WebServices/CustDocsTicketWebService';
+import { variable } from '@angular/compiler/src/output/output_ast';
 
 export class DeclarationCustomsDocumentsController implements ICustomsDocumentsController {
     public loadedSupplierInvoices: SupplierInvoicePM[];
@@ -123,6 +124,32 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                             this.GeneratedCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
                             this.originalCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
                         }
+                          //**********************************Ticket 707 ********************************//
+                          var exist_707 = this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == '707').length;
+                          exist_707 +=this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == '419').length;
+                          exist_707 +=this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == '700').length;
+                          exist_707 +=this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == '703').length;
+                          exist_707 +=this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == '704').length;
+                          var ConsigWithTypeCode16=0;
+                          for(var item of this.declarationPM.Consignments){
+                            if(item.CargoTypeCode=="16"){
+                                ConsigWithTypeCode16++;
+                            }
+                          }
+                          var Copies_707=ConsigWithTypeCode16-exist_707;
+                          for(var i =0;Copies_707 > i;i++){
+                            var entityParams: RelatedEntityParams = new RelatedEntityParams()
+                            entityParams.ParentEntityCode = 'Declaration';
+                            entityParams.ParentEntityId = this.declarationPM.Id;
+                            var otherModelTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "707");
+                            var metaData: { [Code: string]: any; } = {};
+                            //metaData["18"] = this.declarationPM.ImporterCode;
+                            var otherModelTicketViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(otherModelTicket, null, true,
+                                this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
+                            otherModelTicketViewModel.SetCustomDocumentMetaData(metaData);
+                            this.GeneratedCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
+                            this.originalCustomsDocumentTicketViewModel.push(otherModelTicketViewModel)
+                          }
                         //**********************************Ticket 380********************************//
                         this.loadedSupplierInvoices.forEach((supplierInvoice) => {
                             var exists_380 = null;

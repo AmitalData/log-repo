@@ -1,17 +1,17 @@
 declare var window: any;
-import {Component, ChangeDetectorRef}  from '@angular/core';
-import {AppTool, ArrayTool} from '../../../../../../Infrastructure/Tools';
-import {BaseComponent} from '../../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {LogTab} from '../../../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
-import {SessionLocator} from '../../../../../../Infrastructure/Utilities/SessionLocator';
-import {ServiceHelper} from '../../../../../../Infrastructure/Utilities/ServiceHelper';
-import {ConfirmWindow} from '../../../../../../Controls/Windows/ConfirmWindow';
-import {TextCodeTranslator} from '../../../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {ObservableCollection} from '../../../../../../Infrastructure/Utilities/ObservableCollection';
-import {EntityResourceService} from '../../../../../../Infrastructure/Services/EntityResourceService';
-import {ApiQueryFilters} from '../../../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { Component, ChangeDetectorRef } from '@angular/core';
+import { AppTool, ArrayTool } from '../../../../../../Infrastructure/Tools';
+import { BaseComponent } from '../../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { LogTab } from '../../../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
+import { SessionLocator } from '../../../../../../Infrastructure/Utilities/SessionLocator';
+import { ServiceHelper } from '../../../../../../Infrastructure/Utilities/ServiceHelper';
+import { ConfirmWindow } from '../../../../../../Controls/Windows/ConfirmWindow';
+import { TextCodeTranslator } from '../../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ObservableCollection } from '../../../../../../Infrastructure/Utilities/ObservableCollection';
+import { EntityResourceService } from '../../../../../../Infrastructure/Services/EntityResourceService';
+import { ApiQueryFilters } from '../../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { DeclarationValidator } from '../../../../../../Customs/Validators/DeclarationValidator';
-import {LogitudeWindow} from '../../../../../../Controls/Windows/LogitudeWindow';
+import { LogitudeWindow } from '../../../../../../Controls/Windows/LogitudeWindow';
 import { FeatureLocator } from '../../../../../../Infrastructure/Utilities/FeatureLocator';
 import { SupplierInvoiceItemPM } from '../../../../../../Customs/EntityPMs/SupplierInvoiceItemPM';
 import { SupplierInvoiceItemsModPM } from '../../../../../../Customs/EntityPMs/SupplierInvoiceItemsModPM';
@@ -23,25 +23,25 @@ import { SupplierInvoiceItemsProdIdentPM } from '../../../../../../Customs/Entit
 import { SupplierInvoiceItemsLevyPM } from '../../../../../../Customs/EntityPMs/SupplierInvoiceItemsLevyPM';
 import { CustomsItemPM } from '../../../../../../Customs/EntityPMs/CustomsItemPM';
 
-import {CustomsRequiredFieldListService} from '../../../../../../Customs/Services/StandardLists/CustomsRequiredFieldListService';
+import { CustomsRequiredFieldListService } from '../../../../../../Customs/Services/StandardLists/CustomsRequiredFieldListService';
 
-import {LuhnAlgorithm} from '../../../../../../Customs/Utilities/LuhnAlgorithm';
-import {ObjectsLocator} from '../../../../../../Infrastructure/Locators/ObjectsLocator';
+import { LuhnAlgorithm } from '../../../../../../Customs/Utilities/LuhnAlgorithm';
+import { ObjectsLocator } from '../../../../../../Infrastructure/Locators/ObjectsLocator';
 import { SupplierInvoiceItemsPricePM } from '../../../../../../Customs/EntityPMs/SupplierInvoiceItemsPricePM';
 import { SuppInvoiceItemsAbachStatementPM } from '../../../../../../Customs/EntityPMs/SuppInvoiceItemsAbachStatementPM';
 import { CustomsRequiredFieldExtendedListService } from '../../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
 
 
 @Component({
-    
+
     templateUrl: './EditSupplierInvoiceItem.html',
 })
-export class EditSupplierInvoiceItem extends BaseComponent{
+export class EditSupplierInvoiceItem extends BaseComponent {
     public DataContext: any = this;
     public entityResourceService: EntityResourceService = new EntityResourceService();
     public declarationValidator: DeclarationValidator = new DeclarationValidator();
     public ValidationErrorsList: any[] = [];
-    public OriginalItemPM: SupplierInvoiceItemPM; 
+    public OriginalItemPM: SupplierInvoiceItemPM;
     public ClonedItemPM: SupplierInvoiceItemPM;
     public TypeCodeFilterItems: ApiQueryFilters;
 
@@ -60,8 +60,11 @@ export class EditSupplierInvoiceItem extends BaseComponent{
         this.CustomsBookTypeFilterItems = new ApiQueryFilters();
         this.CustomsBookTypeFilterItems.addAdditionalFilter("Code", "2", null, null, "Exclude", false, false, false, "string", false, true);
         this.TypeCodeFilterItems = new ApiQueryFilters();
-        this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantGoodsItem", true, null, null, "Equals", false, false, false, "boolean");
-
+        if (this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E") {
+            this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantGoodsItemExport", true, null, null, "Equals", false, false, false, "boolean",false,true);
+        } else {
+            this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantGoodsItem", true, null, null, "Equals", false, false, false, "boolean",false,true);
+        }
         this.BuildTabs();
 
         // Initilize lists
@@ -80,7 +83,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
             this.allowExport = args.allowExport;
             this.OriginalItemPM = args.SupplierInvoiceItemPM;
             this.ClonedItemPM = this.CloneEntity(args.SupplierInvoiceItemPM);
-         
+
 
             this.CustomsItem = this.OriginalItemPM.TaxExemptCode;
 
@@ -93,6 +96,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
         }
         console.log("--> EditSupplierInvoiceItem window argument passed: ", args);
         this.CheckRequrierdFieldsForSend();
+        
     }
 
     FillGridsData() {
@@ -206,16 +210,16 @@ export class EditSupplierInvoiceItem extends BaseComponent{
 
     BuildTabs() {
         this.SelectedTab = "Details";
-        this.TabsSource.push({ Name: "Details", isSelected: true, Header: TextCodeTranslator.Translate("Customs.Declaration.O.Details")  });
+        this.TabsSource.push({ Name: "Details", isSelected: true, Header: TextCodeTranslator.Translate("Customs.Declaration.O.Details") });
         this.TabsSource.push({ Name: "Declarations", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.Declarations") });
         this.TabsSource.push({ Name: "SerialNumbers", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.SerialNumbers") });
         this.TabsSource.push({ Name: "Levies", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.Levies") });
-        if (FeatureLocator.IsFeatureGrantedByCode("ItemPackageTab")) { 
+        if (FeatureLocator.IsFeatureGrantedByCode("ItemPackageTab")) {
             this.TabsSource.push({ Name: "Packages", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.Packages") });
         }
     }
     SelectionChanged(tab: any) {
-        
+
         this.TabsSource.forEach(item => { // reset selection
             item.isSelected = false;
         });
@@ -385,7 +389,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
     set DangerousClassificationCode(value: string) {
         if (this.OriginalItemPM.DangerousClassificationCode != value) {
             if (value) {
-                this.OriginalItemPM.DangerousClassificationCode = value+"";
+                this.OriginalItemPM.DangerousClassificationCode = value + "";
             } else {
                 this.OriginalItemPM.DangerousClassificationCode = null;
             }
@@ -408,7 +412,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
 
     public get TransactionNatureCode() { return this.OriginalItemPM ? this.OriginalItemPM.TransactionNatureCode : null; }
     public set TransactionNatureCode(newValue: string) {
-       
+
         this.OriginalItemPM.TransactionNatureCode = newValue;
     }
 
@@ -423,22 +427,22 @@ export class EditSupplierInvoiceItem extends BaseComponent{
     abachCounter = 0;
 
     AddAbachButton() {
-         var item = new SuppInvoiceItemsAbachStatementPM(this.OriginalItemPM);
+        var item = new SuppInvoiceItemsAbachStatementPM(this.OriginalItemPM);
 
         if (this.AbachsList.Length > 0) {
             this.abachCounter = this.getMax(this.AbachsList.Collection, "SequenceNumeric");
         }
-             item.DeclarationId = this.OriginalItemPM.DeclarationId,
-                item.Tenant = this.OriginalItemPM.Tenant,
-                item.InvoiceCounterKey = this.OriginalItemPM.CounterKey,
-                item.InvoiceItemLineNumber = this.OriginalItemPM.LineNumber,
-                  item.SequenceNumeric=this.abachCounter +1,
-                item.ChangeSetOp = "Insert",
+        item.DeclarationId = this.OriginalItemPM.DeclarationId,
+            item.Tenant = this.OriginalItemPM.Tenant,
+            item.InvoiceCounterKey = this.OriginalItemPM.CounterKey,
+            item.InvoiceItemLineNumber = this.OriginalItemPM.LineNumber,
+            item.SequenceNumeric = this.abachCounter + 1,
+            item.ChangeSetOp = "Insert",
 
-                this.OriginalItemPM.AddSuppInvoiceItemsAbachStatement(item);
-            this.AbachsList.Insert(new AbachItemModel(item));
-            //this.CurrentSession.ResetRowIndex();
-         
+            this.OriginalItemPM.AddSuppInvoiceItemsAbachStatement(item);
+        this.AbachsList.Insert(new AbachItemModel(item));
+        //this.CurrentSession.ResetRowIndex();
+
     }
 
     RemoveAbach(item: AbachItemModel) {
@@ -453,23 +457,23 @@ export class EditSupplierInvoiceItem extends BaseComponent{
     priceCounter = 0;
 
     AddPriceButton() {
-             var item = new SupplierInvoiceItemsPricePM(this.OriginalItemPM);
+        var item = new SupplierInvoiceItemsPricePM(this.OriginalItemPM);
 
         if (this.PricesList.Length > 0) {
             this.priceCounter = this.getMax(this.PricesList.Collection, "LineNumber");
         }
-             item.DeclarationId = this.OriginalItemPM.DeclarationId,
-                item.Tenant = this.OriginalItemPM.Tenant,
-                item.InvoiceCounterKey = this.OriginalItemPM.CounterKey,
-                item.InvoiceItemLineNumber = this.OriginalItemPM.LineNumber,
-                 item.LineNumber = this.priceCounter +1,
+        item.DeclarationId = this.OriginalItemPM.DeclarationId,
+            item.Tenant = this.OriginalItemPM.Tenant,
+            item.InvoiceCounterKey = this.OriginalItemPM.CounterKey,
+            item.InvoiceItemLineNumber = this.OriginalItemPM.LineNumber,
+            item.LineNumber = this.priceCounter + 1,
 
-                item.ChangeSetOp = "Insert",
+            item.ChangeSetOp = "Insert",
 
-                this.OriginalItemPM.AddSupplierInvoiceItemsPrice(item);
-            this.PricesList.Insert(new PriceItemModel(item));
-            //this.CurrentSession.ResetRowIndex();
-         
+            this.OriginalItemPM.AddSupplierInvoiceItemsPrice(item);
+        this.PricesList.Insert(new PriceItemModel(item));
+        //this.CurrentSession.ResetRowIndex();
+
     }
 
     RemovePrice(item: PriceItemModel) {
@@ -492,15 +496,15 @@ export class EditSupplierInvoiceItem extends BaseComponent{
                 this.modificationCounter = this.getMax(this.ModificationsList.Collection, "ModificationCounterKey");
             }
             item.DeclarationId = this.OriginalItemPM.DeclarationId,
-            item.Tenant = this.OriginalItemPM.Tenant,
-            item.InvoiceCounterKey = this.OriginalItemPM.CounterKey,
-            item.LineNumber = this.OriginalItemPM.LineNumber,
-            item.ModificationCounterKey = this.modificationCounter,
-                    
-            item.ChangeSetOp = "Insert",
+                item.Tenant = this.OriginalItemPM.Tenant,
+                item.InvoiceCounterKey = this.OriginalItemPM.CounterKey,
+                item.LineNumber = this.OriginalItemPM.LineNumber,
+                item.ModificationCounterKey = this.modificationCounter,
 
-            this.OriginalItemPM.AddSupplierInvoiceItemsMod(item);
-            this.ModificationsList.Insert(new ModificationItemModel(item)); 
+                item.ChangeSetOp = "Insert",
+
+                this.OriginalItemPM.AddSupplierInvoiceItemsMod(item);
+            this.ModificationsList.Insert(new ModificationItemModel(item));
             //this.CurrentSession.ResetRowIndex();
         }
     }
@@ -643,7 +647,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
     SerialNumbersList: ObservableCollection;
     DescriptionsList: ObservableCollection;
     IdentificationsList: ObservableCollection;
-    
+
     snNumber = 0;
     AddSerialNumberButton() {
         var item = new SupplierInvoiceItemsSerialNumPM(this.OriginalItemPM);
@@ -779,7 +783,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
         var isValid = this.ValidateCustomsItemField();
         if (!isValid)
             return;
-            
+
         this.TaxExemptCode = this.CustomsItemTextValue;
 
 
@@ -794,11 +798,11 @@ export class EditSupplierInvoiceItem extends BaseComponent{
             || this.OriginalItemPM.SupplierInvoiceItemsDescripts.length > 0 || this.OriginalItemPM.SupplierInvoiceItemsSerialNums.length > 0 || this.OriginalItemPM.SupplierInvoiceItemsProdIdents.length > 0) {
 
             this.OriginalItemPM.ItemAdditionalStatus = true;
-         
+
         }
         else {
             this.OriginalItemPM.ItemAdditionalStatus = false;
-        
+
         }
 
         //console.log("Ok, New -> ", this.ClonedItemPM)
@@ -836,9 +840,9 @@ export class EditSupplierInvoiceItem extends BaseComponent{
             this.hasDash = value.includes("-");
             value = value.replace("-", "");
         }
-        
 
-        
+
+
         if (AppTool.IsNullOrEmpty(value)) {
             this.CustomItemErrorMessage = null;
         }
@@ -911,7 +915,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
         clonedEntity = new SupplierInvoiceItemPM(entityToClone.EntityParentPM); // check it !!
 
         this.MapEntitytoEntity(entityToClone, clonedEntity);
-        
+
         // --------------------------[ Arrays ]------------------------------
         // Modification
         clonedEntity.SupplierInvoiceItemsMods = [];
@@ -989,7 +993,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
     //#endregion
 
     getMax(list: any[], propertyName: string) {
-          var max = -99999;
+        var max = -99999;
         var maxObj = list ? list.reduce(function (prev, current) { return (prev[propertyName] > current[propertyName]) ? prev : current }) : null;
         if (maxObj != null)
             if (max <= maxObj[propertyName])
@@ -1005,7 +1009,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
             windowArgs.SupplierInvoiceItem = this.OriginalItemPM;
 
             windowArgs.IsDisplayOnly = this.IsDisplayOnly;
-             var windowTitle = "נתונים נוספים ליצוא - שורת חשבון יצואן";
+            var windowTitle = "נתונים נוספים ליצוא - שורת חשבון יצואן";
 
             var logWindow = new LogitudeWindow();
             logWindow.Width = 700;
@@ -1013,7 +1017,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
             logWindow.Title = windowTitle;
             logWindow.ShowCloseButton = false;
             logWindow.WindowArgs = windowArgs;
- 
+
             logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceItem/ExporterInvoiceItemComponent');
         }
 
@@ -1043,7 +1047,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
             logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceItem/AddEditActualLinesComponent');
         }
 
-       
+
     }
 
     UpdateActualInvoiceLines(data: string) {
@@ -1052,11 +1056,11 @@ export class EditSupplierInvoiceItem extends BaseComponent{
         }
     }
 
-    OnEscHotKeyPressed(){
+    OnEscHotKeyPressed() {
         this.CancelButtonClicked();
     }
 
-    OnCTRL_S_HotKeyPressed(){
+    OnCTRL_S_HotKeyPressed() {
         this.OkButtonClicked();
     }
 }
@@ -1188,7 +1192,7 @@ export class ModificationItemModel extends BaseComponent {
 
 
     //#region Properties
-    
+
     get TypeCode() { return this.ModificationPM.TypeCode; }
     set TypeCode(value: string) {
         if (this.ModificationPM.TypeCode != value) {
@@ -1228,7 +1232,7 @@ export class ModificationItemModel extends BaseComponent {
 
         }
     }
-    
+
 
     //#endregion
 
@@ -1358,7 +1362,7 @@ export class ConDeclarItemModel extends BaseComponent { // connected declaration
 
         }
     }
-    
+
 
     //#endregion
 
@@ -1508,7 +1512,7 @@ export class ProdIdentItemModel extends BaseComponent {
         }
 
     }
-   
+
 }
 
 export class LevyItemModel extends BaseComponent {
@@ -1556,5 +1560,5 @@ export class LevyItemModel extends BaseComponent {
 
     }
 
-    
+
 }

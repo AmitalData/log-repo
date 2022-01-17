@@ -404,10 +404,12 @@
     <Reference Include="Profact.TimbraCFDI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Profact3.3.1.2.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
     </Reference>
+ 
     <Reference Include="RabbitMQ.Client, Version=6.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\RabbitMQ.Client.6.2.2\lib\net461\RabbitMQ.Client.dll</HintPath>
     </Reference>
-    <Reference Include="SendGrid.SmtpApi, Version=1.3.3.0, Culture=neutral, processorArchitecture=MSIL">
+     <Reference Include="SendGrid.SmtpApi, Version=1.3.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SendGrid.SmtpApi.1.3.3\lib\SendGrid.SmtpApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -1044,6 +1046,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ExportReferenceViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ExportStorageViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\FclLclCodeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\IncotemrsFileValidationViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PoaAuthorizationTypeLookupViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PhysicalCheckSearchResultTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PoaStatusTypeLookUpViewsController.Generated.cs" />
@@ -1061,6 +1064,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferenceStatusController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\ContainerizationWebServiceController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\NewQuoteOPWebService.cs" />
+    <Compile Include="Controllers\GlobalModel\Extended\AdvancedQueryFiltersExtendedController.cs" />
     <Compile Include="Controllers\Integration\IntegrationTestController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\CarrierAreaExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\DocumentDownloadTokenController.cs" />
@@ -3174,6 +3178,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountWithholdingTaxUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\HandingCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\HazardousSubstanceUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\IncotemrsFileValidationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\IntegrityCheckStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\InterestBasesPeriodUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\InterestBasesTypeUpdateClass.cs" />

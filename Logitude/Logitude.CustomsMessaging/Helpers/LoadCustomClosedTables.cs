@@ -349,6 +349,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(confirmationTypeTable, confirmationTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(confirmationTypeTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData IncotemrsFileValidationTable = closedSystemTables.Where(d => d.id == "23928").FirstOrDefault();
+            ObjectTable IncotemrsFileValidationObjectTable = objectTableRepository.GetObjectTableByName("Customs.IncotemrsFileValidation", 0, false);
+            InsertClosedTableRecord(IncotemrsFileValidationTable, IncotemrsFileValidationObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(IncotemrsFileValidationTable);
+
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData modificationAndDiscountTypeTable = closedSystemTables.Where(d => d.id == "1416").FirstOrDefault();
             ObjectTable modificationAndDiscountTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.ModificationAndDiscountType", 0, false);
             InsertClosedTableRecord(modificationAndDiscountTypeTable, modificationAndDiscountTypeObjectTable, customsClosedTables, customsClosedTableRepository);

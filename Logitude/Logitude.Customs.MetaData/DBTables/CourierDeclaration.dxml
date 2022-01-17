@@ -5,6 +5,12 @@
   DBType="Main"
   Module="Customs">
   <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="DeclarationId"
     Type="varchar"
     Size="15">
@@ -18,12 +24,6 @@
     Size="15">
     <Constraints
       PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Tenant"
-    Type="int">
-    <Constraints
       Nullable="false" />
   </Column>
   <Column
@@ -42,14 +42,4 @@
     ReferencedTable="CourierMasters"
     ReferencedColumn="Id"
     ReferencedTableSchema="Customs" />
-  
-  
-  <!--
-  Invalid DXML Syntax: Unnecessary Index On Columns
-  <Index
-    Columns="DeclarationId" />
-
-  <Index
-    Columns="CourierMasterId" />-->
-
 </Table>

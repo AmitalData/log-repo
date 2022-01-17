@@ -1,0 +1,47 @@
+<div class="col">
+    <div class="row">        
+        <LogLabel [Text]='"סוג משלוח"' [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        <LogTextBox [ObjectFieldName]="'ShipType'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+        [DataContext]="DataContext" [Text]="ShipType"></LogTextBox>
+    </div>
+    
+    <div class="row">        
+        <LogLabel [ObjectFieldName]="'CargoTypeCodeName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        <LogTextBox [ObjectFieldName]="'CargoTypeCodeName'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+        [DataContext]="DataContext" [Text]="CargoTypeCodeName"></LogTextBox>
+    </div>
+    
+    <div class="row">        
+        <LogLabel [ObjectFieldName]="'SecondCargoID'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        <LogTextBox [ObjectFieldName]="'SecondCargoID'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+        [DataContext]="DataContext" [Text]="SecondCargoID"></LogTextBox>
+    </div>
+</div>
+
+<div class="col">
+    <div class="row">        
+        <LogLabel [ObjectFieldName]="'ExporterID'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        <LogTextBox [ObjectFieldName]="'ExporterID'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+        [DataContext]="DataContext" [Text]="ExporterID"></LogTextBox>
+    </div>
+    
+    <div class="row">        
+        <LogLabel [ObjectFieldName]="'FirstCargoID'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        <LogTextBox [ObjectFieldName]="'FirstCargoID'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+        [DataContext]="DataContext" [Text]="FirstCargoID"></LogTextBox>
+    </div>
+    
+    <div class="row">        
+        <LogLabel [ObjectFieldName]="'ThirdCargoID'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        <LogTextBox [ObjectFieldName]="'ThirdCargoID'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+        [DataContext]="DataContext" [Text]="ThirdCargoID"></LogTextBox>
+    </div>
+</div>
+
+<div class="col">
+    <div class="row">        
+        <LogLabel [ObjectFieldName]="'ExportDealIdentification'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        <LogTextBox [ObjectFieldName]="'ExportDealIdentification'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+        [DataContext]="DataContext" [Text]="ExportDealIdentification"></LogTextBox>
+    </div>
+</div>

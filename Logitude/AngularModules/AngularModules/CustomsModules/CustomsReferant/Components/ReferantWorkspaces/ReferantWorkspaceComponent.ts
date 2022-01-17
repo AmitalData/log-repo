@@ -1,5 +1,5 @@
 import { Component, OnDestroy, AfterViewInit, Output, EventEmitter, ViewChild } from '@angular/core';
-import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ApiQueryFilters, FilterItem } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { DeclarationReferantDataWebService } from '../../../../Customs/Services/WebServices/DeclarationReferantDataWebService';
@@ -11,6 +11,9 @@ import { FormatTool, AppTool } from '../../../../Infrastructure/Tools';
 import { DeclarationReferantDataExtendedListService } from '../../../../Customs/Services/ExtendedLists/DeclarationReferantDataExtendedListService';
 import { Dictionary } from '../../../../Infrastructure/GenericTypes/Dictionary';
 import { DeclarationReferantDataFiltersMenuComponent } from '../FiltersMenu/DeclarationReferantDataFiltersMenuComponent';
+import { AdvancedQueryFiltersPMService } from 'Infrastructure/Services/StandardPMs/AdvancedQueryFiltersPMService';
+import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
+import { ServiceArgs } from 'Infrastructure/DataContracts/ServiceArgs';
 declare var makeAmBarChart, BarClick, ResetItem: any;
 
 @Component({
@@ -24,7 +27,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     public isScreenLoaded: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
-    public counters: any; 
+    public counters: any;
     public ObjectTableName: string = "Customs.DeclarationReferantData";
 
 
@@ -77,10 +80,45 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     @ViewChild(DeclarationReferantDataFiltersMenuComponent) declarationReferantDataFiltersMenuComponent: DeclarationReferantDataFiltersMenuComponent;
 
     setFilters() {
-        this.RefId = (SessionLocator.LoggedUserPM.Id == null || SessionLocator.LoggedUserPM.Id == "0") ? "9999999" : SessionLocator.LoggedUserPM.Id;
-        this.DepId = "";
-        this.TransportModeId = "ALL";
+        this.getFiltersFromDb();
     }
+
+
+    getFiltersFromDb() {
+        this._declarationReferantDataWebService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, "Customs.DeclarationReferantData.AllCases").subscribe((myResult: any) => {
+            var listArgs = new ListComponentArgs();
+            var AdditionalFilters: FilterItem[]=new Array();
+            if (myResult) {
+                var ReferantUserIdFilter = myResult.filter(a => a.ObjectFieldName == "ReferentUserId");
+                if (ReferantUserIdFilter.length>0) {
+                    AdditionalFilters.push(new FilterItem("ReferentUserId", ReferantUserIdFilter[0].PredefinedValue , null, null, "InListExact", false, false, false, "string", null, null, null));
+                }
+                var DepartmentNameFilter = myResult.filter(a => a.ObjectFieldName == "DepartmentName");
+                if (DepartmentNameFilter.length>0) {
+                    AdditionalFilters.push(new FilterItem("DepartmentName", DepartmentNameFilter[0].PredefinedValue, null, null, "Equal", false, false, false, "string", null, null, null));
+                }
+                var ReferantUserNameFilter = myResult.filter(a => a.ObjectFieldName == "ReferantUserName");
+                if (ReferantUserNameFilter.length>0) {
+                    AdditionalFilters.push(new FilterItem("ReferantUserName", ReferantUserNameFilter[0].PredefinedValue, null, null, "Equal", false, false, false, "string", null, null, null));
+                }
+                var DepartmentIdFilter = myResult.filter(a => a.ObjectFieldName == "DepartmentId");
+                if (DepartmentIdFilter.length>0) {
+                    AdditionalFilters.push(new FilterItem("DepartmentId", DepartmentIdFilter[0].PredefinedValue, null, null, "InListExact", false, false, false, "string", null, null, null));
+                }
+                var TransportModeIdFilter = myResult.filter(a => a.ObjectFieldName == "TransportModeId");
+                if (TransportModeIdFilter.length>0) {
+                    AdditionalFilters.push(new FilterItem("TransportModeId", TransportModeIdFilter[0].PredefinedValue, null, null, "Equals", false, true, false, "string", null, null, null));
+                }
+            }
+            if(AdditionalFilters.length>0){
+                listArgs.QuerySection=myResult[0].QueryId;
+            }
+            listArgs.Filters = AdditionalFilters;
+            this.declarationReferantDataFiltersMenuComponent.SetFiltersMenu(listArgs);
+        });
+    }
+
+
     constructor(public _declarationReferantDataWebService: DeclarationReferantDataWebService) {
         this.setFilters();
         this.CurrentSession.StartBusyIndicatorLoading();
@@ -167,8 +205,8 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesRejectedByClassification", true));
 
 
-           // this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("AllCases"));
-           // this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("AllCases", true));
+            // this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("AllCases"));
+            // this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("AllCases", true));
 
             this.FillInProgressDeclarationReferantDataDashboardData();
         });
@@ -333,16 +371,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     FilterChange($event) {
         this.filters = new ApiQueryFilters();
         this.filters = $event.Filters;
-        this.viewFilters.AdditionalFilters = this.filters.AdditionalFilters.filter(a => a.FieldName == "ReferentUserId" || a.FieldName == "DepartmentId" || a.FieldName == "TransportModeId" || a.FieldName == "ReferantUserName" || a.FieldName == "DepartmentName"  );
-        this.RefId = this.declarationReferantDataFiltersMenuComponent.LOVListUsers.map(({ Id }) => Id).toString();
-        this.DepId = this.declarationReferantDataFiltersMenuComponent.LOVListDepartment.map(({ Id }) => Id).toString();
-        this.TransportModeId = this.declarationReferantDataFiltersMenuComponent.transportmodeId;
-        this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).subscribe(
-            (data: any) => {
-                this.counters = data.Result;
-                this.InProgressDeclarationReferantDataId = this.InProgressDeclarationReferantDataId + this.CurrentSession.GetChartId();
-                this.LoadInProgressDeclarationReferantDatasDashboard();
-            });
+        this.ApplyFilters(this.filters);
     }
     RefreshButtonClicked() {
         this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).subscribe(
@@ -352,6 +381,19 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                 this.LoadInProgressDeclarationReferantDatasDashboard();
             });
 
+    }
+
+    ApplyFilters(filters) {
+        this.viewFilters.AdditionalFilters = this.filters.AdditionalFilters.filter(a => a.FieldName == "ReferentUserId" || a.FieldName == "DepartmentId" || a.FieldName == "TransportModeId" || a.FieldName == "ReferantUserName" || a.FieldName == "DepartmentName");
+        this.RefId = this.declarationReferantDataFiltersMenuComponent.LOVListUsers.map(({ Id }) => Id).toString();
+        this.DepId = this.declarationReferantDataFiltersMenuComponent.LOVListDepartment.map(({ Id }) => Id).toString();
+        this.TransportModeId = this.declarationReferantDataFiltersMenuComponent.SelectedValue;
+        this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).subscribe(
+            (data: any) => {
+                this.counters = data.Result;
+                this.InProgressDeclarationReferantDataId = this.InProgressDeclarationReferantDataId + this.CurrentSession.GetChartId();
+                this.LoadInProgressDeclarationReferantDatasDashboard();
+            });
     }
 
     ViewReferantQuery(myQueryCode: string) {
@@ -421,7 +463,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                     }
                 default: { break; }
             }
-             this.BuildFiltersForQuery(this.filters);
+            this.BuildFiltersForQuery(this.filters);
             if (myQueryCode.endsWith("_A"))
                 this.filters.addAdditionalFilter("IsAvailabilityDateNull", false, null, null, "Equals", false, false, false, "number");
             var listArgs = new ListComponentArgs();
@@ -432,7 +474,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("General.MH.ReferantWorkspace");
             listArgs.IgnoreSelectedPerspective = true;
             if (AppTool.IsNullOrEmpty(listArgs.NewButtonLabel)) listArgs.NewButtonLabel = TextCodeTranslator.Translate("Customs.General.O.NewCustomsFile"); // "פתיחת תיק חדש";
-             var _filters = ["TransportModeId", "ReferentUserId", "DepartmentName", "ReferantUserName", "DepartmentId"];
+            var _filters = ["TransportModeId", "ReferentUserId", "DepartmentName", "ReferantUserName", "DepartmentId"];
 
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
@@ -441,7 +483,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
 
                         cmpRef.instance.Run(listArgs);
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                            this.filters.AdditionalFilters = this.filters.AdditionalFilters.filter(x => x.FieldName == "TransportModeId" || x.FieldName == "ReferentUserId" || x.FieldName == "DepartmentName" || x.FieldName == "ReferantUserName" || x.FieldName == "DepartmentId"  );
+                            this.filters.AdditionalFilters = this.filters.AdditionalFilters.filter(x => x.FieldName == "TransportModeId" || x.FieldName == "ReferentUserId" || x.FieldName == "DepartmentName" || x.FieldName == "ReferantUserName" || x.FieldName == "DepartmentId");
                             this.LoadAllScreenData();
                             this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).subscribe(
                                 (data: any) => {

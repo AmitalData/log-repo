@@ -251,41 +251,12 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 return;
 
             }
+            //Delete Supplier Invoice
 
             if (String.IsNullOrWhiteSpace(_LogitudeCommDecFile.Id))
             {
                 string existId = myQueryService.GetIdByCustomFileNo(_LogitudeCommDecFile.CustomFileNo, _tenant);
                 _LogitudeCommDecFile.Id = existId;
-            }
-
-            //Delete Supplier Invoice
-
-            if (mode == "1" || mode == "2")
-            {
-                //Delete Supplier Invoice
-                MyGenericResponseObj.Stage = "GetSingle - To delete";
-                _context = CustomContext.GetContext(ResolvedTenant());
-                var myQueryService2 = new DeclarationQueryService(_context);
-                this._MyDeclarationPM = myQueryService2.GetSingle(this._LogitudeCommDecFile.Id, true, false);
-                if (this._MyDeclarationPM == null)
-                {
-                    throw new BusinessErrorException("LOGITUDEFILE is " + this._LogitudeCommDecFile.Id + " but not found");
-                }
-                AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-                ICustomContext dbContext2 = CustomContext.GetContext(ResolvedTenant());
-                DeclarationUpdateService DeclarationUpdateService = new DeclarationUpdateService(dbContext2, new Dictionary<string, IContext>(), ResolvedTenant());
-                this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                this._MyDeclarationPM.MarkAsChanged = true;
-
-                DeclarationUpdateService.DeclarationSupplierInvoicesFastDelete(_MyDeclarationPM, dbContext2);
-                dbContext2 = CustomContext.GetContext(ResolvedTenant());
-                DeclarationUpdateService = new DeclarationUpdateService(dbContext2, new Dictionary<string, IContext>(), ResolvedTenant());
-
-                AppendLogLine("MarkToDeleteSupplierInvoice:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-                _MyDeclarationPM.CurrentContextTag = UpsertActionConst;
-                DeclarationUpdateService.Update(this._MyDeclarationPM, true);
-                AppendLogLine("Update:MarkToDeleteSupplierInvoice:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-
             }
 
             /////////////////////////////////////////////////////////////
@@ -369,30 +340,9 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     //                    this._MyDeclarationPM.Consignments[0].OriginCountryCode = null;
                 }
 
-                if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.CargoDescription))
-                {
-                    if(_LogitudeCommDecFile.CargoDescription.Length > 255)
-                    {
-                        AppendLogLine("_LogitudeCommDecFile.CargoDescription.Substring(0, 255)");
-                        _LogitudeCommDecFile.CargoDescription = _LogitudeCommDecFile.CargoDescription.Substring(0, 255);
-                    }
-                    this._MyDeclarationPM.Consignments[0].CargoDescription = _LogitudeCommDecFile.CargoDescription;
-
-                }
+                if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.CargoDescription)) this._MyDeclarationPM.Consignments[0].CargoDescription = _LogitudeCommDecFile.CargoDescription;
                 //this._MyDeclarationPM.Consignments[0].ManifestDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCommDecFile.ManifestDate, "LogitudeCommDecFile.ManifestDate");
-                if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.ArrivalDateTime))
-                {
-                    try
-                    {
-                        this._MyDeclarationPM.Consignments[0].UnloadDate = 
-                            AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCommDecFile.ArrivalDateTime, "LogitudeCommDecFile.ArrivalDateTime");
-                    }
-                    catch (Exception)
-                    {
-                        AppendLogLine("Consignments[0].UnloadDate not saved - _LogitudeCommDecFile.ArrivalDateTime format not valid");
-                    }
-
-                }
+                if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.ArrivalDateTime)) this._MyDeclarationPM.Consignments[0].UnloadDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCommDecFile.ArrivalDateTime, "LogitudeCommDecFile.ArrivalDateTime");
 
                 if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.OriginCountryId))
                 {
@@ -586,10 +536,10 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     }
                 }
             }
+
             this._LOGICUSTFILE = XmlGenericUtil<LOGICUSTFILE>.DeSerializeObject(xmlLOGICUSTFILE);
             if (_LOGICUSTFILE.LogitudeCustomsFile == null || _LOGICUSTFILE.LogitudeCustomsFile.Length != 1)
             {
-                LogMessagingUtil.Instance.AppendLine("_LOGICUSTFILE.LogitudeCustomsFile is null or longer than 1 =  " + _LOGICUSTFILE.LogitudeCustomsFile.Length);
                 MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                 MyGenericResponseObj.Message = "customFile.LogitudeCustomsFile.Length !=1 !!!";
             }
@@ -598,7 +548,6 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 this._AmitalCustomsFile = _LOGICUSTFILE.LogitudeCustomsFile[0];
                 if (_MyDeclarationPM.IsCourierDeclaration == true)
                 {
-                    LogMessagingUtil.Instance.AppendLine(" _MyDeclarationPM.IsCourierDeclaration is not null  ");
                     UpdateNoIdUnder150();
                     CalcIsAutonomy();
                     CalcProcedureCurrentCode();
@@ -913,8 +862,6 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     {
                         if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                         currentDeclarationCourierStatusPM.ShopId = shopId;
-                        this.IsProcedureCurrentCodeChanged = true;
-                        if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.Count() > 0 && _MyDeclarationPM.SupplierInvoices[0].ChangeSetOp == ChangeSetOperation.None) _MyDeclarationPM.SupplierInvoices[0].ChangeSetOp = ChangeSetOperation.Update;
                     }
                 }
             }
@@ -1249,11 +1196,9 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                                 myCourierDeclarationUpdateService.Update(_CourierDeclarationPMPMDiferentMaster, true);
 
+
                                 if (false)
                                 {
-
-
-
 
 
                                     CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(_context);
@@ -1298,6 +1243,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                                             string message = messagingService.CreateCRS(_tenant, Curruser, requestParams2);
 
                                         }
+                                        //}
                                     }
                                 }
                             }

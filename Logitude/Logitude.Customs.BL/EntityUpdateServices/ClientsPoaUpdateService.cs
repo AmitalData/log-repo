@@ -19,8 +19,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
     {
         protected override void OnCreating(ClientsPoaPM entityPM, ClientPM entityParentPM)
         {
+            if (entityPM == null)
+                return;
+
+            entityPM.Tenant = entityParentPM.Tenant;
             entityPM.Id = IdCounter.GetNumber("Customs.ClientsPoa", entityPM.Tenant);
-            
+
+
         }
        
     }

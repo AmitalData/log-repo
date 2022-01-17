@@ -49,8 +49,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                SecondCargoID = a.SecondCargoID,
                                                                ThirdCargoID = a.ThirdCargoID,
                                                                CustomFileNo = declarationCouldBeNull != null ? declarationCouldBeNull.CustomFileNo : "",
-                                                               TransportModeId = a.TransportModeId,
-                                                               Direction = a.Direction,
+                                                               TransportModeId = declarationCouldBeNull.TransportModeId,
+                                                               Direction = declarationCouldBeNull.Direction,
                                                            });
             return query;
         }

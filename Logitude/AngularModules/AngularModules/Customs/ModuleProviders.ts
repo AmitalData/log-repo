@@ -255,7 +255,6 @@ import { PhysicalCheckSearchResultTypeListService } from './Services/StandardLis
 
 //#region StandardPMs
 import { ClaimPMService } from './Services/StandardPMs/ClaimPMService';
-import { ClientPMService } from './Services/StandardPMs/ClientPMService';
 import { CustomBankPMService } from './Services/StandardPMs/CustomBankPMService';
 import { CustomsBookPMService } from './Services/StandardPMs/CustomsBookPMService';
 import { CustomsClosedTablePMService } from './Services/StandardPMs/CustomsClosedTablePMService';
@@ -426,6 +425,9 @@ import { BuyerRoleTypeListService } from './Services/StandardLists/BuyerRoleType
 import { AmedmentTypeListService } from './Services/StandardLists/AmedmentTypeListService';
 import { CustomsRequestsSheetWebService } from './Services/WebServices/CustomsRequestsSheetWebService';
 import { TradeAgreementProtocolListService } from './Services/StandardLists/TradeAgreementProtocolListService';
+import { ExportStoragePMService } from './Services/StandardPMs/ExportStoragePMService';
+import { IncotemrsFileValidationListService } from './Services/StandardLists/IncotemrsFileValidationListService';
+import { ClientPMService } from './Services/StandardPMs/ClientPMService';
 
 
 export class ModuleProviders {
@@ -717,6 +719,7 @@ export class ModuleProviders {
             case "ClientsPoaListService": { myResult = new ClientsPoaListService(); break; }
             case "BuyerRoleTypeListService": { myResult = new BuyerRoleTypeListService(); break; }
             case "PhysicalCheckSearchResultTypeListService": { myResult = new PhysicalCheckSearchResultTypeListService(); break; }
+            case "IncotemrsFileValidationListService": { myResult = new IncotemrsFileValidationListService(); break; }
 
                 
              //#endregion                
@@ -754,6 +757,7 @@ export class ModuleProviders {
             case "NotificationPMService": { myResult = new NotificationPMService(); break; }
             case "NotificationTenantDefinitionPMService": { myResult = new NotificationTenantDefinitionPMService(); break; }
             case "PaymentOrderPMService": { myResult = new PaymentOrderPMService(); break; }
+            case "ExportStoragePMService": { myResult = new ExportStoragePMService(); break; }
             case "PhysicalCheckPMService": { myResult = new PhysicalCheckPMService(); break; }
             case "ProceduralFaultPMService": { myResult = new ProceduralFaultPMService(); break; }
             case "ProceduralFaultsPMService": { myResult = new ProceduralFaultPMService(); break; }

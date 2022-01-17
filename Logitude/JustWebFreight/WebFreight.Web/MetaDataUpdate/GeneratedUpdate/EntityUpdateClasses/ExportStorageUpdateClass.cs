@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExportStorageUpdateClass
    {  		
-		public const string HashString = "3286d182aa8edd93bab7a904a8774fbc";
+		public const string HashString = "c88d652d8cc00b5946603610e22ed686";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -100,7 +100,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
+			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
@@ -374,8 +374,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StorageStatus",
 					  						DefaultText =  "Storage Status",
+					  						FullLocalDefaultText =  "סטטוס נמען",
 					  						ListFieldLable =  "StorageStatusListLable",
 					  						ListLableDefaultText =  "Storage Status",
+					  						ListLocalDefaultText =  "סטטוס נמען",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1372,7 +1374,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ObjectTableName =  "Customs.ExportStorage",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
-					  						MaxLength =  4,
+					  						MaxLength =  16,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1380,7 +1382,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  4,
+					  						SystemMaxLength =  16,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
@@ -1543,6 +1545,123 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Declaration_ID",
+					  						ObjectTableName =  "Customs.ExportStorage",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Declaration_ID",
+					  						ListPropertyPath =  "Declaration_ID",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Declaration_ID",
+					  						DefaultText =  "Declaration ID",
+					  						FullLocalDefaultText =  "מספר הצהרה",
+					  						ListFieldLable =  "Declaration_IDListLable",
+					  						ListLableDefaultText =  "Declaration ID",
+					  						ListLocalDefaultText =  "מספר הצהרה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "DeclarationCustomFileNo",
+					  						ObjectTableName =  "Customs.ExportStorage",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  12,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  12,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "DeclarationCustomFileNo",
+					  						ListPropertyPath =  "DeclarationCustomFileNo",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "DeclarationCustomFileNo",
+					  						DefaultText =  "Declaration Custom File No",
+					  						FullLocalDefaultText =  "מספר הצהרה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -1610,8 +1729,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen ExportStorageCustomsExportStorageHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ExportStorage.HeaderScreen", Name = "Customs.ExportStorageHeaderScreen", ObjectTableId = ExportStorageObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
-      	
+	         Screen ExportStorageCustomsExportStorageHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ExportStorage.HeaderScreen", Name = "Customs.ExportStorageHeaderScreen", ObjectTableId = ExportStorageObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
+      
+             ScreenField CustomsExportStorageCustomsExportStorageHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ExportStorageCustomsExportStorageHeaderScreenScreen0.Id,ScreenCode = ExportStorageCustomsExportStorageHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.ExportStorage.DeclarationCustomFileNo", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsExportStorageCustomsExportStorageHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ExportStorageCustomsExportStorageHeaderScreenScreen0.Id,ScreenCode = ExportStorageCustomsExportStorageHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.ExportStorage.ExportFileNo", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsExportStorageCustomsExportStorageHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ExportStorageCustomsExportStorageHeaderScreenScreen0.Id,ScreenCode = ExportStorageCustomsExportStorageHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.ExportStorage.OpenDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsExportStorageCustomsExportStorageHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = ExportStorageCustomsExportStorageHeaderScreenScreen0.Id,ScreenCode = ExportStorageCustomsExportStorageHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.ExportStorage.ShipName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsExportStorageCustomsExportStorageHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ExportStorageCustomsExportStorageHeaderScreenScreen0.Id,ScreenCode = ExportStorageCustomsExportStorageHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.ExportStorage.CustomsStatus", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsExportStorageCustomsExportStorageHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = ExportStorageCustomsExportStorageHeaderScreenScreen0.Id,ScreenCode = ExportStorageCustomsExportStorageHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.ExportStorage.DeclarationStatusTypeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    ExportStorageObjectTable.HeaderScreenId = ExportStorageCustomsExportStorageHeaderScreenScreen0.Id;
 		    ExportStorageObjectTable.HeaderScreenCode = ExportStorageCustomsExportStorageHeaderScreenScreen0.Code;
 
@@ -1620,7 +1751,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable ExportStorageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ExportStorage" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode ExportStorageGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportStorage.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ExportStorageGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportStorage.Tab.General", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExportStorageFeatures.STGN", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ExportStorageObjectTable);
+ 
+                 
+			   TextCode ExportStorageRequestSheetTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportStorage.TH.RequestSheets", DefaultText = "Request Sheet",LocalDefaultText = "גליון בקשות", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ExportStorageRequestSheetFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportStorage.Tab.RequestSheet", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExportStorageFeatures.ESRS", NameTextCodeDefaultText = "Request Sheet", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ExportStorageObjectTable);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "STGN",HtmlComponentName = "ExportStorageGeneralTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsExportStorage/components/edit/ExportStorageGeneralTabComponent/ExportStorageGeneralTabComponent", FeatureId = ExportStorageGeneralFeature_TH0.Id,FeatureUniqeCode = ExportStorageGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.ExportStorage.ExportStorageGeneralTabComponent", ObjectTableId = ExportStorageObjectTable.Id, TabNameTextCodeId = ExportStorageGeneralTextCode_TH0.Id, TabNameTextCodeCode = ExportStorageGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ESRS",HtmlComponentName = "RequestSheetTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent", FeatureId = ExportStorageRequestSheetFeature_TH1.Id,FeatureUniqeCode = ExportStorageRequestSheetFeature_TH1.FeatureUniqeCode, ControlPath = "", ObjectTableId = ExportStorageObjectTable.Id, TabNameTextCodeId = ExportStorageRequestSheetTextCode_TH1.Id, TabNameTextCodeCode = ExportStorageRequestSheetTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)

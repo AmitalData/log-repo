@@ -2,13 +2,9 @@
 using Logitude.AmitalMessaging.Utils;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.Customs.BL.BL;
 using Logitude.Customs.BL.EntityQueryServices;
-using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs;
-using Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments;
 using Logitude.Customs.Data;
-using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.CustomsMessaging.Common.RequestParams;
@@ -242,7 +238,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                                 From = "Logitude",
                                 InOut = "O",
 
-                             };
+                            };
 
 
                             var message = Encoding.UTF8.GetBytes(xmlESBResponseXmlClass);
@@ -251,42 +247,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
 
-
-                            var queuename = "ucbud2lt";
-                            var args = new Dictionary<string, object>();
-
-                            //   var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
-                            var factory = RabbitmqHelper.GetConnectionFactory();
-
-                            using (var connection = factory.CreateConnection())
-                            using (var channel = connection.CreateModel())
-                            {
-
-                                channel.BasicQos(0, 5, true);
-
-                                //args.Add("x-queue-mode", "lazy");
-                                //channel.QueueDeclare(queue: queuename,
-                                //                    durable: true,
-                                //                    exclusive: false,
-                                //                    autoDelete: false,
-                                //                    arguments: args);
-
-                                RabbitmqHelper.DeclareQueue(channel, queuename);
+                            string InterfaceTypeCode = "ucbud2lt";
+                            String rabbitMQCode = RabbitmqHelper.GetRabbitMQCode(tenant);
 
 
-                                var header = new Dictionary<string, object>();
-                                var prop = channel.CreateBasicProperties();
-                                prop.Persistent = true;
-                                prop.MessageId = communicationLogId;
-                                prop.DeliveryMode = 2; //persistent
-                                prop.Headers = header;
-
-                                channel.BasicPublish(exchange: "",
-                                                             routingKey: queuename,
-                                                             basicProperties: prop,
-                                                             body: message);
-
-                            }
+                            var rabbitPublishService = new RabbitPublishService();
+                            rabbitPublishService.Publish(message, communicationLogId, InterfaceTypeCode, rabbitMQCode,8);
                         }
                         catch (Exception)
                         {
@@ -296,7 +262,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                     }
 
-
+ 
 
                     trans.Complete();
                     return "המסר נבנה בהצלחה וישלח בתהליך רקע";
@@ -322,6 +288,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         }
 
+        
 
     }
 
@@ -450,12 +417,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 if (/*CourierENV() */ declarationPM.IsCourierDeclaration)
                 {
                     Debug.WriteLine("CourierENV");
-                    var updateDocumentStatuscodeService = new UpdateDocumentStatuscodeService();
-                    if (updateDocumentStatuscodeService.ConnectedAfterSend_Need2UpdateDocumentStatuscode(declarationPM,_DocumentsFilingPM))
-                    {
-                        LogitudeSettings.HandleLogMe("ConnectedAfterSend_Need2UpdateDocumentStatuscode", false, "CreateUD2LTService", stopLogAt);
-                        updateDocumentStatuscodeService.UpdateDocumentStatuscode(declarationPM, stopLogAt,true);
-                    }
+
                     shouldCreateDCAComm = true;
                 }
                 else
@@ -563,53 +525,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
 
         }
-
-        //public static void UpdateDocumentStatuscode(DeclarationPM connectedDeclarationPM, DateTime stopLogAt)
-        //{
-
-        //    ICustomContext context = CustomContext.GetContext(connectedDeclarationPM.Tenant);
-        //    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-        //    DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(connectedDeclarationPM.Id, true, false);
-        //    if (currentDeclarationCourierStatusPM != null)
-        //    {
-        //        CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(connectedDeclarationPM, connectedDeclarationPM.Id, connectedDeclarationPM.Tenant);
-        //        //LogMessagingUtil.Instance.AppendLine("currentDeclarationCourierStatusPM.DocumentStatusCode: " + currentDeclarationCourierStatusPM.DocumentStatusCode);
-        //        currentDeclarationCourierStatusPM.DocumentStatusCode = "V";
-        //        calculateDeclarationCourierStatus.CalcDocumentStatusCode(currentDeclarationCourierStatusPM);//// will change if wrong !!!
-        //        if (currentDeclarationCourierStatusPM.DocumentStatusCode == "V")
-        //        {
-        //            LogMessagingUtil.Instance.AppendLine($"currentDeclarationCourierStatusPM.DocumentStatusCode: {currentDeclarationCourierStatusPM.DocumentStatusCode}  change 2 V");
-        //            LogitudeSettings.HandleLogMe($"currentDeclarationCourierStatusPM.DocumentStatusCode: {currentDeclarationCourierStatusPM.DocumentStatusCode}  change 2 V", false, "CreateUD2LTService", stopLogAt);
-        //            using (var trans = TransactionFactory.GetNewTransaction())
-        //            {
-        //                DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
-        //                currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-        //                ///currentDeclarationCourierStatusPM.DocumentStatusCode = "V";
-        //                declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
-        //                trans.Complete();
-        //            }
-        //        }
-        //        else
-        //        {
-        //            LogitudeSettings.HandleLogMe("calculateDeclarationCourierStatus.CalcDocumentStatusCode return <> V", false, "CreateUD2LTService", stopLogAt);
-        //        }
-        //    }
-        //}
-
-        //private bool ConnectedAfterSend_Need2UpdateDocumentStatuscode(DeclarationPM declarationPM)
-        //{
-
-        //    var customsDocumentRepository = new CustomsDocumentRepository(declarationPM.Tenant);
-        //    var customsDocument =customsDocumentRepository.GetSingle(_DocumentsFilingPM.Id, declarationPM.Tenant);
-        //    if (string.IsNullOrWhiteSpace(customsDocument?.CustomsDocId))
-        //    {
-        //        return false;
-        //    }
-        //    var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(declarationPM.Tenant);
-        //    var declarationCourierStatus =declarationCourierStatusRepository.GetSingle(declarationPM.Id, declarationPM.Tenant);
-        //    return declarationCourierStatus.DocumentStatusCode != "V";
-
-        //}
 
         private void FixDocumentTypeCodeEmpty(string logData)
         {

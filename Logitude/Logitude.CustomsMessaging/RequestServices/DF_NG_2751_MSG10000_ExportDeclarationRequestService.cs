@@ -1513,13 +1513,13 @@ namespace Logitude.CustomsMessaging.RequestServices
                     //    Value = "SSO"
                     //}
                     // moran 12.4.16 - Bug 20650 -->
-                    DMExtensions = GetGoodsItemCommodityClassificationDMExtensions(supplierInvoiceItemPM)
                     //{
                     //    DangerousGoodsPackingRequirementsGroupCode = SetCodeTypeValue<DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDMExtensionsDangerousGoodsPackingRequirementsGroupCode>(supplierInvoiceItemPM.DangerousPackingGroupTypeCode)
                     //}
                     // moran 12.4.16 - Bug 20650 <--
                 };
             }
+
             var declarationGoodsItemCommodity = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodity();
             //declarationGoodsItemCommodity.DMExtensions = GetGoodsItemCommodityDMExtensions(supplierInvoiceItemPM);
             // moran 25.5.14 - Bug 6059 - commented -->
@@ -1544,6 +1544,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                       //   Value = supplierInvoiceItemPM.ClassificationCode
                      //},
                         IdentificationTypeCode = SetCodeTypeValue < ClassificationIdentificationTypeCodeType>(supplierInvoiceItemPM.ClassificationTypeCode),
+                        DMExtensions = GetGoodsItemCommodityClassificationDMExtensions(supplierInvoiceItemPM),
                         DangerousGoodsStatement = GetDangerousGoodsStatement(supplierInvoiceItemPM.SuppInvoiceItemsAbachStatements),
                       //  TaxExemptCode =SetCodeTypeValue < DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationTaxExemptCode>(supplierInvoiceItemPM.TaxExemptCode),                     
                         ProductName = GetGetDeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsProductName(supplierInvoiceItemPM),
@@ -1565,7 +1566,10 @@ namespace Logitude.CustomsMessaging.RequestServices
             var DMExtensions = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDMExtensions();
             if (!string.IsNullOrEmpty(supplierInvoiceItemPM.DutyRegimeProtocolCode))
                 DMExtensions.DutyRegimeProtocolCode = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDMExtensionsDutyRegimeProtocolCode() { Value = supplierInvoiceItemPM.DutyRegimeProtocolCode };
-
+            if (!string.IsNullOrEmpty(supplierInvoiceItemPM.TradeAgreementCode))
+            {
+                DMExtensions.DutyRegimeCode = new DutyTaxFeeDutyRegimeCodeType() { Value= supplierInvoiceItemPM.TradeAgreementCode };
+            }
             return DMExtensions;
         }
 
@@ -1623,7 +1627,6 @@ namespace Logitude.CustomsMessaging.RequestServices
                 var supplierInvoiceItemsTax = supplierInvoiceItemPM.SupplierInvoiceItemTaxes[itemsTaxSeq];
                 var goodsItemCommodityDutyTaxFees = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDutyTaxFee();
                 goodsItemCommodityDutyTaxFees.TypeCode = SetCodeTypeValue<DutyTaxFeeTypeCodeType>(supplierInvoiceItemsTax.TaxTypeCode);
-                //  goodsItemCommodityDutyTaxFees.DutyRegimeCode = SetCodeTypeValue<DutyTaxFeeDutyRegimeCodeType>(supplierInvoiceItemsTax.TradeAgreementTypeCode);
                 if (supplierInvoiceItemsTax.TaxRate.HasValue)
                 {
                     goodsItemCommodityDutyTaxFees.TaxRate = supplierInvoiceItemsTax.TaxRate.Value;

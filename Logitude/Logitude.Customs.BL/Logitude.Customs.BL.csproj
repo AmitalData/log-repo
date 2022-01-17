@@ -137,7 +137,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AmitalContextUtil.cs" />
+    <Compile Include="BL\CacheHelper.cs" />
     <Compile Include="BL\CalculateDeclarationCourierStatus.cs" />
+    <Compile Include="BL\SIModificationByCustomerCommissionService.cs" />
     <Compile Include="CloseTables\CustomsCargoSealStatus.cs" />
     <Compile Include="CloseTables\CustomsAutonomyKeywordDetails.cs" />
     <Compile Include="CloseTables\CustomRabbitMQQueue.cs" />
@@ -170,6 +172,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\FclLclCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\FullnessCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\HandingCodeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\IncotemrsFileValidationDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\LoadingSiteTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\NDMessageActionCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PartyRelationshipTypeDetails.Generated.cs" />
@@ -729,6 +732,7 @@
     <Compile Include="EntityDataMappings\Generated\ImporterDespositionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ImporterPeriodicDeclarStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ImporterTypeForClaimDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\IncotemrsFileValidationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterfaceManagementDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterfaceSendOptionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterfaceTenantDefinitionDataMapping.Generated.cs" />
@@ -898,6 +902,7 @@
     <Compile Include="EntityDataMappings\ImporterDespositionDataMapping.cs" />
     <Compile Include="EntityDataMappings\ImporterPeriodicDeclarStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\ImporterTypeForClaimDataMapping.cs" />
+    <Compile Include="EntityDataMappings\IncotemrsFileValidationDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterfaceManagementDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterfaceSendOptionDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterfaceTenantDefinitionDataMapping.cs" />
@@ -1058,6 +1063,7 @@
     <Compile Include="EntityDataMappings\VendorTypeDataMapping.cs" />
     <Compile Include="EntityQueryServiceExt\CustomsDocumentQueryServiceExt.cs" />
     <Compile Include="EntityQueryServices\CargoIdentifireTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\IncotemrsFileValidationQueryService.cs" />
     <Compile Include="EntityQueryServices\ClientsPoaQueryService.cs" />
     <Compile Include="EntityQueryServices\ContainerizationQueryService.cs" />
     <Compile Include="EntityQueryServices\DeclarationReferantDataQueryService.cs" />
@@ -1089,6 +1095,7 @@
     <Compile Include="EntityQueryServices\Generated\FclLclCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\FullnessCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\HandingCodeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\IncotemrsFileValidationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\LoadingSiteTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\LogisticsReferenceTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\NDMessageActionCodeQueryService.Generated.cs" />
@@ -1552,6 +1559,7 @@
     <Compile Include="EntityQueryServices\VendorCommissionQueryService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealIdentifierUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\IncotemrsFileValidationUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CityUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClaimImporterDeclarsP3LoiUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClaimImporterDeclarsPage3AUpdateService.cs" />
@@ -1633,6 +1641,7 @@
     <Compile Include="EntityUpdateServices\Generated\FclLclCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\FullnessCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\HandingCodeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\IncotemrsFileValidationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\LoadingSiteTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\LogisticsReferenceTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\NbcDeclarationTypeUpdateService.Generated.cs" />
@@ -2095,6 +2104,7 @@
     <Compile Include="Messaging\CustomsAnalyzeQueue\MamanStatusAvailabilitySplitterQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSHAWBQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSSpecialActionQService.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\RabbitMQ\UCUW2L_OpenDeclarationsQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\RabbitMQ\UCBUD2LT_ConnectDocToTicketQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\SetInAnalyzeQResponseService.cs" />
     <Compile Include="Messaging\Customs\ClientProgressBarIndicatorService.cs" />
@@ -2180,7 +2190,7 @@
     <Compile Include="Messaging\U2L\CellFile\CellFileUpsertService.cs" />
     <Compile Include="Messaging\U2L\CommDecReferantData\CommDecReferantDataService.cs" />
     <Compile Include="Messaging\U2L\CommMasterCourier\CommMasterCourierService.cs" />
-    <Compile Include="Messaging\U2L\CommDec\CommDecService.cs" />
+    <Compile Include="Messaging\U2L\CommDec\Do_CommDecService.cs" />
     <Compile Include="Messaging\U2L\CourierStatus\CourierStatusService.cs" />
     <Compile Include="Messaging\U2L\Courier\CourierPendingReasonService.cs" />
     <Compile Include="Messaging\U2L\DeclarationDocuments\DeclarationDocumentsService.cs" />

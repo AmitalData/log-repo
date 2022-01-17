@@ -13,15 +13,15 @@ declare const window: any;
 
 @Injectable()
 export class LogtuideTableDataService {
-  private _entityResourceService: EntityResourceService = new EntityResourceService();
 
   constructor(
     private entityListService: EntityListService,
+    private entityResourceService: EntityResourceService
   ) { }
 
   getTable(tableName: string): Promise<any> {
     return new Promise<ServiceResponse>((resolve, reject) => {
-      this._entityResourceService.getEntityResourceByTableName(tableName, 0)
+      this.entityResourceService.getEntityResourceByTableName(tableName, 0)
         .pipe(filterIsNotNull(), take(1))
         .subscribe(async () => {
           const LookUpTable: ObjectTablePM = window.ObjectTables.filter(d => d.Name === tableName)[0];

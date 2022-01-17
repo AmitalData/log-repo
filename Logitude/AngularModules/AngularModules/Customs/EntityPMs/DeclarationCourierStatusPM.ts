@@ -399,6 +399,11 @@ export class DeclarationCourierStatusPM {
     public set CargoDescription(newValue: string) { if (this.cargoDescription != newValue) { this.cargoDescription = newValue; this.MarkAsDirty("CargoDescription"); } }
        
 	 
+    private hatraDate: Date;
+    public get HatraDate() { return this.hatraDate; }
+    public set HatraDate(newValue: Date) { if (this.hatraDate != newValue) { this.hatraDate = newValue; this.MarkAsDirty("HatraDate"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		

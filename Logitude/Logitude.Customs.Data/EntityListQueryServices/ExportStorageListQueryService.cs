@@ -23,7 +23,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         {
             IQueryable<ExportStorageList> query = (from en in iQueryable
                                                    
-                                                   join declaration in context.Declarations.Select(r => new { r.Id, r.DeclarationStatusTypeCode })
+                                                   join declaration in context.Declarations.Select(r => new { r.Id, r.DeclarationStatusTypeCode, r.CustomFileNo })
                                                    on en.DeclarationId equals declaration.Id
                                                    join status in context.DeclarationStatusTypes.Select(r => new { r.Code, r.LocalName })
                                                    on declaration.DeclarationStatusTypeCode equals status.Code
@@ -41,7 +41,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                    on en.ShipCode equals customsShip.Code
 
                                                    join cargoIdentifireType in context.CargoIdentifireTypes.Select(r=> new{ r.Code, r.LocalName})
-                                                   on en.CargoType equals cargoIdentifireType.Code
+                                                   on en.CargoTypeCode equals cargoIdentifireType.Code
 
                                                    select new ExportStorageList()
                                                    {
@@ -99,7 +99,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                        CargoTypeCodeName = cargoIdentifireType.LocalName,
 
-                                                       DeclarationStatusTypeCode = status.Code
+                                                       DeclarationStatusTypeCode = status.Code,
+
+                                                       Declaration_ID = en.DeclarationId,
+
+                                                       DeclarationCustomFileNo = declaration.CustomFileNo,
                                                    });
             return query;
         }

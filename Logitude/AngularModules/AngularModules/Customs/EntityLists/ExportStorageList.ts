@@ -33,6 +33,8 @@ export class ExportStorageList {
 	ExportDealIdentification: string;
 	CargoTypeCodeName: string;
 	DeclarationStatusTypeCode: string;
+	Declaration_ID: string;
+	DeclarationCustomFileNo: string;
 	
 }
  

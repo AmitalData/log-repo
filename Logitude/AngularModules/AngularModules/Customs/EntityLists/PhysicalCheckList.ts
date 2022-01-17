@@ -55,6 +55,7 @@ export class PhysicalCheckList {
 	MyCloseCheckBox: boolean;
 	TransportModeId: string;
 	Direction: string;
+	DeclarationOfficeName: string;
 	
 }
  
