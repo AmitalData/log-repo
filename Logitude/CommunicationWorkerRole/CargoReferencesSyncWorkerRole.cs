@@ -76,8 +76,7 @@ namespace CommunicationWorkerRole
             orderShipmentQueue.AddRange(GetSameShipmants(orderShipmentQueue));
             var orderSeatches = GetSearchesByShipmentIds(GetShipmentsIds(orderShipmentQueue));
             var newForwardingSearches = GetNewSearches(orderShipmentQueue, orderSeatches, Codes.OrderType);
-            DeleteOldSearches(newForwardingSearches);
-            AddSearchesByBulk(newForwardingSearches);
+            UpdateSearches(newForwardingSearches);
             SyncCustomSearches(orderShipmentQueue);
             RemoveQueueRecords(orderShipmentQueue);
         }
@@ -116,13 +115,12 @@ namespace CommunicationWorkerRole
             }
             return results;
         }
-        private void AddSearchesByBulk(List<CargoTrackingShipmentSearch> newForwardingSearches)
+        private void AddSearchesByBulk(SqlConnection sqlConnection, SqlTransaction transaction, List<CargoTrackingShipmentSearch> newForwardingSearches)
         {
             var cargoTrackingShipmentSearchDataTable = CreateCargoTrackingShipmentSearchDataTable();
             FillCargoTrackingShipmentSearchDataTable(cargoTrackingShipmentSearchDataTable, newForwardingSearches);
-            using (SqlBulkCopy bulkCopy = new SqlBulkCopy())
+            using (SqlBulkCopy bulkCopy = new SqlBulkCopy(sqlConnection,SqlBulkCopyOptions.Default, transaction))
             {
-                bulkCopy.BatchSize = 100000;
                 bulkCopy.DestinationTableName = ShipmentSearchesTableName;
                 bulkCopy.WriteToServer(cargoTrackingShipmentSearchDataTable);
             }
@@ -142,8 +140,8 @@ namespace CommunicationWorkerRole
             customShipmentQueue.AddRange(GetSameShipmants(customShipmentQueue));
             var customSeatches = GetSearchesByShipmentIds(GetShipmentsIds(customShipmentQueue));
             var newCustomSearches = GetNewSearches(customShipmentQueue, customSeatches, Codes.ForwardingType);
-            DeleteOldSearches(newCustomSearches);
-            AddSearchesByBulk(newCustomSearches);
+            UpdateSearches(newCustomSearches);
+
         }
 
         private List<string> GetShipmentsIds(List<CargoReferencesSyncQueue> shipmentQueue)
@@ -184,7 +182,6 @@ namespace CommunicationWorkerRole
             var forwardingSeatches = GetSearchesByShipmentIds(GetShipmentsIds(forwardingShipmentQueue));
             var newCustomeSearches = GetNewSearches(forwardingShipmentQueue, forwardingSeatches, Codes.ForwardingType);
             UpdateSearches(newCustomeSearches);
-           
             RemoveQueueRecords(forwardingShipmentQueue);
 
         }
@@ -195,8 +192,8 @@ namespace CommunicationWorkerRole
             {
                 sqlConnection.Open();
                 var transaction = sqlConnection.BeginTransaction();
-                DeleteOldSearches(sqlConnection, newCustomeSearches);
-                AddSearchesByBulk(newCustomeSearches);
+                DeleteOldSearches(sqlConnection, transaction, newCustomeSearches);
+                AddSearchesByBulk(sqlConnection, transaction, newCustomeSearches);
                 transaction.Commit();
             }
 
@@ -292,12 +289,13 @@ namespace CommunicationWorkerRole
             var query = $"delete from CargoReferencesSyncQueues where id in ({ids}) ";
             cargoContext.GetActiveDbContext().Database.ExecuteSqlCommand(query);
         }
-        private void DeleteOldSearches(SqlConnection sqlConnection, List<CargoTrackingShipmentSearch> searches)
+        private void DeleteOldSearches(SqlConnection sqlConnection, SqlTransaction transaction, List<CargoTrackingShipmentSearch> searches)
         {
             var ids = GetIdsAsString(searches.Select(e => e.ShipmentId).ToList());
             var query = $"delete from CargoTrackingShipmentSearches where ShipmentId in ({ids}) ";
             SqlCommand command = new SqlCommand(query, sqlConnection);
-            command.
+            command.Transaction = transaction;
+            command.ExecuteNonQuery();
         }
 
             private string GetIdsAsString(List<string> Ids)
