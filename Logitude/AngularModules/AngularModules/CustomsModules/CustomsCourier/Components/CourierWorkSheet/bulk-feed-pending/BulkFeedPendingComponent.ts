@@ -21,7 +21,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
   IsFiltered: boolean = false;
   SearchFilter: string = '';
   declartionList: DeclarationsforBulkFeed[] = [];
-  ItemsSource:ObservableCollection = new ObservableCollection([]);
+  ItemsSource: ObservableCollection = new ObservableCollection([]);
 
   constructor(
     private pendingWebService: PendingWebService,
@@ -40,19 +40,19 @@ export class BulkFeedPendingComponent extends BaseComponent {
     this.CourierMasterPM = args?.CourierMasterPM;
   }
 
-  
+
   async RefreshList() {
     console.log('goodsDescription', this.goodsDescription)
     console.log('weightFrom', this.weightFrom)
     console.log('weightTo', this.weightTo)
     console.log('incotermCode', this.incotermCode)
     console.log('incotermCode', this.SearchFilter)
-    this.declartionList = await this.pendingWebService.getDeclarationsforBulkFeed(this.goodsDescription || '', this.weightFrom || '', this.weightTo || '', this.incotermCode || '', this.SearchFilter || '', 0, 100)
+    this.declartionList = await this.pendingWebService.getDeclarationsforBulkFeed(this.goodsDescription || '', this.weightFrom || '', this.weightTo || '', this.incotermCode || '', this.SearchFilter || '', this._SelectedTotalInvoiceValue || '', this._SelectedFastIndividualProcessValue || '', 0, 100)
     this.ItemsSource.InsertCollection(this.declartionList)
     console.log(this.declartionList)
   }
 
-  
+
   SelectedTotalInvoiceValue(value: string) {
     this._SelectedTotalInvoiceValue = value;
     this.onFilteSelect()
@@ -64,7 +64,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
     this.onFilteSelect()
   }
 
-  
+
   onFilteSelect() {
     this.IsFiltered = [
       this._SelectedTotalInvoiceValue,
@@ -74,14 +74,14 @@ export class BulkFeedPendingComponent extends BaseComponent {
     this.RefreshList();
   }
 
-  
+
   FilterCleanButtonClicked() {
     this._SelectedTotalInvoiceValue = 'A';
     this._SelectedFastIndividualProcessValue = 'A';
     this.RefreshList();
   }
 
-  
+
   FilterCancelButtonClicked() {
     this.IsFiltered = false;
     this.MyDropdownMenuFilterComponent.DropdowndisplayToggle(null);
@@ -91,26 +91,24 @@ export class BulkFeedPendingComponent extends BaseComponent {
   onSearchTextChangeEvent(text: string) {
     this.SearchFilter = text;
     this.RefreshList();
-}
+  }
 
-async OnRowEnded($event) {
-  //console.log("this.ItemsSource.Length : " + this.ItemsSource.Length);
-  if (($event) == this.ItemsSource.Length) {
+  async OnRowEnded($event) {
+    //console.log("this.ItemsSource.Length : " + this.ItemsSource.Length);
+    if (($event) == this.ItemsSource.Length) {
       //setTimeout(() => this.Add(), 1);
       // this.Add();
 
-      const declartionList = await this.pendingWebService.getDeclarationsforBulkFeed(this.goodsDescription || '', this.weightFrom || '', this.weightTo || '', this.incotermCode || '', this.SearchFilter || '', 0, 100)
-      this.ItemsSource.AppendCollection(declartionList)
-
-
+      this.declartionList = await this.pendingWebService.getDeclarationsforBulkFeed(this.goodsDescription || '', this.weightFrom || '', this.weightTo || '', this.incotermCode || '', this.SearchFilter || '', this._SelectedTotalInvoiceValue || '', this._SelectedFastIndividualProcessValue || '', 0, 100)
+      this.ItemsSource.AppendCollection(this.declartionList)
+    }
   }
-}
 
-OnFocus() {
-  // if (this.ItemsSource.Length == 0) {
-  //     this.Add();
-  // }
-}
+  OnFocus() {
+    // if (this.ItemsSource.Length == 0) {
+    //     this.Add();
+    // }
+  }
 
 
 
@@ -136,6 +134,5 @@ OnFocus() {
   public get IncotermCode() { return this.incotermCode; }
   public set IncotermCode(newValue: string) {
     this.incotermCode = newValue;
-  } 
-
+  }
 }

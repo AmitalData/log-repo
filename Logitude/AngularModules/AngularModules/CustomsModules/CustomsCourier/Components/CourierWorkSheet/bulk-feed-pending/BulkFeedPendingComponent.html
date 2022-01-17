@@ -9,20 +9,21 @@
         [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'nText'"></LogTextBox>
     <LogLabel [Text]="'Customs.MasterBOLQuery.O.TotalWeight' | TextCodeTranslationPipe" [NoObjectField]="true"
         [DataContext]="DataContext"></LogLabel>
-    <LogLabel [Text]="'TarrifHeader.O.From' | TextCodeTranslationPipe" [NoObjectField]="true"
+    <LogLabel [Text]="'Customs.General.O.From' | TextCodeTranslationPipe" [NoObjectField]="true"
         [DataContext]="DataContext"></LogLabel>
     <div>
         <LogTextBox [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true" [ObjectFieldName]="'WeightFrom'"
             [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'nText'"></LogTextBox>
     </div>
-    <LogLabel [Text]="'TarrifHeader.O.To' | TextCodeTranslationPipe" [NoObjectField]="true" [DataContext]="DataContext">
+    <LogLabel [Text]="'Customs.General.O.To' | TextCodeTranslationPipe" [NoObjectField]="true"
+        [DataContext]="DataContext">
     </LogLabel>
     <div>
         <LogTextBox [ngStyle]='' [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true"
             [ObjectFieldName]="'WeightTo'" [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'nText'">
         </LogTextBox>
     </div>
-    <LogLabel [Text]="'Customs.TermsOfSaleType.Q.TermsOfSaleTypeQuery' | TextCodeTranslationPipe" [NoObjectField]="true"
+    <LogLabel [Text]="'Customs.General.O.TermsOfSale' | TextCodeTranslationPipe" [NoObjectField]="true"
         [DataContext]="DataContext"></LogLabel>
     <div class='incoterm-code-wrapper'>
         <LogLov [ObjectFieldName]="'IncotermCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
@@ -30,7 +31,7 @@
         </LogLov>
     </div>
     <button class="GreenButton" style="width:90px;" (click)="RefreshList()">
-        {{'Customs.Notification.O.Search' | TextCodeTranslationPipe}}
+        {{'Customs.General.O.Search' | TextCodeTranslationPipe}}
     </button>
 
     <SearchTextBox [ObjectTableName]="'Customs.CourierMaster'" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"
@@ -188,7 +189,7 @@
 
     <!--[SelectedRow]="SelectedRow"-->
 
-    <log-column [header]="'Customs.ReleaseGoods.O.GoodsDescription' | TextCodeTranslationPipe" [binding]="'Id'"
+    <log-column [header]="'Customs.Declaration.CH.CourierHAWBListLable' | TextCodeTranslationPipe" [binding]="'Id'"
         [width]="'70'" [Alignment]="'right'">
         <ng-template let-item>
             <log-cell-template #logcelltemplate [RIndex]="item.rowIndex" [TabIndex]="-1">
@@ -199,8 +200,8 @@
         </ng-template>
     </log-column>
 
-    <log-column [header]="'Customs.ReleaseGoods.O.GoodsDescription' | TextCodeTranslationPipe"
-        [binding]="'Importername'" [width]="'70'" [Alignment]="'right'">
+    <log-column [header]="'Customs.Declaration.F.ImporterName' | TextCodeTranslationPipe" [binding]="'Importername'"
+        [width]="'70'" [Alignment]="'right'">
         <ng-template let-item>
             <log-cell-template #logcelltemplate [RIndex]="item.rowIndex" [TabIndex]="-1">
                 <div style="text-align:right" class="TextTrimming">
@@ -210,8 +211,8 @@
         </ng-template>
     </log-column>
 
-    <log-column [header]="'Customs.ReleaseGoods.O.GoodsDescription' | TextCodeTranslationPipe" [binding]="'Code'"
-        [width]="'70'" [Alignment]="'right'">
+    <log-column [header]="'Customs.DeclarationCourierStatus.F.ImporterCode' | TextCodeTranslationPipe"
+        [binding]="'Code'" [width]="'70'" [Alignment]="'right'">
         <ng-template let-item>
             <log-cell-template #logcelltemplate [RIndex]="item.rowIndex" [TabIndex]="-1">
                 <div style="text-align:right" class="TextTrimming">
@@ -232,8 +233,8 @@
         </ng-template>
     </log-column>
 
-    <log-column [header]="'Customs.ReleaseGoods.O.GoodsDescription' | TextCodeTranslationPipe"
-        [binding]="'IncotermCode'" [width]="'70'" [Alignment]="'right'">
+    <log-column [header]="'Customs.General.O.TermsOfSale' | TextCodeTranslationPipe" [binding]="'IncotermCode'"
+        [width]="'70'" [Alignment]="'right'">
         <ng-template let-item>
             <log-cell-template #logcelltemplate [RIndex]="item.rowIndex" [TabIndex]="-1">
                 <div style="text-align:right" class="TextTrimming">
@@ -243,7 +244,7 @@
         </ng-template>
     </log-column>
 
-    <log-column [header]="'Customs.ReleaseGoods.O.GoodsDescription' | TextCodeTranslationPipe"
+    <log-column [header]="'Customs.Declaration.F.TotalInvoiceAmountInUSD' | TextCodeTranslationPipe"
         [binding]="'Totalinvoiceamountinus'" [width]="'70'" [Alignment]="'right'">
         <ng-template let-item>
             <log-cell-template #logcelltemplate [RIndex]="item.rowIndex" [TabIndex]="-1">
@@ -254,8 +255,19 @@
         </ng-template>
     </log-column>
 
-    <log-column [header]="'Customs.ReleaseGoods.O.GoodsDescription' | TextCodeTranslationPipe"
-        [binding]="'Casualimportercity'" [width]="'70'" [Alignment]="'right'">
+    <log-column [header]="'Customs.MasterBOLQuery.O.TotalWeight' | TextCodeTranslationPipe"
+        [binding]="'PackageMeasureQualifierCode'" [width]="'70'" [Alignment]="'right'">
+        <ng-template let-item>
+            <log-cell-template #logcelltemplate [RIndex]="item.rowIndex" [TabIndex]="-1">
+                <div style="text-align:right" class="TextTrimming">
+                    <span>{{item.PackageMeasureQualifierCode}}</span>
+                </div>
+            </log-cell-template>
+        </ng-template>
+    </log-column>
+
+    <log-column [header]="'Customs.ClientAddress' | TextCodeTranslationPipe" [binding]="'Casualimportercity'"
+        [width]="'70'" [Alignment]="'right'">
         <ng-template let-item>
             <log-cell-template #logcelltemplate [RIndex]="item.rowIndex" [TabIndex]="-1">
                 <div style="text-align:right" class="TextTrimming">

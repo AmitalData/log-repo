@@ -15,7 +15,7 @@ namespace WebFreight.Web.Controllers.WebServices
     public class PendingWebServiceController : ApiController
     {
         [HttpGet]
-        public HttpResponseMessage DeclarationsforBulkFeed(string goodsDescription, string weightFrom, string weightTo, string incotermCode, string SearchFilter, int? skip = null, int? take = null)
+        public HttpResponseMessage DeclarationsforBulkFeed(string goodsDescription, string weightFrom, string weightTo, string incotermCode, string searchFilter, string totalInvoice, string fastIndividualProcess, int? skip = null, int? take = null)
         {
             try
             {
@@ -23,7 +23,7 @@ namespace WebFreight.Web.Controllers.WebServices
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 
-                var res =  new DeclarationRepository(tenant).GetforPendingBulkFeed(goodsDescription, weightFrom, weightTo, incotermCode, SearchFilter, skip, take);
+                var res =  new DeclarationRepository(tenant).GetforPendingBulkFeed(goodsDescription, weightFrom, weightTo, incotermCode, searchFilter, totalInvoice, fastIndividualProcess, skip, take);
 
 
                 return Request.CreateResponse(HttpStatusCode.OK, res);

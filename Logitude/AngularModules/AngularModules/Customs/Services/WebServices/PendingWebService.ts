@@ -21,7 +21,7 @@ export class PendingWebService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/PendingWebService';
     }
 
-    getDeclarationsforBulkFeed(goodsDescription: string, weightFrom: string, weightTo: string, incotermCode: string, SearchFilter: string, skip: number = null, take: number =  null): Promise<DeclarationsforBulkFeed[]> {
+    getDeclarationsforBulkFeed(goodsDescription: string, weightFrom: string, weightTo: string, incotermCode: string, searchFilter: string, totalInvoice: string, fastIndividualProcess: string, skip: number = null, take: number =  null): Promise<DeclarationsforBulkFeed[]> {
         const ajax: Observable<any> = this._http.get(
             this._apiUrl + "/DeclarationsforBulkFeed",
             {
@@ -31,7 +31,9 @@ export class PendingWebService {
                     weightFrom: weightFrom,
                     weightTo: weightTo,
                     incotermCode: incotermCode,
-                    SearchFilter: SearchFilter,
+                    searchFilter: searchFilter,
+                    totalInvoice: totalInvoice,
+                    fastIndividualProcess: fastIndividualProcess,
                     skip: '' + skip,
                     take: '' + take,
                 }
@@ -54,6 +56,6 @@ export interface DeclarationsforBulkFeed {
     Id: string;
     Importername: string;
     IncotermCode: string;
-    PackageMeasureQualifierCode1: string;
+    PackageMeasureQualifierCode: number;
     Totalinvoiceamountinus: number;
 }
