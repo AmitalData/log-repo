@@ -85,8 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationCargoSplitUpdateClass
    {  		
-
-		public const string HashString = "19b2dbd7fc6d4ecd41ab467be7dda7a7";
+		public const string HashString = "597908722308144ff5cfcf31446d24ec";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -194,10 +193,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RequestDate",
 					  						DefaultText =  "Request Date",
-					  						FullLocalDefaultText =  "תםריך בקשת פיצול",
+					  						FullLocalDefaultText =  "תאריך בקשת פיצול",
 					  						ListFieldLable =  "RequestDateListLable",
 					  						ListLableDefaultText =  "Request Date",
-					  						ListLocalDefaultText =  "תםריך בקשת פיצול",
+					  						ListLocalDefaultText =  "תאריך בקשת פיצול",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
@@ -814,10 +813,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ManifestNumber",
 					  						DefaultText =  "Manifest Number",
-					  						FullLocalDefaultText =  "מזהה מטען רםשון",
+					  						FullLocalDefaultText =  "מזהה מטען ראשון",
 					  						ListFieldLable =  "ManifestNumberListLable",
 					  						ListLableDefaultText =  "Manifest Number",
-					  						ListLocalDefaultText =  "מזהה מטען רםשון",
+					  						ListLocalDefaultText =  "מזהה מטען ראשון",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
