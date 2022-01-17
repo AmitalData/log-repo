@@ -677,7 +677,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.ShowViews = false;
             this.EnglishView = true;
         }
-        } 
+          
          }
     public ReloadAllListEvent: any = null;
     Listen() {
