@@ -866,6 +866,11 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                             SupplierInvoiceItemPM.ClassificationCode = invoiceItem.CLASSIFICATIONCODE;
                             SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Update;
                         }
+                        if (invoiceItem.CLASIFIEDREMARKS != SupplierInvoiceItemPM.ClasifiedRemarks)
+                        {
+                            SupplierInvoiceItemPM.ClasifiedRemarks = invoiceItem.CLASIFIEDREMARKS;
+                            SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
                         if (invoiceItem.TRADEAGREEMENTCODE != SupplierInvoiceItemPM.TradeAgreementCode)
                         {
                             if ((String.IsNullOrWhiteSpace(invoiceItem.TRADEAGREEMENTCODE) || invoiceItem.TRADEAGREEMENTCODE == "1") && SupplierInvoiceItemPM.TradeAgreementCode != null)

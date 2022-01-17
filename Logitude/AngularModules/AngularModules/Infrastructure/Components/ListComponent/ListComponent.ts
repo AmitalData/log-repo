@@ -84,6 +84,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     public HasCustomsFilterMenu: boolean = false;
     public IsPhysicalCheckObjectTable: boolean = false;
 
+
     @ViewChild(LogGridComponent) MyLogGridComponent: LogGridComponent = null;
     @ViewChild(LogGridComponentV2) MyLogGridComponentV2: LogGridComponentV2 = null;
     public IsShowTipArea: boolean = false;
@@ -666,6 +667,8 @@ export class ListComponent implements OnInit, AfterViewInit {
           }
          if (this.ObjectTableName == "Customs.PhysicalCheck") {
             this.IsPhysicalCheckObjectTable = true;
+        if (this.ObjectTableName == "Customs.DeclarationReferantData" || this.ObjectTableName == "Customs.DeclarationCargoSplit") {
+            this.HasCustomsFilterMenu = true;
         }
         if (this.ObjectTableName == "Customs.ExportStorge" || this.ObjectTableName == "QuoteOP") {
 
@@ -2628,7 +2631,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     }
     private SetNewEntityLabel() {
         if (this.HaveFeatureNewExportDeclararion()) {
-            this.NewEntityButtonLabel = "הצהרת יצוא חדשה"
+            this.NewEntityButtonLabel = "הצהרת יצום חדשה"
         } else
         if (this.listArgs.NewButtonLabel != null) {
             this.NewEntityButtonLabel = this.listArgs.NewButtonLabel;
@@ -2886,7 +2889,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     }
     RunNewExportDeclaration() {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "פתיחת הצהרת יצוא חדשה";
+        logWindow.Title = "פתיחת הצהרת יצום חדשה";
         logWindow.Width = 800;
         logWindow.Height = 500;
         logWindow.NewWizardArgs = { IsNewEntity: true };

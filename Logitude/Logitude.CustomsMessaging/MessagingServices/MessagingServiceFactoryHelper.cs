@@ -520,6 +520,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+              DF_MSG8235_ExportDeclarationAmendmentMessagingService>
+              ((new DF_MSG8235_ExportDeclarationAmendmentMessagingService()).MainInterfaceCode);
+
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 SE_6001_SealUpdateMessagingService>
                 ((new SE_6001_SealUpdateMessagingService()).MainInterfaceCode);
 

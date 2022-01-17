@@ -166,6 +166,7 @@
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\UnifreightIIG.3.1803.46\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+
     </Reference>
     <Reference Include="UnifreightIIG.UServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\UnifreightIIG.3.1803.46\lib\Net40\UnifreightIIG.UServer.dll</HintPath>

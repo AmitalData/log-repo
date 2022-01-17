@@ -147,9 +147,11 @@
     </Reference>
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\UnifreightIIG.3.1803.46\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\UnifreightIIG.3.1803.46\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -393,6 +395,7 @@
     <Compile Include="ResponseServices\DF_NG_2754_MSG10004_SubmitExportDeclarationResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_2757_MSG10004_ExportDeclarationResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_5117_ImportDeclerationAmendmentReplyResponseService.cs" />
+    <Compile Include="ResponseServices\DF_NG_8235_MSG14000_ExportDeclarationResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsgResponseService.cs" />
 
     <Compile Include="ResponseServices\MultiUpdateBatchUCBCMSS_MsgResponseService.cs" />
@@ -647,6 +650,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CommonDataModel\" />
+    <Folder Include="RabbitMQ\" />
     <Folder Include="RequestParams\" />
     <Folder Include="ResponseData\" />
   </ItemGroup>
