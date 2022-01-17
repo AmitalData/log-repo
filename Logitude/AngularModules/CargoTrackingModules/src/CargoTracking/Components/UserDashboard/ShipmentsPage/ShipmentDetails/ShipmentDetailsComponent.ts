@@ -523,14 +523,11 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     }
 
     SetValueOfCustomsOrForwarder() {
-        if (this.cargoTrackingShipmentPM.EntityType == this.ForwardingEntityType) {
-            this.ValueOfCustomsOrForwarder = this.cargoTrackingShipmentPM.ShipmentNumber;
+        this.ValueOfCustomsOrForwarder = this.cargoTrackingShipmentPM.ShipmentNumber;
+        if(!this.cargoTrackingShipmentPM.ConnectedShipmentsNumbers){
+            return;
         }
-
-        if (this.cargoTrackingShipmentPM.EntityType == this.CustomsEntityType || this.cargoTrackingShipmentPM.EntityType == this.OrderEntityType) {
-            var ForwardingShipmentNumber = this.cargoTrackingShipmentPM.ForwardingShipmentHeaderId != null ? this.cargoTrackingShipmentPM.ForwardingShipmentNumber != null ? "\n" + this.cargoTrackingShipmentPM.ForwardingShipmentNumber : "": "";
-            this.ValueOfCustomsOrForwarder = this.cargoTrackingShipmentPM.ShipmentNumber + ForwardingShipmentNumber;
-        }
+        this.ValueOfCustomsOrForwarder = this.cargoTrackingShipmentPM.ShipmentNumber + "\n" + this.cargoTrackingShipmentPM.ConnectedShipmentsNumbers;
 
     }
 

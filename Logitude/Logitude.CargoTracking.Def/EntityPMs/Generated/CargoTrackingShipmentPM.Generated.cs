@@ -2987,6 +2987,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private string connectedShipmentsNumbers ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ConnectedShipmentsNumbers  
+	   {
+	    
+	     get
+		{
+		   return connectedShipmentsNumbers;
+		 }
+		 set
+		 {
+		   if(connectedShipmentsNumbers != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConnectedShipmentsNumbers",OldValue=connectedShipmentsNumbers,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   connectedShipmentsNumbers=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
