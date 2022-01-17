@@ -666,7 +666,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.HasCustomsFilterMenu = true;
           }
          if (this.ObjectTableName == "Customs.PhysicalCheck") {
-            this.IsPhysicalCheckObjectTable = true;
+             this.IsPhysicalCheckObjectTable = true; }
         if (this.ObjectTableName == "Customs.DeclarationReferantData" || this.ObjectTableName == "Customs.DeclarationCargoSplit") {
             this.HasCustomsFilterMenu = true;
         }
@@ -677,8 +677,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.ShowViews = false;
             this.EnglishView = true;
         }
-    }
-
+        } 
+         }
     public ReloadAllListEvent: any = null;
     Listen() {
         if (!this.ReloadAllListEvent) {
