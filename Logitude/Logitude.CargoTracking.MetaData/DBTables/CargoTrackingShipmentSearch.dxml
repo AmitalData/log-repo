@@ -47,7 +47,7 @@
   <Column
     Name="ReferenceType"
     Type="varchar"
-    Size="30">
+    Size="200">
     <Constraints
       Nullable="false" />
   </Column>
