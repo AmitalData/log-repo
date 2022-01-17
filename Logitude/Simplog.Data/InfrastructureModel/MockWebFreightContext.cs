@@ -1475,6 +1475,21 @@ namespace Simplog.Data.InfrastructureModel
             }
         }
 
+        private MockObjectSet<QuoteChargesGroup> quoteChargesGroupList;
+        public IDbSet<QuoteChargesGroup> QuoteChargesGroups
+        {
+            get
+            {
+                quoteChargesGroupList = new MockObjectSet<QuoteChargesGroup>();
+                QuoteChargesGroup chargesGroup1 = new QuoteChargesGroup() { Code = "CG" };
+
+
+                quoteChargesGroupList.AddObject(chargesGroup1);
+
+                return quoteChargesGroupList;
+            }
+        }
+
         private MockObjectSet<VolumeUnit> volumeUnitList;
         public IDbSet<VolumeUnit> VolumeUnits
         {

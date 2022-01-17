@@ -34,6 +34,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.AWBPrintDescription = entityPM.AWBPrintDescription;
             poco.ChargesGroupCode = entityPM.ChargesGroupCode;
             poco.ChargesGroupId = entityPM.ChargesGroupId;
+            poco.QuoteChargesGroupCode = entityPM.QuoteChargesGroupCode;
+            poco.QuoteChargesGroupId = entityPM.QuoteChargesGroupId;
             poco.IATACodeId = entityPM.IATACodeId;
             poco.Description = entityPM.Description;
             poco.IsAir = entityPM.IsAir;

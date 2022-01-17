@@ -1,6 +1,7 @@
 import {ApiQueryFilters} from '../DataContracts/ApiQueryFilters';
 import {BluesnapContractListService} from '../Services/StandardLists/BluesnapContractListService';
-import {ChargesGroupListService} from '../Services/StandardLists/ChargesGroupListService';
+import { ChargesGroupListService } from '../Services/StandardLists/ChargesGroupListService';
+import { QuoteChargesGroupListService } from '../Services/StandardLists/QuoteChargesGroupListService';
 import {CustomPickListListService} from '../Services/StandardLists/CustomPickListListService';
 import {EntityStatusListService} from '../Services/StandardLists/EntityStatusListService';
 import {EventTypeListService} from '../Services/StandardLists/EventTypeListService';
@@ -141,6 +142,7 @@ export class CachedDataManagerServices {
         switch (name) { 
             case "BluesnapContractListService": { myResult = new BluesnapContractListService(); break; }
             case "ChargesGroupListService": { myResult = new ChargesGroupListService(); break; }
+            case "QuoteChargesGroupListService": { myResult = new QuoteChargesGroupListService(); break; }
             case "CustomPickListListService": { myResult = new CustomPickListListService(); break; }
             case "EntityStatusListService": { myResult = new EntityStatusListService(); break; }
             case "EventTypeListService": { myResult = new EventTypeListService(); break; }

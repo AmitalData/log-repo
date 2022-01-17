@@ -50,6 +50,7 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<GeneralLock> GeneralLocks { get; }
         IDbSet<IATACode> IATACodes { get; }
         IDbSet<ChargesGroup> ChargesGroups { get; }
+        IDbSet<QuoteChargesGroup> QuoteChargesGroups { get; }
         IDbSet<VolumeUnit> VolumeUnits { get; }
         IDbSet<EntityStatus> EntityStatus { get; }
         IDbSet<DescriptionOfGoods> DescriptionOfGoods { get; }

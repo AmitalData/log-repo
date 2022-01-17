@@ -98,6 +98,7 @@ namespace WebFreight.Web.InfrastructureModel
         static VatTypeRepository vatTypeRepository;
         static ChargesTypeRepository chargesTypeRepository;
         static ChargesGroupRepository chargesGroupRepository;
+        static QuoteChargesGroupRepository quoteChargesGroupRepository;
         static RankRepository rankRepository;
         static PackageTypeRepository packageTypeRepository;
         static DocumentTypeCustomFieldRepository documentTypeCustomFieldRepository;
@@ -135,6 +136,7 @@ namespace WebFreight.Web.InfrastructureModel
         private static AdvancedQueryFilterQuery advancedQueryFilterQuery;
         private static ChargesTypeQuery chargesTypeQuery;
         private static ChargesGroupQuery chargesGroupQuery;
+        private static QuoteChargesGroupQuery quoteChargesGroupQuery;
         private static EntityStatusQuery entityStatusQuery;
         private static EventTypeQuery eventTypeQuery;
         private static MenusTableQuery menusTableQuery;
@@ -249,6 +251,7 @@ namespace WebFreight.Web.InfrastructureModel
             vatTypeRepository = new VatTypeRepository(theTenant);
             chargesTypeRepository = new ChargesTypeRepository(theTenant);
             chargesGroupRepository = new ChargesGroupRepository(theTenant);
+            quoteChargesGroupRepository = new QuoteChargesGroupRepository(theTenant);
             rankRepository = new RankRepository(theTenant);
             packageTypeRepository = new PackageTypeRepository(theTenant);
             documentTypeCustomFieldRepository = new DocumentTypeCustomFieldRepository(theTenant);
@@ -293,7 +296,7 @@ namespace WebFreight.Web.InfrastructureModel
             eventTypeQuery = new EventTypeQuery(eventTypeRepository);
             advancedQueryFilterQuery = new AdvancedQueryFilterQuery(theTenant);
             chargesTypeQuery = new ChargesTypeQuery(theTenant);
-            chargesGroupQuery = new ChargesGroupQuery(theTenant);
+            quoteChargesGroupQuery = new QuoteChargesGroupQuery(theTenant);
             documentTypeQuery = new DocumentTypeQuery(theTenant);
             measurementQuery = new MeasurementQuery(theTenant);
             packageTypeQuery = new PackageTypeQuery(theTenant);
@@ -347,6 +350,7 @@ namespace WebFreight.Web.InfrastructureModel
                 List<VatType> tenantZeroVatTypes;
                 List<ChargesTypePM> tenantZeroChargesTypes;
                 List<ChargesGroupPM> tenantZeroChargesGroups;
+                List<QuoteChargesGroupPM> tenantZeroQuoteChargesGroups;
                 List<PackageTypePM> tenantZeroPackageTypes;
                 List<DocumentTypeCustomField> tenantZeroCustomFields;
                 List<CreditCardTypePM> tenantZeroCreditCardTypes;
@@ -392,6 +396,7 @@ namespace WebFreight.Web.InfrastructureModel
                     tenantZeroVatTypes = vatTypeRepository.GetVatTypes(0).ToList();
                     tenantZeroChargesTypes = chargesTypeQuery.GetChargesTypePMsByTenant(0).ToList();
                     tenantZeroChargesGroups = chargesGroupQuery.GetChargesGroupPMsByTenant(0).ToList();
+                    tenantZeroQuoteChargesGroups = quoteChargesGroupQuery.GetQuoteChargesGroupPMsByTenant(0).ToList();
                     tenantZeroPackageTypes = packageTypeQuery.GetPackageTypePMsByTenant(0).ToList();
                     tenantZeroCustomFields = documentTypeCustomFieldRepository.GetDocumentTypeCustomFields(0).ToList();
 
@@ -494,6 +499,7 @@ namespace WebFreight.Web.InfrastructureModel
                 AddQuoteStages(tenant, quoteStageRepository, tenantZeroQuoteStages);
                 AddChargesTypes(tenant, chargesTypeRepository, tenantZeroChargesTypes, currentTenantMeasurement, tenantZeroVatTypes, currentTenantVatTypes);
                 AddChargesGroups(tenant, chargesGroupRepository, tenantZeroChargesGroups);
+                CopyQuoteChargesGroupsFromTenantZero(tenant, quoteChargesGroupRepository, tenantZeroQuoteChargesGroups);
                 AddRanks(tenant, rankRepository);
                 AddPackageTypes(tenant, packageTypeRepository, measurementRepository, tenantZeroPackageTypes);
                 AddOpportunityTypes(tenant, opportunityTypeRepository, tenantZeroOpportunityTypes);
@@ -2258,6 +2264,8 @@ namespace WebFreight.Web.InfrastructureModel
                     AWBPrintDescription = a.AWBPrintDescription,
                     ChargesGroupCode = a.ChargesGroupCode,
                     ChargesGroupId = a.ChargesGroupId,
+                    QuoteChargesGroupCode = a.QuoteChargesGroupCode,
+                    QuoteChargesGroupId = a.QuoteChargesGroupId,
                     IATACodeId = a.IATACodeId,
                     Description = a.Description,
                     IsAir = a.IsAir,
@@ -2314,7 +2322,33 @@ namespace WebFreight.Web.InfrastructureModel
             }
             theChargesGroupRepository.SubmitChanges();
         }
-        
+
+        public static void CopyQuoteChargesGroupsFromTenantZero(int theTenant, QuoteChargesGroupRepository theChargesGroupRepository, List<QuoteChargesGroupPM> tenantZeroChargesGroups)
+        {
+            foreach (QuoteChargesGroupPM quoteChargesGroup in tenantZeroChargesGroups)
+            {
+                AddQuoteChargesGroup(quoteChargesGroup, theTenant, theChargesGroupRepository);
+            }
+            theChargesGroupRepository.SubmitChanges();
+        }
+
+        private static void AddQuoteChargesGroup(QuoteChargesGroupPM quoteChargesGroup, int theTenant, QuoteChargesGroupRepository theChargesGroupRepository)
+        {
+            string localName = !string.IsNullOrEmpty(quoteChargesGroup.LocalName) ? quoteChargesGroup.LocalName : quoteChargesGroup.Name;
+            QuoteChargesGroup chargesGroup = new QuoteChargesGroup()
+            {
+                Id = IdCounter.GetNumber("QuoteChargesGroup", theTenant).ToString(),
+                Tenant = theTenant,
+                Code = quoteChargesGroup.Code,
+                Name = quoteChargesGroup.Name,
+                LocalName = localName,
+                SearchFields = quoteChargesGroup.SearchFields,
+                ViewOrder = quoteChargesGroup.ViewOrder,
+
+            };
+            theChargesGroupRepository.Add(chargesGroup);
+        }
+
         public static void AddRanks(int theTenant, RankRepository theRankRepository)
         {
             List<Rank> ranks = theRankRepository.GetRanks(0).ToList();
