@@ -245,7 +245,7 @@ export class CustomsRequestsSheetsComponent
     GetStatistics() {
         this.customsSettingListService.getSingleFromCache(SessionLocator.Tenant.toString()).subscribe((response: ServiceResponse) => {
             var customsSetting = response.Result;
-            if (!AppTool.IsNullOrEmpty(customsSetting) && customsSetting.CompanyType == "B") {
+            //if (!AppTool.IsNullOrEmpty(customsSetting) && customsSetting.CompanyType == "B") {
                 this.StatisticsVisibility = !this.CurrentSession?.CurrentEditComponent?.EntityPM;;
                 var service = new CustomsRequestsSheetWebService();
                 var statistics = service.GetStatistics().subscribe((response: any) => {
@@ -258,7 +258,7 @@ export class CustomsRequestsSheetsComponent
                         }
                     }
                 });
-            }
+           // }
         });
 
     }
