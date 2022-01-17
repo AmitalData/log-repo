@@ -44,6 +44,8 @@ export class TariffList {
 	CustomsBrokerId: string;
 	CustomsBrokerName: string;
 	CustomsBrokerPartnerTypeId: string;
+	DirectionCode: string;
+	DirectionName: string;
 	
 }
  

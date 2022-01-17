@@ -86,6 +86,10 @@ namespace Logitude.TariffModule.Data.EntityLists
        public string CustomsBrokerName  { get; set; }
        [DataMember]
        public string CustomsBrokerPartnerTypeId  { get; set; }
+       [DataMember]
+       public string DirectionCode  { get; set; }
+       [DataMember]
+       public string DirectionName  { get; set; }
    }
 
 }

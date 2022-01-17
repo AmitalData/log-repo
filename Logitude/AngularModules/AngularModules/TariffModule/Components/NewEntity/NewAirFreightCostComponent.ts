@@ -217,6 +217,10 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
             this.SellerDependancy = "SL,AG,SG";
         }
 
+        if (this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "ICC") {
+            EntityType = this.EntityPM.TypeCode == "ECC" ? "IsExport" : "IsImport";
+        }
+
         this.MeasurementsQueryFilters = new ApiQueryFilters();
 
         if (this.EntityPM.TypeCode == "OFS") {
