@@ -62,6 +62,7 @@
     <Compile Include="Customs\CustomFile\DeclarationReferantData\LOGIDECREFERANTDATA.cs">
       <DependentUpon>LOGIDECREFERANTDATA.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Customs\CustomFile\ExportStorageDTD\LogitudeStorage.cs" />
     <Compile Include="Customs\CustomFile\FileAdditionalData.cs" />
     <Compile Include="Customs\CustomFile\CargoQueryContext.cs" />
     <Compile Include="Customs\CustomFile\CellFile\LOGICELLFILE.cs">
@@ -131,6 +132,9 @@
     </Compile>
     <Compile Include="Customs\MasterCourier\LOGIMASTERCOUR.cs">
       <DependentUpon>LOGIMASTERCOUR.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Export\Entry\LOGIEXPORTSTORAGE.cs">
+      <DependentUpon>LOGIEXPORTSTORAGE.xsd</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\FuStatus\gfusts.cs">
       <DependentUpon>gfusts.xsd</DependentUpon>
@@ -268,6 +272,12 @@
     <None Include="Customs\CustomFile\DeclarationReferantData\LOGIDECREFERANTDATA.dtd" />
     <None Include="Customs\MasterCourier\LOGIMASTERCOUR.dtd" />
     <None Include="Customs\MasterCourier\LOGIMASTERCOUR.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Export\Entry\LOGIEXPORTSTORAGE.dtd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Export\Entry\LOGIEXPORTSTORAGE.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Infrastructure\FuStatus\gfusts.dtd" />

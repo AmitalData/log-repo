@@ -21,7 +21,17 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-   }
+        public string GetIDByStorageNo(string storageNo, int tenant)
+        {
+            var q= from a in context.ExportStorages
+                   where 
+                   a.Tenant == tenant &&
+                   a.StorageNo == storageNo
+                   select a.Id;
+            return q.FirstOrDefault();
+
+        }
+    }
 
 }
    
