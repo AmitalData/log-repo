@@ -76,8 +76,7 @@ namespace CommunicationWorkerRole
             orderShipmentQueue.AddRange(GetSameShipmants(orderShipmentQueue));
             var orderSeatches = GetSearchesByShipmentIds(GetShipmentsIds(orderShipmentQueue));
             var newForwardingSearches = GetNewSearches(orderShipmentQueue, orderSeatches, Codes.OrderType);
-            DeleteOldSearches(newForwardingSearches);
-            AddSearchesByBulk(newForwardingSearches);
+            UpdateSearches(newForwardingSearches);
             SyncCustomSearches(orderShipmentQueue);
             RemoveQueueRecords(orderShipmentQueue);
         }
@@ -106,7 +105,7 @@ namespace CommunicationWorkerRole
         }
         private List<CargoTrackingShipmentSearch> GetNewSearches(List<CargoReferencesSyncQueue> shipmentQueue, List<CargoTrackingShipmentSearch> seatches, string sourceType)
         {
-            var shipmentQueueDictionary = shipmentQueue.ToDictionary(e => e.ShipmentId, e => e);
+            var shipmentQueueDictionary = GetShipmentQueueDictionary(shipmentQueue);
             var searchesGroupByShipmentId = seatches.GroupBy(e => e.ShipmentId);
             var searchesGroupByShipmentIdDictionary = searchesGroupByShipmentId.ToDictionary(e => e.Key, e => e);
             var results = new List<CargoTrackingShipmentSearch>();
@@ -116,11 +115,11 @@ namespace CommunicationWorkerRole
             }
             return results;
         }
-        private void AddSearchesByBulk(List<CargoTrackingShipmentSearch> newForwardingSearches)
+        private void AddSearchesByBulk(SqlConnection sqlConnection, SqlTransaction transaction, List<CargoTrackingShipmentSearch> newForwardingSearches)
         {
             var cargoTrackingShipmentSearchDataTable = CreateCargoTrackingShipmentSearchDataTable();
             FillCargoTrackingShipmentSearchDataTable(cargoTrackingShipmentSearchDataTable, newForwardingSearches);
-            using (SqlBulkCopy bulkCopy = new SqlBulkCopy(cargoContext.GetConnection().ConnectionString))
+            using (SqlBulkCopy bulkCopy = new SqlBulkCopy(sqlConnection,SqlBulkCopyOptions.Default, transaction))
             {
                 bulkCopy.DestinationTableName = ShipmentSearchesTableName;
                 bulkCopy.WriteToServer(cargoTrackingShipmentSearchDataTable);
@@ -141,8 +140,8 @@ namespace CommunicationWorkerRole
             customShipmentQueue.AddRange(GetSameShipmants(customShipmentQueue));
             var customSeatches = GetSearchesByShipmentIds(GetShipmentsIds(customShipmentQueue));
             var newCustomSearches = GetNewSearches(customShipmentQueue, customSeatches, Codes.ForwardingType);
-            DeleteOldSearches(newCustomSearches);
-            AddSearchesByBulk(newCustomSearches);
+            UpdateSearches(newCustomSearches);
+
         }
 
         private List<string> GetShipmentsIds(List<CargoReferencesSyncQueue> shipmentQueue)
@@ -182,13 +181,35 @@ namespace CommunicationWorkerRole
             forwardingShipmentQueue.AddRange(GetSameShipmants(forwardingShipmentQueue));
             var forwardingSeatches = GetSearchesByShipmentIds(GetShipmentsIds(forwardingShipmentQueue));
             var newCustomeSearches = GetNewSearches(forwardingShipmentQueue, forwardingSeatches, Codes.ForwardingType);
-            DeleteOldSearches(newCustomeSearches);
-            AddSearchesByBulk(newCustomeSearches);
+            UpdateSearches(newCustomeSearches);
             RemoveQueueRecords(forwardingShipmentQueue);
 
         }
 
+        private void UpdateSearches(List<CargoTrackingShipmentSearch> newCustomeSearches)
+        {
 
+            using (SqlConnection sqlConnection = new SqlConnection(cargoContext.GetConnection().ConnectionString))
+            {
+                sqlConnection.Open();
+                var transaction = sqlConnection.BeginTransaction();
+                try
+                {
+                    DeleteOldSearches(sqlConnection, transaction, newCustomeSearches);
+                    AddSearchesByBulk(sqlConnection, transaction, newCustomeSearches);
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+                
+            }
+
+
+            
+        }
 
         private DataRow CreateDataRow(DataTable cargoTrackingShipmentSearchDataTable, CargoTrackingShipmentSearch item)
         {
@@ -278,14 +299,16 @@ namespace CommunicationWorkerRole
             var query = $"delete from CargoReferencesSyncQueues where id in ({ids}) ";
             cargoContext.GetActiveDbContext().Database.ExecuteSqlCommand(query);
         }
-        private void DeleteOldSearches(List<CargoTrackingShipmentSearch> searches)
+        private void DeleteOldSearches(SqlConnection sqlConnection, SqlTransaction transaction, List<CargoTrackingShipmentSearch> searches)
         {
             var ids = GetIdsAsString(searches.Select(e => e.ShipmentId).ToList());
             var query = $"delete from CargoTrackingShipmentSearches where ShipmentId in ({ids}) ";
-            cargoContext.GetActiveDbContext().Database.ExecuteSqlCommand(query);
+            SqlCommand command = new SqlCommand(query, sqlConnection);
+            command.Transaction = transaction;
+            command.ExecuteNonQuery();
         }
 
-        private string GetIdsAsString(List<string> Ids)
+            private string GetIdsAsString(List<string> Ids)
         {
             var ids = "";
             foreach (var item in Ids)
@@ -296,6 +319,17 @@ namespace CommunicationWorkerRole
                 ids = ids.Substring(0, ids.Length - 1);
             return ids;
 
+        }
+        private Dictionary<string, CargoReferencesSyncQueue> GetShipmentQueueDictionary(List<CargoReferencesSyncQueue> shipmentQueue)
+        {
+            var dictionary = new Dictionary<string, CargoReferencesSyncQueue>(shipmentQueue.Count);
+            foreach (var item in shipmentQueue)
+            {
+                if (!dictionary.ContainsKey(item.ShipmentId)){
+                    dictionary.Add(item.ShipmentId, item);
+                }
+            }
+            return dictionary;
         }
 
     }
