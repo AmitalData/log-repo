@@ -268,14 +268,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             comprobante.Emisor.Nombre = currentTenant.Company;
             comprobante.Emisor.RegimenFiscal = "601";
 
-
-            //Llena datos del receptor
-            comprobante.Receptor = new Profact.TimbraCFDI40.ComprobanteReceptor();
-            //comprobante.Receptor.Rfc = billToCard.VatNumber;
-            comprobante.Receptor.Nombre = billToCard.EnglishName;
-            comprobante.Receptor.RegimenFiscalReceptor = arInvoicePM.RegimenFiscalCode;
-            comprobante.Receptor.DomicilioFiscalReceptor = billToAddress?.ZipCode;
-
+            MapReceptor(comprobante, billToCard, billToAddress);
+            
             string billToCountryCode = (billToAddress != null ? (billToAddress.Country != null ? billToAddress.Country.Code : null) : null);
             if (billToAddress.Country != null)
             {
@@ -607,6 +601,26 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             sATBaseProfact40Service.BuildProfactCommunicationLog40(new Profact40CommunicationLogArgs { Comprobante = comprobante, EntityId = arInvoicePM.Id, EntityReference = arInvoicePM.InvoiceNumber.ToString() });
 
             arInvoice.SATTransferStatusCode = arInvoicePM.SATTransferStatusCode = "TG";
+
+        }
+
+        private void MapReceptor(Profact.TimbraCFDI40.Comprobante comprobante, Card billToCard, Address billToAddress)
+        {
+            if (string.IsNullOrEmpty(arInvoicePM.RegimenFiscalCode) && !string.IsNullOrEmpty(billToCard.RegimenFiscalCode))
+            {
+                arInvoicePM.RegimenFiscalCode = billToCard.RegimenFiscalCode;
+            }
+            if (string.IsNullOrEmpty(arInvoicePM.RegimenFiscalCode))
+            {
+                throw new ApplicationException("Regimen Fiscal is required ");
+            }
+
+            comprobante.Receptor = new Profact.TimbraCFDI40.ComprobanteReceptor
+            {
+                Nombre = billToCard.EnglishName,
+                RegimenFiscalReceptor = arInvoicePM.RegimenFiscalCode,
+                DomicilioFiscalReceptor = billToAddress?.ZipCode
+            };
 
         }
 

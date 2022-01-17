@@ -79,7 +79,7 @@ export class NewConsolidationComponent extends BaseComponent {
             this.BuildPartnersTypes();
           this.LoadData();
 
-          if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+            if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             this.DisplaySATSettings = true;
             this.MetodoPagoCode = SessionLocator.SATInterfaceSettings.MetodoPagoCode;
 
@@ -235,7 +235,7 @@ export class NewConsolidationComponent extends BaseComponent {
     SetUIProperties_Payment() {
         this.UIProperties.SetRequired("SATPaymentMethodCode", this.ObjectTableName, false);
         this.UIProperties.SetRequired("MetodoPagoCode", this.ObjectTableName, false);
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
                 this.UIProperties.SetRequired("SATPaymentMethodCode", this.ObjectTableName, true);
           }
@@ -689,7 +689,7 @@ export class NewConsolidationComponent extends BaseComponent {
             }
         }
 
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
                 errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.SATPaymentMethodCode")));
             }

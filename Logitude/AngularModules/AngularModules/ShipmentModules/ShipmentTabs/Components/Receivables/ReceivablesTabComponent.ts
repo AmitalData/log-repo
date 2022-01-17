@@ -1241,7 +1241,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
             });
         });
 
-      if (FeatureLocator.HasFeaturePermession("ARInvoice", "Intercompany") || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+        if (FeatureLocator.HasFeaturePermession("ARInvoice", "Intercompany") || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             logitudeWindow.Height = 540;
         }
 
