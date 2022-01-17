@@ -198,6 +198,7 @@
     <None Include="DBScripts\CommonModel\UpdateDocumentKPIFields.sxml" />
     <None Include="DBScripts\CommonModel\UpdatePortsSearchFields.sxml" />
     <None Include="DBScripts\CommonModel\UpdateShippingLinesSearchFields.sxml" />
+    <None Include="DBScripts\GlobalModel\202201131010_AddImporterShipmentOrdersWR.sxml" />
     <None Include="DBScripts\GlobalModel\202110271507_AddMultiEntityUpdateWR.sxml" />
     <None Include="DBScripts\GlobalModel\AddCollaborationToolContainerWRsBatchService.sxml" />
     <None Include="DBScripts\CommonModel\UpdateAutomaticLastUpdateDateOnVatType.sxml" />

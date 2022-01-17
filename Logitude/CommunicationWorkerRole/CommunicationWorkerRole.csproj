@@ -387,6 +387,8 @@
     <Compile Include="ContainerRequestWorkeRole.cs" />
     <Compile Include="ContainerStatusesReceiverWR.cs" />
     <Compile Include="ContainerUpdateWR.cs" />
+    <Compile Include="EntityMapping\ShipmentOrderAmMap.cs" />
+    <Compile Include="ImporterShipmentOrdersWorkerRole.cs" />
     <Compile Include="MultiEntityUpdate\IMultiEntityUpdater.cs" />
     <Compile Include="MultiEntityUpdate\MultiEntityUpdater.cs" />
     <Compile Include="MultiEntityUpdate\ShipmentUpdater.cs" />
@@ -395,6 +397,7 @@
     <Compile Include="PODImageConverterWorkerRole.cs" />
     <Compile Include="MultiEntityUpdateWorkerRole.cs" />
     <Compile Include="Services\ContainerSchedulerTaskService.cs" />
+    <Compile Include="Services\ImporterShipmentOrdersService.cs" />
     <Compile Include="Services\MultiEntityUpdateService.cs" />
     <Compile Include="Services\SAT\SATInvoiceProfact40CancellationService.cs" />
     <Compile Include="Services\SAT\SATPaymentProfact40CancellationService.cs" />
@@ -812,6 +815,18 @@
     <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
       <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
       <Name>Logitude.Server.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.ShipmentOrderModule.BL\Logitude.ShipmentOrderModule.BL.csproj">
+      <Project>{F37BF2F7-0206-4123-A873-290A087538F6}</Project>
+      <Name>Logitude.ShipmentOrderModule.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.ShipmentOrderModule.Data\Logitude.ShipmentOrderModule.Data.csproj">
+      <Project>{378DB1A8-43C3-45A1-A4A0-0B8961CFDB52}</Project>
+      <Name>Logitude.ShipmentOrderModule.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.ShipmentOrderModule.Def\Logitude.ShipmentOrderModule.Def.csproj">
+      <Project>{4148FDA0-EF43-49BF-8D5C-23FF1FA4BD0E}</Project>
+      <Name>Logitude.ShipmentOrderModule.Def</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.Social.BL\Logitude.Social.BL.csproj">
       <Project>{13ce8afb-6ada-4e96-b76c-67279095a018}</Project>

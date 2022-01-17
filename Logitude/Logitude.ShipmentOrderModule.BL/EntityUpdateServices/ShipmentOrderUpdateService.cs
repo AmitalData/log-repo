@@ -1,5 +1,8 @@
-﻿using Logitude.BL.ShipmentsModel.EntityQueries;
+﻿using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Helpers;
+using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.QueueService;
 using Logitude.ShipmentOrderModule.Data.EntityPOCOs;
 using Logitude.ShipmentOrderModule.Def.EntityPMs;
 using System;
@@ -21,6 +24,8 @@ namespace Logitude.ShipmentOrderModule.BL.EntityUpdateServices
 
             entityPM.ShipmentId = GetShipmentIdByNumber(entityPM.ShipmentNumber, entityPM.Tenant);
             entityPM.CustomerId = GetCustomerIdByDirectionId(entityPM.DirectionId, entityPM.ConsigneeId, entityPM.ShipperId);
+
+            BuildShipmentOrderQueue(entityPM);
         }
 
         private string GetCustomerIdByDirectionId(string directionId, string consigneeId, string shipperId)
@@ -32,6 +37,8 @@ namespace Logitude.ShipmentOrderModule.BL.EntityUpdateServices
         {
             entityPM.ShipmentId = GetShipmentIdByNumber(entityPM.ShipmentNumber, entityPM.Tenant);
             entityPM.CustomerId = GetCustomerIdByDirectionId(entityPM.DirectionId, entityPM.ConsigneeId, entityPM.ShipperId);
+
+            BuildShipmentOrderQueue(entityPM);
         }
 
         private string GetShipmentIdByNumber(string shipmentNumber, int tenant)
@@ -45,6 +52,24 @@ namespace Logitude.ShipmentOrderModule.BL.EntityUpdateServices
                 throw new ApplicationException("Shipment with Shipment Number " + shipmentNumber + " doesn't exist");
             return shipmentId;
 
+        }
+
+        private void BuildShipmentOrderQueue(ShipmentOrderPM entityPM)
+        {
+            if (!ValidForLogBoxTransfer(entityPM))
+                return;
+
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("ImporterShipmentOrderQueue", 0);
+            queueservice.Send(
+                new Dictionary<string, string>() { { "ShipmentOrderId", entityPM.Id }, { "Tenant", entityPM.Tenant.ToString() } }, entityPM.Tenant);
+        }
+
+        private bool ValidForLogBoxTransfer(ShipmentOrderPM entityPM)
+        {
+            CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(entityPM.Tenant);
+            CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(entityPM.Tenant, entityPM.ShipperId);
+            return customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && customerTenantAccessInfo.CustomerTenant != 0 && !string.IsNullOrEmpty(entityPM.CustomerTenantNumber?.ToString()) && !string.IsNullOrEmpty(entityPM.CustomerShipmentNumber);
         }
     }
 }
