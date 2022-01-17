@@ -228,6 +228,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.Leg3VesselId = containerPM.Leg3VesselId;
             container.Leg4VesselId = containerPM.Leg4VesselId;
             container.Leg5VesselId = containerPM.Leg5VesselId;
+            container.EmptyContainerReturnETA = containerPM.EmptyContainerReturnETA;
+            container.EmptyContainerReturnATA = containerPM.EmptyContainerReturnATA;
+            container.EmptyContainerReturnETD = containerPM.EmptyContainerReturnETD;
+            container.EmptyContainerReturnATD = containerPM.EmptyContainerReturnATD;
+            container.EmptyContainerReturnFrom = containerPM.EmptyContainerReturnFrom;
+            container.EmptyContainerReturnTo = containerPM.EmptyContainerReturnTo;
+
             BuildSearchField(containerPM, container);
         }
 

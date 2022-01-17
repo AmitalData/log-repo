@@ -107,6 +107,12 @@ export class ContainerPMInitService {
             entityPM.UIProperties.SetEnabled("ShipmentDeliveryTruckerId", "Container", false);
             entityPM.UIProperties.SetEnabled("ShipmentDeliveryTruckerName", "Container", false);
 
+            entityPM.UIProperties.SetEnabled("EmptyContainerReturnFrom", "Container", false);
+            entityPM.UIProperties.SetEnabled("EmptyContainerReturnTo", "Container", false);
+            entityPM.UIProperties.SetEnabled("EmptyContainerReturnETA", "Container", false);
+            entityPM.UIProperties.SetEnabled("EmptyContainerReturnETD", "Container", false);
+            entityPM.UIProperties.SetEnabled("EmptyContainerReturnATD", "Container", false);
+            entityPM.UIProperties.SetEnabled("EmptyContainerReturnATA", "Container", false);
         }
     }
 }
