@@ -188,13 +188,23 @@ namespace CommunicationWorkerRole
 
         private void UpdateSearches(List<CargoTrackingShipmentSearch> newCustomeSearches)
         {
+
             using (SqlConnection sqlConnection = new SqlConnection(cargoContext.GetConnection().ConnectionString))
             {
                 sqlConnection.Open();
                 var transaction = sqlConnection.BeginTransaction();
-                DeleteOldSearches(sqlConnection, transaction, newCustomeSearches);
-                AddSearchesByBulk(sqlConnection, transaction, newCustomeSearches);
-                transaction.Commit();
+                try
+                {
+                    DeleteOldSearches(sqlConnection, transaction, newCustomeSearches);
+                    AddSearchesByBulk(sqlConnection, transaction, newCustomeSearches);
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+                
             }
 
 
