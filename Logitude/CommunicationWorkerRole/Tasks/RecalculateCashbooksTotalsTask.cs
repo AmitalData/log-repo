@@ -1,10 +1,6 @@
 ﻿using Logitude.Accounting.BL.CoreBL;
 using Logitude.SystemLogs;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace CommunicationWorkerRole.Tasks
@@ -12,12 +8,12 @@ namespace CommunicationWorkerRole.Tasks
     public class RecalculateCashbooksTotalsTask: TaskManagerBase
     {
 
-        private StringBuilder _SB;
+        private StringBuilder stringBuilder;
         int tenant;
 
         public RecalculateCashbooksTotalsTask(string Id, int tenant) : base(Id, tenant)
         {
-            _SB = new StringBuilder();
+            stringBuilder = new StringBuilder();
             this.tenant = tenant;
         }
 
@@ -28,34 +24,26 @@ namespace CommunicationWorkerRole.Tasks
             {
 
 
-                _SB.Append(DateTime.Now.ToString()).AppendLine("RecalculateCashbooksTotalsTask:Start");
-                var tenantsAccountingActivated = new List<int>();
-                using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(3)))
+                stringBuilder.Append(DateTime.Now.ToString()).AppendLine("RecalculateCashbooksTotalsTask:Start");
+                try
                 {
-                    var tenantRepo = new TenantRepository(0);
-                    tenantsAccountingActivated = tenantRepo.All().Where(r => r.AccountingActivated).Select(r => r.Id).ToList();
-                    scope.Complete();
+                    var cashbookService = new CashbookService();
+                    var updatedCount = cashbookService.RecalculateCashbooksTotals(tenant);
+                    string responseText = updatedCount;
+                    stringBuilder.Append(DateTime.Now.ToString()).Append("responseText:").Append(responseText).AppendLine();
                 }
-                _SB.Append(DateTime.Now.ToString()).Append("tenantsAccountingActivated:").Append(String.Join(",", tenantsAccountingActivated)).AppendLine();
-                    try
-                    {
-                        var cashbookService = new CashbookService();
-                        var updatedCount = cashbookService.RecalculateCashbooksTotals(tenant);
-                        string responseText = updatedCount;
-                        _SB.Append(DateTime.Now.ToString()).Append("responseText:").Append(responseText).AppendLine();
-                    }
-                    catch (Exception ex)
-                    {
-                        failed = true;
-                        _SB.Append(DateTime.Now.ToString()).Append("Exception:").Append(ex.Message).AppendLine();
+                catch (Exception ex)
+                {
+                    failed = true;
+                    stringBuilder.Append(DateTime.Now.ToString()).Append("Exception:").Append(ex.Message).AppendLine();
                     ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", $"RecalculateCashbooksTotalsTask()", null);
-                    }
+                }
             }
             finally
             {
                 if (failed)
                 {
-                    throw new Exception(_SB.ToString());
+                    throw new Exception(stringBuilder.ToString());
                 }
             }
         }
