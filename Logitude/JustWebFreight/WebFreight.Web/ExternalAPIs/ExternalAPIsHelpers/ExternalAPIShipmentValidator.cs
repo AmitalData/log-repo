@@ -1015,10 +1015,6 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                 return;
 
             string commodityName = commodityRepository.GetSingleCommodityNameByCode(item.CommodityNumber, tenant);
-
-            if (string.IsNullOrEmpty(commodityName))
-                return;
-
             item.CommodityName = commodityName;
         } 
         private void ValidateInlandDomesticShipmentFromTypeCode(ShipmentPM entityPM)
