@@ -164,6 +164,11 @@ export class ExportStoragePM {
     public set DeclarationNumber(newValue: string) { if (this.declarationNumber != newValue) { this.declarationNumber = newValue; this.MarkAsDirty("DeclarationNumber"); } }
        
 	 
+    private exporterCode: string;
+    public get ExporterCode() { return this.exporterCode; }
+    public set ExporterCode(newValue: string) { if (this.exporterCode != newValue) { this.exporterCode = newValue; this.MarkAsDirty("ExporterCode"); } }
+       
+	 
 
     public OldEntityPM: ExportStoragePM;
 		
