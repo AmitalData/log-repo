@@ -676,7 +676,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
     }
 
-    private ReloadAllListEvent: any = null;
+    public ReloadAllListEvent: any = null;
     Listen() {
         if (!this.ReloadAllListEvent) {
             this.ReloadAllListEvent = this.CurrentSession.SessionEvent.subscribe(s => {
