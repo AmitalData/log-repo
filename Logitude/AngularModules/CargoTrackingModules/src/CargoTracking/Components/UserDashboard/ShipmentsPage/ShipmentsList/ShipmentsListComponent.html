@@ -320,7 +320,7 @@
                         <!-- References -->
                         <div class="column col-md-2 reference" style="width: 11%;">
                             <div>
-                                <div [attr.src]="SplitReference(shipment.CustomerReference)" class="subtitle">
+                                <div [attr.src]="BuildShipmentReferences(shipment)" class="subtitle">
                                     Reference NO.
                                     <span *ngIf="shipment.IsFavorite">
                                         &nbsp;<img src="/assets/images/icons/favoritesicon@1x.png" alt="">

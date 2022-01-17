@@ -221,8 +221,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     private InitializeComponent(result: any)
     {
         this.cargoTrackingShipmentPM = result;
-        this.ShipmentReferences = this.cargoTrackingShipmentPM.CustomerReference ? this.cargoTrackingShipmentPM.CustomerReference.split(',') : null;
-
+        this.BuildShipmentReferences();
 
         this.SetCustomsOrForwarderFields();
         this.SetOverviewPanelTitle();
@@ -247,6 +246,19 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
 
 
         this.SetDeclarationMessage();
+    }
+
+    private BuildShipmentReferences() {
+        this.ShipmentReferences = this.cargoTrackingShipmentPM.CustomerReference ? this.cargoTrackingShipmentPM.CustomerReference.split(',') : [];
+        if (this.cargoTrackingShipmentPM.EntityType == 'O') {
+            this.AddShipmentReferencesForOrderShipment();
+        }
+    }
+    private AddShipmentReferencesForOrderShipment() {
+        if (this.cargoTrackingShipmentPM.ShipmentOrderPONumber != null)
+            this.ShipmentReferences.push(this.cargoTrackingShipmentPM.ShipmentOrderPONumber);
+        if (this.cargoTrackingShipmentPM.SHOBookingConfirmationNumber != null)
+            this.ShipmentReferences.push(this.cargoTrackingShipmentPM.SHOBookingConfirmationNumber);
     }
 
     private SetDeclarationMessage()
