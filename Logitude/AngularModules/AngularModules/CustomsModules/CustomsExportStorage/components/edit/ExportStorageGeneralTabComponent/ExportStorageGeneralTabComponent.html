@@ -1,7 +1,7 @@
 <div class="col">
     <div class="row">        
         <LogLabel [Text]='"סוג משלוח"' [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        <LogTextBox [ObjectFieldName]="'ShipType'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+        <LogTextBox disabled [ObjectFieldName]="'ShipType'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
         [DataContext]="DataContext" [Text]="ShipType"></LogTextBox>
     </div>
     
@@ -20,9 +20,9 @@
 
 <div class="col">
     <div class="row">        
-        <LogLabel [ObjectFieldName]="'ExporterID'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        <LogTextBox [ObjectFieldName]="'ExporterID'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
-        [DataContext]="DataContext" [Text]="ExporterID"></LogTextBox>
+        <LogLabel [ObjectFieldName]="'ExporterCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        <LogTextBox [ObjectFieldName]="'ExporterCode'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+        [DataContext]="DataContext" [Text]="ExporterCode"></LogTextBox>
     </div>
     
     <div class="row">        

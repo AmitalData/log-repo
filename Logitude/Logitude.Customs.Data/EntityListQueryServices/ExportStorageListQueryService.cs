@@ -34,7 +34,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                    join storageStatus in context.StorageStatuses.Select( r=> new {r.Code, r.LocalName})
                                                    on en.StorageStatus equals storageStatus.Code
 
-                                                   join card in context.Cards.Select( r=> new {r.Id, r.LocalName})
+                                                   join card in context.Cards.Select( r=> new {r.Id, r.LocalName, r.VatNumber})
                                                    on en.ExporterID equals card.Id
 
                                                    join customsShip in context.CustomsShips.Select( r=> new {r.Code, r.LocalName})
@@ -106,6 +106,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        DeclarationCustomFileNo = declaration.CustomFileNo,
 
                                                        DeclarationNumber = declaration.DeclarationNumber,
+
+                                                       ExporterCode = card.VatNumber
                                                    });
             return query;
         }
