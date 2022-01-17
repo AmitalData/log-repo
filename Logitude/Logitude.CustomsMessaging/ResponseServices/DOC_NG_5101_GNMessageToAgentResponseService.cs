@@ -520,7 +520,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (this._MyDeclarationPM != null && !string.IsNullOrWhiteSpace(notificationStatusCode))
             {
                 LogMessagingUtil.Instance.AppendLine("Sent status " + notificationStatusCode + " to UNF");
-                RaiseEvent(this._MyDeclarationPM, notificationStatusCode, customResponse.MessageToAgent.msgString.Replace("00:00:00", ""));
+                RaiseEvent(this._MyDeclarationPM, notificationStatusCode, customResponse.MessageToAgent.msgString?.Replace("00:00:00", ""));
             }
 
             if (!string.IsNullOrWhiteSpace(notificationDefinitionCode))
