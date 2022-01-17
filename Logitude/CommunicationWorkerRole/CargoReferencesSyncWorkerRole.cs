@@ -106,7 +106,7 @@ namespace CommunicationWorkerRole
         }
         private List<CargoTrackingShipmentSearch> GetNewSearches(List<CargoReferencesSyncQueue> shipmentQueue, List<CargoTrackingShipmentSearch> seatches, string sourceType)
         {
-            var shipmentQueueDictionary = shipmentQueue.ToDictionary(e => e.ShipmentId, e => e);
+            var shipmentQueueDictionary = GetShipmentQueueDictionary(shipmentQueue);
             var searchesGroupByShipmentId = seatches.GroupBy(e => e.ShipmentId);
             var searchesGroupByShipmentIdDictionary = searchesGroupByShipmentId.ToDictionary(e => e.Key, e => e);
             var results = new List<CargoTrackingShipmentSearch>();
@@ -296,6 +296,17 @@ namespace CommunicationWorkerRole
                 ids = ids.Substring(0, ids.Length - 1);
             return ids;
 
+        }
+        private Dictionary<string, CargoReferencesSyncQueue> GetShipmentQueueDictionary(List<CargoReferencesSyncQueue> shipmentQueue)
+        {
+            var dictionary = new Dictionary<string, CargoReferencesSyncQueue>(shipmentQueue.Count);
+            foreach (var item in shipmentQueue)
+            {
+                if (!dictionary.ContainsKey(item.ShipmentId)){
+                    dictionary.Add(item.ShipmentId, item);
+                }
+            }
+            return dictionary;
         }
 
     }
