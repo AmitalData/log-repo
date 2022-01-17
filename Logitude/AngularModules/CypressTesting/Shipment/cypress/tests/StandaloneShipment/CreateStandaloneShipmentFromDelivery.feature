@@ -1,4 +1,4 @@
-@devrelease
+@standalone @devrelease
 Feature: Create Standalone Shipment From Delivery
     The user creates a direct import ocean FCL shipment,
     create standalone shipment when delivery is from partner to port with the same countries,
