@@ -25,6 +25,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     public IsCreditLimitActivated: boolean = false;
     public LocalCurrencyCode: string;
     public IsAccountingActivated: boolean;
+    public SatInterfaceSettingCode: string;
 
     @ViewChild('BillingChild', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     public DisplaySATSettings: boolean = false;
@@ -46,6 +47,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
+            this.SatInterfaceSettingCode = SessionLocator.SATInterfaceSettings.SATInterfaceCode;
         }
 
         this.Listen();
