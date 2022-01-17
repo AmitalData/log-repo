@@ -85,6 +85,8 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     hasApprovalDeclineResponse: boolean = false;
     noShipmentFound: boolean = false;
     approvalMessage: string;
+    PartnersPanel: string = "PartnersPanel";
+    MaxHeightForPartnersPanel: number = 600;
 
     PartnerCardTypesOfShipmentTransportMode = {
         'A': "AIRLINES",
@@ -710,7 +712,8 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         var panelElement = document.getElementById(panelName) as HTMLElement;
         if (panelElement){
             panelElement.scrollIntoView();
-            document.getElementsByTagName('html')[0].scrollTop -= 113;
+            if ((panelName == this.PartnersPanel && panelElement.clientHeight > this.MaxHeightForPartnersPanel) || panelName != this.PartnersPanel)
+                document.getElementsByTagName('html')[0].scrollTop -= 113;
 
         }
 
