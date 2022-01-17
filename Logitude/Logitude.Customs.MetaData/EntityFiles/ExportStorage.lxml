@@ -788,10 +788,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;CustomsStatus&quot;"
     DefaultText="&quot;Customs Status&quot;"
-    FullLocalDefaultText="&quot;סטטוס אחסנה מכסי&quot;"
+    FullLocalDefaultText="&quot;סטטוס אחסנה&quot;"
     ListFieldLable="&quot;CustomsStatusListLable&quot;"
     ListLableDefaultText="&quot;Customs Status&quot;"
-    ListLocalDefaultText="&quot;סטטוס אחסנה מכסי&quot;"
+    ListLocalDefaultText="&quot;סטטוס אחסנה&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -2182,7 +2182,7 @@
         QueryCode="&quot;OpenStorages&quot;"
         IndexOrder="4"
         ObjectFieldName="&quot;DeclarationNumber&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;OpenStorages&quot;"
         IndexOrder="5"
