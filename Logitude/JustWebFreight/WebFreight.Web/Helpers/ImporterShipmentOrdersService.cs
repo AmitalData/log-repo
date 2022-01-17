@@ -67,7 +67,7 @@ namespace WebFreight.Web.Helpers
                 if (shipment == null)
                     throw new Exception("Shipment number does not exist");
                 MapShipmentOrderAmToShipment(shipmentOrder, shipment);
-                SubitUpdate(shipment);
+                SubmitShipmentUpdate(shipment);
                 return shipment;
             }
             catch (Exception ex)
@@ -77,7 +77,7 @@ namespace WebFreight.Web.Helpers
             }
         }
 
-        private void SubitUpdate(ShipmentPM shipment)
+        private void SubmitShipmentUpdate(ShipmentPM shipment)
         {
             string systemEmail = "system@tenant" + tenant + ".com";
             shipmentService = new ShipmentService(shipmentsContext, shipment, systemEmail);
