@@ -120,6 +120,8 @@ namespace CommunicationWorkerRole.Services.ImporterShipmentOrders
 
         private void SendShipmentAM(ShipmentOrderAM shipmentOrderAM)
         {
+            APILogsUtility.UpdateAPILogStatus(apiLog.Id, apiLog.Tenant, "I", 1, DateTime.Now, DateTime.UtcNow, "Sending Shipment Order" + DateTime.Now, LogitudeXmlSerializer.SerializeObjectToXmlString(shipmentOrderAM), null, null, "");
+
             using (var client = new HttpClient())
             {
                 string ImporterShipmentsURI = URI + "ImporterShipmentOrders";
@@ -134,9 +136,9 @@ namespace CommunicationWorkerRole.Services.ImporterShipmentOrders
                 {
                     HandleRequestError(result);
                 }
-                var ResponseData = result.Result.Content.ReadAsStringAsync().Result;
-                var Donemsg = "Updates Of Shipment Sent To Importer Successfully " + DateTime.Now;
-                APILogsUtility.UpdateAPILogStatus(apiLog.Id, tenant.Value, "D", queueResponse.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, ResponseData, null, "");
+                var responseData = result.Result.Content.ReadAsStringAsync().Result;
+                var msg = "Updates Of Shipment Sent To Importer Successfully " + DateTime.Now;
+                APILogsUtility.UpdateAPILogStatus(apiLog.Id, tenant.Value, "D", queueResponse.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, null, responseData, null, "");
             }
         }
 

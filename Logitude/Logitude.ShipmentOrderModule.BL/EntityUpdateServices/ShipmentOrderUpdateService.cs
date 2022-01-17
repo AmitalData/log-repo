@@ -69,8 +69,7 @@ namespace Logitude.ShipmentOrderModule.BL.EntityUpdateServices
         {
             CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(entityPM.Tenant);
             CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(entityPM.Tenant, entityPM.ShipperId);
-            //customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && customerTenantAccessInfo.CustomerTenant != 0  &&
-            return !string.IsNullOrEmpty(entityPM.CustomerTenantNumber?.ToString()) && !string.IsNullOrEmpty(entityPM.CustomerShipmentNumber);
+            return customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && customerTenantAccessInfo.CustomerTenant != 0 && !string.IsNullOrEmpty(entityPM.CustomerTenantNumber?.ToString()) && !string.IsNullOrEmpty(entityPM.CustomerShipmentNumber);
         }
     }
 }
