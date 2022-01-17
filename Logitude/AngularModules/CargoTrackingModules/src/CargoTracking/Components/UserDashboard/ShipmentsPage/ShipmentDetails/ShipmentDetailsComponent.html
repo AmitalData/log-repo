@@ -173,10 +173,7 @@
                         <li *ngIf="ShipmentOrder?.PONumber != null">
                             <custom-label>{{ShipmentOrder?.PONumber}} </custom-label>
                         </li>
-                        <li
-                            *ngIf="cargoTrackingShipmentPM.EntityType == 'O' && cargoTrackingShipmentPM.ShipmentOrderPONumber">
-                            <custom-label>{{cargoTrackingShipmentPM.ShipmentOrderPONumber}} </custom-label>
-                        </li>
+                
                     </ul>
                     <ul *ngIf="showMoreReferences">
                         <li *ngFor="let ref of ShipmentReferences, let i = index">

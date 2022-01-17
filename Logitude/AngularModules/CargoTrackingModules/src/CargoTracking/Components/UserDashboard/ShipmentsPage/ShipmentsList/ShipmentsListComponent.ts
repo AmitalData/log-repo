@@ -641,18 +641,20 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         return shipmentFilters;
     }
 
-
-
-
-
-
-
-
-
-    SplitReference(reference: string) {
-        this.references = reference != null ? reference.split(',') : null;
-
+    BuildShipmentReferences(shipment: CargoTrackingShipmentList) {
+        this.references = shipment.CustomerReference != null ? shipment.CustomerReference.split(',') : [];
+        if (shipment.EntityType == 'O') {
+            this.AddShipmentReferencesForOrderShipment(shipment);
+        }
     }
+
+    private AddShipmentReferencesForOrderShipment(shipment: CargoTrackingShipmentList) {
+        if (shipment.PoNumber != null)
+            this.references.push(shipment.PoNumber);
+        if (shipment.BookingNotes != null)
+            this.references.push(shipment.BookingNotes );
+    }
+
     masterLabel = 'Master';
     houseLabel = 'House';
     SetMasterOrHouseLabel(shipment: CargoTrackingShipmentList) {

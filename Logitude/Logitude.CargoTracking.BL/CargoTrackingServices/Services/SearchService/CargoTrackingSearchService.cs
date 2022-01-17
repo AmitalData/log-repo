@@ -123,6 +123,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ConsigneeName");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwarderShipmentNumber");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "PoNumber");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "BookingConfirmationNumber");
+
 
 
                 SaveTheWholeHouseReferenceinSearchTable(tableRow, bulkDataPreperation);
@@ -180,6 +182,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "OrderShipperName");
             AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "OrderShipmentNumber");
             AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "OrderPoNumber");
+            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "OrderBookingNumber");
+
 
             AddSplittedData(new SplittedDataArguments
                 .Builder()
