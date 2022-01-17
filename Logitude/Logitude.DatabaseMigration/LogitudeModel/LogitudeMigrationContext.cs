@@ -100,6 +100,12 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
         }
 
+        public IDbSet<UsoCFDI> RegimenFiscal
+        {
+            get;
+            set;
+        }
+
         public IDbSet<DocumentStatus> DocumentStatuses
         {
             get;

@@ -133,6 +133,7 @@ export class CustomerList {
 		SATForeignRFC: string;
 		MetodoPagoCode: string;
 		UsoCFDICode: string;
+		RegimenFiscalCode: string;
 		ZipCode: string;
 		Address1: string;
 		Address2: string;

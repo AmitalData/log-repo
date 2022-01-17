@@ -200,6 +200,7 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<WarehouseType> WarehouseTypes { get; }
         IDbSet<NumberFormat> NumberFormats { get; }
         IDbSet<UsoCFDI> UsoCFDIs { get; }
+        IDbSet<RegimenFiscal> RegimenFiscals { get; }
         IDbSet<ReportsTemplate> ReportsTemplates { get; set; }
         IDbSet<ReportsTemplatesVersion> ReportsTemplatesVersions { get; set; }
         IDbSet<FeatureChange> FeatureChanges { get; set; }
