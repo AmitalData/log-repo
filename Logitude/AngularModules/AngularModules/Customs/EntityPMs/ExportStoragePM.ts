@@ -159,6 +159,11 @@ export class ExportStoragePM {
     public set DeclarationCustomFileNo(newValue: string) { if (this.declarationCustomFileNo != newValue) { this.declarationCustomFileNo = newValue; this.MarkAsDirty("DeclarationCustomFileNo"); } }
        
 	 
+    private declarationNumber: string;
+    public get DeclarationNumber() { return this.declarationNumber; }
+    public set DeclarationNumber(newValue: string) { if (this.declarationNumber != newValue) { this.declarationNumber = newValue; this.MarkAsDirty("DeclarationNumber"); } }
+       
+	 
 
     public OldEntityPM: ExportStoragePM;
 		

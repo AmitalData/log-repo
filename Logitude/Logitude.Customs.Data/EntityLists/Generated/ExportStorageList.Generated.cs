@@ -68,6 +68,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string Declaration_ID  { get; set; }
        [DataMember]
        public string DeclarationCustomFileNo  { get; set; }
+       [DataMember]
+       public string DeclarationNumber  { get; set; }
    }
 
 }
