@@ -100,12 +100,10 @@ export function AssertShipmenteDelivaryWindowDisabled() {
 }
 
 export function AddPcakagesInPickupDelivary() {
-   cy.Click(ShipmentSelectors.PickUpDeliveryPackages,null)
-   cy.Click(ShipmentSelectors.AddContainerFromPickup,null,true)
+   cy.Click(ShipmentSelectors.PickUpDeliveryPackages, null)
+   cy.Click(ShipmentSelectors.AddContainerFromPickup, null, true)
    cy.get(ShipmentSelectors.LogitudeCheckBox).eq(1).click();
    cy.get(ShipmentSelectors.LogitudeCheckBox).eq(2).click();
    cy.get(ShipmentSelectors.LogitudeCheckBox).eq(3).click();
-   cy.Click(BaseSelectors.RedButton, ShipmentConstants.Ok)
+   cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
 }
-
-  

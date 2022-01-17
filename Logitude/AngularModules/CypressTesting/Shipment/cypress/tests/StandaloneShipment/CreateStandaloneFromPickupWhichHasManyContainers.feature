@@ -1,7 +1,7 @@
+@standalone @devrelease
 Feature:  Can't create standalon from pickup which has many containers
     The user creates a Direct Import Ocean FCL shipment, add packages,
     Add pickup and select all container
-
 
     Scenario: Create import ocean FCL shipment
         Given the user logged in and navigates to shipments workspace
@@ -27,7 +27,6 @@ Feature:  Can't create standalon from pickup which has many containers
         When save shipment
         Then the direct shipment should save successfully
 
-
     Scenario: Add pickup and select all container
         Given the user in shipment routing tab
         And add a new pickup leg with the following details
@@ -38,5 +37,3 @@ Feature:  Can't create standalon from pickup which has many containers
         And the user in the pickup packages select all container
         When click create standalone shipment
         Then a validation message with "Can't Create a Stand Alone Shipment Since Pickup has more than one Container" error should appear
-
-

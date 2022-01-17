@@ -7,14 +7,12 @@ import * as BaseAssertion from "../../../../../Base/cypress/actions/Assertion";
 import * as Assists from "../../../../../Base/cypress/assists/Assists";
 import { RequestAliases } from "../../../../../Base/cypress/constants/RequestAliases";
 import { ShipmentSelectors } from "../../../selectors/Selectors"
-import { RestAPI } from '../../../../../Base/cypress/constants/RestAPI';
-import { URLs } from '../../../constants/URLs';
 import { BaseSelectors } from '../../../../../Base/cypress/selectors/BaseSelectors';
 import { ShipmentConstants } from "../../../constants/constants";
 import { PackagesDetails } from "cypress/models/PackagesDetails";
 
 let shipmentDetails: ShipmentDetails;
-let PickupDelivarytData: PickupDelivaryDetails;
+let pickupDelivarytData: PickupDelivaryDetails;
 let shipmentNumber: string;
 let containerDetailsList
 
@@ -63,22 +61,22 @@ Then("the direct shipment should save successfully", () => {
 //#endregion
 
 //#region Add pickup
-Given("the user in shipment routing tab",()=>{
+Given("the user in shipment routing tab", () => {
   cy.Click(ShipmentSelectors.RoutingsTab, null)
   cy.Click(ShipmentSelectors.AddPickUp, null)
   cy.Click(BaseSelectors.Button, ShipmentConstants.AddPickUp)
 })
 
 Given("add a new pickup leg with the following details", (dataTable) => {
-  PickupDelivarytData = Assists.CreateInstance<PickupDelivaryDetails>(dataTable, true);
-  StandaloneAction.FillPickUpDelivaryDetails(PickupDelivarytData);
+  pickupDelivarytData = Assists.CreateInstance<PickupDelivaryDetails>(dataTable, true);
+  StandaloneAction.FillPickUpDelivaryDetails(pickupDelivarytData);
 });
 
-Given("the user in the pickup packages select all container",()=>{
+Given("the user in the pickup packages select all container", () => {
   StandaloneAction.AddPcakagesInPickupDelivary()
 })
 
-When("click create standalone shipment",()=>{
+When("click create standalone shipment", () => {
   cy.Click(ShipmentSelectors.RedButton + BaseSelectors.LastElement, ShipmentConstants.CreateStandaloneShipment)
 })
 

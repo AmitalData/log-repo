@@ -10,6 +10,4 @@ export class ShipmentConstants {
     public static readonly CreateStandaloneShipment = "Create Standalone Shipment"
     public static readonly AddPickUp = "Add Pickup"
     public static readonly AddContainer = "Add Container"
-    public static readonly Ok = "Ok"
-
 }
