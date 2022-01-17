@@ -120,8 +120,9 @@ namespace CommunicationWorkerRole
         {
             var cargoTrackingShipmentSearchDataTable = CreateCargoTrackingShipmentSearchDataTable();
             FillCargoTrackingShipmentSearchDataTable(cargoTrackingShipmentSearchDataTable, newForwardingSearches);
-            using (SqlBulkCopy bulkCopy = new SqlBulkCopy(cargoContext.GetConnection().ConnectionString))
+            using (SqlBulkCopy bulkCopy = new SqlBulkCopy())
             {
+                bulkCopy.BatchSize = 100000;
                 bulkCopy.DestinationTableName = ShipmentSearchesTableName;
                 bulkCopy.WriteToServer(cargoTrackingShipmentSearchDataTable);
             }
@@ -182,13 +183,26 @@ namespace CommunicationWorkerRole
             forwardingShipmentQueue.AddRange(GetSameShipmants(forwardingShipmentQueue));
             var forwardingSeatches = GetSearchesByShipmentIds(GetShipmentsIds(forwardingShipmentQueue));
             var newCustomeSearches = GetNewSearches(forwardingShipmentQueue, forwardingSeatches, Codes.ForwardingType);
-            DeleteOldSearches(newCustomeSearches);
-            AddSearchesByBulk(newCustomeSearches);
+            UpdateSearches(newCustomeSearches);
+           
             RemoveQueueRecords(forwardingShipmentQueue);
 
         }
 
+        private void UpdateSearches(List<CargoTrackingShipmentSearch> newCustomeSearches)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(cargoContext.GetConnection().ConnectionString))
+            {
+                sqlConnection.Open();
+                var transaction = sqlConnection.BeginTransaction();
+                DeleteOldSearches(sqlConnection, newCustomeSearches);
+                AddSearchesByBulk(newCustomeSearches);
+                transaction.Commit();
+            }
 
+
+            
+        }
 
         private DataRow CreateDataRow(DataTable cargoTrackingShipmentSearchDataTable, CargoTrackingShipmentSearch item)
         {
@@ -278,14 +292,15 @@ namespace CommunicationWorkerRole
             var query = $"delete from CargoReferencesSyncQueues where id in ({ids}) ";
             cargoContext.GetActiveDbContext().Database.ExecuteSqlCommand(query);
         }
-        private void DeleteOldSearches(List<CargoTrackingShipmentSearch> searches)
+        private void DeleteOldSearches(SqlConnection sqlConnection, List<CargoTrackingShipmentSearch> searches)
         {
             var ids = GetIdsAsString(searches.Select(e => e.ShipmentId).ToList());
             var query = $"delete from CargoTrackingShipmentSearches where ShipmentId in ({ids}) ";
-            cargoContext.GetActiveDbContext().Database.ExecuteSqlCommand(query);
+            SqlCommand command = new SqlCommand(query, sqlConnection);
+            command.
         }
 
-        private string GetIdsAsString(List<string> Ids)
+            private string GetIdsAsString(List<string> Ids)
         {
             var ids = "";
             foreach (var item in Ids)
