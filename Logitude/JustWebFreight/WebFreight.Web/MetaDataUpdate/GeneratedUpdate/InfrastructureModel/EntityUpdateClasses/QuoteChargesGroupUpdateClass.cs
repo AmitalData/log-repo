@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class QuoteChargesGroupUpdateClass
    {  		
-		public const string HashString = "657ff8c4840c6ec79c76d167255b5c23";
+		public const string HashString = "ce75fd9d13ac7cedb49f0b6457e8a3fa";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,8 +89,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	             				    ObjectTableName =  "QuoteChargesGroup",
 			      				    IsNew =  true,
 			      				    DBTableName =  "QuoteChargesGroups",
-			      				    ObjectTableSingular =  "Quote Charges Group",
-			      				    ObjectTablePlural =  "Quote Charges Groups",
+			      				    ObjectTableSingular =  "Quote Charge Group",
+			      				    ObjectTablePlural =  "Quote Charge Groups",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -122,7 +122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "Quote Charges Group",
+			      				    DefaultText =  "Quote Charge Groups",
 			      				    Code =  "685c",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
