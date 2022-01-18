@@ -93,23 +93,23 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
             var AdditionalFilters: FilterItem[] = new Array();
             if (myResult) {
                 var ReferantUserIdFilter = myResult.filter(a => a.ObjectFieldName == "ReferentUserId");
-                if (ReferantUserIdFilter.length>0) {
-                    AdditionalFilters.push(new FilterItem("ReferentUserId", ReferantUserIdFilter[0].PredefinedValue , null, null, "InListExact", false, false, false, "string", null, null, null));
+                if (ReferantUserIdFilter.length > 0) {
+                    AdditionalFilters.push(new FilterItem("ReferentUserId", ReferantUserIdFilter[0].PredefinedValue, null, null, "InListExact", false, false, false, "string", null, null, null));
                 }
                 var DepartmentNameFilter = myResult.filter(a => a.ObjectFieldName == "DepartmentName");
-                if (DepartmentNameFilter.length>0) {
+                if (DepartmentNameFilter.length > 0) {
                     AdditionalFilters.push(new FilterItem("DepartmentName", DepartmentNameFilter[0].PredefinedValue, null, null, "Equal", false, false, false, "string", null, null, null));
                 }
                 var ReferantUserNameFilter = myResult.filter(a => a.ObjectFieldName == "ReferantUserName");
-                if (ReferantUserNameFilter.length>0) {
+                if (ReferantUserNameFilter.length > 0) {
                     AdditionalFilters.push(new FilterItem("ReferantUserName", ReferantUserNameFilter[0].PredefinedValue, null, null, "Equal", false, false, false, "string", null, null, null));
                 }
                 var DepartmentIdFilter = myResult.filter(a => a.ObjectFieldName == "DepartmentId");
-                if (DepartmentIdFilter.length>0) {
+                if (DepartmentIdFilter.length > 0) {
                     AdditionalFilters.push(new FilterItem("DepartmentId", DepartmentIdFilter[0].PredefinedValue, null, null, "InListExact", false, false, false, "string", null, null, null));
                 }
                 var TransportModeIdFilter = myResult.filter(a => a.ObjectFieldName == "TransportModeId");
-                if (TransportModeIdFilter.length>0) {
+                if (TransportModeIdFilter.length > 0) {
                     AdditionalFilters.push(new FilterItem("TransportModeId", TransportModeIdFilter[0].PredefinedValue, null, null, "Equals", false, true, false, "string", null, null, null));
                 }
             }
@@ -124,11 +124,13 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
         });
     }
 
-
     constructor(public _declarationReferantDataWebService: DeclarationReferantDataWebService) {
         this.setFilters();
         this.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationReferantData").subscribe((response: any) => {
+        });
+
+    }
 
     applyQueriesCount() {
         this.GetFilterForQueriesCount();
@@ -144,10 +146,9 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                 this.InProgressDeclarationReferantDataId = this.InProgressDeclarationReferantDataId + this.CurrentSession.GetChartId();
                 this.LoadInProgressDeclarationReferantDatasDashboard();
 
-                    this.isScreenLoaded = true;
-                    this.CurrentSession.StopBusyIndicator();
-                });
-        });
+                this.isScreenLoaded = true;
+                this.CurrentSession.StopBusyIndicator();
+            });
     }
 
     public IsQueryVisible_MyViewsGroup: boolean = true;
