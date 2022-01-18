@@ -37,4 +37,5 @@ export class ExportStorageGeneralTabComponent extends BaseComponent {
   public get FirstCargoID() { return this.EntityPM.FirstCargoID; }
   public get ThirdCargoID() { return this.EntityPM.ThirdCargoID; }
   public get ExportDealIdentification() { return this.EntityPM.ExportDealIdentification; }
+  public get ExporterCode() { return this.EntityPM.ExporterCode; }
 }
