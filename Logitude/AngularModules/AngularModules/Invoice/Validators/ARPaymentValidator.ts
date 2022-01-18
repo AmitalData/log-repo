@@ -99,7 +99,7 @@ export class ARPaymentValidator {
       }
     }
 
-    if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+      if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
       if (AppTool.IsNullOrEmpty(entityPm.MetodoPagoCode)) {
         validationResults.push("Metodo Pago Field is Required");
       }
@@ -254,7 +254,7 @@ export class ARPaymentValidator {
             }
         }
 
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             if (AppTool.IsNullOrEmpty(entityPm.MetodoPagoCode)) {
                 errors.push("Metodo Pago Field is Required");
             }

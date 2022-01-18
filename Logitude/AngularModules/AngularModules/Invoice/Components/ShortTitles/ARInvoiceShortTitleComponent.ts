@@ -25,7 +25,7 @@ export class ARInvoiceShortTitleComponent implements OnDestroy {
 
         this.Listen();
 
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             this.DisplaySATSettings = true;
         }
     }

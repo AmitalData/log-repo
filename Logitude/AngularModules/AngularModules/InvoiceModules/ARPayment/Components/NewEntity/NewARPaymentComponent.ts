@@ -335,7 +335,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             this.newARPaymentPM.ExchangeRateDate = this.invoicePm.ExchangeRateDate;
             this.newARPaymentPM.PaymentCurrencyExchangeRate = this.invoicePm.InvoiceCurrencyExchangeRate;
 
-          if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+            if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             if (!AppTool.IsNullOrEmpty(this.invoicePm.MetodoPagoCode)) {
               this.MetodoPagoCode = this.invoicePm.MetodoPagoCode;
               this.UIProperties.SetEnabled("MetodoPagoCode", this.ObjectTableName, false);
@@ -432,7 +432,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     }
 
     ValidateTipoCadenaPagoFields() {
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             if (!AppTool.IsNullOrEmpty(this.TipoCadenaPago) && this.TipoCadenaPago == "01" && this.SATPaymentMethodCode == "03") {
                 if (AppTool.IsNullOrEmpty(this.CertPago))
                     this.UIProperties.SetRequired("CertPago", "ARPayment", true);
@@ -1018,7 +1018,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         this.UIProperties.SetRequired("SATPaymentMethodCode", this.ObjectTableName, false);
         this.UIProperties.SetRequired("MetodoPagoCode", this.ObjectTableName, false);
 
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
                 this.UIProperties.SetRequired("SATPaymentMethodCode", this.ObjectTableName, true);
           }
@@ -1075,7 +1075,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.AmountInPaymentCurrency")));
         }
 
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
                 errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate( "ARPayment.F.SATPaymentMethodCode")));
             }

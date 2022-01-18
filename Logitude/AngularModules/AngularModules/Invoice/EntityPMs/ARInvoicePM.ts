@@ -987,6 +987,11 @@ export class ARInvoicePM {
     public set UsoCFDICode(newValue: string) { if (this.usoCFDICode != newValue) { this.usoCFDICode = newValue; this.MarkAsDirty("UsoCFDICode"); } }
        
 	 
+    private regimenFiscalCode: string;
+    public get RegimenFiscalCode() { return this.regimenFiscalCode; }
+    public set RegimenFiscalCode(newValue: string) { if (this.regimenFiscalCode != newValue) { this.regimenFiscalCode = newValue; this.MarkAsDirty("RegimenFiscalCode"); } }
+       
+	 
     private isDraft: boolean;
     public get IsDraft() { return this.isDraft; }
     public set IsDraft(newValue: boolean) { if (this.isDraft != newValue) { this.isDraft = newValue; this.MarkAsDirty("IsDraft"); } }

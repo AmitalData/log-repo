@@ -57,7 +57,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         private ChargesTypeRepository chargesTypeRepository;
         private PaymentTermRepository paymentTermRepository;
         private SATBaseProfact40Service sATBaseProfact40Service;
-
+        
         public SATInvoiceProfact40Service(ARInvoicePM arInvoicePM, ARInvoice arInvoice, SATInterfaceSetting satSetting)
         {
             this.arInvoicePM = arInvoicePM;
@@ -65,8 +65,9 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             this.satSetting = satSetting;
             InitalizeContexts(arInvoicePM);
             InitalizeRepositories(arInvoicePM);
-            this.sATBaseProfact40Service = new SATBaseProfact40Service(arInvoicePM.Tenant);
+            InitalizeServices();
         }
+
         private void InitalizeContexts(ARInvoicePM arInvoicePM)
         {
             commonContext = CommonDataContext.GetContext(arInvoicePM.Tenant);
@@ -84,6 +85,11 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             measurementRepository = new MeasurementRepository(commonContext);
             chargesTypeRepository = new ChargesTypeRepository(commonContext);
             paymentTermRepository = new PaymentTermRepository(commonContext);
+        }
+
+        public void InitalizeServices()
+        {
+            sATBaseProfact40Service = new SATBaseProfact40Service(arInvoicePM.Tenant);
         }
 
         public void SendProfactoXML()
@@ -125,14 +131,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 }
             }
 
-
-            Address billToAddress = null;
-            if (!string.IsNullOrEmpty(arInvoicePM.BillToAddressId))
-            {
-                billToAddress = addressReposirory.GetSingleAddress(arInvoicePM.BillToAddressId, arInvoicePM.Tenant);
-            }
-            else
-                throw new ApplicationException("Bill to Address is required ");
+            Address billToAddress = GetBillToAddress();
 
             Card billToCard = cardRepository.GetSingleCard(arInvoicePM.BillToId, arInvoicePM.Tenant);
 
@@ -196,6 +195,10 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 throw new ApplicationException("Metodo Pago is required ");
             }
 
+            if (string.IsNullOrEmpty(billToCard.EnglishName))
+            {
+                throw new ApplicationException("Bill to Name is required");
+            }
             string serie = "A";
             string folio = arInvoicePM.InvoiceNumber;
 
@@ -236,12 +239,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 comprobante.TipoCambioSpecified = true;
             }
 
-            comprobante.InformacionGlobal = new Profact.TimbraCFDI40.ComprobanteInformacionGlobal
-            {
-                Periodicidad = "",
-                Meses = "",
-                Año = new short()
-            };
+            MapInformacionGlobal(comprobante);
             comprobante.Exportacion = "01";
             comprobante.Moneda = invoiceCurrency.Code;
             comprobante.Serie = serie;
@@ -262,7 +260,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
             comprobante.SubTotal = Math.Abs((arInvoicePM.SubTotalInInvoiceCurrency != null ? (decimal)arInvoicePM.SubTotalInInvoiceCurrency.Value : 0));
             comprobante.Total = Math.Abs((arInvoicePM.AmountInInvoiceCurrency != null ? (decimal)arInvoicePM.AmountInInvoiceCurrency.Value : 0));
-         
+
 
             //Llenamos datos del emisor
             comprobante.Emisor = new Profact.TimbraCFDI40.ComprobanteEmisor();
@@ -270,14 +268,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             comprobante.Emisor.Nombre = currentTenant.Company;
             comprobante.Emisor.RegimenFiscal = "601";
 
-
-            //Llena datos del receptor
-            comprobante.Receptor = new Profact.TimbraCFDI40.ComprobanteReceptor();
-            //comprobante.Receptor.Rfc = billToCard.VatNumber;
-            comprobante.Receptor.Nombre = billToCard.EnglishName;
-            comprobante.Receptor.RegimenFiscalReceptor = arInvoicePM.RegimenFiscalCode;
-            comprobante.Receptor.DomicilioFiscalReceptor = billToAddress.ZipCode;
-
+            MapReceptor(comprobante, billToCard, billToAddress);
+            
             string billToCountryCode = (billToAddress != null ? (billToAddress.Country != null ? billToAddress.Country.Code : null) : null);
             if (billToAddress.Country != null)
             {
@@ -345,7 +337,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             }
             else
                 comprobante.LugarExpedicion = currentTenant.Address.ZipCode;
-           
+
 
 
             //Llenamos los conceptos
@@ -457,7 +449,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                             {
                                 Importe = sATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0))),
                                 Impuesto = "002",
-                                Base = sATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0))),
+                                //Base = sATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0))),
                                 TasaOCuota = total_tasaOCuota,
                                 TipoFactor = _totaltipoFactor,//(totalVat.VATPercent == 0 ? "Exento" : "Tasa"),
                             };
@@ -610,6 +602,73 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
             arInvoice.SATTransferStatusCode = arInvoicePM.SATTransferStatusCode = "TG";
 
+        }
+
+        private void MapReceptor(Profact.TimbraCFDI40.Comprobante comprobante, Card billToCard, Address billToAddress)
+        {
+            if (string.IsNullOrEmpty(arInvoicePM.RegimenFiscalCode) && !string.IsNullOrEmpty(billToCard.RegimenFiscalCode))
+            {
+                arInvoicePM.RegimenFiscalCode = billToCard.RegimenFiscalCode;
+            }
+            if (string.IsNullOrEmpty(arInvoicePM.RegimenFiscalCode))
+            {
+                throw new ApplicationException("Regimen Fiscal is required ");
+            }
+
+            comprobante.Receptor = new Profact.TimbraCFDI40.ComprobanteReceptor
+            {
+                Nombre = billToCard.EnglishName,
+                RegimenFiscalReceptor = arInvoicePM.RegimenFiscalCode,
+                DomicilioFiscalReceptor = billToAddress?.ZipCode
+            };
+
+        }
+
+        private Address GetBillToAddress()
+        {
+            if (!string.IsNullOrEmpty(arInvoicePM.BillToAddressId))
+            {
+                return addressReposirory.GetSingleAddress(arInvoicePM.BillToAddressId, arInvoicePM.Tenant);
+            }
+            else
+                throw new ApplicationException("Bill to Address is required ");
+        }
+
+        private void MapInformacionGlobal(Profact.TimbraCFDI40.Comprobante comprobante)
+        {
+            if (!arInvoice.IsConsolidationInvoice) return;
+            Dictionary<int, string> satMonths = GetSatMonths();
+            DateTime arInvoiceDate = (DateTime)arInvoicePM.InvoiceDate;
+            comprobante.InformacionGlobal = new Profact.TimbraCFDI40.ComprobanteInformacionGlobal
+            {
+                Periodicidad = "",
+                Meses = satMonths[arInvoiceDate.Month],
+                Año = Convert.ToInt16(arInvoiceDate.Year),
+            };
+        }
+
+        public Dictionary<int, string> GetSatMonths()
+        {
+            return new Dictionary<int, string> {
+                {01,  "Enero"},
+                {02,  "Febrero"},
+                {03,  "Marzo"},
+                {04,  "Abril"},
+                {05,  "Mayo"},
+                {06,  "Junio"},
+                {07,  "Julio"},
+                {08,  "Agosto"},
+                {09,  "Septiembre"},
+                {10, "Octubre"},
+                {11, "Noviembre"},
+                {12, "Diciembre"},
+                {13, "Enero-Febrero"},
+                {14, "Marzo-Abril"},
+                {15, "Mayo-Junio"},
+                {16, "Julio-Agosto"},
+                {17, "Septiembre-Octubre"},
+                {18, "Noviembre-Diciembre"}
+            };
         }
 
         private void CalucalteLineTotals(ARInvoiceLinePM line, Profact.TimbraCFDI40.ComprobanteConcepto concepto, List<VatType> allVatTypes, List<VatTypePercentagePM> allVatPercentages, List<VATTypesGroup> allVatGroups)
