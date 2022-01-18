@@ -1656,7 +1656,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         }
 
         if (this._SelectedFinalReleaseValue !== 'A')
-            filters.addAdditionalFilter("FinalRelease", this._SelectedFinalReleaseValue === 'Y', null, null, "Equals", false, false, false, "Boolean");
+            filters.addAdditionalFilter("FinalRelease", 'is not change what write', null, null, this._SelectedFinalReleaseValue === 'Y' ? 'Equal' : 'NotEqual', false, false, false, "string");
     }
 
     ViewInitCompleted($event) {
@@ -2473,10 +2473,3 @@ export class TabFilter {
     constructor(public Code: string, public Header: string, public Total?: number, public Filter?: string) {
     }
 }
-
-
-var arr = [
-    { "FieldName": "CourierMasterId", "FieldValue": "1-465", "FieldValue2": null, "FieldValue3": null, "Operator": "Equals", "IsCustom": false, "DisplayInList": false, "IsCustomField": false, "FieldDataType": "string", "IgnoreFilter": false, "IsCacheOnClient": false, "IsLookUpfilter": false }, 
-    { "FieldName": "Tenant", "FieldValue": 6, "FieldValue2": null, "FieldValue3": null, "Operator": "Equals", "IsCustom": false, "DisplayInList": false, "IsCustomField": false, "FieldDataType": "number", "IgnoreFilter": false, "IsCacheOnClient": false, "IsLookUpfilter": false }, 
-    { "FieldName": "AcceptanceStatusCode", "FieldValue": "1", "FieldValue2": null, "FieldValue3": null, "Operator": "Equals", "IsCustom": false, "DisplayInList": false, "IsCustomField": false, "FieldDataType": "string", "IgnoreFilter": false, "IsCacheOnClient": false, "IsLookUpfilter": false }, 
-    { "FieldName": "IsClosedForFollowUp", "FieldValue": false, "FieldValue2": null, "FieldValue3": null, "Operator": "Equals", "IsCustom": false, "DisplayInList": false, "IsCustomField": false, "FieldDataType": "Boolean", "IgnoreFilter": false, "IsCacheOnClient": false, "IsLookUpfilter": false }]
