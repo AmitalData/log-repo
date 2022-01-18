@@ -1619,6 +1619,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool finalRelease ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool FinalRelease  
+	   {
+	    
+	     get
+		{
+		   return finalRelease;
+		 }
+		 set
+		 {
+		   if(finalRelease != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FinalRelease",OldValue=finalRelease,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   finalRelease=value;
+		   }
+			
+		 }
+	   }
 	  private DateTime? hatraDate ;
 	  	  
        
