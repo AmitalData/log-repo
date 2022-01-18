@@ -14,7 +14,7 @@ using Simplog.Data.ShipmentsModel;
 using System;
 using System.Collections.Generic;
 
-namespace WebFreight.Web.Helpers
+namespace WebFreight.Web.Helpers.ImporterShipmentOrders
 {
     public class ImporterShipmentOrdersService
     {
@@ -25,6 +25,7 @@ namespace WebFreight.Web.Helpers
         private IWebFreightContext webFreightContext;
         private IShipmentsContext shipmentsContext;
         private ShipmentService shipmentService;
+        private ShipmentOrderAmMap shipmentOrderAmMap;
 
         private readonly int tenant;
         private APILogsPM apiLog;
@@ -49,6 +50,7 @@ namespace WebFreight.Web.Helpers
             shipmentQuery = new ShipmentQuery(tenant);
             apiLogsService = new APILogsService(webFreightContext, tenant);
             aPILogsQuery = new APILogsQuery(tenant);
+            shipmentOrderAmMap = new ShipmentOrderAmMap(tenant);
         }
         private void InitiallizeFields()
         {
@@ -66,7 +68,7 @@ namespace WebFreight.Web.Helpers
                 ShipmentPM shipment = shipmentQuery.GetSingleShipmentPMByNumber(shipmentOrder.CustomerShipmentNumber, tenant);
                 if (shipment == null)
                     throw new Exception("Shipment number does not exist");
-                MapShipmentOrderAmToShipment(shipmentOrder, shipment);
+                shipment = shipmentOrderAmMap.MapShipmentOrderAmToShipment(shipmentOrder, shipment);
                 SubmitShipmentUpdate(shipment);
                 return shipment;
             }
@@ -87,11 +89,6 @@ namespace WebFreight.Web.Helpers
 
             var msg = "Shipment Updated Successfully " + DateTime.Now;
             APILogsUtility.UpdateAPILogStatus(apiLog.Id, apiLog.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, msg, null, shipment.Id, null, "");
-        }
-
-        private void MapShipmentOrderAmToShipment(ShipmentOrderAM shipmentOrder, ShipmentPM shipment)
-        {
-            shipment.Volume = shipmentOrder.Volume;
         }
 
         private void HandleExeption(Exception exception)

@@ -79,7 +79,7 @@ namespace CommunicationWorkerRole.Services.ImporterShipmentOrders
             settingQuery = new SettingQuery(new SettingRepository(objectContext));
             shipmentOrderQueryService = new ShipmentOrderQueryService(tenant.Value);
             aPILogsQuery = new APILogsQuery(tenant.Value);
-            shipmentOrderAmMap = new ShipmentOrderAmMap();
+            shipmentOrderAmMap = new ShipmentOrderAmMap(tenant.Value);
         }
 
         private void InitiallizeFields()

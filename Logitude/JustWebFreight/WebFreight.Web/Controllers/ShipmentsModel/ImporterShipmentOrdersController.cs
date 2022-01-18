@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Helpers.ImporterShipmentOrders;
 using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.ShipmentsModel
