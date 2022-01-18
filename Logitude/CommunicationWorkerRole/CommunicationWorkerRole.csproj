@@ -387,7 +387,7 @@
     <Compile Include="ContainerRequestWorkeRole.cs" />
     <Compile Include="ContainerStatusesReceiverWR.cs" />
     <Compile Include="ContainerUpdateWR.cs" />
-    <Compile Include="EntityMapping\ShipmentOrderAmMap.cs" />
+    <Compile Include="EntityMapping\ShipmentOrderPmToAmMapping.cs" />
     <Compile Include="ImporterShipmentOrdersWorkerRole.cs" />
     <Compile Include="MultiEntityUpdate\IMultiEntityUpdater.cs" />
     <Compile Include="MultiEntityUpdate\MultiEntityUpdater.cs" />
