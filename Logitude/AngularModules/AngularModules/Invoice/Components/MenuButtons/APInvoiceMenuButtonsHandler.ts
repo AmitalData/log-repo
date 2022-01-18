@@ -184,7 +184,7 @@ export class APInvoiceMenuButtonsHandler {
         if (this.EntityPM != null && this.EntityPM.IsExternalEntity) {
             myButtonIsDisabled = true;
         }
-        return myButtonIsDisabled;
+        return SessionLocator.TenantPM.AccountingActivated && myButtonIsDisabled;
     }
 
     public MenuButtonClick(menuButton: MenuButtonPM) {
@@ -380,7 +380,7 @@ export class APInvoiceMenuButtonsHandler {
 
         if (this.isValid) {
             this.ValidateInvoiceDate();
-          
+
         }
 
         else {
@@ -411,7 +411,7 @@ if (response != null) {
                     this.entityArgs.EditComponent.ValidationErrorsList  = response.ErrorsArray;
                 }
             }
-           
+
         });
 
     }
@@ -420,7 +420,7 @@ if (response != null) {
 
         let confirmWindow = new ConfirmWindow();
         confirmWindow.ShowWarningImage = true;
-   
+
         confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.Cancel");
         confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Ok");
         confirmWindow.WindowClosed.subscribe((event: any) => {
