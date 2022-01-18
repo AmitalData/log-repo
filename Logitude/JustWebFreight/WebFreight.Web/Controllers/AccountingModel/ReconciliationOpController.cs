@@ -43,6 +43,8 @@ using WebFreight.Web.DataContracts;
 using Simplog.Data.Helpers;
 using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.BL.CoreBL.Reconcile;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.Server.Tools.StorageService;
 
 namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsController.cs
 {
@@ -739,6 +741,39 @@ tenant);
 
         }
 
+        public HttpResponseMessage PostReconcileExcelData(ReconcileExcelDataArgs args)
+        {
+            SecurityUtility.AuthenticationOnTenant(args.Tenant);
+
+            var excelArgs = new ExportToExcelArgs()
+            {
+                Data = args.Data.GetEnumerator(),
+                QueryColumns = args.QueryColumns,
+                Tenant = args.Tenant,
+                QueryPM = new QueryPM()
+                {
+                    ObjectTableName = "Reconciliation",
+                    DisplayText = "Draft Reconciliation",
+                }
+            };
+            var data = new ExportToExcelHelper().ExportDataToExcel(excelArgs);
+
+            BlobFileInfo fileInfo = new BlobFileInfo()
+            {
+                FileName = "DraftReconciliation-" + DateTime.Now.ToShortDateString(),
+                FolderName = "others",
+                Extension = "xls",
+                Tenant = args.Tenant,
+                FileSize = data.Length,
+            };
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            storageservice.Write(data, fileInfo);
+
+
+            return Request.CreateResponse(HttpStatusCode.OK, fileInfo.FileName);
+        }
+
+
     }
 
 
@@ -749,5 +784,13 @@ tenant);
 
         public List<LedgerTransactionList> OpenReconciliation { get; set; }
         public List<LedgerTransactionList> OpenReconciliationDraft { get; set; }
+    }
+
+
+    public class ReconcileExcelDataArgs
+    {
+        public List<LedgerTransactionPM> Data { get; set; }
+        public List<QueryColumnPM> QueryColumns { get; set; }
+        public int Tenant { get; set; }
     }
 }

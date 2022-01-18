@@ -619,8 +619,257 @@ namespace WebFreight.Web.Helpers
 
             return memory.ToArray();
         }
+        public byte[] ExportDataToExcel(ExportToExcelArgs args)
+        {
+            MemoryStream memory = new MemoryStream();
+
+            var datalist = args.Data;
+
+                if (datalist != null)
+            {
+                var dummyQuery = new QueryPM()
+                {
+                    ObjectTableName = args.QueryPM.ObjectTableName,
+                    DisplayText = args.QueryPM.DisplayText,
+                    NameTextCodeCode = null
+                };
+
+                string xmlData = ConvertDataList2Xml(datalist, dummyQuery, args.QueryColumns, args.Tenant);
+
+                ExcelEngine excelEngine;
+                IWorkbook workbook;
+                IWorksheet sheet;
+
+                InitializeExcelFile(out excelEngine, out workbook, out sheet);
+
+                CreateSheetHeader(dummyQuery, sheet);
+
+                foreach (QueryColumnPM column in args.QueryColumns)
+                {
+                    sheet.AutofitColumn(column.IndexOrder + 1);
+                }
+
+                XmlReader reader = XmlReader.Create(new StringReader(xmlData));
+                XmlDataDocument doc = new XmlDataDocument();
+                doc.Load(reader);
+
+                doc.GetElementsByTagName("Reconciliation");
+                XmlNodeList entitiesList = doc.GetElementsByTagName("Reconciliation");
+
+                if (entitiesList.Count == 0)
+                {
+                    string ip = "";
+                    if (HttpContext.Current != null && HttpContext.Current.Request != null)
+                    {
+                        string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+                        if (string.IsNullOrEmpty(currentIP))
+                        {
+                            currentIP = HttpContext.Current.Request.UserHostAddress;
+                        }
+                        ip = currentIP;
+                    }
+                    //ExceptionHandler.HandleException(new Exception("Error while building xml file, table columns are empty!"), DateTime.Now, tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "ExcelExportService : ExportQueryToExcel Method", ip);
+                    return null;
+                }
+
+                int[,] array = new int[,] { { 65, 0 } };
+
+                foreach (XmlNode node in entitiesList.Item(0).ChildNodes)
+                {
+                    string nodename = TranslateTextsClass.Translate(node.Name, args.Tenant);
+                    QueryColumnPM column = args.QueryColumns.Where(q => q.ObjectFieldListLabelTextCodeCode == node.Name || q.ObjectFieldFullNameTextCodeCode == node.Name).FirstOrDefault();
+                    if (column != null)
+                    {
+                        if (!string.IsNullOrEmpty(column.DisplayText))
+                        {
+
+                            nodename = column.DisplayText;
+                        }
+                    }
+
+                    nodename = nodename != null ? nodename : "";
+                    nodename = nodename.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "");
+                    int start = 65;
+                    string sheetColumn = "";
+                    if (array[0, 0] <= 90 && array[0, 1] == 0)
+                    {
+                        char a = (char)array[0, 0];
+                        sheetColumn = a.ToString();
+                        array[0, 0]++;
+                    }
+                    else
+                    {
+                        if (array[0, 1] == 0)
+                        {
+                            array[0, 0] = start;
+                            array[0, 1] = 65;
+
+                            sheet.Range["AA2:AZ2"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
+                            sheet.Range["AA3:AZ3"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
+
+                        }
+                        if (array[0, 1] <= 90)
+                        {
+                            string a = sheetColumn = ((char)array[0, 0]).ToString() + ((char)array[0, 1]).ToString();
+                            array[0, 1]++;
+                        }
+                        else
+                        {
+                            start += 1;
+                            array[0, 0] = start;
+                            array[0, 1] = 65;
+                            string a = sheetColumn = ((char)array[0, 0]).ToString() + ((char)array[0, 1]).ToString();
+                            array[0, 1]++;
+                            char startCharacter = Convert.ToChar(start);
+                            sheet.Range["AA2:" + startCharacter + "Z2"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
+                            sheet.Range["AA3:" + startCharacter + "Z3"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
+                        }
+
+                    };
+
+                    sheet.Range[sheetColumn.ToString() + "3"].Text = nodename;
+                    IRange range = sheet.Range[sheetColumn + "3"];
+                    //sheet.Range.NumberFormat = "yyyy-mm-dd;@";
+                    range.CellStyle.Font.FontName = "Times New Roman";
+                    range.CellStyle.Font.Bold = true;
+
+                }
+                int cellRow = 4;
+                TenantRepository tenantRepoitory = new TenantRepository(args.Tenant);
+                var CurTenant = tenantRepoitory.GetSingleByTenant(args.Tenant);
+                foreach (XmlNode node in entitiesList)
+                {
+                    int cellCol = 1;
+                    foreach (XmlNode childNode in node.ChildNodes)
+                    {
+
+                        QueryColumnPM column = args.QueryColumns.Where(q => q.ObjectFieldListLabelTextCodeCode == childNode.Name || q.ObjectFieldFullNameTextCodeCode == childNode.Name).FirstOrDefault();
+
+                        switch (column.ObjectFieldDataTypeCode)
+                        {
+                            case "Text":
+                                {
+                                    sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
+                                    break;
+                                }
+
+                            case "Boolean":
+                                {
+                                    Boolean b = false;
+                                    Boolean.TryParse(childNode.InnerText.Trim(), out b);
+                                    sheet.Range[cellRow, cellCol].Boolean = b;
+                                    break;
+                                }
+
+                            case "Constant":
+                                {
+                                    sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
+                                    break;
+                                }
+
+                            case "DateTime":
+                                {
+                                    DateTime date;
+                                    if (DateTime.TryParse(childNode.InnerText.Trim(), out date))
+                                    {
+                                        sheet.Range[cellRow, cellCol].DateTime = date.Date;
+                                        string datetimeformat = @"dd\/MM\/yyyy";
+                                        if (!string.IsNullOrEmpty(CurTenant.DateTimeFormat))
+                                        {
+                                            datetimeformat = CurTenant.DateTimeFormat;
+                                        }
+                                        sheet.Range[cellRow, cellCol].NumberFormat = datetimeformat;
+                                    }
+                                    else
+                                    {
+                                        sheet.Range[cellRow, cellCol].Text = "";
+                                    }
+                                    break;
+                                }
+
+                            case "Decimal":
+                                {
+                                    double dex = 0;
+                                    double.TryParse(childNode.InnerText.Trim(), out dex);
+                                    sheet.Range[cellRow, cellCol].Number = dex;
+                                    break;
+                                }
+
+                            case "SigDouble":
+                            case "Double":
+                                {
+                                    double d = 0;
+                                    double.TryParse(childNode.InnerText.Trim(), out d);
+                                    sheet.Range[cellRow, cellCol].Number = d;
+                                    break;
+                                }
+
+                            case "Integer":
+                                {
+                                    int x = 0;
+                                    int.TryParse(childNode.InnerText.Trim(), out x);
+                                    sheet.Range[cellRow, cellCol].Number = x;
+                                    break;
+                                }
+
+                            default:
+                                {
+                                    sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
+                                    break;
+                                }
+                        }
+
+                        //sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
+                        //if (cellCol <= 2)
+                        //    sheet.Range[cellRow, cellCol].ColumnWidth = 30;
 
 
+
+                        cellCol++;
+                    }
+                    cellRow++;
+
+
+                }
+
+
+                //***************************************************************************
+                //Inserting sample text into the range of cells of the first worksheet.
+                //sheet.Range["A1:N30"].Text = "Hello World";
+
+                //Saving the workbook to disk.
+
+                workbook.SaveAs(memory, ExcelSaveType.SaveAsXLS);
+
+                //No exception will be thrown if there are unsaved workbooks.
+                excelEngine.ThrowNotSavedOnDestroy = false;
+                excelEngine.Dispose();
+            }
+
+
+            return memory.ToArray();
+        }
+
+        private static void CreateSheetHeader(QueryPM dummyQuery, IWorksheet sheet)
+        {
+            sheet.Range["A2:C2"].Merge();
+            sheet.Range["A2:C2"].Text = !string.IsNullOrEmpty(dummyQuery.DisplayText) ? dummyQuery.DisplayText : TextCodesTranslator.TranslateText(dummyQuery.NameTextCodeCode, args.Tenant);
+            sheet.Range["A2:C2"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+            sheet.Range["A2:C2"].CellStyle.Font.Bold = true;
+            sheet.Range["A2:C2"].CellStyle.Font.Color = ExcelKnownColors.Black;
+            sheet.Range["A2:C2"].CellStyle.Font.Size = 12;
+            sheet.Range["A2:C2"].CellStyle.Font.FontName = "Thoma";
+            sheet.Range["A2:Z2"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
+            sheet.Range["A3:Z3"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
+        }
+
+        private static void InitializeExcelFile(out ExcelEngine excelEngine, out IWorkbook workbook, out IWorksheet sheet)
+        {
+            excelEngine = new ExcelEngine();
+            IApplication application = excelEngine.Excel;
+            workbook = excelEngine.Excel.Workbooks.Create(1);
+            sheet = workbook.Worksheets[0];
+        }
 
         private string ConvertDataList2Xml(IEnumerator dataList, QueryPM query, List<QueryColumnPM> queryColumns, int tenant)
         {
@@ -897,6 +1146,7 @@ public class ExportToExcelArgs
 
     public QueryPM QueryPM { get; set; }
     public  List<QueryColumnPM> QueryColumns { get; set; }
-    
+    public IEnumerator Data { get; set; }
+
 
 }
