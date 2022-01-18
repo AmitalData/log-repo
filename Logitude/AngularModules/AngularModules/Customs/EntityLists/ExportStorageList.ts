@@ -35,6 +35,8 @@ export class ExportStorageList {
 	DeclarationStatusTypeCode: string;
 	Declaration_ID: string;
 	DeclarationCustomFileNo: string;
+	DeclarationNumber: string;
+	ExporterCode: string;
 	
 }
  

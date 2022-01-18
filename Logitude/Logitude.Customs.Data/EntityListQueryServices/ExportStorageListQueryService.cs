@@ -23,7 +23,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         {
             IQueryable<ExportStorageList> query = (from en in iQueryable
                                                    
-                                                   join declaration in context.Declarations.Select(r => new { r.Id, r.DeclarationStatusTypeCode, r.CustomFileNo })
+                                                   join declaration in context.Declarations.Select(r => new { r.Id, r.DeclarationStatusTypeCode, r.CustomFileNo, r.DeclarationNumber })
                                                    on en.DeclarationId equals declaration.Id
                                                    join status in context.DeclarationStatusTypes.Select(r => new { r.Code, r.LocalName })
                                                    on declaration.DeclarationStatusTypeCode equals status.Code
@@ -34,7 +34,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                    join storageStatus in context.StorageStatuses.Select( r=> new {r.Code, r.LocalName})
                                                    on en.StorageStatus equals storageStatus.Code
 
-                                                   join card in context.Cards.Select( r=> new {r.Id, r.LocalName})
+                                                   join card in context.Cards.Select( r=> new {r.Id, r.LocalName, r.VatNumber})
                                                    on en.ExporterID equals card.Id
 
                                                    join customsShip in context.CustomsShips.Select( r=> new {r.Code, r.LocalName})
@@ -104,6 +104,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        Declaration_ID = en.DeclarationId,
 
                                                        DeclarationCustomFileNo = declaration.CustomFileNo,
+
+                                                       DeclarationNumber = declaration.DeclarationNumber,
+
+                                                       ExporterCode = card.VatNumber
                                                    });
             return query;
         }
