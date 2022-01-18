@@ -628,7 +628,18 @@ export class AmitalGatewayUtil {
         static StartDoIt(unifreightMessage: UnifreightMessageM, myEditTab, callback2TabZero: () => void) {
             //BackButtonLabel: "הצהרות ללם התרה"EntityId :"1-103991" ,ObjectTableName:"Customs.Declaration"
             let isSaved: boolean = false;
-            let BackButtonLabel = "תיק עמילות"
+            let BackButtonLabel = "תיק עמילות";
+            
+            if (unifreightMessage.UnifreightEntity == "EFIFILEM") {
+                BackButtonLabel = "תיק יצוא";
+                try {
+                    const formtitleArray = unifreightMessage.Requset.filter((item) => item[0] == "formtitle");
+                    BackButtonLabel=formtitleArray[0][1];
+                } catch (e) {
+
+                }
+                
+            }
 
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
                 //myEditTab.SessionComponent.viewContainerRef
