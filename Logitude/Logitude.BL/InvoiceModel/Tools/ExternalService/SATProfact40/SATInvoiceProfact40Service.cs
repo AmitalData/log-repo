@@ -916,16 +916,28 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         {
             if (relatedInvoice == null || (relatedInvoice != null && string.IsNullOrEmpty(relatedInvoice.SATXML))) return "";
 
-            Profact.TimbraCFDI40.Comprobante oldComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI40.Comprobante>(relatedInvoice.SATXML);
+            XmlElement[] complementoXmlElement = GetComplementoXmlElementFromRelatedInvoice(relatedInvoice.SATXML); 
+            
+            if (complementoXmlElement == null) return "";
 
-            if (oldComprobante.Complemento.Any == null) return "";
-
-            List<System.Xml.XmlElement> myLXmlComplementos = oldComprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+            List<System.Xml.XmlElement> myLXmlComplementos = complementoXmlElement.ToList<System.Xml.XmlElement>();
             var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
             if (timbreFiscalDigitalElement == null) return "";
 
             Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
             return digitalTi.UUID.Trim();
+        }
+
+        private static XmlElement[] GetComplementoXmlElementFromRelatedInvoice(string relatedInvoiceSATXML)
+        {
+            try
+            {
+                return Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI40.Comprobante>(relatedInvoiceSATXML).Complemento.Any;
+            }
+            catch (Exception ex)
+            {
+                return Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(relatedInvoiceSATXML).Complemento.Any;
+            }
         }
 
         private void BuildCfdiRelacionados(Profact.TimbraCFDI40.Comprobante comprobante, string relatedInvoiceUUID)
