@@ -8,13 +8,13 @@ using System;
 
 namespace CommunicationWorkerRole.EntityMapping
 {
-    public class ShipmentOrderAmMap
+    public class ShipmentOrderPmToAmMapping
     {
         private readonly CardRepository cardsReporistory;
         private readonly IncotermRepository incotermRepository;
         private readonly int tenant;
 
-        public ShipmentOrderAmMap(int tenant)
+        public ShipmentOrderPmToAmMapping(int tenant)
         {
             ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
             cardsReporistory = new CardRepository(commoncontext);

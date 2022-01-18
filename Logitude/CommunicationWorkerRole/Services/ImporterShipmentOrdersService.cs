@@ -35,7 +35,7 @@ namespace CommunicationWorkerRole.Services.ImporterShipmentOrders
         private SettingQuery settingQuery;
         private ShipmentOrderQueryService shipmentOrderQueryService;
         private APILogsQuery aPILogsQuery;
-        private ShipmentOrderAmMap shipmentOrderAmMap;
+        private ShipmentOrderPmToAmMapping shipmentOrderAmMap;
 
         private string shipmentOrderId;
         private int? tenant;
@@ -79,7 +79,7 @@ namespace CommunicationWorkerRole.Services.ImporterShipmentOrders
             settingQuery = new SettingQuery(new SettingRepository(objectContext));
             shipmentOrderQueryService = new ShipmentOrderQueryService(tenant.Value);
             aPILogsQuery = new APILogsQuery(tenant.Value);
-            shipmentOrderAmMap = new ShipmentOrderAmMap(tenant.Value);
+            shipmentOrderAmMap = new ShipmentOrderPmToAmMapping(tenant.Value);
         }
 
         private void InitiallizeFields()
