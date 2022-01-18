@@ -165,6 +165,7 @@ export class APInvoiceMenuButtonsHandler {
                         }
 
                         case "CopyInvoice": {
+                            button.IsHidden = !SessionLocator.TenantPM.AccountingActivated;
                             myButtonIsDisabled = this.SetEnableForCopyInvoiceButton(myButtonIsDisabled);
                             break;
                         }
@@ -184,7 +185,7 @@ export class APInvoiceMenuButtonsHandler {
         if (this.EntityPM != null && this.EntityPM.IsExternalEntity) {
             myButtonIsDisabled = true;
         }
-        return SessionLocator.TenantPM.AccountingActivated && myButtonIsDisabled;
+        return myButtonIsDisabled;
     }
 
     public MenuButtonClick(menuButton: MenuButtonPM) {
