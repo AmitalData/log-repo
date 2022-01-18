@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunicationWorkerRole.Stimulsoft.fonts;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -25,10 +26,20 @@ namespace WindowsFormsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
+            AddStimulsoftFonts();
             button1.Enabled = false;
             var worker = new BackgroundWorker();
             worker.DoWork += new DoWorkEventHandler(worker_DoWork);
             worker.RunWorkerAsync();
+        }
+
+        private void AddStimulsoftFonts()
+        {
+            try
+            {
+                StimulsoftFontsService.AddFonts();
+            }
+            catch (Exception){}
         }
 
         void worker_DoWork(object sender, DoWorkEventArgs e)
