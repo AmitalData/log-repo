@@ -131,6 +131,9 @@ export class NewBIReport extends BaseComponent {
         if (factTablesNames == undefined || factTablesNames == null)
             return;
         factTablesNames.forEach((factTable: any) => {
+            if (factTable.DisplayName == 'Containers') {
+                this.FactTables.push(new ShortFactTableDetails(factTable.Code, factTable.DisplayName, factTable.Description));
+            }
             if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "BIReport." + factTable.Code))
                 this.FactTables.push(new ShortFactTableDetails(factTable.Code, factTable.DisplayName, factTable.Description));
         });

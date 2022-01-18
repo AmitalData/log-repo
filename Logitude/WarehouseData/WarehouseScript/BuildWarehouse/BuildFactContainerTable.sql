@@ -84,6 +84,9 @@
  declare @createdByUser as int
  declare @updatedByUser as int 
  declare @ShipmentId as varchar(15)
+ declare @LastFreeDayDate as datetime  
+ declare @GateOut as datetime
+ declare @FreeDays as int
 
  DECLARE ContainersCursor CURSOR READ_ONLY
 	FOR
@@ -96,7 +99,7 @@
 	dw_Containers.ActualTransshipment4Discharge, dw_Containers.EstimatedTransshipment4Loaded, dw_Containers.ActualTransshipment4Loaded, dw_Containers.EstimatedTrans4VesselDeparture, dw_Containers.ActualTrans4VesselDeparture, pODLocationPort.Id_Number, dw_Containers.EstimatedPODVesselArrival, dw_Containers.EstimatedPODDischarge, 
 	dw_Containers.ActualPODVesselArrival, dw_Containers.ActualPODDischarge, dw_Containers.EstimatedPODDeparture, dw_Containers.ActualPODDeparture, emptyReturnLocationPort.Id_Number, dw_Containers.EstimatedEmptyReturn, dw_Containers.ActualEmptyReturn, dw_Containers.MainCarriageATA, dw_Containers.MainCarriageETA, dw_Containers.MainCarriageETD, 
 	dw_Containers.MainCarriageATD, dw_Containers.PreCarriageATD, onCarriageLocationPort.Id_Number, dw_Containers.EstimatedOnCarriageDeparture, dw_Containers.OnCarriageETD, dw_Containers.ActualOnCarriageDeparture, dw_Containers.OnCarriageATD, lIFLocationPort.Id_Number, dw_Containers.ActualLIFArrival, dw_Containers.PreCarriageETD, 
-	dw_Containers.EstimatedLIFArrival, dw_Containers.CreateDate, createdByUser.Id_Number, dw_Containers.UpdateDate, updatedByUser.Id_Number, dw_Containers.CurrentStatus, dw_Containers.CurrentStatusDate, dw_Containers.ClosedDate, dw_Containers.IsClosed, status.Id_Number,dw_Containers.ShipmentId
+	dw_Containers.EstimatedLIFArrival, dw_Containers.CreateDate, createdByUser.Id_Number, dw_Containers.UpdateDate, updatedByUser.Id_Number, dw_Containers.CurrentStatus, dw_Containers.CurrentStatusDate, dw_Containers.ClosedDate, dw_Containers.IsClosed, status.Id_Number,dw_Containers.ShipmentId,dw_Containers.LastFreeDayDate,dw_Containers.GateOut,dw_Containers.FreeDays
 
   From dw_Containers
 
@@ -127,7 +130,7 @@
 	@ActualTransshipment4Discharge, @EstimatedTransshipment4Loaded, @ActualTransshipment4Loaded, @EstimatedTrans4VesselDeparture, @ActualTrans4VesselDeparture, @pODLocationPort, @EstimatedPODVesselArrival, @EstimatedPODDischarge, 
 	@ActualPODVesselArrival, @ActualPODDischarge, @EstimatedPODDeparture, @ActualPODDeparture, @emptyReturnLocationPort, @EstimatedEmptyReturn, @ActualEmptyReturn, @MainCarriageATA, @MainCarriageETA, @MainCarriageETD,
 	@MainCarriageATD, @PreCarriageATD, @onCarriageLocationPort, @EstimatedOnCarriageDeparture, @OnCarriageETD, @ActualOnCarriageDeparture, @OnCarriageATD, @lIFLocationPort, @ActualLIFArrival, @PreCarriageETD, @EstimatedLIFArrival,
-	@CreateDate, @createdByUser, @UpdateDate, @updatedByUser, @CurrentStatus, @CurrentStatusDate, @ClosedDate, @IsClosed, @status, @ShipmentId
+	@CreateDate, @createdByUser, @UpdateDate, @updatedByUser, @CurrentStatus, @CurrentStatusDate, @ClosedDate, @IsClosed, @status, @ShipmentId,@LastFreeDayDate,@GateOut,@FreeDays
 
 		WHILE @@FETCH_STATUS = 0
 	BEGIN
@@ -143,18 +146,18 @@
 	 [Actual Transshipment4 Loaded], [Estimated Transshipment4 Vessel Departure], [Actual Transshipment4 Vessel Departure ], [POD Location Port], [Estimated POD Vessel Arrival], [Estimated POD Discharge], [Actual POD Vessel Arrival], [Actual POD Discharge],
 	 [Estimated POD Departure], [Actual POD Departure], [Empty Return Location Port], [Estimated Empty Return], [Actual Empty Return], [Container Main Carriage ATA], [Container Main Carriage ETA], [Container Main Carriage ETD], 
 	 [Container Main Carriage ATD], [Container Pre Carriage ETD], [On Carriage Location Port], [Estimated On Carriage Departure], [Container On Carriage ETD], [Actual On Carriage Departure], [Container On Carriage ATD], [LIF Location Port], [Actual LIF Arrival], [Container Pre Carriage ATD], [Estimated LIF Arrival],
-	 [Create Date], [Created By], [Update Date], [Updated By], [Current Status], [Current Status Date], [Closed Date], [Is Closed], [Status], [Shipment Id])
+	 [Create Date], [Created By], [Update Date], [Updated By], [Current Status], [Current Status Date], [Closed Date], [Is Closed], [Status], [Shipment Id],[Last Free Day],[POD Gate Out],[Free Days])
 
-	 values(@Id, @SourceTenant, @ParentTenant,@ActualEmptyPickupDate, @emptyPickupLocationPort, @EstimatedEmptyPickupDate, @preCarriageLocationPort, @pOLLocationPort, @EstimatedPOLArrival,
-	@ActualPOLArrival, @EstimatedPOLLoaded, @ActualPOLLoaded, @EstimatedPOLVesselDeparture, @ActualPOLVesselDeparture, @transshipment1LocationPort, @EstimatedTrans1VesselArrival, @ActualTransshipment1VesselArrival,
-	@EstimatedTransshipment1Discharge, @ActualTransshipment1Discharge, @EstimatedTransshipment1Loaded, @ActualTransshipment1Loaded, @EstimatedTrans1VesselDeparture, @ActualTrans1VesselDeparture, @transshipment2LocationPort,
-	@EstimatedTrans2VesselArrival, @ActualTransshipment2VesselArrival, @EstimatedTransshipment2Discharge, @ActualTransshipment2Discharge, @EstimatedTransshipment2Loaded, @ActualTransshipment2Loaded, @EstimatedTrans2VesselDeparture,
-	@ActualTrans2VesselDeparture, @transshipment3LocationPort, @EstimatedTrans3VesselArrival, @ActualTransshipment3VesselArrival, @EstimatedTransshipment3Discharge, @ActualTransshipment3Discharge, @EstimatedTransshipment3Loaded,
-	@ActualTransshipment3Loaded, @EstimatedTrans3VesselDeparture, @ActualTrans3VesselDeparture, @transshipment4LocationPort, @EstimatedTrans4VesselArrival, @ActualTransshipment4VesselArrival, @EstimatedTransshipment4Discharge,
-	@ActualTransshipment4Discharge, @EstimatedTransshipment4Loaded, @ActualTransshipment4Loaded, @EstimatedTrans4VesselDeparture, @ActualTrans4VesselDeparture, @pODLocationPort, @EstimatedPODVesselArrival, @EstimatedPODDischarge, 
-	@ActualPODVesselArrival, @ActualPODDischarge, @EstimatedPODDeparture, @ActualPODDeparture, @emptyReturnLocationPort, @EstimatedEmptyReturn, @ActualEmptyReturn, @MainCarriageATA, @MainCarriageETA, @MainCarriageETD,
-	@MainCarriageATD, @PreCarriageATD, @onCarriageLocationPort, @EstimatedOnCarriageDeparture, @OnCarriageETD, @ActualOnCarriageDeparture, @OnCarriageATD, @lIFLocationPort, @ActualLIFArrival, @PreCarriageETD, @EstimatedLIFArrival,
-	@CreateDate, @createdByUser, @UpdateDate, @updatedByUser, @CurrentStatus, @CurrentStatusDate, @ClosedDate, @IsClosed, @status, @ShipmentId)
+	 values(@Id, @SourceTenant, @ParentTenant,dbo.GetDateFormateAsNumber(@ActualEmptyPickupDate), @emptyPickupLocationPort, dbo.GetDateFormateAsNumber(@EstimatedEmptyPickupDate), @preCarriageLocationPort, @pOLLocationPort, dbo.GetDateFormateAsNumber(@EstimatedPOLArrival),
+	 dbo.GetDateFormateAsNumber(@ActualPOLArrival), dbo.GetDateFormateAsNumber(@EstimatedPOLLoaded), dbo.GetDateFormateAsNumber(@ActualPOLLoaded), dbo.GetDateFormateAsNumber(@EstimatedPOLVesselDeparture), dbo.GetDateFormateAsNumber(@ActualPOLVesselDeparture), @transshipment1LocationPort, dbo.GetDateFormateAsNumber(@EstimatedTrans1VesselArrival), dbo.GetDateFormateAsNumber(@ActualTransshipment1VesselArrival),
+	 dbo.GetDateFormateAsNumber(@EstimatedTransshipment1Discharge), dbo.GetDateFormateAsNumber(@ActualTransshipment1Discharge), dbo.GetDateFormateAsNumber(@EstimatedTransshipment1Loaded), dbo.GetDateFormateAsNumber(@ActualTransshipment1Loaded), dbo.GetDateFormateAsNumber(@EstimatedTrans1VesselDeparture), dbo.GetDateFormateAsNumber(@ActualTrans1VesselDeparture),
+	 @transshipment2LocationPort, dbo.GetDateFormateAsNumber(@EstimatedTrans2VesselArrival), dbo.GetDateFormateAsNumber(@ActualTransshipment2VesselArrival), dbo.GetDateFormateAsNumber(@EstimatedTransshipment2Discharge), dbo.GetDateFormateAsNumber(@ActualTransshipment2Discharge), dbo.GetDateFormateAsNumber(@EstimatedTransshipment2Loaded),
+	 dbo.GetDateFormateAsNumber(@ActualTransshipment2Loaded), dbo.GetDateFormateAsNumber(@EstimatedTrans2VesselDeparture), dbo.GetDateFormateAsNumber(@ActualTrans2VesselDeparture), @transshipment3LocationPort, dbo.GetDateFormateAsNumber(@EstimatedTrans3VesselArrival), dbo.GetDateFormateAsNumber(@ActualTransshipment3VesselArrival), dbo.GetDateFormateAsNumber(@EstimatedTransshipment3Discharge),
+	 dbo.GetDateFormateAsNumber(@ActualTransshipment3Discharge), dbo.GetDateFormateAsNumber(@EstimatedTransshipment3Loaded), dbo.GetDateFormateAsNumber(@ActualTransshipment3Loaded), dbo.GetDateFormateAsNumber(@EstimatedTrans3VesselDeparture), dbo.GetDateFormateAsNumber(@ActualTrans3VesselDeparture), @transshipment4LocationPort, dbo.GetDateFormateAsNumber(@EstimatedTrans4VesselArrival), dbo.GetDateFormateAsNumber(@ActualTransshipment4VesselArrival), dbo.GetDateFormateAsNumber(@EstimatedTransshipment4Discharge), dbo.GetDateFormateAsNumber(@ActualTransshipment4Discharge), dbo.GetDateFormateAsNumber(@EstimatedTransshipment4Loaded),
+	 dbo.GetDateFormateAsNumber(@ActualTransshipment4Loaded), dbo.GetDateFormateAsNumber(@EstimatedTrans4VesselDeparture), dbo.GetDateFormateAsNumber(@ActualTrans4VesselDeparture), @pODLocationPort, dbo.GetDateFormateAsNumber(@EstimatedPODVesselArrival), dbo.GetDateFormateAsNumber(@EstimatedPODDischarge), dbo.GetDateFormateAsNumber(@ActualPODVesselArrival), dbo.GetDateFormateAsNumber(@ActualPODDischarge),
+	 dbo.GetDateFormateAsNumber(@EstimatedPODDeparture), dbo.GetDateFormateAsNumber(@ActualPODDeparture), @emptyReturnLocationPort, dbo.GetDateFormateAsNumber(@EstimatedEmptyReturn), dbo.GetDateFormateAsNumber(@ActualEmptyReturn), dbo.GetDateFormateAsNumber(@MainCarriageATA), dbo.GetDateFormateAsNumber(@MainCarriageETA), dbo.GetDateFormateAsNumber(@MainCarriageETD),
+	 dbo.GetDateFormateAsNumber(@MainCarriageATD), dbo.GetDateFormateAsNumber(@PreCarriageETD), @onCarriageLocationPort, dbo.GetDateFormateAsNumber(@EstimatedOnCarriageDeparture), dbo.GetDateFormateAsNumber(@OnCarriageETD), dbo.GetDateFormateAsNumber(@ActualOnCarriageDeparture), dbo.GetDateFormateAsNumber(@OnCarriageATD), @lIFLocationPort, dbo.GetDateFormateAsNumber(@ActualLIFArrival), dbo.GetDateFormateAsNumber(@PreCarriageATD), dbo.GetDateFormateAsNumber(@EstimatedLIFArrival),
+	 dbo.GetDateFormateAsNumber(@CreateDate), @createdByUser, dbo.GetDateFormateAsNumber(@UpdateDate), @updatedByUser, @CurrentStatus, dbo.GetDateFormateAsNumber(@CurrentStatusDate), dbo.GetDateFormateAsNumber(@ClosedDate), @IsClosed, @status,@ShipmentId, dbo.GetDateFormateAsNumber(@LastFreeDayDate), dbo.GetDateFormateAsNumber(@GateOut), @FreeDays)
 
 		END TRY 
 BEGIN CATCH  
@@ -176,7 +179,7 @@ FETCH NEXT FROM ContainersCursor INTO @Id,@Tenant, @SourceTenant, @ParentTenant,
 	@ActualTransshipment4Discharge, @EstimatedTransshipment4Loaded, @ActualTransshipment4Loaded, @EstimatedTrans4VesselDeparture, @ActualTrans4VesselDeparture, @pODLocationPort, @EstimatedPODVesselArrival, @EstimatedPODDischarge, 
 	@ActualPODVesselArrival, @ActualPODDischarge, @EstimatedPODDeparture, @ActualPODDeparture, @emptyReturnLocationPort, @EstimatedEmptyReturn, @ActualEmptyReturn, @MainCarriageATA, @MainCarriageETA, @MainCarriageETD,
 	@MainCarriageATD, @PreCarriageATD, @onCarriageLocationPort, @EstimatedOnCarriageDeparture, @OnCarriageETD, @ActualOnCarriageDeparture, @OnCarriageATD, @lIFLocationPort, @ActualLIFArrival, @PreCarriageETD, @EstimatedLIFArrival,
-	@CreateDate, @createdByUser, @UpdateDate, @updatedByUser, @CurrentStatus, @CurrentStatusDate, @ClosedDate, @IsClosed, @status, @ShipmentId
+	@CreateDate, @createdByUser, @UpdateDate, @updatedByUser, @CurrentStatus, @CurrentStatusDate, @ClosedDate, @IsClosed, @status, @ShipmentId,@LastFreeDayDate,@GateOut,@FreeDays
 
 			End
 	CLOSE ContainersCursor

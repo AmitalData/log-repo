@@ -384,7 +384,9 @@ export class DWObjectFieldsDetails
             this.IsPrimaryKey = DWObjectField.IsPrimaryKey;
             this.IsMeasurement = DWObjectField.IsMeasurement;
             this.AggregationTypeCode = DWObjectField.AggregationTypeCode;
-            this.IsCustom = DWObjectField.IsCustom;
+            this.IsCustom = DWObjectField.IsCustom; 
+           //this.Code = DWObjectField.Code;
+
             if (DWObjectField.FilterType) {
                 this.FilterType = DWObjectField.FilterType;
             }
@@ -559,7 +561,7 @@ export class DWObjectFieldsDetails
 
                 this.TranslationText = this.GetTranslationText(this);
                 this.DisplayName = this.ComputeDisplayName(this);//(AppTool.IsNullOrEmpty(this.DisplayName)) ? (this.DWObjectTableCode + ' ' + this.Code) : (this.DisplayName);
-                this.ParentDimTabelName = this.DimensionTableCode;
+                this.ParentDimTabelName = this.DimensionTableCode; 
                 if (!AppTool.IsNullOrEmpty(this.DimensionTableDisplayName)) {
                     this.DimensionTableDisplayName = this.DimensionTableDisplayName;
                 }
@@ -1003,7 +1005,7 @@ export class DWObjectFieldsDetails
         this.DataTypeCode = DWObjectField.DataTypeCode;
         this.DimensionTableCode = DWObjectField.DimensionTableCode;
         this.TranslationText = this.GetTranslationText(DWObjectField);
-        this.DisplayName = this.ComputeDisplayName(DWObjectField);//(AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) ? (DWObjectField.DWObjectTableCode + ' ' + DWObjectField.Code) : (DWObjectField.DisplayName);
+        this.DisplayName = this.ComputeDisplayName(DWObjectField);//(AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) ? (DWObjectField.DWObjectTableCode + ' ' + DWObjectField.Code) : (DWObjectField.DisplayName); 
 
         if (!AppTool.IsNullOrEmpty(DWObjectField.DimensionTableDisplayName)) {
             this.DimensionTableDisplayName = DWObjectField.DimensionTableDisplayName;
