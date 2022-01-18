@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TariffUpdateClass
    {  		
-		public const string HashString = "6b3522d714fa6c2e0a16ebe813c21bef";
+		public const string HashString = "7b5426ff3fb62825c4b07639554a4d9c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4634,6 +4634,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	          	
 		    TariffObjectTable.HeaderScreenId = TariffTariffSurchagesHeaderScreenScreen1.Id;
 		    TariffObjectTable.HeaderScreenCode = TariffTariffSurchagesHeaderScreenScreen1.Code;
+
+	   		  
+	      
+
+	         Screen TariffCustomsChargesHeaderScreenScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Tariff.CustomsChargesHeaderScreen", Name = "CustomsChargesHeaderScreen", ObjectTableId = TariffObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
+      
+             ScreenField TariffTariffCustomsChargesHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TariffCustomsChargesHeaderScreenScreen2.Id,ScreenCode = TariffCustomsChargesHeaderScreenScreen2.Code, ObjectFieldCode = "Tariff.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TariffTariffCustomsChargesHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TariffCustomsChargesHeaderScreenScreen2.Id,ScreenCode = TariffCustomsChargesHeaderScreenScreen2.Code, ObjectFieldCode = "Tariff.StartDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TariffTariffCustomsChargesHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = TariffCustomsChargesHeaderScreenScreen2.Id,ScreenCode = TariffCustomsChargesHeaderScreenScreen2.Code, ObjectFieldCode = "Tariff.CustomsBrokerId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TariffTariffCustomsChargesHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = TariffCustomsChargesHeaderScreenScreen2.Id,ScreenCode = TariffCustomsChargesHeaderScreenScreen2.Code, ObjectFieldCode = "Tariff.ExpirationDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TariffTariffCustomsChargesHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = TariffCustomsChargesHeaderScreenScreen2.Id,ScreenCode = TariffCustomsChargesHeaderScreenScreen2.Code, ObjectFieldCode = "Tariff.CurrencyId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TariffTariffCustomsChargesHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = TariffCustomsChargesHeaderScreenScreen2.Id,ScreenCode = TariffCustomsChargesHeaderScreenScreen2.Code, ObjectFieldCode = "Tariff.ContractNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField TariffTariffCustomsChargesHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = TariffCustomsChargesHeaderScreenScreen2.Id,ScreenCode = TariffCustomsChargesHeaderScreenScreen2.Code, ObjectFieldCode = "Tariff.TariffNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
+		    TariffObjectTable.HeaderScreenId = TariffCustomsChargesHeaderScreenScreen2.Id;
+		    TariffObjectTable.HeaderScreenCode = TariffCustomsChargesHeaderScreenScreen2.Code;
 
 	   		  
 

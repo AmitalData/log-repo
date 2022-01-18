@@ -38,7 +38,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Tariff Types&quot;"
-  Code="&quot;042f&quot;"
+  Code="&quot;91bb&quot;"
   Name="&quot;TariffType Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"

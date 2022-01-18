@@ -5842,6 +5842,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;DirectionCode&quot;"
     ListPropertyPath="&quot;DirectionCode&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -5910,6 +5911,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;DirectionName&quot;"
     ListPropertyPath="&quot;DirectionName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -6574,6 +6576,52 @@
         Row="0"
         ObjectFieldName="&quot;TariffNumber&quot;"
         ScreenName="TariffSurchagesHeaderScreen" />
+    </ScreenFields>
+  </Screen>
+  <Screen
+    Name="&quot;CustomsChargesHeaderScreen&quot;"
+    ObjectTableName="&quot;Tariff&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    Code="&quot;Tariff.CustomsChargesHeaderScreen&quot;"
+    NumberOfColumns="4"
+    NumberOfRows="2">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;Name&quot;"
+        ScreenName="CustomsChargesHeaderScreen" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;StartDate&quot;"
+        ScreenName="CustomsChargesHeaderScreen" />
+      <ScreenField
+        Column="1"
+        Row="0"
+        ObjectFieldName="&quot;CustomsBrokerId&quot;"
+        ScreenName="CustomsChargesHeaderScreen" />
+      <ScreenField
+        Column="1"
+        Row="1"
+        ObjectFieldName="&quot;ExpirationDate&quot;"
+        ScreenName="CustomsChargesHeaderScreen" />
+      <ScreenField
+        Column="2"
+        Row="0"
+        ObjectFieldName="&quot;CurrencyId&quot;"
+        ScreenName="CustomsChargesHeaderScreen" />
+      <ScreenField
+        Column="2"
+        Row="1"
+        ObjectFieldName="&quot;ContractNumber&quot;"
+        ScreenName="CustomsChargesHeaderScreen" />
+      <ScreenField
+        Column="3"
+        Row="0"
+        ObjectFieldName="&quot;TariffNumber&quot;"
+        ScreenName="CustomsChargesHeaderScreen" />
     </ScreenFields>
   </Screen>
   <Tab

@@ -21,6 +21,7 @@ export class CostWorkspaceComponent implements OnInit {
     private CurrentSession = SessionLocator.SelectedSession;
     public IsTariffGenerateVisible: boolean = false;
     public IsCustomsChargesVisible: boolean = false;
+    public QueriesAreaHeight: number = 240;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(private _entityResourceService: EntityResourceService, private tariffDomainService: TariffDomainService) {
         this.RunComponent();
@@ -113,6 +114,7 @@ export class CostWorkspaceComponent implements OnInit {
     SetQueriesVisibility() {
         if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CCT")[0]) {
             this.IsCustomsChargesVisible = true;
+            this.QueriesAreaHeight = 310;
         }
 
         if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.AirFreightCostTariffs")) {

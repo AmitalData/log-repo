@@ -163,8 +163,7 @@ export class TariffTabsContentComponent implements OnDestroy {
 
     Run(args: any) {
         this.EntityPM = args['EntityPM'];
-
-        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
+        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
             this.EditTabTariffType = "SVR";
         }
 
@@ -178,6 +177,10 @@ export class TariffTabsContentComponent implements OnDestroy {
 
         else if (this.EntityPM.TypeCode == "OFS") {
             this.EditTabTariffType = "OVR";
+        }
+
+        else if (this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
+            this.EditTabTariffType = "CHVR";
         }
 
         this.BuildTabs();
@@ -420,12 +423,12 @@ class TariffDetailsTab {
                 break;
             }
 
-            case "CVR":{
-                    this.IsDraft = version.IsDraft;
-                    this.VersionPM = version;
-                    this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/OceanFCLVersionTabComponent";
-                    break;
-                }
+            case "CVR": {
+                this.IsDraft = version.IsDraft;
+                this.VersionPM = version;
+                this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/OceanFCLVersionTabComponent";
+                break;
+            }
 
             case "OVR":
                 {
@@ -447,7 +450,7 @@ class TariffDetailsTab {
 
             case "EV": {
                 this.ComponentPath = "./Common/Components/Events/EventsTabComponent";
-                break;                    
+                break;
             }
         }
     }

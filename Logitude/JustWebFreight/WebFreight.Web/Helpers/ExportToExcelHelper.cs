@@ -265,7 +265,6 @@ namespace WebFreight.Web.Helpers
                     }
                 }
 
-
                 if (stop == false)
                 {
                     MethodsInfo = getMethodsInfo("WebFreight.Web.CRMModel.DomainServices.CRMDomainService", query);
@@ -289,6 +288,7 @@ namespace WebFreight.Web.Helpers
                         stop = true;
                     }
                 }
+
                 if (stop == false)
                 {
                     MethodsInfo = getMethodsInfo("WebFreight.Web.AccountingModel.DomainServices.AccountingDomainService", query);
@@ -300,6 +300,7 @@ namespace WebFreight.Web.Helpers
                         stop = true;
                     }
                 }
+
                 if (stop == false)
                 {
                     MethodsInfo = getMethodsInfo("WebFreight.Web.WarehouseModel.DomainServices.WarehousesDomainService", query);
@@ -312,6 +313,17 @@ namespace WebFreight.Web.Helpers
                     }
                 }
 
+                if (stop == false)
+                {
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.TariffModel.DomainServices.TariffDomainService", query);
+                    if (MethodsInfo != null)
+                    {
+                        getListMethodInfo = MethodsInfo.ListMethodInfo;
+                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                        context = MethodsInfo.context;
+                        stop = true;
+                    }
+                }
             }
 
             System.Linq.IQueryable querableEntities = null;
