@@ -112,7 +112,7 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
        
         if (errors.length > 0) {
             this.ValidationErrorsList = errors;
- 
+            this.isOkButtonClicked=false;
             this.CurrentSession.StopBusyIndicator();
              return;
         }

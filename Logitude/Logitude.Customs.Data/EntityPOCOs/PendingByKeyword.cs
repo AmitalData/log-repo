@@ -34,6 +34,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string SearchFields { get; set; }
         [Column("SearchByFieldCode")]
 	    public string SearchByFieldCode { get; set; }
+        [Column("SearchToField")]
+	    public int SearchToField { get; set; }
+        [Column("SerachType")]
+	    public int SerachType { get; set; }
     }
 }
 	 
