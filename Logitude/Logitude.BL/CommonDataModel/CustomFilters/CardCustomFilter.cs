@@ -66,19 +66,6 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                             queryableData = queryableData.Where(d => d.EnglishName.StartsWith(value) || d.Code.StartsWith(value) || d.LocalName.StartsWith(value));
                         }
                     }
-
-                    if (item.FieldName == "GLAccountId")
-                    {
-                        queryableData = queryableData.Where(d => d.GLAccountId != null);
-
-                    }
-                    if (item.FieldName == "ExcluedFromDeductionReport")
-                    {
-                        IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
-                        List<string> accountIds = (from account in accountingContext.GLAccounts where !account.ExcludeFromDeductionReport select account.Id).ToList();
-                        queryableData = queryableData.Where(d => accountIds.Contains(d.GLAccountId));
-
-                    }
                 }
             }
 

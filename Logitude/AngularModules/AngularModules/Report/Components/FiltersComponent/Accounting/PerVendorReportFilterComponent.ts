@@ -18,6 +18,9 @@ import { GLAccountListService } from '../../../../Accounting/Services/StandardLi
 import { ChartOfAccountListService } from '../../../../Accounting/Services/StandardLists/ChartOfAccountListService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { AdvancedDatePickerResolverComponent } from '../../../../Infrastructure/Components/LogitudeComponents/AdvancedDatePickerResolverComponent';
+import { GLAccountPMService } from 'Accounting/Services/StandardPMs/GLAccountPMService';
+import { reject } from 'q';
+import { GLAccountPM } from 'Accounting/EntityPMs/GLAccountPM';
 
 @Component({
 
@@ -34,6 +37,7 @@ export class PerVendorReportFilterComponent extends BaseComponent {
     public ObjectTableName: string = "Card";
     public VendorLovSizeForFullAccounting: number = 550
     public TenantPM: TenantPM = SessionLocator.TenantPM;
+    VendorGLAccount: GLAccountPM;
     private CurrentSession = SessionLocator.SelectedSession;
 
     entityResourceService: EntityResourceService = new EntityResourceService();
@@ -80,9 +84,6 @@ export class PerVendorReportFilterComponent extends BaseComponent {
         // initialize query filters for Accounts
         this.CardFilterItems = new ApiQueryFilters();
         // this.CardFilterItems.addAdditionalFilter("PartnerTypeId", "VD", null, null, "Equals", false, false, true, "string");
-        this.CardFilterItems.addAdditionalFilter("GLAccountId", "A", null, null, "IsNotNull", true, false, true, "string");
-        this.CardFilterItems.addAdditionalFilter("CountryCode", "IL", null, null, "Equal", false, false, false, "string");
-        this.CardFilterItems.addAdditionalFilter("ExcluedFromDeductionReport", false, null, null, "Equal", true, false, true, "boolean");
     }
 
     private GetResources() {
@@ -93,12 +94,15 @@ export class PerVendorReportFilterComponent extends BaseComponent {
     public set Vendor(value: CardList) {
         if (this.vendor != value) {
             this.vendor = value;
+            this.getVendorGlAccount();
         }
     }
 
-
-
-
+    getVendorGlAccount(){
+        if(this.vendor.GLAccountId) {
+            this.GetGLAccount(this.vendor.GLAccountId);
+        }
+    }
 
     ValidateDate() {
         var advancedDatePickerResolverComponent: AdvancedDatePickerResolverComponent = new AdvancedDatePickerResolverComponent();
@@ -132,12 +136,18 @@ export class PerVendorReportFilterComponent extends BaseComponent {
     }
 
     //#endregion
-    private errors: string[];
+    private errors: string[] = [];
     RunButtonClicked() {
 
         this.errors = [];
+        this.ValidationErrorsList = [];
+        if (this.vendor.GLAccountId == null) {
+            this.errors.push("The selected doesn't have GlAccount");
+        }
 
-
+        if(this.VendorGLAccount && this.VendorGLAccount.ExcludeFromDeductionReport) {
+            this.errors.push("The selected vendor is excluded from deduction report");
+        }
         if (this.errors.length == 0) {
 
 
@@ -188,8 +198,6 @@ export class PerVendorReportFilterComponent extends BaseComponent {
     public set VendorId(value: Date) {
         if (this.vendorId != value) {
             this.vendorId = value;
-            
-
         }
     }
 
@@ -241,6 +249,29 @@ export class PerVendorReportFilterComponent extends BaseComponent {
         //this.SetUIProperties();
         //this.ValidateDate();
 
+    }
+
+    GetGLAccount(id: string)
+    {
+        return new Promise(resolve =>
+        {
+
+            var service = new GLAccountPMService();
+            service.get(id).subscribe((response:any) =>
+            {
+                var result: ServiceResponse = response;
+                if (!result.HasError) {
+                    this.VendorGLAccount = result.Result;
+                    resolve(this.VendorGLAccount);
+                }
+                else {
+                    console.error(result.ErrorsArray);
+                    reject();
+                }
+            });
+
+
+        });
     }
 
 }
