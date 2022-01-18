@@ -181,8 +181,7 @@ namespace WebFreight.Web.InfrastructureModel
         private TextCodeQuery textCodeQuery;
         private TipQuery tipQuery;
         private TipsVisibilityQuery tipsVisibilityQuery;
-
-
+        private List<ObjectTable> objectTables;
 
         public GeneralDomainService(UserData currentuser)
         {
@@ -3711,7 +3710,97 @@ namespace WebFreight.Web.InfrastructureModel
             return fieldsTranslationList.OrderBy(f => f.Code).ToList();
         }
 
-       // List<FieldsTranslations> NewFieldsTranslationsList = null;
+        private List<Translation> translaionList;
+        private List<Translation> defaultTranslationsList;
+        private List<FieldsTranslations> fieldsTranslationList;
+        // This method the same as GetTranslationsByParam method for Customization, need more clean code as this for fixing bug
+        public List<FieldsTranslations> GetTranslationsByParamForCustomization(int translationTenant, string typeCode, string tableId, string translationLanguageCode)
+        {
+            TextCodeRepository = new TextCodeRepository(translationTenant);
+            TranslationRepository = new TranslationRepository(translationTenant);
+            this.ChangeConnectionString(translationTenant);
+            fieldsTranslationList = new List<FieldsTranslations>();
+            List<TextCode> textCodesList;
+            GeneralDomainService defaultDomain = new GeneralDomainService();
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(translationTenant);
+            if (!string.IsNullOrEmpty(tableId) && !string.IsNullOrEmpty(typeCode))
+            {
+                textCodesList = TextCodeRepository.GetTextCodesByTenantForCustomization(translationTenant).Where(t => t.TextCodeTypeCode == typeCode && t.ObjectTableId == tableId).ToList<TextCode>();
+            }
+            else if (string.IsNullOrEmpty(tableId) && !string.IsNullOrEmpty(typeCode))
+            {
+                textCodesList = TextCodeRepository.GetTextCodesByTenantForCustomization(translationTenant).Where(t => t.TextCodeTypeCode == typeCode).ToList<TextCode>();
+            }
+            else if (!string.IsNullOrEmpty(tableId) && string.IsNullOrEmpty(typeCode))
+            {
+                textCodesList = TextCodeRepository.GetTextCodesByTenantForCustomization(translationTenant).Where(t => t.ObjectTableId == tableId).ToList<TextCode>();
+            }
+            else
+            {
+                throw new ApplicationException("Error Loading Translations");
+            }
+            objectTables = objectTableRepository.GetObjectsByTenant(translationTenant).ToList();
+            translaionList = TranslationRepository.GetTranslationsByTenant(translationTenant).Where(t => t.TranslationHeaderCode == translationLanguageCode).ToList();
+            defaultTranslationsList = defaultDomain.GetTranslations(0).Where(d => d.TranslationHeaderCode == translationLanguageCode).ToList();
+            foreach (TextCode textcode in textCodesList)
+            {
+                FillTranslationList(textcode, translationTenant, translationLanguageCode);
+            }
+            return fieldsTranslationList.OrderBy(f => f.Code).ToList();
+        }
+
+        private void FillTranslationList(TextCode textcode, int translationTenant, string translationLanguageCode)
+        {
+            ObjectTable objectTable = objectTables.Where(a => a.Id == textcode.ObjectTableId).FirstOrDefault();
+            Translation translaion = translaionList.Where(t => t.TextCodeCode == textcode.Code).FirstOrDefault();
+            FieldsTranslations fieldsTranslation = new FieldsTranslations();
+
+            if (translaion != null)
+            {
+                fieldsTranslation.IsTranslated = true;
+                fieldsTranslation.TranslateDate = translaion.TranslateDate;
+                fieldsTranslation.TranslatedText = translaion.TranslatedText;
+                fieldsTranslation.TranslatedByUserId = translaion.TranslatedByUserId;
+                fieldsTranslation.TranslatedTextPlural = translaion.TranslatedTextPlural;
+            }
+            else
+            {
+                Translation defaultTranslation = (from a in defaultTranslationsList
+                                                  where a.TextCode.Code == textcode.Code
+                                                  select a).FirstOrDefault();
+                if (defaultTranslation != null)
+                {
+                    fieldsTranslation.IsTranslated = true;
+                    fieldsTranslation.TranslateDate = defaultTranslation.TranslateDate;
+                    fieldsTranslation.TranslatedText = defaultTranslation.TranslatedText;
+                    fieldsTranslation.TranslatedByUserId = defaultTranslation.TranslatedByUserId;
+                    fieldsTranslation.TranslatedTextPlural = defaultTranslation.TranslatedTextPlural;
+                }
+
+                else
+                {
+                    fieldsTranslation.TranslatedText = textcode.DefaultText;
+                    fieldsTranslation.TranslatedTextPlural = textcode.DefaultTextPlural;
+                }
+            }
+
+            fieldsTranslation.Tenant = textcode.Tenant;
+            fieldsTranslation.DefaultText = textcode.DefaultText;
+            fieldsTranslation.DefaultTextPlural = textcode.DefaultTextPlural;
+            fieldsTranslation.Code = textcode.Code;
+            fieldsTranslation.TextCodeId = textcode.Id;
+            fieldsTranslation.TextCodeCode = textcode.Code;
+            fieldsTranslation.TypeCode = textcode.TextCodeTypeCode;
+            fieldsTranslation.ObjectTableID = textcode.ObjectTableId;
+            fieldsTranslation.TranslationTenent = translationTenant;
+            fieldsTranslation.TranslationLanguageCode = translationLanguageCode;
+            fieldsTranslation.ObjectTableName = objectTable.Name;
+            fieldsTranslation.ObjectTableTypeCode = objectTable.ObjectTableTypeCode;
+            fieldsTranslationList.Add(fieldsTranslation);
+        }
+
+
+        // List<FieldsTranslations> NewFieldsTranslationsList = null;
         string[] lineOfStrings;
         string[] thisLine;
         [Invoke]
