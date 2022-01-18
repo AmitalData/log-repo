@@ -916,6 +916,10 @@ namespace WebFreight.Web.WcfApi
         private void MapDatesFields(ShipmentPM entityPM, ShipmentAdditionalCloudDataRepository shipmentAdditionalCloudDataRepository, ShipmentRepository shipmentRepository)
         {
             Shipment shipment = shipmentRepository.GetSingleShipmentByShipmentNumber(entityPM.ShipmentNumber, entityPM.Tenant);
+
+            if (shipment == null)
+                return;
+              
             ShipmentAdditionalCloudData shipmentAdditionalCloudData = shipmentAdditionalCloudDataRepository.GetSingleShipmentAdditionalCloudData(shipment.Id, entityPM.Tenant);
 
             if (shipmentAdditionalCloudData == null)
