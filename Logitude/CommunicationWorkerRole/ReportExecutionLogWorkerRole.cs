@@ -1,4 +1,5 @@
-﻿using Logitude.BL.CommonDataModel.EntityAMs;
+﻿using CommunicationWorkerRole.Stimulsoft.fonts;
+using Logitude.BL.CommonDataModel.EntityAMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -105,7 +106,11 @@ namespace CommunicationWorkerRole
             var queueResponse = queueService.Receive(new TimeSpan(0, 0, 1));
             if (queueResponse != null && queueResponse.MessageId != null)
             {
-                ThreadStart reportExecutionServiceThreadStart = (() => new ReportExecutionService(queueService, queueResponse).ExecuteReportExecutionQueue());
+                ThreadStart reportExecutionServiceThreadStart = () =>
+                {
+                    StimulsoftFontsService.AddFonts();
+                    new ReportExecutionService(queueService, queueResponse).ExecuteReportExecutionQueue();
+                };
                 reportExecutionServiceThreadStart += () => { LogDoneItemInMemory(); };
                 new Thread(reportExecutionServiceThreadStart) { IsBackground = true }.Start();
                 queueService.Complete();
