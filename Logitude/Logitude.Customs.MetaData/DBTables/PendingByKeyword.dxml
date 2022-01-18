@@ -47,6 +47,18 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="SearchToField"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SerachType"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CourierPendingReasonCode"
     ReferencedTable="CourierPendingReasons"
