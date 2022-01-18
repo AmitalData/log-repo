@@ -2172,6 +2172,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ExporterCode&quot;"
     ListPropertyPath="&quot;ExporterCode&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -2291,7 +2292,7 @@
       <ScreenField
         Column="0"
         Row="0"
-        ObjectFieldName="&quot;DeclarationCustomFileNo&quot;"
+        ObjectFieldName="&quot;DeclarationNumber&quot;"
         ScreenName="Customs.ExportStorageHeaderScreen" />
       <ScreenField
         Column="0"
