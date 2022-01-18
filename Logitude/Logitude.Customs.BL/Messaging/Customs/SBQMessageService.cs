@@ -31,6 +31,7 @@ using System.Xml.Serialization;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 using Logitude.Customs.Def.Messaging.Customs;
+using System.Configuration;
 
 namespace Logitude.Customs.BL.Messaging.Customs
 {
@@ -173,13 +174,20 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 queueSendModel.TenantPriority = tenantPriority;
 
             }
+            string overrideSBQueueName = SBQueueName.ToString();
+            var UseCustomsMessagingSheetWR = ConfigurationManager.AppSettings["Override:CustomsMessagingSheetWR"];
+            if (!String.IsNullOrWhiteSpace(UseCustomsMessagingSheetWR) && UseCustomsMessagingSheetWR.Contains( $"-{queueSendModel.InterfaceTypeCode}-" ))
+            {
+                overrideSBQueueName = SBQueueNames.CustomsMessagingSheetBQ.ToString();
+            }
+            
 
             using (TransactionScope scope =
                 //(LogitudeSettings.QueueServiceMode != "db") ? TransactionFactory.GetNewSerializableTransaction() :TransactionFactory.GetTransaction())
                 TransactionFactory.GetTransaction())
             {
 
-                var queueSendService = new Logitude.Server.Tools.QueueService.QueueSendService(SBQueueName.ToString(), correlationId, queueSendModel);
+                var queueSendService = new Logitude.Server.Tools.QueueService.QueueSendService(/*SBQueueName.ToString()*/overrideSBQueueName, correlationId, queueSendModel);
                 //queueSendService.InterfaceTypeCode = interfaceTypeCode;//this.GetType().FullName;
                 //queueSendService.DebugMode = true;
                 //queueSendService.Tenant = tenant;
