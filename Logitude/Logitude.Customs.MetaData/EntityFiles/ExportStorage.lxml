@@ -2292,7 +2292,7 @@
       <ScreenField
         Column="0"
         Row="0"
-        ObjectFieldName="&quot;DeclarationCustomFileNo&quot;"
+        ObjectFieldName="&quot;DeclarationNumber&quot;"
         ScreenName="Customs.ExportStorageHeaderScreen" />
       <ScreenField
         Column="0"

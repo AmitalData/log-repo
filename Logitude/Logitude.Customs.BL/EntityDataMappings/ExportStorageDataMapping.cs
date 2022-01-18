@@ -67,6 +67,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             entityPM.CargoTypeCodeName = cargoIdentifireTypePM.LocalName;
             entityPM.DeclarationStatusTypeCode = declarationPM.DeclarationStatusTypeCode;
             entityPM.DeclarationCustomFileNo = declarationPM.CustomFileNo;
+            entityPM.DeclarationNumber = declarationPM.DeclarationNumber;
             entityPM.ExporterCode = cardPM.VatNumber;
         }
    }
