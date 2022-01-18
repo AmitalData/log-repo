@@ -6,16 +6,16 @@ using System;
 
 namespace WebFreight.Web.Helpers.ImporterShipmentOrders
 {
-    public class ShipmentOrderAmMap
+    public class ShipmentOrderAmToShipmentMapping
     {
         private readonly int tenant;
 
-        public ShipmentOrderAmMap(int tenant)
+        public ShipmentOrderAmToShipmentMapping(int tenant)
         {
             this.tenant = tenant;
         }
 
-        public ShipmentPM MapShipmentOrderAmToShipment(ShipmentOrderAM shipmentOrder, ShipmentPM shipment)
+        public ShipmentPM Map(ShipmentOrderAM shipmentOrder, ShipmentPM shipment)
         {
             shipment.Volume = shipmentOrder.Volume;
             shipment.TransportModeId = shipmentOrder.TransportModeId;

@@ -2702,7 +2702,7 @@
     <Compile Include="Helpers\DocumentTypeTemplateDefultAttachmentService.cs" />
     <Compile Include="Helpers\DWObjectTableAdditionalConditionService.cs" />
     <Compile Include="Helpers\ImporterShipmentOrders\ImporterShipmentOrdersService.cs" />
-    <Compile Include="Helpers\ImporterShipmentOrders\ShipmentOrderAmMap.cs" />
+    <Compile Include="Helpers\ImporterShipmentOrders\ShipmentOrderAmToShipmentMapping.cs" />
     <Compile Include="Helpers\MixPanel\AuthenticationMixPanelService.cs" />
     <Compile Include="Helpers\MixPanel\events\LogBoxActionsEvent.cs" />
     <Compile Include="Helpers\MixPanel\MixPanelActionsEvent.cs" />

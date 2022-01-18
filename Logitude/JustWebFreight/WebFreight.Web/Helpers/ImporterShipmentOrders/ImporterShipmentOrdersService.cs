@@ -25,7 +25,7 @@ namespace WebFreight.Web.Helpers.ImporterShipmentOrders
         private IWebFreightContext webFreightContext;
         private IShipmentsContext shipmentsContext;
         private ShipmentService shipmentService;
-        private ShipmentOrderAmMap shipmentOrderAmMap;
+        private ShipmentOrderAmToShipmentMapping shipmentOrderAmMap;
 
         private readonly int tenant;
         private APILogsPM apiLog;
@@ -50,7 +50,7 @@ namespace WebFreight.Web.Helpers.ImporterShipmentOrders
             shipmentQuery = new ShipmentQuery(tenant);
             apiLogsService = new APILogsService(webFreightContext, tenant);
             aPILogsQuery = new APILogsQuery(tenant);
-            shipmentOrderAmMap = new ShipmentOrderAmMap(tenant);
+            shipmentOrderAmMap = new ShipmentOrderAmToShipmentMapping(tenant);
         }
         private void InitiallizeFields()
         {
@@ -68,7 +68,7 @@ namespace WebFreight.Web.Helpers.ImporterShipmentOrders
                 ShipmentPM shipment = shipmentQuery.GetSingleShipmentPMByNumber(shipmentOrder.CustomerShipmentNumber, tenant);
                 if (shipment == null)
                     throw new Exception("Shipment number does not exist");
-                shipment = shipmentOrderAmMap.MapShipmentOrderAmToShipment(shipmentOrder, shipment);
+                shipment = shipmentOrderAmMap.Map(shipmentOrder, shipment);
                 SubmitShipmentUpdate(shipment);
                 return shipment;
             }

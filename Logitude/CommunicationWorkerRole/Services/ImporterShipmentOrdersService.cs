@@ -157,7 +157,7 @@ namespace CommunicationWorkerRole.Services.ImporterShipmentOrders
         private ShipmentOrderAM GetShipmentOrderAM()
         {
             var shipmentOrder = shipmentOrderQueryService.GetSinglePM(shipmentOrderId, tenant.Value);
-            return shipmentOrderAmMap.GetForImporterShipmentOrders(tenant.Value, shipmentOrder);
+            return shipmentOrderAmMap.Map(tenant.Value, shipmentOrder);
         }
 
         private void GetToken()

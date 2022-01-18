@@ -22,7 +22,7 @@ namespace CommunicationWorkerRole.EntityMapping
             this.tenant = tenant;
         }
 
-        public ShipmentOrderAM GetForImporterShipmentOrders(int tenant, ShipmentOrderPM shipmentOrder)
+        public ShipmentOrderAM Map(int tenant, ShipmentOrderPM shipmentOrder)
         {
             Card agent = cardsReporistory.GetSingleCard(shipmentOrder.AgentId, tenant);
 
