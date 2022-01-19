@@ -15,7 +15,7 @@ export class TariffShortTitleComponent {
         this.EntityPM = this.entityArgs.EntityPM;
     }
     
-    ViewCard() {
+    ViewSeller() {
         if (this.EntityPM != null) {
             if (!AppTool.IsNullOrEmpty(this.EntityPM.SellerId)) {
                 var objectTableName = null;
