@@ -118,6 +118,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string SATForeignRFC { get; set; }
         public string MetodoPagoCode { get; set; }
         public string UsoCFDICode { get; set; }
+        public string RegimenFiscalCode { get; set; }
         public string ZipCode { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }

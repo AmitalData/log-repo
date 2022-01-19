@@ -61,6 +61,11 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public virtual ChargesGroup ChargesGroup { get; set; }
         public string ChargesGroupId { get; set; }
 
+        [ForeignKey("QuoteChargesGroupId")]
+        public virtual QuoteChargesGroup QuoteChargesGroup { get; set; }
+        public string QuoteChargesGroupId { get; set; }
+        public string QuoteChargesGroupCode{ get; set; }
+
         [ForeignKey("IATACodeId")]
         public virtual IATACode IATACode { get; set; }
         public string IATACodeId { get; set; }

@@ -718,7 +718,10 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                            select shipment);
 
             var shipmentsLists = GetIqueryableList(shipments);
-            return shipmentsLists.FirstOrDefault();
+            var result = shipmentsLists.ToList();
+            CargoTrackingShipmentSearchListQueryService cargoTrackingShipmentSearchListQueryService = new CargoTrackingShipmentSearchListQueryService(context);
+            cargoTrackingShipmentSearchListQueryService.AddSearchsToShipments(result, tenant);
+            return result.FirstOrDefault();
         }
 
         public List<string> GetShipmentPublicReferences(string SecurityKey, int tenant)

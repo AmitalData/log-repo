@@ -480,6 +480,10 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     this.MapPaymentProfact33Fields(currentPayment, paymentDataProvider, tenantSettings, invoiceCotnext, billToCard);
                 }
+                else if (satSetting != null && satSetting.SATInterfaceCode == "PROF40" && tenantSettings != null)
+                {
+                    SATPaymentProfact40DataProviderMappingFields.MapProfact40Fields(currentPayment, paymentDataProvider, invoiceCotnext, billToCard);
+                }
 
                 paymentDataProvider.AmountInLocalCurrency = currentPayment.AmountInLocalCurrency;
 

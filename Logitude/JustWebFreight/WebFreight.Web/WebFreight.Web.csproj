@@ -406,7 +406,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Profact.TimbraCFDI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Profact3.3.1.2.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
+      <HintPath>..\..\packages\Profact4.0.1.1.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
     </Reference>
     <Reference Include="SendGrid.SmtpApi, Version=1.3.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SendGrid.SmtpApi.1.3.3\lib\SendGrid.SmtpApi.dll</HintPath>
@@ -1012,10 +1012,8 @@
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\CustomAgentAPiHelper.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\ShippingAgentAPiHelper.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\TruckerAPiHelper.cs" />
- 
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\VendorAPiHelper.cs" />
- 
-    <Compile Include="Controllers\CommonDataModel\ApiHelpers\WarehouseAPiHelper.cs" /> 
+    <Compile Include="Controllers\CommonDataModel\ApiHelpers\WarehouseAPiHelper.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\CommunicationLogExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\CargoTrackingTenantMilestoneDefinitionExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\CarrierAreaExtendedController.cs" />
@@ -1028,6 +1026,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\HorseViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\PortTimeZoneViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ProductItemViewsController.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\RegimenFiscalViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ReportExecutionLogViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\UnassignedEntityViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\VatUniquePartnerTypeViewsController.Generated.cs" />
@@ -1061,7 +1060,9 @@
     <Compile Include="Controllers\InfrastructureModel\Extended\WorkerRoleNameExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\BIReportFolderExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\EntityStatusTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\QuoteChargesGroupViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\MultiEntityUpdateLogController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\QuoteChargesGroupController.Generated.cs" />
     <Compile Include="Controllers\Integration\Factories\IntegrationPartnerFactory.cs" />
     <Compile Include="Controllers\Integration\ModelIntegrationController.cs" />
     <Compile Include="Controllers\Integration\Quote\QuoteIntegrationBuilder.cs" />
@@ -1085,6 +1086,7 @@
     <Compile Include="Controllers\ShipmentsModel\DocumentApprovalController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ContainerViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ContainerController.Generated.cs" />
+    <Compile Include="Controllers\ShipmentsModel\ImporterShipmentOrdersController.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffVersionUploadedExcelViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffVersionUploadedExcelController.Generated.cs" />
     <Compile Include="Controllers\WebDomainControllers\PotentialAddressController.cs" />
@@ -2702,6 +2704,8 @@
     <Compile Include="Helpers\BaseDataProviderService.cs" />
     <Compile Include="Helpers\DocumentTypeTemplateDefultAttachmentService.cs" />
     <Compile Include="Helpers\DWObjectTableAdditionalConditionService.cs" />
+    <Compile Include="Helpers\ImporterShipmentOrders\ImporterShipmentOrdersService.cs" />
+    <Compile Include="Helpers\ImporterShipmentOrders\ShipmentOrderAmToShipmentMapping.cs" />
     <Compile Include="Helpers\MixPanel\AuthenticationMixPanelService.cs" />
     <Compile Include="Helpers\MixPanel\events\LogBoxActionsEvent.cs" />
     <Compile Include="Helpers\MixPanel\MixPanelActionsEvent.cs" />
@@ -2800,6 +2804,7 @@
     <Compile Include="Helpers\WorkerRole\PODImage\PODImagePdfConverter.cs" />
     <Compile Include="Helpers\WorkerRole\ReportExecutionService.cs" />
     <Compile Include="InfrastructureModel\DomainServices\WebFreightDomainService.EntityStatusType.cs" />
+    <Compile Include="InfrastructureModel\DomainServices\WebFreightDomainService.QuoteChargesGruop.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.APPaymentTransferStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARInvoiceStocksStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARPaymentTransferStatus.cs" />
@@ -2840,6 +2845,7 @@
     <Compile Include="MetaDataUpdate\DetailClasses\MetodoPagoDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\ManifestCargoStatusDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\MAWBTypeDetails.cs" />
+    <Compile Include="MetaDataUpdate\DetailClasses\QuoteChargesGroupDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\SATInterfaceDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\SATPaymentMethodDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\SATInvoiceStatusDetails.cs" />
@@ -2976,6 +2982,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ProductTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\RankUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\RateClassUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\RegimenFiscalUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\RegionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\RegistryDateTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ReportExecutionLogUpdateClass.cs" />
@@ -3316,6 +3323,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\PrepaidCollectUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\QueryExportExecutionLogUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\QueueMessageMoreDetailsUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\QuoteChargesGroupUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\RatesTableUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\RuleUpdateHistoryUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\SchedulerLogsUpdateClass.cs" />
@@ -5950,6 +5958,8 @@
       <DependentUpon>OpportunitySummaryWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ReportsWebServices\SATPaymentProfact40DataProviderMappingFields.cs" />
+    <Compile Include="ReportsWebServices\SATInvoiceProfact40DataProviderMappingFields.cs" />
     <Compile Include="ReportsWebServices\ShipmentPackingWebService.asmx.cs">
       <DependentUpon>ShipmentPackingWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -6030,6 +6040,27 @@
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.ShipmentCustomsTransmission.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.ShipmentPackageItem.cs" />
     <Compile Include="ShipmentsModel\DomainServices\ShipmentsDomainService.ShipmentCustomsMessageType.cs" />
+    <Content Include="Stimulsoft\fonts\century-gothic\GOTHIC.TTF" />
+    <Content Include="Stimulsoft\fonts\century-gothic\GOTHICB.TTF" />
+    <Content Include="Stimulsoft\fonts\century-gothic\GOTHICBI.TTF" />
+    <Content Include="Stimulsoft\fonts\century-gothic\GOTHICI.TTF" />
+    <Content Include="Stimulsoft\fonts\didot\GFSDidot-Regular.ttf" />
+    <Content Include="Stimulsoft\fonts\garamond\GARA.TTF" />
+    <Content Include="Stimulsoft\fonts\garamond\GARABD.TTF" />
+    <Content Include="Stimulsoft\fonts\garamond\GARAIT.TTF" />
+    <Content Include="Stimulsoft\fonts\lucida-bright\LBRITE.TTF" />
+    <Content Include="Stimulsoft\fonts\lucida-bright\LBRITED.TTF" />
+    <Content Include="Stimulsoft\fonts\lucida-bright\LBRITEDI.TTF" />
+    <Content Include="Stimulsoft\fonts\lucida-bright\LBRITEI.TTF" />
+    <Content Include="Stimulsoft\fonts\monaco\Monaco.ttf" />
+    <Content Include="Stimulsoft\fonts\optima\Optima_Medium.ttf" />
+    <Content Include="Stimulsoft\fonts\optima\OPTIMA.TTF" />
+    <Content Include="Stimulsoft\fonts\optima\OPTIMA_B.TTF" />
+    <Content Include="Stimulsoft\fonts\optima\Optima_Italic.ttf" />
+    <Content Include="Stimulsoft\fonts\perpetua\PERBI___.TTF" />
+    <Content Include="Stimulsoft\fonts\perpetua\PERB____.TTF" />
+    <Content Include="Stimulsoft\fonts\perpetua\PERI____.TTF" />
+    <Content Include="Stimulsoft\fonts\perpetua\PER_____.TTF" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\ShipmentsController.cs" />
@@ -6127,6 +6158,7 @@
     <Compile Include="Stimulsoft\Designer.aspx.designer.cs">
       <DependentUpon>Designer.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Stimulsoft\fonts\StimulsoftFontsService.cs" />
     <Compile Include="SystemLogsModel\DomainServices\BatchServicesLogDomainService.cs" />
     <Compile Include="SystemLogsModel\EntityList\BatchServicesLogList.cs" />
     <Compile Include="SystemLogsModel\EntityList\ContactActivityLogList.cs" />
@@ -6558,6 +6590,7 @@
     <Compile Include="SystemLogsModel\Tools\Mapping\BatchServicesLogMapping.cs" />
     <Compile Include="SystemLogsModel\Tools\EntityService\BatchServicesLogUpdateService.cs" />
     <Compile Include="SystemLogsModel\Tools\Mapping\ErrorLogMapping.cs" />
+    <Compile Include="TariffModel\DomainServices\TariffDomainService.cs" />
     <Compile Include="TaxesApprovalModel\TaxesApproval.Shared.cs" />
     <Compile Include="TaxesApprovalModel\TaxesApprovalWebService.asmx.cs">
       <DependentUpon>TaxesApprovalWebService.asmx</DependentUpon>

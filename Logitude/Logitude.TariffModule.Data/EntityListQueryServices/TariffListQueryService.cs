@@ -45,6 +45,8 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
                                                 UpdatedByUserName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact != null ? a.UpdatedByUser.Contact.EnglishName : "" : "",
                                                 TariffNumber = a.TariffNumber,
                                                 LastUsedDate = a.LastUsedDate,
+                                                TypeCode = a.TypeCode,
+                                                CustomsBrokerName = a.CustomsBroker != null ? a.CustomsBroker.EnglishName : "",
                                             });
             return query;
         }
@@ -69,7 +71,7 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
 
             foreach (EntityLastActivity lastActivity in lastActivities)
             {
-                Tariff a = (from d in entities.Include("UpdatedByUser.Contact").Include("CreatedByUser.Contact").Include("Seller")
+                Tariff a = (from d in entities.Include("UpdatedByUser.Contact").Include("CreatedByUser.Contact").Include("Seller").Include("CustomsBroker")
                             where d.Id == lastActivity.EntityId
                             select d).FirstOrDefault();
 
@@ -99,12 +101,15 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
                         LastActivityByUserName = lastActivity.User.Contact.EnglishName,
                         CurrencyId = a.CurrencyId,
                         LastUsedDate = a.LastUsedDate,
+                        CustomsBrokerName = a.CustomsBroker != null ? a.CustomsBroker.EnglishName : "",
                     };
 
                     TariffType tariffType = GetTariffType(a.TypeCode, tenant);
                     list.TypeName = tariffType.Name != null ? tariffType.Name : "";
                     list.TransportModeCode = tariffType.TransportModeCode != null ? tariffType.TransportModeCode : "";
                     list.TransportModeName = GetTransportModeName(tariffType.TransportModeCode, tenant);
+                    list.DirectionCode = tariffType.DirectionCode != null ? tariffType.DirectionCode : "";
+                    list.DirectionName = GetDirectionName(tariffType.DirectionCode, tenant);
                     entityList.Add(list);
                 }
             }
@@ -121,6 +126,17 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
                 transportModeName = transportMode.Name != null ? transportMode.Name : ""; 
             }
             return transportModeName;
+        }
+        private string GetDirectionName(string code, int tenant)
+        {
+            DirectionRepository directionRepository = new DirectionRepository(tenant);
+            Direction direction = directionRepository.GetSingleDirection(code);
+            string directionName = "";
+            if (direction != null)
+            {
+                directionName = direction.Name != null ? direction.Name : "";
+            }
+            return directionName;
         }
 
         private TariffType GetTariffType(string typeCode, int tenant)

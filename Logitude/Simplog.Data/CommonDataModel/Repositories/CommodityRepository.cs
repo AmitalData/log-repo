@@ -53,6 +53,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from d in context.Commodities where d.Id == id && d.Tenant == tenant select d).FirstOrDefault();
         }
+        public string GetSingleCommodityNameByCode(string code, int tenant)
+        {
+            return (from d in context.Commodities where d.Code == code && d.Tenant == tenant select d.Name).FirstOrDefault();
+        }
 
         public void Add(Commodity entity)
         {

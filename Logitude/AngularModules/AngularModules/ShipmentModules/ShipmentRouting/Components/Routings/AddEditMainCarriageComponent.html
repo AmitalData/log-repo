@@ -473,7 +473,7 @@
                                                                         <LogLabel [ObjectFieldName]="'MainCarriageVesselName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.F.MainCarriageVesselId.Short'"></LogLabel>
                                                                     </td>
 
-                                                                    <td style="width: 170px;">
+                                                                    <td *ngIf="IsVesselFreeTextVisible" style="width: 170px;">
                                                                         <table>
                                                                             <tr>
                                                                                 <td>
@@ -486,6 +486,16 @@
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
+                                                                    </td>
+
+                                                                    <td *ngIf="!IsVesselFreeTextVisible" style="width: 170px;">
+                                                                        <LogLov [ObjectFieldName]="'MainCarriageVesselId'"
+                                                                                [SelectedValue]="MainCarriageVesselId"
+                                                                                [ObjectTableName]="ObjectTableName"
+                                                                                [DataContext]="DataContext"
+                                                                                [LookUpTableName]="'Vessel'"
+                                                                                (SelectedItemChanged)="MainCarriageVessel = $event">
+                                                                        </LogLov>
                                                                     </td>
 
                                                                     <td>
@@ -721,7 +731,7 @@
                                                             <LogLabel [ObjectFieldName]="'Transshipment1VesselName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.F.Transshipment1VesselId.Short'"></LogLabel>
                                                         </td>
 
-                                                        <td>
+                                                        <td *ngIf="IsVesselFreeTextVisible">
                                                             <table>
                                                                 <tr>
                                                                     <td>
@@ -734,6 +744,16 @@
                                                                     </td>
                                                                 </tr>
                                                             </table>
+                                                        </td>
+
+                                                        <td *ngIf="!IsVesselFreeTextVisible">
+                                                            <LogLov [ObjectFieldName]="'Transshipment1VesselId'"
+                                                                    [SelectedValue]="Transshipment1VesselId"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'Vessel'"
+                                                                    (SelectedItemChanged)="Transshipment1Vessel = $event">
+                                                            </LogLov>
                                                         </td>
 
                                                         <td>
@@ -965,7 +985,7 @@
                                                             <LogLabel [ObjectFieldName]="'Transshipment2VesselName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.F.Transshipment2VesselId.Short'"></LogLabel>
                                                         </td>
 
-                                                        <td>
+                                                        <td *ngIf="IsVesselFreeTextVisible">
                                                             <table>
                                                                 <tr>
                                                                     <td>
@@ -978,6 +998,16 @@
                                                                     </td>
                                                                 </tr>
                                                             </table>
+                                                        </td>
+
+                                                        <td *ngIf="!IsVesselFreeTextVisible">
+                                                            <LogLov [ObjectFieldName]="'Transshipment2VesselId'"
+                                                                    [SelectedValue]="Transshipment2VesselId"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'Vessel'"
+                                                                    (SelectedItemChanged)="Transshipment2Vessel = $event">
+                                                            </LogLov>
                                                         </td>
 
                                                         <td>
@@ -1209,7 +1239,7 @@
                                                             <LogLabel [ObjectFieldName]="'Transshipment3VesselName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.F.Transshipment3VesselId.Short'"></LogLabel>
                                                         </td>
 
-                                                        <td>
+                                                        <td *ngIf="IsVesselFreeTextVisible">
                                                             <table>
                                                                 <tr>
                                                                     <td>
@@ -1222,6 +1252,16 @@
                                                                     </td>
                                                                 </tr>
                                                             </table>
+                                                        </td>
+
+                                                        <td *ngIf="!IsVesselFreeTextVisible">
+                                                            <LogLov [ObjectFieldName]="'Transshipment3VesselId'"
+                                                                    [SelectedValue]="Transshipment3VesselId"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'Vessel'"
+                                                                    (SelectedItemChanged)="Transshipment3Vessel = $event">
+                                                            </LogLov>
                                                         </td>
 
                                                         <td>

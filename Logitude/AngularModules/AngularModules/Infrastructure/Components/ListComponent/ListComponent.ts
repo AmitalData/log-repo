@@ -3195,6 +3195,18 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             windowArgs.TypeCode = "OFS";
                             break;
                         }
+
+                        case "Tariff.Import Customs Charges Cost": {
+                            logWindow.Title = "New " + TextCodeTranslator.Translate("Tariff.Q.ImportCustomsChargesCost");
+                            windowArgs.TypeCode = "ICC";
+                            break;
+                        }
+
+                        case "Tariff.Export Customs Charges Cost": {
+                            logWindow.Title = "New " + TextCodeTranslator.Translate("Tariff.Q.ExportCustomsChargesCost");
+                            windowArgs.TypeCode = "ECC";
+                            break;
+                        }
                     }
 
                     logWindow.WindowArgs = windowArgs;

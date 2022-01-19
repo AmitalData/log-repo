@@ -52,7 +52,7 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 })
 
 export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
-    
+
     private forceFocus: any;
     @Input()
     public get ForceFocus() {
@@ -212,7 +212,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             }
         });
     }
-   
+
     SetSelectedItemInActiveField() {
         this.UpdateSelectedEntity(this.SelectedItem?.Id);
     }
@@ -2208,6 +2208,9 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         args.IsAddDisabled = this.isAddDisabled;
         args.IsEditDisabled = this.isEditDisabled;
         args.DisplayFieldsFromList = this.DisplayFieldsFromList;
+        args.DisplayLocalFieldsFromList = this.DisplayLocalFieldsFromList;
+        args.LanguageFilterValue = this.LanguageFilterValue;
+        args.ShowLanguageFilter = this.ShowLanguageFilter;
         var tablename = TextCodeTranslator.TranslateTablePlural(this.GetObjectTableName(this.LookUpTableName));
 
         if (tablename == "Cards") {
@@ -2234,10 +2237,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             // Get Selected value
             var id = null;
             var tenant = null;
+            let languageCode = this.LanguageFilterValue;
             if (args.indexOf(',')) {
                 var argsarr = args.split(',');
                 id = argsarr[0];
                 tenant = argsarr[1];
+                languageCode = argsarr[2];
             }
             else {
                 id = args;
@@ -2254,12 +2259,17 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                             if (myResponse instanceof ServiceResponse) {
                                 list = myResponse.Result;
                             }
+
+                            this.LanguageFilterValue = languageCode;
+                            this.SetDisplayMemberPath();
+
                             this.isSelectedFromList = true;
                             this.SearchTextNgModel = list[this.DisplayMemberPath];
                             this.OldSearchInput = this.SearchTextNgModel;
                             this.DisplayValue = list[this.DisplayMemberPath];
                             this.SelectedItem = list;
                             this.SetToolTipInfo();
+
                             var value = this.DataContext[this.ObjectFieldName];
                             if (this.ObjectField && this.ObjectField.IsCustom && this.IgnoreCustomFieldCheck == false) {
                                 var customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];
@@ -3458,7 +3468,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         }
 
         this.SetDisplayMemberPath();
-    }  
+    }
 }
 
 export class EntityArgs {

@@ -80,6 +80,16 @@ namespace Logitude.TariffModule.Data.EntityLists
        public DateTime? LastUsedDate  { get; set; }
        [DataMember]
        public string FreightChargeId  { get; set; }
+       [DataMember]
+       public string CustomsBrokerId  { get; set; }
+       [DataMember]
+       public string CustomsBrokerName  { get; set; }
+       [DataMember]
+       public string CustomsBrokerPartnerTypeId  { get; set; }
+       [DataMember]
+       public string DirectionCode  { get; set; }
+       [DataMember]
+       public string DirectionName  { get; set; }
    }
 
 }

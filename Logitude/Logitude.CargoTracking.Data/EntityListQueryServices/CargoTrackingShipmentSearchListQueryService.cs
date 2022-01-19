@@ -21,6 +21,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
     public partial class CargoTrackingShipmentSearchListQueryService
     {
+        public const string OrderType = "O";
         private IQueryable<CargoTrackingShipmentSearchList> GetIqueryableList(IQueryable<CargoTrackingShipmentSearch> iQueryable)
         {
             IQueryable<CargoTrackingShipmentSearchList> query = (from a in iQueryable
@@ -58,8 +59,30 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
             CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(context);
             List<CargoTrackingShipmentList> shipments = shipmentsQuery.GetShipments(shipmentsIds, tenant);
-
+            AddSearchsToShipments(shipments, tenant);
             return shipments;
+        }
+
+        public void AddSearchsToShipments(List<CargoTrackingShipmentList> shipments, int tenant)
+        {
+            CargoTrackingShipmentSearchRepository repo = new CargoTrackingShipmentSearchRepository(tenant);
+            List<CargoTrackingShipmentSearch> shipmentSearchs = repo.GetConnectedShipmentNumbersByShipmentIds(shipments.Where(e => e.EntityType != OrderType).Select(e=>e.EntityId).ToList());
+            var searchesGroupDictionary = shipmentSearchs.GroupBy(e => e.ShipmentId).ToDictionary(e => e.Key, e => e);
+            foreach (var item in shipments)
+            {
+                item.ConnectedShipmentsNumbers = GetSearchesFromGroupsDictionary(item, searchesGroupDictionary);
+            }
+
+        }
+
+        private string GetSearchesFromGroupsDictionary(CargoTrackingShipmentList item, Dictionary<string, IGrouping<string, CargoTrackingShipmentSearch>> searchesGroupDictionary)
+        {
+
+            if (!searchesGroupDictionary.ContainsKey(item.EntityId))
+                return null;
+            var connectedShipmentsNumbers = searchesGroupDictionary[item.EntityId].ToList();
+            var maxConnectedShipmentsNumbers = connectedShipmentsNumbers.GroupBy(e => e.ReferenceType).Select(e => e.Max(f=>f.SearchFields)).ToList();
+            return string.Join("\n", maxConnectedShipmentsNumbers);
         }
 
         private static IQueryable<CargoTrackingShipmentSearch> GetShipmentsSearchEntities(string searchText, int tenant)

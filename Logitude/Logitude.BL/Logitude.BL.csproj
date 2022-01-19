@@ -178,7 +178,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Profact.TimbraCFDI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Profact3.3.1.1.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
+      <HintPath>..\packages\Profact4.0.1.1.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
     </Reference>
     <Reference Include="SilverlightExpressions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SilverlightExpression.1.0.0\lib\Net40\SilverlightExpressions.dll</HintPath>
@@ -326,6 +326,7 @@
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\PortTimeZoneDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\ProductPeriodDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\RateClassDetails.Generated.cs" />
+    <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\RegimenFiscalDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\RegistryDateTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\TarrifFromToTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\TarrifTypeDetails.Generated.cs" />
@@ -360,6 +361,7 @@
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\PortTimeZoneStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\ProductPeriodStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\RateClassStruct.Generated.cs" />
+    <Compile Include="CommonDataModel\CloseTables\EnumGenerated\RegimenFiscalStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\RegistryDateTypeStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\TarrifFromToTypeStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\TarrifTypeStruct.Generated.cs" />
@@ -386,6 +388,7 @@
     <Compile Include="CommonDataModel\EntityLists\ProductItemList.cs" />
     <Compile Include="CommonDataModel\EntityLists\ReportExecutionLogList.cs" />
     <Compile Include="CommonDataModel\EntityLists\UnassignedEntityList.cs" />
+    <Compile Include="CommonDataModel\EntityLists\RegimenFiscalList.cs" />
     <Compile Include="CommonDataModel\EntityPMs\AddressTypePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CommunicationLogExtendedArgs.cs" />
     <Compile Include="CommonDataModel\EntityPMs\ExtendedContactPM.cs" />
@@ -395,12 +398,14 @@
     <Compile Include="CommonDataModel\EntityPMs\ProductItemPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CargoTenantMilestoneDefinitionPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\UnassignedEntityPM.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\RegimenFiscalPM.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CargoTenantMilestoneDefinitionQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\HTSCodeQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\PortTimeZoneQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ProductItemQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ReportExecutionLogQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\UnassignedEntityQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\RegimenFiscalQuery.cs" />
     <Compile Include="CommonDataModel\ExternalService\CommunicationLogExtendedService.cs" />
     <Compile Include="CommonDataModel\ExternalService\CopyDocumentTypeTemplateService.cs" />
     <Compile Include="CommonDataModel\ExternalService\SystemReportsTemplatesService.cs" />
@@ -532,10 +537,13 @@
     <Compile Include="InfrastructureModel\CloseTables\EnumGenerated\EntityStatusTypeStruct.Generated.cs" />
     <Compile Include="InfrastructureModel\DataContracts\MultiEntityUpdateData.cs" />
     <Compile Include="InfrastructureModel\EntityLists\EntityStatusTypeList.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\QuoteChargesGroupList.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\EntityStatusTypePM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\MultiEntityUpdateLogPM.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\QuoteChargesGroupPM.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\EntityStatusTypeQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\MultiEntityUpdateLogQuery.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\QuoteChargesGroupQuery.cs" />
     <Compile Include="InfrastructureModel\FieldShortNameGetters\ObjectFieldsShortNamesGetter.cs" />
     <Compile Include="GlobalModel\EntityLists\BluesnapTransactionList.cs" />
     <Compile Include="GlobalModel\EntityLists\HelpResourceList.cs" />
@@ -566,11 +574,13 @@
     <Compile Include="InfrastructureModel\EntityQueries\RuleUpdateHistoryQuery.cs" />
     <Compile Include="InfrastructureModel\Services\QuoteUpdateService.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\MultiEntityUpdateLogMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\QuoteChargesGroupMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\WorkerRoleNameMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\RuleUpdateHistoryMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\SchedulerProcedureMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\MultiEntityUpdateLogService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\PrivateLabelShipmentService.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\QuoteChargesGroupService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\WorkerRoleNameService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\RuleUpdateHistoryService.cs" />
     <Compile Include="InfrastructureModel\Tools\Validating\TasksSchedulerValidator.cs" />
@@ -631,10 +641,15 @@
     <Compile Include="InvoiceModel\Tools\Behaviours\EntityAutomationAPInvoiceMappingPMFields.cs" />
     <Compile Include="InvoiceModel\Tools\DataMapping\ARPaymentBankTranferMapping.cs" />
     <Compile Include="InvoiceModel\Tools\EntityService\ARPaymentReferencesService.cs" />
+    <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\SATPaymentProfact40Service.cs" />
     <Compile Include="InvoiceModel\Tools\FullAccountingARPaymentValidatorArguments.cs" />
     <Compile Include="InvoiceModel\Tools\Initializers\APInvoiceServiceInitializer.cs" />
     <Compile Include="InvoiceModel\Tools\Initializers\ARInvoiceServiceInitializer.cs" />
     <Compile Include="InvoiceModel\Tools\QuickbooksService.cs" />
+    <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\SATCancelPaymentProfact40Service.cs" />
+    <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\SATCancelInvoiceProfact40Service.cs" />
+    <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\SATBaseProfact40Service.cs" />
+    <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\SATInvoiceProfact40Service.cs" />
     <Compile Include="QuoteModel\DataContracts\QuoteTemplateSettingData.cs" />
     <Compile Include="QuoteModel\Tools\EntityService\QuoteTemplateSettingDataBuilder.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\PickUpDeliveryFromToType.Generated.cs" />

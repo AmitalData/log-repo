@@ -34,6 +34,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ReceivablesDefaultCurrencyId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.PayablesDefaultCurrencyId).HasMaxLength(15).IsUnicode(false);
 
+            this.Property(t => t.QuoteChargesGroupCode).HasMaxLength(5).IsUnicode(false);
+            this.Property(t => t.QuoteChargesGroupId).HasMaxLength(15).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ChargesTypes");
@@ -86,6 +88,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ApplyRegionalTax).HasColumnName("ApplyRegionalTax");
             this.Property(t => t.HasPickup).HasColumnName("HasPickup");
             this.Property(t => t.HasDelivery).HasColumnName("HasDelivery");
+            this.Property(t => t.QuoteChargesGroupCode).HasColumnName("QuoteChargesGroupCode");
+            this.Property(t => t.QuoteChargesGroupId).HasColumnName("QuoteChargesGroupId");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -111,6 +115,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.HasRequired(t => t.Measurement).WithMany().HasForeignKey(t => t.MeasurementId);
             this.HasOptional(t => t.ReceivablesDefaultCurrency).WithMany().HasForeignKey(d => d.ReceivablesDefaultCurrencyId);
             this.HasOptional(t => t.PayablesDefaultCurrency).WithMany().HasForeignKey(d => d.PayablesDefaultCurrencyId);
+            this.HasOptional(t => t.QuoteChargesGroup).WithMany().HasForeignKey(d => d.QuoteChargesGroupId);
         }
     }
 }

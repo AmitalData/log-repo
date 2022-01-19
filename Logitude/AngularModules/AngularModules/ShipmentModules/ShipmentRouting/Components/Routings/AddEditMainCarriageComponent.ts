@@ -25,6 +25,8 @@ import {PartnersDomainService} from '../../../../Common/Services/PartnersDomainS
 import {ShipmentDomainService} from '../../../../Shipment/Services/ShipmentDomainService';
 import {AWBStackDomainService} from '../../../../Common/Services/AWBStackDomainService';
 import {MAWBStackPM} from '../../../../Common/EntityPMs/MAWBStackPM';
+import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
+import { VesselList } from '../../../../Common/EntityLists/VesselList';
 
 @Component({    
     templateUrl: './AddEditMainCarriageComponent.html',
@@ -39,7 +41,7 @@ export class AddEditMainCarriageComponent extends BaseComponent {
     public LabelWidth: number = 100;
     private CurrentSession = SessionLocator.SelectedSession;
     private oldCountryId: string = null;
-
+    public IsVesselFreeTextVisible: boolean = false;
     constructor() {
         super();
         this.InitServices();
@@ -71,6 +73,11 @@ export class AddEditMainCarriageComponent extends BaseComponent {
 
         else if (this.EntityPM.TransportModeId == "O" && this.EntityPM.DirectionId == "E") {
             this.LabelWidth = 150;
+        }
+
+        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "VSL")[0];
+        if (featureToggle) {
+            this.IsVesselFreeTextVisible = true;
         }
 
         this.InitializeComponent();
@@ -316,6 +323,7 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         this.UIProperties.SetEnabled("MAWBOBLDate", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("CutoffDate", this.ObjectTableName, this.IsEditingEnabled);        
         this.UIProperties.SetEnabled("MainCarriageVesselName", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("MainCarriageVesselId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("MainCarriageETA", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("MainCarriageATD", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("MainCarriageATA", this.ObjectTableName, this.IsEditingEnabled);
@@ -339,6 +347,7 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         this.UIProperties.SetEnabled("Transshipment1CarrierNumber", this.ObjectTableName, isLegFieldsEnabled);
         this.UIProperties.SetEnabled("Transshipment1AdditionalMAWBOBLBL", this.ObjectTableName, isLegFieldsEnabled);
         this.UIProperties.SetEnabled("Transshipment1VesselName", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("Transshipment1VesselId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Transshipment1ETD", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Transshipment1ETA", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Transshipment1ATD", this.ObjectTableName, this.IsEditingEnabled);
@@ -358,6 +367,7 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         this.UIProperties.SetEnabled("Transshipment2CarrierNumber", this.ObjectTableName, isLegFieldsEnabled);
         this.UIProperties.SetEnabled("Transshipment2AdditionalMAWBOBLBL", this.ObjectTableName, isLegFieldsEnabled);
         this.UIProperties.SetEnabled("Transshipment2VesselName", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("Transshipment2VesselId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Transshipment2ETD", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Transshipment2ETA", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Transshipment2ATD", this.ObjectTableName, this.IsEditingEnabled);
@@ -377,6 +387,7 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         this.UIProperties.SetEnabled("Transshipment3CarrierNumber", this.ObjectTableName, isLegFieldsEnabled);
         this.UIProperties.SetEnabled("Transshipment3AdditionalMAWBOBLBL", this.ObjectTableName, isLegFieldsEnabled);
         this.UIProperties.SetEnabled("Transshipment3VesselName", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("Transshipment3VesselId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Transshipment3ETD", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Transshipment3ETA", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Transshipment3ATD", this.ObjectTableName, this.IsEditingEnabled);
@@ -1050,11 +1061,27 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         }
     }
 
+    private mainCarriageVessel: VesselList;
+    get MainCarriageVessel() { return this.mainCarriageVessel; }
+    set MainCarriageVessel(value: VesselList) {
+        if (this.mainCarriageVessel != value) {
+            this.mainCarriageVessel = value;
+        }
+
+        this.MainCarriageVesselName = null;
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.MainCarriageVesselName = value.EnglishName;
+        }
+    }
+
     get MainCarriageVesselName() { return this.EntityPM.MainCarriageVesselName; }
     set MainCarriageVesselName(newValue: string) {
         if (this.EntityPM.MainCarriageVesselName != newValue) {
             this.EntityPM.MainCarriageVesselName = newValue;
-            this.MainCarriageVesselId = null;
+
+            if (this.IsVesselFreeTextVisible) {
+                this.MainCarriageVesselId = null;
+            }
         }
     }
 
@@ -1065,11 +1092,27 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         }
     }
 
+    private transshipment1Vessel: VesselList;
+    get Transshipment1Vessel() { return this.transshipment1Vessel; }
+    set Transshipment1Vessel(value: VesselList) {
+        if (this.transshipment1Vessel != value) {
+            this.transshipment1Vessel = value;
+        }
+
+        this.Transshipment1VesselName = null;
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.Transshipment1VesselName = value.EnglishName;
+        }
+    }
+
     get Transshipment1VesselName() { return this.EntityPM.Transshipment1VesselName; }
     set Transshipment1VesselName(value: string) {
         if (this.EntityPM.Transshipment1VesselName != value) {
             this.EntityPM.Transshipment1VesselName = value;
-            this.Transshipment1VesselId = null;
+
+            if (this.IsVesselFreeTextVisible) {
+                this.Transshipment1VesselId = null;
+            }
         }
     }
 
@@ -1080,11 +1123,27 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         }
     }
 
+    private transshipment2Vessel: VesselList;
+    get Transshipment2Vessel() { return this.transshipment2Vessel; }
+    set Transshipment2Vessel(value: VesselList) {
+        if (this.transshipment2Vessel != value) {
+            this.transshipment2Vessel = value;
+        }
+
+        this.Transshipment2VesselName = null;
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.Transshipment2VesselName = value.EnglishName;
+        }
+    }
+
     get Transshipment2VesselName() { return this.EntityPM.Transshipment2VesselName; }
     set Transshipment2VesselName(value: string) {
         if (this.EntityPM.Transshipment2VesselName != value) {
             this.EntityPM.Transshipment2VesselName = value;
-            this.Transshipment2VesselId = null;
+
+            if (this.IsVesselFreeTextVisible) {
+                this.Transshipment2VesselId = null;
+            }
         }
     }
 
@@ -1095,11 +1154,27 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         }
     }
 
+    private transshipment3Vessel: VesselList;
+    get Transshipment3Vessel() { return this.transshipment3Vessel; }
+    set Transshipment3Vessel(value: VesselList) {
+        if (this.transshipment3Vessel != value) {
+            this.transshipment3Vessel = value;
+        }
+
+        this.Transshipment3VesselName = null;
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.Transshipment3VesselName = value.EnglishName;
+        }
+    }
+
     get Transshipment3VesselName() { return this.EntityPM.Transshipment3VesselName; }
     set Transshipment3VesselName(value: string) {
         if (this.EntityPM.Transshipment3VesselName != value) {
             this.EntityPM.Transshipment3VesselName = value;
-            this.Transshipment3VesselId = null;
+
+            if (this.IsVesselFreeTextVisible) {
+                this.Transshipment3VesselId = null;
+            }
         }
     }
 

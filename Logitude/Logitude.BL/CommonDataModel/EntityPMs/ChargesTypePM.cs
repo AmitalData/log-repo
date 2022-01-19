@@ -29,7 +29,13 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ChargesGroupId { get; set; }
-        
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string QuoteChargesGroupCode { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string QuoteChargesGroupId { get; set; }
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string MeasurementId { get; set; }
 

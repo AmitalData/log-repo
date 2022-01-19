@@ -35,7 +35,9 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;e4df&quot;"
+
+  Code="&quot;c67c&quot;"
+
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -7195,6 +7197,7 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+
     <Feature
       Code="&quot;SHAREDCARGOTRACKING&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
@@ -7204,5 +7207,16 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+
+    <Feature
+      Code="&quot;QUOTECHARGESGROUP&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.QUOTECHARGESGROUP&quot;"
+      FeatureDefaultText="&quot;Quote Charges Types&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+
   </AdditionalFeatures>
 </entity>

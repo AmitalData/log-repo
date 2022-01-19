@@ -20,6 +20,7 @@ using System.Web.UI;
 using Microsoft.Practices.Unity;
 using Logitude.Server.Tools.StorageService;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Stimulsoft.fonts;
 
 namespace WebFreight.Web.Stimulsoft
 {
@@ -28,6 +29,7 @@ namespace WebFreight.Web.Stimulsoft
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            StimulsoftFontsService.AddFonts();
             StiWebDesigner.CacheHelper = new StiMyCacheHelper();
             StiWebViewer.CacheHelper = new StiMyCacheHelper();
 

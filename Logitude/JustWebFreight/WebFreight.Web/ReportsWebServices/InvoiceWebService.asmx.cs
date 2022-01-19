@@ -1954,7 +1954,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 reportinvoiceline.UOMPercentage = "%";
                             }
 
-                            if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33"))
+                            if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33" || satSetting.SATInterfaceCode == "PROF40"))
                             {
                                 ComputingPartnerTranslationHelper computingPartnerHelper = new ComputingPartnerTranslationHelper(currentInvoice.Tenant);
                                 reportinvoiceline.ClaveUnidad = computingPartnerHelper.GetComputingPartnerCodeTranslation(myMeasurement.Code, "G-Profact", "Measurement");
@@ -2145,7 +2145,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 reportinvoiceline.UOMPercentage = "%";
                             }
 
-                            if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33"))
+                            if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33" || satSetting.SATInterfaceCode == "PROF40"))
                             {
                                 ComputingPartnerTranslationHelper computingPartnerHelper = new ComputingPartnerTranslationHelper(currentInvoice.Tenant);
                                 reportinvoiceline.ClaveUnidad = computingPartnerHelper.GetComputingPartnerCodeTranslation(myMeasurement.Code, "G-Profact", "Measurement");
@@ -2251,7 +2251,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
 
 
-                if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33"))
+                if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33" || satSetting.SATInterfaceCode == "PROF40"))
                 {
                     if (!string.IsNullOrEmpty(currentInvoice.SATXML))
                     {
@@ -2259,9 +2259,13 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             MapProfact32Fields(currentInvoice, invoicedataprovider, tenantSettings);
                         }
-                        else
+                        else if (satSetting.SATInterfaceCode == "PROF33")
                         {
                             MapProfact33Fields(currentInvoice, invoicedataprovider, tenantSettings);
+                        }
+                        else
+                        {
+                            MapProfact40Fields(currentInvoice, invoicedataprovider, tenantSettings);
                         }
                     }
                     else
@@ -2311,7 +2315,7 @@ namespace WebFreight.Web.ReportsWebServices
                     }
 
                     var FrenchFractionsExpense = "";
-                    if (resulyFirstdigits > 0)
+                    if (resulyFirstdigits > 0)  
                     {
                         FrenchFractionsExpense = resulyFirstdigits + " Cts";
                     }
@@ -2735,6 +2739,11 @@ namespace WebFreight.Web.ReportsWebServices
             //string cadenaOriginalString = GetCadenaOrignialField(currentInvoice, "33");
             //invoicedataprovider.SAT.CadenaOriginal = cadenaOriginalString;
 
+        }
+
+        private static void MapProfact40Fields(ARInvoice currentInvoice, InvoiceDataProvider invoicedataprovider, Tenant tenantSettings)
+        {
+            SATInvoiceProfact40DataProviderMappingFields.MapProfact40Fields(currentInvoice, invoicedataprovider, tenantSettings);
         }
 
         private static string GetSATTimbreFiscalDigitalValue(string attributeName, System.Xml.XmlElement timbreFiscalDigitalElement)
@@ -3261,7 +3270,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 reportinvoiceline.UOMPercentage = "%";
                             }
 
-                            if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33"))
+                            if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33" || satSetting.SATInterfaceCode == "PROF40"))
                             {
                                 ComputingPartnerTranslationHelper computingPartnerHelper = new ComputingPartnerTranslationHelper(entityPOCO.Tenant);
                                 reportinvoiceline.ClaveUnidad = computingPartnerHelper.GetComputingPartnerCodeTranslation(myMeasurement.Code, "G-Profact", "Measurement");
@@ -3432,7 +3441,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 reportinvoiceline.UOMPercentage = "%";
                             }
 
-                            if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33"))
+                            if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33" || satSetting.SATInterfaceCode == "PROF40"))
                             {
                                 ComputingPartnerTranslationHelper computingPartnerHelper = new ComputingPartnerTranslationHelper(entityPOCO.Tenant);
                                 reportinvoiceline.ClaveUnidad = computingPartnerHelper.GetComputingPartnerCodeTranslation(myMeasurement.Code, "G-Profact", "Measurement");
@@ -3948,7 +3957,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
 
 
-                if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33"))
+                if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33" || satSetting.SATInterfaceCode == "PROF40"))
                 {
                     if (!string.IsNullOrEmpty(entityPOCO.SATXML))
                     {
@@ -3956,9 +3965,13 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             MapProfact32Fields(entityPOCO, invoiceDataProvider, tenantSettings);
                         }
-                        else
+                        else if (satSetting.SATInterfaceCode == "PROF33")
                         {
                             MapProfact33Fields(entityPOCO, invoiceDataProvider, tenantSettings);
+                        }
+                        else
+                        {
+                            MapProfact40Fields(entityPOCO, invoiceDataProvider, tenantSettings);
                         }
                     }
                     else

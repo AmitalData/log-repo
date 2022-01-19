@@ -6,3 +6,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .myPanelClass{
     margin-top: 22px; 
 }
+
+.per-line{
+    white-space: pre-line!important;
+}

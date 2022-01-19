@@ -600,6 +600,32 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="FromCountryId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ToCountryId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsFromAllOtherCountries"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsToAllOtherCountries"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="OriginPortId"
     ReferencedTable="Ports"
@@ -663,6 +689,16 @@
   <Relation
     ForeignKeyColumn="ViaPortId"
     ReferencedTable="Ports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="FromCountryId"
+    ReferencedTable="Countries"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ToCountryId"
+    ReferencedTable="Countries"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <UniqueConstraint

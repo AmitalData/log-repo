@@ -77,8 +77,6 @@
 
       INSERT INTO @ConsolidationInvoiceTable (Id, InvoiceNumber ,InvoiceDate , StatusCode , DraftNumber) SELECT Id, InvoiceNumber , InvoiceDate ,StatusCode ,DraftNumber  FROM dw_ARInvoices where IsConsolidationInvoice = 1 or Id = '-1'
 
-	   
- 
 
 
 	DECLARE ARInvoicesCursor CURSOR READ_ONLY

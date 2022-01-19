@@ -2493,6 +2493,190 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string fromCountryId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FromCountryId  
+	   {
+	    
+	     get
+		{
+		   return fromCountryId;
+		 }
+		 set
+		 {
+		   if(fromCountryId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromCountryId",OldValue=fromCountryId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fromCountryId=value;
+		   }
+			
+		 }
+	   }
+	  private string toCountryId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToCountryId  
+	   {
+	    
+	     get
+		{
+		   return toCountryId;
+		 }
+		 set
+		 {
+		   if(toCountryId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToCountryId",OldValue=toCountryId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toCountryId=value;
+		   }
+			
+		 }
+	   }
+	  private string fromCountryCode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FromCountryCode  
+	   {
+	    
+	     get
+		{
+		   return fromCountryCode;
+		 }
+		 set
+		 {
+		   if(fromCountryCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromCountryCode",OldValue=fromCountryCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fromCountryCode=value;
+		   }
+			
+		 }
+	   }
+	  private string toCountryCode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToCountryCode  
+	   {
+	    
+	     get
+		{
+		   return toCountryCode;
+		 }
+		 set
+		 {
+		   if(toCountryCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToCountryCode",OldValue=toCountryCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toCountryCode=value;
+		   }
+			
+		 }
+	   }
+	  private string fromCountryName ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FromCountryName  
+	   {
+	    
+	     get
+		{
+		   return fromCountryName;
+		 }
+		 set
+		 {
+		   if(fromCountryName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromCountryName",OldValue=fromCountryName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fromCountryName=value;
+		   }
+			
+		 }
+	   }
+	  private string toCountryName ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToCountryName  
+	   {
+	    
+	     get
+		{
+		   return toCountryName;
+		 }
+		 set
+		 {
+		   if(toCountryName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToCountryName",OldValue=toCountryName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toCountryName=value;
+		   }
+			
+		 }
+	   }
+	  private bool isFromAllOtherCountries ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsFromAllOtherCountries  
+	   {
+	    
+	     get
+		{
+		   return isFromAllOtherCountries;
+		 }
+		 set
+		 {
+		   if(isFromAllOtherCountries != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsFromAllOtherCountries",OldValue=isFromAllOtherCountries,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isFromAllOtherCountries=value;
+		   }
+			
+		 }
+	   }
+	  private bool isToAllOtherCountries ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsToAllOtherCountries  
+	   {
+	    
+	     get
+		{
+		   return isToAllOtherCountries;
+		 }
+		 set
+		 {
+		   if(isToAllOtherCountries != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsToAllOtherCountries",OldValue=isToAllOtherCountries,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isToAllOtherCountries=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

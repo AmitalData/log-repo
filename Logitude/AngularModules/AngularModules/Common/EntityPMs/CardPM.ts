@@ -439,6 +439,11 @@ export class CardPM {
     public set UsoCFDICode(newValue: string) { if (this.usoCFDICode != newValue) { this.usoCFDICode = newValue; this.MarkAsDirty("UsoCFDICode"); } }
        
 	 
+    private regimenFiscalCode: string;
+    public get RegimenFiscalCode() { return this.regimenFiscalCode; }
+    public set RegimenFiscalCode(newValue: string) { if (this.regimenFiscalCode != newValue) { this.regimenFiscalCode = newValue; this.MarkAsDirty("RegimenFiscalCode"); } }
+       
+	 
     private isInternationalPartner: boolean;
     public get IsInternationalPartner() { return this.isInternationalPartner; }
     public set IsInternationalPartner(newValue: boolean) { if (this.isInternationalPartner != newValue) { this.isInternationalPartner = newValue; this.MarkAsDirty("IsInternationalPartner"); } }

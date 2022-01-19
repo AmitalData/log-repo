@@ -435,7 +435,129 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             return count;
         }
 
+        [Query(HasSideEffects = true)]
+        public IQueryable<RegimenFiscalList> GetRegimenFiscalFilters(byte[] xmlFilters, int tenant)
+        {
+            RegimenFiscalRepository RegimenFiscalRepository = new RegimenFiscalRepository(tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
 
+            IQueryable<RegimenFiscal> iQueryable = RegimenFiscalRepository.GetRegimenFiscals();
+
+            //PortCustomFilter customfilters = new PortCustomFilter(tenant);
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            iQueryable = filter.GetFilteredQuery<RegimenFiscal>(nonListQueryOperation, iQueryable);
+
+            int skippedPorts = queryOperations.PageIndex;//PageSize * (queryOperations.PageIndex - 1);
+
+            var query2 = from entity in iQueryable
+                         select new RegimenFiscalList()
+                         {
+                             Code = entity.Code,
+                             Name = entity.Name,
+                             SearchFields = entity.SearchFields,
+                         };
+
+            query2 = filter.GetFilteredQuery<RegimenFiscalList>(listQueryOperation, query2);
+
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                PropertyInfo propInfo = typeof(LoginPolicyList).GetProperty(queryOperations.SortByColumnName);
+                //ObjectFieldsRepository objectFieledsRepository = new ObjectFieldsRepository(tenant);
+                List<ObjectField> shipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("MetodoPago", tenant).ToList();
+
+                ObjectField objectField = (from a in shipmentObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
+
+
+                if (objectField != null)
+                {
+                    switch (objectField.DataTypeCode.ToLower())
+                    {
+                        case "text":
+                            {
+                                query2 = sortClass.GetSorterQuery<RegimenFiscalList, string>(queryOperations, query2);
+                                break;
+                            }
+                        case "double":
+                            {
+                                query2 = sortClass.GetSorterQuery<RegimenFiscalList, double>(queryOperations, query2);
+                                break;
+                            }
+                        case "datetime":
+                            {
+                                query2 = sortClass.GetSorterQuery<RegimenFiscalList, DateTime>(queryOperations, query2);
+                                break;
+                            }
+                        case "integer":
+                            {
+                                query2 = sortClass.GetSorterQuery<RegimenFiscalList, int>(queryOperations, query2);
+                                break;
+                            }
+                        case "boolean":
+                            {
+                                query2 = sortClass.GetSorterQuery<RegimenFiscalList, bool>(queryOperations, query2);
+                                break;
+                            }
+                        default:
+                            {
+                                query2 = query2.OrderByDescending(d => d.Name);
+                                break;
+                            }
+                    }
+                }
+            }
+
+            else
+            {
+                query2 = query2.OrderByDescending(d => d.Code);
+            }
+
+            query2 = query2.Skip(skippedPorts);
+            query2 = query2.Take(queryOperations.PageSize);
+            return query2;
+        }
+
+        public int GetRegimenFiscalFiltersCount(byte[] xmlFilters, int tenant)
+        {
+            RegimenFiscalRepository RegimenFiscalRepository = new RegimenFiscalRepository(tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<RegimenFiscal> iQueryable = RegimenFiscalRepository.GetRegimenFiscals();
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            iQueryable = filter.GetFilteredQuery<RegimenFiscal>(nonListQueryOperation, iQueryable);
+
+            var query2 = from entity in iQueryable
+                         select new RegimenFiscalList()
+                         {
+                             Code = entity.Code,
+                             Name = entity.Name,
+                             SearchFields = entity.SearchFields,
+                         };
+
+            query2 = filter.GetFilteredQuery<RegimenFiscalList>(listQueryOperation, query2);
+            int count = query2.Count();
+            return count;
+        }
 
         [Query(HasSideEffects = true)]
         public IQueryable<UsoCFDIList> GetUsoCFDIFilters(byte[] xmlFilters, int tenant)

@@ -26,8 +26,7 @@ import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeName
 import { UpdateTariffArgs } from '../../../Args';
 import { AirSurchargeTariffLineData } from '../../../../TariffModule/Components/EditTabs/Tariff/TariffLineData';
 
-@Component({
-    
+@Component({    
     templateUrl: './SurchargeVersionTabComponent.html',
 })
 

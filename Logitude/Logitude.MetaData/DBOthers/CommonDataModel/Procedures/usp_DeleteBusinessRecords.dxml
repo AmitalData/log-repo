@@ -28,13 +28,17 @@ delete from QuoteTemplateExcludedSections where Tenant = @Tenant
 delete from QuoteComputedFields where Tenant = @Tenant
 delete from Quotes where Tenant = @Tenant
 
+delete from ShipmentUnassignedFields where Tenant = @Tenant
+delete from Containers where Tenant = @Tenant
 delete from ShipmentCustomsTransmissions where Tenant = @Tenant
 delete from ARInvoiceChargesConstraints where Tenant= @Tenant
 delete from ShipmentReceivables where Tenant= @Tenant
+delete from PayableProratedAmounts where Tenant= @Tenant
 delete from ShipmentPayables where Tenant= @Tenant
 delete from InsideShipmentPackages where Tenant = @Tenant
 delete from ShipmentPackageHarmonize where Tenant = @Tenant
 delete from ShipmentPackageItems where Tenant = @Tenant
+delete from ShipmentContainerStatuses where Tenant = @Tenant
 delete from ShipmentPackages where Tenant= @Tenant
 delete from ShipmentOrderPackages where Tenant= @Tenant
 delete from PickUpDeliveryPackageHarmonizes where Tenant = @Tenant
@@ -59,6 +63,14 @@ delete from WarehouseEntries where Tenant = @Tenant
 delete from WarehouseReleases where Tenant = @Tenant
 
 delete from Shipments where Tenant = @Tenant
+
+delete from TariffLinesContainersPrices where Tenant = @Tenant
+delete from TariffLines where Tenant = @Tenant
+delete from TariffSurchargesUpdates where Tenant = @Tenant
+delete from TariffVersionAllInCharges where Tenant = @Tenant
+delete from TariffVersionUploadedExcels where Tenant = @Tenant
+delete from TariffVersions where Tenant = @Tenant
+delete from Tariffs where Tenant = @Tenant
 
 delete from ARInvoiceLines where Tenant = @Tenant
 delete from ARInvoiceEntities where Tenant = @Tenant

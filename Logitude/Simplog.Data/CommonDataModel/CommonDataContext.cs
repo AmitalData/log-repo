@@ -1005,6 +1005,7 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<ChargesExternalAccountsByProduct> ChargesExternalAccountsByProducts { get; set; }
         public IDbSet<RegistryDateType> RegistryDateTypes { get; set; }
         public IDbSet<UsoCFDI> UsoCFDIs { get; set; }
+        public IDbSet<RegimenFiscal> RegimenFiscals { get; set; }
         public IDbSet<ReportsTemplate> ReportsTemplates { get; set; }
         public IDbSet<ReportsTemplatesVersion> ReportsTemplatesVersions { get; set; }
         public IDbSet<FeatureChange> FeatureChanges { get; set; }

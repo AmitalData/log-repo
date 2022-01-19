@@ -592,7 +592,11 @@ namespace Simplog.Data.InfrastructureModel
             get;
             set;
         }
-
+        public IDbSet<QuoteChargesGroup> QuoteChargesGroups
+        {
+            get;
+            set;
+        }
         public IDbSet<VolumeUnit> VolumeUnits
         {
             get;

@@ -54,7 +54,7 @@ export class ARInvoicePMInitService {
             entityPM.UIProperties.SetVisibility("Intercompany", "ARInvoice", false);
         }
 
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             if (AppTool.IsNullOrEmpty(entityPM.SATPaymentMethodCode)) {
                 entityPM.UIProperties.SetRequired("SATPaymentMethodCode", "ARInvoice", true);
             }

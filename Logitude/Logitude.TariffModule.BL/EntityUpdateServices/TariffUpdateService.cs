@@ -60,6 +60,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 
                 this.ValidateSurchargeUniqueSeller(entityPM);
                 this.ValidateFCLSurchargeUniqueSeller(entityPM);
+                this.ValidateCustomsChargesUniqueBroker(entityPM);
             }
         }
         
@@ -117,6 +118,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
             this.ValidateSurchargeUniqueSeller(entityPM);
             this.ValidateFCLSurchargeUniqueSeller(entityPM);
+            this.ValidateCustomsChargesUniqueBroker(entityPM);
 
             if (entityPM.IsApprovingDraftVersion)
             {
@@ -633,7 +635,25 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 }
             }
         }
+        private void ValidateCustomsChargesUniqueBroker(TariffPM entityPM)
+        {
+            if (entityPM.TypeCode == "ICC" || entityPM.TypeCode == "ECC")
+            {
+                ITariffModuleContext iContext = TariffModuleContext.GetContext(entityPM.Tenant);
+                int iCount = (from d in iContext.Tariffs
+                              where d.Tenant == entityPM.Tenant
+                              && !d.InActive
+                              && d.Id != entityPM.Id
+                              && d.CustomsBrokerId == entityPM.CustomsBrokerId
+                              && d.TypeCode == entityPM.TypeCode
+                              select d).Count();
 
+                if (iCount >= 1)
+                {
+                    throw new ApplicationException("Tariff customs broker should be unique");
+                }
+            }
+        }
         private void UpdateMissingPorts(TariffPM entityPM)
         {
             this.iTariffLineRepository = new TariffLineRepository(entityPM.Tenant);
