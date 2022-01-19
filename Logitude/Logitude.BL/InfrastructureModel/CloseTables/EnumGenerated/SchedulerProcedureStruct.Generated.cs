@@ -33,6 +33,7 @@ namespace Logitude.BL.InfrastructureModel.CloseTables
        public const string DeleteOldCargoTrackingData = "DeleteOldCargoTrackingData";  
        public const string ExchangeRateUpdateTask = "ExchangeRateUpdateTask";  
        public const string ContainerAutomaticallyClosingTask = "ContainerAutomaticallyClosingTask";  
+       public const string RecalculateCashbooksTotalsTask = "RecalculateCashbooksTotalsTask";  
     }
 }
 

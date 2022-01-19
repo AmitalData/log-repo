@@ -188,6 +188,14 @@ namespace Logitude.BL.InfrastructureModel
                 Description = "ContainerAutomaticallyClosingTask", 
                 IsInternallyDefined = false, 
 			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
+                Code = "RecalculateCashbooksTotalsTask", 
+                Name = "RecalculateCashbooksTotalsTask", 
+                SearchFields = "RecalculateCashbooksTotalsTask", 
+                IsInternallyDefined = false, 
+			});
 			
             return all;
        }
