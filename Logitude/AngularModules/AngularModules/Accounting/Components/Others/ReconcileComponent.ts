@@ -384,30 +384,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
     public ExportToExcelClick(){
 
-        // var reconcile = this.CreateReconciliation();
-
-
-        // var args: ReconcileExcelDataArgs= new ReconcileExcelDataArgs();
-        // args.QueryColumns = this.QueryColumns;
-        // args.Tenant = SessionLocator.Tenant;
-        // args.Data = reconcile.ReconciliationLines;
-
-        // this._ReconciliationExtendedPMService.PostReconcileExcelData(args)
-        //     .subscribe(arg => {
-
-        //     });
-        // ;
-
-        this.ExportToExcelExcute();
-    }
-
-    ExportToExcelExcute() {
-
         if(this.SelectedLines.Length == 0)
             this.ValidationErrorsList = [TextCodeTranslator.Translate("Reconciliation.O.NoLinesSelected") ];
         else
             this.ShowExportToExcelWindow();
-
     }
 
     private ShowExportToExcelWindow()
