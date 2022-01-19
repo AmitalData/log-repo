@@ -291,6 +291,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.0\lib\netstandard2.0\System.Memory.dll</HintPath>
     </Reference>
@@ -402,6 +403,7 @@
     <Compile Include="Services\SAT\SATInvoiceProfact40CancellationService.cs" />
     <Compile Include="Services\SAT\SATPaymentProfact40CancellationService.cs" />
     <Compile Include="Services\SAT\SATProfact40Service.cs" />
+    <Compile Include="Stimulsoft\fonts\StimulsoftFontsService.cs" />
     <Compile Include="Tasks\ContainerAutomaticallyClosingTask.cs" />
     <Compile Include="UpdatePortTimeZoneWR.cs" />
     <Compile Include="WebHookCommunicationWorkerRole.cs" />
@@ -758,6 +760,69 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\wsReference\Timbrado.wsdl" />
+    <None Include="Stimulsoft\fonts\century-gothic\GOTHIC.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\century-gothic\GOTHICB.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\century-gothic\GOTHICBI.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\century-gothic\GOTHICI.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\didot\GFSDidot-Regular.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\garamond\GARA.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\garamond\GARABD.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\garamond\GARAIT.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\lucida-bright\LBRITE.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\lucida-bright\LBRITED.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\lucida-bright\LBRITEDI.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\lucida-bright\LBRITEI.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\monaco\Monaco.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\optima\OPTIMA.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\optima\OPTIMA_B.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\optima\Optima_Italic.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\optima\Optima_Medium.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\perpetua\PERBI___.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\perpetua\PERB____.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\perpetua\PERI____.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\perpetua\PER_____.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JustWebFreight\WebFreight.Web\WebFreight.Web.csproj">
