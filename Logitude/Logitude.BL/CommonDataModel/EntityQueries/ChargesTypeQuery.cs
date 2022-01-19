@@ -51,6 +51,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                           AWBPrintDescription = a.AWBPrintDescription,
                           ChargesGroupCode = a.ChargesGroupCode,
                           ChargesGroupId = a.ChargesGroupId,
+                          QuoteChargesGroupCode = a.QuoteChargesGroupCode,
+                          QuoteChargesGroupId = a.QuoteChargesGroupId,
                           IATACodeId = a.IATACodeId,
                           Description = a.Description,
                           IsAir = a.IsAir,
@@ -127,6 +129,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         AWBPrintDescription = a.AWBPrintDescription,
                                         ChargesGroupCode = a.ChargesGroupCode,
                                         ChargesGroupId = a.ChargesGroupId,
+                                        QuoteChargesGroupCode = a.QuoteChargesGroupCode,
+                                        QuoteChargesGroupId = a.QuoteChargesGroupId,
                                         IATACodeId = a.IATACodeId,
                                         Description = a.Description,
                                         IsAir = a.IsAir,
@@ -299,6 +303,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               AWBPrintDescription = a.AWBPrintDescription,
                               ChargesGroupCode = a.ChargesGroupCode,
                               ChargesGroupId = a.ChargesGroupId,
+                              QuoteChargesGroupCode = a.QuoteChargesGroupCode,
+                              QuoteChargesGroupId = a.QuoteChargesGroupId,
                               IATACodeId = a.IATACodeId,
                               Description = a.Description,
                               IsAir = a.IsAir,
@@ -401,6 +407,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     AWBPrintDescription = a.AWBPrintDescription,
                                                     ChargesGroupCode = a.ChargesGroupCode,
                                                     ChargesGroupId = a.ChargesGroupId,
+                                                    QuoteChargesGroupCode = a.QuoteChargesGroupCode,
+                                                    QuoteChargesGroupId = a.QuoteChargesGroupId,
                                                     IATACodeId = a.IATACodeId,
                                                     Description = a.Description,
                                                     IsAir = a.IsAir,
@@ -474,6 +482,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              AWBPrintDescription = a.AWBPrintDescription,
                              ChargesGroupCode = a.ChargesGroupCode,
                              ChargesGroupId = a.ChargesGroupId,
+                             QuoteChargesGroupCode = a.QuoteChargesGroupCode,
+                             QuoteChargesGroupId = a.QuoteChargesGroupId,
                              IATACodeId = a.IATACodeId,
                              Description = a.Description,
                              IsAir = a.IsAir,
@@ -550,7 +560,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<ChargesTypeList> GetIQueryableEntityList(IQueryable<ChargesType> iQueryable)
         {
-            IQueryable<ChargesTypeList> result = from f in iQueryable.Include("Measurement").Include("ContainerMeasurement").Include("VatType").Include("ChargesGroup")
+            IQueryable<ChargesTypeList> result = from f in iQueryable.Include("Measurement").Include("ContainerMeasurement").Include("VatType").Include("ChargesGroup").Include("QuoteChargesGroup")
                                                  select new ChargesTypeList()
                                                  {
                                                      AddedManually = f.AddedManually,
@@ -566,6 +576,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      AWBPrintDescription = f.AWBPrintDescription,
                                                      ChargesGroupCode = f.ChargesGroupCode,
                                                      ChargesGroupId = f.ChargesGroupId,
+                                                     QuoteChargesGroupCode = f.QuoteChargesGroupCode,
+                                                     QuoteChargesGroupId = f.QuoteChargesGroupId,
                                                      IATACodeId = f.IATACodeId,
                                                      Description = f.Description,
                                                      IsAir = f.IsAir,
@@ -585,6 +597,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      ContainerMeasurementCode = f.ContainerMeasurement != null ? f.ContainerMeasurement.Code : null,
                                                      ViewOrder = f.ViewOrder,
                                                      ChargesGroupName = f.ChargesGroup == null ? null : f.ChargesGroup.Name,
+                                                     QuoteChargesGroupName = f.QuoteChargesGroup == null ? null : f.QuoteChargesGroup.Name,
                                                      SearchFields = f.SearchFields,
                                                      AccountingVATSplit = f.AccountingVATSplit,
                                                      ReceivableCreditAccount = f.ReceivableCreditAccount,
@@ -620,7 +633,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public ChargesTypeList GetSingleChargesType(string id, int tenant)
         {
-            ChargesTypeList chargesTypeList = (from f in repository.context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement").Include("VatType").Include("ChargesGroup")
+            ChargesTypeList chargesTypeList = (from f in repository.context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement").Include("VatType").Include("ChargesGroup").Include("QuoteChargesGroup")
                                                where f.Tenant == tenant && f.Id == id
                                                select new ChargesTypeList()
                                                {
@@ -637,6 +650,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    AWBPrintDescription = f.AWBPrintDescription,
                                                    ChargesGroupCode = f.ChargesGroupCode,
                                                    ChargesGroupId = f.ChargesGroupId,
+                                                   QuoteChargesGroupCode = f.QuoteChargesGroupCode,
+                                                   QuoteChargesGroupId = f.QuoteChargesGroupId,
                                                    IATACodeId = f.IATACodeId,
                                                    Description = f.Description,
                                                    IsAir = f.IsAir,
@@ -656,6 +671,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    ContainerMeasurementCode = f.ContainerMeasurement != null ? f.ContainerMeasurement.Code : null,
                                                    ViewOrder = f.ViewOrder,
                                                    ChargesGroupName = f.ChargesGroup == null ? null : f.ChargesGroup.Name,
+                                                   QuoteChargesGroupName = f.QuoteChargesGroup == null ? null : f.QuoteChargesGroup.Name,
                                                    SearchFields = f.SearchFields,
                                                    AccountingVATSplit = f.AccountingVATSplit,
                                                    ReceivableCreditAccount = f.ReceivableCreditAccount,
@@ -691,7 +707,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<ChargesTypeList> GetChargesTypeLists(int tenant, int skip, int take)
         {
-            IQueryable<ChargesTypeList> query = (from f in repository.context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement").Include("VatType").Include("ChargesGroup")
+            IQueryable<ChargesTypeList> query = (from f in repository.context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement").Include("VatType").Include("ChargesGroup").Include("QuoteChargesGroup")
                                                  where f.Tenant == tenant
                          select new ChargesTypeList()
                          {
@@ -708,6 +724,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              AWBPrintDescription = f.AWBPrintDescription,
                              ChargesGroupCode = f.ChargesGroupCode,
                              ChargesGroupId = f.ChargesGroupId,
+                             QuoteChargesGroupCode = f.QuoteChargesGroupCode,
+                             QuoteChargesGroupId = f.QuoteChargesGroupId,
                              IATACodeId = f.IATACodeId,
                              Description = f.Description,
                              IsAir = f.IsAir,
@@ -727,6 +745,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              ContainerMeasurementCode = f.ContainerMeasurement != null ? f.ContainerMeasurement.Code : null,
                              ViewOrder = f.ViewOrder,
                              ChargesGroupName = f.ChargesGroup == null ? null : f.ChargesGroup.Name,
+                             QuoteChargesGroupName = f.QuoteChargesGroup == null ? null : f.QuoteChargesGroup.Name,
                              SearchFields = f.SearchFields,
                              AccountingVATSplit = f.AccountingVATSplit,
                              ReceivableCreditAccount = f.ReceivableCreditAccount,
@@ -773,13 +792,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   Code = a.Code,
                                                   ViewOrder = a.ViewOrder, 
                                                   ChargesGroupId = a.ChargesGroupId,
+                                                  QuoteChargesGroupId = a.QuoteChargesGroupId,
                                                 };
             return charges;
         }
 
         public ChargesTypeList GetSingleChargesTypeListByCode(string code, int tenant)
         {
-            ChargesTypeList chargesTypeList = (from f in repository.context.ChargesTypes.Include("Measurement").Include("VatType").Include("ChargesGroup")
+            ChargesTypeList chargesTypeList = (from f in repository.context.ChargesTypes.Include("Measurement").Include("VatType").Include("ChargesGroup").Include("QuoteChargesGroup")
                                                where f.Tenant == tenant && f.Code == code
                                                select new ChargesTypeList()
                                                {
@@ -796,6 +816,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    AWBPrintDescription = f.AWBPrintDescription,
                                                    ChargesGroupCode = f.ChargesGroupCode,
                                                    ChargesGroupId = f.ChargesGroupId,
+                                                   QuoteChargesGroupCode = f.QuoteChargesGroupCode,
+                                                   QuoteChargesGroupId = f.QuoteChargesGroupId,
                                                    IATACodeId = f.IATACodeId,
                                                    Description = f.Description,
                                                    IsAir = f.IsAir,
@@ -814,6 +836,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    ContainerMeasurementId = f.ContainerMeasurementId,
                                                    ViewOrder = f.ViewOrder,
                                                    ChargesGroupName = f.ChargesGroup == null ? null : f.ChargesGroup.Name,
+                                                   QuoteChargesGroupName = f.QuoteChargesGroup == null ? null : f.QuoteChargesGroup.Name,
                                                    SearchFields = f.SearchFields,
                                                    AccountingVATSplit = f.AccountingVATSplit,
                                                    ReceivableCreditAccount = f.ReceivableCreditAccount,

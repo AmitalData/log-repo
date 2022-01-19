@@ -10,6 +10,8 @@
         public string LocalName { get; set; }
         public string ChargesGroupCode { get; set; }
         public string ChargesGroupId { get; set; }
+        public string QuoteChargesGroupCode { get; set; }
+        public string QuoteChargesGroupId { get; set; }
         public string MeasurementId { get; set; }
         public string ContainerMeasurementId { get; set; }
         public string Description { get; set; }
