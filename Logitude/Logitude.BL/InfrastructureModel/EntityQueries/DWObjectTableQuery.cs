@@ -18,7 +18,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         {
             {"BIF","Invoices"}, 
             {"BAF", "ARInvoices"},
-            {"IDS", "Inland Domestic Shipments"}
+            {"IDS", "Inland Domestic Shipments"},
+            {"BCF", "Containers"}
         };
 
         public DWObjectTableQuery()

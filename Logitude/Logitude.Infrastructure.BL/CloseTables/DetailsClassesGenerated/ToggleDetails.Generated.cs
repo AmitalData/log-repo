@@ -415,14 +415,14 @@ namespace Logitude.Infrastructure.BL
             });
 
             all.Add(new ToggleDetails()
-            {
+            {    
 
-                Code = "AEV",
-                Name = "Automation Event Creation",
-                SearchFields = "AEV,Automation Event Creation",
-                Description = "Automation Event Creation",
-            });
-
+                Code = "AEV", 
+                Name = "Automation Event Creation", 
+                SearchFields = "AEV,Automation Event Creation", 
+                Description = "Automation Event Creation", 
+			});
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "OPS", 
@@ -462,8 +462,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "OPF,Open Format RTL", 
                 Description = "Open Format RTL Issues", 
 			});
-			 
-
+            
             all.Add(new ToggleDetails()
             {    
                 Code = "CUS", 
@@ -502,6 +501,14 @@ namespace Logitude.Infrastructure.BL
                 Name = "Vessel Free Text", 
                 SearchFields = "VSL,Vessel Free Text", 
                 Description = "Vessel Free Text", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BCF", 
+                Name = "Containers DWH", 
+                SearchFields = "Containers DWH,Allow Tenants to Show Containers Fact on BI Report Screent,BCF", 
+                Description = "Allow Tenants to Show Containers Fact on BI Report Screen", 
 			});
 			
             return all;

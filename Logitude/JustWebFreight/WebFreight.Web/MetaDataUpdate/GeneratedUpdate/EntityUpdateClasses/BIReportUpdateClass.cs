@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BIReportUpdateClass
    {  		
-		public const string HashString = "c09b33611e0050d4f714967b70cfdba7";
+		public const string HashString = "dea43b464c66807e57c7b30197ea3b9b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1319,6 +1319,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature BIReportFeature_BIReport_Fact_ARInvoices = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Fact_ARInvoices", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReport.Fact_ARInvoices", NameTextCodeDefaultText = @"ARInvoices" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
 
 		   Feature BIReportFeature_BIReport_Fact_InlandDomesticShipments = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Fact_InlandDomesticShipments", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReport.Fact_InlandDomesticShipments", NameTextCodeDefaultText = @"Inland Domestic Shipments" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
+
+		   Feature BIReportFeature_BIReport_Fact_Containers = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Fact_Containers", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReport.Fact_Containers", NameTextCodeDefaultText = @"Containers" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
 
    
 	    
