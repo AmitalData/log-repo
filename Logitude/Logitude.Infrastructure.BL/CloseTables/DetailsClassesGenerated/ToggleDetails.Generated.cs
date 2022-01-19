@@ -407,6 +407,15 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
+
+                Code = "ODA",
+                Name = "On Update Document Automation Tab",
+                SearchFields = "ODA,On Update Document Automation Tab",
+                Description = "On Update Document Automation Tab",
+            });
+
+            all.Add(new ToggleDetails()
+            {    
                 Code = "AEV", 
                 Name = "Automation Event Creation", 
                 SearchFields = "AEV,Automation Event Creation", 
@@ -452,7 +461,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "OPF,Open Format RTL", 
                 Description = "Open Format RTL Issues", 
 			});
-			 
+            
             all.Add(new ToggleDetails()
             {    
                 Code = "CUS", 
@@ -500,6 +509,16 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "CCT,Customs Charges Tariffs", 
                 Description = "Customs Charges Tariffs", 
 			});
+
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BCF", 
+                Name = "Containers DWH", 
+                SearchFields = "Containers DWH,Allow Tenants to Show Containers Fact on BI Report Screent,BCF", 
+                Description = "Allow Tenants to Show Containers Fact on BI Report Screen", 
+			});
+
 			
             return all;
        }
