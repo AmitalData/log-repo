@@ -745,7 +745,31 @@ tenant);
         {
             SecurityUtility.AuthenticationOnTenant(args.Tenant);
 
-            var excelArgs = new ExportToExcelArgs()
+            ExportToExcelArgs excelArgs = BuildExportToExcelArguments(args);
+            var excelFile = new ExportToExcelHelper().ExportDataToExcel(excelArgs);
+            BlobFileInfo fileInfo = SaveFileToStorage(args, excelFile);
+
+            return Request.CreateResponse(HttpStatusCode.OK, fileInfo.FileName);
+        }
+
+        private static BlobFileInfo SaveFileToStorage(ReconcileExcelDataArgs args, byte[] excelFile)
+        {
+            BlobFileInfo fileInfo = new BlobFileInfo()
+            {
+                FileName = "DraftReconciliation-" + DateTime.Now.ToShortDateString(),
+                FolderName = "others",
+                Extension = "xls",
+                Tenant = args.Tenant,
+                FileSize = excelFile.Length,
+            };
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            storageservice.Write(excelFile, fileInfo);
+            return fileInfo;
+        }
+
+        private static ExportToExcelArgs BuildExportToExcelArguments(ReconcileExcelDataArgs args)
+        {
+            return new ExportToExcelArgs()
             {
                 Data = args.Data.GetEnumerator(),
                 QueryColumns = args.QueryColumns,
@@ -754,26 +778,10 @@ tenant);
                 {
                     ObjectTableName = "Reconciliation",
                     DisplayText = "Draft Reconciliation",
+                    Tenant = args.Tenant
                 }
             };
-            var data = new ExportToExcelHelper().ExportDataToExcel(excelArgs);
-
-            BlobFileInfo fileInfo = new BlobFileInfo()
-            {
-                FileName = "DraftReconciliation-" + DateTime.Now.ToShortDateString(),
-                FolderName = "others",
-                Extension = "xls",
-                Tenant = args.Tenant,
-                FileSize = data.Length,
-            };
-            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-            storageservice.Write(data, fileInfo);
-
-
-            return Request.CreateResponse(HttpStatusCode.OK, fileInfo.FileName);
         }
-
-
     }
 
 

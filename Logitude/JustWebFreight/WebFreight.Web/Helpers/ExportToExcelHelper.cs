@@ -853,7 +853,7 @@ namespace WebFreight.Web.Helpers
         private static void CreateSheetHeader(QueryPM dummyQuery, IWorksheet sheet)
         {
             sheet.Range["A2:C2"].Merge();
-            sheet.Range["A2:C2"].Text = !string.IsNullOrEmpty(dummyQuery.DisplayText) ? dummyQuery.DisplayText : TextCodesTranslator.TranslateText(dummyQuery.NameTextCodeCode, args.Tenant);
+            sheet.Range["A2:C2"].Text = !string.IsNullOrEmpty(dummyQuery.DisplayText) ? dummyQuery.DisplayText : TextCodesTranslator.TranslateText(dummyQuery.NameTextCodeCode, dummyQuery.Tenant);
             sheet.Range["A2:C2"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
             sheet.Range["A2:C2"].CellStyle.Font.Bold = true;
             sheet.Range["A2:C2"].CellStyle.Font.Color = ExcelKnownColors.Black;
