@@ -96,6 +96,7 @@
  declare @LastFreeDayDate as datetime  
  declare @GateOut as datetime
  declare @FreeDays as int
+ --@[DeclareCustomFieldsVariable]
 
   DECLARE ContainersCursor CURSOR READ_ONLY
 	FOR
@@ -108,7 +109,8 @@
 	dw_Containers.ActualTransshipment4Discharge, dw_Containers.EstimatedTransshipment4Loaded, dw_Containers.ActualTransshipment4Loaded, dw_Containers.EstimatedTrans4VesselDeparture, dw_Containers.ActualTrans4VesselDeparture, pODLocationPort.Id_Number, dw_Containers.EstimatedPODVesselArrival, dw_Containers.EstimatedPODDischarge, 
 	dw_Containers.ActualPODVesselArrival, dw_Containers.ActualPODDischarge, dw_Containers.EstimatedPODDeparture, dw_Containers.ActualPODDeparture, emptyReturnLocationPort.Id_Number, dw_Containers.EstimatedEmptyReturn, dw_Containers.ActualEmptyReturn, dw_Containers.MainCarriageATA, dw_Containers.MainCarriageETA, dw_Containers.MainCarriageETD, 
 	dw_Containers.MainCarriageATD, dw_Containers.PreCarriageATD, onCarriageLocationPort.Id_Number, dw_Containers.EstimatedOnCarriageDeparture, dw_Containers.OnCarriageETD, dw_Containers.ActualOnCarriageDeparture, dw_Containers.OnCarriageATD, lIFLocationPort.Id_Number, dw_Containers.ActualLIFArrival, dw_Containers.PreCarriageETD, 
-	dw_Containers.EstimatedLIFArrival, dw_Containers.CreateDate, createdByUser.Id_Number, dw_Containers.UpdateDate, updatedByUser.Id_Number, dw_Containers.CurrentStatus, dw_Containers.CurrentStatusDate, dw_Containers.ClosedDate, dw_Containers.IsClosed, status.Id_Number,dw_Containers.ShipmentId,dw_Containers.LastFreeDayDate,dw_Containers.GateOut,dw_Containers.FreeDays
+	dw_Containers.EstimatedLIFArrival, dw_Containers.CreateDate, createdByUser.Id_Number, dw_Containers.UpdateDate, updatedByUser.Id_Number, dw_Containers.CurrentStatus, dw_Containers.CurrentStatusDate, dw_Containers.ClosedDate, dw_Containers.IsClosed, status.Id_Number,dw_Containers.ShipmentId,dw_Containers.LastFreeDayDate,dw_Containers.GateOut,dw_Containers.FreeDays,
+	@dw_Containers.CustomFieldsVariable
 
   From dw_Containers
 
@@ -129,6 +131,7 @@
 	inner JOIN DIM_Users createdByUser ON dw_Containers.CreatedByUserId = createdByUser.Id
 	inner JOIN DIM_Users updatedByUser ON dw_Containers.UpdatedByUserId = updatedByUser.Id
 	inner JOIN DIM_ShipmentStatuses status ON dw_Containers.StatusId = status.Id
+	inner JOIN dw_CustomObjectFields  ON dw_Containers.Tenant = dw_CustomObjectFields.Tenant and dw_CustomObjectFields.ObjectTableName = 'Container'
 
 	 where dw_Containers.AutomaticLastUpdateDate > @LastUpdateDate
 
@@ -141,12 +144,18 @@
 	@ActualTransshipment4Discharge, @EstimatedTransshipment4Loaded, @ActualTransshipment4Loaded, @EstimatedTrans4VesselDeparture, @ActualTrans4VesselDeparture, @pODLocationPort, @EstimatedPODVesselArrival, @EstimatedPODDischarge, 
 	@ActualPODVesselArrival, @ActualPODDischarge, @EstimatedPODDeparture, @ActualPODDeparture, @emptyReturnLocationPort, @EstimatedEmptyReturn, @ActualEmptyReturn, @MainCarriageATA, @MainCarriageETA, @MainCarriageETD,
 	@MainCarriageATD, @PreCarriageATD, @onCarriageLocationPort, @EstimatedOnCarriageDeparture, @OnCarriageETD, @ActualOnCarriageDeparture, @OnCarriageATD, @lIFLocationPort, @ActualLIFArrival, @PreCarriageETD, @EstimatedLIFArrival,
-	@CreateDate, @createdByUser, @UpdateDate, @updatedByUser, @CurrentStatus, @CurrentStatusDate, @ClosedDate, @IsClosed, @status, @ShipmentId,@LastFreeDayDate,@GateOut,@FreeDays
+	@CreateDate, @createdByUser, @UpdateDate, @updatedByUser, @CurrentStatus, @CurrentStatusDate, @ClosedDate, @IsClosed, @status, @ShipmentId,@LastFreeDayDate,@GateOut,@FreeDays,@CursorCustomFieldsVariable
 	
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	 
 	 BEGIN TRY  
+
+		 --------------Resolve Custom Field Data Type Code-------------------
+            
+			      --@[ResolveCustomFieldDataTypeCodeVariable]
+
+	 ------------------------------------------------------
 
 	 	 insert into Fact_Containers ([Id], [Source Tenant], [Parent Tenant], [Actual Empty Pickup Date], [Empty Pickup Location Port], [Estimated Empty Pickup Date], [Pre Carriage Location Port], [POL Location Port], [Estimated POL Arrival],
 	 [Actual POL Arrival], [Estimated POL Loaded], [Actual POL Loaded], [Estimated POL Vessel Departure], [Actual POL Vessel Departure], [Transshipment1 Location Port], [Estimated Transshipment1 Vessel Arrival], [Actual Transshipment1 Vessel Arrival],
@@ -157,7 +166,7 @@
 	 [Actual Transshipment4 Loaded], [Estimated Transshipment4 Vessel Departure], [Actual Transshipment4 Vessel Departure ], [POD Location Port], [Estimated POD Vessel Arrival], [Estimated POD Discharge], [Actual POD Vessel Arrival], [Actual POD Discharge],
 	 [Estimated POD Departure], [Actual POD Departure], [Empty Return Location Port], [Estimated Empty Return], [Actual Empty Return], [Container Main Carriage ATA], [Container Main Carriage ETA], [Container Main Carriage ETD], 
 	 [Container Main Carriage ATD], [Container Pre Carriage ETD], [On Carriage Location Port], [Estimated On Carriage Departure], [Container On Carriage ETD], [Actual On Carriage Departure], [Container On Carriage ATD], [LIF Location Port], [Actual LIF Arrival], [Container Pre Carriage ATD], [Estimated LIF Arrival],
-	 [Create Date], [Created By], [Update Date], [Updated By], [Current Status], [Current Status Date], [Closed Date], [Is Closed], [Status], [Shipment Id],[Last Free Day],[POD Gate Out],[Free Days])
+	 [Create Date], [Created By], [Update Date], [Updated By], [Current Status], [Current Status Date], [Closed Date], [Is Closed], [Status], [Shipment Id],[Last Free Day],[POD Gate Out],[Free Days],[CustomFieldNamesVariable])
 
 	 values(@Id, @SourceTenant, @ParentTenant,dbo.GetDateFormateAsNumber(@ActualEmptyPickupDate), @emptyPickupLocationPort, dbo.GetDateFormateAsNumber(@EstimatedEmptyPickupDate), @preCarriageLocationPort, @pOLLocationPort, dbo.GetDateFormateAsNumber(@EstimatedPOLArrival),
 	 dbo.GetDateFormateAsNumber(@ActualPOLArrival), dbo.GetDateFormateAsNumber(@EstimatedPOLLoaded), dbo.GetDateFormateAsNumber(@ActualPOLLoaded), dbo.GetDateFormateAsNumber(@EstimatedPOLVesselDeparture), dbo.GetDateFormateAsNumber(@ActualPOLVesselDeparture), @transshipment1LocationPort, dbo.GetDateFormateAsNumber(@EstimatedTrans1VesselArrival), dbo.GetDateFormateAsNumber(@ActualTransshipment1VesselArrival),
@@ -168,7 +177,7 @@
 	 dbo.GetDateFormateAsNumber(@ActualTransshipment4Loaded), dbo.GetDateFormateAsNumber(@EstimatedTrans4VesselDeparture), dbo.GetDateFormateAsNumber(@ActualTrans4VesselDeparture), @pODLocationPort, dbo.GetDateFormateAsNumber(@EstimatedPODVesselArrival), dbo.GetDateFormateAsNumber(@EstimatedPODDischarge), dbo.GetDateFormateAsNumber(@ActualPODVesselArrival), dbo.GetDateFormateAsNumber(@ActualPODDischarge),
 	 dbo.GetDateFormateAsNumber(@EstimatedPODDeparture), dbo.GetDateFormateAsNumber(@ActualPODDeparture), @emptyReturnLocationPort, dbo.GetDateFormateAsNumber(@EstimatedEmptyReturn), dbo.GetDateFormateAsNumber(@ActualEmptyReturn), dbo.GetDateFormateAsNumber(@MainCarriageATA), dbo.GetDateFormateAsNumber(@MainCarriageETA), dbo.GetDateFormateAsNumber(@MainCarriageETD),
 	 dbo.GetDateFormateAsNumber(@MainCarriageATD), dbo.GetDateFormateAsNumber(@PreCarriageETD), @onCarriageLocationPort, dbo.GetDateFormateAsNumber(@EstimatedOnCarriageDeparture), dbo.GetDateFormateAsNumber(@OnCarriageETD), dbo.GetDateFormateAsNumber(@ActualOnCarriageDeparture), dbo.GetDateFormateAsNumber(@OnCarriageATD), @lIFLocationPort, dbo.GetDateFormateAsNumber(@ActualLIFArrival), dbo.GetDateFormateAsNumber(@PreCarriageATD), dbo.GetDateFormateAsNumber(@EstimatedLIFArrival),
-	 dbo.GetDateFormateAsNumber(@CreateDate), @createdByUser, dbo.GetDateFormateAsNumber(@UpdateDate), @updatedByUser, @CurrentStatus, dbo.GetDateFormateAsNumber(@CurrentStatusDate), dbo.GetDateFormateAsNumber(@ClosedDate), @IsClosed, @status,@ShipmentId, dbo.GetDateFormateAsNumber(@LastFreeDayDate), dbo.GetDateFormateAsNumber(@GateOut), @FreeDays)
+	 dbo.GetDateFormateAsNumber(@CreateDate), @createdByUser, dbo.GetDateFormateAsNumber(@UpdateDate), @updatedByUser, @CurrentStatus, dbo.GetDateFormateAsNumber(@CurrentStatusDate), dbo.GetDateFormateAsNumber(@ClosedDate), @IsClosed, @status,@ShipmentId, dbo.GetDateFormateAsNumber(@LastFreeDayDate), dbo.GetDateFormateAsNumber(@GateOut), @FreeDays,[CustomFieldValuesVariable])
 
 		END TRY 
 BEGIN CATCH  
@@ -190,7 +199,7 @@ FETCH NEXT FROM ContainersCursor INTO @Id,@Tenant, @SourceTenant, @ParentTenant,
 	@ActualTransshipment4Discharge, @EstimatedTransshipment4Loaded, @ActualTransshipment4Loaded, @EstimatedTrans4VesselDeparture, @ActualTrans4VesselDeparture, @pODLocationPort, @EstimatedPODVesselArrival, @EstimatedPODDischarge, 
 	@ActualPODVesselArrival, @ActualPODDischarge, @EstimatedPODDeparture, @ActualPODDeparture, @emptyReturnLocationPort, @EstimatedEmptyReturn, @ActualEmptyReturn, @MainCarriageATA, @MainCarriageETA, @MainCarriageETD,
 	@MainCarriageATD, @PreCarriageATD, @onCarriageLocationPort, @EstimatedOnCarriageDeparture, @OnCarriageETD, @ActualOnCarriageDeparture, @OnCarriageATD, @lIFLocationPort, @ActualLIFArrival, @PreCarriageETD, @EstimatedLIFArrival,
-	@CreateDate, @createdByUser, @UpdateDate, @updatedByUser, @CurrentStatus, @CurrentStatusDate, @ClosedDate, @IsClosed, @status, @ShipmentId,@LastFreeDayDate,@GateOut,@FreeDays
+	@CreateDate, @createdByUser, @UpdateDate, @updatedByUser, @CurrentStatus, @CurrentStatusDate, @ClosedDate, @IsClosed, @status, @ShipmentId,@LastFreeDayDate,@GateOut,@FreeDays,@CursorCustomFieldsVariable 
 
 			End
 	CLOSE ContainersCursor
