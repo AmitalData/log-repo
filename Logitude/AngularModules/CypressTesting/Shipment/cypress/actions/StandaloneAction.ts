@@ -7,6 +7,7 @@ import { RequestAliases } from '../../../Base/cypress/constants/RequestAliases';
 import { PickupDelivaryDetails } from "../models/PickupDelivaryDetails";
 import { RegexSelectors } from "../selectors/RegexSelectors";
 import { ShipmentConstants } from '../constants/constants'
+import { PackagesDetails } from "cypress/models/PackagesDetails";
 
 let fromType = null
 let toType = null
@@ -107,3 +108,12 @@ export function AddPcakagesInPickupDelivary() {
    cy.get(ShipmentSelectors.LogitudeCheckBox).eq(3).click();
    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
 }
+
+export function AddPcakagesInStandaloneShipment(packagesDetails:PackagesDetails) {
+   cy.FillLogLov(ShipmentSelectors.PackageType, packagesDetails.PackageType, true)
+   cy.FillLogTextBox(ShipmentSelectors.ContainerNumber, packagesDetails.ContainerNumber)
+   cy.get(ShipmentSelectors.PackageWeight).type(packagesDetails.GrossWeight.toString());
+
+}
+
+
