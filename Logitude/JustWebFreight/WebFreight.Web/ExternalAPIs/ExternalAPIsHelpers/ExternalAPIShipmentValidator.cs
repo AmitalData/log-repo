@@ -1012,7 +1012,7 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
         }
         private void MapCommodityName(ShipmentPackagePM item)
         {
-            if (string.IsNullOrEmpty(item.CommodityNumber))
+            if (string.IsNullOrEmpty(item.CommodityNumber) && string.IsNullOrEmpty(item.CommodityName))
                 return;
 
             string commodityName = commodityRepository.GetSingleCommodityNameByCode(item.CommodityNumber, tenant);

@@ -55,6 +55,9 @@ namespace Simplog.Data.CommonDataModel.Repositories
         }
         public string GetSingleCommodityNameByCode(string code, int tenant)
         {
+            if (string.IsNullOrEmpty(code))
+                return "";
+
             return (from d in context.Commodities where d.Code == code && d.Tenant == tenant select d.Name).FirstOrDefault();
         }
 
