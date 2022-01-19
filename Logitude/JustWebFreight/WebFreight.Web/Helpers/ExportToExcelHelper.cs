@@ -638,7 +638,7 @@ namespace WebFreight.Web.Helpers
                 FillDataOnExcelCells(args, sheet, entitiesList);
 
                 SaveExcelFileToMemoreyStream(memory, workbook);
-
+                excelEngine.ThrowNotSavedOnDestroy = false;
                 excelEngine.Dispose();
             }
 
@@ -662,7 +662,6 @@ namespace WebFreight.Web.Helpers
         private static void SaveExcelFileToMemoreyStream(MemoryStream memory, IWorkbook workbook)
         {
             workbook.SaveAs(memory, ExcelSaveType.SaveAsXLS);
-            excelEngine.ThrowNotSavedOnDestroy = false;
 
         }
 
