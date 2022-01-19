@@ -207,6 +207,8 @@ export class LineModel extends BaseComponent {
 
 }
 
+const exportToExcelWindowWidth = 500;
+const exportToExcelWindowHeight = 200;
 @Component({
     selector: 'ReconcileComponent',
     moduleId: './Accounting/Components/Others/',
@@ -401,11 +403,29 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
     ExportToExcelExcute() {
 
-        var reconcile = this.CreateReconciliation();
-        var args: ReconcileExcelDataArgs= new ReconcileExcelDataArgs();
+        if(this.SelectedLines.Length == 0)
+            this.ValidationErrorsList = [TextCodeTranslator.Translate("Reconciliation.O.NoLinesSelected") ];
+        else
+            this.ShowExportToExcelWindow();
+
+    }
+
+    private ShowExportToExcelWindow()
+    {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = exportToExcelWindowWidth;
+        logitudeWindow.Height = exportToExcelWindowHeight;
+        logitudeWindow.WindowArgs = this.GetExportToExcelWindowArgs();
+        logitudeWindow.Title = TextCodeTranslator.Translate("General.B.ExportingDataToExcel");
+        logitudeWindow.Show('./Infrastructure/Components/Export2ExcelControl/Export2ExcelControl');
+    }
+
+    private GetExportToExcelWindowArgs()
+    {
+        var args: ReconcileExcelDataArgs = new ReconcileExcelDataArgs();
         args.QueryColumns = this.QueryColumns;
         args.Tenant = SessionLocator.Tenant;
-        args.Data = this.SelectedLines.Collection.map((d:LineModel)=>d.LedgerTransactionPM);
+        args.Data = this.SelectedLines.Collection.map((d: LineModel) => d.LedgerTransactionPM);
 
         var windowArgs: any = {};
         windowArgs.ReconcileExcelDataArgs = args;
@@ -413,14 +433,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         windowArgs.ObjectTableName = this.ObjectTableName;
         windowArgs.QueryName = this.ObjectTableName;
         windowArgs.QueryType = "DraftReconciliation";
-        var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 500;
-        logitudeWindow.Height = 200;
-        logitudeWindow.Title = TextCodeTranslator.Translate("General.B.ExportingDataToExcel");//"Exporting View Data List To Excel File";
-        logitudeWindow.WindowArgs = windowArgs;
-        logitudeWindow.Show('./Infrastructure/Components/Export2ExcelControl/Export2ExcelControl');
-
-
+        return windowArgs;
     }
 
     public AddAccountIdFilterForFilterAgrs(){
