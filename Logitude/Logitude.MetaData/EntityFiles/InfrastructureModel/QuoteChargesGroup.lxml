@@ -566,7 +566,7 @@
     EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;AllQuoteChargesGroups&quot;"
-    TextCode="&quot;All Quote Charges Groups&quot;"
+    TextCode="&quot;All Quote Charge Groups&quot;"
     QueryGroupCode="&quot;685c&quot;"
     IndexOrder="0"
     ObjectTableName="&quot;QuoteChargesGroup&quot;"
