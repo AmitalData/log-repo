@@ -23,25 +23,39 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         {
             IQueryable<ExportStorageList> query = (from en in iQueryable
                                                    
-                                                   join declaration in context.Declarations.Select(r => new { r.Id, r.DeclarationStatusTypeCode, r.CustomFileNo, r.DeclarationNumber })
-                                                   on en.DeclarationId equals declaration.Id
-                                                   join status in context.DeclarationStatusTypes.Select(r => new { r.Code, r.LocalName })
-                                                   on declaration.DeclarationStatusTypeCode equals status.Code
+                                                   join d in context.Declarations.Select(r => new { r.Id, r.DeclarationStatusTypeCode, r.CustomFileNo, r.DeclarationNumber })
+                                                   on en.DeclarationId equals d.Id
+                                                   into dj from declaration in dj.DefaultIfEmpty()
 
-                                                   join cargoType in context.CargoTypes.Select(r => new { r.Code, r.LocalName})
-                                                   on en.CargoType equals cargoType.Code
+                                                   join s in context.DeclarationStatusTypes.Select(r => new { r.Code, r.LocalName })
+                                                   on declaration.DeclarationStatusTypeCode equals s.Code
+                                                   into sj
+                                                   from status in sj.DefaultIfEmpty()
 
-                                                   join storageStatus in context.StorageStatuses.Select( r=> new {r.Code, r.LocalName})
-                                                   on en.StorageStatus equals storageStatus.Code
+                                                   join ct in context.CargoTypes.Select(r => new { r.Code, r.LocalName})
+                                                   on en.CargoType equals ct.Code
+                                                   into ctj
+                                                   from cargoType in ctj.DefaultIfEmpty()
 
-                                                   join card in context.Cards.Select( r=> new {r.Id, r.LocalName, r.VatNumber})
-                                                   on en.ExporterID equals card.Id
+                                                   join ss in context.StorageStatuses.Select( r=> new {r.Code, r.LocalName})
+                                                   on en.StorageStatus equals ss.Code
+                                                   into ssj
+                                                   from storageStatus in ssj.DefaultIfEmpty()
 
-                                                   join customsShip in context.CustomsShips.Select( r=> new {r.Code, r.LocalName})
-                                                   on en.ShipCode equals customsShip.Code
+                                                   join c in context.Cards.Select( r=> new {r.Id, r.LocalName, r.VatNumber})
+                                                   on en.ExporterID equals c.Id
+                                                   into cj
+                                                   from card in cj.DefaultIfEmpty()
 
-                                                   join cargoIdentifireType in context.CargoIdentifireTypes.Select(r=> new{ r.Code, r.LocalName})
-                                                   on en.CargoTypeCode equals cargoIdentifireType.Code
+                                                   join cs in context.CustomsShips.Select( r=> new {r.Code, r.LocalName})
+                                                   on en.ShipCode equals cs.Code
+                                                   into csj
+                                                   from customsShip in csj.DefaultIfEmpty()
+
+                                                   join ci in context.CargoIdentifireTypes.Select(r=> new{ r.Code, r.LocalName})
+                                                   on en.CargoTypeCode equals ci.Code
+                                                   into cij
+                                                   from cargoIdentifireType in cij.DefaultIfEmpty()
 
                                                    select new ExportStorageList()
                                                    {
