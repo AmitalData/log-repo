@@ -106,20 +106,20 @@
     inner JOIN NewDIM_Tenants SourceTenant ON dw_Containers .Tenant = SourceTenant.[Tenant Number]
     inner JOIN dw_DWHSettings ON dw_Containers.Tenant = dw_DWHSettings.Tenant
     inner JOIN NewDIM_Tenants ParentTenant ON dw_DWHSettings.ParentTenant = ParentTenant.[Tenant Number]
-    inner JOIN DIM_Ports emptyPickupLocationPort ON dw_Containers.EmptyPickupLocationPortId = emptyPickupLocationPort.Id
-    inner JOIN DIM_Ports preCarriageLocationPort ON dw_Containers.PreCarriageLocationPortId = preCarriageLocationPort.Id
-	inner JOIN DIM_Ports pOLLocationPort ON dw_Containers.POLLocationPortId = pOLLocationPort.Id
-	inner JOIN DIM_Ports transshipment1LocationPort ON dw_Containers.Transshipment1LocationPortId = transshipment1LocationPort.Id
-	inner JOIN DIM_Ports transshipment2LocationPort ON dw_Containers.Transshipment2LocationPortId = transshipment2LocationPort.Id
-	inner JOIN DIM_Ports transshipment3LocationPort ON dw_Containers.Transshipment3LocationPortId = transshipment3LocationPort.Id
-	inner JOIN DIM_Ports transshipment4LocationPort ON dw_Containers.Transshipment4LocationPortId = transshipment4LocationPort.Id
-	inner JOIN DIM_Ports pODLocationPort ON dw_Containers.PODLocationPortId = pODLocationPort.Id
-	inner JOIN DIM_Ports emptyReturnLocationPort ON dw_Containers.EmptyReturnLocationPortId = emptyReturnLocationPort.Id
-	inner JOIN DIM_Ports onCarriageLocationPort ON dw_Containers.OnCarriageLocationPortId = onCarriageLocationPort.Id
-	inner JOIN DIM_Ports lIFLocationPort ON dw_Containers.LIFLocationPortId = lIFLocationPort.Id
-	inner JOIN DIM_Users createdByUser ON dw_Containers.CreatedByUserId = createdByUser.Id
-	inner JOIN DIM_Users updatedByUser ON dw_Containers.UpdatedByUserId = updatedByUser.Id
-	inner JOIN DIM_ShipmentStatuses status ON dw_Containers.StatusId = status.Id
+    inner JOIN NewDIM_Ports emptyPickupLocationPort ON dw_Containers.EmptyPickupLocationPortId = emptyPickupLocationPort.Id
+    inner JOIN NewDIM_Ports preCarriageLocationPort ON dw_Containers.PreCarriageLocationPortId = preCarriageLocationPort.Id
+	inner JOIN NewDIM_Ports pOLLocationPort ON dw_Containers.POLLocationPortId = pOLLocationPort.Id
+	inner JOIN NewDIM_Ports transshipment1LocationPort ON dw_Containers.Transshipment1LocationPortId = transshipment1LocationPort.Id
+	inner JOIN NewDIM_Ports transshipment2LocationPort ON dw_Containers.Transshipment2LocationPortId = transshipment2LocationPort.Id
+	inner JOIN NewDIM_Ports transshipment3LocationPort ON dw_Containers.Transshipment3LocationPortId = transshipment3LocationPort.Id
+	inner JOIN NewDIM_Ports transshipment4LocationPort ON dw_Containers.Transshipment4LocationPortId = transshipment4LocationPort.Id
+	inner JOIN NewDIM_Ports pODLocationPort ON dw_Containers.PODLocationPortId = pODLocationPort.Id
+	inner JOIN NewDIM_Ports emptyReturnLocationPort ON dw_Containers.EmptyReturnLocationPortId = emptyReturnLocationPort.Id
+	inner JOIN NewDIM_Ports onCarriageLocationPort ON dw_Containers.OnCarriageLocationPortId = onCarriageLocationPort.Id
+	inner JOIN NewDIM_Ports lIFLocationPort ON dw_Containers.LIFLocationPortId = lIFLocationPort.Id
+	inner JOIN NewDIM_Users createdByUser ON dw_Containers.CreatedByUserId = createdByUser.Id
+	inner JOIN NewDIM_Users updatedByUser ON dw_Containers.UpdatedByUserId = updatedByUser.Id
+	inner JOIN NewDIM_ShipmentStatuses status ON dw_Containers.StatusId = status.Id
 
 	OPEN ContainersCursor FETCH NEXT FROM ContainersCursor   into  @Id ,@Tenant , @SourceTenant, @ParentTenant,@ActualEmptyPickupDate, @emptyPickupLocationPort, @EstimatedEmptyPickupDate, @preCarriageLocationPort, @pOLLocationPort, @EstimatedPOLArrival,
 	@ActualPOLArrival, @EstimatedPOLLoaded, @ActualPOLLoaded, @EstimatedPOLVesselDeparture, @ActualPOLVesselDeparture, @transshipment1LocationPort, @EstimatedTrans1VesselArrival, @ActualTransshipment1VesselArrival,
