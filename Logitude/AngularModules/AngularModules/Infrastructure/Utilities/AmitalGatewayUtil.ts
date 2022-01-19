@@ -15,6 +15,7 @@ import { IIGGeneralMessagesService} from '../../Customs/Services/WebServices/IIG
 import { ObservableCollection } from './ObservableCollection';
 import { SupplierInvoiceItemList } from "../../Customs/EntityLists/Extended/SupplierInvoiceItemList";
 import { TextCodeTranslator } from './TextCodeTranslator';
+import { ClientPM } from '../../Customs/EntityPMs/ClientPM';
 
 //import { ClientMessagesService } from '../../Customs/Services/WebServices/ClientMessagesService';
 //import { CustDocMetaDataValuesWebService } from '../../Customs/Services/WebServices/CustDocMetaDataValuesWebService';
@@ -637,7 +638,7 @@ export class AmitalGatewayUtil {
             let BackButtonLabel = "תיק עמילות";
             
             if (unifreightMessage.UnifreightEntity == "EFIFILEM") {
-                BackButtonLabel = "תיק יצוא";
+                BackButtonLabel = "תיק יצום";
                 try {
                     const formtitleArray = unifreightMessage.Requset.filter((item) => item[0] == "formtitle");
                     BackButtonLabel=formtitleArray[0][1];
