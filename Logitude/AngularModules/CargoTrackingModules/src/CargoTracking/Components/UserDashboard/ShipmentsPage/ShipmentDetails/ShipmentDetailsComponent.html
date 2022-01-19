@@ -1125,7 +1125,7 @@
                     <div class="no-data-available" *ngIf="cargoTrackingShipmentPM.PartnerCards?.length == 0 "
                         style="margin-top:10px">No Partners defined for this shipment</div>
                     <div class="partners-cards-wrapper">
-                        <div class="card partner-card" *ngFor="let partnerCard of cargoTrackingShipmentPM.PartnerCards">
+                        <div [class.hidden]="partnerCard.Name == null" class="card partner-card" *ngFor="let partnerCard of cargoTrackingShipmentPM.PartnerCards">
                             <div class="header">
                                 <!-- <div class="partners-buttons hide-mobile">
                                 <div class="circle-icon">
