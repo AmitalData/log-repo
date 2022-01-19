@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Scheduler Procedure&quot;"
-  Code="&quot;f77d&quot;"
+  Code="&quot;3dbf&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -556,6 +556,11 @@
       Name="&quot;ContainerAutomaticallyClosingTask&quot;"
       SearchFields="&quot;ContainerAutomaticallyClosingTask&quot;"
       Description="&quot;ContainerAutomaticallyClosingTask&quot;"
+      IsInternallyDefined="false" />
+    <Record
+      Code="&quot;RecalculateCashbooksTotalsTask&quot;"
+      Name="&quot;RecalculateCashbooksTotalsTask&quot;"
+      SearchFields="&quot;RecalculateCashbooksTotalsTask&quot;"
       IsInternallyDefined="false" />
   </Records>
   <DataContracts />
