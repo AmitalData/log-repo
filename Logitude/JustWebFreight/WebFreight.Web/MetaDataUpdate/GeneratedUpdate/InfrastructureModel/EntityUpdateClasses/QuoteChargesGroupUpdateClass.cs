@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class QuoteChargesGroupUpdateClass
    {  		
-		public const string HashString = "ce75fd9d13ac7cedb49f0b6457e8a3fa";
+		public const string HashString = "90e5bb7f8bb33ebce869cf5c00b97333";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -458,7 +458,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode QuoteChargesGroupTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteChargesGroup.Q.AllQuoteChargesGroups", DefaultText = @"All Quote Charges Groups",LocalDefaultText = null, ObjectTableId = QuoteChargesGroupObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode QuoteChargesGroupTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteChargesGroup.Q.AllQuoteChargesGroups", DefaultText = @"All Quote Charge Groups",LocalDefaultText = null, ObjectTableId = QuoteChargesGroupObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature QuoteChargesGroupFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteChargesGroup.Q.AllQuoteChargesGroups", ObjectTableId = QuoteChargesGroupObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteChargesGroupFeatures.AllQuoteChargesGroups", NameTextCodeDefaultText = "AllQuoteChargesGroups", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,QuoteChargesGroupObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
