@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ReconciliationUpdateClass
    {  		
-		public const string HashString = "e4d5869bb56fb56f1218565d5c875c4c";
+		public const string HashString = "aea7b53034abc36fdf409d8751e33f22";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -122,7 +122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "התאמה",
 			      				    DefaultText =  "Reconciliation",
-			      				    Code =  "0a86",
+			      				    Code =  "1672",
 			      				    Name =  "Reconciliation Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -1238,6 +1238,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode ReconciliationTextCode_ReconciliationODifferentAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.O.DifferentAccounts", DefaultText = "The reconciliation lines are from different accounts",LocalDefaultText = @"השורות בהתאמה מחשבונות שונים", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ReconciliationTextCode_ReconciliationOOpenTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.O.OpenTransactions", DefaultText = "Open Transactions",LocalDefaultText = @"תנועות פתוחות", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ReconciliationTextCode_ReconciliationONoLinesSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.O.NoLinesSelected", DefaultText = "No lines was marked",LocalDefaultText = @"יש לסמן את השורות שברצונך להוריד", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

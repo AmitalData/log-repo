@@ -17,10 +17,11 @@ import { LogitudeGridExportToExcelExtendedPMService } from 'Common/Services/Exte
 import { interval, Observable, TimeInterval, timer } from 'rxjs';
 import { takeUntil, timeInterval } from 'rxjs/operators';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { ReconcileExcelDataArgs, ReconciliationExtendedPMService } from 'Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
 
 
 @Component({
-    
+
 
     templateUrl: './Export2ExcelControl.html',
     //pipes: [TextCodeTranslationPipe],
@@ -48,11 +49,13 @@ export class Export2ExcelControl {
     QueryType: string;
     ExportExcelArgs: any;
     WebFreightDomainService: WebFreightDomainService;
+    ReconcileExcelDataArgs : ReconcileExcelDataArgs;
     SetWindowArgs(args: any) {
 
         this.QueryType = args.QueryType ? args.QueryType : "";
         this.queryName = args.QueryName;
         this.ExportExcelArgs = args.ExportExcelArgs;
+        this.ReconcileExcelDataArgs = args.ReconcileExcelDataArgs;
 
        if (this.QueryType == "LogBox") {
             var logboxShipmentExportExcelService: LogboxShipmentExportExcelService = new LogboxShipmentExportExcelService();
@@ -70,7 +73,14 @@ export class Export2ExcelControl {
             });
 
         }
+        else if (this.QueryType == "DraftReconciliation") {
+            var reconciliationExtendedPMService: ReconciliationExtendedPMService = new ReconciliationExtendedPMService();
+            reconciliationExtendedPMService.PostReconcileExcelData(this.ReconcileExcelDataArgs).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) this.CompleteExcelData(myResponse.Result);
+                else this.CompleteExcelData("Faild");
+            });
 
+        }
         else {
             this.WebFreightDomainService = new WebFreightDomainService();
             this.ObjectTableName = args.currentObjectTable;
@@ -85,7 +95,7 @@ export class Export2ExcelControl {
                this.HandleExportResult(myResult);
            }, error => { this.OnError(error)});
         }
-         
+
     }
 
     OnError(error) {
@@ -135,9 +145,9 @@ export class Export2ExcelControl {
             }
 
             if (this.IsStartExecutionLogCheckTimer) {
-                
+
                 this.WebFreightDomainService ?? new WebFreightDomainService();
-                
+
 
                 this.WebFreightDomainService.GetQueryExportExecutionLogStatus(logId).subscribe(
                     (res: ServiceResponse) => {
@@ -226,7 +236,7 @@ export class Export2ExcelControl {
         {
             window.open(url);
         }
-        
+
         this.CurrentSession.CloseCurrentWindow();
     }
 
@@ -268,7 +278,7 @@ export class Export2ExcelControl {
         this.CurrentSession.CloseCurrentWindow();
     }
 
-    
+
 
 }
 
