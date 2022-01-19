@@ -13,7 +13,7 @@
                     <table class="FixedTable">
 
                         <!-- From  -->
-                        <tr class="FormFieldRow">
+                        <tr *ngIf="IsPortsVisible" class="FormFieldRow">
                             <td style="width:100px;">
                                 <LogLabel [ObjectFieldName]="'OriginPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                             </td>
@@ -61,8 +61,42 @@
                             </td>
                         </tr>
 
+                        <tr *ngIf="!IsPortsVisible" class="FormFieldRow">
+                            <td style="width:100px;">
+                                <LogLabel [ObjectFieldName]="'FromCountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+
+                            <td style="width:230px;">
+                                <LogLov [ObjectFieldName]="'FromCountryId'"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [LookUpTableName]="'Country'"
+                                        [DataContext]="DataContext"
+                                        (SelectedItemChanged)="DataContext.FromCountry = $event"
+                                        [SelectedValue]="DataContext.FromCountryId">
+                                </LogLov>
+                            </td>
+
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td style="width:140px;">
+                                            <LogLabel [ObjectFieldName]="'IsFromAllOtherCountries'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td style="width:25px;">
+                                            <LogCheckBox [ObjectFieldName]="'IsFromAllOtherCountries'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Checked]="DataContext.IsFromAllOtherCountries"></LogCheckBox>
+                                        </td>
+
+                                        <td style="color:red; padding-left: 10px;">
+                                            <span *ngIf="!DataContext.FromCountryId">{{DataContext.FromCountryCode}}</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
                         <!-- To -->
-                        <tr class="FormFieldRow">
+                        <tr *ngIf="IsPortsVisible" class="FormFieldRow">
                             <td>
                                 <LogLabel [ObjectFieldName]="'DestinationPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                             </td>
@@ -110,6 +144,41 @@
                             </td>
                         </tr>
 
+                        <tr *ngIf="!IsPortsVisible" class="FormFieldRow">
+                            <td>
+                                <LogLabel [ObjectFieldName]="'ToCountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+
+                            <td>
+                                <LogLov [ObjectFieldName]="'ToCountryId'"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [LookUpTableName]="'Country'"
+                                        [DataContext]="DataContext"
+                                        (SelectedItemChanged)="DataContext.ToCountry = $event"
+                                        [SelectedValue]="DataContext.ToCountryId">
+                                </LogLov>
+                            </td>
+
+
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td style="width:140px;">
+                                            <LogLabel [ObjectFieldName]="'IsToAllOtherCountries'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td style="width:25px;">
+                                            <LogCheckBox [ObjectFieldName]="'IsToAllOtherCountries'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Checked]="DataContext.IsToAllOtherCountries"></LogCheckBox>
+                                        </td>
+
+                                        <td style="color:red; padding-left: 10px;">
+                                            <span *ngIf="!DataContext.ToCountryId">{{ToCountryCode}}</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
                         <!-- Via  -->
                         <tr *ngIf="IsViaFieldVisible" class="FormFieldRow">
                             <td style="width:100px;">
@@ -151,9 +220,8 @@
                             </td>
                         </tr>
 
-
                         <!-- Currency -->
-                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS'">
+                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS' || TariffType == 'ICC' || TariffType == 'ECC'">
                             <td>
                                 <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                             </td>
@@ -189,7 +257,7 @@
                         </tr>
 
                         <!-- StartDate -->
-                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS'">
+                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS' || TariffType == 'ICC' || TariffType == 'ECC'">
                             <td>
                                 <LogLabel [ObjectFieldName]="'StartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                             </td>
@@ -354,7 +422,7 @@
                         </tr>
 
                         <!-- Air Surcharges Cost-->
-                        <tr *ngIf="TariffType == 'ASC' || TariffType == 'OSC'" style="height:1px;">
+                        <tr *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'ICC' || TariffType == 'ECC'" style="height:1px;">
                             <td colspan="3">
                                 <table>
                                     <!-- Surcharge1Price -->

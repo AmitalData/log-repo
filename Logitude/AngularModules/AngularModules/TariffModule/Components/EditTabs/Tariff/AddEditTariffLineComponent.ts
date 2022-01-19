@@ -23,16 +23,11 @@ export class AddEditTariffLineComponent  {
     public DestinationDependencyFilterValue = "A";
     public ViaDependencyFilterValue = "A";
     public IsViaFieldVisible: boolean = true;
+    public IsPortsVisible: boolean = true;
     public IsAir: boolean = false;
 
     constructor() {
         
-    }
-
-    SetViaFieldVisiblity() {
-        if (this.TariffType == "OFS" || this.TariffType == "OSC" || this.TariffType == "ASC") {
-            this.IsViaFieldVisible = false;
-        }
     }
 
     SetWindowArgs(args) {
@@ -41,8 +36,18 @@ export class AddEditTariffLineComponent  {
         this.TariffType = args['TariffType'];
         this.SetOriginDependencyFilterValue();
         this.GetTariffType();
-        this.SetViaFieldVisiblity();
+        this.SetFieldsVisiblity();
         this.Clone();
+    }
+
+    SetFieldsVisiblity() {
+        if (this.TariffType == "OFS" || this.TariffType == "OSC" || this.TariffType == "ASC" || this.TariffType == "ICC" || this.TariffType == "ECC") {
+            this.IsViaFieldVisible = false;
+
+            if (this.TariffType == "ICC" || this.TariffType == "ECC") {
+                this.IsPortsVisible = false;
+            }
+        }
     }
 
     SetOriginDependencyFilterValue() {
