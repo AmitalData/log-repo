@@ -42,11 +42,11 @@ namespace CommunicationWorkerRole.Services.ImporterShipmentOrders
         private string messageId;
         private ObjectTable objectTable;
         private APILogsPM apiLog;
-        private string URI = "http://localhost:9996/api/";//"http://localhost:9996/api/";
+        private string URI = "";//"http://localhost:9996/api/";
         private string token;
         private APICredentialsParameters APICredentialsParam = new APICredentialsParameters()
         {
-            PrimaryKey = "121060db-b064-4ee3-a65f-b3e6c214e659",//"8eb9c6e4-c1ca-43e5-8061-87a7adcdc5f8",
+            PrimaryKey = "8eb9c6e4-c1ca-43e5-8061-87a7adcdc5f8",//"121060db-b064-4ee3-a65f-b3e6c214e659",
             SecondaryKey = "c2dd0ebf-20bf-4d44-916c-7f9000dce4ec"
         };
 
