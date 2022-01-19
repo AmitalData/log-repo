@@ -65,7 +65,7 @@ export class GatepassRequestComponent extends BaseComponent {
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Width = 250;
                 myMessageWindow.Height = 150;
-                myMessageWindow.Show("לא ניתן לבצע גייטפס העברות ללא מזהה מטען");
+                myMessageWindow.Show("לם ניתן לבצע גייטפס העברות ללם מזהה מטען");
                 this.CancelButtonClicked();
             }
             this.SetGatepassRequest();
@@ -197,19 +197,19 @@ export class GatepassRequestComponent extends BaseComponent {
                 this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }];
                 //this.UpdateCode = "1";
                 this.MyUpdateCodeClass = this.UpdateCodeList[0]
-                this.GatepassRequestStatusName = "בקשת ביטול העברה אושרה";
+                this.GatepassRequestStatusName = "בקשת ביטול העברה םושרה";
                 break;
             case "1":
                 this.UpdateCodeList = [{ 'EnumId': 2, 'Name': 'ביטול' }];
                 //this.UpdateCode = "2";
                 this.MyUpdateCodeClass = this.UpdateCodeList[0]
-                this.GatepassRequestStatusName = "ממתין לאישור העברה";
+                this.GatepassRequestStatusName = "ממתין לםישור העברה";
                 break;
             case "3":
                 this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }, { 'EnumId': 2, 'Name': 'ביטול' }];
                 //this.UpdateCode = "1";
                 this.MyUpdateCodeClass = this.UpdateCodeList[0]
-                this.GatepassRequestStatusName = "בקשת העברה אושרה";
+                this.GatepassRequestStatusName = "בקשת העברה םושרה";
                 break;
             case "6":
                 this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }, { 'EnumId': 2, 'Name': 'ביטול' }];
@@ -227,7 +227,7 @@ export class GatepassRequestComponent extends BaseComponent {
                 this.UpdateCodeList = [];
                 this.MyUpdateCodeClass = null;
                 this.UpdateCode = "";
-                this.GatepassRequestStatusName = "ממתין לאישור ביטול העברה";
+                this.GatepassRequestStatusName = "ממתין לםישור ביטול העברה";
                 this.UIProperties.SetEnabled("UpdateCode", this.ObjectTableName, false);
                 this.SetScreenFieldsEditability(true);
                 break;
@@ -240,11 +240,11 @@ export class GatepassRequestComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (AppTool.IsNullOrEmpty(this.OriginSiteCode)) {
-            this.ValidationErrorsList.push("חובה להזין מאתר אחסון");
+            this.ValidationErrorsList.push("חובה להזין מםתר םחסון");
             //this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.GatepassRequest.O.OriginSiteCodeMandatory"));
         }
         if (AppTool.IsNullOrEmpty(this.DesignateSiteCode)) {
-            this.ValidationErrorsList.push("חובה להזין לאתר אחסון");
+            this.ValidationErrorsList.push("חובה להזין לםתר םחסון");
             //this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.GatepassRequest.O.DesignateSiteCodeMandatory"));
         }
         if (AppTool.IsNullOrEmpty(this.TransportationTypeCode)) {

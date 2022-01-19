@@ -64,6 +64,16 @@ export class PendingByKeywordPM {
     public set SearchByFieldName(newValue: string) { if (this.searchByFieldName != newValue) { this.searchByFieldName = newValue; this.MarkAsDirty("SearchByFieldName"); } }
        
 	 
+    private searchToField: number;
+    public get SearchToField() { return this.searchToField; }
+    public set SearchToField(newValue: number) { if (this.searchToField != newValue) { this.searchToField = newValue; this.MarkAsDirty("SearchToField"); } }
+       
+	 
+    private serachType: number;
+    public get SerachType() { return this.serachType; }
+    public set SerachType(newValue: number) { if (this.serachType != newValue) { this.serachType = newValue; this.MarkAsDirty("SerachType"); } }
+       
+	 
 
     public OldEntityPM: PendingByKeywordPM;
 		

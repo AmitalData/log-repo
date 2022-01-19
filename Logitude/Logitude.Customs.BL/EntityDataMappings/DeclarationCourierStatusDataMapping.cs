@@ -45,6 +45,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPM.CourierHawb = declarationPM.CourierHAWB;
                 entityPM.ProcedureCurrentCode = declarationPM.ProcedureCurrentCode;
                 entityPM.ImporterCode = declarationPM.ImporterCode;
+                entityPM.FinalRelease = !declarationPM.HatraDate.HasValue;
             }
 
             if (entityPOCO.StorageSiteStatusCode != null)
