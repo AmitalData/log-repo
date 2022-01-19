@@ -57,7 +57,6 @@ export class PerVendorReportFilterComponent extends BaseComponent {
         this.InitLOVFilters();
         this.SetGLaccountFilterEnability();
         this.SetMonthFilterDefaults();
-
         //this.FillAgingMethodList();
     }
 
@@ -87,7 +86,7 @@ export class PerVendorReportFilterComponent extends BaseComponent {
     }
 
     private GetResources() {
-        this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => { this.isReady = true; });
+        this.entityResourceService.getEntityResourceByTableName("TaxDeductionReport").subscribe((response: any) => { this.isReady = true; });
     }
     private vendor: CardList;
     public get Vendor() { return this.vendor; }
@@ -142,7 +141,7 @@ export class PerVendorReportFilterComponent extends BaseComponent {
         this.errors = [];
         this.ValidationErrorsList = [];
         if (this.vendor.GLAccountId == null) {
-            this.errors.push("The selected doesn't have GlAccount");
+            this.errors.push("The selected vendor doesn't have GlAccount");
         }
 
         if(this.VendorGLAccount && this.VendorGLAccount.ExcludeFromDeductionReport) {
