@@ -383,7 +383,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         }
 
     public ExportToExcelClick(){
-
+this.ValidationErrorsList = [];
         if(this.SelectedLines.Length == 0)
             this.ValidationErrorsList = [TextCodeTranslator.Translate("Reconciliation.O.NoLinesSelected") ];
         else
