@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;1863&quot;"
+  Code="&quot;05c9&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -687,6 +687,11 @@
       Name="&quot;Vessel Free Text&quot;"
       SearchFields="&quot;VSL,Vessel Free Text&quot;"
       Description="&quot;Vessel Free Text&quot;" />
+    <Record
+      Code="&quot;CCT&quot;"
+      Name="&quot;Customs Charges Tariffs&quot;"
+      SearchFields="&quot;CCT,Customs Charges Tariffs&quot;"
+      Description="&quot;Customs Charges Tariffs&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

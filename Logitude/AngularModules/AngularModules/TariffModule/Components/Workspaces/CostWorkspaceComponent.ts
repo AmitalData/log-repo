@@ -6,15 +6,13 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { TariffDomainService, TariffSummery} from '../../Services/TariffDomainService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ListComponentArgs } from '../../../Infrastructure/Args';
-import { DocumentsFilingExtendedPMService } from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { TariffList } from '../../EntityLists/TariffList';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 
 @Component({
-    selector: 'CostComponent',
-    
+    selector: 'CostComponent',    
     templateUrl: './CostWorkspaceComponent.html',
     providers: [EntityResourceService, TariffDomainService]
 })
@@ -22,6 +20,8 @@ import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator'
 export class CostWorkspaceComponent implements OnInit {
     private CurrentSession = SessionLocator.SelectedSession;
     public IsTariffGenerateVisible: boolean = false;
+    public IsCustomsChargesVisible: boolean = false;
+    public QueriesAreaHeight: number = 240;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(private _entityResourceService: EntityResourceService, private tariffDomainService: TariffDomainService) {
         this.RunComponent();
@@ -32,7 +32,8 @@ export class CostWorkspaceComponent implements OnInit {
     public OceanLCLFreightCount: string;
     public OceanFCLFreightCount: string;
     public OceanFCLSurchargesCount: string;
-
+    public ImportCustomsChargesCount: string;
+    public ExportCustomsChargesCount: string;
     private isLoaderReady: boolean = false;
     RunComponent() {
         if (this.AllLocations) {
@@ -79,6 +80,8 @@ export class CostWorkspaceComponent implements OnInit {
                         this.OceanLCLFreightCount = myResult.OceanLCLFreightCount > 1000 ? "1000+" : myResult.OceanLCLFreightCount.toString();
                         this.OceanFCLFreightCount = myResult.OceanFCLFreightCount > 1000 ? "1000+" : myResult.OceanFCLFreightCount.toString();
                         this.OceanFCLSurchargesCount = myResult.OceanFCLSurchargesCount > 1000 ? "1000+" : myResult.OceanFCLSurchargesCount.toString();
+                        this.ImportCustomsChargesCount = myResult.ImportCustomsChargesCount > 1000 ? "1000+" : myResult.ImportCustomsChargesCount.toString();
+                        this.ExportCustomsChargesCount = myResult.ExportCustomsChargesCount > 1000 ? "1000+" : myResult.ExportCustomsChargesCount.toString();
                     }
                 }
             }
@@ -105,9 +108,14 @@ export class CostWorkspaceComponent implements OnInit {
     public OceanLCLFreightCostVisibility: boolean = false;
     public OceanLCLSurchargesCostVisibility: boolean = false;
     public OceanFCLFreightCostVisibility: boolean = false;
-    public OceanFCLSurchargesCostVisibility: boolean = false; 
-
+    public OceanFCLSurchargesCostVisibility: boolean = false;
+    public ImportCustomsCostVisibility: boolean = false;
+    public ExportCustomsCostVisibility: boolean = false;
     SetQueriesVisibility() {
+        if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CCT")[0]) {
+            this.IsCustomsChargesVisible = true;
+            this.QueriesAreaHeight = 310;
+        }
 
         if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.AirFreightCostTariffs")) {
             this.AirFreightCostVisibility = true;
@@ -131,6 +139,14 @@ export class CostWorkspaceComponent implements OnInit {
 
         if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.OceanFCLSurchargesCost")) {
             this.OceanFCLSurchargesCostVisibility = true;
+        }
+
+        if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.ExportCustomsChargesCost")) {
+            this.ExportCustomsCostVisibility = true;
+        }
+
+        if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.ImportCustomsChargesCost")) {
+            this.ImportCustomsCostVisibility = true;
         }
     }
 
@@ -169,6 +185,18 @@ export class CostWorkspaceComponent implements OnInit {
             case "OFS": {
                 windowTitle = "New " + TextCodeTranslator.Translate("Tariff.Q.OceanFCLSurchargesCost");
                 typeCode = "OFS";
+                break;
+            }
+
+            case "ICC": {
+                windowTitle = "New " + TextCodeTranslator.Translate("Tariff.Q.ImportCustomsChargesCost");
+                typeCode = "ICC";
+                break;
+            }
+
+            case "ECC": {
+                windowTitle = "New " + TextCodeTranslator.Translate("Tariff.Q.ExportCustomsChargesCost");
+                typeCode = "ECC";
                 break;
             }
             default: {
@@ -236,6 +264,18 @@ export class CostWorkspaceComponent implements OnInit {
             case "OFS": {
                 queryCode = "Ocean FCL Surcharges Cost";
                 displayTitle = "Ocean FCL Surcharges Cost";
+                break;
+            }
+
+            case "ICC": {
+                queryCode = "Import Customs Charges Cost";
+                displayTitle = "Import Customs Charges Cost";
+                break;
+            }
+
+            case "ECC": {
+                queryCode = "Export Customs Charges Cost";
+                displayTitle = "Export Customs Charges Cost";
                 break;
             }
 

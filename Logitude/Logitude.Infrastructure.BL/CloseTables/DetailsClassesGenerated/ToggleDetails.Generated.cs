@@ -404,25 +404,15 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "QBT,QBO Tax Id Calculations", 
                 Description = "QBO Tax Id Calculations", 
 			});
-
+			 
             all.Add(new ToggleDetails()
-            {
-
-                Code = "ODA",
-                Name = "On Update Document Automation Tab",
-                SearchFields = "ODA,On Update Document Automation Tab",
-                Description = "On Update Document Automation Tab",
-            });
-
-            all.Add(new ToggleDetails()
-            {
-
-                Code = "AEV",
-                Name = "Automation Event Creation",
-                SearchFields = "AEV,Automation Event Creation",
-                Description = "Automation Event Creation",
-            });
-
+            {    
+                Code = "AEV", 
+                Name = "Automation Event Creation", 
+                SearchFields = "AEV,Automation Event Creation", 
+                Description = "Automation Event Creation", 
+			});
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "OPS", 
@@ -463,7 +453,6 @@ namespace Logitude.Infrastructure.BL
                 Description = "Open Format RTL Issues", 
 			});
 			 
-
             all.Add(new ToggleDetails()
             {    
                 Code = "CUS", 
@@ -502,6 +491,14 @@ namespace Logitude.Infrastructure.BL
                 Name = "Vessel Free Text", 
                 SearchFields = "VSL,Vessel Free Text", 
                 Description = "Vessel Free Text", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CCT", 
+                Name = "Customs Charges Tariffs", 
+                SearchFields = "CCT,Customs Charges Tariffs", 
+                Description = "Customs Charges Tariffs", 
 			});
 			
             return all;

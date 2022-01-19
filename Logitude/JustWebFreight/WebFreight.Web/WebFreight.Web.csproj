@@ -6590,6 +6590,7 @@
     <Compile Include="SystemLogsModel\Tools\Mapping\BatchServicesLogMapping.cs" />
     <Compile Include="SystemLogsModel\Tools\EntityService\BatchServicesLogUpdateService.cs" />
     <Compile Include="SystemLogsModel\Tools\Mapping\ErrorLogMapping.cs" />
+    <Compile Include="TariffModel\DomainServices\TariffDomainService.cs" />
     <Compile Include="TaxesApprovalModel\TaxesApproval.Shared.cs" />
     <Compile Include="TaxesApprovalModel\TaxesApprovalWebService.asmx.cs">
       <DependentUpon>TaxesApprovalWebService.asmx</DependentUpon>

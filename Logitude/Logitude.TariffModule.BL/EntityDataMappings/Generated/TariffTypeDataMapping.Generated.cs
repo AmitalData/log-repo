@@ -25,7 +25,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Code, 
 	         Name, 
 	         SearchFields, 
-	         TransportModeCode,
+	         TransportModeCode, 
+	         DirectionCode,
 	      }
 
 
@@ -35,7 +36,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Code, 
 	         Name, 
 	         SearchFields, 
-	         TransportModeCode,
+	         TransportModeCode, 
+	         DirectionCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -57,6 +59,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransportModeCode))
             {
 				entityPOCO.TransportModeCode = entityPM.TransportModeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DirectionCode))
+            {
+				entityPOCO.DirectionCode = entityPM.DirectionCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -85,6 +92,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.TransportModeCode = entityPOCO.TransportModeCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DirectionCode))
+            {
+					entityPM.DirectionCode = entityPOCO.DirectionCode;
+            }
+
 		}
 
 		public void PMToOldPM(TariffTypePM entityPM, TariffTypePM oldEntityPM)
@@ -104,6 +116,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransportModeCode))
             {
                 oldEntityPM.TransportModeCode = entityPM.TransportModeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DirectionCode))
+            {
+                oldEntityPM.DirectionCode = entityPM.DirectionCode;
             }
 			
 		}

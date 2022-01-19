@@ -22,8 +22,7 @@ import { TariffVersionAllInChargePM } from '../../EntityPMs/TariffVersionAllInCh
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    selector: 'NewAirFreightCostComponent',
-    
+    selector: 'NewAirFreightCostComponent',    
     templateUrl: './NewAirFreightCostComponent.html',
 })
 
@@ -49,9 +48,11 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
     public PriceStepsText: string;
     public TariffCurrencyTextCode: string;
     public SellerDependancy: string = "AL";
+    public CustomsBrokerDependancy: string = "AG,CG";
     public HasAContainerTypeUOM: boolean = false;
     private firstVersion: TariffVersionPM;
-
+    public IsSellerVisible: boolean = false;
+    public IsCustomsBrokerVisible: boolean = false;
     constructor() {
         super();
         this.myService = new TariffPMService();
@@ -60,8 +61,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         this.EntityPM = this.myService.GetNewEntityPM();
        
         this.FillChargesIDsAndUOMS();
-        this.FillContainerTypeIds();
-     
+        this.FillContainerTypeIds();     
     }
 
     ngOnInit() {
@@ -79,10 +79,8 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
             var chargeType: ChargesTypeList = p.Result.filter(p => p.Code == chargeCode)[0];
             if (chargeType != null) {
                 this.FreightChargeId = chargeType.Id;
-
             }
         });
-
     }
 
     private BCNTmeasurementId: string;
@@ -102,7 +100,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
     SetWindowArgs(args) {
         this.EntityPM.TypeCode = args.TypeCode;
 
-        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
+        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
             this.VisibileSurchargesArea = true;
             this.TariffCurrencyTextCode = "Tariff.O.DefaultCurrency";
         }
@@ -150,8 +148,9 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         }
 
         this.SetUIProperties_FreightCharges();
+        this.SetUIProperties_Seller();
+        this.SetUIProperties_CustomsBroker();
     }
-
     private SetUIProperties_FreightCharges() {
         var isFreightChargeVisible: boolean = false;
         if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OFC") {
@@ -159,6 +158,38 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
             this.UIProperties.SetRequired("FreightChargeId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.FreightChargeId));
         }
         this.UIProperties.SetVisibility("FreightChargeId", this.ObjectTableName, isFreightChargeVisible);
+    }
+    private SetUIProperties_Seller() {
+        var isSellerVisible: boolean = true;
+        var isSellerRequired: boolean = false;
+
+        if (this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
+            isSellerVisible = false;
+        }
+
+        if (isSellerVisible) {
+            isSellerRequired = AppTool.IsNullOrEmpty(this.SellerId);
+        }
+
+        this.IsSellerVisible = isSellerVisible;
+        this.UIProperties.SetVisibility("SellerId", this.ObjectTableName, isSellerVisible);
+        this.UIProperties.SetRequired("SellerId", this.ObjectTableName, isSellerRequired)
+    }
+    private SetUIProperties_CustomsBroker() {
+        var isBrokerVisible: boolean = false;
+        var isBrokerRequired: boolean = false;
+
+        if (this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
+            isBrokerVisible = true;
+        }
+
+        if (isBrokerVisible) {
+            isBrokerRequired = AppTool.IsNullOrEmpty(this.CustomsBrokerId);
+        }
+
+        this.IsCustomsBrokerVisible = isBrokerVisible;
+        this.UIProperties.SetVisibility("CustomsBrokerId", this.ObjectTableName, isBrokerVisible);
+        this.UIProperties.SetRequired("CustomsBrokerId", this.ObjectTableName, isBrokerRequired)
     }
 
     FillChargesIDsAndUOMS() {
@@ -179,9 +210,15 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         if (this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "OFS") {
             EntityType = "IsOcean";
             this.SellerDependancy = "SL";
-        } else if (this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OLC") {
+        }
+
+        else if (this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OLC") {
             EntityType = "IsOcean";
             this.SellerDependancy = "SL,AG,SG";
+        }
+
+        if (this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "ICC") {
+            EntityType = this.EntityPM.TypeCode == "ECC" ? "IsExport" : "IsImport";
         }
 
         this.MeasurementsQueryFilters = new ApiQueryFilters();
@@ -268,6 +305,19 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
     set SellerId(value: string) {
         if (this.EntityPM.SellerId != value) {
             this.EntityPM.SellerId = value;
+
+            this.SetUIProperties_Seller();
+        }
+    }
+
+    get CustomsBrokerId() {
+        return this.EntityPM.CustomsBrokerId;
+    }
+    set CustomsBrokerId(value: string) {
+        if (this.EntityPM.CustomsBrokerId != value) {
+            this.EntityPM.CustomsBrokerId = value;
+
+            this.SetUIProperties_CustomsBroker();
         }
     }
 
@@ -857,12 +907,21 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
 
     OkButtonClicked() {
         this.ValidationErrorsList = [];
-
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, this.ValidationErrorsList);
 
+        if (this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
+            if (AppTool.IsNullOrEmpty(this.CustomsBrokerId)) {
+                this.ValidationErrorsList.push("Customs Broker Field is Required");
+            }
+        }
+
+        else {
+            if (AppTool.IsNullOrEmpty(this.SellerId)) {
+                this.ValidationErrorsList.push("Seller Field is Required");
+            }
+        }
 
         if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OFC") {
-
             if (AppTool.IsNullOrEmpty(this.FreightChargeId)) {
                 var fieldName: string = TextCodeTranslator.Translate('Tariff.F.FreightChargeId');
                 var translatedRequiredError: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -897,6 +956,10 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
 
             var errorsArray = validator.Validate("Tariff", this.EntityPM);
             this.ValidationErrorsList = errorsArray;
+            this.ValidateSurcharge();
+        }
+
+        else if (this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
             this.ValidateSurcharge();
         }
 
