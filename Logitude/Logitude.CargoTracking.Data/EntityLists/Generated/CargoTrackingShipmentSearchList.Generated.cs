@@ -28,6 +28,8 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public bool? IsPublic  { get; set; }
        [DataMember]
        public string ReferenceType  { get; set; }
+       [DataMember]
+       public string ReferenceFromShipmentId  { get; set; }
    }
 
 }

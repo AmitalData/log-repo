@@ -100,6 +100,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             var shipmentOrderFields =
              "min(SHO.Master) as OrderMaster, " +
+             "min(SHO.Id) as OrderId, " +
              "min(SHO.House) as OrderHouse, " +
              "min(SHO.CasualImporterName) as OrderShipperName, " +
              "min(SHO.OrderNumber) as OrderShipmentNumber, " +
@@ -308,7 +309,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
              "min(SHO.CasualImporterName) as OrderShipperName, " +
              "min(SHO.OrderNumber) as OrderShipmentNumber, " +
              "min(SHO.PoNumber) as OrderPoNumber, " +
-             "min(SHO.CustomerReferences) as OrderCustomerReference ";
+             "min(SHO.CustomerReferences) as OrderCustomerReference, "+
+             "min(SHO.Id) as OrderId ";
 
             var carrierCardFields =
             "min(CarrierCard.EnglishName) as CarrierEnglishName, " +

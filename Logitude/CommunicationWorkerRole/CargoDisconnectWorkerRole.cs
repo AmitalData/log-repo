@@ -86,12 +86,9 @@ namespace CommunicationWorkerRole
             return cargoContext.CargoDisconnectQueues.Take(MaxShepmentsNumberPerTime).ToList();
         }
 
-
-
         private List<string> GetConnectedShipmentsIds(List<CargoDisconnectQueue> disconnectShipmentQueue)
         {
-            var tenantsIds = disconnectShipmentQueue.GroupBy(e => e.Tenant);
-            var shipmentsConnectedIds = GetShipmentsConnectedIds(tenantsIds);
+            var shipmentsConnectedIds = GetShipmentsConnectedIds(disconnectShipmentQueue);
             shipmentsConnectedIds = shipmentsConnectedIds.GroupBy(e => e).Select(e => e.Key).ToList();
             return shipmentsConnectedIds;
 
@@ -108,44 +105,14 @@ namespace CommunicationWorkerRole
             var query = $"delete from CargoDisconnectQueues where id in ({ids}) ";
             cargoContext.GetActiveDbContext().Database.ExecuteSqlCommand(query);
         }
-        private List<CargoDisconnectShipmentData> GetShipmentsConnectedToOrder(List<string> orderIds)
+        private List<string> GetShipmentsConnectedIds(List<CargoDisconnectQueue> disconnectShipmentQueue)
         {
-            var data = cargoContext.CargoTrackingShipments.Where(e => orderIds.Contains(e.ForwardingShipmentHeaderId))
-                .Select(e => new { e.EntityId, e.EntityType, e.ForwardingShipmentHeaderId, e.CustomsShipmentHeaderId })
-                .ToList();
-            return data.Select(e => new CargoDisconnectShipmentData()
-            {
-                CustomsShipmentHeaderId = e.CustomsShipmentHeaderId,
-                EntityId = e.EntityId,
-                EntityType = e.EntityType,
-                ForwardingShipmentHeaderId = e.ForwardingShipmentHeaderId
-            }).ToList();
-
+            var fromIds = disconnectShipmentQueue.Select(e => e.ShipmentId).ToList();
+            var connectedIds = cargoContext.CargoTrackingShipmentSearches
+                .Where(e => e.ReferenceFromShipmentId != null && fromIds.Contains(e.ReferenceFromShipmentId))
+                .Select(e => e.ShipmentId).ToList();
+            return connectedIds;
         }
-        private List<string> GetShipmentsConnectedIds(IEnumerable<IGrouping<int, CargoDisconnectQueue>> tenantsIds)
-        {
-            var query = BuildGetQueryByIdAndTenant(tenantsIds);
-            var data = query.Select(e => e.ShipmentId)
-                .ToList();
-            return data;
-        }
-
-        private IQueryable<CargoTrackingShipmentSearch> BuildGetQueryByIdAndTenant(IEnumerable<IGrouping<int, CargoDisconnectQueue>> tenantsIds)
-        {
-            var query = cargoContext.CargoTrackingShipmentSearches.AsQueryable();
-            var searchCriteria = new List<Expression<Func<CargoTrackingShipmentSearch, bool>>>();
-            foreach (var tenantGroup in tenantsIds)
-            {
-                foreach (var shipment in tenantGroup)
-                {
-                    searchCriteria.Add(e => e.ShipmentId == shipment.ShipmentId && e.Tenant == tenantGroup.Key);
-                }
-            }
-            var joinedSearchCriteria = Join(Expression.Or, searchCriteria);
-            query = query.Where(joinedSearchCriteria);
-            return query;
-        }
-
         private string GetIdsAsString(List<string> Ids)
         {
             var ids = "";
@@ -158,46 +125,7 @@ namespace CommunicationWorkerRole
             return ids;
 
         }
-
-        public static Expression<Func<T, TReturn>> Join<T, TReturn>(Func<Expression, Expression, BinaryExpression> joiner, IReadOnlyCollection<Expression<Func<T, TReturn>>> expressions)
-        {
-            if (!expressions.Any())
-            {
-                throw new ArgumentException("No expressions were provided");
-            }
-            var firstExpression = expressions.First();
-            var otherExpressions = expressions.Skip(1);
-            var firstParameter = firstExpression.Parameters.Single();
-            var otherExpressionsWithParameterReplaced = otherExpressions.Select(e => ReplaceParameter(e.Body, e.Parameters.Single(), firstParameter));
-            var bodies = new[] { firstExpression.Body }.Concat(otherExpressionsWithParameterReplaced);
-            var joinedBodies = bodies.Aggregate(joiner);
-            return Expression.Lambda<Func<T, TReturn>>(joinedBodies, firstParameter);
-        }
-        public static T ReplaceParameter<T>(T expr, ParameterExpression toReplace, ParameterExpression replacement) where T : Expression
-        {
-            var replacer = new ExpressionReplacer(e => e == toReplace ? replacement : e);
-            return (T)replacer.Visit(expr);
-        }
     }
-    public class CargoDisconnectShipmentData
-    {
-        public string CustomsShipmentHeaderId { get; internal set; }
-        public string EntityId { get; internal set; }
-        public string EntityType { get; internal set; }
-        public string ForwardingShipmentHeaderId { get; internal set; }
-    }
-    public class ExpressionReplacer : ExpressionVisitor
-    {
-        private readonly Func<Expression, Expression> replacer;
 
-        public ExpressionReplacer(Func<Expression, Expression> replacer)
-        {
-            this.replacer = replacer;
-        }
-
-        public override Expression Visit(Expression node)
-        {
-            return base.Visit(replacer(node));
-        }
-    }
+   
 }

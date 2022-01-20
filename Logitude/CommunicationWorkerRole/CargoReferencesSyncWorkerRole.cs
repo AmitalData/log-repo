@@ -207,6 +207,7 @@ namespace CommunicationWorkerRole
             row["ShipmentId"] = item.ShipmentId;
             row["IsPublic"] = item.IsPublic;
             row["ReferenceType"] = item.ReferenceType;
+            row["ReferenceFromShipmentId"] = item.ReferenceFromShipmentId;
             return row;
         }
 
@@ -220,6 +221,7 @@ namespace CommunicationWorkerRole
             datatable.Columns.Add("ShipmentId", typeof(string));
             datatable.Columns.Add("IsPublic", typeof(bool));
             datatable.Columns.Add("ReferenceType", typeof(string));
+            datatable.Columns.Add("ReferenceFromShipmentId", typeof(string));
             return datatable;
         }
 
@@ -250,7 +252,17 @@ namespace CommunicationWorkerRole
             item.Id = 0;
             item.ShipmentId = shipmentQueueItem.SyncTo;
             item.ReferenceType = GetNewReferenceType(shipmentQueueItem, item.ReferenceType, sourceType);
+            item.ReferenceFromShipmentId = GetReferenceFromShipmentId(item.ReferenceFromShipmentId,shipmentQueueItem);
             return item;
+        }
+
+        private string GetReferenceFromShipmentId(string referenceFromShipmentId, CargoReferencesSyncQueue shipmentQueueItem)
+        {
+            if (shipmentQueueItem.SyncTo == shipmentQueueItem.ShipmentId)
+                return null;
+            if (string.IsNullOrEmpty(referenceFromShipmentId))
+                return shipmentQueueItem.ShipmentId;
+            return referenceFromShipmentId;
         }
 
         private string GetNewReferenceType(CargoReferencesSyncQueue shipmentQueueItem, string referenceType, string sourceType)
