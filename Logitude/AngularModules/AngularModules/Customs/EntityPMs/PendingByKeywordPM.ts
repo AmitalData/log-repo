@@ -64,14 +64,14 @@ export class PendingByKeywordPM {
     public set SearchByFieldName(newValue: string) { if (this.searchByFieldName != newValue) { this.searchByFieldName = newValue; this.MarkAsDirty("SearchByFieldName"); } }
        
 	 
-    private searchToField: number;
-    public get SearchToField() { return this.searchToField; }
-    public set SearchToField(newValue: number) { if (this.searchToField != newValue) { this.searchToField = newValue; this.MarkAsDirty("SearchToField"); } }
+    private searchType: string;
+    public get SearchType() { return this.searchType; }
+    public set SearchType(newValue: string) { if (this.searchType != newValue) { this.searchType = newValue; this.MarkAsDirty("SearchType"); } }
        
 	 
-    private serachType: number;
-    public get SerachType() { return this.serachType; }
-    public set SerachType(newValue: number) { if (this.serachType != newValue) { this.serachType = newValue; this.MarkAsDirty("SerachType"); } }
+    private searchTypesName: string;
+    public get SearchTypesName() { return this.searchTypesName; }
+    public set SearchTypesName(newValue: string) { if (this.searchTypesName != newValue) { this.searchTypesName = newValue; this.MarkAsDirty("SearchTypesName"); } }
        
 	 
 
