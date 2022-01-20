@@ -48,7 +48,9 @@ namespace Logitude.Customs.Data.Repsitories
                     if (r.SearchType == "2")
                     {
                         var tempList = r.KeywordsList.ToLower().Split(',').ToList();
-                        if(tempList.FirstOrDefault(x=>word.Contains(x)) != null){
+                        tempList.RemoveAll(s => string.IsNullOrWhiteSpace(s));
+
+                        if (tempList.FirstOrDefault(x=>word.Contains(x)) != null){
                             pendingByKeyword.Add(r);
                         }
                     }
