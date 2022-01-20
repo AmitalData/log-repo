@@ -100,12 +100,11 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     ConstantPageSize: number = 100;
     UsingLogGridV2: boolean = false;
     LanguageFilterValue: string;
-
+    @Input() ForceShowLanguageFilter: boolean = false;
 
     public get ShowLanguageFilter(): boolean
     {
-        return this.ObjectTableName == 'APInvoice'
-            && SessionLocator?.LoggedUserPM?.ShowLocalNameInLOV
+        return  SessionLocator?.LoggedUserPM?.ShowLocalNameInLOV
             && SessionLocator?.TenantPM?.AccountingActivated;
     }
 
@@ -179,6 +178,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         this.DisplayFieldsFromList = args.DisplayFieldsFromList;
         this.DisplayLocalFieldsFromList = args.DisplayLocalFieldsFromList;
         this.LanguageFilterValue = args.LanguageFilterValue;
+        this.ForceShowLanguageFilter = args.ForceShowLanguageFilterOnSearchWindow;
 
         if (this.IsTenantZeroSearch) {
             this.IsAllDataVisible = true;
@@ -900,6 +900,7 @@ export class CustomEntityArgs {
     public LanguageFilterValue: string;
     public HideEdit: boolean;
     public ShowLanguageFilter: boolean;
+    public ForceShowLanguageFilterOnSearchWindow: boolean;
 
 
 }

@@ -383,6 +383,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     _KeyDownSubscribe: any;
     @Output() KeyDownEvent: EventEmitter<any> = new EventEmitter();
     @Input() ColumnsWidths: ColumnsWidths[] = [];
+    @Input() ForceShowLanguageFilterOnSearchWindow: boolean = false;
 
     ngAfterViewInit() {
         this.RunComponent();
@@ -2210,7 +2211,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         args.DisplayFieldsFromList = this.DisplayFieldsFromList;
         args.DisplayLocalFieldsFromList = this.DisplayLocalFieldsFromList;
         args.LanguageFilterValue = this.LanguageFilterValue;
-        args.ShowLanguageFilter = this.ShowLanguageFilter;
+        args.ForceShowLanguageFilterOnSearchWindow = this.ForceShowLanguageFilterOnSearchWindow;
         var tablename = TextCodeTranslator.TranslateTablePlural(this.GetObjectTableName(this.LookUpTableName));
 
         if (tablename == "Cards") {
