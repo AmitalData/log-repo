@@ -21,7 +21,7 @@ export class SharedDocumentsPermissionsComponent implements OnInit {
     DocumentPermissiosSelectedViewModel: SharedDocumentsPermissionsViewModel;
     DocumentPermissiosLists: SharedDocumentsPermissionsViewModel[];
     ObjectTableId: string;
-    FullComponentsVisibility: boolean = false;
+    FullComponentsVisibility: boolean = true;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _documentTypePMExtendedService: DocumentTypePMExtendedService) {
         this.CurrentSession.StartBusyIndicatorLoading();
