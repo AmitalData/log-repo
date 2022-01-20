@@ -359,7 +359,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
                             FeatureQuery featureQuery = new FeatureQuery();
                             int.TryParse(_AmitalCustomsFile.Tenant, out int tenant);
-                            var features = featureQuery.GetAllowedFeaturesForLoggedUser( AuthenticationUtil.ResolveUserId(tenant), tenant);
+                            var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
                             var feature = features.Features.FirstOrDefault(x => x.Code == "AddNewClientFromManifest");
                             if (clientId == null && mode == "UpdateNotEmpty" && feature != null)
                             {
@@ -377,7 +377,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 this._MyDeclarationPM.ReferentUserId = TranslateUser(_AmitalCustomsFile.ReferentUserId);
                 this._MyDeclarationPM.DepartmentId = TranslateDepartment(_AmitalCustomsFile.DepartmentId);
                 this._MyDeclarationPM.WeightValue = _AmitalCustomsFile.COUWTVAL;
-                
+
                 if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.CustomerId))
                 {
                     MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
@@ -591,16 +591,16 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
                     //this._MyDeclarationPM.Consignments[0].ManifestDate = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.ManifestDate, "AmitalCustomsFile.ManifestDate");
                     this._MyDeclarationPM.Consignments[0].UnloadDate = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.ArrivalDateTime, "AmitalCustomsFile.ArrivalDateTime");
-                    // moran 20.5.15 - Task 13527 - change handle for formatting dates <--
-                    //moran wi 1829 + 1855 14.11.13 <--
-                    // moran 1.2.17 - AMI-59543 -->
-                    string warehouseId = null;
-                    if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.WarehouseId))
-                    {
-                        warehouseId = TranslateWarehouse(_AmitalCustomsFile.WarehouseId);
-                    }
-                    this._MyDeclarationPM.Consignments[0].StorageSiteCode = warehouseId;
-
+                        // moran 20.5.15 - Task 13527 - change handle for formatting dates <--
+                        //moran wi 1829 + 1855 14.11.13 <--
+                        // moran 1.2.17 - AMI-59543 -->
+                        string warehouseId = null;
+                        if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.WarehouseId))
+                        {
+                            warehouseId = TranslateWarehouse(_AmitalCustomsFile.WarehouseId);
+                        }
+                        this._MyDeclarationPM.Consignments[0].StorageSiteCode = warehouseId;
+                    
                     if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) && _AmitalCustomsFile.IsCourierDeclaration.ToLower() != "true"))
                     {
 
@@ -719,8 +719,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 }
 
 
-              //  UpdateTrucker();
+                //  UpdateTrucker();
 
+                ExportDeclarationInsert();
                 if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) && _AmitalCustomsFile.IsCourierDeclaration.ToLower() != "true"))
                 {
                     _MyDeclarationPM.IsCourierDeclaration = false;
@@ -906,6 +907,89 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             }
         }
 
+        private void ExportDeclarationInsert()
+        {
+            if (_AmitalCustomsFile.Direction == "E")
+            {
+
+                ///DeclarationPM
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.DestinationCountryCode))
+                {
+                    this._MyDeclarationPM.DestinationCountryCode = _AmitalCustomsFile.DestinationCountryCode;
+                }
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.ImporterFile))
+                {
+                    this._MyDeclarationPM.ExportFile = _AmitalCustomsFile.ImporterFile;
+                }
+
+                //SupplierInvoices
+                if (this._MyDeclarationPM.SupplierInvoices.Count == 0)
+                {
+                    this._MyDeclarationPM.SupplierInvoices.Add(new SupplierInvoicePM() { ChangeSetOp = ChangeSetOperation.Insert, Tenant = ResolvedTenant() });
+                }
+                this._MyDeclarationPM.SupplierInvoices[0].VendorId = _AmitalCustomsFile.VendorId;
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.InvoiceNumber))
+                {
+                    this._MyDeclarationPM.SupplierInvoices[0].InvoiceNumber = _AmitalCustomsFile.InvoiceNumber;
+                }
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.IncotermCode))
+                {
+                    this._MyDeclarationPM.SupplierInvoices[0].IncotermCode = _AmitalCustomsFile.IncotermCode;
+                }
+
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.BuyerName))
+                {
+                    this._MyDeclarationPM.SupplierInvoices[0].BuyerName = _AmitalCustomsFile.BuyerName;
+                }
+
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.BuyerAddress))
+                {
+                    this._MyDeclarationPM.SupplierInvoices[0].BuyerAddress = _AmitalCustomsFile.BuyerAddress;
+                }
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.BuyerCountryCode))
+                {
+                    this._MyDeclarationPM.SupplierInvoices[0].BuyerCountryCode = _AmitalCustomsFile.BuyerCountryCode;
+                }
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.BuyerRoleCode))
+                {
+                    this._MyDeclarationPM.SupplierInvoices[0].BuyerRoleCode = _AmitalCustomsFile.BuyerRoleCode;
+                }
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.CargoTypeCode))
+                {
+                    this._MyDeclarationPM.Consignments[0].CargoTypeCode = _AmitalCustomsFile.CargoTypeCode;
+                }
+
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.SecondCargoID))
+                {
+                    this._MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.SecondCargoID;
+                }
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.ThirdCargoID))
+                {
+                    this._MyDeclarationPM.Consignments[0].ThirdCargoID = _AmitalCustomsFile.ThirdCargoID;
+                }
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.LoadingPortCode))
+                {
+                    this._MyDeclarationPM.Consignments[0].ExportLoadingPortCode = _AmitalCustomsFile.LoadingPortCode;
+                }
+
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.UnloadportId))
+                {
+                    this._MyDeclarationPM.Consignments[0].FinalDestinationPortCode = _AmitalCustomsFile.UnloadportId;
+                }
+                if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.ExportUnloadingPortCode))
+                {
+                    this._MyDeclarationPM.Consignments[0].ExportUnloadingPortCode = _AmitalCustomsFile.ExportUnloadingPortCode;
+                }
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.StorageSiteCode))
+                {
+                    this._MyDeclarationPM.Consignments[0].StorageSiteCode = _AmitalCustomsFile.StorageSiteCode;
+                }
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.ShipCode))
+                {
+                    this._MyDeclarationPM.Consignments[0].ShipCode = _AmitalCustomsFile.ShipCode;
+                }
+            }
+        }
 
         public void SendClientSearch()
         {

@@ -65,6 +65,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             ICustomContext _Context = MainContext as CustomContext;
 
             SupplierInvoiceQueryService supplierInvoiceQueryService = new SupplierInvoiceQueryService(_Context);
+            var declarationPM = entityParentPM as DeclarationPM;
+            if (String.IsNullOrWhiteSpace(entityPM.DeclarationId) && declarationPM?.Direction == "E")
+            {
+                entityPM.DeclarationId = declarationPM.Id;
+            }
             int? maxCounterKey = supplierInvoiceQueryService.GetMaxCounterKey(entityPM.DeclarationId, entityPM.Tenant);
             if (maxCounterKey != null)
             {
@@ -343,12 +348,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
-            //calculate frieghts total
-            //this.CalculateFrieghtTotals(entityPM, declarationPM);
-            InsuranceFreightUtil util = new Utils.InsuranceFreightUtil();
-            util.CalculateFreightForInvoice(entityPM, _DeclarationPM.TaxationDateTime);
-            entityPM.InvoiceAmountInUSD = InsuranceFreightUtil.CalcInvoiceAmountInUSD(_DeclarationPM.TaxationDateTime, entityPM.InvoiceCurrencyTypeCode, entityPM.InvoiceAmount.GetValueOrDefault(), entityPM.Tenant);
-
+            if (_DeclarationPM != null)
+            {
+                //calculate frieghts total
+                //this.CalculateFrieghtTotals(entityPM, declarationPM);
+                InsuranceFreightUtil util = new Utils.InsuranceFreightUtil();
+                util.CalculateFreightForInvoice(entityPM, _DeclarationPM.TaxationDateTime);
+                entityPM.InvoiceAmountInUSD = InsuranceFreightUtil.CalcInvoiceAmountInUSD(_DeclarationPM.TaxationDateTime, entityPM.InvoiceCurrencyTypeCode, entityPM.InvoiceAmount.GetValueOrDefault(), entityPM.Tenant);
+            }
             object entityPOCO; object entityPM1; object entityParentPM;
             this.GetAncestor(out entityPOCO, out entityPM1, out entityParentPM);
             var myDec = (entityPM1 as DeclarationPM);
@@ -780,7 +787,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             invoiceRepository.SubmitChanges();
             InsuranceFreightUtil insuranceFreightUtil = new Utils.InsuranceFreightUtil();
-            insuranceFreightUtil.CalculateInsurance(declarationPM);
+            insuranceFreightUtil.CalculateInsurance(declarationPM ?? defaultDeclarationPM);
 
             #region insurance old calculations 
             //SupplierInvoice invoice = supplierInvoices.Where(d => d.SequenceNumeric == 1).FirstOrDefault();
@@ -1265,8 +1272,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     OpenUnifreighTask(entityPM);
                 }
                 //Yuval Chalup 04.12.2016 TASK-24655 --->
-
-                UpdateDeclarationFields(entityPM);
+                if (entityPM.ChangeSetOp != ChangeSetOperation.Insert)
+                {
+                    UpdateDeclarationFields(entityPM);
+                }
 
             }
             finally
@@ -1312,7 +1321,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
 
             //  -------- Declaration Referant Data 
-            UpdateReferantData(declarationPM);
+            UpdateReferantData(declarationPM?? defaultDeclarationPM);
             
         }
 
