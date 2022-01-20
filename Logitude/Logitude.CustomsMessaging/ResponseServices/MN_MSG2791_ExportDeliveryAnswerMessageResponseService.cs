@@ -56,20 +56,24 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 customResponse.CargoIdentifier.cargoIdentifierKey3,
                 customResponse.CargoIdentifier.cargoIdentifierType, requestParams.Tenant);
 
-            entity.StorErrorXML = customResponse.Exception.ToString();
-            //entity.CustomsStatus = customResponse.
-            entity.ChangeSetOp = ChangeSetOperation.Update;
-            var updateService = new ExportStorageUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
-            updateService.Update(entity, true);
-            
+            if(entity != null)
+            {
+                entity.StorErrorXML = customResponse.Exception.ToString();
+                //entity.CustomsStatus = customResponse.
+                entity.ChangeSetOp = ChangeSetOperation.Update;
+                var updateService = new ExportStorageUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
+                updateService.Update(entity, true);
+                MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                MyRequestSheetParam.EntityId2 = entity.DeclarationId;
+
+            }
+
             if (MyRequestSheetParam == null) 
                 MyRequestSheetParam = new RequestSheetParam();
             MyRequestSheetParam.EntityId1 = requestParams.LoggingEntityId;
             MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.ExportStorage");
 
-            MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-            MyRequestSheetParam.EntityId2 = entity.DeclarationId;
-
+            
             MyResponseData = new INF_MSG_GenericResponseData();
             MyResponseData.Succeeded = true;
             MyResponseData.UserMessage = "";
