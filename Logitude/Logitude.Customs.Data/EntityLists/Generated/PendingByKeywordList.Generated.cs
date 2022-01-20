@@ -31,9 +31,9 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string SearchByFieldName  { get; set; }
        [DataMember]
-       public int SearchToField  { get; set; }
+       public string SearchType  { get; set; }
        [DataMember]
-       public int SerachType  { get; set; }
+       public string SearchTypesName  { get; set; }
    }
 
 }

@@ -204,48 +204,48 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private int searchToField ;
+	  private string searchType ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int SearchToField  
+       public string SearchType  
 	   {
 	    
 	     get
 		{
-		   return searchToField;
+		   return searchType;
 		 }
 		 set
 		 {
-		   if(searchToField != value)
+		   if(searchType != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchToField",OldValue=searchToField,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchType",OldValue=searchType,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   searchToField=value;
+		   searchType=value;
 		   }
 			
 		 }
 	   }
-	  private int serachType ;
+	  private string searchTypesName ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int SerachType  
+       public string SearchTypesName  
 	   {
 	    
 	     get
 		{
-		   return serachType;
+		   return searchTypesName;
 		 }
 		 set
 		 {
-		   if(serachType != value)
+		   if(searchTypesName != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SerachType",OldValue=serachType,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchTypesName",OldValue=searchTypesName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   serachType=value;
+		   searchTypesName=value;
 		   }
 			
 		 }
