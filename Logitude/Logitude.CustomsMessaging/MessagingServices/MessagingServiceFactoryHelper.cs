@@ -102,6 +102,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 ((new DCAInDF_NG_2470_DF_MSG16001_ReleaseGoodsMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+               DCAInMN_MSG2791_ExportDeliveryAnswerMessageMessagingServices>
+               ((new DCAInMN_MSG2791_ExportDeliveryAnswerMessageMessagingServices()).MainInterfaceCode);
+
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 DCAInEV_NG_8219_MSG14100_ProceduralFaultCancelMassagingService>
                 ((new DCAInEV_NG_8219_MSG14100_ProceduralFaultCancelMassagingService()).MainInterfaceCode);
 
