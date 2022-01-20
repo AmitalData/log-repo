@@ -32,13 +32,13 @@
                             <div class="TabControl">
                                 <div class="TabControlHead">
                                     <ul style="margin-left: 2px;">
-                                        <li [class.Selected]="SelectedTabCode == 'CUV'" (click)="SelectedTabCode = 'CUV'" style="margin-left:2px;">
+                                        <li [class.Selected]="SelectedTabCode == 'CUV'" (click)="SelectedTabChange('CUV')" style="margin-left:2px;">
                                             <div style="width:100px;text-align:left;font-size:11px;color:black" class="InnerChild">
                                                 <span>Customer View</span>
                                             </div>
                                         </li>
 
-                                        <li [class.Selected]="SelectedTabCode == 'AGV'" (click)="SelectedTabCode = 'AGV'" *ngIf="HasAgentDocumentsPermission">
+                                        <li [class.Selected]="SelectedTabCode == 'AGV'" (click)="SelectedTabChange('AGV')" *ngIf="HasAgentDocumentsPermission">
                                             <div style="width:100px;text-align:left;font-size:11px;color:black" class="InnerChild">
                                                 <span>Agent View</span>
                                             </div>
@@ -128,7 +128,7 @@
                                         </div>
                                     </div>
                                     <!--Tab 2: Agent View-->
-                                    <div class="MediaFillRelative" [hidden]="SelectedTabCode != 'AGV'">
+                                    <div *ngIf="IsCloud" class="MediaFillRelative" [hidden]="SelectedTabCode != 'AGV'">
                                         <div class="MediaFillAbsolute">
                                             <table>
                                                 <tr style="height:100%">
@@ -206,6 +206,8 @@
                                             </table>
                                         </div>
                                     </div>
+
+                                    <div [hidden]="SelectedTabCode != 'AGV' || IsCloud" class="LocationDirective" LocationDirective Code="AGV"> </div>
                                 </div>
                             </div>
                         </div>
