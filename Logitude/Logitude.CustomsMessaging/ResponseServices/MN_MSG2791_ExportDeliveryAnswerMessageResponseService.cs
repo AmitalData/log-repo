@@ -58,7 +58,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if(entity != null)
             {
-                entity.StorErrorXML = customResponse.Exception.ToString();
+                entity.StorErrorXML = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ExportStorage.MN2791.Exception[]>.SerializeObject(customResponse.Exception);
                 //entity.CustomsStatus = customResponse.
                 entity.ChangeSetOp = ChangeSetOperation.Update;
                 var updateService = new ExportStorageUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
