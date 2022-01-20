@@ -81,7 +81,7 @@
                 </li>
                 <li float-start id="All"
                     (click)="VendorFilterItemClicked('All')"
-                    [class.SelectedFilter]="VendorFilterSelectedValue === 'All'">
+                    [class.SelectedFilter]="VendorFilterSelectedValue === 'All'" style="width: 80px;">
                     {{'TaxDeductionReport.O.AllVendors' | TextCodeTranslationPipe}}
                 </li>
             </ul>
@@ -140,7 +140,7 @@
     <tr style="height: 32px;">
         <td style="width:10px"></td>
         <td class="Label" [style.text-align]="isRTL? 'right': 'left'" style="width: 150px;">
-            {{'TaxDeductionReport.O.ToDate' | TextCodeTranslationPipe}}
+            {{'TaxDeductionReport.O.ToDate' | TextCodeTranslationPipe}}:
         </td>
         <td style="width:10px"></td>
         <td style="width:150px;">
