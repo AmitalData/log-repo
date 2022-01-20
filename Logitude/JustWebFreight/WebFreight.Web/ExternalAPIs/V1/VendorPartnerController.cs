@@ -131,10 +131,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 gLAccountEntity.AccountTypeCode = "3";
                                 gLAccountEntity.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
                                 gLAccountEntity.InternalNumber = entity.GLAccount.InternalNumber;
-                                gLAccountEntity.DeductionFileNumber = entity.GLAccount.DeductionFileNumber;
-                                gLAccountEntity.AssessingOfficeCode = entity.GLAccount.AssessingOfficeCode;
+                                gLAccountEntity.DeductionFileNumber = string.IsNullOrWhiteSpace(entity.GLAccount.DeductionFileNumber) ? null : entity.GLAccount.DeductionFileNumber;
+                                gLAccountEntity.AssessingOfficeCode = string.IsNullOrWhiteSpace(entity.GLAccount.AssessingOfficeCode) ? null : entity.GLAccount.AssessingOfficeCode;
                                 gLAccountEntity.DeductionFileTypeId = entity.GLAccount.DeductionFileTypeId;
-                                gLAccountEntity.ConsolidationVat = entity.GLAccount.ConsolidationVat;
+                                gLAccountEntity.ConsolidationVat = string.IsNullOrWhiteSpace(entity.GLAccount.ConsolidationVat) ? null : entity.GLAccount.ConsolidationVat;
 
                                 //DisplayNumber
                                 SetDisplayNumber(entity, card, gLAccountEntity);
