@@ -1596,6 +1596,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.EndDate", DefaultText = "End Date", LocalDefaultText = "תאריך סיום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FailedWhilePerforming", DefaultText = "failed while performing", LocalDefaultText = "תקלה בביצוע", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.NoVendors", DefaultText = "No Vendors found with Vat Number and Deduction File Number", LocalDefaultText = "לא אותרו ספקים עם תיק ניכויים ועם מספר עוסק מורשה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FoundVatNumber", DefaultText = "Found Vat Number", LocalDefaultText = "אותר מספר עוסק מורשה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
         }
         #endregion
 
