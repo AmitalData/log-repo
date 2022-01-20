@@ -98,7 +98,7 @@ export class PerVendorReportFilterComponent extends BaseComponent {
     }
 
     getVendorGlAccount(){
-        if(this.vendor.GLAccountId) {
+        if(this.vendor && this.vendor.GLAccountId) {
             this.GetGLAccount(this.vendor.GLAccountId);
         }
     }
@@ -140,11 +140,16 @@ export class PerVendorReportFilterComponent extends BaseComponent {
 
         this.errors = [];
         this.ValidationErrorsList = [];
-        if (this.vendor.GLAccountId == null) {
+        if (this.VendorFilterSelectedValue == "Vendor" && !this.vendor) {
+            this.errors.push("No vendor has been selected");
+            this.errors.push(TextCodeTranslator.Translate("GLTransactionReport.O.RequiredFields"));
+        }
+
+        if (this.VendorFilterSelectedValue == "Vendor" && this.vendor && this.vendor.GLAccountId == null) {
             this.errors.push("The selected vendor doesn't have GlAccount");
         }
 
-        if(this.VendorGLAccount && this.VendorGLAccount.ExcludeFromDeductionReport) {
+        if(this.VendorFilterSelectedValue == "Vendor" && this.VendorGLAccount && this.VendorGLAccount.ExcludeFromDeductionReport) {
             this.errors.push("The selected vendor is excluded from deduction report");
         }
         if (this.errors.length == 0) {
@@ -212,6 +217,7 @@ export class PerVendorReportFilterComponent extends BaseComponent {
         if (this.VendorFilterSelectedValue == "All") {
             this.Vendor = null;
             this.VendorId = null;
+            this.VendorGLAccount = null;
             this.UIProperties.SetEnabled("VendorId", "Card", false);
         }
         else {
