@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="DBTables\CargoDisconnectQueue.dxml" />
     <None Include="DBTables\CargoReferencesSyncQueue.dxml" />
     <None Include="DBTables\CargoTrackingCard.dxml" />
     <None Include="DBTables\CargoTrackingCountry.dxml" />
@@ -104,6 +105,7 @@
     <None Include="DBTables\CargoTrackingShipmentSearch.dxml" />
     <None Include="DBTables\CargoTrackingTransportMode.dxml" />
     <None Include="DBTables\CargoTrackingWatermark.dxml" />
+    <None Include="EntityFiles\CargoDisconnectQueue.lxml" />
     <None Include="EntityFiles\CargoReferencesSyncQueue.lxml" />
     <None Include="EntityFiles\CargoTrackingCard.lxml" />
     <None Include="EntityFiles\CargoTrackingCountry.lxml" />
