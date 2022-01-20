@@ -12508,6 +12508,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                OperationalStatusId = f.OperationalStatusId,
                                OperationalStatusName = f.OperationalStatusName,
                                PrivateLabelAgentName = f.PrivateLabelAgentName,
+                               StatusWeight = f.StatusWeight,
                            };
             return myResult;
         }
