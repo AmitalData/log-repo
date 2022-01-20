@@ -47,6 +47,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Leg3VesselId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Leg4VesselId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Leg5VesselId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.EmptyContainerReturnTo).HasMaxLength(200).IsUnicode(false);
+            this.Property(t => t.EmptyContainerReturnFrom).HasMaxLength(200).IsUnicode(false);
+
             this.ToTable("Containers");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
@@ -244,6 +247,13 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Leg3VesselId).HasColumnName("Leg5VesselId");
             this.Property(t => t.Leg4VesselId).HasColumnName("Leg4VesselId");
             this.Property(t => t.Leg5VesselId).HasColumnName("Leg5VesselId");
+
+            this.Property(t => t.EmptyContainerReturnFrom).HasColumnName("EmptyContainerReturnFrom");
+            this.Property(t => t.EmptyContainerReturnTo).HasColumnName("EmptyContainerReturnTo");
+            this.Property(t => t.EmptyContainerReturnETA).HasColumnName("EmptyContainerReturnETA");
+            this.Property(t => t.EmptyContainerReturnATA).HasColumnName("EmptyContainerReturnATA");
+            this.Property(t => t.EmptyContainerReturnETD).HasColumnName("EmptyContainerReturnETD");
+            this.Property(t => t.EmptyContainerReturnATD).HasColumnName("EmptyContainerReturnATD");
 
             this.HasOptional(t => t.CarrierCard).WithMany().HasForeignKey(d => d.MainCarriageCarrierId).WillCascadeOnDelete(false); 
             this.HasOptional(t => t.ShipmentPackage).WithMany().HasForeignKey(d => d.ShipmentPackagesId).WillCascadeOnDelete(false);

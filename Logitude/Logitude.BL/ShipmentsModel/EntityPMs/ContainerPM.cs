@@ -330,5 +330,11 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string Leg3VesselId { get; set; }
         public string Leg4VesselId { get; set; }
         public string Leg5VesselId { get; set; }
+        public string EmptyContainerReturnFrom { get; set; }
+        public string EmptyContainerReturnTo { get; set; }
+        public DateTime? EmptyContainerReturnETA { get; set; }
+        public DateTime? EmptyContainerReturnETD { get; set; }
+        public DateTime? EmptyContainerReturnATD { get; set; }
+        public DateTime? EmptyContainerReturnATA { get; set; }
     }
 }
