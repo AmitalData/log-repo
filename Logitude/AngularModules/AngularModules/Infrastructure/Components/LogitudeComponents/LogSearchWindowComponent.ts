@@ -104,8 +104,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
 
     public get ShowLanguageFilter(): boolean
     {
-        return
-            this.ObjectTableName == 'APInvoice'
+        return this.ObjectTableName == 'APInvoice'
             && SessionLocator?.LoggedUserPM?.ShowLocalNameInLOV
             && SessionLocator?.TenantPM?.AccountingActivated;
     }
@@ -180,7 +179,6 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         this.DisplayFieldsFromList = args.DisplayFieldsFromList;
         this.DisplayLocalFieldsFromList = args.DisplayLocalFieldsFromList;
         this.LanguageFilterValue = args.LanguageFilterValue;
-        this.ShowLanguageFilter = SessionLocator.TenantPM.AccountingActivated && args.ShowLanguageFilter;
 
         if (this.IsTenantZeroSearch) {
             this.IsAllDataVisible = true;
