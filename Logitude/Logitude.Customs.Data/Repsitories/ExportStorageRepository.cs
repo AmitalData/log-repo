@@ -31,6 +31,20 @@ namespace Logitude.Customs.Data.Repsitories
             return q.FirstOrDefault();
 
         }
+
+        public ExportStorage GetIDByCargoKeys(string firstCargoID, string secondCargoID, string thirdCargoID, int cargoIdentifierType, int tenant)
+        {
+            var q = from a in context.ExportStorages
+                    where
+                    a.Tenant == tenant &&
+                    a.FirstCargoID == firstCargoID &&
+                    a.SecondCargoID == secondCargoID &&
+                    a.ThirdCargoID == thirdCargoID &&
+                    a.CargoTypeCode == cargoIdentifierType.ToString()
+                    select a;
+            return q.FirstOrDefault();
+
+        }
     }
 
 }
