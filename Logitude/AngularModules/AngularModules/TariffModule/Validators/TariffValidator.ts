@@ -39,7 +39,7 @@ export class TariffValidator {
                 }
             }
 
-            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC") {
+            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC" || entityPM.TypeCode == "ICC" || entityPM.TypeCode == "ECC") {
                 this.chargesTypePMService = new ChargesTypeListService();
                 this.FillChargesIDsAndUOMS();
                 this.ValidateSurcharge();
@@ -110,7 +110,7 @@ export class TariffValidator {
                 var chargresType = this.IdProps.filter(p => this.entityPM[p + ""] == this.entityPM[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this.entityPM[IdProps[index - 1]] != null)[0];
                 if (!DuplicatedChargesIds.includes(this.entityPM[chargresType + ""])) {
                     DuplicatedChargesIds.push(this.entityPM[chargresType + ""]);
-                    this.chargesTypePMService.getSingleFromCache(this.entityPM[chargresType + ""]).subscribe((res:any) => {
+                    this.chargesTypePMService.getSingleFromCache(this.entityPM[chargresType + ""]).subscribe((res: any) => {
                         if (!res.HasError) {
                             var chargesTypeList: ChargesTypeList = res.Result;
                             if (res) {
@@ -181,8 +181,8 @@ export class TariffValidator {
     }
 
     ValidateContainers() {
-        var IdProps: string[] = [];        
-        var IdPropsName: string[] = [];       
+        var IdProps: string[] = [];
+        var IdPropsName: string[] = [];
         var DuplicatedContainersIds: string[] = [];
         var EmptyIndex = 1;
         var emptyLines: boolean = false;
@@ -190,14 +190,14 @@ export class TariffValidator {
         var tempErrors: Array<string> = [];
 
         for (var index = 1; index <= 5; index++) {
-            IdProps.push("ContainerType" + index + "Id");            
+            IdProps.push("ContainerType" + index + "Id");
             IdPropsName.push("Container Type " + index);
-            
+
             if (this.IdProps.filter(p => this.entityPM[p + ""] == this.entityPM[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this.entityPM[IdProps[index - 1]] != null)[0] != null) {
                 var packageType = this.IdProps.filter(p => this.entityPM[p + ""] == this.entityPM[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this.entityPM[IdProps[index - 1]] != null)[0];
                 if (!DuplicatedContainersIds.includes(this.entityPM[packageType + ""])) {
                     DuplicatedContainersIds.push(this.entityPM[packageType + ""]);
-                    this.packageTypeListService.getSingleFromCache(this.entityPM[packageType + ""]).subscribe((res:any) => {
+                    this.packageTypeListService.getSingleFromCache(this.entityPM[packageType + ""]).subscribe((res: any) => {
                         if (!res.HasError) {
                             var packageTypeList: PackageTypeList = res.Result;
                             if (packageTypeList) {
@@ -223,7 +223,7 @@ export class TariffValidator {
                         EmptyIndex = index;
                     }
                 }
-                
+
                 if (index == 2) {
                     if (!AppTool.IsNullOrEmpty(this.entityPM[IdProps[index - 1]])) {
                         if (FirstLineEmpty) {
@@ -292,6 +292,31 @@ export class TariffValidator {
 
                     if (AppTool.IsNullOrEmpty(item.OriginPortId) && !item.IsFromAllOtherPorts) {
                         this.Errors.push("From port or From All Other Ports is Required");
+                    }
+                }
+
+                else if (this.entityPM.TypeCode == "ICC" || this.entityPM.TypeCode == "ECC") {
+                    if (item.IsDifferentCurrenciesPerCharge) {
+                        for (var i = 1; i <= 10; i++) {
+                            if (this.entityPM["Surcharge" + i + "Id"]) {
+                                if (AppTool.IsNullOrEmpty(item["Surcharge" + i + "CurrencyId"])) {
+                                    this.Errors.push("Surcharge " + i + " Currency Field is Required");
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        if (AppTool.IsNullOrEmpty(item.CurrencyId)) {
+                            this.Errors.push("Currency Field is Required");
+                        }
+                    }
+
+                    if (AppTool.IsNullOrEmpty(item.ToCountryId) && !item.IsToAllOtherCountries) {
+                        this.Errors.push("To country or to all other countries is required");
+                    }
+
+                    if (AppTool.IsNullOrEmpty(item.FromCountryId) && !item.IsFromAllOtherCountries) {
+                        this.Errors.push("From country or from all other countries is required");
                     }
                 }
 

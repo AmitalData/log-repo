@@ -1,6 +1,5 @@
 import { Component, OnDestroy, EventEmitter } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
@@ -484,17 +483,7 @@ export class CustomChargesVersionTabComponent extends BaseComponent implements O
             newVersion.Version = item.Version;
             newVersion.ParentVersionNumber = item.ParentVersionNumber;
             newVersion.Id = item.TariffId;
-
-            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
-                newVersion.Name = "Version " + item.Version;
-            }
-
-            else {
-                var from: string = datePipe.transform(item.StartDate, 'dd/MM/yyyy');
-                var to: string = datePipe.transform(item.ExpirationDate, 'dd/MM/yyyy');
-                newVersion.Name = "Version " + item.Version + " (" + from + " - " + to + ")";
-            }
-
+            newVersion.Name = "Version " + item.Version;
             this.VersionsList.push(newVersion);
         });
 
@@ -1862,6 +1851,24 @@ export class CustomsChargesTariffLineData extends BaseComponent {
             if (this.FatherComponent["Surcharge" + i + "PriceVisibility"]) {
                 this["Surcharge" + i + "CurrencyId"] = defaultCurrencyId;
             }
+        }
+    }
+
+    get ErrorText() {
+        return this.EntityPM.ErrorText;
+    }
+    set ErrorText(value: string) {
+        if (this.EntityPM.ErrorText != value) {
+            this.EntityPM.ErrorText = value;
+        }
+    }
+
+    get HasErrors() {
+        return this.EntityPM.HasErrors;
+    }
+    set HasErrors(value: boolean) {
+        if (this.EntityPM.HasErrors != value) {
+            this.EntityPM.HasErrors = value;
         }
     }
 }

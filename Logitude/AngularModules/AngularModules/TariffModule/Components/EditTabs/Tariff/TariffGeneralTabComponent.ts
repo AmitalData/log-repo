@@ -12,8 +12,7 @@ import { CommonDomainService } from '../../../../Common/Services/CommonDomainSer
 import { TariffVersionPM } from '../../../EntityPMs/TariffVersionPM';
 import { CardList } from '../../../../Common/EntityLists/CardList';
 
-@Component({
-    
+@Component({    
     templateUrl: './TariffGeneralTabComponent.html',
 })
 
@@ -624,7 +623,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     }
 
     ngAfterViewInit() {
-        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
+        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
             this.Validate(true);
         }
         if (this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "OFS") {
@@ -748,7 +747,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
                         this["isSurcharges" + i + "Added"] = false;
                     }
 
-                    if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
+                    if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC" ) {
                         this.Validate(true);
                     }
                     if (this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "OFS") {

@@ -150,6 +150,31 @@ export class AddEditTariffLineComponent  {
                     }
                 }
             }
+
+            else if (this.TariffType == "ICC" || this.TariffType == "ECC") {
+                if (AppTool.IsNullOrEmpty(this.DataContext.ToCountryId) && !this.DataContext.IsToAllOthercountry) {
+                    errors.push("To country or to all other countries is required");
+                }
+
+                if (AppTool.IsNullOrEmpty(this.DataContext.FromCountryId) && !this.DataContext.IsFromAllOtherCountries) {
+                    errors.push("From country or from all other countries is required");
+                }
+
+                if (this.DataContext.IsDifferentCurrenciesPerCharge) {
+                    for (var i = 1; i <= 10; i++) {
+                        if (this.DataContext.FatherComponent["Surcharge" + i + "PriceVisibility"]) {
+                            if (AppTool.IsNullOrEmpty(this.DataContext["Surcharge" + i + "CurrencyId"])) {
+                                errors.push("Surcharge " + i + " Currency Field is Required");
+                            }
+                        }
+                    }
+                }
+                else {
+                    if (AppTool.IsNullOrEmpty(this.DataContext.CurrencyId)) {
+                        errors.push("Currency Field is Required");
+                    }
+                }
+            }
         }
 
         this.ValidationErrorsList = errors;
