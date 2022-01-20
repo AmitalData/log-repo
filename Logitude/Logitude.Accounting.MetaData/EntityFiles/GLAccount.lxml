@@ -17317,6 +17317,12 @@
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
     <TextCode
+      Code="&quot;System1000.O.FoundVatNumber&quot;"
+      DefaultText="&quot;Found Vat Number&quot;"
+      LocalDefaultText="&quot;אותר מספר עוסק מורשה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
       Code="&quot;GLAccount.O.NoCreditDefined&quot;"
       DefaultText="&quot;Credit balance not defined&quot;"
       LocalDefaultText="&quot;לא הוגדרה מסגרת אשראי ללקוח&quot;"
