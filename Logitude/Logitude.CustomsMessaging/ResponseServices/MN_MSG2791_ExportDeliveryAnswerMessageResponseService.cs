@@ -55,10 +55,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 customResponse.CargoIdentifier.cargoIdentifierKey2,
                 customResponse.CargoIdentifier.cargoIdentifierKey3,
                 customResponse.CargoIdentifier.cargoIdentifierType, requestParams.Tenant);
-
             if(entity != null)
             {
-                entity.StorErrorXML = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ExportStorage.MN2791.Exception[]>.SerializeObject(customResponse.Exception);
+                LogMessagingUtil.Instance.AppendLine("entity found, id: " + entity.Id);
+                if (customResponse.Exception != null)
+                {
+                    LogMessagingUtil.Instance.AppendLine("customResponse.Exception");
+
+                    entity.StorErrorXML = 
+                        XmlGenericUtil<UnifreightIIG.Common.MessageLib.ExportStorage.MN2791.Exception[]>.SerializeObject(customResponse.Exception);
+                }
                 //entity.CustomsStatus = customResponse.
                 entity.ChangeSetOp = ChangeSetOperation.Update;
                 var updateService = new ExportStorageUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
