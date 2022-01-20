@@ -86,7 +86,7 @@ namespace Logitude.XSD.INTTRA.BL
             this.shipmentRepository = new ShipmentRepository(shipmentContext);
             this.shipmentMasterDataRepository = new ShipmentMasterDataRepository(shipmentContext);
             this.Shipment = shipmentRepository.GetSingleShipment(ShipmentId, Tenant);
-            this.MasterData = shipmentMasterDataRepository.GetSingleMasterData(Shipment.MasterShipmentDataId);
+            this.MasterData = shipmentMasterDataRepository.GetSingleMasterDataWithTransShipmentReferences(Shipment.MasterShipmentDataId);
             this.contactRepository = new ContactRepository(this.CommonContext);
 
 
@@ -824,6 +824,8 @@ namespace Logitude.XSD.INTTRA.BL
             this.BuildMessageHeader();
             this.BuildMessageProperties();
             this.BuildMessageDetails();
+            this.HandelOneHouse();
+
         }
 
         // Message Header
@@ -888,6 +890,9 @@ namespace Logitude.XSD.INTTRA.BL
         public List<INTTRA_Out.ShipmentComments> Instructions;
         public INTTRA_Out.TransportationDetails TransportationDetails;
         public List<INTTRA_Out.PartnerInformation> MessagePropertiesParties;
+        public INTTRA_Out.ShipmentIndicator ShipmentIndicator;
+        public List<INTTRA_Out.HeaderCustomsFilerInstruction> HeaderCustomsInformation;
+
         private void BuildMessageProperties()
         {
             this.BuildMessageProperties_HaulageDetails();
@@ -2234,12 +2239,133 @@ namespace Logitude.XSD.INTTRA.BL
                         //},
                     });
 
+                    // Houses 
+                    AddHousesToGoodsDetails(itemGoodsDetails, myShipmentPackage.ContainerNumber);
                     itemGoodsDetails.SplitGoodsDetails = splitGoodsList.ToArray<INTTRA_Out.SplitGoodsDetails>();
 
                     this.GoodsDetails.Add(itemGoodsDetails);
                     this.lineNumber_Goods++;
                 }
             }
+        }
+
+        private void AddHousesToGoodsDetails(INTTRA_Out.GoodsDetails itemGoodsDetails, string containerNumber)
+        {
+            if (this.Shipment.ShipmentLevelCode != "C" && this.MasterData.Transshipment1FromPort?.CountryCode != "US")
+            {
+                return;
+            }
+            
+            this.AddHouses(itemGoodsDetails, containerNumber);
+            
+        }
+        
+        private void AddHouses(INTTRA_Out.GoodsDetails itemGoodsDetails, string containerNumber)
+        {
+            var houses = (from shipment in shipmentContext.Shipments.Where(t => t.MasterShipmentDataId == this.ShipmentId && t.ShipmentLevelCode == "H" && !t.IsCancelled)
+                          where shipment.Tenant == this.Tenant
+                          select shipment);
+
+            if (houses.Count() == 0)
+            {
+                return;
+            }
+             
+            if(houses.Count() > 1)
+            {
+                this.HandelMultiHouses(houses, itemGoodsDetails, containerNumber);
+                this.AddShipmentIndicator();
+            }
+        }
+
+        private void HandelMultiHouses(IQueryable<Shipment> masterhouses, INTTRA_Out.GoodsDetails itemGoodsDetails, string containerNumber)
+        {
+            this.AddShipToPartner(this.Shipment);
+            var houses = (from shipment in masterhouses
+                          join shipmentPackage in shipmentContext.ShipmentPackages
+                       on shipment.Id equals shipmentPackage.ShipmentId
+                          where shipment.Tenant == this.Tenant
+                          select shipment).ToList();
+            List<INTTRA_Out.HousePartiesPartnerInformation> houseParties = new List<INTTRA_Out.HousePartiesPartnerInformation>();
+            List<INTTRA_Out.DetailsCustomsFilerInstruction> detailsCustomsInformation = new List<INTTRA_Out.DetailsCustomsFilerInstruction>();
+            List<INTTRA_Out.DetailsReferenceInformation> detailsReferenceInformation = new List<INTTRA_Out.DetailsReferenceInformation>();
+            foreach (var house in houses)
+            {
+                this.AddDetailsCustomsInformation(detailsCustomsInformation, house);
+                this.AddHouseParties(houseParties, house);
+                this.AddHouseDetailsReferenceInformation(detailsReferenceInformation, house);
+            }
+            itemGoodsDetails.HouseParties = houseParties.ToArray<INTTRA_Out.HousePartiesPartnerInformation>();
+            itemGoodsDetails.DetailsCustomsInformation = detailsCustomsInformation.ToArray<INTTRA_Out.DetailsCustomsFilerInstruction>();
+            itemGoodsDetails.DetailsReferenceInformation = detailsReferenceInformation.ToArray<INTTRA_Out.DetailsReferenceInformation>();
+        }
+        private void AddShipToPartner(Shipment shipment)
+        {
+            Card myCard = (from d in CommonContext.Cards where d.Id == shipment.ConsigneeId select d).FirstOrDefault();
+            if (myCard == null)
+            {
+                return;
+            }
+            Contact consigneeContact = this.contactRepository.GetSingleContact(shipment.ConsigneeContactId, this.Tenant);
+            INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
+            {
+                PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.ShipTo,
+                PartnerName = this.iNTTRAGeneralMethods.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
+                ContactInformation = consigneeContact != null ? this.GetContactInformation(consigneeContact) : null,
+            };
+            if (this.ConsigneeAddress != null)
+            {
+                item.AddressInformation = this.GetAddressInformation(this.ConsigneeAddress);
+            }
+            this.MessagePropertiesParties.Add(item);
+        }
+        private void AddDetailsCustomsInformation(List<INTTRA_Out.DetailsCustomsFilerInstruction> detailsCustomsInformation, Shipment house)
+        {
+            detailsCustomsInformation.Add(new INTTRA_Out.DetailsCustomsFilerInstruction()
+            {
+                ManifestFilerStatus = INTTRA_Out.DetailsCustomsFilerInstructionManifestFilerStatus.Carrier,
+                ManifestFilingCountryCode = new INTTRA_Out.ManifestFilingCountryCode
+                {
+                    Agency = INTTRA_Out.ManifestFilingCountryCodeAgency.UN,
+                    Value = "US",
+                }
+            });
+        }
+        private void AddHouseParties(List<INTTRA_Out.HousePartiesPartnerInformation> houseParties, Shipment house)
+        {
+            var houseShipper = (from d in CommonContext.Cards where d.Id == house.ShipperId select d).FirstOrDefault();
+            var houseConsignee = (from d in CommonContext.Cards where d.Id == house.ConsigneeId select d).FirstOrDefault();
+
+            houseParties.Add(new INTTRA_Out.HousePartiesPartnerInformation()
+            {
+                PartnerRole = INTTRA_Out.HousePartiesPartnerInformationPartnerRole.OriginalShipper,
+                PartnerName = this.iNTTRAGeneralMethods.GetStringList(houseShipper?.EnglishName, 2, 35).ToArray<string>(),
+                AddressInformation = house.ShipperAddress != null ? this.GetAddressLines(house.ShipperAddress) : null,
+            });
+            houseParties.Add(new INTTRA_Out.HousePartiesPartnerInformation()
+            {
+                PartnerRole = INTTRA_Out.HousePartiesPartnerInformationPartnerRole.UltimateConsignee,
+                PartnerName = this.iNTTRAGeneralMethods.GetStringList(houseConsignee?.EnglishName, 2, 35).ToArray<string>(),
+                AddressInformation = house.ConsigneeAddress != null ? this.GetAddressLines(house.ConsigneeAddress) : null,
+            });
+        }
+        private void AddHouseDetailsReferenceInformation(List<INTTRA_Out.DetailsReferenceInformation> detailsReferenceInformation, Shipment house)
+        {
+            detailsReferenceInformation.Add(new INTTRA_Out.DetailsReferenceInformation()
+            {
+                ReferenceType = INTTRA_Out.DetailsReferenceInformationReferenceType.HouseBillNumber,
+                Value= house.ShipmentNumber,
+                ReferenceTypeSpecified = true,
+            });
+        }
+        private void AddShipmentIndicator()
+        {
+            if (this.ShipmentIndicator == null)
+                this.ShipmentIndicator = new INTTRA_Out.ShipmentIndicator()
+                {
+                    IndicatorType = INTTRA_Out.ShipmentIndicatorIndicatorType.SingleMessage,
+                    IndicatorTypeSpecified = true,
+                };
         }
 
         // Tools
@@ -2395,6 +2521,59 @@ namespace Logitude.XSD.INTTRA.BL
 
             return myResult;
         }
+
+        private string [] GetAddressLines(Address myAddress)
+        {
+            List<string> AddressLines = new List<string>();
+            string iCountryName = null;
+            if (!string.IsNullOrEmpty(myAddress.Address1))
+            {
+                if (AddressLines.Count < 4)
+                {
+                    AddressLines.Add(this.iNTTRAGeneralMethods.FormatString(myAddress.Address1, 35));
+                }
+            }
+
+            if (!string.IsNullOrEmpty(myAddress.Address2))
+            {
+                if (AddressLines.Count < 4)
+                {
+                    AddressLines.Add(this.iNTTRAGeneralMethods.FormatString(myAddress.Address2, 35));
+                }
+            }
+
+            if (!string.IsNullOrEmpty(myAddress.City) || !string.IsNullOrEmpty(myAddress.ZipCode))
+            {
+                if (AddressLines.Count < 4)
+                {
+                    string iField = myAddress.City;
+
+                    if (!string.IsNullOrEmpty(myAddress.ZipCode))
+                    {
+                        iField += "," + myAddress.ZipCode;
+                    }
+
+                    AddressLines.Add(this.iNTTRAGeneralMethods.FormatString(iField, 35));
+                }
+            }
+            if (myAddress.CountryId != null)
+            {
+                Country myCountry = (from d in CommonContext.Countries where d.Id == myAddress.CountryId select d).FirstOrDefault();
+                if (myCountry != null)
+                {
+                    iCountryName = myCountry.EnglishName;
+                }
+            }
+            if (!string.IsNullOrEmpty(iCountryName))
+            {
+                if (AddressLines.Count < 4)
+                {
+                    AddressLines.Add(this.iNTTRAGeneralMethods.FormatString(iCountryName, 35));
+                }
+            }
+
+            return AddressLines.ToArray<string>();
+        }
         private INTTRA_Out.ContactInformation[] GetContactInformation(Contact myContact, INTTRA_Out.ContactNameContactType iContactType = INTTRA_Out.ContactNameContactType.Informational)
         {
             List<INTTRA_Out.ContactInformation> ContactInformationList = new List<INTTRA_Out.ContactInformation>();
@@ -2444,5 +2623,84 @@ namespace Logitude.XSD.INTTRA.BL
             return ContactInformationList.ToArray<INTTRA_Out.ContactInformation>();
         }
 
+        private void HandelOneHouse()
+        {
+            if (this.Shipment.ShipmentLevelCode != "C" && this.MasterData.Transshipment1FromPort?.CountryCode != "US")
+            {
+                return;
+            }
+            var houses = (from shipment in shipmentContext.Shipments.Where(t => t.MasterShipmentDataId == this.ShipmentId && t.ShipmentLevelCode == "H" && !t.IsCancelled)
+                          where shipment.Tenant == this.Tenant
+                          select shipment);
+
+            if (houses.Count() != 1)
+            {
+                return;
+            }
+            var house = houses.FirstOrDefault();
+            this.AddHeaderCustomsInformation();
+            this.AddSingleHouseParties(house);
+        }
+        private void AddHeaderCustomsInformation()
+        {
+            this.HeaderCustomsInformation = new List<INTTRA_Out.HeaderCustomsFilerInstruction>();
+
+            this.HeaderCustomsInformation.Add(new INTTRA_Out.HeaderCustomsFilerInstruction()
+            {
+                ManifestFilerStatus = INTTRA_Out.HeaderCustomsFilerInstructionManifestFilerStatus.Carrier,
+                ManifestFilingCountryCode = new INTTRA_Out.ManifestFilingCountryCode
+                {
+                    Agency = INTTRA_Out.ManifestFilingCountryCodeAgency.UN,
+                    Value = "US",
+                },
+            });
+        }
+
+        private void AddSingleHouseParties(Shipment house)
+        {
+            this.AddShipToPartner(house);
+            this.AddSupplierManufacturerPartner(house);
+            this.AddUltimateConsignee(house);
+        }
+        private void AddSupplierManufacturerPartner(Shipment house)
+        {
+            Card myCard = (from d in CommonContext.Cards where d.Id == house.ConsigneeId select d).FirstOrDefault();
+            if (myCard == null)
+            {
+                return;
+            }
+            Contact consigneeContact = this.contactRepository.GetSingleContact(house.ConsigneeContactId, this.Tenant);
+            INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
+            {
+                PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.SupplierManufacturer,
+                PartnerName = this.iNTTRAGeneralMethods.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
+                ContactInformation = consigneeContact != null ? this.GetContactInformation(consigneeContact) : null,
+            };
+            if (this.ConsigneeAddress != null)
+            {
+                item.AddressInformation = this.GetAddressInformation(this.ConsigneeAddress);
+            }
+            this.MessagePropertiesParties.Add(item);
+        }
+        private void AddUltimateConsignee(Shipment house)
+        {
+            Card myCard = (from d in CommonContext.Cards where d.Id == house.ConsigneeId select d).FirstOrDefault();
+            if (myCard == null)
+            {
+                return;
+            }
+            Contact consigneeContact = this.contactRepository.GetSingleContact(house.ConsigneeContactId, this.Tenant);
+            INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
+            {
+                PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.UltimateConsignee,
+                PartnerName = this.iNTTRAGeneralMethods.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
+                ContactInformation = consigneeContact != null ? this.GetContactInformation(consigneeContact) : null,
+            };
+            if (this.ConsigneeAddress != null)
+            {
+                item.AddressInformation = this.GetAddressInformation(this.ConsigneeAddress);
+            }
+            this.MessagePropertiesParties.Add(item);
+        }
     }
 }
