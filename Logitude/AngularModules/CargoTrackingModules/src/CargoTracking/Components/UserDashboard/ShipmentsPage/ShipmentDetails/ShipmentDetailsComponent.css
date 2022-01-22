@@ -690,7 +690,9 @@ h1 {
     margin: 0 10px 20px;
     padding: 15px;
 }
-
+.hidden{
+    display:none;
+}
 .partner-type-label {
     text-transform: uppercase;
     color: var(--MainColor);

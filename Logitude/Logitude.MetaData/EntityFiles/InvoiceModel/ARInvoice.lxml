@@ -6838,6 +6838,8 @@
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;CustomerRef&quot;"
+    ListPropertyPath="&quot;CustomerRef&quot;"
     DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"

@@ -36,7 +36,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment Package&quot;"
-  Code="&quot;bae4&quot;"
+  Code="&quot;7d57&quot;"
   Name="&quot;ShipmentPackage&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -9276,7 +9276,8 @@
   <DataContracts>
     <DataContract
       Name="&quot;Container&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="&quot;False&quot;">
       <DCField
         DCFieldName="&quot;Id&quot;"
         DCVersion="&quot;&quot;"
@@ -9479,7 +9480,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Pieces&quot;"
         FieldName="&quot;Quantity&quot;"
@@ -9545,7 +9546,8 @@
     </DataContract>
     <DataContract
       Name="&quot;AirPackage&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="&quot;False&quot;">
       <DCField
         DCFieldName="&quot;Id&quot;"
         DCVersion="&quot;&quot;"
@@ -9733,7 +9735,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Reference4&quot;"
         FieldName="&quot;Reference4&quot;"
@@ -9782,7 +9784,8 @@
     </DataContract>
     <DataContract
       Name="&quot;OceanOrInlandPackage&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="&quot;False&quot;">
       <DCField
         DCFieldName="&quot;Id&quot;"
         DCVersion="&quot;&quot;"
@@ -10151,7 +10154,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Reference4&quot;"
         FieldName="&quot;Reference4&quot;"

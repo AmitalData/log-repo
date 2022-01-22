@@ -397,6 +397,7 @@
     <Compile Include="Services\ContainerSchedulerTaskService.cs" />
     <Compile Include="Services\MultiEntityUpdateService.cs" />
     <Compile Include="Tasks\ContainerAutomaticallyClosingTask.cs" />
+    <Compile Include="Tasks\RecalculateCashbooksTotalsTask.cs" />
     <Compile Include="UpdatePortTimeZoneWR.cs" />
     <Compile Include="WebHookCommunicationWorkerRole.cs" />
     <Compile Include="Service References\LoginServiceReference\Reference.cs">

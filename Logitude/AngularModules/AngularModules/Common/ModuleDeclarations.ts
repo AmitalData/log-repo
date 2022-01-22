@@ -17,7 +17,8 @@ import {EditLastRateComponent} from './Components/Maintenance/EditLastRateCompon
 import {LogBoxSettings} from '../Common/Components/Maintenance/LogBoxSettings';
 import {TenantImportComponent} from './Components/Maintenance/TenantImportComponent';
 import {MeasurementGeneralComponent} from './Components/Maintenance/Measurement/MeasurementGeneralComponent';
-import {ChargesTypeGeneralTabComponent} from './Components/Maintenance/ChargesType/ChargesTypeGeneralTabComponent';
+import { ChargesTypeGeneralTabComponent } from './Components/Maintenance/ChargesType/ChargesTypeGeneralTabComponent';
+import { ChargesTypeQuotationsTabComponent } from './Components/Maintenance/ChargesType/ChargesTypeQuotationsTabComponent';
 import {CreditLimitSettingsComponent} from './Components/Maintenance/CreditLimit/CreditLimitSettingsComponent';
 import { CustomerActivationSettingsComponent } from '../Common/Components/Maintenance/CustomerActivationSettingsComponent';
 import { VATSettingsComponent } from '../Common/Components/Maintenance/VATSettingsComponent';
@@ -77,6 +78,7 @@ export const Components =
         NewCurrencyComponent,
         NewChargesTypeComponent,
         ChargesTypeGeneralTabComponent,
+        ChargesTypeQuotationsTabComponent,
         NewVatTypePercentageComponent,
         CreditLimitSettingsComponent,
         CompetitorComponent,
@@ -143,6 +145,7 @@ export class ModuleDeclarations {
             case "NewCurrencyComponent": { myResult = NewCurrencyComponent; break; }
             case "NewChargesTypeComponent": { myResult = NewChargesTypeComponent; break; }
             case "ChargesTypeGeneralTabComponent": { myResult = ChargesTypeGeneralTabComponent; break; }
+            case "ChargesTypeQuotationsTabComponent": { myResult = ChargesTypeQuotationsTabComponent; break; }
             case "NewVatTypePercentageComponent": { myResult = NewVatTypePercentageComponent; break; }
             case "CreditLimitSettingsComponent": { myResult = CreditLimitSettingsComponent; break; }
             case "CustomerActivationSettingsComponent": { myResult = CustomerActivationSettingsComponent; break }
