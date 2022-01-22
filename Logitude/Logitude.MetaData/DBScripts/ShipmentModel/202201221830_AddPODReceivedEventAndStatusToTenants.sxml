@@ -71,8 +71,7 @@ update ObjectTableLastUpdates set LastUpdateDate = GETDATE() where ObjectTableId
 update ObjectTableLastUpdates set LastUpdateDate = GETDATE() where ObjectTableId = (select id from ObjectTables where Name = 'EntityStatus')
     
     ]]>
-  </Sql>
-  <Oracle Version="1"></Oracle>
+</Sql>
 </Script>
 
 
