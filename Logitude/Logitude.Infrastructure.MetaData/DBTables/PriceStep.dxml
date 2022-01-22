@@ -71,6 +71,14 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="UnitOfMeasurementCode"
+    OldNames="UnitOfMeasurement"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
@@ -80,5 +88,10 @@
     ForeignKeyColumn="UpdatedByUserId"
     ReferencedTable="Users"
     ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="UnitOfMeasurementCode"
+    ReferencedTable="WeightUnits"
+    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
 </Table>

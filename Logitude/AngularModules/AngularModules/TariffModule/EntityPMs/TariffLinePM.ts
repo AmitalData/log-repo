@@ -632,6 +632,11 @@ export class TariffLinePM {
     public set IsToAllOtherCountries(newValue: boolean) { if (this.isToAllOtherCountries != newValue) { this.isToAllOtherCountries = newValue; this.MarkAsDirty("IsToAllOtherCountries"); } }
        
 	 
+    private unitOfMeasurementCode: string;
+    public get UnitOfMeasurementCode() { return this.unitOfMeasurementCode; }
+    public set UnitOfMeasurementCode(newValue: string) { if (this.unitOfMeasurementCode != newValue) { this.unitOfMeasurementCode = newValue; this.MarkAsDirty("UnitOfMeasurementCode"); } }
+       
+	 
 
     public OldEntityPM: TariffLinePM;
 	

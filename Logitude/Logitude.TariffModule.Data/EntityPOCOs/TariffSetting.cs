@@ -38,6 +38,11 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public string DefaultCurrencyId { get; set; }
 	      
         public virtual Currency DefaultCurrency { get; set; }
+        [ForeignKey("UnitOfMeasurement")]
+        [Column("UnitOfMeasurementCode")]
+	    public string UnitOfMeasurementCode { get; set; }
+	      
+        public virtual WeightUnit UnitOfMeasurement { get; set; }
     }
 }
 	 

@@ -18,7 +18,7 @@
 
                 <!-- Name -->
                 <tr class="FormFieldRow">
-                    <td style="width:120px;">
+                    <td style="width:150px;">
                         <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
 
@@ -51,6 +51,26 @@
                         </table>
                     </td>
                 </tr>
+
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'UnitOfMeasurementCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:100px">
+                        <LogLov [ObjectFieldName]="'UnitOfMeasurementCode'"
+                                [SelectedValue]="UnitOfMeasurementCode"
+                                [NoObjectField]="true"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'WeightUnit'"
+                                >
+                        </LogLov>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
                 <tr *ngIf="!isNewEntity" class="FormFieldRow">
                     <td>
                         <LogLabel [ObjectFieldName]="'Inactive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>

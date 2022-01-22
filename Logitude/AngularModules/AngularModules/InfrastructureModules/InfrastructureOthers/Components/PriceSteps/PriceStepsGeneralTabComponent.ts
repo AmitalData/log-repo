@@ -112,6 +112,13 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
         }
     }
 
+    get UnitOfMeasurementCode() { return this.EntityPM.UnitOfMeasurementCode; }
+    set UnitOfMeasurementCode(value: string) {
+        if (this.EntityPM.UnitOfMeasurementCode != value) {
+            this.EntityPM.UnitOfMeasurementCode = value;
+        }
+    }
+
     get Steps() { return this.EntityPM.Steps; }
     set Steps(value: string) {
         if (this.EntityPM.Steps != value) {

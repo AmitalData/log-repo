@@ -1010,6 +1010,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
                     }
 
                     this.CurrencyId = this.tariffSetting.DefaultCurrencyId;
+                    this.EntityPM.UnitOfMeasurementCode = this.tariffSetting.UnitOfMeasurementCode;
                 }
             }
         });
@@ -1044,7 +1045,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
     EditPriceSteps() {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Price Steps";
-        logWindow.WindowArgs = this.PriceSteps;
+        logWindow.WindowArgs =[this.PriceSteps, this.EntityPM.UnitOfMeasurementCode];
         logWindow.Show("./TariffModule/Components/NewEntity/TariffPriceStepsComponent");
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {

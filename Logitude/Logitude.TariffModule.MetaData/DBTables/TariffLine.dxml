@@ -626,6 +626,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="UnitOfMeasurementCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="OriginPortId"
     ReferencedTable="Ports"
@@ -700,6 +707,11 @@
     ForeignKeyColumn="ToCountryId"
     ReferencedTable="Countries"
     ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="UnitOfMeasurementCode"
+    ReferencedTable="WeightUnits"
+    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <UniqueConstraint
     Columns="TariffId,Version,LineUniqueKeyText" />

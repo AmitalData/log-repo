@@ -38,6 +38,8 @@ namespace Logitude.TariffModule.Data.EntityMapping
             this.Property(t => t.ContainerDefaults).HasColumnName("ContainerDefaults").HasMaxLength(50).IsUnicode(false);
 
             this.Property(t => t.DefaultCurrencyId).HasColumnName("DefaultCurrencyId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.UnitOfMeasurementCode).HasColumnName("UnitOfMeasurementCode").HasMaxLength(3).IsUnicode(false);
         }
     }
 }

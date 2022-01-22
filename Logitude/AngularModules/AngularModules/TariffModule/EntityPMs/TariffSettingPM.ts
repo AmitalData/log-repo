@@ -74,6 +74,11 @@ export class TariffSettingPM {
     public set DefaultCurrencyId(newValue: string) { if (this.defaultCurrencyId != newValue) { this.defaultCurrencyId = newValue; this.MarkAsDirty("DefaultCurrencyId"); } }
        
 	 
+    private unitOfMeasurementCode: string;
+    public get UnitOfMeasurementCode() { return this.unitOfMeasurementCode; }
+    public set UnitOfMeasurementCode(newValue: string) { if (this.unitOfMeasurementCode != newValue) { this.unitOfMeasurementCode = newValue; this.MarkAsDirty("UnitOfMeasurementCode"); } }
+       
+	 
 
     public OldEntityPM: TariffSettingPM;
 		

@@ -477,12 +477,12 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
                     this.Step1PriceVisibility = true;
                 }
                 for (var i = 1; i <= count; i++) {
-                    this["Step" + i + "PriceLabel"] = steps[i - 1] + " KG";
+                    this["Step" + i + "PriceLabel"] = steps[i - 1].concat(" " , this.EntityPM.UnitOfMeasurementCode);
                     this["Step" + i + "PriceVisibility"] = true;
                 }
             }
             else {
-                this.Step1PriceLabel = this.PriceSteps + " KG";
+                this.Step1PriceLabel = this.PriceSteps.concat(" ", this.EntityPM.UnitOfMeasurementCode);
                 this.Step1PriceVisibility = true;
             }
         }

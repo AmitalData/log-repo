@@ -31,6 +31,8 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     public SellerDependancy: string = "AL";
     public TariffCurrencyTextCode: string = "Tariff.F.CurrencyId";
     public IsContainersAreaVisible: boolean = false;
+    public IsUnitOfMeasurementFieldVisible: boolean = true;
+
     private draftVersion: TariffVersionPM;
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -54,6 +56,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
         this.Listen();
         this.CheckCurrancyEnabledProperty();
         this.GetBCNTMeasurementId();
+        this.SetUnitOfMeasurementFieldVisiblity();
     }
 
     private BCNTmeasurementId: string;
@@ -72,6 +75,13 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
 
     SetUIProperties() {
         this.CheckCurrancyEnabledProperty();
+    }
+
+    SetUnitOfMeasurementFieldVisiblity() {
+        this.UIProperties.SetEnabled("UnitOfMeasurementCode", this.ObjectTableName, false);
+        if (this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "ASC") {
+            this.IsUnitOfMeasurementFieldVisible = false;
+        }
     }
 
     CheckCurrancyEnabledProperty() {
@@ -777,6 +787,13 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     set ContractNumber(value: string) {
         if (this.EntityPM.ContractNumber != value) {
             this.EntityPM.ContractNumber = value;
+        }
+    }
+
+    get UnitOfMeasurementCode() { return this.EntityPM.UnitOfMeasurementCode; }
+    set UnitOfMeasurementCode(value: string) {
+        if (this.EntityPM.UnitOfMeasurementCode != value) {
+            this.EntityPM.UnitOfMeasurementCode = value;
         }
     }
 

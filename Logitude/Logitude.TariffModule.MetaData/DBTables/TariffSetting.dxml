@@ -59,9 +59,21 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="UnitOfMeasurementCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DefaultCurrencyId"
     ReferencedTable="Currencies"
     ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="UnitOfMeasurementCode"
+    ReferencedTable="WeightUnits"
+    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
 </Table>

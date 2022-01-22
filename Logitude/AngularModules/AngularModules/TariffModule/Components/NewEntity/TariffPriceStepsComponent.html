@@ -35,6 +35,10 @@
                                     <LogTextBox [InputType]="'UnsInteger'" [NoObjectField]="true" [ObjectFieldName]="'Step'" [DataContext]="item.DataContext" [HideColumns]="true" [Text]="item.Step"></LogTextBox>
                                 </td>
 
+                                <td class="CellDisabled" style="width:30px; min-width:30px; max-width:30px; text-align: left; margin-left:3px; ">
+                                    {{item.StepCellUnitOfMeasurementCode}}
+                                </td>
+
                                 <td class="CellTools">
                                     <span class="CellSeparator"></span>
                                     <IconButton [ExternalId]="'Package_'+i" [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="item.DeleteClicked()" [IsEnabled]="item.Step != null"></IconButton>

@@ -307,6 +307,7 @@ export class TariffSettingComponent extends BaseComponent {
                         this.AirDefaultStepsId = s.EntityPM.Id;
                     }
 
+                    this.EntityPM.UnitOfMeasurementCode = s.EntityPM.UnitOfMeasurementCode;
                     this.CurrentSession.SessionEvent.emit("TariffStepsRefresh");
                 }
             });

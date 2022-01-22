@@ -90,6 +90,8 @@ namespace Logitude.TariffModule.Data.EntityLists
        public string DirectionCode  { get; set; }
        [DataMember]
        public string DirectionName  { get; set; }
+       [DataMember]
+       public string UnitOfMeasurementCode  { get; set; }
    }
 
 }

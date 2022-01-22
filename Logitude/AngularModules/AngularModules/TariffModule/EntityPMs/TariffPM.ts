@@ -443,6 +443,11 @@ export class TariffPM {
     public set CustomsBrokerPartnerTypeId(newValue: string) { if (this.customsBrokerPartnerTypeId != newValue) { this.customsBrokerPartnerTypeId = newValue; this.MarkAsDirty("CustomsBrokerPartnerTypeId"); } }
        
 	 
+    private unitOfMeasurementCode: string;
+    public get UnitOfMeasurementCode() { return this.unitOfMeasurementCode; }
+    public set UnitOfMeasurementCode(newValue: string) { if (this.unitOfMeasurementCode != newValue) { this.unitOfMeasurementCode = newValue; this.MarkAsDirty("UnitOfMeasurementCode"); } }
+       
+	 
 
     public OldEntityPM: TariffPM;
 		

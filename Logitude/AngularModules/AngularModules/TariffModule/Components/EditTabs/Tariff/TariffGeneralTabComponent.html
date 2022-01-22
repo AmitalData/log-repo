@@ -12,7 +12,7 @@
 
                     <!-- Name -->
                     <tr class="FormFieldRow">
-                        <td style="width:120px;">
+                        <td style="width:150px;">
                             <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
 
@@ -76,6 +76,27 @@
                                     [DataContext]="DataContext"
                                     [HideMaintenanceIcon]="true"
                                     [LookUpTableName]="'Currency'">
+                            </LogLov>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- Unit Of Measurement -->
+                    <tr *ngIf="IsUnitOfMeasurementFieldVisible" class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'UnitOfMeasurementCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogLov [ObjectFieldName]="'UnitOfMeasurementCode'"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [SelectedValue]="UnitOfMeasurementCode"
+                                    [DataContext]="DataContext"
+                                    [HideMaintenanceIcon]="true"
+                                    [LookUpTableName]="'WeightUnit'">
                             </LogLov>
                         </td>
 
