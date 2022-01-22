@@ -99071,6 +99071,20 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+    <EventType
+      Code="&quot;PODR&quot;"
+      ObjectTableName="&quot;Shipment&quot;"
+      EnglishName="&quot;POD Received&quot;"
+      LocalName="&quot;POD Received&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false"
+      EntityStatusCode="&quot;PODR&quot;" />
   </EventTypes>
   <Records />
   <MenuButtons
