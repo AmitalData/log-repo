@@ -824,7 +824,7 @@ namespace Logitude.XSD.INTTRA.BL
             this.BuildMessageHeader();
             this.BuildMessageProperties();
             this.BuildMessageDetails();
-            this.HandelOneHouse();
+            //this.HandelOneHouse();
 
         }
 
@@ -2259,39 +2259,43 @@ namespace Logitude.XSD.INTTRA.BL
             this.AddHouses(itemGoodsDetails, containerNumber);
             
         }
-        
+
         private void AddHouses(INTTRA_Out.GoodsDetails itemGoodsDetails, string containerNumber)
         {
             var houses = (from shipment in shipmentContext.Shipments.Where(t => t.MasterShipmentDataId == this.ShipmentId && t.ShipmentLevelCode == "H" && !t.IsCancelled)
                           where shipment.Tenant == this.Tenant
                           select shipment);
 
-            if (houses.Count() == 0)
+            if (houses?.Count() == 0)
             {
                 return;
             }
-             
-            if(houses.Count() > 1)
-            {
-                this.HandelMultiHouses(houses, itemGoodsDetails, containerNumber);
-                this.AddShipmentIndicator();
-            }
+
+            this.HandelMultiHouses(houses, itemGoodsDetails, containerNumber);
+            this.AddShipmentIndicator();
         }
 
         private void HandelMultiHouses(IQueryable<Shipment> masterhouses, INTTRA_Out.GoodsDetails itemGoodsDetails, string containerNumber)
         {
-            this.AddShipToPartner(this.Shipment);
-            var houses = (from shipment in masterhouses
-                          join shipmentPackage in shipmentContext.ShipmentPackages
-                       on shipment.Id equals shipmentPackage.ShipmentId
-                          where shipment.Tenant == this.Tenant
-                          select shipment).ToList();
             List<INTTRA_Out.HousePartiesPartnerInformation> houseParties = new List<INTTRA_Out.HousePartiesPartnerInformation>();
             List<INTTRA_Out.DetailsCustomsFilerInstruction> detailsCustomsInformation = new List<INTTRA_Out.DetailsCustomsFilerInstruction>();
             List<INTTRA_Out.DetailsReferenceInformation> detailsReferenceInformation = new List<INTTRA_Out.DetailsReferenceInformation>();
+
+            var houses = (from shipment in masterhouses
+                          join shipmentPackage in shipmentContext.ShipmentPackages.Where(a => a.ContainerNumber == containerNumber)
+                          on shipment.Id equals shipmentPackage.ShipmentId
+                          where shipment.Tenant == this.Tenant
+                          select shipment).ToList();
+
+            if (houses?.Count() == 0)
+            {
+                return;
+            }
+
+            this.AddShipToPartner(this.Shipment);
+            this.AddDetailsCustomsInformation(detailsCustomsInformation);
             foreach (var house in houses)
             {
-                this.AddDetailsCustomsInformation(detailsCustomsInformation, house);
                 this.AddHouseParties(houseParties, house);
                 this.AddHouseDetailsReferenceInformation(detailsReferenceInformation, house);
             }
@@ -2319,7 +2323,7 @@ namespace Logitude.XSD.INTTRA.BL
             }
             this.MessagePropertiesParties.Add(item);
         }
-        private void AddDetailsCustomsInformation(List<INTTRA_Out.DetailsCustomsFilerInstruction> detailsCustomsInformation, Shipment house)
+        private void AddDetailsCustomsInformation(List<INTTRA_Out.DetailsCustomsFilerInstruction> detailsCustomsInformation)
         {
             detailsCustomsInformation.Add(new INTTRA_Out.DetailsCustomsFilerInstruction()
             {
