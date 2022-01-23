@@ -27,5 +27,6 @@ export class ReportList {
 		AvailableForScheduling: boolean;
 		DisablePreview: boolean;
 		DefaultExcelTemplateId: string;
+		IsExcelReportAllowed: boolean;
 	
 }
