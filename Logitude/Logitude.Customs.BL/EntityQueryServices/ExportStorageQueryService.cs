@@ -30,6 +30,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 exportStoragePM = new ExportStoragePM()
                 {
+                    Id = exportStorage.Id,
                     DeclarationId = exportStorage.DeclarationId,
                     Tenant = exportStorage.Tenant,
                     CargoType = exportStorage.CargoType,

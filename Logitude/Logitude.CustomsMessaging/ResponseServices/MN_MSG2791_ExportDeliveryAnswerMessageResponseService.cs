@@ -55,7 +55,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 customResponse.CargoIdentifier.cargoIdentifierKey2,
                 customResponse.CargoIdentifier.cargoIdentifierKey3,
                 customResponse.CargoIdentifier.cargoIdentifierType, requestParams.Tenant);
-            if(entity != null)
+            
+            if (MyRequestSheetParam == null)
+                MyRequestSheetParam = new RequestSheetParam();
+
+            if (entity != null)
             {
                 LogMessagingUtil.Instance.AppendLine("entity found, id: " + entity.Id);
                 if (customResponse.Exception != null)
@@ -74,9 +78,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             }
 
-            if (MyRequestSheetParam == null) 
-                MyRequestSheetParam = new RequestSheetParam();
-            MyRequestSheetParam.EntityId1 = requestParams.LoggingEntityId;
+            
+            MyRequestSheetParam.EntityId1 = entity.Id;
             MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.ExportStorage");
 
             
