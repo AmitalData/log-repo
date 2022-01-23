@@ -258,7 +258,7 @@ namespace CommunicationWorkerRole
         {
             if (!isPODReceived && podReceivedDate == null)
             {
-                this.DeleteTraceEvent("PIOD");
+                this.DeleteTraceEvent("PIOD"); 
             }
             else
             {
