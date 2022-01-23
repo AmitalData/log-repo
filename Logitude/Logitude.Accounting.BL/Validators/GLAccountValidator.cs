@@ -434,19 +434,6 @@ namespace Logitude.Accounting.BL.Validators
             {
                 return "Parent cannot be the account itself!";
             }
-            else if (parentPM.ChartOfAccountsTypeCode != glaccountPM.ChartOfAccountsTypeCode)
-            {
-                return TextCodesTranslator.TranslateText("GLAccounts.O.GLAParentValidation1",0);
-                //return "GLAccount and its parent must be same chart of account type!";
-            }
-            else if (parentPM.AccountTypeCode != glaccountPM.AccountTypeCode)
-            {
-                return "GLAccount and its parent must be same account type!";
-            }
-            else if (parentPM.AccountTypeCode != glaccountPM.AccountTypeCode)
-            {
-                return "GLAccount and its parent must be same account type!";
-            }
             else if (!string.IsNullOrWhiteSpace(parentPM.ParentAccountId))
             {
                 return "Cannot connect GL Account to parent account that has parent (multi level is not allowd)!"; //לא ניתן לקשר כרטיס לכרטיס אב שיש לו כרטיס אב
