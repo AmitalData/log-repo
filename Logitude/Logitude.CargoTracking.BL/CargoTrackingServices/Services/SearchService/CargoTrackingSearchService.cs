@@ -79,7 +79,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "CustomsDeclarationNumber");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ShipperName");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ConsigneeName");
-                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwarderShipmentNumber");
 
                 bool isCustomsShipment = tableRow["ShipmentLevelCode"].Equals("A");
                 if (isCustomsShipment)
@@ -135,12 +134,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
         private static void AddForwardingSearchRecordsForCustomsShipment(DataRow tableRow, BulkDataPreperation bulkDataPreperation)
         {
 
-            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingMaster");
-            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingCustomFileNumber");
-            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingCustomsDeclarationNumber", "Forward Customs Declaration No");
-            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingShipperName");
-            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingConsigneeName");
-            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingShipmentNumber");
+            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingMaster",null, GetStringValue(tableRow["ForwardingIdForCustom"]));
+            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingCustomFileNumber", null, GetStringValue(tableRow["ForwardingIdForCustom"]));
+            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingCustomsDeclarationNumber", "Forward Customs Declaration No", GetStringValue(tableRow["ForwardingIdForCustom"]));
+            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingShipperName", null, GetStringValue(tableRow["ForwardingIdForCustom"]));
+            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingConsigneeName", null, GetStringValue(tableRow["ForwardingIdForCustom"]));
+            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingShipmentNumber", null, GetStringValue(tableRow["ForwardingIdForCustom"]));
 
             AddSplittedData(new SplittedDataArguments
                 .Builder()
@@ -148,6 +147,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 .DataTable(bulkDataPreperation.InnerDataTable)
                 .CoulmnName("ForwardingCustomerReference1")
                 .Delimiter(',')
+                .ReferenceFromShipmentId(GetStringValue(tableRow["ForwardingIdForCustom"]))
                 .Build());
 
             AddSplittedData(new SplittedDataArguments
@@ -156,6 +156,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 .DataTable(bulkDataPreperation.InnerDataTable)
                 .CoulmnName("ForwardingCustomerReference2")
                 .Delimiter(',')
+                .ReferenceFromShipmentId(GetStringValue(tableRow["ForwardingIdForCustom"]))
                 .Build());
 
             AddSplittedData(new SplittedDataArguments
@@ -164,6 +165,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 .DataTable(bulkDataPreperation.InnerDataTable)
                 .CoulmnName("ForwardingContainersNumbers")
                 .Delimiter(',')
+                .ReferenceFromShipmentId(GetStringValue(tableRow["ForwardingIdForCustom"]))
                 .Build());
 
             AddSplittedData(new SplittedDataArguments
@@ -172,17 +174,19 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 .DataTable(bulkDataPreperation.InnerDataTable)
                 .CoulmnName("ForwardingHouse")
                 .Delimiter('-')
+                .ReferenceFromShipmentId(GetStringValue(tableRow["ForwardingIdForCustom"]))
                 .Build());
 
         }
         private static void AddShipmentOrderSearchRecordsInForwardingShipment(DataRow tableRow, BulkDataPreperation bulkDataPreperation)
         {
 
-            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "OrderMaster");
-            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "OrderShipperName");
-            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "OrderShipmentNumber");
-            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "OrderPoNumber");
-            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "OrderBookingNumber");
+            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "OrderMaster",null, GetStringValue(tableRow["OrderId"]));
+            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "OrderShipperName", null, GetStringValue(tableRow["OrderId"]));
+            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "OrderShipmentNumber", null, GetStringValue(tableRow["OrderId"]));
+            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "OrderPoNumber", null, GetStringValue(tableRow["OrderId"]));
+            AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "OrderBookingNumber", null, GetStringValue(tableRow["OrderId"]));
+
 
 
             AddSplittedData(new SplittedDataArguments
@@ -191,6 +195,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 .DataTable(bulkDataPreperation.InnerDataTable)
                 .CoulmnName("OrderCustomerReference")
                 .Delimiter(',')
+                .ReferenceFromShipmentId(GetStringValue(tableRow["OrderId"]))
                 .Build());
 
             AddSplittedData(new SplittedDataArguments
@@ -199,10 +204,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 .DataTable(bulkDataPreperation.InnerDataTable)
                 .CoulmnName("OrderHouse")
                 .Delimiter('-')
+                .ReferenceFromShipmentId(GetStringValue(tableRow["OrderId"]))
                 .Build());
 
             if (tableRow["OrderHouse"].ToString().Contains('-'))
-                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "OrderHouse");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "OrderHouse", null, GetStringValue(tableRow["OrderId"]));
 
         }
 
@@ -214,7 +220,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             }
 
         }
-        private static void AddNewReferenceForSplitCase(DataRow tableRow, DataTable dataTable, string ColumnName)
+        private static void AddNewReferenceForSplitCase(DataRow tableRow, DataTable dataTable, string ColumnName, string referenceFromShipmentId = null)
         {
             var Value = tableRow[ColumnName];
             string SearchField = (string)Value;
@@ -227,6 +233,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                     CoulmnName = ColumnName,
                     SearchField = SearchArr,
                     TableRow = tableRow,
+                    ReferenceFromShipmentId = referenceFromShipmentId,
 
                 };
                 AddNewReference(ReferencecArgs);
@@ -315,6 +322,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                         CoulmnName = splittedDataArguments.CoulmnName,
                         SearchField = SearchArr[i],
                         TableRow = splittedDataArguments.TableRow,
+                        ReferenceFromShipmentId = splittedDataArguments.ReferenceFromShipmentId,
 
                     };
                     AddNewReference(ReferencecArgs);
@@ -324,7 +332,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
 
 
 
-        private static void AddNewRecord(DataRow tableRow, DataTable dataTable, string coulmnName, string referenceTypeName = null)
+        private static void AddNewRecord(DataRow tableRow, DataTable dataTable, string coulmnName, string referenceTypeName = null, string referenceFromShipmentId = null)
         {
             if (!IsNullOrEmpty(tableRow, coulmnName))
             {
@@ -336,16 +344,17 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                     CoulmnName = coulmnName,
                     SearchField = SearchField,
                     TableRow = tableRow,
+                    ReferenceFromShipmentId = referenceFromShipmentId,
 
                 };
                 if (ReferencecArgs.CoulmnName == "ForwardingShipmentNumber")
                 {
-                    AddNewReferenceForSplitCase(ReferencecArgs.TableRow, ReferencecArgs.DataTable, ReferencecArgs.CoulmnName);
+                    AddNewReferenceForSplitCase(ReferencecArgs.TableRow, ReferencecArgs.DataTable, ReferencecArgs.CoulmnName, referenceFromShipmentId);
                 }
                 if (referenceTypeName == null)
                     AddNewReference(ReferencecArgs);
                 else
-                    AddNewReference(ReferencecArgs, referenceTypeName);
+                    AddNewReference(ReferencecArgs, referenceTypeName, referenceFromShipmentId);
 
             }
         }
@@ -359,16 +368,18 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             TableRow1.ItemArray = referencecArgs.TableRow.ItemArray.Clone() as object[];
             TableRow1.SetField("SearchFields", referencecArgs.SearchField.Trim());
             TableRow1.SetField("ReferenceType", GetReferenceTypeFromCoulmnName(referencecArgs.CoulmnName));
+            TableRow1.SetField("ReferenceFromShipmentId", referencecArgs.ReferenceFromShipmentId);
             SetIsPublicForCoulmn(TableRow1, referencecArgs.CoulmnName);
             if (!IsNullOrEmpty(TableRow1, "SearchFields"))
                 referencecArgs.DataTable.Rows.Add(TableRow1);
         }
-        private static void AddNewReference(ReferencecArgs referencecArgs,string typeName)
+        private static void AddNewReference(ReferencecArgs referencecArgs,string typeName, string referenceFromShipmentId)
         {
             DataRow TableRow1 = referencecArgs.DataTable.NewRow();
             TableRow1.ItemArray = referencecArgs.TableRow.ItemArray.Clone() as object[];
             TableRow1.SetField("SearchFields", referencecArgs.SearchField.Trim());
             TableRow1.SetField("ReferenceType", typeName);
+            TableRow1.SetField("ReferenceFromShipmentId", referenceFromShipmentId);
             SetIsPublicForCoulmn(TableRow1, referencecArgs.CoulmnName);
             if (!IsNullOrEmpty(TableRow1, "SearchFields"))
                 referencecArgs.DataTable.Rows.Add(TableRow1);
@@ -431,7 +442,15 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             string ReferenceType = Regex.Replace(CoulmnName, "([a-z])([A-Z])", "$1 $2");
             return ReferenceType;
         }
+        private static string GetStringValue(object data)
+        {
+            if (data == null)
+                return null;
+            if (data == DBNull.Value)
+                return null;
+            return data.ToString();
 
+        }
 
     }
 

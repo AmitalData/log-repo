@@ -991,6 +991,7 @@
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingMilestoneViewsController.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingShipmentController.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingShipmentsDeclarationApprovalService.cs" />
+    <Compile Include="Controllers\CargoTrackingModel\Generated\ListControllers\CargoDisconnectQueueViewsController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\Generated\ListControllers\CargoTrackingCardViewsController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\Generated\ListControllers\CargoTrackingCountryViewsController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\Generated\ListControllers\CargoTrackingHeaderEntityTypeViewsController.Generated.cs" />
@@ -1000,10 +1001,12 @@
     <Compile Include="Controllers\CargoTrackingModel\Generated\ListControllers\CargoTrackingShipmentViewsController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\Generated\ListControllers\CargoTrackingTransportModeViewsController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\Generated\ListControllers\CargoTrackingWatermarkViewsController.Generated.cs" />
+    <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoDisconnectQueueController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingCardController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingCountryController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingIncrementalStatController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingPortController.Generated.cs" />
+    <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingShipmentComputedController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingShipmentController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingShipmentSearchController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\Generated\PMControllers\CargoTrackingTransportModeController.Generated.cs" />
@@ -3070,6 +3073,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CalculatedChartsOfAccountUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CancellationReasonRequestTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CancellationRequestStatusUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoDisconnectQueueUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoReferencesSyncQueueUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoSealIdentifierUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoSealUpdateClass.cs" />

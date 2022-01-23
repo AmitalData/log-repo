@@ -9,6 +9,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
         public DataTable DataTable;
         public string CoulmnName;
         public char Delimiter;
+        public string ReferenceFromShipmentId;
 
         public class Builder
         {
@@ -39,6 +40,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
             public Builder Delimiter(char delimiter)
             {
                 splittedDataArguments.Delimiter = delimiter;
+                return this;
+            }
+            public Builder ReferenceFromShipmentId(string forwardingShipmentHeaderId)
+            {
+                splittedDataArguments.ReferenceFromShipmentId = forwardingShipmentHeaderId;
                 return this;
             }
             public SplittedDataArguments Build()

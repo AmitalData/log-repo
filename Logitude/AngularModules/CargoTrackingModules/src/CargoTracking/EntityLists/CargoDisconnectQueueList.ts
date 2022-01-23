@@ -6,16 +6,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class CargoTrackingShipmentSearchList {
+export class CargoDisconnectQueueList {
    
-	Tenant: number;
-	SearchFields: string;
-	ShipmentDate: Date;
 	Id: number;
-	ShipmentId: string;
-	IsPublic: boolean;
-	ReferenceType: string;
-	ReferenceFromShipmentId: string;
+	Tenant: number;
 	
 }
  
