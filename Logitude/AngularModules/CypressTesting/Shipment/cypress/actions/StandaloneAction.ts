@@ -7,6 +7,7 @@ import { RequestAliases } from '../../../Base/cypress/constants/RequestAliases';
 import { PickupDelivaryDetails } from "../models/PickupDelivaryDetails";
 import { RegexSelectors } from "../selectors/RegexSelectors";
 import { ShipmentConstants } from '../constants/constants'
+import { PackagesDetails } from "cypress/models/PackagesDetails";
 
 let fromType = null
 let toType = null
@@ -106,4 +107,23 @@ export function AddPcakagesInPickupDelivary() {
    cy.get(ShipmentSelectors.LogitudeCheckBox).eq(2).click();
    cy.get(ShipmentSelectors.LogitudeCheckBox).eq(3).click();
    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+}
+
+export function AddPcakagesInStandaloneShipment(packagesDetails: PackagesDetails) {
+   cy.FillLogLov(ShipmentSelectors.PackageType, packagesDetails.PackageType, true)
+   cy.FillLogTextBox(ShipmentSelectors.ContainerNumber, packagesDetails.ContainerNumber)
+   cy.FillLogTextBox(ShipmentSelectors.PackageWeight, packagesDetails.GrossWeight.toString())
+   cy.Click(ShipmentSelectors.OceanPackageOKButton,null)
+   cy.Click(BaseSelectors.RedButton, ShipmentConstants.Ok)
+   
+}
+export function StandaloneShipmentOpenPackageTab(){
+   cy.Click(ShipmentSelectors.PackagesTab_Number + BaseSelectors.LastElement, null)
+   cy.Click(ShipmentSelectors.AddPackage, null)
+   cy.Click(ShipmentSelectors.AddPackagesInStandalone, null)
+}
+export function OpenRoutingTabAddPickUp(){
+  cy.Click(ShipmentSelectors.RoutingsTab, null)
+  cy.Click(ShipmentSelectors.AddPickUp, null)
+  cy.Click(BaseSelectors.Button, ShipmentConstants.AddPickUp)
 }
