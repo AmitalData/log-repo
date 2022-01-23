@@ -180,6 +180,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     PartnerTypeName = card.PartnerType == null ? null : card.PartnerType.Name,
                     SalesmanUserId = card.Customer != null ? card.Customer.SalesmanUserId : "",
                     AccountManagerUserId = card.Customer != null ? card.Customer.AccountManagerUserId : "",
+                    TeamId = card.Customer != null ? card.Customer.TeamId : "",
                     Website = card.Website,
                     InvoiceCurrencyId = card.InvoiceCurrencyId,
                     VatTypeId = card.VatTypeId,

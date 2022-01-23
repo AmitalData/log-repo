@@ -381,6 +381,7 @@
     <Compile Include="CommonDataModel\CustomFilters\CommunicationLogCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\ReportExecutionLogCustomFilter.cs" />
     <Compile Include="CommonDataModel\EntityLists\CargoTenantMilestoneDefinitionList.cs" />
+    <Compile Include="CommonDataModel\EntityLists\CustomerTeamList.cs" />
     <Compile Include="CommonDataModel\EntityLists\HTSCodeList.cs" />
     <Compile Include="CommonDataModel\EntityLists\PortTimeZoneList.cs" />
     <Compile Include="CommonDataModel\EntityLists\ProductItemList.cs" />
@@ -388,6 +389,7 @@
     <Compile Include="CommonDataModel\EntityLists\UnassignedEntityList.cs" />
     <Compile Include="CommonDataModel\EntityPMs\AddressTypePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CommunicationLogExtendedArgs.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\CustomerTeamPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\ExtendedContactPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\PortTimeZonePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\ReportExecutionLogPM.cs" />
@@ -396,6 +398,7 @@
     <Compile Include="CommonDataModel\EntityPMs\CargoTenantMilestoneDefinitionPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\UnassignedEntityPM.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CargoTenantMilestoneDefinitionQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\CustomerTeamQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\HTSCodeQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\PortTimeZoneQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ProductItemQuery.cs" />
@@ -462,6 +465,7 @@
     <Compile Include="CommonDataModel\Tools\DataMapping\CardContactAdditionalServiceMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CardContactProductMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CargoTenantMilestoneDefinitionMapping.cs" />
+    <Compile Include="CommonDataModel\Tools\DataMapping\CustomerTeamMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CustomerOpenFilesAmountMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\DocumentsExecutionLogMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\HorseMapping.cs" />
@@ -480,6 +484,7 @@
     <Compile Include="CommonDataModel\Tools\EntityService\CarrierAreaService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\CargoTenantMilestoneDefinitionService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\CustomerOpenFilesAmountService.cs" />
+    <Compile Include="CommonDataModel\Tools\EntityService\CustomerTeamService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\CustomerStatusQueueService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\DocumentsExecutionLogService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\GLAccountCardDataService.cs" />

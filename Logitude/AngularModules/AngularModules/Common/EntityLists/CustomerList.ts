@@ -10,6 +10,7 @@ export class CustomerList {
    		Id: string;
 		Tenant: number;
 		RankId: string;
+		TeamId: string;
 		RankCode: string;
 		RankName: string;
 		IndustryId: string;
