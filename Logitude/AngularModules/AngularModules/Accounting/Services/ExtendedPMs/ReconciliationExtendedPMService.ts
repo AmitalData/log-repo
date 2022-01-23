@@ -30,7 +30,7 @@ export class ReconciliationExtendedPMService {
     insert(entityPM: ReconciliationPM) {
         var mappedEntity: ReconciliationPM;
         mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-        return this.httpClient.post(this._apiUrl, JSON.stringify(mappedEntity),  ServiceHelper.GetHttpHeaders()).pipe(
+        return this.httpClient.post(this._apiUrl + '/PostInsertReconciliation', JSON.stringify(mappedEntity),  ServiceHelper.GetHttpHeaders()).pipe(
             map((res:RecoCallback) => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
