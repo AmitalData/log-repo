@@ -98006,8 +98006,8 @@
     <EventType
       Code="&quot;PIOD&quot;"
       ObjectTableName="&quot;Shipment&quot;"
-      EnglishName="&quot;POD&quot;"
-      LocalName="&quot;POD&quot;"
+      EnglishName="&quot;POD Received&quot;"
+      LocalName="&quot;POD Received&quot;"
       IsManualEntry="true"
       ShortView="true"
       EventTypeCategoryCode="&quot;LEG&quot;"
@@ -98019,7 +98019,7 @@
       IsFollowUp="true"
       FollowUpEnglishName="&quot;POD&quot;"
       FollowUpLocalName="&quot;POD&quot;"
-      EntityStatusCode="&quot;SDLD&quot;" />
+      EntityStatusCode="&quot;PODR&quot;" />
     <EventType
       Code="&quot;DELD&quot;"
       ObjectTableName="&quot;Shipment&quot;"
