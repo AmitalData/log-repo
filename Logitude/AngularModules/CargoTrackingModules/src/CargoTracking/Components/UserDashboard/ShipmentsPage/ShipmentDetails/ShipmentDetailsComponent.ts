@@ -87,6 +87,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     approvalMessage: string;
     PartnersPanel: string = "PartnersPanel";
     MaxHeightForPartnersPanel: number = 600;
+    MaxNumberOfCarachterForMobile: number = 15;
 
     PartnerCardTypesOfShipmentTransportMode = {
         'A': "AIRLINES",
@@ -687,6 +688,18 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
 
     //#endregion
 
+    GetSlice(text: string, numberOfCharacter) {
+
+        var result = text
+        if (text?.length > numberOfCharacter && !this.IsMobileView) {
+            result = text.slice(0, numberOfCharacter) + "..."
+        }
+        if (text?.length > this.MaxNumberOfCarachterForMobile && this.IsMobileView ) {
+            result = text.slice(0, this.MaxNumberOfCarachterForMobile) + "..."
+        }
+        return result;
+
+    }
     GetModeIcon()
     {
         var iconPath = "";

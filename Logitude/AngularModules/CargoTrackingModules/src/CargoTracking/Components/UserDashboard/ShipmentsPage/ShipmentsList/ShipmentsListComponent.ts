@@ -76,6 +76,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     SupplierOrClientValue: string;
     ShowMobileSearch: boolean = false;
     ShipmenTypeForRouting: string;
+    RoutingPortNames: string;
     public SortOptions = SortOptions;
     MasterOrHouseLabel: string = "";
     EntityType_Customs = "C";
@@ -501,8 +502,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         }
     }
 
-
-
+    SetRoutingPortNames(shipment: CargoTrackingShipmentList) {
+        this.RoutingPortNames = shipment.FromPortName + " to " + shipment.ToPortName; 
+    }
 
     private InitComponent() {
         this.InitForm();

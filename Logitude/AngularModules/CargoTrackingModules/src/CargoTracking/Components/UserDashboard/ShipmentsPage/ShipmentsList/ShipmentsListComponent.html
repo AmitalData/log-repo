@@ -422,8 +422,9 @@
 
                                 <div class="subtitle hide-mobile" [attr.src]="SetShipmenTypeForRouting(shipment)">
                                     ROUTING</div>
-                                <div class="value truncateText hide-mobile">
-                                    {{shipment.FromPortCode}} to {{shipment.ToPortCode}} <br>
+                                <div [attr.src]="SetRoutingPortNames(shipment)" class="value truncateText hide-mobile">
+                                    <span (click)="$event.stopPropagation()"
+                                          [matTooltip]=" RoutingPortNames?.length > maxNumberOfCarachter ? RoutingPortNames : ''">{{GetSlice(RoutingPortNames,maxNumberOfCarachter)}}</span><br>
                                     <span style="font-weight:bold"> {{ShipmenTypeForRouting}}</span>
                                 </div>
                                 <span style="font-weight:bold"> {{ShipmenTypeForRouting}}</span>

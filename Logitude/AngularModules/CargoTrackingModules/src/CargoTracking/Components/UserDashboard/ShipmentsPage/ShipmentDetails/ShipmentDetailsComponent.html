@@ -197,7 +197,8 @@
                 <div>
                     <div class="title">Routing</div>
                     <ul>
-                        <li>{{cargoTrackingShipmentPM.RouteFromPortCode}} to {{cargoTrackingShipmentPM.RouteToPortCode}}
+                        <li>
+                            {{cargoTrackingShipmentPM.RouteFromPortName}} to {{cargoTrackingShipmentPM.RouteToPortName}}
                         </li>
                     </ul>
                 </div>
@@ -940,14 +941,13 @@
                                             <div class="route-card-body">
                                                 <div *ngIf="step.FromPortLabel != null || step.ToPortLabel != null"
                                                     class="route-label">
-                                                    <div class="mobile-font-12"
-                                                        [attr.title]="step.ToolTipFromPortLabel">
-                                                        {{step.FromPortLabel}}
+                                                    <div class="mobile-font-12">
+                                                        <span [attr.title]="step.ToolTipFromPortLabel != null ? step.ToolTipFromPortLabel : step.FromPortLabel?.length > 6 ? step.FromPortLabel : ''">
+                                                        {{ step.ToPortLabel != null ? GetSlice(step.FromPortLabel,6) : GetSlice(step.FromPortLabel,15)}}</span>
                                                     </div>
-                                                    <div *ngIf="step.ToPortLabel != null"
-                                                        [attr.title]="step.ToolTipToPortLabel">
+                                                    <div *ngIf="step.ToPortLabel != null">
                                                         >
-                                                        {{step.ToPortLabel}}
+                                                        <span [attr.title]="step.ToolTipToPortLabel != null ? step.ToolTipToPortLabel : step.ToPortLabel?.length > 6 ? step.ToPortLabel : ''">{{GetSlice(step.ToPortLabel,6)}}</span>
                                                     </div>
                                                 </div>
                                                 <div class="route-description TextTrimming" [title]="step.Description">
