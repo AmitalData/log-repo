@@ -1135,7 +1135,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                                             else
                                             {
-                                                if (e.EventType.EntityStatus.StatusWeight > previousEvent.EventType.EntityStatus.StatusWeight)
+                                                var currentEventStatusWeight = e.EventType.EntityStatus.StatusLocalWeight != null ? e.EventType.EntityStatus.StatusLocalWeight : e.EventType.EntityStatus.StatusWeight;
+                                                var previousEventStatusWeight = previousEvent.EventType.EntityStatus.StatusLocalWeight != null ? previousEvent.EventType.EntityStatus.StatusLocalWeight : previousEvent.EventType.EntityStatus.StatusWeight;
+
+                                                if (currentEventStatusWeight > previousEventStatusWeight)
                                                 {
                                                     previousEvent = e;
                                                 }
@@ -1221,7 +1224,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                                             else
                                             {
-                                                if (e.EventType.EntityStatus.StatusWeight > previousEvent.EventType.EntityStatus.StatusWeight)
+                                                var currentEventStatusWeight = e.EventType.EntityStatus.StatusLocalWeight != null ? e.EventType.EntityStatus.StatusLocalWeight : e.EventType.EntityStatus.StatusWeight;
+                                                var previousEventStatusWeight = previousEvent.EventType.EntityStatus.StatusLocalWeight != null ? previousEvent.EventType.EntityStatus.StatusLocalWeight : previousEvent.EventType.EntityStatus.StatusWeight;
+
+                                                if (currentEventStatusWeight > previousEventStatusWeight)
                                                 {
                                                     previousEvent = e;
                                                 }
@@ -1281,7 +1287,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                             EntityStatus newEntityStatus = allEntityStatuses.Where(d => d.Id == newEventType.EntityStatusId).FirstOrDefault();
                             EntityStatus oldEntityStatus = allEntityStatuses.Where(d => d.Id == args.OldOperationalStatusId).FirstOrDefault();
 
-                            if (newEntityStatus.StatusWeight >= oldEntityStatus.StatusWeight)
+                            var newEntityStatusWeight = newEntityStatus.StatusLocalWeight != null ? newEntityStatus.StatusLocalWeight : newEntityStatus.StatusWeight;
+                            var oldEntityStatusWeight = oldEntityStatus.StatusLocalWeight != null ? oldEntityStatus.StatusLocalWeight : oldEntityStatus.StatusWeight;
+
+                            if (newEntityStatusWeight >= oldEntityStatusWeight)
                             {
                                 entityPM.OperationalStatusId = newEventType.EntityStatusId;
                                 entityPoco.OperationalStatusId = entityPM.OperationalStatusId;
@@ -1321,7 +1330,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                             EntityStatus newEntityStatus = allEntityStatuses.Where(d => d.Id == newEventType.EntityStatusId).FirstOrDefault();
                             EntityStatus oldEntityStatus = allEntityStatuses.Where(d => d.Id == args.OldStatusId).FirstOrDefault();
 
-                            if (newEntityStatus.StatusWeight >= oldEntityStatus.StatusWeight)
+                            var newEntityStatusWeight = newEntityStatus.StatusLocalWeight != null ? newEntityStatus.StatusLocalWeight : newEntityStatus.StatusWeight;
+                            var oldEntityStatusWeight = oldEntityStatus.StatusLocalWeight != null ? oldEntityStatus.StatusLocalWeight : oldEntityStatus.StatusWeight;
+
+                            if (newEntityStatusWeight >= oldEntityStatusWeight)
                             {
                                 entityPM.StatusId = newEventType.EntityStatusId;
                                 entityPM.StatusDate = args.EventDateTime;
@@ -1704,7 +1716,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                                     else
                                     {
-                                        if (e.EventType.EntityStatus.StatusWeight > previousEvent.EventType.EntityStatus.StatusWeight)
+                                        var currentEventStatusWeight = e.EventType.EntityStatus.StatusLocalWeight != null ? e.EventType.EntityStatus.StatusLocalWeight : e.EventType.EntityStatus.StatusWeight;
+                                        var previousEventStatusWeight = previousEvent.EventType.EntityStatus.StatusLocalWeight != null ? previousEvent.EventType.EntityStatus.StatusLocalWeight : previousEvent.EventType.EntityStatus.StatusWeight;
+                                        if (currentEventStatusWeight > previousEventStatusWeight)
                                         {
                                             previousEvent = e;
                                         }
@@ -1782,7 +1796,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                         else
                         {
-                            if (e.EventType.EntityStatus.StatusWeight > previousEvent.EventType.EntityStatus.StatusWeight)
+                            var currentEventStatusWeight = e.EventType.EntityStatus.StatusLocalWeight != null ? e.EventType.EntityStatus.StatusLocalWeight : e.EventType.EntityStatus.StatusWeight;
+                            var previousEventStatusWeight = previousEvent.EventType.EntityStatus.StatusLocalWeight != null ? previousEvent.EventType.EntityStatus.StatusLocalWeight : previousEvent.EventType.EntityStatus.StatusWeight;
+
+                            if (currentEventStatusWeight > previousEventStatusWeight)
                             {
                                 previousEvent = e;
                             }
@@ -1883,7 +1900,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                                     else
                                     {
-                                        if (e.EventType.EntityStatus.StatusWeight > previousEvent.EventType.EntityStatus.StatusWeight)
+                                        var currentEventStatusWeight = e.EventType.EntityStatus.StatusLocalWeight != null ? e.EventType.EntityStatus.StatusLocalWeight : e.EventType.EntityStatus.StatusWeight;
+                                        var previousEventStatusWeight = previousEvent.EventType.EntityStatus.StatusLocalWeight != null ? previousEvent.EventType.EntityStatus.StatusLocalWeight : previousEvent.EventType.EntityStatus.StatusWeight;
+
+                                        if (currentEventStatusWeight > previousEventStatusWeight)
                                         {
                                             previousEvent = e;
                                         }
