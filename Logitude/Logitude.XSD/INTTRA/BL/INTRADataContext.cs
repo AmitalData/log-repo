@@ -2277,7 +2277,10 @@ namespace Logitude.XSD.INTTRA.BL
 
         private void HandelMultiHouses(IQueryable<Shipment> masterhouses, INTTRA_Out.GoodsDetails itemGoodsDetails, string containerNumber)
         {
-            
+            List<INTTRA_Out.HousePartiesPartnerInformation> houseParties = new List<INTTRA_Out.HousePartiesPartnerInformation>();
+            List<INTTRA_Out.DetailsCustomsFilerInstruction> detailsCustomsInformation = new List<INTTRA_Out.DetailsCustomsFilerInstruction>();
+            List<INTTRA_Out.DetailsReferenceInformation> detailsReferenceInformation = new List<INTTRA_Out.DetailsReferenceInformation>();
+
             var houses = (from shipment in masterhouses
                           join shipmentPackage in shipmentContext.ShipmentPackages.Where(a => a.ContainerNumber == containerNumber)
                           on shipment.Id equals shipmentPackage.ShipmentId
@@ -2288,10 +2291,8 @@ namespace Logitude.XSD.INTTRA.BL
             {
                 return;
             }
+
             this.AddShipToPartner(this.Shipment);
-            List<INTTRA_Out.HousePartiesPartnerInformation> houseParties = new List<INTTRA_Out.HousePartiesPartnerInformation>();
-            List<INTTRA_Out.DetailsCustomsFilerInstruction> detailsCustomsInformation = new List<INTTRA_Out.DetailsCustomsFilerInstruction>();
-            List<INTTRA_Out.DetailsReferenceInformation> detailsReferenceInformation = new List<INTTRA_Out.DetailsReferenceInformation>();
             this.AddDetailsCustomsInformation(detailsCustomsInformation);
             foreach (var house in houses)
             {
