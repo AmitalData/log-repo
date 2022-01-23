@@ -107,7 +107,11 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     get DeclarationApprovalEnabled()
     {
         const isCustomShipment = this.cargoTrackingShipmentPM.EntityType == this.EntityType_Customs;
-        return isCustomShipment && this.cargoTrackingShipmentPM.ActivatedForDeclarationApprove;
+        const haveResponse = this.cargoTrackingShipmentPM.ApprovedDate || this.cargoTrackingShipmentPM.DenyReason;
+        const responseRequired = this.cargoTrackingShipmentPM.IsImporterApprovalRequried;
+        return isCustomShipment
+                && this.cargoTrackingShipmentPM.ActivatedForDeclarationApprove
+                && ( responseRequired || haveResponse );
     }
 
     get ShowShipmentAsDeclaration() {  return this.isDeclarationLink && this.DeclarationApprovalEnabled; }
