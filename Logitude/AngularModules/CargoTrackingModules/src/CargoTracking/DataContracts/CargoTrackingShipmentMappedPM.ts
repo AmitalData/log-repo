@@ -691,8 +691,8 @@ export class CargoTrackingShipmentMappedPM {
     public ShipmentTypeName: string;
     public ShipmentOrderQuantity: number;
     public ShipmentOrderPONumber: string;
-    public RouteToPortCode: string;
-    public RouteFromPortCode: string;
+    public RouteToPortName: string;
+    public RouteFromPortName: string;
     public SHOBookingConfirmationNumber: string;
     public SHOCarrierName: string;
     public SHOPODate: Date;
