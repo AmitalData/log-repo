@@ -59,6 +59,7 @@ import { JournalActionTypeListService } from '../../Accounting/Services/Standard
 import { BluesnapContractTypeListService } from '../Services/StandardLists/BluesnapContractTypeListService'; 
 import { HorseListService } from '../../Common/Services/StandardLists/HorseListService';
 import { PortTimeZoneListService } from '../../Common/Services/StandardLists/PortTimeZoneListService';
+import { CustomerTeamListService } from '../../Common/Services/StandardLists/CustomerTeamListService';
 
 //customs
 import {InternationalSiteListService} from '../../Customs/Services/StandardLists/InternationalSiteListService'; 
@@ -245,6 +246,7 @@ export class CachedDataManagerServices {
             case "ShipmentSubTypeListService": { myResult = new ShipmentSubTypeListService(); break; }
             case "HorseListService": { myResult = new HorseListService(); break; }
             case "PortTimeZoneListService": { myResult = new PortTimeZoneListService(); break; }
+            case "CustomerTeamListService": { myResult = new CustomerTeamListService(); break; }
 
             default: {
 

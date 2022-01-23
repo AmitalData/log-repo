@@ -67,6 +67,8 @@ export class CardList {
 		SalesmanUserEnglishName: string;
 		AccountManagerUserName: string;
 		AccountManagerUserId: string;
+		TeamId: string;
+		TeamName: string;
 		CASSCode: string;
 		IATACode: string;
 		RegulatedAgentCode: string;

@@ -240,6 +240,23 @@ namespace Simplog.Data.CommonDataModel.Mocks
             }
         }
 
+        List<CustomerTeam> customerTeams;
+        MockObjectSet<CustomerTeam> customerTeamObjectSet;
+        public IDbSet<CustomerTeam> CustomerTeams
+        {
+            get
+            {
+                if (customerTeams == null)
+                {
+                    customerTeams = new List<CustomerTeam>() {
+                        new CustomerTeam() { Id = "1-1", Name = "CT1", InActive = false, Tenant = 1},
+                        new CustomerTeam() { Id = "1-2", Name = "CT2", InActive = false, Tenant = 2 } };
+                    rankObjectSet = new MockObjectSet<Rank>(ranks);
+                }
+                return customerTeamObjectSet;
+            }
+        }
+
         public IDbSet<User> Users
         {
             get { return new MockObjectSet<User>(new List<User>() { new User() { BranchId = "1-1", DepartmentId = "1-1", Id = "1-3", Tenant = 1,Contact=Contacts.Where(d=>d.Id=="1-3").FirstOrDefault()  },

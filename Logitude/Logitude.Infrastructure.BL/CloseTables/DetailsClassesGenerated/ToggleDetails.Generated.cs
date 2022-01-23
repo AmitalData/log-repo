@@ -525,6 +525,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "DFP,Sharing Documents Via Shared links Permission", 
                 Description = "Sharing Documents Via Shared links Permission", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CTF", 
+                Name = "Customer Term Field", 
+                SearchFields = "CTF,Customer Term Field", 
+                Description = "Show Customer Term Field", 
+			});
 			
             return all;
        }

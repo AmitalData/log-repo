@@ -214,6 +214,8 @@ import { ProductItemListService } from './Services/StandardLists/ProductItemList
 import { DocumentFileService } from './Services/DocumentServices/DocumentFileService';
 import { PortTimeZoneListService } from './Services/StandardLists/PortTimeZoneListService';
 import { PortTimeZonePMService } from './Services/StandardPMs/PortTimeZonePMService';
+import { CustomerTeamPMService } from './Services/StandardPMs/CustomerTeamPMService';
+import { CustomerTeamListService } from './Services/StandardLists/CustomerTeamListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -431,6 +433,8 @@ export class ModuleProviders {
             case "ShippingLineExtendedPMService": { myResult = new ShippingLineExtendedPMService(); break; }
             case "PortTimeZoneListService": { myResult = new PortTimeZoneListService(); break; }
             case "PortTimeZonePMService": { myResult = new PortTimeZonePMService(); break; }
+            case "CustomerTeamPMService": { myResult = new CustomerTeamPMService(); break; }
+            case "CustomerTeamListService": { myResult = new CustomerTeamListService(); break; }
         }
 
         return myResult;

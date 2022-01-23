@@ -36,7 +36,7 @@
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
 
-  Code="&quot;c67c&quot;"
+  Code="&quot;9d74&quot;"
 
   Name="&quot;General&quot;"
   GenerateDomainService="false"
@@ -5106,6 +5106,11 @@
       DefaultText="&quot;Entity Status&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.CustomerTeam&quot;"
+      DefaultText="&quot;Customer Teams&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -7218,5 +7223,14 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
 
+    <Feature
+      Code="&quot;General.Features.CustomerTeam&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.General.Features.CustomerTeam&quot;"
+      FeatureDefaultText="&quot;Customer Teams&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>

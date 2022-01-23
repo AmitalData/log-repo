@@ -23,6 +23,7 @@ export const LazyWidgets: { path: string, loadChildren: () => Promise<NgModuleFa
   // Common Modules
   { loadChildren: () => import('../../Common/Module_COMN').then(m => m.LogitudeCommonModule), path: 'Common' },
   { loadChildren: () => import('../../CommonModules/CommonAgent/ModuleCommonAgent').then(m => m.ModuleCommonAgent), path: 'CommonAgent' },
+  { loadChildren: () => import('../../CommonModules/CommonCustomerTeam/ModuleCommonCustomerTeam').then(m => m.ModuleCommonCustomerTeam), path: 'CommonCustomerTeam' },
   { loadChildren: () => import('../../CommonModules/CommonAirline/ModuleCommonAirline').then(m => m.ModuleCommonAirline), path: 'CommonAirline' },
   { loadChildren: () => import('../../CommonModules/CommonCustomer/ModuleCommonCustomer').then(m => m.ModuleCommonCustomer), path: 'CommonCustomer' },
   { loadChildren: () => import('../../CommonModules/CommonFilingInbox/ModuleCommonFilingInbox').then(m => m.ModuleCommonFilingInbox), path: 'CommonFilingInbox' },

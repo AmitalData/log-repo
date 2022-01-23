@@ -129,6 +129,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string RankId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        [DataMember]
+        public string TeamId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember] 
         public string VatTypeId { get; set; }
 

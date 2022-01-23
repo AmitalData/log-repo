@@ -951,6 +951,27 @@
                                                             </td>
                                                         </tr>
                                                     </table>
+                                                    <table *ngIf="ShowCustomerTeamField">
+                                                        <!-- TeamId -->
+                                                        <tr class="FormFieldRow">
+                                                            <td style="width:130px;">
+                                                                <LogLabel [ObjectFieldName]="'TeamId'" [ObjectTableName]="'Customer'" [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+
+                                                            <td style="width:196px">
+                                                                <LogLov [ObjectFieldName]="'TeamId'"
+                                                                        [SelectedValue]="TeamId"
+                                                                        [ObjectTableName]="'Customer'"
+                                                                        [DataContext]="DataContext"
+                                                                        [LookUpTableName]="'CustomerTeam'">
+                                                                </LogLov>
+                                                            </td>
+
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </td>
                                             </tr>
                                         </table>
