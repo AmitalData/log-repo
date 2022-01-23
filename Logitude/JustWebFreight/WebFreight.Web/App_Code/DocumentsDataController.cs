@@ -223,15 +223,15 @@ namespace WebFreight.Web.App_Code
             DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
             List<DocumentsFilingPM> myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(entityId, tenant);
 
-            if (partnerType == "CS")
+            if (partnerType == "AG")
             {
                 myDocumentFilings = GetAgentDocuments(myDocumentFilings,shipmentLevelCode,tenant);
             }
 
-            //else if (partnerType == "CS")
-            //{
-            //    myDocumentFilings = myDocumentFilings.Where(d => d.IsCustomerView).ToList();
-            //}
+            else if (partnerType == "CS")
+            {
+                myDocumentFilings = myDocumentFilings.Where(d => d.IsCustomerView).ToList();
+            }
 
             List<DocumentOutCopy> allcopies = new List<DocumentOutCopy>();
             List<DocumentsFilingPM> missedDocuments = myDocumentFilings.Where(d => d.DirectionCode == "O" && d.DoucmentTypeTemplateFormatCode != "M" && d.DocumentId == null).ToList();
