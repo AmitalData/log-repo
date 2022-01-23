@@ -637,7 +637,7 @@ export class Operator {
 
 
 
-class AutomationEntityList {
+export class AutomationEntityList {
 
     DisplayName: string;
 

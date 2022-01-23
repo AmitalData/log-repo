@@ -172,6 +172,14 @@ namespace Logitude.Server.Tools.EntityChanges
                                 customObjectFieldLists.Add(objectFieldValue);
                             }
                         }
+
+
+                        ObjectField partnerObjectField = objectFieldLists.Where(d => d.FieldCode == automationSetValue.PartnerObjectFieldCode).FirstOrDefault();
+                        if (partnerObjectField != null && !customObjectFieldLists.Contains(partnerObjectField))
+                        {
+                            customObjectFieldLists.Add(partnerObjectField);
+                        }
+
                     }
                 }
                 #endregion
