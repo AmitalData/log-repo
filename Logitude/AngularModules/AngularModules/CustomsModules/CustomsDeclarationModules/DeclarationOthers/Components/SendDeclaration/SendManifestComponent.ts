@@ -11,7 +11,6 @@ import {AppTool, DateTool} from '../../../../../Infrastructure/Tools'
 import {DeclarationWebService} from '../../../../../Customs/Services/WebServices/DeclarationWebService';
 import {DeclarationPM} from '../../../../../Customs/EntityPMs/DeclarationPM';
 import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
-import {ClientPM} from '../../../../../Customs/EntityPMs/ClientPM';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
 import {Validator} from '../../../../../Infrastructure/Validators/Validator';

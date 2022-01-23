@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class IncotemrsFileValidationUpdateClass
    {  		
-		public const string HashString = "9f26388f655f52bd9fbfb1b2db6644a2";
+		public const string HashString = "73827cc741254f7db8060efaf9410f73";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -982,21 +982,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn IncotemrsFileValidationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.IncotemrsFileValidation.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn IncotemrsFileValidationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.IncotemrsFileValidation.TermsOfSaleTypeID" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn IncotemrsFileValidationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.IncotemrsFileValidation.TermsOfSaleTypeID" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn IncotemrsFileValidationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.IncotemrsFileValidation.IsFreightCharge" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn IncotemrsFileValidationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.IncotemrsFileValidation.IsFreightCharge" , ColumnWidth = 160 }, addedQueryColumns);
 
-			 QueryColumn IncotemrsFileValidationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.IncotemrsFileValidation.IsPortIsraelCharge" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn IncotemrsFileValidationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.IncotemrsFileValidation.IsPortIsraelCharge" , ColumnWidth = 160 }, addedQueryColumns);
 
-			 QueryColumn IncotemrsFileValidationQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.IncotemrsFileValidation.IsInsurance" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn IncotemrsFileValidationQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.IncotemrsFileValidation.IsInsurance" , ColumnWidth = 160 }, addedQueryColumns);
 
-			 QueryColumn IncotemrsFileValidationQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.IncotemrsFileValidation.CargoIdentifierTypeID" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn IncotemrsFileValidationQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.IncotemrsFileValidation.CargoIdentifierTypeID" , ColumnWidth = 140 }, addedQueryColumns);
 
-			 QueryColumn IncotemrsFileValidationQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.IncotemrsFileValidation.CargoIdentifierTypeName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn IncotemrsFileValidationQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.IncotemrsFileValidation.CargoIdentifierTypeName" , ColumnWidth = 140 }, addedQueryColumns);
 
-			 QueryColumn IncotemrsFileValidationQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.IncotemrsFileValidation.LeadDocumentTypeID" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn IncotemrsFileValidationQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.IncotemrsFileValidation.LeadDocumentTypeID" , ColumnWidth = 140 }, addedQueryColumns);
 
-			 QueryColumn IncotemrsFileValidationQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Customs.IncotemrsFileValidation.LeadDocumentTypeName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn IncotemrsFileValidationQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotemrsFileValidationQuery.Id,QueryCode = IncotemrsFileValidationQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Customs.IncotemrsFileValidation.LeadDocumentTypeName" , ColumnWidth = 140 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

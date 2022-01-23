@@ -84,6 +84,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     public HasCustomsFilterMenu: boolean = false;
     public IsPhysicalCheckObjectTable: boolean = false;
 
+
     @ViewChild(LogGridComponent) MyLogGridComponent: LogGridComponent = null;
     @ViewChild(LogGridComponentV2) MyLogGridComponentV2: LogGridComponentV2 = null;
     public IsShowTipArea: boolean = false;
@@ -665,7 +666,9 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.HasCustomsFilterMenu = true;
           }
          if (this.ObjectTableName == "Customs.PhysicalCheck") {
-            this.IsPhysicalCheckObjectTable = true;
+             this.IsPhysicalCheckObjectTable = true; }
+        if (this.ObjectTableName == "Customs.DeclarationReferantData" || this.ObjectTableName == "Customs.DeclarationCargoSplit") {
+            this.HasCustomsFilterMenu = true;
         }
         if (this.ObjectTableName == "Customs.ExportStorge" || this.ObjectTableName == "QuoteOP") {
 
@@ -674,9 +677,9 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.ShowViews = false;
             this.EnglishView = true;
         }
-    }
-
-    private ReloadAllListEvent: any = null;
+          
+         }
+    public ReloadAllListEvent: any = null;
     Listen() {
         if (!this.ReloadAllListEvent) {
             this.ReloadAllListEvent = this.CurrentSession.SessionEvent.subscribe(s => {
@@ -894,7 +897,6 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             if (myObjectTableName.startsWith(this.ObjectTable.ClientModuleName + '.')) {
                                 myObjectTableName = myObjectTableName.substr((this.ObjectTable.ClientModuleName + '.').length)
                             }
-                            debugger;
                             let isCustomsObjectTableWith=false;
                             if(this.ObjectTable.ClientModuleName=="Customs"){
                               isCustomsObjectTableWith=true
@@ -2512,6 +2514,9 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         //this.MenuHeaderchangeevent = new EventEmitter();
         //this.ColumnsReady = new EventEmitter();
         //this.isEditControlOpened = false;
+        if (this.MethodName != undefined && this.MethodName.indexOf("Customs.") > -1) {
+            this.MethodName = this.MethodName.split('.')[1];
+        }
         this._entityListService.getSingle(selectedEntityId, this.ObjectTableName, this.MethodName == undefined ? null : this.MethodName).then((res: any) => {
             //var re = res;
             this.DestroyMe = false;
@@ -2626,7 +2631,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     }
     private SetNewEntityLabel() {
         if (this.HaveFeatureNewExportDeclararion()) {
-            this.NewEntityButtonLabel = "הצהרת יצום חדשה"
+            this.NewEntityButtonLabel = "הצהרת יצוא חדשה"
         } else
         if (this.listArgs.NewButtonLabel != null) {
             this.NewEntityButtonLabel = this.listArgs.NewButtonLabel;
@@ -2884,7 +2889,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     }
     RunNewExportDeclaration() {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "פתיחת הצהרת יצום חדשה";
+        logWindow.Title = "פתיחת הצהרת יצוא חדשה";
         logWindow.Width = 800;
         logWindow.Height = 500;
         logWindow.NewWizardArgs = { IsNewEntity: true };

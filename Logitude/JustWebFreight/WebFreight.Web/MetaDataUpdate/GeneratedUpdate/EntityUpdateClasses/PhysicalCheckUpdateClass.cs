@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PhysicalCheckUpdateClass
    {  		
-		public const string HashString = "52dbcfc410ac583ad289c2c1d490df1a";
+		public const string HashString = "f5a24dbd254353ef391e74dd17b3c644";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3268,6 +3268,67 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "DeclarationOfficeName",
+					  						ObjectTableName =  "Customs.PhysicalCheck",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  100,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "DeclarationOfficeName",
+					  						ListPropertyPath =  "DeclarationOfficeName",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.PhysicalCheck",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "DeclarationOfficeName",
+					  						DefaultText =  "Declaration Office ",
+					  						FullLocalDefaultText =  "בית מכס",
+					  						ListFieldLable =  "DeclarationOfficeNameListLable",
+					  						ListLableDefaultText =  "Declaration Office Name",
+					  						ListLocalDefaultText =  "בית מכס",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -3328,9 +3389,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn OpenChecksQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.PhysicalCheck.LimitDate" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.PhysicalCheck.Direction" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.PhysicalCheck.Direction" , ColumnWidth = 30 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.PhysicalCheck.TransportModeId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.PhysicalCheck.TransportModeId" , ColumnWidth = 60 }, addedQueryColumns);
 
 			 QueryColumn OpenChecksQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Customs.PhysicalCheck.ContainerNubmer" , ColumnWidth = 110 }, addedQueryColumns);
 
@@ -3367,9 +3428,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ClosedChecksQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.PhysicalCheck.LimitDate" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn ClosedChecksQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.PhysicalCheck.Direction" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ClosedChecksQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.PhysicalCheck.Direction" , ColumnWidth = 30 }, addedQueryColumns);
 
-			 QueryColumn ClosedChecksQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.PhysicalCheck.TransportModeId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ClosedChecksQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.PhysicalCheck.TransportModeId" , ColumnWidth = 60 }, addedQueryColumns);
 
 			 QueryColumn ClosedChecksQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.PhysicalCheck.ContainerNubmer" , ColumnWidth = 110 }, addedQueryColumns);
 
@@ -3406,9 +3467,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ByUpcomingChecksQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.PhysicalCheck.LimitDate" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn ByUpcomingChecksQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.PhysicalCheck.Direction" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ByUpcomingChecksQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.PhysicalCheck.Direction" , ColumnWidth = 30 }, addedQueryColumns);
 
-			 QueryColumn ByUpcomingChecksQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.PhysicalCheck.TransportModeId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ByUpcomingChecksQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.PhysicalCheck.TransportModeId" , ColumnWidth = 60 }, addedQueryColumns);
 
 			 QueryColumn ByUpcomingChecksQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.PhysicalCheck.ContainerNubmer" , ColumnWidth = 110 }, addedQueryColumns);
 

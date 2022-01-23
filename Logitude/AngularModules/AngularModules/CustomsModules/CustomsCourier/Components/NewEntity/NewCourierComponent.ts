@@ -8,7 +8,7 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {AppTool} from '../../../../Infrastructure/Tools';
-import {CourierMasterService} from '../../../../Customs/Services/Others/CourierMasterService';
+import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
 
 @Component({
     

@@ -71,10 +71,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                 VehicleChassisNumber = a.VehicleChassisNumber,
                                                                 CustomerId = a.CustomerId,
                                                                 NoEscortRequired=a.NoEscortRequired,
+                                                               DeclarationOfficeName = s.DeclarationOffice == null ? null : s.DeclarationOffice.LocalName,
                                                                 Direction= s.Direction,
                                                                 TransportModeId= s.TransportModeId,
 
-                                                            });
+                                                   });
         
             return query;
 		}

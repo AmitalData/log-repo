@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CustomsGeneral&quot;"
-  Code="&quot;d753&quot;"
+  Code="&quot;8a08&quot;"
   Name="&quot;CustomsGeneral&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -617,6 +617,18 @@
       Code="&quot;Customs.General.O.NoSupplierInvoiceForDeclaration&quot;"
       DefaultText="&quot;Need at least one Supplier Invoice&quot;"
       LocalDefaultText="&quot;יש להקליד לפחות חשבון ספק אחד&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.General.O.NoDetailsForInsurancAmount&quot;"
+      DefaultText="&quot;Not have amount insurance details for supplier&quot;"
+      LocalDefaultText="&quot;אין פרטי מחיר ביטוח ליצואן&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.General.O.NoDetailsForFreightAmount&quot;"
+      DefaultText="&quot;Not have amount freight details for supplier&quot;"
+      LocalDefaultText="&quot;אין פרטי מחיר הובלה ליצואן&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -5282,6 +5294,30 @@
       DefaultText="&quot;CustomsReports&quot;"
       LocalDefaultText="&quot;דוחות&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.General.O.From&quot;"
+      DefaultText="&quot;From&quot;"
+      LocalDefaultText="&quot;מ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.General.O.To&quot;"
+      DefaultText="&quot;To&quot;"
+      LocalDefaultText="&quot;עד&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.General.O.Search&quot;"
+      DefaultText="&quot;Search&quot;"
+      LocalDefaultText="&quot;חיפוש&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.General.O.TermsOfSale&quot;"
+      DefaultText="&quot;Terms of sale&quot;"
+      LocalDefaultText="&quot;תנאי מכר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>

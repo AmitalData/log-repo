@@ -21,8 +21,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
         ResponseServiceBase<INF_MSG_GenericResponseData, DF_NG_2757_MSG10004_ExportDeclarationResponse, GenericRequestParams>
     {
         DeclarationPM _MyDeclarationPM;
-        
-        
+        public bool _IsSubmitDeclarationResponse { get; set; }
+        decimal? vat = 0;
+        DeclarationError _MyDeclarationError;
         private bool isFromImporter;
         string decIdOrg;
         bool isFromAmendment = false;
@@ -925,6 +926,40 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return supplierInvoicePMs;
         }
 
+        //private List<SupplierInvoiceFreightAmountPM> GetSupplierInvoiceFreightAmounts(ref SupplierInvoicePM supplierInvoicePM, DeclarationGoodsShipment declarationGoodsShipment, int tenant)
+        //{
+        //    SupplierInvoiceFreightAmountQueryService supplierInvoiceFreightAmountQueryService = new SupplierInvoiceFreightAmountQueryService(tenant);
+        //    List<SupplierInvoiceFreightAmountPM> supplierInvoiceFreightAmountPM = new List<SupplierInvoiceFreightAmountPM>();
+        //    if (decIdOrg != null && isFromImporter)
+        //    {
+        //        supplierInvoiceFreightAmountPM = supplierInvoiceFreightAmountQueryService.GetSupplierInvoiceFreightAmountsByInvoice(decIdOrg, _OrgSupplierInvoicePM.InvoiceCounterKey);
+
+        //        if (supplierInvoiceFreightAmountPM != null)
+        //        {
+        //            supplierInvoiceFreightAmountPM.ForEach(x => { x.ChangeSetOp = ChangeSetOperation.Insert; });
+        //        }
+        //    }
+        //    //else if (declarationGoodsShipment..CustomsValuation != null)
+        //    //{
+        //    //    foreach (var item in declarationGoodsShipment.CustomsValuation)
+        //    //    {
+        //    //        if (item.ChargesTypeCode.Value == "144")
+        //    //        {
+        //    //            SupplierInvoiceFreightAmountPM supplierInvoiceFreightAmountPM1 = new SupplierInvoiceFreightAmountPM();
+        //    //            supplierInvoiceFreightAmountPM1.Amount = GetValueAmountType(item.FreightChargeAmount);
+        //    //            supplierInvoiceFreightAmountPM1.CurrencyTypeCode = item.FreightChargeAmount.currencyID.ToString();
+        //    //            supplierInvoiceFreightAmountPM1.ChangeSetOp = ChangeSetOperation.Insert;
+        //    //            supplierInvoiceFreightAmountPM1.DeclarationId = supplierInvoicePM.DeclarationId;
+        //    //            supplierInvoiceFreightAmountPM1.InvoiceCounterKey = supplierInvoicePM.InvoiceCounterKey;
+        //    //            supplierInvoiceFreightAmountPM1.Tenant = tenant;
+        //    //             supplierInvoiceFreightAmountPM.Add(supplierInvoiceFreightAmountPM1);
+
+        //    //        }
+        //    //    }
+               
+        //    //}
+        //    return supplierInvoiceFreightAmountPM;
+        //}
 
         private List<SupplierInvoiceItemPM> GetSupplierInvoiceItems(DeclarationGoodsShipment item, Declaration declaration, string declarationId, int tenant, SupplierInvoicePM supplierInvoicePM, ICustomContext context, SupplierInvoicePM supplierInvoicePMPMOrg)
         {
@@ -1304,7 +1339,129 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return supplierInvioceItemCertificatPMs;
          }
 
-       
+        private List<SupplierInvioceItemCertificatPM> GetSupplierInvioceItemCertificats(SupplierInvoicePM supplierInvoicePM, SupplierInvoiceItemPM supplierInvoiceItemPM)
+        {
+            //if (supplierInvoiceItemPM.SupplierInvioceItemCertificats != null && supplierInvoiceItemPM.SupplierInvioceItemCertificats.Count() > 0)
+            //{
+            //    return supplierInvoiceItemPM.SupplierInvioceItemCertificats;
+            //}
+
+            //var supplierInvioceItemCertificatPMList = new List<SupplierInvioceItemCertificatPM>();
+            var supplierInvioceItemCertificatPMList = supplierInvoiceItemPM.SupplierInvioceItemCertificats;
+
+            List<string> certificateCodeListFromErrosXml = GetCertificateCodeListFromErrosXml("SupplierInvoice", supplierInvoicePM.SequenceNumeric.ToString(), "SupplierInvoiceItem", supplierInvoiceItemPM.SequenceNumeric.ToString());
+
+            if (certificateCodeListFromErrosXml == null)
+            {
+                return supplierInvioceItemCertificatPMList;
+                return null;
+            }
+            foreach (var certificateCodeFromErrosXml in certificateCodeListFromErrosXml)
+            {
+                //Check if the code exists current SupplierInvioceItemCertificats
+                List<string> entityList = (from a in supplierInvoiceItemPM.SupplierInvioceItemCertificats
+                                           where (a.ReqConfirmationTypeCode == certificateCodeFromErrosXml)
+                                           select a.ReqConfirmationTypeCode).ToList();
+
+                //If it does NOT exist - Add it to SupplierInvioceItemCertificat
+                if (entityList.Count == 0)
+                {
+                    SupplierInvioceItemCertificatPM supplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM();
+                    supplierInvioceItemCertificatPM.ChangeSetOp = ChangeSetOperation.Insert;
+
+                    supplierInvioceItemCertificatPM.Tenant = this._MyDeclarationPM.Tenant;
+                    supplierInvioceItemCertificatPM.ReqConfirmationTypeCode = certificateCodeFromErrosXml;
+
+                    supplierInvioceItemCertificatPMList.Add(supplierInvioceItemCertificatPM);
+                }
+            }
+            return supplierInvioceItemCertificatPMList;
+        }
+
+        private List<string> GetCertificateCodeListFromErrosXml(string myChild1Type, string myChild1Sequence, string myChild2Type, string myChild2Sequence)
+        {
+            if (_MyDeclarationError == null)
+            {
+                return null;
+            }
+            if (_MyDeclarationError.Entitites.Count == 0)
+            {
+                return null;
+            }
+
+            List<string> certificateCodeListFromErrosXml = new List<string>();
+
+            //Get all 'Entity' for the SupplierInvoiceItem
+            List<Entity> entityList = (from a in _MyDeclarationError.Entitites
+                                       where (a.Child1Type == myChild1Type && a.Child1Sequence == myChild1Sequence
+                                       && a.Child2Type == myChild2Type && a.Child2Sequence == myChild2Sequence)
+                                       select a).ToList();
+
+            if (entityList.Count > 0) //Bug 23715: שליחת הצהרה- מתקבלת שגיאה שקשורה לאישורים
+            //if (entityList.Count != null)
+            {
+                //Go over all the 'Entity'
+                foreach (var entity in entityList)
+                {
+                    if (entity.FieldErrors != null)
+                    {
+                        //Go over all the 'FieldErrors'
+                        foreach (var fieldErrors in entity.FieldErrors)
+                        {
+                            //Get all 'FieldErrors' for the 'FieldError'
+                            List<field> fieldList = (from a in entity.FieldErrors
+                                                     where (a.Code == "2592" && a.Fieldcode == "ClassificationCode")
+                                                     select a).ToList();
+                            //if (fieldList.Count != null)
+                            if (fieldList.Count > 0)// Bug 23715: שליחת הצהרה- מתקבלת שגיאה שקשורה לאישורים
+                            {
+                                //Go over all the 'FieldErrors'
+                                foreach (var field in fieldList)
+                                {
+                                    var messageError = field.MessageError;
+                                    messageError = messageError.Substring(messageError.IndexOf("#") + 1, messageError.LastIndexOf("#") - messageError.IndexOf("#") - 1);
+
+                                    string[] codes = messageError.Split(new string[] { ";" }, StringSplitOptions.None);
+                                    for (int i = 0; i < codes.Length; i++)
+                                    {
+                                        var code = codes[i];
+                                        var charList = new List<char>(); // moran 19.10.16 - Bug 23715 - update handle -->
+                                        charList.Add(' ');
+                                        charList.Add(',');
+                                        code = code.Trim(charList.ToArray());
+                                        if (!string.IsNullOrWhiteSpace(code))
+                                        {
+                                            if (code.Length <= 4)//&& code.Length==3 Bug 23715: שליחת הצהרה- מתקבלת שגיאה שקשורה לאישורים
+                                            {
+                                                var confirmationType = new ConfirmationTypeRepository(_MyDeclarationPM.Tenant);
+                                                var myConfirmationType = confirmationType.GetSingle(code);
+                                                if (myConfirmationType != null)
+                                                {
+                                                    certificateCodeListFromErrosXml.Add(code);
+                                                }
+                                                else
+                                                {
+                                                    LogMessagingUtil.Instance.AppendLine("Certificate " + code + " does not exist in DB.");
+                                                }
+                                            }
+                                            else
+                                            {
+                                                LogMessagingUtil.Instance.AppendLine("Certificate " + code + " is too large.");
+                                            }
+                                        } // moran 19.10.16 - Bug 23715 - update handle <--
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                return certificateCodeListFromErrosXml;
+            }
+            else
+            {
+                return null;
+            }
+        }
          private List<DeclarationTaxPM> GetDeclarationTaxesPM(Declaration declaration, DeclarationPM declarationPMOrg, string declarationId,int tenant)
         {
             var declarationTaxPMList = new List<DeclarationTaxPM>();

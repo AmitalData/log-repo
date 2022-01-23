@@ -251,11 +251,11 @@ import { ContainerizationStatusCodeListService } from './Services/StandardLists/
 import { ContainerizationHataraStatusListService } from './Services/StandardLists/ContainerizationHataraStatusListService';
 import { PhysicalCheckSearchResultTypeListService } from './Services/StandardLists/PhysicalCheckSearchResultTypeListService';
 
+
 //#endregion
 
 //#region StandardPMs
 import { ClaimPMService } from './Services/StandardPMs/ClaimPMService';
-import { ClientPMService } from './Services/StandardPMs/ClientPMService';
 import { CustomBankPMService } from './Services/StandardPMs/CustomBankPMService';
 import { CustomsBookPMService } from './Services/StandardPMs/CustomsBookPMService';
 import { CustomsClosedTablePMService } from './Services/StandardPMs/CustomsClosedTablePMService';
@@ -428,6 +428,7 @@ import { CustomsRequestsSheetWebService } from './Services/WebServices/CustomsRe
 import { TradeAgreementProtocolListService } from './Services/StandardLists/TradeAgreementProtocolListService';
 import { ExportStoragePMService } from './Services/StandardPMs/ExportStoragePMService';
 import { IncotemrsFileValidationListService } from './Services/StandardLists/IncotemrsFileValidationListService';
+import { ClientPMService } from './Services/StandardPMs/ClientPMService';
 
 
 export class ModuleProviders {

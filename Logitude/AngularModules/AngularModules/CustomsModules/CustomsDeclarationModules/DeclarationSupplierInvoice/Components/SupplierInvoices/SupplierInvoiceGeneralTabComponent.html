@@ -890,6 +890,16 @@
                                                     <logitude-edit-grid GridWidth="100%"
                                                                         GridHeight="100%"
                                                                         [ItemSource]="AdjustmentsList">
+                                                        <log-column [width]="'10'" [Alignment]="'right'" *ngIf='allowExport && (isInsurance || isFreightCharge)'>
+                                                            <ng-template let-item>
+                                                                <log-cell-template #logcelltemplate>                                                                    
+                                                                    <td style="width: 7px; height: 27px;" *ngIf='(!item.CurrencyTypeName || !item.Amount) && ((item.TypeName === "ביטוח" && isInsurance ) || (item.TypeName === "הובלה" && isFreightCharge))'>
+                                                                        <div style="width: 7px; height: 7px; background: #FFCB00; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+                                                                    </td>
+                                                                </log-cell-template>
+                                                            </ng-template>
+                                                        </log-column>
+
                                                         <log-column [header]="'Customs.SupplierInvoiceModification.O.Section' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'right'" [binding]="'TypeCode'">
                                                             <ng-template let-item>
                                                                 <log-cell-template #logcelltemplate>

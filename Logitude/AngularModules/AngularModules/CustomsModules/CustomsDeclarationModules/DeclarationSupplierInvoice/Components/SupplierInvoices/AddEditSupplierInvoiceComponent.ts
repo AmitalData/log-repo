@@ -880,7 +880,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 if ((this.EntityPM.SupplierInvoiceFreightAmounts.length == 0 && !this.declarationPM.InvoiceHasFreight) || ((this.declarationPM.SupplierInvoices.length > 0 && this.EntityPM.SequenceNumeric == 1 && this.EntityPM.InsuranceAmount == null) || (this.declarationPM.SupplierInvoices.length == 0 && this.EntityPM.SequenceNumeric == null && this.EntityPM.InsuranceAmount == null))) {
 
                     SessionLocator.SelectedSession.StopBusyIndicator();
-                    if (this._IsNoIncotermCheck == "Y") {
+                    if (this._IsNoIncotermCheck == "Y" || this.declarationPM.Direction === 'E') {
                         this.ConfirmWindowYesButton();
                     }
                     else {

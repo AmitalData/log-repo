@@ -399,6 +399,16 @@ export class DeclarationCourierStatusPM {
     public set CargoDescription(newValue: string) { if (this.cargoDescription != newValue) { this.cargoDescription = newValue; this.MarkAsDirty("CargoDescription"); } }
        
 	 
+    private finalRelease: boolean;
+    public get FinalRelease() { return this.finalRelease; }
+    public set FinalRelease(newValue: boolean) { if (this.finalRelease != newValue) { this.finalRelease = newValue; this.MarkAsDirty("FinalRelease"); } }
+       
+	 
+    private hatraDate: Date;
+    public get HatraDate() { return this.hatraDate; }
+    public set HatraDate(newValue: Date) { if (this.hatraDate != newValue) { this.hatraDate = newValue; this.MarkAsDirty("HatraDate"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		

@@ -26,7 +26,6 @@ import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Service
 import { GITITEMExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/GITITEMExtendedPMService';
 import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITITEMCacheService';
 import { CustomsRequiredFieldExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
-import { ClientPMService } from '../../../../../Customs/Services/StandardPMs/ClientPMService';
 
 @Component({
     

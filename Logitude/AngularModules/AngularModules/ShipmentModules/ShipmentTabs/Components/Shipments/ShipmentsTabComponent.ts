@@ -14,8 +14,8 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
-import { ShipmentSubTypeListService } from '../../../../shipment/services/standardlists/shipmentsubtypelistservice';
 import { ShipmentSubTypeList } from '../../../../shipment/EntityLists/ShipmentSubTypeList';
+import { ShipmentSubTypeListService } from 'Shipment/services/standardlists/shipmentsubtypelistservice';
 
 @Component({
     

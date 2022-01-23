@@ -36,6 +36,10 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.IsRelevantGoodsItem).HasColumnName("IsRelevantGoodsItem");
 
             this.Property(t => t.IsRelevantInvoice).HasColumnName("IsRelevantInvoice");
+
+            this.Property(t => t.IsRelevantInvoiceExport).HasColumnName("IsRelevantInvoiceExport");
+
+            this.Property(t => t.IsRelevantGoodsItemExport).HasColumnName("IsRelevantGoodsItemExport");
         }
     }
 }

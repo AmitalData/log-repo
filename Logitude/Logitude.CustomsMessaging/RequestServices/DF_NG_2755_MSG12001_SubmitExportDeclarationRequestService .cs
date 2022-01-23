@@ -328,7 +328,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             this.MyRequestSheetParam.CustomFileNo = declarationPM.CustomFileNo;
             this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             this.MyRequestSheetParam.EntityId1 = declarationPM.Id;
-            this.MyRequestSheetParam.RequestDescription = "הגשת תשלום " + declarationPM.DeclarationNumber + " " + declarationPM.VersionId;
+            this.MyRequestSheetParam.RequestDescription = "הגשה " + declarationPM.DeclarationNumber + " " + declarationPM.VersionId;
 
             myGeneralData.declarationID = declarationPM.DeclarationNumber;
             myGeneralData.declarationVersion = declarationPM.VersionId;

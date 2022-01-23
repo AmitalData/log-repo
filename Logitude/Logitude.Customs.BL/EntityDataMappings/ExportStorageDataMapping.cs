@@ -23,6 +23,19 @@ namespace Logitude.Customs.BL.EntityDataMappings
         public void CustomPMToPOCO(ExportStoragePM entityPM, ExportStorage entityPOCO)
         {
             //throw new NotImplementedException();
+
+            CustomMappedPOCOProperties.Add(POCOPropertyNames.Id);
+            
+            CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
+
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            {
+
+                entityPOCO.Id = entityPM.Id;
+            
+                entityPOCO.Tenant = entityPM.Tenant;
+
+            }
         }
 
         public void CustomPOCOToPM(ExportStoragePM entityPM, ExportStorage entityPOCO)
@@ -54,6 +67,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
             entityPM.CargoTypeCodeName = cargoIdentifireTypePM.LocalName;
             entityPM.DeclarationStatusTypeCode = declarationPM.DeclarationStatusTypeCode;
             entityPM.DeclarationCustomFileNo = declarationPM.CustomFileNo;
+            entityPM.DeclarationNumber = declarationPM.DeclarationNumber;
+            entityPM.ExporterCode = cardPM.VatNumber;
         }
    }
 }

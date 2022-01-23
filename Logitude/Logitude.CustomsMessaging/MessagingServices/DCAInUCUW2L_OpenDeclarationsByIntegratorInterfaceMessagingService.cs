@@ -4,10 +4,13 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.CustomsMessaging.RabbitMQ;
 using Logitude.CustomsMessaging.RequestServices;
 using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.CustomsMessaging.Testers.Messages;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
+using RabbitMQ.Client;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -103,6 +106,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 //var responseData = messService.SendSheet(genericRequestParams);
 
                 var ourRef = "";
+
+                InterfaceManagementQueryService interfaceManagementQueryService = new InterfaceManagementQueryService(tenant);
+
+                var interfaceManagementPM = interfaceManagementQueryService.GetSingle(this.MainInterfaceCode, false, true);
+
+
                 using (var trans = TransactionFactory.GetNewTransaction())
                 {
                    
@@ -110,16 +119,70 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 var InterfaceManagementPM = InterfaceManagementQS.GetSingleInterfaceManagementwithDefinition(
                     this.MainInterfaceCode, tenant);
                 fileName = fileName.Replace("DcaPrefixName.", InterfaceManagementPM.DcaPrefixName);
-                ourRef = this.DcaReceivedCustomResponseCorrelation(InterfaceManagementPM, tenant, new Customs.BL.Utils.DCAFileModel()
-                {
-                    SelectedFileDownload = fileName,
-                    TimStamp = transmitionDateTime
-
-                }, xmlESBResponseXmlClass);
+                    if (!interfaceManagementPM.UseRabbitMQ)
+                    {
 
 
-                        trans.Complete();
-                        return "SUCCESS";
+                        ourRef = this.DcaReceivedCustomResponseCorrelation(InterfaceManagementPM, tenant, new Customs.BL.Utils.DCAFileModel()
+                        {
+                            SelectedFileDownload = fileName,
+                            TimStamp = transmitionDateTime
+
+                        }, xmlESBResponseXmlClass);
+                    }
+                    else
+                    {
+                        //todo : remove, unifreight treatment
+                        try
+                        {
+
+
+                            var _CommunicationsParams = new CommunicationsParams()
+                            {
+
+                                Tenant = tenant,
+
+                                LoggingObjectTableId = objectTableId,
+                                //LoggingEntityId = entityId,
+
+                                Subject = "פתיחת הצהרה מאינטגרטור",
+                                //LoggingEntityReference = documentsFilingPM.ExternalEntityReference,
+                                LoggingUserId = LoggingUserId,
+                                //CorrelationID = documentsFilingPM.Id,
+
+                                Status = "W",
+                                To = "RabbitMQ",
+                                CommunicationLogTypeCode = "T",
+                                FolderName = "RabbitMQ",
+                                From = "Logitude",
+                                InOut = "O",
+
+                            };
+
+
+                            var message = Encoding.UTF8.GetBytes(xmlESBResponseXmlClass);
+                            _CommunicationsParams.ByteData = message;
+                            string communicationLogId = Communications.AddCommunicationLog(_CommunicationsParams);
+
+
+
+                            string InterfaceTypeCode = "uw2l";
+                            String rabbitMQCode = RabbitmqHelper.GetRabbitMQCode(tenant);
+
+                            var rabbitPublishService = new RabbitPublishService();
+                            rabbitPublishService.Publish(message, communicationLogId, InterfaceTypeCode, rabbitMQCode, 9);
+
+                        }
+                        catch (System.Exception)
+                        {
+
+                            throw;
+                        }
+
+                    }
+
+                    trans.Complete();
+                    return "SUCCESS";
                      
                   
                 }

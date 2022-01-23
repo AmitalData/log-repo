@@ -38,6 +38,11 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
         }
         public WCOFluent GetNode(int level, string WCOID)
         {
+            if (_List == null)
+            {
+                _List = new List<WCOErrorPointerModel>();
+            }
+
             var elm = _List.FirstOrDefault(rec => rec.Level == level & rec.WCOID == WCOID);
             GetNode(elm);
             return this;

@@ -286,6 +286,7 @@ export class CourierWorksheetListTemplate {
 
     }
     SendManifest(event) {
+        debugger;
         this.ButtonClick(event);
         let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
         myDeclarationPMService.get(this._CourierWorksheet['DeclarationId'])

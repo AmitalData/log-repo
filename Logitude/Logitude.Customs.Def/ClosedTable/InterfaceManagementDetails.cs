@@ -595,7 +595,22 @@ namespace Logitude.Customs.Def.ClosedTable
                 ResponseInterfaceCode = null,
                 //    NeedSignature = false
             });
-
+            all.Add(
+            new InterfaceManagementDetails()
+            {
+                Code = "2791",
+                InOut = InOutEnum.I.ToString(),
+                Description = "משוב לתעודת אחסנה",
+                DcaPrefixName = "SendMN_MSG2791_ExportDeliveryAnswerMessage_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+                //  NotificationId = "",//NotificationDefinitionDetails.GetAll().FirstOrDefault(rec=> rec.Code="").Code
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
+                //    NeedSignature = false
+            });
 
             //DCAInEV_NG_8219_MSG14100_ProceduralFaultCancelMassagingService
             all.Add(
@@ -1400,6 +1415,39 @@ namespace Logitude.Customs.Def.ClosedTable
                 //     NeedSignature = false
             });
 
+
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "9100",
+                InOut = InOutEnum.O.ToString(),
+                Description = "הודעות ממתינות",
+                DcaPrefixName = "",
+                DefaultSendOptionsCode = Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.D.ToString(),
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+                //NotificationId = "",//NotificationDefinitionDetails.GetAll().FirstOrDefault(rec=> rec.Code="").Code
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "9101",
+                //   NeedSignature = false,
+            });
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "9101",
+                InOut = InOutEnum.I.ToString(),
+                Description = "אחזור הודעות ממתינות",
+                DcaPrefixName = "UNKNOWN_CHECKING GetSYSTBL_MSG9010_9011_MessageRestoreRequest_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = false,
+                //  NotificationId = "",//NotificationDefinitionDetails.GetAll().FirstOrDefault(rec=> rec.Code="").Code
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
+                //     NeedSignature = false
+            });
 
             all.Add(new InterfaceManagementDetails()
             {

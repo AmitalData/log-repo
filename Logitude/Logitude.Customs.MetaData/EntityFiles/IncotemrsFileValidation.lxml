@@ -1069,42 +1069,42 @@
         QueryCode="&quot;IncotemrsFileValidation&quot;"
         IndexOrder="4"
         ObjectFieldName="&quot;TermsOfSaleTypeID&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;IncotemrsFileValidation&quot;"
         IndexOrder="5"
         ObjectFieldName="&quot;IsFreightCharge&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="160" />
       <QueryColumn
         QueryCode="&quot;IncotemrsFileValidation&quot;"
         IndexOrder="6"
         ObjectFieldName="&quot;IsPortIsraelCharge&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="160" />
       <QueryColumn
         QueryCode="&quot;IncotemrsFileValidation&quot;"
         IndexOrder="7"
         ObjectFieldName="&quot;IsInsurance&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="160" />
       <QueryColumn
         QueryCode="&quot;IncotemrsFileValidation&quot;"
         IndexOrder="8"
         ObjectFieldName="&quot;CargoIdentifierTypeID&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="140" />
       <QueryColumn
         QueryCode="&quot;IncotemrsFileValidation&quot;"
         IndexOrder="9"
         ObjectFieldName="&quot;CargoIdentifierTypeName&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="140" />
       <QueryColumn
         QueryCode="&quot;IncotemrsFileValidation&quot;"
         IndexOrder="10"
         ObjectFieldName="&quot;LeadDocumentTypeID&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="140" />
       <QueryColumn
         QueryCode="&quot;IncotemrsFileValidation&quot;"
         IndexOrder="11"
         ObjectFieldName="&quot;LeadDocumentTypeName&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="140" />
     </QueryColumns>
     <QueryFilters />
   </Query>

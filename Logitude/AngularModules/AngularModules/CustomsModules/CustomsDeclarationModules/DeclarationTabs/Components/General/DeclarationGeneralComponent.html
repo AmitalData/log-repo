@@ -141,6 +141,7 @@
                                     <td style="width: 25px;"><IconButton [IsSmall]="true" [Name]="'Edit'" (click)="EditImporter()"></IconButton></td>
                                     <!--<td style="width: 25px;"><IconButton [IsSmall]="true" [Name]="'Search'" (click)="SearchImporter('Importer', $event)" [IsEnabled]="!IsDisplayOnly"></IconButton></td>-->
                                     <td style="width: 25px;"><IconButton *ngIf="!IsDisplayOnly" [IsSmall]="true" [Name]="'Search'" (click)="SearchImporter('Importer', $event)" [IsIconOnly]="true" style="float:left;"></IconButton></td>
+                                    <td style="width: 25px;"><IconButton *ngIf="!IsDisplayOnly" [IsSmall]="true" [Name]="'Search'" (click)="SearchClient('Importer', $event)" [IsIconOnly]="true" style="float:left;"></IconButton></td>
                                     <td style="width: 120px; min-width: 120px; max-width: 120px; text-align: right; padding-right: 5px;">
                                         <div style="color: #646464; font-size: 11px;">{{CalculatedImporterName}}</div>
                                     </td>

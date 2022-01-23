@@ -33,6 +33,7 @@ using Logitude.CustomsMessaging.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.Customs.BL.Messaging.U2L.CommDec;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -55,7 +56,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             // {
             string customFileNo = "";
 
-            CommDecService CommDecService = new CommDecService();
+            Do_CommDecService CommDecService = new Do_CommDecService();
                 try {
                     string error = "";
                 string decId = "";
@@ -81,32 +82,62 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
 
                 var context = CustomContext.GetContext(requestParams.Tenant);
-                if (true)
-                {
-                    CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(context);
-                    List<CustomsRequestsSheetPM> customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(requestParams.Tenant, "UCUDO", "", "", null, null, courierMasterID, true);
 
-                    if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0)
+                CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(context);
+                var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
+
+                List<CustomsRequestsSheetPM> customsRequestsSheetPMList = customsRequestsSheetQueryService
+                    //.GetRequestInProgress(requestParams.Tenant, "UCUDO", "", "", null, null, courierMasterID, true);
+                    .GetRequestInProgress(requestParams.Tenant, "UCUDO", objectTableId, courierMasterID, null, null, null, true);
+
+                if (customsRequestsSheetPMList== null || customsRequestsSheetPMList.Count==0)
+                {
+                    //customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(requestParams.Tenant, "UCUW2L", "", "", null, null, courierMasterID, true);
+                    //customsRequestsSheetPMList = customsRequestsSheetPMList.Where(x => x.Id != requestParams.PBId).ToList();
+                    //if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0 )
                     {
-                        customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(requestParams.Tenant, "UCUW2L", "", "", null, null, courierMasterID, true);
-                        customsRequestsSheetPMList = customsRequestsSheetPMList.Where(x => x.Id != requestParams.PBId).ToList();
-                        if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0)
+
+                        AppendLogLine("open UCUDO  ??");
+
+                        string GeneralKey = GetGeneralLockKey(courierMasterID);
+                        var concurrentKiller = new ConcurrentKiller();
+                        
+                        bool haveUCUDOInProgress = false;
+                        try
                         {
 
-                            var messagingService = new DCAInUCUDO_UpdateOpenDeclarationsMessagingService();
-                            UpdateOpenDeclarationsRequestParams requestParams2 = new UpdateOpenDeclarationsRequestParams()
+                            using (var scope = TransactionFactory.GetNewTransaction())//open new Transaction  because if not the Transaction  wil invalidad
                             {
+                                concurrentKiller.FreeLockIfCreated15MinOld(GeneralKey, requestParams.Tenant);
+                                concurrentKiller.LockOrCrashOnCommitDueUnique(GeneralKey, requestParams.Tenant);
+                                haveUCUDOInProgress = false;
+                                AppendLogLine("UCUDO:concurrentKiller: Ok");
+                                scope.Complete();
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            AppendLogLine("UCUDO:concurrentKiller:Have in the middle in the last 15 min- not open  UCUDO");
+                            haveUCUDOInProgress = true;
+                        }
 
-                                LoggingUserId = requestParams.LoggingUserId,
-                                Tenant = requestParams.Tenant,
-                                LoggingEntityId = courierMasterID,
 
-                            };
+                        var messagingService = new DCAInUCUDO_UpdateOpenDeclarationsMessagingService();
+                        UpdateOpenDeclarationsRequestParams requestParams2 = new UpdateOpenDeclarationsRequestParams()
+                        {
 
+                            LoggingUserId = requestParams.LoggingUserId,
+                            Tenant = requestParams.Tenant,
+                            LoggingEntityId = courierMasterID,
+
+                        };
+                        if (!haveUCUDOInProgress)
+                        {
                             string message = messagingService.CreateCRS(requestParams.Tenant, requestParams.LoggingUserId, requestParams2);
+                            AppendLogLine($"UCUDO  opened {message}");
+
                         }
                     }
-
                 }
 
                 this.MyResponseData.ApplicationID = customFileNo;
@@ -133,7 +164,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
            // }
         }
 
-        
+        private void AppendLogLine(string mess)
+        {
+            LogMessagingUtil.Instance.AppendLine(mess);
+        }
+
+        public static string GetGeneralLockKey(string courierMasterId)
+        {
+            return $"UCUDO:{courierMasterId}";
+        }
+
     }
     public class ConnectDocumentsfilingService
     {

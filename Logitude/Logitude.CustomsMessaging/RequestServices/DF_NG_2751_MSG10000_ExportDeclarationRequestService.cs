@@ -1566,7 +1566,10 @@ namespace Logitude.CustomsMessaging.RequestServices
             var DMExtensions = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDMExtensions();
             if (!string.IsNullOrEmpty(supplierInvoiceItemPM.DutyRegimeProtocolCode))
                 DMExtensions.DutyRegimeProtocolCode = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDMExtensionsDutyRegimeProtocolCode() { Value = supplierInvoiceItemPM.DutyRegimeProtocolCode };
-
+            if (!string.IsNullOrEmpty(supplierInvoiceItemPM.TradeAgreementCode))
+            {
+                DMExtensions.DutyRegimeCode = new DutyTaxFeeDutyRegimeCodeType() { Value= supplierInvoiceItemPM.TradeAgreementCode };
+            }
             return DMExtensions;
         }
 
@@ -1624,7 +1627,6 @@ namespace Logitude.CustomsMessaging.RequestServices
                 var supplierInvoiceItemsTax = supplierInvoiceItemPM.SupplierInvoiceItemTaxes[itemsTaxSeq];
                 var goodsItemCommodityDutyTaxFees = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDutyTaxFee();
                 goodsItemCommodityDutyTaxFees.TypeCode = SetCodeTypeValue<DutyTaxFeeTypeCodeType>(supplierInvoiceItemsTax.TaxTypeCode);
-                //  goodsItemCommodityDutyTaxFees.DutyRegimeCode = SetCodeTypeValue<DutyTaxFeeDutyRegimeCodeType>(supplierInvoiceItemsTax.TradeAgreementTypeCode);
                 if (supplierInvoiceItemsTax.TaxRate.HasValue)
                 {
                     goodsItemCommodityDutyTaxFees.TaxRate = supplierInvoiceItemsTax.TaxRate.Value;

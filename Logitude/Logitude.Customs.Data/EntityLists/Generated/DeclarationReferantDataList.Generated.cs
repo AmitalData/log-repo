@@ -166,6 +166,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string Commodity  { get; set; }
        [DataMember]
        public string LastStatusRemarks  { get; set; }
+       [DataMember]
+       public string ReferantUserName  { get; set; }
+       [DataMember]
+       public string DepartmentName  { get; set; }
    }
 
 }

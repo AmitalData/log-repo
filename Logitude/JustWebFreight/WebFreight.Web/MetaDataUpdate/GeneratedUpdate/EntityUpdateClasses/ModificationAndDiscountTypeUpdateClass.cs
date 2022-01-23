@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ModificationAndDiscountTypeUpdateClass
    {  		
-		public const string HashString = "6bee1bfc5d2b0321fb4e74211c77d142";
+		public const string HashString = "b329e428a50014ea999f77e67907d5c8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -578,6 +578,124 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsRelevantInvoiceExport",
+					  						ObjectTableName =  "Customs.ModificationAndDiscountType",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsRelevantInvoiceExport",
+					  						ListPropertyPath =  "IsRelevantInvoiceExport",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ModificationAndDiscountType",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsRelevantInvoiceExport",
+					  						DefaultText =  "IsRelevantInvoiceExport",
+					  						ListFieldLable =  "IsRelevantInvoiceExportListLable",
+					  						ListLableDefaultText =  "IsRelevantInvoiceExport",
+					  						ListLocalDefaultText =  "האם רלוונטי לחשבון ביצוא ",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsRelevantGoodsItemExport",
+					  						ObjectTableName =  "Customs.ModificationAndDiscountType",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsRelevantGoodsItemExport",
+					  						ListPropertyPath =  "IsRelevantGoodsItemExport",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ModificationAndDiscountType",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsRelevantGoodsItemExport",
+					  						DefaultText =  "IsRelevantGoodsItemExport",
+					  						ListFieldLable =  "IsRelevantGoodsItemExportListLable",
+					  						ListLableDefaultText =  "IsRelevantGoodsItemExport",
+					  						ListLocalDefaultText =  "האם רלוונטי לסחורה ביצוא ",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -612,17 +730,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ModificationAndDiscountTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ModificationAndDiscountTypeTextCode_0.Id, NameTextCodeCode = ModificationAndDiscountTypeTextCode_0.Code, ObjectTableName = "Customs.ModificationAndDiscountType", Code = "ModificationAndDiscountType",  QueryGroupCode = "MADT", IndexOrder = 0, Tenant = 0, ObjectTableId = ModificationAndDiscountTypeObjectTable.Id, QuerySection = "Customs.ModificationAndDiscountType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ModificationAndDiscountTypeFeature_0.Id,FeatureUniqeCode= ModificationAndDiscountTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ModificationAndDiscountTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ModificationAndDiscountTypeQuery.Id,QueryCode = ModificationAndDiscountTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ModificationAndDiscountType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ModificationAndDiscountTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ModificationAndDiscountTypeQuery.Id,QueryCode = ModificationAndDiscountTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ModificationAndDiscountType.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ModificationAndDiscountTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ModificationAndDiscountTypeQuery.Id,QueryCode = ModificationAndDiscountTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ModificationAndDiscountType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ModificationAndDiscountTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ModificationAndDiscountTypeQuery.Id,QueryCode = ModificationAndDiscountTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ModificationAndDiscountType.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ModificationAndDiscountTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ModificationAndDiscountTypeQuery.Id,QueryCode = ModificationAndDiscountTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ModificationAndDiscountType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ModificationAndDiscountTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ModificationAndDiscountTypeQuery.Id,QueryCode = ModificationAndDiscountTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ModificationAndDiscountType.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ModificationAndDiscountTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ModificationAndDiscountTypeQuery.Id,QueryCode = ModificationAndDiscountTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ModificationAndDiscountType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ModificationAndDiscountTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ModificationAndDiscountTypeQuery.Id,QueryCode = ModificationAndDiscountTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ModificationAndDiscountType.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ModificationAndDiscountTypeQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ModificationAndDiscountTypeQuery.Id,QueryCode = ModificationAndDiscountTypeQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.ModificationAndDiscountType.IsRelevantGoodsItem" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ModificationAndDiscountTypeQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ModificationAndDiscountTypeQuery.Id,QueryCode = ModificationAndDiscountTypeQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.ModificationAndDiscountType.IsRelevantGoodsItem" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ModificationAndDiscountTypeQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ModificationAndDiscountTypeQuery.Id,QueryCode = ModificationAndDiscountTypeQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.ModificationAndDiscountType.IsRelevantInvoice" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ModificationAndDiscountTypeQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ModificationAndDiscountTypeQuery.Id,QueryCode = ModificationAndDiscountTypeQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.ModificationAndDiscountType.IsRelevantInvoice" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ModificationAndDiscountTypeQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ModificationAndDiscountTypeQuery.Id,QueryCode = ModificationAndDiscountTypeQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.ModificationAndDiscountType.IsRelevantInvoiceExport" , ColumnWidth = 170 }, addedQueryColumns);
+
+			 QueryColumn ModificationAndDiscountTypeQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ModificationAndDiscountTypeQuery.Id,QueryCode = ModificationAndDiscountTypeQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.ModificationAndDiscountType.IsRelevantGoodsItemExport" , ColumnWidth = 170 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

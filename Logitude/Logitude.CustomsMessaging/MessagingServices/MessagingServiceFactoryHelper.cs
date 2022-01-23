@@ -102,6 +102,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 ((new DCAInDF_NG_2470_DF_MSG16001_ReleaseGoodsMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+               DCAInMN_MSG2791_ExportDeliveryAnswerMessageMessagingServices>
+               ((new DCAInMN_MSG2791_ExportDeliveryAnswerMessageMessagingServices()).MainInterfaceCode);
+
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 DCAInEV_NG_8219_MSG14100_ProceduralFaultCancelMassagingService>
                 ((new DCAInEV_NG_8219_MSG14100_ProceduralFaultCancelMassagingService()).MainInterfaceCode);
 
@@ -520,6 +525,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+              DF_MSG8235_ExportDeclarationAmendmentMessagingService>
+              ((new DF_MSG8235_ExportDeclarationAmendmentMessagingService()).MainInterfaceCode);
+
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 SE_6001_SealUpdateMessagingService>
                 ((new SE_6001_SealUpdateMessagingService()).MainInterfaceCode);
 
@@ -556,6 +566,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
         ((new DCAInUCBClosePending_MsgMessagingService()).MainInterfaceCode);
 
 
+
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                           NG_9100_MSG_OutgoingMessageRequestMessagingService>
+                           ((new NG_9100_MSG_OutgoingMessageRequestMessagingService()).MainInterfaceCode);
         }
         public static void InitContainer()
         {

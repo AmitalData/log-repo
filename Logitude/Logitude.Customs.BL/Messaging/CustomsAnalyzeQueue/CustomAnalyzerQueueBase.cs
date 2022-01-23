@@ -51,7 +51,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
         }
 
-        public void Run( AnalyzeQueueRepository analyzeQueueRepository, int tenant, string communicationLogId , string message , out string log , out bool success)
+        public void Run( AnalyzeQueueRepository analyzeQueueRepository, int tenant, string candidateCommunicationLogId , string message, QueueDetails queue, out string log , out bool success)
         {
             success = false;
             log = "none";
@@ -59,15 +59,47 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             {
                 this.analyzeQueueRepository = analyzeQueueRepository;
 
-                if (String.IsNullOrWhiteSpace(communicationLogId))
+                if (String.IsNullOrWhiteSpace(candidateCommunicationLogId))
                 {
-                    throw new Exception("CommunicationLogId is null");
+                    
+                        var _CommunicationsParams = new CommunicationsParams()
+                        {
+
+                            Tenant = tenant,
+
+                            //LoggingObjectTableId = objectTableId,
+                            //LoggingEntityId = entityId,
+
+                            Subject = queue.Name,
+                            //LoggingEntityReference = documentsFilingPM.ExternalEntityReference,
+                           // LoggingUserId = LoggingUserId,
+                            //CorrelationID = documentsFilingPM.Id,
+
+                            Status = "W",
+                            To = "RabbitMQ",
+                            CommunicationLogTypeCode = "T",
+                            FolderName = "RabbitMQ",
+                            From = "Logitude",
+                            InOut = "O",
+
+                        };
+
+
+                        var messageByte = Encoding.UTF8.GetBytes(message);
+                        _CommunicationsParams.ByteData = messageByte;
+                          candidateCommunicationLogId = Communications.AddCommunicationLog(_CommunicationsParams);
+
+                    
+                     //   throw new Exception("CommunicationLogId is null");
                 }
 
                 try
                 {
-                    _CommunicationLog = Communications.GetCommunicationLog(tenant, communicationLogId);
-
+                    _CommunicationLog = Communications.GetCommunicationLog(tenant, candidateCommunicationLogId);
+                    if (_CommunicationLog == null)
+                    {
+                        _CommunicationLog = Communications.GetCommunicationLogByCorrelationID(tenant, candidateCommunicationLogId);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -76,15 +108,40 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                     throw new Exception("Cannnot GetCommunicationLog");
                 }
 
-                //  if (_CommunicationLog.CommunicationStatusTypeCode == "D") return;
+                if (_CommunicationLog == null)
+                {
 
 
-                //if (_CommunicationLog == null)
-                //{
-                //    log = "Cannnot GetCommunicationLog";
+                    var _CommunicationsParams = new CommunicationsParams()
+                    {
 
-                //    throw new Exception("Cannnot GetCommunicationLog");
-                //}
+                        Tenant = tenant,
+
+                        //LoggingObjectTableId = objectTableId,
+                        //LoggingEntityId = entityId,
+
+                        Subject = queue.Name,
+                        //LoggingEntityReference = documentsFilingPM.ExternalEntityReference,
+                        // LoggingUserId = LoggingUserId,
+                        //CorrelationID = documentsFilingPM.Id,
+                        CorrelationID = candidateCommunicationLogId,
+                        Status = "W",
+                        To = "RabbitMQ",
+                        CommunicationLogTypeCode = "T",
+                        FolderName = "RabbitMQ",
+                        From = "Logitude",
+                        InOut = "O",
+
+                    };
+
+
+                    var messageByte = Encoding.UTF8.GetBytes(message);
+                    _CommunicationsParams.ByteData = messageByte;
+                    candidateCommunicationLogId = Communications.AddCommunicationLog(_CommunicationsParams);
+
+                    _CommunicationLog = Communications.GetCommunicationLog(tenant, candidateCommunicationLogId);
+
+                }
 
                 if (_CommunicationLog.Retries == 5)
                 { success = true;
@@ -96,15 +153,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 log = "_CommunicationLog != null";
 
                 var communicationsData = message;  
-                //if (string.IsNullOrWhiteSpace(communicationsData))
-                //{
-                //    throw new Exception("communicationsData is null");
-                //}
 
-               // log = "communicationsData != null";
-
-
-                //LogMessagingUtil.Instance.Clear();
                 try
                 {
                     _AnalyzeResultModel = this.AnalyzeData(communicationsData);
@@ -117,8 +166,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                     _AnalyzeResultModel.ErrorMessage = log;
 
                     success = false;
-                    //UpdateAnlayzeRetry();
-                    throw new Exception(log);
+                     throw new Exception(log);
                 }
 
 
@@ -130,7 +178,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                
                 if( _CommunicationLog == null)
                 {
-                    _CommunicationLog = Communications.GetCommunicationLog(tenant, communicationLogId);
+                    _CommunicationLog = Communications.GetCommunicationLog(tenant, candidateCommunicationLogId);
 
                 }
                 if (_CommunicationLog != null)
@@ -469,9 +517,9 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.D;//default !!
         }
         public string ErrorMessage { get; set; }
-        public CommStatusEnum MyCommStatusEnum { get; internal set; }
-        public string EntityID { get; internal set; }
-        public string ObjectTableID { get; internal set; }
-        public string EntityReference { get; internal set; }
+        public CommStatusEnum MyCommStatusEnum { get; set; }
+        public string EntityID { get; set; }
+        public string ObjectTableID { get; set; }
+        public string EntityReference { get; set; }
     }
 }

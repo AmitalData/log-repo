@@ -30,6 +30,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string SearchByFieldCode  { get; set; }
        [DataMember]
        public string SearchByFieldName  { get; set; }
+       [DataMember]
+       public string SearchType  { get; set; }
+       [DataMember]
+       public string SearchTypesName  { get; set; }
    }
 
 }
