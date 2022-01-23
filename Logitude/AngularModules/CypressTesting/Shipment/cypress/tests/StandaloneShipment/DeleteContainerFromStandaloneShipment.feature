@@ -1,3 +1,4 @@
+@standalone @devrelease
 Feature: Delete container from standalone shipment
     The user creates a Direct Import Ocean FCL shipment, add packages,
     Create standalone shipment,Delete the container from standalone shipment
