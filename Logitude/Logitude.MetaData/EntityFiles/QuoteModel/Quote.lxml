@@ -8164,7 +8164,7 @@
     ValidForQuerySection1="&quot;Quote&quot;"
     ValidForQuerySection2="&quot;QuoteFollowUp&quot;"
     IsRestrictable="false"
-    DisplayInEntityVariables="true"
+    DisplayInEntityVariables="false"
     Code="&quot;Reference&quot;"
     AllowedInCustomerFieldsSettings="false"
     DisplayInSearchWindowFilters="false"
