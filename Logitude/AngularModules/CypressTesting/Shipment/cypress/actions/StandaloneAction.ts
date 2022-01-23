@@ -109,11 +109,21 @@ export function AddPcakagesInPickupDelivary() {
    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
 }
 
-export function AddPcakagesInStandaloneShipment(packagesDetails:PackagesDetails) {
+export function AddPcakagesInStandaloneShipment(packagesDetails: PackagesDetails) {
    cy.FillLogLov(ShipmentSelectors.PackageType, packagesDetails.PackageType, true)
    cy.FillLogTextBox(ShipmentSelectors.ContainerNumber, packagesDetails.ContainerNumber)
-   cy.get(ShipmentSelectors.PackageWeight).type(packagesDetails.GrossWeight.toString());
-
+   cy.FillLogTextBox(ShipmentSelectors.PackageWeight, packagesDetails.GrossWeight.toString())
+   cy.Click(ShipmentSelectors.OceanPackageOKButton,null)
+   cy.Click(BaseSelectors.RedButton, ShipmentConstants.Ok)
+   
 }
-
-
+export function StandaloneShipmentOpenPackageTab(){
+   cy.Click(ShipmentSelectors.PackagesTab_Number + BaseSelectors.LastElement, null)
+   cy.Click(ShipmentSelectors.AddPackage, null)
+   cy.Click(ShipmentSelectors.AddPackagesInStandalone, null)
+}
+export function OpenRoutingTabAddPickUp(){
+  cy.Click(ShipmentSelectors.RoutingsTab, null)
+  cy.Click(ShipmentSelectors.AddPickUp, null)
+  cy.Click(BaseSelectors.Button, ShipmentConstants.AddPickUp)
+}

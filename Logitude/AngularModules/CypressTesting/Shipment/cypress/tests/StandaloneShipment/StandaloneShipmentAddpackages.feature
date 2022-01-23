@@ -1,4 +1,5 @@
-Feature:add Package to Standalone Shipment
+@standalone @devrelease
+Feature: Add Package to Standalone Shipment
     The user creates a Direct Import Ocean FCL shipment, add packages,create standalone from pickup,
     add package from standalone
 
@@ -31,7 +32,6 @@ Feature:add Package to Standalone Shipment
         And all fields should be dim in pickup window
         And the link of standalon should display
 
-
     Scenario: Add Package from standalone
         Given the user in the standalone shipment Packages tab
         And a container with the following details
@@ -39,5 +39,5 @@ Feature:add Package to Standalone Shipment
             | Bulk        | ABCD1234560     | 100         |
         When save shipment
         Then the direct shipment should save successfully
-        And pickup window should  updated successfully
-        And forwarder shipment should updated successfully
+        And The container appear in the pickup 
+        And The container appear in the forwarder shipment
