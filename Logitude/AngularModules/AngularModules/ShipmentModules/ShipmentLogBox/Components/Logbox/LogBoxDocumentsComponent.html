@@ -293,8 +293,17 @@
      font-size: 15px;
      margin-left: 10px;
     }
- 
 
+    .SHO {
+        color: white;
+        background: black;
+        border: 2px solid black;
+        border-radius: 15px 15px;
+        display: inline;
+        padding-right: 15px;
+        padding-left: 15px;
+        font-weight: bold;
+    }
 </style>
 
 <table>
@@ -311,15 +320,16 @@
                             <img *ngIf="SelectedShipment && SelectedShipment.TransportModeId == 'O'" src="./Images/Vessel.png" style="width:23px;height:18px;vertical-align:middle;" />
                             <img *ngIf="SelectedShipment && SelectedShipment.TransportModeId == 'A'" src="./Images/Airline.png" style="width:23px;height:18px;vertical-align:middle;" />
                             <img *ngIf="SelectedShipment && SelectedShipment.TransportModeId == 'I'" src="./Images/Trucker.png" style="width:23px;height:18px;vertical-align:middle;" />
-                            <span style="vertical-align:middle;font-size:18px;color:#6E7172;margin-left: 10px;" [title]="SelectedShipment ? SelectedShipment.ShipmentNumber : ''">{{SelectedShipment ? (SelectedShipment.ForwarderShipmentNumber ? SelectedShipment.ForwarderShipmentNumber : SelectedShipment.CustomerReference1) : ''}} </span>
-                   
+                            <span style="vertical-align:middle;font-size:18px;color:#6E7172;margin-left: 10px;" [title]="SelectedShipment ? SelectedShipment.ShipmentNumber : ''">{{SelectedShipment ? (SelectedShipment.ForwarderShipmentNumber ? SelectedShipment.ForwarderShipmentNumber : SelectedShipment.CustomerReference1) : ''}}  </span>
+                            <div *ngIf="SelectedShipment  && !SelectedShipment.ForwarderShipmentNumber && SelectedShipment.TransportModeId == 'O'" class="SHO">SHO</div>
+
                             <span *ngIf="SelectedShipment && IsExportActivated">
                                 <span class="Date" [class.ActualDate]="MainCarriageTDLabel == 'ATD:'" [class.ExpectedDate]="MainCarriageTDLabel == 'ETD:'">
                                     {{MainCarriageTDLabel}}{{MainCarriageTD | DateTimePipe: 'SMD'}}
                                 </span>
                                 <span class="Date" [class.ActualDate]="MainCarriageTALabel == 'ATA:'" [class.ExpectedDate]="MainCarriageTALabel == 'ETA:'">
                                     {{MainCarriageTALabel}}{{MainCarriageTA | DateTimePipe: 'SMD'}}
-                                </span> 
+                                </span>
                             </span>
                             <span *ngIf="SelectedShipment && !IsExportActivated">
                                 <span *ngIf="SelectedShipment && SelectedShipment.MainCarriageATA" style="vertical-align:middle;font-size:15px;color:green;margin-left: 10px;">ATA : {{SelectedShipment.MainCarriageATA  | DateTimePipe: 'SMD'}}</span>
@@ -378,20 +388,27 @@
                     </tr>
                     <tr>
                         <td *ngIf="SelectedShipment && (ShipmentTypeId === 'FCL' || ShipmentTypeId === 'FCLD') && SelectedShipment.TransportModeId != 'A'">
-                            <span *ngIf="SelectedShipment.PackagesQuantity == null || SelectedShipment.PackagesQuantity == 0" style="vertical-align:middle;font-size:12px;color:#6E7172;">
-                                {{SelectedShipment ? ((SelectedShipment.PackagesQuantity == null ? 0 : SelectedShipment.PackagesQuantity) + ' Containers' + ' / ' + (SelectedShipment.GrossWeight == null ? 0 : SelectedShipment.GrossWeight) + ' Kgm') : ''}}
+                            <span *ngIf="(SelectedShipment.PackagesQuantity == null || SelectedShipment.PackagesQuantity == 0) && (this.ShipmentPM && this.ShipmentPM.ShipmentOrderPackages.length == 0 )" style="vertical-align:middle;font-size:12px;color:#6E7172;">
+                                {{SelectedShipment ? ((SelectedShipment.PackagesQuantity == null ? 0 : SelectedShipment.PackagesQuantity) + ' Containers') : ''}}
                             </span>
-                            <span class="Archive" *ngIf="SelectedShipment.PackagesQuantity != null && SelectedShipment.PackagesQuantity != 0" style="vertical-align:middle;font-size:12px;" (click)="OnPackagesClick('Containers')">
-                                {{SelectedShipment ? ((SelectedShipment.PackagesQuantity == null ? 0 : SelectedShipment.PackagesQuantity) + ' Containers' + ' / ' + (SelectedShipment.GrossWeight == null ? 0 : SelectedShipment.GrossWeight) + ' Kgm') : ''}}
+                            <span class="Archive" *ngIf="(SelectedShipment.PackagesQuantity != null && SelectedShipment.PackagesQuantity != 0)" style="vertical-align:middle;font-size:12px;" (click)="OnPackagesClick('Containers')">
+                                {{SelectedShipment ? ((SelectedShipment.PackagesQuantity == null ? 0 : SelectedShipment.PackagesQuantity) + ' Containers') : ''}}
                             </span>
+                            <span class="Archive" *ngIf="this.ShipmentPM && this.ShipmentPM.ShipmentOrderPackages.length != 0 && (SelectedShipment.PackagesQuantity == null || SelectedShipment.PackagesQuantity == 0)" style="vertical-align:middle;font-size:12px;" (click)="OnPackagesClick('Containers')">
+                                {{this.ShipmentPM ? ((this.ShipmentPM.ShipmentOrderPackages.length == 0 ? 0 : this.ShipmentPM.ShipmentOrderPackages.length) + ' Containers') : ''}}
+                            </span>
+
                         </td>
                         <td *ngIf="SelectedShipment && (ShipmentTypeId != 'FCL' && ShipmentTypeId != 'FCLD') || (SelectedShipment && SelectedShipment.TransportModeId == 'A')">
                             <!--<span class="Archive" style="vertical-align:middle;font-size:12px;color:#6E7172;" >{{SelectedShipment ? ((SelectedShipment.PackagesQuantity == null ? 0 : SelectedShipment.PackagesQuantity) + ' Pcs' + ' / ' + (SelectedShipment.GrossWeight == null ? 0 : SelectedShipment.GrossWeight) + ' Kgm') : ''}}</span>-->
-                            <span *ngIf="SelectedShipment.PackagesQuantity == null || SelectedShipment.PackagesQuantity == 0" style="vertical-align:middle;font-size:12px;color:#6E7172;">
+                            <span *ngIf="(SelectedShipment.PackagesQuantity == null || SelectedShipment.PackagesQuantity == 0) && ( this.ShipmentPM && this.ShipmentPM.ShipmentOrderPackages.length == 0 )" style="vertical-align:middle;font-size:12px;color:#6E7172;">
                                 {{SelectedShipment ? ((SelectedShipment.PackagesQuantity == null ? 0 : SelectedShipment.PackagesQuantity) + ' Pcs' + ' / ' + (SelectedShipment.GrossWeight == null ? 0 : SelectedShipment.GrossWeight) + ' Kgm') : ''}}
                             </span>
-                            <span class="Archive" *ngIf="SelectedShipment.PackagesQuantity != null && SelectedShipment.PackagesQuantity != 0" style="vertical-align:middle;font-size:12px;" (click)="OnPackagesClick('Packages')">
+                            <span class="Archive" *ngIf="(SelectedShipment.PackagesQuantity != null && SelectedShipment.PackagesQuantity != 0)" style="vertical-align:middle;font-size:12px;" (click)="OnPackagesClick('Packages')">
                                 {{SelectedShipment ? ((SelectedShipment.PackagesQuantity == null ? 0 : SelectedShipment.PackagesQuantity) + ' Pcs' + ' / ' + (SelectedShipment.GrossWeight == null ? 0 : SelectedShipment.GrossWeight) + ' Kgm') : ''}}
+                            </span>
+                            <span class="Archive" *ngIf="this.ShipmentPM && this.ShipmentPM.ShipmentOrderPackages.length != 0 && (SelectedShipment.PackagesQuantity == null || SelectedShipment.PackagesQuantity == 0)" style="vertical-align:middle;font-size:12px;" (click)="OnPackagesClick('Packages')">
+                                {{this.ShipmentPM ? ((this.ShipmentPM.ShipmentOrderPackages.length == 0 ? 0 : this.ShipmentPM.ShipmentOrderPackages.length) + ' Pcs' + ' / ' + (this.ShipmentPM.OrderGrossWeight == null ? 0 : this.ShipmentPM.OrderGrossWeight) + ' Kgm') : ''}}
                             </span>
                         </td>
                         <td *ngIf="!SelectedShipment">
