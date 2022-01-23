@@ -142,10 +142,6 @@ export class SharedLogisticsDocumentPermissiosComponent implements OnInit {
     }
 
     SaveButtonClicked() {
-        if (this.SharedDocumentPage) {
-            this.SharedDocumentPage.SaveButtonClicked();
-            return;
-        }
         this.CurrentSession.StartBusyIndicatorSaving();
         this.myTenantList = [];
         this.DocumentPermissiosLists.forEach((item) => {
@@ -154,24 +150,31 @@ export class SharedLogisticsDocumentPermissiosComponent implements OnInit {
             }
         });
 
+
         if (this.myTenantList.length > 0) {
             this._documentTypePMExtendedService.update(this.myTenantList).subscribe((res: any) => {
-                this.CloseButtonClicked();
+                this.SaveSharedDocumentPage();
             });
         }
         else {
-            this.CloseButtonClicked();
+            this.SaveSharedDocumentPage();
         }
+    }
+
+    private SaveSharedDocumentPage() {
+        if (this.SharedDocumentPage) this.SharedDocumentPage.SaveButtonClicked(this.myTenantList);
+        else this.CloseButtonClicked();
     }
 
     onSearchTextChangeEvent(searchText) {
         if (!searchText) searchText = "";
 
         this.mySearchText = searchText;
-        if (!this.SharedDocumentPage) this.BuildData();
-        else this.SharedDocumentPage.onSearchTextChangeEvent(searchText);
+        this.BuildData();
+        if (this.SharedDocumentPage) this.SharedDocumentPage.onSearchTextChangeEvent(searchText);
     }
 
+    SharedDocumentsPermissionsComponentLoaded: boolean;
     LoadEventCreationResultComponent() {
         if (!this.AllLocations) return;
 
@@ -179,10 +182,8 @@ export class SharedLogisticsDocumentPermissiosComponent implements OnInit {
         if (myGeneratedComponentLocation == null) {
             return;
         }
-        this.SharedDocumentPage = null;
-        myGeneratedComponentLocation.viewContainerRef.clear();
-        if (this.SelectedTabCode != 'AGV') return;
-
+        if (this.SharedDocumentsPermissionsComponentLoaded) return;
+        this.SharedDocumentsPermissionsComponentLoaded = true;
         SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureDocuments/Components/SharedDocument/SharedDocumentsPermissionsComponent', myGeneratedComponentLocation.viewContainerRef)
             .then(cmpRef => {
                 this.SharedDocumentPage = cmpRef.instance;
