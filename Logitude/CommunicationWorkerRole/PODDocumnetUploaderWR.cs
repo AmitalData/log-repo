@@ -258,11 +258,11 @@ namespace CommunicationWorkerRole
         {
             if (!isPODReceived && podReceivedDate == null)
             {
-                this.DeleteTraceEvent("PODR");
+                this.DeleteTraceEvent("POID");
             }
             else
             {
-                this.CreateTraceEvent("PODR");
+                this.CreateTraceEvent("POID");
             }
         }
 

@@ -33,33 +33,17 @@ BEGIN
                      @Name,
                      @Name,
                      0,
-					 'P',
-					 245,
-					 245,
-					 @Code +','+@Name+','+@Name
+					           'P',
+			          		 245,
+					           245,
+					           @Code +','+@Name+','+@Name
                      )
               end   
 
-              if not exists (select * from EventTypes where Code = @Code and Tenant = @Tenant)
-              begin                     
-                     EXECUTE usp_GetNextTableIdValue @NewId OUTPUT,'EventType'
-                     insert into EventTypes(Id, Code, ObjectTableId, Tenant, EnglishName, LocalName, AddedManually, IsManualEntry, IsFollowUp, ManualActivatedFollowUp, InActive, ShortView,EntityStatusId,SearchFields)
-                     values
-                     (
-                     @NewId,
-                     @Code,
-                     @ObjectTableId,
-                     @Tenant,
-                     @Name,
-                     @Name,
-                     0,
-                     0,
-                     0,
-                     0,
-                     0,
-                     1,
-                     (Select Id from EntityStatus where EntityStatus.Code = @Code and EntityStatus.Tenant = @Tenant),
-					 @Code +','+@Name+','+@Name)
+              if exists (select * from EventTypes where Code = 'PIOD' and Tenant = @Tenant)
+              begin 
+              
+              Update EventTypes set EnglishName = @Name, LocalName = @Name, SearchFields = 'PIOD' +','+@Name+','+@Name ,EntityStatusId = (Select Id from EntityStatus where EntityStatus.Code = @Code and EntityStatus.Tenant = @Tenant) where EventTypes.Code = 'PIOD' and EventTypes.Tenant = @Tenant
               end    			 
        FETCH NEXT FROM DataCursor INTO @Tenant
        END
@@ -67,7 +51,6 @@ BEGIN
        DEALLOCATE DataCursor
 END
 
-update ObjectTableLastUpdates set LastUpdateDate = GETDATE() where ObjectTableId = (select id from ObjectTables where Name = 'EventType')
 update ObjectTableLastUpdates set LastUpdateDate = GETDATE() where ObjectTableId = (select id from ObjectTables where Name = 'EntityStatus')
     
     ]]>
