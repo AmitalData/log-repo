@@ -529,9 +529,9 @@ namespace Logitude.Infrastructure.BL
             all.Add(new ToggleDetails()
             {    
                 Code = "CTF", 
-                Name = "Customer Term Field", 
-                SearchFields = "CTF,Customer Term Field", 
-                Description = "Show Customer Term Field", 
+                Name = "Customer Team Field", 
+                SearchFields = "CTF,Customer Team Field", 
+                Description = "Show Customer Team Field", 
 			});
 			
             return all;
