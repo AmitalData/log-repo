@@ -152,7 +152,7 @@ export class AddEditTariffLineComponent  {
             }
 
             else if (this.TariffType == "ICC" || this.TariffType == "ECC") {
-                if (AppTool.IsNullOrEmpty(this.DataContext.ToCountryId) && !this.DataContext.IsToAllOthercountry) {
+                if (AppTool.IsNullOrEmpty(this.DataContext.ToCountryId) && !this.DataContext.IsToAllOtherCountries) {
                     errors.push("To country or to all other countries is required");
                 }
 

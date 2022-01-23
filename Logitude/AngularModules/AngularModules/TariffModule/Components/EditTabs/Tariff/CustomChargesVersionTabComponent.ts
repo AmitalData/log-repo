@@ -24,6 +24,9 @@ import { TariffVersionExtendedPMService } from '../../../Services/ExtendedPMs/Ta
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 import { CountryList } from '../../../../Common/EntityLists/CountryList';
 import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
+import { AddressList } from '../../../../Common/EntityLists/AddressList';
+import { AddressListService } from '../../../../Common/Services/StandardLists/AddressListService';
+import { PartnersDomainService } from '../../../../Common/Services/PartnersDomainService';
 
 @Component({
     templateUrl: './CustomChargesVersionTabComponent.html',
@@ -86,7 +89,6 @@ export class CustomChargesVersionTabComponent extends BaseComponent implements O
                         this.AllMeasurements = myResponse2.Result;
 
                         this.LoadCompareToVersions();
-
                         this.SetUIProperties();
                         this.SetSurchargesLabelsAndVisibility();
 
@@ -513,29 +515,48 @@ export class CustomChargesVersionTabComponent extends BaseComponent implements O
     }
 
     AddTariffLine() {
-        var logWindow = new LogitudeWindow();
-        var itemPM = new TariffLinePM(null);
-        itemPM.StartDate = this.StartDate;
-        itemPM.ExpirationDate = this.ExpirationDate;
-        itemPM.Tenant = SessionLocator.Tenant;
-        itemPM.Version = this.CurrentVersion.Version;
-        itemPM.Index = 0;
-        itemPM.CurrencyId = this.EntityPM.CurrencyId;
+        var addressService: PartnersDomainService = new PartnersDomainService();
+        addressService.GetMainAddressListByCardId(this.EntityPM.CustomsBrokerId).subscribe((response: any) => {
+            if (!response.HasError) {
+                var customsBrokerAddress = response;
 
-        var Version: TariffVersionPM = this.EntityPM.TariffVersions.filter(p => p.Version == itemPM.Version)[0];
-        if (Version) {
-            if (Version.TariffLines.length > 0) {
-                var index = Math.max.apply(Math, Version.TariffLines.map(function (o) { return o.Index; })) + 1;
-                if (index) {
-                    itemPM.Index = index;
+                var logWindow = new LogitudeWindow();
+                var itemPM = new TariffLinePM(null);
+                itemPM.StartDate = this.StartDate;
+                itemPM.ExpirationDate = this.ExpirationDate;
+                itemPM.Tenant = SessionLocator.Tenant;
+                itemPM.Version = this.CurrentVersion.Version;
+                itemPM.Index = 0;
+                itemPM.CurrencyId = this.EntityPM.CurrencyId;
+
+                if (this.EntityPM.TypeCode == "ECC") {
+                    itemPM.FromCountryId = customsBrokerAddress.CountryId;
+                    itemPM.FromCountryCode = customsBrokerAddress.CountryCode;
+                    itemPM.FromCountryName = customsBrokerAddress.CountryName;
                 }
-            }
-        }
 
-        var itemComponent = new CustomsChargesTariffLineData(itemPM, this, true);
-        logWindow.WindowArgs = { DataContext: itemComponent, EntityPM: itemPM, TariffType: this.EntityPM.TypeCode };
-        logWindow.Title = "New Tariff Line";
-        logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
+                else if (this.EntityPM.TypeCode == "ICC") {
+                    itemPM.ToCountryId = customsBrokerAddress.CountryId;
+                    itemPM.ToCountryCode = customsBrokerAddress.CountryCode;
+                    itemPM.ToCountryName = customsBrokerAddress.CountryName;
+                }
+
+                var Version: TariffVersionPM = this.EntityPM.TariffVersions.filter(p => p.Version == itemPM.Version)[0];
+                if (Version) {
+                    if (Version.TariffLines.length > 0) {
+                        var index = Math.max.apply(Math, Version.TariffLines.map(function (o) { return o.Index; })) + 1;
+                        if (index) {
+                            itemPM.Index = index;
+                        }
+                    }
+                }
+
+                var itemComponent = new CustomsChargesTariffLineData(itemPM, this, true);
+                logWindow.WindowArgs = { DataContext: itemComponent, EntityPM: itemPM, TariffType: this.EntityPM.TypeCode };
+                logWindow.Title = "New Tariff Line";
+                logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
+            }
+        });
     }
 
     EditTariffButtonClicked(item: CustomsChargesTariffLineData) {

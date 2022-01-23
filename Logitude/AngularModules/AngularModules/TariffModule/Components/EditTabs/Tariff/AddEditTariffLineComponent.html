@@ -240,7 +240,7 @@
                             <td>
                                 <table>
                                     <tr>
-                                        <td style="width:160px;">
+                                        <td [style.width.px]="TariffType == 'ICC' || TariffType == 'ECC' ? 160 : 140">
                                             <LogLabel [ObjectFieldName]="'IsDifferentCurrenciesPerCharge'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Different Per Charge'"></LogLabel>
                                         </td>
 
