@@ -153,6 +153,8 @@
 
         private string qUE_TYPEField;
 
+        private INV_EXPENSES[] iNV_EXPENSESField;
+
         /// <remarks/>
         public string INVOICELINENO
         {
@@ -320,6 +322,20 @@
             set
             {
                 this.qUE_TYPEField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("INV_EXPENSES")]
+        public INV_EXPENSES[] INV_EXPENSES
+        {
+            get
+            {
+                return this.iNV_EXPENSESField;
+            }
+            set
+            {
+                this.iNV_EXPENSESField = value;
             }
         }
     }
@@ -865,6 +881,77 @@
             set
             {
                 this.currencyTypeCodeField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGISIVUG")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGISIVUG", IsNullable = false)]
+    public partial class INV_EXPENSES
+    {
+
+        private string invExpTypeCodeField;
+
+        private string invExpAmountField;
+
+        private string invExpCurrencyTypeCodeField;
+
+        private string invExpDescriptionField;
+
+        /// <remarks/>
+        public string InvExpTypeCode
+        {
+            get
+            {
+                return this.invExpTypeCodeField;
+            }
+            set
+            {
+                this.invExpTypeCodeField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string InvExpAmount
+        {
+            get
+            {
+                return this.invExpAmountField;
+            }
+            set
+            {
+                this.invExpAmountField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string InvExpCurrencyTypeCode
+        {
+            get
+            {
+                return this.invExpCurrencyTypeCodeField;
+            }
+            set
+            {
+                this.invExpCurrencyTypeCodeField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string InvExpDescription
+        {
+            get
+            {
+                return this.invExpDescriptionField;
+            }
+            set
+            {
+                this.invExpDescriptionField = value;
             }
         }
     }
