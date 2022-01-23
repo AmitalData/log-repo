@@ -554,6 +554,7 @@ export class CustomChargesVersionTabComponent extends BaseComponent implements O
                 var itemComponent = new CustomsChargesTariffLineData(itemPM, this, true);
                 logWindow.WindowArgs = { DataContext: itemComponent, EntityPM: itemPM, TariffType: this.EntityPM.TypeCode };
                 logWindow.Title = "New Tariff Line";
+                logWindow.Width = 700;
                 logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
             }
         });
