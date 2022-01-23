@@ -35,6 +35,7 @@
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="INVOICEITEMS" />
         <xs:element minOccurs="0" maxOccurs="1" ref="ChangeInSupplierInvoice" />
         <xs:element minOccurs="0" maxOccurs="1" ref="QUE_TYPE" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="INV_EXPENSES" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -134,6 +135,20 @@
   <xs:element name="CurrencyTypeCode" type="xs:string" />
   <xs:element name="ChangeInSupplierInvoice" type="xs:string" />
   <xs:element name="QUE_TYPE" type="xs:string" />
+  <xs:element name="INV_EXPENSES">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="InvExpTypeCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="InvExpAmount" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="InvExpCurrencyTypeCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="InvExpDescription" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InvExpTypeCode" type="xs:string" />
+  <xs:element name="InvExpAmount" type="xs:string" />
+  <xs:element name="InvExpCurrencyTypeCode" type="xs:string" />
+  <xs:element name="InvExpDescription" type="xs:string" />
   <xs:element name="CustomsDocuments">
     <xs:complexType>
       <xs:sequence>
