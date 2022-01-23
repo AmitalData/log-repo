@@ -551,6 +551,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                 }
             }
 
+            MyGenericResponseObj.ApplicationId = _LogitudeScheduler.Param1;
+
         }
 
 
