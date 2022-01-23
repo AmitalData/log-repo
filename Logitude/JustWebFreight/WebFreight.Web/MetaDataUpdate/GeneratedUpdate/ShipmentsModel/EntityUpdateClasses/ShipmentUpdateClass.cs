@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "7b4dac8e83a4eccb10a628c5abc6c8b1";
+		public const string HashString = "e52aa2b7691077d88bf230906760a8df";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -49463,8 +49463,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "PIOD",
-                EnglishName =  "POD",
-                LocalName =  "POD",
+                EnglishName =  "POD Received",
+                LocalName =  "POD Received",
                 IsManualEntry =  true,
                 ShortView =  true,
                 EventTypeCategoryCode =  "LEG",
@@ -49477,7 +49477,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
                 FollowUpEnglishName =  "POD",
                 FollowUpLocalName =  "POD",
                 ObjectTableId = ShipmentObjectTable.Id,
-                EntityStatusId = AllEntityStatuses.Where(d => d.Tenant == 0 && d.Code == "SDLD").FirstOrDefault().Id,
+                EntityStatusId = AllEntityStatuses.Where(d => d.Tenant == 0 && d.Code == "PODR").FirstOrDefault().Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
