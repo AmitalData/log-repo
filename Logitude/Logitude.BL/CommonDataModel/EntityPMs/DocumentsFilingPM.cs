@@ -168,6 +168,9 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool IsDigitalSignRequired { get; set; }
         public bool BackedupExternally { get; set; }
         public bool? IsTransferdToQBO { get; set; }
+        public bool IsAgentSharedInHouse { get; set; }
+        public bool IsAgentSharedInDirect { get; set; }
+        public bool IsAgentSharedInMaster { get; set; }
 
     }
 }

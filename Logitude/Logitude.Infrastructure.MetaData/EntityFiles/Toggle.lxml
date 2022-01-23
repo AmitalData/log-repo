@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;55a5&quot;"
+  Code="&quot;183e&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -697,6 +697,11 @@
       Name="&quot;Containers DWH&quot;"
       SearchFields="&quot;Containers DWH,Allow Tenants to Show Containers Fact on BI Report Screent,BCF&quot;"
       Description="&quot;Allow Tenants to Show Containers Fact on BI Report Screen&quot;" />
+    <Record
+      Code="&quot;DFP&quot;"
+      Name="&quot;Sharing Documents Via Shared links&quot;"
+      SearchFields="&quot;DFP,Sharing Documents Via Shared links Permission&quot;"
+      Description="&quot;Sharing Documents Via Shared links Permission&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

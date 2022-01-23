@@ -15,6 +15,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using WebFreight.Web.Security;
 using WebFreight.Web.WebServices;
 using Logitude.Server.Tools.QueueService;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.App_Code
 {
@@ -127,7 +128,7 @@ namespace WebFreight.Web.App_Code
             {
                 CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
 
-                output = this.GetShipmentSharedDocuments(entityId, partnerType, tenant, false);
+                output = this.GetShipmentSharedDocuments(entityId, shipment.ShipmentLevelCode, partnerType, tenant, false);
             }
 
             return output.OrderBy(o => o.Name).ToList();
@@ -153,7 +154,7 @@ namespace WebFreight.Web.App_Code
                     {
                         if(partnerType !="AG") partnerType = "CS"; //To avoid change PartnerType if it's agent
 
-                        output = this.GetShipmentSharedDocuments(entityId, partnerType, tenant, true);
+                        output = this.GetShipmentSharedDocuments(entityId, shipment.ShipmentLevelCode, partnerType, tenant, true);
                     }
                 }
             }
@@ -213,7 +214,7 @@ namespace WebFreight.Web.App_Code
             return true;
         }
 
-        private List<SharedLogisticDocumentPM> GetShipmentSharedDocuments(string entityId, string partnerType, int tenant, bool isExternalURL)
+        private List<SharedLogisticDocumentPM> GetShipmentSharedDocuments(string entityId, string shipmentLevelCode, string partnerType, int tenant, bool isExternalURL)
         {
             List<SharedLogisticDocumentPM> output = new List<SharedLogisticDocumentPM>();
 
@@ -222,15 +223,15 @@ namespace WebFreight.Web.App_Code
             DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
             List<DocumentsFilingPM> myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(entityId, tenant);
 
-            if (partnerType == "AG")
+            if (partnerType == "CS")
             {
-                myDocumentFilings = myDocumentFilings.Where(d => d.IsAgentView).ToList();
+                myDocumentFilings = GetAgentDocuments(myDocumentFilings,shipmentLevelCode,tenant);
             }
 
-            else if (partnerType == "CS")
-            {
-                myDocumentFilings = myDocumentFilings.Where(d => d.IsCustomerView).ToList();
-            }
+            //else if (partnerType == "CS")
+            //{
+            //    myDocumentFilings = myDocumentFilings.Where(d => d.IsCustomerView).ToList();
+            //}
 
             List<DocumentOutCopy> allcopies = new List<DocumentOutCopy>();
             List<DocumentsFilingPM> missedDocuments = myDocumentFilings.Where(d => d.DirectionCode == "O" && d.DoucmentTypeTemplateFormatCode != "M" && d.DocumentId == null).ToList();
@@ -322,6 +323,27 @@ namespace WebFreight.Web.App_Code
             return output;
         }
 
+        private List<DocumentsFilingPM> GetAgentDocuments(List<DocumentsFilingPM> myDocumentFilings, string shipmentLevelCode, int tenant)
+        {
+            if (IsCloudEnvironment() || !FeatureToggleHelper.HasFeatureToggle("DFP", tenant))
+                return myDocumentFilings.Where(d => d.IsAgentView).ToList();
+
+            if (shipmentLevelCode == "C")
+                return myDocumentFilings.Where(d => d.IsAgentSharedInMaster).ToList();
+
+            if (shipmentLevelCode == "D")
+                return myDocumentFilings.Where(d => d.IsAgentSharedInDirect).ToList();
+
+            if (shipmentLevelCode == "H")
+                return myDocumentFilings.Where(d => d.IsAgentSharedInHouse).ToList();
+
+            return myDocumentFilings.Where(d => d.IsAgentView).ToList();
+        }
+
+        private bool IsCloudEnvironment()
+        {
+            return Simplog.Server.Infrastructure.LogitudeSettings.WorkEnvironment == "cloud";
+        }
 
         private bool CheckSharedContactAuthenticationForShipment(string agentId, string customerId, int tenant)
         {

@@ -125,6 +125,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
                                               IsTransferdToQBO =  a.IsTransferdToQBO,
+
+                                              IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                              IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                              IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                           }).FirstOrDefault();
 
 
@@ -224,6 +228,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
                                               IsTransferdToQBO = a.IsTransferdToQBO,
+
+                                              IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                              IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                              IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                           }).FirstOrDefault();
 
             if (extDocPm != null)
@@ -323,6 +331,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               BackedupExternally = a.BackedupExternally,
                                               SecurityId = a.SecurityId,
                                               IsTransferdToQBO = a.IsTransferdToQBO,
+
+                                              IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                              IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                              IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                           }).FirstOrDefault();
 
             if (extDocPm != null)
@@ -425,6 +437,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
                                               IsTransferdToQBO = a.IsTransferdToQBO,
+
+                                              IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                              IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                              IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                           }).FirstOrDefault();
 
             if (extDocPm != null)
@@ -523,6 +539,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               IsTransferdToQBO = a.IsTransferdToQBO,
                                               BackedupExternally = a.BackedupExternally,
+
+                                              IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                              IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                              IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                           }).FirstOrDefault();
 
             if (extDocPm != null)
@@ -621,6 +641,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
                                               IsTransferdToQBO = a.IsTransferdToQBO,
+
+                                              IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                              IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                              IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                           }).FirstOrDefault();
 
             if (extDocPm != null)
@@ -719,6 +743,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
                                               IsTransferdToQBO = a.IsTransferdToQBO,
+
+                                              IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                              IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                              IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                           }).FirstOrDefault();
 
             if (extDocPm != null)
@@ -815,6 +843,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                IsDigitalSignRequired = a.IsDigitalSignRequired,
                                                                BackedupExternally = a.BackedupExternally,
                                                                IsTransferdToQBO = a.IsTransferdToQBO,
+
+                                                               IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                                               IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                                               IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                                            }).ToList();
 
             ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
@@ -930,6 +962,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                IsDigitalSignRequired = a.IsDigitalSignRequired,
                                                                BackedupExternally = a.BackedupExternally,
                                                                IsTransferdToQBO = a.IsTransferdToQBO,
+
+                                                               IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                                               IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                                               IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                                            }).ToList();
 
             ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
@@ -1065,6 +1101,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        SignDueDate = a.SignDueDate,
                                        IsDigitalSignRequired = a.IsDigitalSignRequired,
                                        BackedupExternally = a.BackedupExternally,
+
+                                       IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                       IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                       IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                    });
 
             if (!string.IsNullOrEmpty(childEntityId)) externalDocumentPMs = externalDocumentPMs.Where(d => d.ChildEntityId == childEntityId);
@@ -1210,6 +1250,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            SignDueDate = a.SignDueDate,
                                            IsDigitalSignRequired = a.IsDigitalSignRequired,
                                            BackedupExternally = a.BackedupExternally,
+
+                                           IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                           IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                           IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                        }).ToList();
             }
             else
@@ -1288,6 +1332,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            SignDueDate = a.SignDueDate,
                                            IsDigitalSignRequired = a.IsDigitalSignRequired,
                                            BackedupExternally = a.BackedupExternally,
+
+                                           IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                           IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                           IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                        }).ToList();
             }
 
@@ -1434,6 +1482,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            IsDigitalSignRequired = a.IsDigitalSignRequired,
                                            BackedupExternally = a.BackedupExternally,
                                            CalculatedFileName = a.Document != null ? a.Document.CalculatedFileName : null,
+
+                                           IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                           IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                           IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                        }).ToList();
             }
             else
@@ -1510,7 +1562,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            BackedupExternally = a.BackedupExternally,
                                            CalculatedFileName = a.Document != null ? a.Document.CalculatedFileName : null,
 
-
+                                           IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                           IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                           IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                        }).ToList();
             }
             return externalDocumentPMs;
@@ -1595,6 +1649,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        SignDueDate = a.SignDueDate,
                                        IsDigitalSignRequired = a.IsDigitalSignRequired,
                                        BackedupExternally = a.BackedupExternally,
+
+                                       IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                       IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                       IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                    }).ToList();
 
             ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
@@ -2075,6 +2133,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            SignDueDate = a.SignDueDate,
                                            IsDigitalSignRequired = a.IsDigitalSignRequired,
                                            BackedupExternally = a.BackedupExternally,
+
+                                           IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                           IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                           IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                        }).ToList();
             }
             else
@@ -2156,6 +2218,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            SignDueDate = a.SignDueDate,
                                            IsDigitalSignRequired = a.IsDigitalSignRequired,
                                            BackedupExternally = a.BackedupExternally,
+
+                                           IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                           IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                           IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                        }).ToList();
             }
 
@@ -2235,6 +2301,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     OrigionalDocumentId = a.OrigionalDocumentId,
                                                     IsDigitalSignRequired = a.IsDigitalSignRequired,
                                                     BackedupExternally = a.BackedupExternally,
+
+                                                    IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                                    IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                                    IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                                 }).ToList();
 
                 externalDocumentPMs = externalDocumentPMs.Concat(docs).ToList();
@@ -2353,6 +2423,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               SignDueDate = a.SignDueDate,
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
+
+                                              IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                              IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                              IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                           }).FirstOrDefault();
 
             if (extDocPm != null)
@@ -2448,6 +2522,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               SignDueDate = a.SignDueDate,
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
+
+                                              IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                              IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                              IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                           }).FirstOrDefault();
 
             if (extDocPm != null)
@@ -2548,6 +2626,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               SignDueDate = a.SignDueDate,
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
+
+                                              IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                              IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                              IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                           }).FirstOrDefault();
 
             if (extDocPm != null)
@@ -2925,6 +3007,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         IsDigitalSignRequired = a.IsDigitalSignRequired,
                         BackedupExternally = a.BackedupExternally,
 
+                        IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                        IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                        IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                     }).ToList();
         }
 
@@ -3004,6 +3089,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        SignDueDate = a.SignDueDate,
                                                        IsDigitalSignRequired = a.IsDigitalSignRequired,
                                                        BackedupExternally = a.BackedupExternally,
+
+                                                       IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                                       IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                                       IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                                    };
                 return result.ToList();
         }
@@ -3082,6 +3171,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        SignDueDate = a.SignDueDate,
                                                        IsDigitalSignRequired = a.IsDigitalSignRequired,
                                                        BackedupExternally = a.BackedupExternally,
+
+                                                       IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                                       IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                                       IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                                    };
             return result.ToList();
         }
@@ -3164,8 +3257,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            SignDueDate = a.SignDueDate,
                                            IsDigitalSignRequired = a.IsDigitalSignRequired,
                                            BackedupExternally = a.BackedupExternally,
-                                           DocumentCategoryCode = a.DocumentType.DocumentTypeCategoryCode
- 
+                                           DocumentCategoryCode = a.DocumentType.DocumentTypeCategoryCode,
+
+                                           IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                           IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                           IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                        }).ToList();
             }
             else
@@ -3240,6 +3336,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            SignDueDate = a.SignDueDate,
                                            IsDigitalSignRequired = a.IsDigitalSignRequired,
                                            BackedupExternally = a.BackedupExternally,
+
+                                           IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                           IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                           IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                        }).ToList();
             }
             if (externalEntityReferences != null)
@@ -3310,6 +3410,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     OrigionalDocumentId = a.OrigionalDocumentId,
                                                     IsDigitalSignRequired = a.IsDigitalSignRequired,
                                                     BackedupExternally = a.BackedupExternally,
+
+                                                    IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                                    IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                                    IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                                 }).ToList();
                 externalDocumentPMs = externalDocumentPMs.Concat(docs).ToList();
             }
@@ -3424,7 +3528,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        OrigionalDocumentId = a.OrigionalDocumentId,
                                        IsDigitalSignRequired = a.IsDigitalSignRequired,
                                        BackedupExternally = a.BackedupExternally,
-                                       DocumentCategoryCode =a.DocumentType.DocumentTypeCategoryCode
+                                       DocumentCategoryCode =a.DocumentType.DocumentTypeCategoryCode,
+
+                                       IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                       IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                       IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                    }).ToList();
 
 
@@ -3569,6 +3677,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               SignDueDate = a.SignDueDate,
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
+
+                                              IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                              IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                              IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                           }).FirstOrDefault();
 
             //if (extDocPm != null)
@@ -3782,6 +3894,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        SignDueDate = a.SignDueDate,
                                                        IsDigitalSignRequired = a.IsDigitalSignRequired,
                                                        BackedupExternally = a.BackedupExternally,
+
+                                                       IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                                       IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                                       IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                                    };
             return result.ToList();
         }
