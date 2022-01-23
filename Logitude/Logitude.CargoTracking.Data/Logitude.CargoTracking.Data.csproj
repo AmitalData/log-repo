@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CargoTrackingContext.cs" />
+    <Compile Include="EntityKeys\CargoDisconnectQueueKeys.cs" />
     <Compile Include="EntityKeys\CargoReferencesSyncQueueKeys.cs" />
     <Compile Include="EntityKeys\CargoTrackingCardKeys.cs" />
     <Compile Include="EntityKeys\CargoTrackingCountryKeys.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="EntityKeys\CargoTrackingShipmentSearchKeys.cs" />
     <Compile Include="EntityKeys\CargoTrackingTransportModeKeys.cs" />
     <Compile Include="EntityKeys\CargoTrackingWatermarkKeys.cs" />
+    <Compile Include="EntityListQueryServices\CargoDisconnectQueueListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoReferencesSyncQueueListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoTrackingCardListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoTrackingCountryListQueryService.cs" />
@@ -103,6 +105,7 @@
     <Compile Include="EntityListQueryServices\CargoTrackingShipmentSearchListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoTrackingTransportModeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoTrackingWatermarkListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CargoDisconnectQueueListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CargoReferencesSyncQueueListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CargoTrackingCardListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CargoTrackingCountryListQueryService.Generated.cs" />
@@ -116,6 +119,7 @@
     <Compile Include="EntityListQueryServices\Generated\CargoTrackingShipmentSearchListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CargoTrackingTransportModeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CargoTrackingWatermarkListQueryService.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CargoDisconnectQueueList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CargoReferencesSyncQueueList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CargoTrackingCardList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CargoTrackingCountryList.Generated.cs" />
@@ -129,6 +133,7 @@
     <Compile Include="EntityLists\Generated\CargoTrackingShipmentSearchList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CargoTrackingTransportModeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CargoTrackingWatermarkList.Generated.cs" />
+    <Compile Include="EntityMapping\CargoDisconnectQueueMap.cs" />
     <Compile Include="EntityMapping\CargoReferencesSyncQueueMap.cs" />
     <Compile Include="EntityMapping\CargoTrackingCardMap.cs" />
     <Compile Include="EntityMapping\CargoTrackingCountryMap.cs" />
@@ -142,6 +147,7 @@
     <Compile Include="EntityMapping\CargoTrackingShipmentSearchMap.cs" />
     <Compile Include="EntityMapping\CargoTrackingTransportModeMap.cs" />
     <Compile Include="EntityMapping\CargoTrackingWatermarkMap.cs" />
+    <Compile Include="EntityPOCOs\CargoDisconnectQueue.cs" />
     <Compile Include="EntityPOCOs\CargoReferencesSyncQueue.cs" />
     <Compile Include="EntityPOCOs\CargoTrackingCard.cs" />
     <Compile Include="EntityPOCOs\CargoTrackingCountry.cs" />
@@ -170,6 +176,7 @@
     <Compile Include="Repositories\CargoTrackingShipmentSearchRepository.cs" />
     <Compile Include="Repositories\CargoTrackingTransportModeRepository.cs" />
     <Compile Include="Repositories\CargoTrackingWatermarkRepository.cs" />
+    <Compile Include="Repositories\Generated\CargoDisconnectQueueRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\CargoReferencesSyncQueueRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\CargoTrackingCardRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\CargoTrackingCountryRepository.Generated.cs" />

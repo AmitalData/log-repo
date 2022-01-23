@@ -14,7 +14,7 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
-export class CargoTrackingShipmentSearchPM {
+export class CargoDisconnectQueuePM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -24,24 +24,14 @@ export class CargoTrackingShipmentSearchPM {
       }
  	 
     
-    private tenant: number;
-    public get Tenant() { return this.tenant; }
-    public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
-       
-	 
-    private searchFields: string;
-    public get SearchFields() { return this.searchFields; }
-    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
-       
-	 
-    private shipmentDate: Date;
-    public get ShipmentDate() { return this.shipmentDate; }
-    public set ShipmentDate(newValue: Date) { if (this.shipmentDate != newValue) { this.shipmentDate = newValue; this.MarkAsDirty("ShipmentDate"); } }
-       
-	 
     private id: number;
     public get Id() { return this.id; }
     public set Id(newValue: number) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
+       
+	 
+    private tenant: number;
+    public get Tenant() { return this.tenant; }
+    public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
     private shipmentId: string;
@@ -49,23 +39,13 @@ export class CargoTrackingShipmentSearchPM {
     public set ShipmentId(newValue: string) { if (this.shipmentId != newValue) { this.shipmentId = newValue; this.MarkAsDirty("ShipmentId"); } }
        
 	 
-    private isPublic: boolean;
-    public get IsPublic() { return this.isPublic; }
-    public set IsPublic(newValue: boolean) { if (this.isPublic != newValue) { this.isPublic = newValue; this.MarkAsDirty("IsPublic"); } }
-       
-	 
-    private referenceType: string;
-    public get ReferenceType() { return this.referenceType; }
-    public set ReferenceType(newValue: string) { if (this.referenceType != newValue) { this.referenceType = newValue; this.MarkAsDirty("ReferenceType"); } }
-       
-	 
-    private referenceFromShipmentId: string;
-    public get ReferenceFromShipmentId() { return this.referenceFromShipmentId; }
-    public set ReferenceFromShipmentId(newValue: string) { if (this.referenceFromShipmentId != newValue) { this.referenceFromShipmentId = newValue; this.MarkAsDirty("ReferenceFromShipmentId"); } }
+    private shipmentType: string;
+    public get ShipmentType() { return this.shipmentType; }
+    public set ShipmentType(newValue: string) { if (this.shipmentType != newValue) { this.shipmentType = newValue; this.MarkAsDirty("ShipmentType"); } }
        
 	 
 
-    public OldEntityPM: CargoTrackingShipmentSearchPM;
+    public OldEntityPM: CargoDisconnectQueuePM;
 		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
@@ -76,13 +56,13 @@ export class CargoTrackingShipmentSearchPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CargoTrackingShipmentSearch");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CargoDisconnectQueue");
            
         }
        }
     }
 
-    private MyClone: CargoTrackingShipmentSearchPM;
+    private MyClone: CargoDisconnectQueuePM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

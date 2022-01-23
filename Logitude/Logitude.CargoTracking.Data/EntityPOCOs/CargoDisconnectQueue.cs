@@ -14,27 +14,19 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 namespace Logitude.CargoTracking.Data.EntityPOCOs
 {
    
-    public class CargoTrackingShipmentSearch
+    public class CargoDisconnectQueue
     {
 	 string dbms;
 
-           [Column("Tenant")]
-	    public int Tenant { get; set; }
-        [Column("SearchFields")]
-	    public string SearchFields { get; set; }
-        [Column("ShipmentDate")]
-	    public DateTime? ShipmentDate { get; set; }
-     [Key]
+        [Key]
         [Column("Id")]
 	    public int Id { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
         [Column("ShipmentId")]
 	    public string ShipmentId { get; set; }
-        [Column("IsPublic")]
-	    public bool? IsPublic { get; set; }
-        [Column("ReferenceType")]
-	    public string ReferenceType { get; set; }
-        [Column("ReferenceFromShipmentId")]
-	    public string ReferenceFromShipmentId { get; set; }
+        [Column("ShipmentType")]
+	    public string ShipmentType { get; set; }
     }
 }
 	 

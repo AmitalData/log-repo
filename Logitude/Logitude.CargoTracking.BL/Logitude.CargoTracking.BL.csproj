@@ -69,6 +69,7 @@
     <Compile Include="APIDataContract\QueryService\TransportModeQueryService.Generated.cs" />
     <Compile Include="APIDataContract\TransportMode.Generated.cs" />
     <Compile Include="CargoTrackingServices\Codes.cs" />
+    <Compile Include="CargoTrackingServices\DBTablesCopy\Generated\CargoDisconnectQueueDxml.Generated.cs" />
     <Compile Include="CargoTrackingServices\DBTablesCopy\Generated\CargoReferencesSyncQueueDxml.Generated.cs" />
     <Compile Include="CargoTrackingServices\DBTablesCopy\Generated\CargoTrackingCardDxml.Generated.cs" />
     <Compile Include="CargoTrackingServices\DBTablesCopy\Generated\CargoTrackingCountryDxml.Generated.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="CargoTrackingServices\HelperClasses\SetTableLogicArgs.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\SplittedDataArguments.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\UpdateCargoTrackingRecords.cs" />
+    <Compile Include="CargoTrackingServices\Services\QueueServices\CargoDisconnectQueueService.cs" />
     <Compile Include="CargoTrackingServices\Services\QueueServices\CargoReferencesSyncQueueService.cs" />
     <Compile Include="CargoTrackingServices\Services\CargoTrackingSetLogic\CargoTrackingShipmentsOrderLogicService.cs" />
     <Compile Include="CargoTrackingServices\Services\CargoTrackingSetLogic\ShareTableLogic.cs" />
@@ -143,6 +145,7 @@
     <Compile Include="CoreBL\CargoTrackingUsersShipmentService.cs" />
     <Compile Include="CoreBL\UpdateShipmetsBatchArgs.cs" />
     <Compile Include="DataContracts\MixPanelTrackingEvent.cs" />
+    <Compile Include="EntityDataMappings\CargoDisconnectQueueDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoReferencesSyncQueueDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingCardDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingCountryDataMapping.cs" />
@@ -156,6 +159,7 @@
     <Compile Include="EntityDataMappings\CargoTrackingShipmentSearchDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingTransportModeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingWatermarkDataMapping.cs" />
+    <Compile Include="EntityDataMappings\Generated\CargoDisconnectQueueDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoReferencesSyncQueueDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoTrackingCardDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoTrackingCountryDataMapping.Generated.cs" />
@@ -178,6 +182,7 @@
     <Compile Include="EntityQueryServices\CargoTrackingTransportModeQueryService.cs" />
     <Compile Include="EntityQueryServices\CargoTrackingWatermarkQueryService.cs" />
     <Compile Include="EntityQueryServices\CargoTrackingShipmentSearchQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\CargoDisconnectQueueQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoReferencesSyncQueueQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoTrackingCardQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoTrackingCountryQueryService.Generated.cs" />
@@ -191,6 +196,7 @@
     <Compile Include="EntityQueryServices\Generated\CargoTrackingShipmentSearchQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoTrackingTransportModeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoTrackingWatermarkQueryService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CargoDisconnectQueueUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CargoReferencesSyncQueueUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CargoTrackingCardUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CargoTrackingCountryUpdateService.Generated.cs" />

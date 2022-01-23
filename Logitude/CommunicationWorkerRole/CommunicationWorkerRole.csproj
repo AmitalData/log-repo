@@ -378,6 +378,7 @@
     <Compile Include="ArtemusAnalyzerWorkerRole.cs" />
     <Compile Include="AutoSignUpMailWorkerRole.cs" />
     <Compile Include="AutoSignUpWorkerRole.cs" />
+    <Compile Include="CargoDisconnectWorkerRole.cs" />
     <Compile Include="CollaborationToolContainerUpdateWR.cs" />
     <Compile Include="CollaborationToolShipmentUpdateWR.cs" />
     <Compile Include="CollaborationToolTaskWR.cs" />
