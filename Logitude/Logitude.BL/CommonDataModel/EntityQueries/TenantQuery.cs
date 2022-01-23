@@ -680,6 +680,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
                                            AutomaticallyCloseDays = a.AutomaticallyCloseDays,
                                            EnableDeliveryOptions = a.EnableDeliveryOptions,
+                                           AccountingActivated = a.AccountingActivated
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -830,6 +831,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
                                        AutomaticallyCloseDays = a.AutomaticallyCloseDays,
                                        EnableDeliveryOptions = a.EnableDeliveryOptions,
+                                       AccountingActivated = a.AccountingActivated,
+
                                    }).FirstOrDefault();
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())

@@ -577,7 +577,6 @@
     <None Include="DBScripts\ShipmentModel\202108260927_UpdateContainersFieldsFromShipmentField.sxml" />
     <None Include="DBScripts\ShipmentModel\202109021032_FillDomesticFromToAdPartner.sxml" />
     <None Include="DBScripts\ShipmentModel\202111071410_FillContainersShipmentCreateDate.sxml" />
-    <None Include="DBScripts\ShipmentModel\202109221248_FillContainersPortsIdsData.sxml" />
     <None Include="DBScripts\ShipmentModel\202112261340_FillVesselNamesFieldsOnMaster.soxml" />
     <None Include="DBScripts\ShipmentModel\202112261340_FillVesselNamesFieldsOnShipment.soxml" />
     <None Include="DBScripts\ShipmentModel\202211010335_UpdateAutomaticLastUpdateDateOnContainerStatuses.sxml" />
