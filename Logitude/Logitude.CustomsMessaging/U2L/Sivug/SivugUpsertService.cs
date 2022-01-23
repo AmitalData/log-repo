@@ -1272,7 +1272,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                                 throw new BusinessErrorException("Error in parsing expense.InvExpAmount (" + expense.InvExpAmount + ") into decimal");
                             }
                         }
-                        else
+                        else if (!String.IsNullOrWhiteSpace(expense.InvExpTypeCode) || (String.IsNullOrWhiteSpace(expense.InvExpTypeCode) && this._MySupplierInvoicePM.ChangeSetOp == ChangeSetOperation.Insert))
                         {
                             var SupplierInvoiceModificationPM = new SupplierInvoiceModificationPM();
                             if (decimal.TryParse(expense.InvExpAmount, out decimal1))
