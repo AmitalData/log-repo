@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.CodePropertiesMapping;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.ShipmentOrderModule.Def.EntityAMs;
+using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 
@@ -29,7 +30,12 @@ namespace WebFreight.Web.Helpers.ImporterShipmentOrders
             shipment.NumberOfPackages = shipmentOrder.Quantity;
             shipment.PackagesQuantity = shipmentOrder.Quantity;
             shipment.GrossWeight = shipmentOrder.Weight;
+
             shipment.StatusId = GetCreatedEntityStatusId();
+            shipment.StatusDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            shipment.LastStatusLogDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            shipment.IsStatusChange = true;
+
             GetShipperId(shipmentOrder, shipment);
             if (!string.IsNullOrEmpty(shipmentOrder.ShipperName))
             {
