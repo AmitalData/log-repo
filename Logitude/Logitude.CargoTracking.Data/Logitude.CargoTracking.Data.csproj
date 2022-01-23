@@ -164,6 +164,7 @@
     <Compile Include="Enums\ShipmentDirections.cs" />
     <Compile Include="ICargoTrackingContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\CargoDisconnectQueueRepository.cs" />
     <Compile Include="Repositories\CargoReferencesSyncQueueRepository.cs" />
     <Compile Include="Repositories\CargoTrackingCardRepository.cs" />
     <Compile Include="Repositories\CargoTrackingCountryRepository.cs" />
