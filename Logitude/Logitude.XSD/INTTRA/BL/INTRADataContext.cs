@@ -2251,13 +2251,10 @@ namespace Logitude.XSD.INTTRA.BL
 
         private void AddHousesToGoodsDetails(INTTRA_Out.GoodsDetails itemGoodsDetails, string containerNumber)
         {
-            if (this.Shipment.ShipmentLevelCode != "C" && this.MasterData.Transshipment1FromPort?.CountryCode != "US")
+            if (this.Shipment.ShipmentLevelCode == "C" && this.MasterData.Transshipment1FromPort?.CountryCode == "US")
             {
-                return;
-            }
-            
-            this.AddHouses(itemGoodsDetails, containerNumber);
-            
+                this.AddHouses(itemGoodsDetails, containerNumber);
+            } 
         }
 
         private void AddHouses(INTTRA_Out.GoodsDetails itemGoodsDetails, string containerNumber)
