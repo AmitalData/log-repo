@@ -205,14 +205,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return tenantLists;
         }
 
-        public TenantPM GetSinglePM(int id)
+        public TenantPM GetSinglePM(int id, bool useCache = true)
         {
             string entityName = "TenantPM" + id; 
 
             TenantPM entity;
             if (true)//HttpContext.Current != null)
             {
-                if (CacheManager.CacheWrapper.Get(entityName) == null)
+                if (CacheManager.CacheWrapper.Get(entityName) == null || !useCache)
                 {
                     Tenant tt = (from a in repository.context.Tenants.Include("Address").Include("PaymentTerm").Include("OtherChargesCurrency").Include("QuoteSaleCurrency").Include("AgentCard").Include("Currency").Include("ProfitCurrency").Include("FreightCurrency").Include("PasswordPolicy").Include("Address.Country").Include("LogBoxTenantSetting")
                                  where a.Id == id

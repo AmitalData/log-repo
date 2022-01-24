@@ -161,7 +161,7 @@ export class PerVendorReportFilterComponent extends BaseComponent {
 
             if (this.VendorFilterSelectedValue != "All") {
                 myFilterItems.push(new QueryFilterItem("Vendor", this.Vendor.GLAccountId, "string"));
-
+                myFilterItems.push(new QueryFilterItem("CardId", this.VendorGLAccount.CardId, "string"));
             }
 
             var myReportFliter: ReportFliter = new ReportFliter();
