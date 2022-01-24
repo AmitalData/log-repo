@@ -296,6 +296,7 @@ namespace WebFreight.Web.InfrastructureModel
             eventTypeQuery = new EventTypeQuery(eventTypeRepository);
             advancedQueryFilterQuery = new AdvancedQueryFilterQuery(theTenant);
             chargesTypeQuery = new ChargesTypeQuery(theTenant);
+            chargesGroupQuery = new ChargesGroupQuery(theTenant);
             quoteChargesGroupQuery = new QuoteChargesGroupQuery(theTenant);
             documentTypeQuery = new DocumentTypeQuery(theTenant);
             measurementQuery = new MeasurementQuery(theTenant);
