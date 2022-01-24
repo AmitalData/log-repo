@@ -188,7 +188,8 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PackageGrossWeight = '#Shipment_GrossWeight';
   public static readonly PackagePartialSplit = '#PartialSplit';
   public static readonly HyperLinkGenerateFromOrderPackage = '#GenerateBTN';
-
+  
+  
   public static readonly DeliveryATDTime = '#time_ShipmentPackage_DeliveryATD';
   public static readonly DeliveryATDDate = '#date_ShipmentPackage_DeliveryATD';
   public static readonly DeliveryATATime = '#time_ShipmentPackage_DeliveryATA';
@@ -206,6 +207,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PickUpDeliverynote = '#ShipmentPickUpDelivery_Notes';
   public static readonly PickUpDeliveryPackages = '#ShipmentPickUpDeliveryTHPackages';
   public static readonly AddContainerFromPickup =  "[data-cy='AddContainerFromPickup']"; 
+  public static readonly AddContainerFromDelivary =  "[data-cy='AddContainerFromDelivary']"; 
   public static readonly AddFisrtContainer = '#CheckBox_0_1_LBL';
   public static readonly ShipmentRatio = '#Shipment_Ratio';
   public static readonly ShipmentGrossWeightUnitCode = '#Shipment_GrossWeightUnitCode';
@@ -283,7 +285,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentPreForwardingFromPortId = '#Shipment_PreForwardingFromPortId';
   public static readonly ShipmentOnForwardingTransportModeId = '#Shipment_OnForwardingTransportModeId';
   public static readonly ShipmentOnForwardingToPortId = '#Shipment_OnForwardingToPortId';
-
+  
   //Warehouse
   public static readonly ShipmentWarehouseLegExpectedEntryDate = "#date_Shipment_WarehouseLegExpectedEntryDate"
   public static readonly ShipmentWarehouseLegActualEntryDate = "#date_Shipment_WarehouseLegActualEntryDate"
