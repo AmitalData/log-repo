@@ -2124,7 +2124,7 @@
     DependencyFilter3IsList="false"
     ValidForQuerySection1="&quot;ARInvoice&quot;"
     IsRestrictable="false"
-    DisplayInEntityVariables="true"
+    DisplayInEntityVariables="false"
     Code="&quot;Reference&quot;"
     AllowedInCustomerFieldsSettings="false"
     DisplayInSearchWindowFilters="false"
