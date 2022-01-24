@@ -32,6 +32,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { HttpClient } from '@angular/common/http';
 import { SystemEnvironmentService } from '../../../../Infrastructure/Utilities/SystemEnvironmentService';
 import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
+import { forEach } from 'cypress/types/lodash';
 
 @Component({
     selector: 'LogBoxDocuments',
@@ -81,9 +82,10 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     public MainCarriageTD: any = "";
     public MainCarriageTALabel: string = "";
     public MainCarriageTDLabel: string = "";
-     
-    public IsExportActivated: boolean = false;
+  
 
+    public IsExportActivated: boolean = false;
+     
     public hasDocumentTypeHighlightColor = SessionLocator.PrivateLableSettings ? (SessionLocator.PrivateLableSettings.DocumentTypeHighlightColor == null ? false : true) : false; 
     public privateLabelClass = {
         background: SessionLocator.PrivateLableSettings ? SessionLocator.PrivateLableSettings.DocumentTypeHighlightColor : "",
@@ -95,6 +97,10 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
 
     public ToPortCountryCode: string;
     public ToPortCode: string;
+    public ShipmentPackagesLabel: string = "";
+    public ShowShipmentPackagesLabelLink: boolean = false;
+    public ShipmentPackageTitle: string = "";
+
     constructor(public http: HttpClient, public serviceArgs: ServiceArgs, private _entityListService: EntityListService) {
         super();
         this.serviceArgs.http = this.http;
@@ -115,7 +121,9 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         });
          
     }
-     
+
+
+
     SetPortFields() {
 
         if (this.SelectedShipment) {
@@ -190,6 +198,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                   this.ShipmentTypeId = myResult.Result.ShipmentTypeId;
                   this.DocsSentToAgent = myResult.Result.DocsSentToAgent;
                     this.SetMainCarriageDates();
+                    this.SetShipmentPackageLabel();
                   this._EntityStatusExtendedListService.getSingle("INPS").subscribe((Status: ServiceResponse) => {
                     if (Status.Result && (myResult.Result.StatusId == Status.Result.Id)) {
                       this.DisableAddDocumentButton = true;
@@ -232,7 +241,62 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
          
     }
 
+    SetShipmentPackageLabel() {
+        this.ShipmentPackagesLabel = "";
+        this.ShowShipmentPackagesLabelLink = false;
+        if (this.SelectedShipment && (this.ShipmentTypeId === 'FCL' || this.ShipmentTypeId === 'FCLD') && this.SelectedShipment.TransportModeId != 'A') { 
+            this.SetFCLShipmentPackages();
+            return this.ShipmentPackagesLabel;
+         }
+
+        if (this.SelectedShipment && (this.ShipmentTypeId != 'FCL' && this.ShipmentTypeId != 'FCLD') || (this.SelectedShipment && this.SelectedShipment.TransportModeId == 'A')) {
+            this.SetLCLShipmentPackage(); 
+            return this.ShipmentPackagesLabel;
+        }
+       
+    }
   
+    private SetLCLShipmentPackage() {
+
+        this.ShipmentPackageTitle = "Packages";
+        this.ShipmentPackagesLabel = "0 Pcs / 0 Kgm";
+
+        if ((this.SelectedShipment.PackagesQuantity == null || this.SelectedShipment.PackagesQuantity == 0) && (this.ShipmentPM && this.ShipmentPM.ShipmentOrderPackages.length == 0)) {
+            this.ShipmentPackagesLabel = this.SelectedShipment ? ((this.SelectedShipment.PackagesQuantity == null ? 0 : this.SelectedShipment.PackagesQuantity) + ' Pcs' + ' / ' + (this.SelectedShipment.GrossWeight == null ? 0 : this.SelectedShipment.GrossWeight) + ' Kgm') : '';
+            this.ShowShipmentPackagesLabelLink = false; 
+        }
+        if ((this.SelectedShipment.PackagesQuantity != null && this.SelectedShipment.PackagesQuantity != 0)) {
+            this.ShipmentPackagesLabel = this.SelectedShipment ? ((this.SelectedShipment.PackagesQuantity == null ? 0 : this.SelectedShipment.PackagesQuantity) + ' Pcs' + ' / ' + (this.SelectedShipment.GrossWeight == null ? 0 : this.SelectedShipment.GrossWeight) + ' Kgm') : '';
+            this.ShowShipmentPackagesLabelLink = true; 
+        }
+
+        if (this.ShipmentPM && this.SelectedShipment.TransportModeId == 'O' && this.ShipmentPM.ShipmentOrderPackages.length != 0 && (this.SelectedShipment.PackagesQuantity == null || this.SelectedShipment.PackagesQuantity == 0)) {
+            this.ShipmentPackagesLabel = this.ShipmentPM ? ((this.ShipmentPM.ShipmentOrderPackages.length == 0 ? 0 : this.GetShipmentOrderQuantity()) + ' Pcs' + ' / ' + (this.ShipmentPM.OrderGrossWeight == null ? 0 : this.ShipmentPM.OrderGrossWeight) + ' Kgm') : '';
+            this.ShowShipmentPackagesLabelLink = true; 
+        }
+    }
+
+    private SetFCLShipmentPackages() {
+
+        this.ShipmentPackageTitle = "Containers";
+        this.ShipmentPackagesLabel = "0 Containers";
+
+        if ((this.SelectedShipment.PackagesQuantity == null || this.SelectedShipment.PackagesQuantity == 0) && (this.ShipmentPM && this.ShipmentPM.ShipmentOrderPackages.length == 0)) {
+            this.ShipmentPackagesLabel = (this.SelectedShipment.PackagesQuantity == null ? "0" : this.SelectedShipment.PackagesQuantity) + ' Containers';
+            this.ShowShipmentPackagesLabelLink = false; 
+        }
+
+        if (this.SelectedShipment.PackagesQuantity != null && this.SelectedShipment.PackagesQuantity != 0) {
+            this.ShipmentPackagesLabel = (this.SelectedShipment.PackagesQuantity == null ? 0 : this.SelectedShipment.PackagesQuantity) + ' Containers';
+            this.ShowShipmentPackagesLabelLink = true; 
+        }
+
+        if (this.ShipmentPM && this.ShipmentPM.ShipmentOrderPackages.length != 0 && (this.SelectedShipment.PackagesQuantity == null || this.SelectedShipment.PackagesQuantity == 0)) {
+            this.ShipmentPackagesLabel = this.ShipmentPM ? ((this.ShipmentPM.ShipmentOrderPackages.length == 0 ? 0 : this.ShipmentPM.ShipmentOrderPackages.length) + ' Containers') : '';
+            this.ShowShipmentPackagesLabelLink = true; 
+        }
+    }
+
     private SetMainCarriageArrivalDate() {
         if (this.ShipmentPM.MainCarriageATA != null) {
             this.MainCarriageTA = this.ShipmentPM.MainCarriageATA;
@@ -1197,6 +1261,16 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
             }
 
         });
+    }
+
+    GetShipmentOrderQuantity() {
+        var shipmentOrderQuantity = 0;
+
+        this.ShipmentPM.ShipmentOrderPackages.forEach((item) => {
+            shipmentOrderQuantity = shipmentOrderQuantity + item.Quantity
+        }); 
+
+        return shipmentOrderQuantity;
     }
 
     OnPackagesClick(Title) {
