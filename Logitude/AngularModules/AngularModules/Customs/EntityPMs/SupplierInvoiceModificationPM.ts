@@ -72,6 +72,11 @@ export class SupplierInvoiceModificationPM {
     public set ModificationCounterKey(newValue: number) { if (this.modificationCounterKey != newValue) { this.modificationCounterKey = newValue; this.MarkAsDirty("ModificationCounterKey"); } }
        
 	 
+    private typeDesc: string;
+    public get TypeDesc() { return this.typeDesc; }
+    public set TypeDesc(newValue: string) { if (this.typeDesc != newValue) { this.typeDesc = newValue; this.MarkAsDirty("TypeDesc"); } }
+       
+	 
 
     public OldEntityPM: SupplierInvoiceModificationPM;
 	

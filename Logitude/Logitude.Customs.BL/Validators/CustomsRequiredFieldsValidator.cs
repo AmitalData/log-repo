@@ -408,6 +408,10 @@ namespace Logitude.Customs.BL.Validators
                 List<PropertyInfo> SupplierInvoiceModificationProperties = GetPropertiesForEntity("SupplierInvoiceModificationPM");
                 foreach (SupplierInvoiceModificationPM supplierInvoiceModification in supplierInvoiceModifications)
                 {
+                    if (string.IsNullOrEmpty(supplierInvoiceModification.TypeCode))
+                    {
+                        requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { EntityReference = supplierInvoiceModification.ModificationCounterKey.ToString(), FieldName = "TypeCode", TableName = "Customs.SupplierInvoiceModification" });
+                    }
                     foreach (PropertyInfo info in SupplierInvoiceModificationProperties)
                     {
                         bool required = (from a in supplierInvoiceModificationRequiredFields
