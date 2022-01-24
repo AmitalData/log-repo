@@ -107,6 +107,8 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentPreCarriageCheckBox = "input[data-cy='Shipment_PreCarriage_CheckBox']";
   public static readonly ShipmentOnCarriageCheckBox = "input[data-cy='Shipment_OnCarriage_CheckBox']";
   public static readonly ShipmentIncludePackagesCheckBox = "input[data-cy='Shipment_IncludePackages_CheckBox']";
+  public static readonly ShipmentPickupDelivaryMain = '#ShipmentPickUpDeliveryTHMain';
+  
   //#endregion
 
   //#region Order tab
