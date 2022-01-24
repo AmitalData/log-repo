@@ -35,9 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-
-  Code="&quot;9d74&quot;"
-
+  Code="&quot;72e3&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5111,6 +5109,12 @@
       DefaultText="&quot;Customer Teams&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.WrongVatNumber&quot;"
+      DefaultText="&quot;Wrong Vat Number&quot;"
+      LocalDefaultText="&quot;חפ שגוי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -7202,7 +7206,6 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-
     <Feature
       Code="&quot;SHAREDCARGOTRACKING&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
@@ -7212,7 +7215,6 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-
     <Feature
       Code="&quot;QUOTECHARGESGROUP&quot;"
       FeatureTypeCode="&quot;MENU&quot;"

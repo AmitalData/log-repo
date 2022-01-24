@@ -3035,6 +3035,10 @@
       <Project>{89132340-6f21-4ce1-8de4-1ca45e2cd9f3}</Project>
       <Name>Logitude.Customs.Def</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logitude.CustomsMessaging.Common\Logitude.CustomsMessaging.Common.csproj">
+      <Project>{F0039DBE-4A1A-4755-8F37-E4005EA74746}</Project>
+      <Name>Logitude.CustomsMessaging.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.Infrastructure.Data\Logitude.Infrastructure.Data.csproj">
       <Project>{B02E4D92-9226-4F3F-990F-66C7F66E9316}</Project>
       <Name>Logitude.Infrastructure.Data</Name>
