@@ -18,5 +18,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
         public DataTable DataTableSchema { get; set; }
         public DateTime? MaxDate { get; internal set; }
         public List<string> ForwardingShipmentsIds { get; internal set; }
+        public string ShipmentsWaterMark { get; set; }
     }
 }
