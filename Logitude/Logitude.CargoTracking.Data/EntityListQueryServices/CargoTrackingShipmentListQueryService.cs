@@ -69,7 +69,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                ClearanceDate = shipment.ClearanceDate,
                                                                CreateDate = shipment.CreateDate,
                                                                DirectionId = shipment.DirectionId,
-                                                               CustomerReference = shipment.CustomerReference,
+                                                               CustomerReference =  shipment.EntityType == "O" ? shipment.CustomerReference + ","+ shipment.BookingNotes +"," + shipment.PoNumber : shipment.CustomerReference,
                                                                AssignedCustomsAgentDate = shipment.AssignedCustomsAgentDate,
                                                                AssignedCustomsAgentDone = shipment.AssignedCustomsAgentDone,
                                                                AssignedCustomsAgentEstDate = shipment.AssignedCustomsAgentEstDate,
