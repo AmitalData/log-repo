@@ -1,5 +1,5 @@
 declare var window: any;
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, isDevMode } from '@angular/core';
 
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { SessionInfo } from '../../Utilities/SessionInfo';
@@ -43,6 +43,7 @@ import { ObjectsUpdater } from '../../Locators/ObjectsUpdater';
 //import { DWObjectFieldExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/DWObjectFieldExtendedPMService';
 import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 import { GeneralDomainService } from '../../../Infrastructure/Services/GeneralDomainService';
+import { TenantList } from 'Common/EntityLists/TenantList';
 
 @Component({
     
@@ -169,7 +170,22 @@ export class LoginComponent implements OnInit {
             this.StartLoginProcess();
         }
         
+        if(isDevMode())
+            this.developerLogin();
     }
+
+    async developerLogin() {
+        this.Email = 'itzik@amital.co.il'
+        this.Password = 'xhx@word3';
+        this.LoginClicked();
+
+        while(!this.TenantList?.length)
+            await new Promise<void>(resolve => setTimeout(() => resolve(), 100))
+
+        this.SelectedCompany = this.TenantList.find(d => d.Tenant == 6);
+        this.ContinueClicked()
+    }
+
     IsShowLoginForm: boolean = false;
 
     StartLoginProcess() {

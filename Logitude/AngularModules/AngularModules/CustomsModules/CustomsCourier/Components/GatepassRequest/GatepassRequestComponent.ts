@@ -6,7 +6,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { CourierMasterPM } from '../../../../Customs/EntityPMs/CourierMasterPM';
 import { GatepassRequestPM } from '../../../../Customs/EntityPMs/GatepassRequestPM';
 import { GatepassRequestPMService } from '../../../../Customs/Services/StandardPMs/GatepassRequestPMService';
-import { CourierMasterService } from '../../../../Customs/Services/others/CourierMasterService';
+import { CourierMasterService } from '../../../../Customs/Services/Others/CourierMasterService';
 import { CustomMessageProgressComponent } from '../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { GatepassRequestMessageRequestParams } from '../../../../Customs/DataContract/RequestParams/GatepassRequestMessageRequestParams';
 import { CustomSendOptionsArgs } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';

@@ -22,7 +22,7 @@ import {QuoteOPTemplateDetailsFieldExtendedPMService} from '../../../QuoteOPM/Se
 import {QuoteOPTemplateHeaderFieldExtendedPMService} from '../../../QuoteOPM/Services/ExtendedPMs/QuoteOPTemplateHeaderFieldExtendedPMService';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import { ObjectFieldPM } from'../../../Infrastructure/entitypms/ObjectFieldPM';
+import { ObjectFieldPM } from'../../../Infrastructure/EntityPMs/ObjectFieldPM';
 import {TextCodeData} from'./QuoteTemplatePricingSettingComponent';
 import {AppTool} from '../../../Infrastructure/Tools';
 

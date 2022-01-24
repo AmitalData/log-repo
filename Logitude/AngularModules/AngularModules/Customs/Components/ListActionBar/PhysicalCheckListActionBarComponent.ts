@@ -57,6 +57,7 @@ export class PhysicalCheckListActionBarComponent
     CloseMarkChecks() {
         SessionLocator.SelectedSession.StartBusyIndicator("");
         var checkList = this._physicalChecksCloseSharedDataService._SelectedItems.Collection.join(',');
+        
         this._PhysicalCheckWebService.PostCloseMarkPhysicalChecks(checkList, SessionLocator.Tenant)
             .subscribe((myResponse: ServiceResponse) => {
 
@@ -111,7 +112,7 @@ export class PhysicalCheckListActionBarComponent
         //        "CFIHMAIN.LogitudeTask",
         //        "ShowOCRQuery",
         //        unifreightMessageM,
-        //        " הצגת מסך : שאילתא ל - OCR");
+        //        " הצגת מסך : שםילתם ל - OCR");
         //}
         //else {
         //    alert("ShowOCRQuery");

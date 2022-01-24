@@ -35,14 +35,14 @@ import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLoca
 import { SendClosePendingRequestParams } from 'Customs/DataContract/RequestParams/SendClosePendingRequestParams';
 
 @Component({
-    
+
     templateUrl: './CourierWorksheetComponent.html',
     providers: [CourierWorksheetSharedDataService],
 })
 
 
 export class CourierWorksheetComponent extends BaseComponent implements OnDestroy {
-  public _SelectedItems: any;
+    public _SelectedItems: any;
 
     ObjectTableName: string = "Customs.CourierMaster";
     DataContext: any = this;
@@ -122,7 +122,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     public IsSendDocumentsFromQueueButton: boolean = false;
     public DisplayOnlyMessage: string = "";
     private currentSession = SessionLocator.SelectedSession;
-    private ChangedUnloadPortSite: boolean ;
+    private ChangedUnloadPortSite: boolean;
     //constructor(public entityArgs: EntityArgs) {
     constructor(public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
@@ -147,7 +147,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         //);
         this.GetMamanPUR();
         this.GetIsSendDocumentsFromQueueButton();
-         this.isAllowAccounting = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowAccounting")
+        this.isAllowAccounting = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowAccounting")
     }
     //PseventRowSelectEventSubscribe: any;
     ngOnDestroy() {
@@ -165,8 +165,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 }
             });
 
-        
-        
+
+
         this.ChangedUnloadPortSite = false;
         //if (!AppTool.IsNullOrEmpty(this.PendingFilter)) {
         //    setTimeout(() => {
@@ -226,7 +226,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         this._SelectedTabFilter = this._TabFilterList[0];
         this.CheckRequiredFields();
 
-        if (!AppTool.IsNullOrEmpty( windowArgs.TabMode)) {
+        if (!AppTool.IsNullOrEmpty(windowArgs.TabMode)) {
             switch (windowArgs.TabMode) {
                 case "Pending902":
                     {
@@ -269,7 +269,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             }
         }
 
-        
+
         this.TabFilterClick(this._SelectedTabFilter);
     }
 
@@ -367,7 +367,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
 
         this._CourierMasterService.PostSendALLCorrectManifest(currRequestParams)
-            .subscribe((res:any) => {
+            .subscribe((res: any) => {
 
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
@@ -390,7 +390,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         }
 
         this.currentSession.StartBusyIndicatorLoading();
-        this.currentSession.entityResourceService.getEntityResourceByTableName("Customs.DeclarationPaymentMethod", 0).subscribe((response:any) => {
+        this.currentSession.entityResourceService.getEntityResourceByTableName("Customs.DeclarationPaymentMethod", 0).subscribe((response: any) => {
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Width = 500;
             logitudeWindow.Height = 300;
@@ -414,7 +414,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                         currRequestParams.InternalBankId = InternalBankId;
                         currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
                         this._CourierMasterService.PostSendPayReadyLow2755(currRequestParams)
-                            .subscribe((res:any) => {
+                            .subscribe((res: any) => {
                                 this.currentSession.StopBusyIndicator();
                                 var myMessageWindow = new MessageWindow();
                                 myMessageWindow.Show(res.Result);
@@ -425,7 +425,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                     }
                     else {
                         this._CourierMasterService.GetSendPayReadyLow2755(this.entityPM.Id, this.entityPM.HAWB, InternalBankId)
-                            .subscribe((res:any) => {
+                            .subscribe((res: any) => {
                                 this.currentSession.StopBusyIndicator();
                                 var myMessageWindow = new MessageWindow();
                                 myMessageWindow.Show(res.Result);
@@ -489,7 +489,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         currRequestParams.SelectedFinalReleaseValue = this._SelectedFinalReleaseValue;
 
         this._CourierMasterService.PostSendALLCorrectDec(currRequestParams)
-            .subscribe((res:any) => {
+            .subscribe((res: any) => {
                 this.currentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
@@ -531,7 +531,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         MyFilters.PageIndex = 0;
 
         MyFilters.GetAll = true;
-       // MyFilters.PageSize = 100;
+        // MyFilters.PageSize = 100;
 
         //this.CurrentQueryFilters = MyFilters;
         var ids: string[] = [];
@@ -596,14 +596,14 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
 
         if (this._ValidationErrors2.length > 0) {
-        this._ValidationErrors2 = []
+            this._ValidationErrors2 = []
             this._CourierMasterService.GetIfAllowToCancelCourierMaster(this.entityPM.Id).subscribe(
-                (data:any) => {
+                (data: any) => {
                     //if (data.Result != "")
                     //    this._ValidationErrors2.push();
                     switch (data.Result) {
                         case "INVALID_INPROGRESS":
-                            this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.CantCancelFlight") +' ' + TextCodeTranslator.Translate("Customs.CourierMaster.O.NotValidDecInProccess") )
+                            this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.CantCancelFlight") + ' ' + TextCodeTranslator.Translate("Customs.CourierMaster.O.NotValidDecInProccess"))
                             break;
                         case "INVALID_PAYED":
                             this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.CantCancelFlight") + ' ' + TextCodeTranslator.Translate("Customs.CourierMaster.O.NotValidDecWithPayment"))
@@ -688,10 +688,10 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     }
 
     RefreshStatistic() {
-       // SessionLocator.SelectedSession.StartBusyIndicatorCreating();
+        // SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetStatistic(this.entityPM.Id)
-            .subscribe((res:any) => {
-            //    this.currentSession.StopBusyIndicator();
+            .subscribe((res: any) => {
+                //    this.currentSession.StopBusyIndicator();
                 var list: KeyValuePair[];
 
                 list = res.Result;
@@ -1400,7 +1400,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         this.BuildFiltersForQuery(filters);
 
         var myout = this._EntityListService.getExtendedByFilters("Customs.DeclarationCourierStatus", filters);
-        
+
         return myout;
     }
 
@@ -1651,6 +1651,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             }
             case "N": {
                 filters.addAdditionalFilter("CourierCustomStatusCode", "2", "1", null, "NotEqual", false, false, false, "string");
+
+
                 break;
             }
         }
@@ -1729,7 +1731,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         this._PendingCodes.push({ 'Key': "A", 'Value': TextCodeTranslator.Translate("Customs.General.O.All") });
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetPending(this.entityPM.Id)
-            .subscribe((resu:any) => {
+            .subscribe((resu: any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var list: string[];
                 var itemPname = null;
@@ -1834,7 +1836,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     }
 
     SelectedCustomStatusValueClick(value: string) {
-         this._SelectedCustomStatusValue = value;
+        this._SelectedCustomStatusValue = value;
         this.selectedFilterClick();
     }
 
@@ -1959,7 +1961,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             if (!AppTool.IsNullOrEmpty(currentScreenCode)) {
 
                 if (objectTableName == "Customs.Declaration") {
-                    debugger;
+                    
                     if (currentScreenCode == "DEGC" && selected.IsAmendment == true) currentScreenCode = "DCCR";
 
                     SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = true;
@@ -2050,7 +2052,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetSendALLDeclarationsStatusRequest(this.entityPM.Id)
-            .subscribe((res:any) => {
+            .subscribe((res: any) => {
                 this.currentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
@@ -2062,7 +2064,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetSendFTPMamanRequest(this.entityPM.Id)
-            .subscribe((res:any) => {
+            .subscribe((res: any) => {
                 this.currentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
@@ -2083,7 +2085,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
-            myMessageWindow.Show("לא ניתן לבצע גייטפס העברות ללא מזהה מטען"); //TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            myMessageWindow.Show("לם ניתן לבצע גייטפס העברות ללם מזהה מטען"); //TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
             return;
         }
 
@@ -2112,7 +2114,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
 
         this._CourierMasterService.PostSendALLTerminal(currRequestParams)
-            .subscribe((res:any) => {
+            .subscribe((res: any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
@@ -2128,11 +2130,9 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         myInterfaceManagementPMService.get("2715")
             .subscribe((response: any) => {
                 this.IsSendDocumentsFromQueueButton = false;
-                if (!response.HasError)
-                {
-                    if (response.Result != null && !AppTool.IsNullOrEmpty(response.Result.SendTime))
-                    {
-                       this.IsSendDocumentsFromQueueButton = true;
+                if (!response.HasError) {
+                    if (response.Result != null && !AppTool.IsNullOrEmpty(response.Result.SendTime)) {
+                        this.IsSendDocumentsFromQueueButton = true;
                     }
                 }
             });
@@ -2177,15 +2177,15 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         logitudeWindow.Width = 350;
         logitudeWindow.Height = 250;
         logitudeWindow.IsShowCloseButton = true;
-        logitudeWindow.Title = "שינוי אתר פריקה";
+        logitudeWindow.Title = "שינוי םתר פריקה";
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/GetUnloadPortCodeComponent');
-        this.ChangedUnloadPortSite=true;
+        this.ChangedUnloadPortSite = true;
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
             this.RefreshButtonClicked();
         });
     }
-    ClosePendingMethod(){
+    ClosePendingMethod() {
         SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         if (this.IsDisplayOnly) {
             var myMessageWindow = new MessageWindow();
@@ -2200,26 +2200,26 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
         currRequestParams.Tenant = SessionLocator.Tenant;
         currRequestParams.CourierMasterId = this.entityPM.Id;
-        currRequestParams.MAWB = this.entityPM.MAWB;       
+        currRequestParams.MAWB = this.entityPM.MAWB;
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.DeclarationsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
         }
-        currRequestParams.PendingCode=new Array();
-        if(this.SelectedPendingCodeFilter.Key=='A' && this._PendingCodes.length>1){
-            this._PendingCodes.forEach(x=> currRequestParams.PendingCode.push(x.Key));
-        }else{
+        currRequestParams.PendingCode = new Array();
+        if (this.SelectedPendingCodeFilter.Key == 'A' && this._PendingCodes.length > 1) {
+            this._PendingCodes.forEach(x => currRequestParams.PendingCode.push(x.Key));
+        } else {
             currRequestParams.PendingCode.push(this.SelectedPendingCodeFilter.Key);
         }
         //currRequestParams.PendingCode=this.SelectedPendingCodeFilter.Key;
         this._CourierMasterService.PostSendClosePending(currRequestParams)
-        .subscribe((res:any) => {
-            SessionLocator.SelectedSession.StopBusyIndicator();
-            var myMessageWindow = new MessageWindow();
-            myMessageWindow.Show(res.Result);
-            myMessageWindow.WindowClosed.subscribe(s => {
-                this.RefreshButtonClicked();
+            .subscribe((res: any) => {
+                SessionLocator.SelectedSession.StopBusyIndicator();
+                var myMessageWindow = new MessageWindow();
+                myMessageWindow.Show(res.Result);
+                myMessageWindow.WindowClosed.subscribe(s => {
+                    this.RefreshButtonClicked();
+                });
             });
-        });
     }
     ChangeStorageSiteMethod() {
 
@@ -2237,7 +2237,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         logitudeWindow.Width = 350;
         logitudeWindow.Height = 250;
         logitudeWindow.IsShowCloseButton = true;
-        logitudeWindow.Title = "שינוי אתר אחסון";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
+        logitudeWindow.Title = "שינוי םתר םחסון";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/GetStorageSiteCodeComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
@@ -2265,12 +2265,12 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     }
     Export2Excel() {
         //this._IsDisableToggle = !this._IsDisableToggle;
-        
-        
-        
+
+
+
 
         //communicationLogStepListService.GetExportExcelByRequestId("8305", this.MyLastCustomsRequestSheetId, SessionLocator.Tenant);
-                            //http://localhost:9996/api/CourierMaster/GetExportCourierMaster2Excel?CourierMasterId=1-3333&tenant=1
+        //http://localhost:9996/api/CourierMaster/GetExportCourierMaster2Excel?CourierMasterId=1-3333&tenant=1
         var url = ServiceHelper.GetLogitudeURL() + 'api/CourierMaster/GetExportCourierMaster2Excel?' + 'CourierMasterId=' + this.entityPM.Id + '&tenant=' + this.entityPM.Tenant.toString();
 
 
@@ -2286,7 +2286,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         var url = ServiceHelper.GetLogitudeURL() + 'api/CourierMaster/GetExportCourierPending2Excel?' + 'CourierMasterId=' + this.entityPM.Id + '&tenant=' + this.entityPM.Tenant.toString();
         window.open(url);
     }
-    
+
     UpdateIsReadyForInvoice() {
         SessionLocator.SelectedSession.StartBusyIndicatorSaving();
         this.entityPM.IsReadyForInvoice = !this.entityPM.IsReadyForInvoice;
@@ -2315,7 +2315,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "ClosePending")[0];
                 if (customsRequestsSheetPM != null) {
                     this.IsDisplayOnly = true;
-                    this.DisplayOnlyMessage =  "לתצוגה בלבד - קיימת בקשה לסגירת PENDING ברקע ";
+                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לסגירת PENDING ברקע ";
                     this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
                 }
             }
@@ -2334,7 +2334,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCBCMSS")[0];
                 if (customsRequestsSheetPM != null) {
                     this.IsDisplayOnly = true;
-                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר אחסון/פריקה ברקע ";
+                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי םתר םחסון/פריקה ברקע ";
                     this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
                 }
             }
@@ -2371,7 +2371,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         if (sendMode == 'VX') currRequestParams.IsCreateNewDocumentVersion = true;
 
         this._CourierMasterService.PostSendUnCorrectDocuments(currRequestParams)
-            .subscribe((res:any) => {
+            .subscribe((res: any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
@@ -2421,9 +2421,9 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
 
     CancelFlight() {
-        this._ValidationErrors2=[]
+        this._ValidationErrors2 = []
         this._CourierMasterService.GetIfAllowToCancelCourierMaster(this.entityPM.Id).subscribe(
-            (data:any) => {
+            (data: any) => {
                 //if (data.Result != "")
                 //    this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.CantCancelFlight"));
                 switch (data.Result) {
@@ -2436,13 +2436,13 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                     case "":
                         {
                             var confirmWindow = new ConfirmWindow();
-                             confirmWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.SureToCancel"));
+                            confirmWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.SureToCancel"));
                             confirmWindow.WindowClosed.subscribe((event: any) => {
                                 if (confirmWindow.Yes) {
                                     this.entityPM.IsCancelled = true;
 
                                     SessionLocator.SelectedSession.StartBusyIndicatorSaving();
-                                     this._CourierMasterPMService
+                                    this._CourierMasterPMService
                                         .update(this.entityPM)
                                         .subscribe((response: ServiceResponse) => {
                                             SessionLocator.SelectedSession.StopBusyIndicator();
@@ -2455,14 +2455,25 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
                                 }
                             });
-                            }
                         }
- 
+                }
+
             });
 
 
     }
 
+    openBulkFeedPending() {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 800;
+        logitudeWindow.Height = 735;
+        logitudeWindow.IsShowCloseButton = true;
+        logitudeWindow.Title = "הזנה גורפת PENDING";
+        logitudeWindow.WindowArgs = { CourierMasterPM: this.entityPM };        
+        logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/bulk-feed-pending/BulkFeedPendingComponent');
+        this.ChangedUnloadPortSite = true;
+        logitudeWindow.WindowClosed.subscribe(($event: any) => this.RefreshButtonClicked());
+    }
 }
 
 
