@@ -216,7 +216,8 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 //Task 46455
                 DistributorHP = distributorHP,
                 DistributorName = distributorName,
-                 IsDelay = isDelay
+                IsDelay = isDelay,
+                StorageSite = myDeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().StorageSiteCode ?? ""
 
             };
 
@@ -319,7 +320,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
         public string ResponseStatusMsg { get; set; }
         public bool IsDelay { get; set; }
 
-
+        public string StorageSite { get; set; }
 
     }
 }
