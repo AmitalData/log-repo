@@ -348,6 +348,18 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='DenyDate' Type='datetime'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
+"  <Column Name='InvoicedDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='InvoicedDone' Type='bit'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='InvoicedNotes' Type='nvarchar' Size='-1'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='InvoicedExceptionReason' Type='nvarchar' Size='-1'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
 "  <Relation ForeignKeyColumn='EntityType' ReferencedTable='CargoTrackingHeaderEntityTypes' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='CurrentMilestoneCode' ReferencedTable='CargoTrackingMilestones' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+
 "  <Index Columns='EntityId' />"+

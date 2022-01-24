@@ -251,6 +251,14 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public bool? IsOperationalClosed { get; set; }
         [Column("DenyDate")]
 	    public DateTime? DenyDate { get; set; }
+        [Column("InvoicedDate")]
+	    public DateTime? InvoicedDate { get; set; }
+        [Column("InvoicedDone")]
+	    public bool? InvoicedDone { get; set; }
+        [Column("InvoicedNotes")]
+	    public string InvoicedNotes { get; set; }
+        [Column("InvoicedExceptionReason")]
+	    public string InvoicedExceptionReason { get; set; }
     }
 }
 	 
