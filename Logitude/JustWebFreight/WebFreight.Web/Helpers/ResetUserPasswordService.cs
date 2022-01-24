@@ -165,7 +165,7 @@ namespace WebFreight.Web.Helpers
             StringBuilder HtmlTemplate = new StringBuilder();
             if (!resetPasswordParameters.IsMobile)
             {
-                if (!string.IsNullOrEmpty(resetPasswordParameters.TemplateName))
+                if (!string.IsNullOrEmpty(resetPasswordParameters.TemplateName) && !string.IsNullOrEmpty(emailBodyArgs.BrandingTenant))
                 {
                     result = new ResetUserPasswordDocumentService(int.Parse(resetPasswordParameters.BrandingTenant)).GetMessageArgsByTemplateName(resetPasswordParameters, emailBodyArgs);
                 }
