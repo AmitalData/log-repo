@@ -3494,6 +3494,9 @@
     <Content Include="Monitoring\CargoShipmentsWaiting.aspx" />
     <Content Include="Monitoring\CustomerTenantAccessMonitoring.aspx" />
     <Content Include="Monitoring\CustomerTenantAccessRequestMonitoring.aspx" />
+    <Content Include="Monitoring\DeclarationApprovalRequestMonitoring.aspx" />
+    <Content Include="Monitoring\DocumentApprovalQueueMonitoring.aspx" />
+    <Content Include="Monitoring\DocumentFilingBackupBatchMonitoring.aspx" />
     <Content Include="Monitoring\DocumentsExecutionLogWaitingStatus.aspx" />
     <Content Include="Monitoring\EmailSendingFailedStatus.aspx" />
     <Content Include="Monitoring\FailedLoginLog.aspx" />
@@ -5634,6 +5637,27 @@
     </Compile>
     <Compile Include="Monitoring\CustomerTenantAccessRequestMonitoring.aspx.designer.cs">
       <DependentUpon>CustomerTenantAccessRequestMonitoring.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\DeclarationApprovalRequestMonitoring.aspx.cs">
+      <DependentUpon>DeclarationApprovalRequestMonitoring.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\DeclarationApprovalRequestMonitoring.aspx.designer.cs">
+      <DependentUpon>DeclarationApprovalRequestMonitoring.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\DocumentApprovalQueueMonitoring.aspx.cs">
+      <DependentUpon>DocumentApprovalQueueMonitoring.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\DocumentApprovalQueueMonitoring.aspx.designer.cs">
+      <DependentUpon>DocumentApprovalQueueMonitoring.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\DocumentFilingBackupBatchMonitoring.aspx.cs">
+      <DependentUpon>DocumentFilingBackupBatchMonitoring.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\DocumentFilingBackupBatchMonitoring.aspx.designer.cs">
+      <DependentUpon>DocumentFilingBackupBatchMonitoring.aspx</DependentUpon>
     </Compile>
     <Compile Include="Monitoring\DocumentsExecutionLogWaitingStatus.aspx.cs">
       <DependentUpon>DocumentsExecutionLogWaitingStatus.aspx</DependentUpon>
