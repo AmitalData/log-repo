@@ -468,6 +468,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "VSL,Vessel Free Text", 
                 Description = "Vessel Free Text", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CTF", 
+                Name = "Customer Team Field", 
+                SearchFields = "CTF,Customer Team Field", 
+                Description = "Show Customer Team Field", 
+			});
 			
             return all;
        }

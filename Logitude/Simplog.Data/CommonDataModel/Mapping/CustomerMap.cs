@@ -16,6 +16,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AccountManagerUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.SalesmanUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.RankId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.TeamId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Field1).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.Field2).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.Field3).HasMaxLength(250).IsUnicode(true);
@@ -58,6 +59,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AccountManagerUserId).HasColumnName("AccountManagerUserId");
             this.Property(t => t.SalesmanUserId).HasColumnName("SalesmanUserId");
             this.Property(t => t.RankId).HasColumnName("RankId");
+            this.Property(t => t.TeamId).HasColumnName("TeamId");
             this.Property(t => t.StartWorkingDate).HasColumnName("StartWorkingDate");
             this.Property(t => t.StartWorkingManuallySet).HasColumnName("StartWorkingManuallySet");
             this.Property(t => t.LastShipmentDate).HasColumnName("LastShipmentDate");
@@ -125,6 +127,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.HasOptional(t => t.AccountManagerUser).WithMany().HasForeignKey(d => d.AccountManagerUserId);
             this.HasOptional(t => t.SalesmanUser).WithMany().HasForeignKey(d => d.SalesmanUserId);
             this.HasOptional(t => t.Rank).WithMany().HasForeignKey(d => d.RankId);
+            this.HasOptional(t => t.CustomerTeam).WithMany().HasForeignKey(d => d.TeamId);
             this.HasOptional(t => t.LeadSource).WithMany().HasForeignKey(d => d.LeadSourceId);
             this.HasOptional(t => t.Industry).WithMany().HasForeignKey(d => d.IndustryId);
             this.HasOptional(t => t.CustomerStatus).WithMany().HasForeignKey(d => d.CustomerStatusCode);

@@ -96,6 +96,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  SalesmanBusinessUnitId = card.Customer == null ? null : (card.Customer.SalesmanUser == null ? null : card.Customer.SalesmanUser.BusinessUnitId),
                                                  AccountManagerUserName = card.Customer == null ? null : (card.Customer.AccountManagerUser == null ? null : (card.Customer.AccountManagerUser.Contact.EnglishName)),
                                                  AccountManagerUserId = card.Customer == null ? null : card.Customer.AccountManagerUserId,
+                                                 TeamId = card.Customer == null ? null : card.Customer.TeamId,
                                                  CASSCode = card.Agent == null ? null : card.Agent.CASSCode,
                                                  IATACode = card.Agent == null ? null : card.Agent.IATACode,
                                                  RegulatedAgentCode = card.Agent == null ? null : card.Agent.RegulatedAgentCode,
@@ -217,6 +218,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       EnableConsolidationInvoices = a.EnableConsolidationInvoices,
                                       SalesmanUserId = a.Customer == null ? null : a.Customer.SalesmanUserId,
                                       AccountManagerUserId = a.Customer == null ? null : a.Customer.AccountManagerUserId,
+                                      TeamId = a.Customer == null ? null : a.Customer.TeamId,
                                       SalesmanBusinessUnitId = a.Customer == null ? null : (a.Customer.SalesmanUser == null ? null : a.Customer.SalesmanUser.BusinessUnitId),
                                       IsActiveForMobile = a.IsActiveForMobile,
                                       IsCustomer = a.IsCustomer,
@@ -318,6 +320,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   EnableConsolidationInvoices = a.EnableConsolidationInvoices,
                                   SalesmanUserId = a.Customer == null ? null : a.Customer.SalesmanUserId,
                                   AccountManagerUserId = a.Customer == null ? null : a.Customer.AccountManagerUserId,
+                                  TeamId = a.Customer == null ? null : a.Customer.TeamId,
                                   SalesmanBusinessUnitId = a.Customer == null ? null : (a.Customer.SalesmanUser == null ? null : a.Customer.SalesmanUser.BusinessUnitId),
                                   IsActiveForMobile = a.IsActiveForMobile,
                                   IRSPlace = a.IRSPlace,
@@ -713,6 +716,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           EnableConsolidationInvoices = a.EnableConsolidationInvoices,
                                           SalesmanUserId = a.Customer == null ? null : a.Customer.SalesmanUserId,
                                           AccountManagerUserId = a.Customer == null ? null : a.Customer.AccountManagerUserId,
+                                          TeamId = a.Customer == null ? null : a.Customer.TeamId,
                                           SalesmanBusinessUnitId = a.Customer == null ? null : (a.Customer.SalesmanUser == null ? null : a.Customer.SalesmanUser.BusinessUnitId),
                                           IsActiveForMobile = a.IsActiveForMobile,
                                           IsCustomer = a.IsCustomer,
@@ -799,6 +803,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       EnableConsolidationInvoices = a.EnableConsolidationInvoices,
                                       SalesmanUserId = a.Customer == null ? null : a.Customer.SalesmanUserId,
                                       AccountManagerUserId = a.Customer == null ? null : a.Customer.AccountManagerUserId,
+                                      TeamId = a.Customer == null ? null : a.Customer.TeamId,
                                       SalesmanBusinessUnitId = a.Customer == null ? null : (a.Customer.SalesmanUser == null ? null : a.Customer.SalesmanUser.BusinessUnitId),
                                       IsActiveForMobile = a.IsActiveForMobile,
                                       IsCustomer = a.IsCustomer,
@@ -875,6 +880,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   EnableConsolidationInvoices = a.EnableConsolidationInvoices,
                                   SalesmanUserId = a.Customer == null ? null : a.Customer.SalesmanUserId,
                                   AccountManagerUserId = a.Customer == null ? null : a.Customer.AccountManagerUserId,
+                                  TeamId = a.Customer == null ? null : a.Customer.TeamId,
                                   SalesmanBusinessUnitId = a.Customer == null ? null : (a.Customer.SalesmanUser == null ? null : a.Customer.SalesmanUser.BusinessUnitId),
                                   IsActiveForMobile = a.IsActiveForMobile,
                                   IsCustomer = a.IsCustomer,
@@ -974,6 +980,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     entityList.KCExpirationDate = entityPOCO.Customer.KCExpirationDate;
                     entityList.SalesmanUserId = entityPOCO.Customer.SalesmanUserId;
                     entityList.AccountManagerUserId = entityPOCO.Customer.AccountManagerUserId;
+                    entityList.TeamId = entityPOCO.Customer.TeamId;
                     entityList.IsCreditLimitEnabled = entityPOCO.Customer.IsCreditLimitEnabled;
                     entityList.CreditLimitAmount = entityPOCO.Customer.CreditLimitAmount;
                     entityList.CreditLimitOpenBalance = entityPOCO.Customer.CreditLimitOpenBalance;
@@ -1034,6 +1041,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             }
                         }
                     }
+
+                    SetCustomerTeamName(entityPOCO, entityList);
 
                     entityList.OpenShipments = SetCustomerOpenShipments(entityList);
                     #endregion
@@ -1121,6 +1130,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return entityList;
         }
+
+        private static void SetCustomerTeamName(Card entityPOCO, CardList entityList)
+        {
+            if (string.IsNullOrEmpty(entityPOCO.Customer.TeamId)) return;
+            if (entityPOCO.Customer.CustomerTeam != null)
+            {
+                entityList.TeamName = entityPOCO.Customer.CustomerTeam.Name;
+            }
+        }
+
         private decimal SetCustomerOpenShipments(CardList card)
         {
             CustomerOpenFilesAmountQuery customerOpenFilesAmountQuery = new CustomerOpenFilesAmountQuery(card.Tenant);
@@ -1183,7 +1202,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 SalesmanUserId = card.Customer == null ? null : card.Customer.SalesmanUserId,
                                                 SalesmanBusinessUnitId = card.Customer == null ? null : (card.Customer.SalesmanUser == null ? null : card.Customer.SalesmanUser.BusinessUnitId),
                                                 AccountManagerUserName = card.Customer == null ? null : (card.Customer.AccountManagerUser == null ? null : (card.Customer.AccountManagerUser.Contact.EnglishName)),
+                                                TeamName = card.Customer == null ? null : (card.Customer.CustomerTeam == null ? null : (card.Customer.CustomerTeam.Name)),
                                                 AccountManagerUserId = card.Customer == null ? null : card.Customer.AccountManagerUserId,
+                                                TeamId = card.Customer == null ? null : card.Customer.TeamId,
                                                 CASSCode = card.Agent == null ? null : card.Agent.CASSCode,
                                                 IATACode = card.Agent == null ? null : card.Agent.IATACode,
                                                 RegulatedAgentCode = card.Agent == null ? null : card.Agent.RegulatedAgentCode,

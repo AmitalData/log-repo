@@ -70,6 +70,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string SalesmanUserId { get; set; }
         public string AccountManagerUserId { get; set; }
+        public string TeamId { get; set; }
         public string SalesmanBusinessUnitId { get; set; }
 
         public string PartnerTypeName { get; set; }
