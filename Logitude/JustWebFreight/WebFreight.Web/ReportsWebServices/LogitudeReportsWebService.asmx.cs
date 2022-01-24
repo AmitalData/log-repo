@@ -1791,6 +1791,16 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.AmountDueInInvoiceCurrency = arInvoice.AmountDue;
                 invoicesRecored.AmountDueInLocalCurrency = arInvoice.AmountDueInLocalCurrency;
 
+                invoicesRecored.BillToVatNumber = arInvoice.VatNumber;
+                if (string.IsNullOrEmpty(invoicesRecored.BillToVatNumber))
+                {
+                    Card billTo = CardRepository.GetSingleCard(arInvoice.BillToId, tenant, false);
+                    if(billTo != null)
+                    {
+                        invoicesRecored.BillToVatNumber = billTo.VatNumber;
+                    }
+                }
+
                 if (localCurrency)
                 {
                     totalVat = totalVat + myTotalVats.Sum(d => d.LocalVATAmount);
