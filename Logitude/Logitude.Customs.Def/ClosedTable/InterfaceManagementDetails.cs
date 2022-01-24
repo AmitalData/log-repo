@@ -2882,10 +2882,10 @@ namespace Logitude.Customs.Def.ClosedTable
             });            
             all.Add(new InterfaceManagementDetails()
             {
-                Code = "DCAUAC",
+                Code = "UCADPE",
                 InOut = InOutEnum.I.ToString(),
-                Description = "עדכון פטור 92 גורף",
-                DcaPrefixName = "DCAUAC_OUT",
+                Description = "נה גורפת PENDING",
+                DcaPrefixName = "UCADPE_OUT",
                 DefaultSendOptionsCode = null,
                 DefaultPriority = 5,
                 AllowRestore = true,
