@@ -112,21 +112,7 @@ ELSE      Begin
 				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 100 WHERE [dbo].[DWCategories].[Code] = 'KPI'	  
 		  End
 
-
-
-
-		  --CustomFields
-IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories] 
-          WHERE Code = 'CustomFields')
-		  Begin  
-				INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('CustomFields','CustomFields',110)
-		  End
-ELSE      Begin 
-				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 110 WHERE [dbo].[DWCategories].[Code] = 'CustomFields'	  
-		  End
-
-
-
+  
 
 		  		  --PartnerAddresses
 IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories] 
@@ -323,3 +309,15 @@ ELSE      Begin
 		  End
 
 	    
+		
+
+
+		  --CustomFields
+IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories] 
+          WHERE Code = 'CustomFields')
+		  Begin  
+				INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('CustomFields','CustomFields',280)
+		  End
+ELSE      Begin 
+				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 280 WHERE [dbo].[DWCategories].[Code] = 'CustomFields'	  
+		  End

@@ -15,6 +15,7 @@ import {AttachmentsList} from '../../../../InfrastructureModules/InfrastructureD
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {SharedDocumentHelper} from '../../../../Infrastructure/Helpers/SharedDocumentHelper';
+import { GeneralEmailSender } from '../../../../Infrastructure/Helpers/GeneralEmailSender';
 
 @Component({
     
@@ -32,10 +33,13 @@ export class SharedDocumentComponent implements OnInit {
     ShipmentShareDocumentsDataLists: ShipmentShareDocumentsData[];
     ObjectTableId: string;
     IsShowMessageNoDocument: boolean = false;
-
+    IsShareDocumentsViaEmail: boolean = false;
     AttachmentsLists: AttachmentsList[];
     OnCloseSharedWithAgentsEvent = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
+    ShareDocumentsViaEmailDocumentTypeCode = "SDVE"; 
+    public documentTypePMExtendedService: DocumentTypePMExtendedService = new DocumentTypePMExtendedService();
+
     constructor(public _documentTypePMExtendedService: DocumentTypePMExtendedService, public _agentSharedDocumentExtendedService: AgentSharedDocumentExtendedService) {
 
 
@@ -52,6 +56,7 @@ export class SharedDocumentComponent implements OnInit {
     Mode: string = "";
     OkButtonLable: string;
     SetWindowArgs(args: any) {
+        this.IsShareDocumentsViaEmail = args.ShareDocumentsViaEmail;
         this.Mode = args.Mode;
         this.EntityPM = args.EntityPM;
         this.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Shipment")[0].Id;
@@ -63,7 +68,7 @@ export class SharedDocumentComponent implements OnInit {
 
         }
 
-        this.OkButtonLable = this.Mode == "Attachment" ? "OK" : "Share";
+        this.OkButtonLable = (this.Mode == "Attachment" || this.IsShareDocumentsViaEmail) ? "OK" : "Share";
         if (this.Mode == "Attachment") {
             this.OnCloseSharedWithAgentsEvent = args.OnCloseSharedWithAgentsEvent;
             this.AttachmentsLists = [];
@@ -201,98 +206,157 @@ export class SharedDocumentComponent implements OnInit {
         this.CurrentSession.CloseCurrentWindow();
     }
 
-    SelectedShipmentShareDocumentsDataLists: ShipmentShareDocumentsData[] = [];
+    SelectedShipmentShareDocumentsDataLists: ShipmentShareDocumentsData[] = []; 
+
+    private GetShareDocumentsViaEmailAction() {
+        var attachmentsList = this.GetSelectedAttachmentsList(); 
+        this.ShowSendControlBasedDocumentType(attachmentsList); 
+    }
+
+    private ShowSendControlBasedDocumentType(attachmentsList: AttachmentsList[]) {
+        this.documentTypePMExtendedService.GetDoesDocumentTypeCodeExist(this.ShareDocumentsViaEmailDocumentTypeCode, SessionLocator.Tenant).subscribe((res: any) => {
+            var serviceResponse: ServiceResponse = res;
+            if (!serviceResponse.HasError && serviceResponse.Result == false) {
+                this.ShowValidationMessage("Contact your administrator");
+            }
+            if (!serviceResponse.HasError && serviceResponse.Result == true) {
+                this.ShowSendControl(attachmentsList);
+            }
+        });
+    }
+
+    private ShowValidationMessage(messsage: string) {
+        var messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Show(messsage);
+    }
+
+    private ShowSendControl(attachmentsList: AttachmentsList[]) {
+        var generalEmailSender = new GeneralEmailSender("Shipment", this.ShareDocumentsViaEmailDocumentTypeCode, this.EntityPM.Id, this.EntityPM.ShipmentNumber, this.EntityPM.CustomerId, "", "", "", attachmentsList, "", this.EntityPM, false, "QEMO");
+        generalEmailSender.ShowFullSendControll();
+    }
+
+    private GetSelectedAttachmentsList() {
+        var attachmentsList = new Array<AttachmentsList>();
+        this.ShipmentShareDocumentsDataLists.forEach((item) => {
+            if (!AppTool.IsNullOrEmpty(item.AgentSharedManifestRef) && item.ShareDocuments.filter(d => d.Included == true).length > 0) { 
+                this.BuildShareDocumentAtttachmentsList(item, attachmentsList);
+            }
+        });
+        return attachmentsList;
+    }
+
+
+    private BuildShareDocumentAtttachmentsList(item: ShipmentShareDocumentsData, attachmentsList: AttachmentsList[]) {
+        item.ShareDocuments.filter(d => d.Included).forEach((doc) => {
+            var item = new AttachmentsList();
+            item.Id = doc.DocumentId;
+            item.DocumentFilingId = doc.DocumentsFilingId;
+            item.Tenant = SessionLocator.Tenant;
+            item.FileSize = doc.FileSize;
+            item.FileExtension = doc.Extension;
+            item.DocumentTypeCopyNameWithDocumentTypeName = doc.DocumentTypeName;
+            item.ShowRemoveLink = true;
+            attachmentsList.push(item);
+        });
+    }
+
     SaveButtonClicked() {
-        this.SelectedShipmentShareDocumentsDataLists = [];
-        if (this.ShipmentShareDocumentsDataLists) {
-            this.ShipmentShareDocumentsDataLists.forEach((item) => {
-                if (!AppTool.IsNullOrEmpty(item.AgentSharedManifestRef) && item.ShareDocuments.filter(d => d.Included == true).length > 0) {
-                    var shipmentShareDocumentsData: ShipmentShareDocumentsData = new ShipmentShareDocumentsData();
-                    shipmentShareDocumentsData.AgentId = item.AgentId;
-                    shipmentShareDocumentsData.AgentSharedManifestRef = item.AgentSharedManifestRef;
-                    shipmentShareDocumentsData.TenantAgent = item.TenantAgent;
-                    shipmentShareDocumentsData.EntityId = item.EntityId;
-                    shipmentShareDocumentsData.ShipmentLevelCode = item.ShipmentLevelCode;
-                    shipmentShareDocumentsData.ShipmentNumber = item.ShipmentNumber; 
-                    shipmentShareDocumentsData.ShareDocuments = item.ShareDocuments.filter(d => d.Included);
 
-                    this.SelectedShipmentShareDocumentsDataLists.push(shipmentShareDocumentsData);
-                }
-            });
+        if (this.IsShareDocumentsViaEmail) {
+            this.GetShareDocumentsViaEmailAction();  
+             return; 
+         }
+         
+            this.SelectedShipmentShareDocumentsDataLists = [];
+            if (this.ShipmentShareDocumentsDataLists) {
+                this.ShipmentShareDocumentsDataLists.forEach((item) => {
+                    if (!AppTool.IsNullOrEmpty(item.AgentSharedManifestRef) && item.ShareDocuments.filter(d => d.Included == true).length > 0) {
+                        var shipmentShareDocumentsData: ShipmentShareDocumentsData = new ShipmentShareDocumentsData();
+                        shipmentShareDocumentsData.AgentId = item.AgentId;
+                        shipmentShareDocumentsData.AgentSharedManifestRef = item.AgentSharedManifestRef;
+                        shipmentShareDocumentsData.TenantAgent = item.TenantAgent;
+                        shipmentShareDocumentsData.EntityId = item.EntityId;
+                        shipmentShareDocumentsData.ShipmentLevelCode = item.ShipmentLevelCode;
+                        shipmentShareDocumentsData.ShipmentNumber = item.ShipmentNumber;
+                        shipmentShareDocumentsData.ShareDocuments = item.ShareDocuments.filter(d => d.Included);
 
-            if (this.Mode == "Attachment") {
-                this.AttachmentsLists = new Array<AttachmentsList>();
-
-                this.SelectedShipmentShareDocumentsDataLists.forEach((item) => {
-                    item.ShareDocuments.forEach((doc) => {
-                        var item = new AttachmentsList();
-                        item.Id = doc.DocumentId;
-                        item.DocumentFilingId = doc.DocumentsFilingId;
-                        item.Tenant = SessionLocator.Tenant;
-                        item.FileSize = doc.FileSize;
-                        item.FileExtension = doc.Extension;
-                        item.DocumentTypeCopyNameWithDocumentTypeName = doc.DocumentTypeName;
-                        item.ShowRemoveLink = true;
-                        this.AttachmentsLists.push(item);
-                    });
-
-
+                        this.SelectedShipmentShareDocumentsDataLists.push(shipmentShareDocumentsData);
+                    }
                 });
 
-                this.OnCloseSharedWithAgentsEvent.emit(this.AttachmentsLists);
-                this.CloseButtonClicked();
+                if (this.Mode == "Attachment") {
+                    this.AttachmentsLists = new Array<AttachmentsList>();
 
-            }
-            else {
+                    this.SelectedShipmentShareDocumentsDataLists.forEach((item) => {
+                        item.ShareDocuments.forEach((doc) => {
+                            var item = new AttachmentsList();
+                            item.Id = doc.DocumentId;
+                            item.DocumentFilingId = doc.DocumentsFilingId;
+                            item.Tenant = SessionLocator.Tenant;
+                            item.FileSize = doc.FileSize;
+                            item.FileExtension = doc.Extension;
+                            item.DocumentTypeCopyNameWithDocumentTypeName = doc.DocumentTypeName;
+                            item.ShowRemoveLink = true;
+                            this.AttachmentsLists.push(item);
+                        });
 
-                if (this.SelectedShipmentShareDocumentsDataLists.length > 0) {
 
-                    this.CurrentSession.StartBusyIndicator("Sharing Documnents...");
-                    this._agentSharedDocumentExtendedService.PostSharedDocuments(this.SelectedShipmentShareDocumentsDataLists, this.EntityPM.Id).subscribe((res:any) => {
-                        var pmResponse: ServiceResponse = res;
-                        var messageWindow: MessageWindow = new MessageWindow();
-                        messageWindow.Title = "Share Document";
-                        if (!pmResponse.HasError) {
-                            ServiceLocator.SendTotangoUserActivity("Agents Shared Logistics", "Share Documents");
-                            messageWindow.Show("Selected documents were shared successfully.");
-                            this.CloseButtonClicked();
-                        }
-                        else {
-                            if (pmResponse.ErrorsArray && pmResponse.ErrorsArray[0]) {
-                                messageWindow.Show(pmResponse.ErrorsArray[0].toString());
-                            }
-                        }
-                        this.CurrentSession.StopBusyIndicator();
                     });
+
+                    this.OnCloseSharedWithAgentsEvent.emit(this.AttachmentsLists);
+                    this.CloseButtonClicked();
 
                 }
                 else {
 
+                    if (this.SelectedShipmentShareDocumentsDataLists.length > 0) {
+
+                        this.CurrentSession.StartBusyIndicator("Sharing Documnents...");
+                        this._agentSharedDocumentExtendedService.PostSharedDocuments(this.SelectedShipmentShareDocumentsDataLists, this.EntityPM.Id).subscribe((res:any) => {
+                            var pmResponse: ServiceResponse = res;
+                            var messageWindow: MessageWindow = new MessageWindow();
+                            messageWindow.Title = "Share Document";
+                            if (!pmResponse.HasError) {
+                                ServiceLocator.SendTotangoUserActivity("Agents Shared Logistics", "Share Documents");
+                                messageWindow.Show("Selected documents were shared successfully.");
+                                this.CloseButtonClicked();
+                            }
+                            else {
+                                if (pmResponse.ErrorsArray && pmResponse.ErrorsArray[0]) {
+                                    messageWindow.Show(pmResponse.ErrorsArray[0].toString());
+                                }
+                            }
+                            this.CurrentSession.StopBusyIndicator();
+                        });
+
+                    }
+                    else {
+
+                        var messageWindow: MessageWindow = new MessageWindow();
+                        messageWindow.Title = "Share Document";
+                        messageWindow.Show("Please select at least one document.");
+                    }
+                }
+
+            }
+
+            else {
+                if (this.Mode == "Attachment") {
+                    this.OnCloseSharedWithAgentsEvent.emit(this.AttachmentsLists);
+                    this.CloseButtonClicked();
+
+                } else {
                     var messageWindow: MessageWindow = new MessageWindow();
                     messageWindow.Title = "Share Document";
-                    messageWindow.Show("Please select at least one document.");
+                    messageWindow.Show("Please definition at least one document.");
                 }
+
             }
 
-        }
 
-        else {
-            if (this.Mode == "Attachment") {
-                this.OnCloseSharedWithAgentsEvent.emit(this.AttachmentsLists);
-                this.CloseButtonClicked();
-
-            } else {
-                var messageWindow: MessageWindow = new MessageWindow();
-                messageWindow.Title = "Share Document";
-                messageWindow.Show("Please definition at least one document.");
-            }
 
         }
-
-
-
-    }
-
+ 
     SortItemSource(ItemsSource: any) {
 
         ItemsSource.sort((a, b) => {
