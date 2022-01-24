@@ -2192,7 +2192,6 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     }
  
     ClosePendingMethod() {
-        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
          if (this.IsDisplayOnly) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
