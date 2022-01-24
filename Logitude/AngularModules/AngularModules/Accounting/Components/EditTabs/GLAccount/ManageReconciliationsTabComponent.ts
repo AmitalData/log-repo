@@ -122,18 +122,18 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
                 if (!AppTool.IsNullOrEmpty(num) && !AppTool.IsNullOrEmpty(this.amount)) {
 
                     if (this.selectedAmountOperator.Code == Operator.Equals) {
-                        this.amountFieldFilter = new FilterItem("ForeignAmount", num, -1 * num, null, this.selectedAmountOperator.Code, false, false, false, "number", false);
+                        this.amountFieldFilter = new FilterItem("ReconciliationAmount", num, -1 * num, null, this.selectedAmountOperator.Code, false, false, false, "number", false);
                     }
                     else if (this.selectedAmountOperator.Code == Operator.LessThan) {
                         num = Math.abs(num);
-                        this.amountFieldFilter = new FilterItem("ForeignAmount", -1 * --num, +num, null, "Between", false, false, false, "number", false);
+                        this.amountFieldFilter = new FilterItem("ReconciliationAmount", -1 * --num, +num, null, "Between", false, false, false, "number", false);
                     }
                     else if (this.selectedAmountOperator.Code == Operator.LessThanOrEqual) {
                         num = Math.abs(num);
-                        this.amountFieldFilter = new FilterItem("ForeignAmount", -1 * num, +num, null, "Between", false, false, false, "number", false);
+                        this.amountFieldFilter = new FilterItem("ReconciliationAmount", -1 * num, +num, null, "Between", false, false, false, "number", false);
                     }
                     else {
-                        this.amountFieldFilter = new FilterItem("ForeignAmount", Math.abs(num), null, null, this.selectedAmountOperator.Code, false, false, false, "number", false);
+                        this.amountFieldFilter = new FilterItem("ReconciliationAmount", Math.abs(num), null, null, this.selectedAmountOperator.Code, false, false, false, "number", false);
                     }
                     this.RefreshButtonClicked();
 
