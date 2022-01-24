@@ -367,6 +367,8 @@ namespace Logitude.TariffModule.BL.Helpers
 
                     if (!string.IsNullOrEmpty(itemStep.PriceSteps))
                     {
+                        weight = CalculateWeightByUnitOfMeasurementCode(itemStep);
+           
                         List<string> initialSteps = itemStep.PriceSteps.Split(',').ToList();
                         int index = 0;
                         initialSteps.ForEach(item =>
@@ -1730,6 +1732,39 @@ namespace Logitude.TariffModule.BL.Helpers
                }
             }
         }
+
+        private double? CalculateWeightByUnitOfMeasurementCode(Tariff tariff)
+        {
+            if (string.IsNullOrEmpty(tariff.UnitOfMeasurementCode))
+                return this.weight;
+
+            if (string.IsNullOrEmpty(this.weightCode))
+                return this.weight;
+
+            if(tariff.UnitOfMeasurementCode == this.weightCode)
+                return this.weight;
+
+            double ratio = GetWeightRtioByUnitOfMeasurementsCodes(this.weightCode, tariff.UnitOfMeasurementCode);
+
+            return this.weight * ratio;
+        }
+        private double GetWeightRtioByUnitOfMeasurementsCodes(string shipmentUnitCode, string tariffUnitCode)
+        {
+            if (shipmentUnitCode.ToUpper() == "KG" && tariffUnitCode.ToUpper() == "LB")
+                  return WeightUnitsConverter.KilogramsToPounds;
+            if (shipmentUnitCode.ToUpper() == "KG" && tariffUnitCode.ToUpper() == "MT")
+                return WeightUnitsConverter.KilogramsToMetricTon;
+            if (shipmentUnitCode.ToUpper() == "LB" && tariffUnitCode.ToUpper() == "MT")
+                return WeightUnitsConverter.PoundsToMitrcTons;
+            if (shipmentUnitCode.ToUpper() == "LB" && tariffUnitCode.ToUpper() == "KG")
+                return WeightUnitsConverter.PoundsToKilograms;
+            if (shipmentUnitCode.ToUpper() == "MT" && tariffUnitCode.ToUpper() == "KG")
+                return WeightUnitsConverter.MetricTonToKilograms;
+            if (shipmentUnitCode.ToUpper() == "MT" && tariffUnitCode.ToUpper() == "LB")
+                return WeightUnitsConverter.MetricTonsToPounds;
+
+            return 1.0;
+        }
     }
 
     public class TariffResult
@@ -1754,5 +1789,14 @@ namespace Logitude.TariffModule.BL.Helpers
         public Tariff Tariff { get; set; }
         public int ContainerNumber { get; set; }
         public string NoteMissingContainers { get; set; }
+    }
+    public struct WeightUnitsConverter 
+    {
+        public const double MetricTonToKilograms = 1000.0;
+        public const double PoundsToKilograms = 0.453592;
+        public const double KilogramsToMetricTon = 0.001;
+        public const double KilogramsToPounds = 2.20462;
+        public const double MetricTonsToPounds = 2204.62;
+        public const double PoundsToMitrcTons = 0.000453592;
     }
 }

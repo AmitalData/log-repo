@@ -302,12 +302,14 @@ export class TariffSettingComponent extends BaseComponent {
                 if (d && d != "cancel") {
                     if (type == "LCL") {
                         this.LCLDefaultStepsId = s.EntityPM.Id;
+                        this.EntityPM.LCLUnitOfMeasurementCode = s.EntityPM.UnitOfMeasurementCode;
+
                     }
                     else if (type == "Air") {
                         this.AirDefaultStepsId = s.EntityPM.Id;
-                    }
+                        this.EntityPM.AirUnitOfMeasurementCode = s.EntityPM.UnitOfMeasurementCode;
 
-                    this.EntityPM.UnitOfMeasurementCode = s.EntityPM.UnitOfMeasurementCode;
+                    }
                     this.CurrentSession.SessionEvent.emit("TariffStepsRefresh");
                 }
             });

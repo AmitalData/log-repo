@@ -30,7 +30,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         LCLDefaultStepsId, 
 	         ContainerDefaults, 
 	         DefaultCurrencyId, 
-	         UnitOfMeasurementCode,
+	         AirUnitOfMeasurementCode, 
+	         LCLUnitOfMeasurementCode,
 	      }
 
 
@@ -47,7 +48,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         LCLDefaultSteps, 
 	         ContainerDefaults, 
 	         DefaultCurrencyId, 
-	         UnitOfMeasurementCode,
+	         AirUnitOfMeasurementCode, 
+	         LCLUnitOfMeasurementCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -91,9 +93,14 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 				entityPOCO.DefaultCurrencyId = entityPM.DefaultCurrencyId;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnitOfMeasurementCode))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AirUnitOfMeasurementCode))
             {
-				entityPOCO.UnitOfMeasurementCode = entityPM.UnitOfMeasurementCode;
+				entityPOCO.AirUnitOfMeasurementCode = entityPM.AirUnitOfMeasurementCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LCLUnitOfMeasurementCode))
+            {
+				entityPOCO.LCLUnitOfMeasurementCode = entityPM.LCLUnitOfMeasurementCode;
 			}
 			}
 
@@ -140,9 +147,14 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.DefaultCurrencyId = entityPOCO.DefaultCurrencyId;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UnitOfMeasurementCode))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AirUnitOfMeasurementCode))
             {
-					entityPM.UnitOfMeasurementCode = entityPOCO.UnitOfMeasurementCode;
+					entityPM.AirUnitOfMeasurementCode = entityPOCO.AirUnitOfMeasurementCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LCLUnitOfMeasurementCode))
+            {
+					entityPM.LCLUnitOfMeasurementCode = entityPOCO.LCLUnitOfMeasurementCode;
             }
 
 		}
@@ -186,9 +198,14 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
                 oldEntityPM.DefaultCurrencyId = entityPM.DefaultCurrencyId;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnitOfMeasurementCode))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AirUnitOfMeasurementCode))
             {
-                oldEntityPM.UnitOfMeasurementCode = entityPM.UnitOfMeasurementCode;
+                oldEntityPM.AirUnitOfMeasurementCode = entityPM.AirUnitOfMeasurementCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LCLUnitOfMeasurementCode))
+            {
+                oldEntityPM.LCLUnitOfMeasurementCode = entityPM.LCLUnitOfMeasurementCode;
             }
 			
 		}

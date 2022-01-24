@@ -24,8 +24,7 @@ export class TariffPriceStepsComponent extends BaseComponent {
     }
 
     SetWindowArgs(args) {
-        this.DefaultPriceSteps = args[0];
-        this.UnitOfMeasurementCode = args[1];
+        this.DefaultPriceSteps = args;
         this.BuildItemsSource();
     }
 
@@ -45,14 +44,14 @@ export class TariffPriceStepsComponent extends BaseComponent {
 
         var index: number = 0;
         Steps.forEach(item => {
-            this.ItemsSource.push(new TariffSettingStep(item, index, this, this.UnitOfMeasurementCode));
+            this.ItemsSource.push(new TariffSettingStep(item, index, this));
             this.BuildDefaultPriceSteps();
             index++;
         });
 
         if (Steps.length < 8) {
             for (var i = Steps.length; i < 8; i++) {
-                this.ItemsSource.push(new TariffSettingStep(null, index, this, this.UnitOfMeasurementCode));
+                this.ItemsSource.push(new TariffSettingStep(null, index, this));
                 index++;
             }
         }
@@ -120,15 +119,13 @@ export class TariffPriceStepsComponent extends BaseComponent {
 class TariffSettingStep extends BaseComponent {
     public Index: number;
     public UnitOfMeasurementCode: string;
-    public StepCellUnitOfMeasurementCode: string = "";
     public DataContext = this;
-    constructor(iStep: string, index: number, private father: TariffPriceStepsComponent, unitOfMeasurementCode: string) {
+    constructor(iStep: string, index: number, private father: TariffPriceStepsComponent) {
         super();
 
         this.Index = index;
-        this.UnitOfMeasurementCode = unitOfMeasurementCode;
+        this.UnitOfMeasurementCode = this.father.UnitOfMeasurementCode;
         if (iStep) {
-            this.StepCellUnitOfMeasurementCode = this.UnitOfMeasurementCode;
             this.Step = +iStep;
         }
     }
@@ -138,21 +135,12 @@ class TariffSettingStep extends BaseComponent {
     set Step(value: number) {
         if (this.step != value) {
             this.step = value;
-            this.SetStepCellUnitOfMeasurementCode(value);
             this.father.BuildDefaultPriceSteps();
         }
     }
 
-    SetStepCellUnitOfMeasurementCode(value: number) {
-        if (value == null) {
-            this.StepCellUnitOfMeasurementCode = "";
-        } else {
-            this.StepCellUnitOfMeasurementCode = this.UnitOfMeasurementCode;
-        }
-    }
 
     DeleteClicked() {
         this.Step = null;
-        this.StepCellUnitOfMeasurementCode = "";
     }
 }

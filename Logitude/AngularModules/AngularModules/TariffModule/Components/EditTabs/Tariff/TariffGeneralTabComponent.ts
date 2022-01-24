@@ -31,7 +31,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     public SellerDependancy: string = "AL";
     public TariffCurrencyTextCode: string = "Tariff.F.CurrencyId";
     public IsContainersAreaVisible: boolean = false;
-    public IsUnitOfMeasurementFieldVisible: boolean = true;
+    public IsUnitOfMeasurementFieldVisible: boolean = false;
 
     private draftVersion: TariffVersionPM;
     constructor(public entityArgs: EntityArgs) {
@@ -79,8 +79,8 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
 
     SetUnitOfMeasurementFieldVisiblity() {
         this.UIProperties.SetEnabled("UnitOfMeasurementCode", this.ObjectTableName, false);
-        if (this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "ASC") {
-            this.IsUnitOfMeasurementFieldVisible = false;
+        if (this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "AFC") {
+            this.IsUnitOfMeasurementFieldVisible = true;
         }
     }
 

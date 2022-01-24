@@ -39,7 +39,9 @@ namespace Logitude.TariffModule.Data.EntityMapping
 
             this.Property(t => t.DefaultCurrencyId).HasColumnName("DefaultCurrencyId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.UnitOfMeasurementCode).HasColumnName("UnitOfMeasurementCode").HasMaxLength(3).IsUnicode(false);
+            this.Property(t => t.AirUnitOfMeasurementCode).HasColumnName("AirUnitOfMeasurementCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.LCLUnitOfMeasurementCode).HasColumnName("LCLUnitOfMeasurementCode").HasMaxLength(3).IsUnicode(false);
         }
     }
 }

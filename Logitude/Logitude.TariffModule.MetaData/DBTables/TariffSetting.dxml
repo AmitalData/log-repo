@@ -60,7 +60,15 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="UnitOfMeasurementCode"
+    Name="AirUnitOfMeasurementCode"
+    OldNames="UnitOfMeasurementCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LCLUnitOfMeasurementCode"
     Type="varchar"
     Size="3">
     <Constraints
@@ -72,7 +80,12 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="UnitOfMeasurementCode"
+    ForeignKeyColumn="AirUnitOfMeasurementCode"
+    ReferencedTable="WeightUnits"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="LCLUnitOfMeasurementCode"
     ReferencedTable="WeightUnits"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />

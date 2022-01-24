@@ -250,25 +250,48 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
-	  private string unitOfMeasurementCode ;
+	  private string airUnitOfMeasurementCode ;
 	  	  
        
 	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string UnitOfMeasurementCode  
+       public string AirUnitOfMeasurementCode  
 	   {
 	    
 	     get
 		{
-		   return unitOfMeasurementCode;
+		   return airUnitOfMeasurementCode;
 		 }
 		 set
 		 {
-		   if(unitOfMeasurementCode != value)
+		   if(airUnitOfMeasurementCode != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UnitOfMeasurementCode",OldValue=unitOfMeasurementCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AirUnitOfMeasurementCode",OldValue=airUnitOfMeasurementCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   unitOfMeasurementCode=value;
+		   airUnitOfMeasurementCode=value;
+		   }
+			
+		 }
+	   }
+	  private string lCLUnitOfMeasurementCode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LCLUnitOfMeasurementCode  
+	   {
+	    
+	     get
+		{
+		   return lCLUnitOfMeasurementCode;
+		 }
+		 set
+		 {
+		   if(lCLUnitOfMeasurementCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LCLUnitOfMeasurementCode",OldValue=lCLUnitOfMeasurementCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   lCLUnitOfMeasurementCode=value;
 		   }
 			
 		 }
