@@ -14,7 +14,8 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly TariffMenu = "#GeneralMHTariffModule";
     public static readonly ShippingLine = "#MaintenanceItemMTSL"
     public static readonly TabHolder = ".TabHolder";
-  
+    public static readonly RowsInPickUpPackages = ".SimpleGridViewRow RowHover";
+    
     //#endregion
     //#region CRM
     public static readonly CRMCustomers = "#CRMCUS"
