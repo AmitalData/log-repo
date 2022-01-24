@@ -2879,6 +2879,20 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = "",
                 InterfaceType = "C",
+            });            
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "DCAUAC",
+                InOut = InOutEnum.I.ToString(),
+                Description = "עדכון פטור 92 גורף",
+                DcaPrefixName = "DCAUAC_OUT",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                InterfaceType = "C",
             });
             all.Add(new InterfaceManagementDetails()
             {
