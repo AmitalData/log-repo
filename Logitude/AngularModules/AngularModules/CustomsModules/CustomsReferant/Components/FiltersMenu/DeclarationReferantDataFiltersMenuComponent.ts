@@ -127,7 +127,7 @@ export class DeclarationReferantDataFiltersMenuComponent
 
         var i = 0;
         var myService: UserListService = new UserListService();
-        if (UserListFromFilters[0] != "HowCare" && UserListFromFilters.length != 0) {
+        if (UserListFromFilters[0] != "HowCare" && UserListFromFilters.length != 0 && UserListFromFilters[0] != null ) {
             UserListFromFilters[0].split("%2C").forEach(function (value) {
                 let ul = new UserList();
                 ul.Id = value;
@@ -142,7 +142,7 @@ export class DeclarationReferantDataFiltersMenuComponent
 
         }
         i = 0;
-        if (DepartmentFromFilters[0] != "HowCare" && DepartmentFromFilters.length != 0) {
+        if (DepartmentFromFilters[0] != "HowCare" && DepartmentFromFilters.length != 0 && DepartmentFromFilters[0] != null) {
             DepartmentFromFilters[0].split("%2C").forEach(function (value) {
                 let ul = new DepartmentList();
                 ul.Id = value;
@@ -152,24 +152,28 @@ export class DeclarationReferantDataFiltersMenuComponent
                 }
                 i++;
                 this._CD.detectChanges();
-                this.apiQueryFilters.addAdditionalFilter("DepartmentName", this.DepartmentNamesListString, null, null, "Equal", true, false, false, "string", true);
-                this.apiQueryFilters.addAdditionalFilter("DepartmentId", this.DepartmentListString, null, null, "InListExact", false, false, false, "string", this.LOVListDepartment.length == 0);
+               // this.apiQueryFilters.addAdditionalFilter("DepartmentName", this.DepartmentNamesListString, null, null, "Equal", true, false, false, "string", true);
+               // this.apiQueryFilters.addAdditionalFilter("DepartmentId", this.DepartmentListString, null, null, "InListExact", false, false, false, "string", this.LOVListDepartment.length == 0);
 
             }, this);
         } else {
         }
 
         if (this.TransportFilters.AdditionalFilters.length > 0) {
-            this.SetTransport(this.TransportFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue).toString());
-            this.apiQueryFilters.AdditionalFilters.push(this.TransportFilters.AdditionalFilters[0]);
+            if (this.TransportFilters.AdditionalFilters[0].FieldValue == null) {
+                this.SetTransport("All");
+            } else {
+                this.SetTransport(this.TransportFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue).toString());
+                this.apiQueryFilters.AdditionalFilters.push(this.TransportFilters.AdditionalFilters[0]);
+            }
 
         } else {
             this.SetTransport("All");
         }
-        this.SelectedValueChangedEmitUser();
-        this.SelectedValueChangedEmitDepartment();
+        //this.SelectedValueChangedEmitUser();
+        //this.SelectedValueChangedEmitDepartment();
 
-        this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: false });
+        //this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: false });
         this.ApplyTransportSelectedStyle();
         this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
         this.myViewChildrenMultiSelectLOVComponent.last.Invalidate();
@@ -241,22 +245,31 @@ export class DeclarationReferantDataFiltersMenuComponent
 
     private updateOrInsertAdvanceFilter(AdditionalFilters: FilterItem[]) {
         var objectFieldPMExtendedService: ObjectFieldPMExtendedService = new ObjectFieldPMExtendedService();
-        objectFieldPMExtendedService.GetObjectFieldByName(AdditionalFilters[0].FieldName, this.ObjectTableName).subscribe((objectField: any) => {
-            if (objectField) {
-                var myService: DeclarationReferantDataWebService = new DeclarationReferantDataWebService();
-                myService.GetSingleByObjectFieldCodeAndTenant(objectField[0].Id, SessionInfo.LoggedUserTenant, this.QueryCode, SessionInfo.LoggedUserId).subscribe((advanceFilterFromDb: any) => {
-                    if (advanceFilterFromDb) { // update if exist in db 
-                        advanceFilterFromDb.PredefinedValue = AdditionalFilters[0].FieldValue;
-                        myService.update(advanceFilterFromDb).subscribe((myResult: any) => {
-                        });
-                    } else { // insert if doesnt exist in db
-                        this.TransportAdvancedQueryFilterPM = this.GetAdvanceFilterPMFromFilterItem(AdditionalFilters[0], objectField[0]);
-                        myService.insertDeclarationReferantFilters(this.TransportAdvancedQueryFilterPM).subscribe((myResult: any) => {
-                        });
-                    }
-                });
-            }
-        });
+        if (AdditionalFilters.length > 0) {
+            objectFieldPMExtendedService.GetObjectFieldByName(AdditionalFilters[0].FieldName, this.ObjectTableName).subscribe((objectField: any) => {
+                if (objectField) {
+                    var myService: DeclarationReferantDataWebService = new DeclarationReferantDataWebService();
+                    myService.GetSingleByObjectFieldCodeAndTenant(objectField[0].Id, SessionInfo.LoggedUserTenant, this.QueryCode, SessionInfo.LoggedUserId).subscribe((advanceFilterFromDb: any) => {
+                        if (advanceFilterFromDb) { // update if exist in db 
+                            advanceFilterFromDb.PredefinedValue = this.getPredefinedValue(AdditionalFilters[0].FieldValue);
+                            myService.update(advanceFilterFromDb).subscribe((myResult: any) => {
+                            });
+                        } else { // insert if doesnt exist in db
+                            this.TransportAdvancedQueryFilterPM = this.GetAdvanceFilterPMFromFilterItem(AdditionalFilters[0], objectField[0]);
+                            myService.insertDeclarationReferantFilters(this.TransportAdvancedQueryFilterPM).subscribe((myResult: any) => {
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    getPredefinedValue(value: string) {
+        if (value != "All") {
+            return value;
+        }
+        return null;
     }
 
     applyBasicFiltes() {
@@ -275,7 +288,7 @@ export class DeclarationReferantDataFiltersMenuComponent
             this.apiQueryFilters.addAdditionalFilter("RetrievData", true, null, null, "Equal", true, false, false, "string");
 
         } else {
-            this.applyBasicFiltes();
+            //this.applyBasicFiltes();
             // this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
 
             //  this.SelectedValueChangedEmitUser();
