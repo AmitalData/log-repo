@@ -142,7 +142,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             if (cargoTrackingDataBaseArgs.CargoTrackingArguments == null)
             {
-                LastUpdate = ServiceHelper.GetTableLastUpdate(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName, cargoTrackingDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
+                LastUpdate = cargoTrackingDataBaseArgs.ShipmentsWaterMark;
 
                 string lastUpdateCondition = $" (C.AutomaticLastUpdateDate > '{LastUpdate}')";
                 whereConditions.Add(lastUpdateCondition);
@@ -349,7 +349,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             if (cargoTrackingDataBaseArgs.CargoTrackingArguments == null)
             {
-                LastUpdate = ServiceHelper.GetTableLastUpdate(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName,cargoTrackingDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
+                LastUpdate = cargoTrackingDataBaseArgs.ShipmentsWaterMark;
 
                 string lastUpdateCondition = $" (P.AutomaticLastUpdateDate > '{LastUpdate}')";
                 whereConditions.Add(lastUpdateCondition);
@@ -506,8 +506,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             if (cargoTrackingDataBaseArgs.CargoTrackingArguments == null)
             {
-                LastUpdate = ServiceHelper.GetTableLastUpdate(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName, cargoTrackingDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
-
+                LastUpdate = cargoTrackingDataBaseArgs.ShipmentsWaterMark;
                 string lastUpdateCondition = $" (SHO.AutomaticLastUpdateDate > '{LastUpdate}')";
                 whereConditions.Add(lastUpdateCondition);
             }
