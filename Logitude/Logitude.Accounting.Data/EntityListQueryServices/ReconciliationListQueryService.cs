@@ -46,6 +46,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 		private IQueryable<Reconciliation> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<Reconciliation> iQueryable,int tenant)
         {
+
             return iQueryable;
 		}
 

@@ -35,6 +35,32 @@
                                                 </td>
                                                 <td><div></div></td>
                                             </tr>
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 100px;padding-right: 10px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'Accounting.General.O.Amount' | TextCodeTranslationPipe}}</td>
+
+                                                <td style="width: 140px;">
+                                                    
+                                                        <ComboBox [ItemsSource]="operatorsList" [Binding]="'LocalName'"
+                                                                  [SelectedItem]="selectedAmountOperator"
+                                                                  (SelectedItemChanged)="selectedAmountOperator = $event"></ComboBox>
+                                                    
+                                                        
+                                                </td>
+
+                                                <td style="width: 30px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true"
+                                                    [ObjectFieldName]="'Amount'" [Text]="Amount" [HideColumns]="true"
+                                                    (ValueChanged)="AmountTextChanged($event)" [DebounceTime]="400"
+                                                    [ObjectTableName]="'Reconciliation'" [DataContext]="this"></LogTextBox>
+                                                </td>
+
+                                                <td ></td>
+
+                                                <td >
+                                                    
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
 
                                         </table>
                                 </tr>
