@@ -83,7 +83,7 @@ export class SharedDocumentComponent implements OnInit {
     LoadData() {
         this.CurrentSession.StartBusyIndicatorLoading();
         this.ShipmentShareDocumentsDataLists = [];
-        this._documentTypePMExtendedService.GetShareDocumentByObjectTableAndEntityIdAndshipmentLevel(this.EntityPM.Id, this.EntityPM.AgentId, this.EntityPM.ShipmentNumber, this.ObjectTableId, this.EntityPM.ShipmentLevelCode, SessionLocator.Tenant).subscribe((res:any) => {
+        this._documentTypePMExtendedService.GetShareDocumentByObjectTableAndEntityIdAndshipmentLevel(this.EntityPM.Id, this.EntityPM.AgentId, this.EntityPM.ShipmentNumber, this.ObjectTableId, this.EntityPM.ShipmentLevelCode, SessionLocator.Tenant, this.IsShareDocumentsViaEmail ? "Email" : "").subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError && pmResponse.Result) {
                 var myList = pmResponse.Result;
@@ -97,7 +97,7 @@ export class SharedDocumentComponent implements OnInit {
 
                 if (this.ShipmentShareDocumentsDataLists) {
                     this.ShipmentShareDocumentsDataLists.forEach((item) => {
-                        if (item.ShareDocuments && !AppTool.IsNullOrEmpty(item.AgentSharedManifestRef)) {
+                        if (item.ShareDocuments && (!AppTool.IsNullOrEmpty(item.AgentSharedManifestRef) || this.IsShareDocumentsViaEmail)) {
                             item.ShareDocuments.forEach((doc) => {
                                 doc.Included = doc.IsReady;
 
@@ -238,7 +238,7 @@ export class SharedDocumentComponent implements OnInit {
     private GetSelectedAttachmentsList() {
         var attachmentsList = new Array<AttachmentsList>();
         this.ShipmentShareDocumentsDataLists.forEach((item) => {
-            if (!AppTool.IsNullOrEmpty(item.AgentSharedManifestRef) && item.ShareDocuments.filter(d => d.Included == true).length > 0) { 
+            if ((!AppTool.IsNullOrEmpty(item.AgentSharedManifestRef) || this.IsShareDocumentsViaEmail) && item.ShareDocuments.filter(d => d.Included == true).length > 0) { 
                 this.BuildShareDocumentAtttachmentsList(item, attachmentsList);
             }
         });
