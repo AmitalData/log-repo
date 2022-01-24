@@ -14,6 +14,7 @@ import { DeclarationReferantDataFiltersMenuComponent } from '../FiltersMenu/Decl
 import { AdvancedQueryFiltersPMService } from 'Infrastructure/Services/StandardPMs/AdvancedQueryFiltersPMService';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { ServiceArgs } from 'Infrastructure/DataContracts/ServiceArgs';
+import { debounce, debounceTime } from 'rxjs/operators';
 declare var makeAmBarChart, BarClick, ResetItem: any;
 
 @Component({
@@ -87,6 +88,8 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     getFiltersFromDb() {
         this._declarationReferantDataWebService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, "Customs.DeclarationReferantData.AllCases").subscribe((myResult: any) => {
             var listArgs = new ListComponentArgs();
+            this.CurrentSession.StopBusyIndicator();
+            this.isScreenLoaded = true;
             var AdditionalFilters: FilterItem[] = new Array();
             if (myResult) {
                 var ReferantUserIdFilter = myResult.filter(a => a.ObjectFieldName == "ReferentUserId");
@@ -112,10 +115,12 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
             }
             if (AdditionalFilters.length > 0) {
                 listArgs.QuerySection = myResult[0].QueryId;
+            }else{
+                this.applyQueriesCount();
             }
             listArgs.Filters = AdditionalFilters;
             this.declarationReferantDataFiltersMenuComponent.SetFiltersMenu(listArgs);
-            this.applyQueriesCount();
+            //this.applyQueriesCount();
         });
     }
 
@@ -128,6 +133,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     }
 
     applyQueriesCount() {
+        this.GetFilterForQueriesCount();
         this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).subscribe(
             (data: any) => {
                 this.counters = data.Result;
@@ -367,12 +373,15 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     viewFilters = new ApiQueryFilters();
 
 
-    FilterChange($event) {
-        this.filters = new ApiQueryFilters();
-        this.filters = $event.Filters;
-        this.ApplyFilters(this.filters);
+    FilterChange($event, IsFilterFromDbLoadd: boolean) {
+        if (IsFilterFromDbLoadd) {
+            this.filters = new ApiQueryFilters();
+            this.filters = $event.Filters;
+            this.ApplyFilters(this.filters);
+        }
     }
     RefreshButtonClicked() {
+        this.GetFilterForQueriesCount();
         this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).subscribe(
             (data: any) => {
                 this.counters = data.Result;
@@ -383,11 +392,8 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     }
 
     ApplyFilters(filters) {
-        this.viewFilters.AdditionalFilters = this.filters.AdditionalFilters.filter(a => a.FieldName == "ReferentUserId" || a.FieldName == "DepartmentId" || a.FieldName == "TransportModeId" || a.FieldName == "ReferantUserName" || a.FieldName == "DepartmentName");
-        this.RefId = this.declarationReferantDataFiltersMenuComponent.LOVListUsers.map(({ Id }) => Id).toString();
-        this.DepId = this.declarationReferantDataFiltersMenuComponent.LOVListDepartment.map(({ Id }) => Id).toString();
-        this.TransportModeId = this.declarationReferantDataFiltersMenuComponent.SelectedValue;
-        this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).subscribe(
+        this.GetFilterForQueriesCount();
+        this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).pipe(debounceTime(1000)).subscribe(
             (data: any) => {
                 this.counters = data.Result;
                 this.InProgressDeclarationReferantDataId = this.InProgressDeclarationReferantDataId + this.CurrentSession.GetChartId();
@@ -484,6 +490,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => {
                             this.filters.AdditionalFilters = this.filters.AdditionalFilters.filter(x => x.FieldName == "TransportModeId" || x.FieldName == "ReferentUserId" || x.FieldName == "DepartmentName" || x.FieldName == "ReferantUserName" || x.FieldName == "DepartmentId");
                             this.LoadAllScreenData();
+                            this.GetFilterForQueriesCount();
                             this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).subscribe(
                                 (data: any) => {
                                     this.counters = data.Result;
@@ -492,6 +499,15 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                         });
                     });
             });
+        }
+    }
+
+    public GetFilterForQueriesCount() {
+        if (this.filters?.AdditionalFilters.length > 0) {
+            this.viewFilters.AdditionalFilters = this.filters.AdditionalFilters.filter(a => a.FieldName == "ReferentUserId" || a.FieldName == "DepartmentId" || a.FieldName == "TransportModeId" || a.FieldName == "ReferantUserName" || a.FieldName == "DepartmentName");
+            this.RefId = this.declarationReferantDataFiltersMenuComponent.LOVListUsers.map(({ Id }) => Id).toString();
+            this.DepId = this.declarationReferantDataFiltersMenuComponent.LOVListDepartment.map(({ Id }) => Id).toString();
+            this.TransportModeId = this.declarationReferantDataFiltersMenuComponent.SelectedValue;
         }
     }
 
