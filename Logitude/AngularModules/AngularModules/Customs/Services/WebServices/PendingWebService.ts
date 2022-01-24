@@ -54,7 +54,7 @@ export class PendingWebService {
             }
         );
 
-        return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
+        return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax) as Promise<any>;
     }
 
 }

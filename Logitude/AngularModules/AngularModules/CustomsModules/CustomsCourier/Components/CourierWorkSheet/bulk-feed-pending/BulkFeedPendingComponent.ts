@@ -143,66 +143,14 @@ export class BulkFeedPendingComponent extends BaseComponent {
     const listPendingRemark = declarationCourierStatus.DeclarationPendings.map(x => x.PendingRemarks)
 
     SessionLocator.SelectedSession.StartBusyIndicatorSaving();
-    await this.pendingWebService.postBulkFeeding(listPending, listPendingRemark, this.declarationIdsList)
+    const res = await this.pendingWebService.postBulkFeeding(listPending, listPendingRemark, this.declarationIdsList)
     SessionLocator.SelectedSession.StopBusyIndicator();
 
-    
-  }
-
-
-  CheckDisplayOnly() {
-    const interfaceTypeCode: string = 'UCADPE'
-    this.IsDisplayOnly = false;
-    this._CourierWorksheetSharedDataService.IsDisplayOnly = false;
-
-    //Check if deleting pending
-    this._CourierMasterValidator.SetEntityPM(this.CourierMasterPM);
-    this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.CourierMasterPM.Tenant, interfaceTypeCode, this.CourierMasterPM.Id).subscribe((response: any) => {
-      const displayOnlyCheckResult = response.Result;
-      if (displayOnlyCheckResult?.length) {
-        const customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == interfaceTypeCode)[0];
-
-        if (customsRequestsSheetPM != null) {
-          this.IsDisplayOnly = true;
-          this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לסגירת PENDING ברקע ";
-          this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
-        }
-      }
-    });
-  }
-
-
-  updatePendingMethod() {
-    SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-    if (this.IsDisplayOnly) {
-      var myMessageWindow = new MessageWindow();
-      myMessageWindow.Width = 250;
-      myMessageWindow.Height = 150;
-      myMessageWindow.Show("קיים מסר זהה בתהליך");
-      SessionLocator.SelectedSession.StopBusyIndicator();
-      return;
-    }
-    var currRequestParams = new AddMultiPendingsRequestParams();
-    currRequestParams.LoggingEnabled = true;
-    currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
-    currRequestParams.Tenant = SessionLocator.Tenant;
-    currRequestParams.CourierMasterId = this.CourierMasterPM.Id;
-    // if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
-    //   currRequestParams.DeclarationsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
-    // }
-
-    currRequestParams.PendingCode = '';
-    //   currRequestParams.DeclarationsList = 
-
-    /*  this._CourierMasterService.PostSendClosePending(currRequestParams)
-       .subscribe((res: any) => {
-         SessionLocator.SelectedSession.StopBusyIndicator();
-         var myMessageWindow = new MessageWindow();
-         myMessageWindow.Show(res.Result);
-         myMessageWindow.WindowClosed.subscribe(s => {
-           this.RefreshList();
-         });
-       }); */
+    const myMessageWindow = new MessageWindow();
+    myMessageWindow.Width = 250;
+    myMessageWindow.Height = 150;
+    myMessageWindow.Show(res);
+    SessionLocator.SelectedSession.StopBusyIndicator();
   }
 
 
