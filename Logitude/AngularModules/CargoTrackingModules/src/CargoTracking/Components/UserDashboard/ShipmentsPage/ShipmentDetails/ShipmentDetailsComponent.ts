@@ -288,7 +288,8 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
 
     private SetDeniedDeclarationMessage()
     {
-        this.approvalMessage = declineResponseMessage + '\n"' + this.cargoTrackingShipmentPM.DenyReason+'"';
+        const denyDate = this.datePipe.transform(this.cargoTrackingShipmentPM.DenyDate, 'dd/MM/yyyy, HH:mm');
+        this.approvalMessage = declineResponseMessage + '\n"' + this.cargoTrackingShipmentPM.DenyReason+'"'+ ' ' + denyDate;
     }
 
     private SetApprovedDeclarationMessage()
