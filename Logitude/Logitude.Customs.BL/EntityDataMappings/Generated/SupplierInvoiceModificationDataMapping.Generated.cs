@@ -28,7 +28,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Tenant, 
 	         CurrencyTypeCode, 
 	         Amount, 
-	         ModificationCounterKey,
+	         ModificationCounterKey, 
+	         TypeDesc,
 	      }
 
 
@@ -43,7 +44,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Amount, 
 	         TypeName, 
 	         CurrencyTypeName, 
-	         ModificationCounterKey,
+	         ModificationCounterKey, 
+	         TypeDesc,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -70,6 +72,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Amount))
             {
 				entityPOCO.Amount = entityPM.Amount;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TypeDesc))
+            {
+				entityPOCO.TypeDesc = entityPM.TypeDesc;
 			}
 			}
 
@@ -111,6 +118,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ModificationCounterKey = entityPOCO.ModificationCounterKey;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TypeDesc))
+            {
+					entityPM.TypeDesc = entityPOCO.TypeDesc;
+            }
+
 		}
 
 		public void PMToOldPM(SupplierInvoiceModificationPM entityPM, SupplierInvoiceModificationPM oldEntityPM)
@@ -137,6 +149,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.Amount = entityPM.Amount;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TypeDesc))
+            {
+                oldEntityPM.TypeDesc = entityPM.TypeDesc;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(SupplierInvoiceModificationPM entityPM)
@@ -145,6 +162,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 return;
 
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.TypeDesc)) //T4 find type == nText 
+            {
+                entityPM.TypeDesc = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.TypeDesc));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

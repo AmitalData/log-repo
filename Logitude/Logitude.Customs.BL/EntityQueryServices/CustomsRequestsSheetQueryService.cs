@@ -321,7 +321,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB9999", // ניתוח מחדש
 "8326", // שאילתא לתצהיר יבואן
 "DCAMU", // multi update 
-"DCAUAC" // multi update 
+"DCAUAC", // multi update 
+"UCADPE" // add multi pending
 
 
             };
@@ -446,7 +447,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "2751",
 "2757",
 "DCAMU", // multi update 
-"DCAUAC"
+"DCAUAC",
+"UCADPE"
 //"8302" //בקשה לטופס הצהרה
 };
 
