@@ -48,7 +48,7 @@
                     </multiple-selection>
                     <multiple-selection #shipmentDirectionMultipleSelection class="multipe-select"
                         [MultipleSelectionList]="ShipmentDirectionFilters" [Title]="'Shipment Direction'"
-                        (SelectionChanged)="ShipmentDirectionChangedHandler($event)" [UseFixedTitle]="true"> 
+                        (SelectionChanged)="ShipmentDirectionChangedHandler($event)" [UseFixedTitle]="true">
                     </multiple-selection>
                     <multiple-selection #shipmentMoreFiltersMultipleSelection class="multipe-select"
                         [MultipleSelectionList]="ShipmentMoreFilters" [Title]="'More Filters'"
@@ -227,7 +227,7 @@
 
     <!-- Shipments List -->
     <div class="scrollable-table" *ngIf="!noResult">
-        <div class="table" style="height: 100%;">
+        <div class="table" style="height: 100%; box-sizing: border-box;">
 
 
             <cdk-virtual-scroll-viewport id="scrollArea" *ngIf="ShipmentsDataSource" class="shipment-cards-holder"
@@ -550,7 +550,7 @@
     <div class="filters-sidebar" *ngIf="sharedService.isAdvancedFilterOpened$ | async">
         <div class="header">
             <div class="title">Advanced Filters</div>
-            
+
             <div class="close-btn hide-mobile" (click)="sharedService.updateValue(false)">×</div>
             <div class="clear-addvance-filter-div" matTooltip="Clear Advanced Filters"  (click)="ClearAdvancedFilters()">
                 <svg class="clear-addvance-filter-svg"   width="24" height="24" viewBox="0 0 24 24"><path d="M14.73,20.83L17.58,18L14.73,15.17L16.15,13.76L19,16.57L21.8,13.76L23.22,15.17L20.41,18L23.22,20.83L21.8,22.24L19,19.4L16.15,22.24L14.73,20.83M13,19.88C13.04,20.18 12.94,20.5 12.71,20.71C12.32,21.1 11.69,21.1 11.3,20.71L7.29,16.7C7.06,16.47 6.96,16.16 7,15.87V10.75L2.21,4.62C1.87,4.19 1.95,3.56 2.38,3.22C2.57,3.08 2.78,3 3,3V3H17V3C17.22,3 17.43,3.08 17.62,3.22C18.05,3.56 18.13,4.19 17.79,4.62L13,10.75V19.88M5.04,5L9,10.06V15.58L11,17.58V10.05L14.96,5H5.04Z"/></svg>
@@ -636,7 +636,7 @@
                 <div class="filter-title">
                     More Filter
                 </div>
-                
+
                 <div class="more-filter-toggle">
                     <div class="flex-row-space-between">
                         <label>Exception Only</label>
@@ -655,9 +655,9 @@
                         <label>Operational Opened Only</label>
                         <mat-slide-toggle color="primary" [(ngModel)]="this.MoreFilterMobileValue.OperationalOpenedOnly"></mat-slide-toggle>
                     </div>
-                    
-                    
-                    
+
+
+
                 </div>
             </li>
         </ul>
