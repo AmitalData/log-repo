@@ -788,9 +788,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
-               SecurityUtility.AuthenticationOnTenant(tenant);
-               SecurityUtility.CheckContactFeature("Shipment", "READ", tenant); 
-                
+                //used in sharedmasterdocumentspage dont add security
+                //SecurityUtility.AuthenticationOnTenant(tenant);
+                //SecurityUtility.CheckContactFeature("Shipment", "READ", tenant); 
+
                 IShipmentsContext myContext = ShipmentsContext.GetContext(tenant);
                 ShipmentConsoleShipmentQuery shipmentConsoleShipmentQuery = new ShipmentConsoleShipmentQuery(myContext);
                 List<Shipment> housesShipments = shipmentConsoleShipmentQuery.GetMasterConnectedHouseShipments(entityId, tenant);
