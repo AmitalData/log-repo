@@ -226,7 +226,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 //Task 46455:
                 DestLineCode = "9999999999",
                 DeclarationId = myDeclarationPM.DeclarationNumber,
-                CustomIkuv = myDeclarationPM.CourierCustomStatusCode=="1"?"3": (!string.IsNullOrEmpty(myDeclarationPM.CourierSuspentionCode)? myDeclarationPM.CourierSuspentionCode: MamanSuspendedCode),//task 49300
+                CustomIkuv = myDeclarationPM.CourierCustomStatusCode=="1"?"3": (!string.IsNullOrEmpty(myDeclarationPM.CourierCustomStatusCode) ? myDeclarationPM.CourierSuspentionCode: MamanSuspendedCode),//task 49300
                 //CustomIkuv = myDeclarationPM.CourierSuspentionReasonCode,
                 //Task 46455
                 DistributorHP = distributorHP,
