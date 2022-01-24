@@ -37,6 +37,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
             QueryFilterItem filterItem_VendorId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Vendor").FirstOrDefault();
+            QueryFilterItem filterItem_CardId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CardId").FirstOrDefault();
 
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
             DateTime myStartDate = todayDate.AddMonths(-1);
@@ -64,6 +65,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 }
             }
 
+            if (filterItem_CardId != null)
+            {
+                if (filterItem_CardId.FieldValue != null)
+                {
+                    taxDeductionPerVendorReportParameters.CardId = filterItem_CardId.FieldValue.ToString();
+                }
+            }
 
         }
 
