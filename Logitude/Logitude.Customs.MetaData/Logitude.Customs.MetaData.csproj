@@ -109,6 +109,8 @@
     <None Include="DBScripts\Post\202005210125_BeforeUpdateDeleteAllMetadata.sxml" />
     <None Include="DBScripts\Post\202005270157_SetNullableForCDROPColumns_Global.sxml" />
     <None Include="DBScripts\Post\202005270158_SetNullableForCDROPColumns_Main.sxml" />
+    <None Include="DBScripts\Post\202108011330_AddPhysicalCheckSearchResultTypes.sxml" />
+    <None Include="DBScripts\Post\202111101021_SetCargoDescription.sxml" />
     <None Include="DBScripts\Post\202107071341_SetDeclarationDeclarationTypeCode.sxml" />
     <None Include="DBScripts\Post\202103251635_AddFCLLCL.sxml" />
     <None Include="DBScripts\Post\202105252040_AddAmendmentStatuses.sxml" />
@@ -124,6 +126,10 @@
     <None Include="DBScripts\Post\202104201027_AddCOURIERPENDINGREASONS903.sxml" />
     <None Include="DBScripts\Post\202107071340_SetCustomsDocumentsDefinitionDeclarationType.sxml" />
     <None Include="DBScripts\Post\202106061800_AddComputingPartners.sxml" />
+    <None Include="DBScripts\Post\2022010514_InterfaceTenantDefS8251.sxml" />
+    <None Include="DBScripts\Post\202111101341_InterfaceManagementDefaultPriority89.sxml" />
+    <None Include="DBScripts\Pre\202108111402_AddONSearchResult.sxml" />
+    <None Include="DBScripts\Post\202201031031_SearchFieldCourierMaster.sxml" />
     <None Include="DBScripts\Pre\20210801_DeleteDuplicateQueryColumns .sxml" />
     <None Include="DBScripts\Pre\202005210104_DropUnneededTables_Global.sxml" />
     <None Include="DBScripts\Pre\202005210105_DropUnneededTables_Main.sxml" />
@@ -155,6 +161,7 @@
     <None Include="DBScripts\Pre\202009061641_FixFKCourierPendingReason.sxml" />
     <None Include="DBScripts\Pre\20201215_AddAddonCourierAuto.sxml" />
     <None Include="DBScripts\Pre\20210726_CustomPartnerFTPSDropIndex.sxml" />
+    <None Include="DBScripts\Pre\20210929_AddMoveTypes.sxml" />
     <None Include="DBScripts\Pre\20211125_UpdateIsMultiCustomer.sxml" />
     <None Include="DBTables\AcceptanceStatus.dxml" />
     <None Include="DBTables\AccumalationState.dxml" />
@@ -346,7 +353,7 @@
     <None Include="DBTables\ExportDeliveryDocumentMessage.dxml" />
     <None Include="DBTables\ExporterRoleType.dxml" />
     <None Include="DBTables\ExportReference.dxml" />
-    <None Include="DBTables\ExportStorge.dxml" />
+    <None Include="DBTables\ExportStorage.dxml" />
     <None Include="DBTables\FacilitationType.dxml" />
     <None Include="DBTables\FaultInspectionType.dxml" />
     <None Include="DBTables\FclLclCode.dxml" />
@@ -367,6 +374,7 @@
     <None Include="DBTables\ImporterDesposition.dxml" />
     <None Include="DBTables\ImporterPeriodicDeclarStatus.dxml" />
     <None Include="DBTables\ImporterTypeForClaim.dxml" />
+    <None Include="DBTables\IncotemrsFileValidation.dxml" />
     <None Include="DBTables\InterfaceManagement.dxml" />
     <None Include="DBTables\InterfaceSendOption.dxml" />
     <None Include="DBTables\InterfaceTenantDefinition.dxml" />
@@ -419,6 +427,7 @@
     <None Include="DBTables\PendingErrorPlace.dxml" />
     <None Include="DBTables\PhysicalCheck.dxml" />
     <None Include="DBTables\PhysicalCheckOperation.dxml" />
+    <None Include="DBTables\PhysicalCheckSearchResultType.dxml" />
     <None Include="DBTables\PhysicalCheckStatusMessage.dxml" />
     <None Include="DBTables\PoaAuthorizationTypeLookup.dxml" />
     <None Include="DBTables\PoaStatusTypeLookUp.dxml" />
@@ -485,6 +494,7 @@
     <None Include="DBTables\TermsOfSaleType.dxml" />
     <None Include="DBTables\TPGFileType.dxml" />
     <None Include="DBTables\TradeAgreement.dxml" />
+    <None Include="DBTables\TradeAgreementProtocol.dxml" />
     <None Include="DBTables\TradeLevyExamptType.dxml" />
     <None Include="DBTables\TransactionNatureType.dxml" />
     <None Include="DBTables\TransferCargoMethodType.dxml" />
@@ -513,10 +523,13 @@
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
+    <None Include="EntityFiles\ExportStorage.lxml" />
+    <None Include="EntityFiles\PhysicalCheckSearchResultType.lxml" />
     <None Include="EntityFiles\AmendRequestRejectReasonType.lxml" />
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
     <None Include="EntityFiles\AutonomyRegionType.lxml" />
+    <None Include="EntityFiles\IncotemrsFileValidation.lxml" />
     <None Include="EntityFiles\ClientsPoa.lxml" />
     <None Include="EntityFiles\AmedmentType.lxml" />
     <None Include="EntityFiles\ContainerizationStatusCode.lxml" />
@@ -530,7 +543,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\ExportReference.lxml" />
-    <None Include="EntityFiles\ExportStorge.lxml" />
     <None Include="EntityFiles\StuffingSiteType.lxml" />
     <None Include="EntityFiles\HandingCode.lxml" />
     <None Include="EntityFiles\NDMessageActionCode.lxml" />
@@ -541,6 +553,7 @@
     <None Include="EntityFiles\ExportDeliveryDocumentMessage.lxml" />
     <None Include="EntityFiles\SecurityClearenceTypeCode.lxml" />
     <None Include="EntityFiles\CoolingReportingMethod.lxml" />
+    <None Include="EntityFiles\TradeAgreementProtocol.lxml" />
     <None Include="EntityFiles\TransportMeansType.lxml" />
     <None Include="EntityFiles\FullnessCode.lxml" />
     <None Include="EntityFiles\CancellationReasonRequestType.lxml" />
@@ -643,11 +656,6 @@
     <None Include="EntityFiles\ClaimsRelatedEntity.lxml">
       <SubType>Designer</SubType>
     </None>
-    <Compile Include="AutoGenerators\CustomClassesGenerator.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>CustomClassesGenerator.tt</DependentUpon>
-    </Compile>
     <None Include="EntityFiles\CustomsDocumentsDefinition.lxml" />
     <None Include="EntityFiles\CustomsInsuranceCompany.lxml" />
     <None Include="EntityFiles\DeclarationCargoSplit.lxml" />
@@ -665,6 +673,11 @@
     <None Include="EntityFiles\ReferantException.lxml" />
     <None Include="EntityFiles\AmendCancellRequestInitiator.lxml" />
     <None Include="DBScripts\Pre\202101131441_DocumentsMetaDataTypeByCodeVER.sxml" />
+    <Compile Include="AutoGenerators\CustomClassesGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CustomClassesGenerator.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

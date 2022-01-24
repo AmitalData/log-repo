@@ -1,0 +1,30 @@
+<p-toast position="top-left"></p-toast>
+
+<form [ngClass]='{"ng-submitted": isSubmit}'>
+    <div class="section root-header">
+        <h2 class="root-header-text">Quote Data</h2>
+    </div>
+
+    <div class="grid container">
+
+        <div class="col-10 right-side">
+            <div class="partners">
+                <div class="section" *ngFor='let partner of ["shipper", "consignee"]'>
+                    <app-new-quote-partner [type]='partner' [formGroup]='formGroup' [EntityPM]='EntityPM'>
+                    </app-new-quote-partner>
+                </div>
+            </div>
+
+            <app-new-quote-properties [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-properties>
+
+            <div class="section">
+                <app-new-quote-general [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-general>
+            </div>
+
+            <div class="section section-order">
+                <app-new-quote-expected-order [formGroup]='formGroup' [EntityPM]='EntityPM'>
+                </app-new-quote-expected-order>
+            </div>
+        </div>
+    </div>
+</form>

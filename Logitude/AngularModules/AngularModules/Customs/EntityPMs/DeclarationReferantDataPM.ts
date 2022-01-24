@@ -219,6 +219,21 @@ export class DeclarationReferantDataPM {
     public set FclLclName(newValue: string) { if (this.fclLclName != newValue) { this.fclLclName = newValue; this.MarkAsDirty("FclLclName"); } }
        
 	 
+    private isManualPayment: boolean;
+    public get IsManualPayment() { return this.isManualPayment; }
+    public set IsManualPayment(newValue: boolean) { if (this.isManualPayment != newValue) { this.isManualPayment = newValue; this.MarkAsDirty("IsManualPayment"); } }
+       
+	 
+    private commodity: string;
+    public get Commodity() { return this.commodity; }
+    public set Commodity(newValue: string) { if (this.commodity != newValue) { this.commodity = newValue; this.MarkAsDirty("Commodity"); } }
+       
+	 
+    private lastStatusRemarks: string;
+    public get LastStatusRemarks() { return this.lastStatusRemarks; }
+    public set LastStatusRemarks(newValue: string) { if (this.lastStatusRemarks != newValue) { this.lastStatusRemarks = newValue; this.MarkAsDirty("LastStatusRemarks"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		

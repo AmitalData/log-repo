@@ -94,7 +94,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                          DefaultSendOptionName = management.InterfaceSendOption != null ? management.InterfaceSendOption.LocalName :null,
                                                          SearchFields = management.SearchFields,
                                                          InterfaceType = management.InterfaceType,
-                                                         Tenant = tenant
+                                                         Tenant = tenant,
+                                                         UseRabbitMQ= management.UseRabbitMQ
                                                      };
                     if (definition != null)
                     {

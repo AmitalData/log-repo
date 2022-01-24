@@ -9,6 +9,7 @@ import {VatTypesValidator} from '../../Infrastructure/Validators/VatTypesValidat
 export class QuoteOPValidator {  
     
     public Validate(entityPM: QuoteOPPM) {
+        return []; 
         var errors = [];        
         var objectTableName: "QuoteOP";
         var isInlandDomestic: boolean = false;

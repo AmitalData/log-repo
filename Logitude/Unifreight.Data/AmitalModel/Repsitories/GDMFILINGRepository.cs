@@ -90,6 +90,13 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             return this.GetSingle(keys.COMID);
         }
 
+        public List<GDMFILING> GetNotDeleted(List<string> commIds)
+        {
+            
+            return this.GetAll()
+                .Where(r => commIds.Contains(r.COMID))
+                .Where(r => r.DELETED != "T").ToList();
+        }
         public void GetStatisticWeekly(out int totalSplitedDocsLastMonth, out int logBoxDocuments)
         {
             logBoxDocuments =totalSplitedDocsLastMonth = -1;

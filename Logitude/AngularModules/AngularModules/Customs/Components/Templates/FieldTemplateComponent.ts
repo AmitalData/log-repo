@@ -1,6 +1,5 @@
 import { Component, ViewChild, ViewContainerRef, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { CourierMasterService } from '../../Services/Others/CourierMasterService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { CustomsAutonomyKeywordExtendedPMService } from '../../Services/ExtendedPMs/CustomsAutonomyKeywordExtendedPMService';
@@ -20,6 +19,8 @@ import { ExceptionReasonListService } from '../../Services/StandardLists/Excepti
 import { ExceptionReasonList } from '../../EntityLists/ExceptionReasonList';
 
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
+import { PhysicalChecksCloseSharedDataService } from '../../Services/DataChange/PhysicalChecksCloseSharedDataService';
+import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
 @Component({
 
     templateUrl: './FieldTemplateComponent.html',
@@ -42,7 +43,7 @@ export class FieldTemplateComponent {
     private _ListComponentArgs: ListComponentArgs;
     @ViewChild('SpotLight', { read: ViewContainerRef, static: false }) SpotLightViewContainerRef: ViewContainerRef;
     RowIndex: any;
-    constructor(private CD: ChangeDetectorRef, private entityResourceService: EntityResourceService) {
+    constructor(private CD: ChangeDetectorRef, private entityResourceService: EntityResourceService, private _physicalChecksCloseSharedDataService: PhysicalChecksCloseSharedDataService) {
         if (SessionLocator.SelectedSession.CurrentListComponent != null) {
             this._ListComponentArgs = SessionLocator.SelectedSession.CurrentListComponent._ListComponentArgs;
         } else {
@@ -170,6 +171,35 @@ export class FieldTemplateComponent {
         });
 
     }
+    EditMyCloseCheckBox(eventM) {
+        
+        this._ListComponentArgs.SuppressOnRowSelectedField = true;
+        
+
+        //eventM.stopPropagation();
+        if (!this._physicalChecksCloseSharedDataService._SelectedItems.Collection.includes(this.Entity.Id)) {
+            this._physicalChecksCloseSharedDataService._SelectedItems.Insert(this.Entity.Id);
+        }
+        else {
+            var removedIndex = null;
+            for (var i = 0; i < this._physicalChecksCloseSharedDataService._SelectedItems.Collection.length; i++) {
+                if (this.Entity.Id == this._physicalChecksCloseSharedDataService._SelectedItems.Collection[i]) {
+                    removedIndex = i;
+                    break;
+                }
+            }
+            if (removedIndex != null) {
+                this._physicalChecksCloseSharedDataService._SelectedItems.Collection.splice(removedIndex, 1);
+            }
+
+        }
+
+
+        this._physicalChecksCloseSharedDataService.IsDisplayButtonClose = (this._physicalChecksCloseSharedDataService._SelectedItems.Collection.length > 0);
+        this.CD.detectChanges();
+
+    }
+
     OpenClassificationRemarks() {
         this._ListComponentArgs.SuppressOnRowSelectedField = true;
         var _declarationRemarksService: DeclarationRemarksService = new DeclarationRemarksService();

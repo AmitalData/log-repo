@@ -39,8 +39,8 @@
   NewWizardControlName="&quot;Logitude.Customs.Views.NewDeclarationCargoSplitControlCommand&quot;"
   LocalDefaultText="&quot;בקשת פיצול מטען&quot;"
   DefaultText="&quot;Declaration Cargo Split&quot;"
-  NewButtonLocalDefaultText="&quot;בקשת פיצול מטען חדשה&quot;"
-  NewButtonDefaultText="&quot;בקשת פיצול מטען חדשה&quot;"
+  NewButtonLocalDefaultText="&quot;בקשת פיצול מטען&quot;"
+  NewButtonDefaultText="&quot;בקשת פיצול מטען&quot;"
   Code="&quot;DECS&quot;"
   Name="&quot;Customs.DeclarationCargoSplit&quot;"
   GenerateDomainService="true"
@@ -1548,10 +1548,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;CustomFileNo&quot;"
     DefaultText="&quot;Custom File No&quot;"
-    FullLocalDefaultText="&quot;תיק עמילות&quot;"
+    FullLocalDefaultText="&quot;תיק עמילות/מכס&quot;"
     ListFieldLable="&quot;CustomFileNoListLable&quot;"
     ListLableDefaultText="&quot;Custom File No&quot;"
-    ListLocalDefaultText="&quot;תיק עמילות&quot;"
+    ListLocalDefaultText="&quot;תיק עמילות/מכס&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -1777,7 +1777,7 @@
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
-    HasDataBaseField="true"
+    HasDataBaseField="false"
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
@@ -1855,7 +1855,7 @@
     DontBuildRelationOnDB="false"
     NavigationPropertyName="CustomsTransportMode"
     IsPrimaryKey="false"
-    HasDataBaseField="true"
+    HasDataBaseField="false"
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
@@ -1938,15 +1938,16 @@
         QueryCode="&quot;OpenCargoSplits&quot;"
         IndexOrder="8"
         ObjectFieldName="&quot;Direction&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="30" />
       <QueryColumn
         QueryCode="&quot;OpenCargoSplits&quot;"
         IndexOrder="9"
         ObjectFieldName="&quot;TransportModeId&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="60" />
       <QueryColumn
         QueryCode="&quot;OpenCargoSplits&quot;"
         IndexOrder="10"
+
         ObjectFieldName="&quot;ResponseStatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
@@ -2027,15 +2028,16 @@
         QueryCode="&quot;ClosedCargoSplits&quot;"
         IndexOrder="8"
         ObjectFieldName="&quot;Direction&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="30" />
       <QueryColumn
         QueryCode="&quot;ClosedCargoSplits&quot;"
         IndexOrder="9"
         ObjectFieldName="&quot;TransportModeId&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="60" />
       <QueryColumn
         QueryCode="&quot;ClosedCargoSplits&quot;"
         IndexOrder="10"
+
         ObjectFieldName="&quot;ResponseStatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
@@ -2116,15 +2118,16 @@
         QueryCode="&quot;AllCargoSplits&quot;"
         IndexOrder="8"
         ObjectFieldName="&quot;Direction&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="30" />
       <QueryColumn
         QueryCode="&quot;AllCargoSplits&quot;"
         IndexOrder="9"
         ObjectFieldName="&quot;TransportModeId&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="60" />
       <QueryColumn
         QueryCode="&quot;AllCargoSplits&quot;"
         IndexOrder="10"
+
         ObjectFieldName="&quot;ResponseStatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn

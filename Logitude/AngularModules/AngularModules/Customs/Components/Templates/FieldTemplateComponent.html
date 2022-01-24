@@ -527,7 +527,48 @@
                 <div *ngIf="FieldName == 'LimitDate'" style="position:relative;width:100%; height: 100%;">
                     {{Entity[FieldName] | DateTimePipe:'DT'}}
                 </div>
+                <div *ngIf="FieldName == 'MyCloseCheckBox'" style="text-align:right" (click)="EditMyCloseCheckBox($event)">
+                    <input class="CenterCenter" style="box-shadow:none ;width: 16px; height:16px; text-align:center"
+                           type="checkbox"  />
+                </div>
+                <div *ngIf="FieldName == 'TransportModeId'" style="position:relative;width:100%; height: 100%;">
 
+                    <div *ngIf="!IsHeaderScreenTemplate">
+                        <div *ngIf="Entity['TransportModeId']=='A'">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Airline.png" />
+                        </div>
+                        <div *ngIf="Entity['TransportModeId']=='L'">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Trucker.png" />
+                        </div>
+                        <div *ngIf="Entity['TransportModeId']=='O'">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Vessel.png" />
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="FieldName == 'Direction'" style="position:relative;width:100%; height: 100%;">
+
+                    <div *ngIf="!IsHeaderScreenTemplate">
+                        <div *ngIf="Entity['Direction']=='E'">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Directions/E.png" />
+                        </div>
+                        <div *ngIf="Entity['Direction']=='I'">
+                            <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Directions/I.png" />
+                        </div> 
+                    </div>
+                </div>
+                <!--<div *ngIf="FieldName == 'MyCloseCheckBox'" style="position:relative;width:100%; height: 100%;" (click)="EditMyCloseCheckBox()">
+
+                    <div *ngIf="!IsHeaderScreenTemplate" style="display: inline; position: absolute;right: 50%;">-->
+
+                        <!--<div *ngIf="Entity['MyCloseCheckBox']==true">
+                <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" title="Yes" src="./Images/CheckBoxIcon.png" />
+            </div>
+            <div *ngIf="Entity['MyCloseCheckBox']==false">
+                <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Referant/Unactive_Favorite.png" />
+
+            </div>-->
+                    <!--</div>
+                </div>-->
                 <!-- IsClosed -->
                 <div *ngIf="FieldName == 'IsClosed'" style="position:relative;width:100%; height: 100%;">
                     <div *ngIf="IsHeaderScreenTemplate">
@@ -636,6 +677,39 @@
                         <div *ngIf="Entity['IsExportPoaActive']== false">
                             <img class="CenterCenter" style="width:15px;height:15px;margin-top:6px" src="./Images/RedX.png" />
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="ObjectTableName == 'Customs.ExportStorage'">
+                <div *ngIf="FieldName == 'DeclarationStatusTypeName'" style="position:relative;width:100%; height: 100%;">
+                    <div style="position: absolute;top: 0;bottom: 0px; left: 0px; right: 0px;text-align:right">
+
+
+                        <div *ngIf="!IsHeaderScreenTemplate">
+                            <!-- <div style="display: inline-block;" *ngIf="Entity['HasConstraint']">-->
+                            <img *ngIf="Entity['HasConstraint']" style="width:20px" src="./Images/Warning_icon.png" />
+
+                            <div class="TextTrimming"
+                                 style="display: inline; "
+                                 [ngStyle]="{color: Entity.DeclarationStatusTypeCode | StringToColorPipe:'DeclarationStatusTypeCode'}">
+                                <span style="font-weight: bold;">{{Entity[FieldName]}}</span>
+                            </div>
+                        </div>
+
+
+                        <div *ngIf="IsHeaderScreenTemplate">
+                            <div class="TextTrimming"
+                                 style="display: inline; position: absolute;left: 0px; padding-top: 1px;"
+                                 [ngStyle]="{color: Entity.DeclarationStatusTypeCode | StringToColorPipe:'DeclarationStatusTypeCode'}"
+                                 [style.right]="Entity['HasConstraint'] ? '25px' : '0px'">
+                                <span style="font-weight: bold;">{{Entity[FieldName]}}</span>
+                            </div>
+                            <div *ngIf="Entity['HasConstraint']">
+                                <img style="width:20px" src="./Images/Warning_icon.png" />
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

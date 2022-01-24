@@ -28,11 +28,8 @@ namespace Amital.QuoteOPM.Data.EntityPOCOs
 	    public string QuoteOPId { get; set; }
 	      
         public virtual QuoteOP QuoteOP { get; set; }
-        [ForeignKey("PackageType")]
         [Column("PackageTypeId")]
 	    public string PackageTypeId { get; set; }
-	      
-        public virtual PackageType PackageType { get; set; }
         [Column("Quantity")]
 	    public int? Quantity { get; set; }
         [Column("GrossWeight")]

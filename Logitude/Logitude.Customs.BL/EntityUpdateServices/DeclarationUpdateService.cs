@@ -57,6 +57,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         private EventTracerArgs _LastTraceEventParams;
         private CourierMasterPM _CourierMasterPM;
 
+        public bool IsProcedureCurrentCodeChanged { get; set; }
+
         public bool IsFromCustomsFeedback { get; set; }
         public bool ToUpdateWithPaymentDate { get; set; }
         protected override void OnCreating(DeclarationPM entityPM, EntityPM entityParentPM)
@@ -184,9 +186,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 entityPM.ReferentUserId = entityPM.CreatedByUserId;
             }
-            OnCreatingExportDeclaration(entityPM);
             
             if (entityPM.Direction == "I" && string.IsNullOrWhiteSpace(entityPM.DeclarationTypeCode)) entityPM.DeclarationTypeCode = "1";
+            if (entityPM.Direction == "E" && string.IsNullOrWhiteSpace(entityPM.DeclarationTypeCode)) entityPM.DeclarationTypeCode = "2";
+
+            OnCreatingExportDeclaration(entityPM);
 
         }
 
@@ -257,6 +261,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             SupplierInvoiceUpdateService supplierInvoiceUpdateService = new SupplierInvoiceUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             supplierInvoiceUpdateService.Multi_LastSIWillUpdateCCU = true;
             supplierInvoiceUpdateService.UpdateFromDeclaration = IsFromCustomsFeedback;
+            supplierInvoiceUpdateService.IsProcedureCurrentCodeChanged = IsProcedureCurrentCodeChanged;
             supplierInvoiceUpdateService.UpdateMulti(entityPM.SupplierInvoices, entityPM.DeletedSupplierInvoices, entityPM, false);
 
             DeclarationTaxUpdateService declarationTaxUpdateService = new DeclarationTaxUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
@@ -335,20 +340,25 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //if (setting.IsConnectedToUniFreight)
                 var eventContextTagModel = entityPM.CurrentContextTag as EventContextTagModel;
 
+                var declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
 
                 if (entityPM.IsAmendment==true && eventContextTagModel != null  && eventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate)
                 {
-                    var declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
 
                     var entityPMOrg = declarationQueryService.GetSingle(entityPM.AmendmentOriginalDeclartation, true, false);
                     entityPMOrg.CurrentContextTag = eventContextTagModel;
                     entityPMOrg.HatraDate = entityPM.HatraDate;
+                  //  entityPMOrg.DeclarationNumber = entityPM.DeclarationNumber;
+
                     UpdateUnifreight(entityPMOrg);
 
 
                 }
 
-                if (entityPM.IsConnectedToUnifreight)
+
+               // var entityAmend = declarationQueryService.GetAcceptDeclarationAmendment(entityPM.Id, entityPM.Tenant);
+
+                if (entityPM.IsConnectedToUnifreight && !( entityPM.PaymentDate.HasValue && string.IsNullOrEmpty(entityPM.DeclarationNumber)))
                 {
                     UpdateUnifreight(entityPM);
                 }
@@ -356,7 +366,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 if(entityPM.IsDiamondDeclaration)
                 {
-                    DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                  //  DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
 
                     entityPM.IsValidTicketsDiamond= declarationQueryService.IsValidTickets(entityPM);
 
@@ -374,6 +384,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     {
                         entityPM.CourierHAWB = consignment.ManifestNumber;
                     }
+
+
+                    entityPM.CargoDescription = consignment.CargoDescription;
+
 
                     DeliverySiteTypeQueryService deliverySiteTypeQueryService = new DeliverySiteTypeQueryService(entityPM.Tenant);
                     DeliverySiteTypePM deliverySiteType = deliverySiteTypeQueryService.GetSingle(entityPM.StorageSiteCode, false, true);

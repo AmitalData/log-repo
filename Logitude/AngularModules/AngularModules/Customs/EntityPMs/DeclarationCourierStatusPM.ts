@@ -379,6 +379,36 @@ export class DeclarationCourierStatusPM {
     public set TruckerName(newValue: string) { if (this.truckerName != newValue) { this.truckerName = newValue; this.MarkAsDirty("TruckerName"); } }
        
 	 
+    private terminalReleaseDate: Date;
+    public get TerminalReleaseDate() { return this.terminalReleaseDate; }
+    public set TerminalReleaseDate(newValue: Date) { if (this.terminalReleaseDate != newValue) { this.terminalReleaseDate = newValue; this.MarkAsDirty("TerminalReleaseDate"); } }
+       
+	 
+    private shopId: string;
+    public get ShopId() { return this.shopId; }
+    public set ShopId(newValue: string) { if (this.shopId != newValue) { this.shopId = newValue; this.MarkAsDirty("ShopId"); } }
+       
+	 
+    private lastMileServiceType: string;
+    public get LastMileServiceType() { return this.lastMileServiceType; }
+    public set LastMileServiceType(newValue: string) { if (this.lastMileServiceType != newValue) { this.lastMileServiceType = newValue; this.MarkAsDirty("LastMileServiceType"); } }
+       
+	 
+    private cargoDescription: string;
+    public get CargoDescription() { return this.cargoDescription; }
+    public set CargoDescription(newValue: string) { if (this.cargoDescription != newValue) { this.cargoDescription = newValue; this.MarkAsDirty("CargoDescription"); } }
+       
+	 
+    private finalRelease: boolean;
+    public get FinalRelease() { return this.finalRelease; }
+    public set FinalRelease(newValue: boolean) { if (this.finalRelease != newValue) { this.finalRelease = newValue; this.MarkAsDirty("FinalRelease"); } }
+       
+	 
+    private hatraDate: Date;
+    public get HatraDate() { return this.hatraDate; }
+    public set HatraDate(newValue: Date) { if (this.hatraDate != newValue) { this.hatraDate = newValue; this.MarkAsDirty("HatraDate"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		

@@ -53,7 +53,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FileOpenDate, 
 	         FclLcl, 
 	         PackageQuantity, 
-	         ForwarderId,
+	         ForwarderId, 
+	         IsManualPayment, 
+	         Commodity, 
+	         LastStatusRemarks,
 	      }
 
 
@@ -98,7 +101,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         PackageQuantity, 
 	         ForwarderId, 
 	         ForwarderName, 
-	         FclLclName,
+	         FclLclName, 
+	         IsManualPayment, 
+	         Commodity, 
+	         LastStatusRemarks,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -260,6 +266,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwarderId))
             {
 				entityPOCO.ForwarderId = entityPM.ForwarderId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsManualPayment))
+            {
+				entityPOCO.IsManualPayment = entityPM.IsManualPayment;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Commodity))
+            {
+				entityPOCO.Commodity = entityPM.Commodity;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusRemarks))
+            {
+				entityPOCO.LastStatusRemarks = entityPM.LastStatusRemarks;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -428,6 +449,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ForwarderId = entityPOCO.ForwarderId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsManualPayment))
+            {
+					entityPM.IsManualPayment = entityPOCO.IsManualPayment;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Commodity))
+            {
+					entityPM.Commodity = entityPOCO.Commodity;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastStatusRemarks))
+            {
+					entityPM.LastStatusRemarks = entityPOCO.LastStatusRemarks;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationReferantDataPM entityPM, DeclarationReferantDataPM oldEntityPM)
@@ -589,6 +625,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.ForwarderId = entityPM.ForwarderId;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsManualPayment))
+            {
+                oldEntityPM.IsManualPayment = entityPM.IsManualPayment;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Commodity))
+            {
+                oldEntityPM.Commodity = entityPM.Commodity;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusRemarks))
+            {
+                oldEntityPM.LastStatusRemarks = entityPM.LastStatusRemarks;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(DeclarationReferantDataPM entityPM)
@@ -609,6 +660,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.Team)) //T4 find type == nText 
             {
                 entityPM.Team = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Team));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.LastStatusRemarks)) //T4 find type == nText 
+            {
+                entityPM.LastStatusRemarks = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LastStatusRemarks));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

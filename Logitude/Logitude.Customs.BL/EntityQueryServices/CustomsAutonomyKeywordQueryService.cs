@@ -52,8 +52,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             valueToSearch = valueToSearch.TrimEnd();
             valueToSearch = valueToSearch.TrimStart();
+            valueToSearch = valueToSearch.ToLower();
 
-            var myCustomsAutonomyKeyword = this.repository.GetByKeywordtypeCodeList(type, tenant);
+
+            var myCustomsAutonomyKeyword = this.repository.GetByKeywordtypeCodeStringList(type, tenant);
+            myCustomsAutonomyKeyword = myCustomsAutonomyKeyword.ConvertAll(d => d.ToLower());
+
+
             if (myCustomsAutonomyKeyword == null ) return false;
             //string[] list = myCustomsAutonomyKeyword.KeywordsList.Split(',');
 
@@ -68,12 +73,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 if (type == "3" || type == "2")
                 {
-                    if (myCustomsAutonomyKeyword.FirstOrDefault(x => valueToSearch.StartsWith(x.KeywordsList)) != null)
+                    if (myCustomsAutonomyKeyword.FirstOrDefault(x => valueToSearch.StartsWith(x)) != null)
                         return true;
                 }
                 else
                 {
-                    if (myCustomsAutonomyKeyword.FirstOrDefault(x => x.KeywordsList == valueToSearch) != null)
+                    if (myCustomsAutonomyKeyword.FirstOrDefault(x => x == valueToSearch) != null)
                         return true;
                 }
             }

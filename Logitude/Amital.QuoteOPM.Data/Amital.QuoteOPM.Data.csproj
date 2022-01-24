@@ -87,6 +87,7 @@
     <Compile Include="EntityKeys\QuoteOPKeys.cs" />
     <Compile Include="EntityKeys\QuoteOPPackageKeys.cs" />
     <Compile Include="EntityKeys\QuoteOPPriceStepsKeys.cs" />
+    <Compile Include="EntityKeys\QuoteOPPropertiesKeys.cs" />
     <Compile Include="EntityKeys\QuoteOPRatingKeys.cs" />
     <Compile Include="EntityKeys\QuoteOPSettingKeys.cs" />
     <Compile Include="EntityKeys\QuoteOPStageKeys.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="EntityListQueryServices\Generated\QuoteOPListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\QuoteOPPackageListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\QuoteOPPriceStepsListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\QuoteOPPropertiesListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\QuoteOPRatingListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\QuoteOPStageListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\QuoteOPTemplateListQueryService.Generated.cs" />
@@ -131,6 +133,7 @@
     <Compile Include="EntityListQueryServices\QuoteOPListQueryService.cs" />
     <Compile Include="EntityListQueryServices\QuoteOPPackageListQueryService.cs" />
     <Compile Include="EntityListQueryServices\QuoteOPPriceStepsListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\QuoteOPPropertiesListQueryService.cs" />
     <Compile Include="EntityListQueryServices\QuoteOPRatingListQueryService.cs" />
     <Compile Include="EntityListQueryServices\QuoteOPSaleChargeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\QuoteOPSalesTotalListQueryService.cs" />
@@ -158,6 +161,7 @@
     <Compile Include="EntityLists\Generated\QuoteOPList.Generated.cs" />
     <Compile Include="EntityLists\Generated\QuoteOPPackageList.Generated.cs" />
     <Compile Include="EntityLists\Generated\QuoteOPPriceStepsList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\QuoteOPPropertiesList.Generated.cs" />
     <Compile Include="EntityLists\Generated\QuoteOPRatingList.Generated.cs" />
     <Compile Include="EntityLists\Generated\QuoteOPSaleChargeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\QuoteOPSalesTotalList.Generated.cs" />
@@ -185,6 +189,7 @@
     <Compile Include="EntityMapping\QuoteOPMap.cs" />
     <Compile Include="EntityMapping\QuoteOPPackageMap.cs" />
     <Compile Include="EntityMapping\QuoteOPPriceStepsMap.cs" />
+    <Compile Include="EntityMapping\QuoteOPPropertiesMap.cs" />
     <Compile Include="EntityMapping\QuoteOPRatingMap.cs" />
     <Compile Include="EntityMapping\QuoteOPSaleChargeMap.cs" />
     <Compile Include="EntityMapping\QuoteOPSalesTotalMap.cs" />
@@ -212,6 +217,7 @@
     <Compile Include="EntityPOCOs\QuoteOPDocumentVersion.cs" />
     <Compile Include="EntityPOCOs\QuoteOPPackage.cs" />
     <Compile Include="EntityPOCOs\QuoteOPPriceSteps.cs" />
+    <Compile Include="EntityPOCOs\QuoteOPProperties.cs" />
     <Compile Include="EntityPOCOs\QuoteOPRating.cs" />
     <Compile Include="EntityPOCOs\QuoteOPSaleCharge.cs" />
     <Compile Include="EntityPOCOs\QuoteOPSalesTotal.cs" />
@@ -241,6 +247,7 @@
     <Compile Include="Repsitories\Generated\QuoteOPDocumentVersionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\QuoteOPPackageRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\QuoteOPPriceStepsRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\QuoteOPPropertiesRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\QuoteOPRatingRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\QuoteOPRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\QuoteOPSettingRepository.Generated.cs" />
@@ -263,6 +270,7 @@
     <Compile Include="Repsitories\QuoteOPDocumentVersionRepository.cs" />
     <Compile Include="Repsitories\QuoteOPPackageRepository.cs" />
     <Compile Include="Repsitories\QuoteOPPriceStepsRepository.cs" />
+    <Compile Include="Repsitories\QuoteOPPropertiesRepository.cs" />
     <Compile Include="Repsitories\QuoteOPRatingRepository.cs" />
     <Compile Include="Repsitories\QuoteOPRepository.cs" />
     <Compile Include="Repsitories\QuoteOPSettingRepository.cs" />

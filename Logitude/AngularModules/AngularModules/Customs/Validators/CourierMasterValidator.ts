@@ -2,10 +2,10 @@ declare var window: any;
 import { TextCodeTranslator } from '../../Infrastructure/Utilities/TextCodeTranslator';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import { CourierMasterPM } from '../EntityPMs/CourierMasterPM';
-import {CourierMasterService} from '../Services/Others/CourierMasterService';
 import { ServiceHelper } from '../../Infrastructure/Utilities/ServiceHelper';
 import { defer, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
 
 export class CourierMasterValidator {
   private _CourierMasterPM: CourierMasterPM;

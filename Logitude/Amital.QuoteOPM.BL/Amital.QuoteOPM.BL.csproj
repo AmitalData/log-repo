@@ -71,6 +71,7 @@
     <Compile Include="EntityDataMappings\Generated\QuoteOPDocumentVersionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\QuoteOPPackageDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\QuoteOPPriceStepsDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\QuoteOPPropertiesDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\QuoteOPRatingDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\QuoteOPSaleChargeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\QuoteOPSalesTotalDataMapping.Generated.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="EntityDataMappings\QuoteOPDocumentVersionDataMapping.cs" />
     <Compile Include="EntityDataMappings\QuoteOPPackageDataMapping.cs" />
     <Compile Include="EntityDataMappings\QuoteOPPriceStepsDataMapping.cs" />
+    <Compile Include="EntityDataMappings\QuoteOPPropertiesDataMapping.cs" />
     <Compile Include="EntityDataMappings\QuoteOPRatingDataMapping.cs" />
     <Compile Include="EntityDataMappings\QuoteOPSaleChargeDataMapping.cs" />
     <Compile Include="EntityDataMappings\QuoteOPSalesTotalDataMapping.cs" />
@@ -122,6 +124,7 @@
     <Compile Include="EntityQueryServices\Generated\QuoteOPDocumentVersionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\QuoteOPPackageQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\QuoteOPPriceStepsQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\QuoteOPPropertiesQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\QuoteOPQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\QuoteOPRatingQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\QuoteOPSettingQueryService.Generated.cs" />
@@ -146,6 +149,7 @@
     <Compile Include="EntityUpdateServices\Generated\QuoteOPDocumentVersionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\QuoteOPPackageUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\QuoteOPPriceStepsUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\QuoteOPPropertiesUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\QuoteOPRatingUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\QuoteOPSettingUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\QuoteOPStageUpdateService.Generated.cs" />
@@ -162,6 +166,7 @@
     <Compile Include="EntityUpdateServices\OPSpecialServicesTypeRepository.cs" />
     <Compile Include="EntityUpdateServices\QuoteOPChargeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\QuoteOPDocumentVersionUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\QuoteOPPropertiesUpdateService.cs" />
     <Compile Include="EntityUpdateServices\QuoteOPPackageUpdateService.cs" />
     <Compile Include="EntityUpdateServices\QuoteOPPriceStepsUpdateService.cs" />
     <Compile Include="EntityUpdateServices\QuoteOPTotalVATUpdateService.cs" />
@@ -205,6 +210,10 @@
     <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
       <Project>{ACC2EA9E-E150-4099-8AA1-66326AB14BE8}</Project>
       <Name>Simplog.Server.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Unifreight.BL\Unifreight.BL.csproj">
+      <Project>{0EC1BD46-2613-4227-A6D7-D345DD0978CD}</Project>
+      <Name>Unifreight.BL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

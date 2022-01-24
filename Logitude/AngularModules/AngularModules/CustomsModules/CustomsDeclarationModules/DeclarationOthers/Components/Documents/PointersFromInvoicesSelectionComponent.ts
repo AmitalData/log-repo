@@ -50,10 +50,13 @@ export class PointersFromInvoicesSelectionComponent {
         this.BuildColumns();
     }
 
-
+    isExportDeclaration: boolean = false;
     IsVisibile: boolean = false;
     SetWindowArgs(args: any) {
         this.DeclarationPM = args.DeclarationPM;
+        if (this.DeclarationPM != null && this.DeclarationPM.Direction == "E") {
+            this.isExportDeclaration = true;
+        }
         this.CustomsDocumentsTicket = args.CustomsDocumentsTicket;
         this.SelectInvoicesOnly = args.selectInvoicesOnly;
         //this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response: any) => {

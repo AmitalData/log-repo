@@ -114,6 +114,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.ClassificationCodeSource = entityPOCO.ClassificationCode;
             }
+
+            if (!string.IsNullOrWhiteSpace(entityPOCO.DutyRegimeProtocolCode))
+                entityPM.DutyRegimeProtocolLocalName = new TradeAgreementProtocolQueryService(entityPM.Tenant).GetSingle(entityPOCO.DutyRegimeProtocolCode, false, true)?.LocalName;
+
             //if (entityPOCO.TaxExemptCode != null)
             //{
             //    ValidCustomsItemQueryService validCustomsItemQueryService = new ValidCustomsItemQueryService(entityPOCO.Tenant);

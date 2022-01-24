@@ -1,11 +1,16 @@
-﻿using Logitude.Customs.BL.EntityQueryServices;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.NotificationBL;
 using Logitude.Customs.Data;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.CustomsMessaging.Helpers;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
@@ -112,7 +117,77 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     DoUpdateNotification("5108N", deficitPM, requestParams.Tenant, connectedDeclarationPM, description, "A");
                 }
             }
+
+            AnalyzeDocument(customResponse.Attachment, requestParams, customResponse.DecisionMessage.leadingFileNumber);
         }
+
+        private void AnalyzeDocument(Attachment[] attachment, GenericRequestParams requestParams,string leadingFileNumber)
+        {
+            var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
+            var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
+
+            if (attachment == null || attachment.Length == 0) return;
+
+            //var tapagQueryService = new TapagQueryService(CustomContext.GetContext(requestParams.Tenant));
+            //TapagPM tapagPM = tapagQueryService.GetSingleTapagByLeadingFileNumber(leadingFileNumber, requestParams.Tenant);
+           // if (tapagPM != null)
+           // {
+                //var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Tapag");
+                //var entityId = tapagPM.Id;
+                var documentType = documentTypeQuery.GetSinglePMByCodeAndTenant("DFC", requestParams.Tenant);
+                if (documentType == null) return;
+                //var documentsFilingPMs = documentsFilingQuery.GetDocumentsFilingListByDocumentType(documentType.Id, objectTableId, entityId, requestParams.Tenant);
+
+                foreach (var item in attachment)
+                {
+                    //var documentsFilingPM = documentsFilingPMs.FirstOrDefault(x => x.ExternalAttachmentId == item.externalAttachmentID);
+                    //if(documentsFilingPM == null)
+                        CreateDocument(item, requestParams, leadingFileNumber, documentType);
+                    //else
+                        //UpdateDocument(documentsFilingPM, item, requestParams);
+                }
+            //}
+        }
+
+        private void UpdateDocument(DocumentsFilingPM documentsFilingPM, Attachment attachment, GenericRequestParams requestParams)
+        {
+            var commonContext = CommonDataContext.GetContext(requestParams.Tenant);
+            var documentsFilingService = new UnifreightDocumentsFilingService(commonContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "5108", IsCourier = IsCourier(requestParams.Tenant) });
+            documentsFilingService.OnlyIfChangeUpdateAndAddVersion = true;
+            documentsFilingService.Update(documentsFilingPM, attachment.content, requestParams.LoggingUserId);
+            LogMessagingUtil.Instance.AppendLine("update File document " + documentsFilingPM.Code);
+        }
+
+        private bool IsCourier(int tenant)
+        {
+            var pm = CustomsSettingQueryService.GetSettingByTenant(tenant);
+            return pm?.CompanyType == "B";//Courier
+        }
+        private void CreateDocument(Attachment attachment, GenericRequestParams requestParams, string leadingFileNumber, DocumentTypePM documentType)
+        {
+            var documentsFilingPM = new DocumentsFilingPM();
+            documentsFilingPM.Tenant = requestParams.Tenant;
+            documentsFilingPM.DocumentTypeId = documentType.Id;
+            //documentsFilingPM.EntityId = tapagPM.Id;
+            //documentsFilingPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+            //documentsFilingPM.ChildEntityId = _PaymentOrderPM.Id;
+            //documentsFilingPM.ChildObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
+            documentsFilingPM.ChildEntityReference = leadingFileNumber;
+            documentsFilingPM.CreatedByUserId = requestParams.LoggingUserId;
+            documentsFilingPM.OwnerId = requestParams.LoggingUserId;
+            documentsFilingPM.UpdatedByUserId = requestParams.LoggingUserId;
+            documentsFilingPM.ReceivedByUserId = requestParams.LoggingUserId;
+            documentsFilingPM.DirectionCode = "I";
+            documentsFilingPM.Description = "החלטה לתיק גרעון " + leadingFileNumber;
+            documentsFilingPM.FileExtension = "PDF";
+            
+            var commonContext = CommonDataContext.GetContext(requestParams.Tenant);
+            var documentsFilingService = new UnifreightDocumentsFilingService(commonContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "5108", IsCourier = IsCourier(requestParams.Tenant) });
+
+            documentsFilingService.Create(documentsFilingPM, attachment.content, requestParams.LoggingUserId);
+            LogMessagingUtil.Instance.AppendLine("create File document " + documentsFilingPM.Code);
+        }
+
 
         private string GetDecisionTypeName(string decisionTypeCode, int tenant)
         {

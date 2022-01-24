@@ -137,9 +137,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AmitalContextUtil.cs" />
+    <Compile Include="BL\CacheHelper.cs" />
     <Compile Include="BL\CalculateDeclarationCourierStatus.cs" />
+    <Compile Include="BL\SIModificationByCustomerCommissionService.cs" />
     <Compile Include="CloseTables\CustomsCargoSealStatus.cs" />
     <Compile Include="CloseTables\CustomsAutonomyKeywordDetails.cs" />
+    <Compile Include="CloseTables\CustomRabbitMQQueue.cs" />
     <Compile Include="CloseTables\CustomsPartnerFtpDetails.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AmedmentTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AmendCancellRequestInitiatorDetails.Generated.cs" />
@@ -169,15 +172,18 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\FclLclCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\FullnessCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\HandingCodeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\IncotemrsFileValidationDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\LoadingSiteTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\NDMessageActionCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PartyRelationshipTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PoaAuthorizationTypeLookupDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\PhysicalCheckSearchResultTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PoaStatusTypeLookUpDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ReleaseMessageTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SecurityClearenceTypeCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\StuffingSiteTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SupplierPartyTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\TradeAgreementProtocolDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TransactionNatureTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DeclaraionDetails.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TransportMeansTypeDetails.Generated.cs" />
@@ -499,7 +505,7 @@
     <Compile Include="EntityDataMappings\ExportDeliveryDocumentMessageDataMapping.cs" />
     <Compile Include="EntityDataMappings\ExporterRoleTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ExportReferenceDataMapping.cs" />
-    <Compile Include="EntityDataMappings\ExportStorgeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ExportStorageDataMapping.cs" />
     <Compile Include="EntityDataMappings\FacilitationTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\FaultInspectionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\FclLclCodeDataMapping.cs" />
@@ -705,7 +711,7 @@
     <Compile Include="EntityDataMappings\Generated\ExportDeliveryDocumentMessageDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ExporterRoleTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ExportReferenceDataMapping.Generated.cs" />
-    <Compile Include="EntityDataMappings\Generated\ExportStorgeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ExportStorageDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FacilitationTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FaultInspectionTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FclLclCodeDataMapping.Generated.cs" />
@@ -726,6 +732,7 @@
     <Compile Include="EntityDataMappings\Generated\ImporterDespositionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ImporterPeriodicDeclarStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ImporterTypeForClaimDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\IncotemrsFileValidationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterfaceManagementDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterfaceSendOptionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterfaceTenantDefinitionDataMapping.Generated.cs" />
@@ -780,6 +787,7 @@
     <Compile Include="EntityDataMappings\Generated\PendingErrorPlaceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PhysicalCheckDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PhysicalCheckOperationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PhysicalCheckSearchResultTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PhysicalCheckStatusMessageDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PoaAuthorizationTypeLookupDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PoaStatusTypeLookUpDataMapping.Generated.cs" />
@@ -855,6 +863,7 @@
     <Compile Include="EntityDataMappings\Generated\TermsOfSaleTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TPGFileTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TradeAgreementDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TradeAgreementProtocolDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TradeLevyExamptTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TransactionNatureTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TransferCargoMethodTypeDataMapping.Generated.cs" />
@@ -893,6 +902,7 @@
     <Compile Include="EntityDataMappings\ImporterDespositionDataMapping.cs" />
     <Compile Include="EntityDataMappings\ImporterPeriodicDeclarStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\ImporterTypeForClaimDataMapping.cs" />
+    <Compile Include="EntityDataMappings\IncotemrsFileValidationDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterfaceManagementDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterfaceSendOptionDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterfaceTenantDefinitionDataMapping.cs" />
@@ -947,6 +957,7 @@
     <Compile Include="EntityDataMappings\PendingErrorPlaceDataMapping.cs" />
     <Compile Include="EntityDataMappings\PhysicalCheckDataMapping.cs" />
     <Compile Include="EntityDataMappings\PhysicalCheckOperationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PhysicalCheckSearchResultTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\PhysicalCheckStatusMessageDataMapping.cs" />
     <Compile Include="EntityDataMappings\PoaAuthorizationTypeLookupDataMapping.cs" />
     <Compile Include="EntityDataMappings\PoaStatusTypeLookUpDataMapping.cs" />
@@ -1022,6 +1033,7 @@
     <Compile Include="EntityDataMappings\TermsOfSaleTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TPGFileTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TradeAgreementDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TradeAgreementProtocolDataMapping.cs" />
     <Compile Include="EntityDataMappings\TradeLevyExamptTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TransactionNatureTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TransferCargoMethodTypeDataMapping.cs" />
@@ -1051,9 +1063,11 @@
     <Compile Include="EntityDataMappings\VendorTypeDataMapping.cs" />
     <Compile Include="EntityQueryServiceExt\CustomsDocumentQueryServiceExt.cs" />
     <Compile Include="EntityQueryServices\CargoIdentifireTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\IncotemrsFileValidationQueryService.cs" />
     <Compile Include="EntityQueryServices\ClientsPoaQueryService.cs" />
     <Compile Include="EntityQueryServices\ContainerizationQueryService.cs" />
     <Compile Include="EntityQueryServices\DeclarationReferantDataQueryService.cs" />
+    <Compile Include="EntityQueryServices\ExportStorageQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\AmedmentTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AmendCancellRequestInitiatorQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AmendmentFieldStatusTypeQueryService.Generated.cs" />
@@ -1078,15 +1092,16 @@
     <Compile Include="EntityQueryServices\Generated\ExportDeclarationClosingDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExportDeliveryDocumentMessageQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExporterRoleTypeQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\Generated\ExportReferenceQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\Generated\ExportStorgeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ExportStorageQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\FclLclCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\FullnessCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\HandingCodeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\IncotemrsFileValidationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\LoadingSiteTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\LogisticsReferenceTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\NDMessageActionCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\PoaAuthorizationTypeLookupQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PhysicalCheckSearchResultTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\PoaStatusTypeLookUpQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ReferantTeamQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ReferenceInputTypeQueryService.Generated.cs" />
@@ -1097,6 +1112,7 @@
     <Compile Include="EntityQueryServices\Generated\SupplierInvoiceUCRQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\SupplierInvoicePaymentQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\SupplierPartyTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TradeAgreementProtocolQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TransportMeansTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\ContainerTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\CertificateExemptionTypeQueryService.cs" />
@@ -1544,6 +1560,7 @@
     <Compile Include="EntityQueryServices\VendorCommissionQueryService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealIdentifierUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\IncotemrsFileValidationUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CityUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClaimImporterDeclarsP3LoiUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClaimImporterDeclarsPage3AUpdateService.cs" />
@@ -1621,16 +1638,18 @@
     <Compile Include="EntityUpdateServices\Generated\ExportDeliveryDocumentMessageUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ExporterRoleTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ExportReferenceUpdateService.Generated.cs" />
-    <Compile Include="EntityUpdateServices\Generated\ExportStorgeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ExportStorageUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\FclLclCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\FullnessCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\HandingCodeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\IncotemrsFileValidationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\LoadingSiteTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\LogisticsReferenceTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\NbcDeclarationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\NDMessageActionCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PartyRelationshipTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PoaAuthorizationTypeLookupUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\PhysicalCheckSearchResultTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PoaStatusTypeLookUpUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ReferantTeamUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ReferenceInputTypeUpdateService.Generated.cs" />
@@ -1643,6 +1662,7 @@
     <Compile Include="EntityUpdateServices\Generated\SupplierInvoicePaymentUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SupplierInvoiceUCRUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SupplierPartyTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TradeAgreementProtocolUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TransactionNatureTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TransportMeansTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\ContainerTypeUpdateService.cs" />
@@ -1953,6 +1973,7 @@
     <Compile Include="EntityUpdateServices\SupplierInvoiceItemsPriceUpdateService.cs" />
     <Compile Include="EntityUpdateServices\SupplierInvoiceItemVehicleUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeficitDecisionUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ExportStorageUpdateService.cs" />
     <Compile Include="EntityUpdateServices\UIMessageUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ValidCustomsItemUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\ValidCustomsItemUpdateService.Generated.cs" />
@@ -2084,6 +2105,8 @@
     <Compile Include="Messaging\CustomsAnalyzeQueue\MamanStatusAvailabilitySplitterQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSHAWBQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSSpecialActionQService.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\RabbitMQ\UCUW2L_OpenDeclarationsQService.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\RabbitMQ\UCBUD2LT_ConnectDocToTicketQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\SetInAnalyzeQResponseService.cs" />
     <Compile Include="Messaging\Customs\ClientProgressBarIndicatorService.cs" />
     <Compile Include="Messaging\Customs\CustomsRequestsSheetDomainModelUtil.cs" />
@@ -2168,10 +2191,11 @@
     <Compile Include="Messaging\U2L\CellFile\CellFileUpsertService.cs" />
     <Compile Include="Messaging\U2L\CommDecReferantData\CommDecReferantDataService.cs" />
     <Compile Include="Messaging\U2L\CommMasterCourier\CommMasterCourierService.cs" />
-    <Compile Include="Messaging\U2L\CommDec\CommDecService.cs" />
+    <Compile Include="Messaging\U2L\CommDec\Do_CommDecService.cs" />
     <Compile Include="Messaging\U2L\CourierStatus\CourierStatusService.cs" />
     <Compile Include="Messaging\U2L\Courier\CourierPendingReasonService.cs" />
     <Compile Include="Messaging\U2L\DeclarationDocuments\DeclarationDocumentsService.cs" />
+    <Compile Include="Messaging\U2L\ExportStorage\ExportStorageUpsertService.cs" />
     <Compile Include="Messaging\U2L\FritzDeclaration\FritzDeclarationCls\FritzDeclaration.cs">
       <DependentUpon>FritzDeclaration.xsd</DependentUpon>
     </Compile>

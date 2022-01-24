@@ -36,7 +36,7 @@
     Name="Quantity"
     Type="int">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="GrossWeight"
@@ -77,11 +77,6 @@
   <Relation
     ForeignKeyColumn="QuoteOPId"
     ReferencedTable="QuoteOPs"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="PackageTypeId"
-    ReferencedTable="PackageTypes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

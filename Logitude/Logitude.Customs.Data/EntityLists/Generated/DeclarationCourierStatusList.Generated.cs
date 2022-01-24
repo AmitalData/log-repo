@@ -168,6 +168,18 @@ namespace Logitude.Customs.Data.EntityLists
        public string CourierPendingReasonNameList  { get; set; }
        [DataMember]
        public bool IsAmendment  { get; set; }
+       [DataMember]
+       public string DeclarationStorageSiteCode  { get; set; }
+       [DataMember]
+       public DateTime? TerminalReleaseDate  { get; set; }
+       [DataMember]
+       public string LastMileServiceType  { get; set; }
+       [DataMember]
+       public string CargoDescription  { get; set; }
+       [DataMember]
+       public bool FinalRelease  { get; set; }
+       [DataMember]
+       public DateTime? HatraDate  { get; set; }
    }
 
 }

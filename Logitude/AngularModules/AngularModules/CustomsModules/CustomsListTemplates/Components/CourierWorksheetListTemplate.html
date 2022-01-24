@@ -246,6 +246,9 @@
                         <li *ngIf="!IsClosedForFollowUp" (click)="SetCLSHWBEvent(1)">
                             <span>סגירה ש.מ.ב</span>
                         </li>
+                        <li (click)="DeclarationsStatusRequestMethod()">
+                            <span>שאילתא לסטטוס הצהרה</span>
+                        </li>
 
                     </ul>
                 </div>
@@ -269,8 +272,8 @@
                         <ul *ngIf="_IsSplitButtonMenuFilterReady" class="x-button-drop-menu" style="width:90px;">
 
                             <li>
-                                <span *ngIf=" ( (_CourierWorksheet['AmendmentDontDisplayInList'] ==false) && (_CourierWorksheet['CourierPaymentStatusCode'] != 'P' || _CourierWorksheet['CourierPaymentStatusCode'] ==null) && ( _CourierWorksheet['CourierManifestStatusCode']=='V' ||_CourierWorksheet['CourierManifestStatusCode'] == 'R' || _CourierWorksheet['CourierManifestStatusCode'] == 'X' || _CourierWorksheet['CourierManifestStatusCode'] == 'M'))" (click)="currSplitButtonComponent.DropdownDisplayClose();SendManifest($event);">מצהר</span>
-                                <span *ngIf="!( (_CourierWorksheet['AmendmentDontDisplayInList'] ==false) && (_CourierWorksheet['CourierPaymentStatusCode'] != 'P' || _CourierWorksheet['CourierPaymentStatusCode'] ==null)  && ( _CourierWorksheet['CourierManifestStatusCode']=='V' ||_CourierWorksheet['CourierManifestStatusCode'] == 'R' || _CourierWorksheet['CourierManifestStatusCode'] == 'X'|| _CourierWorksheet['CourierManifestStatusCode'] == 'M'))" class="DimLI">מצהר</span>
+                                <span *ngIf=" (  ((_CourierWorksheet['HatraDate'] == null ) && (_CourierWorksheet['AmendmentDontDisplayInList'] ==false)) && (_CourierWorksheet['CourierPaymentStatusCode'] != 'P' || _CourierWorksheet['CourierPaymentStatusCode'] ==null) && ( _CourierWorksheet['CourierManifestStatusCode']=='V' ||_CourierWorksheet['CourierManifestStatusCode'] == 'R' || _CourierWorksheet['CourierManifestStatusCode'] == 'X' || _CourierWorksheet['CourierManifestStatusCode'] == 'M'))" (click)="currSplitButtonComponent.DropdownDisplayClose();SendManifest($event);">מצהר</span>
+                                <span *ngIf="!(  ((_CourierWorksheet['HatraDate'] == null ) && (_CourierWorksheet['AmendmentDontDisplayInList'] ==false)) && (_CourierWorksheet['CourierPaymentStatusCode'] != 'P' || _CourierWorksheet['CourierPaymentStatusCode'] ==null)  && ( _CourierWorksheet['CourierManifestStatusCode']=='V' ||_CourierWorksheet['CourierManifestStatusCode'] == 'R' || _CourierWorksheet['CourierManifestStatusCode'] == 'X'|| _CourierWorksheet['CourierManifestStatusCode'] == 'M'))" class="DimLI">מצהר</span>
                             </li>
 
 

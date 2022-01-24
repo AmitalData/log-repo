@@ -122,19 +122,19 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
         }
         public static void AddQuoteGroupSection(QuoteGroupSectionDetails quoteGroupSectionDetails, QuoteGroupSectionRepository quoteGroupSectionRepository)
         {
-            Dictionary<string, QuoteGroupSection> tenantQuoteGroupSections = quoteGroupSectionRepository.GetQuoteGroupSections().ToDictionary(d => d.Id, a => a);
+            Dictionary<string, QuoteGroupSection> tenantQuoteGroupSections = quoteGroupSectionRepository.GetQuoteGroupSections().ToDictionary(d => d.Code, a => a);
 
             if (tenantQuoteGroupSections.Keys.Contains(quoteGroupSectionDetails.Code))
             {
-                QuoteGroupSection quoteGroupSection = quoteGroupSectionRepository.GetSingleQuoteGroupSection(quoteGroupSectionDetails.Id, 0);
+                QuoteGroupSection quoteGroupSection = quoteGroupSectionRepository.GetSingleQuoteGroupSection(quoteGroupSectionDetails.Code, 0);
                 quoteGroupSection.Name = quoteGroupSectionDetails.Name;
-                quoteGroupSection.Tenant = quoteGroupSectionDetails.Tenant;
                 quoteGroupSection.Code = quoteGroupSectionDetails.Code;
+                quoteGroupSection.Searchfields = quoteGroupSectionDetails.Searchfields;
                 quoteGroupSectionRepository.Update(quoteGroupSection);
             }
             else
             {
-                QuoteGroupSection quoteGroupSection = new QuoteGroupSection() { Id = quoteGroupSectionDetails.Id, Code = quoteGroupSectionDetails.Code, Name = quoteGroupSectionDetails.Name, Tenant = quoteGroupSectionDetails.Tenant };
+                QuoteGroupSection quoteGroupSection = new QuoteGroupSection() {  Code = quoteGroupSectionDetails.Code, Name = quoteGroupSectionDetails.Name, Searchfields = quoteGroupSectionDetails.Searchfields };
                 quoteGroupSectionRepository.Add(quoteGroupSection);
             }
         }

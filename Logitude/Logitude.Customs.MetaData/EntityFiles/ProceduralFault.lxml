@@ -51,6 +51,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;2ee2&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"

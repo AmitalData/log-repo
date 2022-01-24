@@ -665,6 +665,49 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         }
         private int? _LINECOUNTER;
 
+        /// <summary>
+        /// There are no comments for LINECOUNTER in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string PROTESTREMARK
+        {
+            get
+            {
+                return _PROTESTREMARK;
+            }
+            set
+            {
+                if (_PROTESTREMARK != value)
+                {
+                    _PROTESTREMARK = value;
+                    OnPropertyChanged("PROTESTREMARK");
+                }
+            }
+        }
+        private string _PROTESTREMARK;
+
+
+
+        /// <summary>
+        /// There are no comments for LINECOUNTER in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string MAKATREMARK
+        {
+            get
+            {
+                return _MAKATREMARK;
+            }
+            set
+            {
+                if (_MAKATREMARK != value)
+                {
+                    _MAKATREMARK = value;
+                    OnPropertyChanged("MAKATREMARK");
+                }
+            }
+        }
+        private string _MAKATREMARK;
 
         #endregion
 

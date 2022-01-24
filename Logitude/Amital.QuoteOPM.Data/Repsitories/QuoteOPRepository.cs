@@ -71,9 +71,10 @@ namespace Amital.QuoteOPM.Data.Repsitories
         public QuoteOP GetSingleQuote(string id, int tenant)
         {
 
-            var q = (from record in context.QuoteOPs.Include("Incoterm").Include("FromPort").Include("Stage").Include("Rating").Include("QuoteOPType").Include("TransportMode").Include("Direction").Include("ToPort")
+            var q = (from record in context.QuoteOPs/*.Include("Incoterm").Include("FromPort")*/.Include("Stage").Include("Rating").Include("QuoteOPType").Include("TransportMode").Include("Direction")/*.Include("ToPort")*/
                      //.Include("ShipmentType")
-                     .Include("ToPort.Country").Include("FromPort.Country").Include("CreatedByUser.Contact").Include("MainCarriageCarrierCard").Include("Department").Include("Branch").Include("FromPartnerAddress").Include("ToPartnerAddress").Include("FromPartnerAddress.Country").Include("ToPartnerAddress.Country").Include("FreelancerCard").Include("BusinessUnit").Include("QuoteOPClosingReason").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AgentCard").Include("NotifyCard")
+                     /*.Include("ToPort.Country").Include("FromPort.Country")*/.Include("CreatedByUser.Contact")/*.Include("MainCarriageCarrierCard")*/.Include("Department").Include("Branch").Include("FromPartnerAddress")
+                     .Include("ToPartnerAddress").Include("FromPartnerAddress.Country").Include("ToPartnerAddress.Country").Include("FreelancerCard").Include("BusinessUnit").Include("QuoteOPClosingReason").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AgentCard").Include("NotifyCard")
                      where record.Id == id && record.Tenant == tenant
                      select record);
             return q.FirstOrDefault();

@@ -1,0 +1,17 @@
+<!ELEMENT LOGIEXPORTSTORAGE (LogitudeExportStorage*)>
+<!ELEMENT LogitudeExportStorage (Id?, StorageNo?, Tenant?, ExportFileNo?, DeclarationId?, OpenDate?, ExportDealIdentification?, ExporterNumber?, ExporterFileNumber?, ShipCode?, CargoTypeCode?, FirstCargoId?, SecondCargoId?, ThirdCargoId?, CargoType?)>
+<!ELEMENT Id (#PCDATA)>
+<!ELEMENT StorageNo (#PCDATA)>
+<!ELEMENT Tenant (#PCDATA)>
+<!ELEMENT ExportFileNo (#PCDATA)>
+<!ELEMENT DeclarationId (#PCDATA)>
+<!ELEMENT OpenDate (#PCDATA)>
+<!ELEMENT ExportDealIdentification (#PCDATA)>
+<!ELEMENT ExporterNumber (#PCDATA)>
+<!ELEMENT ExporterFileNumber (#PCDATA)>
+<!ELEMENT ShipCode (#PCDATA)>
+<!ELEMENT CargoTypeCode (#PCDATA)>
+<!ELEMENT FirstCargoId (#PCDATA)>
+<!ELEMENT SecondCargoId (#PCDATA)>
+<!ELEMENT ThirdCargoId (#PCDATA)>
+<!ELEMENT CargoType (#PCDATA)>

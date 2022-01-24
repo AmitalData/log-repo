@@ -33,7 +33,7 @@ export class DeclarationEditComponentController implements IEditComponentControl
 
         }
 
-        if (currentEntity.IsAmendment || !FeatureLocator.HasFeaturePermession("Customs.Declaration", "DECLARATIONAMENDMENT")) {
+        if (currentEntity.IsAmendment || !FeatureLocator.HasFeaturePermession("Customs.Declaration", "DECLARATIONAMENDMENT") || currentEntity.Direction == "E") {
             var indexOfTab = allTabs.findIndex(t => t.Code == "DCCO");
 
             if (indexOfTab > -1) {

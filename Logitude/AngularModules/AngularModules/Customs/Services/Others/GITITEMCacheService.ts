@@ -133,6 +133,9 @@ export class GITITEMCacheService {
           myGITITEMPM.NAMEENG = item.ItemDescription;
           myGITITEMPM.ORIGINCOUNTRY = item.OriginCountryCode;
           myGITITEMPM.UNITID = item.InvoiceQuantityType;
+            myGITITEMPM.TARIFFID = item.TariffID;
+            myGITITEMPM.GITITEMCRs = item.GITITEMCRs;
+            //myGITITEMPM.GITITEMCRs.push.apply(myGITITEMPM.GITITEMCRs, item.GITITEMCRs)
 
           //this.GITITEMExtendedPMService.insert(myGITITEMPM).subscribe((myResult:any) => {
           //  var mm: ServiceResponse = myResult;

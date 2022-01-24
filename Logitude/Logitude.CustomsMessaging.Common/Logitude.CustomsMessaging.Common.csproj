@@ -74,9 +74,12 @@
     <Compile Include="RequestParams\GuaranteeCertificateRequestParams.Shared.cs" />
     <Compile Include="RequestParams\GuaranteeRequestParams.Shared.cs" />
     <Compile Include="RequestParams\CreditQueryRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\MessageWaitingRequestParams.cs" />
     <Compile Include="RequestParams\NewVehicleRequestParams.Shared.cs" />
     <Compile Include="RequestParams\RTGSInfoQueryRequestParams.Shared.cs" />
     <Compile Include="RequestParams\SendALLCorrectRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\MultiUpdateRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\SendClosePendingRequestParams.Shared.cs" />
     <Compile Include="RequestParams\SendALLStorageSiteRequestParams.Shared.cs" />
     <Compile Include="RequestParams\SendCollateralsRequestParams.Shared.cs" />
     <Compile Include="RequestParams\SendPayReadyLowRequestParams.Shared.cs" />
@@ -147,6 +150,7 @@
     <Compile Include="ResponseData\GuaranteeCertificateResponseData.Shared.cs" />
     <Compile Include="ResponseData\GuaranteeResponseData.Shared.cs" />
     <Compile Include="ResponseData\CreditQueryResponseData.Shared.cs" />
+    <Compile Include="ResponseData\MessageWaitingResponseData.Shared.cs" />
     <Compile Include="ResponseData\PaymentOrderReplyResponseData.Shared.cs" />
     <Compile Include="ResponseData\ReleaseGoodsResponseData.Shared.cs" />
     <Compile Include="ResponseData\RequiredDocumentResponseData.Shared.cs" />

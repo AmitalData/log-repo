@@ -28,7 +28,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SearchFields, 
 	         Inactive, 
 	         IsRelevantGoodsItem, 
-	         IsRelevantInvoice,
+	         IsRelevantInvoice, 
+	         IsRelevantInvoiceExport, 
+	         IsRelevantGoodsItemExport,
 	      }
 
 
@@ -41,7 +43,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SearchFields, 
 	         Inactive, 
 	         IsRelevantGoodsItem, 
-	         IsRelevantInvoice,
+	         IsRelevantInvoice, 
+	         IsRelevantInvoiceExport, 
+	         IsRelevantGoodsItemExport,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -78,6 +82,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsRelevantInvoice))
             {
 				entityPOCO.IsRelevantInvoice = entityPM.IsRelevantInvoice;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsRelevantInvoiceExport))
+            {
+				entityPOCO.IsRelevantInvoiceExport = entityPM.IsRelevantInvoiceExport;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsRelevantGoodsItemExport))
+            {
+				entityPOCO.IsRelevantGoodsItemExport = entityPM.IsRelevantGoodsItemExport;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -121,6 +135,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsRelevantInvoice = entityPOCO.IsRelevantInvoice;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsRelevantInvoiceExport))
+            {
+					entityPM.IsRelevantInvoiceExport = entityPOCO.IsRelevantInvoiceExport;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsRelevantGoodsItemExport))
+            {
+					entityPM.IsRelevantGoodsItemExport = entityPOCO.IsRelevantGoodsItemExport;
+            }
+
 		}
 
 		public void PMToOldPM(ModificationAndDiscountTypePM entityPM, ModificationAndDiscountTypePM oldEntityPM)
@@ -155,6 +179,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsRelevantInvoice))
             {
                 oldEntityPM.IsRelevantInvoice = entityPM.IsRelevantInvoice;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsRelevantInvoiceExport))
+            {
+                oldEntityPM.IsRelevantInvoiceExport = entityPM.IsRelevantInvoiceExport;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsRelevantGoodsItemExport))
+            {
+                oldEntityPM.IsRelevantGoodsItemExport = entityPM.IsRelevantGoodsItemExport;
             }
 			
 		}

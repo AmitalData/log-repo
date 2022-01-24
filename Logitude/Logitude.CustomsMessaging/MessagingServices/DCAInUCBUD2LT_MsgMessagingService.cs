@@ -9,11 +9,14 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.CustomsMessaging.RabbitMQ;
 using Logitude.CustomsMessaging.RequestServices;
 using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.CustomsMessaging.Testers.Messages;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
+using RabbitMQ.Client;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -100,13 +103,25 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             var objectTableDocumentsFilingId = ObjectTableRepository.GetObjectTableByName("DocumentsFiling");
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
+
+
+            InterfaceManagementPM interfaceManagementPM = new InterfaceManagementPM();
+
+            InterfaceManagementQueryService interfaceManagementQueryService = new InterfaceManagementQueryService(tenant);
+
+            interfaceManagementPM = interfaceManagementQueryService.GetSingle(this.MainInterfaceCode, false, true);
+
             //bool simultaneousCheckGeneralLock = true;
             //if (simultaneousCheckGeneralLock)
             //{
 
             //}
             //else
+           // {
+           if(!interfaceManagementPM.UseRabbitMQ)
             {
+
+          
                 var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode,
                     objectTableId, documentsFilingPM.EntityId,
                     objectTableDocumentsFilingId, documentsFilingPM.Id, null, true);
@@ -118,9 +133,19 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 }
             }
+            // }
+
+            else
+            {
+                if (Communications.GetSingleCommunicationLogInProccess(tenant, documentsFilingPM.EntityId, "RabbitMQ", documentsFilingPM.Id) != null)
+                {
+                    return "קיים מסר זהה בתהליך )RABBITMQ(";
+                }
+            }
+
+          
+
             LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = UCBUD2LT  !!!");
-
-
 
             string uniComm = null;
             string fileName = null;
@@ -175,14 +200,69 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     var InterfaceManagementPM = InterfaceManagementQS.GetSingleInterfaceManagementwithDefinition(
                         this.MainInterfaceCode, tenant);
                     fileName = fileName.Replace("DcaPrefixName.", InterfaceManagementPM.DcaPrefixName);
-                    ourRef = this.DcaReceivedCustomResponseCorrelation(InterfaceManagementPM, tenant, new Customs.BL.Utils.DCAFileModel()
+
+                    if (!interfaceManagementPM.UseRabbitMQ)
                     {
-                        SelectedFileDownload = fileName,
-                        TimStamp = transmitionDateTime
-
-                    }, xmlESBResponseXmlClass);
 
 
+                        ourRef = this.DcaReceivedCustomResponseCorrelation(InterfaceManagementPM, tenant, new Customs.BL.Utils.DCAFileModel()
+                        {
+                            SelectedFileDownload = fileName,
+                            TimStamp = transmitionDateTime
+
+                        }, xmlESBResponseXmlClass);
+                    }
+                    else
+                    {
+                        try
+                        {
+
+
+                            var _CommunicationsParams = new CommunicationsParams()
+                            {
+
+                                Tenant = tenant,
+
+                                LoggingObjectTableId = objectTableId,
+                                LoggingEntityId = entityId,
+
+                                Subject = "קישור מסמך לטיקט",
+                                LoggingEntityReference = documentsFilingPM.ExternalEntityReference,
+                                LoggingUserId = LoggingUserId,
+                                CorrelationID = documentsFilingPM.Id,
+
+                                Status = "W",
+                                To = "RabbitMQ",
+                                CommunicationLogTypeCode = "T",
+                                FolderName = "RabbitMQ",
+                                From = "Logitude",
+                                InOut = "O",
+
+                            };
+
+
+                            var message = Encoding.UTF8.GetBytes(xmlESBResponseXmlClass);
+                            _CommunicationsParams.ByteData = message;
+                            string communicationLogId = Communications.AddCommunicationLog(_CommunicationsParams);
+
+
+
+                            string InterfaceTypeCode = "ucbud2lt";
+                            String rabbitMQCode = RabbitmqHelper.GetRabbitMQCode(tenant);
+
+
+                            var rabbitPublishService = new RabbitPublishService();
+                            rabbitPublishService.Publish(message, communicationLogId, InterfaceTypeCode, rabbitMQCode,8);
+                        }
+                        catch (Exception)
+                        {
+
+                            throw;
+                        }
+
+                    }
+
+ 
 
                     trans.Complete();
                     return "המסר נבנה בהצלחה וישלח בתהליך רקע";
@@ -208,6 +288,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         }
 
+        
 
     }
 
@@ -318,7 +399,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 }
 
-
+                if (declarationPM ==null )
+                {
+                    LogitudeSettings.HandleLogMe("declarationPM ==null" + logData, false, "CreateUD2LTService", stopLogAt);
+                    Debug.WriteLine("declarationPM ==null");
+                    return;
+                }
 
                 logData += $"declarationPM.id={declarationPM.Id},CustomFileNo={declarationPM.CustomFileNo}"; //Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(declarationPM);
                 if (declarationPM.PaymentDate.HasValue)
@@ -430,7 +516,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             catch (Exception E)
             {
 
-                LogitudeSettings.HandleLogMe(E.ToString() + logData, true, "CreateUD2LTService", stopLogAt);
+                LogitudeSettings.HandleLogMe(E.ToString() + E.StackTrace+ logData, true, "CreateUD2LTService", stopLogAt);
                 throw;
             }
             finally

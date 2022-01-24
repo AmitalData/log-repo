@@ -33,6 +33,7 @@ import {QuoteOPVATsTotalPM} from '../../EntityPMs/QuoteOPVATsTotalPM';
 import {QuoteOPFollowUpPM} from '../../EntityPMs/QuoteOPFollowUpPM';
 import {QuoteOPDocumentVersionPM} from '../../EntityPMs/QuoteOPDocumentVersionPM';
 import {QuoteOPTotalVATPM} from '../../EntityPMs/QuoteOPTotalVATPM';
+import {QuoteOPPropertiesPM} from '../../EntityPMs/QuoteOPPropertiesPM';
 import {QuoteOPValidator} from '../../Validators/QuoteOPValidator';
 
 @Injectable()
@@ -216,6 +217,7 @@ export class QuoteOPPMService {
                this.MapFollowUps(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapQuoteDocumentVersions(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapTotalVATs(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapQuoteProperties(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
@@ -308,6 +310,15 @@ export class QuoteOPPMService {
 						
 							 
             entityPM.OldEntityPM.TotalVATs.push(newQuoteOPTotalVATPM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.QuoteProperties = [];
+            for (var item in entityPM.QuoteProperties) {
+            var myQuoteOPPropertiesPM = entityPM.QuoteProperties[item];
+            var newQuoteOPPropertiesPM: QuoteOPPropertiesPM = this.clone(myQuoteOPPropertiesPM);
+						
+							 
+            entityPM.OldEntityPM.QuoteProperties.push(newQuoteOPPropertiesPM);
             }
 			   
 		}
@@ -996,6 +1007,98 @@ export class QuoteOPPMService {
                         
                         deletedPM.OldEntityPM = null;
                         entityPM.TotalVATs.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    MapQuoteProperties(entityPM: QuoteOPPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldQuoteProperties: QuoteOPPropertiesPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldQuoteProperties = entityPM.OldEntityPM.QuoteProperties;
+        }
+
+        entityPM.QuoteProperties = new Array<QuoteOPPropertiesPM>();
+        for (var item in jsonPM.QuoteProperties) {
+            var jItem = jsonPM.QuoteProperties[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newQuoteOPPropertiesPM: QuoteOPPropertiesPM;
+	  
+            if (mapParent) {
+                newQuoteOPPropertiesPM = new QuoteOPPropertiesPM(entityPM);
+            }
+            else
+            {
+                newQuoteOPPropertiesPM = new QuoteOPPropertiesPM(null);
+            }
+ 			newQuoteOPPropertiesPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newQuoteOPPropertiesPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newQuoteOPPropertiesPM.UniqueKey = Guid.newGuid();
+                newQuoteOPPropertiesPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newQuoteOPPropertiesPM.OldEntityPM = this.clone(newQuoteOPPropertiesPM);
+
+				
+            }
+            else {
+                if (newQuoteOPPropertiesPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newQuoteOPPropertiesPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newQuoteOPPropertiesPM.ChangeSetOp = "Insert";
+                }
+ 
+                newQuoteOPPropertiesPM.OldEntityPM = null;
+                newQuoteOPPropertiesPM.EntityParentPM = null;
+            }
+			 newQuoteOPPropertiesPM.DisableMarkAsDirty = false;
+			 newQuoteOPPropertiesPM.IsDirty = false;
+            entityPM.QuoteProperties.push(newQuoteOPPropertiesPM);
+        }
+        if (oldQuoteProperties) {
+            
+            for (var itemKey in oldQuoteProperties) {
+                if (entityPM.QuoteProperties.filter(p=> p.UniqueKey === oldQuoteProperties[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldQuoteProperties[itemKey]) {
+                        //oldQuoteProperties[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.QuoteProperties.push(oldQuoteProperties[itemKey]);
+						var oldItemJson = oldQuoteProperties[itemKey];
+                        var deletedPM: QuoteOPPropertiesPM = new QuoteOPPropertiesPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.QuoteProperties.push(deletedPM);
                     }
                 }
             }

@@ -64,6 +64,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string InterfaceType  { get; set; }
        [DataMember]
        public string InterfaceTypeName  { get; set; }
+       [DataMember]
+       public bool UseRabbitMQ  { get; set; }
+       [DataMember]
+       public string SendTime  { get; set; }
    }
 
 }

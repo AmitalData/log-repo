@@ -86,6 +86,7 @@
     <None Include="DBTables\QuoteOPDocumentVersion.dxml" />
     <None Include="DBTables\QuoteOPPackage.dxml" />
     <None Include="DBTables\QuoteOPPriceSteps.dxml" />
+    <None Include="DBTables\QuoteOPProperties.dxml" />
     <None Include="DBTables\QuoteOPRating.dxml" />
     <None Include="DBTables\QuoteOPSetting.dxml" />
     <None Include="DBTables\QuoteOPStage.dxml" />
@@ -111,6 +112,7 @@
     <None Include="EntityFiles\QuoteOPCustomerType.lxml" />
     <None Include="EntityFiles\QuoteOPPackage.lxml" />
     <None Include="EntityFiles\QuoteOPPriceSteps.lxml" />
+    <None Include="EntityFiles\QuoteOPProperties.lxml" />
     <None Include="EntityFiles\QuoteOPRating.lxml" />
     <None Include="EntityFiles\QuoteOPSaleCharge.lxml" />
     <None Include="EntityFiles\QuoteOPSalesTotal.lxml" />

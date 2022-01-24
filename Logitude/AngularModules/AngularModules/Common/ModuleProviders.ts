@@ -210,6 +210,7 @@ import { ReportExecutionLogListService } from './Services/StandardLists/ReportEx
 import { ReportExecutionLogPMService } from './Services/StandardPMs/ReportExecutionLogPMService';
 import { ProductItemListService } from './Services/StandardLists/ProductItemListService';
 import { DocumentFileService } from './Services/DocumentServices/DocumentFileService';
+import { QuoteGroupSectionListService } from './Services/StandardLists/QuoteGroupSectionListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -423,7 +424,8 @@ export class ModuleProviders {
             case "ReportExecutionLogPMService": { myResult = new ReportExecutionLogPMService(); break; }
             case "ProductItemListService": { myResult = new ProductItemListService(); break; }
             case "DocumentFileService": { myResult = new DocumentFileService(); break; }
-                 
+            case "QuoteGroupSectionListService": { myResult = new QuoteGroupSectionListService(); break; }
+
         }
 
         return myResult;

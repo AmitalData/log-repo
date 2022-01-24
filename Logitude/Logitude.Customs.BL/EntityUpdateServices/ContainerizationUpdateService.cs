@@ -104,7 +104,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     entityPM.IsMultiCustomers = containerizationImporters[0].LocalName;
                 }
-                entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                 //entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+ 
             }
 
             base.OnUpdating(entityPM, entityPOCO);

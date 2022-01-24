@@ -2135,6 +2135,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string dutyRegimeProtocolCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DutyRegimeProtocolCode  
+	   {
+	    
+	     get
+		{
+		   return dutyRegimeProtocolCode;
+		 }
+		 set
+		 {
+		   if(dutyRegimeProtocolCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DutyRegimeProtocolCode",OldValue=dutyRegimeProtocolCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   dutyRegimeProtocolCode=value;
+		   }
+			
+		 }
+	   }
+	  private string dutyRegimeProtocolLocalName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DutyRegimeProtocolLocalName  
+	   {
+	    
+	     get
+		{
+		   return dutyRegimeProtocolLocalName;
+		 }
+		 set
+		 {
+		   if(dutyRegimeProtocolLocalName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DutyRegimeProtocolLocalName",OldValue=dutyRegimeProtocolLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   dutyRegimeProtocolLocalName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

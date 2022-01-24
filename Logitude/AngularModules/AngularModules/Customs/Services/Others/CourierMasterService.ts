@@ -14,6 +14,7 @@ import { GatepassRequestMessageRequestParams } from '../../DataContract/RequestP
 import { SendALLStorageSiteRequestParams } from '../../DataContract/RequestParams/SendALLStorageSiteRequestParams';
 import { SendUnCorrectDocumentsRequestParams } from '../../DataContract/RequestParams/SendUnCorrectDocumentsRequestParams';
 import { AppTool } from '../../../Infrastructure/Tools';
+import { SendClosePendingRequestParams } from 'Customs/DataContract/RequestParams/SendClosePendingRequestParams';
 
 
 @Injectable()
@@ -467,7 +468,31 @@ export class CourierMasterService {
 
         });
     }
+    
+    GetSendDocumentsFromQueue(courierMasterId, MAWB) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callTime = new Date();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetSendDocumentsFromQueue?' + 'courierMasterId=' + courierMasterId + '&MAWB=' + MAWB, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var messString = response;
 
+
+
+
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = messString;
+
+
+
+                return serviceResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+
+    }
     GetSendALLCorrectManifest(CourierMasterId, HAWB, CourierDeclarationStatusCode) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
@@ -658,5 +683,29 @@ export class CourierMasterService {
             }),catchError(ServiceHelper.HandleServiceError));
         });
 
+    }
+
+    PostSendClosePending(requestParams: SendClosePendingRequestParams) {
+
+        return defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.post(
+                this._apiUrl + '/PostSendClosePending/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    var messString = res;
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = messString;
+
+                    return serviceResponse;
+                }),catchError(ServiceHelper.HandleServiceError));
+            ;
+
+        });
     }
 }

@@ -349,6 +349,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(confirmationTypeTable, confirmationTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(confirmationTypeTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData IncotemrsFileValidationTable = closedSystemTables.Where(d => d.id == "23928").FirstOrDefault();
+            ObjectTable IncotemrsFileValidationObjectTable = objectTableRepository.GetObjectTableByName("Customs.IncotemrsFileValidation", 0, false);
+            InsertClosedTableRecord(IncotemrsFileValidationTable, IncotemrsFileValidationObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(IncotemrsFileValidationTable);
+
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData modificationAndDiscountTypeTable = closedSystemTables.Where(d => d.id == "1416").FirstOrDefault();
             ObjectTable modificationAndDiscountTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.ModificationAndDiscountType", 0, false);
             InsertClosedTableRecord(modificationAndDiscountTypeTable, modificationAndDiscountTypeObjectTable, customsClosedTables, customsClosedTableRepository);
@@ -1172,6 +1177,10 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(releaseMessageTypeInitiatorTable, ReleaseMessageTypeInitiatorObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(releaseMessageTypeInitiatorTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData TradeAgreementProtocolTable = closedSystemTables.Where(d => d.id == "23900").FirstOrDefault();
+            ObjectTable TradeAgreementProtocolObjectTable = objectTableRepository.GetObjectTableByName("Customs.TradeAgreementProtocol", 0, false);
+            InsertClosedTableRecord(TradeAgreementProtocolTable, TradeAgreementProtocolObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(TradeAgreementProtocolTable);
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
             //ObjectTable collateralAnswerStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CollateralAnswerStatus", 0, false);
             //InsertClosedTableRecord(collateralAnswerStatusTable, collateralAnswerStatusObjectTable, customsClosedTables, customsClosedTableRepository);

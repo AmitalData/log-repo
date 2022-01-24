@@ -49,7 +49,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string code)
         {
 		  try
             {
@@ -61,7 +61,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				QuoteGroupSectionRepository  quoteGroupSectionRepository = new QuoteGroupSectionRepository(MyContext);
 				QuoteGroupSectionList entityList = null;
-				QuoteGroupSection entityPoco = quoteGroupSectionRepository.GetSingleQuoteGroupSection(id , authToken.Tenant);
+				QuoteGroupSection entityPoco = quoteGroupSectionRepository.GetSingleQuoteGroupSection(code );
 
 				if (entityPoco != null)
 				{
@@ -98,11 +98,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 				ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				QuoteGroupSectionRepository  quoteGroupSectionRepository = new QuoteGroupSectionRepository(MyContext);
-				IQueryable<QuoteGroupSection> entityPocos = quoteGroupSectionRepository.GetQuoteGroupSections(authToken.Tenant);
+				IQueryable<QuoteGroupSection> entityPocos = quoteGroupSectionRepository.GetQuoteGroupSections();
 
 				QuoteGroupSectionQuery quoteGroupSectionQuery = new QuoteGroupSectionQuery(quoteGroupSectionRepository);
 			    IQueryable<QuoteGroupSectionList> entityLists = quoteGroupSectionQuery.GetIQueryableEntityList(entityPocos);
-				entityLists = entityLists.OrderBy(d => d.Name);
+				entityLists = entityLists.OrderBy(d => d.Code);
 				List<QuoteGroupSectionList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 										
@@ -214,7 +214,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 								
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 QuoteGroupSectionRepository  quoteGroupSectionRepository = new QuoteGroupSectionRepository(MyContext);
-                IQueryable<QuoteGroupSection> entityPocos = quoteGroupSectionRepository.GetQuoteGroupSections(tenant);
+                IQueryable<QuoteGroupSection> entityPocos = quoteGroupSectionRepository.GetQuoteGroupSections();
 
                 QuoteGroupSectionQuery quoteGroupSectionQuery = new QuoteGroupSectionQuery(quoteGroupSectionRepository);
                 
@@ -288,7 +288,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                             }
                         default:
                             {
-                                entityLists = entityLists.OrderBy(d => d.Name);
+                                entityLists = entityLists.OrderBy(d => d.Code);
                                 break;
                             }
                     }
@@ -297,7 +297,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
             }					  						
 	       else
             {
-                entityLists = entityLists.OrderBy(d => d.Name);
+                entityLists = entityLists.OrderBy(d => d.Code);
             } 
 
 			ServiceResponse response = new ServiceResponse();

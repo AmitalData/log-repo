@@ -75,16 +75,16 @@ namespace Amital.QuoteOPM.Data.EntityPOCOs
 	    public bool IsByContainer { get; set; }
         [Column("EstimateProfitEdited")]
 	    public bool EstimateProfitEdited { get; set; }
-        [ForeignKey("PickUpAddressEntity")]
+        [ForeignKey("FromAddress")]
         [Column("FromAddressId")]
 	    public string FromAddressId { get; set; }
 	      
-        public virtual Address PickUpAddressEntity { get; set; }
-        [ForeignKey("DeliveryAddressEntity")]
+        public virtual Address FromAddress { get; set; }
+        [ForeignKey("ToAddress")]
         [Column("ToAddressId")]
 	    public string ToAddressId { get; set; }
 	      
-        public virtual Address DeliveryAddressEntity { get; set; }
+        public virtual Address ToAddress { get; set; }
         [Column("OpportunityId")]
 	    public string OpportunityId { get; set; }
         [Column("MinimumFreightCost")]
@@ -129,11 +129,8 @@ namespace Amital.QuoteOPM.Data.EntityPOCOs
 	    public bool IsCancelled { get; set; }
         [Column("QuoteNumber")]
 	    public string QuoteNumber { get; set; }
-        [ForeignKey("MainCarriageCarrierCard")]
         [Column("MainCarriageCarrierId")]
 	    public string MainCarriageCarrierId { get; set; }
-	      
-        public virtual Card MainCarriageCarrierCard { get; set; }
         [ForeignKey("Direction")]
         [Column("DirectionId")]
 	    public string DirectionId { get; set; }
@@ -197,21 +194,12 @@ namespace Amital.QuoteOPM.Data.EntityPOCOs
 	    public string ConsigneeReference1 { get; set; }
         [Column("ConsigneeReference2")]
 	    public string ConsigneeReference2 { get; set; }
-        [ForeignKey("FromPort")]
         [Column("FromPortId")]
 	    public string FromPortId { get; set; }
-	      
-        public virtual Port FromPort { get; set; }
-        [ForeignKey("ToPort")]
         [Column("ToPortId")]
 	    public string ToPortId { get; set; }
-	      
-        public virtual Port ToPort { get; set; }
-        [ForeignKey("Incoterm")]
         [Column("IncotermId")]
 	    public string IncotermId { get; set; }
-	      
-        public virtual Incoterm Incoterm { get; set; }
         [ForeignKey("SalesmanUser")]
         [Column("SalesmanUserId")]
 	    public string SalesmanUserId { get; set; }
@@ -562,11 +550,8 @@ namespace Amital.QuoteOPM.Data.EntityPOCOs
 	    public DateTime? AutomaticLastUpdateDate { get; set; }
         [Column("IsMultiCurrency")]
 	    public bool IsMultiCurrency { get; set; }
-        [ForeignKey("OPSpecialServicesType")]
         [Column("SpecialServiceId")]
 	    public string SpecialServiceId { get; set; }
-	      
-        public virtual OPSpecialServicesType OPSpecialServicesType { get; set; }
     }
 }
 	 

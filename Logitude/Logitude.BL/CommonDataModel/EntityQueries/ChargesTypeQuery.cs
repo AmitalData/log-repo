@@ -171,6 +171,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         IsActiveInImport = a.IsActiveInImport,
                                         IsActiveInDrop = a.IsActiveInDrop,
                                         IsActiveInDomestic = a.IsActiveInDomestic,
+                                        QuoteGroupSectionID=a.QuoteGroupSectionID,
                                     }).FirstOrDefault();
 
             ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);

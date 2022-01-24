@@ -249,12 +249,13 @@ import { CargoTypeListService } from './Services/StandardLists/CargoTypeListServ
 import { ContainerizationListService } from './Services/StandardLists/ContainerizationListService';
 import { ContainerizationStatusCodeListService } from './Services/StandardLists/ContainerizationStatusCodeListService';
 import { ContainerizationHataraStatusListService } from './Services/StandardLists/ContainerizationHataraStatusListService';
+import { PhysicalCheckSearchResultTypeListService } from './Services/StandardLists/PhysicalCheckSearchResultTypeListService';
+
 
 //#endregion
 
 //#region StandardPMs
 import { ClaimPMService } from './Services/StandardPMs/ClaimPMService';
-import { ClientPMService } from './Services/StandardPMs/ClientPMService';
 import { CustomBankPMService } from './Services/StandardPMs/CustomBankPMService';
 import { CustomsBookPMService } from './Services/StandardPMs/CustomsBookPMService';
 import { CustomsClosedTablePMService } from './Services/StandardPMs/CustomsClosedTablePMService';
@@ -361,6 +362,8 @@ import { SupplierInvioceItemCertificatsService } from './Services/WebServices/Su
 import { LoadTestService } from './Services/WebServices/LoadTestService';
 import { InvoiceQueueWebService } from './Services/WebServices/InvoiceQueueWebService';
 import { ContainerizationMessagesService } from './Services/WebServices/ContainerizationMessagesService';
+import { NewQuoteOPWebService } from './Services/WebServices/NewQuoteOPWebService';
+
 
 //#endregion
 
@@ -381,6 +384,8 @@ import { ClaimMenuButtonsHandler } from './Components/MenuButtons/ClaimMenuButto
 import { PhysicalCheckMenuButtonsHandler } from './Components/MenuButtons/PhysicalCheckMenuButtonsHandler';
 import { DeclarationEditComponentController } from './Controller/DeclarationEditComponentController'
 import { VehicleEditComponentController } from './Controller/VehicleEditComponentController'
+import { PhysicalCheckEditComponentController } from './Controller/PhysicalCheckEditComponentController'
+
 import { VendorCommissionService } from './Services/WebServices/VendorCommissionService'
 import { ApprovedProfessionListService } from './Services/StandardLists/ApprovedProfessionListService'
 import { RequestTypeListService } from './Services/StandardLists/RequestTypeListService'
@@ -401,7 +406,7 @@ import { NDMessageActionCodeListService } from './Services/StandardLists/NDMessa
 import { HandingCodeListService } from './Services/StandardLists/HandingCodeListService';
 import { StuffingSiteTypeListService } from './Services/StandardLists/StuffingSiteTypeListService';
 import { ContainerTypeListService } from './Services/StandardLists/ContainerTypeListService';
-import { ExportStorgeListService } from './Services/StandardLists/ExportStorgeListService';
+import { ExportStorageListService } from './Services/StandardLists/ExportStorageListService';
 import { LogisticsReferenceTypeListService } from './Services/StandardLists/LogisticsReferenceTypeListService';
 import { ReferenceStatusListService } from './Services/StandardLists/ReferenceStatusListService';
 import { ReferenceInputTypeListService } from './Services/StandardLists/ReferenceInputTypeListService';
@@ -419,6 +424,12 @@ import { PoaAuthorizationTypeLookupListService } from './Services/StandardLists/
 import { ClientsPoaListService } from './Services/StandardLists/ClientsPoaListService';
 import { BuyerRoleTypeListService } from './Services/StandardLists/BuyerRoleTypeListService';
 import { AmedmentTypeListService } from './Services/StandardLists/AmedmentTypeListService';
+import { CustomsRequestsSheetWebService } from './Services/WebServices/CustomsRequestsSheetWebService';
+import { TradeAgreementProtocolListService } from './Services/StandardLists/TradeAgreementProtocolListService';
+import { ExportStoragePMService } from './Services/StandardPMs/ExportStoragePMService';
+import { IncotemrsFileValidationListService } from './Services/StandardLists/IncotemrsFileValidationListService';
+import { ClientPMService } from './Services/StandardPMs/ClientPMService';
+
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -696,7 +707,7 @@ export class ModuleProviders {
             case "CoolingReportingMethodListService": { myResult = new CoolingReportingMethodListService(); break; } 
             case "NDMessageActionCodeListService": { myResult = new NDMessageActionCodeListService(); break; } 
             case "HandingCodeListService": { myResult = new HandingCodeListService(); break; } 
-            case "ExportStorgeListService": { myResult = new ExportStorgeListService(); break; } 
+            case "ExportStorageListService": { myResult = new ExportStorageListService(); break; } 
 
             case "AmendCancellRequestInitiatorListService": { myResult = new AmendCancellRequestInitiatorListService(); break; }
             case "FclLclCodeListService": { myResult = new FclLclCodeListService(); break; }
@@ -708,6 +719,8 @@ export class ModuleProviders {
             case "PoaAuthorizationTypeLookupListService": { myResult = new PoaAuthorizationTypeLookupListService(); break; }
             case "ClientsPoaListService": { myResult = new ClientsPoaListService(); break; }
             case "BuyerRoleTypeListService": { myResult = new BuyerRoleTypeListService(); break; }
+            case "PhysicalCheckSearchResultTypeListService": { myResult = new PhysicalCheckSearchResultTypeListService(); break; }
+            case "IncotemrsFileValidationListService": { myResult = new IncotemrsFileValidationListService(); break; }
 
                 
              //#endregion                
@@ -745,6 +758,7 @@ export class ModuleProviders {
             case "NotificationPMService": { myResult = new NotificationPMService(); break; }
             case "NotificationTenantDefinitionPMService": { myResult = new NotificationTenantDefinitionPMService(); break; }
             case "PaymentOrderPMService": { myResult = new PaymentOrderPMService(); break; }
+            case "ExportStoragePMService": { myResult = new ExportStoragePMService(); break; }
             case "PhysicalCheckPMService": { myResult = new PhysicalCheckPMService(); break; }
             case "ProceduralFaultPMService": { myResult = new ProceduralFaultPMService(); break; }
             case "ProceduralFaultsPMService": { myResult = new ProceduralFaultPMService(); break; }
@@ -769,6 +783,7 @@ export class ModuleProviders {
             case "ReferantTeamPMService": { myResult = new ReferantTeamPMService(); break; }
             case "ExportStorgePMService": { myResult = new ExportStorgePMService(); break; }
             case "ContainerizationPMService": { myResult = new ContainerizationPMService(); break; }
+            case "TradeAgreementProtocolListService": { myResult = new TradeAgreementProtocolListService(); break; }
 
             //#endregion
 
@@ -826,6 +841,9 @@ export class ModuleProviders {
             case "LoadTestService": { myResult = new LoadTestService(); break; }
             case "InvoiceQueueWebService": { myResult = new InvoiceQueueWebService(); break; }
             case "ContainerizationMessagesService": { myResult = new ContainerizationMessagesService(); break; }
+            case "NewQuoteOPWebService": { myResult = new NewQuoteOPWebService(); break; }
+            case "CustomsRequestsSheetWebService": { myResult = new CustomsRequestsSheetWebService(); break; }
+
 
             //#endregion
 
@@ -848,6 +866,7 @@ export class ModuleProviders {
             case "PhysicalCheckMenuButtonsHandler": { myResult = new PhysicalCheckMenuButtonsHandler(); break; }
             case "VendorCommissionService": { myResult = new VendorCommissionService(); break; }
             case "DeclarationAmendmentSharedDataService": { myResult = new DeclarationAmendmentSharedDataService(); break; }
+            case "PhysicalCheckEditComponentController": { myResult = new PhysicalCheckEditComponentController(); break; }
 
                 
 

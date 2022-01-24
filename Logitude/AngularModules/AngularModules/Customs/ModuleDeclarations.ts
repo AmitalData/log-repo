@@ -27,6 +27,8 @@ import { ExportStorgeShortTitleComponent } from './Components/ShortTitles/Export
 import {CustomsSpotlightComponent} from './Components/Spotlight/CustomsSpotlightComponent';
 import { ReferantSpotlightDataTemplate } from './Components/Spotlight/ReferantSpotlightDataTemplate';
 import { DeclarationReferantDataListActionBarComponent } from './Components/ListActionBar/DeclarationReferantDataListActionBarComponent';
+import { PhysicalCheckListActionBarComponent } from './Components/ListActionBar/PhysicalCheckListActionBarComponent';
+import { ExportStorageShortTitleComponent } from './Components/ShortTitles/ExportStorageShortTitleComponent';
 
 export const CustomsControlsComponents =
     [
@@ -52,6 +54,7 @@ export const Components =
         DeclarationShortTitleComponent,
      
         ExportStorgeShortTitleComponent,
+        ExportStorageShortTitleComponent,
      
   
       
@@ -69,6 +72,7 @@ export const Components =
 
         ReferantSpotlightDataTemplate,
         DeclarationReferantDataListActionBarComponent,
+        PhysicalCheckListActionBarComponent
     ];
 
 export class ModuleDeclarations {
@@ -90,6 +94,7 @@ export class ModuleDeclarations {
                         //short titles
             case "DeclarationShortTitleComponent": {myResult = DeclarationShortTitleComponent; break;}
             case "ExportStorgeShortTitleComponent": { myResult = ExportStorgeShortTitleComponent; break; }
+            case "ExportStorageShortTitleComponent": { myResult = ExportStorageShortTitleComponent; break; }
 
            
 
@@ -98,6 +103,7 @@ export class ModuleDeclarations {
             case "ReferantSpotlightDataTemplate": { myResult = ReferantSpotlightDataTemplate; break; }
 
             case "DeclarationReferantDataListActionBarComponent": { myResult = DeclarationReferantDataListActionBarComponent; break; }
+            case "PhysicalCheckListActionBarComponent": { myResult = PhysicalCheckListActionBarComponent; break; }
         }
 
         return myResult;

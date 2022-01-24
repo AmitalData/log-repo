@@ -212,7 +212,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ExportDeliveryDocumentMessage> ExportDeliveryDocumentMessages { get; }
 		 IDbSet<ExporterRoleType> ExporterRoleTypes { get; }
 		 IDbSet<ExportReference> ExportReferences { get; }
-		 IDbSet<ExportStorge> ExportStorges { get; }
+		 IDbSet<ExportStorage> ExportStorages { get; }
 		 IDbSet<FacilitationType> FacilitationTypes { get; }
 		 IDbSet<FaultInspectionType> FaultInspectionTypes { get; }
 		 IDbSet<FclLclCode> FclLclCodes { get; }
@@ -233,6 +233,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ImporterDesposition> ImporterDespositions { get; }
 		 IDbSet<ImporterPeriodicDeclarStatus> ImporterPeriodicDeclarStatuses { get; }
 		 IDbSet<ImporterTypeForClaim> ImporterTypeForClaims { get; }
+		 IDbSet<IncotemrsFileValidation> IncotemrsFileValidations { get; }
 		 IDbSet<InterfaceManagement> InterfaceManagements { get; }
 		 IDbSet<InterfaceSendOption> InterfaceSendOptions { get; }
 		 IDbSet<InterfaceTenantDefinition> InterfaceTenantDefinitions { get; }
@@ -285,6 +286,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<PendingErrorPlace> PendingErrorPlaces { get; }
 		 IDbSet<PhysicalCheck> PhysicalChecks { get; }
 		 IDbSet<PhysicalCheckOperation> PhysicalCheckOperations { get; }
+		 IDbSet<PhysicalCheckSearchResultType> PhysicalCheckSearchResultTypes { get; }
 		 IDbSet<PhysicalCheckStatusMessage> PhysicalCheckStatusMessages { get; }
 		 IDbSet<PoaAuthorizationTypeLookup> PoaAuthorizationTypeLookups { get; }
 		 IDbSet<PoaStatusTypeLookUp> PoaStatusTypeLookUps { get; }
@@ -356,6 +358,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<TermsOfSaleType> TermsOfSaleTypes { get; }
 		 IDbSet<TPGFileType> TPGFileTypes { get; }
 		 IDbSet<TradeAgreement> TradeAgreements { get; }
+		 IDbSet<TradeAgreementProtocol> TradeAgreementProtocols { get; }
 		 IDbSet<TradeLevyExamptType> TradeLevyExamptTypes { get; }
 		 IDbSet<TransactionNatureType> TransactionNatureTypes { get; }
 		 IDbSet<TransferCargoMethodType> TransferCargoMethodTypes { get; }

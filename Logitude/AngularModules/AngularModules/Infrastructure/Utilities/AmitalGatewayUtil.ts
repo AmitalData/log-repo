@@ -15,7 +15,6 @@ import { IIGGeneralMessagesService} from '../../Customs/Services/WebServices/IIG
 import { ObservableCollection } from './ObservableCollection';
 import { SupplierInvoiceItemList } from "../../Customs/EntityLists/Extended/SupplierInvoiceItemList";
 import { TextCodeTranslator } from './TextCodeTranslator';
-import { ClientPM } from '../../Customs/Entitypms/ClientPM';
 
 //import { ClientMessagesService } from '../../Customs/Services/WebServices/ClientMessagesService';
 //import { CustDocMetaDataValuesWebService } from '../../Customs/Services/WebServices/CustDocMetaDataValuesWebService';
@@ -28,6 +27,7 @@ import { EntityPMService } from '../Services/EntityPMService';
 import { CourierMasterPMService } from '../../Customs/Services/StandardPMs/CourierMasterPMService';
 import { ServiceResponse } from '../DataContracts/ServiceResponse';
 import { DeclarationWebService } from '../../Customs/Services/WebServices/DeclarationWebService';
+import { ClientPM } from 'Customs/EntityPMs/ClientPM';
 
 
 export class AmitalGatewayUtil {
@@ -282,6 +282,7 @@ export class AmitalGatewayUtil {
 
         if (AppTool.IsNullOrEmpty(window.parent._JavascriptGateway)) {
             alert("_JavascriptGateway not exist !!!");
+            SessionLocator.SelectedSession.StopBusyIndicator();
             return;
 
         } else {
@@ -309,6 +310,7 @@ export class AmitalGatewayUtil {
     
     UnifaceRequest(myParam, myEditTab, change2EditTab: () => void, change2CA23Tab: () => void) {
         const MaintenanceMenu: string = "General.MH.Maintenance";
+        const QuotesOPMenu: string = "General.MH.QuotesOP";
         let unifreightMessage: UnifreightMessageM = myParam;
         //if (AppTool.IsNullOrEmpty(unifreightMessage.LogitudeCommandId)) {
         //    throw new Error("UnifaceRequest get bad  unifreightMessage (LogitudeCommandId is null !?!?!?)");
@@ -317,7 +319,11 @@ export class AmitalGatewayUtil {
         this._LastUnifreightMessageM.Requset = this._LastUnifreightMessageM.Requset || [];
         this._LastUnifreightMessageM.Response = this._LastUnifreightMessageM.Response || [];
         switch (unifreightMessage.LogitudeCommandId) {
-            
+            case "ShowQuotesOPMenu()":
+                {
+                    this.SelectCustomsRequestMenu(QuotesOPMenu);
+                }
+                break;
             case "SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM()": 
             case "this.CurrentSession.CurrentEditComponent.ReloadEntityPM()": {
                 if (SessionLocator.SelectedSession.CurrentEditComponent) {
@@ -628,7 +634,18 @@ export class AmitalGatewayUtil {
         static StartDoIt(unifreightMessage: UnifreightMessageM, myEditTab, callback2TabZero: () => void) {
             //BackButtonLabel: "הצהרות ללם התרה"EntityId :"1-103991" ,ObjectTableName:"Customs.Declaration"
             let isSaved: boolean = false;
-            let BackButtonLabel = "תיק עמילות"
+            let BackButtonLabel = "תיק עמילות";
+            
+            if (unifreightMessage.UnifreightEntity == "EFIFILEM") {
+                BackButtonLabel = "תיק יצום";
+                try {
+                    const formtitleArray = unifreightMessage.Requset.filter((item) => item[0] == "formtitle");
+                    BackButtonLabel=formtitleArray[0][1];
+                } catch (e) {
+
+                }
+                
+            }
 
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
                 //myEditTab.SessionComponent.viewContainerRef
@@ -1433,11 +1450,11 @@ export class ShowInvoiceFromUrouterReturnCreateInvoiceCommand {
                 let ExcludeLines = "";
                 if (toCreateQInvoice.includes("1")) {
                     CreateInvoice = 1;
-                    let ExcludeLines = toCreateQInvoice.replace("1;", "");
+                    ExcludeLines = toCreateQInvoice.replace("1;", "");
                 } else {
                     CreateInvoice = 0;
                 }
-                AmitalGatewayUtil.Instance.CreateQInvoiceUnifreightCallBack(CreateInvoice, comp.Remarks, ExcludeLines );
+                AmitalGatewayUtil.Instance.CreateQInvoiceUnifreightCallBack(CreateInvoice, comp.Remarks, ExcludeLines);
             });
         });
         logWindow.Show('./CustomsModules/InvoiceQueue/Components/InvoiceQueueComponent');

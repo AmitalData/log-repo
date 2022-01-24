@@ -56,6 +56,8 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="IsAutonomy" />
         <xs:element minOccurs="0" maxOccurs="1" ref="SiteCode" />
         <xs:element minOccurs="0" maxOccurs="1" ref="CrateNumber" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="shopId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="LastMileServiceType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -303,4 +305,6 @@
   <xs:element name="IsAutonomy" type="xs:string" />
   <xs:element name="SiteCode" type="xs:string" />
   <xs:element name="CrateNumber" type="xs:string" />
+  <xs:element name="shopId" type="xs:string" />
+  <xs:element name="LastMileServiceType" type="xs:string" />
 </xs:schema>

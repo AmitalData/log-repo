@@ -21,6 +21,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logitude.Customs.Data.Repsitories;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
 {
@@ -65,7 +67,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
             _context = CustomContext.GetContext(ResolvedTenant());
             AppendLogLine($"ResolvedTenant()={ResolvedTenant()}");
             var myQueryService = new DeclarationQueryService(_context);
-
+            CustomsDocumentPM customsDocumentPM = new CustomsDocumentPM();
             MyGenericResponseObj.Stage = "GetSingle";
             this._MyDeclarationPM = myQueryService.GetSingle(this._LogitudeDocs.Id, true, false);
             if (this._MyDeclarationPM == null)
@@ -111,6 +113,19 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                                 var myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(o => o.ParentEntityCode == "Declaration" && o.ParentEntityId == _MyDeclarationPM.Id);
                                 if(myCustomsDocumentPointerPMListforDec != null && myCustomsDocumentPointerPMListforDec.Count() > 0)
                                 {
+                                    
+                                    if (this._MyDeclarationPM.IsCourierDeclaration)
+                                    {
+                                        var updateDocumentStatuscodeService = new UpdateDocumentStatuscodeService();
+                                        updateDocumentStatuscodeService.UpdateDocumentStatuscode(this._MyDeclarationPM, DateTime.MinValue, false);
+                                    }
+                                  customsDocumentPM = myCustomsDocumentQueryService.GetSingle(this._LogitudeDocs.COM_ID, false, false);
+
+                                    if (customsDocumentPM!= null && String.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId) && customsDocumentPM.DocumentStatusCode!="7")
+                                    {
+                                        var updateDocumentStatuscodeService = new UpdateDocumentStatuscodeService();
+                                        updateDocumentStatuscodeService.UpdateDocumentStatuscode(this._MyDeclarationPM, DateTime.MinValue, false);
+                                    }
                                     throw new BusinessErrorException("Ticket already Exist for this Document");
                                 }
                             }
@@ -170,8 +185,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     myCustomsDocumentPointerUpdateService.Update(customsDocumentPointerPM, true);
 
                     var myDocumentId = myCustomsDocumentQueryService.GetSingle(this._LogitudeDocs.COM_ID, true, false);
-                    CustomsDocumentPM customsDocumentPM;
-                    var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                     var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                     
                     CustomsDocumentMetaDataValueQueryService customsDocumentMetaDataValueQuery = new CustomsDocumentMetaDataValueQueryService(_context);
 
@@ -237,12 +251,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                         if (String.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
                         {
                             customsDocumentPM.IsSendToQueue = true;
+                            customsDocumentPM.IsCustomSendTime = true;
                             myCustomsDocumentUpdateService.IgnoreSendFailure = true;
                             AppendLogLine("myCustomsDocumentUpdateService.Update:IsSendToQueue = true");
                             if (customsDocumentPM.ChangeSetOp != ChangeSetOperation.Update) customsDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
                         }
                         myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
                     }
+                
 
                     AppendLogLine("after Update Document");
                 }
@@ -255,6 +271,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
             {
                 AppendLogLine($"this._LogitudeDocs.COM_ID is null nothing done ");
             }
+            if (this._MyDeclarationPM.IsCourierDeclaration)
+            {
+                var updateDocumentStatuscodeService = new UpdateDocumentStatuscodeService();
+                updateDocumentStatuscodeService.UpdateDocumentStatuscode(this._MyDeclarationPM, DateTime.MinValue, false);
+
+            }
+
             DeclarationUpdateService DeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
             this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
             this._MyDeclarationPM.MarkAsChanged = true;
@@ -362,7 +385,66 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
         {
             throw new NotImplementedException();
         }
+
     
+    }
+
+    
+    public class UpdateDocumentStatuscodeService
+    {
+        public bool ConnectedAfterSend_Need2UpdateDocumentStatuscode(DeclarationPM declarationPM, DocumentsFilingPM _DocumentsFilingPM)
+        {
+            if (_DocumentsFilingPM==null)
+            {
+                return false;
+            }
+            var customsDocumentRepository = new CustomsDocumentRepository(declarationPM.Tenant);
+            var customsDocument = customsDocumentRepository.GetSingle(_DocumentsFilingPM.Id, declarationPM.Tenant);
+            if (string.IsNullOrWhiteSpace(customsDocument?.CustomsDocId))
+            {
+                return false;
+            }
+            var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(declarationPM.Tenant);
+            var declarationCourierStatus = declarationCourierStatusRepository.GetSingle(declarationPM.Id, declarationPM.Tenant);
+            return declarationCourierStatus.DocumentStatusCode != "V";
+
+        }
+
+        public void UpdateDocumentStatuscode(DeclarationPM connectedDeclarationPM, DateTime stopLogAt, bool newTrans)
+        {
+
+            ICustomContext context = CustomContext.GetContext(connectedDeclarationPM.Tenant);
+            DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(connectedDeclarationPM.Id, true, false);
+            if (currentDeclarationCourierStatusPM != null)
+            {
+                var calculateDeclarationCourierStatus = new BL.CalculateDeclarationCourierStatus(connectedDeclarationPM, connectedDeclarationPM.Id, connectedDeclarationPM.Tenant);
+                //LogMessagingUtil.Instance.AppendLine("currentDeclarationCourierStatusPM.DocumentStatusCode: " + currentDeclarationCourierStatusPM.DocumentStatusCode);
+                currentDeclarationCourierStatusPM.DocumentStatusCode = "V";
+                calculateDeclarationCourierStatus.CalcDocumentStatusCode(currentDeclarationCourierStatusPM);//// will change if wrong !!!
+                if (currentDeclarationCourierStatusPM.DocumentStatusCode == "V")
+                {
+                    LogMessagingUtil.Instance.AppendLine($"currentDeclarationCourierStatusPM.DocumentStatusCode: {currentDeclarationCourierStatusPM.DocumentStatusCode}  change 2 V");
+                    LogitudeSettings.HandleLogMe($"currentDeclarationCourierStatusPM.DocumentStatusCode: {currentDeclarationCourierStatusPM.DocumentStatusCode}  change 2 V", false, "CreateUD2LTService", stopLogAt);
+                    using (var trans =
+                        newTrans ? TransactionFactory.GetNewTransaction() : TransactionFactory.GetTransaction()
+                        )
+                    {
+                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
+                        currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        ///currentDeclarationCourierStatusPM.DocumentStatusCode = "V";
+                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                        trans.Complete();
+                    }
+                }
+                else
+                {
+                    LogMessagingUtil.Instance.AppendLine($"calculateDeclarationCourierStatus.CalcDocumentStatusCode return <> V");
+                    LogitudeSettings.HandleLogMe("calculateDeclarationCourierStatus.CalcDocumentStatusCode return <> V", false, "CreateUD2LTService", stopLogAt);
+                }
+            }
+        }
+ 
     }
 }
 

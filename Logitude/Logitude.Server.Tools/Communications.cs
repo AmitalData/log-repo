@@ -48,6 +48,26 @@ namespace Logitude.Server.Tools
             var myCommLog = communicationLogRep.GetSingleCommunicationLog(requestCommunicationLogId, tenant);
             return myCommLog;
         }
+        public static CommunicationLog GetCommunicationLogByCorrelationID(int tenant, string correlationID)
+        {
+            var myContext = CommonDataContext.GetContext(tenant);
+            CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(myContext);
+
+            var myCommLog = communicationLogRep.GetSingleCommunicationByCorrelationID( tenant, correlationID);
+            return myCommLog;
+        }
+        public static CommunicationLog GetSingleCommunicationLogInProccess(int tenant, string entityId , string to, string correlationID)
+        {
+
+            //CommunicationLog communicationLog = null;
+            var myContext = CommonDataContext.GetContext(tenant);
+            CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(myContext);
+
+            var myCommLog = communicationLogRep.GetSingleCommunicationLogInProccess(entityId, tenant , to , correlationID);
+            return myCommLog;
+        }
+
+
         public static string GetData(CommunicationLog myCommLog)
         {
 
@@ -335,7 +355,7 @@ namespace Logitude.Server.Tools
                     var messageProperties = new Dictionary<string, string>();
                     messageProperties["CommunicationLogId"] = communicationLogId;
                     messageProperties["Tenant"] = tenant.ToString();
-                    var queueId = queueService.Send(messageProperties, tenant, delayTime);
+                    var queueId = queueService.Send(messageProperties, tenant, delayTime,7);
 
                     LogMessagingUtil.Instance.AppendLine($"SendCommunicationLogMessageToQueue({queueName}, {communicationLogId})=>QID={queueId} ");
                     ///throw new Exception("Queue is DbMode "); 

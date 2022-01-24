@@ -291,7 +291,7 @@
                                      (CloseTabClicked)="DeleteTab($event)"
                                      (SelectedTabChanged)="OnSelectedChanged($event)"
                                      [NoBorder]="true"
-                                     [MultiLineTabs]="true"
+                                     [MultiLineTabs]="false"
                                      style="display: block; height: 100%;"></LogTabs>
                         </td>
                     </tr>
@@ -366,82 +366,163 @@
         <tr *ngIf="IsExportDeclaration">
             <td colspan="2" style=" height: 100%;">
                 <div class="CellContent">
-                    <logitude-edit-grid GridWidth="100%"
-                                        GridHeight="100%" [ItemSource]="ItemsList" [Disabled]="IsDisplayOnly"
-                                        (RowEnded)="OnRowEnded($event)" (Ondblclick)="OnFocus()"
-                                        (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
-                        <log-column [header]="'סוג מזהה מטען '"
-                                    [binding]="'CargoTypeCode'"
-                                    [width]="'150'" [Alignment]="'right'">
-                            <ng-template let-item>
-                                <log-cell-template #logcelltemplate>
-                                    <div style="width:100%;height:100%;text-align: right;">
-                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                            <span>{{item.CargoIdentifireTypeName}}</span>
-                                        </div>
-                                        <div *ngIf="logcelltemplate.IsEditMode">
-                                            <LogLov tabindex="4" [ObjectFieldName]="'CargoTypeCode'"
-                                                    [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'"
-                                                    [DataContext]="item"
-                                                    [LookUpTableName]="'Customs.CargoIdentifireType'"
-                                                    [QueryFilterItems]="ExportCargoTypeFilterItems"
-                                                    [SelectedValue]="CargoTypeCode"
-                                                    [HideColumns]="true"
-                                                    [FocusOnMe]="'true'"
-                                                    (ValueChanged)="item.ChangeCargoIdentifireType()">
-                                            </LogLov>
-                                        </div>
-                                    </div>
-                                </log-cell-template>
-                            </ng-template>
-                        </log-column>
-                        <log-column [header]="'Customs.DecCargoSplitCargoIdentifier.F.CargoIdentifierKey1' | TextCodeTranslationPipe"
-                                    [binding]="'CargoIdentifierKey1'"
-                                    [width]="'150'" [Alignment]="'right'">
-                            <ng-template let-item>
-                                <log-cell-template #logcelltemplate>
-                                    <div style="width:100%;height:100%;text-align: right;">
-                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                    <table style="width: 700px;height: 70px;float:right;">
+
+                        <tr class="FormFieldRow">
+                            <!-- CargoTypeCode -->
+                            <td class="col1Label">
+                                <LogLabel [ObjectFieldName]="'CargoTypeCode'" [ObjectTableName]="'Customs.DeclarationCargoSplit'"
+                                          [DataContext]="DataContext"></LogLabel>
+                            </td>
+                            <td class="col1Text">
+                                <LogLov tabindex="4" [ObjectFieldName]="'CargoTypeCode'"
+                                        [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'"
+                                        [DataContext]="decCargoSplitCargoIdentifierModel"
+                                        [LookUpTableName]="'Customs.CargoIdentifireType'"
+                                        [QueryFilterItems]="ExportCargoTypeFilterItems"
+                                        [SelectedValue]="decCargoSplitCargoIdentifierModel.CargoTypeCode"
+                                        [HideColumns]="true"
+                                        
+                                        (ValueChanged)="decCargoSplitCargoIdentifierModel.ChangeCargoIdentifireType()">
+                                </LogLov>
+                            </td>
+
+                            <!-- ManifestNumber -->
+                            <td class="col1Label">
+                                <LogLabel [ObjectFieldName]="'CargoIdentifierKey1'" [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'"
+                                          [DataContext]="DataContext"></LogLabel>
+                            </td>
+                            <td class="col1Text">
+                                <LogTextBox #ParentCargoConsinmentItemTextBox
+                                            
+                                            [Placeholder]="decCargoSplitCargoIdentifierModel.ManifestNumberPlaceholder"
+                                            [ObjectFieldName]="'CargoIdentifierKey1'"
+                                            [Text]="decCargoSplitCargoIdentifierModel.CargoIdentifierKey1"
+                                            [DataContext]="decCargoSplitCargoIdentifierModel"
+                                            [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'"
+                                            [HideColumns]="true">
+                                </LogTextBox>
+
+                            </td>
+
+                            <td><div></div></td>
+                        </tr>
+
+                        <tr class="FormFieldRow">
+                            <!-- SecondCargoID -->
+                            <td class="col1Label">
+                                <LogLabel [ObjectFieldName]="'CargoIdentifierKey2'" [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'"
+                                          [DataContext]="DataContext"></LogLabel>
+                            </td>
+                            <td class="col1Text">
+                                <LogTextBox [ObjectFieldName]="'CargoIdentifierKey2'"
+                                            [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'"
+                                            [DataContext]="decCargoSplitCargoIdentifierModel"
+                                            [Text]="decCargoSplitCargoIdentifierModel.CargoIdentifierKey2"
+                                            [Placeholder]="decCargoSplitCargoIdentifierModel.SecondCargoIDPlaceholder"
+                                            [HideColumns]="true"></LogTextBox>
+
+                            </td>
+
+                            <!-- ThirdCargoID -->
+                            <td class="col1Label">
+                                <LogLabel [ObjectFieldName]="'CargoIdentifierKey3'" [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'"
+                                          [DataContext]="DataContext"></LogLabel>
+                            </td>
+                            <td class="col1Text">
+                                <LogTextBox [ObjectFieldName]="'CargoIdentifierKey3'"
+                                            [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'"
+                                            [DataContext]="decCargoSplitCargoIdentifierModel"
+                                            [Text]="decCargoSplitCargoIdentifierModel.CargoIdentifierKey3"
+                                            [Placeholder]="decCargoSplitCargoIdentifierModel.ThirdCargoIdPlaceholder"
+                                            [HideColumns]="true"></LogTextBox>
+
+                            </td>
+
+
+                        </tr>
+                    </table>
+
+
+                    <!--<logitude-edit-grid GridWidth="100%"
+                        GridHeight="100%" [ItemSource]="ItemsList" [Disabled]="IsDisplayOnly"
+                        (RowEnded)="OnRowEnded($event)" (Ondblclick)="OnFocus()"
+                        (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
+        <log-column [header]="'סוג מזהה מטען יצום '"
+                    [binding]="'CargoTypeCode'"
+                    [width]="'150'" [Alignment]="'right'">
+            <ng-template let-item>
+                <log-cell-template #logcelltemplate>
+                    <div style="width:100%;height:100%;text-align: right;">
+                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                            <span>{{item.CargoIdentifireTypeName}}</span>
+                        </div>
+                        <div *ngIf="logcelltemplate.IsEditMode">
+                            <LogLov tabindex="4" [ObjectFieldName]="'CargoTypeCode'"
+                                    [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'"
+                                    [DataContext]="item"
+                                    [LookUpTableName]="'Customs.CargoIdentifireType'"
+                                    [QueryFilterItems]="ExportCargoTypeFilterItems"
+                                    [SelectedValue]="CargoTypeCode"
+                                    [HideColumns]="true"
+                                    [FocusOnMe]="'true'"
+                                    (ValueChanged)="item.ChangeCargoIdentifireType()">
+                            </LogLov>
+                        </div>
+                    </div>
+                </log-cell-template>
+            </ng-template>
+        </log-column>
+                <log-column [header]="'Customs.DecCargoSplitCargoIdentifier.F.CargoIdentifierKey1' | TextCodeTranslationPipe"
+                    [binding]="'CargoIdentifierKey1'"
+                    [width]="'150'" [Alignment]="'right'">
+            <ng-template let-item>
+                <log-cell-template #logcelltemplate>
+                    <div style="width:100%;height:100%;text-align: right;">
+                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                             <span>{{item.CargoIdentifierKey1}}</span>
+                           
                                         </div>
                                         <div *ngIf="logcelltemplate.IsEditMode">
-                                            <LogTextBox #ParentCargoConsinmentItemTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CargoIdentifierKey1'" [DataContext]="item"
+
+                                             <LogTextBox #ParentCargoConsinmentItemTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CargoIdentifierKey1'" [DataContext]="item"
                                                         [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'" [HideColumns]="true">
                                             </LogTextBox>
-                                        </div>
-                                    </div>
-                                </log-cell-template>
-                            </ng-template>
-                        </log-column>
+                        </div>
+                                </log-cell-template>                            </ng-template>
+        </log-column>
 
-                        <log-column [header]="'Customs.DecCargoSplitCargoIdentifier.F.CargoIdentifierKey2' | TextCodeTranslationPipe"
-                                    [binding]="'CargoIdentifierKey2'"
-                                    [width]="'150'" [Alignment]="'right'">
-                            <ng-template let-item>
-                                <log-cell-template #logcelltemplate>
-
-                                    <div style="text-align: right;width:100%;height:100%;">
+        <log-column [header]="'Customs.DecCargoSplitCargoIdentifier.F.CargoIdentifierKey2' | TextCodeTranslationPipe"
+                    [binding]="'CargoIdentifierKey2'"
+                    [width]="'150'" [Alignment]="'right'">
+            <ng-template let-item>
+                <log-cell-template #logcelltemplate>
+                    <div style="text-align: right;width:100%;height:100%;">
                                         <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                             <span>{{item.CargoIdentifierKey2}}</span>
                                         </div>
                                         <div *ngIf="logcelltemplate.IsEditMode">
+                        <div *ngIf="logcelltemplate.IsEditMode">
                                             <LogTextBox #GrossMassMeasureTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CargoIdentifierKey2'" [DataContext]="item"
                                                         [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'" [HideColumns]="true">
                                             </LogTextBox>
-                                        </div>
-                                    </div>
-
+                    </div>
                                 </log-cell-template>
-                            </ng-template>
-                        </log-column>
 
-                        <log-column [header]="'Customs.DecCargoSplitCargoIdentifier.F.CargoIdentifierKey3' | TextCodeTranslationPipe"
-                                    [binding]="'CargoIdentifierKey3'"
-                                    [width]="'150'" [Alignment]="'right'">
-                            <ng-template let-item>
+                            </ng-template>
+        </log-column>
+
+        <log-column [header]="'Customs.DecCargoSplitCargoIdentifier.F.CargoIdentifierKey3' | TextCodeTranslationPipe"
+                    [binding]="'CargoIdentifierKey3'"
+                    [width]="'150'" [Alignment]="'right'">
+            <ng-template let-item>
                                 <log-cell-template #logcelltemplate>
+
+
                                     <div style="width:100%;height:100%;text-align: right;">
+
                                         <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+
                                             <span>{{item.CargoIdentifierKey3}}</span>
                                         </div>
                                         <div *ngIf="logcelltemplate.IsEditMode">
@@ -451,9 +532,9 @@
                                     </div>
                                 </log-cell-template>
                             </ng-template>
-                        </log-column>
+        </log-column>
 
-                    </logitude-edit-grid>
+    </logitude-edit-grid>-->
                 </div>
             </td>
         </tr>

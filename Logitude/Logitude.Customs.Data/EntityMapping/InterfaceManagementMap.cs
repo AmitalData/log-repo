@@ -54,6 +54,10 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.DcaPrefixName4).HasColumnName("DcaPrefixName4").HasMaxLength(256).IsUnicode(false);
 
             this.Property(t => t.InterfaceType).HasColumnName("InterfaceType").HasMaxLength(1).IsUnicode(false);
+
+            this.Property(t => t.UseRabbitMQ).HasColumnName("UseRabbitMQ");
+
+            this.Property(t => t.SendTime).HasColumnName("SendTime").HasMaxLength(100).IsUnicode(false);
         }
     }
 }

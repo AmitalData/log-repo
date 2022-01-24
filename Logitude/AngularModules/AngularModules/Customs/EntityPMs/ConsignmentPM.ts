@@ -262,6 +262,11 @@ export class ConsignmentPM {
     public set ConsignmentType(newValue: string) { if (this.consignmentType != newValue) { this.consignmentType = newValue; this.MarkAsDirty("ConsignmentType"); } }
        
 	 
+    private deliverySiteCode: string;
+    public get DeliverySiteCode() { return this.deliverySiteCode; }
+    public set DeliverySiteCode(newValue: string) { if (this.deliverySiteCode != newValue) { this.deliverySiteCode = newValue; this.MarkAsDirty("DeliverySiteCode"); } }
+       
+	 
 
     public OldEntityPM: ConsignmentPM;
 	

@@ -866,6 +866,11 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                             SupplierInvoiceItemPM.ClassificationCode = invoiceItem.CLASSIFICATIONCODE;
                             SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Update;
                         }
+                        if (invoiceItem.CLASIFIEDREMARKS != SupplierInvoiceItemPM.ClasifiedRemarks)
+                        {
+                            SupplierInvoiceItemPM.ClasifiedRemarks = invoiceItem.CLASIFIEDREMARKS;
+                            SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
                         if (invoiceItem.TRADEAGREEMENTCODE != SupplierInvoiceItemPM.TradeAgreementCode)
                         {
                             if ((String.IsNullOrWhiteSpace(invoiceItem.TRADEAGREEMENTCODE) || invoiceItem.TRADEAGREEMENTCODE == "1") && SupplierInvoiceItemPM.TradeAgreementCode != null)
@@ -1223,103 +1228,106 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             decimal decimal1 = 0;
 
             {
-                /*
-                if (iNVOICE.EXPENSES != null)
+                
+                if (iNVOICE.INV_EXPENSES != null)
                 {
 
-                    foreach (var expense in iNVOICE.EXPENSES)
+                    foreach (var expense in iNVOICE.INV_EXPENSES)
                     {
-                        if (!String.IsNullOrWhiteSpace(expense.TypeCode))
-                        {
-                            if (SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault() != null)
-                            {
-                                if (!String.IsNullOrWhiteSpace(expense.CurrencyTypeCode))
-                                {
-                                    if (SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().CurrencyTypeCode != expense.CurrencyTypeCode)
-                                    {
-                                        var expenseCurrency = new CurrencyTypeRepository(ResolvedTenant());
-                                        var myexpenseCurrency = expenseCurrency.GetSingle(expense.CurrencyTypeCode);
-                                        if (myexpenseCurrency == null)
-                                        {
-                                            string expenseCurrencyCode = "";
-                                            expenseCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.CURRENCYCODE);
 
-                                            if (!string.IsNullOrWhiteSpace(expenseCurrencyCode) && SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().CurrencyTypeCode != expenseCurrencyCode)
-                                            {
-                                                SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().CurrencyTypeCode = expenseCurrencyCode;
-                                                SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Update;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            if (!string.IsNullOrWhiteSpace(myexpenseCurrency.Code) && SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().CurrencyTypeCode != myexpenseCurrency.Code)
-                                            {
-                                                SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().CurrencyTypeCode = myexpenseCurrency.Code;
-                                                SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Update;
-                                            }
-                                        }
-                                    }
-                                }
-                                if (decimal.TryParse(expense.Amount, out decimal1))
-                                {
-                                    if (SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().Amount != decimal1)
-                                    {
-                                        SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().Amount = decimal1;
-                                        SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Update;
-                                    }
-                                }
-                                else
-                                {
-                                    throw new BusinessErrorException("Error in parsing expense.Amount (" + expense.Amount + ") into decimal");
-                                }
-                            }
-                            else
+                        if (!String.IsNullOrWhiteSpace(expense.InvExpTypeCode) && SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.InvExpTypeCode).FirstOrDefault() != null)
+                        {
+                            if (!String.IsNullOrWhiteSpace(expense.InvExpCurrencyTypeCode))
                             {
-                                var SupplierInvoiceModificationPM = new SupplierInvoiceModificationPM();
-                                if (decimal.TryParse(expense.Amount, out decimal1))
-                                {
-                                    SupplierInvoiceModificationPM.Amount = decimal1;
-                                }
-                                else
-                                {
-                                    throw new BusinessErrorException("Error in parsing expense.Amount (" + expense.Amount + ") into decimal");
-                                }
-                                if (!String.IsNullOrWhiteSpace(expense.CurrencyTypeCode))
+                                if (SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.InvExpTypeCode).FirstOrDefault().CurrencyTypeCode != expense.InvExpCurrencyTypeCode)
                                 {
                                     var expenseCurrency = new CurrencyTypeRepository(ResolvedTenant());
-                                    var myexpenseCurrency = expenseCurrency.GetSingle(expense.CurrencyTypeCode);
+                                    var myexpenseCurrency = expenseCurrency.GetSingle(expense.InvExpCurrencyTypeCode);
                                     if (myexpenseCurrency == null)
                                     {
                                         string expenseCurrencyCode = "";
                                         expenseCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.CURRENCYCODE);
 
-                                        if (!string.IsNullOrWhiteSpace(expenseCurrencyCode)) SupplierInvoiceModificationPM.CurrencyTypeCode = expenseCurrencyCode;
+                                        if (!string.IsNullOrWhiteSpace(expenseCurrencyCode) && SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.InvExpTypeCode).FirstOrDefault().CurrencyTypeCode != expenseCurrencyCode)
+                                        {
+                                            SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.InvExpTypeCode).FirstOrDefault().CurrencyTypeCode = expenseCurrencyCode;
+                                            SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.InvExpTypeCode).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Update;
+                                        }
                                     }
                                     else
                                     {
-                                        SupplierInvoiceModificationPM.CurrencyTypeCode = myexpenseCurrency.Code.ToString();
+                                        if (!string.IsNullOrWhiteSpace(myexpenseCurrency.Code) && SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.InvExpTypeCode).FirstOrDefault().CurrencyTypeCode != myexpenseCurrency.Code)
+                                        {
+                                            SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.InvExpTypeCode).FirstOrDefault().CurrencyTypeCode = myexpenseCurrency.Code;
+                                            SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.InvExpTypeCode).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Update;
+                                        }
                                     }
                                 }
-                                if (!String.IsNullOrWhiteSpace(expense.TypeCode))
-                                {
-                                    var modificationAndDiscountType = new ModificationAndDiscountTypeRepository(ResolvedTenant());
-                                    var mymodificationAndDiscountType = modificationAndDiscountType.GetSingle(expense.TypeCode);
-                                    if (mymodificationAndDiscountType != null && !String.IsNullOrWhiteSpace(mymodificationAndDiscountType.Code))
-                                    {
-                                        SupplierInvoiceModificationPM.TypeCode = mymodificationAndDiscountType.Code;
-                                    }
-                                }
-                                SupplierInvoiceModificationPM.DeclarationId = this._MySupplierInvoicePM.DeclarationId;
-                                if (this._MySupplierInvoicePM.InvoiceCounterKey > 0) SupplierInvoiceModificationPM.InvoiceCounterKey = this._MySupplierInvoicePM.InvoiceCounterKey;
-                                SupplierInvoiceModificationPM.Tenant = (this._MyDeclarationPM.Tenant > 0) ? this._MyDeclarationPM.Tenant : ResolvedTenant();
-                                SupplierInvoiceModificationPM.ChangeSetOp = ChangeSetOperation.Insert;
-
-                                SupplierInvoiceModificationPMList.Add(SupplierInvoiceModificationPM);
                             }
+                            if (decimal.TryParse(expense.InvExpAmount, out decimal1))
+                            {
+                                if (SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.InvExpTypeCode).FirstOrDefault().Amount != decimal1)
+                                {
+                                    SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.InvExpTypeCode).FirstOrDefault().Amount = decimal1;
+                                    SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.InvExpTypeCode).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Update;
+                                }
+                            }
+                            else
+                            {
+                                throw new BusinessErrorException("Error in parsing expense.InvExpAmount (" + expense.InvExpAmount + ") into decimal");
+                            }
+                        }
+                        else if (!String.IsNullOrWhiteSpace(expense.InvExpTypeCode) || (String.IsNullOrWhiteSpace(expense.InvExpTypeCode) && this._MySupplierInvoicePM.ChangeSetOp == ChangeSetOperation.Insert))
+                        {
+                            var SupplierInvoiceModificationPM = new SupplierInvoiceModificationPM();
+                            if (decimal.TryParse(expense.InvExpAmount, out decimal1))
+                            {
+                                SupplierInvoiceModificationPM.Amount = decimal1;
+                            }
+                            else
+                            {
+                                throw new BusinessErrorException("Error in parsing expense.InvExpAmount (" + expense.InvExpAmount + ") into decimal");
+                            }
+                            if (!String.IsNullOrWhiteSpace(expense.InvExpCurrencyTypeCode))
+                            {
+                                var expenseCurrency = new CurrencyTypeRepository(ResolvedTenant());
+                                var myexpenseCurrency = expenseCurrency.GetSingle(expense.InvExpCurrencyTypeCode);
+                                if (myexpenseCurrency == null)
+                                {
+                                    string expenseCurrencyCode = "";
+                                    expenseCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.CURRENCYCODE);
+
+                                    if (!string.IsNullOrWhiteSpace(expenseCurrencyCode)) SupplierInvoiceModificationPM.CurrencyTypeCode = expenseCurrencyCode;
+                                }
+                                else
+                                {
+                                    SupplierInvoiceModificationPM.CurrencyTypeCode = myexpenseCurrency.Code.ToString();
+                                }
+                            }
+                            if (!String.IsNullOrWhiteSpace(expense.InvExpTypeCode))
+                            {
+                                var modificationAndDiscountType = new ModificationAndDiscountTypeRepository(ResolvedTenant());
+                                var mymodificationAndDiscountType = modificationAndDiscountType.GetSingle(expense.InvExpTypeCode);
+                                if (mymodificationAndDiscountType != null && !String.IsNullOrWhiteSpace(mymodificationAndDiscountType.Code))
+                                {
+                                    SupplierInvoiceModificationPM.TypeCode = mymodificationAndDiscountType.Code;
+                                }
+                            }
+                            if (!String.IsNullOrWhiteSpace(expense.InvExpDescription))
+                            {
+                                //SupplierInvoiceModificationPM.InvExpDescription = expense.InvExpDescription;
+                            }
+                            SupplierInvoiceModificationPM.DeclarationId = this._MySupplierInvoicePM.DeclarationId;
+                            if (this._MySupplierInvoicePM.InvoiceCounterKey > 0) SupplierInvoiceModificationPM.InvoiceCounterKey = this._MySupplierInvoicePM.InvoiceCounterKey;
+                            SupplierInvoiceModificationPM.Tenant = (this._MyDeclarationPM.Tenant > 0) ? this._MyDeclarationPM.Tenant : ResolvedTenant();
+                            SupplierInvoiceModificationPM.ChangeSetOp = ChangeSetOperation.Insert;
+
+                            SupplierInvoiceModificationPMList.Add(SupplierInvoiceModificationPM);
+
                         }
                     }
                 }
-                */
+                
                 return SupplierInvoiceModificationPMList;
             }
         }

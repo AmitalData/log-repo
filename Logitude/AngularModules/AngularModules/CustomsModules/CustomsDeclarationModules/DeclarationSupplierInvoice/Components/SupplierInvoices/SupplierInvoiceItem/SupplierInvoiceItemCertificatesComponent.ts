@@ -20,6 +20,7 @@ import { SupplierInvoicePMService } from '../../../../../../Customs/Services/Sta
 import {ApiQueryFilters, FilterItem} from '../../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {FeatureLocator} from '../../../../../../Infrastructure/Utilities/FeatureLocator';
 import { AttachmentTypeListService } from  '../../../../../../Customs/Services/StandardLists/AttachmentTypeListService';
+import { ConfirmationTypeListService } from 'Customs/Services/StandardLists/ConfirmationTypeListService';
 declare var window: any;
 
 @Component({
@@ -62,7 +63,6 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         var decPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
         this.TypeCodeFilterItems = new ApiQueryFilters();
-        debugger;
         if (decPM.direction == "I") {
             this.TypeCodeFilterItems.addAdditionalFilter("IsImportDeclaration", true, null, null, "Equals", false, false, false, "boolean");
         }
@@ -585,9 +585,13 @@ export class InvoiceItemCertificateLine extends BaseComponent {
     constructor(EntityPM: SupplierInvioceItemCertificatPM, Parent: SupplierInvoiceItemCertificatesComponent) {
         super();
         this.entityPM = EntityPM;
-
         this.parent = Parent;
-       
+        var confirmationTypeService= new ConfirmationTypeListService();
+        confirmationTypeService.getSingleFromCache(EntityPM.ReqConfirmationTypeCode).subscribe((req:any)=>{
+            if(req.Result != null){
+                this.ConfirmationType=req.Result;
+            }
+        });
     }
 
     //#region properties
@@ -598,7 +602,6 @@ export class InvoiceItemCertificateLine extends BaseComponent {
     confirmationType: ConfirmationTypePM;
     get ConfirmationType() { return this.confirmationType; }
     set ConfirmationType(value: ConfirmationTypePM) {
-
         if (this.confirmationType != value) {
             this.confirmationType = value;
         }

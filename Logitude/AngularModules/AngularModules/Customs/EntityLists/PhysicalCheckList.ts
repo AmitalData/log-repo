@@ -47,6 +47,15 @@ export class PhysicalCheckList {
 	CustomerId: string;
 	NoEscortRequired: boolean;
 	VehicleChassisNumber: string;
+	SearchResult: string;
+	SealNumber: string;
+	CheckAuthorityAttenderTypeID: string;
+	CheckAuthorityAttenderTypeName: string;
+	CheckAnwserStatus: number;
+	MyCloseCheckBox: boolean;
+	TransportModeId: string;
+	Direction: string;
+	DeclarationOfficeName: string;
 	
 }
  

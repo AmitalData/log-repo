@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class QuoteOPUpdateClass
    {  		
-		public const string HashString = "9b3d5f5d29c0006ce2bad3fa58d8af90";
+		public const string HashString = "3bb05df9d79ccacb8bc60501d2e81d10";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -14866,6 +14866,64 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "QuoteProperties",
+					  						ObjectTableName =  "QuoteOP",
+					  						FieldsDataType =  "List",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "QuoteProperties",
+					  						ListPropertyPath =  "QuoteProperties",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  true,
+					  						MultiTableName =  "QuoteOPProperties",
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "QuoteProperties",
+					  						DefaultText =  "Quote Propertiess",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -15422,80 +15480,92 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
 			   ObjectTable QuoteOPObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteOP" && d.Tenant == 0).FirstOrDefault();  
                  
-			   TextCode QuoteOPOverviewTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.TH.Overview", DefaultText = "Overview",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature QuoteOPOverviewFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OVERVIEW", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOP.Features.Overview", NameTextCodeDefaultText = "Overview", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteOPObjectTable);
+			   TextCode QuoteOPQuoteDataTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.TH.QuoteData", DefaultText = "QuoteData",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature QuoteOPQuoteDataFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteOP.Tab.QuoteData", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOPFeatures.QOPD", NameTextCodeDefaultText = "QuoteData", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteOPObjectTable);
  
                  
-			   TextCode QuoteOPConnectedEntitiesTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.TH.ConnectedEntities", DefaultText = "Connected Entities",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature QuoteOPConnectedEntitiesFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONNECTEDENTITIES", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOP.Features.ConnectedEntities", NameTextCodeDefaultText = "Connected Entities", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteOPObjectTable);
+			   TextCode QuoteOPAdditionalTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.TH.Additional", DefaultText = "Additional",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature QuoteOPAdditionalFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteOP.Tab.Additional", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOPFeatures.QOPA", NameTextCodeDefaultText = "Additional", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteOPObjectTable);
  
                  
-			   TextCode QuoteOPDetailsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.TH.Details", DefaultText = "Details",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature QuoteOPDetailsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DETAILS", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOP.Features.Details", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteOPObjectTable);
+			   TextCode QuoteOPPackagesTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.TH.Packages", DefaultText = "Packages",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature QuoteOPPackagesFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PACKAGES", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOP.Features.Packages", NameTextCodeDefaultText = "Packages", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteOPObjectTable);
  
                  
-			   TextCode QuoteOPPartnersTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.TH.Partners", DefaultText = "Partners",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature QuoteOPPartnersFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PARTNERS", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOP.Features.Partners", NameTextCodeDefaultText = "Partners", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteOPObjectTable);
+			   TextCode QuoteOPChargesTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.TH.Charges", DefaultText = "Charges",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature QuoteOPChargesFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHARGES", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOP.Features.Charges", NameTextCodeDefaultText = "Charges", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteOPObjectTable);
  
                  
-			   TextCode QuoteOPPackagesTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.TH.Packages", DefaultText = "Packages",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature QuoteOPPackagesFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PACKAGES", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOP.Features.Packages", NameTextCodeDefaultText = "Packages", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteOPObjectTable);
+			   TextCode QuoteOPEventsTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature QuoteOPEventsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOP.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteOPObjectTable);
  
                  
-			   TextCode QuoteOPRoutingsTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.TH.Routings", DefaultText = "Routings",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature QuoteOPRoutingsFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ROUTINGS", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOP.Features.Routings", NameTextCodeDefaultText = "Routings", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteOPObjectTable);
+			   TextCode QuoteOPCommunicationsTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.TH.Communications", DefaultText = "Communications",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature QuoteOPCommunicationsFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COMMUNICATION", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOP.Features.Communication", NameTextCodeDefaultText = "Communications", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteOPObjectTable);
  
                  
-			   TextCode QuoteOPChargesTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.TH.Charges", DefaultText = "Charges",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature QuoteOPChargesFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHARGES", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOP.Features.Charges", NameTextCodeDefaultText = "Charges", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteOPObjectTable);
+			   TextCode QuoteOPOverviewTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.TH.Overview", DefaultText = "Overview",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature QuoteOPOverviewFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OVERVIEW", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOP.Features.Overview", NameTextCodeDefaultText = "Overview", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteOPObjectTable);
  
                  
-			   TextCode QuoteOPDocsOutTextCode_TH7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.TH.DocsOut", DefaultText = "Docs Out",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature QuoteOPDocsOutFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSOUT", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOP.Features.DocsOut", NameTextCodeDefaultText = "DocsOut", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteOPObjectTable);
+			   TextCode QuoteOPConnectedEntitiesTextCode_TH7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.TH.ConnectedEntities", DefaultText = "Connected Entities",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature QuoteOPConnectedEntitiesFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONNECTEDENTITIES", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOP.Features.ConnectedEntities", NameTextCodeDefaultText = "Connected Entities", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteOPObjectTable);
  
                  
-			   TextCode QuoteOPDocsInTextCode_TH8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature QuoteOPDocsInFeature_TH8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOP.Features.DocsIn", NameTextCodeDefaultText = "DocsIn", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteOPObjectTable);
+			   TextCode QuoteOPDetailsTextCode_TH8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.TH.Details", DefaultText = "Details",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature QuoteOPDetailsFeature_TH8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DETAILS", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOP.Features.Details", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteOPObjectTable);
  
                  
-			   TextCode QuoteOPAuditTextCode_TH9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.TH.Audit", DefaultText = "Audit",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature QuoteOPAuditFeature_TH9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteOP.Tab.Audit", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOPFeatures.QPAU", NameTextCodeDefaultText = "Audit", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteOPObjectTable);
+			   TextCode QuoteOPPartnersTextCode_TH9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.TH.Partners", DefaultText = "Partners",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature QuoteOPPartnersFeature_TH9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PARTNERS", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOP.Features.Partners", NameTextCodeDefaultText = "Partners", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteOPObjectTable);
  
                  
-			   TextCode QuoteOPEventsTextCode_TH10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature QuoteOPEventsFeature_TH10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOP.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteOPObjectTable);
+			   TextCode QuoteOPRoutingsTextCode_TH10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.TH.Routings", DefaultText = "Routings",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature QuoteOPRoutingsFeature_TH10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ROUTINGS", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOP.Features.Routings", NameTextCodeDefaultText = "Routings", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteOPObjectTable);
  
                  
-			   TextCode QuoteOPCommunicationsTextCode_TH11 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.TH.Communications", DefaultText = "Communications",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature QuoteOPCommunicationsFeature_TH11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COMMUNICATION", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOP.Features.Communication", NameTextCodeDefaultText = "Communications", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteOPObjectTable);
+			   TextCode QuoteOPDocsOutTextCode_TH11 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.TH.DocsOut", DefaultText = "Docs Out",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature QuoteOPDocsOutFeature_TH11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSOUT", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOP.Features.DocsOut", NameTextCodeDefaultText = "DocsOut", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteOPObjectTable);
+ 
+                 
+			   TextCode QuoteOPDocsInTextCode_TH12 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature QuoteOPDocsInFeature_TH12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOP.Features.DocsIn", NameTextCodeDefaultText = "DocsIn", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteOPObjectTable);
+ 
+                 
+			   TextCode QuoteOPAuditTextCode_TH13 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.TH.Audit", DefaultText = "Audit",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature QuoteOPAuditFeature_TH13 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteOP.Tab.Audit", ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOPFeatures.QPAU", NameTextCodeDefaultText = "Audit", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteOPObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QPOV",HtmlComponentName = "OverviewTabComponent",HtmlComponentUrl = "./QuoteOPModules/QuoteTabs/Components/Overview/OverviewTabComponent", FeatureId = QuoteOPOverviewFeature_TH0.Id,FeatureUniqeCode = QuoteOPOverviewFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.OverView.OverViewTabControl", ObjectTableId = QuoteOPObjectTable.Id, TabNameTextCodeId = QuoteOPOverviewTextCode_TH0.Id, TabNameTextCodeCode = QuoteOPOverviewTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QOPD",HtmlComponentName = "QuoteOPData",HtmlComponentUrl = "./QuoteOPModules/QuoteTabs/Components/Data/QuoteOPDataTabComponent", FeatureId = QuoteOPQuoteDataFeature_TH0.Id,FeatureUniqeCode = QuoteOPQuoteDataFeature_TH0.FeatureUniqeCode, ControlPath = "./QuoteOPModules/QuoteTabs/Components/Data/QuoteOPDataTabComponent", ObjectTableId = QuoteOPObjectTable.Id, TabNameTextCodeId = QuoteOPQuoteDataTextCode_TH0.Id, TabNameTextCodeCode = QuoteOPQuoteDataTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QPCE",HtmlComponentName = "ConnectionsTabComponent",HtmlComponentUrl = "./QuoteOPModules/QuoteTabs/Components/Connections/ConnectionsTabComponent", FeatureId = QuoteOPConnectedEntitiesFeature_TH1.Id,FeatureUniqeCode = QuoteOPConnectedEntitiesFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Shipments.ShipmentsControl", ObjectTableId = QuoteOPObjectTable.Id, TabNameTextCodeId = QuoteOPConnectedEntitiesTextCode_TH1.Id, TabNameTextCodeCode = QuoteOPConnectedEntitiesTextCode_TH1.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QOPA",HtmlComponentName = "QuoteOPAdditionalTabComponent",HtmlComponentUrl = "./QuoteOPModules/QuoteTabs/Components/Data/QuoteOPAdditionalTabComponent", FeatureId = QuoteOPAdditionalFeature_TH1.Id,FeatureUniqeCode = QuoteOPAdditionalFeature_TH1.FeatureUniqeCode, ControlPath = "./QuoteOPModules/QuoteTabs/Components/Data/QuoteOPAdditionalTabComponent", ObjectTableId = QuoteOPObjectTable.Id, TabNameTextCodeId = QuoteOPAdditionalTextCode_TH1.Id, TabNameTextCodeCode = QuoteOPAdditionalTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QPOR",HtmlComponentName = "OrdersabComponent",HtmlComponentUrl = "./QuoteOPModules/QuoteTabs/Components/Orders/OrdersTabComponent", FeatureId = QuoteOPDetailsFeature_TH2.Id,FeatureUniqeCode = QuoteOPDetailsFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Orders.OrdersControl", ObjectTableId = QuoteOPObjectTable.Id, TabNameTextCodeId = QuoteOPDetailsTextCode_TH2.Id, TabNameTextCodeCode = QuoteOPDetailsTextCode_TH2.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QPPK",HtmlComponentName = "PackagesTabComponent",HtmlComponentUrl = "./QuoteOPModules/QuoteTabs/Components/Packages/PackagesTabComponent", FeatureId = QuoteOPPackagesFeature_TH2.Id,FeatureUniqeCode = QuoteOPPackagesFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Packages.PackagesControl", ObjectTableId = QuoteOPObjectTable.Id, TabNameTextCodeId = QuoteOPPackagesTextCode_TH2.Id, TabNameTextCodeCode = QuoteOPPackagesTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QPPA",HtmlComponentName = "PartnersTabComponent",HtmlComponentUrl = "./QuoteOPModules/QuoteTabs/Components/Partners/PartnersTabComponent", FeatureId = QuoteOPPartnersFeature_TH3.Id,FeatureUniqeCode = QuoteOPPartnersFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Partners.PartnersControl", ObjectTableId = QuoteOPObjectTable.Id, TabNameTextCodeId = QuoteOPPartnersTextCode_TH3.Id, TabNameTextCodeCode = QuoteOPPartnersTextCode_TH3.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QPCH",HtmlComponentName = "ChargesTabComponent",HtmlComponentUrl = "./QuoteOPModules/QuoteCharges/Components/ChargesTabComponent", FeatureId = QuoteOPChargesFeature_TH3.Id,FeatureUniqeCode = QuoteOPChargesFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Charges.ChargesUserControl", ObjectTableId = QuoteOPObjectTable.Id, TabNameTextCodeId = QuoteOPChargesTextCode_TH3.Id, TabNameTextCodeCode = QuoteOPChargesTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QPPK",HtmlComponentName = "PackagesTabComponent",HtmlComponentUrl = "./QuoteOPModules/QuoteTabs/Components/Packages/PackagesTabComponent", FeatureId = QuoteOPPackagesFeature_TH4.Id,FeatureUniqeCode = QuoteOPPackagesFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Packages.PackagesControl", ObjectTableId = QuoteOPObjectTable.Id, TabNameTextCodeId = QuoteOPPackagesTextCode_TH4.Id, TabNameTextCodeCode = QuoteOPPackagesTextCode_TH4.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QPEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = QuoteOPEventsFeature_TH4.Id,FeatureUniqeCode = QuoteOPEventsFeature_TH4.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = QuoteOPObjectTable.Id, TabNameTextCodeId = QuoteOPEventsTextCode_TH4.Id, TabNameTextCodeCode = QuoteOPEventsTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QPRT",HtmlComponentName = "RoutingsTabComponent",HtmlComponentUrl = "./QuoteOPModules/QuoteTabs/Components/Routings/RoutingsTabComponent", FeatureId = QuoteOPRoutingsFeature_TH5.Id,FeatureUniqeCode = QuoteOPRoutingsFeature_TH5.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Routings.RoutingsControl", ObjectTableId = QuoteOPObjectTable.Id, TabNameTextCodeId = QuoteOPRoutingsTextCode_TH5.Id, TabNameTextCodeCode = QuoteOPRoutingsTextCode_TH5.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QPCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = QuoteOPCommunicationsFeature_TH5.Id,FeatureUniqeCode = QuoteOPCommunicationsFeature_TH5.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = QuoteOPObjectTable.Id, TabNameTextCodeId = QuoteOPCommunicationsTextCode_TH5.Id, TabNameTextCodeCode = QuoteOPCommunicationsTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QPCH",HtmlComponentName = "ChargesTabComponent",HtmlComponentUrl = "./QuoteOPModules/QuoteCharges/Components/ChargesTabComponent", FeatureId = QuoteOPChargesFeature_TH6.Id,FeatureUniqeCode = QuoteOPChargesFeature_TH6.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Charges.ChargesUserControl", ObjectTableId = QuoteOPObjectTable.Id, TabNameTextCodeId = QuoteOPChargesTextCode_TH6.Id, TabNameTextCodeCode = QuoteOPChargesTextCode_TH6.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QPOV",HtmlComponentName = "OverviewTabComponent",HtmlComponentUrl = "./QuoteOPModules/QuoteTabs/Components/Overview/OverviewTabComponent", FeatureId = QuoteOPOverviewFeature_TH6.Id,FeatureUniqeCode = QuoteOPOverviewFeature_TH6.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.OverView.OverViewTabControl", ObjectTableId = QuoteOPObjectTable.Id, TabNameTextCodeId = QuoteOPOverviewTextCode_TH6.Id, TabNameTextCodeCode = QuoteOPOverviewTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QPDO",HtmlComponentName = "QuoteDocsOutTabComponent",HtmlComponentUrl = "./QuoteOPModules/QuoteTabs/Components/DocsOut/QuoteDocsOutTabComponent", FeatureId = QuoteOPDocsOutFeature_TH7.Id,FeatureUniqeCode = QuoteOPDocsOutFeature_TH7.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Documents.DocumentOutsControl", ObjectTableId = QuoteOPObjectTable.Id, TabNameTextCodeId = QuoteOPDocsOutTextCode_TH7.Id, TabNameTextCodeCode = QuoteOPDocsOutTextCode_TH7.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QPCE",HtmlComponentName = "ConnectionsTabComponent",HtmlComponentUrl = "./QuoteOPModules/QuoteTabs/Components/Connections/ConnectionsTabComponent", FeatureId = QuoteOPConnectedEntitiesFeature_TH7.Id,FeatureUniqeCode = QuoteOPConnectedEntitiesFeature_TH7.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Shipments.ShipmentsControl", ObjectTableId = QuoteOPObjectTable.Id, TabNameTextCodeId = QuoteOPConnectedEntitiesTextCode_TH7.Id, TabNameTextCodeCode = QuoteOPConnectedEntitiesTextCode_TH7.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QPDI",HtmlComponentName = "QuoteDocsInTabComponent",HtmlComponentUrl = "./QuoteOPModules/QuoteTabs/Components/DocsIn/QuoteDocsInTabComponent", FeatureId = QuoteOPDocsInFeature_TH8.Id,FeatureUniqeCode = QuoteOPDocsInFeature_TH8.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Documents.DocumentInsControl", ObjectTableId = QuoteOPObjectTable.Id, TabNameTextCodeId = QuoteOPDocsInTextCode_TH8.Id, TabNameTextCodeCode = QuoteOPDocsInTextCode_TH8.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QPOR",HtmlComponentName = "OrdersabComponent",HtmlComponentUrl = "./QuoteOPModules/QuoteTabs/Components/Orders/OrdersTabComponent", FeatureId = QuoteOPDetailsFeature_TH8.Id,FeatureUniqeCode = QuoteOPDetailsFeature_TH8.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Orders.OrdersControl", ObjectTableId = QuoteOPObjectTable.Id, TabNameTextCodeId = QuoteOPDetailsTextCode_TH8.Id, TabNameTextCodeCode = QuoteOPDetailsTextCode_TH8.Code, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QPAU",HtmlComponentName = "QuoteAuditTabComponent",HtmlComponentUrl = "./QuoteOPModules/QuoteTabs/Components/Audit/QuoteAuditTabComponent", FeatureId = QuoteOPAuditFeature_TH9.Id,FeatureUniqeCode = QuoteOPAuditFeature_TH9.FeatureUniqeCode, ControlPath = "./QuoteOPMModules/QuoteTabs/Components/Audit/QuoteAuditTabComponent", ObjectTableId = QuoteOPObjectTable.Id, TabNameTextCodeId = QuoteOPAuditTextCode_TH9.Id, TabNameTextCodeCode = QuoteOPAuditTextCode_TH9.Code, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QPPA",HtmlComponentName = "PartnersTabComponent",HtmlComponentUrl = "./QuoteOPModules/QuoteTabs/Components/Partners/PartnersTabComponent", FeatureId = QuoteOPPartnersFeature_TH9.Id,FeatureUniqeCode = QuoteOPPartnersFeature_TH9.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Partners.PartnersControl", ObjectTableId = QuoteOPObjectTable.Id, TabNameTextCodeId = QuoteOPPartnersTextCode_TH9.Id, TabNameTextCodeCode = QuoteOPPartnersTextCode_TH9.Code, Tenant = 0, IndexOrder = 9 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QPEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = QuoteOPEventsFeature_TH10.Id,FeatureUniqeCode = QuoteOPEventsFeature_TH10.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = QuoteOPObjectTable.Id, TabNameTextCodeId = QuoteOPEventsTextCode_TH10.Id, TabNameTextCodeCode = QuoteOPEventsTextCode_TH10.Code, Tenant = 0, IndexOrder = 9 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QPRT",HtmlComponentName = "RoutingsTabComponent",HtmlComponentUrl = "./QuoteOPModules/QuoteTabs/Components/Routings/RoutingsTabComponent", FeatureId = QuoteOPRoutingsFeature_TH10.Id,FeatureUniqeCode = QuoteOPRoutingsFeature_TH10.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Routings.RoutingsControl", ObjectTableId = QuoteOPObjectTable.Id, TabNameTextCodeId = QuoteOPRoutingsTextCode_TH10.Id, TabNameTextCodeCode = QuoteOPRoutingsTextCode_TH10.Code, Tenant = 0, IndexOrder = 10 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QPCM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = QuoteOPCommunicationsFeature_TH11.Id,FeatureUniqeCode = QuoteOPCommunicationsFeature_TH11.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = QuoteOPObjectTable.Id, TabNameTextCodeId = QuoteOPCommunicationsTextCode_TH11.Id, TabNameTextCodeCode = QuoteOPCommunicationsTextCode_TH11.Code, Tenant = 0, IndexOrder = 10 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QPDO",HtmlComponentName = "QuoteDocsOutTabComponent",HtmlComponentUrl = "./QuoteOPModules/QuoteTabs/Components/DocsOut/QuoteDocsOutTabComponent", FeatureId = QuoteOPDocsOutFeature_TH11.Id,FeatureUniqeCode = QuoteOPDocsOutFeature_TH11.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Documents.DocumentOutsControl", ObjectTableId = QuoteOPObjectTable.Id, TabNameTextCodeId = QuoteOPDocsOutTextCode_TH11.Id, TabNameTextCodeCode = QuoteOPDocsOutTextCode_TH11.Code, Tenant = 0, IndexOrder = 11 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QPDI",HtmlComponentName = "QuoteDocsInTabComponent",HtmlComponentUrl = "./QuoteOPModules/QuoteTabs/Components/DocsIn/QuoteDocsInTabComponent", FeatureId = QuoteOPDocsInFeature_TH12.Id,FeatureUniqeCode = QuoteOPDocsInFeature_TH12.FeatureUniqeCode, ControlPath = "Simplog.QuoteLib.Views.Documents.DocumentInsControl", ObjectTableId = QuoteOPObjectTable.Id, TabNameTextCodeId = QuoteOPDocsInTextCode_TH12.Id, TabNameTextCodeCode = QuoteOPDocsInTextCode_TH12.Code, Tenant = 0, IndexOrder = 12 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "QPAU",HtmlComponentName = "QuoteAuditTabComponent",HtmlComponentUrl = "./QuoteOPModules/QuoteTabs/Components/Audit/QuoteAuditTabComponent", FeatureId = QuoteOPAuditFeature_TH13.Id,FeatureUniqeCode = QuoteOPAuditFeature_TH13.FeatureUniqeCode, ControlPath = "./QuoteOPMModules/QuoteTabs/Components/Audit/QuoteAuditTabComponent", ObjectTableId = QuoteOPObjectTable.Id, TabNameTextCodeId = QuoteOPAuditTextCode_TH13.Id, TabNameTextCodeCode = QuoteOPAuditTextCode_TH13.Code, Tenant = 0, IndexOrder = 13 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -15539,6 +15609,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature QuoteOPFeature_General_Features_QuoteOPSettings = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "General.Features.QuoteOPSettings", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.General.Features.QuoteOPSettings", NameTextCodeDefaultText = @"Quote Settings(OP)" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteOPObjectTable);
 
 		   Feature QuoteOPFeature_QPDBOP = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QPDBOP", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.QPDBOP", NameTextCodeDefaultText = @"Quotes Performance Dashboard(OP)" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteOPObjectTable);
+
+		   Feature QuoteOPFeature_QuoteOPMaintence = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteOPMaintence", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOP.Features.QuoteOPMaintence", NameTextCodeDefaultText = @"Quote OP Maintence" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteOPObjectTable);
 
    
 	    
@@ -16447,7 +16519,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode QuoteOPTextCode_QuoteOPONewQuoteMainCarriage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.O.NewQuote.MainCarriage", DefaultText = "Main Carriage",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode QuoteOPTextCode_QuoteOPONewQuoteIncludePickUp = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.O.NewQuote.IncludePickUp", DefaultText = "Include PickUp",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode QuoteOPTextCode_QuoteOPONewQuoteIncludePickup = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.O.NewQuote.IncludePickup", DefaultText = "Include PickUp",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode QuoteOPTextCode_QuoteOPONewQuoteIncludeDelivery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.O.NewQuote.IncludeDelivery", DefaultText = "Include Delivery",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -16793,7 +16865,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode QuoteOPTextCode_QuoteOPSNewQuoteCloseAutomatically = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.S.NewQuote.CloseAutomatically", DefaultText = "Close automatically as declined after",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode QuoteOPTextCode_QuoteOPSNewQuoteDays = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.S.NewQuote.Days", DefaultText = "days",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode QuoteOPTextCode_QuoteOPSNewQuoteDays = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.S.NewQuote.Days", DefaultText = "Days",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode QuoteOPTextCode_QuoteOPSNewQuotePickup = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.S.NewQuote.Pickup", DefaultText = "Pickup",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -16906,6 +16978,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode QuoteOPTextCode_QuoteOPSCostTotalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.S.CostTotalAmount", DefaultText = "Cost",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode QuoteOPTextCode_QuoteOPFPackageTypeQuantityShort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.F.PackageTypeQuantity.Short", DefaultText = "Quantity",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteOPTextCode_QuoteOPSNewQuoteCloseDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.S.NewQuote.CloseDate", DefaultText = "Close Date",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

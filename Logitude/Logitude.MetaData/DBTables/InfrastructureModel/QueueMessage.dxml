@@ -75,7 +75,16 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Relation
+	<Column
+  Name="TenantPriority"
+  Type="int"
+  DefaultValue="7">
+		
+		<Constraints
+		  Nullable="true" />
+	</Column>
+
+	<Relation
     ForeignKeyColumn="QueueDefinitionCode"
     ReferencedTable="QueueDefinitions"
     ReferencedColumn="Code"

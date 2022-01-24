@@ -46,6 +46,7 @@ using Unifreight.Data.AmitalModel.Repsitories;
 using Simplog.Data.Helpers;
 using Logitude.Customs.BL.BL;
 
+
 namespace Logitude.CustomsMessaging.RequestServices
 {
     public class DF_MSG10000_ImportDeclarationRequestService : RequestServiceBase<DF_MSG10000_ImportDeclaration, GenericRequestParams>
@@ -471,6 +472,13 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
 
             LogMessagingUtil.Instance.AppendLine("declaration retrieve from db");
+
+            var sIModificationByCustomerCommissionService = new SIModificationByCustomerCommissionService();
+            foreach (var currSupplierInvoices in _DeclarationPM.SupplierInvoices)
+            {
+                sIModificationByCustomerCommissionService.EnsureReductionByVendorCommission(_DeclarationPM, currSupplierInvoices, true);
+
+            }
 
             req.Declaration = Getdeclaration(_DeclarationPM);
             LogMessagingUtil.Instance.AppendLine("declaration build" + requestParams.AppicationId);
@@ -1317,10 +1325,13 @@ namespace Logitude.CustomsMessaging.RequestServices
                 //}
             }
 
+            var itemCrQueryService = new Unifreight.BL.EntityQueryServices.GITITEMCRQueryService(AmitalContext.GetContext(supplierInvoiceItemPM.Tenant));
+            List<Unifreight.BL.EntityPMs.GITITEMCRPM> itemCrList = itemCrQueryService.GetMulti(supplierInvoiceItemPM.ItemCode,true);
             //Get supplier Item Certificate - From SupplierInvioceItemsCertificates Table
             foreach (var CertificateItem in supplierInvoiceItemPM.SupplierInvioceItemCertificats.OrderBy(x=>x.SequenceNumeric))
             {
-                if (!(string.IsNullOrWhiteSpace(CertificateItem.ResConfirmationTypeCode) && string.IsNullOrWhiteSpace(CertificateItem.CertificateNumber) && string.IsNullOrWhiteSpace(CertificateItem.CertificateExemptionTypeCode) && string.IsNullOrWhiteSpace(CertificateItem.AttachmentTypeCode) && string.IsNullOrWhiteSpace(CertificateItem.CustomsAttachmentID)))
+                var itemCert = itemCrList.Where(r => r.REQCERT.TrimStart('0') == CertificateItem.ReqConfirmationTypeCode).FirstOrDefault();
+                if (!(string.IsNullOrWhiteSpace(CertificateItem.ResConfirmationTypeCode) && string.IsNullOrWhiteSpace(CertificateItem.CertificateNumber) && string.IsNullOrWhiteSpace(CertificateItem.CertificateExemptionTypeCode) && string.IsNullOrWhiteSpace(CertificateItem.AttachmentTypeCode) && string.IsNullOrWhiteSpace(CertificateItem.CustomsAttachmentID)) || (itemCert != null && !string.IsNullOrWhiteSpace(itemCert.REQCERT)))
                 { // moran 26.9.16 - Task 22961 - enter into 'if' fields are empty
                     var declarationGoodsShipmentAdditionalDocument = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemAdditionalDocument();
                     if (CertificateItem.CertificateNumber != null)

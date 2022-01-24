@@ -286,6 +286,7 @@ export class CourierWorksheetListTemplate {
 
     }
     SendManifest(event) {
+        debugger;
         this.ButtonClick(event);
         let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
         myDeclarationPMService.get(this._CourierWorksheet['DeclarationId'])
@@ -314,6 +315,20 @@ export class CourierWorksheetListTemplate {
 
     SendButtonClicked() {
         this.ButtonClick(null);
+    }
+
+    DeclarationsStatusRequestMethod() {
+        let customsRequestMenuService = new CustomsRequestMenuService();
+        let my = {
+            "DeclarationNumber": this._CourierWorksheet.DeclarationNumber,
+            "CustomsFile": this._CourierWorksheet.CustomFileNo,
+            "DeclarationId": this._CourierWorksheet.DeclarationId,
+        };
+        customsRequestMenuService.WindowClosed.subscribe(
+            (myarg) => { this.CD.detectChanges();
+            }
+        );
+        customsRequestMenuService.ShowModalAsEditMenuAction("8250", my);
     }
 
     _IsSplitButtonMenuFilterReady: boolean = false;

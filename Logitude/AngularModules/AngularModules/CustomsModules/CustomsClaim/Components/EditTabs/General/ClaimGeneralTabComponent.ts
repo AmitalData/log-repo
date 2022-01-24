@@ -5,21 +5,21 @@ import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionL
 import { LogTab } from '../../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ClaimPM } from '../../../../../Customs/EntityPMs/ClaimPM';
-import { ClientAddressPM } from '../../../../../Customs/EntityPMs/ClientAddressPM';
 import { ClaimsRelatedEntityPM } from '../../../../../Customs/EntityPMs/ClaimsRelatedEntityPM';
-import { ClientPM } from '../../../../../Customs/EntityPMs/ClientPM';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
-import { ClientsAddressCommTypePM } from '../../../../../Customs/EntityPMs/ClientsAddressCommTypePM';
 import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
 import { ClientMessagesService } from '../../../../../Customs/Services/WebServices/ClientMessagesService';
 import { ClaimPMService } from '../../../../../Customs/Services/StandardPMs/ClaimPMService';
-import { ClientPMService } from '../../../../../Customs/Services/StandardPMs/ClientPMService';
 import { Validator } from '../../../../../Infrastructure/Validators/Validator';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
+import { ClientAddressPM } from 'Customs/EntityPMs/ClientAddressPM';
+import { ClientPM } from 'Customs/EntityPMs/ClientPM';
+import { ClientsAddressCommTypePM } from 'Customs/EntityPMs/ClientsAddressCommTypePM';
+import { ClientPMService } from 'Customs/Services/StandardPMs/ClientPMService';
 
 @Component({
     

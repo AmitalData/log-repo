@@ -437,7 +437,7 @@ __pycache__/
 /Logitude/JustWebFreight/WebFreight.Web/CargoTracking
 /Logitude/JustWebFreight/WebFreight.Web/CargoTracking/CargoTrackingImages/*
 /Logitude/JustWebFreight/WebFreight.Web/CargoTracking/CargoTrackingImages
-*.png
+
 /Logitude/AngularModules/CypressTesting/Shipment/cypress/Reports
 /Logitude/JustWebFreight/WebFreight.Web/bin.zip
 
@@ -456,3 +456,4 @@ __pycache__/
 
 /Logitude/Logitude.CargoTrackingTests/Connections
 /Logitude/Logitude.CargoTrackingTests/Configurations/Configurations.xml
+/Logitude/AngularModules/LoginModules/Login/Components/binding work .js

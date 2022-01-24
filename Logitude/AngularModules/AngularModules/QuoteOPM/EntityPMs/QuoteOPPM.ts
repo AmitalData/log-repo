@@ -16,6 +16,7 @@ import {QuoteOPVATsTotalPM} from './QuoteOPVATsTotalPM';
 import {QuoteOPFollowUpPM} from './QuoteOPFollowUpPM';
 import {QuoteOPDocumentVersionPM} from './QuoteOPDocumentVersionPM';
 import {QuoteOPTotalVATPM} from './QuoteOPTotalVATPM';
+import {QuoteOPPropertiesPM} from './QuoteOPPropertiesPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -141,6 +142,16 @@ export class QuoteOPPM {
     private estimateProfitEdited: boolean;
     public get EstimateProfitEdited() { return this.estimateProfitEdited; }
     public set EstimateProfitEdited(newValue: boolean) { if (this.estimateProfitEdited != newValue) { this.estimateProfitEdited = newValue; this.MarkAsDirty("EstimateProfitEdited"); } }
+       
+	 
+    private fromAddressId: string;
+    public get FromAddressId() { return this.fromAddressId; }
+    public set FromAddressId(newValue: string) { if (this.fromAddressId != newValue) { this.fromAddressId = newValue; this.MarkAsDirty("FromAddressId"); } }
+       
+	 
+    private toAddressId: string;
+    public get ToAddressId() { return this.toAddressId; }
+    public set ToAddressId(newValue: string) { if (this.toAddressId != newValue) { this.toAddressId = newValue; this.MarkAsDirty("ToAddressId"); } }
        
 	 
     private opportunityId: string;
@@ -1639,6 +1650,20 @@ export class QuoteOPPM {
     public set SpecialServiceName(newValue: string) { if (this.specialServiceName != newValue) { this.specialServiceName = newValue; this.MarkAsDirty("SpecialServiceName"); } }
        
 	 
+     
+	private quoteProperties: QuoteOPPropertiesPM[];
+    get  QuoteProperties() {
+        if (this.quoteProperties == null) {
+            this.quoteProperties = [];
+        }
+
+        return this.quoteProperties;
+    }
+    set  QuoteProperties(newValue: QuoteOPPropertiesPM[]) {
+        if (this.quoteProperties != newValue) {
+            this.quoteProperties = newValue;
+        }
+    }
 
     public OldEntityPM: QuoteOPPM;
 		

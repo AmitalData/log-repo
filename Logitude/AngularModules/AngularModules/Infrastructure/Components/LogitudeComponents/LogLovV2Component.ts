@@ -2335,7 +2335,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             if (!this.DisplayFieldsFromList) {
                 lookupFields = lookupFields.sort((a, b) => { return a.DisplayInLookUpIndex - b.DisplayInLookUpIndex });
             }
-
+            lookupFields = lookupFields.sort((a, b) => { return a.DisplayInLookUpIndex - b.DisplayInLookUpIndex });//Bug 154065: HD CAll#383618 - LOV column not sorted- why not to force any time - quick
             for (var i = 0; i < lookupFields.length; i++) {
                 var words: string[] = [];
                 for (var j = 0; j < items.length; j++) {

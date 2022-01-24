@@ -36,11 +36,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
             var myGenericRequestParams = new UpdateOpenDeclarationsRequestParams()
             {
-                LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
-                 // LoggingEntityId = customsResponse.CustomFileNo
+                LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster"),
+                LoggingEntityId = customsResponse.EntityId
             };
             return myGenericRequestParams;
-
         }
 
         protected override UpdateOpenDeclarationsResponseContentHeader CallWS(SYSTBL_NG_9000_MSG_SystemTableRequest customRequest, UpdateOpenDeclarationsRequestParams requestParams, out string exceptionMessage)

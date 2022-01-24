@@ -1738,7 +1738,7 @@ export class EditComponent implements OnDestroy {
     }
     EditComponentController: IEditComponentController;
     GetControllerByTableName(objectTableName: string) {
-        var notDefault = ["Declaration", "Vehicle"];
+        var notDefault = ["Declaration", "Vehicle","PhysicalCheck"];
         var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
         if (objectTableName.indexOf('Customs.') > -1) {
             objectTableName = objectTableName.split('.')[1];
@@ -1895,6 +1895,28 @@ export class EditComponent implements OnDestroy {
 
 
     //navigation methods
+
+    TextMoveToValue: number;
+    MoveToTextBoxKeyUp(event) {
+        //96542123
+        if (!AppTool.IsNullOrEmpty(this.TextMoveToValue)) {
+
+            let theSelectedIndex = this.TextMoveToValue;
+            this.TextMoveToValue=null
+            if (theSelectedIndex < 1) {
+                theSelectedIndex = 1;
+            }
+            else if (theSelectedIndex > this.NavigationIds.length) {
+                theSelectedIndex = this.NavigationIds.length;
+            }
+
+            this.CurrentNavigatedIndex = theSelectedIndex;
+            this.Previous();
+
+            
+        }
+
+    }
 
     public NextPreviousVisible: boolean = false;
     public PreviousButtonDisabled: boolean = false;

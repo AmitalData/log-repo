@@ -33,6 +33,8 @@ export class InterfaceManagementList {
 	DcaRenameFilePrefix: string;
 	InterfaceType: string;
 	InterfaceTypeName: string;
+	UseRabbitMQ: boolean;
+	SendTime: string;
 	
 }
  

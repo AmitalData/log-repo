@@ -34,7 +34,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 	   });// new Declaration {ExportFile = newgroup.Key.ExportFile };
 
 
-			IQueryable<ContainerizationList> query = (from a in iQueryable.Include("ContainerizationStatusCode").Include("DeclarationStatusType")
+			IQueryable<ContainerizationList> query = (from a in iQueryable.Include("ContainerizationStatusCode").Include("ContainerizationHataraStatus")
 													  join d in declarations
 													  on a.Id equals d.ExportContainerizationID into EmpCont
 													  from ed in EmpCont.DefaultIfEmpty()

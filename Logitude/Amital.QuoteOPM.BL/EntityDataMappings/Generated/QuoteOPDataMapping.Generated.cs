@@ -240,6 +240,8 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 	         IsByKG, 
 	         IsByContainer, 
 	         EstimateProfitEdited, 
+	         FromAddressId, 
+	         ToAddressId, 
 	         OpportunityId, 
 	         LastStageDate, 
 	         AgentReference1, 
@@ -609,6 +611,16 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EstimateProfitEdited))
             {
 				entityPOCO.EstimateProfitEdited = entityPM.EstimateProfitEdited;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromAddressId))
+            {
+				entityPOCO.FromAddressId = entityPM.FromAddressId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressId))
+            {
+				entityPOCO.ToAddressId = entityPM.ToAddressId;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OpportunityId))
@@ -1542,6 +1554,16 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 					entityPM.EstimateProfitEdited = entityPOCO.EstimateProfitEdited;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromAddressId))
+            {
+					entityPM.FromAddressId = entityPOCO.FromAddressId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToAddressId))
+            {
+					entityPM.ToAddressId = entityPOCO.ToAddressId;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OpportunityId))
             {
 					entityPM.OpportunityId = entityPOCO.OpportunityId;
@@ -2466,6 +2488,16 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EstimateProfitEdited))
             {
                 oldEntityPM.EstimateProfitEdited = entityPM.EstimateProfitEdited;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromAddressId))
+            {
+                oldEntityPM.FromAddressId = entityPM.FromAddressId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressId))
+            {
+                oldEntityPM.ToAddressId = entityPM.ToAddressId;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OpportunityId))

@@ -3,9 +3,6 @@ import { AppTool, ArrayTool } from '../../../../../Infrastructure/Tools';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { ClientDrivingLicensePM } from '../../../../../Customs/EntityPMs/ClientDrivingLicensePM';
-import { ClientDrivingLicenseTypePM } from '../../../../../Customs/EntityPMs/ClientDrivingLicenseTypePM';
-import { ClientPM } from '../../../../../Customs/EntityPMs/ClientPM';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
@@ -14,6 +11,9 @@ import { ClientMessagesService } from '../../../../../Customs/Services/WebServic
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
+import { ClientDrivingLicensePM } from 'Customs/EntityPMs/ClientDrivingLicensePM';
+import { ClientDrivingLicenseTypePM } from 'Customs/EntityPMs/ClientDrivingLicenseTypePM';
+import { ClientPM } from 'Customs/EntityPMs/ClientPM';
 
 @Component({
     

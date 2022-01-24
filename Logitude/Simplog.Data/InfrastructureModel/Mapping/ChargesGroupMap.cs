@@ -53,7 +53,9 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Name).HasColumnName("Name");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.ViewOrder).HasColumnName("ViewOrder");
-            
+            this.Property(t => t.QuoteGroupSectionID).HasColumnName("QuoteGroupSectionID").HasMaxLength(1);
+
+
         }
     }
 }

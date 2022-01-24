@@ -30,6 +30,11 @@ using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.Messaging.ILSWS;
 
+using Logitude.Customs.BL.TraceEvents;
+
+using Logitude.CustomsMessaging.Common.RequestParams;
+
+
 namespace CustomsWorkerRole.Test
 {
     public class clsTester
@@ -251,6 +256,9 @@ SELECT TOP 1000 [Id]
 
         }
 
+
+        
+
         public static void SendDeclarationsThatCanResendInBatch()
         {
             //12 or 13
@@ -306,6 +314,20 @@ SELECT TOP 1000 [Id]
                 Debug.WriteLine(ex.ToString());
             }
         }
+        public static void TestUnifreightFUStatusTaskService()
+        {
+            var unifreightFUStatusTaskService = new UnifreightFUStatusTaskService();
+            unifreightFUStatusTaskService.UpsertFUStatusLE2U(3, "1-10", new UnifreightFUStatusParam()
+            {
+                Entname = "CFIFILEM",
+                PrimaryNum = "60515808",
+                Mode = UnifreightEventMode.@new,
+                StatusCode = "SMG",
+                EventDateTime = new DateTime(2021,03,09),
+                OwnerUnifreightUserCode = FUOwnerUnifreightUserCode.SWISS
+            });
+        }
+       
 
         public static void TestUpdateLOGITUDE_FILE()
         {

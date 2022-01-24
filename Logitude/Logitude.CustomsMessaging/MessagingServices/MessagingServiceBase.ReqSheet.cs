@@ -259,6 +259,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                         break;
 
+                    case SheetStatusEnum.Created:
+                        {
+                            _CustomsRequestsSheetService.ReCreateNow();
+                        }
+                        break;
                     default:
                         throw new Exception("SheetStatus  not Valid");
                         break;
@@ -1716,13 +1721,18 @@ Exception:" + ee.Message
                 RequestSheetParam reqSheetDetails = this.GetSheetDetailsFromRequestParam(defaultRequestParamsFromCustomsResponse);//itzik for Sivug Batch
                 //var debug = selectedDCAFile.DebugCreateNew;
                 CustomsRequestsSheetDomainModelService<TRequestParams>.Seed(dcaReceivedService.ExternalId, tenant, defaultRequestParamsFromCustomsResponse, out _CustomsRequestsSheetService, dm, true, reqSheetDetails);
-
+ 
                 var queueSendModel = new QueueSendModel()
                 {
                     Tenant = tenant,
-                    InterfaceTypeCode = this.MainInterfaceCode
+                    InterfaceTypeCode = this.MainInterfaceCode 
                 };
-
+                if (futureSendDateTime.HasValue)
+                {
+                    TimeSpan timeSpan = futureSendDateTime.Value.Subtract(DateTime.Now);
+                    queueSendModel.Delay = timeSpan;
+                }
+                
                 //_CustomsRequestsSheetService = customsRequestsSheetService;
                 bool explictStop = false;
                 if (_CustomsRequestsSheetService.StartCustomsRequestStepEnum == CustomsStepEnum.DCAInProgressUploaded)

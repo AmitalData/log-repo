@@ -93,6 +93,28 @@ namespace Logitude.CustomsMessaging.RequestServices
             base.ManipulateRequestParams(requestParams);
         }
 
+        private void AutoPaymentFromUni(GenericRequestParams requestParams)
+        {
+             if (requestParams.LoggingEntityReference != "AutoPayment")
+            {
+                return;
+            }
+        
+            var dic = UnifreightListsUtil.Deserialize(requestParams.UnifreightListOnServerOnly);
+            var bankId = UnifreightListsUtil.GetValue(ref dic, "InternalBankId");
+            var DeclarationQueryService = new DeclarationQueryService(this.dbContext);
+            var declarationPM = DeclarationQueryService.GetSingle(requestParams.AppicationId, true, false);
+
+
+
+            CheckLock(requestParams, declarationPM);
+            PaymentDateISNotNull(requestParams, declarationPM);
+            TotalTaxRequestedIsValid(requestParams, declarationPM);
+            DelSertPayment(
+          requestParams,
+          declarationPM,
+          bankId);
+        }
 
         private void UCB2755Batch(GenericRequestParams requestParams)
         {
@@ -304,6 +326,8 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             this.dbContext = CustomContext.GetContext(requestParams.Tenant);
             this.UCB2755Batch(requestParams);
+            this.AutoPaymentFromUni(requestParams);
+
             var DeclarationPaymentQueryService = new DeclarationPaymentQueryService(this.dbContext);
             var declarationPaymentsPM = DeclarationPaymentQueryService.GetSingle(requestParams.AppicationId, true, false);
 
@@ -339,7 +363,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 myGeneralData.submitDate = myDeclarationPaymentsPM.PaymentDate.Value;
             }
-            else if (myDeclarationPaymentsPM.AutomaticPayment==1 && !(myDeclarationPaymentsPM.PaymentDate.HasValue))
+              if (myDeclarationPaymentsPM.AutomaticPayment==1 && ( !(myDeclarationPaymentsPM.PaymentDate.HasValue) || myDeclarationPaymentsPM.PaymentDate < DateTime.Now))
             {
                 myGeneralData.submitDate = DateTime.Now;
             }

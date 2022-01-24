@@ -458,7 +458,7 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ExportReferenceMap());
 	
-            modelBuilder.Configurations.Add(new ExportStorgeMap());
+            modelBuilder.Configurations.Add(new ExportStorageMap());
 	
             modelBuilder.Configurations.Add(new FacilitationTypeMap());
 	
@@ -499,6 +499,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new ImporterPeriodicDeclarStatusMap());
 	
             modelBuilder.Configurations.Add(new ImporterTypeForClaimMap());
+	
+            modelBuilder.Configurations.Add(new IncotemrsFileValidationMap());
 	
             modelBuilder.Configurations.Add(new InterfaceManagementMap());
 	
@@ -603,6 +605,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new PhysicalCheckMap());
 	
             modelBuilder.Configurations.Add(new PhysicalCheckOperationMap());
+	
+            modelBuilder.Configurations.Add(new PhysicalCheckSearchResultTypeMap());
 	
             modelBuilder.Configurations.Add(new PhysicalCheckStatusMessageMap());
 	
@@ -745,6 +749,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new TPGFileTypeMap());
 	
             modelBuilder.Configurations.Add(new TradeAgreementMap());
+	
+            modelBuilder.Configurations.Add(new TradeAgreementProtocolMap());
 	
             modelBuilder.Configurations.Add(new TradeLevyExamptTypeMap());
 	
@@ -898,52 +904,6 @@ namespace Logitude.Customs.Data
 			modelBuilder.Entity<Deposit>().Property(x => x.DepositAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<DepositCondition>().Property(x => x.DepositAmount).HasPrecision(16, 2);
-				
-			modelBuilder.Entity<ExportStorge>().Property(x => x.TransactionQuantity).HasPrecision(8, 0);
-				
-			modelBuilder.Entity<ExportStorge>().Property(x => x.CargoRows).HasPrecision(4, 0);
-				
-			modelBuilder.Entity<ExportStorge>().Property(x => x.DangerousGoodsIndication).HasPrecision(1, 0);
-				
-			modelBuilder.Entity<ExportStorge>().Property(x => x.CodeBreaksIndication).HasPrecision(1, 0);
-				
-			modelBuilder.Entity<ExportStorge>().Property(x => x.DamageCode).HasPrecision(1, 0);
-				
-			modelBuilder.Entity<ExportStorge>().Property(x => x.ForeignCurrencyAmoun).HasPrecision(14, 2);
-				
-			modelBuilder.Entity<ExportStorge>().Property(x => x.GoodsValueNIS).HasPrecision(14, 2);
-				
-			modelBuilder.Entity<ExportStorge>().Property(x => x.Quantity).HasPrecision(8, 0);
-				
-			modelBuilder.Entity<ExportStorge>().Property(x => x.WeightInPortMandatory).HasPrecision(1, 0);
-				
-			modelBuilder.Entity<ExportStorge>().Property(x => x.Weight).HasPrecision(11, 3);
-				
-			modelBuilder.Entity<ExportStorge>().Property(x => x.VolumeSize).HasPrecision(8, 0);
-				
-			modelBuilder.Entity<ExportStorge>().Property(x => x.ExporterReportedWeightID).HasPrecision(9, 0);
-				
-			modelBuilder.Entity<ExportStorge>().Property(x => x.CoolingActivated).HasPrecision(1, 0);
-				
-			modelBuilder.Entity<ExportStorge>().Property(x => x.RequiredTemperature).HasPrecision(3, 1);
-				
-			modelBuilder.Entity<ExportStorge>().Property(x => x.LeftException).HasPrecision(4, 0);
-				
-			modelBuilder.Entity<ExportStorge>().Property(x => x.RightException).HasPrecision(4, 0);
-				
-			modelBuilder.Entity<ExportStorge>().Property(x => x.FrontException).HasPrecision(4, 0);
-				
-			modelBuilder.Entity<ExportStorge>().Property(x => x.BackException).HasPrecision(4, 0);
-				
-			modelBuilder.Entity<ExportStorge>().Property(x => x.HeightException).HasPrecision(4, 0);
-				
-			modelBuilder.Entity<ExportStorge>().Property(x => x.VentValue).HasPrecision(3, 0);
-				
-			modelBuilder.Entity<ExportStorge>().Property(x => x.HumidityPercentage).HasPrecision(3, 0);
-				
-			modelBuilder.Entity<ExportStorge>().Property(x => x.Co2Percentage).HasPrecision(2, 0);
-				
-			modelBuilder.Entity<ExportStorge>().Property(x => x.O2Percentage).HasPrecision(2, 0);
 				
 			modelBuilder.Entity<GuaranteeCondition>().Property(x => x.GuaranteeAmount).HasPrecision(16, 2);
 				
@@ -2519,7 +2479,7 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
-	 public IDbSet<ExportStorge> ExportStorges 
+	 public IDbSet<ExportStorage> ExportStorages 
 	 {
 	      get; set;
 	 
@@ -2640,6 +2600,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ImporterTypeForClaim> ImporterTypeForClaims 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<IncotemrsFileValidation> IncotemrsFileValidations 
 	 {
 	      get; set;
 	 
@@ -2952,6 +2918,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<PhysicalCheckOperation> PhysicalCheckOperations 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<PhysicalCheckSearchResultType> PhysicalCheckSearchResultTypes 
 	 {
 	      get; set;
 	 
@@ -3378,6 +3350,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<TradeAgreement> TradeAgreements 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TradeAgreementProtocol> TradeAgreementProtocols 
 	 {
 	      get; set;
 	 

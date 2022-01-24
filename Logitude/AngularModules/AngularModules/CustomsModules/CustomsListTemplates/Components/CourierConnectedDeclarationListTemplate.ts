@@ -6,7 +6,7 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import { CourierMasterPM } from '../../../Customs/EntityPMs/CourierMasterPM';
 import { CourierMasterValidator } from '../../../Customs/Validators/CourierMasterValidator';
 import { CustomsRequestsSheetPM } from '../../../Customs/EntityPMs/CustomsRequestsSheetPM';
-import { CourierMasterService } from '../../../Customs/Services/Others/CourierMasterService';
+import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
 
 @Component({
     

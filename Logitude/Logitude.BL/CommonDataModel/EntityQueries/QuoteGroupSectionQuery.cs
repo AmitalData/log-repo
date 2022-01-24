@@ -21,10 +21,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             repository = new QuoteGroupSectionRepository(); 
         }
 
-        public QuoteGroupSectionQuery(int tenant)
-        {
-            repository = new QuoteGroupSectionRepository(tenant);
-        }
+
 
         public QuoteGroupSectionQuery(QuoteGroupSectionRepository repository)
         {
@@ -35,21 +32,21 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             return (from a in repository.context.QuoteGroupSections
                     where a.Code == code
-                    select new QuoteGroupSectionPM() { Code = a.Code, Name = a.Name, Tenant = a.Tenant, Id = a.Id }).FirstOrDefault();
+                    select new QuoteGroupSectionPM() { Code = a.Code, Name = a.Name, Searchfields=a.Searchfields }).FirstOrDefault();
         }
 
         public QuoteGroupSectionPM GetSinglePM(string code, int tenant = 0)
         {
             return (from a in repository.context.QuoteGroupSections
                     where a.Code == code
-                    select new QuoteGroupSectionPM() { Code = a.Code, Name = a.Name , Tenant = a.Tenant, Id = a.Id }).FirstOrDefault();
+                    select new QuoteGroupSectionPM() { Code = a.Code, Name = a.Name , Searchfields=a.Searchfields }).FirstOrDefault();
         }
 
         public IQueryable<QuoteGroupSectionPM> GetQuoteGroupSectionPMs()
         {
             return (from a in repository.context.QuoteGroupSections
 
-                    select new QuoteGroupSectionPM() { Code = a.Code, Name = a.Name, Tenant = a.Tenant, Id = a.Id });
+                    select new QuoteGroupSectionPM() { Code = a.Code, Name = a.Name, Searchfields=a.Searchfields});
         }
 
         public IQueryable<QuoteGroupSectionList> GetIQueryableEntityList(IQueryable<QuoteGroupSection> iQueryable)
@@ -57,10 +54,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             IQueryable<QuoteGroupSectionList> result = from entity in iQueryable
                                              select new QuoteGroupSectionList()
                                              {
-                                                 Id=entity.Id,
                                                  Name = entity.Name,
                                                  Code = entity.Code,
-                                                 Tenant=entity.Tenant,
+                                                 Searchfields=entity.Searchfields,
                                              };
             return result;
         }

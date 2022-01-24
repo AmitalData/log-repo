@@ -917,6 +917,75 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isManualPayment ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsManualPayment  
+	   {
+	    
+	     get
+		{
+		   return isManualPayment;
+		 }
+		 set
+		 {
+		   if(isManualPayment != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsManualPayment",OldValue=isManualPayment,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isManualPayment=value;
+		   }
+			
+		 }
+	   }
+	  private string commodity ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Commodity  
+	   {
+	    
+	     get
+		{
+		   return commodity;
+		 }
+		 set
+		 {
+		   if(commodity != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Commodity",OldValue=commodity,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   commodity=value;
+		   }
+			
+		 }
+	   }
+	  private string lastStatusRemarks ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LastStatusRemarks  
+	   {
+	    
+	     get
+		{
+		   return lastStatusRemarks;
+		 }
+		 set
+		 {
+		   if(lastStatusRemarks != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastStatusRemarks",OldValue=lastStatusRemarks,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   lastStatusRemarks=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

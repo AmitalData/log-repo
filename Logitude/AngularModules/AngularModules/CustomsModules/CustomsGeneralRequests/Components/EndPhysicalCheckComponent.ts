@@ -39,9 +39,19 @@ export class EndPhysicalCheckComponent
         });
     }
 
+    @ViewChild(CustomMessageWrapperComponent)
+    SuperCustomMessageWrapperComponent: CustomMessageWrapperComponent = new CustomMessageWrapperComponent();
+    ngAfterViewInit() {
+        if (this.SuperCustomMessageWrapperComponent == null) {
+            console.warn("SuperCustomMessageWrapperComponent.ngAfterViewInit MyCustomMessageWrapperComponent == null");
+        } else {
+            console.log("SuperCustomMessageWrapperComponent.ngAfterViewInit MyCustomMessageWrapperComponent != null");
+        }
+        this.MyCustomMessageWrapperComponent = this.SuperCustomMessageWrapperComponent;
+        this.subscribeWrapperComponent()
+    }
 
     OnMassageDisplayMethod() {
-
         if (this.MyCommunicationLogId != null) {
             this.getData(this.MyCommunicationLogId, this.MyCustomsMenuItem.MainInterfaceCode);
         }

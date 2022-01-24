@@ -187,25 +187,43 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 CustomerRepository customerRepository = new CustomerRepository(MyContext);
-                IQueryable<CustomersDataView> entityPocos = customerRepository.GetCustomersDataViews(tenant);
-
+                
                 CustomerQuery customerQuery = new CustomerQuery(customerRepository);
-
                 QueryOperations nonListQueryOperation = new QueryOperations();
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-
-                CustomerCustomFilter customfilters = new CustomerCustomFilter(tenant);
-                entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
-
-                CustomerBusinessUnitFilter myFilter = new CustomerBusinessUnitFilter(tenant);
-                entityPocos = myFilter.RunFilter(entityPocos);
-
-                entityPocos = genericFilter.GetFilteredQuery<CustomersDataView>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
-                IQueryable<CustomerList> entityLists = customerQuery.GetIQueryableEntityList(entityPocos);
+                IQueryable<CustomerList> entityLists;
 
+                FeatureQuery featureQuery = new FeatureQuery();
+                string loggedUserId = null;
+                ContactQuery contactQuery = new ContactQuery(tenant);
+                var contact = contactQuery.GetContactByEmailOnly(authToken.Email, tenant);
+                if (contact != null)
+                {
+                    loggedUserId = contact.Id;
+                }
+                var features = featureQuery.GetAllowedFeaturesForLoggedUser(loggedUserId, tenant);
+                var feature = features.Features.FirstOrDefault(x => x.Code == "CUSTOMERSVIEW");
+                if (feature != null)
+                {
+                    var entityPocos = customerRepository.GetCustomers(tenant);
+                    CustomerBusinessUnitFilter myFilter = new CustomerBusinessUnitFilter(tenant);
+                    entityPocos = myFilter.RunFilter(entityPocos);
+                    entityPocos = genericFilter.GetFilteredQuery<Customer>(nonListQueryOperation, entityPocos);
+                    entityLists = customerQuery.GetIQueryableEntityList(entityPocos);
+                }
+                else
+                {
+                    IQueryable<CustomersDataView> entityPocos = customerRepository.GetCustomersDataViews(tenant);
+                    CustomerCustomFilter customfilters = new CustomerCustomFilter(tenant);
+                    entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
+                    CustomerBusinessUnitFilter myFilter = new CustomerBusinessUnitFilter(tenant);
+                    entityPocos = myFilter.RunFilter(entityPocos);
+                    entityPocos = genericFilter.GetFilteredQuery<CustomersDataView>(nonListQueryOperation, entityPocos);
+                    entityLists = customerQuery.GetIQueryableEntityList(entityPocos);
+                }
                 entityLists = genericFilter.GetFilteredQuery<CustomerList>(listQueryOperation, entityLists);
 
                 if (!string.IsNullOrEmpty(searchvalue))

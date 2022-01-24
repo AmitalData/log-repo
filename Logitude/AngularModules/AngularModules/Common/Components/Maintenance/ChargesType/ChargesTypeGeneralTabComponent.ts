@@ -11,6 +11,7 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import { AccountingSettingPM } from '../../../EntityPMs/AccountingSettingPM';
 import { AccountingSettingPMService } from '../../../Services/StandardPMs/AccountingSettingPMService';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     selector: 'ChargesTypeGeneralTabComponent',
@@ -26,17 +27,20 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
     public DisplayRegoinalTax: boolean = false;
     public MeasurementsQueryFilters: ApiQueryFilters;
     public IsChargeTypesRestrictedFeatureToggleOn = false;
-
+    public IsQuoteOPMaintence = false;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+        if (SessionLocator.SATInterfaceSettings && SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
             this.DisplaySATSettings = true;
         }
         if (SessionLocator.AccountingSettingPM.AllowRegionalTaxManagement) {
             this.DisplayRegoinalTax = true;
         }
         this.ReadChargeTypesRestrictedFeatureToggleFeature();
+        if (FeatureLocator.HasFeaturePermession("QuoteOP", "QuoteOPMaintence")) {
+            this.IsQuoteOPMaintence = true;
+        }
     }
 
     ngOnInit() {
@@ -168,6 +172,13 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
         }
     }
 
+    get QuoteGroupSectionID() { return this.EntityPM.QuoteGroupSectionID; }
+    set QuoteGroupSectionID(newValue: string) {
+        if (this.EntityPM.QuoteGroupSectionID != newValue) {
+            this.EntityPM.QuoteGroupSectionID = newValue;
+        }
+    }
+
     get ChargesGroupId() { return this.EntityPM.ChargesGroupId; }
     set ChargesGroupId(newValue: string) {
         if (this.EntityPM.ChargesGroupId != newValue) {
@@ -177,7 +188,9 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
                 myService.getSingleFromCache(this.EntityPM.ChargesGroupId).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError && myResponse.Result) {
                         this.ChargesGroupCode = myResponse.Result.Code;
-                    }
+                        this.QuoteGroupSectionID = myResponse.Result.QuoteGroupSectionID;
+                        
+                    } 
                 });
             }
             else this.ChargesGroupCode = newValue;

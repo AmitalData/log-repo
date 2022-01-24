@@ -5,9 +5,7 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
     {
         public string Code { get; set; }
         public string Name { get; set; }
-        public int Tenant { get; set; }
-
-        public string Id { get; set; }
+        public string Searchfields { get; set; }
 
     }
 }

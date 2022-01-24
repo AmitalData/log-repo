@@ -1,0 +1,23 @@
+<div [formGroup]="formGroup">
+    <h3>My Customers</h3>
+
+    <div class="p-fluid">
+        <div class="p-field w-17rem inline-block mr-3">
+            <label for="customers1">customers1</label>
+            <p-autoComplete formControlName="customers1" id="customers1" [suggestions]="customers1Selected"
+                [dropdown]="true" (completeMethod)="searchCustomers1($event)"
+                (onKeyUp)='keyUp(formGroup.controls.customers1, customers1List)'>
+                <ng-template let-x pTemplate="item">{{x}}</ng-template>
+            </p-autoComplete>
+        </div>
+
+        <div class="p-field w-17rem inline-block mr-3">
+            <label for="customers2">customers2</label>
+            <p-autoComplete formControlName="customers2" id="customers2" [suggestions]="customers2Selected"
+                [dropdown]="true" (completeMethod)="searchCustomers2($event)"
+                (onKeyUp)='keyUp(formGroup.controls.customers2, customers2List)'>
+                <ng-template let-x pTemplate="item">{{x}}</ng-template>
+            </p-autoComplete>
+        </div>
+    </div>
+</div>

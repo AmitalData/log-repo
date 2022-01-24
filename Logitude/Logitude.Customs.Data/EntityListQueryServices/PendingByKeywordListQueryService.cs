@@ -36,7 +36,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                             "תאור טובין"//"תאור טובין" 
                                                             :
                                                             "שם יבואן"///"שם יבואן"
-                                                            ) :null
+                                                            ) :null,
+                                                            SearchType=a.SearchType,
+                                                          SearchTypesName = a.SearchType != null ? (a.SearchType == "1" ?
+                                                            "מילה" 
+                                                            :
+                                                            "חלק ממילה"
+                                                            ) : null
 
                                                       });
             return query;

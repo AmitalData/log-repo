@@ -2,13 +2,13 @@ import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {CourierMasterPM} from '../../../../Customs/EntityPMs/CourierMasterPM';
-import {CourierMasterService} from '../../../../Customs/Services/Others/CourierMasterService';
 import {CourierMasterValidator} from '../../../../Customs/Validators/CourierMasterValidator';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { CustomsRequestsSheetPM } from '../../../../Customs/EntityPMs/CustomsRequestsSheetPM';
+import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
 
 @Component({
     

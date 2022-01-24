@@ -38,9 +38,4 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Relation
-    ForeignKeyColumn="Id"
-    ReferencedTable="ExportStorges"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="Customs" />
 </Table>

@@ -2,8 +2,6 @@ import {Component}  from '@angular/core';
 import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {ClientAddressPM} from '../../../../../Customs/EntityPMs/ClientAddressPM';
-import {ClientPM} from '../../../../../Customs/EntityPMs/ClientPM';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
@@ -14,6 +12,8 @@ import {INF_MSG_GenericResponseData} from '../../../../../Customs/DataContract/R
 import { ClaimGeneralTabComponent } from '../../../../CustomsClaim/Components/EditTabs/General/ClaimGeneralTabComponent';
 import {AddAddressContactForClientRequestParams, ClientAddress, ClientsAddressCommunicationResult, OperationTypes} from '../../../../../Customs/DataContract/RequestParams/AddAddressContactForClientRequestParams';
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
+import { ClientAddressPM } from 'Customs/EntityPMs/ClientAddressPM';
+import { ClientPM } from 'Customs/EntityPMs/ClientPM';
 
 @Component({
     
