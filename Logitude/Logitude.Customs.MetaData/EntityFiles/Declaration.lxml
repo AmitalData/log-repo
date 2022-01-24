@@ -18807,7 +18807,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
- 
   <Query
     Code="&quot;OpenCourierMaster&quot;"
     TextCode="&quot;Courier Master Open&quot;"
@@ -20089,8 +20088,8 @@
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
         IndexOrder="0" />
-	</QueryFilters>
-</Query>
+    </QueryFilters>
+  </Query>
   <Query
     Code="&quot;AllCourierDeclarations&quot;"
     TextCode="&quot;All Courier Declarations&quot;"
@@ -20501,7 +20500,7 @@
         Operator="&quot;Equal&quot;"
         IndexOrder="0" />
       <QueryFilter
-        QueryCode="&quot;AllCourierDeclarations&quot;"
+        QueryCode="&quot;ExportDeclarations&quot;"
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsCancelled&quot;"
         IsPredefined="true"

@@ -163,6 +163,8 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool IsManualPayment  { get; set; }
        [DataMember]
+       public string PackageTypeCode  { get; set; }
+       [DataMember]
        public string Commodity  { get; set; }
        [DataMember]
        public string LastStatusRemarks  { get; set; }
@@ -170,8 +172,6 @@ namespace Logitude.Customs.Data.EntityLists
        public string ReferantUserName  { get; set; }
        [DataMember]
        public string DepartmentName  { get; set; }
-       [DataMember]
-       public string PackageTypeCode  { get; set; }
    }
 
 }
