@@ -1,4 +1,5 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
@@ -7,6 +8,7 @@ using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.MessagingServices;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Logitude.CustomsMessaging.ResponseServices
@@ -22,12 +24,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public override void Update(DCAInUCBUCADPEResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
             int i = 0;
-            var customContext = CustomContext.GetContext(requestParams.Tenant);
+            ICustomContext customContext = CustomContext.GetContext(customResponse.tenant);
 
             customResponse.listPending.ToList().ForEach(pendingCode =>
             {
                 customResponse.declarationIdsList.ToList().ForEach(declarationId =>
-                    UpdateDeclarationPending(customResponse.tenant, declarationId, pendingCode, customResponse.listPendingRemark[i]));
+                    UpdateDeclarationPending(customResponse.tenant, declarationId, pendingCode, customResponse.listPendingRemark[i], customContext));
 
                 i++;
             });
@@ -44,42 +46,44 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
 
-        public void UpdateDeclarationPending(int tenant, string declarationId, string courierReasonCode, string pendingRemark)
+        public void UpdateDeclarationPending(int tenant, string declarationId, string courierReasonCode, string pendingRemark, ICustomContext customContext)
         {
             DeclarationCourierStatusPM myDeclarationCourierStatusPM = new DeclarationCourierStatusQueryService(tenant).GetSingle(declarationId, true, false);
             DeclarationPendingPM declarationPendingPM = myDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == declarationId && r.CourierPendingReasonCode == courierReasonCode).FirstOrDefault();
+            DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
 
             CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(tenant);
             bool isActive = courierPendingReasonRepositoryRepository.IsActive(courierReasonCode, myDeclarationCourierStatusPM.Tenant);
 
-            if (isActive)
+            if (!isActive) return;
+
+            if (declarationPendingPM == null)
             {
-                if (declarationPendingPM == null)
+                declarationPendingPM = new DeclarationPendingPM()
                 {
-                    declarationPendingPM = new DeclarationPendingPM()
-                    {
-                        ChangeSetOp = ChangeSetOperation.Insert,
-                        DeclarationID = declarationId,
-                        Tenant = tenant,
-                        CourierPendingReasonCode = courierReasonCode,
-                        PendingRemarks = pendingRemark,
-                        Status = "A",
-                    };
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                    DeclarationID = declarationId,
+                    Tenant = tenant,
+                    CourierPendingReasonCode = courierReasonCode,
+                    PendingRemarks = pendingRemark,
+                    Status = "A",
+                };
 
-                    myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM);
-                }
-                else
-                {
-                    declarationPendingPM.PendingRemarks = pendingRemark;
-                    declarationPendingPM.ChangeSetOp = ChangeSetOperation.Update;
-
-                    if (declarationPendingPM.Status == "S")
-                        declarationPendingPM.Status = "A";
-                }
-
-                if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.None)
-                    myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM);
             }
+            else
+            {
+                declarationPendingPM.PendingRemarks = pendingRemark;
+                declarationPendingPM.ChangeSetOp = ChangeSetOperation.Update;
+
+                if (declarationPendingPM.Status == "S")
+                    declarationPendingPM.Status = "A";
+            }
+
+            if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.None)
+                myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+
+            declarationCourierStatusUpdateService.Update(myDeclarationCourierStatusPM, true);
         }
     }
 }
