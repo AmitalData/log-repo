@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TariffUpdateClass
    {  		
-		public const string HashString = "7b5426ff3fb62825c4b07639554a4d9c";
+		public const string HashString = "cee84c19d81c8ae818a76528b671e00d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4642,11 +4642,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
       
              ScreenField TariffTariffCustomsChargesHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TariffCustomsChargesHeaderScreenScreen2.Id,ScreenCode = TariffCustomsChargesHeaderScreenScreen2.Code, ObjectFieldCode = "Tariff.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField TariffTariffCustomsChargesHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TariffCustomsChargesHeaderScreenScreen2.Id,ScreenCode = TariffCustomsChargesHeaderScreenScreen2.Code, ObjectFieldCode = "Tariff.StartDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TariffTariffCustomsChargesHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TariffCustomsChargesHeaderScreenScreen2.Id,ScreenCode = TariffCustomsChargesHeaderScreenScreen2.Code, ObjectFieldCode = "Tariff.CreateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField TariffTariffCustomsChargesHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = TariffCustomsChargesHeaderScreenScreen2.Id,ScreenCode = TariffCustomsChargesHeaderScreenScreen2.Code, ObjectFieldCode = "Tariff.CustomsBrokerId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField TariffTariffCustomsChargesHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = TariffCustomsChargesHeaderScreenScreen2.Id,ScreenCode = TariffCustomsChargesHeaderScreenScreen2.Code, ObjectFieldCode = "Tariff.ExpirationDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TariffTariffCustomsChargesHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = TariffCustomsChargesHeaderScreenScreen2.Id,ScreenCode = TariffCustomsChargesHeaderScreenScreen2.Code, ObjectFieldCode = "Tariff.UpdateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField TariffTariffCustomsChargesHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = TariffCustomsChargesHeaderScreenScreen2.Id,ScreenCode = TariffCustomsChargesHeaderScreenScreen2.Code, ObjectFieldCode = "Tariff.CurrencyId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
