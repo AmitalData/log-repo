@@ -907,7 +907,7 @@
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                    <span *ngIf="EntityPM.TypeCode == 'ASC'">{{item.FromCountryCode}}</span>
+                                                    <span>{{item.FromCountryCode}}</span>
                                                     <div style="height: 100%; width: 100%;" *ngIf="item.IsFromAllOtherCountries">
                                                         <img src="./Images/Icons/A-icon.png" width="16" height="16" title="From All Other Countries" />
                                                     </div>
@@ -920,7 +920,7 @@
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                    <span *ngIf="EntityPM.TypeCode == 'ASC'">{{item.ToCountryCode}}</span>
+                                                    <span>{{item.ToCountryCode}}</span>
                                                     <div style="height: 100%; width: 100%;" *ngIf="item.IsToAllOtherCountries">
                                                         <img src="./Images/Icons/A-icon.png" width="16" height="16" title="To All Other Countries" />
                                                     </div>
