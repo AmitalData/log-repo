@@ -1,12 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { defer } from "cypress/types/lodash";
-import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
 import { ServiceHelper } from "Infrastructure/Utilities/ServiceHelper";
-import { SessionInfo } from "Infrastructure/Utilities/SessionInfo";
 import { LogtuideTableDataService } from "QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service";
 import { Observable } from "rxjs";
-import { catchError, map } from "rxjs/operators";
 
 @Injectable()
 export class PendingWebService {
@@ -21,12 +17,13 @@ export class PendingWebService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/PendingWebService';
     }
 
-    getDeclarationsforBulkFeed(goodsDescription: string, weightFrom: string, weightTo: string, incotermCode: string, searchFilter: string, totalInvoice: string, fastIndividualProcess: string, skip: number = null, take: number =  null): Promise<DeclarationsforBulkFeed[]> {
+    getDeclarationsforBulkFeed(courierMasterId: string, goodsDescription: string, weightFrom: string, weightTo: string, incotermCode: string, searchFilter: string, totalInvoice: string, fastIndividualProcess: string, skip: number = null, take: number =  null): Promise<DeclarationsforBulkFeed[]> {
         const ajax: Observable<any> = this._http.get(
             this._apiUrl + "/DeclarationsforBulkFeed",
             {
                 headers: ServiceHelper.GetHttpHeaders().headers,
                 params: {
+                    courierMasterId: courierMasterId,
                     goodsDescription: goodsDescription,
                     weightFrom: weightFrom,
                     weightTo: weightTo,
@@ -43,6 +40,23 @@ export class PendingWebService {
         return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
     }
 
+
+    postBulkFeeding(listPending: string[], listPendingRemark: string[], declarationIdsList: string[]) {
+        const ajax: Observable<any> = this._http.post(
+            this._apiUrl + "/BulkFeeding",
+            {
+                listPending: listPending, 
+                listPendingRemark: listPendingRemark, 
+                declarationIdsList: declarationIdsList
+            },
+            {
+                headers: ServiceHelper.GetHttpHeaders().headers,
+            }
+        );
+
+        return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
+    }
+
 }
 
 
@@ -53,7 +67,8 @@ export interface DeclarationsforBulkFeed {
     Casualimporteraddress2?: any;
     Casualimportercity: string;
     Code?: any;
-    Id: string;
+    CourierHAWB: string;
+    DeclarationId: string;
     Importername: string;
     IncotermCode: string;
     PackageMeasureQualifierCode: number;

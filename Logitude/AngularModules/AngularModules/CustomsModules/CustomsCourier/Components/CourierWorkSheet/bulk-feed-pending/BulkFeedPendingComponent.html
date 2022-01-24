@@ -1,36 +1,37 @@
 <div class="search-row-container">
-
-
-
-
     <LogLabel [Text]="'Customs.ReleaseGoods.O.GoodsDescription' | TextCodeTranslationPipe" [NoObjectField]="true"
         [DataContext]="DataContext"></LogLabel>
-    <LogTextBox [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true" [ObjectFieldName]="'GoodsDescription'"
+
+    <LogTextBox class="input-good-description" [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true" [ObjectFieldName]="'GoodsDescription'"
         [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'nText'"></LogTextBox>
-    <LogLabel [Text]="'Customs.MasterBOLQuery.O.TotalWeight' | TextCodeTranslationPipe" [NoObjectField]="true"
+
+    <LogLabel class="label-weight" [Text]="'Customs.MasterBOLQuery.O.TotalWeight' | TextCodeTranslationPipe" [NoObjectField]="true"
         [DataContext]="DataContext"></LogLabel>
-    <LogLabel [Text]="'Customs.General.O.From' | TextCodeTranslationPipe" [NoObjectField]="true"
+
+    <LogLabel class="label-from" [Text]="'Customs.General.O.From' | TextCodeTranslationPipe" [NoObjectField]="true"
         [DataContext]="DataContext"></LogLabel>
-    <div>
-        <LogTextBox [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true" [ObjectFieldName]="'WeightFrom'"
-            [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'nText'"></LogTextBox>
-    </div>
-    <LogLabel [Text]="'Customs.General.O.To' | TextCodeTranslationPipe" [NoObjectField]="true"
+
+    <LogTextBox class="input-from" [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true" [ObjectFieldName]="'WeightFrom'"
+        [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'nText'"></LogTextBox>
+
+    <LogLabel class="label-to"  [Text]="'Customs.General.O.To' | TextCodeTranslationPipe" [NoObjectField]="true"
         [DataContext]="DataContext">
     </LogLabel>
-    <div>
-        <LogTextBox [ngStyle]='' [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true"
-            [ObjectFieldName]="'WeightTo'" [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'nText'">
-        </LogTextBox>
-    </div>
-    <LogLabel [Text]="'Customs.General.O.TermsOfSale' | TextCodeTranslationPipe" [NoObjectField]="true"
+
+    <LogTextBox class="input-to" [ngStyle]='' [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true"
+        [ObjectFieldName]="'WeightTo'" [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'nText'">
+    </LogTextBox>
+
+    <LogLabel class="label-incoterm" [Text]="'Customs.General.O.TermsOfSale' | TextCodeTranslationPipe" [NoObjectField]="true"
         [DataContext]="DataContext"></LogLabel>
+
     <div class='incoterm-code-wrapper'>
         <LogLov [ObjectFieldName]="'IncotermCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
             [LookUpTableName]="'Customs.TermsOfSaleType'" [HideColumns]="true" [SelectedValue]="IncotermCode">
         </LogLov>
     </div>
-    <button class="GreenButton" style="width:90px;" (click)="RefreshList()">
+    
+    <button class="GreenButton" (click)="RefreshList()">
         {{'Customs.General.O.Search' | TextCodeTranslationPipe}}
     </button>
 
@@ -189,19 +190,29 @@
 
     <!--[SelectedRow]="SelectedRow"-->
 
-    <log-column [header]="'Customs.Declaration.CH.CourierHAWBListLable' | TextCodeTranslationPipe" [binding]="'Id'"
-        [width]="'70'" [Alignment]="'right'">
+    <log-column [width]="'30'" [Alignment]="'center'">
+        <ng-template let-item>
+            <log-cell-template #logcelltemplate [RIndex]="item.rowIndex" [TabIndex]="-1">
+                <div class="TextTrimming checkbox-wrapper">
+                    <input type="checkbox" (change)="onCheckboxClick($event.target.checked, item.DeclarationId)">
+                </div>
+            </log-cell-template>
+        </ng-template>
+    </log-column>
+
+    <log-column [header]="'Customs.Declaration.CH.CourierHAWBListLable' | TextCodeTranslationPipe"
+        [binding]="'CourierHAWB'" [width]="'90'" [Alignment]="'right'">
         <ng-template let-item>
             <log-cell-template #logcelltemplate [RIndex]="item.rowIndex" [TabIndex]="-1">
                 <div style="text-align:right" class="TextTrimming">
-                    <span>{{item.Id}}</span>
+                    <span>{{item.CourierHAWB}}</span>
                 </div>
             </log-cell-template>
         </ng-template>
     </log-column>
 
     <log-column [header]="'Customs.Declaration.F.ImporterName' | TextCodeTranslationPipe" [binding]="'Importername'"
-        [width]="'70'" [Alignment]="'right'">
+        [width]="'90'" [Alignment]="'right'">
         <ng-template let-item>
             <log-cell-template #logcelltemplate [RIndex]="item.rowIndex" [TabIndex]="-1">
                 <div style="text-align:right" class="TextTrimming">
@@ -212,7 +223,7 @@
     </log-column>
 
     <log-column [header]="'Customs.DeclarationCourierStatus.F.ImporterCode' | TextCodeTranslationPipe"
-        [binding]="'Code'" [width]="'70'" [Alignment]="'right'">
+        [binding]="'Code'" [width]="'90'" [Alignment]="'right'">
         <ng-template let-item>
             <log-cell-template #logcelltemplate [RIndex]="item.rowIndex" [TabIndex]="-1">
                 <div style="text-align:right" class="TextTrimming">
@@ -223,7 +234,7 @@
     </log-column>
 
     <log-column [header]="'Customs.ReleaseGoods.O.GoodsDescription' | TextCodeTranslationPipe"
-        [binding]="'Cargodescription'" [width]="'70'" [Alignment]="'right'">
+        [binding]="'Cargodescription'" [width]="'90'" [Alignment]="'right'">
         <ng-template let-item>
             <log-cell-template #logcelltemplate [RIndex]="item.rowIndex" [TabIndex]="-1">
                 <div style="text-align:right" class="TextTrimming">
@@ -234,7 +245,7 @@
     </log-column>
 
     <log-column [header]="'Customs.General.O.TermsOfSale' | TextCodeTranslationPipe" [binding]="'IncotermCode'"
-        [width]="'70'" [Alignment]="'right'">
+        [width]="'60'" [Alignment]="'right'">
         <ng-template let-item>
             <log-cell-template #logcelltemplate [RIndex]="item.rowIndex" [TabIndex]="-1">
                 <div style="text-align:right" class="TextTrimming">
@@ -245,18 +256,18 @@
     </log-column>
 
     <log-column [header]="'Customs.Declaration.F.TotalInvoiceAmountInUSD' | TextCodeTranslationPipe"
-        [binding]="'Totalinvoiceamountinus'" [width]="'70'" [Alignment]="'right'">
+        [binding]="'TotalInvoiceAmountInUSD'" [width]="'90'" [Alignment]="'right'">
         <ng-template let-item>
             <log-cell-template #logcelltemplate [RIndex]="item.rowIndex" [TabIndex]="-1">
                 <div style="text-align:right" class="TextTrimming">
-                    <span>{{item.Totalinvoiceamountinus}}</span>
+                    <span>{{item.TotalInvoiceAmountInUSD}}</span>
                 </div>
             </log-cell-template>
         </ng-template>
     </log-column>
 
     <log-column [header]="'Customs.MasterBOLQuery.O.TotalWeight' | TextCodeTranslationPipe"
-        [binding]="'PackageMeasureQualifierCode'" [width]="'70'" [Alignment]="'right'">
+        [binding]="'PackageMeasureQualifierCode'" [width]="'45'" [Alignment]="'right'">
         <ng-template let-item>
             <log-cell-template #logcelltemplate [RIndex]="item.rowIndex" [TabIndex]="-1">
                 <div style="text-align:right" class="TextTrimming">
@@ -267,7 +278,7 @@
     </log-column>
 
     <log-column [header]="'Customs.ClientAddress' | TextCodeTranslationPipe" [binding]="'Casualimportercity'"
-        [width]="'70'" [Alignment]="'right'">
+        [width]="'110'" [Alignment]="'right'">
         <ng-template let-item>
             <log-cell-template #logcelltemplate [RIndex]="item.rowIndex" [TabIndex]="-1">
                 <div style="text-align:right" class="TextTrimming">
@@ -279,3 +290,6 @@
     </log-column>
 
 </logitude-edit-grid>
+
+
+<app-declaration-pendings-bulk-feeding (OkClick)='onOkClick($event)'></app-declaration-pendings-bulk-feeding>

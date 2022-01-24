@@ -756,12 +756,15 @@ namespace Logitude.Customs.Data.Repsitories
             }
         }
 
-        public List<DeclarationPendingBulkFeed> GetforPendingBulkFeed(string goodsDescription, string weightFrom, string weightTo, string incotermCode, string SearchFilter, string totalInvoice, string fastIndividualProcess, int? skip = null, int? take = null)
+        public List<DeclarationPendingBulkFeed> GetforPendingBulkFeed(string courierMasterId, string goodsDescription, string weightFrom, string weightTo, string incotermCode, string SearchFilter, string totalInvoice, string fastIndividualProcess, int? skip = null, int? take = null)
         {
             int weightFromInt = 0;
             int weightToInt = 0;
 
-            var q1 = (from d in context.Declarations
+            var q1 = (from cd in context.CourierDeclarations.Where(cd=> cd.CourierMasterId == courierMasterId)
+
+                      join d in context.Declarations on cd.DeclarationId equals d.Id
+
                       join dcs in context.DeclarationCourierStatuses on d.Id equals dcs.DeclarationId
 
                       join cp in context.ConsignmentPackages on d.Id equals cp.DeclarationId into cpjoin
@@ -783,7 +786,8 @@ namespace Logitude.Customs.Data.Repsitories
 
                       select new
                       {
-                          Id = d.Id,
+                          DeclarationId = d.Id,
+                          CourierHAWB = d.CourierHAWB,
                           Importername = d.ImporterName,
                           Cargodescription = d.CargoDescription,
                           Casualimporteraddress1 = d.CasualImporterAddress1,
@@ -798,7 +802,7 @@ namespace Logitude.Customs.Data.Repsitories
                       });
 
             if (skip.HasValue)
-                q1 = q1.OrderBy(x => x.Id).Skip(skip.Value);
+                q1 = q1.OrderBy(x => x.CourierHAWB).Skip(skip.Value);
 
             if (take.HasValue)
                 q1 = q1.Take(take.Value);
@@ -851,7 +855,8 @@ namespace Logitude.Customs.Data.Repsitories
             var q2 = res.GroupBy(d =>
                 new
                 {
-                    d.Id,
+                    d.DeclarationId,
+                    d.CourierHAWB,
                     d.Importername,
                     d.Cargodescription,
                     d.Casualimporteraddress1,
@@ -863,7 +868,8 @@ namespace Logitude.Customs.Data.Repsitories
                     d.IncotermCode
                 }).Select(t => new DeclarationPendingBulkFeed()
                 {
-                    Id = t.Key.Id,
+                    DeclarationId = t.Key.DeclarationId,
+                    CourierHAWB = t.Key.CourierHAWB,
                     Importername = t.Key.Importername,
                     Cargodescription = t.Key.Cargodescription,
                     Casualimporteraddress1 = t.Key.Casualimporteraddress1,
@@ -991,7 +997,8 @@ namespace Logitude.Customs.Data.Repsitories
 
     public class DeclarationPendingBulkFeed
     {
-        public string Id { get; set; }
+        public string DeclarationId { get; set; }
+        public string CourierHAWB { get; set; }
         public string Importername { get; set; }
         public string Cargodescription { get; set; }
         public string Casualimporteraddress1 { get; set; }
@@ -1004,9 +1011,10 @@ namespace Logitude.Customs.Data.Repsitories
 
         public DeclarationPendingBulkFeed() { }
 
-        public DeclarationPendingBulkFeed(string id, string importername, string cargodescription, string casualimporteraddress1, string casualimporteraddress2, string casualimportercity, decimal? totalInvoiceAmountInUSD, int packageMeasureQualifierCode, string code, string incotermCode)
+        public DeclarationPendingBulkFeed(string declarationId, string courierHAWB, string importername, string cargodescription, string casualimporteraddress1, string casualimporteraddress2, string casualimportercity, decimal? totalInvoiceAmountInUSD, int packageMeasureQualifierCode, string code, string incotermCode)
         {
-            Id = id;
+            DeclarationId = declarationId;
+            CourierHAWB = courierHAWB;
             Importername = importername;
             Cargodescription = cargodescription;
             Casualimporteraddress1 = casualimporteraddress1;

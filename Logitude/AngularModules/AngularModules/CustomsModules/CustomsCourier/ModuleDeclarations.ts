@@ -23,6 +23,7 @@ import { AutonomyKeywordComponent } from './Components/AutonomyKeyword/AutonomyK
 import { CourierWorksheetNGComponent } from './Components/CourierWorkSheet/CourierWorksheetNGComponent';
 import { CourierWorksheetNGListTemplate } from '../CustomsListTemplates/Components/CourierWorksheetNGListTemplate';
 import { BulkFeedPendingComponent } from './Components/CourierWorkSheet/bulk-feed-pending/BulkFeedPendingComponent';
+import { DeclarationPendingsBulkFeedingComponent } from './Components/CourierPendingReason/DeclarationPendingsBulkFeedingComponent';
 
 export const Components =
     [
@@ -42,6 +43,7 @@ export const Components =
         GetStorageSiteCodeComponent,
         AddEditPendingByKeywordComponent,
         DeclarationPendingsGeneralComponent,
+        DeclarationPendingsBulkFeedingComponent,
         CourierDeclarationWorkspaceComponent,
         AutonomyKeywordComponent,
         GetUnloadPortCodeComponent,
@@ -76,6 +78,7 @@ export class ModuleDeclarations {
             case "GetUnloadPortCodeComponent": { myResult = GetUnloadPortCodeComponent; break; }
             case "AddEditPendingByKeywordComponent": { myResult = AddEditPendingByKeywordComponent; break; }
             case "DeclarationPendingsGeneralComponent": { myResult = DeclarationPendingsGeneralComponent; break; }
+            case "DeclarationPendingsBulkFeedingComponent": { myResult = DeclarationPendingsBulkFeedingComponent; break; }
             case "CourierDeclarationWorkspaceComponent": { myResult = CourierDeclarationWorkspaceComponent; break; }
             case "BulkFeedPendingComponent": { myResult = BulkFeedPendingComponent; break; }
                 

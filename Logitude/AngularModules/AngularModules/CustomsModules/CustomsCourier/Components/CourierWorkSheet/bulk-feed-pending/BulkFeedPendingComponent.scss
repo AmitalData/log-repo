@@ -1,13 +1,17 @@
+:host ::ng-deep {
+    LogTextBox .InputDiv {
+        height: 23px !important;
+    }
+}
+
 .search-row-container {
     height: 22px;
     display: flex;
     align-items: center;
     margin: 17px 0px;
 
-
-
     > * {
-        flex: 1;
+        // flex: 1;
         width: 60px;
         height: 22px;
         position: relative;
@@ -18,19 +22,72 @@
             position: relative;
         }
     }
-}
 
+    .label-weight {
+        width: 40px;
+        margin-right: 15px;
+    }
 
-:host ::ng-deep{
+    .label-from {
+        width: 23px;
+    }
 
-    LogTextBox .InputDiv {
-        height: 23px !important;
+    .input-from {
+        width: 40px;
+    }
+
+    .label-to {
+        width: 30px;
+    }
+
+    .input-to {
+        width: 40px;
+    }
+
+    .label-incoterm {
+        margin-right: 10px;
+    }
+
+    .GreenButton {
+        width: 70px;
+        margin: 0 13px;
+    }
+
+    searchtextbox {
+        width: 140px;
+        margin-right: 10px;
+    }
+
+    courier-filter-button {
+        margin-right: 15px;
     }
 }
 
+.input-good-description {
+    width: 85px;
+}
 
 logitude-edit-grid {
     position: relative;
     display: block;
     height: 357px;
+}
+
+.checkbox-wrapper {
+    text-align: center;
+
+    input {
+        height: 15px;
+        width: 15px;
+        min-height: 15px;
+        vertical-align: middle;
+    }
+}
+
+
+app-declaration-pendings-bulk-feeding {
+    width: 432px;
+    display: block;
+    height: 230px;
+    margin: auto;
 }
