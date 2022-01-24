@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CustomerUpdateClass
    {  		
-		public const string HashString = "41fb52221f69c19bc457ea0ba34f51bc";
+		public const string HashString = "8f32ddff58264df5b15eb8198d3cf60c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4498,7 +4498,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "PotentialCustomers",
 					  						ObjectTableName =  "Customer",
-					  						FieldsDataType =  "Boolean",
+					  						FieldsDataType =  "Constant",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
@@ -8343,7 +8343,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreditLimitAmount",
 					  						DefaultText =  "Credit Amount",
-					  						FullLocalDefaultText =  "מסגרת םשרםי",
+					  						FullLocalDefaultText =  "מסגרת אשראי",
 					  						ListFieldLable =  "CreditLimitAmountListLable",
 					  						ListLableDefaultText =  "Credit Amount",
 					  						IsMaxLength =  false,
@@ -9511,10 +9511,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InsuredcreditLimit",
 					  						DefaultText =  "Insured Credit Limit",
-					  						FullLocalDefaultText =  "מסגרת םשרםי מבוטחת",
+					  						FullLocalDefaultText =  "מסגרת אשראי מבוטחת",
 					  						ListFieldLable =  "InsuredcreditLimitListLable",
 					  						ListLableDefaultText =  "Insured Credit Limit",
-					  						ListLocalDefaultText =  "מסגרת םשרםי מבוטחת",
+					  						ListLocalDefaultText =  "מסגרת אשראי מבוטחת",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -9555,6 +9555,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "RegimenFiscalCode",
 					  						ListPropertyPath =  "RegimenFiscalCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -9616,6 +9617,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TeamId",
 					  						ListPropertyPath =  "TeamId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
