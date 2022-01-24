@@ -16,8 +16,8 @@ export class PendingByKeywordList {
 	SearchFields: string;
 	SearchByFieldCode: string;
 	SearchByFieldName: string;
-	SearchToField: number;
-	SerachType: number;
+	SearchType: string;
+	SearchTypesName: string;
 	
 }
  

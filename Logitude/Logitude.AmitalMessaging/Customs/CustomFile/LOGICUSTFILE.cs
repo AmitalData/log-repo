@@ -384,7 +384,8 @@ public partial class LogitudeCustomsFile
             this.loadingPortCodeField = value;
         }
     }
-
+    
+    public string DestinationCountryCode { get; set; }
     /// <remarks/>
     public string OriginCountryCode
     {
@@ -592,7 +593,7 @@ public partial class LogitudeCustomsFile
             this.warehouseIdField = value;
         }
     }
-
+      
     /// <remarks/>
     public string UnloadportId
     {
@@ -607,6 +608,7 @@ public partial class LogitudeCustomsFile
     }
 
     /// <remarks/>
+    public string ExportUnloadingPortCode { get; set; }
     public string ProcedureCurrentCode
     {
         get
@@ -631,6 +633,13 @@ public partial class LogitudeCustomsFile
             this.importerAddressField = value;
         }
     }
+
+    public string BuyerName { get; set; }
+    public string BuyerAddress { get; set; }
+    public string BuyerCountryCode { get; set; }
+    public string BuyerRoleCode { get; set; }
+    public string IncotermCode { get; set; }
+    public string InvoiceNumber { get; set; }
 
     /// <remarks/>
     public string CargoTypeCode
@@ -671,6 +680,7 @@ public partial class LogitudeCustomsFile
         }
     }
 
+    public string StorageSiteCode { get; set; }
     /// <remarks/>
     public string UnloadDate
     {
@@ -1034,6 +1044,7 @@ public partial class LogitudeCustomsFile
             this.fclLclField = value;
         }
     }
+    public string ShipCode { get; set; }
 
     /// <remarks/>
     public string ForwarderId

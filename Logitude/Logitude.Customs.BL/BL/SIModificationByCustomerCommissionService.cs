@@ -35,7 +35,11 @@ namespace Logitude.Customs.BL.BL
             {
                 var declarationRepository = new DeclarationRepository(context);
                 var dec = declarationRepository.GetSingle(supplierInvoicePM.DeclarationId, supplierInvoicePM.Tenant);
-                customerId = dec.CustomerId;
+                if (dec!= null)
+                {
+                    customerId = dec.CustomerId; ;// ExportDeclarationInsert - avoid crash
+                }
+                
 
             }
             if (string.IsNullOrWhiteSpace(customerId))

@@ -28,8 +28,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         KeywordsList, 
 	         SearchFields, 
 	         SearchByFieldCode, 
-	         SearchToField, 
-	         SerachType,
+	         SearchType,
 	      }
 
 
@@ -44,8 +43,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SearchFields, 
 	         SearchByFieldCode, 
 	         SearchByFieldName, 
-	         SearchToField, 
-	         SerachType,
+	         SearchType, 
+	         SearchTypesName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -79,14 +78,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.SearchByFieldCode = entityPM.SearchByFieldCode;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchToField))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchType))
             {
-				entityPOCO.SearchToField = entityPM.SearchToField;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SerachType))
-            {
-				entityPOCO.SerachType = entityPM.SerachType;
+				entityPOCO.SearchType = entityPM.SearchType;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -125,14 +119,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.SearchByFieldCode = entityPOCO.SearchByFieldCode;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchToField))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchType))
             {
-					entityPM.SearchToField = entityPOCO.SearchToField;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SerachType))
-            {
-					entityPM.SerachType = entityPOCO.SerachType;
+					entityPM.SearchType = entityPOCO.SearchType;
             }
 
 		}
@@ -166,14 +155,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.SearchByFieldCode = entityPM.SearchByFieldCode;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchToField))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchType))
             {
-                oldEntityPM.SearchToField = entityPM.SearchToField;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SerachType))
-            {
-                oldEntityPM.SerachType = entityPM.SerachType;
+                oldEntityPM.SearchType = entityPM.SearchType;
             }
 			
 		}

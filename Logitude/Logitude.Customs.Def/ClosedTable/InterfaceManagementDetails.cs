@@ -595,7 +595,22 @@ namespace Logitude.Customs.Def.ClosedTable
                 ResponseInterfaceCode = null,
                 //    NeedSignature = false
             });
-
+            all.Add(
+            new InterfaceManagementDetails()
+            {
+                Code = "2791",
+                InOut = InOutEnum.I.ToString(),
+                Description = "משוב לתעודת אחסנה",
+                DcaPrefixName = "SendMN_MSG2791_ExportDeliveryAnswerMessage_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+                //  NotificationId = "",//NotificationDefinitionDetails.GetAll().FirstOrDefault(rec=> rec.Code="").Code
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
+                //    NeedSignature = false
+            });
 
             //DCAInEV_NG_8219_MSG14100_ProceduralFaultCancelMassagingService
             all.Add(

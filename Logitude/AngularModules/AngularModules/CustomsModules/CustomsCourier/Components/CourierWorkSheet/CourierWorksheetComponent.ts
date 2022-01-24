@@ -2207,10 +2207,9 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         currRequestParams.Tenant = SessionLocator.Tenant;
         currRequestParams.CourierMasterId = this.entityPM.Id;
         currRequestParams.MAWB = this.entityPM.MAWB;
-        let text = "נם םשר מחיקת PENDING לכל";
+        let text = "נא אשר מחיקת קוד עיכוב";
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.DeclarationsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
-            let text = "נם םשר מחיקת Pending לכל הרשומות המסומנות";
         }
         currRequestParams.PendingCode = new Array();
         if (this.SelectedPendingCodeFilter.Key == 'A' && this._PendingCodes.length > 1) {
