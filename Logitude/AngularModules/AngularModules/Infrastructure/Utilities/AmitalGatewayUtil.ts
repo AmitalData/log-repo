@@ -15,7 +15,7 @@ import { IIGGeneralMessagesService} from '../../Customs/Services/WebServices/IIG
 import { ObservableCollection } from './ObservableCollection';
 import { SupplierInvoiceItemList } from "../../Customs/EntityLists/Extended/SupplierInvoiceItemList";
 import { TextCodeTranslator } from './TextCodeTranslator';
-import { ClientPM } from '../../Customs/Entitypms/ClientPM';
+import { ClientPM } from '../../Customs/EntityPMs/ClientPM';
 
 //import { ClientMessagesService } from '../../Customs/Services/WebServices/ClientMessagesService';
 //import { CustDocMetaDataValuesWebService } from '../../Customs/Services/WebServices/CustDocMetaDataValuesWebService';

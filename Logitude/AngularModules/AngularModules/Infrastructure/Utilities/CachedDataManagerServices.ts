@@ -105,7 +105,7 @@ import { OccasionStatusListService } from '../../CRM/Services/StandardLists/Occa
 import { OccasionTypeListService } from '../../CRM/Services/StandardLists/OccasionTypeListService';
 
 import { AWBAdditionalHandlingInfoListService } from '../../Shipment/Services/StandardLists/AWBAdditionalHandlingInfoListService';
-import { ShipmentSubTypeListService } from '../../shipment/services/standardlists/shipmentsubtypelistservice';
+import { ShipmentSubTypeListService } from '../../Shipment/services/standardlists/shipmentsubtypelistservice';
 import { SessionLocator } from './SessionLocator';
 import { ObjectsLocator } from '../Locators/ObjectsLocator';
 import { AppTool } from '../Tools';

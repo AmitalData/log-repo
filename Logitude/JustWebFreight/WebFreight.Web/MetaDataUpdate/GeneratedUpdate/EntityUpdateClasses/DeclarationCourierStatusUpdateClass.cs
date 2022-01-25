@@ -86,8 +86,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    public class DeclarationCourierStatusUpdateClass
    {  		
  
-		public const string HashString = "bd9ac5be9f989c2d91781fdbd20a1437";
- 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+ 
+		public const string HashString = "bfcad3aea0a81ebf6e281fee005f7da9";
+  	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -126,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Declaration Courier Status",
-			      				    Code =  "366c",
+			      				    Code =  "cc11",
 			      				    Name =  "Customs.DeclarationCourierStatus Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -1177,10 +1178,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CourierCustomStatusName",
 					  						DefaultText =  "Courier Custom Status",
-					  						FullLocalDefaultText =  "התרה/מעוכב",
+					  						FullLocalDefaultText =  "ה.מוקדמת/מעוכב",
 					  						ListFieldLable =  "CourierCustomStatusNameListLable",
 					  						ListLableDefaultText =  "Courier Custom Status",
-					  						ListLocalDefaultText =  "התרה/מעוכב",
+					  						ListLocalDefaultText =  "ה.מוקדמת/מעוכב",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -5179,7 +5180,128 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "FinalRelease",
+					  						ObjectTableName =  "Customs.DeclarationCourierStatus",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "FinalRelease",
+					  						ListPropertyPath =  "FinalRelease",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Final Release",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "FinalRelease",
+					  						DefaultText =  "Final Release",
+					  						FullLocalDefaultText =  "הותר",
+					  						ListFieldLable =  "FinalReleaseListLable",
+					  						ListLableDefaultText =  "Final Release",
+					  						ListLocalDefaultText =  "הותר",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "HatraDate",
+					  						ObjectTableName =  "Customs.DeclarationCourierStatus",
+					  						FieldsDataType =  "DateTime",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "HatraDate",
+					  						ListPropertyPath =  "HatraDate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.DeclarationCourierStatus",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "HatraDate",
+					  						DefaultText =  "Hatra Date",
+					  						ListFieldLable =  "HatraDateListLable",
+					  						ListLableDefaultText =  "Hatra Date",
+					  						ListLocalDefaultText =  "תםריך התרה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
