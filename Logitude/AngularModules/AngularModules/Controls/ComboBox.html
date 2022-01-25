@@ -101,7 +101,9 @@
     }
 </style>
 
-<div class="ComboBox"
+<div 
+     class="ComboBox"
+     [attr.data-cy]="CyData" 
      [attr.id]="ControlId"
      (keydown)="OnKeyDown($event)"
      (blur)="OnLostFocus()"
@@ -117,7 +119,7 @@
             </td>
 
             <td>
-                <div class="FillParent">
+                <div  class="FillParent">
                     <div [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" class="TextTrimming">{{Text}}</div>
                     <div [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" class="TextTrimming Label" *ngIf="!Text">{{WaterMark}}</div>
                 </div>
@@ -156,7 +158,7 @@
         </tr>
     </table>
 
-    <div class="ComboBoxDropdown" [attr.id]="DropdownId" style="z-index:5;" [hidden]="!IsOpened">
+    <div  class="ComboBoxDropdown" [attr.id]="DropdownId" style="z-index:5;" [hidden]="!IsOpened">
         <div class="ScrollViewer">
             <ul class="ScrollContent" [attr.id]="ListControlId" *ngIf="!WithCheckBoxes">
                 <li [attr.data-cy]="item.Name" id="{{'ComboBoxItem' | IdGeneratorPipe}}" class="ComboBoxItem TextTrimming" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngFor="let item of ItemsSource" [class.SelectedComboboxItem]="item === SelectedItem" (mousedown)="ItemClicked(item)">

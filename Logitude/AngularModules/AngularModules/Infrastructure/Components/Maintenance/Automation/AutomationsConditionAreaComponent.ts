@@ -13,7 +13,7 @@ import {FieldValueResolver} from '../../../../Infrastructure/Utilities/FieldValu
     
     selector: 'AutomationsConditionAreaComponent',
     templateUrl: './AutomationsConditionAreaComponent.html',
-    inputs: ['AutomationCondationLists', 'Title', 'TiggerComponent', 'CondationListType', 'IsDisabled', 'ListHeight', 'NoEntity','CanSetValueFromField','AddFirstLine'],
+    inputs: ['AutomationCondationLists', 'Title', 'TiggerComponent', 'CondationListType', 'IsDisabled', 'ListHeight', 'NoEntity', 'CanSetValueFromField', 'AddFirstLine', 'IsDelay'],
 
 })
 export class AutomationsConditionAreaComponent extends BaseComponent implements OnInit {
@@ -27,12 +27,15 @@ export class AutomationsConditionAreaComponent extends BaseComponent implements 
     ListHeight: string = "120px";
     TiggerComponent: any;
     NoEntity: boolean = false;
+    IsDelay: boolean = false;
+
     CanSetValueFromField: boolean = true;
-    
+    public cyData: string;
     constructor() {
         super();
       
     }
+
     item: any;
     ngOnInit() { 
         if (!this.ListHeight) {
@@ -41,7 +44,7 @@ export class AutomationsConditionAreaComponent extends BaseComponent implements 
         if(this.AddFirstLine){
             this.AddAutomationConditionMethod();
         }
-
+        this.cyData = this.CondationListType + (this.IsDelay ? "Delay":"") +"ConditionIdArea";
     }
 
 

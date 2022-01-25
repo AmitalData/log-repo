@@ -7,13 +7,14 @@ import {ObjectsLocator} from '../Infrastructure/Locators/ObjectsLocator';
     selector: 'ComboBox',
 
     templateUrl: './ComboBox.html',
-    inputs: ['ItemsSource', 'SelectedItem', 'Binding', 'IsDisabled', 'WaterMark', 'IsBlueBox', 'IsGreenButton', 'FocusOnMe', 'SelectedValue', 'SelectedValuePath', 'MaxHeight', 'WithCheckBoxes', 'WithIcons'],
+    inputs: ['ItemsSource', 'SelectedItem', 'Binding', 'IsDisabled', 'WaterMark', 'IsBlueBox', 'IsGreenButton', 'FocusOnMe', 'SelectedValue', 'SelectedValuePath', 'MaxHeight', 'WithCheckBoxes', 'WithIcons', 'CyData'],
 })
 
 export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
     public Text: string = null;
     public WaterMark: string = null;
     private itemsSource: any[];
+
     dropdownTimertoken: any;
     get ItemsSource() { return this.itemsSource; }
     set ItemsSource(value: any[]) {
@@ -56,6 +57,8 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
     @Output() LostFocus: EventEmitter<boolean> = new EventEmitter<boolean>();
     private CurrentSession = SessionLocator.SelectedSession;
     public SearchTextId: string = "SearchTextId";
+    public CyData: string;
+
     constructor(private cd: ChangeDetectorRef) {
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
 
@@ -75,6 +78,7 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
             this.ListControlId = "List_" + idIndex;
             this.SearchTextId = "SearchText_" + idIndex;
         }
+        
     }
 
     private MouseDownEvent: any = null;

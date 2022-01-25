@@ -179,7 +179,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     IsShowCreateTaskResult: boolean = false;
     IsTenantZero: boolean = false;
     private quoteTemplateListService: QuoteTemplateListService;
-
+    public cyData: string;
+    public cyData2: string;
     constructor(public _automationResultEmailRecipientExtendedService:
 
         AutomationResultEmailRecipientExtendedService, public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService, public documentTypeCopyPMExtendedService: DocumentTypeCopyPMExtendedService, public _automationExtendedPMService: AutomationExtendedPMService, public _automationHistoryExtendedPMService: AutomationHistoryExtendedPMService, private cd: ChangeDetectorRef, public entityArgs: EntityArgs) {
@@ -1037,6 +1038,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 if (this.CurrentEntityPM.Type == "OnDocumentUpdate") {
                     this.FillOnDocumentUpdateResults();
                 }
+                
             }
 
             //Quotes
@@ -1046,7 +1048,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 this.ResultCodeList.push(new ResultCode("Docs In F/U Creation", "DOCINFOLLOWUP"));
                 this.ResultCodeList.push(new ResultCode("Set Fields Value", "FIELDSET"));
             }
-
+            
             this.ResultCodeSelected = this.ResultCodeList.filter(d => d.Code == this.AutomatedBackupClass.ResultCode)[0];
 
             if (!this.ResultCodeSelected) {
@@ -1787,7 +1789,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 if (!AppTool.IsNullOrEmpty(this.AutomationFollowUp.EventTypeId)) {
                     var eventType: EventTypeList = this.EventDocFollowUpTypeLists.filter(d => d.Id == this.AutomationFollowUp.EventTypeId)[0];
                     if (eventType) this.AutomationFollowUp.EventTypeId = "";
+                    
                 }
+                
             }
 
             if (AppTool.IsNullOrEmpty(this.AutomationFollowUp.EventTypeId)) {

@@ -1,5 +1,5 @@
 {
-  "url": "https://test.logitudeworld.com/test",
+  "url": "http://localhost:4200/",
   "email": "specflowdev@mail.com",
   "password": "!Cypress1",
   "tenant": null
