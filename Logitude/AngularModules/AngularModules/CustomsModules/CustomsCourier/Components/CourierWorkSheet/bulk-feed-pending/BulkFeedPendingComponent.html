@@ -1,44 +1,80 @@
 <div class="search-row-container">
-    <LogLabel [Text]="'Customs.ReleaseGoods.O.GoodsDescription' | TextCodeTranslationPipe" [NoObjectField]="true"
+    <div style="height:26px;width:53px; ">
+        <div style="border:1px solid #6A8299;width:47px;border-radius: 3px;max-height: 26px;">
+            <table>
+                <tr>
+                    <td>
+                        <div class="ActionButton" style="width: 35px;height:23px; ">
+                            <CheckBox style="pointer-events:none;"
+                                [IsChecked]="_CourierMasterService.disconnectedSelectAll"
+                                (Checked)="IsSelectedNot = $event "></CheckBox>
+
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="ToggleButton" tabindex="-1" style="width: 20px;height:23px;left:10px ">
+
+
+                            <img src="./Images/ToggleIcon.png" style="float:left;" />
+                            <div class="ToggleButtonMenu" style="width: 70px;top:26px;text-align:right">
+                                <button style="text-align:right"
+                                    (click)="OnAllBtnClickedNot()">{{'Customs.CourierMaster.O.All' |
+                                    TextCodeTranslationPipe}}</button>
+                                <button style="text-align:right"
+                                    (click)="OnNoneBtnClickedNot()">{{'Customs.CourierMaster.O.None' |
+                                    TextCodeTranslationPipe}}</button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- <div class="checkbox-all">
+        <LogLabel [Text]="'Customs.CourierMaster.O.All' | TextCodeTranslationPipe" [NoObjectField]="true"
+            [DataContext]="DataContext"></LogLabel>
+        <input type="checkbox" (change)="onCheckAllClick($event.target.checked)">
+    </div> -->
+
+    <LogLabel class="label-good-description"
+        [Text]="'Customs.ReleaseGoods.O.GoodsDescription' | TextCodeTranslationPipe" [NoObjectField]="true"
         [DataContext]="DataContext"></LogLabel>
 
-    <LogTextBox class="input-good-description" [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true" [ObjectFieldName]="'GoodsDescription'"
-        [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'nText'"></LogTextBox>
+    <LogTextBox class="input-good-description" [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true"
+        [ObjectFieldName]="'GoodsDescription'" [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'nText'">
+    </LogTextBox>
 
-    <LogLabel class="label-weight" [Text]="'Customs.MasterBOLQuery.O.TotalWeight' | TextCodeTranslationPipe" [NoObjectField]="true"
-        [DataContext]="DataContext"></LogLabel>
+    <LogLabel class="label-weight" [Text]="'Customs.MasterBOLQuery.O.TotalWeight' | TextCodeTranslationPipe"
+        [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
 
     <LogLabel class="label-from" [Text]="'Customs.General.O.From' | TextCodeTranslationPipe" [NoObjectField]="true"
         [DataContext]="DataContext"></LogLabel>
 
-    <LogTextBox class="input-from" [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true" [ObjectFieldName]="'WeightFrom'"
-        [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'nText'"></LogTextBox>
+    <LogTextBox class="input-from" [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true"
+        [ObjectFieldName]="'WeightFrom'" [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'number'">
+    </LogTextBox>
 
-    <LogLabel class="label-to"  [Text]="'Customs.General.O.To' | TextCodeTranslationPipe" [NoObjectField]="true"
+    <LogLabel class="label-to" [Text]="'Customs.General.O.To' | TextCodeTranslationPipe" [NoObjectField]="true"
         [DataContext]="DataContext">
     </LogLabel>
 
     <LogTextBox class="input-to" [ngStyle]='' [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true"
-        [ObjectFieldName]="'WeightTo'" [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'nText'">
+        [ObjectFieldName]="'WeightTo'" [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'number'">
     </LogTextBox>
 
-    <LogLabel class="label-incoterm" [Text]="'Customs.General.O.TermsOfSale' | TextCodeTranslationPipe" [NoObjectField]="true"
-        [DataContext]="DataContext"></LogLabel>
+    <LogLabel class="label-incoterm" [Text]="'Customs.General.O.TermsOfSale' | TextCodeTranslationPipe"
+        [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
 
     <div class='incoterm-code-wrapper'>
         <LogLov [ObjectFieldName]="'IncotermCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
             [LookUpTableName]="'Customs.TermsOfSaleType'" [HideColumns]="true" [SelectedValue]="IncotermCode">
         </LogLov>
     </div>
-    
+
     <button class="GreenButton" (click)="RefreshList()">
         {{'Customs.General.O.Search' | TextCodeTranslationPipe}}
     </button>
-
-    <SearchTextBox [ObjectTableName]="'Customs.CourierMaster'" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"
-        [SearchText]="SearchFilter" [PlaceHolder]="'תיק/הצהרה/ש.מ.ב/לקוח'">
-    </SearchTextBox>
-
 
     <courier-filter-button #MyDropdownMenuFilterComponent>
         <div class="class-filter-content">
@@ -180,15 +216,32 @@
         </div>
     </courier-filter-button>
 
+    <SearchTextBox [ObjectTableName]="'Customs.CourierMaster'" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"
+        [SearchText]="SearchFilter" [PlaceHolder]="'תיק/הצהרה/ש.מ.ב/לקוח'">
+    </SearchTextBox>
+
 </div>
+
+
+<div class="GeneratedGridContainer">
+    <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName" [dataSource]="DataSource"
+        (AfterViewInitCompleted)="ViewInitCompleted($event)" (rowSelectedEvent)="OnRowSelected($event)"
+        [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="columns" [SelectedRow]="SelectedRow"
+        [IsCustomTemplate]="false" [RowBackGroundColor]="'#DFECF7'" [ChangeColorByPropName]="'IsChecked'"
+        [ChangeColorByPropValue]="true" [IgnoreRowHoverVisibilityQueryName]="true" [EnableRowHoverVisibility]="true"
+        [HoverTemplateIndex]="8" [rowHeight]="40" [rows]="RowsItems" [PassAdditionalDataToTemplates]="true"
+        [MyScrollTop]="MyScrollTop">
+    </logitude-grid>
+</div>
+
+
 
 <!-- [SelectedRow]="SelectedRow" -->
 <!-- (SelectedItemChanged)="OnSelectedItemChanged($event)" -->
 <!-- [ChangeScrollPosition]="ChangeScrollPosition" -->
-<logitude-edit-grid GridWidth="100%" (Ondblclick)="OnFocus()" (RowEnded)="OnRowEnded($event)" GridHeight="100%"
-    [IsReadOnly]="true" [UseVirtuallization]="true" [ItemSource]="ItemsSource">
 
-    <!--[SelectedRow]="SelectedRow"-->
+<!-- <logitude-edit-grid GridWidth="100%" (Ondblclick)="OnFocus()" (RowEnded)="OnRowEnded($event)" GridHeight="100%"
+    [IsReadOnly]="true" [UseVirtuallization]="true" [ItemSource]="ItemsSource">
 
     <log-column [width]="'30'" [Alignment]="'center'">
         <ng-template let-item>
@@ -289,7 +342,8 @@
         </ng-template>
     </log-column>
 
-</logitude-edit-grid>
+</logitude-edit-grid> -->
 
 
-<app-declaration-pendings-bulk-feeding (OkClick)='onOkClick($event)'></app-declaration-pendings-bulk-feeding>
+<app-declaration-pendings-bulk-feeding (OkClick)='onOkClick($event)' (cancelClicked)='cancelClicked()'>
+</app-declaration-pendings-bulk-feeding>

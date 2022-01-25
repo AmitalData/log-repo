@@ -24,6 +24,7 @@ import { KeyValuePair } from '../CourierWorkSheet/CourierWorksheetComponent';
 
 export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
     @Output() OkClick = new EventEmitter<DeclarationCourierStatusPM>();
+    @Output() cancelClicked = new EventEmitter<DeclarationCourierStatusPM>();
 
     public ObjectTableName: string = "Customs.DeclarationPending";
     public DataContext = this;
@@ -66,7 +67,7 @@ export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
                 this.notUpdateSelf = args.notUpdateSelf;
                 //this.DeclarationPendingsList = args.DeclarationIdList;
                 this.DeclarationCourierStatus = args.DeclarationCourierStatus;
-                if (!AppTool.IsNullOrEmpty(this.DeclarationCourierStatus.DeclarationPendings)) {
+                if (!AppTool.IsNullOrEmpty(this.DeclarationCourierStatus?.DeclarationPendings)) {
                     this.DeclarationPendingsList = this.DeclarationCourierStatus.DeclarationPendings;
                 }
                 this.DeclarationId = args.DeclarationId;
@@ -224,14 +225,17 @@ export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
                 else {
                     //this.RejectChanges();
                     SessionLocator.SelectedSession.CloseCurrentWindow();
+                    this.cancelClicked.emit()
                 }
 
             });
-
+            
         }
         else {
             SessionLocator.SelectedSession.CloseCurrentWindowEmit('cancel');
+            this.cancelClicked.emit()
         }
+        
 
     }
 

@@ -26,9 +26,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
             int i = 0;
             ICustomContext customContext = CustomContext.GetContext(customResponse.tenant);
 
+            List<string> declarationIdsList = customResponse.checkboxAll ?
+                new DeclarationCourierStatusQueryService(customContext).GetByMasterID_DeclarationIdList(customResponse.tenant, customResponse.courierMasterId) :
+                customResponse.declarationIdsList.ToList();
+
             customResponse.listPending.ToList().ForEach(pendingCode =>
             {
-                customResponse.declarationIdsList.ToList().ForEach(declarationId =>
+                declarationIdsList.ForEach(declarationId =>
                     UpdateDeclarationPending(customResponse.tenant, declarationId, pendingCode, customResponse.listPendingRemark[i], customContext));
 
                 i++;
@@ -48,6 +52,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public void UpdateDeclarationPending(int tenant, string declarationId, string courierReasonCode, string pendingRemark, ICustomContext customContext)
         {
+            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine(" UCADPA start update DeclarationId: " + declarationId + " pending code: " + courierReasonCode);
             DeclarationCourierStatusPM myDeclarationCourierStatusPM = new DeclarationCourierStatusQueryService(tenant).GetSingle(declarationId, true, false);
             DeclarationPendingPM declarationPendingPM = myDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == declarationId && r.CourierPendingReasonCode == courierReasonCode).FirstOrDefault();
             DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), tenant);

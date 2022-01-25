@@ -2834,7 +2834,7 @@ namespace Logitude.Customs.Def.ClosedTable
             {
                 Code = "UCADPE",
                 InOut = InOutEnum.I.ToString(),
-                Description = "נה גורפת PENDING",
+                Description = "הזנה גורפת PENDING",
                 DcaPrefixName = "UCADPE_OUT",
                 DefaultSendOptionsCode = null,
                 DefaultPriority = 5,
