@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Server.Tools.Helpers;
+using System.Data.Entity.Core.Objects;
 
 namespace Logitude.Accounting.BL.DataContract
 {
@@ -168,7 +169,7 @@ namespace Logitude.Accounting.BL.DataContract
           
             List<LedgerTransaction> transactions = (from a in accountingContext.LedgerTransactions
                     join j in accountingContext.Journals on a.JournalId equals j.Id
-                    where (a.AccountingDate >= startDate && a.AccountingDate <= endDate)
+                    where (EntityFunctions.TruncateTime(a.AccountingDate) >= startDate.Date && EntityFunctions.TruncateTime(a.AccountingDate) <= endDate.Date)
                     && a.Tenant == Tenant &&  a.AccountId == setting.TaxWithholdingGLAccountId
                     && j.ExternalSystem != null && a.LocalAmountDebit == 0
                    select a).ToList();
@@ -184,7 +185,7 @@ namespace Logitude.Accounting.BL.DataContract
         {
             List<JournalLine> journalLines = (from a in accountingContext.JournalLines                                       
                                                     where 
-                                                     a.Tenant == Tenant && (a.DocumentDate >= startDate && a.DocumentDate <= endDate)
+                                                     a.Tenant == Tenant && (EntityFunctions.TruncateTime(a.DocumentDate) >= startDate.Date && EntityFunctions.TruncateTime(a.DocumentDate) <= endDate.Date)
                                                     && a.ActionCode == "2" && journalIds.Contains(a.JournalId)
                                                     select a).ToList();
             return journalLines;
@@ -196,7 +197,7 @@ namespace Logitude.Accounting.BL.DataContract
             return (from a in accountingContext.LedgerTransactions
                     join journal in accountingContext.Journals on a.JournalId equals journal.Id
                     where oopositeAccountIds.Contains(a.AccountId)
-                    && a.Tenant == Tenant && (a.AccountingDate >= startDate && a.AccountingDate <= endDate) && journal.ExternalSystem != null
+                    && a.Tenant == Tenant && (EntityFunctions.TruncateTime(a.AccountingDate) >= startDate.Date && EntityFunctions.TruncateTime(a.AccountingDate) <= endDate.Date) && journal.ExternalSystem != null
                     select a).ToList();
 
         }
@@ -491,6 +492,9 @@ namespace Logitude.Accounting.BL.DataContract
             List<TaxDeductionReportLine> groupeddeductionLines = GroupDeductionLinesByVendorAndPercentage(deductionLines);
             List<CardList> mainCards = GetMainAccountsCards();
             vendors = vendors.Concat(transactionsVendors).Concat(mainCards).ToList();
+            if (!string.IsNullOrWhiteSpace(taxDeductionPerVendorReportParameters.CardId)) {
+                vendors = vendors.Where(x => x.Id == taxDeductionPerVendorReportParameters.CardId).ToList();
+            }
             gLAccounts = gLAccounts.Concat(transactionsOppositGLAccounts).Concat(transactionsGLAccounts).Concat(mainGLAccounts).ToList();
             if (taxDeductionPerVendorReportParameters != null && taxDeductionPerVendorReportParameters.VendorId != null)
             {
@@ -506,7 +510,7 @@ namespace Logitude.Accounting.BL.DataContract
                     VendorId = item.VendorId,
                 };
                 groupedbyVendor.EndYearBalance = 0;
-                GLAccountList gLAccount = gLAccounts.Where(d => d.Id == item.VendorId).FirstOrDefault();
+                GLAccountList gLAccount = gLAccounts.Where(d => d.Id == item.VendorId ).FirstOrDefault();
 
                 if (gLAccount != null)
                 {
@@ -830,7 +834,7 @@ namespace Logitude.Accounting.BL.DataContract
         private TenantPM GetTenantPM()
         {
             TenantQuery tenantQuery = new TenantQuery(Tenant);
-            TenantPM tenantPM = tenantQuery.GetSinglePM(Tenant);
+            TenantPM tenantPM = tenantQuery.GetSinglePM(Tenant, false);
             return tenantPM;
         }
     }
