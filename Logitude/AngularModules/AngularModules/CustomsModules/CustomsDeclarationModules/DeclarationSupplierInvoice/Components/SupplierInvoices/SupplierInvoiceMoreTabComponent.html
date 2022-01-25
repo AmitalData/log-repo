@@ -180,6 +180,24 @@
                         </ng-template>
                     </log-column>
 
+
+                    <!-- TypeDesc -->
+                    <log-column [header]="'Customs.SupplierInvoiceModification.F.TypeDesc' | TextCodeTranslationPipe" [width]="'220'" [Alignment]="'right'" [binding]="'TypeDesc'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate>
+                                <div style="text-align: left;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                    <span>{{item.TypeDesc}}</span>
+                                </div>
+                                <div style="direction: ltr;"  *ngIf="logcelltemplate.IsEditMode">
+                                    
+                                    <LogTextBox [ObjectFieldName]="'TypeDesc'" [DataContext]="item" 
+                                                [ObjectTableName]="'Customs.SupplierInvoiceModification'" [HideColumns]="true" [FocusOnMe]="true" [AllowPercentage]="true" (OriginalText)="item.TypeDesc"></LogTextBox>
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
+
                     <!-- Buttons -->
                     <log-column [width]="'40'" [Alignment]="'right'">
                         <ng-template let-item>
