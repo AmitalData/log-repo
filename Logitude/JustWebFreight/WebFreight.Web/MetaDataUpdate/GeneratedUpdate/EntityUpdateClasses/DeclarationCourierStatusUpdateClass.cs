@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationCourierStatusUpdateClass
    {  		
-		public const string HashString = "69413b4eea0148f863a5ff60966b5772";
+		public const string HashString = "bfcad3aea0a81ebf6e281fee005f7da9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Declaration Courier Status",
-			      				    Code =  "6e70",
+			      				    Code =  "cc11",
 			      				    Name =  "Customs.DeclarationCourierStatus Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -1176,10 +1176,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CourierCustomStatusName",
 					  						DefaultText =  "Courier Custom Status",
-					  						FullLocalDefaultText =  "התרה מוקדמת/מעוכב",
+					  						FullLocalDefaultText =  "ה.מוקדמת/מעוכב",
 					  						ListFieldLable =  "CourierCustomStatusNameListLable",
 					  						ListLableDefaultText =  "Courier Custom Status",
-					  						ListLocalDefaultText =  "התרה מוקדמת/מעוכב",
+					  						ListLocalDefaultText =  "ה.מוקדמת/מעוכב",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
