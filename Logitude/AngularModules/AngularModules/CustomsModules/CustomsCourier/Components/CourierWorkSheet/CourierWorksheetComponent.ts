@@ -2488,7 +2488,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
     openBulkFeedPending() {
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 800;
+        logitudeWindow.Width = 1200;
         logitudeWindow.Height = 735;
         logitudeWindow.IsShowCloseButton = true;
         logitudeWindow.Title = "הזנה גורפת PENDING";

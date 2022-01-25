@@ -11,5 +11,7 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public string[] listPending { get; set; }
         public string[] listPendingRemark { get; set; }
         public string[] declarationIdsList { get; set; }
+        public string courierMasterId { get; set; }
+        public bool checkboxAll { get; set; }
     }
 }

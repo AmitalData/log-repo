@@ -756,12 +756,12 @@ namespace Logitude.Customs.Data.Repsitories
             }
         }
 
-        public List<DeclarationPendingBulkFeed> GetforPendingBulkFeed(string courierMasterId, string goodsDescription, string weightFrom, string weightTo, string incotermCode, string SearchFilter, string totalInvoice, string fastIndividualProcess, int? skip = null, int? take = null)
+        public List<DeclarationPendingBulkFeed> GetforPendingBulkFeed(string courierMasterId, string goodsDescription, string weightFrom, string weightTo, string incotermCode, string SearchFilter, string totalInvoice, string fastIndividualProcess, int? skip = null, int? take = null, string sortingCol = null, string sortingDir = null)
         {
             int weightFromInt = 0;
             int weightToInt = 0;
 
-            var q1 = (from cd in context.CourierDeclarations.Where(cd=> cd.CourierMasterId == courierMasterId)
+            var q1 = (from cd in context.CourierDeclarations.Where(cd => cd.CourierMasterId == courierMasterId)
 
                       join d in context.Declarations on cd.DeclarationId equals d.Id
 
@@ -860,7 +860,7 @@ namespace Logitude.Customs.Data.Repsitories
                     d.Importername,
                     d.Cargodescription,
                     d.Casualimporteraddress1,
-                    d.Casualimporteraddress2,
+                    d.Casualimporteraddress2,                    
                     d.Casualimportercity,
                     d.TotalInvoiceAmountInUSD,
                     d.PackageMeasureQualifierCode1,
@@ -872,8 +872,7 @@ namespace Logitude.Customs.Data.Repsitories
                     CourierHAWB = t.Key.CourierHAWB,
                     Importername = t.Key.Importername,
                     Cargodescription = t.Key.Cargodescription,
-                    Casualimporteraddress1 = t.Key.Casualimporteraddress1,
-                    Casualimporteraddress2 = t.Key.Casualimporteraddress2,
+                    Casualimporteraddress = t.Key.Casualimporteraddress1 + " " + t.Key.Casualimporteraddress2,
                     Casualimportercity = t.Key.Casualimportercity,
                     TotalInvoiceAmountInUSD = t.Key.TotalInvoiceAmountInUSD,
                     PackageMeasureQualifierCode = t.Sum(cpj => Convert.ToInt32(cpj.PackageMeasureQualifierCode1)),
@@ -886,6 +885,25 @@ namespace Logitude.Customs.Data.Repsitories
 
             if (int.TryParse(weightTo, out weightToInt))
                 q2 = q2.Where(s => s.PackageMeasureQualifierCode <= weightToInt);
+
+            if (!string.IsNullOrEmpty(sortingCol))
+            {
+                var sortBy = new Dictionary<string, Func<IEnumerable<DeclarationPendingBulkFeed>, IEnumerable<DeclarationPendingBulkFeed>>>()
+                {
+                    { "CourierHAWB", lus => lus.OrderBy(lu => lu.CourierHAWB) },
+                    { "Importername", lus => lus.OrderBy(lu => lu.Importername) },
+                    { "Code", lus => lus.OrderBy(lu => lu.Code) },
+                    { "Cargodescription", lus => lus.OrderBy(lu => lu.Cargodescription) },
+                    { "IncotermCode", lus => lus.OrderBy(lu => lu.IncotermCode) },
+                    { "TotalInvoiceAmountInUSD", lus => lus.OrderBy(lu => lu.TotalInvoiceAmountInUSD) },
+                    { "PackageMeasureQualifierCode", lus => lus.OrderBy(lu => lu.PackageMeasureQualifierCode) },
+                    { "Casualimportercity", lus => lus.OrderBy(lu => lu.Casualimportercity) },
+                };
+                q2 = sortBy[sortingCol](q2);
+
+                if (sortingDir == "Descending")
+                    q2 = q2.Reverse();
+            };
 
             var res2 = q2.ToList();
 
@@ -1001,8 +1019,8 @@ namespace Logitude.Customs.Data.Repsitories
         public string CourierHAWB { get; set; }
         public string Importername { get; set; }
         public string Cargodescription { get; set; }
-        public string Casualimporteraddress1 { get; set; }
-        public string Casualimporteraddress2 { get; set; }
+        public string Casualimporteraddress { get; set; }
+        
         public string Casualimportercity { get; set; }
         public decimal? TotalInvoiceAmountInUSD { get; set; }
         public int PackageMeasureQualifierCode { get; set; }
@@ -1011,14 +1029,13 @@ namespace Logitude.Customs.Data.Repsitories
 
         public DeclarationPendingBulkFeed() { }
 
-        public DeclarationPendingBulkFeed(string declarationId, string courierHAWB, string importername, string cargodescription, string casualimporteraddress1, string casualimporteraddress2, string casualimportercity, decimal? totalInvoiceAmountInUSD, int packageMeasureQualifierCode, string code, string incotermCode)
+        public DeclarationPendingBulkFeed(string declarationId, string courierHAWB, string importername, string cargodescription, string casualimporteraddress, string casualimportercity, decimal? totalInvoiceAmountInUSD, int packageMeasureQualifierCode, string code, string incotermCode)
         {
             DeclarationId = declarationId;
             CourierHAWB = courierHAWB;
             Importername = importername;
             Cargodescription = cargodescription;
-            Casualimporteraddress1 = casualimporteraddress1;
-            Casualimporteraddress2 = casualimporteraddress2;
+            Casualimporteraddress = casualimporteraddress;            
             Casualimportercity = casualimportercity;
             TotalInvoiceAmountInUSD = totalInvoiceAmountInUSD;
             PackageMeasureQualifierCode = packageMeasureQualifierCode;
