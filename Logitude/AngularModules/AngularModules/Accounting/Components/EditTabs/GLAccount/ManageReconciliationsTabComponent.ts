@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter, AfterViewInit, ChangeDetectorRef, Input}  from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, AfterViewInit, ChangeDetectorRef, Input, ViewChild}  from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -9,6 +9,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { LogGridComponent } from 'Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent';
+import { Operators } from 'Accounting/DataContracts/Operators';
 
 @Component({
     
@@ -20,7 +21,7 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
     public ObjectTableName = "GLAccount";
     public DataContext = this;
 
-    @Input() DataGrid:LogGridComponent;
+    @ViewChild('DataGrid') DataGrid:LogGridComponent;
 
     // Events
     @Output() onQueryChangeEvent = new EventEmitter();
@@ -86,12 +87,12 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
         }
     }
     operatorsList =
-    [{Code:Operator.Equals, EnglishName: 'Equals', LocalName: TextCodeTranslator.Translate("Accounting.General.O.Equals") },
-        {Code:Operator.NotEqual, EnglishName: 'Not Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.NotEqual") },
-        {Code:Operator.LargerThan, EnglishName: 'Larger Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LargerThan") },
-        {Code:Operator.LessThan, EnglishName: 'Less Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThan") },
-        {Code:Operator.LessThanOrEqual, EnglishName: 'Less Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThanOrEqual") },
-        {Code:Operator.GreaterThanOrEqual, EnglishName: 'Greater Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.GreaterThanOrEqual") },
+    [{Code:Operators.Equals, EnglishName: 'Equals', LocalName: TextCodeTranslator.Translate("Accounting.General.O.Equals") },
+        {Code:Operators.NotEqual, EnglishName: 'Not Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.NotEqual") },
+        {Code:Operators.LargerThan, EnglishName: 'Larger Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LargerThan") },
+        {Code:Operators.LessThan, EnglishName: 'Less Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThan") },
+        {Code:Operators.LessThanOrEqual, EnglishName: 'Less Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThanOrEqual") },
+        {Code:Operators.GreaterThanOrEqual, EnglishName: 'Greater Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.GreaterThanOrEqual") },
     ];
     selectedAmountOperator:{Code:string, EnglishName: string, LocalName: string };
     amount: number;
@@ -200,6 +201,7 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
         sortingDir: "Descending",
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
             var tempo = this.GetRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
+            this.DataGrid.DetectChangesTimer();
             return tempo;
         },
     };
@@ -215,6 +217,9 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
         }
         if (this.searchFieldFilter) {
             filters.AdditionalFilters.push(this.searchFieldFilter);
+        }
+        if (this.amountFieldFilter) {
+            filters.AdditionalFilters.push(this.amountFieldFilter);
         }
         if (this.amountFieldFilter) {
             filters.AdditionalFilters.push(this.amountFieldFilter);
@@ -273,12 +278,4 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
 
 
 }
-export enum Operator{
-    GreaterThanOrEqual='GreaterThanOrEqual',
-    LessThanOrEqual='LessThanOrEqual',
-    LessThan='LessThan',
-    LargerThan='LargerThan',
-    NotEqual='NotEqual',
-    Equals='Equals'
 
-}

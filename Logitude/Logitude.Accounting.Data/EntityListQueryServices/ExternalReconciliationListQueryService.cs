@@ -13,6 +13,7 @@ using System.Xml.Serialization;
 
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityLists;
+using System.Data.Entity;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 {
@@ -44,7 +45,45 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
         private IQueryable<ExternalReconciliation> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<ExternalReconciliation> iQueryable, int tenant)
         {
+            var reconciliationLinesQueryOperations = GetReconciliationLinesQueryOperations(queryOperations);
+            if (reconciliationLinesQueryOperations == null)
+                return iQueryable;
+            GenericFilter filter = new GenericFilter();
+            var reconciliationLinesQuery = context.ExternalReconciliationLines.Include(e=>e.ExternalReconciliation).Include(e => e.LedgerTransaction).AsQueryable();
+
+
+            reconciliationLinesQuery = filter.GetFilteredQuery(reconciliationLinesQueryOperations, reconciliationLinesQuery);
+            reconciliationLinesQuery = reconciliationLinesQuery.Where(t => t.Tenant == tenant);
+            iQueryable = iQueryable.Where(w => reconciliationLinesQuery.Where(e => e.ReconciliationId == w.Id).Any());
+
             return iQueryable;
+        }
+        private QueryOperations GetReconciliationLinesQueryOperations(QueryOperations queryOperations)
+        {
+            var filterFieldName = "ReconciliationAmount";
+            var reconciliationAmountFieldOperations = queryOperations.QueryFilterItems.Where(e => e.FieldName == filterFieldName).FirstOrDefault();
+            if (reconciliationAmountFieldOperations == null)
+                return null;
+            queryOperations.QueryFilterItems.Remove(reconciliationAmountFieldOperations);
+            var reconciliationLinesQueryOperations = CreateReconciliationLinesQueryOperations(reconciliationAmountFieldOperations);
+            return reconciliationLinesQueryOperations;
+        }
+
+        private QueryOperations CreateReconciliationLinesQueryOperations(QueryFilterItem reconciliationAmountFieldOperations)
+        {
+            return new QueryOperations()
+            {
+                GetAll = true,
+                QueryFilterItems = new List<QueryFilterItem>()
+                {
+                    new QueryFilterItem()
+                    {
+                        FieldName = reconciliationAmountFieldOperations.FieldName,
+                        FieldValue = decimal.Parse(reconciliationAmountFieldOperations.FieldValue.ToString()),
+                        Operator = reconciliationAmountFieldOperations.Operator
+                    }
+                }
+            };
         }
         private IQueryable<ExternalReconciliation> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<ExternalReconciliation> iQueryable, int tenant)
         {

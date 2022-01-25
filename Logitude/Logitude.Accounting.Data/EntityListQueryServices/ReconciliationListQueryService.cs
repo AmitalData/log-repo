@@ -62,24 +62,29 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         private QueryOperations GetReconciliationLinesQueryOperations(QueryOperations queryOperations)
         {
             var filterFieldName = "ReconciliationAmount";
-            var ReconciliationAmountFieldOperations = queryOperations.QueryFilterItems.Where(e => e.FieldName == filterFieldName).FirstOrDefault();
-            if (ReconciliationAmountFieldOperations == null)
+            var reconciliationAmountFieldOperations = queryOperations.QueryFilterItems.Where(e => e.FieldName == filterFieldName).FirstOrDefault();
+            if (reconciliationAmountFieldOperations == null)
                 return null;
-            queryOperations.QueryFilterItems.Remove(ReconciliationAmountFieldOperations);
-            var reconciliationLinesQueryOperations = new QueryOperations()
+            queryOperations.QueryFilterItems.Remove(reconciliationAmountFieldOperations);
+            var reconciliationLinesQueryOperations = CreateReconciliationLinesQueryOperations(reconciliationAmountFieldOperations);
+            return reconciliationLinesQueryOperations;
+        }
+
+        private QueryOperations CreateReconciliationLinesQueryOperations(QueryFilterItem reconciliationAmountFieldOperations)
+        {
+            return new QueryOperations()
             {
                 GetAll = true,
-                QueryFilterItems = new List<QueryFilterItem>() 
+                QueryFilterItems = new List<QueryFilterItem>()
                 {
                     new QueryFilterItem()
                     {
-                        FieldName = ReconciliationAmountFieldOperations.FieldName,
-                        FieldValue = decimal.Parse(ReconciliationAmountFieldOperations.FieldValue.ToString()),
-                        Operator = ReconciliationAmountFieldOperations.Operator
+                        FieldName = reconciliationAmountFieldOperations.FieldName,
+                        FieldValue = decimal.Parse(reconciliationAmountFieldOperations.FieldValue.ToString()),
+                        Operator = reconciliationAmountFieldOperations.Operator
                     }
                 }
             };
-            return reconciliationLinesQueryOperations;
         }
 
         private IQueryable<Reconciliation> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<Reconciliation> iQueryable,int tenant)
