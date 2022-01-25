@@ -94,6 +94,15 @@ namespace Logitude.Accounting.Data.Repositories
                    where a.IsControlAccount == true && a.Tenant == tenant
                    select a);
         }
+
+        public IQueryable<GLAccount> GetQueryAllSmallCashbookAccount(int tenant)
+        {
+            return (from a in context.GLAccounts
+                    where a.Smallcashbook == true && a.Tenant == tenant
+                    select a);
+        }
+
+
         public List<GLAccount> GetByGLAccountsIdList(List<String> GLAccountsIdList, int tenant)
         {
             return (from a in context.GLAccounts
