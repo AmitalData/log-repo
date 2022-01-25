@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, AfterViewInit, ChangeDetectorRef, Input}  from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -8,6 +8,7 @@ import {EntityListService} from '../../../../Infrastructure/Services/EntityListS
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { LogGridComponent } from 'Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent';
 
 @Component({
     
@@ -18,6 +19,8 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
     public EntityPM: GLAccountPM = null;
     public ObjectTableName = "GLAccount";
     public DataContext = this;
+
+    @Input() DataGrid:LogGridComponent;
 
     // Events
     @Output() onQueryChangeEvent = new EventEmitter();
@@ -115,33 +118,20 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
             this.RefreshButtonClicked();
         }
     }
+    AmountOperatorChanged($event){
+        this.selectedAmountOperator = $event
+        this.AmountTextChanged(this.Amount);
+    }
     AmountTextChanged(num) {
-        if (!AppTool.IsNullOrEmpty(num) && !AppTool.IsNullOrEmpty(this.amount)) {
-
+        if (!AppTool.IsNullOrEmpty(num) && !AppTool.IsNullOrEmpty(this.amount)&& this.selectedAmountOperator ) {
+            var amountFieldName = 'ReconciliationAmount';
             this.timerToken = setTimeout(() => {
                 if (!AppTool.IsNullOrEmpty(num) && !AppTool.IsNullOrEmpty(this.amount)) {
-
-                    if (this.selectedAmountOperator.Code == Operator.Equals) {
-                        this.amountFieldFilter = new FilterItem("ReconciliationAmount", num, -1 * num, null, this.selectedAmountOperator.Code, false, false, false, "number", false);
-                    }
-                    else if (this.selectedAmountOperator.Code == Operator.LessThan) {
-                        num = Math.abs(num);
-                        this.amountFieldFilter = new FilterItem("ReconciliationAmount", -1 * --num, +num, null, "Between", false, false, false, "number", false);
-                    }
-                    else if (this.selectedAmountOperator.Code == Operator.LessThanOrEqual) {
-                        num = Math.abs(num);
-                        this.amountFieldFilter = new FilterItem("ReconciliationAmount", -1 * num, +num, null, "Between", false, false, false, "number", false);
-                    }
-                    else {
-                        this.amountFieldFilter = new FilterItem("ReconciliationAmount", Math.abs(num), null, null, this.selectedAmountOperator.Code, false, false, false, "number", false);
-                    }
+                    this.amountFieldFilter = new FilterItem(amountFieldName, num, null, null, this.selectedAmountOperator.Code, false, false, false, "number", false);
                     this.RefreshButtonClicked();
-
                 } else {
                     this.amountFieldFilter = null;
-
                     this.RefreshButtonClicked();
-
                 }
             }, 700);
 
@@ -285,10 +275,10 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
 }
 export enum Operator{
     GreaterThanOrEqual='GreaterThanOrEqual',
-    LessThanOrEqual='GreaterThanOrEqual',
-    LessThan='GreaterThanOrEqual',
-    LargerThan='GreaterThanOrEqual',
-    NotEqual='GreaterThanOrEqual',
-    Equals='GreaterThanOrEqual'
+    LessThanOrEqual='LessThanOrEqual',
+    LessThan='LessThan',
+    LargerThan='LargerThan',
+    NotEqual='NotEqual',
+    Equals='Equals'
 
 }

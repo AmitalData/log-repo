@@ -42,10 +42,12 @@
                                                     
                                                         <ComboBox [ItemsSource]="operatorsList" [Binding]="'LocalName'"
                                                                   [SelectedItem]="selectedAmountOperator"
-                                                                  (SelectedItemChanged)="selectedAmountOperator = $event"></ComboBox>
+                                                                  (SelectedItemChanged)="AmountOperatorChanged($event)"></ComboBox>
                                                     
                                                         
                                                 </td>
+                                                <td style="width: 30px;"><div></div></td>
+                                                <td style="width: 30px;"><div></div></td>
 
                                                 <td style="width: 30px;" [style.text-align]="isRTL ? 'right' : 'left'">
                                                     <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true"
@@ -54,11 +56,7 @@
                                                     [ObjectTableName]="'Reconciliation'" [DataContext]="this"></LogTextBox>
                                                 </td>
 
-                                                <td ></td>
-
-                                                <td >
-                                                    
-                                                </td>
+                                                
                                                 <td><div></div></td>
                                             </tr>
 
@@ -93,7 +91,7 @@
                         <td colspan="5" style="height: 100%;">
 
                             <div class="GeneratedGridContainer">
-                                <logitude-grid GridWidth="100%" 
+                                <logitude-grid #DataGrid GridWidth="100%" 
                                                GridHeight="100%" 
                                                [ObjectTable]="'Reconciliation'" 
                                                [dataSource]="DataSource"
