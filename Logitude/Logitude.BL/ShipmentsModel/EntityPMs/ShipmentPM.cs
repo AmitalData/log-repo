@@ -2104,6 +2104,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? DocumentInspection { get; set; }
         public DateTime? GatepassDocumentsReady { get; set; }
         public DateTime? GoodsClassification { get; set; }
+        public DateTime? InvoiceIssuedDate { get; set; }
+
         public bool IsImporterApprovalRequired { get; set; }
         public bool SendUpdatesToAgentEnabled { get; set; }
         public bool UpdateSendUpdatesToAgentEnabledField { get; set; }

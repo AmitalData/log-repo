@@ -93,6 +93,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             var shipmentAdditionalDataFields =
              "min(AdditionalData.GoodsClassification) as GoodsClassification, " +
              "min(AdditionalData.DocumentInspection) as DocumentInspection , " +
+             "min(AdditionalData.InvoiceIssuedDate) as InvoiceIssuedDate , " +
              "AdditionalData.IsPaymentRequired as IsPaymentRequired , " +
              "min(AdditionalData.PaymentDateTime) as PaymentDateTime , " +
              "min(AdditionalData.PaymentRequestDateTime) as PaymentRequestDateTime , " +
@@ -299,6 +300,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             var shipmentAdditionalDataFields =
              "min(AdditionalData.GoodsClassification) as GoodsClassification, " +
              "min(AdditionalData.DocumentInspection) as DocumentInspection , " +
+             "min(AdditionalData.InvoiceIssuedDate) as InvoiceIssuedDate , " +
              "AdditionalData.IsPaymentRequired as IsPaymentRequired , " +
              "min(AdditionalData.PaymentDateTime) as PaymentDateTime , " +
              "min(AdditionalData.PaymentRequestDateTime) as PaymentRequestDateTime , " +
@@ -449,6 +451,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "0 as AssignedCustomsAgentDone," +
                 "0 as DeliveryDone," +
                 "0 as DocumentInspectionDone," +
+                "0 as InvoicedDone," +
                 "0 as GoodsClassificationDone," +
                 "0 as PaymentRequiredDone," +
                 "0 as PaymentReceivedDone," +
