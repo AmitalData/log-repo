@@ -344,7 +344,8 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
             if (isAccountingActivated && !string.IsNullOrEmpty(entityPM.VatNumber))
             {
                 var isValid = LuhnAlgorithm.IsVatNumberValid(entityPM.VatNumber);
-                if (!isValid)
+                var isZeros = Int32.Parse(entityPM.VatNumber) == 0;
+                if (!isValid || isZeros)
                     throw new ApplicationException(TranslateTextsClass.Translate("General.O.WrongVatNumber", entityPM.Tenant));
             }
             else if (isAccountingActivated && string.IsNullOrEmpty(entityPM.VatNumber))
