@@ -178,6 +178,8 @@ export class PublicShipmentDetailsComponent implements OnInit
     }
 
     Delivered: boolean = false;
+    InvoicedDone: boolean = false;
+
     AssignedTruckerDone: boolean = false;
     InProgressShipment: boolean = false;
     DileveredIconColor: string;
@@ -211,6 +213,10 @@ export class PublicShipmentDetailsComponent implements OnInit
                 this.ShipmentReferences =result.ShipmentList.CustomerReference? result.ShipmentList.CustomerReference.split(','):null;
                 if (this.Shipment.CurrentMilestoneCode == CargoTrackingMilestones.Delivered) {
                     this.Delivered = true;
+                    this.DileveredIconColor = CargoTrackingBrandingData.SecondaryColor;
+                }
+                else if (this.Shipment.CurrentMilestoneCode == CargoTrackingMilestones.Invoiced) {
+                    this.InvoicedDone = true;
                     this.DileveredIconColor = CargoTrackingBrandingData.SecondaryColor;
                 }
                 else if (this.Shipment.CurrentMilestoneCode == CargoTrackingMilestones.AssignedToTrucker) {

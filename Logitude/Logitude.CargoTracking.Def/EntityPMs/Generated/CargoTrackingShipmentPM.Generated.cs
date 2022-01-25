@@ -3010,6 +3010,98 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private DateTime? invoicedDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? InvoicedDate  
+	   {
+	    
+	     get
+		{
+		   return invoicedDate;
+		 }
+		 set
+		 {
+		   if(invoicedDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoicedDate",OldValue=invoicedDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   invoicedDate=value;
+		   }
+			
+		 }
+	   }
+	  private bool? invoicedDone ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? InvoicedDone  
+	   {
+	    
+	     get
+		{
+		   return invoicedDone;
+		 }
+		 set
+		 {
+		   if(invoicedDone != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoicedDone",OldValue=invoicedDone,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   invoicedDone=value;
+		   }
+			
+		 }
+	   }
+	  private string invoicedNotes ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InvoicedNotes  
+	   {
+	    
+	     get
+		{
+		   return invoicedNotes;
+		 }
+		 set
+		 {
+		   if(invoicedNotes != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoicedNotes",OldValue=invoicedNotes,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   invoicedNotes=value;
+		   }
+			
+		 }
+	   }
+	  private string invoicedExceptionReason ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InvoicedExceptionReason  
+	   {
+	    
+	     get
+		{
+		   return invoicedExceptionReason;
+		 }
+		 set
+		 {
+		   if(invoicedExceptionReason != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoicedExceptionReason",OldValue=invoicedExceptionReason,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   invoicedExceptionReason=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

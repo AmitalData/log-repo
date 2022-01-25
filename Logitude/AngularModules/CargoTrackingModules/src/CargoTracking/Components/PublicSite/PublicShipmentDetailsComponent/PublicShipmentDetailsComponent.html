@@ -147,7 +147,7 @@
                         </div>
                         <div class="end">
 
-                            <svg *ngIf="Delivered || (!Delivered && !AssignedTruckerDone)" width="24px" height="33px" viewBox="0 0 24 33" version="1.1"
+                            <svg *ngIf="Delivered || InvoicedDone || (!Delivered && !AssignedTruckerDone)" width="24px" height="33px" viewBox="0 0 24 33" version="1.1"
                                  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title>77E5C82D-08E6-4278-98AE-10E5958AFF86</title>
                                 <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -160,7 +160,7 @@
                                     </g>
                                 </g>
                             </svg>
-                            <svg *ngIf="!Delivered && AssignedTruckerDone" width="47px" height="24px" viewBox="0 0 39 24" version="1.1"
+                            <svg *ngIf="!Delivered && AssignedTruckerDone && !InvoicedDone " width="47px" height="24px" viewBox="0 0 39 24" version="1.1"
                                  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title>1AA85C09-5F26-422B-B8DF-3A21F62D731B</title>
                                 <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -177,24 +177,24 @@
                                 </g>
                             </svg>
 
-                            <div class="label" *ngIf="!Delivered && AssignedTruckerDone">{{currentMilestoneName||'In Progress'}}</div>
+                            <div class="label" *ngIf="!Delivered && ( AssignedTruckerDone || InvoicedDone)">{{currentMilestoneName||'In Progress'}}</div>
 
 
-                            <div *ngIf="!Delivered && !AssignedTruckerDone" class="label dim">Delivered</div>
+                            <div *ngIf="!Delivered && !AssignedTruckerDone && !InvoicedDone" class="label dim">Delivered</div>
                             <div *ngIf="Delivered" class="label">Delivered</div>
-                            <div class="details" *ngIf="Delivered || (!Delivered && AssignedTruckerDone)">{{Date | date: 'dd/MM/yyyy'}}</div>
+                            <div class="details" *ngIf="Delivered || (!Delivered && ( AssignedTruckerDone || InvoicedDone))">{{Date | date: 'dd/MM/yyyy'}}</div>
                             <!-- <div class="details">details</div> -->
                         </div>
                     </div>
 
                     <div class="line-progressbar">
-                        <div class="line" [class.colored-line]="InProgressShipment||Delivered || AssignedTruckerDone"></div>
-                        <div class="line end" [class.colored-line]="Delivered || AssignedTruckerDone"></div>
+                        <div class="line" [class.colored-line]="InProgressShipment||Delivered || AssignedTruckerDone || InvoicedDone"></div>
+                        <div class="line end" [class.colored-line]="Delivered || AssignedTruckerDone || InvoicedDone"></div>
 
                         <div class="dot start"></div>
                         <div class="dot middle" [class.outline]="InProgressShipment" [class.colored]="Delivered"
                             *ngIf="InProgressShipment "></div>
-                        <div class="dot end gray" [class.colored]="Delivered || AssignedTruckerDone"></div>
+                        <div class="dot end gray" [class.colored]="Delivered || AssignedTruckerDone || InvoicedDone"></div>
                     </div>
 
                 </div>

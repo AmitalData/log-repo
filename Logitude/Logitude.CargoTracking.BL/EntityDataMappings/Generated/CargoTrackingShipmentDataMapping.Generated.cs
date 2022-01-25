@@ -134,7 +134,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         DescriptionOfGoods, 
 	         SupplyDateTime, 
 	         IsOperationalClosed, 
-	         DenyDate,
+	         DenyDate, 
+	         InvoicedDate, 
+	         InvoicedDone, 
+	         InvoicedNotes, 
+	         InvoicedExceptionReason,
 	      }
 
 
@@ -270,7 +274,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         ApprovedDate, 
 	         DenyDate, 
 	         DenyReason, 
-	         ConnectedShipmentsNumbers,
+	         ConnectedShipmentsNumbers, 
+	         InvoicedDate, 
+	         InvoicedDone, 
+	         InvoicedNotes, 
+	         InvoicedExceptionReason,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -827,6 +835,26 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DenyDate))
             {
 				entityPOCO.DenyDate = entityPM.DenyDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvoicedDate))
+            {
+				entityPOCO.InvoicedDate = entityPM.InvoicedDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvoicedDone))
+            {
+				entityPOCO.InvoicedDone = entityPM.InvoicedDone;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvoicedNotes))
+            {
+				entityPOCO.InvoicedNotes = entityPM.InvoicedNotes;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvoicedExceptionReason))
+            {
+				entityPOCO.InvoicedExceptionReason = entityPM.InvoicedExceptionReason;
 			}
 			}
 
@@ -1388,6 +1416,26 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.DenyDate = entityPOCO.DenyDate;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InvoicedDate))
+            {
+					entityPM.InvoicedDate = entityPOCO.InvoicedDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InvoicedDone))
+            {
+					entityPM.InvoicedDone = entityPOCO.InvoicedDone;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InvoicedNotes))
+            {
+					entityPM.InvoicedNotes = entityPOCO.InvoicedNotes;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InvoicedExceptionReason))
+            {
+					entityPM.InvoicedExceptionReason = entityPOCO.InvoicedExceptionReason;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingShipmentPM entityPM, CargoTrackingShipmentPM oldEntityPM)
@@ -1944,6 +1992,26 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
                 oldEntityPM.DenyDate = entityPM.DenyDate;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvoicedDate))
+            {
+                oldEntityPM.InvoicedDate = entityPM.InvoicedDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvoicedDone))
+            {
+                oldEntityPM.InvoicedDone = entityPM.InvoicedDone;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvoicedNotes))
+            {
+                oldEntityPM.InvoicedNotes = entityPM.InvoicedNotes;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvoicedExceptionReason))
+            {
+                oldEntityPM.InvoicedExceptionReason = entityPM.InvoicedExceptionReason;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(CargoTrackingShipmentPM entityPM)
@@ -2032,6 +2100,14 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.DescriptionOfGoods)) //T4 find type == nText 
             {
                 entityPM.DescriptionOfGoods = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.DescriptionOfGoods));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.InvoicedNotes)) //T4 find type == nText 
+            {
+                entityPM.InvoicedNotes = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.InvoicedNotes));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.InvoicedExceptionReason)) //T4 find type == nText 
+            {
+                entityPM.InvoicedExceptionReason = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.InvoicedExceptionReason));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
