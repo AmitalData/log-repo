@@ -178,6 +178,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string CargoDescription  { get; set; }
        [DataMember]
        public bool FinalRelease  { get; set; }
+       [DataMember]
+       public DateTime? HatraDate  { get; set; }
    }
 
 }
