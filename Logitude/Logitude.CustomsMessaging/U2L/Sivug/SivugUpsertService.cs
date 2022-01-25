@@ -1310,7 +1310,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                             }
                             if (!String.IsNullOrWhiteSpace(expense.InvExpDescription))
                             {
-                                //SupplierInvoiceModificationPM.InvExpDescription = expense.InvExpDescription;
+                                SupplierInvoiceModificationPM.TypeDesc = expense.InvExpDescription;
                             }
                             SupplierInvoiceModificationPM.DeclarationId = this._MySupplierInvoicePM.DeclarationId;
                             if (this._MySupplierInvoicePM.InvoiceCounterKey > 0) SupplierInvoiceModificationPM.InvoiceCounterKey = this._MySupplierInvoicePM.InvoiceCounterKey;
