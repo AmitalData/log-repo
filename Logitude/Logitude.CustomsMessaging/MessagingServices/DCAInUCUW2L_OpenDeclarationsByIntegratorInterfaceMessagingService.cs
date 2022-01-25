@@ -170,7 +170,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             String rabbitMQCode = RabbitmqHelper.GetRabbitMQCode(tenant);
 
                             var rabbitPublishService = new RabbitPublishService();
-                            rabbitPublishService.Publish(message, communicationLogId, InterfaceTypeCode, rabbitMQCode, 5);
+                            rabbitPublishService.Publish(message, communicationLogId, InterfaceTypeCode, rabbitMQCode, 9);
 
                         }
                         catch (System.Exception)
