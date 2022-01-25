@@ -141,17 +141,16 @@ export class PerVendorReportFilterComponent extends BaseComponent {
         this.errors = [];
         this.ValidationErrorsList = [];
         if (this.VendorFilterSelectedValue == "Vendor" && !this.vendor) {
-            this.errors.push("No vendor has been selected");
-            this.errors.push(TextCodeTranslator.Translate("GLTransactionReport.O.RequiredFields"));
+            this.errors.push(TextCodeTranslator.Translate("TaxDeductionReport.O.NoVendorSelected"));
+        } else if(this.VendorFilterSelectedValue == "Vendor" && this.VendorGLAccount && this.VendorGLAccount.ExcludeFromDeductionReport) {
+            this.errors.push(TextCodeTranslator.Translate("TaxDeductionReport.O.ExcludedFromDeductionReport"));
         }
 
         if (this.VendorFilterSelectedValue == "Vendor" && this.vendor && this.vendor.GLAccountId == null) {
-            this.errors.push("The selected vendor doesn't have GlAccount");
+            this.errors.push(TextCodeTranslator.Translate("TaxDeductionReport.O.NoVendorGlAccount"));
         }
 
-        if(this.VendorFilterSelectedValue == "Vendor" && this.VendorGLAccount && this.VendorGLAccount.ExcludeFromDeductionReport) {
-            this.errors.push("The selected vendor is excluded from deduction report");
-        }
+        
         if (this.errors.length == 0) {
 
 

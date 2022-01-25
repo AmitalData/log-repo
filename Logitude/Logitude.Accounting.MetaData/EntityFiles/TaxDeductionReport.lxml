@@ -1604,6 +1604,24 @@
       LocalDefaultText="&quot;כל הספקים&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxDeductionReport.O.NoVendorSelected&quot;"
+      DefaultText="&quot;No vendor has been selected&quot;"
+      LocalDefaultText="&quot;אף ספק לא נבחר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxDeductionReport.O.NoVendorGlAccount&quot;"
+      DefaultText="&quot;The selected vendor doesn't have GlAccount&quot;"
+      LocalDefaultText="&quot;לספק הנבחר לא מחובר כרטיס הנהלת חשבונות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxDeductionReport.O.ExcludedFromDeductionReport&quot;"
+      DefaultText="&quot;The selected vendor is excluded from deduction report&quot;"
+      LocalDefaultText="&quot; הספק הנבחר מסומן &quot;לא לדיווח&quot; בדוח 856&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
