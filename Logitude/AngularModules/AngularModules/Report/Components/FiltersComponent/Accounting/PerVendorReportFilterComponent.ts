@@ -110,6 +110,7 @@ export class PerVendorReportFilterComponent extends BaseComponent {
             setTimeout(() => {
                 if (!this.IsOldDate("ToDate"))
                     this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustGreaterFromDate"));
+                    this.errors = [];
                 if (!this.IsOldDate("FromDate"))
                     this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
                 this.CD.detectChanges();
@@ -142,15 +143,16 @@ export class PerVendorReportFilterComponent extends BaseComponent {
         this.ValidationErrorsList = [];
         if (this.VendorFilterSelectedValue == "Vendor" && !this.vendor) {
             this.errors.push(TextCodeTranslator.Translate("TaxDeductionReport.O.NoVendorSelected"));
+        } else if (this.VendorFilterSelectedValue == "Vendor" && this.vendor && this.vendor.GLAccountId == null) {
+            this.errors.push(TextCodeTranslator.Translate("TaxDeductionReport.O.NoVendorGlAccount"));
         } else if(this.VendorFilterSelectedValue == "Vendor" && this.VendorGLAccount && this.VendorGLAccount.ExcludeFromDeductionReport) {
             this.errors.push(TextCodeTranslator.Translate("TaxDeductionReport.O.ExcludedFromDeductionReport"));
         }
 
-        if (this.VendorFilterSelectedValue == "Vendor" && this.vendor && this.vendor.GLAccountId == null) {
-            this.errors.push(TextCodeTranslator.Translate("TaxDeductionReport.O.NoVendorGlAccount"));
+        var advancedDatePickerResolverComponent: AdvancedDatePickerResolverComponent = new AdvancedDatePickerResolverComponent();
+        if (!advancedDatePickerResolverComponent.SetValidityBetweenTwoDateOptions(this.FromDate, this.ToDate)) {
+            this.errors.push(TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
         }
-
-        
         if (this.errors.length == 0) {
 
 
