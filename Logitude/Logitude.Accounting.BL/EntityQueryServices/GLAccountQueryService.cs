@@ -141,6 +141,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return pocoGLAccountCard;
         }
 
+        public IQueryable<GLAccount> GetQueryAllSmallCashbookAccount(int tenant)
+        {
+            var pocoGLAccount = this.repository.GetQueryAllSmallCashbookAccount(tenant);
+            return pocoGLAccount;
+        }
+
 
 
         public List<int> GetTenantByNextDueDate(DateTime today, List<string> accountTypeCodeList)

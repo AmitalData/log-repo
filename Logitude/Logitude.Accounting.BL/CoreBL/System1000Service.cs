@@ -54,14 +54,6 @@ namespace Logitude.Accounting.BL.CoreBL
                 throw new Exception(text);
             }
 
-            if (_AllVendorGLAccountCards == null)
-            {
-                bool useLocal = true;
-                string text = TranslateTextsClassTranslate("System1000.O.NoVendors", 0, useLocal);
-                if (String.IsNullOrEmpty(text)) text = "No Vendors found  with Vat Number and Deduction File Number";
-                throw new Exception(text);
-            }
-
             var listOfAccounts = _AllVendorGLAccountCards.ToList();
             if (listOfAccounts == null || listOfAccounts.Count == 0)
             {
@@ -70,6 +62,21 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (String.IsNullOrEmpty(text)) text = "No Vendors found with Vat Number and Deduction File Number";
                 throw new Exception(text);
             }
+
+            List<GLAccount> listOfSmallCashbooks = new List<GLAccount>();
+            var smallCashbooks = GetQAllCashbookGLAccounts(accountingContext, tenant);
+            if (smallCashbooks != null)
+            {
+                listOfSmallCashbooks = smallCashbooks.ToList();
+                foreach (var cashbook in listOfSmallCashbooks)
+                {
+                    listOfAccounts.RemoveAll(c => c.Id == cashbook.Id);
+                }
+            }
+
+
+
+
             List<String> glid_cache = new List<string>();
             List<CardGLAccountDataView> workList = new List<CardGLAccountDataView>();
             foreach (var item in listOfAccounts)
@@ -229,6 +236,13 @@ namespace Logitude.Accounting.BL.CoreBL
             var myGLAccountQueryService = new GLAccountQueryService(accountingContext);
             var myVendorGLAccountCardList = myGLAccountQueryService.GetQAllVendorGLAccountCardsHavingDeduction(tenant);
             return myVendorGLAccountCardList;
+        }
+
+        private IQueryable<GLAccount> GetQAllCashbookGLAccounts(IAccountingContext accountingContext, int tenant)
+        {
+            var myGLAccountQueryService = new GLAccountQueryService(accountingContext);
+            var myCashbookGLAccountList = myGLAccountQueryService.GetQueryAllSmallCashbookAccount(tenant);
+            return myCashbookGLAccountList;
         }
 
 
