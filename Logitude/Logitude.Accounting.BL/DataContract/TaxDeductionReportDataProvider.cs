@@ -492,7 +492,7 @@ namespace Logitude.Accounting.BL.DataContract
             List<TaxDeductionReportLine> groupeddeductionLines = GroupDeductionLinesByVendorAndPercentage(deductionLines);
             List<CardList> mainCards = GetMainAccountsCards();
             vendors = vendors.Concat(transactionsVendors).Concat(mainCards).ToList();
-            if (!string.IsNullOrWhiteSpace(taxDeductionPerVendorReportParameters.CardId)) {
+            if (taxDeductionPerVendorReportParameters != null &&!string.IsNullOrWhiteSpace(taxDeductionPerVendorReportParameters.CardId)) {
                 vendors = vendors.Where(x => x.Id == taxDeductionPerVendorReportParameters.CardId).ToList();
             }
             gLAccounts = gLAccounts.Concat(transactionsOppositGLAccounts).Concat(transactionsGLAccounts).Concat(mainGLAccounts).ToList();
