@@ -14251,7 +14251,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                      Transshipment3ToPortName = masterData.Transshipment3ToPort != null ? masterData.Transshipment3ToPort.EnglishName : null,
                                                      Transshipment3ToPortCode = masterData.Transshipment3ToPort != null ? masterData.Transshipment3ToPort.Code : null,
                                                      Transshipment3ToPortStateCode = masterData.Transshipment3ToPort != null ? masterData.Transshipment3ToPort.StateCode : null,
-                                                     Transshipment3ToPortCountryCode = masterData.Transshipment3ToPort != null ? masterData.Transshipment3ToPort.Country.Code : null
+                                                     Transshipment3ToPortCountryCode = masterData.Transshipment3ToPort != null ? masterData.Transshipment3ToPort.Country.Code : null,
+
+                                                     OnCarriageATA = masterData.OnCarriageATA,
+                                                     OnCarriageATD = masterData.OnCarriageATD,
+                                                     OnCarriageETA = masterData.OnCarriageETA,
+                                                     OnCarriageETD = masterData.OnCarriageETD,
+                                                     HasOnCarriage = masterData.OnCarriageFromPortId != null || masterData.OnCarriageToPortId != null ? true : false,
+
+                                                     PreCarriageATA = masterData.PreCarriageATA,
+                                                     PreCarriageATD = masterData.PreCarriageATD,
+                                                     PreCarriageETA = masterData.PreCarriageETA,
+                                                     PreCarriageETD = masterData.PreCarriageETD,
+                                                     HasPreCarriage = masterData.PreCarriageFromPortId != null || masterData.PreCarriageToPortId != null ? true : false
                                                  };
 
             return shipmentsMasterDataFieldsQuery.ToList();
@@ -14329,6 +14341,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentAdditionalFields.Transshipment3ToPortCode = shipmentMasterDataFields.Transshipment3ToPortCode;
                 shipmentAdditionalFields.Transshipment3ToPortStateCode = shipmentMasterDataFields.Transshipment3ToPortStateCode;
                 shipmentAdditionalFields.Transshipment3ToPortCountryCode = shipmentMasterDataFields.Transshipment3ToPortCountryCode;
+
+                shipmentAdditionalFields.OnCarriageATA = shipmentMasterDataFields.OnCarriageATA;
+                shipmentAdditionalFields.OnCarriageATD = shipmentMasterDataFields.OnCarriageATD;
+                shipmentAdditionalFields.OnCarriageETA = shipmentMasterDataFields.OnCarriageETA;
+                shipmentAdditionalFields.OnCarriageETD = shipmentMasterDataFields.OnCarriageETD;
+                shipmentAdditionalFields.HasOnCarriage = shipmentMasterDataFields.HasOnCarriage;
+
+                shipmentAdditionalFields.PreCarriageATA = shipmentMasterDataFields.PreCarriageATA;
+                shipmentAdditionalFields.PreCarriageATD = shipmentMasterDataFields.PreCarriageATD;
+                shipmentAdditionalFields.PreCarriageETA = shipmentMasterDataFields.PreCarriageETA;
+                shipmentAdditionalFields.PreCarriageETD = shipmentMasterDataFields.PreCarriageETD;
+                shipmentAdditionalFields.HasPreCarriage = shipmentMasterDataFields.HasPreCarriage;
             }
         }
 
