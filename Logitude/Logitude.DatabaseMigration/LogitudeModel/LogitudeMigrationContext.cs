@@ -100,7 +100,13 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
         }
 
-        public IDbSet<UsoCFDI> RegimenFiscal
+        public IDbSet<RegimenFiscal> RegimenFiscals
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<PostalCode> PostalCodes
         {
             get;
             set;

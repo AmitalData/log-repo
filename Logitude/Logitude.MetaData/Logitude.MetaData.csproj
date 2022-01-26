@@ -196,6 +196,7 @@
     <None Include="DBScripts\CommonModel\202109021051_AddDefaultValueForSecurityLevel.sxml" />
     <None Include="DBScripts\CommonModel\202109021049_UpdateUsersSecurityLevel.sxml" />
     <None Include="DBScripts\CommonModel\202112191200_UpdateReportExcelAllowed.sxml" />
+    <None Include="DBScripts\CommonModel\202201261145_FillPostalCodesTable.sxml" />
     <None Include="DBScripts\CommonModel\202201101050_AddHRAdminRole.sxml" />
     <None Include="DBScripts\CommonModel\UpdateDocumentKPIFields.sxml" />
     <None Include="DBScripts\CommonModel\UpdatePortsSearchFields.sxml" />
@@ -753,12 +754,14 @@
     <None Include="DBTables\CommonDataModel\PaymentTerm.dxml" />
     <None Include="DBTables\CommonDataModel\PaymentTermDateType.dxml" />
     <None Include="DBTables\CommonDataModel\Port.dxml" />
+    <None Include="DBTables\CommonDataModel\PostalCode.dxml" />
     <None Include="DBTables\CommonDataModel\ProductItem.dxml" />
     <None Include="DBTables\CommonDataModel\ProductPeriod.dxml" />
     <None Include="DBTables\CommonDataModel\ProductType.dxml" />
     <None Include="DBTables\CommonDataModel\ProductTypeModification.dxml" />
     <None Include="DBTables\CommonDataModel\Rank.dxml" />
     <None Include="DBTables\CommonDataModel\RateClass.dxml" />
+    <None Include="DBTables\CommonDataModel\RegimenFiscal.dxml" />
     <None Include="DBTables\CommonDataModel\Region.dxml" />
     <None Include="DBTables\CommonDataModel\RegistryDateType.dxml" />
     <None Include="DBTables\CommonDataModel\Report.dxml" />
@@ -1123,6 +1126,7 @@
     <None Include="EntityFiles\CommonDataModel\HTSCode.lxml" />
     <None Include="EntityFiles\CommonDataModel\HybridTenantState.lxml" />
     <None Include="EntityFiles\CommonDataModel\PortTimeZone.lxml" />
+    <None Include="EntityFiles\CommonDataModel\PostalCode.lxml" />
     <None Include="EntityFiles\CommonDataModel\ProductItem.lxml" />
     <None Include="EntityFiles\CommonDataModel\RegimenFiscal.lxml" />
     <None Include="EntityFiles\CommonDataModel\ReportExecutionLog.lxml" />

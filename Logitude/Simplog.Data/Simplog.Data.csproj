@@ -190,8 +190,11 @@
     <Compile Include="CommonDataModel\EntityPOCOs\PortTimeZone.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\ProductItem.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CargoTenantMilestoneDefinition.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\PostalCode.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerTeamMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\PostalCodeMap.cs" />
     <Compile Include="CommonDataModel\Repositories\CustomerTeamRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\PostalCodeRepository.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\QuoteChargesType.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TariffCarrierTranslation.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UnassignedEntity.cs" />
