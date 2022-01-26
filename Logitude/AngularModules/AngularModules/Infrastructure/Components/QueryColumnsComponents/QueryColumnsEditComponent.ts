@@ -57,6 +57,7 @@ export class QueryColumnsEditComponent {
     public serviceArgs: ServiceArgs;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsViewOnly: boolean = false;
+    public LayoutDirection: string = 'ltr';
 
     constructor(private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
@@ -69,6 +70,9 @@ export class QueryColumnsEditComponent {
         else {
             this.SearchFieldsId = "QueryColumnSearchFields_" + this.CurrentSession.GetNewId("QueryColumnSearchFields");
         }
+
+        //RTL Layout
+        this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         //this.Run();
     }
 
