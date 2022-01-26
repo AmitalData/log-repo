@@ -190,6 +190,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 select new MyDecJoin
                 {
                     DeclarationId = rec.myDeclarationCourierStatuses.DeclarationId/*myDeclarations.Id*/,
+                    TerminalReleaseDate = rec.myDeclarationCourierStatuses.TerminalReleaseDate/*myDeclarations.Id*/,
                     //CourierMasterId = rec.CourierMasterId,
                     IsClosedForFollowUp = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.IsClosedForFollowUp : false,
                     //FastIndividualProcessName = "",
@@ -482,7 +483,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      CargoTypeName = myJoinConsignment != null && myJoinConsignment.CargoType  != null ? myJoinConsignment.CargoType.LocalName : null,
                                                      SecondCargoID= myJoinConsignment != null ? myJoinConsignment.SecondCargoID : null,
                                                      ThirdCargoID= myJoinConsignment != null ? myJoinConsignment.ThirdCargoID : null,
-                                                     ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber :null
+                                                     ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber :null,
+                                                     TerminalReleaseDate = myJoin.TerminalReleaseDate
                                                  });
 
 
@@ -760,6 +762,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         public bool IsPending900 { get; set; }
         public string CourierPendingReasonList { get; set; }
         public string MAWB { get; set; }
+        public DateTime? TerminalReleaseDate { get; set; }
         public bool IsCourierMissingClassification { get; set; }
         public bool IsPendingNotNull { get; set; }
     }
