@@ -52,7 +52,7 @@
 <table>
     <tr>
         <td>
-            <div *ngIf="IsViewOnly" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" class="ViewOnly">
+            <div *ngIf="IsShowWarringMessage" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" class="ViewOnly">
                 <div style="margin:3px 7px;font-weight:500">
                     You are not allowed to edit or remove the filters of this view. It was shared with view only mode.  <Hyperlink style="margin-left:5px;margin-right:5px;" (click)="IsShowWarringMessage = false" [FontSize]="12" [Text]="'close'"></Hyperlink>
 
