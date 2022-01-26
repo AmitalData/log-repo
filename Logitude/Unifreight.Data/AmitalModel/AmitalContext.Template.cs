@@ -8684,6 +8684,33 @@ namespace Unifreight.Data.AmitalModel
 
             #endregion
 
+
+            #region GITITEMAP
+
+            modelBuilder.Entity<GITITEMAP>()
+                .HasKey(p => new { p.COUNTER, p.APPROVTYPEID })
+                .ToTable("GITITEMAP", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GITITEMAP>()
+                .Property(p => p.COUNTER)
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("decimal")
+                    .HasPrecision(20, 0);
+            modelBuilder.Entity<GITITEMAP>()
+                .Property(p => p.APPROVTYPEID)
+                    .HasColumnName(@"APPROV_TYPE_ID")
+                    .IsRequired()
+                    .HasMaxLength(4)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GITITEMAP>()
+                .Property(p => p.REMARKS)
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+
+            #endregion
+
             #region Disabled conventions
 
 
@@ -8806,5 +8833,7 @@ namespace Unifreight.Data.AmitalModel
         public virtual DbSet<MTBCARR> MTBCARRs { get; set; }
         public virtual DbSet<MTBPORT> MTBPORTs { get; set; }
         public virtual DbSet<GGGHDAY> GGGHDAYS { get; set; }
+        public virtual DbSet<GITITEMAP> GITITEMAPs { get; set; }
+
     }
 }
