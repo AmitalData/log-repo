@@ -107,7 +107,17 @@
 
 	<Column
     Name="UseRabbitMQ"
-    Type="bit">
+    Type="bit"
+	DefaultValue="0">
+		<Constraints
+		  Nullable="false" />
+	</Column>
+
+	
+	<Column
+Name="HaveRabbitMQ"
+Type="bit"
+DefaultValue="0">
 		<Constraints
 		  Nullable="false" />
 	</Column>

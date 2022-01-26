@@ -132,13 +132,13 @@ namespace Logitude.Server.Tools.QueueService
                     {
                         
                         
-                        queueService.Send(messageProperties, _QueueSendModel.Tenant, _QueueSendModel.Delay, _QueueSendModel.TenantPriority ?? 89);
+                        queueService.Send(messageProperties, _QueueSendModel.Tenant, _QueueSendModel.Delay, _QueueSendModel/*.TenantPriority ?? 89*/);
                         LogMessagingUtil.Instance.AppendLine("***** Delay _QueueSendModel.Delay " + _QueueSendModel.Delay.ToString());
 
                     }
                     else
                     {
-                        queueId = queueService.Send(messageProperties, _QueueSendModel.Tenant, null, _QueueSendModel.TenantPriority ?? 89);
+                        queueId = queueService.Send(messageProperties, _QueueSendModel.Tenant, null, _QueueSendModel/*.TenantPriority ?? 89*/);
                     }
                     
                     LogMessagingUtil.Instance.AppendLine("CustomDbQueueService:CreateNew:SBQueueName=" + _SBQueueName + "QMId=" + queueId);
@@ -157,6 +157,10 @@ namespace Logitude.Server.Tools.QueueService
     }
     public class QueueSendModel
     {
+        public QueueSendModel()
+        {
+
+        }
         //public int ProcessState { get; set; }
 
         public int Tenant { get; set; }
@@ -177,7 +181,7 @@ namespace Logitude.Server.Tools.QueueService
             set { _DcaAnalyzeAggregateKey = value; }
         }
 
-        
-        
+        public bool UseRabbitMQ { get;  set; }
+        public string QueueCodeRabbit { get; set; }
     }
 }
