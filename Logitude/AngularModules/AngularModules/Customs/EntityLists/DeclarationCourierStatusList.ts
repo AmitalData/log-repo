@@ -89,6 +89,10 @@ export class DeclarationCourierStatusList {
 	TerminalReleaseDate: Date;
 	LastMileServiceType: string;
 	CargoDescription: string;
+	CasualSupplierAddress: string;
+	CasualImporterCity: string;
+	GrossMassMeasure: number;
+	IncoTermCode: string;
 	
 }
  

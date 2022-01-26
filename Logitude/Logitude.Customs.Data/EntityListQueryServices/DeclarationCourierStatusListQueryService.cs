@@ -262,6 +262,163 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationCourierStatusList> q = GetIqueryableList(DeclarationCourierStatusQuery);
             return q;
         }
+
+        public IQueryable<DeclarationCourierStatusList> GetDeclarationCourierStatusforPendingBulkFeed(IQueryable<DeclarationCourierStatus> iQueryable)
+        {
+            int weightFromInt = 0;
+            int weightToInt = 0;
+
+            var q1 = (from cd in context.CourierDeclarations//.Where(cd => cd.CourierMasterId == courierMasterId)
+
+                      join d in context.Declarations on cd.DeclarationId equals d.Id
+
+                      join dcs in context.DeclarationCourierStatuses on d.Id equals dcs.DeclarationId
+
+                      join cp in context.ConsignmentPackages on d.Id equals cp.DeclarationId into cpjoin
+                      from cpj in cpjoin.Where(cp => cp.PackageMeasureQualifierCode == "2").DefaultIfEmpty()
+
+                      join c in context.Clients on d.ImporterId equals c.Id into cjoin
+                      from cj in cjoin.DefaultIfEmpty()
+
+                      join s in (from temp in context.SupplierInvoices
+                                 group temp by temp.DeclarationId into temp2
+                                 where temp2.Count() > 0
+                                 select new { DeclarationId = temp2.Key, SupplierInvoices = temp2.FirstOrDefault() })
+                               on d.Id equals s.DeclarationId into sjoin
+                      from sj in sjoin.DefaultIfEmpty()
+
+              
+                      orderby d.Id
+
+                      select new DeclarationCourierStatusList
+                      {
+                          CourierMasterId= cd.CourierMasterId, 
+                          DeclarationId = d.Id,
+                          CourierHawb = d.CourierHAWB,
+                          ImporterName = d.ImporterName,
+                          CargoDescription = d.CargoDescription,
+                          CasualSupplierAddress = d.CasualImporterAddress1 + "," + d.CasualImporterAddress2,
+                        //  Casualimporteraddress2 = d.CasualImporterAddress2,
+                          CasualImporterCity = d.CasualImporterCity,
+                          TotalInvoiceAmountInUSD = dcs.TotalInvoiceAmountInUSD,
+                          //GrossMassMeasure = cpj != null ? cpj.GrossMassMeasure : "0",// t.AsEnumerable().Sum(cpj => int.Parse(cpj.PackageMeasureQualifierCode)),
+                          ImporterCode = cj != null ? cj.Code : d.ImporterCode,
+                          IncoTermCode = sj != null ? sj.SupplierInvoices.IncotermCode : "",
+                          CourierSearchFields = d.CourierSearchFields,
+                          FastIndividualProcessCode = dcs.FastIndividualProcessCode
+                      });
+
+            
+
+ 
+ 
+
+            return q1;
+
+ 
+        }
+
+        public List<DeclarationCourierStatusList> GetDeclarationCourierStatusListPendingBulk(QueryOperations queryOperations, int tenant)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<DeclarationCourierStatus> iQueryable = (from a in context.DeclarationCourierStatuses
+
+                                                               where a.Tenant == tenant
+                                                  select a);
+            iQueryable = ApplyCustomFilters(queryOperations, iQueryable, tenant);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            iQueryable = filter.GetFilteredQuery<DeclarationCourierStatus>(nonListQueryOperation, iQueryable);
+
+            int skippedPorts = queryOperations.PageIndex;
+
+            IQueryable<DeclarationCourierStatusList> query2 = GetDeclarationCourierStatusforPendingBulkFeed(iQueryable);
+
+            query2 = filter.GetFilteredQuery<DeclarationCourierStatusList>(listQueryOperation, query2);
+
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                PropertyInfo propInfo = typeof(DeclarationCourierStatusList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> DeclarationCourierStatusObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.DeclarationCourierStatus", tenant).ToList();
+
+                ObjectField objectField = (from a in DeclarationCourierStatusObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
+
+                if (objectField != null)
+                {
+                    if (objectField.IsCustom)
+                    {
+                        query2 = sortClass.GetSorterQuery<DeclarationCourierStatusList, string>(queryOperations, query2);
+                    }
+                    else
+                    {
+                        switch (objectField.DataTypeCode.ToLower())
+                        {
+                            case "ntext":
+                            case "text":
+                                {
+                                    query2 = sortClass.GetSorterQuery<DeclarationCourierStatusList, string>(queryOperations, query2);
+                                    break;
+                                }
+                            case "sigdouble":
+                            case "double":
+                                {
+                                    query2 = sortClass.GetSorterQuery<DeclarationCourierStatusList, double>(queryOperations, query2);
+                                    break;
+                                }
+                            case "date":
+                            case "datetime":
+                                {
+                                    query2 = sortClass.GetSorterQuery<DeclarationCourierStatusList, DateTime>(queryOperations, query2);
+                                    break;
+                                }
+                            case "unsinteger":
+                            case "integer":
+                                {
+                                    query2 = sortClass.GetSorterQuery<DeclarationCourierStatusList, int>(queryOperations, query2);
+                                    break;
+                                }
+                            case "boolean":
+                                {
+                                    query2 = sortClass.GetSorterQuery<DeclarationCourierStatusList, bool>(queryOperations, query2);
+                                    break;
+                                }
+                            case "unsdecimal":
+                            case "decimal":
+                                {
+                                    query2 = sortClass.GetSorterQuery<DeclarationCourierStatusList, decimal>(queryOperations, query2);
+                                    break;
+                                }
+                            default:
+                                {
+                                    query2 = query2.OrderByDescending(d => d.CourierHawb);
+                                    break;
+                                }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                 query2 = query2.OrderByDescending(d => d.CourierHawb);
+            }
+            if (!queryOperations.GetAll)
+            {
+                query2 = query2.Skip(skippedPorts);
+                query2 = query2.Take(queryOperations.PageSize);
+            }
+            return query2.ToList();
+
+
+        }
+
     }
 
     public class MyJoin

@@ -176,6 +176,14 @@ namespace Logitude.Customs.Data.EntityLists
        public string LastMileServiceType  { get; set; }
        [DataMember]
        public string CargoDescription  { get; set; }
+       [DataMember]
+       public string CasualSupplierAddress  { get; set; }
+       [DataMember]
+       public string CasualImporterCity  { get; set; }
+       [DataMember]
+       public decimal GrossMassMeasure  { get; set; }
+       [DataMember]
+       public string IncoTermCode  { get; set; }
    }
 
 }
