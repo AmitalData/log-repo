@@ -127,3 +127,34 @@ export function OpenRoutingTabAddPickUp(){
   cy.Click(ShipmentSelectors.AddPickUp, null)
   cy.Click(BaseSelectors.Button, ShipmentConstants.AddPickUp)
 }
+export function FillStandaloneShipmentFromTypeDetails(standaloneDetails: PickupDelivaryDetails) {
+   if (standaloneDetails.From == ShipmentConstants.Partner) {
+      cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageFromPartner, standaloneDetails.FromPartner, true)
+   }
+   else if (standaloneDetails.From == ShipmentConstants.Port) {
+      cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageFromPort, standaloneDetails.FromPort, true)
+   }
+   else {
+      cy.FillLogLov(ShipmentSelectors.ShipmentInlandDomesticFromCountry, standaloneDetails.FromCountry, true)
+      cy.FillLogTextBox(ShipmentSelectors.ShipmentInlandDomesticFromCity, standaloneDetails.FromCity)
+   }
+}
+
+export function FillStandaloneShipmentToTypeDetails(standaloneDetails: PickupDelivaryDetails) {
+   if (standaloneDetails.To == ShipmentConstants.Partner) {
+      cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageToPartner, standaloneDetails.ToPartner, true)
+   }
+   else if (standaloneDetails.To == ShipmentConstants.Port) {
+      cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageToPort, standaloneDetails.ToPort, true)
+   }
+   else {
+      cy.FillLogTextBox(ShipmentSelectors.ShipmentInlandDomesticToCountry, standaloneDetails.ToCity)
+      cy.FillLogLov(ShipmentSelectors.ShipmentInlandDomesticToCity, standaloneDetails.ToCountry, true)
+   }
+}
+
+export function CreateStandaloneShipmentFromRoutingDetails(pickupdelivaryDetails: PickupDelivaryDetails) {
+   FillPickupDeliveryRouting(pickupdelivaryDetails)
+   FillStandaloneShipmentFromTypeDetails(pickupdelivaryDetails)
+   FillStandaloneShipmentToTypeDetails(pickupdelivaryDetails)
+}
