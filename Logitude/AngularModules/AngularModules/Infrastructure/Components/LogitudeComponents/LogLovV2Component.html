@@ -735,7 +735,7 @@
 
                             <!-- Footer -->
                             <div class="LogLOVFooter" [style.text-align]="LayoutDirection=='rtl' ? 'left' : 'right'" *ngIf="ShowAddLink || ShowSearchButton">
-                                <ul *ngIf="ShowLanguageFilter"  float-start >
+                                <ul *ngIf="ShowLanguageFilter && !ForceShowLocalAndEnglishColumns"  float-start >
                                     <li style="width: 50px;" [class.SelectedFilter]="LanguageFilterValue == 'L'" (click)="SwitchBetweenLocalAndEng('L')" class="noselect">
                                         Local
                                     </li>
