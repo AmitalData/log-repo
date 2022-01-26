@@ -173,7 +173,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="SaveChanges()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" [disabled]="IsViewOnly" (click)="SaveChanges()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>
