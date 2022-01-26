@@ -30,6 +30,14 @@ namespace Logitude.Customs.Data.EntityLists
        public bool DcaRenameFileEnable  { get; set; }
        [DataMember]
        public string DcaRenameFilePrefix  { get; set; }
+       [DataMember]
+       public string QueueType  { get; set; }
+       [DataMember]
+       public bool UseRabbitMQ  { get; set; }
+       [DataMember]
+       public string QueueGroupCode  { get; set; }
+       [DataMember]
+       public string SendTime  { get; set; }
    }
 
 }

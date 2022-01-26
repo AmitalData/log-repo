@@ -2,8 +2,7 @@
 <Table
   Name="InterfaceTenantDefinitions"
   Schema="Customs"
-  DBType="Main"
-  Module="Customs">
+  DBType="Main">
   <Column
     Name="Id"
     Type="varchar"
@@ -54,6 +53,33 @@
     Name="DcaRenameFilePrefix"
     Type="varchar"
     Size="256">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="QueueType"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="UseRabbitMQ"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="QueueGroupCode"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SendTime"
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>

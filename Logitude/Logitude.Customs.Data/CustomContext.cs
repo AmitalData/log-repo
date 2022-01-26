@@ -318,6 +318,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CustomsDocumentsTicketMap());
 	
+            modelBuilder.Configurations.Add(new CustomsEnvironmentSettingMap());
+	
             modelBuilder.Configurations.Add(new CustomsEnvoirmentTypeMap());
 	
             modelBuilder.Configurations.Add(new CustomsExchangeRateMap());
@@ -2082,6 +2084,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CustomsDocumentsTicket> CustomsDocumentsTickets 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CustomsEnvironmentSetting> CustomsEnvironmentSettings 
 	 {
 	      get; set;
 	 

@@ -84,6 +84,27 @@
 		  Nullable="true" />
 	</Column>
 
+
+	<Column
+		Name="InterfaceTypeCode"
+		Type="varchar"
+		Size="32">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+
+	
+
+	<Column
+		Name="QueueCodeRabbit"
+		Type="varchar"
+		Size="256">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+
+
+
 	<Column
     Name="UseRabbitMQ"
     Type="bit">
@@ -99,4 +120,8 @@
   <Index
     Columns="QueueDefinitionCode,Status,NextRunDateTime"
     Include="Id" />
+
+	<Index
+  Columns="UseRabbitMQ"
+   />
 </Table>
