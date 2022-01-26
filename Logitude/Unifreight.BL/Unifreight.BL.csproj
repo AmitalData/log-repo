@@ -126,6 +126,8 @@
     <Compile Include="EntityDataMappings\CFIMSVLINEDataMapping.cs" />
     <Compile Include="EntityDataMappings\CFIMSVPAGEDataMapping.cs" />
     <Compile Include="EntityDataMappings\CFIMSVREMDataMapping.cs" />
+    <Compile Include="EntityDataMappings\EFIFILEMDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ESPSPEDDataMapping.cs" />
     <Compile Include="EntityDataMappings\GITITEMCRDataMapping.cs" />
     <Compile Include="EntityDataMappings\ETBAIRLINEDataMapping.cs" />
     <Compile Include="EntityDataMappings\ETBPAYTRDataMapping.cs" />
@@ -270,6 +272,8 @@
     <Compile Include="EntityPMs\UGenerated\CTBTRANSPPM.cs" />
     <Compile Include="EntityPMs\UGenerated\CTBTSRUFTYPEPM.cs" />
     <Compile Include="EntityPMs\UGenerated\CTBUNLOADPM.cs" />
+    <Compile Include="EntityPMs\UGenerated\EFIFILEMPM.cs" />
+    <Compile Include="EntityPMs\UGenerated\ESPSPEDPM.cs" />
     <Compile Include="EntityPMs\UGenerated\ETBAIRLINEPM.cs" />
     <Compile Include="EntityPMs\UGenerated\ETBPAYTRPM.cs" />
     <Compile Include="EntityPMs\UGenerated\ETBPORTPM.cs" />
@@ -356,6 +360,8 @@
     <Compile Include="EntityQueryServices\CTBTSRUFTYPEQueryService.cs" />
     <Compile Include="EntityQueryServices\CTBUNLOADQueryService.cs" />
     <Compile Include="EntityQueryServices\DualQueryService.cs" />
+    <Compile Include="EntityQueryServices\EFIFILEMQueryService.cs" />
+    <Compile Include="EntityQueryServices\ESPSPEDQueryService.cs" />
     <Compile Include="EntityQueryServices\ETBAIRLINEQueryService.cs" />
     <Compile Include="EntityQueryServices\ETBPAYTRQueryService.cs" />
     <Compile Include="EntityQueryServices\ETBPORTQueryService.cs" />

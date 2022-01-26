@@ -296,6 +296,75 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string mAIN_AWB ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MAIN_AWB  
+	   {
+	    
+	     get
+		{
+		   return mAIN_AWB;
+		 }
+		 set
+		 {
+		   if(mAIN_AWB != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MAIN_AWB",OldValue=mAIN_AWB,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   mAIN_AWB=value;
+		   }
+			
+		 }
+	   }
+	  private string sMP ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SMP  
+	   {
+	    
+	     get
+		{
+		   return sMP;
+		 }
+		 set
+		 {
+		   if(sMP != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SMP",OldValue=sMP,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   sMP=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? fLIGHT_DATE ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? FLIGHT_DATE  
+	   {
+	    
+	     get
+		{
+		   return fLIGHT_DATE;
+		 }
+		 set
+		 {
+		   if(fLIGHT_DATE != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FLIGHT_DATE",OldValue=fLIGHT_DATE,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   fLIGHT_DATE=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
