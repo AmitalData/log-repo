@@ -282,6 +282,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             gLAccountEntity.ConsolidationVat = entity.GLAccount.ConsolidationVat;
             gLAccountEntity.Occupation = entity.GLAccount.Occupation;
         }
+        
 
         private static string GetDeductionTypeId(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Vendor entity, GLAccountPM gLAccountEntity)
         {
@@ -300,6 +301,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             TaxWithholdingAssessOfficeQueryService assessOfficeService = new TaxWithholdingAssessOfficeQueryService(gLAccountEntity.Tenant);
             return assessOfficeService.GetByNumber(entity.GLAccount.AssessingOfficeCode, gLAccountEntity.Tenant).Id;
         }
+
 
         private static void SetDisplayNumber(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Vendor entity, Simplog.Data.CommonDataModel.EntityPOCOs.Card card, GLAccountPM gLAccountEntity)
         {
