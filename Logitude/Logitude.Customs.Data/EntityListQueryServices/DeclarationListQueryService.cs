@@ -190,7 +190,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 select new MyDecJoin
                 {
                     DeclarationId = rec.myDeclarationCourierStatuses.DeclarationId/*myDeclarations.Id*/,
-                    TerminalReleaseDate = rec.myDeclarationCourierStatuses.TerminalReleaseDate/*myDeclarations.Id*/,
+                    TerminalReleaseDate = rec.myDeclarationCourierStatuses.TerminalReleaseDate,
                     //CourierMasterId = rec.CourierMasterId,
                     IsClosedForFollowUp = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.IsClosedForFollowUp : false,
                     //FastIndividualProcessName = "",

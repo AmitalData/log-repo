@@ -1384,11 +1384,6 @@ export class DeclarationPM {
     public set AmendmentTypeName(newValue: string) { if (this.amendmentTypeName != newValue) { this.amendmentTypeName = newValue; this.MarkAsDirty("AmendmentTypeName"); } }
        
 	 
-    private terminalReleaseDate: Date;
-    public get TerminalReleaseDate() { return this.terminalReleaseDate; }
-    public set TerminalReleaseDate(newValue: Date) { if (this.terminalReleaseDate != newValue) { this.terminalReleaseDate = newValue; this.MarkAsDirty("TerminalReleaseDate"); } }
-       
-	 
 
     public OldEntityPM: DeclarationPM;
 		
