@@ -729,7 +729,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
         {
             Tenant tenantPOCO = GetTenant(invoicePM.Tenant);
 
-            if (tenantPOCO != null && tenantPOCO.AccountingActivated)
+            if (tenantPOCO != null && tenantPOCO.AccountingActivated && !invoicePM.IsUpdateFromPaymentService)
             {
                 string errors = "";
                 ValidateInvoiceGLaccount(invoicePM, ref errors, invoicePM.Tenant);
