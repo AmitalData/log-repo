@@ -844,6 +844,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         referant.ChangeSetOp = ChangeSetOperation.Update;
                     }
                 }
+                else
+                {
+                    if (referant.PackageTypeCode != null)
+                    {
+                        referant.PackageTypeCode = null;
+                        referant.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                }
 
 
                 logData = $"entityPM.CustomFileNo={entityPM.CustomFileNo}, referant.NewFile={referant.NewFile}, before update2";
