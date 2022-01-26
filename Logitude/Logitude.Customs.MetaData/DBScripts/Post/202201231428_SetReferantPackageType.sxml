@@ -5,7 +5,14 @@
 
   <Oracle Version="1">
     <![CDATA[
-update  DECLARATIONS set DIRECTION ='I' WHERE  DIRECTION is null ;
+
+UPDATE DECLARATIONREFERANTDATAS d
+SET PACKAGETYPECODE = (SELECT PACKAGETYPECODE
+               FROM CONSIGNMENTPACKAGES p              
+               WHERE p.declarationid =d.declarationid and  p.PACKAGEMEASUREQUALIFIERCODE = '2'
+               FETCH NEXT 1 ROWS ONLY)
+WHERE d.PACKAGETYPECODE is null and  (D.ISCLOSEDFORFOLLOWUP is null or D.ISCLOSEDFORFOLLOWUP = 0 );
+
 
     ]]>
   </Oracle>
