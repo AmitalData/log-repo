@@ -35,23 +35,23 @@ Feature: Update Standalone shipment
 
     Scenario: Update routing tab in standalone shipment
         Given the user in the standalone shipment routings tab
-        And edit edit main carriage leg with the following details
-            | Trucker       | Testing trucker |
-            | Driver        | test            |
-            | TruckNumber   | 1234            |
-            | TrailerNumber | 45678           |
-            | ETD           | 06/01/2021      |
-            | ETA           | 06/02/2021      |
-            | ATD           | 06/03/2021      |
-            | ATA           | 06/10/2021      |
-        When update shipment
-        Then the shipment should update successfully
+        And edit main carriage leg with the following details
+            | Trucker       | Testing trucker weekly Scenario |
+            | Driver        | test                            |
+            | TruckNumber   | 1234                            |
+            | TrailerNumber | 45678                           |
+            | ETD           | 06/01/2021                      |
+            | ETA           | 06/02/2021                      |
+            | ATD           | 06/03/2021                      |
+            | ATA           | 06/10/2021                      |
+        When save shipment
+        Then the direct shipment should save successfully
         And the pickup window should update successfully with the following details
-            | Trucker       | AJPES      |
-            | Driver        | test       |
-            | TruckNumber   | 1234       |
-            | TrailerNumber | 45678      |
-            | ETD           | 06/01/2021 |
-            | ETA           | 06/02/2021 |
-            | ATD           | 06/03/2021 |
-            | ATA           | 06/10/2021 |
+            | Trucker       | Testing trucker weekly Scenario |
+            | Driver        | test                            |
+            | TruckNumber   | 1234                            |
+            | TrailerNumber | 45678                           |
+            | ETD           | 06/01/2021                      |
+            | ETA           | 06/02/2021                      |
+            | ATD           | 06/03/2021                      |
+            | ATA           | 06/10/2021                      |

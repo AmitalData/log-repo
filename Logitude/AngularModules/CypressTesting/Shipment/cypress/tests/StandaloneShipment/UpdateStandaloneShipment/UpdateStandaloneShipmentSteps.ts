@@ -86,13 +86,28 @@ Then("the link of standalon should display", () => {
 })
 //#endregion
 
-
-Given("the user in the standalone shipment routings tab",()=>{
+//#region Update Standalone
+Given("the user in the standalone shipment routings tab", () => {
     cy.Click(BaseSelectors.HyperlinkButtonControl, StandaloneShipmenNumber)
     cy.Click(ShipmentSelectors.RoutingsTab_Number + BaseSelectors.LastElement, null)
 })
-Given("edit edit main carriage leg with the following details",(dataTable)=>{
+
+Given("edit main carriage leg with the following details", (dataTable) => {
     let standaloneroutingdetails = Assists.CreateInstance<StandaloneRoutingDetails>(dataTable, true);
     StandaloneAction.FillStandaloneRoutingDetails(standaloneroutingdetails)
-
 })
+
+When("save shipment", () => {
+    Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton_Number + BaseSelectors.LastElement)
+});
+
+Then("the direct shipment should save successfully", () => {
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+    cy.Click(ShipmentSelectors.Backbutton + BaseSelectors.LastElement, null, true)
+});
+
+Then("the pickup window should update successfully with the following details", (dataTable) => {
+    let standaloneroutingdetails = Assists.CreateInstance<StandaloneRoutingDetails>(dataTable, true);
+    StandaloneAction.AsseratAllFieldsInPickUpWindowField(standaloneroutingdetails)
+})
+//#endregion
