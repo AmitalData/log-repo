@@ -2365,6 +2365,13 @@ namespace Simplog.Data.CommonDataModel.Mocks
                 throw new NotImplementedException();
             }
         }
+        public IDbSet<PostalCode> PostalCodes
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
         public IDbSet<ReportsTemplate> ReportsTemplates
         {
             get

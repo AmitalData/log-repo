@@ -324,6 +324,7 @@
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\PaymentGatewayPartnerDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\PaymentTermDateTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\PortTimeZoneDetails.Generated.cs" />
+    <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\PostalCodeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\ProductPeriodDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\RateClassDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\RegimenFiscalDetails.Generated.cs" />
@@ -359,6 +360,7 @@
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\PartnerTypeStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\PaymentTermDateTypeStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\PortTimeZoneStruct.Generated.cs" />
+    <Compile Include="CommonDataModel\CloseTables\EnumGenerated\PostalCodeStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\ProductPeriodStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\RateClassStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\RegimenFiscalStruct.Generated.cs" />
@@ -387,6 +389,7 @@
     <Compile Include="CommonDataModel\EntityLists\HTSCodeList.cs" />
     <Compile Include="CommonDataModel\EntityLists\PortTimeZoneList.cs" />
     <Compile Include="CommonDataModel\EntityLists\ProductItemList.cs" />
+    <Compile Include="CommonDataModel\EntityLists\PostalCodeList.cs" />
     <Compile Include="CommonDataModel\EntityLists\ReportExecutionLogList.cs" />
     <Compile Include="CommonDataModel\EntityLists\UnassignedEntityList.cs" />
     <Compile Include="CommonDataModel\EntityLists\RegimenFiscalList.cs" />
@@ -395,6 +398,7 @@
     <Compile Include="CommonDataModel\EntityPMs\CustomerTeamPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\ExtendedContactPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\PortTimeZonePM.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\PostalCodePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\ReportExecutionLogPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\HTSCodePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\ProductItemPM.cs" />
@@ -406,6 +410,7 @@
     <Compile Include="CommonDataModel\EntityQueries\HTSCodeQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\PortTimeZoneQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ProductItemQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\PostalCodeQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ReportExecutionLogQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\UnassignedEntityQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\RegimenFiscalQuery.cs" />
