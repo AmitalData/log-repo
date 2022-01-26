@@ -1,3 +1,4 @@
+@standalone @devrelease
 Feature: Add Two container with the same container number in forwarder shipment
     The user creates a Direct Import Ocean FCL shipment, Add first container,Add second container
 

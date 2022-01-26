@@ -99,18 +99,22 @@ Given("a container with the following details", (dataTable) => {
 });
 
 When("save shipment", () => {
-  Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton_Number+BaseSelectors.LastElement)
+  Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton_Number + BaseSelectors.LastElement)
 });
 
 Then("the direct shipment should save successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });
 
-Then("The container appear in the pickup",()=>{
-
+Then("The container appear in the pickup", () => {
+  cy.Navigate(ShipmentSelectors.Backbutton + BaseSelectors.LastElement, true)
+  cy.Click(ShipmentSelectors.PickUpDeliveryPackages, null)
+  BaseAssertion.AssertElementExist(BaseSelectors.GridViewCell)
 })
 
-Then("The container appear in the forwarder shipment",()=>{
-
+Then("The container appear in the forwarder shipment", () => {
+  cy.Click(ShipmentSelectors.CloseBtn, null)
+  cy.Navigate(ShipmentSelectors.PackagesTab);
+  BaseAssertion.AssertElementExist(BaseSelectors.Row0)
 })
   //#endregion
