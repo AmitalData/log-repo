@@ -53,6 +53,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         {
                             DocumentRepository documentRepository = new DocumentRepository(MyContext);
                             Document document = documentRepository.GetSingleDocument(authToken.Tenant, entityPM.DocumentId);
+                            if (!document.HasFile) throw new Exception("this document's file has been deleted");
                             document.FileName = entityPM.FileName;
                             documentRepository.Update(document);
                             documentRepository.SubmitChanges();
