@@ -209,8 +209,18 @@ export class SharedDocumentComponent implements OnInit {
     SelectedShipmentShareDocumentsDataLists: ShipmentShareDocumentsData[] = []; 
 
     private GetShareDocumentsViaEmailAction() {
-        var attachmentsList = this.GetSelectedAttachmentsList(); 
+        var attachmentsList = this.GetSelectedAttachmentsList();
+        if (attachmentsList.length == 0 || attachmentsList == null) {
+            this.ShowSelectDocumentValidationMessage();
+            return;
+        }
         this.ShowSendControlBasedDocumentType(attachmentsList); 
+    }
+
+    private ShowSelectDocumentValidationMessage() {
+        var messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Title = "Share Document";
+        messageWindow.Show("Please select at least one document.");
     }
 
     private ShowSendControlBasedDocumentType(attachmentsList: AttachmentsList[]) {
