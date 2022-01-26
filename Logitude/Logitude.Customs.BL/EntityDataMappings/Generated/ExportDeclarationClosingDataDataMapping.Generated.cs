@@ -48,7 +48,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FinalLoadingSite, 
 	         FinalLoadingSiteName, 
 	         FinalCargoTypeName, 
-	         FinalShipCodeName,
+	         FinalShipCodeName, 
+	         MAIN_AWB, 
+	         SMP, 
+	         FLIGHT_DATE,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
