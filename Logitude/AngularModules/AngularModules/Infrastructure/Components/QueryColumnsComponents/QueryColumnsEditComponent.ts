@@ -57,6 +57,8 @@ export class QueryColumnsEditComponent {
     public serviceArgs: ServiceArgs;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsViewOnly: boolean = false;
+    public IsShowWarringMessage: boolean = false;
+     
     public LayoutDirection: string = 'ltr';
 
     constructor(private CD: ChangeDetectorRef) {
@@ -208,6 +210,7 @@ export class QueryColumnsEditComponent {
     private SetIsViewOnlyOption(currentQuery: any) {
         if (currentQuery.SharedByUserId && currentQuery.SharedByUserId != SessionLocator.LoggedUserId && currentQuery.IsViewOnly) {
             this.IsViewOnly = true;
+            this.IsShowWarringMessage = true;
         }
     }
 
