@@ -429,7 +429,7 @@ namespace WebFreight.Web.Helpers
                         }
 
                         int[,] array = new int[,] { { 65, 0 } };
-
+                        int start = 65;
                         foreach (XmlNode node in entitiesList.Item(0).ChildNodes)
                         {
                             string nodename = TranslateTextsClass.Translate(node.Name, tenant);
@@ -445,7 +445,7 @@ namespace WebFreight.Web.Helpers
 
                             nodename = nodename != null ? nodename : "";
                             nodename = nodename.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "");
-                            int start = 65;
+                            
                             string sheetColumn = "";
                             if (array[0, 0] <= 90 && array[0, 1] == 0)
                             {
@@ -668,7 +668,7 @@ namespace WebFreight.Web.Helpers
         private static void FillDataOnExcelCells(ExportToExcelArgs args, IWorksheet sheet, XmlNodeList entitiesList)
         {
             int[,] array = new int[,] { { 65, 0 } };
-
+            int start = 65;
             foreach (XmlNode node in entitiesList.Item(0).ChildNodes)
             {
                 string nodename = TranslateTextsClass.Translate(node.Name, args.Tenant);
@@ -684,7 +684,7 @@ namespace WebFreight.Web.Helpers
 
                 nodename = nodename != null ? nodename : "";
                 nodename = nodename.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "");
-                int start = 65;
+                
                 string sheetColumn = "";
                 if (array[0, 0] <= 90 && array[0, 1] == 0)
                 {
