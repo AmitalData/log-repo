@@ -47,8 +47,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
             var cargoTypeQueryService = new CargoTypeQueryService(entityPOCO.Tenant);
             CargoTypePM cargoTypePM = cargoTypeQueryService.GetSingle(entityPOCO.CargoType, false, true);
 
-            var storageStatusQueryService = new StorageStatusQueryService(entityPOCO.Tenant);
-            StorageStatusPM storageStatusPM = storageStatusQueryService.GetSingle(entityPOCO.StorageStatus, false, true);
+            var cargoStatusQueryService = new CargoStatusQueryService(entityPOCO.Tenant);
+            CargoStatusPM cargoStatusPM = cargoStatusQueryService.GetSingle(entityPOCO.CustomsStatus, false, true);
 
             var cardQueryService = new CardQueryService(entityPOCO.Tenant);
             Card cardPM = 
@@ -64,7 +64,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             entityPM.Declaration_ID = declarationPM?.Id;
             entityPM.DeclarationStatusTypeName = declarationPM?.DeclarationStatusTypeName;
             entityPM.CargoTypeName = cargoTypePM.LocalName;
-            entityPM.StorageStatusName = storageStatusPM?.LocalName;
+            entityPM.CustomStatusName = cargoStatusPM?.LocalName;
             entityPM.ExporterName = cardPM?.LocalName;
             entityPM.ShipName = customsShipPM?.LocalName;
             entityPM.CargoTypeCodeName = cargoIdentifireTypePM?.LocalName;

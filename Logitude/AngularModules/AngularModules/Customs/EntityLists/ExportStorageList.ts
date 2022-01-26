@@ -25,7 +25,7 @@ export class ExportStorageList {
 	ThirdCargoID: string;
 	DeclarationStatusTypeName: string;
 	CargoTypeName: string;
-	StorageStatusName: string;
+	CustomStatusName: string;
 	ExporterName: string;
 	ShipName: string;
 	StorErrorXML: string;
