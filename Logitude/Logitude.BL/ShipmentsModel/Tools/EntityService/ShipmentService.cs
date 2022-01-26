@@ -2617,6 +2617,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private ShipmentChangeTracking BuildShipmentChangeTracking()
         {
+            ShipmentMapping.ComputeMainCarriageFinalDestinationDates(this.entityMasterData, this.entityPM, true);
             ShipmentChangeTracking shipmentChangeTracking = new ShipmentChangeTracking() { ChangeTrackingPM = new ShipmentPM() };
             ShipmentQuery query = new ShipmentQuery(tenant);
             query.MapShipmentToShipmentPMForAutomation(shipmentChangeTracking.ChangeTrackingPM, this.entityPoco, null, this.entityMasterData);
