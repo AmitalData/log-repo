@@ -37,12 +37,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return context.PostalCodes;
         }
 
-        public PostalCode GetSinglePostalCode(string code, int tenant = 0)
+        public PostalCode GetSinglePostalCode(string code)
         {
             return (from record in context.PostalCodes where record.Code == code select record).FirstOrDefault();
         }
 
-        public PostalCode GetSinglePostalCodeUpdate(string code, int tenant)
+        public PostalCode GetSinglePostalCodeUpdate(string code)
         {
             return (from record in context.PostalCodes where record.Code == code select record).FirstOrDefault();
         }

@@ -4659,10 +4659,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel
 					this.ObjectContext.SaveChanges();
 					scope.Complete();
 				}
- 
-				PostalCodeUpdateClass.FillPostalCode();
-
- 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("ProductItem", ObjectTables, ProductItemUpdateClass.HashString))
@@ -9856,8 +9852,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel
 	   
 	   	   PortTimeZoneUpdateClass.FillPortTimeZone();
 	
-	   	   PostalCodeUpdateClass.FillPostalCode();
-	
+	   
 	   
 	   	   ProductPeriodUpdateClass.FillProductPeriod();
 	

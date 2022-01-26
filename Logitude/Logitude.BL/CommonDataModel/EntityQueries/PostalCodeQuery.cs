@@ -38,10 +38,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     select new PostalCodePM() { Code = a.Code, Name = a.Name, SearchFields = a.SearchFields, CountryCode = a.CountryCode, }).FirstOrDefault();
         }
 
-        public PostalCodePM GetSinglePM(string code, int tenant = 0)
+        public PostalCodePM GetSinglePM(string code)
         {
             return (from a in repository.context.PostalCodes
                     where a.Code == code
+                    select new PostalCodePM() { Code = a.Code, Name = a.Name, SearchFields = a.SearchFields, CountryCode = a.CountryCode, }).FirstOrDefault();
+        }
+
+        public PostalCodePM GetSinglePMByCountryCode(string code, string countryCode)
+        {
+            return (from a in repository.context.PostalCodes
+                    where a.Code == code && countryCode == countryCode
                     select new PostalCodePM() { Code = a.Code, Name = a.Name, SearchFields = a.SearchFields, CountryCode = a.CountryCode, }).FirstOrDefault();
         }
 
