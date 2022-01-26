@@ -219,6 +219,7 @@ export class ShipmentSelectors extends RegexSelectors {
   //#endregion
 
   //#region Routing tab fields
+
   public static readonly RoutingToggle = '#RoutingToggle';
   public static readonly RoutingToggle_Number = '[id^=RoutingToggle]'
   public static readonly StorageCalculationScreen = '.LogitudeSectionBody';
@@ -232,6 +233,10 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly EditWarehouseLegPickups = "#Edit-WarehouseLeg_Pickups"
   public static readonly EditRoutingMainCarriage = '#Edit-MainCarriage';
   public static readonly ShipmentMainCarriageCarrierId = '#Shipment_MainCarriageCarrierId';
+  public static readonly ShipmentDriver = '#Shipment_Driver';
+  public static readonly ShipmentTruckNumber = '#Shipment_TruckNumber';
+  public static readonly ShipmentTrailerNumber = '#Shipment_TrailerNumber';
+  
   public static readonly ShipmentBookingNumberOfPackages = '#Shipment_BookingNumberOfPackages';
   public static readonly ShipmentFlightNumber = '#Shipment_MainCarriageCarrierNumber';
   public static readonly ShipmentMAWB = '#Shipment_Master';

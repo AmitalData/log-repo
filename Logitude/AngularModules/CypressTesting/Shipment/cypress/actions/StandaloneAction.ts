@@ -8,6 +8,7 @@ import { PickupDelivaryDetails } from "../models/PickupDelivaryDetails";
 import { RegexSelectors } from "../selectors/RegexSelectors";
 import { ShipmentConstants } from '../constants/constants'
 import { PackagesDetails } from "cypress/models/PackagesDetails";
+import { StandaloneRoutingDetails } from "../models/StandaloneRoutingDetails";
 
 let fromType = null
 let toType = null
@@ -126,4 +127,12 @@ export function OpenRoutingTabAddPickUp(){
   cy.Click(ShipmentSelectors.RoutingsTab, null)
   cy.Click(ShipmentSelectors.AddPickUp, null)
   cy.Click(BaseSelectors.Button, ShipmentConstants.AddPickUp)
+}
+
+export function FillStandaloneRoutingDetails(standaloneroutingdetails: StandaloneRoutingDetails) {
+   cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageCarrierId, standaloneroutingdetails.Trucker,true)
+   cy.FillLogTextBox(ShipmentSelectors.ShipmentDriver, standaloneroutingdetails.Driver)
+   cy.FillLogTextBox(ShipmentSelectors.ShipmentTruckNumber, standaloneroutingdetails.TruckNumber)
+   cy.FillLogTextBox(ShipmentSelectors.ShipmentTrailerNumber, standaloneroutingdetails.TrailerNumber)
+   
 }
