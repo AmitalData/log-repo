@@ -13,6 +13,7 @@ using Logitude.Customs.Data;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Simplog.Data.CommonDataModel.Repositories;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -41,7 +42,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
         public void CustomPOCOToPM(ExportStoragePM entityPM, ExportStorage entityPOCO)
         {
             var declarationQueryService = new DeclarationQueryService(entityPOCO.Tenant);
-            DeclarationPM declarationPM = declarationQueryService.GetSingleDeclarationById(entityPOCO.DeclarationId, entityPOCO.Tenant);
+            DeclarationPM declarationPM = entityPOCO.DeclarationId != null ? declarationQueryService.GetSingleDeclarationById(entityPOCO.DeclarationId, entityPOCO.Tenant) : null;
 
             var cargoTypeQueryService = new CargoTypeQueryService(entityPOCO.Tenant);
             CargoTypePM cargoTypePM = cargoTypeQueryService.GetSingle(entityPOCO.CargoType, false, true);
@@ -50,7 +51,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
             StorageStatusPM storageStatusPM = storageStatusQueryService.GetSingle(entityPOCO.StorageStatus, false, true);
 
             var cardQueryService = new CardQueryService(entityPOCO.Tenant);
-            Card cardPM = cardQueryService.GetCardById(entityPOCO.ExporterID, entityPOCO.Tenant);
+            Card cardPM = 
+             new CardRepository(entityPOCO.Tenant).GetCardsByIds(new List<string>() { entityPOCO.ExporterID }, entityPOCO.Tenant).Count() > 0 ?
+             cardQueryService.GetCardById(entityPOCO.ExporterID, entityPOCO.Tenant): null;
 
             var customsShipQueryService = new CustomsShipQueryService(entityPOCO.Tenant);
             CustomsShipPM customsShipPM = customsShipQueryService.GetSingle(entityPOCO.ShipCode, false, true);
@@ -58,17 +61,17 @@ namespace Logitude.Customs.BL.EntityDataMappings
             var cargoIdentifireTypeQueryService = new CargoIdentifireTypeQueryService(entityPOCO.Tenant);
             CargoIdentifireTypePM cargoIdentifireTypePM  = cargoIdentifireTypeQueryService.GetSingle(entityPOCO.CargoTypeCode, false, true);
 
-            entityPM.Declaration_ID = declarationPM.Id;
-            entityPM.DeclarationStatusTypeName = declarationPM.DeclarationStatusTypeName;
+            entityPM.Declaration_ID = declarationPM?.Id;
+            entityPM.DeclarationStatusTypeName = declarationPM?.DeclarationStatusTypeName;
             entityPM.CargoTypeName = cargoTypePM.LocalName;
-            entityPM.StorageStatusName = storageStatusPM.LocalName;
-            entityPM.ExporterName = cardPM.LocalName;
-            entityPM.ShipName = customsShipPM.LocalName;
-            entityPM.CargoTypeCodeName = cargoIdentifireTypePM.LocalName;
-            entityPM.DeclarationStatusTypeCode = declarationPM.DeclarationStatusTypeCode;
-            entityPM.DeclarationCustomFileNo = declarationPM.CustomFileNo;
-            entityPM.DeclarationNumber = declarationPM.DeclarationNumber;
-            entityPM.ExporterCode = cardPM.VatNumber;
+            entityPM.StorageStatusName = storageStatusPM?.LocalName;
+            entityPM.ExporterName = cardPM?.LocalName;
+            entityPM.ShipName = customsShipPM?.LocalName;
+            entityPM.CargoTypeCodeName = cargoIdentifireTypePM?.LocalName;
+            entityPM.DeclarationStatusTypeCode = declarationPM?.DeclarationStatusTypeCode;
+            entityPM.DeclarationCustomFileNo = declarationPM?.CustomFileNo;
+            entityPM.DeclarationNumber = declarationPM?.DeclarationNumber;
+            entityPM.ExporterCode = cardPM?.VatNumber;
         }
    }
 }
