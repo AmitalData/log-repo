@@ -13,9 +13,7 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.Data.DataContracts;
 using System.Data.Entity;
-using Logitude.Customs.Data.EntityLists;
-using Simplog.Server.Infrastructure.DataContracts;
-using Simplog.Server.Infrastructure.Helpers;
+ 
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -274,7 +272,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
         public DeclarationCourierStatusSummary GetQueriesCounts(int tenant)
         {
             DeclarationCourierStatusSummary declarationCourierStatusSummary = new DeclarationCourierStatusSummary();
-            IQueryable<DeclarationCourierStatus> declarationCourierStatuses = (from dc in context.DeclarationCourierStatuses//.Include("Declaration")
+            IQueryable<DeclarationCourierStatus> declarationCourierStatuses = (from dc in context.DeclarationCourierStatuses.Include("Declaration")
                                                                             //  join d in context.CourierDeclarations on dc.DeclarationId equals d.DeclarationId
                                                                              //  join dm in context.CourierMasters
                                                                              // on d.CourierMasterId equals dm.Id
