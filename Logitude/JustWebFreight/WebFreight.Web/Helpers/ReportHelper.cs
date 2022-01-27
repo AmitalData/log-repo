@@ -2331,7 +2331,7 @@ namespace WebFreight.Web.Helpers
                     ReportsTemplate systemEmailReportTemplate = tenantZeroReportsTemplate.Where(d => d.ReportId == report.Id && d.Id == report.DefaultMessageTemplateId).FirstOrDefault();
                     if(systemReportTemplate != null)
                         isChangeReport = CopySystemReportTemplate(new CopyReportTemplateArgs { tenant = tenant, userId = userId, myReports = myReports, isChangeReport = isChangeReport, report = report, systemReportTemplate = systemReportTemplate });
-                    else if (systemEmailReportTemplate != null)
+                    if (systemEmailReportTemplate != null)
                         isChangeReport = CopySystemReportTemplate(new CopyReportTemplateArgs { tenant = tenant, userId = userId, myReports = myReports, isChangeReport = isChangeReport, report = report, systemReportTemplate = systemEmailReportTemplate });
                 }
 
@@ -2386,6 +2386,7 @@ namespace WebFreight.Web.Helpers
             ReportsTemplatesVersion reportsTemplatesVersion = GetNewInstanceReportsTemplatesVersion(copyReportTemplateArgs, currentTenantReportsTemplate, documentId);
 
             reportsTemplatesVersionRepository.Add(reportsTemplatesVersion);
+            currentTenantReportsTemplate.IsSystem = true;
             currentTenantReportsTemplate.CurrentVersion = reportsTemplatesVersion.Version;
             currentTenantReportsTemplate.UpdateDate = TenantServerConfigration.GetCurrentDateTime(copyReportTemplateArgs.tenant);
             currentTenantReportsTemplate.UpdatedByUserId = copyReportTemplateArgs.userId;
@@ -2418,8 +2419,21 @@ namespace WebFreight.Web.Helpers
             string documentId = AddDocument(documentRepository, tenantZeroReportsTemplatesVersion.ReportDocumentId, copyReportTemplateArgs.report.Tenant, copyReportTemplateArgs.tenant, documentLists);
             if (string.IsNullOrEmpty(documentId)) return copyReportTemplateArgs.isChangeReport;
 
-            currentTenantReport.DefaultTemplateId = AddReportTemplate(currentTenantReport.Id, copyReportTemplateArgs.systemReportTemplate.Description, copyReportTemplateArgs.userId, documentId, copyReportTemplateArgs.tenant, reportsTemplateRepository, reportsTemplatesVersionRepository, null, true, copyReportTemplateArgs.systemReportTemplate.TemplateType);
+            string reportTemplateId = AddReportTemplate(currentTenantReport.Id, copyReportTemplateArgs.systemReportTemplate.Description, copyReportTemplateArgs.userId, documentId, copyReportTemplateArgs.tenant, reportsTemplateRepository, reportsTemplatesVersionRepository, null, true, copyReportTemplateArgs.systemReportTemplate.TemplateType);
+            SetReportDefaultTemplates(copyReportTemplateArgs, currentTenantReport, reportTemplateId);
             return true;
+        }
+
+        private static void SetReportDefaultTemplates(CopyReportTemplateArgs copyReportTemplateArgs, Report currentTenantReport, string reportTemplateId)
+        {
+            if (copyReportTemplateArgs.systemReportTemplate.TemplateType == "R")
+            {
+                currentTenantReport.DefaultTemplateId = reportTemplateId;
+            }
+            else if (copyReportTemplateArgs.systemReportTemplate.TemplateType == "M")
+            {
+                currentTenantReport.DefaultMessageTemplateId = reportTemplateId;
+            }
         }
 
         private ReportsTemplate GetCurrentTenantReportsTemplate(Report currentTenantReport, string currentTenantReportDefaultTemplateId)
