@@ -1,4 +1,5 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Linq;
@@ -8,10 +9,19 @@ namespace WebFreight.Web.Helpers
 {
     public class ResetUserPasswordDocumentService
     {
+        private readonly ICommonDataContext commonDataContext;
+        private readonly int tenant;
+
+        public ResetUserPasswordDocumentService(int tenant)
+        {
+            commonDataContext = CommonDataContext.GetContext(tenant);
+            this.tenant = tenant;
+        }
+
         public MessageArgs GetMessageArgsByTemplateName(ResetPasswordParameters resetPasswordParameters, EmailBodyArgs emailBodyArgs)
         {
             MessageArgs result = new MessageArgs();
-            var documenttype = GetDocumentTypeByName(resetPasswordParameters.TemplateName, Int32.Parse(resetPasswordParameters.BrandingTenant));
+            var documenttype = GetDocumentTypeByName(resetPasswordParameters.TemplateName, tenant);
             if (documenttype == null)
                 return result;
 
@@ -19,10 +29,20 @@ namespace WebFreight.Web.Helpers
             if (string.IsNullOrEmpty(result.HtmlTemplate))
                 return result;
 
+            Contact contact = GetContact(resetPasswordParameters);
+
             string path = "?email=" + resetPasswordParameters.Email + "&reset_request_number=" + emailBodyArgs.ReqestNumber + "&ischamplogin=" + resetPasswordParameters.IsChampLogin;
             result.HtmlTemplate = result.HtmlTemplate.Replace("[ResetPasswordURL]", path);
-            result.HtmlTemplate = result.HtmlTemplate.Replace("[InvitationEmail]", resetPasswordParameters.Email); 
+            result.HtmlTemplate = result.HtmlTemplate.Replace("[InvitationEmail]", resetPasswordParameters.Email);
+            result.HtmlTemplate = result.HtmlTemplate.Replace("[InviteeName]", contact?.EnglishName ?? "");
             return result;
+        }
+
+        private Contact GetContact(ResetPasswordParameters resetPasswordParameters)
+        {
+            return (from c in commonDataContext.Contacts
+                    where c.Email == resetPasswordParameters.Email && c.Tenant == tenant
+                    select c).FirstOrDefault();
         }
 
         private DocumentType GetDocumentTypeByName(string templateName, int tenant)
