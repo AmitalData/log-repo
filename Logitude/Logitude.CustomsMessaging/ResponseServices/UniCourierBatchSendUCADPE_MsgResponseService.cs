@@ -30,6 +30,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 new DeclarationCourierStatusQueryService(customContext).GetByMasterID_DeclarationIdList(customResponse.tenant, customResponse.courierMasterId) :
                 customResponse.declarationIdsList.ToList();
 
+
+            if(customResponse.checkboxAll && customResponse.allwithoutDeclarationIdsList != null && customResponse.allwithoutDeclarationIdsList.Count()>0)
+            {
+                declarationIdsList.RemoveAll(x => customResponse.allwithoutDeclarationIdsList.Contains(x));
+            }
+
+
+
             customResponse.listPending.ToList().ForEach(pendingCode =>
             {
                 declarationIdsList.ForEach(declarationId =>

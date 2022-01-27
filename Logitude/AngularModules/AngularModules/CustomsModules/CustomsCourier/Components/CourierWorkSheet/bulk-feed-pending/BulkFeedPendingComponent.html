@@ -39,11 +39,7 @@
             </table>
         </div>
     </div>
-    <!-- <div class="checkbox-all">
-        <LogLabel [Text]="'Customs.CourierMaster.O.All' | TextCodeTranslationPipe" [NoObjectField]="true"
-            [DataContext]="DataContext"></LogLabel>
-        <input type="checkbox" (change)="onCheckAllClick($event.target.checked)">
-    </div> -->
+  
 
     <LogLabel class="label-good-description"
               [Text]="'Customs.ReleaseGoods.O.GoodsDescription' | TextCodeTranslationPipe" [NoObjectField]="true"
@@ -56,19 +52,14 @@
     <LogLabel class="label-weight" [Text]="'Customs.MasterBOLQuery.O.TotalWeight' | TextCodeTranslationPipe"
               [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
 
-    <LogLabel class="label-from" [Text]="'Customs.General.O.From' | TextCodeTranslationPipe" [NoObjectField]="true"
-              [DataContext]="DataContext"></LogLabel>
-
+  
     <LogTextBox class="input-from" [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true"
-                [ObjectFieldName]="'WeightFrom'" [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'number'">
+                [ObjectFieldName]="'WeightFrom'"   [DataContext]="DataContext" [InputType]="'number'"  [Placeholder]="'Customs.General.O.From' | TextCodeTranslationPipe">
     </LogTextBox>
+ 
 
-    <LogLabel class="label-to" [Text]="'Customs.General.O.To' | TextCodeTranslationPipe" [NoObjectField]="true"
-              [DataContext]="DataContext">
-    </LogLabel>
-
-    <LogTextBox class="input-to" [ngStyle]='' [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true"
-                [ObjectFieldName]="'WeightTo'" [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'number'">
+    <LogTextBox class="input-to" [ngStyle]='' [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true"   [Placeholder]="'Customs.General.O.To' | TextCodeTranslationPipe"
+                [ObjectFieldName]="'WeightTo'"  [DataContext]="DataContext" [InputType]="'number'">
     </LogTextBox>
 
     <LogLabel class="label-incoterm" [Text]="'Customs.General.O.TermsOfSale' | TextCodeTranslationPipe"

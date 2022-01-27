@@ -51,6 +51,8 @@ export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
     notUpdateSelf: boolean = false;
     parent;
     declarationIdsList: string[] = [];
+    allWithoutdeclarationIdsList: string[] = [];
+
     checkboxAll: boolean;
     courierMasterId: string;
     constructor(private pendingWebService: PendingWebService) {
@@ -70,6 +72,8 @@ export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
                 this.IsVisibile = true;
                 this.notUpdateSelf = args.notUpdateSelf;
                 this.declarationIdsList = args.declarationIdsList;
+                this.allWithoutdeclarationIdsList = args.allWithoutdeclarationIdsList;
+
                 this.checkboxAll = args.checkboxAll;
                 this.courierMasterId = args.courierMasterId;
                 //this.DeclarationPendingsList = args.DeclarationIdList;
@@ -171,7 +175,7 @@ export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
         const listPendingRemark = this.DeclarationPendingItemsSource.Collection.map(x => x.PendingRemarks)
 
         SessionLocator.SelectedSession.StartBusyIndicatorSaving();
-        const res = await this.pendingWebService.postBulkFeeding(listPending, listPendingRemark, this.declarationIdsList, this.courierMasterId, this.checkboxAll)
+        const res = await this.pendingWebService.postBulkFeeding(listPending, listPendingRemark, this.declarationIdsList, this.courierMasterId, this.checkboxAll, this.allWithoutdeclarationIdsList)
         SessionLocator.SelectedSession.StopBusyIndicator();
 
         const myMessageWindow = new MessageWindow();

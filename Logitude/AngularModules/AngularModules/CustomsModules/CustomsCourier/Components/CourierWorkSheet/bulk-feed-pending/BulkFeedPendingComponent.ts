@@ -102,8 +102,16 @@ export class BulkFeedPendingComponent extends BaseComponent {
         filters.GetAll = false;
         filters.GetCount = true;
 
-        filters.SortBy = "CourierHAWB";
-        filters.SortDirection = "Descending";
+        if (AppTool.IsNullOrEmpty(sortingCol)) {
+            filters.SortBy = "CourierHAWB";
+            filters.SortDirection = "Descending";
+        }
+        else {
+            filters.SortBy = sortingCol;
+            filters.SortDirection = sortingDir;
+
+        }
+      
 
  
         filters.addAdditionalFilter("CourierMasterId", this.CourierMasterPM.Id, null, null, "Equals", false,true, false, "string");
@@ -177,6 +185,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
         var windowArgs: any = {};
         windowArgs.courierMasterId = this.CourierMasterPM.Id;
         windowArgs.declarationIdsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
+        windowArgs.allWithoutdeclarationIdsList = this._CourierWorksheetSharedDataService._UnSelectedItems.Collection;
         windowArgs.checkboxAll = this._CourierWorksheetSharedDataService.connectedSelectAll ;
         windowArgs.notUpdateSelf = true;
 
@@ -444,15 +453,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
         SortByName: 'GrossMassMeasure'
     });
   
-    this.columns.push({
-        FieldName: 'CasualImporterCity',
-      DataTypeCode: 'String',
-        Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CasualImporterCity"),
-      Styles: { width: '110px' },
-      IsCustomTemplate: true,
-      ServerSideSortable: true,
-        SortByName: 'CasualImporterCity'
-    });
+   
       this.columns.push({
           FieldName: 'CasualSupplierAddress',
           DataTypeCode: 'String',
@@ -461,6 +462,15 @@ export class BulkFeedPendingComponent extends BaseComponent {
           IsCustomTemplate: true,
           ServerSideSortable: true,
           SortByName: 'CasualSupplierAddress'
+      });
+      this.columns.push({
+          FieldName: 'CasualImporterCity',
+          DataTypeCode: 'String',
+          Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CasualImporterCity"),
+          Styles: { width: '110px' },
+          IsCustomTemplate: true,
+          ServerSideSortable: true,
+          SortByName: 'CasualImporterCity'
       });
   }
 
@@ -506,7 +516,8 @@ export class BulkFeedPendingComponent extends BaseComponent {
       this.IsSelectedNot = true;
 
       this._CourierWorksheetSharedDataService.connectedSelectAll = true;
-     // this._CourierWorksheetSharedDataService._SelectedItems = ;
+      this._CourierWorksheetSharedDataService._SelectedItems.Clear()
+          ;
 
       this.RefreshList();
     //this._CourierMasterService.disconnectedSelectAll = true;
@@ -519,6 +530,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
     OnNoneBtnClickedNot() {
 
         this._CourierWorksheetSharedDataService.connectedSelectAll = false;
+        this._CourierWorksheetSharedDataService._UnSelectedItems.Clear();
         this.RefreshList();
 
     this.IsSelectedNot = false;

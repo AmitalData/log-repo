@@ -6,6 +6,8 @@ import { ObservableCollection } from '../../../Infrastructure/Utilities/Observab
 @Injectable()
 export class CourierWorksheetSharedDataService {
     public _SelectedItems: ObservableCollection = new ObservableCollection([]);
+    public _UnSelectedItems: ObservableCollection = new ObservableCollection([]);
+
     public connectedSelectAll: boolean;
     public disconnectedSelectAll: boolean;
 

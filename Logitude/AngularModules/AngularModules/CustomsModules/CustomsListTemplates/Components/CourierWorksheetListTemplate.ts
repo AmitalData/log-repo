@@ -782,18 +782,36 @@ export class CourierWorksheetListTemplate {
     OnCheckedWithSystemEvent(eventM) {
         eventM.stopPropagation();
 
-        this._CourierWorksheetSharedDataService.connectedSelectAll = false;
+      //  this._CourierWorksheetSharedDataService.connectedSelectAll = false;
 
-
+        debugger;
         this.IsDeclarationChecked = !this.IsDeclarationChecked;
         //if (event.IsChecked) {
         if (this.IsDeclarationChecked) {
             if (!this._CourierWorksheetSharedDataService._SelectedItems.Collection.includes(this._CourierWorksheet.DeclarationId)) {
                 this._CourierWorksheetSharedDataService._SelectedItems.Insert(this._CourierWorksheet.DeclarationId);
             }
+
+
+            for (var i = 0; i < this._CourierWorksheetSharedDataService._UnSelectedItems.Collection.length; i++) {
+                if (this._CourierWorksheet.DeclarationId == this._CourierWorksheetSharedDataService._UnSelectedItems.Collection[i]) {
+                    removedIndex = i;
+                    break;
+                }
+            }
+
+            if (removedIndex != null) {
+                this._CourierWorksheetSharedDataService._UnSelectedItems.RemoveFromIndex(removedIndex);
+            }
+
         }
         else {
             var removedIndex = null;
+
+            if (!this._CourierWorksheetSharedDataService._UnSelectedItems.Collection.includes(this._CourierWorksheet.DeclarationId)) {
+                this._CourierWorksheetSharedDataService._UnSelectedItems.Insert(this._CourierWorksheet.DeclarationId);
+            }
+
             for (var i = 0; i < this._CourierWorksheetSharedDataService._SelectedItems.Collection.length; i++) {
                 if (this._CourierWorksheet.DeclarationId == this._CourierWorksheetSharedDataService._SelectedItems.Collection[i]) {
                     removedIndex = i;
