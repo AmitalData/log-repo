@@ -55,6 +55,7 @@
 
     .input-from {
         width: 40px;
+        margin-left: 10px;
     }
 
     .label-to {
@@ -80,13 +81,18 @@
     }
 
     courier-filter-button {
-        margin-right: 345px;
+        margin-right: 376px;
+    }
+
+    .incoterm-code-wrapper {
+        width: 120px;;
+    }
+    
+    .input-good-description {
+        width: 200px;
     }
 }
 
-.input-good-description {
-    width: 200px;
-}
 
 .GeneratedGridContainer {
     // logitude-edit-grid {

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationCourierStatusUpdateClass
    {  		
-		public const string HashString = "95fefbdf052ef8e38c62ff8756bd7e9d";
+		public const string HashString = "1b811a2a3f75bd185f8de893933c3536";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Declaration Courier Status",
-			      				    Code =  "fab9",
+			      				    Code =  "c666",
 			      				    Name =  "Customs.DeclarationCourierStatus Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -5204,6 +5204,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CasualSupplierAddress",
 					  						ListPropertyPath =  "CasualSupplierAddress",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -5264,6 +5265,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CasualImporterCity",
 					  						ListPropertyPath =  "CasualImporterCity",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -5324,6 +5326,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "GrossMassMeasure",
 					  						ListPropertyPath =  "GrossMassMeasure",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -5385,6 +5388,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IncoTermCode",
 					  						ListPropertyPath =  "IncoTermCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -5533,6 +5537,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOAirline = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.Airline", DefaultText = "Airline",LocalDefaultText = @"חברת תעופה", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOCourierHawb = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.CourierHawb", DefaultText = "CourierHawb",LocalDefaultText = @"ש.מ.ר", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusONotCheckDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.NotCheckDeclarations", DefaultText = "Not Check declarations",LocalDefaultText = @"לא נבחרו הצהרות", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOCity = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.City", DefaultText = "City",LocalDefaultText = @"עיר", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
