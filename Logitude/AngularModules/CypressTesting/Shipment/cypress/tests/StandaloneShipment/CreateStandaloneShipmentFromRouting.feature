@@ -19,10 +19,11 @@ Feature: Create Standalone Shipment from Routing
     Scenario: Create standalone shipment from routing in pickup screen
         Given the user open the shipment and navigate to RoutingsTab workspace
         And add Standalone Shipment With Pickup leg with the following details
-            | From        | Partner        |
-            | FromPartner | Israeli Tenant |
-            | To          | Partner        |
-            | ToPartner   | Israeli Tenant |
+            | From        | Partner            |
+            | FromPartner | Testagent          |
+            | To          | CasualAddress      |
+            | ToCountry   | State Of Palestine |
+            | ToCity      | Bethlehem          |
         When create shipment
         Then a domestic inland shipment should create
         And the cancel ,operational close Shipment,convert to custom file and Send Response action in more button shouldn't be dim

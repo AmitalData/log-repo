@@ -148,8 +148,8 @@ export function FillStandaloneShipmentToTypeDetails(standaloneDetails: PickupDel
       cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageToPort, standaloneDetails.ToPort, true)
    }
    else {
-      cy.FillLogTextBox(ShipmentSelectors.ShipmentInlandDomesticToCountry, standaloneDetails.ToCity)
-      cy.FillLogLov(ShipmentSelectors.ShipmentInlandDomesticToCity, standaloneDetails.ToCountry, true)
+      cy.FillLogLov(ShipmentSelectors.ShipmentInlandDomesticToCountry, standaloneDetails.ToCountry,true)
+      cy.FillLogTextBox(ShipmentSelectors.ShipmentInlandDomesticToCity, standaloneDetails.ToCity)
    }
 }
 
