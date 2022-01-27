@@ -458,12 +458,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             LedgerTransactionsFilter transactionsFilter = BuildTransferTransactionsFilter(bankAccounts);
             IQueryable<LedgerTransactionList> transactionsQuery = GetFilteredTransactions(transactionsFilter);
             IQueryable<LedgerTransactionList> externalTransactions = GetTransferAccountsExternalTransactions(bankAccounts);
-           
+
 
             transactionsQuery = FilterTransactionQueryByRefDatePeriod(transactionsQuery);
             transactionsQuery = FilterByOpenAndClosed(transactionsQuery);
+            transactionsQuery = FilterFullOpenAmountTransactionsOnly(transactionsQuery);
+
             externalTransactions = FilterTransactionQueryByRefDatePeriod(externalTransactions);
             externalTransactions = FilterByOpenAndClosed(externalTransactions);
+
 
             var transferTransactions = new List<LedgerTransactionList>();
             transferTransactions.AddRange(transactionsQuery);
@@ -471,6 +474,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
 
             return transferTransactions;
+        }
+
+        private static IQueryable<LedgerTransactionList> FilterFullOpenAmountTransactionsOnly(IQueryable<LedgerTransactionList> transactionsQuery)
+        {
+            IQueryable<LedgerTransactionList> FilterFullOpenAmountTransactionsOnly = transactionsQuery.Where(a => Math.Abs(a.OpenAmount) == Math.Abs(a.LocalAmountCredit + a.LocalAmountDebit));
+            transactionsQuery = FilterFullOpenAmountTransactionsOnly;
+            return transactionsQuery;
         }
 
         private IQueryable<LedgerTransactionList> GetTransferAccountsExternalTransactions(List<BankAccountPM> bankAccounts)
