@@ -109,9 +109,9 @@ export class ExportStoragePM {
     public set CargoTypeName(newValue: string) { if (this.cargoTypeName != newValue) { this.cargoTypeName = newValue; this.MarkAsDirty("CargoTypeName"); } }
        
 	 
-    private storageStatusName: string;
-    public get StorageStatusName() { return this.storageStatusName; }
-    public set StorageStatusName(newValue: string) { if (this.storageStatusName != newValue) { this.storageStatusName = newValue; this.MarkAsDirty("StorageStatusName"); } }
+    private customStatusName: string;
+    public get CustomStatusName() { return this.customStatusName; }
+    public set CustomStatusName(newValue: string) { if (this.customStatusName != newValue) { this.customStatusName = newValue; this.MarkAsDirty("CustomStatusName"); } }
        
 	 
     private exporterName: string;

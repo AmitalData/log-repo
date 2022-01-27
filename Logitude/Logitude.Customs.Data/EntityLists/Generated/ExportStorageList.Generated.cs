@@ -49,7 +49,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string CargoTypeName  { get; set; }
        [DataMember]
-       public string StorageStatusName  { get; set; }
+       public string CustomStatusName  { get; set; }
        [DataMember]
        public string ExporterName  { get; set; }
        [DataMember]

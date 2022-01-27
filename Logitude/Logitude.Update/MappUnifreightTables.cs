@@ -24,15 +24,15 @@ namespace Logitude.Update
         {
             this.classes = new string[5, 2];
             this.classes[0, 0] = "Keys"; // file name
-            this.classes[0, 1] = @"C:\LWC\log-repo\Logitude\Unifreight.Data\AmitalModel\EntityKeys"; // file location
+            this.classes[0, 1] = @"C:\LWC\log-repo2\Logitude\Unifreight.Data\AmitalModel\EntityKeys"; // file location
             this.classes[1, 0] = "Repository";
-            this.classes[1, 1] = @"C:\LWC\log-repo\Logitude\Unifreight.Data\AmitalModel\Repsitories";
+            this.classes[1, 1] = @"C:\LWC\log-repo2\Logitude\Unifreight.Data\AmitalModel\Repsitories";
             this.classes[2, 0] = "DataMapping";
-            this.classes[2, 1] = @"C:\LWC\log-repo\Logitude\Unifreight.BL\EntityDataMappings";
+            this.classes[2, 1] = @"C:\LWC\log-repo2\Logitude\Unifreight.BL\EntityDataMappings";
             this.classes[3, 0] = "PM";
-            this.classes[3, 1] = @"C:\LWC\log-repo\Logitude\Unifreight.BL\EntityPMs\UGenerated";
+            this.classes[3, 1] = @"C:\LWC\log-repo2\Logitude\Unifreight.BL\EntityPMs\UGenerated";
             this.classes[4, 0] = "QueryService";
-            this.classes[4, 1] = @"C:\LWC\log-repo\Logitude\Unifreight.BL\EntityQueryServices";
+            this.classes[4, 1] = @"C:\LWC\log-repo2\Logitude\Unifreight.BL\EntityQueryServices";
         }
         private void MappUnifreightTables_Load(object sender, EventArgs e)
         {

@@ -1,291 +1,266 @@
+<table>
+    <tr style="height :50px;">
+        <td class="TabTitleRow">
+            <div style="font-size: medium">נתונים תפעוליים</div>
+        </td>
+    </tr>
+    <tr style="height:80px">
+        <td style="border: 1px solid #3BB3E2; padding: 1px">
+            <table *ngIf="IsReady">
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <LogLabel [Text]="'שטר מטען ראשי'" [ObjectFieldName]="'MainAWB'"
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'MainAWB'" [DataContext]="DataContext"
+                                        [InputType]="'text'" [HideColumns]="true" [ObjectTableName]="ObjectTableName" [Text]="MainAWB"></LogTextBox>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td width="15px"></td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <LogLabel [Text]="'שטר מטען פנימי'" [ObjectFieldName]="'Smp'"
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'Smp'" [DataContext]="DataContext"
+                                    [InputType]="'text'" [HideColumns]="true" [ObjectTableName]="ObjectTableName" [Text]="Smp"></LogTextBox>
+                                </td>
+                            </tr>
 
-    <table>
-        <tr style="height :50px;">
-            <td class="TabTitleRow">
-                <div style="font-size: medium">נתונים תפעוליים</div>
-            </td>
-        </tr>
-        <tr style="height:80px">
-            <td style="border: 1px solid #3BB3E2; padding: 1px">
-                <table *ngIf="IsReady">
-                    <tr>
-                        <td>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <LogLabel [Text]="'שטר מטען ראשי'" [ObjectFieldName]="'LoadingDateTime'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td>
-                                        <LogTextBox [DataContext]="DataContext" [InputType]="'text'"
-                                                    [HideColumns]="true"
-                                                    [Text]=""></LogTextBox>
-                                    </td>
-                                </tr>
+                        </table>
+                    </td>
+                    <td width="20%"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <LogLabel [Text]="'אתר טעינה'" [ObjectFieldName]="'LoadingDateTime'"
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogTextBox [DataContext]="DataContext" [InputType]="'text'" [HideColumns]="true"
+                                        [Text]=""></LogTextBox>
+                                </td>
+                            </tr>
 
-                            </table>
-                        </td>
-                        <td width="15px"></td>
-                        <td>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <LogLabel [Text]="'שטר מטען פנימי'" [ObjectFieldName]="'LoadingDateTime'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td>
-                                        <LogTextBox [DataContext]="DataContext" [InputType]="'text'"
-                                                    [HideColumns]="true"
-                                                    [Text]=""></LogTextBox>
-                                    </td>
-                                </tr>
+                        </table>
+                    </td>
+                    <td width="15px"></td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <LogLabel [Text]="'תאריך המראה בפועל'" [ObjectFieldName]="'FlightDate'"
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'FlightDate'" [DataContext]="DataContext"
+                                    [InputType]="'text'" [HideColumns]="true" [ObjectTableName]="ObjectTableName" [Text]="FlightDate"></LogTextBox>
+                                </td>
+                            </tr>
 
-                            </table>
-                        </td>
-                        <td width="20%"></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <LogLabel [Text]="'אתר טעינה'" [ObjectFieldName]="'LoadingDateTime'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td>
-                                        <LogTextBox [DataContext]="DataContext" [InputType]="'text'"
-                                                    [HideColumns]="true"
-                                                    [Text]=""></LogTextBox>
-                                    </td>
-                                </tr>
+                        </table>
+                    </td>
+                    <td width="20%"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
 
-                            </table>
-                        </td>
-                        <td width="15px"></td>
-                        <td>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <LogLabel [Text]="'תאריך המראה בפועל'" [ObjectFieldName]="'LoadingDateTime'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td>
-                                        <LogTextBox [DataContext]="DataContext" [InputType]="'text'"
-                                                    [HideColumns]="true"
-                                                    [Text]=""></LogTextBox>
-                                    </td>
-                                </tr>
+    <tr style="height :50px;">
+        <td class="TabTitleRow">
+            <div style="font-size: medium">נתוני סגירה</div>
+        </td>
+    </tr>
+    <tr style="height:200px">
+        <td style="border: 1px solid #3BB3E2; padding: 3px;">
+            <table *ngIf="IsReady" style="height:170px;margin-bottom:50px">
 
-                            </table>
-                        </td>
-                        <td width="20%"></td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'FinalCargoTypeCode'"
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogLov [ObjectFieldName]="'FinalCargoTypeCode'" [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext" [LookUpTableName]="'Customs.CargoIdentifireType'"
+                                        [DisplayMemberPath]="'LocalName'" [SelectedValue]="FinalCargoTypeCode"
+                                        [HideColumns]="true">
+                                    </LogLov>
+                                </td>
+                            </tr>
 
-        <tr style="height :50px;">
-            <td class="TabTitleRow">
-                <div style="font-size: medium">נתוני סגירה</div>
-            </td>
-        </tr>
-        <tr style="height:200px">
-            <td style="border: 1px solid #3BB3E2; padding: 3px;">
-                <table *ngIf="IsReady" style="height:170px;margin-bottom:50px">
+                        </table>
+                    </td>
+                    <td width="15px"></td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'FinalManifestNumber'"
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'FinalManifestNumber'" [InputType]="'text'"
+                                        [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                        [HideColumns]="true" [Text]="FinalManifestNumber"></LogTextBox>
+                                </td>
+                            </tr>
 
-                    <tr>
-                        <td>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'FinalCargoTypeCode'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td>
-                                        <LogLov [ObjectFieldName]="'FinalCargoTypeCode'"
-                                                [ObjectTableName]="ObjectTableName"
-                                                [DataContext]="DataContext"
-                                                [LookUpTableName]="'Customs.CargoIdentifireType'"
-                                                [DisplayMemberPath]="'LocalName'"
-                                                [SelectedValue]="FinalCargoTypeCode"
-                                                [HideColumns]="true">
-                                        </LogLov>
-                                    </td>
-                                </tr>
+                        </table>
+                    </td>
 
-                            </table>
-                        </td>
-                        <td width="15px"></td>
-                        <td>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'FinalManifestNumber'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td>
-                                        <LogTextBox [ObjectFieldName]="'FinalManifestNumber'"
-                                                    [InputType]="'text'"
-                                                    [DataContext]="DataContext"
-                                                    [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"
-                                                    [Text]="FinalManifestNumber"></LogTextBox>
-                                    </td>
-                                </tr>
+                    <td width="20%"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'FinalSecondCargoId'"
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'FinalSecondCargoId'" [InputType]="'text'"
+                                        [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                        [HideColumns]="true" [Text]="FinalSecondCargoId"></LogTextBox>
+                                </td>
+                            </tr>
 
-                            </table>
-                        </td>
+                        </table>
+                    </td>
 
-                        <td width="20%"></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'FinalSecondCargoId'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td>
-                                        <LogTextBox [ObjectFieldName]="'FinalSecondCargoId'"
-                                                    [InputType]="'text'"
-                                                    [DataContext]="DataContext"
-                                                    [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"
-                                                    [Text]="FinalSecondCargoId"></LogTextBox>
-                                    </td>
-                                </tr>
+                    <td width="15px"></td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'FinalThirdCargoId'"
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'FinalThirdCargoId'" [InputType]="'text'"
+                                        [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                        [HideColumns]="true" [Text]="FinalThirdCargoId"></LogTextBox>
+                                </td>
+                            </tr>
 
-                            </table>
-                        </td>
+                        </table>
+                    </td>
 
-                        <td width="15px"></td>
-                        <td>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'FinalThirdCargoId'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td>
-                                        <LogTextBox [ObjectFieldName]="'FinalThirdCargoId'"
-                                                    [InputType]="'text'"
-                                                    [DataContext]="DataContext"
-                                                    [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"
-                                                    [Text]="FinalThirdCargoId"></LogTextBox>
-                                    </td>
-                                </tr>
+                    <td width="20%"></td>
 
-                            </table>
-                        </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'LoadingDateTime'" [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogDatePicker [ObjectFieldName]="'LoadingDateTime'"
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                        [InputType]="'date'" [HideColumns]="true"></LogDatePicker>
+                                </td>
+                            </tr>
 
-                        <td width="20%"></td>
+                        </table>
+                    </td>
 
-                    </tr>
-                    <tr>
-                        <td>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'LoadingDateTime'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td>
-                                        <LogDatePicker [ObjectFieldName]="'LoadingDateTime'" [ObjectTableName]="ObjectTableName"
-                                                       [DataContext]="DataContext" [InputType]="'date'"
-                                                       [HideColumns]="true"></LogDatePicker>
-                                    </td>
-                                </tr>
+                    <td width="15px"></td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'FinalLoadingSite'" [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogLov [ObjectFieldName]="'FinalLoadingSite'" [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext" [LookUpTableName]="'Customs.UnloadingSiteType'"
+                                        [DisplayMemberPath]="'LocalName'" [SelectedValue]="FinalLoadingSite"
+                                        [HideColumns]="true">
+                                    </LogLov>
+                                </td>
+                            </tr>
 
-                            </table>
-                        </td>
+                        </table>
+                    </td>
+                    <td width="20%"></td>
 
-                        <td width="15px"></td>
-                        <td>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'FinalLoadingSite'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td>
-                                        <LogLov [ObjectFieldName]="'FinalLoadingSite'"
-                                                [ObjectTableName]="ObjectTableName"
-                                                [DataContext]="DataContext"
-                                                [LookUpTableName]="'Customs.UnloadingSiteType'"
-                                                [DisplayMemberPath]="'LocalName'"
-                                                [SelectedValue]="FinalLoadingSite"
-                                                [HideColumns]="true">
-                                        </LogLov>
-                                    </td>
-                                </tr>
+                </tr>
 
-                            </table>
-                        </td>
-                        <td width="20%"></td>
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'FinalShipCode'" [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogLov [ObjectFieldName]="'FinalShipCode'" [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext" [LookUpTableName]="'Customs.CustomsShip'"
+                                        [DisplayMemberPath]="'LocalName'" [SelectedValue]="FinalShipCode"
+                                        [HideColumns]="true">
+                                    </LogLov>
+                                </td>
+                            </tr>
 
-                    </tr>
+                        </table>
+                    </td>
+                    <td width="15px"></td>
 
-                    <tr>
-                        <td>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'FinalShipCode'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td>
-                                        <LogLov [ObjectFieldName]="'FinalShipCode'"
-                                                [ObjectTableName]="ObjectTableName"
-                                                [DataContext]="DataContext"
-                                                [LookUpTableName]="'Customs.CustomsShip'"
-                                                [DisplayMemberPath]="'LocalName'"
-                                                [SelectedValue]="FinalShipCode"
-                                                [HideColumns]="true">
-                                        </LogLov>
-                                    </td>
-                                </tr>
+                    <td></td>
+                    <td width="20%"></td>
 
-                            </table>
-                        </td>
-                        <td width="15px"></td>
+                </tr>
+            </table>
 
-                        <td></td>
-                        <td width="20%"></td>
+        </td>
+    </tr>
 
-                    </tr>
-                </table>
+    <tr style="height: 70px;">
+        <td>
+            <table>
+                <tr style="float: left;padding-top: 40px;">
 
-            </td>
-        </tr>
-   
-        <tr style="height: 70px;">
-            <td>
-                <table>
-                    <tr style="float: left;padding-top: 40px;">
-                    
-                       <td style="width: 57px;">
-                           <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
-                       </td>
-                       <td style="width: 67px; padding-right: 10px;">
-                           <button class="RedButton" (click)="OkButtonClicked()" [disabled]="false">{{'General.B.Save' |TextCodeTranslationPipe}}</button>
-                       </td>
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel'
+                            |TextCodeTranslationPipe}}</button>
+                    </td>
+                    <td style="width: 67px; padding-right: 10px;">
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="false">{{'General.B.Save'
+                            |TextCodeTranslationPipe}}</button>
+                    </td>
 
-                       <td style="padding-right: 10px;">
-                           <div style="display: inline-block; width: 110px; vertical-align: bottom;">
-                               <custom-send-options [IsDisabled]="!SendButtonEnabled"
-                                                    [AvoidDoubleClick]="true"
-                                                    [HaveTestCase]="'true'"
-                                                    #MyCustomSendOptionsComponent
-                                                    (SendButtonClicked)="SendButtonClicked($event)">
-                               </custom-send-options>
-                           </div>
-                       </td>  
-                    </tr>
-                </table>
-            </td>
+                    <td style="padding-right: 10px;">
+                        <div style="display: inline-block; width: 110px; vertical-align: bottom;">
+                            <custom-send-options [IsDisabled]="!SendButtonEnabled" [AvoidDoubleClick]="true"
+                                [HaveTestCase]="'true'" #MyCustomSendOptionsComponent
+                                (SendButtonClicked)="SendButtonClicked($event)">
+                            </custom-send-options>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
 
-        </tr>
-    </table>
-
+    </tr>
+</table>

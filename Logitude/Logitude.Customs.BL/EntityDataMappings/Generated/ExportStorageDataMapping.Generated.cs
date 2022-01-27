@@ -63,7 +63,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ThirdCargoID, 
 	         DeclarationStatusTypeName, 
 	         CargoTypeName, 
-	         StorageStatusName, 
+	         CustomStatusName, 
 	         ExporterName, 
 	         ShipName, 
 	         StorErrorXML, 
@@ -372,9 +372,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.ExportFileNo = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ExportFileNo));
             }
-            if (!String.IsNullOrWhiteSpace(entityPM.CustomsStatus)) //T4 find type == nText 
+            if (!String.IsNullOrWhiteSpace(entityPM.StorageStatus)) //T4 find type == nText 
             {
-                entityPM.CustomsStatus = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CustomsStatus));
+                entityPM.StorageStatus = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.StorageStatus));
             }
             if (!String.IsNullOrWhiteSpace(entityPM.StorErrorXML)) //T4 find type == nText 
             {

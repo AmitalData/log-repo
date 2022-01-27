@@ -67,5 +67,6 @@
 <!ELEMENT FclLcl (#PCDATA)>
 <!ELEMENT ForwarderId (#PCDATA)>
 <!ELEMENT LastMileServiceType (#PCDATA)>
-<!ELEMENT Direction (#PCDATA)>
+ <!ELEMENT Direction (#PCDATA)>
 <!ELEMENT Commodity (#PCDATA)>
+ 

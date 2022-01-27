@@ -141,6 +141,8 @@
     <Compile Include="AmitalModel\EntityKeys\CTBTAXTYPEKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBTRANSPKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBTSRUFTYPEKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\EFIFILEMKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\ESPSPEDKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\ETBAIRLINEKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\ETBPAYTRKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\ETBPORTKeys.cs" />
@@ -157,6 +159,7 @@
     <Compile Include="AmitalModel\EntityKeys\GDMLOCKKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GDMREFKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GGGHDAYKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\GITITEMAPKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GITITEMCRKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GGGQCKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GGGQKeys.cs" />
@@ -232,6 +235,8 @@
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBTSRUFTYPE.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBUNLOAD.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.DWGNDCARD.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.EFIFILEM.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ESPSPED.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ETBAIRLINE.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ETBPAYTR.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ETBPORT.cs" />
@@ -263,6 +268,7 @@
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GGGQ.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GGGQC.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GITITEM.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GITITEMAP.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GITITEMCR.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GNDADR.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GNDCARD.cs" />
@@ -345,6 +351,8 @@
     <Compile Include="AmitalModel\Repsitories\CTBTSRUFTYPERepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CTBUNLOADRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\DualRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\EFIFILEMRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\ESPSPEDRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\ETBAIRLINERepository.cs" />
     <Compile Include="AmitalModel\Repsitories\ETBPAYTRRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\ETBPORTRepository.cs" />
@@ -360,6 +368,7 @@
     <Compile Include="AmitalModel\Repsitories\GDMFLDRTRRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GDMLOCKRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GDMREFRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\GITITEMAPRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GITITEMCRRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GGGHDAYRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GGGQCRepository.cs" />

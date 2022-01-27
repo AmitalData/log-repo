@@ -84,6 +84,21 @@ export class ExportDeclarationClosingDataPM {
     public set FinalShipCodeName(newValue: string) { if (this.finalShipCodeName != newValue) { this.finalShipCodeName = newValue; this.MarkAsDirty("FinalShipCodeName"); } }
        
 	 
+    private mAIN_AWB: string;
+    public get MAIN_AWB() { return this.mAIN_AWB; }
+    public set MAIN_AWB(newValue: string) { if (this.mAIN_AWB != newValue) { this.mAIN_AWB = newValue; this.MarkAsDirty("MAIN_AWB"); } }
+       
+	 
+    private sMP: string;
+    public get SMP() { return this.sMP; }
+    public set SMP(newValue: string) { if (this.sMP != newValue) { this.sMP = newValue; this.MarkAsDirty("SMP"); } }
+       
+	 
+    private fLIGHT_DATE: Date;
+    public get FLIGHT_DATE() { return this.fLIGHT_DATE; }
+    public set FLIGHT_DATE(newValue: Date) { if (this.fLIGHT_DATE != newValue) { this.fLIGHT_DATE = newValue; this.MarkAsDirty("FLIGHT_DATE"); } }
+       
+	 
 
     public OldEntityPM: ExportDeclarationClosingDataPM;
 		
