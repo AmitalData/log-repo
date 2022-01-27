@@ -53,11 +53,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual CargoStatus CustomsCargoStatus { get; set; }
         [Column("ExporterID")]
 	    public string ExporterID { get; set; }
-        [ForeignKey("CustomsShip")]
         [Column("ShipCode")]
 	    public string ShipCode { get; set; }
-	      
-        public virtual CustomsShip CustomsShip { get; set; }
         [Column("FirstCargoID")]
 	    public string FirstCargoID { get; set; }
         [Column("SecondCargoID")]

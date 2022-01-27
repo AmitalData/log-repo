@@ -150,9 +150,4 @@
     ReferencedTable="CargoStatuses"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
-  <Relation
-    ForeignKeyColumn="ShipCode"
-    ReferencedTable="CustomsShips"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
 </Table>
