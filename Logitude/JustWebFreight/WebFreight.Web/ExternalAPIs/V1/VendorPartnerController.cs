@@ -282,19 +282,22 @@ namespace WebFreight.Web.ExternalAPIs.V1
         private static string GetDeductionTypeId(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Vendor entity, GLAccountPM gLAccountEntity)
         {
             AccountingCompanyTypeQueryService accountingCompanyTypeService = new AccountingCompanyTypeQueryService(gLAccountEntity.Tenant);
-             return accountingCompanyTypeService.GetByCode(entity.GLAccount.DeductionTypeCode, gLAccountEntity.Tenant).Id;
+            var accountingCompanyType = accountingCompanyTypeService.GetByCode(entity.GLAccount.DeductionTypeCode, gLAccountEntity.Tenant);
+            return accountingCompanyType != null ? accountingCompanyType.Id : null;
         }
 
         private static string GetDeductionFileTypeId(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Vendor entity, GLAccountPM gLAccountEntity)
         {
             WithholdingTaxDeductionTypeQueryService taxDeductionTypeService = new WithholdingTaxDeductionTypeQueryService(gLAccountEntity.Tenant);
-             return taxDeductionTypeService.GetByCode(entity.GLAccount.DeductionFileTypeCode, gLAccountEntity.Tenant).Id;
+            var taxDeductionType = taxDeductionTypeService.GetByCode(entity.GLAccount.DeductionFileTypeCode, gLAccountEntity.Tenant);
+             return taxDeductionType!= null ? taxDeductionType.Id:null;
         }
 
         private static string GetTaxWithholdingAssessingOfficeId(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Vendor entity, GLAccountPM gLAccountEntity)
         {
             TaxWithholdingAssessOfficeQueryService assessOfficeService = new TaxWithholdingAssessOfficeQueryService(gLAccountEntity.Tenant);
-            return assessOfficeService.GetByNumber(entity.GLAccount.AssessingOfficeCode, gLAccountEntity.Tenant).Id;
+            var assessOffice = assessOfficeService.GetByNumber(entity.GLAccount.AssessingOfficeCode, gLAccountEntity.Tenant);
+            return assessOffice != null? assessOffice.Id:null;
         }
 
         private static void SetDisplayNumber(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Vendor entity, Simplog.Data.CommonDataModel.EntityPOCOs.Card card, GLAccountPM gLAccountEntity)
