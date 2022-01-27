@@ -68,6 +68,7 @@
     <Compile Include="EntityPMs\AutomaticReconcilePM.cs" />
     <Compile Include="EntityPMs\ChartOfAccountPM.cs" />
     <Compile Include="EntityPMs\Generated\AccountingCompanyTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AccountingEntitiesJournalsPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AccountingEntityPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AccountingIntegrityCheckPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AccountingNotePM.Generated.cs" />
