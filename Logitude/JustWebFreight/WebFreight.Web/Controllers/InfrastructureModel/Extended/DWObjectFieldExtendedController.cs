@@ -80,6 +80,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
                 var factFields = new DWObjectFieldAdditionalFactService(new DWObjectFieldAdditionalFactArgs() { FactTableCode = DWOTId,Tenant = authToken.Tenant, GroupedByCategory = true }).DWObjectFieldPMs;
                 var CategoryGroup = factFields.GroupBy(a => a.Category);
+                var FactGroups = factFields.GroupBy(a => a.DWObjectTableCode);
 
                 DWHSettingRepository dWHSettingRepository = new DWHSettingRepository(authToken.Tenant);
                 var isParentTenant =   dWHSettingRepository.IsParentTenant(authToken.Tenant);
@@ -91,40 +92,51 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
 
                 List<DWFieldsGroup> MyGroups = new List<DWFieldsGroup>();
-                foreach (var item in CategoryGroup)
+
+                List<DWFactGroup> FactFieldsGroups = new List<DWFactGroup>();
+
+
+                foreach (var fact in FactGroups)
                 {
-                    var MyKey = MyGroups.Where(a => a.Key == item.Key).FirstOrDefault();
-                    if (MyKey == null)
+                    DWFactGroup DWFactGroup = new DWFactGroup();
+                    DWFactGroup.Key = fact.Key;
+                    DWFactGroup.FieldsGroupList = new List<DWFieldsGroup>();
+                    foreach (var item in CategoryGroup)
                     {
-                        var MyGroup = new DWFieldsGroup();
-                        MyGroup.Key = item.Key;
-                        var FirstItem = item.Select(a => a).FirstOrDefault();
-                        if (FirstItem != null)
+                        var factfields = item.Where(a => a.DWObjectTableCode == fact.Key).ToList();
+
+                        if(factfields != null && factfields.Count !=0)
                         {
+                            var MyGroup = new DWFieldsGroup();
+                            MyGroup.Key = item.Key;
+                            var FirstItem = factfields.Select(a => a).FirstOrDefault();
                             MyGroup.Index = FirstItem.CategoryIndex;
-                        }
+                            MyGroup.FieldsList = factfields.Select(a => a).OrderBy(a => a.Name).ToList();
 
-                        MyGroup.FieldsList = item.Select(a => a).OrderBy(a => a.Name).ToList();
-
-
-                        if (MyGroup.FieldsList != null && MyGroup.FieldsList.Count > 0)
-                        {
-                            if (MyGroup.Key == "Custom Fields" || MyGroup.Key == "CustomFields" )
+                            if (MyGroup.FieldsList != null && MyGroup.FieldsList.Count > 0)
                             {
-                                ResolveDWCustomObjectFields(objectFieldPMs, MyGroup, authToken.Tenant);
-
-                                if (MyGroup.FieldsList.Where(d => d.DisplayInQueryBuilder).Any())
+                                if (MyGroup.Key == "Custom Fields" || MyGroup.Key == "CustomFields")
                                 {
-                                    MyGroups.Add(MyGroup);
+                                    ResolveDWCustomObjectFields(objectFieldPMs, MyGroup, authToken.Tenant);
+
+                                    if (MyGroup.FieldsList.Where(d => d.DisplayInQueryBuilder).Any())
+                                    {
+                                        MyGroups.Add(MyGroup);
+                                    }
                                 }
+                                else MyGroups.Add(MyGroup);
+
+                                DWFactGroup.FieldsGroupList.Add(MyGroup);
                             }
-                            else MyGroups.Add(MyGroup);
-
-
+                             
                         }
-
                     }
+
+                    FactFieldsGroups.Add(DWFactGroup);
                 }
+
+                FactFieldsGroups = FactFieldsGroups; 
+                
                 MyGroups = MyGroups.OrderBy(a => a.Index).ToList();
                 MyGroups = RemoveFactInvoiceCustomFieldsCategory(DWOTId, MyGroups);
 
@@ -133,7 +145,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
-                return Request.CreateResponse(HttpStatusCode.OK, MyGroups);
+                return Request.CreateResponse(HttpStatusCode.OK, FactFieldsGroups);
 
             }
             catch (Exception ex)
@@ -262,5 +274,12 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
         public string Key { get; set; }
         public int Index { get; set; }
         public List<DWObjectFieldPM> FieldsList { get; set; }
+    } 
+    public class DWFactGroup
+    {
+        public string Key { get; set; }
+        public int Index { get; set; }
+        public List<DWFieldsGroup> FieldsGroupList { get; set; }
     }
+
 }

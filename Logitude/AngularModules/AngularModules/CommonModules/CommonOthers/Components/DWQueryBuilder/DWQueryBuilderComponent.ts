@@ -177,58 +177,87 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
                             this.CurrentSession.CurrentWindow.StopBusyIndicator();
                             var MyGroups = [];
                             var MyAllGroups = [];
-                            Result.Result.forEach((Group) => {
-                                if (Group.FieldsList.filter(a => a.DisplayInQueryBuilder == true).length > 0) {
-                                    var view = new DWFieldsGroup(Group.Key, Group.FieldsList);
-                                    if (MyGroups.length == 0) {
-                                        view.IsDetailesOpened = true;
-                                        view.DetailsIcon = "./Images/CellIcons/Arrowup.png";
+                            var TestAllGroups = [];
+
+                            Result.Result.forEach((TestGroup) => { 
+                                    var testView = new DWFieldsGroup(TestGroup.Key, TestGroup.FieldsGroupList);
+                                    if (TestAllGroups.length == 0) {
+                                        testView.IsDetailesOpened = true;
+                                        testView.DetailsIcon = "./Images/CellIcons/Arrowup.png";
                                     }
                                     else {
-                                        view.IsDetailesOpened = false;
-                                        view.DetailsIcon = "./Images/CellIcons/Arrowdown.png";
+                                        testView.IsDetailesOpened = false;
+                                        testView.DetailsIcon = "./Images/CellIcons/Arrowdown.png";
                                     }
-                                    var MyInnerList = [];
-                                    view.FieldsList.forEach((field) => {
-                                        if (this.DisplayFieldInQueryBuilder(field)) {
+                                    var TestInnerList = [];
+                                    testView.FieldsList.forEach((field) => {
                                             var MyItem = new DWObjectFieldsDetails(field, this);
-                                            MyItem.ParentDataTypeCode = field.DataTypeCode;
+                                            MyItem.ParentDataTypeCode = field.Key;
                                             MyItem.Category1 = field.Category1;
                                             MyItem.Category2 = field.Category2;
-                                            MyInnerList.push(MyItem);
+                                            TestInnerList.push(MyItem);
                                             this.ObsList.push(MyItem);
-                                            this.ObsListAll.push(MyItem);
-                                        }
+                                            this.ObsListAll.push(MyItem); 
                                     });
 
-                                    var view1 = new DWFieldsGroup(Group.Key, Group.FieldsList);
-                                    if (MyAllGroups.length == 0) {
-                                        view1.IsDetailesOpened = true;
-                                        view1.DetailsIcon = "./Images/CellIcons/Arrowup.png";
-                                    }
-                                    else {
-                                        view1.IsDetailesOpened = false;
-                                        view1.DetailsIcon = "./Images/CellIcons/Arrowdown.png";
-                                    }
-                                    var MyInnerList1 = [];
-                                    view1.FieldsList.forEach((field) => {
-                                        if (this.DisplayFieldInQueryBuilder(field)) {
-                                            var MyItem = new DWObjectFieldsDetails(field, this);
-                                            MyItem.ParentDataTypeCode = field.DataTypeCode;
-                                            MyItem.Category1 = field.Category1;
-                                            MyItem.Category2 = field.Category2;
-                                            MyInnerList1.push(MyItem);
-                                            this.ObsList.push(MyItem);
-                                            this.ObsListAll.push(MyItem);
+                                TestGroup.FieldsGroupList.forEach((Group) => {
+                                    if (Group.FieldsList.filter(a => a.DisplayInQueryBuilder == true).length > 0) {
+                                        var view = new DWFieldsGroup(Group.Key, Group.FieldsList);
+                                        if (MyGroups.length == 0) {
+                                            view.IsDetailesOpened = true;
+                                            view.DetailsIcon = "./Images/CellIcons/Arrowup.png";
                                         }
-                                    });
+                                        else {
+                                            view.IsDetailesOpened = false;
+                                            view.DetailsIcon = "./Images/CellIcons/Arrowdown.png";
+                                        }
+                                        var MyInnerList = [];
+                                        view.FieldsList.forEach((field) => {
+                                            if (this.DisplayFieldInQueryBuilder(field)) {
+                                                var MyItem = new DWObjectFieldsDetails(field, this);
+                                                MyItem.ParentDataTypeCode = field.DataTypeCode;
+                                                MyItem.Category1 = field.Category1;
+                                                MyItem.Category2 = field.Category2;
+                                                MyInnerList.push(MyItem);
+                                                this.ObsList.push(MyItem);
+                                                this.ObsListAll.push(MyItem);
+                                            }
+                                        });
 
-                                    view.FieldsList = MyInnerList;
-                                    view1.FieldsList = MyInnerList1;
-                                    MyGroups.push(view);
-                                    MyAllGroups.push(view1);
-                                }
-                            });
+                                        var view1 = new DWFieldsGroup(Group.Key, Group.FieldsList);
+                                        if (MyAllGroups.length == 0) {
+                                            view1.IsDetailesOpened = true;
+                                            view1.DetailsIcon = "./Images/CellIcons/Arrowup.png";
+                                        }
+                                        else {
+                                            view1.IsDetailesOpened = false;
+                                            view1.DetailsIcon = "./Images/CellIcons/Arrowdown.png";
+                                        }
+                                        var MyInnerList1 = [];
+                                        view1.FieldsList.forEach((field) => {
+                                            if (this.DisplayFieldInQueryBuilder(field)) {
+                                                var MyItem = new DWObjectFieldsDetails(field, this);
+                                                MyItem.ParentDataTypeCode = field.DataTypeCode;
+                                                MyItem.Category1 = field.Category1;
+                                                MyItem.Category2 = field.Category2;
+                                                MyInnerList1.push(MyItem);
+                                                this.ObsList.push(MyItem);
+                                                this.ObsListAll.push(MyItem);
+                                            }
+                                        });
+
+                                        view.FieldsList = MyInnerList;
+                                        view1.FieldsList = MyInnerList1;
+                                        testView.FieldsList = TestInnerList;
+                                        TestGroup.FieldsList = testView;
+                                        MyGroups.push(view);
+                                        MyAllGroups.push(view1);
+                                    }
+                                } )
+                              
+                             });
+
+
                             this.DataSource = MyGroups;
                             this.AllGroupsDataSource = MyAllGroups;
                             this.AllFieldsDataSource = this.ObsList;
