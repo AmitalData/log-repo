@@ -1352,7 +1352,14 @@ on record.JournalId equals j.Id
                     select a).Count();
         }
 
-       public List<CustomTaxReportData> GetLedgerTransactionsForTaxReport(DateTime? taxReportMonth, int tenant)
+        public JournalAdditionalData GetJournalAdditionalDataByJournalId(string journalId, int tenant)
+        {
+            return (from a in context.JournalAdditionalDatas
+                    where a.JournalId == journalId && a.Tenant == tenant
+                    select a
+                    ).ToList().FirstOrDefault();
+        }
+        public List<CustomTaxReportData> GetLedgerTransactionsForTaxReport(DateTime? taxReportMonth, int tenant)
         {
 
             int days = DateTime.DaysInMonth(taxReportMonth.Value.Year, taxReportMonth.Value.Month);
@@ -1433,7 +1440,7 @@ on record.JournalId equals j.Id
 
 
         }
-             public IQueryable<LedgerTransaction> GetLedgerTransactionsInputsNotIncludedInTaxReports(LedgerTransactionBalanceFilter ledgerTransactionBalanceFilter, FullAccountingSettingList setting)
+        public IQueryable<LedgerTransaction> GetLedgerTransactionsInputsNotIncludedInTaxReports(LedgerTransactionBalanceFilter ledgerTransactionBalanceFilter, FullAccountingSettingList setting)
         {
            
             IQueryable<LedgerTransaction> inputLines = (from ledger in context.LedgerTransactions
