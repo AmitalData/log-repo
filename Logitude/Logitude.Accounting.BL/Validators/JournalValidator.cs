@@ -354,7 +354,7 @@ namespace Logitude.Accounting.BL.Validators
                             else
                             {
                                 //המטבע הוא שח והסכום במטז שונה מסכום שח
-                                errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_ForeignDiffLocalAmountButTenantCurrency, myJournalPM.Tenant));
+                                errorsList.AddNew(TranslateMyTextCodeDisplay(JournalValidator.M_ForeignDiffLocalAmountButTenantCurrency, myJournalPM.Tenant, currJournalLinePM));
                             }
                         }
                     }
@@ -875,8 +875,45 @@ accountingValidationContextServiceProvider
             }
             return trans;
         }
+        string TranslateMyTextCodeDisplay(string textCodeCode, int tenant, JournalLinePM currJournalLinePM)
+        {
+            string trans = "";
+            if (OverrideITextCodeTranslator != null)
+            {
+                trans = OverrideITextCodeTranslator.Translate(textCodeCode, tenant);
+            }
+            else
+            {
+                //bool useLocal = !(GetLoggedContact(tenant).DontShowLocal);
 
-        private  bool ToUseLocalText(int tenant)
+                bool useLocal = ToUseLocalText(tenant);
+
+                //trans = TextCodesTranslator.TranslateText(textCodeCode, tenant);
+                trans = TranslateTextsClass.Translate(textCodeCode, tenant, useLocal) /*+ " " + _JLineNumberTExt*/;
+                if (string.IsNullOrWhiteSpace(trans))
+                {
+                    trans = "$Text(" + textCodeCode + ")";//Our Version Of Uniface Convention
+                }
+                var accountingContext = AccountingContext.GetContext(tenant);
+                GLAccountQueryService glaq = new GLAccountQueryService(accountingContext);
+                string debitDisplay = glaq.GetDisplayNumberByGLAccountId(currJournalLinePM.DebitAccountId,tenant);
+                string creditDisplay = glaq.GetDisplayNumberByGLAccountId(currJournalLinePM.CreditAccountId, tenant);
+
+                string myJLineNumberTExt = ToUseLocalText(tenant) ? $"(שורת פקודה {currJournalLinePM.Line}, חשבון חובה {debitDisplay}, חשבון זכות {creditDisplay})"
+                                                                  : $"(Journal Line {currJournalLinePM.Line}, Debit Account {debitDisplay}, Credit Account {creditDisplay})";
+
+                trans += " " + myJLineNumberTExt; // should use string builder 
+
+
+            }
+            if (string.IsNullOrWhiteSpace(trans))
+            {
+                trans = "$Text(" + textCodeCode + ")";//Our Version Of Uniface Convention
+            }
+            return trans;
+        }
+
+        private bool ToUseLocalText(int tenant)
         {
             bool useLocal = true;
             var user = GetLoggedContact(tenant);
