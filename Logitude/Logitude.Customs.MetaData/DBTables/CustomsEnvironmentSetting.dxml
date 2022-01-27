@@ -1,49 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="BatchServicesDefinitions"
-  Schema="dbo"
-  DBType="Global"
-  Module="Infrastructure">
+  Name="CustomsEnvironmentSettings"
+  Schema="Customs"
+  DBType="Main"
+  Module="Customs">
   <Column
-    Name="Code"
+    Name="Id"
     Type="varchar"
-    Size="50">
+    Size="40">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
-    Name="ClassName"
+    Name="EnvironmentCode"
     Type="varchar"
-    Size="100">
+    Size="20">
     <Constraints
+      PrimaryKey="true"
       Nullable="false" />
-  </Column>
-  <Column
-    Name="Parameter1"
-    Type="varchar"
-    Size="25">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Parameter2"
-    Type="varchar"
-    Size="25">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="QueueDefinitionCode"
-    Type="varchar"
-    Size="200">
-    <Constraints
-      Nullable="true" />
   </Column>
   <Column
     Name="UseRabbitMQ"
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="RabbitHost"
+    Type="varchar"
+    Size="256">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RabbitUserName"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RabbitPassword"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
 </Table>

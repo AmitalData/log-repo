@@ -75,28 +75,22 @@ using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.BL;
 using Logitude.CargoTracking.Data.EntityPOCOs;
 
-//using Amital.QuoteOPM.BL.CLoseTable;
-using Amital.QuoteOPM.Data.Repsitories;
-using Amital.QuoteOPM.Data.EntityPOCOs;
-using Amital.QuoteOPM.BL;
-
-
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
-   public class InterfaceTenantDefinitionUpdateClass
+   public class CustomsEnvironmentSettingUpdateClass
    {  		
-		public const string HashString = "98213d6604953b30020d338f5af7f100";
+		public const string HashString = "1dff41ee18d610fcb3f1ed7b8a6de3ca";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "Customs.InterfaceTenantDefinition",
-			      				    IsNew =  false,
-			      				    DBTableName =  "Customs.InterfaceTenantDefinitions",
-			      				    ObjectTableSingular =  "InterfaceTenantDefinition",
-			      				    ObjectTablePlural =  "InterfaceTenantDefinitions",
+	             				    ObjectTableName =  "CustomsEnvironmentSetting",
+			      				    IsNew =  true,
+			      				    DBTableName =  "CustomsEnvironmentSettings",
+			      				    ObjectTableSingular =  "CustomsEnvironmentSetting",
+			      				    ObjectTablePlural =  "CustomsEnvironmentSettings",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -104,7 +98,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
-			      				    LookUp1 =  "Id",
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
@@ -120,15 +113,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  false,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "Interface Tenant Definition",
-			      				    Code =  "53f1",
-			      				    Name =  "Customs.InterfaceTenantDefinition Query Group",
+			      				    DefaultText =  "Customs Environment Setting",
+			      				    Code =  "bfd6",
+			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Customs",
+			      				    ServerModuleName =  "Customs",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -137,7 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
-			      				    HashString =  InterfaceTenantDefinitionUpdateClass.HashString,
+			      				    HashString =  CustomsEnvironmentSettingUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -148,381 +143,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Code",
-					  						ObjectTableName =  "Customs.InterfaceTenantDefinition",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Customs.InterfaceManagement",
-					  						MinLength =  0,
-					  						MaxLength =  32,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  32,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Code",
-					  						ListPropertyPath =  "Code",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.InterfaceTenantDefinition",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Code",
-					  						DefaultText =  "Code",
-					  						FullLocalDefaultText =  "מספר מסר",
-					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  "Code",
-					  						ListLocalDefaultText =  "מספר מסר",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "TenantSendOptionsCode",
-					  						ObjectTableName =  "Customs.InterfaceTenantDefinition",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Customs.InterfaceSendOption",
-					  						MinLength =  0,
-					  						MaxLength =  2,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  2,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "TenantSendOptionsCode",
-					  						ListPropertyPath =  "TenantSendOptionsCode",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.InterfaceTenantDefinition",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "TenantSendOptionsCode",
-					  						DefaultText =  "Tenant Send Options",
-					  						FullLocalDefaultText =  "אפשרויות שליחה",
-					  						ListFieldLable =  "TenantSendOptionsCodeListLable",
-					  						ListLableDefaultText =  "Tenant Send Options",
-					  						ListLocalDefaultText =  "אפשרויות שליחה",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "TenantPriority",
-					  						ObjectTableName =  "Customs.InterfaceTenantDefinition",
-					  						FieldsDataType =  "Integer",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "TenantPriority",
-					  						ListPropertyPath =  "TenantPriority",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.InterfaceTenantDefinition",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "TenantPriority",
-					  						DefaultText =  "Tenant Priority",
-					  						FullLocalDefaultText =  "עדיפות שליחה / ניתוח",
-					  						ListFieldLable =  "TenantPriorityListLable",
-					  						ListLableDefaultText =  "Tenant Priority",
-					  						ListLocalDefaultText =  "עדיפות שליחה / ניתוח",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "Active",
-					  						ObjectTableName =  "Customs.InterfaceTenantDefinition",
-					  						FieldsDataType =  "Boolean",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Active",
-					  						ListPropertyPath =  "Active",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.InterfaceTenantDefinition",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Active",
-					  						DefaultText =  "Active",
-					  						ListFieldLable =  "ActiveListLable",
-					  						ListLableDefaultText =  "Active",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "DcaRenameFileEnable",
-					  						ObjectTableName =  "Customs.InterfaceTenantDefinition",
-					  						FieldsDataType =  "Boolean",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "DcaRenameFileEnable",
-					  						ListPropertyPath =  "DcaRenameFileEnable",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.InterfaceTenantDefinition",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "DcaRenameFileEnable",
-					  						DefaultText =  "Dca File Rename Is Enable",
-					  						ListFieldLable =  "DcaRenameFileEnableListLable",
-					  						ListLableDefaultText =  "Dca File Rename Is Enable",
-					  						ListLocalDefaultText =  "האם להחליף שם קובץ בכספת",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "DcaRenameFilePrefix",
-					  						ObjectTableName =  "Customs.InterfaceTenantDefinition",
+					 						FieldName =  "Id",
+					  						ObjectTableName =  "CustomsEnvironmentSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  256,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  256,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						Operator =  "StartsWith",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "DcaRenameFilePrefix",
-					  						ListPropertyPath =  "DcaRenameFilePrefix",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.InterfaceTenantDefinition",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "DcaRenameFilePrefix",
-					  						DefaultText =  "Rename DCA Prefix File to",
-					  						ListFieldLable =  "DcaRenameFilePrefixListLable",
-					  						ListLableDefaultText =  "Rename DCA Prefix File to",
-					  						ListLocalDefaultText =  "שם קובץ בכספת מוחלף  ",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "QueueType",
-					  						ObjectTableName =  "Customs.InterfaceTenantDefinition",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  2,
+					  						MaxLength =  40,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -530,14 +155,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  2,
+					  						SystemMaxLength =  40,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "QueueType",
-					  						ListPropertyPath =  "QueueType",
+					  						PMPropertyPath =  "Id",
+					  						ListPropertyPath =  "Id",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -554,8 +179,67 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "QueueType",
-					  						DefaultText =  "סוג תור",
+					  						FullFieldLable =  "Id",
+					  						DefaultText =  "Id",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "EnvironmentCode",
+					  						ObjectTableName =  "CustomsEnvironmentSetting",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  20,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  20,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "EnvironmentCode",
+					  						ListPropertyPath =  "EnvironmentCode",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomsEnvironmentSetting",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "EnvironmentCode",
+					  						DefaultText =  "Environment Code",
+					  						ListFieldLable =  "EnvironmentCodeListLable",
+					  						ListLableDefaultText =  "Environment Code",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -575,7 +259,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UseRabbitMQ",
-					  						ObjectTableName =  "Customs.InterfaceTenantDefinition",
+					  						ObjectTableName =  "CustomsEnvironmentSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -587,7 +271,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -612,9 +296,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UseRabbitMQ",
 					  						DefaultText =  "Use RabbitMQ",
-					  						ListFieldLable =  "UseRabbitMQListLable",
-					  						ListLableDefaultText =  "Use RabbitMQ",
-					  						ListLocalDefaultText =  "תור RabbitMQ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -633,11 +314,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "QueueGroupCode",
-					  						ObjectTableName =  "Customs.InterfaceTenantDefinition",
+					 						FieldName =  "RabbitHost",
+					  						ObjectTableName =  "CustomsEnvironmentSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  30,
+					  						MaxLength =  256,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -645,14 +326,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  30,
+					  						SystemMaxLength =  256,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "QueueGroupCode",
-					  						ListPropertyPath =  "QueueGroupCode",
+					  						PMPropertyPath =  "RabbitHost",
+					  						ListPropertyPath =  "RabbitHost",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -669,8 +350,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "QueueGroupCode",
-					  						DefaultText =  "Queue Group Code",
+					  						FullFieldLable =  "RabbitHost",
+					  						DefaultText =  "Rabbit Host",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -689,8 +370,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "SendTime",
-					  						ObjectTableName =  "Customs.InterfaceTenantDefinition",
+					 						FieldName =  "RabbitUserName",
+					  						ObjectTableName =  "CustomsEnvironmentSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  100,
@@ -707,8 +388,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "SendTime",
-					  						ListPropertyPath =  "SendTime",
+					  						PMPropertyPath =  "RabbitUserName",
+					  						ListPropertyPath =  "RabbitUserName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -724,11 +406,64 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "SendTime",
-					  						DefaultText =  "Send Time",
-					  						ListFieldLable =  "SendTimeListLable",
-					  						ListLableDefaultText =  "SendTime",
-					  						ListLocalDefaultText =  "שעת שליחה",
+					  						FullFieldLable =  "RabbitUserName",
+					  						DefaultText =  "Rabbit User Name",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "RabbitPassword",
+					  						ObjectTableName =  "CustomsEnvironmentSetting",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  100,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "RabbitPassword",
+					  						ListPropertyPath =  "RabbitPassword",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "RabbitPassword",
+					  						DefaultText =  "Rabbit Password",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -752,15 +487,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
-		   ObjectTable InterfaceTenantDefinitionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.InterfaceTenantDefinition" && d.Tenant == 0).FirstOrDefault();
-		   //List<ObjectField> InterfaceTenantDefinitionObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.InterfaceTenantDefinition").ToList();
+		   ObjectTable CustomsEnvironmentSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomsEnvironmentSetting" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> CustomsEnvironmentSettingObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomsEnvironmentSetting").ToList();
 		       
 	      
 
-	         Screen InterfaceTenantDefinitionCustomsInterfaceTenantDefinitionHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InterfaceTenantDefinition.HeaderScreen", Name = "Customs.InterfaceTenantDefinitionHeaderScreen", ObjectTableId = InterfaceTenantDefinitionObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen CustomsEnvironmentSettingCustomsEnvironmentSettingHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomsEnvironmentSetting.HeaderScreen", Name = "CustomsEnvironmentSettingHeaderScreen", ObjectTableId = CustomsEnvironmentSettingObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
-		    InterfaceTenantDefinitionObjectTable.HeaderScreenId = InterfaceTenantDefinitionCustomsInterfaceTenantDefinitionHeaderScreenScreen0.Id;
-		    InterfaceTenantDefinitionObjectTable.HeaderScreenCode = InterfaceTenantDefinitionCustomsInterfaceTenantDefinitionHeaderScreenScreen0.Code;
+		    CustomsEnvironmentSettingObjectTable.HeaderScreenId = CustomsEnvironmentSettingCustomsEnvironmentSettingHeaderScreenScreen0.Id;
+		    CustomsEnvironmentSettingObjectTable.HeaderScreenCode = CustomsEnvironmentSettingCustomsEnvironmentSettingHeaderScreenScreen0.Code;
 
 	   		  
 
@@ -772,18 +507,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
-		   ObjectTable InterfaceTenantDefinitionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.InterfaceTenantDefinition" && d.Tenant == 0).FirstOrDefault(); 
+		   ObjectTable CustomsEnvironmentSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomsEnvironmentSetting" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature InterfaceTenantDefinitionFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = InterfaceTenantDefinitionObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterfaceTenantDefinition.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InterfaceTenantDefinitionObjectTable);
-		   Feature InterfaceTenantDefinitionFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = InterfaceTenantDefinitionObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterfaceTenantDefinition.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InterfaceTenantDefinitionObjectTable);
-		   Feature InterfaceTenantDefinitionFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = InterfaceTenantDefinitionObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterfaceTenantDefinition.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InterfaceTenantDefinitionObjectTable);
-		   Feature InterfaceTenantDefinitionFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = InterfaceTenantDefinitionObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterfaceTenantDefinition.Features.PackageFeature", NameTextCodeDefaultText = "InterfaceTenantDefinition Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InterfaceTenantDefinitionObjectTable);    
+		   Feature CustomsEnvironmentSettingFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CustomsEnvironmentSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsEnvironmentSetting.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsEnvironmentSettingObjectTable);
+		   Feature CustomsEnvironmentSettingFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CustomsEnvironmentSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsEnvironmentSetting.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsEnvironmentSettingObjectTable);
+		   Feature CustomsEnvironmentSettingFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CustomsEnvironmentSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsEnvironmentSetting.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsEnvironmentSettingObjectTable);
+		   Feature CustomsEnvironmentSettingFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = CustomsEnvironmentSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsEnvironmentSetting.Features.PackageFeature", NameTextCodeDefaultText = "CustomsEnvironmentSetting Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsEnvironmentSettingObjectTable);    
 	    
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable InterfaceTenantDefinitionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.InterfaceTenantDefinition" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable CustomsEnvironmentSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomsEnvironmentSetting" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -791,14 +526,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 LocalName =  "Created",
                 IsManualEntry =  false,
                 ShortView =  true,
-                EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,
                 IsSharedLogisticsEnabled =  false,
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = InterfaceTenantDefinitionObjectTable.Id,
+                ObjectTableId = CustomsEnvironmentSettingObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -810,14 +544,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 LocalName =  "Updated",
                 IsManualEntry =  false,
                 ShortView =  false,
-                EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,
                 IsSharedLogisticsEnabled =  false,
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = InterfaceTenantDefinitionObjectTable.Id,
+                ObjectTableId = CustomsEnvironmentSettingObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
