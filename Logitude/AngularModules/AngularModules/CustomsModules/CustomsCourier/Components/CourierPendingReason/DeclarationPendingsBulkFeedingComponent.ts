@@ -183,7 +183,9 @@ export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
         myMessageWindow.Height = 150;
         myMessageWindow.Show(res);
         SessionLocator.SelectedSession.StopBusyIndicator();
-        this.CancelButtonClicked()
+        SessionLocator.SelectedSession.CloseCurrentWindow();
+
+       // this.CancelButtonClicked()
     }
 
 
