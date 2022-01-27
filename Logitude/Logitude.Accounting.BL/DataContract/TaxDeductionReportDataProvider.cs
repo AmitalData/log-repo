@@ -759,7 +759,6 @@ namespace Logitude.Accounting.BL.DataContract
                     select new TaxDeductionReportLine
                     {
                         VendorId = g.Key.VendorId,
-                        //TaxDeductionPercentage = g.Key.TaxDeductionPercentage,
                         AmountInLocalCurrency = g.Sum(s => s.AmountInLocalCurrency),
                         TaxDeductionLocalAmount = g.Sum(s => s.TaxDeductionLocalAmount)
 
