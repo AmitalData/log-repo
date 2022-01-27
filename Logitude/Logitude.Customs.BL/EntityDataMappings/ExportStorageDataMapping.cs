@@ -14,6 +14,8 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -29,7 +31,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             
             CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
 
-            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
 
                 entityPOCO.Id = entityPM.Id;
@@ -37,6 +39,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPOCO.Tenant = entityPM.Tenant;
 
             }
+
+            BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+            entityPOCO.SearchFields = entityPM.SearchFields;
         }
 
         public void CustomPOCOToPM(ExportStoragePM entityPM, ExportStorage entityPOCO)
@@ -73,6 +78,24 @@ namespace Logitude.Customs.BL.EntityDataMappings
             entityPM.DeclarationNumber = declarationPM?.DeclarationNumber;
             entityPM.ExporterCode = cardPM?.VatNumber;
         }
-   }
+
+        private void BuildSearchFields(ExportStoragePM entityPM, ExportStorage entityPOCO, bool isNewEntity)
+        {
+            string mySearchFields = "";
+
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.StorageNo);
+
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ExportFileNo);
+
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.DeclarationId);
+            
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ExporterID);
+
+            mySearchFields = mySearchFields.ToLower();
+
+            entityPM.SearchFields += mySearchFields;
+            entityPOCO.SearchFields += mySearchFields;
+        }
+    }
 }
    
