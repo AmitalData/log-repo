@@ -46,12 +46,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var genericRequestParams = new GenericRequestParams()
             {
                 Tenant = customsResponse.tenant,
-                AppicationId = customsResponse.declarationIdsList[0],
+                AppicationId = customsResponse.courierMasterId,
                 LoggingEnabled = true,
                 InterfaceTypeCode = this.MainInterfaceCode,
                 MainInterfaceCode = this.MainInterfaceCode,
                 LoggingObjectTableId = objectTableId,
-                LoggingEntityId = customsResponse.declarationIdsList[0],
+                LoggingEntityId = customsResponse.courierMasterId,
                 //LoggingUserId = customsResponse.LoggingUserId,
 
             };
@@ -61,7 +61,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             return genericRequestParams;
         }
 
-        public string CreateCRS(int tenant, string[] listPending, string[] listPendingRemark, string[] declarationIdsList, string courierMasterId, bool checkboxAll)
+        public string CreateCRS(int tenant, string[] listPending, string[] listPendingRemark, string[] declarationIdsList, string courierMasterId, bool checkboxAll , string[] allwithoutDeclarationIdsList)
         {
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
@@ -85,6 +85,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 courierMasterId = courierMasterId,
                 checkboxAll = checkboxAll,
                 CustomFileNo = courierMasterId,
+                allwithoutDeclarationIdsList = allwithoutDeclarationIdsList , 
                 ResponseContentHeader = new DefaultResponseContentHeader()
                 {
                     TransmitionDateTime = transmitionDateTime
@@ -153,6 +154,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string[] listPending { get; set; }
         public string[] listPendingRemark { get; set; }
         public string[] declarationIdsList { get; set; }
+        public string[] allwithoutDeclarationIdsList { get; set; }
+
         public string courierMasterId { get; set; }
         public bool checkboxAll { get; set; }
         public string CustomFileNo { get; set; }

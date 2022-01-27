@@ -70,7 +70,7 @@ namespace WebFreight.Web.Controllers.WebServices
                 //});
 
 
-                string res = new DCAInUCBUCADPE_MsgMessagingService().CreateCRS(authToken.Tenant, requestParamsData.listPending, requestParamsData.listPendingRemark, requestParamsData.declarationIdsList, requestParamsData.courierMasterId, requestParamsData.checkboxAll);
+                string res = new DCAInUCBUCADPE_MsgMessagingService().CreateCRS(authToken.Tenant, requestParamsData.listPending, requestParamsData.listPendingRemark, requestParamsData.declarationIdsList, requestParamsData.courierMasterId, requestParamsData.checkboxAll , requestParamsData.allWithoutdeclarationIdsList);
 
                 return Request.CreateResponse(HttpStatusCode.OK, res);
             }

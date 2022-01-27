@@ -19,13 +19,16 @@ import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollect
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
+import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
+import { AppTool } from '../../../../../Infrastructure/Tools';
 import { DeclarationPendingsBulkFeedingComponent } from '../../CourierPendingReason/DeclarationPendingsBulkFeedingComponent';
 import { DropdownMenuFilterComponent } from '../DropdownMenuFilterComponent';
 
 @Component({
   selector: 'app-bulk-feed-pending',
   templateUrl: './BulkFeedPendingComponent.html',
-  styleUrls: ['./BulkFeedPendingComponent.scss']
+    styleUrls: ['./BulkFeedPendingComponent.scss'],
+    providers: [CourierWorksheetSharedDataService]
 })
 export class BulkFeedPendingComponent extends BaseComponent {
   @Output() MenuHeaderchangeevent = new EventEmitter();
@@ -88,7 +91,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
 
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
 
-
+        debugger;
 
         if (filters == null) {
             filters = new ApiQueryFilters();
@@ -99,13 +102,69 @@ export class BulkFeedPendingComponent extends BaseComponent {
         filters.GetAll = false;
         filters.GetCount = true;
 
-        filters.SortBy = "CourierHAWB";
-        filters.SortDirection = "Descending";
+        if (AppTool.IsNullOrEmpty(sortingCol)) {
+            filters.SortBy = "CourierHAWB";
+            filters.SortDirection = "Descending";
+        }
+        else {
+            filters.SortBy = sortingCol;
+            filters.SortDirection = sortingDir;
+
+        }
+      
 
  
         filters.addAdditionalFilter("CourierMasterId", this.CourierMasterPM.Id, null, null, "Equals", false,true, false, "string");
         filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
         filters.addAdditionalFilter("pendingView", SessionLocator.Tenant, null, null, "Equals", true, false, false, "number");
+
+
+        if (!AppTool.IsNullOrEmpty(this.IncotermCode))
+            filters.addAdditionalFilter("IncoTermCode", this.IncotermCode, null, null, "Equals", false, false, false, "string");
+
+        if (!AppTool.IsNullOrEmpty(this.WeightFrom))
+            filters.addAdditionalFilter("GrossMassMeasure", this.WeightFrom, null, null, "GreaterThanOrEqual", false, false, false, "number");
+
+        if (!AppTool.IsNullOrEmpty(this.WeightTo))
+            filters.addAdditionalFilter("GrossMassMeasure", this.WeightTo, null, null, "LessThanOrEqual", false, false, false, "number");
+
+        if (!AppTool.IsNullOrEmpty(this.GoodsDescription))
+            filters.addAdditionalFilter("CargoDescription", this.GoodsDescription, null, null, "Contains", false, false, false, "string");
+
+        if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
+            filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter.toLowerCase(), null, null, "Contains", false, false, false, "string", false, true);
+        }
+
+
+        switch (this._SelectedFastIndividualProcessValue) {
+            case "F": {
+                filters.addAdditionalFilter("FastIndividualProcessCode", "F", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+            case "I": {
+                filters.addAdditionalFilter("FastIndividualProcessCode", "I", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+        }
+
+
+        switch (this._SelectedTotalInvoiceValue) {
+            case "75": {
+                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 75, null, null, "LessThanOrEqual", false, false, false, "number");
+                break;
+            }
+            case "500": {
+                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 76, 500, null, "Between", false, false, false, "number", false);
+                break;
+            }
+            case "1000": {
+                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 501, 1000, null, "Between", false, false, false, "number", false);
+                break;
+            }
+        }
+
+
+
 
         var myout = this._entityListService
             .getExtendedByFilters("Customs.DeclarationCourierStatus", filters);
@@ -119,6 +178,32 @@ export class BulkFeedPendingComponent extends BaseComponent {
     }
 
 
+
+    AddPendings() {
+
+        var logitudeWindow = new LogitudeWindow();
+        var windowArgs: any = {};
+        windowArgs.courierMasterId = this.CourierMasterPM.Id;
+        windowArgs.declarationIdsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
+        windowArgs.allWithoutdeclarationIdsList = this._CourierWorksheetSharedDataService._UnSelectedItems.Collection;
+        windowArgs.checkboxAll = this._CourierWorksheetSharedDataService.connectedSelectAll ;
+        windowArgs.notUpdateSelf = true;
+
+
+        //windowArgs.CourierPendingReasonList = this._CourierWorksheet.CourierPendingReasonList;
+        //windowArgs.PendingRemarks = this._CourierWorksheet.PendingRemarks;
+        //}
+        logitudeWindow.Width = 470;
+        logitudeWindow.Height = 300;
+        logitudeWindow.IsShowCloseButton = true;
+        logitudeWindow.Title = "Pending";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
+        logitudeWindow.WindowArgs = windowArgs;
+        //logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/CourierPendingReasonGeneralComponent');
+        logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/DeclarationPendingsBulkFeedingComponent');
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+           // this.RefreshData();
+        });
+    }
 
 
   // declartionList = [];
@@ -270,7 +355,8 @@ export class BulkFeedPendingComponent extends BaseComponent {
   }
 
 
-  onCheckAllClick(check: boolean) {
+    onCheckAllClick(check: boolean) {
+     this._CourierWorksheetSharedDataService.connectedSelectAll = true;
     this.checkboxAll = check;
   }
 
@@ -314,7 +400,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
           FieldName: 'ImporterName',
           DataTypeCode: 'String',
           Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CustomerName"),
-          Styles: { width: '173px' },
+          Styles: { width: '200px' },
           IsCustomTemplate: true,
           ServerSideSortable: true,
           SortByName: 'ImporterName'
@@ -334,7 +420,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
           FieldName: 'CargoDescription',
           DataTypeCode: 'String',
           Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CargoDescription"),
-          Styles: { width: '188px' },
+          Styles: { width: '350px' },
           IsCustomTemplate: true,
           ServerSideSortable: true,
           SortByName: 'CargoDescription'
@@ -344,7 +430,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
       DataTypeCode: 'String',
       Display: TextCodeTranslator.Translate("Customs.General.O.TermsOfSale"),
       Styles: { width: '60px' },
-      IsCustomTemplate: false,
+      IsCustomTemplate: true,
       ServerSideSortable: true,
         SortByName: 'IncoTermCode'
     });
@@ -357,33 +443,35 @@ export class BulkFeedPendingComponent extends BaseComponent {
        ServerSideSortable: true,
       SortByName: 'TotalInvoiceAmountInUSD'
     });
-    //this.columns.push({
-    //  FieldName: 'PackageMeasureQualifierCode',
-    //  DataTypeCode: 'String',
-    //  Display: TextCodeTranslator.Translate("Customs.MasterBOLQuery.O.TotalWeight"),
-    //  Styles: { width: '45px' },
-    //  IsCustomTemplate: true,
-    //  ServerSideSortable: true,
-    //  SortByName: 'PackageMeasureQualifierCode'
-    //});
     this.columns.push({
-        FieldName: 'CasualSupplierAddress',
+        FieldName: 'GrossMassMeasure',
       DataTypeCode: 'String',
-      Display: TextCodeTranslator.Translate("Customs.ClientAddress"),
-      Styles: { width: '150px' },
-      IsCustomTemplate: false,
+      Display: TextCodeTranslator.Translate("Customs.MasterBOLQuery.O.TotalWeight"),
+      Styles: { width: '45px' },
+      IsCustomTemplate: true,
       ServerSideSortable: true,
-        SortByName: 'CasualSupplierAddress'
+        SortByName: 'GrossMassMeasure'
     });
-    this.columns.push({
-        FieldName: 'CasualImporterCity',
-      DataTypeCode: 'String',
-      Display: TextCodeTranslator.Translate("Customs.City.Q.CityQuery"),
-      Styles: { width: '110px' },
-      IsCustomTemplate: false,
-      ServerSideSortable: true,
-        SortByName: 'CasualImporterCity'
-    });
+  
+   
+      this.columns.push({
+          FieldName: 'CasualSupplierAddress',
+          DataTypeCode: 'String',
+          Display: TextCodeTranslator.Translate("Customs.ClientAddress"),
+          Styles: { width: '150px' },
+          IsCustomTemplate: true,
+          ServerSideSortable: true,
+          SortByName: 'CasualSupplierAddress'
+      });
+      this.columns.push({
+          FieldName: 'CasualImporterCity',
+          DataTypeCode: 'String',
+          Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CasualImporterCity"),
+          Styles: { width: '110px' },
+          IsCustomTemplate: true,
+          ServerSideSortable: true,
+          SortByName: 'CasualImporterCity'
+      });
   }
 
 
@@ -425,21 +513,32 @@ export class BulkFeedPendingComponent extends BaseComponent {
   IsSelectedNot
 
   OnAllBtnClickedNot() {
-    this.IsSelectedNot = true;
-    this._CourierMasterService.disconnectedSelectAll = true;
-    this.CourierMasterPM.ConnectedDeclarations = "ALL";
+      this.IsSelectedNot = true;
 
-    this.LoadNotConnectedDeclarationGrid();
-    this._CourierMasterService.isNotDirty = false;
+      this._CourierWorksheetSharedDataService.connectedSelectAll = true;
+      this._CourierWorksheetSharedDataService._SelectedItems.Clear()
+          ;
+
+      this.RefreshList();
+    //this._CourierMasterService.disconnectedSelectAll = true;
+    //this.CourierMasterPM.ConnectedDeclarations = "ALL";
+
+    //this.LoadNotConnectedDeclarationGrid();
+    //this._CourierMasterService.isNotDirty = false;
   }
 
-  OnNoneBtnClickedNot() {
-    this.IsSelectedNot = false;
-    this._CourierMasterService.disconnectedSelectAll = false;
-    this.CourierMasterPM.ConnectedDeclarations = "";
-    this._CourierMasterService.isNotDirty = false;
+    OnNoneBtnClickedNot() {
 
-    this.LoadNotConnectedDeclarationGrid();
+        this._CourierWorksheetSharedDataService.connectedSelectAll = false;
+        this._CourierWorksheetSharedDataService._UnSelectedItems.Clear();
+        this.RefreshList();
+
+    this.IsSelectedNot = false;
+    //this._CourierMasterService.disconnectedSelectAll = false;
+    //this.CourierMasterPM.ConnectedDeclarations = "";
+    //this._CourierMasterService.isNotDirty = false;
+
+    //this.LoadNotConnectedDeclarationGrid();
   }
 
   LoadNotConnectedDeclarationGrid() {

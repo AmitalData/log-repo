@@ -44,7 +44,7 @@ export class PendingWebService {
     }
 
 
-    postBulkFeeding(listPending: string[], listPendingRemark: string[], declarationIdsList: string[], courierMasterId: string, checkboxAll: boolean) {
+    postBulkFeeding(listPending: string[], listPendingRemark: string[], declarationIdsList: string[], courierMasterId: string, checkboxAll: boolean, allWithoutdeclarationIdsList:string[]) {
         const ajax: Observable<any> = this._http.post(
             this._apiUrl + "/BulkFeeding",
             {
@@ -52,7 +52,8 @@ export class PendingWebService {
                 listPendingRemark: listPendingRemark,
                 declarationIdsList: declarationIdsList,
                 courierMasterId: courierMasterId,
-                checkboxAll: checkboxAll
+                checkboxAll: checkboxAll,
+                allWithoutdeclarationIdsList: allWithoutdeclarationIdsList
             },
             {
                 headers: ServiceHelper.GetHttpHeaders().headers,

@@ -57,10 +57,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "Customs.Declaration",
+                    ObjectTableName = "Customs.DeclarationCourierStatus",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "Customs.Declaration",
+                    QuerySection = "Customs.DeclarationCourierStatus",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
                     GetAll = filters.GetAll,
@@ -127,7 +127,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = declarationListQueryService.GetListCount(queryOperations, tenant);
+                    int count = declarationListQueryService.GetDeclarationCourierStatusforPendingBulkFeedListCount(queryOperations, tenant);
                     response.Count = count;
                 }
 
