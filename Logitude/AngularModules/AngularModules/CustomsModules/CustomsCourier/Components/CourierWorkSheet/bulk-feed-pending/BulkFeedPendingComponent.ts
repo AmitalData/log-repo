@@ -27,8 +27,8 @@ import { DropdownMenuFilterComponent } from '../DropdownMenuFilterComponent';
 @Component({
   selector: 'app-bulk-feed-pending',
   templateUrl: './BulkFeedPendingComponent.html',
-    styleUrls: ['./BulkFeedPendingComponent.scss'],
-    providers: [CourierWorksheetSharedDataService]
+  styleUrls: ['./BulkFeedPendingComponent.scss'],
+  providers: [CourierWorksheetSharedDataService]
 })
 export class BulkFeedPendingComponent extends BaseComponent {
   @Output() MenuHeaderchangeevent = new EventEmitter();
@@ -37,7 +37,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
   @ViewChild(DeclarationPendingsBulkFeedingComponent) DeclarationPendingsBulkFeedingComponent: DeclarationPendingsBulkFeedingComponent;
 
   DataContext: BulkFeedPendingComponent = this;
-    ObjectTableName: string = "Customs.DeclarationCourierStatus";
+  ObjectTableName: string = "Customs.DeclarationCourierStatus";
   CourierMasterPM: CourierMasterPM = null as any;
   _SelectedTotalInvoiceValue: string = 'A';
   _SelectedFastIndividualProcessValue: string = 'A';
@@ -55,7 +55,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
   public MyScrollTop: number = 0;
   filterAgrs: ApiQueryFilters;
   columns: any[] = []
-   private _entityListService: EntityListService = new EntityListService();
+  private _entityListService: EntityListService = new EntityListService();
 
   private _RowsItems: any;
   public get RowsItems(): any {
@@ -72,138 +72,141 @@ export class BulkFeedPendingComponent extends BaseComponent {
   public set SelectedRow(value: any) {
     this._SelectedRow = value;
   }
-    _stratSearch: boolean = true;
+  _stratSearch: boolean = true;
 
   DataSource = {
     pageSize: 30,
     rowCount: null,
     //sortingCol: "CourierHawb",
     //sortingDir: "Descending",
-      getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
+    getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
 
-          var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
-          return tempo;
+      var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
+      return tempo;
 
-      },
-    };
- 
-
-
-    getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
-
-        debugger;
-
-        if (filters == null) {
-            filters = new ApiQueryFilters();
-        }
-
-        filters.PageSize = take;
-        filters.PageIndex = skip;
-        filters.GetAll = false;
-        filters.GetCount = true;
-
-        if (AppTool.IsNullOrEmpty(sortingCol)) {
-            filters.SortBy = "CourierHAWB";
-            filters.SortDirection = "Descending";
-        }
-        else {
-            filters.SortBy = sortingCol;
-            filters.SortDirection = sortingDir;
-
-        }
-      
-
- 
-        filters.addAdditionalFilter("CourierMasterId", this.CourierMasterPM.Id, null, null, "Equals", false,true, false, "string");
-        filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
-        filters.addAdditionalFilter("pendingView", SessionLocator.Tenant, null, null, "Equals", true, false, false, "number");
-
-
-        if (!AppTool.IsNullOrEmpty(this.IncotermCode))
-            filters.addAdditionalFilter("IncoTermCode", this.IncotermCode, null, null, "Equals", false, false, false, "string");
-
-        if (!AppTool.IsNullOrEmpty(this.WeightFrom))
-            filters.addAdditionalFilter("GrossMassMeasure", this.WeightFrom, null, null, "GreaterThanOrEqual", false, false, false, "number");
-
-        if (!AppTool.IsNullOrEmpty(this.WeightTo))
-            filters.addAdditionalFilter("GrossMassMeasure", this.WeightTo, null, null, "LessThanOrEqual", false, false, false, "number");
-
-        if (!AppTool.IsNullOrEmpty(this.GoodsDescription))
-            filters.addAdditionalFilter("CargoDescription", this.GoodsDescription, null, null, "Contains", false, false, false, "string");
-
-        if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
-            filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter.toLowerCase(), null, null, "Contains", false, false, false, "string", false, true);
-        }
-
-
-        switch (this._SelectedFastIndividualProcessValue) {
-            case "F": {
-                filters.addAdditionalFilter("FastIndividualProcessCode", "F", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "I": {
-                filters.addAdditionalFilter("FastIndividualProcessCode", "I", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-        }
-
-
-        switch (this._SelectedTotalInvoiceValue) {
-            case "75": {
-                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 75, null, null, "LessThanOrEqual", false, false, false, "number");
-                break;
-            }
-            case "500": {
-                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 76, 500, null, "Between", false, false, false, "number", false);
-                break;
-            }
-            case "1000": {
-                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 501, 1000, null, "Between", false, false, false, "number", false);
-                break;
-            }
-        }
+    },
+  };
 
 
 
+  getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
 
-        var myout = this._entityListService
-            .getExtendedByFilters("Customs.DeclarationCourierStatus", filters);
-        myout.then(res => {
-            this._stratSearch = false;
-            //this.CurrentSession.StopBusyIndicator();
-        });
+    debugger;
 
-        return myout;
+    if (filters == null) {
+      filters = new ApiQueryFilters();
+    }
+
+    filters.PageSize = take;
+    filters.PageIndex = skip;
+    filters.GetAll = false;
+    filters.GetCount = true;
+
+    if (AppTool.IsNullOrEmpty(sortingCol)) {
+      filters.SortBy = "CourierHAWB";
+      filters.SortDirection = "Descending";
+    }
+    else {
+      filters.SortBy = sortingCol;
+      filters.SortDirection = sortingDir;
 
     }
 
 
 
-    AddPendings() {
-
-        var logitudeWindow = new LogitudeWindow();
-        var windowArgs: any = {};
-        windowArgs.courierMasterId = this.CourierMasterPM.Id;
-        windowArgs.declarationIdsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
-        windowArgs.allWithoutdeclarationIdsList = this._CourierWorksheetSharedDataService._UnSelectedItems.Collection;
-        windowArgs.checkboxAll = this._CourierWorksheetSharedDataService.connectedSelectAll ;
-        windowArgs.notUpdateSelf = true;
+    filters.addAdditionalFilter("CourierMasterId", this.CourierMasterPM.Id, null, null, "Equals", false, true, false, "string");
+    filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
+    filters.addAdditionalFilter("pendingView", SessionLocator.Tenant, null, null, "Equals", true, false, false, "number");
 
 
-        //windowArgs.CourierPendingReasonList = this._CourierWorksheet.CourierPendingReasonList;
-        //windowArgs.PendingRemarks = this._CourierWorksheet.PendingRemarks;
-        //}
-        logitudeWindow.Width = 470;
-        logitudeWindow.Height = 300;
-        logitudeWindow.IsShowCloseButton = true;
-        logitudeWindow.Title = "Pending";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
-        logitudeWindow.WindowArgs = windowArgs;
-        //logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/CourierPendingReasonGeneralComponent');
-        logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/DeclarationPendingsBulkFeedingComponent');
-        logitudeWindow.WindowClosed.subscribe(($event: any) => {
-           // this.RefreshData();
-        });
+    if (!AppTool.IsNullOrEmpty(this.IncotermCode))
+      filters.addAdditionalFilter("IncoTermCode", this.IncotermCode, null, null, "Equals", false, false, false, "string");
+
+    if (!AppTool.IsNullOrEmpty(this.WeightFrom))
+      filters.addAdditionalFilter("GrossMassMeasure", this.WeightFrom, null, null, "GreaterThanOrEqual", false, false, false, "number");
+
+    if (!AppTool.IsNullOrEmpty(this.WeightTo))
+      filters.addAdditionalFilter("GrossMassMeasure", this.WeightTo, null, null, "LessThanOrEqual", false, false, false, "number");
+
+    if (!AppTool.IsNullOrEmpty(this.GoodsDescription))
+      filters.addAdditionalFilter("CargoDescription", this.GoodsDescription, null, null, "Contains", false, false, false, "string");
+
+    if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
+      filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter.toLowerCase(), null, null, "Contains", false, false, false, "string", false, true);
     }
+
+
+    switch (this._SelectedFastIndividualProcessValue) {
+      case "F": {
+        filters.addAdditionalFilter("FastIndividualProcessCode", "F", null, null, "Equals", false, false, false, "string");
+        break;
+      }
+      case "I": {
+        filters.addAdditionalFilter("FastIndividualProcessCode", "I", null, null, "Equals", false, false, false, "string");
+        break;
+      }
+    }
+
+
+    switch (this._SelectedTotalInvoiceValue) {
+      case "75": {
+        filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 75, null, null, "LessThanOrEqual", false, false, false, "number");
+        break;
+      }
+      case "500": {
+        filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 76, 500, null, "Between", false, false, false, "number", false);
+        break;
+      }
+      case "1000": {
+        filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 501, 1000, null, "Between", false, false, false, "number", false);
+        break;
+      }
+    }
+
+
+
+
+    var myout = this._entityListService
+      .getExtendedByFilters("Customs.DeclarationCourierStatus", filters);
+    myout.then(res => {
+      this._stratSearch = false;
+      //this.CurrentSession.StopBusyIndicator();
+    });
+
+    return myout;
+
+  }
+
+
+
+  AddPendings() {
+    if (!this._CourierWorksheetSharedDataService._SelectedItems?.Collection?.length && !this._CourierWorksheetSharedDataService.connectedSelectAll)
+      return new MessageWindow().Show(TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.O.NotCheckDeclarations"));
+
+
+    var logitudeWindow = new LogitudeWindow();
+    var windowArgs: any = {};
+    windowArgs.courierMasterId = this.CourierMasterPM.Id;
+    windowArgs.declarationIdsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
+    windowArgs.allWithoutdeclarationIdsList = this._CourierWorksheetSharedDataService._UnSelectedItems.Collection;
+    windowArgs.checkboxAll = this._CourierWorksheetSharedDataService.connectedSelectAll;
+    windowArgs.notUpdateSelf = true;
+
+
+    //windowArgs.CourierPendingReasonList = this._CourierWorksheet.CourierPendingReasonList;
+    //windowArgs.PendingRemarks = this._CourierWorksheet.PendingRemarks;
+    //}
+    logitudeWindow.Width = 470;
+    logitudeWindow.Height = 300;
+    logitudeWindow.IsShowCloseButton = true;
+    logitudeWindow.Title = "Pending";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
+    logitudeWindow.WindowArgs = windowArgs;
+    //logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/CourierPendingReasonGeneralComponent');
+    logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/DeclarationPendingsBulkFeedingComponent');
+    logitudeWindow.WindowClosed.subscribe(($event: any) => {
+      // this.RefreshData();
+    });
+  }
 
 
   // declartionList = [];
@@ -216,12 +219,12 @@ export class BulkFeedPendingComponent extends BaseComponent {
   }
 
 
-    ngOnInit()  {
+  ngOnInit() {
     this.buildColumns();
 
-      this.RefreshList();
+    this.RefreshList();
 
-  //  this.initPendingList()
+    //  this.initPendingList()
   }
 
 
@@ -355,8 +358,8 @@ export class BulkFeedPendingComponent extends BaseComponent {
   }
 
 
-    onCheckAllClick(check: boolean) {
-     this._CourierWorksheetSharedDataService.connectedSelectAll = true;
+  onCheckAllClick(check: boolean) {
+    this._CourierWorksheetSharedDataService.connectedSelectAll = true;
     this.checkboxAll = check;
   }
 
@@ -368,9 +371,9 @@ export class BulkFeedPendingComponent extends BaseComponent {
       FieldName: "MyDeclarationCheckBox",
       DataTypeCode: 'String',
       Display: '',
-        IsCustomTemplate: true,
-        HtmlListComponentName: 'CourierWorksheetListTemplate',
-        HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+      IsCustomTemplate: true,
+      HtmlListComponentName: 'CourierWorksheetListTemplate',
+      HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
       Styles: { width: '27px' },
       //IsCheckBox: true
     })
@@ -384,47 +387,47 @@ export class BulkFeedPendingComponent extends BaseComponent {
     //    SortByName: 'CourierHawb'
     //});
 
-      this.columns.push({
-          FieldName: 'CourierHawb',
-          DataTypeCode: 'String',
-          Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierHawb"),
-          Styles: { width: '108px' },
-          IsCustomTemplate: true,
-          HtmlListComponentName: 'CourierWorksheetListTemplate',
-          HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-          ServerSideSortable: true,
-          SortByName: 'CourierHawb'
-      });
+    this.columns.push({
+      FieldName: 'CourierHawb',
+      DataTypeCode: 'String',
+      Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierHawb"),
+      Styles: { width: '108px' },
+      IsCustomTemplate: true,
+      HtmlListComponentName: 'CourierWorksheetListTemplate',
+      HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+      ServerSideSortable: true,
+      SortByName: 'CourierHawb'
+    });
 
-      this.columns.push({
-          FieldName: 'ImporterName',
-          DataTypeCode: 'String',
-          Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CustomerName"),
-          Styles: { width: '200px' },
-          IsCustomTemplate: true,
-          ServerSideSortable: true,
-          SortByName: 'ImporterName'
-      });
+    this.columns.push({
+      FieldName: 'ImporterName',
+      DataTypeCode: 'String',
+      Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CustomerName"),
+      Styles: { width: '200px' },
+      IsCustomTemplate: true,
+      ServerSideSortable: true,
+      SortByName: 'ImporterName'
+    });
 
-      this.columns.push({
-          FieldName: 'ImporterCode',
-          DataTypeCode: 'String',
-          Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ImporterCode"),
-          Styles: { width: '90px' },
-          IsCustomTemplate: true,
-          ServerSideSortable: true,
-          SortByName: 'SortedImporterCode'
-      });
+    this.columns.push({
+      FieldName: 'ImporterCode',
+      DataTypeCode: 'String',
+      Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ImporterCode"),
+      Styles: { width: '90px' },
+      IsCustomTemplate: true,
+      ServerSideSortable: true,
+      SortByName: 'SortedImporterCode'
+    });
 
-      this.columns.push({
-          FieldName: 'CargoDescription',
-          DataTypeCode: 'String',
-          Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CargoDescription"),
-          Styles: { width: '350px' },
-          IsCustomTemplate: true,
-          ServerSideSortable: true,
-          SortByName: 'CargoDescription'
-      });
+    this.columns.push({
+      FieldName: 'CargoDescription',
+      DataTypeCode: 'String',
+      Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CargoDescription"),
+      Styles: { width: '350px' },
+      IsCustomTemplate: true,
+      ServerSideSortable: true,
+      SortByName: 'CargoDescription'
+    });
     this.columns.push({
       FieldName: 'IncoTermCode',
       DataTypeCode: 'String',
@@ -432,46 +435,46 @@ export class BulkFeedPendingComponent extends BaseComponent {
       Styles: { width: '60px' },
       IsCustomTemplate: true,
       ServerSideSortable: true,
-        SortByName: 'IncoTermCode'
+      SortByName: 'IncoTermCode'
     });
     this.columns.push({
       FieldName: 'TotalInvoiceAmountInUSD',
       DataTypeCode: 'String',
       Display: TextCodeTranslator.Translate("Customs.Declaration.F.TotalInvoiceAmountInUSD"),
       Styles: { width: '90' },
-        IsCustomTemplate: true,
-       ServerSideSortable: true,
+      IsCustomTemplate: true,
+      ServerSideSortable: true,
       SortByName: 'TotalInvoiceAmountInUSD'
     });
     this.columns.push({
-        FieldName: 'GrossMassMeasure',
+      FieldName: 'GrossMassMeasure',
       DataTypeCode: 'String',
       Display: TextCodeTranslator.Translate("Customs.MasterBOLQuery.O.TotalWeight"),
       Styles: { width: '45px' },
       IsCustomTemplate: true,
       ServerSideSortable: true,
-        SortByName: 'GrossMassMeasure'
+      SortByName: 'GrossMassMeasure'
     });
-  
-   
-      this.columns.push({
-          FieldName: 'CasualSupplierAddress',
-          DataTypeCode: 'String',
-          Display: TextCodeTranslator.Translate("Customs.ClientAddress"),
-          Styles: { width: '150px' },
-          IsCustomTemplate: true,
-          ServerSideSortable: true,
-          SortByName: 'CasualSupplierAddress'
-      });
-      this.columns.push({
-          FieldName: 'CasualImporterCity',
-          DataTypeCode: 'String',
-          Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CasualImporterCity"),
-          Styles: { width: '110px' },
-          IsCustomTemplate: true,
-          ServerSideSortable: true,
-          SortByName: 'CasualImporterCity'
-      });
+
+
+    this.columns.push({
+      FieldName: 'CasualSupplierAddress',
+      DataTypeCode: 'String',
+      Display: TextCodeTranslator.Translate("Customs.ClientAddress"),
+      Styles: { width: '150px' },
+      IsCustomTemplate: true,
+      ServerSideSortable: true,
+      SortByName: 'CasualSupplierAddress'
+    });
+    this.columns.push({
+      FieldName: 'CasualImporterCity',
+      DataTypeCode: 'String',
+      Display: TextCodeTranslator.Translate('Customs.DeclarationCourierStatus.O.City'),
+      Styles: { width: '110px' },
+      IsCustomTemplate: true,
+      ServerSideSortable: true,
+      SortByName: 'CasualImporterCity'
+    });
   }
 
 
@@ -513,13 +516,13 @@ export class BulkFeedPendingComponent extends BaseComponent {
   IsSelectedNot
 
   OnAllBtnClickedNot() {
-      this.IsSelectedNot = true;
+    this.IsSelectedNot = true;
 
-      this._CourierWorksheetSharedDataService.connectedSelectAll = true;
-      this._CourierWorksheetSharedDataService._SelectedItems.Clear()
-          ;
+    this._CourierWorksheetSharedDataService.connectedSelectAll = true;
+    this._CourierWorksheetSharedDataService._SelectedItems.Clear()
+      ;
 
-      this.RefreshList();
+    this.RefreshList();
     //this._CourierMasterService.disconnectedSelectAll = true;
     //this.CourierMasterPM.ConnectedDeclarations = "ALL";
 
@@ -527,11 +530,11 @@ export class BulkFeedPendingComponent extends BaseComponent {
     //this._CourierMasterService.isNotDirty = false;
   }
 
-    OnNoneBtnClickedNot() {
+  OnNoneBtnClickedNot() {
 
-        this._CourierWorksheetSharedDataService.connectedSelectAll = false;
-        this._CourierWorksheetSharedDataService._UnSelectedItems.Clear();
-        this.RefreshList();
+    this._CourierWorksheetSharedDataService.connectedSelectAll = false;
+    this._CourierWorksheetSharedDataService._UnSelectedItems.Clear();
+    this.RefreshList();
 
     this.IsSelectedNot = false;
     //this._CourierMasterService.disconnectedSelectAll = false;

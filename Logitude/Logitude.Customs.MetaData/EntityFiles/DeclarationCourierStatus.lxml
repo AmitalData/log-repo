@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Declaration Courier Status&quot;"
-  Code="&quot;fab9&quot;"
+  Code="&quot;c666&quot;"
   Name="&quot;Customs.DeclarationCourierStatus Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -6433,6 +6433,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CasualSupplierAddress&quot;"
     ListPropertyPath="&quot;CasualSupplierAddress&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -6506,6 +6507,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CasualImporterCity&quot;"
     ListPropertyPath="&quot;CasualImporterCity&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -6579,6 +6581,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;GrossMassMeasure&quot;"
     ListPropertyPath="&quot;GrossMassMeasure&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -6653,6 +6656,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IncoTermCode&quot;"
     ListPropertyPath="&quot;IncoTermCode&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -6804,6 +6808,18 @@
       Code="&quot;Customs.DeclarationCourierStatus.O.CourierHawb&quot;"
       DefaultText="&quot;CourierHawb&quot;"
       LocalDefaultText="&quot;ש.מ.ר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationCourierStatus.O.NotCheckDeclarations&quot;"
+      DefaultText="&quot;Not Check declarations&quot;"
+      LocalDefaultText="&quot;לא נבחרו הצהרות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationCourierStatus.O.City&quot;"
+      DefaultText="&quot;City&quot;"
+      LocalDefaultText="&quot;עיר&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
