@@ -317,22 +317,22 @@ export class BulkFeedPendingComponent extends BaseComponent {
   // }
 
 
-  async onOkClick(declarationCourierStatus: DeclarationCourierStatusPM) {
-    console.log(declarationCourierStatus)
-    const listPending = declarationCourierStatus.DeclarationPendings.map(x => x.CourierPendingReasonCode)
-    const listPendingRemark = declarationCourierStatus.DeclarationPendings.map(x => x.PendingRemarks)
+  //async onOkClick(declarationCourierStatus: DeclarationCourierStatusPM) {
+  //  console.log(declarationCourierStatus)
+  //  const listPending = declarationCourierStatus.DeclarationPendings.map(x => x.CourierPendingReasonCode)
+  //  const listPendingRemark = declarationCourierStatus.DeclarationPendings.map(x => x.PendingRemarks)
 
-    SessionLocator.SelectedSession.StartBusyIndicatorSaving();
-    const res = await this.pendingWebService.postBulkFeeding(listPending, listPendingRemark, this.declarationIdsList, this.CourierMasterPM.Id, this.checkboxAll)
-    SessionLocator.SelectedSession.StopBusyIndicator();
+  //  SessionLocator.SelectedSession.StartBusyIndicatorSaving();
+  //  const res = await this.pendingWebService.postBulkFeeding(listPending, listPendingRemark, this.declarationIdsList, this.CourierMasterPM.Id, this.checkboxAll)
+  //  SessionLocator.SelectedSession.StopBusyIndicator();
 
-    const myMessageWindow = new MessageWindow();
-    myMessageWindow.Width = 250;
-    myMessageWindow.Height = 150;
-    myMessageWindow.Show(res);
-    SessionLocator.SelectedSession.StopBusyIndicator();
-    this.CancelButtonClicked()
-  }
+  //  const myMessageWindow = new MessageWindow();
+  //  myMessageWindow.Width = 250;
+  //  myMessageWindow.Height = 150;
+  //  myMessageWindow.Show(res);
+  //  SessionLocator.SelectedSession.StopBusyIndicator();
+  //  this.CancelButtonClicked()
+  //}
 
 
   CancelButtonClicked() {
