@@ -536,6 +536,7 @@
     <None Include="EntityFiles\PoaAuthorizationTypeLookup.lxml" />
     <None Include="EntityFiles\CustomerIndicationType.lxml" />
     <None Include="EntityFiles\BuyerRoleType.lxml" />
+    <None Include="EntityFiles\CustomsEnvironmentSetting.lxml" />
     <None Include="EntityFiles\PoaStatusTypeLookUp.lxml" />
     <None Include="EntityFiles\Containerization.lxml" />
     <None Include="EntityFiles\ContainerizationHataraStatus.lxml" />

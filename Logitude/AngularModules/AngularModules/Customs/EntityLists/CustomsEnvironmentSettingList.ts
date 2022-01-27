@@ -6,20 +6,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class InterfaceTenantDefinitionList {
+export class CustomsEnvironmentSettingList {
    
 	Id: string;
-	Tenant: number;
-	Code: string;
-	TenantSendOptionsCode: string;
-	TenantPriority: number;
-	Active: boolean;
-	DcaRenameFileEnable: boolean;
-	DcaRenameFilePrefix: string;
-	QueueType: string;
+	EnvironmentCode: string;
 	UseRabbitMQ: boolean;
-	QueueGroupCode: string;
-	SendTime: string;
+	RabbitHost: string;
+	RabbitUserName: string;
 	
 }
  

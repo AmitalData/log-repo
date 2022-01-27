@@ -76,9 +76,12 @@ namespace Logitude.Server.Tools.QueueService
             SendReturnId(messageValues, tenant, delayTime, CustomerId, BatchNumber, NextRunDate);
         }
         protected int? SendReturnId(Dictionary<string, string> messageValues, 
-            int tenant, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null,int tenantPriority = 89)
+            int tenant, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null//,int tenantPriority = 89
+            ,QueueSendModel queueSendModel= null)
         {
-            if (tenantPriority<1)
+
+            int tenantPriority = queueSendModel?.TenantPriority ?? 89;
+            if (tenantPriority < 1)
             {
                 tenantPriority = 89;
             }
@@ -178,6 +181,17 @@ namespace Logitude.Server.Tools.QueueService
                         OracleParameter tenantPriPar = new OracleParameter("p_TenantPriority ", OracleDbType.Number);
                         tenantPriPar.Direction = ParameterDirection.Input;
 
+                        OracleParameter InterfaceTypeCodePar = new OracleParameter("p_InterfaceTypeCode", OracleDbType.VarChar, 32);
+                        InterfaceTypeCodePar.Direction = ParameterDirection.Input;
+
+                        OracleParameter UseRabbitMQPar = new OracleParameter("p_UseRabbitMQ", OracleDbType.Number);
+                        UseRabbitMQPar.Direction = ParameterDirection.Input;
+
+
+                        OracleParameter QueueCodeRabbitPar = new OracleParameter("p_QueueCodeRabbit", OracleDbType.VarChar, 256);
+                        QueueCodeRabbitPar.Direction = ParameterDirection.Input;
+
+
                         queueCodePar.Direction = ParameterDirection.Input;
                         msgBodyPar.Direction = ParameterDirection.Input;
                         tenantPar.Direction = ParameterDirection.Input;
@@ -197,6 +211,19 @@ namespace Logitude.Server.Tools.QueueService
                         //NextRunDateTime.Value = NextRunDate;
                         hashCodePar.Value = bodyHashCode;
                         tenantPriPar.Value = tenantPriority;
+                        InterfaceTypeCodePar.Value = queueSendModel?.InterfaceTypeCode;
+                        if (queueSendModel != null && queueSendModel.UseRabbitMQ)
+                        {
+                            UseRabbitMQPar.Value = 1;
+                        }
+                        else
+                        {
+                            UseRabbitMQPar.Value = 0;
+                        }
+
+                        string myQueueCodeRabbit = GetQueueCodeRabbit(queueSendModel);
+                        QueueCodeRabbitPar.Value = myQueueCodeRabbit.ToLower();
+
                         cmd.Parameters.Add(queueCodePar);
                         cmd.Parameters.Add(msgBodyPar);
                         cmd.Parameters.Add(tenantPar);
@@ -206,8 +233,14 @@ namespace Logitude.Server.Tools.QueueService
                         cmd.Parameters.Add(hashCodePar);
                         cmd.Parameters.Add(watingStatusPar);
                         cmd.Parameters.Add(tenantPriPar);
+
+                        cmd.Parameters.Add(InterfaceTypeCodePar);
+                        cmd.Parameters.Add(UseRabbitMQPar);
+                        cmd.Parameters.Add(QueueCodeRabbitPar);
+
+
                         cmd.Parameters.Add(queueMessageIdPar);
-                        
+
 
 
 
@@ -314,6 +347,25 @@ namespace Logitude.Server.Tools.QueueService
 
 
             return queueMessageId;
+        }
+
+        private string GetQueueCodeRabbit(QueueSendModel queueSendModel)
+        {
+            string env = GetEnv();
+            string myQueueCodeRabbit = this.QueueCode;// $"AN_{env}_{this.QueueCode}";
+            if (!string.IsNullOrEmpty(queueSendModel?.QueueCodeRabbit))
+            {
+                myQueueCodeRabbit = $"{myQueueCodeRabbit}_{queueSendModel?.QueueCodeRabbit}";
+            }
+            myQueueCodeRabbit += "_" + env;
+            return myQueueCodeRabbit;
+        }
+
+        private string GetEnv()
+        {
+            var uri = new Uri(LogitudeSettings.LogitudeURL);
+            var branchEnv = uri.LocalPath.Trim(@"\"[0]).Trim(@"/"[0]);
+            return branchEnv;
         }
 
         private static void AddQueueDetailsToRequestHeaders(string messageBody, string sQueueMessageId)

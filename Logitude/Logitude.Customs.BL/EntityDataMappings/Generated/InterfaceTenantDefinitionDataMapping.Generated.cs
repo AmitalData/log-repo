@@ -29,7 +29,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         TenantPriority, 
 	         Active, 
 	         DcaRenameFileEnable, 
-	         DcaRenameFilePrefix,
+	         DcaRenameFilePrefix, 
+	         QueueType, 
+	         UseRabbitMQ, 
+	         QueueGroupCode, 
+	         SendTime,
 	      }
 
 
@@ -43,7 +47,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         TenantPriority, 
 	         Active, 
 	         DcaRenameFileEnable, 
-	         DcaRenameFilePrefix,
+	         DcaRenameFilePrefix, 
+	         QueueType, 
+	         UseRabbitMQ, 
+	         QueueGroupCode, 
+	         SendTime,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -85,6 +93,26 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DcaRenameFilePrefix))
             {
 				entityPOCO.DcaRenameFilePrefix = entityPM.DcaRenameFilePrefix;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueueType))
+            {
+				entityPOCO.QueueType = entityPM.QueueType;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UseRabbitMQ))
+            {
+				entityPOCO.UseRabbitMQ = entityPM.UseRabbitMQ;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueueGroupCode))
+            {
+				entityPOCO.QueueGroupCode = entityPM.QueueGroupCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SendTime))
+            {
+				entityPOCO.SendTime = entityPM.SendTime;
 			}
 			}
 
@@ -131,6 +159,26 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.DcaRenameFilePrefix = entityPOCO.DcaRenameFilePrefix;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.QueueType))
+            {
+					entityPM.QueueType = entityPOCO.QueueType;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UseRabbitMQ))
+            {
+					entityPM.UseRabbitMQ = entityPOCO.UseRabbitMQ;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.QueueGroupCode))
+            {
+					entityPM.QueueGroupCode = entityPOCO.QueueGroupCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SendTime))
+            {
+					entityPM.SendTime = entityPOCO.SendTime;
+            }
+
 		}
 
 		public void PMToOldPM(InterfaceTenantDefinitionPM entityPM, InterfaceTenantDefinitionPM oldEntityPM)
@@ -170,6 +218,26 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DcaRenameFilePrefix))
             {
                 oldEntityPM.DcaRenameFilePrefix = entityPM.DcaRenameFilePrefix;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueueType))
+            {
+                oldEntityPM.QueueType = entityPM.QueueType;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UseRabbitMQ))
+            {
+                oldEntityPM.UseRabbitMQ = entityPM.UseRabbitMQ;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueueGroupCode))
+            {
+                oldEntityPM.QueueGroupCode = entityPM.QueueGroupCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SendTime))
+            {
+                oldEntityPM.SendTime = entityPM.SendTime;
             }
 			
 		}

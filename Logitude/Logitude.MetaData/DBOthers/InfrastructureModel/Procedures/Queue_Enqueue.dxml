@@ -68,10 +68,16 @@
         v_HashCode            IN VARCHAR2,
         v_WatingStatus        IN NUMBER,
 		p_TenantPriority        IN NUMBER,
+
+        p_InterfaceTypeCode IN VARCHAR2 ,
+        p_UseRabbitMQ IN NUMBER ,
+        p_QueueCodeRabbit IN VARCHAR2 ,
+
         v_QueueMessageId         OUT QUEUEMESSAGES.ID%TYPE
         
         )
 		---20211108 IM TenantPriority
+		---20220127 IM Rabbit
     AS
       v_currentdate     DATE;  
       v_nextRunDateTime DATE;
@@ -98,6 +104,8 @@
           RetryNumber,
           HashCode,
 		  TenantPriority
+		  
+		  ,InterfaceTypeCode ,UseRabbitMQ ,QueueCodeRabbit 
         )
         VALUES
         (
@@ -110,6 +118,8 @@
           0,
           v_HashCode,
 		  v_TenantPriority
+		  
+		  ,p_InterfaceTypeCode ,p_UseRabbitMQ ,p_QueueCodeRabbit 
         );
       IF v_CustomerId = ' ' THEN
         v_CId        := NULL ;
