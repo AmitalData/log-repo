@@ -127,7 +127,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = declarationListQueryService.GetListCount(queryOperations, tenant);
+                    int count = declarationListQueryService.GetDeclarationCourierStatusforPendingBulkFeedListCount(queryOperations, tenant);
                     response.Count = count;
                 }
 

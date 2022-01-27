@@ -100,6 +100,8 @@ export class CourierWorksheetListTemplate {
     private _DeclarationCourierStatusWebService: DeclarationCourierStatusWebService = new DeclarationCourierStatusWebService();
     _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
     private currentSession = SessionLocator.SelectedSession;
+    IsNotConnectedDeclarationChecked: boolean;
+    IsConnectedDeclarationChecked: boolean;
 
     FirePreventSelect() {
         SessionLocator.SelectedSession.PseventRowSelectEvent.emit("CourierWorksheetListTemplate.SendSplitButton");
@@ -268,6 +270,16 @@ export class CourierWorksheetListTemplate {
         else {
             this.IsDeclarationChecked = false;
         }
+
+
+        if (this._CourierWorksheetSharedDataService.connectedSelectAll == true) {
+            this.IsDeclarationChecked = true;
+        }
+        else {
+            this.IsDeclarationChecked = false;
+
+        }
+     
     }
     ShowFollowUpStatus() {
         if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
@@ -769,6 +781,10 @@ export class CourierWorksheetListTemplate {
 
     OnCheckedWithSystemEvent(eventM) {
         eventM.stopPropagation();
+
+        this._CourierWorksheetSharedDataService.connectedSelectAll = false;
+
+
         this.IsDeclarationChecked = !this.IsDeclarationChecked;
         //if (event.IsChecked) {
         if (this.IsDeclarationChecked) {

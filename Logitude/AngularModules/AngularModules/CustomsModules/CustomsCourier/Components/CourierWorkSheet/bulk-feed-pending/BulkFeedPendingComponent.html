@@ -6,8 +6,8 @@
                     <td>
                         <div class="ActionButton" style="width: 35px;height:23px; ">
                             <CheckBox style="pointer-events:none;"
-                                [IsChecked]="_CourierMasterService.disconnectedSelectAll"
-                                (Checked)="IsSelectedNot = $event "></CheckBox>
+                                     
+                                     ></CheckBox>
 
                         </div>
                     </td>
@@ -19,11 +19,19 @@
                             <img src="./Images/ToggleIcon.png" style="float:left;" />
                             <div class="ToggleButtonMenu" style="width: 70px;top:26px;text-align:right">
                                 <button style="text-align:right"
-                                    (click)="OnAllBtnClickedNot()">{{'Customs.CourierMaster.O.All' |
-                                    TextCodeTranslationPipe}}</button>
-                                <button style="text-align:right"
-                                    (click)="OnNoneBtnClickedNot()">{{'Customs.CourierMaster.O.None' |
-                                    TextCodeTranslationPipe}}</button>
+                                        (click)="OnAllBtnClickedNot()">
+                                    {{
+'Customs.CourierMaster.O.All' |
+                                    TextCodeTranslationPipe
+                                    }}
+                                </button>
+                                <button style="text-align:right" 
+                                        (click)="OnNoneBtnClickedNot()">
+                                    {{
+'Customs.CourierMaster.O.None' |
+                                    TextCodeTranslationPipe
+                                    }}
+                                </button>
                             </div>
                         </div>
                     </td>
@@ -38,42 +46,47 @@
     </div> -->
 
     <LogLabel class="label-good-description"
-        [Text]="'Customs.ReleaseGoods.O.GoodsDescription' | TextCodeTranslationPipe" [NoObjectField]="true"
-        [DataContext]="DataContext"></LogLabel>
+              [Text]="'Customs.ReleaseGoods.O.GoodsDescription' | TextCodeTranslationPipe" [NoObjectField]="true"
+              [DataContext]="DataContext"></LogLabel>
 
     <LogTextBox class="input-good-description" [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true"
-        [ObjectFieldName]="'GoodsDescription'" [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'nText'">
+                [ObjectFieldName]="'GoodsDescription'" [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'nText'">
     </LogTextBox>
 
     <LogLabel class="label-weight" [Text]="'Customs.MasterBOLQuery.O.TotalWeight' | TextCodeTranslationPipe"
-        [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+              [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
 
     <LogLabel class="label-from" [Text]="'Customs.General.O.From' | TextCodeTranslationPipe" [NoObjectField]="true"
-        [DataContext]="DataContext"></LogLabel>
+              [DataContext]="DataContext"></LogLabel>
 
     <LogTextBox class="input-from" [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true"
-        [ObjectFieldName]="'WeightFrom'" [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'number'">
+                [ObjectFieldName]="'WeightFrom'" [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'number'">
     </LogTextBox>
 
     <LogLabel class="label-to" [Text]="'Customs.General.O.To' | TextCodeTranslationPipe" [NoObjectField]="true"
-        [DataContext]="DataContext">
+              [DataContext]="DataContext">
     </LogLabel>
 
     <LogTextBox class="input-to" [ngStyle]='' [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true"
-        [ObjectFieldName]="'WeightTo'" [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'number'">
+                [ObjectFieldName]="'WeightTo'" [IsMultiline]="true" [DataContext]="DataContext" [InputType]="'number'">
     </LogTextBox>
 
     <LogLabel class="label-incoterm" [Text]="'Customs.General.O.TermsOfSale' | TextCodeTranslationPipe"
-        [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+              [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
 
     <div class='incoterm-code-wrapper'>
         <LogLov [ObjectFieldName]="'IncotermCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-            [LookUpTableName]="'Customs.TermsOfSaleType'" [HideColumns]="true" [SelectedValue]="IncotermCode">
+                [LookUpTableName]="'Customs.TermsOfSaleType'" [HideColumns]="true" [SelectedValue]="IncotermCode">
         </LogLov>
     </div>
 
-    <button class="GreenButton" (click)="RefreshList()">
+    <button class="Button" (click)="RefreshList()">
         {{'Customs.General.O.Search' | TextCodeTranslationPipe}}
+    </button>
+
+    <button class="Button" (click)="AddPendings()">
+        <!--{{'Customs.General.O.Search' | TextCodeTranslationPipe}}-->
+        הוספת פנדינג
     </button>
 
     <courier-filter-button #MyDropdownMenuFilterComponent>
@@ -86,10 +99,18 @@
                             <img *ngIf="IsFiltered" title="Filter" src="./Images/Icons/Filter.png" />
                         </td>
                         <td>
-                            <span *ngIf="!IsFiltered" style="color: #1B90CB;">{{'Customs.CourierMaster.O.Filter'
-                                |TextCodeTranslationPipe}}</span>
-                            <span *ngIf="IsFiltered" style="color: #6c8a99;">{{'Customs.CourierMaster.O.Filter'
-                                |TextCodeTranslationPipe}}</span>
+                            <span *ngIf="!IsFiltered" style="color: #1B90CB;">
+                                {{
+'Customs.CourierMaster.O.Filter'
+                                |TextCodeTranslationPipe
+                                }}
+                            </span>
+                            <span *ngIf="IsFiltered" style="color: #6c8a99;">
+                                {{
+'Customs.CourierMaster.O.Filter'
+                                |TextCodeTranslationPipe
+                                }}
+                            </span>
                         </td>
                     </tr>
                 </table>
@@ -106,7 +127,7 @@
                     <tr class="FormFieldRow" style="height:22px">
                         <td style="width: 240px">
                             <LogLabel [ObjectFieldName]="'CourierBOL'" [DataContext]="DataContext"
-                                [TextCode]="'Customs.CourierMaster.O.CourierBOL'">
+                                      [TextCode]="'Customs.CourierMaster.O.CourierBOL'">
                             </LogLabel>
                         </td>
                     </tr>
@@ -127,7 +148,8 @@
                                 </li>
                                 <li (click)="SelectedTotalInvoiceValue('A')" style="width:55px;"
                                     [class.SelectedFilter]="_SelectedTotalInvoiceValue === 'A'">
-                                    {{'Customs.General.O.All'
+                                    {{
+'Customs.General.O.All'
                                     |
                                     TextCodeTranslationPipe
                                     }}
@@ -139,7 +161,7 @@
                     <tr class="FormFieldRow" style="height:22px">
                         <td style="width: 240px">
                             <LogLabel [ObjectFieldName]="'Status'" [DataContext]="DataContext"
-                                [TextCode]="'Customs.DeclarationCourierStatus.F.FastIndividualProcessCode'">
+                                      [TextCode]="'Customs.DeclarationCourierStatus.F.FastIndividualProcessCode'">
                             </LogLabel>
                         </td>
                     </tr>
@@ -148,21 +170,24 @@
                             <ul class="FiltersMenu" style="float:right; padding-right: 10px;">
                                 <li (click)="SelectedFastIndividualProcessValueClick('I')" style="width:55px;"
                                     [class.SelectedFilter]="_SelectedFastIndividualProcessValue === 'I'">
-                                    {{'Customs.CourierMaster.HighLowValue.Low'
+                                    {{
+'Customs.CourierMaster.HighLowValue.Low'
                                     |
                                     TextCodeTranslationPipe
                                     }}
                                 </li>
                                 <li (click)="SelectedFastIndividualProcessValueClick('F')" style="width:55px;"
                                     [class.SelectedFilter]="_SelectedFastIndividualProcessValue === 'F'">
-                                    {{'Customs.CourierMaster.HighLowValue.High'
+                                    {{
+'Customs.CourierMaster.HighLowValue.High'
                                     |
                                     TextCodeTranslationPipe
                                     }}
                                 </li>
                                 <li (click)="SelectedFastIndividualProcessValueClick('A')" style="width:55px;"
                                     [class.SelectedFilter]="_SelectedFastIndividualProcessValue === 'A'">
-                                    {{'Customs.General.O.All'
+                                    {{
+'Customs.General.O.All'
                                     |
                                     TextCodeTranslationPipe
                                     }}
@@ -184,15 +209,23 @@
                                     <td style="width: 50px; text-align:center">
                                         <div class="TextTrimming" style="display: inline-block;">
                                             <a href="javascript:;"
-                                                (click)="FilterCleanButtonClicked()">{{'Customs.CourierMaster.O.Clean'
-                                                |TextCodeTranslationPipe}}</a>
+                                               (click)="FilterCleanButtonClicked()">
+                                                {{
+'Customs.CourierMaster.O.Clean'
+                                                |TextCodeTranslationPipe
+                                                }}
+                                            </a>
                                         </div>
                                     </td>
                                     <td style="width: 50px; text-align:center">
                                         <div class="TextTrimming" style="display: inline-block;">
                                             <a href="javascript:;"
-                                                (click)="FilterCancelButtonClicked()">{{'Customs.General.B.Close'
-                                                |TextCodeTranslationPipe}}</a>
+                                               (click)="FilterCancelButtonClicked()">
+                                                {{
+'Customs.General.B.Close'
+                                                |TextCodeTranslationPipe
+                                                }}
+                                            </a>
                                         </div>
                                     </td>
                                     <td style="width: 70px;">
@@ -217,7 +250,7 @@
     </courier-filter-button>
 
     <SearchTextBox [ObjectTableName]="'Customs.CourierMaster'" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"
-        [SearchText]="SearchFilter" [PlaceHolder]="'תיק/הצהרה/ש.מ.ב/לקוח'">
+                   [SearchText]="SearchFilter" [PlaceHolder]="'תיק/הצהרה/ש.מ.ב/לקוח'">
     </SearchTextBox>
 
 </div>
@@ -229,7 +262,7 @@
         [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="columns" [SelectedRow]="SelectedRow"
         [IsCustomTemplate]="false" [RowBackGroundColor]="'#DFECF7'" [ChangeColorByPropName]="'IsChecked'"
         [ChangeColorByPropValue]="true" [IgnoreRowHoverVisibilityQueryName]="true" [EnableRowHoverVisibility]="true"
-        [HoverTemplateIndex]="8" [rowHeight]="40" [rows]="RowsItems" [PassAdditionalDataToTemplates]="true"
+        [HoverTemplateIndex]="80" [rowHeight]="40" [rows]="RowsItems" [PassAdditionalDataToTemplates]="true"
         [MyScrollTop]="MyScrollTop">
     </logitude-grid>
   

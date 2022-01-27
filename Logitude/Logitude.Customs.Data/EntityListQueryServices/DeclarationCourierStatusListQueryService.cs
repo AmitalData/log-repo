@@ -270,15 +270,15 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             var q1 = (from cd in context.CourierDeclarations//.Where(cd => cd.CourierMasterId == courierMasterId)
 
-                      join d in context.Declarations on cd.DeclarationId equals d.Id
+                      join d in context.Declarations.Include("Importer") on cd.DeclarationId equals d.Id
 
                       join dcs in context.DeclarationCourierStatuses on d.Id equals dcs.DeclarationId
 
                       join cp in context.ConsignmentPackages on d.Id equals cp.DeclarationId into cpjoin
                       from cpj in cpjoin.Where(cp => cp.PackageMeasureQualifierCode == "2").DefaultIfEmpty()
 
-                      join c in context.Clients on d.ImporterId equals c.Id into cjoin
-                      from cj in cjoin.DefaultIfEmpty()
+                          //join c in context.Clients on d.ImporterId equals c.Id into cjoin
+                          //from cj in cjoin.DefaultIfEmpty()
 
                       join s in (from temp in context.SupplierInvoices
                                  group temp by temp.DeclarationId into temp2
@@ -287,26 +287,29 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                on d.Id equals s.DeclarationId into sjoin
                       from sj in sjoin.DefaultIfEmpty()
 
-              
+
                       orderby d.Id
 
                       select new DeclarationCourierStatusList
                       {
-                          CourierMasterId= cd.CourierMasterId, 
+                          CourierMasterId = cd.CourierMasterId,
                           DeclarationId = d.Id,
                           CourierHawb = d.CourierHAWB,
-                          ImporterName = d.ImporterName,
+                          ImporterCode = d.ImporterCode,
+                          ImporterName = d.ImporterName != null ? d.ImporterName : (d.ImporterId != null ? d.Importer.FullName : d.ImporterName),
+                          //   ImporterName = d.ImporterName,
                           CargoDescription = d.CargoDescription,
                           CasualSupplierAddress = d.CasualImporterAddress1 + "," + d.CasualImporterAddress2,
-                        //  Casualimporteraddress2 = d.CasualImporterAddress2,
+                          //  Casualimporteraddress2 = d.CasualImporterAddress2,
                           CasualImporterCity = d.CasualImporterCity,
                           TotalInvoiceAmountInUSD = dcs.TotalInvoiceAmountInUSD,
-                          //GrossMassMeasure = cpj != null ? cpj.GrossMassMeasure : "0",// t.AsEnumerable().Sum(cpj => int.Parse(cpj.PackageMeasureQualifierCode)),
-                          ImporterCode = cj != null ? cj.Code : d.ImporterCode,
+                          GrossMassMeasure = 0 , // cpjoin.Sum(x => Convert.ToDecimal(x.GrossMassMeasure)),
+                          //  ImporterCode = cj != null ? cj.Code : d.ImporterCode,
                           IncoTermCode = sj != null ? sj.SupplierInvoices.IncotermCode : "",
                           CourierSearchFields = d.CourierSearchFields,
-                          FastIndividualProcessCode = dcs.FastIndividualProcessCode
-                      });
+                          FastIndividualProcessCode = dcs.FastIndividualProcessCode,
+
+                      }); ;
 
             
 
