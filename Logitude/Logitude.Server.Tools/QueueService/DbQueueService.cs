@@ -186,8 +186,8 @@ namespace Logitude.Server.Tools.QueueService
 
                         OracleParameter UseRabbitMQPar = new OracleParameter("p_UseRabbitMQ", OracleDbType.Number);
                         UseRabbitMQPar.Direction = ParameterDirection.Input;
-                        
-                                                    
+
+
                         OracleParameter QueueCodeRabbitPar = new OracleParameter("p_QueueCodeRabbit", OracleDbType.VarChar, 256);
                         QueueCodeRabbitPar.Direction = ParameterDirection.Input;
 
@@ -212,7 +212,7 @@ namespace Logitude.Server.Tools.QueueService
                         hashCodePar.Value = bodyHashCode;
                         tenantPriPar.Value = tenantPriority;
                         InterfaceTypeCodePar.Value = queueSendModel?.InterfaceTypeCode;
-                        if (queueSendModel!=null && queueSendModel.UseRabbitMQ)
+                        if (queueSendModel != null && queueSendModel.UseRabbitMQ)
                         {
                             UseRabbitMQPar.Value = 1;
                         }
@@ -220,13 +220,8 @@ namespace Logitude.Server.Tools.QueueService
                         {
                             UseRabbitMQPar.Value = 0;
                         }
-                        
-                        string env = GetEnv();
-                        string myQueueCodeRabbit = $"AN_{env}_{this.QueueCode}";
-                        if (!string.IsNullOrEmpty(queueSendModel?.QueueCodeRabbit))
-                        {
-                            myQueueCodeRabbit = $"{myQueueCodeRabbit}_{queueSendModel?.QueueCodeRabbit}";
-                        }
+
+                        string myQueueCodeRabbit = GetQueueCodeRabbit(queueSendModel);
                         QueueCodeRabbitPar.Value = myQueueCodeRabbit.ToLower();
 
                         cmd.Parameters.Add(queueCodePar);
@@ -238,8 +233,8 @@ namespace Logitude.Server.Tools.QueueService
                         cmd.Parameters.Add(hashCodePar);
                         cmd.Parameters.Add(watingStatusPar);
                         cmd.Parameters.Add(tenantPriPar);
-                        
-                        cmd.Parameters.Add(InterfaceTypeCodePar);                        
+
+                        cmd.Parameters.Add(InterfaceTypeCodePar);
                         cmd.Parameters.Add(UseRabbitMQPar);
                         cmd.Parameters.Add(QueueCodeRabbitPar);
 
@@ -352,6 +347,18 @@ namespace Logitude.Server.Tools.QueueService
 
 
             return queueMessageId;
+        }
+
+        private string GetQueueCodeRabbit(QueueSendModel queueSendModel)
+        {
+            string env = GetEnv();
+            string myQueueCodeRabbit = this.QueueCode;// $"AN_{env}_{this.QueueCode}";
+            if (!string.IsNullOrEmpty(queueSendModel?.QueueCodeRabbit))
+            {
+                myQueueCodeRabbit = $"{myQueueCodeRabbit}_{queueSendModel?.QueueCodeRabbit}";
+            }
+            myQueueCodeRabbit += "_" + env;
+            return myQueueCodeRabbit;
         }
 
         private string GetEnv()
