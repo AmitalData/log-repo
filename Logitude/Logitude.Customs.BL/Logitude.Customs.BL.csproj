@@ -441,6 +441,7 @@
     <Compile Include="EntityDataMappings\CustomsDocumentsDefinitionDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsDocumentStatusTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsDocumentsTicketDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomsEnvironmentSettingDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsEnvoirmentTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsExchangeRateDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsHouseTypeAdditionalDataMapping.cs" />
@@ -647,6 +648,7 @@
     <Compile Include="EntityDataMappings\Generated\CustomsDocumentsDefinitionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsDocumentStatusTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsDocumentsTicketDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomsEnvironmentSettingDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsEnvoirmentTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsExchangeRateDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsHouseTypeAdditionalDataMapping.Generated.cs" />
@@ -1085,6 +1087,7 @@
     <Compile Include="EntityQueryServices\Generated\CoolingReportingMethodQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomerClassificationTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomerIdentificationTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomsEnvironmentSettingQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomerIndicationTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeliveryTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CancelRequestRejectReasonTypeQueryService.Generated.cs" />
@@ -1629,6 +1632,7 @@
     <Compile Include="EntityUpdateServices\Generated\CoolingReportingMethodUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomerClassificationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomerIdentificationTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CustomsEnvironmentSettingUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomerIndicationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsShipUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationExportRecipientUpdateService.Generated.cs" />

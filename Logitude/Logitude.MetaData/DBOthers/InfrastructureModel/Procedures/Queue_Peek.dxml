@@ -68,6 +68,7 @@ AS
   v_frequency NUMBER(10,0);
   v_row QueueMessages%rowtype;
 BEGIN
+---20220127 IM Rabbit
   v_frequency := 60 ;
   -- Find next available item available where the status is enabled
 
@@ -79,6 +80,7 @@ BEGIN
      --ROWNUM<2  AND  --do not use rownum due  http://stackoverflow.com/questions/6117254/force-oracle-to-return-top-n-rows-with-skip-locked/6649586#6649586
     AND qt.Status             = v_WatingStatus
     AND QueueDefinitionCode = v_QueueDefinitionCode
+	AND qt.UseRabbitMQ =0
     ORDER BY qt.tenantpriority ASC ,qt.NextRunDateTime ASC
     FOR UPDATE SKIP LOCKED;
 BEGIN

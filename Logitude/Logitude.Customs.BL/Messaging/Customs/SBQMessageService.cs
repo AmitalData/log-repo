@@ -166,14 +166,18 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 }
                 return;
             }
-
+            var interfaceTenantDefinitionQueryService = new InterfaceTenantDefinitionQueryService(queueSendModel.Tenant);
+            var currInterfaceTenantDefinition =interfaceTenantDefinitionQueryService.GetFromCacheByTenatCode(queueSendModel.Tenant, queueSendModel.InterfaceTypeCode);
+            queueSendModel.UseRabbitMQ = currInterfaceTenantDefinition.UseRabbitMQ;
+            queueSendModel.QueueCodeRabbit = currInterfaceTenantDefinition.QueueGroupCode;
             if (!string.IsNullOrWhiteSpace(queueSendModel.InterfaceTypeCode) && queueSendModel.TenantPriority == null)
             {
-                var interfaceTenantDefinitionQueryService = new InterfaceTenantDefinitionQueryService(queueSendModel.Tenant);
-                int? tenantPriority = interfaceTenantDefinitionQueryService.GetTenantPriorityFromCacheByTenatCode(queueSendModel.Tenant, queueSendModel.InterfaceTypeCode);
-                queueSendModel.TenantPriority = tenantPriority;
-
+                //var interfaceTenantDefinitionQueryService = new InterfaceTenantDefinitionQueryService(queueSendModel.Tenant);
+                //int? tenantPriority = interfaceTenantDefinitionQueryService.GetTenantPriorityFromCacheByTenatCode(queueSendModel.Tenant, queueSendModel.InterfaceTypeCode);
+                //queueSendModel.TenantPriority = tenantPriority;
+                queueSendModel.TenantPriority = currInterfaceTenantDefinition.TenantPriority;
             }
+
             string overrideSBQueueName = SBQueueName.ToString();
             var UseCustomsMessagingSheetWR = ConfigurationManager.AppSettings["Override:CustomsMessagingSheetWR"];
             if (!String.IsNullOrWhiteSpace(UseCustomsMessagingSheetWR) && UseCustomsMessagingSheetWR.Contains( $"-{queueSendModel.InterfaceTypeCode}-" ))

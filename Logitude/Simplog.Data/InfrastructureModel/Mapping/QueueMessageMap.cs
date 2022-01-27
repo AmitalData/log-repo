@@ -46,8 +46,26 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.HasRequired(t => t.QueueDefinition).WithMany().HasForeignKey(d => d.QueueDefinitionCode);
             //this.HasRequired(t => t.QueueMessageMoreDetails).WithRequiredPrincipal(d => d.QueueMessage);
 
+
+            #region "ramalla does have this feature >> avoid  IsRequired !!!!"
+
+
             this.Property(t => t.TenantPriority).HasColumnName("TenantPriority");
 
+            this.Property(t => t.InterfaceTypeCode).HasColumnName("InterfaceTypeCode")
+               .HasMaxLength(32)
+               .IsUnicode(false);
+
+            this.Property(t => t.UseRabbitMQ).HasColumnName("UseRabbitMQ");
+
+            this.Property(t => t.QueueCodeRabbit).HasColumnName("QueueCodeRabbit")
+              .HasMaxLength(512)
+              .IsUnicode(false)
+
+              ;
+            
+
+            #endregion
         }
     }
 }
