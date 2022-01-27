@@ -311,6 +311,11 @@ export class CustomerPM {
     public set RankName(newValue: string) { if (this.rankName != newValue) { this.rankName = newValue; this.MarkAsDirty("RankName"); } }
        
 	 
+    private teamName: string;
+    public get TeamName() { return this.teamName; }
+    public set TeamName(newValue: string) { if (this.teamName != newValue) { this.teamName = newValue; this.MarkAsDirty("TeamName"); } }
+       
+	 
     private rankCode: string;
     public get RankCode() { return this.rankCode; }
     public set RankCode(newValue: string) { if (this.rankCode != newValue) { this.rankCode = newValue; this.MarkAsDirty("RankCode"); } }

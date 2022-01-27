@@ -163,6 +163,7 @@
     <Content Include="CommonModules\CommonFlightsSchedules\Components\FlightsSchedules\FlightsSchedulesComponent.html" />
     <Content Include="CommonModules\CommonFlightsSchedules\Components\FlightsSchedules\FVASimulatorComponent.html" />
     <Content Include="CommonModules\CommonFlightsSchedules\Components\FlightsSchedules\XMLFlightsSimulatorComponent.html" />
+    <Content Include="CommonModules\CommonOthers\Components\ZipCodeSelection\ZipCodeSelectionComponent.html" />
     <Content Include="CommonModules\CommonOthers\Components\Depositions\EditTab\CustomsShipperGeneralTabComponent.html" />
     <Content Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderComponent.html" />
     <Content Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderFiltersComponent.html" />
@@ -400,6 +401,7 @@
     <TypeScriptCompile Include="CommonModules\CommonCustomerTeam\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CommonModules\CommonCustomer\Components\AddEdit\AddEditCustomerProductItemComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonCustomer\Components\EditTabs\CustomerProductItemsTabComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonOthers\Components\ZipCodeSelection\ZipCodeSelectionComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ShippingAgent\ShippingAgentGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ShippingLine\ShippinglineGeneralTabComponent.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
@@ -420,6 +422,7 @@
     <TypeScriptCompile Include="Common\EntityPMs\CustomerTeamPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\HTSCodePM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\PortTimeZonePM.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\PostalCodePM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\ProductItemPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\ReportExecutionLogPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\UnassignedEntityPM.ts" />
@@ -434,6 +437,7 @@
     <TypeScriptCompile Include="Common\Services\StandardLists\ReportExecutionLogListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerTeamPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\PortTimeZonePMService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardPMs\PostalCodePMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\ReportExecutionLogPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\UnassignedEntityPMService.ts" />
     <TypeScriptCompile Include="Common\Tools.ts" />
