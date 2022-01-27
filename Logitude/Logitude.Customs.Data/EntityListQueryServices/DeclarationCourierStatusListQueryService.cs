@@ -433,6 +433,31 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         }
 
+        public int GetDeclarationCourierStatusforPendingBulkFeedListCount(QueryOperations queryOperations, int tenant)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<DeclarationCourierStatus> iQueryable = (from a in context.DeclarationCourierStatuses
+                                                               where a.Tenant == tenant
+                                                               select a);
+
+            iQueryable = ApplyCustomFilters(queryOperations, iQueryable, tenant);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            iQueryable = filter.GetFilteredQuery<DeclarationCourierStatus>(nonListQueryOperation, iQueryable);
+
+            IQueryable<DeclarationCourierStatusList> query2 = GetDeclarationCourierStatusforPendingBulkFeed(iQueryable);
+
+            query2 = filter.GetFilteredQuery<DeclarationCourierStatusList>(listQueryOperation, query2);
+            int count = query2.ToList().Count();
+            return count;
+        }
+
     }
 
     public class MyJoin
