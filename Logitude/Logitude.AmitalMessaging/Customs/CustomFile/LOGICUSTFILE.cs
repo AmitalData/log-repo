@@ -186,9 +186,10 @@ public partial class LogitudeCustomsFile
 
     private string lastMileServiceTypeField;
 
-    private string directionField;
+     private string directionField;
 
     private string commodityField;
+ 
 
     /// <remarks/>
     public string CustomFileNo
@@ -1071,7 +1072,7 @@ public partial class LogitudeCustomsFile
             this.lastMileServiceTypeField = value;
         }
     }
-
+ 
     /// <remarks/>
     public string Direction
     {
@@ -1097,4 +1098,5 @@ public partial class LogitudeCustomsFile
             this.commodityField = value;
         }
     }
+ 
 }

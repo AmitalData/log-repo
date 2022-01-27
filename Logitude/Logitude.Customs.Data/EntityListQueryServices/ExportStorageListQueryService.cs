@@ -37,10 +37,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                    into ctj
                                                    from cargoType in ctj.DefaultIfEmpty()
 
-                                                   join ss in context.StorageStatuses.Select( r=> new {r.Code, r.LocalName})
-                                                   on en.StorageStatus equals ss.Code
+                                                   join ss in context.CargoStatuses.Select( r=> new {r.Code, r.LocalName})
+                                                   on en.CustomsStatus equals ss.Code
                                                    into ssj
-                                                   from storageStatus in ssj.DefaultIfEmpty()
+                                                   from cargoStatus in ssj.DefaultIfEmpty()
 
                                                    join c in context.Cards.Select( r=> new {r.Id, r.LocalName, r.VatNumber})
                                                    on en.ExporterID equals c.Id
@@ -99,7 +99,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        
                                                        CargoTypeName = cargoType.LocalName,
 
-                                                       StorageStatusName = storageStatus.LocalName,
+                                                       CustomStatusName = cargoStatus.LocalName,
 
                                                        ExporterName = card.LocalName,
 

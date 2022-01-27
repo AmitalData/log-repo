@@ -33,7 +33,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.ExportFileNo).HasColumnName("ExportFileNo").HasMaxLength(20).IsUnicode(true);
 
-            this.Property(t => t.StorageStatus).HasColumnName("StorageStatus").HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.StorageStatus).HasColumnName("StorageStatus").HasMaxLength(10).IsUnicode(true);
 
             this.Property(t => t.CargoTypeCode).HasColumnName("CargoTypeCode").HasMaxLength(4).IsUnicode(false);
 
@@ -41,7 +41,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.CargoType).HasColumnName("CargoType").HasMaxLength(2).IsUnicode(false);
 
-            this.Property(t => t.CustomsStatus).HasColumnName("CustomsStatus").HasMaxLength(20).IsUnicode(true);
+            this.Property(t => t.CustomsStatus).HasColumnName("CustomsStatus").HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.ExporterID).HasColumnName("ExporterID").HasMaxLength(15).IsUnicode(false);
 
