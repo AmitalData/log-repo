@@ -1721,7 +1721,7 @@ namespace Logitude.DBMigrations.Models
                     SqlDataReader reader = null;
                     SqlConnection connection = new SqlConnection(connectionString);
                     SqlCommand command = new SqlCommand(queryString, connection);
-
+                    command.CommandTimeout = 180;
                     try
                     {
                         connection.Open();
