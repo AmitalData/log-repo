@@ -95,6 +95,7 @@
     <None Include="DBScripts\202103180820_ InsertGLAccountAgingDatas.sxml" />
     <None Include="DBScripts\202103240820_usp_AccountingStreamingTypes.sxml" />
     <None Include="DBTables\AccountingCompanyType.dxml" />
+    <None Include="DBTables\AccountingEntitiesJournals.dxml" />
     <None Include="DBTables\AccountingEntity.dxml" />
     <None Include="DBTables\AccountingIntegrityCheck.dxml" />
     <None Include="DBTables\AccountingNote.dxml" />
@@ -188,6 +189,7 @@
     <None Include="DBTables\VatReportStatus.dxml" />
     <None Include="DBTables\WithholdingTaxDeductionType.dxml" />
     <None Include="EntityFiles\AccountingCompanyType.lxml" />
+    <None Include="EntityFiles\AccountingEntitiesJournals.lxml" />
     <None Include="EntityFiles\AccountingNote.lxml" />
     <None Include="EntityFiles\ARPaymentsJournal.lxml" />
     <None Include="EntityFiles\CalculatedChartsOfAccount.lxml" />

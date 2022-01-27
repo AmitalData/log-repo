@@ -398,6 +398,7 @@
     <Compile Include="DataContract\TaxDeductionReportDataProvider.cs" />
     <Compile Include="DataContract\TaxReportLinesCounter.cs" />
     <Compile Include="EntityDataMappings\AccountingCompanyTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AccountingEntitiesJournalsDataMapping.cs" />
     <Compile Include="EntityDataMappings\AccountingEntityDataMapping.cs" />
     <Compile Include="EntityDataMappings\AccountingEntityService.cs" />
     <Compile Include="EntityDataMappings\AccountingIntegrityCheckDataMapping.cs" />
@@ -433,6 +434,7 @@
     <Compile Include="EntityDataMappings\ExternalReconciliationLineDataMapping.cs" />
     <Compile Include="EntityDataMappings\FullAccountingSettingDataMapping.cs" />
     <Compile Include="EntityDataMappings\Generated\AccountingCompanyTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AccountingEntitiesJournalsDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AccountingEntityDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AccountingIntegrityCheckDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AccountingNoteDataMapping.Generated.cs" />
@@ -624,6 +626,7 @@
     <Compile Include="EntityQueryServices\ChartOfAccountsTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\ExternalReconciliationLineQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\AccountingCompanyTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AccountingEntitiesJournalsQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AccountingIntegrityCheckQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AccountingNoteQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ARPaymentChequeStatusQueryService.Generated.cs" />
@@ -733,6 +736,7 @@
     <Compile Include="EntityUpdateServices\BankAccountTraceEventService.cs" />
     <Compile Include="EntityUpdateServices\CalculatedChartsOfAccountsLineUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CalculatedChartsOfAccountUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\AccountingEntitiesJournalsUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ARPaymentsJournalUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CalculatedChartsLineTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CalculatedChartsOfAccountsLineUpdateService.Generated.cs" />
