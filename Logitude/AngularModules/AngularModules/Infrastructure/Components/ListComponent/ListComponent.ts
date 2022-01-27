@@ -122,7 +122,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         windowArgs.currentObjectTable = this.ObjectTableName;
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 960;
-        logitudeWindow.Height = 520;
+        logitudeWindow.Height = 550;
         logitudeWindow.Title = TextCodeTranslator.Translate("General.O.QueryColumnsEdit");//"Query Columns Edit";
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./Infrastructure/Components/QueryColumnsComponents/QueryColumnsEditComponent');
