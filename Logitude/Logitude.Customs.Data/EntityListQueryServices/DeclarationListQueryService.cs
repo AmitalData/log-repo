@@ -190,7 +190,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 select new MyDecJoin
                 {
                     DeclarationId = rec.myDeclarationCourierStatuses.DeclarationId/*myDeclarations.Id*/,
-                    TerminalReleaseDate = rec.myDeclarationCourierStatuses.TerminalReleaseDate,
+                    TerminalReleaseDate = rec.myDeclarationCourierStatuses.TerminalReleaseDate != null ? rec.myDeclarationCourierStatuses.TerminalReleaseDate : DateTime.Today,
                     //CourierMasterId = rec.CourierMasterId,
                     IsClosedForFollowUp = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.IsClosedForFollowUp : false,
                     //FastIndividualProcessName = "",
@@ -264,6 +264,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                            select new MyDecJoin()
                            {
                                DeclarationId = rec.DeclarationId,
+                               TerminalReleaseDate = new DateTime(),
                                //CourierMasterId = rec.CourierMasterId,
                                IsClosedForFollowUp = false,
                                //FastIndividualProcessName = "",
@@ -484,7 +485,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      SecondCargoID= myJoinConsignment != null ? myJoinConsignment.SecondCargoID : null,
                                                      ThirdCargoID= myJoinConsignment != null ? myJoinConsignment.ThirdCargoID : null,
                                                      ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber :null,
-                                                     TerminalReleaseDate = myJoin.TerminalReleaseDate
+                                                     TerminalReleaseDate = myJoin != null ? myJoin.TerminalReleaseDate : DateTime.Today
                                                  });
 
 
