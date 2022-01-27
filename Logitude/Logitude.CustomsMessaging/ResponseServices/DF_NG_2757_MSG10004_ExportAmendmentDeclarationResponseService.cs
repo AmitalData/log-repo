@@ -921,7 +921,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     supplierInvoicePM.InvoiceCounterKey = SupplierInvoicePMOrg.InvoiceCounterKey;
 
                 supplierInvoicePM.SupplierInvoiceItems = GetSupplierInvoiceItems(item, declaration, declarationId, tenant, supplierInvoicePM, context, SupplierInvoicePMOrg);
-                supplierInvoicePM.SupplierInvoiceModifications = GetSupplierInvoiceModifications(declarationId, SupplierInvoicePMOrg);
                 supplierInvoicePMs.Add(supplierInvoicePM);
             }
             return supplierInvoicePMs;
@@ -1197,29 +1196,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
         //private List<SupplierInvoiceModificationPM> GetSupplierInvoiceModifications(string declarationIdOrg, string declarationIdNew, int tenant, SupplierInvoicePM supplierInvoicePMPMOrg)
-        private List<SupplierInvoiceModificationPM> GetSupplierInvoiceModifications(string declarationIdNew, SupplierInvoicePM supplierInvoicePMPMOrg)
-        {
-            List<SupplierInvoiceModificationPM> supplierInvoiceItemPMs = new List<SupplierInvoiceModificationPM>();
-            //List<Customs.Data.EntityPOCOs.SupplierInvoiceModification> sims = new SupplierInvoiceModificationRepository(tenant).GetSupplierInvoiceModificationsForDeclaration(declarationIdOrg);
-            var sims = supplierInvoicePMPMOrg.SupplierInvoiceModifications;
-            sims.ForEach(sim =>
-            {
-                supplierInvoiceItemPMs.Add(new SupplierInvoiceModificationPM
-                {
-                    ChangeSetOp = ChangeSetOperation.Insert,
-                    DeclarationId = declarationIdNew,
-                    InvoiceCounterKey = sim.InvoiceCounterKey,
-                    ModificationCounterKey = sim.ModificationCounterKey,
-                    TypeCode = sim.CurrencyTypeCode,
-                    Tenant = sim.Tenant,
-                    CurrencyTypeCode = sim.CurrencyTypeCode,
-                    Amount = sim.Amount,
-                    TypeDesc = sim.TypeDesc
-                });
-            });
-
-            return supplierInvoiceItemPMs;
-        }
 
         private List<SupplierInvoiceItemsModPM> GetSupplierInvoiceItemsMods(DeclarationGoodsShipmentGovernmentAgencyGoodsItem governmentAgencyGoodsItem, Declaration declaration, string declarationId, int tenant)
         {

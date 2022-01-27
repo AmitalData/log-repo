@@ -2783,6 +2783,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                     }
 
+
+                    GetSupplierInvoiceModifications(toDeclarationId, fromDeclarationId, tenant, fromDeclaration.Direction, invoice, invoicePM);
+
                     SupplierInvoiceUpdateService invoiceUpdateService = new SupplierInvoiceUpdateService(context, new Dictionary<string, IContext>(), tenant);
                     invoiceUpdateService.Update(invoicePM, true);
                //     CustomsStoredProcedures.CopySupplierInvoiceItems(fromDeclarationId, toDeclarationId,invoicePM.InvoiceCounterKey,  tenant);
@@ -2812,6 +2815,34 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             return true;
 
         }
+
+        private void GetSupplierInvoiceModifications(string toDeclarationId, string fromDeclarationId, int tenant, string declarationDirection, SupplierInvoicePM supplierInvoicePMOrg, SupplierInvoicePM supplierInvoicePMNew)
+        {
+            if (declarationDirection != "E") return;
+
+            supplierInvoicePMOrg.SupplierInvoiceModifications = new SupplierInvoiceModificationQueryService(tenant).GetMulti(new SupplierInvoiceKeys() { DeclarationId = fromDeclarationId, InvoiceCounterKey = supplierInvoicePMNew.InvoiceCounterKey }, true, true);
+
+            List<SupplierInvoiceModificationPM> supplierInvoiceItemPMs = new List<SupplierInvoiceModificationPM>();            
+            var sims = supplierInvoicePMOrg.SupplierInvoiceModifications;
+            sims.ForEach(sim =>
+            {
+                supplierInvoiceItemPMs.Add(new SupplierInvoiceModificationPM
+                {
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                    DeclarationId = toDeclarationId,
+                    InvoiceCounterKey = sim.InvoiceCounterKey,
+                    ModificationCounterKey = sim.ModificationCounterKey,
+                    TypeCode = sim.TypeCode,
+                    Tenant = sim.Tenant,
+                    CurrencyTypeCode = sim.CurrencyTypeCode,
+                    Amount = sim.Amount,
+                    TypeDesc = sim.TypeDesc
+                });
+            });
+
+            supplierInvoicePMNew.SupplierInvoiceModifications = supplierInvoiceItemPMs;
+        }
+
 
         public SendDeclarationChecksResult DoSendDeclarationChekcs(string declarationId, int tenant)
         {
