@@ -23,7 +23,7 @@ namespace CommunicationWorkerRole.Analyzers
         private int queuePriority = 1;
         private string communicationId;
         private List<QueueTask> externalTasksQueueTasksEnvelope;
-
+        private AnalyzeQueueRepository analyzeQueueReposiory;
         public void Run()
         {
             var loginToExternalServiceTask = LoginToExternalService();
@@ -167,31 +167,45 @@ namespace CommunicationWorkerRole.Analyzers
 
         private void InsertNewAnalyzeQueue()
         {
-            Type myType = externalTasksQueueTasksEnvelope.GetType();
-            MemoryStream myMemoryStream = new MemoryStream();
-            XmlSerializer ser = new XmlSerializer(myType);
-            ser.Serialize(myMemoryStream, externalTasksQueueTasksEnvelope);
-            myMemoryStream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(myMemoryStream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = myMemoryStream.ToArray();
-            AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
+            analyzeQueueReposiory = new AnalyzeQueueRepository();
+            byte[] analyzeQueueMessageBody = this.GetAnalyzeQueueByteArray();
+            if (this.IsAnalyzeQueueExsit(analyzeQueueMessageBody))
+            {
+                return;
+            }
             AnalyzeQueue analyzeQueue = new AnalyzeQueue()
             {
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(0),
                 From = "ContainerStatusesReceiver",
                 Id = IdCounter.GetNumber("AnalyzeQueue", 0),
-                MessageBody = bytearray,
+                MessageBody = analyzeQueueMessageBody,
                 Status = "W",
                 Retries = 0,
                 ConnectedToEntity = false,
                 ConnectedToTenant = false,
-                FileSize = bytearray.Length,
+                FileSize = analyzeQueueMessageBody.Length,
                 Tenant = 0,
             };
             analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
             analyzeQueueReposiory.Add(analyzeQueue);
             analyzeQueueReposiory.SubmitChanges();
+        }
+
+        private byte[] GetAnalyzeQueueByteArray()
+        {
+            Type myType = externalTasksQueueTasksEnvelope.GetType();
+            MemoryStream myMemoryStream = new MemoryStream();
+            XmlSerializer ser = new XmlSerializer(myType);
+            ser.Serialize(myMemoryStream, externalTasksQueueTasksEnvelope);
+            myMemoryStream.Seek(0, SeekOrigin.Begin);
+            byte[] bytearray = myMemoryStream.ToArray();
+            return bytearray;
+        }
+
+        private bool IsAnalyzeQueueExsit(byte[] analyzeQueueMessageBody)
+        {
+            var isAnalyzeQueueExsit = analyzeQueueReposiory.IsAnalyzeQueueExsit(analyzeQueueMessageBody);
+            return isAnalyzeQueueExsit;
         }
     }
 }
