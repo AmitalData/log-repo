@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Accounting Entities Journals&quot;"
-  Code="&quot;72ac&quot;"
+  Code="&quot;ddbd&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"

@@ -13,6 +13,7 @@ export class AccountingEntitiesJournalList {
 	AccountingEntityCode: string;
 	Action: string;
 	Id: string;
+	ChildEntityId: string;
 	
 }
  

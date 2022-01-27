@@ -49,6 +49,11 @@ export class AccountingEntitiesJournalPM {
     public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
        
 	 
+    private childEntityId: string;
+    public get ChildEntityId() { return this.childEntityId; }
+    public set ChildEntityId(newValue: string) { if (this.childEntityId != newValue) { this.childEntityId = newValue; this.MarkAsDirty("ChildEntityId"); } }
+       
+	 
 
     public OldEntityPM: AccountingEntitiesJournalPM;
 		

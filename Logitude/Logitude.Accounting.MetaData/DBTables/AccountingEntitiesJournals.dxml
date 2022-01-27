@@ -35,7 +35,7 @@
     Name="Id"
     Type="bigint"
     Size="15"
-	Identity="true">
+    Identity="true">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />

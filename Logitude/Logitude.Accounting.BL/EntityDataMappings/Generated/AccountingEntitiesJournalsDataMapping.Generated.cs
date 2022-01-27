@@ -26,7 +26,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         AccountingEntityId, 
 	         AccountingEntityCode, 
 	         Action, 
-	         Id,
+	         Id, 
+	         ChildEntityId,
 	      }
 
 
@@ -37,7 +38,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         AccountingEntityId, 
 	         AccountingEntityCode, 
 	         Action, 
-	         Id,
+	         Id, 
+	         ChildEntityId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -64,6 +66,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Action))
             {
 				entityPOCO.Action = entityPM.Action;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChildEntityId))
+            {
+				entityPOCO.ChildEntityId = entityPM.ChildEntityId;
 			}
 			}
 
@@ -95,6 +102,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.Id = entityPOCO.Id;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ChildEntityId))
+            {
+					entityPM.ChildEntityId = entityPOCO.ChildEntityId;
+            }
+
 		}
 
 		public void PMToOldPM(AccountingEntitiesJournalPM entityPM, AccountingEntitiesJournalPM oldEntityPM)
@@ -119,6 +131,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Action))
             {
                 oldEntityPM.Action = entityPM.Action;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChildEntityId))
+            {
+                oldEntityPM.ChildEntityId = entityPM.ChildEntityId;
             }
 			
 		}
