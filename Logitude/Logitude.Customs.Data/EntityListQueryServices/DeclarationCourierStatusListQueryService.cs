@@ -274,8 +274,19 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                       join dcs in context.DeclarationCourierStatuses on d.Id equals dcs.DeclarationId
 
-                      join cp in context.ConsignmentPackages on d.Id equals cp.DeclarationId into cpjoin
-                      from cpj in cpjoin.Where(cp => cp.PackageMeasureQualifierCode == "2").DefaultIfEmpty()
+                      //join cp in context.ConsignmentPackages on d.Id equals cp.DeclarationId into cpjoin
+                      //from cpj in cpjoin.Where(cp => cp.PackageMeasureQualifierCode == "2").DefaultIfEmpty()
+
+                      join cp in (
+                      from t in context.ConsignmentPackages
+                      where t.PackageMeasureQualifierCode == "2" && t.GrossMassMeasure.HasValue
+                      group t by t.DeclarationId into t2
+                      select new
+                      {
+                          DeclarationId = t2.Key,
+                          GrossMassMeasure = t2.Sum(s => s.GrossMassMeasure)
+                      }) on d.Id equals cp.DeclarationId into cpjoin
+                      from cpj in cpjoin.DefaultIfEmpty()
 
                           //join c in context.Clients on d.ImporterId equals c.Id into cjoin
                           //from cj in cjoin.DefaultIfEmpty()
@@ -303,7 +314,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                           //  Casualimporteraddress2 = d.CasualImporterAddress2,
                           CasualImporterCity = d.CasualImporterCity,
                           TotalInvoiceAmountInUSD = dcs.TotalInvoiceAmountInUSD,
-                          GrossMassMeasure = 0 , // cpjoin.Sum(x => Convert.ToDecimal(x.GrossMassMeasure)),
+                          GrossMassMeasure = cpj != null ? cpj.GrossMassMeasure.Value : 0 , // cpjoin.Sum(x => Convert.ToDecimal(x.GrossMassMeasure)),
                           //  ImporterCode = cj != null ? cj.Code : d.ImporterCode,
                           IncoTermCode = sj != null ? sj.SupplierInvoices.IncotermCode : "",
                           CourierSearchFields = d.CourierSearchFields,
