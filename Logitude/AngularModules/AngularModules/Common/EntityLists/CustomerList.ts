@@ -13,6 +13,7 @@ export class CustomerList {
 		TeamId: string;
 		RankCode: string;
 		RankName: string;
+		TeamName: string;
 		IndustryId: string;
 		LeadSourceId: string;
 		SalesmanUserId: string;
