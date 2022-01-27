@@ -158,7 +158,7 @@ export function PartialSplitShipment(packagesDetails: PackagesDetails) {
 
 export function CancelShipment(note: string) {
     cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
-    cy.Click(ShipmentSelectors.CancelShipmentButton, null);
+    cy.Click(ShipmentSelectors.CancelShipmentButton + BaseSelectors.LastElement, null, true);
     cy.FillLogTextBox(ShipmentSelectors.ShipmentEventNote, note)
     UpdateShipment(ShipmentSelectors.ConfirmActionButton);
 }
@@ -906,7 +906,7 @@ export function FillShippingLineInOrdersTab(ShippingLine: string) {
 export function FillVoyageNoVesselInRoutingsTab(VoyageNo: string, Vessel: string) {
     NavigateToEditMAinCarriage()
     cy.FillLogTextBox(ShipmentSelectors.MainCarrigeVoyageNo, VoyageNo)
-    cy.FillLogTextBox(ShipmentSelectors.MainCarrigeVessel, Vessel)
+    cy.FillLogLov(ShipmentSelectors.MainCarrigeVessel + BaseSelectors.LastElement, Vessel, true)
     cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
 }
 

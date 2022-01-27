@@ -59,7 +59,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.SATForeignRFC = entityPM.SATForeignRFC;
             entityPOCO.MetodoPagoCode = entityPM.MetodoPagoCode;
             entityPOCO.UsoCFDICode = entityPM.UsoCFDICode;
-            entityPOCO.UsoCFDICode = entityPM.UsoCFDICode;
+            entityPOCO.RegimenFiscalCode = entityPM.RegimenFiscalCode;
             entityPOCO.StateName = entityPM.StateName;
             entityPOCO.IsInternationalPartner = entityPM.IsInternationalPartner;
             entityPOCO.IsAutonomy = entityPM.IsAutonomy;

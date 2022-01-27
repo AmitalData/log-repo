@@ -248,6 +248,17 @@ export class UserRolesTabComponent extends BaseComponent implements OnDestroy {
                     break;
                 }
 
+            case "HRAD":
+                {
+                    if (SessionLocator.Tenant == 0 || SessionLocator.Tenant == 1489 || FeatureLocator.IsPackage_DVMT()) {
+                        if (SessionLocator.LoggedUserPM.IsCustomerCare) {
+                            this.ObsList.push(new UserRolesItemClass(item, this.EntityPM, this));
+                        }
+                    }
+
+                    break;
+                }
+
             default:
                 {
                     if (item.IsCustomRole) {

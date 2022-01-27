@@ -27,13 +27,17 @@
                         </td>
 
                         <td>
-                            <div class="ShortTitleDiv TextTrimming" style="padding-left: 5px; max-width: 250px;">
+                            <div *ngIf="EntityPM.TypeCode != 'ECC' && EntityPM.TypeCode != 'ICC'" class="ShortTitleDiv TextTrimming" style="padding-left: 5px; max-width: 250px;">
                                 <span class="CustomerQueryLink" (click)="ViewSeller()">{{EntityPM.SellerName}}</span>
+                            </div>
+
+                            <div *ngIf="EntityPM.TypeCode == 'ECC' || EntityPM.TypeCode == 'ICC'" class="ShortTitleDiv TextTrimming" style="padding-left: 5px; max-width: 250px;">
+                                <span class="CustomerQueryLink" (click)="ViewCustomsBroker()">{{EntityPM.CustomsBrokerName}}</span>
                             </div>
                         </td>
 
                         <td>
-                            <div class="ShortTitleDiv TextTrimming" style="padding-left: 5px; max-width: 180px; font-size:13px;">
+                            <div class="ShortTitleDiv TextTrimming" style="padding-left: 5px; max-width: 230px; font-size:13px;">
                                ( {{EntityPM.TypeName}} )
                             </div>
                         </td>

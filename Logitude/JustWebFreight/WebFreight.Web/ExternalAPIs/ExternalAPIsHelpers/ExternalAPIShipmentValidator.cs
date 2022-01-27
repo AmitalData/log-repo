@@ -32,6 +32,7 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
 
         private VesselRepository vesselRepository;
         private CardQuery cardQuery;
+        private CommodityRepository commodityRepository;
 
         public ExternalAPIShipmentValidator(ShipmentPM shipmentPM, int tenant)
         {
@@ -39,6 +40,7 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
             this.shipmentPM = shipmentPM;
             this.vesselRepository = new VesselRepository(tenant);
             this.cardQuery = new CardQuery(tenant);
+            this.commodityRepository = new CommodityRepository(tenant);
         }
 
         public void ValidateUnitCodes()
@@ -926,6 +928,7 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                 this.ValidateInsidePackage(item, entityPM);
             }
             item.VolumetricWeight = ComputeHelper.ComputeVolumetricWeight(item, entityPM);
+            this.MapCommodityName(item);
         }
         private void ValidateInsidePackage(ShipmentPackagePM item, ShipmentPM entityPM)
         {
@@ -976,7 +979,7 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
         private Simplog.Server.Infrastructure.ChangeSetOperation GetChangeSet(string ChangeSet)
         {
             Simplog.Server.Infrastructure.ChangeSetOperation changeSetOperation = Simplog.Server.Infrastructure.ChangeSetOperation.None;
-            if(!string.IsNullOrEmpty(ChangeSet))
+            if (!string.IsNullOrEmpty(ChangeSet))
             {
                 switch (ChangeSet.ToLower())
                 {
@@ -998,10 +1001,23 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                             break;
                         }
                 }
+
+            }
+            else
+            {
+                changeSetOperation = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             }
 
             return changeSetOperation;
         }
+        private void MapCommodityName(ShipmentPackagePM item)
+        {
+            if (string.IsNullOrEmpty(item.CommodityNumber) && string.IsNullOrEmpty(item.CommodityName))
+                return;
+
+            string commodityName = commodityRepository.GetSingleCommodityNameByCode(item.CommodityNumber, tenant);
+            item.CommodityName = commodityName;
+        } 
         private void ValidateInlandDomesticShipmentFromTypeCode(ShipmentPM entityPM)
         {
             bool isCityOrCountryNull = string.IsNullOrEmpty(entityPM.InlandDomesticFromCity) || string.IsNullOrEmpty(entityPM.InlandDomesticFromCountryId);

@@ -7,6 +7,8 @@ import { RequestAliases } from '../../../Base/cypress/constants/RequestAliases';
 import { PickupDelivaryDetails } from "../models/PickupDelivaryDetails";
 import { RegexSelectors } from "../selectors/RegexSelectors";
 import { ShipmentConstants } from '../constants/constants'
+import { PackagesDetails } from "cypress/models/PackagesDetails";
+import { StandaloneRoutingDetails } from "../models/StandaloneRoutingDetails";
 
 let fromType = null
 let toType = null
@@ -52,11 +54,10 @@ export function FillPickupDelivaryToTypeDetails(pickupdelivaryDetails: PickupDel
 
 export function CreateStandaloneShipment() {
    cy.DefineRequestWait(RestAPI.POST, URLs.Shipment, RequestAliases.ShipmentStandaloneRequest)
-   cy.Click(ShipmentSelectors.RedButton + BaseSelectors.LastElement, null)
+   cy.Click(ShipmentSelectors.CreateShipmentButton + BaseSelectors.LastElement, null)
 }
 
 export function AssertShipmenteMenuButtonsEnabled() {
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentBConvertToCustomFile + BaseSelectors.LastElement, BaseSelectors.NotBeDisabled)
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentBOperationalClose + BaseSelectors.LastElement, BaseSelectors.NotBeDisabled)
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentBSendResponse + BaseSelectors.LastElement, BaseSelectors.NotBeDisabled)
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentBCancelShipment + BaseSelectors.LastElement, BaseSelectors.NotBeDisabled)
@@ -76,25 +77,75 @@ export function AssertShipmenteMenuButtonsDisabled() {
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentBSplitShipment + BaseSelectors.LastElement, BaseSelectors.BeDisabled)
 }
 
-export function AssertShipmentePickupDelivaryWindowDisabled() {
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryCarrier, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryCarrierNumber, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryDriver, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryTruckNumber, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryTrailerNumber, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryByRail, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryByTruck, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryATDDate, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryATDTime, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryETDDate, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryETDTime, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryETATime, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryETADate, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryATADate, BaseSelectors.BeDisabled)
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryATATime, BaseSelectors.BeDisabled)
+export function AssertShipmentPickupDelivaryWindowFields(condition) {
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryCarrier, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryCarrierNumber, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryDriver, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryTruckNumber, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryTrailerNumber, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryByRail, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryByTruck, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryATDDate, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryATDTime, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryETDDate, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryETDTime, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryETATime, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryETADate, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryATADate, condition)
+   BaseAssertion.AssertElementDisabled(ShipmentSelectors.PickUpDeliveryATATime, condition)
 }
 
 export function AssertShipmenteDelivaryWindowDisabled() {
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryEmptyDeliveryContainer, BaseSelectors.BeDisabled)
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPickUpDeliveryEmptyDeliveryDepotReference, BaseSelectors.BeDisabled)
+}
+
+export function AddPcakagesInPickupDelivary() {
+   cy.Click(ShipmentSelectors.PickUpDeliveryPackages, null)
+   cy.Click(ShipmentSelectors.AddContainerFromPickup, null, true)
+   cy.get(ShipmentSelectors.LogitudeCheckBox).eq(1).click();
+   cy.get(ShipmentSelectors.LogitudeCheckBox).eq(2).click();
+   cy.get(ShipmentSelectors.LogitudeCheckBox).eq(3).click();
+   cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+}
+
+export function AddPcakagesInStandaloneShipment(packagesDetails: PackagesDetails) {
+   cy.FillLogLov(ShipmentSelectors.PackageType, packagesDetails.PackageType, true)
+   cy.FillLogTextBox(ShipmentSelectors.ContainerNumber, packagesDetails.ContainerNumber)
+   cy.FillLogTextBox(ShipmentSelectors.PackageWeight, packagesDetails.GrossWeight.toString())
+   cy.Click(ShipmentSelectors.OceanPackageOKButton,null)
+   cy.Click(BaseSelectors.RedButton, ShipmentConstants.Ok)
+   
+}
+export function StandaloneShipmentOpenPackageTab(){
+   cy.Click(ShipmentSelectors.PackagesTab_Number + BaseSelectors.LastElement, null)
+   cy.Click(ShipmentSelectors.AddPackage, null)
+   cy.Click(ShipmentSelectors.AddPackagesInStandalone, null)
+}
+export function OpenRoutingTabAddPickUp(){
+  cy.Click(ShipmentSelectors.RoutingsTab, null)
+  cy.Click(ShipmentSelectors.AddPickUp, null)
+  cy.Click(BaseSelectors.Button, ShipmentConstants.AddPickUp)
+}
+
+export function FillStandaloneRoutingDetails(standaloneroutingdetails: StandaloneRoutingDetails) {
+   cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageCarrierId, standaloneroutingdetails.Trucker,true)
+   cy.FillLogTextBox(ShipmentSelectors.ShipmentDriver, standaloneroutingdetails.Driver)
+   cy.FillLogTextBox(ShipmentSelectors.ShipmentTruckNumber, standaloneroutingdetails.TruckNumber)
+   cy.FillLogTextBox(ShipmentSelectors.ShipmentTrailerNumber, standaloneroutingdetails.TrailerNumber)
+   cy.FillDate(ShipmentSelectors.ShipmentMainCarriageETDDate,standaloneroutingdetails.ETD)
+   cy.FillDate(ShipmentSelectors.MainCarriageETADate,standaloneroutingdetails.ETA)
+   cy.FillDate(ShipmentSelectors.MainCarriageATDDate,standaloneroutingdetails.ATD)
+   cy.FillDate(ShipmentSelectors.MainCarriageATADate,standaloneroutingdetails.ATA)
+   
+}
+export function AsseratAllFieldsInPickUpWindowField(standaloneroutingdetails: StandaloneRoutingDetails) {
+   BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentPickUpDeliveryCarrier, standaloneroutingdetails.Trucker)
+   BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentPickUpDeliveryDriver, standaloneroutingdetails.Driver)
+   BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentPickUpDeliveryTruckNumber, standaloneroutingdetails.TruckNumber)
+   BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentPickUpDeliveryTrailerNumber, standaloneroutingdetails.TrailerNumber)
+   BaseAssertion.AssertElementHaveValue(ShipmentSelectors.PickUpDeliveryETDDate, standaloneroutingdetails.ETD)
+   BaseAssertion.AssertElementHaveValue(ShipmentSelectors.PickUpDeliveryETADate, standaloneroutingdetails.ETA)
+   BaseAssertion.AssertElementHaveValue(ShipmentSelectors.PickUpDeliveryATDDate, standaloneroutingdetails.ATD)
+   BaseAssertion.AssertElementHaveValue(ShipmentSelectors.PickUpDeliveryATADate, standaloneroutingdetails.ATA)
 }

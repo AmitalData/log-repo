@@ -100,6 +100,18 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
         }
 
+        public IDbSet<RegimenFiscal> RegimenFiscals
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<PostalCode> PostalCodes
+        {
+            get;
+            set;
+        }
+
         public IDbSet<DocumentStatus> DocumentStatuses
         {
             get;

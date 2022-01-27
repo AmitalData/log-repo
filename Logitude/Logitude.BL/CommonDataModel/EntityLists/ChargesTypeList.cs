@@ -25,7 +25,11 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string ChargesGroupId { get; set; }
         public string ChargesGroupCode { get; set; }
         public string ChargesGroupName { get; set; }
-        
+
+        public string QuoteChargesGroupCode { get; set; }
+        public string QuoteChargesGroupId { get; set; }
+        public string QuoteChargesGroupName { get; set; }
+
         public string VatTypeId { get; set; }
         public string VatTypeName { get; set; }
         public double VatTypePercentage { get; set; }

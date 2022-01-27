@@ -61,7 +61,7 @@ export class SATInterfaceSettingsComponent {
             this.ValidationErrorsList.push("SAT Interface Code field is required!");
         }
 
-        if ((this.EntityPM.SATInterfaceCode === "PROF" || this.EntityPM.SATInterfaceCode == "PROF33") && AppTool.IsNullOrEmpty(this.EntityPM.Token)) {
+        if ((this.EntityPM.SATInterfaceCode === "PROF" || this.EntityPM.SATInterfaceCode == "PROF33" || this.EntityPM.SATInterfaceCode == "PROF40" ) && AppTool.IsNullOrEmpty(this.EntityPM.Token)) {
             this.ValidationErrorsList.push("Token field is required!");
         }
         if (this.ValidationErrorsList.length > 0)

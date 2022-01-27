@@ -122,7 +122,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         windowArgs.currentObjectTable = this.ObjectTableName;
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 960;
-        logitudeWindow.Height = 520;
+        logitudeWindow.Height = 550;
         logitudeWindow.Title = TextCodeTranslator.Translate("General.O.QueryColumnsEdit");//"Query Columns Edit";
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./Infrastructure/Components/QueryColumnsComponents/QueryColumnsEditComponent');
@@ -3193,6 +3193,18 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         case "Tariff.Ocean FCL Surcharges Cost": {
                             logWindow.Title = "New " + TextCodeTranslator.TranslateTable("Tariff.Q.OceanFCLSurchargesCost");
                             windowArgs.TypeCode = "OFS";
+                            break;
+                        }
+
+                        case "Tariff.Import Customs Charges Cost": {
+                            logWindow.Title = "New " + TextCodeTranslator.Translate("Tariff.Q.ImportCustomsChargesCost");
+                            windowArgs.TypeCode = "ICC";
+                            break;
+                        }
+
+                        case "Tariff.Export Customs Charges Cost": {
+                            logWindow.Title = "New " + TextCodeTranslator.Translate("Tariff.Q.ExportCustomsChargesCost");
+                            windowArgs.TypeCode = "ECC";
                             break;
                         }
                     }

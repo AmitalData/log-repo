@@ -1791,6 +1791,16 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.AmountDueInInvoiceCurrency = arInvoice.AmountDue;
                 invoicesRecored.AmountDueInLocalCurrency = arInvoice.AmountDueInLocalCurrency;
 
+                invoicesRecored.BillToVatNumber = arInvoice.VatNumber;
+                if (string.IsNullOrEmpty(invoicesRecored.BillToVatNumber))
+                {
+                    Card billTo = CardRepository.GetSingleCard(arInvoice.BillToId, tenant, false);
+                    if(billTo != null)
+                    {
+                        invoicesRecored.BillToVatNumber = billTo.VatNumber;
+                    }
+                }
+
                 if (localCurrency)
                 {
                     totalVat = totalVat + myTotalVats.Sum(d => d.LocalVATAmount);
@@ -10722,7 +10732,8 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         Id = item.GLAccountId,
                         Name = item.GLAccountNumber + "-" + item.GLAccountName,
-
+                        AccountDisplayNumber = item.GLAccountNumber,
+                        AccountName = item.GLAccountName,
                         ParentId = item.ChartOfAccountId,
                         Balance = item.LocalCloseBalancePeriod1,
                     };
@@ -10768,6 +10779,8 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         Id = item.ChartOfAcount5,
                         Name = item.ChartOfAcountCode5 + "-" + item.ChartOfAcountName5,
+                        AccountDisplayNumber = item.ChartOfAcountCode5,
+                        AccountName = item.ChartOfAcountName5,
                         Number = null,
                         ParentId = item.ChartOfAcount4,
                         Balance = item.LocalCloseBalancePeriod1,
@@ -10795,6 +10808,8 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         Id = item.ChartOfAcount4,
                         Name = item.ChartOfAcountCode4 + "-" + item.ChartOfAcountName4,
+                        AccountDisplayNumber = item.ChartOfAcountCode4,
+                        AccountName = item.ChartOfAcountName4,
                         Number = null,
                         ParentId = item.ChartOfAcount3,
                         Balance = item.LocalCloseBalancePeriod1,
@@ -10833,6 +10848,8 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         Id = item.ChartOfAcount3,
                         Name = item.ChartOfAcountCode3 + "-" + item.ChartOfAcountName3,
+                        AccountDisplayNumber = item.ChartOfAcountCode3,
+                        AccountName = item.ChartOfAcountName3,
                         Number = null,
                         ParentId = item.ChartOfAcount2,
                         Balance = item.LocalCloseBalancePeriod1,
@@ -10871,6 +10888,8 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         Id = item.ChartOfAcount2,
                         Name = item.ChartOfAcountCode2 + "-" + item.ChartOfAcountName2,
+                        AccountDisplayNumber = item.ChartOfAcountCode2,
+                        AccountName = item.ChartOfAcountName2,
                         Number = null,
                         ParentId = item.ChartOfAcount1,
                         Balance = item.LocalCloseBalancePeriod1,
@@ -10909,6 +10928,8 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         Id = item.ChartOfAcount1,
                         Name = item.ChartOfAcountCode1 + "-" + item.ChartOfAcountName1,
+                        AccountDisplayNumber = item.ChartOfAcountCode1,
+                        AccountName = item.ChartOfAcountName1,
                         Number = null,
                         ParentId = item.ChartOfAcountType,
                         Balance = item.LocalCloseBalancePeriod1,

@@ -404,7 +404,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "QBT,QBO Tax Id Calculations", 
                 Description = "QBO Tax Id Calculations", 
 			});
-
+			 
             all.Add(new ToggleDetails()
             {
 
@@ -416,13 +416,12 @@ namespace Logitude.Infrastructure.BL
 
             all.Add(new ToggleDetails()
             {
-
-                Code = "AEV",
-                Name = "Automation Event Creation",
-                SearchFields = "AEV,Automation Event Creation",
-                Description = "Automation Event Creation",
-            });
-
+                Code = "AEV", 
+                Name = "Automation Event Creation", 
+                SearchFields = "AEV,Automation Event Creation", 
+                Description = "Automation Event Creation", 
+			});
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "OPS", 
@@ -463,7 +462,6 @@ namespace Logitude.Infrastructure.BL
                 Description = "Open Format RTL Issues", 
 			});
 			 
-
             all.Add(new ToggleDetails()
             {    
                 Code = "CUS", 
@@ -486,6 +484,54 @@ namespace Logitude.Infrastructure.BL
                 Name = "API Credential Valid Key Token", 
                 SearchFields = "AVT,API Credential Valid Key Token", 
                 Description = "API Credential Valid Key Token", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "DFF", 
+                SearchFields = "DFF,support forwarding file format in External Document", 
+                Name = "support forwarding file format in External Document", 
+                Description = "Support forwarding file format in External Document", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "VSL", 
+                Name = "Vessel Free Text", 
+                SearchFields = "VSL,Vessel Free Text", 
+                Description = "Vessel Free Text", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CCT", 
+                Name = "Customs Charges Tariffs", 
+                SearchFields = "CCT,Customs Charges Tariffs", 
+                Description = "Customs Charges Tariffs", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BCF", 
+                Name = "Containers DWH", 
+                SearchFields = "Containers DWH,Allow Tenants to Show Containers Fact on BI Report Screent,BCF", 
+                Description = "Allow Tenants to Show Containers Fact on BI Report Screen", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "DFP", 
+                Name = "Sharing Documents Via Shared links", 
+                SearchFields = "DFP,Sharing Documents Via Shared links Permission", 
+                Description = "Sharing Documents Via Shared links Permission", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CTF", 
+                Name = "Customer Team Field", 
+                SearchFields = "CTF,Customer Team Field", 
+                Description = "Show Customer Team Field", 
 			});
 			
             return all;

@@ -361,6 +361,18 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ProratedAmountInLocalCurrency"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ProratedAmountInProfitCurrency"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ShipmentId"
     ReferencedTable="Shipments"

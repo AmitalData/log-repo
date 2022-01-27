@@ -393,6 +393,24 @@ namespace WarehouseData.Service
                     
                     break;
 
+                case "Containers":
+
+                    cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "EmptyPickupLocationPortId DEFAULT -1 FOR EmptyPickupLocationPortId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PreCarriageLocationPortId DEFAULT -1 FOR PreCarriageLocationPortId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "POLLocationPortId DEFAULT -1 FOR POLLocationPortId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment1LocationPortId DEFAULT -1 FOR Transshipment1LocationPortId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment2LocationPortId DEFAULT -1 FOR Transshipment2LocationPortId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment3LocationPortId DEFAULT -1 FOR Transshipment3LocationPortId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment4LocationPortId DEFAULT '-1' FOR Transshipment4LocationPortId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PODLocationPortId DEFAULT '-1' FOR PODLocationPortId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "EmptyReturnLocationPortId DEFAULT '-1' FOR EmptyReturnLocationPortId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OnCarriageLocationPortId DEFAULT '-1' FOR OnCarriageLocationPortId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "LIFLocationPortId DEFAULT '-1' FOR LIFLocationPortId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CreatedByUserId DEFAULT '-1' FOR CreatedByUserId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "UpdatedByUserId DEFAULT '-1' FOR UpdatedByUserId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "StatusId DEFAULT '-1' FOR StatusId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipmentId DEFAULT '-1' FOR ShipmentId";
+                    break;
 
                 case "ShipmentPayables":
 

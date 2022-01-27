@@ -13,6 +13,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string Id { get; set; }      
         public int Tenant { get; set; }
         public string RankId { get; set; }
+        public string TeamId { get; set; }
         public string AccountManagerUserId { get; set; }
         public string SalesmanUserId { get; set; }
         public bool StartWorkingManuallySet { get; set; }
@@ -46,7 +47,10 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
               
         [ForeignKey("RankId")]
         public virtual Rank Rank { get; set; }
-               
+
+        [ForeignKey("TeamId")]
+        public virtual CustomerTeam CustomerTeam { get; set; }
+
         public string IndustryId { get; set; }       
         public virtual Industry Industry { get; set; }        
 

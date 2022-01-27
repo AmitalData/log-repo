@@ -206,6 +206,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.ARInvoiceStockId = entityPM.ARInvoiceStockId;
             entity.IsInvoiceNumberFromStock = entityPM.IsInvoiceNumberFromStock;
             entity.UsoCFDICode = entityPM.UsoCFDICode;
+            entity.RegimenFiscalCode = entityPM.RegimenFiscalCode;
             entity.RelatedInvoice  = entityPM.RelatedInvoice;
             entity.DocumentFilingId = entityPM.DocumentFilingId;
             entityPM.SetVoided = false;

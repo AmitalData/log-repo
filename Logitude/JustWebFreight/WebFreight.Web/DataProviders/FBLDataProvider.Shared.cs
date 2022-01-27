@@ -278,6 +278,7 @@ namespace WebFreight.Web.DataProviders
         public DateTime? Transshipment2ETD { get; set; }
         public DateTime? Transshipment2ATA { get; set; }
         public DateTime? Transshipment2ATD { get; set; }
+        public byte[] UserSignature { get; set; }
 
     }
 
@@ -295,6 +296,5 @@ namespace WebFreight.Web.DataProviders
         public string Remark { get; set; }
         public string CurrencyCode { get; set; }
         public string CurrencyName { get; set; }
-
     }
 }

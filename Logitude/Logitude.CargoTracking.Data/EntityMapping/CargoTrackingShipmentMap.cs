@@ -67,9 +67,9 @@ namespace Logitude.CargoTracking.Data.EntityMapping
 
             this.Property(t => t.SecurityKey).HasColumnName("SecurityKey").HasMaxLength(40).IsUnicode(false);
 
-            this.Property(t => t.ConsigneeName).HasColumnName("ConsigneeName").HasMaxLength(70).IsUnicode(false);
+            this.Property(t => t.ConsigneeName).HasColumnName("ConsigneeName").HasMaxLength(70).IsUnicode(true);
 
-            this.Property(t => t.ShipperName).HasColumnName("ShipperName").HasMaxLength(70).IsUnicode(false);
+            this.Property(t => t.ShipperName).HasColumnName("ShipperName").HasMaxLength(70).IsUnicode(true);
 
             this.Property(t => t.CustomerReference).HasColumnName("CustomerReference").HasMaxLength(101).IsUnicode(false);
 
@@ -248,6 +248,14 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.IsOperationalClosed).HasColumnName("IsOperationalClosed");
 
             this.Property(t => t.DenyDate).HasColumnName("DenyDate");
+
+            this.Property(t => t.InvoicedDate).HasColumnName("InvoicedDate");
+
+            this.Property(t => t.InvoicedDone).HasColumnName("InvoicedDone");
+
+            this.Property(t => t.InvoicedNotes).HasColumnName("InvoicedNotes").IsMaxLength().IsUnicode(true);
+
+            this.Property(t => t.InvoicedExceptionReason).HasColumnName("InvoicedExceptionReason").IsMaxLength().IsUnicode(true);
         }
     }
 }

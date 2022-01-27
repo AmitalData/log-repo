@@ -440,7 +440,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         this.UIProperties.SetEnabled("SalesmanUserId", "Customer", enabled);
         this.UIProperties.SetEnabled("ClassifierId", "Customer", enabled);
         this.UIProperties.SetEnabled("CollectorId", "Customer", enabled);
-
+        this.UIProperties.SetEnabled("TeamId", "Customer", enabled);
         //Partners
         this.UIProperties.SetEnabled("ForwarderId", "Customer", enabled);
         this.UIProperties.SetEnabled("CustomsAgentId", "Customer", enabled);
@@ -1111,6 +1111,13 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         }
     }
 
+    public get TeamId() { return this.EntityPM.TeamId; }
+    public set TeamId(value: string) {
+        if (this.EntityPM.TeamId != value) {
+            this.EntityPM.TeamId = value;
+        }
+    }
+
     public get SalesmanUserId() { return this.EntityPM.SalesmanUserId; }
     public set SalesmanUserId(value: string) {
         if (this.EntityPM.SalesmanUserId != value) {
@@ -1178,7 +1185,13 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
     public IsMoreButtonVisible_Forwarder: boolean = false;
     public IsMoreButtonVisible_CustomsAgent: boolean = false;
     public IsMoreButtonVisible_Mediator: boolean = false;
+    public ShowCustomerTeamField: boolean = false;
     SetMoreButtonsVisibility() {
+
+        var customerTeamFieldFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CTF")[0];
+        if (customerTeamFieldFeatureToggle) {
+            this.ShowCustomerTeamField = true;
+        }
 
         if (FeatureLocator.HasFeaturePermession("Customer", "CUSTOMERACCOUNTMANAGERBYPRODUCT")) {
             this.IsMoreButtonVisible_AccountManager = true;

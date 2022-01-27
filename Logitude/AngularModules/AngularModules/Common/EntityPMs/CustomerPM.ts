@@ -206,6 +206,11 @@ export class CustomerPM {
     public set RankId(newValue: string) { if (this.rankId != newValue) { this.rankId = newValue; this.MarkAsDirty("RankId"); } }
        
 	 
+    private teamId: string;
+    public get TeamId() { return this.teamId; }
+    public set TeamId(newValue: string) { if (this.teamId != newValue) { this.teamId = newValue; this.MarkAsDirty("TeamId"); } }
+       
+	 
     private vatTypeId: string;
     public get VatTypeId() { return this.vatTypeId; }
     public set VatTypeId(newValue: string) { if (this.vatTypeId != newValue) { this.vatTypeId = newValue; this.MarkAsDirty("VatTypeId"); } }
@@ -1371,6 +1376,11 @@ export class CustomerPM {
     private usoCFDICode: string;
     public get UsoCFDICode() { return this.usoCFDICode; }
     public set UsoCFDICode(newValue: string) { if (this.usoCFDICode != newValue) { this.usoCFDICode = newValue; this.MarkAsDirty("UsoCFDICode"); } }
+       
+	 
+    private regimenFiscalCode: string;
+    public get RegimenFiscalCode() { return this.regimenFiscalCode; }
+    public set RegimenFiscalCode(newValue: string) { if (this.regimenFiscalCode != newValue) { this.regimenFiscalCode = newValue; this.MarkAsDirty("RegimenFiscalCode"); } }
        
 	 
     private customerTenant: number;

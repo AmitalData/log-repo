@@ -445,6 +445,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="RegimenFiscalCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="InvoiceCurrencyId"
     ReferencedTable="Currencies"
@@ -518,6 +525,11 @@
   <Relation
     ForeignKeyColumn="UsoCFDICode"
     ReferencedTable="UsoCFDIs"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="RegimenFiscalCode"
+    ReferencedTable="RegimenFiscals"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Index

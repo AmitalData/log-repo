@@ -175,7 +175,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private List<InterestTransactionSrcLineDTO> CreateJournalSrcLinesDTOFromFile(string FileContent, out int? tenant)
         {
             tenant = null;
-            bool reading_Lines = false;
+     //       bool reading_Lines = false;
             bool finished = false;
             var interestSrcLines = new List<InterestTransactionSrcLineDTO>();
             var lines = FileContent.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
@@ -191,19 +191,19 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     continue;// remark do nothing ...
                 }
-                var rowtype = rawLine.Split(',')[0];///.Substring(0, 1);
-
-                if (!reading_Lines)
-                {
-                    reading_Lines = true;
-                    continue;
-                }
-                else if (InterestTransactionSrcLineDTO.RowType.Contains(rowtype))
-                {
-                    if (!reading_Lines)
-                    {
-                        reading_Lines = true;
-                    }
+     //           var rowtype = rawLine.Split(',')[0];///.Substring(0, 1);
+//
+     //           if (!reading_Lines)
+     //           {
+     //               reading_Lines = true;
+     //               continue;
+     //           }
+     //           else if (InterestTransactionSrcLineDTO.RowType.Contains(rowtype))
+     //           {
+      //              if (!reading_Lines)
+      //              {
+      //                  reading_Lines = true;
+       //             }
                     string accountingCurrencyId = "";
                     if (tenant.HasValue)
                     {
@@ -214,13 +214,13 @@ namespace Logitude.Accounting.BL.CoreBL
                     InterestTransactionSrcLineDTO interestLine = InterestTransactionSrcLineDTO.Create(rawLine, accountingCurrencyId);
                     interestSrcLines.Add(interestLine);
 
-                }
-                else
-                {
-                    string text = TranslateTextsClassTranslate("InterestTransactionsCSV.O.NotValidRowType", 0, useLocal);
-                    if (String.IsNullOrEmpty(text)) text = "Not a valid Row Type";
-                    throw new ApplicationException($"{text}  {rawLine}");
-                }
+     //           }
+     //           else
+     //           {
+     //               string text = TranslateTextsClassTranslate("InterestTransactionsCSV.O.NotValidRowType", 0, useLocal);
+     //               if (String.IsNullOrEmpty(text)) text = "Not a valid Row Type";
+     //               throw new ApplicationException($"{text}  {rawLine}");
+     //           }
                 if (finished)
                 {
                     break;
@@ -446,8 +446,8 @@ namespace Logitude.Accounting.BL.CoreBL
     class Opening_LineDTO_ITCSV
     {
         //public const string RowType = "ס"; // סוג כרטיס,... 
-        public static List<String> RowType = new List<String>(new string[]
-            { "ס", "A", "DebitCredit"});
+    //    public static List<String> RowType = new List<String>(new string[]
+    //        { "ס", "A", "DebitCredit"});
         public string RawLine { get; set; }
         private const bool useLocal = true;
 
@@ -459,75 +459,37 @@ namespace Logitude.Accounting.BL.CoreBL
         internal static Opening_LineDTO_ITCSV Create(string rawLine)
         {
 
-            rawLine = rawLine ?? "";
-            bool startsWithRowTypeOk = false;
-            string actualRowType = "";
-            if (rawLine.Length >= 1)
-            {
-                actualRowType = rawLine.Split(',')[0]; ////rawLine.Substring(0, 1);
-                if (RowType.Contains(actualRowType) || (actualRowType.Length >= 1 && RowType.Contains(actualRowType.Substring(0, 1)))) startsWithRowTypeOk = true;
-            }
+    //        rawLine = rawLine ?? "";
+    //        bool startsWithRowTypeOk = false;
+    //        string actualRowType = "";
+    //        if (rawLine.Length >= 1)
+     //       {
+     //           actualRowType = rawLine.Split(',')[0]; ////rawLine.Substring(0, 1);
+     //           if (RowType.Contains(actualRowType) || (actualRowType.Length >= 1 && RowType.Contains(actualRowType.Substring(0, 1)))) startsWithRowTypeOk = true;
+     //       }
 
-            if (!startsWithRowTypeOk || actualRowType == "")
-            {
-                string text = TranslateTextsClassTranslate("InterestTransactionsCSV.O.DoesntStartWithHeaderLine", 0, useLocal);
-                if (String.IsNullOrEmpty(text)) text = "does not start with a Header Line";
-                throw new ApplicationException($"{text} {RowType} ");
-            }
+    //        if (!startsWithRowTypeOk || actualRowType == "")
+    //        {
+    //            string text = TranslateTextsClassTranslate("InterestTransactionsCSV.O.DoesntStartWithHeaderLine", 0, useLocal);
+    //            if (String.IsNullOrEmpty(text)) text = "does not start with a Header Line";
+    //            throw new ApplicationException($"{text} {RowType} ");
+     //       }
 
             var rec = new Opening_LineDTO_ITCSV();
-            rec.RawLine = rawLine;
+           rec.RawLine = rawLine;
             return rec;
         }
     }
 
-    //class Closing_LineDTO
-    //{
-    //    public const string RowType = "X";
-    //    private const bool useLocal = true;
-
-    //    public static string TranslateTextsClassTranslate(string textCodeCode, int tenant, bool getLocalDefaultText)
-    //    {
-    //        return TranslateTextsClass.Translate(textCodeCode, tenant, getLocalDefaultText);
-    //    }
-
-    //    public string RawLine { get; set; }
-    //    //public string DeductionFileNum { get; private set; }
-
-    //    //public long TotalVendorNumber { get; set; }
-    //    //public long TotalValidRecords { get; set; }
-    //    //public long TotalInvalidRecords { get; set; }
-
-    //    internal static Closing_LineDTO Create(string rawLine)
-    //    {
-
-    //        rawLine = rawLine ?? "";
-    //        if (!rawLine.StartsWith(RowType))
-    //        {
-    //            string text = TranslateTextsClassTranslate("InterestTransactionsCSV.O.DoesntStartWithRowType", 0, useLocal);
-    //            throw new ApplicationException($"{text} {RowType} ");
-    //        }
-
-    //        var rec = new Closing_LineDTO();
-    //        rec.RawLine = rawLine;
-    //        //rec.DeductionFileNum = rawLine.Substring(2 - 1, 9);
-
-    //        //rec.TotalVendorNumber = long.Parse(rawLine.Substring(11 - 1, 4));
-    //        //rec.TotalValidRecords = long.Parse(rawLine.Substring(15 - 1, 4));
-    //        //rec.TotalInvalidRecords = long.Parse(rawLine.Substring(19 - 1, 4));
-
-
-    //        return rec;
-    //    }
-    //}
+    
 
 
 
 
     class InterestTransactionSrcLineDTO
     {
-        public static List<String> RowType = new List<String>(new string[]
-            { "d", "c", "D", "C", "ז", "ח", "1", "2", "3"});
+  //      public static List<String> RowType = new List<String>(new string[]
+  //          { "d", "c", "D", "C", "ז", "ח", "1", "2", "3"});
 
         public const string _EmptyDate = "00000000";
         private const bool useLocal = true;

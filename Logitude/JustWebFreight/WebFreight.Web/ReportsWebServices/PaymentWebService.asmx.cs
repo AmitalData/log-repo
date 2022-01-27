@@ -51,6 +51,8 @@ namespace WebFreight.Web.ReportsWebServices
     // [System.Web.Script.Services.ScriptService]
     public class PaymentWebService : System.Web.Services.WebService
     {
+        IShipmentsContext shipmentsContext;
+        ShipmentRepository shipmentRepository;
 
         [WebMethod]
         public byte[] GetPaymentData(string paymentId, int tenant, string documentTypeId)
@@ -84,8 +86,8 @@ namespace WebFreight.Web.ReportsWebServices
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             IWebFreightContext webFreighContext = WebFreightContext.GetContext(tenant);
             AddressRepository addressRepository = new AddressRepository(tenant);
-            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
-            ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
+            shipmentsContext = ShipmentsContext.GetContext(tenant);
+            shipmentRepository = new ShipmentRepository(shipmentsContext);
 
             ARPayment currentPayment = (from a in invoiceCotnext.ARPayments.Include("PaymentCurrency").Include("BankAccountLite").Include("CreditCardType")
                                         where a.Id == paymentId
@@ -408,6 +410,7 @@ namespace WebFreight.Web.ReportsWebServices
                                         a.ARInvoiceId,
                                         a.ARInvoice.InvoiceNumber,
                                         a.ARInvoice.MainEntityReference,
+                                        a.ARInvoice.MainEntityId,
                                         a.PaymentAmount,
                                         a.ARInvoice.AmountDue,
                                         a.ARInvoice.AmountInInvoiceCurrency,
@@ -419,6 +422,7 @@ namespace WebFreight.Web.ReportsWebServices
                                         ARInvoiceId = gr.Key.ARInvoiceId,
                                         InvoiceNumber = gr.Key.InvoiceNumber,
                                         Reference = gr.Key.MainEntityReference,
+                                        ReferenceId = gr.Key.MainEntityId,
                                         AmountPaid = gr.Key.PaymentAmount,
                                         AmountDue = gr.Key.AmountDue,
                                         OriginalAmount = gr.Key.AmountInInvoiceCurrency,
@@ -440,7 +444,7 @@ namespace WebFreight.Web.ReportsWebServices
                         reportPayments.Vat = ARInvoiceTotalVATs.Sum(s => (s.InvoiceCurrencyVatableAmount * s.VatPercent) / 100);
                         reportPayments.OriginalAmount = item.OriginalAmount;
                         reportPayments.InvoicePaymentExchangeRate = item.ExchangeRate;
-
+                        reportPayments.ProjectNumber = this.GetProjectNumber(item.ReferenceId, tenant);
                         Currency myCurrency = CurrencyRepository.GetSingleCurrency(item.InvoiceCurrencyId, tenant, true);
                         if (myCurrency != null)
                         {
@@ -476,6 +480,10 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     this.MapPaymentProfact33Fields(currentPayment, paymentDataProvider, tenantSettings, invoiceCotnext, billToCard);
                 }
+                else if (satSetting != null && satSetting.SATInterfaceCode == "PROF40" && tenantSettings != null)
+                {
+                    SATPaymentProfact40DataProviderMappingFields.MapProfact40Fields(currentPayment, paymentDataProvider, invoiceCotnext, billToCard);
+                }
 
                 paymentDataProvider.AmountInLocalCurrency = currentPayment.AmountInLocalCurrency;
 
@@ -488,6 +496,16 @@ namespace WebFreight.Web.ReportsWebServices
             customFieldResolver.SetDataProviderCustomFieldsValues("ARPayment", tenant, currentPayment, paymentDataProvider);
 
             return paymentDataProvider;
+        }
+
+        private string GetProjectNumber(string referenceId, int tenant)
+        {
+            if(referenceId == null)
+            {
+                return "";
+            }
+            var projectNumber = shipmentRepository.GetShipmentProjectNumber(referenceId, tenant);
+            return projectNumber;
         }
 
         private void SetFullAccountingBankName(ARPayment payment, PaymentDataProvider paymentDataProvider)

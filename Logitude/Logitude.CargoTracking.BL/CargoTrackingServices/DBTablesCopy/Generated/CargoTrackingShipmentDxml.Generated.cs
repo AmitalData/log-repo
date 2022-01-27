@@ -75,10 +75,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='SecurityKey' Type='varchar' Size='40'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='ConsigneeName' Type='varchar' Size='70'>"+
+"  <Column Name='ConsigneeName' Type='nvarchar' Size='70'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='ShipperName' Type='varchar' Size='70'>"+
+"  <Column Name='ShipperName' Type='nvarchar' Size='70'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='CustomerReference' Type='varchar' Size='101'>"+
@@ -346,6 +346,18 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='DenyDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='InvoicedDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='InvoicedDone' Type='bit'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='InvoicedNotes' Type='nvarchar' Size='-1'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='InvoicedExceptionReason' Type='nvarchar' Size='-1'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Relation ForeignKeyColumn='EntityType' ReferencedTable='CargoTrackingHeaderEntityTypes' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+

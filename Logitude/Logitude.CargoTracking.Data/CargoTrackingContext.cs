@@ -66,6 +66,10 @@ namespace Logitude.CargoTracking.Data
             Database.SetInitializer<CargoTrackingContext>(null);
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 			
+            modelBuilder.Configurations.Add(new CargoDisconnectQueueMap());
+	
+            modelBuilder.Configurations.Add(new CargoReferencesSyncQueueMap());
+	
             modelBuilder.Configurations.Add(new CargoTrackingCardMap());
 	
             modelBuilder.Configurations.Add(new CargoTrackingCountryMap());
@@ -370,6 +374,18 @@ namespace Logitude.CargoTracking.Data
 		}
  
 
+	 public IDbSet<CargoDisconnectQueue> CargoDisconnectQueues 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CargoReferencesSyncQueue> CargoReferencesSyncQueues 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CargoTrackingCard> CargoTrackingCards 
 	 {
 	      get; set;

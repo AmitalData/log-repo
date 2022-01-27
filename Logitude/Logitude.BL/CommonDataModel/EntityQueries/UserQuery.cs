@@ -103,6 +103,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                     if (entity != null)
                     {
+                        entity.IsHRUser = this.CheckIfIsHRUser(entity);
                         entity.ExpirationDaysLeft = ComputeDaysLeft(entity.ExpirationDate);
 
                         UserLastLoginRepository rep = new UserLastLoginRepository(this.repository.context);
@@ -192,6 +193,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 if (entity != null)
                 {
+                    entity.IsHRUser = this.CheckIfIsHRUser(entity);
                     entity.ExpirationDaysLeft = ComputeDaysLeft(entity.ExpirationDate);
 
                     UserLastLoginRepository rep = new UserLastLoginRepository(this.repository.context);
@@ -283,6 +285,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                         if (entity != null)
                         {
+                            entity.IsHRUser = this.CheckIfIsHRUser(entity);
                             entity.ExpirationDaysLeft = ComputeDaysLeft(entity.ExpirationDate);
 
                             UserLastLoginRepository rep = new UserLastLoginRepository(this.repository.context);
@@ -371,6 +374,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                     if (entity != null)
                     {
+                        entity.IsHRUser = this.CheckIfIsHRUser(entity);
                         entity.ExpirationDaysLeft = ComputeDaysLeft(entity.ExpirationDate);
 
                         UserLastLoginRepository rep = new UserLastLoginRepository(this.repository.context);
@@ -447,6 +451,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 if (entity != null)
                 {
+                    entity.IsHRUser = this.CheckIfIsHRUser(entity);
                     entity.ExpirationDaysLeft = ComputeDaysLeft(entity.ExpirationDate);
 
                     UserLastLoginRepository rep = new UserLastLoginRepository(this.repository.context);
@@ -797,6 +802,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             UserLastLoginRepository rep = new UserLastLoginRepository(this.repository.context);
                             UserLastLoginQuery query = new UserLastLoginQuery(rep);
                             entity.UserLastLogin = query.GetSinglePM(entity.Id, tenant);
+                            entity.IsHRUser = this.CheckIfIsHRUser(entity);
                             entity.ExpirationDaysLeft = ComputeDaysLeft(entity.ExpirationDate);
                             UserPermittedBranchRepository userPermRep = new UserPermittedBranchRepository(this.repository.context);
                             UserPermittedBranchQuery userPermittedBranchQuery = new UserPermittedBranchQuery(userPermRep);
@@ -882,6 +888,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                     if (entity != null)
                     {
+                        entity.IsHRUser = this.CheckIfIsHRUser(entity);
                         entity.ExpirationDaysLeft = ComputeDaysLeft(entity.ExpirationDate);
                         UserLastLoginRepository rep = new UserLastLoginRepository(this.repository.context);
                         UserLastLoginQuery query = new UserLastLoginQuery(rep);
@@ -960,6 +967,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 if (entity != null)
                 {
+                    entity.IsHRUser = this.CheckIfIsHRUser(entity);
                     entity.ExpirationDaysLeft = ComputeDaysLeft(entity.ExpirationDate);
 
                     UserLastLoginRepository rep = new UserLastLoginRepository(this.repository.context);
@@ -1785,5 +1793,22 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return "";
         }
 
+        private bool CheckIfIsHRUser(UserPM entity)
+        {
+            bool isHR = false;
+            RoleRepository roleRepository = new RoleRepository(entity.Tenant);
+            ContactTenantRepository contactTenantRepository = new ContactTenantRepository(entity.Tenant);
+
+            Role role = roleRepository.GetSingleByCode("HRAD", 0);
+            ContactTenant contactTenant = contactTenantRepository.GetContactTenantForContactId(entity.Id, entity.Tenant);
+            if (role != null && contactTenant != null)
+            {
+                ContactTenantRoleRepository contactTenantRoleRepository = new ContactTenantRoleRepository(entity.Tenant);
+                ContactTenantRole contactTenantRole = contactTenantRoleRepository.GetContactTenantRoleByRoleIdAndContactTenant(role.Id, contactTenant.Id, entity.Tenant);
+                isHR = contactTenantRole == null ? false : true;
+            }
+
+            return isHR;
+        }
     }
 }

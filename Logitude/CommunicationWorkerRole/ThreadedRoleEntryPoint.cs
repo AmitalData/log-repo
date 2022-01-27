@@ -48,6 +48,7 @@ using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.Customs.BL.Messaging.Amital;
 using Simplog.Server.Infrastructure.Interfaces;
 using Logitude.Server.Tools.Interfaces;
+using CommunicationWorkerRole.Stimulsoft.fonts;
 
 namespace CommunicationWorkerRole
 {
@@ -134,7 +135,7 @@ namespace CommunicationWorkerRole
         public override bool OnStart()
         {
 
-
+            AddStimulsoftFonts();
             if (string.IsNullOrEmpty(LogitudeSettings.DeploymentStage))
             {
 
@@ -347,6 +348,14 @@ namespace CommunicationWorkerRole
             }
         }
 
+        private void AddStimulsoftFonts()
+        {
+            try
+            {
+                StimulsoftFontsService.AddFonts();
+            }
+            catch (Exception) { }
+        }
         private void TestBatch()
         {
 

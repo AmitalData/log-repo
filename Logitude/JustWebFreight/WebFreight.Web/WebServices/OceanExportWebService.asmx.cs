@@ -24,6 +24,8 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Server.Tools.Helpers;
+
 namespace WebFreight.Web.WebServices
 {
     /// <summary>
@@ -2163,6 +2165,7 @@ namespace WebFreight.Web.WebServices
 
             myDataProvider = this.MapTransshipmentOneFields(myDataProvider,shipment);
             myDataProvider = this.MapTransshipmentTwoFields(myDataProvider, shipment);
+            myDataProvider.UserSignature = this.GetUserSignatureImage(tenant);
 
             return myDataProvider;
         }
@@ -2599,6 +2602,29 @@ namespace WebFreight.Web.WebServices
 
             return fBLDataProvider;
         }
+
+        private byte[] GetUserSignatureImage(int tenant)
+        {
+            string contactEmail = AuthenticationUtil.GetLoggedUserEmail(tenant);
+            if (string.IsNullOrEmpty(contactEmail))
+                return null;
+
+            User currentUser = GetCurrentUserByContactEmail(tenant, contactEmail);
+            if (currentUser == null)
+                return null;
+
+            return DataProviders.General.GetUserSignatureImage(currentUser.SignatureImageId, tenant); ;
+        }
+
+        public User GetCurrentUserByContactEmail(int tenant , string contactEmail)
+        {
+            User currentUser = (from a in commonContext.Users
+                                where a.Contact.Email == contactEmail && a.Tenant == tenant
+                                select a).FirstOrDefault();
+
+            return currentUser;
+        }
+
     }
 }
 

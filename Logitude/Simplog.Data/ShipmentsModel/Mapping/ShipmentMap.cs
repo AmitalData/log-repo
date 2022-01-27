@@ -356,6 +356,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.DestinationWarehouseId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.PreForwardingVesselName).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.OnForwardingVesselName).HasMaxLength(40).IsUnicode(false);
+
             this.Property(t => t.PrivateLabelAgentName).HasMaxLength(70).IsUnicode(false);
 
             // Table & Column Mappings
@@ -816,6 +817,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.PrivateLabelAgentName).HasColumnName("PrivateLabelAgentName");
             this.Property(t => t.PreForwardingVesselName).HasColumnName("PreForwardingVesselName");
             this.Property(t => t.OnForwardingVesselName).HasColumnName("OnForwardingVesselName");
+            this.Property(t => t.PrivateLabelAgentName).HasColumnName("PrivateLabelAgentName");
 
             if (dbms == "oracle")
             {

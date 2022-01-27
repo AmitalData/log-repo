@@ -17453,6 +17453,12 @@
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
     <TextCode
+      Code="&quot;System1000.O.FoundVatNumber&quot;"
+      DefaultText="&quot;Found Vat Number&quot;"
+      LocalDefaultText="&quot;אותר מספר עוסק מורשה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
       Code="&quot;GLAccount.O.NoCreditDefined&quot;"
       DefaultText="&quot;Credit balance not defined&quot;"
       LocalDefaultText="&quot;לא הוגדרה מסגרת אשראי ללקוח&quot;"
@@ -17809,6 +17815,12 @@
       Code="&quot;GLAccount.O.Main&quot;"
       DefaultText="&quot;Main&quot;"
       LocalDefaultText="&quot;ראשי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.UnsavedChangesSaveBeforeContinue&quot;"
+      DefaultText="&quot;You have Unsaved changes, please save them before you continue&quot;"
+      LocalDefaultText="&quot;קיימים שינויים שטרם נשמרו, אנא בצע שמירה לפני היציאה.&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

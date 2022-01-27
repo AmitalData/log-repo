@@ -446,6 +446,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="TeamId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Cards"
@@ -539,6 +546,11 @@
   <Relation
     ForeignKeyColumn="ActivationRequestedByUserId"
     ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TeamId"
+    ReferencedTable="CustomerTeams"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

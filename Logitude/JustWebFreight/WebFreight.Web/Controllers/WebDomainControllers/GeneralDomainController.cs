@@ -42,7 +42,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
 
                 GeneralDomainService service = new GeneralDomainService();
-                List<FieldsTranslations> result = service.GetTranslationsByParam(tenant, typeCode, tableId, translationLanguageCode);
+                List<FieldsTranslations> result = service.GetTranslationsByParamForCustomization(tenant, typeCode, tableId, translationLanguageCode);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result.OrderBy(d => d.ObjectTableName));
             }

@@ -38,7 +38,7 @@ export class LastStatusComponent {
 
             else {
 
-                var items: any[] = myResponse.Result;
+                var items: any[] = myResponse.Result.filter(a => a.StatusSource == "INT");
 
                 items.forEach(item => {
                     itemsSource.push(new LastStatusItem(item));

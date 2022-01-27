@@ -8,19 +8,19 @@ import { DateTool, AppTool, ArrayTool } from '../../../../Infrastructure/Tools';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {TMOfficeHourPM} from '../../../EntityPMs/TMOfficeHourPM';
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
+import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 
 @Component({
     selector: 'ClockTimeComponent',
-    
+
     templateUrl: './ClockTimeComponent.html',
 })
 
 export class ClockTimeComponent extends BaseComponent {
-  public LeftCenter: any;
-  public EntryTime: any;
-  public ExitTime: any;
-  public Description: any;
-
+    public LeftCenter: any;
+    public EntryTime: any;
+    public ExitTime: any;
+    public Description: any;
     public DataContext = this;
     public ItemSource: ItemSourceItem[];
     public ItemSourceCollection: ObservableCollection;
@@ -28,18 +28,18 @@ export class ClockTimeComponent extends BaseComponent {
     public ObjectTableName: string = "TMOfficeHour";
     private myDomainService: TimeOfficeHourDomainService
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsHRUser: boolean = false;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
         this.ItemSourceCollection = new ObservableCollection([]);
         this.myDomainService = new TimeOfficeHourDomainService();
-
-        this._entityResourceService.getEntityResourceByTableName("TMOfficeHour", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("TMOfficeHour", 0).subscribe((response: any) => {
 
         });
     }
 
     private employeeUserId: string = null;
-    get EmployeeUserId() {  return this.employeeUserId; }
+    get EmployeeUserId() { return this.employeeUserId; }
     set EmployeeUserId(value: string) {
         if (this.employeeUserId != value) {
             this.employeeUserId = value;
@@ -56,7 +56,6 @@ export class ClockTimeComponent extends BaseComponent {
         }
     }
 
-
     private toDate: Date;
     get ToDate() {
         return this.toDate;
@@ -67,10 +66,8 @@ export class ClockTimeComponent extends BaseComponent {
         }
     }
 
-
-
     AddNewClockHour() {
-        this._entityResourceService.getEntityResourceByTableName("TMOfficeHour", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("TMOfficeHour", 0).subscribe((response: any) => {
             var logWindow = new LogitudeWindow();
             logWindow.Title = "New Office Hour";
             var args: any = {};
@@ -79,7 +76,6 @@ export class ClockTimeComponent extends BaseComponent {
             logWindow.Show('./TimeManagement/Components/NewEntity/NewOfficeHourComponent');
             logWindow.WindowClosed.subscribe(($event: any) => this.OnWindowClosed($event));
         });
-
     }
 
     OnWindowClosed(event) {
@@ -87,25 +83,6 @@ export class ClockTimeComponent extends BaseComponent {
             this.LoadClockTimeSheet();
         }
     }
-
-    //DeleteLineClicked(item: ItemSourceItem) {
-    //    var confirmWindow = new ConfirmWindow();
-    //    confirmWindow.Show("Are you sure you want to delete this line ?");
-
-    //    confirmWindow.WindowClosed.subscribe((event: any) => {
-    //        if (confirmWindow.Yes) {
-    //            this.CurrentSession.StartBusyIndicatorSaving();
-    //            if (this.myDomainService == null) {
-    //                this.myDomainService = new TimeManagementDomainService();
-    //            }
-    //            this.CurrentSession.StopBusyIndicator();
-
-    //        }
-    //    });
-
-
-    //}
-
 
     get HasChanged() {
         if (this.ItemSourceCollection.Collection.filter(p => p.IsDirty)[0])
@@ -125,17 +102,13 @@ export class ClockTimeComponent extends BaseComponent {
             this.ValidationErrorsList.push("From date field must be less than To date field");
 
         if (this.ValidationErrorsList.length == 0) {
-
             if (this.myDomainService == null) {
                 this.myDomainService = new TimeOfficeHourDomainService();
             }
 
             this.CurrentSession.StartBusyIndicatorLoading();
-
             this.myDomainService.GetTimeOfficeClock(this.EmployeeUserId, this.FromDate, this.ToDate).subscribe((myResponse: ServiceResponse) => {
-
                 this.CurrentSession.StopBusyIndicator();
-
                 this.ItemSource = [];
                 this.ItemSourceCollection.Clear();
 
@@ -157,7 +130,6 @@ export class ClockTimeComponent extends BaseComponent {
                 this.ComputeTotals();
             });
         }
-
     }
 
     SaveSingleTimeOfficeHourRecord(item: TMOfficeHourPM) {
@@ -195,7 +167,7 @@ export class ClockTimeComponent extends BaseComponent {
 
         if (items.length != 0) {
             this.CurrentSession.StartBusyIndicatorSaving();
-            
+
             this.myDomainService.UpdateOfficeHourList(items).subscribe((myResponse: ServiceResponse) => {
                 this.CurrentSession.StopBusyIndicator();
 
@@ -215,6 +187,7 @@ export class ClockTimeComponent extends BaseComponent {
     }
 
     InitTab(arg) {
+        this.IsHRUser = SessionInfo.LoggedUserPM.IsHRUser;
         this.employeeUserId = SessionLocator.LoggedUserId;
         var fromDate: Date = DateTool.GetCurrentDateAsUtc();
         fromDate.setDate(1);
@@ -224,6 +197,7 @@ export class ClockTimeComponent extends BaseComponent {
         toDate.setDate(1);
         this.toDate = toDate;
         this.myDomainService = new TimeOfficeHourDomainService();
+
         this.LoadClockTimeSheet();
     }
 

@@ -137,7 +137,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             {
                 cloudData.IsImporterApprovalRequried = false;
                 cloudData.DenyReason = declarationApprovalArgs.DenyReason;
-                //cloudData.DenyDate = TenantServerConfigration.GetCurrentDateTime(declarationApprovalArgs.Tenant);
+                cloudData.DenyDate = TenantServerConfigration.GetCurrentDateTime(declarationApprovalArgs.Tenant);
                 SubmitCloudData(declarationApprovalArgs, cloudData);
             }
         }

@@ -1878,6 +1878,7 @@ namespace MeatadataGeneratorTool
 
                     SetAttribute("Name", GetStringValue(f.DCName), DataContractElement, null);
                     SetAttribute("Version", GetStringValue(f.DCVersion), DataContractElement, null);
+                    SetAttribute("IncludeTenant0Data", GetStringValue(f.IncludeTenant0Data), DataContractElement, null);
                     SetAttribute("ComputingPartnerName", GetStringValue(f.ComputingPartnerName), DataContractElement, null);
                     if (f.DCFieldsObsList != null)
                     {

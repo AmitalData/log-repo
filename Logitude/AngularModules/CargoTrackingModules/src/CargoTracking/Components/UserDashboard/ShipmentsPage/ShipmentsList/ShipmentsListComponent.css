@@ -138,10 +138,9 @@ h1{
     }
 
 .scrollable-table {
-    /* max-width: 1600px; */
     margin: 0 auto;
-    height: 75%;
-    /* height: 68vh; */
+    height: auto;
+    flex-grow: 1;
 }
 
 .scrollable-table>.table {
@@ -550,10 +549,10 @@ h1{
     /* padding: 20px; */
 }
 .weight-quantity{
-    white-space: nowrap; 
+    white-space: nowrap;
     width: 100%;
     overflow: hidden;
-    text-overflow: ellipsis; 
+    text-overflow: ellipsis;
 }
 .clear-addvance-filter-div{
     float: right;
@@ -742,8 +741,11 @@ h1{
 }
 
 .dashboard-container{
-    height:100%;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    height: calc(100% - 5px);
 }
 
 .skelton-wrapper > div{

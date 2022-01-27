@@ -13,7 +13,7 @@ namespace DW_Editor_Tool.Helpers
     public class XmlGenerator
     {
 
-     public static XmlNode indexesXmlNode = null;
+        public static XmlNode indexesXmlNode = null;
         public static bool GenerateXmlToFile(DWObjectTableViewModel tableViewModel)
         {
             try
@@ -22,7 +22,7 @@ namespace DW_Editor_Tool.Helpers
                 XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
                 doc.AppendChild(xmlDeclaration);
                 XmlElement entityElement = (XmlElement)doc.AppendChild(doc.CreateElement("entity"));
-                
+
                 if (string.IsNullOrEmpty(tableViewModel.Id))
                 {
                     SetAttribute("Id", GetStringValue(Guid.NewGuid()), entityElement);
@@ -89,7 +89,7 @@ namespace DW_Editor_Tool.Helpers
                     //MessageBox.Show("file path in not valid!");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 tableViewModel.ErrorMessages = ex.Message;
                 tableViewModel.ErrorsVisibility = Visibility.Visible;
@@ -127,7 +127,7 @@ namespace DW_Editor_Tool.Helpers
                 SetAttribute("Category1", GetStringValue(fieldViewModel.Category1), fieldElement);
                 SetAttribute("Category2", GetStringValue(fieldViewModel.Category2), fieldElement);
                 SetAttribute("LOVAdditionalColumns", GetStringValue(fieldViewModel.LOVAdditionalColumns), fieldElement);
-				SetAttribute("HideTree", fieldViewModel.HideTree.ToString().ToLower(), fieldElement);
+                SetAttribute("HideTree", fieldViewModel.HideTree.ToString().ToLower(), fieldElement);
                 SetAttribute("CannotFilter", fieldViewModel.CannotFilter.ToString().ToLower(), fieldElement);
                 SetAttribute("HelpText", GetStringValue(fieldViewModel.HelpText), fieldElement);
                 SetAttribute("IsCustom", fieldViewModel.IsCustom.ToString().ToLower(), fieldElement);
@@ -144,7 +144,7 @@ namespace DW_Editor_Tool.Helpers
 
         }
 
-   
+
 
         public static DWObjectTableViewModel GetDWViewModelFromFile()
         {
@@ -201,10 +201,10 @@ namespace DW_Editor_Tool.Helpers
 
                             if (childNode.Name == "Indexes") indexesXmlNode = childNode;
 
-                            
+
 
                         }
-                
+
                         tableViewModel.BuildObsList(fieldsList);
                     }
                     else
@@ -224,7 +224,7 @@ namespace DW_Editor_Tool.Helpers
             {
                 var FileName = Path.GetFileName(App.CurrentFilePath).Replace(".dwml", "");
                 tableViewModel.Code = FileName;
-                
+
                 return tableViewModel;
             }
         }
@@ -249,7 +249,7 @@ namespace DW_Editor_Tool.Helpers
             fieldViewModel.Category1 = GetAttributeStringValue(fieldNode.Attributes["Category1"]);
             fieldViewModel.Category2 = GetAttributeStringValue(fieldNode.Attributes["Category2"]);
             fieldViewModel.LOVAdditionalColumns = GetAttributeStringValue(fieldNode.Attributes["LOVAdditionalColumns"]);
-			fieldViewModel.HideTree = GetAttributeBoolValue(fieldNode.Attributes["HideTree"]);
+            fieldViewModel.HideTree = GetAttributeBoolValue(fieldNode.Attributes["HideTree"]);
             fieldViewModel.CannotFilter = GetAttributeBoolValue(fieldNode.Attributes["CannotFilter"]);
             fieldViewModel.HelpText = GetAttributeStringValue(fieldNode.Attributes["HelpText"]);
             fieldViewModel.IsCustom = GetAttributeBoolValue(fieldNode.Attributes["IsCustom"]);
@@ -260,14 +260,14 @@ namespace DW_Editor_Tool.Helpers
             fieldViewModel.DimensionDataViewName = GetAttributeStringValue(fieldNode.Attributes["DimensionDataViewName"]);
             fieldViewModel.RecordType = GetAttributeStringValue(fieldNode.Attributes["RecordType"]);
 
-            
+
 
 
 
             return fieldViewModel;
         }
 
-    
+
 
 
 
@@ -297,7 +297,7 @@ namespace DW_Editor_Tool.Helpers
 
             if (value != null)
             {
-                return "\"" + value.ToString().Replace("\"", "\u0022") + "\""; 
+                return "\"" + value.ToString().Replace("\"", "\u0022") + "\"";
             }
             else
             {

@@ -73,6 +73,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.SATInvoiceStatusCode).IsRequired().HasMaxLength(2).IsUnicode(false);
             this.Property(t => t.MetodoPagoCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.UsoCFDICode).HasMaxLength(3).IsUnicode(false);
+            this.Property(t => t.RegimenFiscalCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.TransmissionError).HasMaxLength(8000).IsUnicode(true);
             this.Property(t => t.ExternalAccountingEntityId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.BankAccountLiteId).HasMaxLength(15).IsUnicode(true);
@@ -182,6 +183,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.RelatedInvoice).HasColumnName("RelatedInvoice");
             this.Property(t => t.MetodoPagoCode).HasColumnName("MetodoPagoCode");
             this.Property(t => t.UsoCFDICode).HasColumnName("UsoCFDICode");
+            this.Property(t => t.RegimenFiscalCode).HasColumnName("RegimenFiscalCode");
             this.Property(t => t.SATTransferStatusCode).HasColumnName("SATTransferStatusCode");
             this.Property(t => t.SATInvoiceStatusCode).HasColumnName("SATInvoiceStatusCode");
             this.Property(t => t.Intercompany).HasColumnName("Intercompany");
@@ -229,6 +231,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.HasOptional(t => t.SalesmanUser).WithMany().HasForeignKey(d => d.SalesmanUserId);
             this.HasOptional(t => t.MetodoPago).WithMany().HasForeignKey(d => d.MetodoPagoCode);
             this.HasOptional(t => t.UsoCFDI).WithMany().HasForeignKey(d => d.UsoCFDICode);
+            this.HasOptional(t => t.RegimenFiscal).WithMany().HasForeignKey(d => d.RegimenFiscalCode);
             this.HasRequired(t => t.SATTransferStatus).WithMany().HasForeignKey(d => d.SATTransferStatusCode);
             this.HasRequired(t => t.SATInvoiceStatus).WithMany().HasForeignKey(d => d.SATInvoiceStatusCode);
             this.HasOptional(t => t.BankAccountLite).WithMany().HasForeignKey(d => d.BankAccountLiteId);

@@ -138,6 +138,10 @@
             this.label51 = new System.Windows.Forms.Label();
             this.label46 = new System.Windows.Forms.Label();
             this.DimShipmentSubTypesLabel = new System.Windows.Forms.Label();
+            this.label53 = new System.Windows.Forms.Label();
+            this.FactContainersLabel = new System.Windows.Forms.Label();
+            this.label52 = new System.Windows.Forms.Label();
+            this.DWContainersLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // BuildWarehouseData
@@ -1405,7 +1409,7 @@
             this.DimContactsLabel.AutoSize = true;
             this.DimContactsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DimContactsLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DimContactsLabel.Location = new System.Drawing.Point(1737, 437);
+            this.DimContactsLabel.Location = new System.Drawing.Point(1743, 426);
             this.DimContactsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.DimContactsLabel.Name = "DimContactsLabel";
             this.DimContactsLabel.Size = new System.Drawing.Size(0, 25);
@@ -1417,7 +1421,7 @@
             this.label49.BackColor = System.Drawing.SystemColors.Control;
             this.label49.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label49.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label49.Location = new System.Drawing.Point(1455, 437);
+            this.label49.Location = new System.Drawing.Point(1452, 426);
             this.label49.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label49.Name = "label49";
             this.label49.Size = new System.Drawing.Size(187, 25);
@@ -1472,11 +1476,65 @@
             this.DimShipmentSubTypesLabel.Size = new System.Drawing.Size(0, 25);
             this.DimShipmentSubTypesLabel.TabIndex = 214;
             // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.BackColor = System.Drawing.SystemColors.Control;
+            this.label53.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label53.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label53.Location = new System.Drawing.Point(1452, 468);
+            this.label53.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(150, 25);
+            this.label53.TabIndex = 271;
+            this.label53.Text = "Fact Containers";
+            // 
+            // FactContainersLabel
+            // 
+            this.FactContainersLabel.AutoSize = true;
+            this.FactContainersLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.FactContainersLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FactContainersLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.FactContainersLabel.Location = new System.Drawing.Point(1743, 468);
+            this.FactContainersLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.FactContainersLabel.Name = "FactContainersLabel";
+            this.FactContainersLabel.Size = new System.Drawing.Size(0, 25);
+            this.FactContainersLabel.TabIndex = 270;
+            // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.BackColor = System.Drawing.SystemColors.Control;
+            this.label52.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label52.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label52.Location = new System.Drawing.Point(1455, 493);
+            this.label52.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(146, 25);
+            this.label52.TabIndex = 277;
+            this.label52.Text = "DW Containers";
+            // 
+            // DWContainersLabel
+            // 
+            this.DWContainersLabel.AutoSize = true;
+            this.DWContainersLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.DWContainersLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DWContainersLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.DWContainersLabel.Location = new System.Drawing.Point(1744, 493);
+            this.DWContainersLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWContainersLabel.Name = "DWContainersLabel";
+            this.DWContainersLabel.Size = new System.Drawing.Size(0, 25);
+            this.DWContainersLabel.TabIndex = 276;
+            // 
             // BuildWarehouseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1789, 859);
+            this.Controls.Add(this.label52);
+            this.Controls.Add(this.DWContainersLabel);
+            this.Controls.Add(this.label53);
+            this.Controls.Add(this.FactContainersLabel);
             this.Controls.Add(this.DimShipmentSubTypesLabel);
             this.Controls.Add(this.label46);
             this.Controls.Add(this.FactARInvoicesLabel);
@@ -1707,6 +1765,10 @@
         private System.Windows.Forms.Label label51;
         private System.Windows.Forms.Label label46;
         private System.Windows.Forms.Label DimShipmentSubTypesLabel;
+        private System.Windows.Forms.Label label53;
+        private System.Windows.Forms.Label FactContainersLabel;
+        private System.Windows.Forms.Label label52;
+        private System.Windows.Forms.Label DWContainersLabel;
     }
 }
 

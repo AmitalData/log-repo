@@ -8,12 +8,14 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using System;
+using Simplog.Data.InfrastructureModel;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
     public class ShipmentPackageQuery
     {
-        ShipmentPackageRepository repository;         
+        ShipmentPackageRepository repository;
+        
         public ShipmentPackageQuery(int tenant)
         {
             repository = new ShipmentPackageRepository(tenant);
@@ -196,7 +198,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             myResult.InsideShipmentPackages = insideShipmentPackageQuery.GetInsideShipmentPackages(myResult?.Id, tenant);
             myResult.ShipmentPackageItems = shipmentPackageItemQuery.GetShipmentPackageItems(myResult?.Id, tenant);
             myResult.ShipmentPackageHarmonizes = shipmentPackageHarmonizeQuery.GetShipmentPackageHarmonizes(myResult?.Id, tenant);
-            this.MapTheLastStatusName(myResult);
+            IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
+            this.MapTheLastStatusName(myResult, webFreightContext);
             return myResult;
         }
 
@@ -320,7 +323,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             PackageTypeRepository PTypeRepo = new PackageTypeRepository(commonContext);
             //CountryRepository CountryRepo = new CountryRepository(commonContext);
             //PackageTypeRepository PTypeRepo = new PackageTypeRepository(commonContext);
-
+            IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
             foreach (ShipmentPackagePM package in shipmentPackages)
             {
                 package.InsideShipmentPackages = insideShipmentPackageQuery.GetInsideShipmentPackages(package.Id, package.Tenant);
@@ -355,27 +358,30 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                            select d.EnglishName).FirstOrDefault();
 
                 }
-                this.MapTheLastStatusName(package);
+                this.MapTheLastStatusName(package, webFreightContext);
             }
             return shipmentPackages;
         }
 
-        private void MapTheLastStatusName(ShipmentPackagePM package)
+        private void MapTheLastStatusName(ShipmentPackagePM package, IWebFreightContext webFreightContext)
         {
-            if (!string.IsNullOrEmpty(package.LastStatusCode))
+            var inttra = "INT";
+            var oceanInsights = "OIN";
+            if (package.ContainerStatusSourceCode == inttra && package.LastStatusCode != null)
             {
-                if(package.ContainerStatusSourceCode == "INT")
-                {
-                    package.LastStatusName = (from d in repository.context.INTTRAStatuses
-                                              where d.Code == package.LastStatusCode
-                                              select d.Name).FirstOrDefault();
-                }
-                else if (package.ContainerStatusSourceCode == "OIN")
-                {
-                    package.LastStatusName = (from d in repository.context.ContainerStatuses
-                                              where d.Code == package.LastStatusCode
-                                              select d.Name).FirstOrDefault();
-                }
+                package.LastStatusName = (from d in repository.context.INTTRAStatuses
+                                          where d.Code == package.LastStatusCode
+                                          select d.Name).FirstOrDefault();
+
+            }
+            else if (package.ContainerStatusSourceCode == oceanInsights && package.ContainerEntityId != null)
+            {
+                var statusId = (from d in repository.context.Containers
+                                where d.Id == package.ContainerEntityId
+                                select d.StatusId).FirstOrDefault();
+                package.ContainerStatusName = (from d in webFreightContext.EntityStatus
+                                               where d.Id == statusId
+                                               select d.Name).FirstOrDefault();
             }
         }
 

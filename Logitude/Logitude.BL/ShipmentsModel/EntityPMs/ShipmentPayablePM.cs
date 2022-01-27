@@ -162,7 +162,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         // Dummy Fields
         public int ViewOrder { get; set; }
-        
+        public double? ProratedAmountInLocalCurrency { get; set; }
+        public double? ProratedAmountInProfitCurrency { get; set; }
         public string UOMPercentage { get; set; }
 
         List<ShipmentPayablePM> childShipmentPayables;

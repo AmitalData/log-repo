@@ -65,6 +65,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             SetPaymentRequestedMilestone(args);
             SetPaymentReceivedMilestone(args);
             SetGatepassDocumentsReadyMilestone(args);
+            SetInvoicedMilestone(args);
+
         }
         private static void SetCreatedMilstones(SetTableLogicArgs args)
         {
@@ -410,6 +412,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                         if (!IsFieldNullOrEmpty(tableRow, "DeliveredDone") && !tableRow["DeliveredDone"].Equals("False"))
                         {
                             currentMilestoneArgs.date = tableRow["DeliveredDate"];
+                            CheckMilestone(currentMilestoneArgs);
+                        }
+                        break;
+                    case CargoTrackingMilestoneValues.Invoiced:
+                        if (!IsFieldNullOrEmpty(tableRow, "InvoicedDone") && !tableRow["InvoicedDone"].Equals("False"))
+                        {
+                            currentMilestoneArgs.date = tableRow["InvoicedDate"];
                             CheckMilestone(currentMilestoneArgs);
                         }
                         break;
@@ -787,6 +796,20 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             }
             tableRow.SetField("GatepassArrivedDate", tableRow["GatepassDocumentsReady"]);
             tableRow.SetField("GatepassArrivedDone", !IsFieldNullOrEmpty(tableRow, "GatepassDocumentsReady"));
+
+        }
+        private static void SetInvoicedMilestone(SetTableLogicArgs args)
+        {
+            var tableRow = args.TableRow;
+            var tenant = (int)tableRow["Tenant"];
+            if (!CheckIfUserHasAccessToMilestone(args.NotPermittedMilestones, CargoTrackingMilestoneValues.Invoiced, tenant))
+            {
+                tableRow.SetField("InvoicedDate", (DBNull)null);
+                tableRow.SetField("InvoicedDone", false);
+                return;
+            }
+            tableRow.SetField("InvoicedDate", tableRow["InvoiceIssuedDate"]);
+            tableRow.SetField("InvoicedDone", !IsFieldNullOrEmpty(tableRow, "InvoiceIssuedDate"));
 
         }
 

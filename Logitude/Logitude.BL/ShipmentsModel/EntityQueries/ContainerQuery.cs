@@ -263,6 +263,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Leg3VesselId = entityPoco.Leg3VesselId,
                     Leg4VesselId = entityPoco.Leg4VesselId,
                     Leg5VesselId = entityPoco.Leg5VesselId,
+                    EmptyContainerReturnTo = entityPoco.EmptyContainerReturnTo,
+                    EmptyContainerReturnFrom = entityPoco.EmptyContainerReturnFrom,
+                    EmptyContainerReturnETA = entityPoco.EmptyContainerReturnETA,
+                    EmptyContainerReturnATA = entityPoco.EmptyContainerReturnATA,
+                    EmptyContainerReturnATD = entityPoco.EmptyContainerReturnATD,
+                    EmptyContainerReturnETD = entityPoco.EmptyContainerReturnETD,
                 };
 
                 if(entityPoco.EntityStatus != null)
@@ -532,6 +538,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         Leg3VesselId = a.Leg3VesselId,
                         Leg4VesselId = a.Leg4VesselId,
                         Leg5VesselId = a.Leg5VesselId,
+                        EmptyContainerReturnTo = a.EmptyContainerReturnTo,
+                        EmptyContainerReturnFrom = a.EmptyContainerReturnFrom,
+                        EmptyContainerReturnETA = a.EmptyContainerReturnETA,
+                        EmptyContainerReturnATA = a.EmptyContainerReturnATA,
+                        EmptyContainerReturnATD = a.EmptyContainerReturnATD,
+                        EmptyContainerReturnETD = a.EmptyContainerReturnETD,
                     }).ToList();
         }
 
@@ -778,6 +790,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    Leg3VesselId = entity.Leg3VesselId,
                                                    Leg4VesselId = entity.Leg4VesselId,
                                                    Leg5VesselId = entity.Leg5VesselId,
+                                                   EmptyContainerReturnTo = entity.EmptyContainerReturnTo,
+                                                   EmptyContainerReturnFrom = entity.EmptyContainerReturnFrom,
+                                                   EmptyContainerReturnETA = entity.EmptyContainerReturnETA,
+                                                   EmptyContainerReturnATA = entity.EmptyContainerReturnATA,
+                                                   EmptyContainerReturnATD = entity.EmptyContainerReturnATD,
+                                                   EmptyContainerReturnETD = entity.EmptyContainerReturnETD,
                                                };
             return result;
         }
@@ -1010,6 +1028,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Leg3VesselId = container.Leg3VesselId,
                     Leg4VesselId = container.Leg4VesselId,
                     Leg5VesselId = container.Leg5VesselId,
+                    EmptyContainerReturnTo = container.EmptyContainerReturnTo,
+                    EmptyContainerReturnFrom = container.EmptyContainerReturnFrom,
+                    EmptyContainerReturnETA = container.EmptyContainerReturnETA,
+                    EmptyContainerReturnATA = container.EmptyContainerReturnATA,
+                    EmptyContainerReturnATD = container.EmptyContainerReturnATD,
+                    EmptyContainerReturnETD = container.EmptyContainerReturnETD,
                 };
                 MapCustomFields(containerPM, container);
             }
@@ -1256,6 +1280,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Leg3VesselId = entityPoco.Leg3VesselId,
                     Leg4VesselId = entityPoco.Leg4VesselId,
                     Leg5VesselId = entityPoco.Leg5VesselId,
+                    EmptyContainerReturnTo = entityPoco.EmptyContainerReturnTo,
+                    EmptyContainerReturnFrom = entityPoco.EmptyContainerReturnFrom,
+                    EmptyContainerReturnETA = entityPoco.EmptyContainerReturnETA,
+                    EmptyContainerReturnATA = entityPoco.EmptyContainerReturnATA,
+                    EmptyContainerReturnATD = entityPoco.EmptyContainerReturnATD,
+                    EmptyContainerReturnETD = entityPoco.EmptyContainerReturnETD,
                 };
             }
 
@@ -1490,6 +1520,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Leg3VesselId = container.Leg3VesselId,
                     Leg4VesselId = container.Leg4VesselId,
                     Leg5VesselId = container.Leg5VesselId,
+                    EmptyContainerReturnTo = container.EmptyContainerReturnTo,
+                    EmptyContainerReturnFrom = container.EmptyContainerReturnFrom,
+                    EmptyContainerReturnETA = container.EmptyContainerReturnETA,
+                    EmptyContainerReturnATA = container.EmptyContainerReturnATA,
+                    EmptyContainerReturnATD = container.EmptyContainerReturnATD,
+                    EmptyContainerReturnETD = container.EmptyContainerReturnETD,
                 };
                 MapCustomFields(containerPM, container);
             }

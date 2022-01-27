@@ -26,8 +26,7 @@ import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeName
 import { UpdateTariffArgs } from '../../../Args';
 import { AirSurchargeTariffLineData } from '../../../../TariffModule/Components/EditTabs/Tariff/TariffLineData';
 
-@Component({
-    
+@Component({    
     templateUrl: './SurchargeVersionTabComponent.html',
 })
 
@@ -591,6 +590,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         var itemComponent = new AirSurchargeTariffLineData(itemPM, this, true);
         logWindow.WindowArgs = { DataContext: itemComponent, EntityPM: itemPM, TariffType: this.EntityPM.TypeCode };
         logWindow.Title = "New Tariff Line";
+        logWindow.Width = 700;
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
     }
 

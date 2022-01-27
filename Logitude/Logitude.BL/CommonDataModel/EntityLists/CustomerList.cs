@@ -18,6 +18,9 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string RankId { get; set; }
 
         [DataMember]
+        public string TeamId { get; set; }
+
+        [DataMember]
         public string RankCode { get; set; }
 
         [DataMember]
@@ -387,6 +390,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         [DataMember]
         public string UsoCFDICode { get; set; }
+        [DataMember]
+        public string RegimenFiscalCode { get; set; }
 
         [DataMember]
         public string ZipCode { get; set; }

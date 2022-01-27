@@ -55,6 +55,8 @@
   <ItemGroup>
     <Compile Include="DataContracts\CargoTrackingShipmentSearchInput.cs" />
     <Compile Include="EntityPMs\CargoTrackingShipmentPM.cs" />
+    <Compile Include="EntityPMs\Generated\CargoDisconnectQueuePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CargoReferencesSyncQueuePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CargoTrackingCardPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CargoTrackingCountryPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CargoTrackingHeaderEntityTypePM.Generated.cs" />

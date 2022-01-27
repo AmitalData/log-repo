@@ -259,7 +259,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Profact.TimbraCFDI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Profact3.3.1.2.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
+      <HintPath>..\packages\Profact4.0.1.1.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
     </Reference>
     <Reference Include="SendGrid.SmtpApi">
       <HintPath>..\packages\SendGrid.SmtpApi.1.3.3\lib\SendGrid.SmtpApi.dll</HintPath>
@@ -291,6 +291,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.0\lib\netstandard2.0\System.Memory.dll</HintPath>
     </Reference>
@@ -378,14 +379,18 @@
     <Compile Include="ArtemusAnalyzerWorkerRole.cs" />
     <Compile Include="AutoSignUpMailWorkerRole.cs" />
     <Compile Include="AutoSignUpWorkerRole.cs" />
+    <Compile Include="CargoDisconnectWorkerRole.cs" />
     <Compile Include="CollaborationToolContainerUpdateWR.cs" />
     <Compile Include="CollaborationToolShipmentUpdateWR.cs" />
     <Compile Include="CollaborationToolTaskWR.cs" />
+    <Compile Include="CargoReferencesSyncWorkerRole.cs" />
     <Compile Include="ContainerCreateWR.cs" />
     <Compile Include="ContainerStatusesConnecterWR.cs" />
     <Compile Include="ContainerRequestWorkeRole.cs" />
     <Compile Include="ContainerStatusesReceiverWR.cs" />
     <Compile Include="ContainerUpdateWR.cs" />
+    <Compile Include="EntityMapping\ShipmentOrderPmToAmMapping.cs" />
+    <Compile Include="ImporterShipmentOrdersWorkerRole.cs" />
     <Compile Include="MultiEntityUpdate\IMultiEntityUpdater.cs" />
     <Compile Include="MultiEntityUpdate\MultiEntityUpdater.cs" />
     <Compile Include="MultiEntityUpdate\ShipmentUpdater.cs" />
@@ -394,8 +399,14 @@
     <Compile Include="PODImageConverterWorkerRole.cs" />
     <Compile Include="MultiEntityUpdateWorkerRole.cs" />
     <Compile Include="Services\ContainerSchedulerTaskService.cs" />
+    <Compile Include="Services\ImporterShipmentOrdersService.cs" />
     <Compile Include="Services\MultiEntityUpdateService.cs" />
+    <Compile Include="Services\SAT\SATInvoiceProfact40CancellationService.cs" />
+    <Compile Include="Services\SAT\SATPaymentProfact40CancellationService.cs" />
+    <Compile Include="Services\SAT\SATProfact40Service.cs" />
+    <Compile Include="Stimulsoft\fonts\StimulsoftFontsService.cs" />
     <Compile Include="Tasks\ContainerAutomaticallyClosingTask.cs" />
+    <Compile Include="Tasks\RecalculateCashbooksTotalsTask.cs" />
     <Compile Include="UpdatePortTimeZoneWR.cs" />
     <Compile Include="WebHookCommunicationWorkerRole.cs" />
     <Compile Include="Service References\LoginServiceReference\Reference.cs">
@@ -751,6 +762,69 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\wsReference\Timbrado.wsdl" />
+    <None Include="Stimulsoft\fonts\century-gothic\GOTHIC.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\century-gothic\GOTHICB.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\century-gothic\GOTHICBI.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\century-gothic\GOTHICI.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\didot\GFSDidot-Regular.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\garamond\GARA.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\garamond\GARABD.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\garamond\GARAIT.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\lucida-bright\LBRITE.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\lucida-bright\LBRITED.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\lucida-bright\LBRITEDI.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\lucida-bright\LBRITEI.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\monaco\Monaco.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\optima\OPTIMA.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\optima\OPTIMA_B.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\optima\Optima_Italic.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\optima\Optima_Medium.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\perpetua\PERBI___.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\perpetua\PERB____.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\perpetua\PERI____.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\perpetua\PER_____.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JustWebFreight\WebFreight.Web\WebFreight.Web.csproj">
@@ -808,6 +882,18 @@
     <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
       <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
       <Name>Logitude.Server.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.ShipmentOrderModule.BL\Logitude.ShipmentOrderModule.BL.csproj">
+      <Project>{F37BF2F7-0206-4123-A873-290A087538F6}</Project>
+      <Name>Logitude.ShipmentOrderModule.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.ShipmentOrderModule.Data\Logitude.ShipmentOrderModule.Data.csproj">
+      <Project>{378DB1A8-43C3-45A1-A4A0-0B8961CFDB52}</Project>
+      <Name>Logitude.ShipmentOrderModule.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.ShipmentOrderModule.Def\Logitude.ShipmentOrderModule.Def.csproj">
+      <Project>{4148FDA0-EF43-49BF-8D5C-23FF1FA4BD0E}</Project>
+      <Name>Logitude.ShipmentOrderModule.Def</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.Social.BL\Logitude.Social.BL.csproj">
       <Project>{13ce8afb-6ada-4e96-b76c-67279095a018}</Project>

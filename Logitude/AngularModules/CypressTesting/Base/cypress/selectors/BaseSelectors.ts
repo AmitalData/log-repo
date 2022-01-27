@@ -8,12 +8,14 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly CRMMenu = "#GeneralMHCRM"
     public static readonly TicketsMenu = '#GeneralMHTicket';
     public static readonly MaintenanceMenu = "#GeneralMHMaintenance"
+    public static readonly ContactsMenu = "#GeneralMHContacts"
     public static readonly FullAccountingTab = "#GeneralMHFullAccounting"
     public static readonly FullAccountingVendorsTab = "#FAVND"
     public static readonly TariffMenu = "#GeneralMHTariffModule";
     public static readonly ShippingLine = "#MaintenanceItemMTSL"
     public static readonly TabHolder = ".TabHolder";
-  
+    public static readonly RowsInPickUpPackages = ".SimpleGridViewRow RowHover";
+    
     //#endregion
     //#region CRM
     public static readonly CRMCustomers = "#CRMCUS"

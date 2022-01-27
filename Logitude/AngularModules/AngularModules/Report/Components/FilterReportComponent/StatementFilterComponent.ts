@@ -10,6 +10,7 @@ import { CurrencyListService } from '../../../Common/Services/StandardLists/Curr
 import { CurrencyList } from '../../../Common/EntityLists/CurrencyList';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { AdvancedDatePickerResolverComponent } from 'Infrastructure/Components/LogitudeComponents/AdvancedDatePickerResolverComponent';
 
 @Component({
     selector: 'StatementFilterComponent',
@@ -358,7 +359,8 @@ export class StatementFilterComponent extends BaseComponent implements OnInit {
     }
 
     ValidateDates(): boolean {
-        if (this.FromDate != null && this.DueDate != null && (this.FromDate > this.DueDate)) {
+        var advancedDatePickerResolverComponent: AdvancedDatePickerResolverComponent = new AdvancedDatePickerResolverComponent();
+        if (!advancedDatePickerResolverComponent.SetValidityBetweenTwoDateOptions(this.FromDate, this.DueDate)) {
             this.ValidationErrorsList.push("From date field must be less than To date field");
             return false
         }

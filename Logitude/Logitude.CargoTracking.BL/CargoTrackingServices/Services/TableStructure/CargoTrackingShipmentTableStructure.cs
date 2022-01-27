@@ -125,6 +125,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             List<string> ColumnsForCopy = new List<string>();
             ColumnsForCopy.Add("IsPublic");
             ColumnsForCopy.Add("ReferenceType");
+            ColumnsForCopy.Add("ReferenceFromShipmentId");
 
             return string.Join(",", ColumnsForCopy.ToArray());
         }

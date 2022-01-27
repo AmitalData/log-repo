@@ -36,6 +36,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
         private CustomCargoTrackingShipmentList MapCargoTrackingShipmentList(CargoTrackingShipmentList cargoTrackingShipmentList)
         {
             CustomCargoTrackingShipmentList customCargoTrackingShipmentList = new CustomCargoTrackingShipmentList();
+            customCargoTrackingShipmentList.ShipmentNumber = cargoTrackingShipmentList.ShipmentNumber;
             customCargoTrackingShipmentList.TransportModeId = cargoTrackingShipmentList.TransportModeId;
             customCargoTrackingShipmentList.CustomerReference = cargoTrackingShipmentList.CustomerReference;
             customCargoTrackingShipmentList.DirectionId = cargoTrackingShipmentList.DirectionId;
@@ -54,6 +55,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             customCargoTrackingShipmentList.CurrentMilestoneExceptions = cargoTrackingShipmentList.CurrentMilestoneExceptions;
             customCargoTrackingShipmentList.IsOrder = cargoTrackingShipmentList.EntityType == "O";
             customCargoTrackingShipmentList.HasException = cargoTrackingShipmentList.CurrentMilestoneExceptions != null;
+            customCargoTrackingShipmentList.NumberOfPackages = cargoTrackingShipmentList.NumberOfPackages;
             customCargoTrackingShipmentList.Client = GetClientName(cargoTrackingShipmentList);
             return customCargoTrackingShipmentList;
         }

@@ -94,6 +94,15 @@ namespace Logitude.Accounting.Data.Repositories
                    where a.IsControlAccount == true && a.Tenant == tenant
                    select a);
         }
+
+        public IQueryable<GLAccount> GetQueryAllSmallCashbookAccount(int tenant)
+        {
+            return (from a in context.GLAccounts
+                    where a.Smallcashbook == true && a.Tenant == tenant
+                    select a);
+        }
+
+
         public List<GLAccount> GetByGLAccountsIdList(List<String> GLAccountsIdList, int tenant)
         {
             return (from a in context.GLAccounts
@@ -911,29 +920,53 @@ namespace Logitude.Accounting.Data.Repositories
 
        }
 
-       public List<GLAccount> GetByDisplayNumber(String displayNumber, int tenant)
-       {
-           if (String.IsNullOrEmpty(displayNumber))
-           {
-               List<GLAccount> rv = new List<GLAccount>();
-               return rv;
-           }
-           else
-           {
-               IQueryable<GLAccount> query = from a in context.GLAccounts
-                                             where a.DisplayNumber == displayNumber && a.Tenant == tenant
-                                             select a;
-               if (query.Any())
-               {
-                   return (query).ToList();
-               }
-               else
-               {
-                   List<GLAccount> rv = new List<GLAccount>();
-                   return rv;
-               }
-           }
-       }
+        public List<GLAccount> GetByDisplayNumber(String displayNumber, int tenant)
+        {
+            if (String.IsNullOrEmpty(displayNumber))
+            {
+                List<GLAccount> rv = new List<GLAccount>();
+                return rv;
+            }
+            else
+            {
+                IQueryable<GLAccount> query = from a in context.GLAccounts
+                                              where a.DisplayNumber == displayNumber && a.Tenant == tenant
+                                              select a;
+                if (query.Any())
+                {
+                    return (query).ToList();
+                }
+                else
+                {
+                    List<GLAccount> rv = new List<GLAccount>();
+                    return rv;
+                }
+            }
+        }
+
+        public List<GLAccount> GetByDisplayNumberEnding(String displayNumberEnding, int tenant)
+        {
+            if (String.IsNullOrEmpty(displayNumberEnding))
+            {
+                List<GLAccount> rv = new List<GLAccount>();
+                return rv;
+            }
+            else
+            {
+                IQueryable<GLAccount> query = from a in context.GLAccounts
+                                              where a.DisplayNumber.Replace(" ", "").EndsWith(displayNumberEnding) && a.Tenant == tenant
+                                              select a;
+                if (query.Any())
+                {
+                    return (query).ToList();
+                }
+                else
+                {
+                    List<GLAccount> rv = new List<GLAccount>();
+                    return rv;
+                }
+            }
+        }
 
         public List<CardDTO> GetVendorCardsWithoutGLAccountMatchDisplayNumber(int tenant)
         {

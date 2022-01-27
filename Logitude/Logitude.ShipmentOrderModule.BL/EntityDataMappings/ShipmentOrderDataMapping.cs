@@ -65,13 +65,13 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
             List<CardList> cards = GetCardList(entityPOCO.Tenant, entityPOCO);
             List<PortList> ports = GetPortList(entityPOCO.Tenant, entityPOCO);
             incoterm = GetIncotermById(entityPM.IncotermId, entityPM.Tenant);
-            entityPM.ConsigneeName = cards.Where(d => d.Id == entityPOCO.ConsigneeId).Select(d => !string.IsNullOrEmpty(d.LocalName) ? d.LocalName : d.EnglishName).FirstOrDefault();
-            entityPM.ShipperName = cards.Where(d => d.Id == entityPOCO.ShipperId).Select(d => !string.IsNullOrEmpty(d.LocalName) ? d.LocalName : d.EnglishName).FirstOrDefault();
-            entityPM.AgentName = cards.Where(d => d.Id == entityPOCO.AgentId).Select(d => !string.IsNullOrEmpty(d.LocalName) ? d.LocalName : d.EnglishName).FirstOrDefault();
+            entityPM.ConsigneeName = cards.Where(d => d.Id == entityPOCO.ConsigneeId).Select(d => !IsDashesOrNullOrEmpty(d.LocalName) ? d.LocalName : !IsDashesOrNullOrEmpty(d.EnglishName) ? d.EnglishName : null).FirstOrDefault();
+            entityPM.ShipperName = cards.Where(d => d.Id == entityPOCO.ShipperId).Select(d => !IsDashesOrNullOrEmpty(d.LocalName) ? d.LocalName : !IsDashesOrNullOrEmpty(d.EnglishName) ? d.EnglishName : null).FirstOrDefault();
+            entityPM.AgentName = cards.Where(d => d.Id == entityPOCO.AgentId).Select(d => !IsDashesOrNullOrEmpty(d.LocalName) ? d.LocalName : !IsDashesOrNullOrEmpty(d.EnglishName) ? d.EnglishName : null).FirstOrDefault();
             entityPM.CustomsAgentName = cards.Where(d => d.Id == entityPOCO.CustomsAgentId).Select(d => !string.IsNullOrEmpty(d.LocalName) ? d.LocalName : d.EnglishName).FirstOrDefault();
             entityPM.ForwarderName = cards.Where(d => d.Id == entityPOCO.ForwarderId).Select(d => !string.IsNullOrEmpty(d.LocalName) ? d.LocalName : d.EnglishName).FirstOrDefault();
-            entityPM.CarrierName = cards.Where(d => d.Id == entityPOCO.CarrierId).Select(d => !string.IsNullOrEmpty(d.LocalName) ? d.LocalName : d.EnglishName).FirstOrDefault();
-            entityPM.CustomerName = cards.Where(d => d.Id == entityPOCO.CustomerId).Select(d => !string.IsNullOrEmpty(d.LocalName) ? d.LocalName : d.EnglishName).FirstOrDefault();
+            entityPM.CarrierName = cards.Where(d => d.Id == entityPOCO.CarrierId).Select(d => !IsDashesOrNullOrEmpty(d.LocalName) ? d.LocalName : !IsDashesOrNullOrEmpty(d.EnglishName) ? d.EnglishName: null).FirstOrDefault();
+            entityPM.CustomerName = cards.Where(d => d.Id == entityPOCO.CustomerId).Select(d => !IsDashesOrNullOrEmpty(d.LocalName) ? d.LocalName : !IsDashesOrNullOrEmpty(d.EnglishName) ? d.EnglishName : null).FirstOrDefault();
             entityPM.OriginPortName = ports.Where(d => d.Id == entityPOCO.OriginPortId).Select(d => d.EnglishName).FirstOrDefault();
             entityPM.DestinationPortName = ports.Where(d => d.Id == entityPOCO.DestinationPortId).Select(d => d.EnglishName).FirstOrDefault();
             entityPM.GatewayName = ports.Where(d => d.Id == entityPOCO.GatewayId).Select(d => d.EnglishName).FirstOrDefault();
@@ -88,6 +88,10 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
             entityPM.IncotermName = incoterm?.Name;
         }
 
+        private bool IsDashesOrNullOrEmpty(string name)
+        {
+            return string.IsNullOrEmpty(name) || name.Equals("---");
+        }
         #region Cards
         private List<CardList> GetCardList(int tenant, ShipmentOrder entityPOCO)
         {

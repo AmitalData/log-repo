@@ -583,6 +583,21 @@ export class DocumentsFilingPM {
     public set IsTransferdToQBO(newValue: boolean) { if (this.isTransferdToQBO != newValue) { this.isTransferdToQBO = newValue; this.MarkAsDirty("IsTransferdToQBO"); } }
        
 	 
+    private isAgentSharedInHouse: boolean;
+    public get IsAgentSharedInHouse() { return this.isAgentSharedInHouse; }
+    public set IsAgentSharedInHouse(newValue: boolean) { if (this.isAgentSharedInHouse != newValue) { this.isAgentSharedInHouse = newValue; this.MarkAsDirty("IsAgentSharedInHouse"); } }
+       
+	 
+    private isAgentSharedInDirect: boolean;
+    public get IsAgentSharedInDirect() { return this.isAgentSharedInDirect; }
+    public set IsAgentSharedInDirect(newValue: boolean) { if (this.isAgentSharedInDirect != newValue) { this.isAgentSharedInDirect = newValue; this.MarkAsDirty("IsAgentSharedInDirect"); } }
+       
+	 
+    private isAgentSharedInMaster: boolean;
+    public get IsAgentSharedInMaster() { return this.isAgentSharedInMaster; }
+    public set IsAgentSharedInMaster(newValue: boolean) { if (this.isAgentSharedInMaster != newValue) { this.isAgentSharedInMaster = newValue; this.MarkAsDirty("IsAgentSharedInMaster"); } }
+       
+	 
 
     public OldEntityPM: DocumentsFilingPM;
 		

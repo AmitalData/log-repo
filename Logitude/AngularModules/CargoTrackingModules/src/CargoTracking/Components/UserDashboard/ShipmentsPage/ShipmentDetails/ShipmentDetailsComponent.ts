@@ -28,6 +28,7 @@ const mobileScreenMaxWidth = 470;
 const approvalResponseMessage = 'לקוח יקר, הצהרה זו םושרה בתםריך';
 const declineResponseMessage = 'לקוח יקר, הצהרה זו נדחתה';
 
+const orderShipmentTypeCode = 'O';
 @Component({
     selector: 'ShipmentDetailsComponent',
     templateUrl: './ShipmentDetailsComponent.html',
@@ -80,10 +81,13 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     public OverviewPanelTitle: string;
     public TypeTitle: string;
     isSharedLink: boolean = false;
-    isDeclaration: boolean = false;
+    isDeclarationLink: boolean = false;
     hasApprovalDeclineResponse: boolean = false;
     noShipmentFound: boolean = false;
     approvalMessage: string;
+    PartnersPanel: string = "PartnersPanel";
+    MaxHeightForPartnersPanel: number = 600;
+    MaxNumberOfCarachterForMobile: number = 15;
 
     PartnerCardTypesOfShipmentTransportMode = {
         'A': "AIRLINES",
@@ -100,14 +104,29 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     {
         return this._tenant || CargoTrackingBrandingData.Tenant;
     }
-    get ShowDeclarationApproval()
+
+    get DeclarationApprovalEnabled()
     {
         const isCustomShipment = this.cargoTrackingShipmentPM.EntityType == this.EntityType_Customs;
+        const haveResponse = this.cargoTrackingShipmentPM.ApprovedDate || this.cargoTrackingShipmentPM.DenyReason;
+        const responseRequired = this.cargoTrackingShipmentPM.IsImporterApprovalRequried;
         return isCustomShipment
-            && this.isDeclaration
-            && this.cargoTrackingShipmentPM.ActivatedForDeclarationApprove
-            && this.cargoTrackingShipmentPM.IsImporterApprovalRequried;
+                && this.cargoTrackingShipmentPM.ActivatedForDeclarationApprove
+                && ( responseRequired || haveResponse );
     }
+
+    get ShowShipmentAsDeclaration() {  return this.isDeclarationLink && this.DeclarationApprovalEnabled; }
+
+    get ShowNoShipmentFoundMessage(){
+        const noDeclarationShipmentFound = this.isDeclarationLink && this.DeclarationApprovalEnabled && this.noShipmentFound;
+        const noNormalShipmentFound = !this.isDeclarationLink && this.noShipmentFound;
+        return noDeclarationShipmentFound || noNormalShipmentFound;
+    }
+
+    get ShowNotSupportedDeclarationMessage(){ return this.isDeclarationLink && !this.DeclarationApprovalEnabled;  }
+
+    get IsOrderShipment(){ return this.cargoTrackingShipmentPM.EntityType == orderShipmentTypeCode; }
+
     constructor(private router: Router,
         private route: ActivatedRoute,
         private cargoTrackingShipmentService: CargoTrackingShipmentService,
@@ -147,7 +166,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
 
         const data: Data = this.route.snapshot.data;
         this.isSharedLink = data?.isSharedLink;
-        this.isDeclaration = data?.isDeclaration;
+        this.isDeclarationLink = data?.isDeclaration;
         if(this.isSharedLink){
             this.GetBrandingData();
         }
@@ -209,8 +228,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     private InitializeComponent(result: any)
     {
         this.cargoTrackingShipmentPM = result;
-        this.ShipmentReferences = this.cargoTrackingShipmentPM.CustomerReference ? this.cargoTrackingShipmentPM.CustomerReference.split(',') : null;
-
+        this.BuildShipmentReferences();
 
         this.SetCustomsOrForwarderFields();
         this.SetOverviewPanelTitle();
@@ -237,9 +255,22 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         this.SetDeclarationMessage();
     }
 
+    private BuildShipmentReferences() {
+        this.ShipmentReferences = this.cargoTrackingShipmentPM.CustomerReference ? this.cargoTrackingShipmentPM.CustomerReference.split(',') : [];
+        if (this.cargoTrackingShipmentPM.EntityType == 'O') {
+            this.AddShipmentReferencesForOrderShipment();
+        }
+    }
+    private AddShipmentReferencesForOrderShipment() {
+        if (this.cargoTrackingShipmentPM.ShipmentOrderPONumber != null)
+            this.ShipmentReferences.push(this.cargoTrackingShipmentPM.ShipmentOrderPONumber);
+        if (this.cargoTrackingShipmentPM.SHOBookingConfirmationNumber != null)
+            this.ShipmentReferences.push(this.cargoTrackingShipmentPM.SHOBookingConfirmationNumber);
+    }
+
     private SetDeclarationMessage()
     {
-        if (this.isSharedLink && this.isDeclaration) {
+        if (this.isSharedLink && this.isDeclarationLink) {
             const isCustomShipment = this.cargoTrackingShipmentPM.EntityType == this.EntityType_Customs;
             this.hasApprovalDeclineResponse = isCustomShipment && this.cargoTrackingShipmentPM.ActivatedForDeclarationApprove && !this.cargoTrackingShipmentPM.IsImporterApprovalRequried;
 
@@ -258,7 +289,8 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
 
     private SetDeniedDeclarationMessage()
     {
-        this.approvalMessage = declineResponseMessage + '\n"' + this.cargoTrackingShipmentPM.DenyReason+'"';
+        const denyDate = this.datePipe.transform(this.cargoTrackingShipmentPM.DenyDate, 'dd/MM/yyyy, HH:mm');
+        this.approvalMessage = declineResponseMessage + '\n"' + this.cargoTrackingShipmentPM.DenyReason+'"'+ ' ' + denyDate;
     }
 
     private SetApprovedDeclarationMessage()
@@ -499,14 +531,11 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     }
 
     SetValueOfCustomsOrForwarder() {
-        if (this.cargoTrackingShipmentPM.EntityType == this.ForwardingEntityType) {
-            this.ValueOfCustomsOrForwarder = this.cargoTrackingShipmentPM.ShipmentNumber;
+        this.ValueOfCustomsOrForwarder = this.cargoTrackingShipmentPM.ShipmentNumber;
+        if(!this.cargoTrackingShipmentPM.ConnectedShipmentsNumbers){
+            return;
         }
-
-        if (this.cargoTrackingShipmentPM.EntityType == this.CustomsEntityType || this.cargoTrackingShipmentPM.EntityType == this.OrderEntityType) {
-            var ForwardingShipmentNumber = this.cargoTrackingShipmentPM.ForwardingShipmentHeaderId != null ? this.cargoTrackingShipmentPM.ForwardingShipmentNumber != null ? "\n" + this.cargoTrackingShipmentPM.ForwardingShipmentNumber : "": "";
-            this.ValueOfCustomsOrForwarder = this.cargoTrackingShipmentPM.ShipmentNumber + ForwardingShipmentNumber;
-        }
+        this.ValueOfCustomsOrForwarder = this.cargoTrackingShipmentPM.ShipmentNumber + "\n" + this.cargoTrackingShipmentPM.ConnectedShipmentsNumbers;
 
     }
 
@@ -664,6 +693,18 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
 
     //#endregion
 
+    GetSlice(text: string, numberOfCharacter) {
+
+        var result = text
+        if (text?.length > numberOfCharacter && !this.IsMobileView) {
+            result = text.slice(0, numberOfCharacter) + "..."
+        }
+        if (text?.length > this.MaxNumberOfCarachterForMobile && this.IsMobileView ) {
+            result = text.slice(0, this.MaxNumberOfCarachterForMobile) + "..."
+        }
+        return result;
+
+    }
     GetModeIcon()
     {
         var iconPath = "";
@@ -698,7 +739,8 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         var panelElement = document.getElementById(panelName) as HTMLElement;
         if (panelElement){
             panelElement.scrollIntoView();
-            document.getElementsByTagName('html')[0].scrollTop -= 113;
+            if ((panelName == this.PartnersPanel && panelElement.clientHeight > this.MaxHeightForPartnersPanel) || panelName != this.PartnersPanel)
+                document.getElementsByTagName('html')[0].scrollTop -= 113;
 
         }
 

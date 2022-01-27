@@ -33,6 +33,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public bool? IsPublic { get; set; }
         [Column("ReferenceType")]
 	    public string ReferenceType { get; set; }
+        [Column("ReferenceFromShipmentId")]
+	    public string ReferenceFromShipmentId { get; set; }
     }
 }
 	 

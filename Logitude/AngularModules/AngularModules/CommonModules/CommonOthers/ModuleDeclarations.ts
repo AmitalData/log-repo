@@ -3,6 +3,7 @@
 import {UpdateCurrencyRateComponent} from './Components/UpdateCurrencyRate/UpdateCurrencyRateComponent';
 import {UpdateVATPercentageComponent} from './Components/UpdateVATPercentage/UpdateVATPercentageComponent';
 import {CitySelectionComponent} from './Components/CitySelection/CitySelectionComponent';
+import {ZipCodeSelectionComponent} from './Components/ZipCodeSelection/ZipCodeSelectionComponent';
 import {LoadSampleDataComponent} from './Components/LoadSampleData/LoadSampleDataComponent';
 import { DWQueryBuilderComponent } from './Components/DWQueryBuilder/DWQueryBuilderComponent';
 import { DWQueryBuilderFiltersComponent } from './Components/DWQueryBuilder/DWQueryBuilderFiltersComponent'; 
@@ -18,6 +19,7 @@ import { ProductTypeGeneralTabComponent } from './Components/ProductType/EditTab
 export const Components =
     [
         CitySelectionComponent,
+        ZipCodeSelectionComponent,
         UpdateCurrencyRateComponent,
         UpdateVATPercentageComponent,
         LoadSampleDataComponent,
@@ -38,6 +40,7 @@ export class ModuleDeclarations {
             case "UpdateCurrencyRateComponent": { myResult = UpdateCurrencyRateComponent; break; }
             case "UpdateVATPercentageComponent": { myResult = UpdateVATPercentageComponent; break; }
             case "CitySelectionComponent": { myResult = CitySelectionComponent; break; }
+            case "ZipCodeSelectionComponent": { myResult = ZipCodeSelectionComponent; break; }
             case "LoadSampleDataComponent": { myResult = LoadSampleDataComponent; break; }
             case "DWQueryBuilderComponent": { myResult = DWQueryBuilderComponent; break; }
             case "DWQueryBuilderFiltersComponent": { myResult = DWQueryBuilderFiltersComponent; break; }

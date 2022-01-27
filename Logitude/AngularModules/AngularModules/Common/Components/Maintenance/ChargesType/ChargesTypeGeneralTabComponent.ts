@@ -30,7 +30,7 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             this.DisplaySATSettings = true;
         }
         if (SessionLocator.AccountingSettingPM.AllowRegionalTaxManagement) {

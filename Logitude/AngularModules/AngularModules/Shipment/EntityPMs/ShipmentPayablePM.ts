@@ -328,6 +328,16 @@ export class ShipmentPayablePM {
     public set ViewOrder(newValue: number) { if (this.viewOrder != newValue) { this.viewOrder = newValue; this.MarkAsDirty("ViewOrder"); } }
        
 	 
+    private proratedAmountInLocalCurrency: number;
+    public get ProratedAmountInLocalCurrency() { return this.proratedAmountInLocalCurrency; }
+    public set ProratedAmountInLocalCurrency(newValue: number) { if (this.proratedAmountInLocalCurrency != newValue) { this.proratedAmountInLocalCurrency = newValue; this.MarkAsDirty("ProratedAmountInLocalCurrency"); } }
+       
+	 
+    private proratedAmountInProfitCurrency: number;
+    public get ProratedAmountInProfitCurrency() { return this.proratedAmountInProfitCurrency; }
+    public set ProratedAmountInProfitCurrency(newValue: number) { if (this.proratedAmountInProfitCurrency != newValue) { this.proratedAmountInProfitCurrency = newValue; this.MarkAsDirty("ProratedAmountInProfitCurrency"); } }
+       
+	 
     private uOMPercentage: string;
     public get UOMPercentage() { return this.uOMPercentage; }
     public set UOMPercentage(newValue: string) { if (this.uOMPercentage != newValue) { this.uOMPercentage = newValue; this.MarkAsDirty("UOMPercentage"); } }

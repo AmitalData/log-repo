@@ -1,4 +1,4 @@
-@release @Customization 
+@release @Customization
 
 Feature: Shipment Exception Resolve
     The user creates a shipment, adds an exception in the Events tab,
@@ -33,4 +33,3 @@ Feature: Shipment Exception Resolve
         Then the exception should resolve successfully
         And resolve the exception should appear in events tab
         And has exception should change to no
-        

@@ -192,6 +192,10 @@ var DynamicLoader_Cust = /** @class */ (function () {
                 myResult = "CommonModules/CommonAgent/ModuleCommonAgent#ModuleCommonAgent";
                 break;
             }
+            case "CommonModules/CommonCustomerTeam": {
+                myResult = "CommonModules/CommonCustomerTeam/ModuleCommonCustomerTeam#ModuleCommonCustomerTeam";
+                break;
+            }
             case "CommonModules/CommonAirline": {
                 myResult = "CommonModules/CommonAirline/ModuleCommonAirline#ModuleCommonAirline";
                 break;

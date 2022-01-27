@@ -211,6 +211,13 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public string FreightChargeId { get; set; }
 	      
         public virtual ChargesType ChargesType { get; set; }
+        [ForeignKey("CustomsBroker")]
+        [Column("CustomsBrokerId")]
+	    public string CustomsBrokerId { get; set; }
+	      
+        public virtual Card CustomsBroker { get; set; }
+        [Column("CustomsBrokerPartnerTypeId")]
+	    public string CustomsBrokerPartnerTypeId { get; set; }
     }
 }
 	 

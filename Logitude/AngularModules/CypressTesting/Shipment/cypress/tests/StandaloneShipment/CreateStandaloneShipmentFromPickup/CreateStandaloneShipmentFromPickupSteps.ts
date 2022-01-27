@@ -63,16 +63,16 @@ Given("add a new pickup leg with the following details", (dataTable) => {
 
 Given("save the pickup", () => {
   cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
-  cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+  cy.Click(BaseSelectors.SaveButton + BaseSelectors.LastElement, null)
   BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });
 
 When("click create Standalone Shipment", () => {
-  cy.Click(ShipmentSelectors.Printbutton, ShipmentConstants.CreateStandaloneShipment)
+  cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, ShipmentConstants.CreateStandaloneShipment)
 })
 
 When("create standalone shipment", () => {
-  cy.Click(ShipmentSelectors.Printbutton, ShipmentConstants.CreateStandaloneShipment)
+  cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, ShipmentConstants.CreateStandaloneShipment)
   StandaloneAction.CreateStandaloneShipment()
 })
 
@@ -91,7 +91,7 @@ Then("all other actions should be dim", () => {
 
 Then("all fields should be dim in pickup window", () => {
   cy.Navigate(ShipmentSelectors.Backbutton + BaseSelectors.LastElement, true)
-  StandaloneAction.AssertShipmentePickupDelivaryWindowDisabled()
+  StandaloneAction.AssertShipmentPickupDelivaryWindowFields(BaseSelectors.BeDisabled)
 })
 
 Then("the link of standalon should display", () => {

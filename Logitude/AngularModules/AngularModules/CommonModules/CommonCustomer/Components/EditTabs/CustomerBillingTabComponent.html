@@ -71,6 +71,21 @@
                                     </td>
                                 </tr>
 
+                                <tr *ngIf="SatInterfaceSettingCode == 'PROF40'" class="FormFieldRow">
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'RegimenFiscalCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'RegimenFiscalCode'"
+                                                [SelectedValue]="RegimenFiscalCode"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'RegimenFiscal'">
+                                        </LogLov>
+                                    </td>
+                                </tr>
+
                                 <tr class="FormFieldRow">
                                     <td style="width: 140px;">
                                         <LogLabel [ObjectFieldName]="'SATForeignRFC'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>

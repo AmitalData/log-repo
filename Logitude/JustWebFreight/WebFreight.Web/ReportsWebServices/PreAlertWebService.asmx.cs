@@ -1407,12 +1407,20 @@ namespace WebFreight.Web.ReportsWebServices
 
                 prealertDataProvider.PreCarriageETD = shipmentpm.PreCarriageETD;
                 prealertDataProvider.PreCarriageATD = shipmentpm.PreCarriageATD;
+                prealertDataProvider.PreCarriageETA = shipmentpm.PreCarriageETA;
+                prealertDataProvider.PreCarriageATA = shipmentpm.PreCarriageATA;
                 prealertDataProvider.PreCarriageCarrierCode = shipmentpm.PreCarriageCarrierCode;
                 prealertDataProvider.PreCarriageCarrierNumber = shipmentpm.PreCarriageCarrierNumber;
+                prealertDataProvider.PreCarriageFrom = shipmentpm.PreCarriageFromPortName;
+                prealertDataProvider.PreCarriageTo = shipmentpm.PreCarriageToPortName;
                 prealertDataProvider.PreForwardingETD = shipmentpm.PreForwardingETD;
                 prealertDataProvider.PreForwardingATD = shipmentpm.PreForwardingATD;
+                prealertDataProvider.PreForwardingETA = shipmentpm.PreForwardingETA;
+                prealertDataProvider.PreForwardingATA = shipmentpm.PreForwardingATA;
                 prealertDataProvider.PreForwardingCarrierCode = shipmentpm.PreForwardingCarrierCode;
                 prealertDataProvider.PreForwardingCarrierNumber = shipmentpm.PreForwardingCarrierNumber;
+                prealertDataProvider.PreForwardingFrom = shipmentpm.PreForwardingFromPortName;
+                prealertDataProvider.PreForwardingTo = shipmentpm.PreForwardingToPortName;
                 prealertDataProvider.MainCarriageATD = shipmentpm.MainCarriageATD;
                 prealertDataProvider.MainCarriageATA = shipmentpm.MainCarriageATA;
                 prealertDataProvider.Transhipment1ATD = shipmentpm.Transshipment1ATD;
@@ -1429,8 +1437,23 @@ namespace WebFreight.Web.ReportsWebServices
                 prealertDataProvider.ShipmentNotes = shipmentpm.Notes;
                 prealertDataProvider.TotalQuantity = shipmentpm.NumberOfPackages;
                 prealertDataProvider.Salesman = shipmentpm.SalesmanUserName;
-
                 prealertDataProvider.FullRoutings = this.GetFullRouting(shipmentpm, shipmentPickUpQuery, shipmentDeliveryQuery);
+                prealertDataProvider.OnForwardingFrom = shipmentpm.OnForwardingFromPortName;
+                prealertDataProvider.OnForwardingTo = shipmentpm.OnForwardingToPortName;
+                prealertDataProvider.OnForwardingETD = shipmentpm.OnForwardingETD;
+                prealertDataProvider.OnForwardingETA = shipmentpm.OnForwardingETA;
+                prealertDataProvider.OnForwardingATD = shipmentpm.OnForwardingATD;
+                prealertDataProvider.OnForwardingATA = shipmentpm.OnForwardingATA;
+                prealertDataProvider.OnForwardingCarrierCode = shipmentpm.OnForwardingCarrierCode;
+                prealertDataProvider.OnForwardingCarrierNumber = shipmentpm.OnForwardingCarrierNumber;
+                prealertDataProvider.OnCarriageFrom = shipmentpm.OnCarriageFromPortName;
+                prealertDataProvider.OnCarriageTo = shipmentpm.OnCarriageToPortName;
+                prealertDataProvider.OnCarriageETD = shipmentpm.OnCarriageETD;
+                prealertDataProvider.OnCarriageETA = shipmentpm.OnCarriageETA;
+                prealertDataProvider.OnCarriageATD = shipmentpm.OnCarriageATD;
+                prealertDataProvider.OnCarriageATA = shipmentpm.OnCarriageATA;
+                prealertDataProvider.OnCarriageCarrierCode = shipmentpm.OnCarriageCarrierCode;
+                prealertDataProvider.OnCarriageCarrierNumber = shipmentpm.OnCarriageCarrierNumber;
 
                 ARInvoiceRepository invoiceRep = new ARInvoiceRepository(tenant);
                 List<ARInvoice> invoices = invoiceRep.GetInvoicesByMainEntityId(shipmentpm.Id, tenant);
@@ -1451,7 +1474,6 @@ namespace WebFreight.Web.ReportsWebServices
 
                     prealertDataProvider.InvoicesNumbers = str;
                 }
-
 
                 ShipmentPickUpDelivery myFirstPickup =
                     (from d in shipmentsContext.ShipmentPickUpDeliveries

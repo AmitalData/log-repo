@@ -49,6 +49,9 @@ namespace WebFreight.Web.DataProviders
         public string ChartOfAccountType { get; set; }
         public string Number { get; set; }
         public string Name { get; set; }
+        public string AccountDisplayNumber { get; set; }
+        public string AccountName { get; set; }
+
         public string ParentId { get; set; }
         public decimal? Balance { get; set; }
         public decimal? LocalOpenBalance { get; set; }

@@ -76,6 +76,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     SupplierOrClientValue: string;
     ShowMobileSearch: boolean = false;
     ShipmenTypeForRouting: string;
+    RoutingPortNames: string;
     public SortOptions = SortOptions;
     MasterOrHouseLabel: string = "";
     EntityType_Customs = "C";
@@ -116,14 +117,14 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.setViews();
     }
     public ExportToExcelClick(){
-        
+
         this.buildFilterArgs();
         this.buildQueryColumns();
          this.logitudeGridExportToExcelService.ExportToExcelExcute("CargoTrackingShipment",this.filterAgrs,this.QueryColumns);
     }
 
     private buildFilterArgs() {
-        this.filterAgrs = new ApiQueryFilters(); 
+        this.filterAgrs = new ApiQueryFilters();
         this.filterAgrs.addAdditionalFilter("Tenant", this.ShipmentSearchInput.Tenant, null, null, "Equals", false, false, false, "string");
         this.filterAgrs.addAdditionalFilter("HasException", this.ShipmentSearchInput.HasException, null, null, "Equals", true, false, false, "boolean");
         this.filterAgrs.addAdditionalFilter("OrdersOnly", this.ShipmentSearchInput.OrdersOnly, null, null, "Equals", true, false, false, "boolean");
@@ -133,7 +134,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.filterAgrs.Tenant = this.ShipmentSearchInput.Tenant;
         this.filterAgrs.SortDirection = this.ShipmentSearchInput.SortType;
         this.filterAgrs.SortBy = this.ShipmentSearchInput.SortFieldName;
-        
+
         if (this.ShipmentSearchInput.CustomersIds.length > 0) {
             this.filterAgrs.addAdditionalFilter("CustomersIds", this.ShipmentSearchInput.CustomersIds.join("_"), null, null, "Equals", false, false, false, "string");
         }
@@ -163,7 +164,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("CurrentMilestoneName",'Text', 'Current Milestone Name'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("FromPortName",'Text', 'From Port'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ToPortName",'Text', 'To Port'));
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ArrivalDate",'DateTime', 'ATD'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ArrivalDate",'DateTime', 'ATA'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ArrivalEstimationDate",'DateTime', 'ETA'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("DepartureDate",'DateTime', 'ATD'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("DepartureEstimationDate",'DateTime', 'ETD'));
@@ -171,6 +172,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("HasException",'Text', 'Has Exception'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("CurrentMilestoneExceptions",'Text', 'Exception Description'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("IsOrder",'Text', 'Is Order'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("NumberOfPackages",'Number', 'Quantity'));
     }
 
     private GetCompanyLoginsFromCache() {
@@ -500,8 +502,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         }
     }
 
-
-
+    SetRoutingPortNames(shipment: CargoTrackingShipmentList) {
+        this.RoutingPortNames = shipment.FromPortName + " to " + shipment.ToPortName; 
+    }
 
     private InitComponent() {
         this.InitForm();
@@ -513,7 +516,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         var allreferences = reference?.split(',');
         if (allreferences?.length > 4) {
 
-            var morereferences = allreferences.slice(4, allreferences.length + 1)
+            var morereferences = allreferences.slice(3, allreferences.length + 1)
             this.MoreReferenceText = morereferences.join(',');
 
         }
@@ -640,18 +643,11 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         return shipmentFilters;
     }
 
-
-
-
-
-
-
-
-
-    SplitReference(reference: string) {
-        this.references = reference != null ? reference.split(',') : null;
-
+    BuildShipmentReferences(shipment: CargoTrackingShipmentList) {
+        this.references = shipment.CustomerReference != null ? shipment.CustomerReference.split(',') : [];
     }
+
+
     masterLabel = 'Master';
     houseLabel = 'House';
     SetMasterOrHouseLabel(shipment: CargoTrackingShipmentList) {
@@ -689,7 +685,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         return null;
 
     }
-    
+
 
     SetEstimationORActualDate(shipment: CargoTrackingShipmentList) {
         if (shipment.ArrivalDate != null) {

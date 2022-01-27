@@ -25,27 +25,44 @@ export class TariffShortTitleComponent {
                     case "AL": { objectTableName = "Airline"; break; }
                 }
 
-                if (!AppTool.IsNullOrEmpty(objectTableName)) {
-                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                        .then(cmpRef => {
-                            cmpRef.instance.ComponentRef = cmpRef;
-                            cmpRef.instance.Run({ EntityId: this.EntityPM.SellerId, ObjectTableName: objectTableName, BackButtonLabel: 'Tariff' });
-
-                            let isEditComponentSaved = false;
-                            cmpRef.instance.BackCompleted.subscribe(bk => {
-                                if (isEditComponentSaved) {
-                                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                                }
-                            });
-
-                            cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                                if (isSaveSuccess) {
-                                    isEditComponentSaved = true;
-                                }
-                            });
-                        });
-                }
+                this.OpenEditComponent(objectTableName, this.EntityPM.SellerId);
             }
+        }
+    }
+    ViewCustomsBroker() {
+        if (this.EntityPM != null) {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.CustomsBrokerId)) {
+                var objectTableName = null;
+
+                switch (this.EntityPM.CustomsBrokerPartnerTypeId) {
+                    case "AG": { objectTableName = "Agent"; break; }
+                    case "CG": { objectTableName = "CustomAgent"; break; }
+                }
+
+                this.OpenEditComponent(objectTableName, this.EntityPM.CustomsBrokerId);
+            }
+        }
+    }
+    OpenEditComponent(objectTableName: string, entityId: string) {
+        if (!AppTool.IsNullOrEmpty(objectTableName)) {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: objectTableName, BackButtonLabel: 'Tariff' });
+
+                    let isEditComponentSaved = false;
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                        if (isEditComponentSaved) {
+                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        }
+                    });
+
+                    cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                        if (isSaveSuccess) {
+                            isEditComponentSaved = true;
+                        }
+                    });
+                });
         }
     }
 }

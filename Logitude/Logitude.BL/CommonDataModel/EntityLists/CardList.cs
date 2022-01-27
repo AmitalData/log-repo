@@ -70,6 +70,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string SalesmanUserEnglishName { get; set; }
         public string AccountManagerUserName { get; set; }
         public string AccountManagerUserId { get; set; }
+        public string TeamId { get; set; }
+        public string TeamName { get; set; }
         public string CASSCode { get; set; }
         public string IATACode { get; set; }
         public string RegulatedAgentCode { get; set; }
@@ -93,6 +95,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string SATForeignRFC { get; set; }
         public string MetodoPagoCode { get; set; }
         public string UsoCFDICode { get; set; }
+        public string RegimenFiscalCode { get; set; }
         public string FirmCode { get; set; }        
         public string StateName { get; set; }
         public bool IsInternationalPartner { get; set; }

@@ -47,9 +47,16 @@
   <Column
     Name="ReferenceType"
     Type="varchar"
-    Size="30">
+    Size="200">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="ReferenceFromShipmentId"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Index
     Columns="Tenant,SearchFields,IsPublic" />
@@ -63,4 +70,6 @@
     Columns="Tenant" />
   <Index
     Columns="SearchFields" />
+	<Index
+    Columns="ReferenceType" />
 </Table>

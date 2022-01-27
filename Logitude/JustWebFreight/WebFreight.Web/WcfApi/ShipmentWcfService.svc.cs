@@ -685,9 +685,8 @@ namespace WebFreight.Web.WcfApi
                     MapFreightForwarder(entityPM, cardsReporistory);
                     #endregion
 
-                    #region PaymentRequestDateTime
-                    MapPaymentRequestDateTime(entityPM, shipmentAdditionalCloudDataRepository, shipmentRepository);
-                    #endregion  
+                    MapDatesFields(entityPM, shipmentAdditionalCloudDataRepository, shipmentRepository);
+
 
                     if (response.HasError)
                     {
@@ -914,23 +913,38 @@ namespace WebFreight.Web.WcfApi
 
         }
 
-        private void MapPaymentRequestDateTime(ShipmentPM entityPM, ShipmentAdditionalCloudDataRepository shipmentAdditionalCloudDataRepository, ShipmentRepository shipmentRepository)
+        private void MapDatesFields(ShipmentPM entityPM, ShipmentAdditionalCloudDataRepository shipmentAdditionalCloudDataRepository, ShipmentRepository shipmentRepository)
         {
             Shipment shipment = shipmentRepository.GetSingleShipmentByShipmentNumber(entityPM.ShipmentNumber, entityPM.Tenant);
+
+            if (shipment == null)
+                return;
+              
+            ShipmentAdditionalCloudData shipmentAdditionalCloudData = shipmentAdditionalCloudDataRepository.GetSingleShipmentAdditionalCloudData(shipment.Id, entityPM.Tenant);
+
+            if (shipmentAdditionalCloudData == null)
+                return;
+            
+            MapPaymentRequestDateTime(entityPM, shipmentAdditionalCloudDataRepository, shipmentRepository, shipmentAdditionalCloudData);
+            shipmentAdditionalCloudData.GatepassDocumentsReady = entityPM.GatepassDocumentsReady;
+            shipmentAdditionalCloudData.GoodsClassification = entityPM.GoodsClassification;
+            shipmentAdditionalCloudData.DocumentInspection = entityPM.DocumentInspection;
+            shipmentAdditionalCloudData.InvoiceIssuedDate = entityPM.InvoiceIssuedDate;
+
+            UpdateShipmentAdditionalCloudData(shipmentAdditionalCloudDataRepository, shipmentAdditionalCloudData);
+
+        }
+
+        private void MapPaymentRequestDateTime(ShipmentPM entityPM, ShipmentAdditionalCloudDataRepository shipmentAdditionalCloudDataRepository, ShipmentRepository shipmentRepository, ShipmentAdditionalCloudData shipmentAdditionalCloudData)
+        {
             if (entityPM.PaymentRequestDateTime != null)
             {
-                ShipmentAdditionalCloudData shipmentAdditionalCloudData = shipmentAdditionalCloudDataRepository.GetSingleShipmentAdditionalCloudData(shipment.Id, entityPM.Tenant);
-              
-                if (shipmentAdditionalCloudData != null)
-                {
-                    UpdateShipmentAdditionalCloudData(entityPM, shipmentAdditionalCloudDataRepository, shipmentAdditionalCloudData);
-                }
+                 shipmentAdditionalCloudData.PaymentRequestDateTime = entityPM.PaymentRequestDateTime;
             }
         }
 
-        private static void UpdateShipmentAdditionalCloudData(ShipmentPM entityPM, ShipmentAdditionalCloudDataRepository shipmentAdditionalCloudDataRepository, ShipmentAdditionalCloudData shipmentAdditionalCloudData)
+        private static void UpdateShipmentAdditionalCloudData( ShipmentAdditionalCloudDataRepository shipmentAdditionalCloudDataRepository, ShipmentAdditionalCloudData shipmentAdditionalCloudData)
         {
-            shipmentAdditionalCloudData.PaymentRequestDateTime = entityPM.PaymentRequestDateTime;
             shipmentAdditionalCloudDataRepository.Update(shipmentAdditionalCloudData);
             shipmentAdditionalCloudDataRepository.SubmitChanges();
         }

@@ -21,7 +21,7 @@ export class ARPaymentPMInitService {
     entityPM.UIProperties.SetEnabled("UpdateDate", "ARPayment", false);
     entityPM.UIProperties.SetEnabled("UpdatedByUserId", "ARPayment", false);
 
-    if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+      if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
       if (AppTool.IsNullOrEmpty(entityPM.SATPaymentMethodCode)) {
         entityPM.UIProperties.SetRequired("SATPaymentMethodCode", "ARPayment", true);
       }

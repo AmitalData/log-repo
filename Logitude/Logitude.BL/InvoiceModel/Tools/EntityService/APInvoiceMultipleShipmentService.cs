@@ -51,6 +51,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private APInvoicePaymentRepository invoicePaymentRepository;
         private APPaymentRepository paymentRepository;
         private ShipmentPayableRepository shipmentPayableRepository;
+        private PayableProratedAmountRepository payableProratedAmountRepository;
         private string QBOAPPaymentId;
         private bool IsTransferEnabled;
         private bool CanTransferToFTP;
@@ -69,6 +70,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.invoicePaymentRepository = new APInvoicePaymentRepository(objectContext);
             this.paymentRepository = new APPaymentRepository(objectContext);
             this.shipmentPayableRepository = new ShipmentPayableRepository(tenant);
+            this.payableProratedAmountRepository = new PayableProratedAmountRepository(tenant);
 
             this.GetLoggedContact();
             this.GetAccountingSystemData();
@@ -753,7 +755,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 foreach (APInvoiceEntity invoiceEntity in allInvoiceEntities)
                 {
                     invoiceEntityRepository.Remove(invoiceEntity);
-                    this.RunShipmentSQL(invoiceEntity.EntityId);
+                    this.RunShipmentSQL(invoiceEntity.EntityId, invoiceEntity.APInvoiceId);
                 }
             }
 
@@ -856,7 +858,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 }
 
                                 this.UpdateAllPayablesAccountedAmount(allPayables.Where(d=>d.ShipmentId == item.ShipmentId).ToList());
-                                this.RunShipmentSQL(item.ShipmentId);
+                                this.RunShipmentSQL(item.ShipmentId, item.APInvoiceId);
                                 break;
                             }
                     }
@@ -873,14 +875,21 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (payable.ShipmentPayableAmountTypeCode == "NEXP")
                 {
                     List<ShipmentPayable> childPayables = shipmentPayableRepository.GetChildPayablesByParentPayable(payable.Id, tenant);
+                    List<string> payablesId = childPayables.Select(s => s.Id).ToList();
 
+                    List<PayableProratedAmount> payableProratedAmounts = payableProratedAmountRepository.GetPayableProratedAmountsByPayablesIds(payablesId, tenant);
+                    foreach (PayableProratedAmount item in payableProratedAmounts)
+                    {
+                        payableProratedAmountRepository.Remove(item);
+                    }
+                    
                     foreach (ShipmentPayable insideItem in childPayables)
                     {
                         shipmentPayableRepository.Remove(insideItem);
                     }
 
                     allPayables.Remove(payable);
-                    shipmentPayableRepository.Remove(payable);                    
+                    shipmentPayableRepository.Remove(payable);
                 }
 
                 else
@@ -903,6 +912,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     shipmentPayableRepository.Update(payable);
                 }
 
+                payableProratedAmountRepository.SubmitChanges();
                 shipmentPayableRepository.SubmitChanges();
             }
         }
@@ -964,9 +974,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 entity.ShipmentPayableLineStatusCode = "PACC";
             }
         }
-        private void RunShipmentSQL(string myShipmentId)
+        private void RunShipmentSQL(string myShipmentId, string invoiceId)
         {
-            UpdateShipmentProfitClass.UpdatePayables(myShipmentId, tenant,true);
+            UpdateShipmentProfitClass.UpdatePayables(myShipmentId, tenant,true, invoiceId);
             UpdateShipmentProfitClass.UpdateProfit(myShipmentId, tenant);
         }
         #endregion
@@ -1322,7 +1332,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 if (entityPM.MainEntityId != null)
                 {
-                    UpdateShipmentProfitClass.UpdatePayables(entityPM.MainEntityId, tenant,true);
+                    UpdateShipmentProfitClass.UpdatePayables(entityPM.MainEntityId, tenant,true, entityPM.Id);
                     UpdateShipmentProfitClass.UpdateProfit(entityPM.MainEntityId, tenant);
                 }
             }

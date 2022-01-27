@@ -34,6 +34,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 "AssignedTruckerNotes",
                 "DeliveryDone",
                 "DeliveryDate",
+                "InvoicedDate",
+                "InvoicedDone",
                 "DeliveryEstimationDate",
                 "DeliveryNotes",
                 "DeliveryExceptionReason",
@@ -175,7 +177,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                             CurrentMilestoneCode = 
                                 CASE
 		                            {doneCases}
-		                            ELSE '{CargoTrackingMilestoneValues.Created}'
+		                            ELSE NULL
 	                            END,
                             CurrentMilestoneDate = 
                                 CASE
@@ -219,7 +221,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 case CargoTrackingMilestoneValues.AssignedToTrucker: return $"WHEN [AssignedTruckerDone] = 1 THEN {CargoTrackingMilestoneValues.AssignedToTrucker}  ";
                 case CargoTrackingMilestoneValues.DeliveryOut: return $"WHEN [DeliveryDone] = 1 THEN {CargoTrackingMilestoneValues.DeliveryOut}  ";
                 case CargoTrackingMilestoneValues.Delivered: return $"WHEN [DeliveredDone] = 1 THEN {CargoTrackingMilestoneValues.Delivered}  ";
-                    //case CargoTrackingMilestoneValues.Invoiced: return $"WHEN [CreatedDone] = 1 THEN {CargoTrackingMilestoneValues.Invoiced}  ";
+                case CargoTrackingMilestoneValues.Invoiced: return $"WHEN [InvoicedDone] = 1 THEN {CargoTrackingMilestoneValues.Invoiced}  ";
             }
             return "";
         }
@@ -255,7 +257,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 case CargoTrackingMilestoneValues.AssignedToTrucker: return $"WHEN [AssignedTruckerDone] = 1 THEN [AssignedTruckerDate]  ";
                 case CargoTrackingMilestoneValues.DeliveryOut: return $"WHEN [DeliveryDone] = 1 THEN [DeliveryDate]  ";
                 case CargoTrackingMilestoneValues.Delivered: return $"WHEN [DeliveredDone] = 1 THEN [DeliveredDate]  ";
-                    //case CargoTrackingMilestoneValues.Invoiced: return $"WHEN [] = 1 THEN  [] ";
+                case CargoTrackingMilestoneValues.Invoiced: return $"WHEN [InvoicedDone] = 1 THEN  [InvoicedDate] ";
             }
             return "";
         }

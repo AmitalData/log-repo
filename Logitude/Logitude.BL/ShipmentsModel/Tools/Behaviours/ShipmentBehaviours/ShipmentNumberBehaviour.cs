@@ -61,6 +61,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
             else if (initializer.EntityPM.ShipmentDirectionConverted && initializer.EntityPM.ShipmentConvertedNewNumber)
             {
+                this.entityPM.OldShipmentNumber = initializer.EntityPM.ShipmentNumber;
                 isTakenCounter = true;
 
                 EventTracer.CreateTraceEvent(new EventTracerArgs()

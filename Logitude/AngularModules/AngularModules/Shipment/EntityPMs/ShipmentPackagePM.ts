@@ -698,6 +698,14 @@ export class ShipmentPackagePM {
     public get IsPackageCheckedInLeg() { return this.isPackageCheckedInLeg; }
     public set IsPackageCheckedInLeg(newValue: boolean) { if (this.isPackageCheckedInLeg != newValue) { this.isPackageCheckedInLeg = newValue; this.MarkAsDirty("IsPackageCheckedInLeg"); } }
 
+    private containerStatusName: string;
+    public get ContainerStatusName() { return this.containerStatusName; }
+    public set ContainerStatusName(newValue: string) { if (this.containerStatusName != newValue) { this.containerStatusName = newValue; this.MarkAsDirty("ContainerStatusName"); } }
+
+    private containerStatusSourceCode: string;
+    public get ContainerStatusSourceCode() { return this.containerStatusSourceCode; }
+    public set ContainerStatusSourceCode(newValue: string) { if (this.containerStatusSourceCode != newValue) { this.containerStatusSourceCode = newValue; this.MarkAsDirty("ContainerStatusSourceCode"); } }
+
     public OldEntityPM: ShipmentPackagePM;
 
     private entityParentPM: any;

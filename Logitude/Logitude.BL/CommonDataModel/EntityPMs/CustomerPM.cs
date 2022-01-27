@@ -129,6 +129,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string RankId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        [DataMember]
+        public string TeamId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember] 
         public string VatTypeId { get; set; }
 
@@ -1000,6 +1004,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public string UsoCFDICode { get; set; }
+        [DataMember]
+        public string RegimenFiscalCode { get; set; }
 
         [DataMember]
         public int CustomerTenant { get; set; }

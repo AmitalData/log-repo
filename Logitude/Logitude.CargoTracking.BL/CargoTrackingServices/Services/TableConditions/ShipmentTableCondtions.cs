@@ -93,6 +93,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             var shipmentAdditionalDataFields =
              "min(AdditionalData.GoodsClassification) as GoodsClassification, " +
              "min(AdditionalData.DocumentInspection) as DocumentInspection , " +
+             "min(AdditionalData.InvoiceIssuedDate) as InvoiceIssuedDate , " +
              "AdditionalData.IsPaymentRequired as IsPaymentRequired , " +
              "min(AdditionalData.PaymentDateTime) as PaymentDateTime , " +
              "min(AdditionalData.PaymentRequestDateTime) as PaymentRequestDateTime , " +
@@ -100,10 +101,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             var shipmentOrderFields =
              "min(SHO.Master) as OrderMaster, " +
+             "min(SHO.Id) as OrderId, " +
              "min(SHO.House) as OrderHouse, " +
              "min(SHO.CasualImporterName) as OrderShipperName, " +
              "min(SHO.OrderNumber) as OrderShipmentNumber, " +
              "min(SHO.PoNumber) as OrderPoNumber, " +
+             "min(SHO.BookingConfirmationNumber) as OrderBookingNumber, " +
              "min(SHO.CustomerReferences) as OrderCustomerReference ";
 
 
@@ -124,8 +127,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             var joinScript = $"left  OUTER JOIN dbo.{table.DBTableName} P                   ON P.CustomFileId = C.Id " +
                              $"LEFT OUTER JOIN dbo.ShipmentComputedFields com ON com.Id = C.Id " +
                              $"LEFT OUTER JOIN dbo.ShipmentMasterDatas Mas    ON Mas.Id = C.MasterShipmentDataId "+
-                             $"LEFT OUTER JOIN dbo.ShipmentMasterDatas ForwardingMaster    ON ForwardingMaster.Id = C.MasterShipmentDataId " +
-                             $"LEFT OUTER JOIN dbo.ShipmentComputedFields ForwardingComputed    ON ForwardingComputed.Id = C.Id " +
+                             $"LEFT OUTER JOIN dbo.ShipmentMasterDatas ForwardingMaster    ON ForwardingMaster.Id = P.MasterShipmentDataId " +
+                             $"LEFT OUTER JOIN dbo.ShipmentComputedFields ForwardingComputed    ON ForwardingComputed.Id = P.Id " +
                              $"LEFT OUTER JOIN dbo.ShipmentAdditionalCloudDatas AdditionalData    ON AdditionalData.Id = C.Id " +
                              $"LEFT OUTER JOIN dbo.ShipmentPickUpDeliveries ShipmentDeliveries    ON ShipmentDeliveries.ShipmentId = C.Id " +
                              $"LEFT OUTER JOIN dbo.Cards CarrierCard    ON CarrierCard.Id = ShipmentDeliveries.CarrierId " +
@@ -140,7 +143,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             if (cargoTrackingDataBaseArgs.CargoTrackingArguments == null)
             {
-                LastUpdate = ServiceHelper.GetTableLastUpdate(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName, cargoTrackingDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
+                LastUpdate = cargoTrackingDataBaseArgs.ShipmentsWaterMark;
 
                 string lastUpdateCondition = $" (C.AutomaticLastUpdateDate > '{LastUpdate}')";
                 whereConditions.Add(lastUpdateCondition);
@@ -223,6 +226,17 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 when (P.DirectionId = 'I' OR P.ShipmentLevelCode = 'A') AND P.ShipperId IS NOT NULL then ShipperCard.EnglishName 
                 when (P.DirectionId = 'I' OR P.ShipmentLevelCode = 'A') AND P.ShipperId IS NULL then P.ShipperName end)
             as ShipperName");
+            updatedShipmentFields = updatedShipmentFields.Replace("P.FromPortId", $@"(case 
+                when (P.FromPortId is not null)  then P.FromPortId 
+                when (P.FromPortId is null and P.MasterShipmentDataId is not null) then Mas.MainCarriageFromPortId 
+             end)
+            as FromPortId");
+            updatedShipmentFields = updatedShipmentFields.Replace("P.ToPortId", $@"(case 
+                when (P.ToPortId is not null)  then P.ToPortId 
+                when (P.ToPortId is null and P.MasterShipmentDataId is not null) then Mas.MainCarriageToPortId
+            end)
+            as ToPortId");
+
 
             var shipmentComputedFields =
                  "com.ContainersNumbers as ContainersNumbers," +
@@ -286,6 +300,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             var shipmentAdditionalDataFields =
              "min(AdditionalData.GoodsClassification) as GoodsClassification, " +
              "min(AdditionalData.DocumentInspection) as DocumentInspection , " +
+             "min(AdditionalData.InvoiceIssuedDate) as InvoiceIssuedDate , " +
              "AdditionalData.IsPaymentRequired as IsPaymentRequired , " +
              "min(AdditionalData.PaymentDateTime) as PaymentDateTime , " +
              "min(AdditionalData.PaymentRequestDateTime) as PaymentRequestDateTime , " +
@@ -297,7 +312,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
              "min(SHO.CasualImporterName) as OrderShipperName, " +
              "min(SHO.OrderNumber) as OrderShipmentNumber, " +
              "min(SHO.PoNumber) as OrderPoNumber, " +
-             "min(SHO.CustomerReferences) as OrderCustomerReference ";
+             "min(SHO.BookingConfirmationNumber) as OrderBookingNumber, " +
+             "min(SHO.CustomerReferences) as OrderCustomerReference, "+
+             "min(SHO.Id) as OrderId ";
 
             var carrierCardFields =
             "min(CarrierCard.EnglishName) as CarrierEnglishName, " +
@@ -334,7 +351,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             if (cargoTrackingDataBaseArgs.CargoTrackingArguments == null)
             {
-                LastUpdate = ServiceHelper.GetTableLastUpdate(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName,cargoTrackingDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
+                LastUpdate = cargoTrackingDataBaseArgs.ShipmentsWaterMark;
 
                 string lastUpdateCondition = $" (P.AutomaticLastUpdateDate > '{LastUpdate}')";
                 whereConditions.Add(lastUpdateCondition);
@@ -388,6 +405,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 					Mas.Transshipment3ETD,
 					Mas.Transshipment2ETD,
 					Mas.Transshipment1ETD,
+					Mas.MainCarriageToPortId,
+					Mas.MainCarriageFromPortId,
                     ShipperCard.LocalName,
                     ConsigneeCard.LocalName";
 
@@ -432,6 +451,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "0 as AssignedCustomsAgentDone," +
                 "0 as DeliveryDone," +
                 "0 as DocumentInspectionDone," +
+                "0 as InvoicedDone," +
                 "0 as GoodsClassificationDone," +
                 "0 as PaymentRequiredDone," +
                 "0 as PaymentReceivedDone," +
@@ -489,8 +509,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             if (cargoTrackingDataBaseArgs.CargoTrackingArguments == null)
             {
-                LastUpdate = ServiceHelper.GetTableLastUpdate(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName, cargoTrackingDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
-
+                LastUpdate = cargoTrackingDataBaseArgs.ShipmentsWaterMark;
                 string lastUpdateCondition = $" (SHO.AutomaticLastUpdateDate > '{LastUpdate}')";
                 whereConditions.Add(lastUpdateCondition);
             }

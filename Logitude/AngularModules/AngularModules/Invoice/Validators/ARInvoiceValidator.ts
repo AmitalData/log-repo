@@ -71,7 +71,7 @@ export class ARInvoiceValidator {
             this.ValidateNormalInvoice()
         }        
 
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             if (AppTool.IsNullOrEmpty(this.EntityPM.SATPaymentMethodCode)) {
                 this.Errors.push("Forma Pago Field is Required");
           }
