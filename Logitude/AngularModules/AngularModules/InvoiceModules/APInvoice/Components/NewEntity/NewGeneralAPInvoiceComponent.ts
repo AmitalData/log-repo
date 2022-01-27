@@ -52,6 +52,8 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     DisplayLocalFieldsFromList:string;
     VendorLovSizeForFullAccounting:number;
     ShowLanguageFilterOnVendorSearchWindow: boolean = false;
+    ColumnsWidths: any[] = [];
+    ForceShowLocalAndEnglishColumns = false;
 
     constructor(private entityResourceService: EntityResourceService) {
         super();
@@ -64,13 +66,31 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
         }
     }
 
+
     private InitializeVendorLov() {
         if (this.IsAccountingActivated) {
             this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
             this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
             this.VendorLovSizeForFullAccounting = 550;
+            this.ForceShowLocalAndEnglishColumns = true;
+            this.FillLOVColumnsWidths();
         }
     }
+
+
+    FillLOVColumnsWidths()
+    {
+        this.ColumnsWidths = [
+            { ColumnName: 'Code', Width: 40 },
+            { ColumnName: 'CalculatedEnglishName', Width: 120 },
+            { ColumnName: 'LocalName', Width: 120 },
+            { ColumnName: 'GLAccountDisplayNumber', Width: 120 },
+            { ColumnName: 'CityName', Width: 85 },
+            { ColumnName: 'CountryCode', Width: 60 },
+            { ColumnName: 'PartnerTypeName', Width: 60 }
+        ];
+    }
+
 
     public AllVatTypes: VatTypeList[] = [];
     private myCardListService: CardListService;
