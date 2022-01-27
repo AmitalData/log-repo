@@ -135,11 +135,12 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  Actions="",
                                                                  CancelRequestStatusCode=d.CancelRequestStatusCode,
                                                                  IsExceptionReasonsListNull = string.IsNullOrEmpty( a.ExceptionReasonsList) , 
-                                                                 IsManualPayment = a.IsManualPayment,
+                                                                  IsManualPayment = a.IsManualPayment,
                                                                  ReferantUserName="",
                                                                  DepartmentName="",
                                                                  Commodity=a.Commodity,
                                                                  LastStatusRemarks=a.LastStatusRemarks,
+ 
 
                                                                  
                                                               }) ;

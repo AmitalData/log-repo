@@ -170,6 +170,7 @@ namespace Logitude.Customs.Data.EntityLists
        public string ReferantUserName  { get; set; }
        [DataMember]
        public string DepartmentName  { get; set; }
+
    }
 
 }
