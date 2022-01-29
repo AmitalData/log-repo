@@ -697,14 +697,19 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
 
         var result = text
         if (text?.length > numberOfCharacter && !this.IsMobileView) {
-            result = text.slice(0, numberOfCharacter) + "..."
+                result = text.slice(0, numberOfCharacter) + "..."
         }
-        if (text?.length > this.MaxNumberOfCarachterForMobile && this.IsMobileView ) {
-            result = text.slice(0, this.MaxNumberOfCarachterForMobile) + "..."
+        if (text?.length > this.MaxNumberOfCarachterForMobile && this.IsMobileView) {
+                result = text.slice(0, this.MaxNumberOfCarachterForMobile) + "..."
         }
         return result;
 
     }
+
+    ContainsHebrew(str: string) {
+        return (/[\u0590-\u05FF]/).test(str)
+    }
+
     GetModeIcon()
     {
         var iconPath = "";
