@@ -222,7 +222,7 @@ export class ManageExternalReconciliationTabComponent extends BaseComponent impl
             var amountFieldName = 'ReconciliationAmount';
             this.timerToken = setTimeout(() => {
                 if (!AppTool.IsNullOrEmpty(num) && !AppTool.IsNullOrEmpty(this.amount)) {
-                    this.amountFieldFilter = new FilterItem(amountFieldName, num, null, null, this.selectedAmountOperator.Code, false, false, false, "number", false);
+                    this.amountFieldFilter = new FilterItem(amountFieldName, num, null, null, this.selectedAmountOperator.Code, true, false, false, "number", false);
                     this.RefreshButtonClicked();
                 } else {
                     this.amountFieldFilter = null;
@@ -320,6 +320,9 @@ export class ManageExternalReconciliationTabComponent extends BaseComponent impl
         }
         if (this.searchFieldFilter) {
             filters.AdditionalFilters.push(this.searchFieldFilter);
+        }
+        if (this.amountFieldFilter) {
+            filters.AdditionalFilters.push(this.amountFieldFilter);
         }
 
         filters.PageSize = 50;

@@ -125,10 +125,10 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
     }
     AmountTextChanged(num) {
         if (!AppTool.IsNullOrEmpty(num) && !AppTool.IsNullOrEmpty(this.amount)&& this.selectedAmountOperator ) {
-            var amountFieldName = 'ReconciliationAmount';
+            var amountFieldName = 'TransactionAmount';
             this.timerToken = setTimeout(() => {
                 if (!AppTool.IsNullOrEmpty(num) && !AppTool.IsNullOrEmpty(this.amount)) {
-                    this.amountFieldFilter = new FilterItem(amountFieldName, num, null, null, this.selectedAmountOperator.Code, false, false, false, "number", false);
+                    this.amountFieldFilter = new FilterItem(amountFieldName, num, null, null, this.selectedAmountOperator.Code, true, false, false, "number", false);
                     this.RefreshButtonClicked();
                 } else {
                     this.amountFieldFilter = null;

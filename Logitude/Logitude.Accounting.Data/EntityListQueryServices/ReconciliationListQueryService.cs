@@ -51,21 +51,40 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             if (reconciliationLinesQueryOperations == null)
                 return iQueryable;
             GenericFilter filter = new GenericFilter();
-            var reconciliationLinesQuery = context.ReconciliationLines.AsQueryable();
+            var reconciliationLinesQuery = GetIQueryableReconciliation(tenant);
             reconciliationLinesQuery = filter.GetFilteredQuery(reconciliationLinesQueryOperations, reconciliationLinesQuery);
-            reconciliationLinesQuery = reconciliationLinesQuery.Where(t => t.Tenant == tenant);
             iQueryable = iQueryable.Where(w => reconciliationLinesQuery.Where(e=>e.ReconciliationId == w.Id).Any());
             
             return iQueryable;
 		}
 
+        private IQueryable<ReconciliationLineList> GetIQueryableReconciliation(int tenant)
+        {
+            return context.ReconciliationLines.Include(e=>e.LedgerTransaction.Account).Select(a=>
+            new ReconciliationLineList()
+            {
+                ReconciliationId = a.ReconciliationId,
+                TransactionId = a.TransactionId,
+                TransactionAmount = 
+                (a.LedgerTransaction != null ? 
+                    a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountCredit : a.LedgerTransaction.ForeignAmountCredit
+                    : 0
+                ) == 0 ?
+                    -1 * (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountDebit : a.LedgerTransaction.ForeignAmountDebit : 0)
+                    : (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountCredit : a.LedgerTransaction.ForeignAmountCredit : 0)
+
+                
+
+            }
+            );
+        }
+
         private QueryOperations GetReconciliationLinesQueryOperations(QueryOperations queryOperations)
         {
-            var filterFieldName = "ReconciliationAmount";
+            var filterFieldName = "TransactionAmount";
             var reconciliationAmountFieldOperations = queryOperations.QueryFilterItems.Where(e => e.FieldName == filterFieldName).FirstOrDefault();
             if (reconciliationAmountFieldOperations == null)
                 return null;
-            queryOperations.QueryFilterItems.Remove(reconciliationAmountFieldOperations);
             var reconciliationLinesQueryOperations = CreateReconciliationLinesQueryOperations(reconciliationAmountFieldOperations);
             return reconciliationLinesQueryOperations;
         }
