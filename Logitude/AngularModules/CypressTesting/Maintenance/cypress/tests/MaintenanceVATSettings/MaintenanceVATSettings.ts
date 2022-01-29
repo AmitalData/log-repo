@@ -1,11 +1,8 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { MaintenanceSelectors } from "../../selectors/Selectors";
 import * as MaintenanceActions from "../../actions/Actions";
-//import * as MaintenanceActions from "../../actions/VATSettingsDetailsActions";
 import { VATSettingsDetails } from "../../models/VATSettingsDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
-
-let vatSettingsDetails: VATSettingsDetails
 
 //#region Open VATSettings
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
@@ -14,7 +11,7 @@ Given("the user logged in and open {string} in maintenance menu", (maintenanceIt
 });
 
 Given("a VAT settings with the following details", (dataTable) => {
-    vatSettingsDetails = Assists.CreateInstance<VATSettingsDetails>(dataTable, true);
+    let vatSettingsDetails = Assists.CreateInstance<VATSettingsDetails>(dataTable, true);
     MaintenanceActions.FillVATSettingsDetails(vatSettingsDetails)
 });
 

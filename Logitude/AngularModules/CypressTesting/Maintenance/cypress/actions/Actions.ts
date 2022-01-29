@@ -1732,11 +1732,9 @@ export function AssertCreateCard(CardType: string) {
 
 export function FillVATSettingsDetails(vatSettingsDetails: VATSettingsDetails) {
     cy.Click(MaintenanceSelectors.VATAppliesFor, null, true)
-    cy.FillLogLov(MaintenanceSelectors.VatFormatTypeCode, vatSettingsDetails.VATFormatType, true);
+    cy.SelectDropDownListItem2(MaintenanceSelectors.VatFormatType, vatSettingsDetails.VATFormatType);
     cy.FillLogLov(MaintenanceSelectors.VATIsMandatoryFor, vatSettingsDetails.IsMandatoryFor, true);
     cy.FillLogTextBox(MaintenanceSelectors.VatSize, vatSettingsDetails.VatSize);
-    //cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
- 
 }
 
 export function AssertPostCard(CardType: string) {
