@@ -16,15 +16,17 @@ export class TariffPriceStepsComponent extends BaseComponent {
     public IsResourcesReady: boolean = false;
     public ValidationErrorsList: string[] = [];
     public ItemsSource: TariffSettingStep[] = [];
-    public UnitOfMeasurementCode: string;
     private CurrentSession = SessionLocator.SelectedSession;
+    public UnitOfMeasurementLabel = "Unit Of Measurement ";
+    private unitOfMeasurementCode: string;
 
     constructor() {
         super();
     }
 
     SetWindowArgs(args) {
-        this.DefaultPriceSteps = args;
+        this.DefaultPriceSteps = args[0];
+        this.unitOfMeasurementCode  = args[1];
         this.BuildItemsSource();
     }
 
@@ -33,6 +35,13 @@ export class TariffPriceStepsComponent extends BaseComponent {
     set DefaultPriceSteps(value: string) {
         if (this.defaultPriceSteps != value) {
             this.defaultPriceSteps = value;
+        }
+    }
+
+    get UnitOfMeasurementCode() { return this.unitOfMeasurementCode; }
+    set UnitOfMeasurementCode(value: string) {
+        if (this.unitOfMeasurementCode != value) {
+            this.unitOfMeasurementCode = value;
         }
     }
 

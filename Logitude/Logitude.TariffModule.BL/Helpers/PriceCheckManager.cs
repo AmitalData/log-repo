@@ -367,19 +367,19 @@ namespace Logitude.TariffModule.BL.Helpers
 
                     if (!string.IsNullOrEmpty(itemStep.PriceSteps))
                     {
-                        weight = CalculateWeightByUnitOfMeasurementCode(itemStep);
+                        var convertedWeightByUOM = CalculateWeightByUnitOfMeasurementCode(itemStep.UnitOfMeasurementCode);
            
                         List<string> initialSteps = itemStep.PriceSteps.Split(',').ToList();
                         int index = 0;
                         initialSteps.ForEach(item =>
                         {
-                            if (float.Parse(item) > weight)
+                            if (float.Parse(item) > convertedWeightByUOM)
                             {
                                 initialPropIndex = index;
                                 return;
                             }
 
-                            else if (float.Parse(item) == weight)
+                            else if (float.Parse(item) == convertedWeightByUOM)
                             {
                                 initialPropIndex = ++index;
                                 return;
@@ -410,6 +410,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                                   item.TariffId,
                                                   item.MinPrice,
                                                   item.Version,
+                                                  item.UnitOfMeasurementCode
                                               } into g  
                                               select new TariffResult()
                                               {
@@ -417,7 +418,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                                   tariffid = g.Key.TariffId,
                                                   TariffVersion = g.Key.Version,
                                                   PriceIndex = 0,
-
+                                                  UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
                                               })).ToList();
                     }
 
@@ -430,6 +431,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                                   item.TariffId,
                                                   item.Step1Price,
                                                   item.Version,
+                                                  item.UnitOfMeasurementCode
                                               } into g
                                               select new TariffResult()
                                               {
@@ -437,6 +439,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                                   tariffid = g.Key.TariffId,
                                                   TariffVersion = g.Key.Version,
                                                   PriceIndex = 1,
+                                                  UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
                                               })).ToList();
                     }
 
@@ -449,6 +452,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                                   item.TariffId,
                                                   item.Step2Price,
                                                   item.Version,
+                                                  item.UnitOfMeasurementCode
                                               } into g
                                               select new TariffResult()
                                               {
@@ -456,6 +460,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                                   tariffid = g.Key.TariffId,
                                                   TariffVersion = g.Key.Version,
                                                   PriceIndex = 2,
+                                                  UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
                                               })).ToList();
                     }
 
@@ -468,6 +473,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                                   item.TariffId,
                                                   item.Step3Price,
                                                   item.Version,
+                                                  item.UnitOfMeasurementCode
                                               } into g
                                               select new TariffResult()
                                               {
@@ -475,6 +481,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                                   tariffid = g.Key.TariffId,
                                                   TariffVersion = g.Key.Version,
                                                   PriceIndex = 3,
+                                                  UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
                                               })).ToList();
                     }
 
@@ -487,6 +494,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                                   item.TariffId,
                                                   item.Step4Price,
                                                   item.Version,
+                                                  item.UnitOfMeasurementCode
                                               } into g
                                               select new TariffResult()
                                               {
@@ -494,6 +502,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                                   tariffid = g.Key.TariffId,
                                                   TariffVersion = g.Key.Version,
                                                   PriceIndex = 4,
+                                                  UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
                                               })).ToList();
                     }
 
@@ -506,6 +515,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                                   item.TariffId,
                                                   item.Step5Price,
                                                   item.Version,
+                                                  item.UnitOfMeasurementCode
                                               } into g
                                               select new TariffResult()
                                               {
@@ -513,6 +523,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                                   tariffid = g.Key.TariffId,
                                                   TariffVersion = g.Key.Version,
                                                   PriceIndex = 5,
+                                                  UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
                                               })).ToList();
                     }
 
@@ -525,6 +536,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                                   item.TariffId,
                                                   item.Step6Price,
                                                   item.Version,
+                                                  item.UnitOfMeasurementCode
                                               } into g
                                               select new TariffResult()
                                               {
@@ -532,6 +544,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                                   tariffid = g.Key.TariffId,
                                                   TariffVersion = g.Key.Version,
                                                   PriceIndex = 6,
+                                                  UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
                                               })).ToList();
                     }
 
@@ -544,6 +557,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                                   item.TariffId,
                                                   item.Step7Price,
                                                   item.Version,
+                                                  item.UnitOfMeasurementCode
                                               } into g
                                               select new TariffResult()
                                               {
@@ -551,6 +565,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                                   tariffid = g.Key.TariffId,
                                                   TariffVersion = g.Key.Version,
                                                   PriceIndex = 7,
+                                                  UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
                                               })).ToList();
                     }
 
@@ -563,6 +578,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                                   item.TariffId,
                                                   item.Step8Price,
                                                   item.Version,
+                                                  item.UnitOfMeasurementCode
                                               } into g
                                               select new TariffResult()
                                               {
@@ -570,6 +586,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                                   tariffid = g.Key.TariffId,
                                                   TariffVersion = g.Key.Version,
                                                   PriceIndex = 8,
+                                                  UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
                                               })).ToList();
                     }
                 });
@@ -936,7 +953,7 @@ namespace Logitude.TariffModule.BL.Helpers
             decimal? actualPrice = 0;
             if (tariff.PriceIndex != 0)
             {
-                actualPrice = tariff.Price * (decimal)weight;
+                actualPrice = tariff.Price * (decimal)CalculateWeightByUnitOfMeasurementCode(tariff.UnitOfMeasurement);
             }
             tariffsSummary.ActualPrice = actualPrice;
         }
@@ -945,7 +962,7 @@ namespace Logitude.TariffModule.BL.Helpers
         {
             if (tariff.PriceIndex != 0)
             {
-                tariff.Price = tariff.Price * (decimal)weight;
+                tariff.Price = tariff.Price * (decimal) CalculateWeightByUnitOfMeasurementCode(tariff.UnitOfMeasurement);
                 if (tariff.Price < minprice)
                 {
                     tariff.Price = minprice;
@@ -1733,34 +1750,34 @@ namespace Logitude.TariffModule.BL.Helpers
             }
         }
 
-        private double? CalculateWeightByUnitOfMeasurementCode(Tariff tariff)
+        private double? CalculateWeightByUnitOfMeasurementCode(string tariffUnitOfMeasurementCode)
         {
-            if (string.IsNullOrEmpty(tariff.UnitOfMeasurementCode))
+            if (string.IsNullOrEmpty(tariffUnitOfMeasurementCode))
                 return this.weight;
 
             if (string.IsNullOrEmpty(this.weightCode))
                 return this.weight;
 
-            if(tariff.UnitOfMeasurementCode == this.weightCode)
+            if(tariffUnitOfMeasurementCode == this.weightCode)
                 return this.weight;
 
-            double ratio = GetWeightRtioByUnitOfMeasurementsCodes(this.weightCode, tariff.UnitOfMeasurementCode);
+            double ratio = GetWeightRtioByUnitOfMeasurementsCodes(this.weightCode, tariffUnitOfMeasurementCode);
 
             return this.weight * ratio;
         }
-        private double GetWeightRtioByUnitOfMeasurementsCodes(string shipmentUnitCode, string tariffUnitCode)
+        private double GetWeightRtioByUnitOfMeasurementsCodes(string shipmentUnitCode, string tariffUnitOfMeasurementCode)
         {
-            if (shipmentUnitCode.ToUpper() == "KG" && tariffUnitCode.ToUpper() == "LB")
+            if (shipmentUnitCode.ToUpper() == "KG" && tariffUnitOfMeasurementCode.ToUpper() == "LB")
                   return WeightUnitsConverter.KilogramsToPounds;
-            if (shipmentUnitCode.ToUpper() == "KG" && tariffUnitCode.ToUpper() == "MT")
+            if (shipmentUnitCode.ToUpper() == "KG" && tariffUnitOfMeasurementCode.ToUpper() == "MT")
                 return WeightUnitsConverter.KilogramsToMetricTon;
-            if (shipmentUnitCode.ToUpper() == "LB" && tariffUnitCode.ToUpper() == "MT")
-                return WeightUnitsConverter.PoundsToMitrcTons;
-            if (shipmentUnitCode.ToUpper() == "LB" && tariffUnitCode.ToUpper() == "KG")
+            if (shipmentUnitCode.ToUpper() == "LB" && tariffUnitOfMeasurementCode.ToUpper() == "MT")
+                return WeightUnitsConverter.PoundsToMetricTons;
+            if (shipmentUnitCode.ToUpper() == "LB" && tariffUnitOfMeasurementCode.ToUpper() == "KG")
                 return WeightUnitsConverter.PoundsToKilograms;
-            if (shipmentUnitCode.ToUpper() == "MT" && tariffUnitCode.ToUpper() == "KG")
+            if (shipmentUnitCode.ToUpper() == "MT" && tariffUnitOfMeasurementCode.ToUpper() == "KG")
                 return WeightUnitsConverter.MetricTonToKilograms;
-            if (shipmentUnitCode.ToUpper() == "MT" && tariffUnitCode.ToUpper() == "LB")
+            if (shipmentUnitCode.ToUpper() == "MT" && tariffUnitOfMeasurementCode.ToUpper() == "LB")
                 return WeightUnitsConverter.MetricTonsToPounds;
 
             return 1.0;
@@ -1774,6 +1791,7 @@ namespace Logitude.TariffModule.BL.Helpers
         public int TariffVersion { get; set; }
         public decimal? Price { get; set; }
         public int PriceIndex { get; set; }
+        public string UnitOfMeasurement { get; set; }
     }
 
     public class ByPckageType
@@ -1797,6 +1815,6 @@ namespace Logitude.TariffModule.BL.Helpers
         public const double KilogramsToMetricTon = 0.001;
         public const double KilogramsToPounds = 2.20462;
         public const double MetricTonsToPounds = 2204.62;
-        public const double PoundsToMitrcTons = 0.000453592;
+        public const double PoundsToMetricTons = 0.000453592;
     }
 }
