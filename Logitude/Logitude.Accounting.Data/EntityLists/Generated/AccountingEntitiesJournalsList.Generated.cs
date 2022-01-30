@@ -12,7 +12,11 @@ namespace Logitude.Accounting.Data.EntityLists
    [DataContract]
    public partial class AccountingEntitiesJournalList
    {
-          [DataMember]
+   
+       [Key]
+       [DataMember]
+       public string Id  { get; set; }
+       [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
        public string AccountingEntityId  { get; set; }
@@ -20,10 +24,6 @@ namespace Logitude.Accounting.Data.EntityLists
        public string AccountingEntityCode  { get; set; }
        [DataMember]
        public string Action  { get; set; }
-
-       [Key]
-       [DataMember]
-       public int Id  { get; set; }
        [DataMember]
        public string ChildEntityId  { get; set; }
    }
