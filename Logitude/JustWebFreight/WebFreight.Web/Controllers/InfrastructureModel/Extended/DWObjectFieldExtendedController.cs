@@ -81,8 +81,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 var factFields = new DWObjectFieldAdditionalFactService(new DWObjectFieldAdditionalFactArgs() { FactTableCode = DWOTId,Tenant = authToken.Tenant, GroupedByCategory = true }).DWObjectFieldPMs;
                 var CategoryGroup = factFields.GroupBy(a => a.Category);
                 var FactGroups = factFields.GroupBy(a => a.DWObjectTableCode);
-
-                DWHSettingRepository dWHSettingRepository = new DWHSettingRepository(authToken.Tenant);
+                
+                DWHSettingRepository dWHSettingRepository = new DWHSettingRepository(authToken.Tenant);  
                 var isParentTenant =   dWHSettingRepository.IsParentTenant(authToken.Tenant);
                 List<ObjectFieldPM> objectFieldPMs = new List<ObjectFieldPM>();
                 if (!isParentTenant)
@@ -90,17 +90,17 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                     objectFieldPMs = GetCustomObjectFields(DWOTId, authToken.Tenant);
                 }
 
-
-                List<DWFieldsGroup> MyGroups = new List<DWFieldsGroup>();
-
+                var ParentFactIndex = 1;
+                List<DWFieldsGroup> MyGroups = new List<DWFieldsGroup>(); 
                 List<DWFactGroup> FactFieldsGroups = new List<DWFactGroup>();
 
-
+                 
                 foreach (var fact in FactGroups)
                 {
                     DWFactGroup DWFactGroup = new DWFactGroup();
-                    DWFactGroup.Key = fact.Key;
+                    DWFactGroup.Key = fact.Key.Replace("_"," ");
                     DWFactGroup.FieldsGroupList = new List<DWFieldsGroup>();
+                    DWFactGroup.Index = fact.Key == DWOTId? 1: ParentFactIndex + 1;
                     foreach (var item in CategoryGroup)
                     {
                         var factfields = item.Where(a => a.DWObjectTableCode == fact.Key).ToList();
@@ -111,6 +111,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                             MyGroup.Key = item.Key;
                             var FirstItem = factfields.Select(a => a).FirstOrDefault();
                             MyGroup.Index = FirstItem.CategoryIndex;
+                            MyGroup.Fact = FirstItem.DWObjectTableCode;
                             MyGroup.FieldsList = factfields.Select(a => a).OrderBy(a => a.Name).ToList();
 
                             if (MyGroup.FieldsList != null && MyGroup.FieldsList.Count > 0)
@@ -133,17 +134,16 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                     }
 
                     FactFieldsGroups.Add(DWFactGroup);
+                    ParentFactIndex = ++ParentFactIndex;
                 }
-
-                FactFieldsGroups = FactFieldsGroups; 
-                
-                MyGroups = MyGroups.OrderBy(a => a.Index).ToList();
+                  
+                FactFieldsGroups = FactFieldsGroups.OrderBy(a => a.Index).ToList();
                 MyGroups = RemoveFactInvoiceCustomFieldsCategory(DWOTId, MyGroups);
+                 
 
 
 
-
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey); 
 
                 return Request.CreateResponse(HttpStatusCode.OK, FactFieldsGroups);
 
@@ -273,6 +273,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
     {
         public string Key { get; set; }
         public int Index { get; set; }
+        public string Fact { get; set; }
         public List<DWObjectFieldPM> FieldsList { get; set; }
     } 
     public class DWFactGroup

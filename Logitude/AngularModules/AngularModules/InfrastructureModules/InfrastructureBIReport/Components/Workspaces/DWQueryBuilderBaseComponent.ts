@@ -282,6 +282,41 @@ export class ValueDetails {
     public Header: string;
     public Row: string;
 }
+ 
+
+export class DWFactsGroup {
+    constructor(Key: string, FieldsList: any[]) {
+        this.Key = Key;
+        this.FieldsList = FieldsList;
+    }
+
+    private key: string;
+    public get Key() { return this.key; }
+    public set Key(newValue: string) { this.key = newValue; }
+
+    private fieldsList: any[];
+    public get FieldsList() { return this.fieldsList; }
+    public set FieldsList(newValue: any[]) { this.fieldsList = newValue; }
+
+    private detailsIcon: string = "./Images/CellIcons/Arrowup.png";
+    public get DetailsIcon() { return this.detailsIcon; }
+    public set DetailsIcon(newValue: string) { this.detailsIcon = newValue; }
+
+    private isDetailesOpened: boolean = false;
+    public get IsDetailesOpened() { return this.isDetailesOpened; }
+    public set IsDetailesOpened(newValue: boolean) { this.isDetailesOpened = newValue; }
+
+    GroupClicked() {
+        this.IsDetailesOpened = !this.IsDetailesOpened;
+        if (!this.IsDetailesOpened) {
+            this.DetailsIcon = "./Images/CellIcons/Arrowdown.png";
+        }
+        else {
+            this.DetailsIcon = "./Images/CellIcons/Arrowup.png";
+        }
+    }
+}
+
 
 export class DWFieldsGroup {
     constructor(Key: string, FieldsList: any[]) {
@@ -292,6 +327,10 @@ export class DWFieldsGroup {
     private key: string;
     public get Key() { return this.key; }
     public set Key(newValue: string) { this.key = newValue; }
+
+    private fact: string;
+    public get Fact() { return this.fact; }
+    public set Fact(newValue: string) { this.fact = newValue; }
 
     private fieldsList: any[];
     public get FieldsList() { return this.fieldsList; }
