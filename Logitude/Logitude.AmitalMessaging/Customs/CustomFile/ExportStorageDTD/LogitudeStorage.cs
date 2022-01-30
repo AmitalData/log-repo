@@ -289,7 +289,12 @@ namespace Logitude.AmitalMessaging.Customs.CustomFile.ExportStorageDTD
 		[XmlElement(ElementName = "DeclarationID")]
 		public string DeclarationID { get; set; }
         public string DeclarationId { get; set; }
-        [XmlElement(ElementName = "CustomStatus")]
+
+		
+		[XmlElement(ElementName = "StorageStatus")]
+		public string StorageStatus { get; set; }
+
+		[XmlElement(ElementName = "CustomStatus")]
 		public string CustomStatus { get; set; }
 
 		[XmlElement(ElementName = "General")]
