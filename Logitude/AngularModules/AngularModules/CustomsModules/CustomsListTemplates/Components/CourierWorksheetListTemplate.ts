@@ -298,7 +298,6 @@ export class CourierWorksheetListTemplate {
 
     }
     SendManifest(event) {
-        debugger;
         this.ButtonClick(event);
         let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
         myDeclarationPMService.get(this._CourierWorksheet['DeclarationId'])
@@ -785,7 +784,6 @@ export class CourierWorksheetListTemplate {
 
       //  this._CourierWorksheetSharedDataService.connectedSelectAll = false;
 
-        debugger;
         this.IsDeclarationChecked = !this.IsDeclarationChecked;
         //if (event.IsChecked) {
         if (this.IsDeclarationChecked) {

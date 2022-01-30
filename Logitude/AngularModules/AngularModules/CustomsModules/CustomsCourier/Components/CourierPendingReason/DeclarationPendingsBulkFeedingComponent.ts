@@ -190,7 +190,6 @@ export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
 
 
     Add() {
-        debugger;
         if (!this.IsDisplayOnly) {
 
             var item: DeclarationPendingPM = new DeclarationPendingPM(this.DeclarationCourierStatus);
@@ -281,7 +280,6 @@ export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
     notMandatoryIsNotEmpty: boolean = false;
     OkButtonClicked() {
 
-        debugger;
         this.ValidationErrorsList = [];
         var errors: string[] = [];
         this.isValid = true;

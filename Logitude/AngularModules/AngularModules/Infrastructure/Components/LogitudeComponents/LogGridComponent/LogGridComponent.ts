@@ -1028,7 +1028,6 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
             });
         }
         if (this.MenuHeaderchangeevent) {
-            debugger;
             this.MenuHeaderSub = this.MenuHeaderchangeevent.subscribe((res) => {
                 if (res.Filters != null) {
                     if (res.Filters.SortBy) {

@@ -135,7 +135,6 @@ export class AddEditPendingByKeywordComponent
     //#endregion\
 
     OkButtonClicked() {
-        debugger;
         var errors = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 

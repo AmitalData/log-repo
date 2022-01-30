@@ -91,7 +91,6 @@ export class BulkFeedPendingComponent extends BaseComponent {
 
   getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
 
-    debugger;
 
     if (filters == null) {
       filters = new ApiQueryFilters();
