@@ -42,7 +42,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DCAInUCBUCADPEResponseContentHeader customsResponse)
         {
-            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
             var genericRequestParams = new GenericRequestParams()
             {
                 Tenant = customsResponse.tenant,
