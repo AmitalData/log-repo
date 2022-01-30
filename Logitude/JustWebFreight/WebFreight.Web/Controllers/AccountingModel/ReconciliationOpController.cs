@@ -655,6 +655,8 @@ tenant);
             string TheAccountId,
             string AdjustAccountId,
             DateTime AccountDate,
+            DateTime DueDate,
+            DateTime RefDate,
             string Ref1,
             string Ref2,
             string Ref3,
@@ -676,7 +678,7 @@ tenant);
                     .Create(
                     accountingContext, authToken.Tenant
                     , ReconciliationLines, TheAccountId, AdjustAccountId,
-                    AccountDate, Ref1, Ref2, Ref3, Remarks);
+                    AccountDate, DueDate, RefDate, Ref1, Ref2, Ref3, Remarks);
 
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, pm);
 

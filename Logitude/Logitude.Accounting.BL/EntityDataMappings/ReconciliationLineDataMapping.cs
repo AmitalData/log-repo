@@ -35,6 +35,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.CurrencySign);
 
             this.CustomMappedPMProperties.Add(PMPropertyNames.DueDate);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.RefDate);
             this.CustomMappedPMProperties.Add(PMPropertyNames.AmountCredit);
             this.CustomMappedPMProperties.Add(PMPropertyNames.AmountDebit);
             this.CustomMappedPMProperties.Add(PMPropertyNames.Reference1);

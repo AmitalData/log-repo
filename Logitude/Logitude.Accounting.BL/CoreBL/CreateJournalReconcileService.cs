@@ -30,6 +30,8 @@ namespace Logitude.Accounting.BL.CoreBL
             string TheAccountId,
             string AdjustAccountId,
             DateTime AccountDate,
+            DateTime DueDate,
+            DateTime RefDate,
             string Ref1,
             string Ref2,
             string Ref3,
@@ -40,6 +42,15 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 using (var scope = TransactionFactory.GetTransaction())
                 {
+                    DateTime dueDate = new DateTime();
+                    if (DueDate != null) {
+                        dueDate = DueDate;
+                    } else if (RefDate != null)
+                    {
+                        dueDate = RefDate;
+                    } else {
+                        dueDate = AccountDate;
+                    }
                     _AccountingContext = accountingContext;
                     var usrid = AuthenticationUtil.ResolveUserId(tenant);
                     decimal totReconciliationAmountFromUnknownCurrency = ReconciliationLines.Sum(r => r.ReconciliationAmount);
@@ -132,7 +143,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         AccountingEntityCode = myAccEntityReconciliation10.Code, //"6",// - Reconciliation
                         AccountingEntityId = null,//Reconciliations.id !!!!!!!!!!!!
                         AccountingEntityReference = null,//Reconciliations.Number !!!!!!!!!!!!
-
+                        DueDate = dueDate,
                         UpdateDate = @now,
                         //journal.UpdatedByUserId = theEntityPm.UpdatedByUserId;
                         ApproveDate = @now,
@@ -168,7 +179,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             ForeignAmount = totForeign,
 
                             DocumentDate = journal.CreateDate,
-                            DueDate = journal.CreateDate,
+                            DueDate = dueDate,
                             CreditAccountId = AdjustAccountId,
                         });
 
@@ -185,7 +196,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             CurrencyId = theCurrencyId,
                             ForeignAmount = totForeign,
                             DocumentDate = journal.CreateDate,
-                            DueDate = journal.CreateDate,
+                            DueDate = dueDate,
                             DebitAccountId = TheAccountId,
                         });
 
@@ -206,7 +217,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             ForeignAmount = totForeign,
 
                             DocumentDate = journal.CreateDate,
-                            DueDate = journal.CreateDate,
+                            DueDate = dueDate,
                             DebitAccountId = AdjustAccountId
 
                         });
@@ -227,7 +238,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             ForeignAmount = totForeign,
 
                             DocumentDate = journal.CreateDate,
-                            DueDate = journal.CreateDate,
+                            DueDate = dueDate,
                             CreditAccountId = TheAccountId,
 
                         });

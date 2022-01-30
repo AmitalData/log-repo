@@ -108,11 +108,13 @@ export class ReconciliationExtendedPMService {
     CreateJournalReconcile(
         myReconciliationLines: ReconciliationLinePM[],
 
-        TheAccountId: string, AdjustAccountId: string, AccountDate: string, Ref1: string, Ref2: string, Ref3: string, Remarks: string) {
+        TheAccountId: string, AdjustAccountId: string, AccountDate: string, DueDate: string, RefDate: string, Ref1: string, Ref2: string, Ref3: string, Remarks: string) {
             return this.httpClient.post(this._apiUrl + "/PostCreateJournalReconcile?"
             + "&TheAccountId=" + TheAccountId
             + "&AdjustAccountId=" + AdjustAccountId
             +"&AccountDate=" + AccountDate
+            +"&DueDate=" + DueDate
+            +"&RefDate=" + RefDate
             +"&Ref1=" + Ref1
             +"&Ref2=" + Ref2
             +"&Ref3=" + Ref3

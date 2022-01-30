@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ReconciliationLineUpdateClass
    {  		
-		public const string HashString = "2698b78c86e29014a8fdf2f8ba54cb63";
+		public const string HashString = "ed48b04c92125255c96e5951c2436d28";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "ReconciliationLine",
 			      				    IsNew =  false,
 			      				    DBTableName =  "ReconciliationLines",
-			      				    OldDBTableName =  "ReconciliationLines",
 			      				    ObjectTableSingular =  "ReconciliationLine",
 			      				    ObjectTablePlural =  "ReconciliationLines",
 			      				    HasCustomFilter =  false,
@@ -121,7 +120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "שורת התאמה",
 			      				    DefaultText =  "Reconciliation Line",
-			      				    Code =  "8f4f",
+			      				    Code =  "77b3",
 			      				    Name =  "ReconciliationLine Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -145,7 +144,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ReconciliationId",
-					  						OldFieldName =  "ReconciliationId",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -207,7 +205,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Line",
-					  						OldFieldName =  "Line",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -269,7 +266,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CurrencyId",
-					  						OldFieldName =  "CurrencyId",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Currency",
@@ -333,7 +329,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CurrencyCode",
-					  						OldFieldName =  "CurrencyCode",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -396,7 +391,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CurrencyName",
-					  						OldFieldName =  "CurrencyName",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -459,7 +453,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TransactionId",
-					  						OldFieldName =  "TransactionId",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "LedgerTransaction",
@@ -523,7 +516,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ReconciliationAmount",
-					  						OldFieldName =  "ReconciliationAmount",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -587,7 +579,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsPartial",
-					  						OldFieldName =  "IsPartial",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -650,7 +641,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "GroupNumber",
-					  						OldFieldName =  "GroupNumber",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -712,7 +702,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsAdjustTransaction",
-					  						OldFieldName =  "IsAdjustTransaction",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -774,7 +763,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ColorField",
-					  						OldFieldName =  "ColorField",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -831,7 +819,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -891,7 +878,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DueDate",
-					  						OldFieldName =  "DueDate",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -904,7 +890,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -930,8 +916,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DueDate",
 					  						DefaultText =  "Due Date",
+					  						FullLocalDefaultText =  "תאריך פרעון",
 					  						ListFieldLable =  "DueDateListLable",
 					  						ListLableDefaultText =  "Due Date",
+					  						ListLocalDefaultText =  "תאריך פרעון",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -951,7 +939,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AmountDebit",
-					  						OldFieldName =  "AmountDebit",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1013,7 +1000,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AmountCredit",
-					  						OldFieldName =  "AmountCredit",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1075,7 +1061,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Reference1",
-					  						OldFieldName =  "Reference1",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1135,7 +1120,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Reference2",
-					  						OldFieldName =  "Reference2",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1195,7 +1179,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Reference3",
-					  						OldFieldName =  "Reference3",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1255,7 +1238,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1315,7 +1297,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "JournalId",
-					  						OldFieldName =  "JournalId",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1375,7 +1356,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "JournalNumber",
-					  						OldFieldName =  "JournalNumber",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1435,7 +1415,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CurrencySign",
-					  						OldFieldName =  "CurrencySign",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1495,7 +1474,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OpenAmountCurrencySign",
-					  						OldFieldName =  "OpenAmountCurrencySign",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1554,7 +1532,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1614,7 +1591,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ReconciledWithTransactionId",
-					  						OldFieldName =  "ReconciledWithTransactionId",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1673,7 +1649,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsRecoCancelled",
-					  						OldFieldName =  "IsRecoCancelled",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1730,7 +1705,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AccountingDate",
-					  						OldFieldName =  "AccountingDate",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1792,7 +1766,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ReconciliationAmountWithSign",
-					  						OldFieldName =  "ReconciliationAmountWithSign",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1849,7 +1822,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsAmountDebitNegative",
-					  						OldFieldName =  "IsAmountDebitNegative",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1906,7 +1878,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TransactionAmount",
-					  						OldFieldName =  "TransactionAmount",
 					  						ObjectTableName =  "ReconciliationLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1984,6 +1955,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ExcelTransactionAmount",
 					  						ListPropertyPath =  "ExcelTransactionAmount",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2003,6 +1975,65 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExcelTransactionAmount",
 					  						DefaultText =  "ExcelTransactionAmount",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "RefDate",
+					  						ObjectTableName =  "ReconciliationLine",
+					  						FieldsDataType =  "DateTime",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "RefDate",
+					  						ListPropertyPath =  "RefDate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ReconciliationLine",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "RefDate",
+					  						DefaultText =  "Ref Date",
+					  						ListFieldLable =  "RefDateListLable",
+					  						ListLableDefaultText =  "Ref Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
