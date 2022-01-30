@@ -220,9 +220,9 @@
     <Content Include="Images\logboxiconInActive.ico" />
     <None Include="Images\Warning.png" />
     <Content Include="logboxicon.ico" />
-    <None Include="Resources\PLBlueGenericLogo.png" />
     <None Include="Resources\PLInactiveLogo.png" />
     <None Include="Resources\PLIcon.ico" />
+    <None Include="Resources\PLBlueGenericLogo.png" />
     <Content Include="temp\samplepdf.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
