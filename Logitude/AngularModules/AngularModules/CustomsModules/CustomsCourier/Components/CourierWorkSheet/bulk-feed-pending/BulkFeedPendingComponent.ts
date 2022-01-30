@@ -129,7 +129,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
       filters.addAdditionalFilter("GrossMassMeasure", this.WeightTo, null, null, "LessThanOrEqual", false, false, false, "number");
 
     if (!AppTool.IsNullOrEmpty(this.GoodsDescription))
-      filters.addAdditionalFilter("CargoDescription", this.GoodsDescription, null, null, "Contains", false, false, false, "string");
+      filters.addAdditionalFilter("CargoDescription", this.GoodsDescription, null, null, "Contains", true, false, false, "string");
 
     if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
       filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter.toLowerCase(), null, null, "Contains", false, false, false, "string", false, true);

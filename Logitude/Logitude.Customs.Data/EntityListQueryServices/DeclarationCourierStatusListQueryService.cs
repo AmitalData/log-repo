@@ -263,7 +263,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return q;
         }
 
-        public IQueryable<DeclarationCourierStatusList> GetDeclarationCourierStatusforPendingBulkFeed(IQueryable<DeclarationCourierStatus> iQueryable)
+        public IQueryable<DeclarationCourierStatusList> GetDeclarationCourierStatusforPendingBulkFeed(QueryOperations queryOperations)
         {
             int weightFromInt = 0;
             int weightToInt = 0;
@@ -320,12 +320,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                           CourierSearchFields = d.CourierSearchFields,
                           FastIndividualProcessCode = dcs.FastIndividualProcessCode,
 
-                      }); ;
+                      });
 
-            
 
- 
- 
+            var cargoDescriptionF = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CargoDescription").FirstOrDefault();
+            if (cargoDescriptionF != null && !string.IsNullOrEmpty(cargoDescriptionF.FieldValue?.ToString()))
+                q1 = q1.Where(x => x.CargoDescription.ToLower().Contains(cargoDescriptionF.FieldValue.ToString().ToLower()));
 
             return q1;
 
@@ -352,7 +352,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             int skippedPorts = queryOperations.PageIndex;
 
-            IQueryable<DeclarationCourierStatusList> query2 = GetDeclarationCourierStatusforPendingBulkFeed(iQueryable);
+            IQueryable<DeclarationCourierStatusList> query2 = GetDeclarationCourierStatusforPendingBulkFeed(queryOperations);
 
             query2 = filter.GetFilteredQuery<DeclarationCourierStatusList>(listQueryOperation, query2);
 
@@ -451,7 +451,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             iQueryable = filter.GetFilteredQuery<DeclarationCourierStatus>(nonListQueryOperation, iQueryable);
 
-            IQueryable<DeclarationCourierStatusList> query2 = GetDeclarationCourierStatusforPendingBulkFeed(iQueryable);
+            IQueryable<DeclarationCourierStatusList> query2 = GetDeclarationCourierStatusforPendingBulkFeed(queryOperations);
 
             query2 = filter.GetFilteredQuery<DeclarationCourierStatusList>(listQueryOperation, query2);
             int count = query2.ToList().Count();
