@@ -772,7 +772,6 @@ namespace WebFreight.Web.MetaDataUpdate
             updateClass.FillCourierPendingReasonTable();
             updateClass.FillContainerizationStatusCodeTable();
             updateClass.FillAmedmentTypeTable();
-
             updateClass.FillCustomsDocumentUploadTable();
         }
 
