@@ -52,7 +52,7 @@ Given("the user open the shipment and navigate to RoutingsTab workspace", () => 
 
 Given("add Standalone Shipment With Pickup leg with the following details", (dataTable) => {
   PickupDelivarytData = Assists.CreateInstance<PickupDelivaryDetails>(dataTable, true);
-  StandaloneAction.CreateStandaloneShipmentFromRoutingDetails(PickupDelivarytData);
+  StandaloneAction.CreateDomesticInlandFromRoutingDetails(PickupDelivarytData);
 });
 
 When("create shipment", () => {
@@ -86,13 +86,13 @@ Then("the link of standalon should display", () => {
 //#region create Standalone shipment from delivery routing 
 Given("the user in the shipment's routings tab", () => {
   cy.Click(ShipmentSelectors.CloseBtn, null)
-  cy.Click(ShipmentSelectors.RoutingToggle, null)
-  cy.Click(ShipmentSelectors.Delivery, null)
+  cy.Click(ShipmentSelectors.RoutingToggle+BaseSelectors.LastElement, null)
+  cy.Click(ShipmentSelectors.Delivery+BaseSelectors.LastElement, null)
   cy.Click(BaseSelectors.Button, ShipmentConstants.AddStandAloneShipmentWithDelivery)
 })
 Given("add Standalone Shipment With delivery leg with the following details", (dataTable) => {
   PickupDelivarytData = Assists.CreateInstance<PickupDelivaryDetails>(dataTable, true);
-  StandaloneAction.CreateStandaloneShipmentFromRoutingDetails(PickupDelivarytData);
+  StandaloneAction.CreateDomesticInlandFromRoutingDetails(PickupDelivarytData);
 });
 
 Then("the delivery will add all fields should be dim in delivery window", () => {

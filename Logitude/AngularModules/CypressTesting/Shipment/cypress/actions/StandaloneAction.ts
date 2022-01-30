@@ -122,10 +122,10 @@ export function StandaloneShipmentOpenPackageTab(){
    cy.Click(ShipmentSelectors.AddPackagesInStandalone, null)
 }
 
-export function CreateStandaloneShipmentFromRoutingDetails(pickupdelivaryDetails: PickupDelivaryDetails) {
+export function CreateDomesticInlandFromRoutingDetails(pickupdelivaryDetails: PickupDelivaryDetails) {
    FillPickupDeliveryRouting(pickupdelivaryDetails)
-   FillStandaloneShipmentFromTypeDetails(pickupdelivaryDetails)
-   FillStandaloneShipmentToTypeDetails(pickupdelivaryDetails)
+   FillDomesticInlandFromTypeDetails(pickupdelivaryDetails)
+   FillDomesticInlandToTypeDetails(pickupdelivaryDetails)
 }
 
 export function OpenRoutingTabAddPickUp(){
@@ -133,7 +133,7 @@ export function OpenRoutingTabAddPickUp(){
   cy.Click(ShipmentSelectors.AddPickUp, null)
   cy.Click(BaseSelectors.Button, ShipmentConstants.AddPickUp)
 }
-export function FillStandaloneShipmentFromTypeDetails(standaloneDetails: PickupDelivaryDetails) {
+export function FillDomesticInlandFromTypeDetails(standaloneDetails: PickupDelivaryDetails) {
    if (standaloneDetails.From == ShipmentConstants.Partner) {
       cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageFromPartner, standaloneDetails.FromPartner, true)
    }
@@ -146,7 +146,7 @@ export function FillStandaloneShipmentFromTypeDetails(standaloneDetails: PickupD
    }
 }
 
-export function FillStandaloneShipmentToTypeDetails(standaloneDetails: PickupDelivaryDetails) {
+export function FillDomesticInlandToTypeDetails(standaloneDetails: PickupDelivaryDetails) {
    if (standaloneDetails.To == ShipmentConstants.Partner) {
       cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageToPartner, standaloneDetails.ToPartner, true)
    }
