@@ -264,10 +264,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
 
         var objectTableId = this.ObjectTableId;
         var lookupFields: any[];
-        if (this.DisplayLocalFieldsFromList && this.LanguageFilterValue == localLanguageCode) {
-            var fields: string[] = this.DisplayLocalFieldsFromList.split(',');
-            lookupFields = window.ObjectFields.filter(d => d.ObjectTableId == this.LookUpTable.Id && fields.lastIndexOf(d.FieldName) > -1);
-        } else if (this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined) {
+        if (this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined) {
             var fields: string[] = this.DisplayFieldsFromList.split(',');
             lookupFields = window.ObjectFields.filter(d => d.ObjectTableId == this.LookUpTable.Id && fields.lastIndexOf(d.FieldName) > -1);
         }
