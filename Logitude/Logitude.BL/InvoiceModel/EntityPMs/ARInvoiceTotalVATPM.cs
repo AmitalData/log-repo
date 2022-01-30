@@ -12,6 +12,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string VatTypeId { get; set; }
         public double? VATPercent { get; set; }
         public string VatTypeName { get; set; }
+        public string VatTypeCode { get; set; }
         public string VatTypeCell { get; set; }
         public string ExternalVATCard { get; set; }
         public string ExternalTAXItemId { get; set; }

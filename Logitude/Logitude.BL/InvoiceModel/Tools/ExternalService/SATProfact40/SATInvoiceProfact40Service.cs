@@ -445,15 +445,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                         //{
                         if (_totaltipoFactor != "Exento")
                         {
-                            traslado = new Profact.TimbraCFDI40.ComprobanteImpuestosTraslado()
-                            {
-                                Importe = sATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0))),
-                                Impuesto = "002",
-                                //Base = sATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0))),
-                                TasaOCuota = total_tasaOCuota,
-                                TipoFactor = _totaltipoFactor,//(totalVat.VATPercent == 0 ? "Exento" : "Tasa"),
-                            };
-
+                            traslado = GetNewComprobanteImpuestosTrasladoInstance(totalVat, _totaltipoFactor, total_tasaOCuota);
                             //if (traslado.TipoFactor == "Tasa")
                             //{
                             //    traslado.TasaOCuota = (totalVat.VATPercent != null ? StringHelper.StringPadRight((Math.Abs(totalVat.VATPercent.Value / 100).ToString()), '0', 8) : "");//(line.VatPercentage != null ? (decimal)(Math.Abs(line.VatPercentage.Value / 100)) : 0),
@@ -604,6 +596,24 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
         }
 
+        private Profact.TimbraCFDI40.ComprobanteImpuestosTraslado GetNewComprobanteImpuestosTrasladoInstance(ARInvoiceTotalVATPM totalVat, string _totaltipoFactor, string total_tasaOCuota)
+        {
+            Profact.TimbraCFDI40.ComprobanteImpuestosTraslado traslado;
+            traslado = new Profact.TimbraCFDI40.ComprobanteImpuestosTraslado()
+            {
+                Impuesto = "002",
+                Base = sATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVatableAmount != null ? (decimal)totalVat.InvoiceCurrencyVatableAmount.Value : 0))),
+                TipoFactor = _totaltipoFactor,
+            };
+            if (totalVat.VatTypeCode != "EXMPT")
+            {
+                traslado.Importe = sATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0)));
+                traslado.TasaOCuota = total_tasaOCuota;
+            }
+
+            return traslado;
+        }
+
         private void MapReceptor(Profact.TimbraCFDI40.Comprobante comprobante, Card billToCard, Address billToAddress)
         {
             if (string.IsNullOrEmpty(arInvoicePM.RegimenFiscalCode) && !string.IsNullOrEmpty(billToCard.RegimenFiscalCode))
@@ -615,13 +625,40 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 throw new ApplicationException("Regimen Fiscal is required ");
             }
 
-            comprobante.Receptor = new Profact.TimbraCFDI40.ComprobanteReceptor
+            comprobante.Receptor = GetNewComprobanteReceptorInstance(billToCard, billToAddress);
+
+        }
+
+        private Profact.TimbraCFDI40.ComprobanteReceptor GetNewComprobanteReceptorInstance(Card billToCard, Address billToAddress)
+        {
+            string billToAddressZipCode = "";
+            if (billToAddress != null && string.IsNullOrEmpty(billToAddress.ZipCode))
+            {
+                billToAddressZipCode = GetBillToAddressZipCode(billToAddress, billToAddressZipCode);
+            }
+
+            return new Profact.TimbraCFDI40.ComprobanteReceptor
             {
                 Nombre = billToCard.EnglishName,
                 RegimenFiscalReceptor = arInvoicePM.RegimenFiscalCode,
-                DomicilioFiscalReceptor = billToAddress?.ZipCode
+                DomicilioFiscalReceptor = billToAddressZipCode
             };
+        }
 
+        private string GetBillToAddressZipCode(Address billToAddress, string billToAddressZipCode)
+        {
+            PostalCodeQuery postalCodeQuery = new PostalCodeQuery(arInvoicePM.Tenant);
+            PostalCodePM postalCodePM = postalCodeQuery.GetSinglePM(billToAddress.ZipCode);
+            if (postalCodePM == null)
+            {
+                 throw new ApplicationException("Bill To Address Zip Code is not valid");
+            }
+            else
+            {
+                billToAddressZipCode = billToAddress.ZipCode;
+            }
+
+            return billToAddressZipCode;
         }
 
         private Address GetBillToAddress()
