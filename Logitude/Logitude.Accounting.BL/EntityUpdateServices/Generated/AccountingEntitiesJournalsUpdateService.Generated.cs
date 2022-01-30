@@ -55,15 +55,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
 
 		
-	    protected override void FillDefaultValuesOnCreate(AccountingEntitiesJournalPM entityPM)
-        {
- 
-		}
-		protected override void FillDefaultValuesOnUpdate(AccountingEntitiesJournalPM entityPM)
-		{
- 
-		}
+		protected override void FillDefaultValuesOnCreate(AccountingEntitiesJournalPM entityPM)
+        {     
+  
 		
+		    entityPM.Id = IdCounter.GetNumber("AccountingEntitiesJournal", entityPM.Tenant); 
+					
+	    }
+        
+		protected override void FillDefaultValuesOnUpdate(AccountingEntitiesJournalPM entityPM)
+        {       
+           
+        }
+		  
 		 
 	 
    }
