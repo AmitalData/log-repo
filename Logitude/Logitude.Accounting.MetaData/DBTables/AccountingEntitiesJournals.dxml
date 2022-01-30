@@ -33,8 +33,7 @@
   </Column>
   <Column
     Name="Id"
-    Type="bigint"
-    Size="15"
+    Type="int"
     Identity="true">
     <Constraints
       PrimaryKey="true"

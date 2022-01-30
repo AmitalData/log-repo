@@ -28,7 +28,7 @@ namespace Logitude.Accounting.Data.Repositories
 
 		 
 		
-		public  AccountingEntitiesJournal GetSingle(string id, int tenant)
+		public  AccountingEntitiesJournal GetSingle(int id, int tenant)
         {
             return (from a in context.AccountingEntitiesJournals
                     where a.Id == id && a.Tenant == tenant

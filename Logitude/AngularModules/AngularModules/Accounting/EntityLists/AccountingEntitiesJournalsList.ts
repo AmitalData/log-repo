@@ -12,7 +12,7 @@ export class AccountingEntitiesJournalList {
 	AccountingEntityId: string;
 	AccountingEntityCode: string;
 	Action: string;
-	Id: string;
+	Id: number;
 	ChildEntityId: string;
 	
 }

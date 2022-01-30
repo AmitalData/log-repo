@@ -110,14 +110,14 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private string id ;
+	  private int id ;
 	  
        [Key]
 	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Id  
+       public int Id  
 	   {
 	    
 	     get
@@ -128,7 +128,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(id != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   id=value;
 		   }

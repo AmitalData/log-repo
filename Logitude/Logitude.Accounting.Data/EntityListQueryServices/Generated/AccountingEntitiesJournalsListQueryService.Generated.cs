@@ -131,7 +131,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public AccountingEntitiesJournalList GetSingle(string id)
+        public AccountingEntitiesJournalList GetSingle(int id)
         {
             IQueryable<AccountingEntitiesJournal> AccountingEntitiesJournalQuery = (from a in context.AccountingEntitiesJournals
                                                        where a.Id == id
