@@ -420,6 +420,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string AmendmentTypeName  { get; set; }
        [DataMember]
        public bool? IsHatraDateNull  { get; set; }
+       [DataMember]
+       public string IntegratorCode  { get; set; }
    }
 
 }

@@ -22,6 +22,7 @@ import { AutonomyKeywordComponent } from './Components/AutonomyKeyword/AutonomyK
 //import { CourierWorksheetNGTComponent } from './Components/CourierWorkspaces/CourierWorksheetNGTComponent';
 import { CourierWorksheetNGComponent } from './Components/CourierWorkSheet/CourierWorksheetNGComponent';
 import { CourierWorksheetNGListTemplate } from '../CustomsListTemplates/Components/CourierWorksheetNGListTemplate';
+import { CourierDeclarationFiltersMenuComponent } from './Components/CourierWorkspaces/FiltersMenu/CourierDeclarationFiltersMenuComponent';
 
 export const Components =
     [
@@ -49,6 +50,7 @@ export const Components =
         //CourierWorksheetNGTComponent,
         CourierWorksheetNGComponent,
         CourierWorksheetNGListTemplate,
+        CourierDeclarationFiltersMenuComponent,
     ];
 
 export class ModuleDeclarations {
@@ -82,7 +84,8 @@ export class ModuleDeclarations {
             //case "CourierWorksheetNGTComponent": { myResult = CourierWorksheetNGTComponent; break; }
             case "CourierWorksheetNGComponent": { myResult = CourierWorksheetNGComponent; break; }
             case "CourierWorksheetNGListTemplate": { myResult = CourierWorksheetNGListTemplate; break; }
-                
+            case "CourierDeclarationFiltersMenuComponent": { myResult = CourierDeclarationFiltersMenuComponent; break; }
+
                 
                 
                 

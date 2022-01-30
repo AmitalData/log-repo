@@ -19,7 +19,9 @@
                     <td style="width: 21px; vertical-align:middle;">
                         <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
                     </td>
-
+                    <td>
+                        <div><CourierDeclarationFiltersMenuComponent [ShowIntegratorFilter]="false" (SelectedValueChanged)="FilterChange($event)"></CourierDeclarationFiltersMenuComponent></div>
+                    </td>
                     <td>
                         <div></div>
                     </td>

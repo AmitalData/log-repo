@@ -40,7 +40,7 @@ export class DeclarationCourierStatusWebService {
 
         );
     }
-    GetQueriesCounts() {
+    GetQueriesCounts(integratorId:string) {
         return defer(() => {
 
             var authHeader = new Headers();
@@ -50,7 +50,7 @@ export class DeclarationCourierStatusWebService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetQueriesCounts", ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + "/GetQueriesCounts/?IntegratorId="+integratorId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse.Result = response;

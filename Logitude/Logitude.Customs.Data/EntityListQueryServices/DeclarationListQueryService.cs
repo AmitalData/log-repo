@@ -199,6 +199,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                     IsPending900 = rec.myDeclarationCourierStatuses != null ? (rec.myDeclarationCourierStatuses.CourierPendingReasonList.Contains("900") ? true : false) : false,
                     CourierPendingReasonList = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.CourierPendingReasonList : null,
                     MAWB = rec.CourierMaster != null ? rec.CourierMaster.MAWB : null,
+                    IntegratorCode= rec.CourierMaster != null ? rec.CourierMaster.IntegratorCode : null,
                     IsCourierMissingClassification = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.IsCourierMissingClassification : false,
                     IsPendingNotNull = rec.myDeclarationCourierStatuses != null ? (rec.myDeclarationCourierStatuses.CourierPendingReasonList != null && rec.myDeclarationCourierStatuses.CourierPendingReasonList.Length > 0 ? true : false) : false,
                 }
@@ -447,6 +448,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      CourierPendingReasonList = myJoin != null ? myJoin.CourierPendingReasonList : null,
                                                      /*CourierPendingReasonList = mypr != null ? mypr.CourierPendingReasonName : null,*/
                                                      //CourierPendingReasonName = a.CourierPendingReasonName,
+                                                     IntegratorCode = myJoin != null ? myJoin.IntegratorCode : null,
 
                                                      MAWB = myJoin != null ? myJoin.MAWB : null,
                                                      IsCourierMissingClassification = myJoin != null ? myJoin.IsCourierMissingClassification : false,
@@ -762,5 +764,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         public string MAWB { get; set; }
         public bool IsCourierMissingClassification { get; set; }
         public bool IsPendingNotNull { get; set; }
+        
+        public string IntegratorCode { get; set; }
     }
 }

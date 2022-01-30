@@ -268,16 +268,27 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
-        public DeclarationCourierStatusSummary GetQueriesCounts(int tenant)
+        public DeclarationCourierStatusSummary GetQueriesCounts(int tenant,string IntegratorId)
         {
             DeclarationCourierStatusSummary declarationCourierStatusSummary = new DeclarationCourierStatusSummary();
-            IQueryable<DeclarationCourierStatus> declarationCourierStatuses = (from dc in context.DeclarationCourierStatuses.Include("Declaration")
-                                                                            //  join d in context.CourierDeclarations on dc.DeclarationId equals d.DeclarationId
-                                                                             //  join dm in context.CourierMasters
-                                                                             // on d.CourierMasterId equals dm.Id
-                                                                               where dc.Tenant == tenant && dc.Declaration.IsCourierDeclaration == true
-                                                                               select dc);
-
+            IQueryable<DeclarationCourierStatus> declarationCourierStatuses=(from dc in context.DeclarationCourierStatuses select dc);
+            if (string.IsNullOrWhiteSpace(IntegratorId) || IntegratorId=="null") {
+               declarationCourierStatuses = (from dc in context.DeclarationCourierStatuses//.Include("Declaration")
+                                                                                                                                //  join d in context.CourierDeclarations on dc.DeclarationId equals d.DeclarationId
+                                                                                                                                //  join dm in context.CourierMasters
+                                                                                                                                // on d.CourierMasterId equals dm.Id
+                                                                                   where dc.Tenant == tenant && dc.Declaration.IsCourierDeclaration == true 
+                                                                                   select dc);
+            }
+            else
+            {
+                declarationCourierStatuses = (from dc in context.DeclarationCourierStatuses//.Include("Declaration")
+                                                                                            join d in context.CourierDeclarations on dc.DeclarationId equals d.DeclarationId
+                                                                                            join dm in context.CourierMasters
+                                                                                            on d.CourierMasterId equals dm.Id
+                                              where dc.Tenant == tenant && dc.Declaration.IsCourierDeclaration == true && dm.IntegratorCode == IntegratorId
+                                              select dc);
+            }
 
             var counters = (from a in declarationCourierStatuses
 
