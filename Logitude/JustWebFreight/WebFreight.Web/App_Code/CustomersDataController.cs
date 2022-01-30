@@ -125,6 +125,7 @@ namespace WebFreight.Web.App_Code
                              Field10 = customer.Field10,
                              RankCode = customer.RankCode,
                              RankName = customer.RankName,
+                             TeamName = customer.TeamName,
                              SharedLogisticsInvitationStatusName = customer.SharedLogisticsInvitationStatusName,
                              LastLoginDate = customer.LastLoginDate,
                              InvitationDate = customer.InvitationDate,

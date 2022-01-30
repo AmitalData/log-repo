@@ -25,6 +25,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         [DataMember]
         public string RankName { get; set; }
+        [DataMember]
+        public string TeamName { get; set; }
 
         [DataMember]
         public string IndustryId { get; set; }
