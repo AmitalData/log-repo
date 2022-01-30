@@ -30,8 +30,8 @@ namespace Logitude.Accounting.BL.CoreBL
             string TheAccountId,
             string AdjustAccountId,
             DateTime AccountDate,
-            DateTime DueDate,
-            DateTime RefDate,
+            DateTime? DueDate,
+            DateTime? RefDate,
             string Ref1,
             string Ref2,
             string Ref3,
@@ -44,10 +44,10 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     DateTime dueDate = new DateTime();
                     if (DueDate != null) {
-                        dueDate = DueDate;
+                        dueDate = DueDate.Value;
                     } else if (RefDate != null)
                     {
-                        dueDate = RefDate;
+                        dueDate = RefDate.Value;
                     } else {
                         dueDate = AccountDate;
                     }
