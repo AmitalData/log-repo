@@ -250,6 +250,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string customsDocumentUpload ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomsDocumentUpload  
+	   {
+	    
+	     get
+		{
+		   return customsDocumentUpload;
+		 }
+		 set
+		 {
+		   if(customsDocumentUpload != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsDocumentUpload",OldValue=customsDocumentUpload,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customsDocumentUpload=value;
+		   }
+			
+		 }
+	   }
+	  private string customsDocumentUploadName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomsDocumentUploadName  
+	   {
+	    
+	     get
+		{
+		   return customsDocumentUploadName;
+		 }
+		 set
+		 {
+		   if(customsDocumentUploadName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsDocumentUploadName",OldValue=customsDocumentUploadName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customsDocumentUploadName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

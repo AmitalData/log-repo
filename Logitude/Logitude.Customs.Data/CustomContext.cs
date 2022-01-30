@@ -328,6 +328,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CustomsDocumentsTicketMap());
 	
+            modelBuilder.Configurations.Add(new CustomsDocumentUploadMap());
+	
             modelBuilder.Configurations.Add(new CustomsEnvironmentSettingMap());
 	
             modelBuilder.Configurations.Add(new CustomsEnvoirmentTypeMap());
@@ -2086,6 +2088,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CustomsDocumentsTicket> CustomsDocumentsTickets 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CustomsDocumentUpload> CustomsDocumentUploads 
 	 {
 	      get; set;
 	 

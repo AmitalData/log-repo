@@ -34,6 +34,10 @@ namespace Logitude.Customs.Data.EntityLists
        public bool IsCourierManadatory  { get; set; }
        [DataMember]
        public bool IsDiamondManadatory  { get; set; }
+       [DataMember]
+       public string CustomsDocumentUpload  { get; set; }
+       [DataMember]
+       public string CustomsDocumentUploadName  { get; set; }
    }
 
 }

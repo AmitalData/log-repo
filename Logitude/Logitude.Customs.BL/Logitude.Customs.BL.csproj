@@ -164,6 +164,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomerIdentificationTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomerIndicationTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomerRoleTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CustomsDocumentUploadDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomsShipDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\DeliveryTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\DocumentRejectTypeDetails.Generated.cs" />
@@ -441,6 +442,7 @@
     <Compile Include="EntityDataMappings\CustomsDocumentsDefinitionDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsDocumentStatusTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsDocumentsTicketDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomsDocumentUploadDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsEnvironmentSettingDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsEnvoirmentTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsExchangeRateDataMapping.cs" />
@@ -648,6 +650,7 @@
     <Compile Include="EntityDataMappings\Generated\CustomsDocumentsDefinitionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsDocumentStatusTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsDocumentsTicketDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomsDocumentUploadDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsEnvironmentSettingDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsEnvoirmentTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsExchangeRateDataMapping.Generated.cs" />
@@ -1065,6 +1068,7 @@
     <Compile Include="EntityDataMappings\VendorTypeDataMapping.cs" />
     <Compile Include="EntityQueryServiceExt\CustomsDocumentQueryServiceExt.cs" />
     <Compile Include="EntityQueryServices\CargoIdentifireTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomsDocumentUploadQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\IncotemrsFileValidationQueryService.cs" />
     <Compile Include="EntityQueryServices\ClientsPoaQueryService.cs" />
     <Compile Include="EntityQueryServices\ContainerizationQueryService.cs" />
@@ -1563,6 +1567,7 @@
     <Compile Include="EntityQueryServices\VendorCommissionQueryService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealIdentifierUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CustomsDocumentUploadUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\IncotemrsFileValidationUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CityUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClaimImporterDeclarsP3LoiUpdateService.cs" />
