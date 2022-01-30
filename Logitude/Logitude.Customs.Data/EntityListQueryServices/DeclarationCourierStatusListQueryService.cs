@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -16,7 +16,7 @@ using Logitude.Customs.Data.EntityLists;
 using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
-{ 
+{
 
     public partial class DeclarationCourierStatusListQueryService
     {
@@ -117,8 +117,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   IsClosedForFollowUp = a.IsClosedForFollowUp,
                                                                   HighLowValue = a.HighLowValue,
                                                                   DocumentStatusCode = a.DocumentStatusCode,
-                                                                  SortedDocumentStatusCode= (a.DocumentStatusCode == "M" || a.DocumentStatusCode == "X")? "M" : a.DocumentStatusCode,
-                                                                  SortedCourierDeclarationStatus=(a.CourierDeclarationStatusCode == "M" || a.CourierDeclarationStatusCode == "X") ? "M" : a.CourierDeclarationStatusCode,
+                                                                  SortedDocumentStatusCode = (a.DocumentStatusCode == "M" || a.DocumentStatusCode == "X") ? "M" : a.DocumentStatusCode,
+                                                                  SortedCourierDeclarationStatus = (a.CourierDeclarationStatusCode == "M" || a.CourierDeclarationStatusCode == "X") ? "M" : a.CourierDeclarationStatusCode,
                                                                   SortedCourierManifestStatus = (a.CourierManifestStatusCode == "M" || a.CourierManifestStatusCode == "X") ? "M" : a.CourierManifestStatusCode,
                                                                   CourierHawb = d.CourierHAWB,
                                                                   ProcedureCurrentCode = d.ProcedureCurrentCode,
@@ -128,7 +128,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   DeclarationStatusTypeName = d.DeclarationStatusType == null ? null : d.DeclarationStatusType.LocalName,
                                                                   ImporterCode = d.ImporterCode,
                                                                   ImporterName = d.ImporterName != null ? d.ImporterName : (d.ImporterId != null ? d.Importer.FullName : d.ImporterName),
-                                                                  SortedImporterCode=d.ImporterCode,
+                                                                  SortedImporterCode = d.ImporterCode,
                                                                   CustomerName = d.CustomerCard.LocalName != null ? d.CustomerCard.LocalName : d.CustomerCard.EnglishName,
                                                                   CourierSearchFields = d.CourierSearchFields,
                                                                   TotalInvoiceAmountInUSD = a.TotalInvoiceAmountInUSD,
@@ -183,14 +183,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   MasterStorageSiteCode = cm.StorageSiteCode,
                                                                   DeclarationStorageSiteCode = d.StorageSiteCode,
                                                                   MasterHAWB = cm.HAWB,
-                                                                  TerminalReleaseDate=a.TerminalReleaseDate,
+                                                                  TerminalReleaseDate = a.TerminalReleaseDate,
                                                                   CustomFileNo = d.CustomFileNo,
                                                                   TruckerId = a.Trucker.Card.Code,
                                                                   CrateNumber = a.CrateNumber,
                                                                   TruckerName = a.Trucker.Card.LocalName,
-                                                                  AmendmentDontDisplayInList= d.AmendmentDontDisplayInList , 
-                                                                  IsAmendment  = d.IsAmendment==true? true :false ,
-                                                                CargoDescription= d.CargoDescription                                                               
+                                                                  AmendmentDontDisplayInList = d.AmendmentDontDisplayInList,
+                                                                  IsAmendment = d.IsAmendment == true ? true : false,
+                                                                  CargoDescription = d.CargoDescription
                                                               });
 
 
@@ -227,11 +227,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             }
         }
 
-        private IQueryable<DeclarationCourierStatus> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<DeclarationCourierStatus> iQueryable, int tenant)
+        private IQueryable<DeclarationCourierStatus> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<DeclarationCourierStatus> iQueryable, int tenant)
         {
             //filters.addAdditionalFilter("CourierMasterId", this.entityPM.Id, null, null, "Equals", false, false, false, "string");
             var courierMasterIdF = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CourierMasterId").FirstOrDefault();
-            if(courierMasterIdF != null)
+            if (courierMasterIdF != null)
             {
                 string courierMasterId = (string)courierMasterIdF.FieldValue;
                 RequiredFieldErrorsForCourierDeclarationIsValid = InjectionUtil.GetRequiredFieldErrorsForCourierDeclarationIsValid(courierMasterId, tenant);
@@ -242,7 +242,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         public IQueryable<DeclarationCourierStatusList> GetByCourierMasterId(string courierMasterId, int tenant)
         {
             IQueryable<DeclarationCourierStatus> DeclarationCourierStatusQuery = (from a in context.DeclarationCourierStatuses
-                                                                                  where a.Tenant  == tenant
+                                                                                  where a.Tenant == tenant
                                                                                   select a);
 
 
@@ -265,71 +265,60 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         public IQueryable<DeclarationCourierStatusList> GetDeclarationCourierStatusforPendingBulkFeed(QueryOperations queryOperations)
         {
-            int weightFromInt = 0;
-            int weightToInt = 0;
+            string courierMasterId = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CourierMasterId").FirstOrDefault().FieldValue.ToString();
 
-            var q1 = (from cd in context.CourierDeclarations//.Where(cd => cd.CourierMasterId == courierMasterId)
+            var q1 = (
+                    from cd in context.CourierDeclarations.Include("Declarations").Include("Importer").Where(cd => cd.CourierMasterId == courierMasterId)
 
-                      join d in context.Declarations.Include("Importer") on cd.DeclarationId equals d.Id
+                    join dcs in context.DeclarationCourierStatuses on cd.Declaration.Id equals dcs.DeclarationId
 
-                      join dcs in context.DeclarationCourierStatuses on d.Id equals dcs.DeclarationId
+                    join cp in context.ConsignmentPackages on cd.Declaration.Id equals cp.DeclarationId into cpjoin
+                    from cj in cpjoin.Where(t => t.PackageMeasureQualifierCode == "2" && t.GrossMassMeasure.HasValue).DefaultIfEmpty()
 
-                      //join cp in context.ConsignmentPackages on d.Id equals cp.DeclarationId into cpjoin
-                      //from cpj in cpjoin.Where(cp => cp.PackageMeasureQualifierCode == "2").DefaultIfEmpty()
+                    join s in context.SupplierInvoices on cd.Declaration.Id equals s.DeclarationId into sjoin
+                    from sj in sjoin.DefaultIfEmpty()            
 
-                      join cp in (
-                      from t in context.ConsignmentPackages
-                      where t.PackageMeasureQualifierCode == "2" && t.GrossMassMeasure.HasValue
-                      group t by t.DeclarationId into t2
-                      select new
-                      {
-                          DeclarationId = t2.Key,
-                          GrossMassMeasure = t2.Sum(s => s.GrossMassMeasure)
-                      }) on d.Id equals cp.DeclarationId into cpjoin
-                      from cpj in cpjoin.DefaultIfEmpty()
+                    group cj by new
+                    {
+                        CourierMasterId = cd.CourierMasterId,
+                        DeclarationId = cd.DeclarationId,
+                        CourierHawb = cd.Declaration.CourierHAWB,
+                        ImporterCode = cd.Declaration.ImporterCode,
+                        ImporterName = cd.Declaration.ImporterName != null ? cd.Declaration.ImporterName : (cd.Declaration.ImporterId != null ? cd.Declaration.Importer.FullName : cd.Declaration.ImporterName),
+                        CargoDescription = cd.Declaration.CargoDescription,
+                        CasualSupplierAddress = cd.Declaration.CasualImporterAddress1 + ", " + cd.Declaration.CasualImporterAddress2,
+                        CasualImporterCity = cd.Declaration.CasualImporterCity,
+                        TotalInvoiceAmountInUSD = dcs.TotalInvoiceAmountInUSD,
+                        IncoTermCode = sj != null ? sj.IncotermCode : "",
+                        CourierSearchFields = cd.Declaration.CourierSearchFields,
+                        FastIndividualProcessCode = dcs.FastIndividualProcessCode,
 
-                          //join c in context.Clients on d.ImporterId equals c.Id into cjoin
-                          //from cj in cjoin.DefaultIfEmpty()
+                    } into t2
+                    select new DeclarationCourierStatusList
+                    {
+                        CourierMasterId = t2.Key.CourierMasterId,
+                        DeclarationId = t2.Key.DeclarationId,
+                        CourierHawb = t2.Key.CourierHawb,
+                        ImporterCode = t2.Key.ImporterCode,
+                        ImporterName = t2.Key.ImporterName,
+                        CargoDescription = t2.Key.CargoDescription,
+                        CasualSupplierAddress = t2.Key.CasualSupplierAddress,
+                        CasualImporterCity = t2.Key.CasualImporterCity,
+                        TotalInvoiceAmountInUSD = t2.Key.TotalInvoiceAmountInUSD,
+                        GrossMassMeasure = t2.Sum(t => t.GrossMassMeasure != null ? t.GrossMassMeasure.Value : 0),
+                        IncoTermCode = t2.Key.IncoTermCode,
+                        CourierSearchFields = t2.Key.CourierSearchFields,
+                        FastIndividualProcessCode = t2.Key.FastIndividualProcessCode,
+                    });
 
-                      join s in (from temp in context.SupplierInvoices
-                                 group temp by temp.DeclarationId into temp2
-                                 where temp2.Count() > 0
-                                 select new { DeclarationId = temp2.Key, SupplierInvoices = temp2.FirstOrDefault() })
-                               on d.Id equals s.DeclarationId into sjoin
-                      from sj in sjoin.DefaultIfEmpty()
-
-
-                      orderby d.Id
-
-                      select new DeclarationCourierStatusList
-                      {
-                          CourierMasterId = cd.CourierMasterId,
-                          DeclarationId = d.Id,
-                          CourierHawb = d.CourierHAWB,
-                          ImporterCode = d.ImporterCode,
-                          ImporterName = d.ImporterName != null ? d.ImporterName : (d.ImporterId != null ? d.Importer.FullName : d.ImporterName),
-                          //   ImporterName = d.ImporterName,
-                          CargoDescription = d.CargoDescription,
-                          CasualSupplierAddress = d.CasualImporterAddress1 + "," + d.CasualImporterAddress2,
-                          //  Casualimporteraddress2 = d.CasualImporterAddress2,
-                          CasualImporterCity = d.CasualImporterCity,
-                          TotalInvoiceAmountInUSD = dcs.TotalInvoiceAmountInUSD,
-                          GrossMassMeasure = cpj != null ? cpj.GrossMassMeasure.Value : 0 , // cpjoin.Sum(x => Convert.ToDecimal(x.GrossMassMeasure)),
-                          //  ImporterCode = cj != null ? cj.Code : d.ImporterCode,
-                          IncoTermCode = sj != null ? sj.SupplierInvoices.IncotermCode : "",
-                          CourierSearchFields = d.CourierSearchFields,
-                          FastIndividualProcessCode = dcs.FastIndividualProcessCode,
-
-                      });
-
-
+                                                                            
             var cargoDescriptionF = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CargoDescription").FirstOrDefault();
             if (cargoDescriptionF != null && !string.IsNullOrEmpty(cargoDescriptionF.FieldValue?.ToString()))
                 q1 = q1.Where(x => x.CargoDescription.ToLower().Contains(cargoDescriptionF.FieldValue.ToString().ToLower()));
 
-            return q1;
+            q1 = q1.OrderBy(x => x.DeclarationId);
 
- 
+            return q1;
         }
 
         public List<DeclarationCourierStatusList> GetDeclarationCourierStatusListPendingBulk(QueryOperations queryOperations, int tenant)
@@ -340,7 +329,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationCourierStatus> iQueryable = (from a in context.DeclarationCourierStatuses
 
                                                                where a.Tenant == tenant
-                                                  select a);
+                                                               select a);
             iQueryable = ApplyCustomFilters(queryOperations, iQueryable, tenant);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
@@ -421,7 +410,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             }
             else
             {
-                 query2 = query2.OrderByDescending(d => d.CourierHawb);
+                query2 = query2.OrderByDescending(d => d.CourierHawb);
             }
             if (!queryOperations.GetAll)
             {
@@ -463,9 +452,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     public class MyJoin
     {
         public bool ErrorPlace { get; set; }
-    public string CourierPendingReason1stName { get;  set; }
-    public string CourierPendingReasonNameList { get;  set; }
-    internal string DeclarationId { get; set; }
+        public string CourierPendingReason1stName { get; set; }
+        public string CourierPendingReasonNameList { get; set; }
+        internal string DeclarationId { get; set; }
     }
 }
-	

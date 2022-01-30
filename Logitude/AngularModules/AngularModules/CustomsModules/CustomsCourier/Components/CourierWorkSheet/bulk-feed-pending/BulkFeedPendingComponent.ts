@@ -114,7 +114,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
 
 
 
-    filters.addAdditionalFilter("CourierMasterId", this.CourierMasterPM.Id, null, null, "Equals", false, true, false, "string");
+    filters.addAdditionalFilter("CourierMasterId", this.CourierMasterPM.Id, null, null, "Equals", true, true, false, "string");
     filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
     filters.addAdditionalFilter("pendingView", SessionLocator.Tenant, null, null, "Equals", true, false, false, "number");
 
