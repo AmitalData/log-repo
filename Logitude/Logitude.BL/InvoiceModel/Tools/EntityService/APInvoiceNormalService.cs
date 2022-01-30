@@ -41,6 +41,8 @@ using Logitude.BL.InvoiceModel.Tools.Behaviours;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours;
+using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.Data.EntityPOCOs;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -2147,11 +2149,31 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                  
 
                     IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
+                    AddAccountingEntitiesJournalConstraint(journal);
                     journalUpdate.Update(journal);
                 }
             }
         }
+        private void AddAccountingEntitiesJournalConstraint(JournalPM entityPM)
+        {
+            AccountingEntitiesJournalRepository accountingEntitiesJournalRepository = new AccountingEntitiesJournalRepository(entityPM.Tenant);
+            var accountingEntitiesJournal = AccountingEntitiesJournalConstraint(entityPM);
+            accountingEntitiesJournalRepository.Add(accountingEntitiesJournal);
+            accountingEntitiesJournalRepository.SubmitChanges();
+        }
 
+        private AccountingEntitiesJournal AccountingEntitiesJournalConstraint(JournalPM entityPM)
+        {
+            return new AccountingEntitiesJournal()
+            {
+                Id = 0,
+                Tenant = entityPM.Tenant,
+                AccountingEntityCode = entityPM.AccountingEntityCode,
+                AccountingEntityId = entityPM.AccountingEntityId,
+                Action = "Add",
+                ChildEntityId = null
+            };
+        }
         private GLAccountPM getCreditGLAccount(string vendorId, int tenant)
         {
             GLAccountPM glaAccount = null;
