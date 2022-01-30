@@ -48,7 +48,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             mapping = new AccountingEntitiesJournalDataMapping();
         }
 		 
-		public  AccountingEntitiesJournalPM GetSingle(string id,bool getComposition, bool getFromCache)
+		public  AccountingEntitiesJournalPM GetSingle(int id,bool getComposition, bool getFromCache)
         {
              EntityKeys = new AccountingEntitiesJournalKeys(){ Id = id };
 

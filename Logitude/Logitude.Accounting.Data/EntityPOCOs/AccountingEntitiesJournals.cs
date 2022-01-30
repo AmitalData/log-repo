@@ -28,7 +28,7 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string Action { get; set; }
      [Key]
         [Column("Id")]
-	    public string Id { get; set; }
+	    public int Id { get; set; }
         [Column("ChildEntityId")]
 	    public string ChildEntityId { get; set; }
     }
