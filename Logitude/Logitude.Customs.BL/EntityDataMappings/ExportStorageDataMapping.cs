@@ -47,7 +47,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
         public void CustomPOCOToPM(ExportStoragePM entityPM, ExportStorage entityPOCO)
         {
             var declarationQueryService = new DeclarationQueryService(entityPOCO.Tenant);
-            DeclarationPM declarationPM = entityPOCO.DeclarationId != null ? declarationQueryService.GetSingleDeclarationById(entityPOCO.DeclarationId, entityPOCO.Tenant) : null;
+
+
+            DeclarationPM declarationPM = entityPOCO.DeclarationId != null ? declarationQueryService.GetSingleDeclarationById(entityPOCO.DeclarationId, entityPOCO.Tenant) : new DeclarationPM();
+
+
+                
 
             var cargoTypeQueryService = new CargoTypeQueryService(entityPOCO.Tenant);
             CargoTypePM cargoTypePM = cargoTypeQueryService.GetSingle(entityPOCO.CargoType, false, true);
