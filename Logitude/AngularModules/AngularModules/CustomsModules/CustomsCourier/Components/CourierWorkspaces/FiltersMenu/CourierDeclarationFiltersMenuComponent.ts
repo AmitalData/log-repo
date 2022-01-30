@@ -3,6 +3,7 @@ import { Component, AfterViewInit, EventEmitter, ContentChild, ViewChild, ViewCh
 import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { EntityResourceService } from "Infrastructure/Services/EntityResourceService";
 import { AppTool } from "Infrastructure/Tools";
+import { FeatureLocator } from "Infrastructure/Utilities/FeatureLocator";
 
 @Component({
     selector: 'CourierDeclarationFiltersMenuComponent',
@@ -14,13 +15,16 @@ export class CourierDeclarationFiltersMenuComponent
     implements AfterViewInit {
     @Output() SelectedValueChanged = new EventEmitter();
     @Input() ShowIntegratorFilter: boolean = false;;
-    public showFilter = false;
+    public showFilter:boolean;
     apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
     public DataContext = this;
     constructor(private _entityResourceService: EntityResourceService, private _CD: ChangeDetectorRef) {
         super();
+        this.showFilter=false;
         this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus", 0).subscribe((response: any) => {
-            this.showFilter = true;
+            if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "IntegratorFilter")) {
+                this.showFilter = true;
+            }
             this._CD.detectChanges();
         });
     }
