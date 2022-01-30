@@ -64,9 +64,21 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="CustomsDocumentUpload"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="PointerLevel"
     ReferencedTable="PointerLevels"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CustomsDocumentUpload"
+    ReferencedTable="CustomsDocumentUploads"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>
