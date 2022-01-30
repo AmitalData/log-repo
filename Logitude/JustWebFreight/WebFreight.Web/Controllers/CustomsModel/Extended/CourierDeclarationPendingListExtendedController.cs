@@ -112,7 +112,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                             string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
-                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+                            bool isCustom = filter.FieldName == "CargoDescription" || filter.FieldName == "CourierMasterId" ? filter.IsCustom : field.IsCustomFilter;
+
+                            queryOperations.SetFilter(filter.FieldName, value1, isCustom, filter.Operator, value2, field.DisplayInList);
                         }
                         else
                         {

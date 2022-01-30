@@ -110,6 +110,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     IsFiltered: boolean = false;
     IsMamanEnabled: boolean = false;
     isAllowAccounting: boolean = false;
+    isAllowBulkPendind: boolean = false;
     IsILOVLEnabled: boolean = false;
     IsILSWSEnabled: boolean = false;
 
@@ -148,6 +149,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         this.GetMamanPUR();
         this.GetIsSendDocumentsFromQueueButton();
         this.isAllowAccounting = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowAccounting")
+        this.isAllowBulkPendind = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowBulkPendind")
     }
     //PseventRowSelectEventSubscribe: any;
     ngOnDestroy() {
