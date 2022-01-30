@@ -65,13 +65,14 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             {
                 ReconciliationId = a.ReconciliationId,
                 TransactionId = a.TransactionId,
-                TransactionAmount = 
+                TransactionAmount =Math.Abs( 
                 (a.LedgerTransaction != null ? 
                     a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountCredit : a.LedgerTransaction.ForeignAmountCredit
                     : 0
                 ) == 0 ?
                     -1 * (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountDebit : a.LedgerTransaction.ForeignAmountDebit : 0)
                     : (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountCredit : a.LedgerTransaction.ForeignAmountCredit : 0)
+                    )
 
                 
 

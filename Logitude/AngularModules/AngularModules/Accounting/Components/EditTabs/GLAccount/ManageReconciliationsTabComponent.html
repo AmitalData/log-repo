@@ -1,4 +1,4 @@
-﻿<table>
+<table>
     <tr>
         <td>
             <div class="TableHolder">
@@ -50,7 +50,7 @@
                                                 <td style="width: 30px;"><div></div></td>
 
                                                 <td style="width: 30px;" [style.text-align]="isRTL ? 'right' : 'left'">
-                                                    <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true"
+                                                    <LogTextBox [InputType]="'double'" [NoObjectField]="true"
                                                     [ObjectFieldName]="'Amount'" [Text]="Amount" [HideColumns]="true"
                                                     (ValueChanged)="AmountTextChanged($event)" [DebounceTime]="400"
                                                     [ObjectTableName]="'Reconciliation'" [DataContext]="this"></LogTextBox>

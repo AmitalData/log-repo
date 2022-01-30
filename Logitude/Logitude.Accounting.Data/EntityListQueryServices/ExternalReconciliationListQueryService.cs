@@ -92,7 +92,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 SearchFields = a.SearchFields,
                 CreditAmount = a.CreditAmount,
                 DebitAmount = a.DebitAmount,
-                Amount = a.CreditAmount != 0 ? a.CreditAmount : a.DebitAmount,
+                Amount = a.CreditAmount != 0 ? Math.Abs( a.CreditAmount ):Math.Abs( a.DebitAmount),
                 Notes = a.Notes,
                 ReconcileExternalPageId = a.ReconcileExternalPageId,
                 Id = a.Id,
@@ -122,7 +122,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                
                 ForeignAmountCredit = a.ForeignAmountCredit,
                 ForeignAmountDebit = a.ForeignAmountDebit,
-                ForeignAmount = a.ForeignAmountDebit == 0 ? a.ForeignAmountCredit : a.ForeignAmountDebit,
+                ForeignAmount = a.ForeignAmountDebit == 0 ? Math.Abs( a.ForeignAmountCredit) : Math.Abs(a.ForeignAmountDebit),
 
                 JournalLineNumber = a.JournalLineNumber,
                 LocalAmountCredit = a.LocalAmountCredit,
