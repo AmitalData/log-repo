@@ -23,6 +23,8 @@ namespace Logitude.Accounting.Data.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
+
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
             this.Property(t => t.AccountingEntityId).HasColumnName("AccountingEntityId").IsRequired().HasMaxLength(15).IsUnicode(false);
@@ -30,8 +32,6 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.AccountingEntityCode).HasColumnName("AccountingEntityCode").IsRequired().HasMaxLength(5).IsUnicode(false);
 
             this.Property(t => t.Action).HasColumnName("Action").IsRequired().HasMaxLength(100).IsUnicode(false);
-
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasDatabaseGeneratedOption(null);
 
             this.Property(t => t.ChildEntityId).HasColumnName("ChildEntityId").HasMaxLength(15).IsUnicode(false);
         }

@@ -32,7 +32,7 @@ export class AccountingEntitiesJournalPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/accountingentitiesjournals';      
     }
 
-	get(id: number) {       
+	get(id: string) {       
 
 		var callTime = new Date();		
 

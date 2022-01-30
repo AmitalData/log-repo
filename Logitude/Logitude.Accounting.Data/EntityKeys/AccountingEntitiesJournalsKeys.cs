@@ -12,7 +12,7 @@ namespace Logitude.Accounting.Data.EntityKeys
 {
    public partial class AccountingEntitiesJournalKeys : EntityKeyFields
    {
-   	  public int Id  { get; set; }
+   	  public string Id  { get; set; }
 	  
 				 
 	    			   

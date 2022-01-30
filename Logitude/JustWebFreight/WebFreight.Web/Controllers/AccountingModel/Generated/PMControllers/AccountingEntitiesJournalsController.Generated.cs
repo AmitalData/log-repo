@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(int id)
+        public HttpResponseMessage GetSingle(string id)
         {
 		  try
             {

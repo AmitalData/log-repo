@@ -24,6 +24,11 @@ export class AccountingEntitiesJournalPM {
       }
  	 
     
+    private id: string;
+    public get Id() { return this.id; }
+    public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
+       
+	 
     private tenant: number;
     public get Tenant() { return this.tenant; }
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
@@ -42,11 +47,6 @@ export class AccountingEntitiesJournalPM {
     private action: string;
     public get Action() { return this.action; }
     public set Action(newValue: string) { if (this.action != newValue) { this.action = newValue; this.MarkAsDirty("Action"); } }
-       
-	 
-    private id: number;
-    public get Id() { return this.id; }
-    public set Id(newValue: number) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
        
 	 
     private childEntityId: string;

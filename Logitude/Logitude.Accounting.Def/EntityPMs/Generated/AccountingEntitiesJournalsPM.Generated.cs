@@ -18,7 +18,32 @@ namespace Logitude.Accounting.Def.EntityPMs
    [DataContract]
    public partial class AccountingEntitiesJournalPM : EntityPM
    {
-   	  private int tenant ;
+   	  private string id ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Id  
+	   {
+	    
+	     get
+		{
+		   return id;
+		 }
+		 set
+		 {
+		   if(id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   id=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
@@ -106,31 +131,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Action",OldValue=action,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   action=value;
-		   }
-			
-		 }
-	   }
-	  private int id ;
-	  
-       [Key]
-	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int Id  
-	   {
-	    
-	     get
-		{
-		   return id;
-		 }
-		 set
-		 {
-		   if(id != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   id=value;
 		   }
 			
 		 }
