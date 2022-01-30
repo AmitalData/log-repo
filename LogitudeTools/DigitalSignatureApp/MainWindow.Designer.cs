@@ -29,8 +29,6 @@ namespace Cloud.Sign.App
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.ni = new System.Windows.Forms.NotifyIcon(this.components);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -59,14 +57,6 @@ namespace Cloud.Sign.App
             // 
             // pictureBox1
             // 
-            if (Environment == "DSV")
-            {
-                this.pictureBox1.Image = global::Cloud.Sign.App.Properties.Resources.HeaderLogo;
-            }
-            else
-            {
-                this.pictureBox1.Image = global::Cloud.Sign.App.Properties.Resources.LogBox;
-            }
             this.pictureBox1.Location = new System.Drawing.Point(237, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(148, 59);
@@ -79,16 +69,8 @@ namespace Cloud.Sign.App
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(12, 30);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(151, 18);
+            this.label1.Size = new System.Drawing.Size(0, 18);
             this.label1.TabIndex = 1;
-            if (Environment == "DSV")
-            {
-                this.label1.Text = "DSV Sign Client";
-            }
-            else
-            {
-                this.label1.Text = "LogBox Sign Client";
-            }
             // 
             // btnLogin
             // 
@@ -130,7 +112,7 @@ namespace Cloud.Sign.App
             this.cobTenants.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.cobTenants.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cobTenants.FormattingEnabled = true;
-            this.cobTenants.Location = new System.Drawing.Point(115, 34);
+            this.cobTenants.Location = new System.Drawing.Point(116, 34);
             this.cobTenants.Name = "cobTenants";
             this.cobTenants.Size = new System.Drawing.Size(210, 21);
             this.cobTenants.TabIndex = 9;
@@ -230,20 +212,10 @@ namespace Cloud.Sign.App
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
-
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            if (Environment == "DSV")
-            {
-                this.Text = "DSV Sign App";
-                this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.DsvIcon")));
-            }
-            else
-            {
-                this.Text = "LogBox Sign App";
-                this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            }
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.Resize += new System.EventHandler(this.MainWindow_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -257,6 +229,14 @@ namespace Cloud.Sign.App
         }
 
         #endregion
+
+        private void InitDSVView(System.ComponentModel.ComponentResourceManager resources)
+        {
+            this.pictureBox1.Image = global::Cloud.Sign.App.Properties.Resources.HeaderLogo;
+            this.label1.Text = "DSV Sign Client";
+            this.Text = "DSV Sign App";
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.DsvIcon")));
+        }
 
         private System.Windows.Forms.NotifyIcon ni;
         private System.Windows.Forms.PictureBox pictureBox1;
