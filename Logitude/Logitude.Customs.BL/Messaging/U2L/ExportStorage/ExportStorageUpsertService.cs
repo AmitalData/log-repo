@@ -191,7 +191,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ExportStorage
 
                 _DBExportStoragePM.CargoType = _UnifreigntExportStorage.CargoDetails.CargoType;
 
-                _DBExportStoragePM.StorageStatus = (_UnifreigntExportStorage.CustomStatus??"").ToLower();
+                _DBExportStoragePM.StorageStatus = (_UnifreigntExportStorage.StorageStatus ?? "").ToLower();
 
 
 
