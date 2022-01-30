@@ -134,4 +134,11 @@ DefaultValue="0">
 	<Index
   Columns="UseRabbitMQ"
    />
+
+
+	<Index
+  Columns="Status,NextRunDateTime,UseRabbitMQ,HaveRabbitMQ"
+   />
+
+
 </Table>
