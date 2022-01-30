@@ -1,5 +1,5 @@
-<div *ngIf="showFilter" style="width: 400px;">
-    <table>
+<div style="width: 400px;">
+    <table *ngIf="this.DataContext?.showFilter">
         <tr>
             <td style="width: 100px;">
                 <LogLabel [NoObjectField]="true" [ObjectFieldName]="'IntegratorCode'"

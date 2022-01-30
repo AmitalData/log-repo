@@ -4,6 +4,7 @@ import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { EntityResourceService } from "Infrastructure/Services/EntityResourceService";
 import { AppTool } from "Infrastructure/Tools";
 import { FeatureLocator } from "Infrastructure/Utilities/FeatureLocator";
+import { DenyReasonComponent } from "ShipmentModules/ShipmentLogBox/Components/Logbox/DenyReasonComponent";
 
 @Component({
     selector: 'CourierDeclarationFiltersMenuComponent',
@@ -15,12 +16,14 @@ export class CourierDeclarationFiltersMenuComponent
     implements AfterViewInit {
     @Output() SelectedValueChanged = new EventEmitter();
     @Input() ShowIntegratorFilter: boolean = false;;
-    public showFilter:boolean;
+    public showFilter: boolean=false;
     apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
     public DataContext = this;
     constructor(private _entityResourceService: EntityResourceService, private _CD: ChangeDetectorRef) {
         super();
-        this.showFilter=false;
+    }
+    ngAfterViewInit(): void {
+        this.showFilter = false;
         this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus", 0).subscribe((response: any) => {
             if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "IntegratorFilter")) {
                 this.showFilter = true;
@@ -28,18 +31,15 @@ export class CourierDeclarationFiltersMenuComponent
             this._CD.detectChanges();
         });
     }
-    ngAfterViewInit(): void {
-
-    }
 
     SelectedValueChangedEmitIntegrator() {
         var removeFilter = false;
         this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "IntegratorCode");
         this.apiQueryFilters.addAdditionalFilter("IntegratorCode", this.IntegratorCode, null, null, "Equal", true, false, false, "string", true);
         if (AppTool.IsNullOrEmpty(this.IntegratorCode)) {
-            removeFilter=true;
+            removeFilter = true;
         }
-        this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters,RemoveFilter: removeFilter});
+        this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: removeFilter });
 
     }
 
