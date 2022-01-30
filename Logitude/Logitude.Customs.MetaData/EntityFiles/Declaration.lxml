@@ -18912,6 +18912,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IntegratorCode&quot;"
     ListPropertyPath="&quot;IntegratorCode&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
