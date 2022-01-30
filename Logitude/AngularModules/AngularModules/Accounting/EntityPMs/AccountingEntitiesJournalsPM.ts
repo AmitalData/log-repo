@@ -44,9 +44,9 @@ export class AccountingEntitiesJournalPM {
     public set Action(newValue: string) { if (this.action != newValue) { this.action = newValue; this.MarkAsDirty("Action"); } }
        
 	 
-    private id: string;
+    private id: number;
     public get Id() { return this.id; }
-    public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
+    public set Id(newValue: number) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
        
 	 
     private childEntityId: string;

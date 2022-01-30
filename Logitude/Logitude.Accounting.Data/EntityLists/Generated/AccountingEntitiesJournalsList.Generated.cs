@@ -23,7 +23,7 @@ namespace Logitude.Accounting.Data.EntityLists
 
        [Key]
        [DataMember]
-       public string Id  { get; set; }
+       public int Id  { get; set; }
        [DataMember]
        public string ChildEntityId  { get; set; }
    }
