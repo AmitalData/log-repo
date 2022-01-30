@@ -46,7 +46,7 @@ import { GeneralDomainService } from '../../../Infrastructure/Services/GeneralDo
 import { TenantList } from 'Common/EntityLists/TenantList';
 
 @Component({
-    
+
     templateUrl: './LoginComponent.html',
     providers: [ApplicationTimersManager, LogitudeApplicationService, UserLastLoginPMService]
 })
@@ -170,7 +170,10 @@ export class LoginComponent implements OnInit {
             this.StartLoginProcess();
         }
         
-        if(isDevMode())
+
+        // if (isDevMode())
+        //     this.developerLogin();
+         if(isDevMode())
             this.developerLogin();
     }
 
@@ -185,6 +188,17 @@ export class LoginComponent implements OnInit {
         this.SelectedCompany = this.TenantList.find(d => d.Tenant == 6);
         this.ContinueClicked()
     }
+
+    // async developerLogin() {
+    //     this.Email = 'itzik@amital.co.il'
+    //     this.Password = '';
+    //     this.LoginClicked(); 
+    //     while (!this.TenantList?.length)
+    //         await new Promise<void>(resolve => setTimeout(() => resolve(), 100));
+    //     this.SelectedCompany = this.TenantList.find(d => d.Tenant == 6);
+    //     this.ContinueClicked()
+    // }
+
 
     IsShowLoginForm: boolean = false;
 
@@ -500,7 +514,7 @@ export class LoginComponent implements OnInit {
     VerifyClicked() {
         if (!AppTool.IsNullOrEmpty(this.VerficationCode)) {
             this.HidePendingLoading = false;
-            this.loginService.PostAuthenticationDeviceVerificationCode(this.LoggedUserData.TwoFactorkey, this.VerficationCode, Number(this.LoggedUserData.CurrentTenant + "")).subscribe((res:any) => {
+            this.loginService.PostAuthenticationDeviceVerificationCode(this.LoggedUserData.TwoFactorkey, this.VerficationCode, Number(this.LoggedUserData.CurrentTenant + "")).subscribe((res: any) => {
                 this.HidePendingLoading = true;
                 if (res == true) {
                     this.ShowTwoFactorAuthenScreen = false;
@@ -967,49 +981,49 @@ export class LoginComponent implements OnInit {
 
 
     private CheckTenantBlocking(userData: any) {
-                var isSystemBlocked = false;
-                var todayDateTicks = DateTool.GetCurrentDateAsUtc().valueOf();
+        var isSystemBlocked = false;
+        var todayDateTicks = DateTool.GetCurrentDateAsUtc().valueOf();
 
-                if(SessionLocator.TenantManagementJS.PaymentFailure) {
+        if (SessionLocator.TenantManagementJS.PaymentFailure) {
 
-                    if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.SuspendDate)) {
-                        isSystemBlocked = true;
-                        SessionLocator.BlockType = "company";
-                    }
+            if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.SuspendDate)) {
+                isSystemBlocked = true;
+                SessionLocator.BlockType = "company";
+            }
 
-                    else if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.SuspendDate).DateTicks < todayDateTicks) {
-                        isSystemBlocked = true;
-                        SessionLocator.BlockType = "suspend";
-                    }
+            else if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.SuspendDate).DateTicks < todayDateTicks) {
+                isSystemBlocked = true;
+                SessionLocator.BlockType = "suspend";
+            }
+        }
+
+        if (!isSystemBlocked) {
+            if (SessionLocator.TenantManagementJS.IsTrial) {
+
+                if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.TrialEndDate)) {
+                    isSystemBlocked = true;
+                    SessionLocator.BlockType = "company";
                 }
 
-        if(!isSystemBlocked) {
-                    if (SessionLocator.TenantManagementJS.IsTrial) {
-
-                        if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.TrialEndDate)) {
-                            isSystemBlocked = true;
-                            SessionLocator.BlockType = "company";
-                        }
-
-                        else if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.TrialEndDate).DateTicks < todayDateTicks) {
-                            isSystemBlocked = true;
-                            SessionLocator.BlockType = "company";
-                        }
-                    }
+                else if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.TrialEndDate).DateTicks < todayDateTicks) {
+                    isSystemBlocked = true;
+                    SessionLocator.BlockType = "company";
                 }
+            }
+        }
 
-        if(!isSystemBlocked) {
-                    if (!AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.PaidUntilDate)) {
+        if (!isSystemBlocked) {
+            if (!AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.PaidUntilDate)) {
 
-                        if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.PaidUntilDate).DateTicks < todayDateTicks && !SessionLocator.TenantManagementJS.IsRecurring) {
-                            isSystemBlocked = true;
-                            SessionLocator.BlockType = "company";
-                        }
-                    }
+                if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.PaidUntilDate).DateTicks < todayDateTicks && !SessionLocator.TenantManagementJS.IsRecurring) {
+                    isSystemBlocked = true;
+                    SessionLocator.BlockType = "company";
                 }
+            }
+        }
 
         this.LoadClosedTablesToWindow(userData.CurrentTenant);
-            }
+    }
 
     private timerToken: any;
     private TotalNumberOfLoads: number = 0;
@@ -1056,10 +1070,10 @@ export class LoginComponent implements OnInit {
                 }
             }
 
-          if (this.CompletedLoadsCount === this.TotalNumberOfLoads && this.generalTableResourcesIsLoaded === true) {
-              console.log("===============>Changing Page<==================");
-              this.SetLayoutDirection();
-              
+            if (this.CompletedLoadsCount === this.TotalNumberOfLoads && this.generalTableResourcesIsLoaded === true) {
+                console.log("===============>Changing Page<==================");
+                this.SetLayoutDirection();
+
                 ServiceLocator.RulesValidator = new RulesValidator();
                 this.timerToken = setTimeout(() => this.ChangePage(), 1000);
             }
@@ -1089,7 +1103,7 @@ export class LoginComponent implements OnInit {
 
 
 
-    
+
 
 }
 

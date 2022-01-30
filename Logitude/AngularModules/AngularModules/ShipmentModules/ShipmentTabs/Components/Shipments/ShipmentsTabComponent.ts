@@ -17,6 +17,7 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import { ShipmentSubTypeListService } from '../../../../Shipment/Services/StandardLists/ShipmentSubTypeListService';
 import { ShipmentSubTypeList } from '../../../../Shipment/EntityLists/ShipmentSubTypeList';
 
+
 @Component({
     
     templateUrl: './ShipmentsTabComponent.html',

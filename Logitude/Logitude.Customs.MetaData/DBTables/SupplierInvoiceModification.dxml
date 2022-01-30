@@ -24,7 +24,7 @@
     Type="varchar"
     Size="3">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="Tenant"
@@ -53,6 +53,14 @@
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
+  </Column>
+  <Column
+    Name="TypeDesc"
+    OldNames="TypeCodeRemarks"
+    Type="nvarchar"
+    Size="256">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="DeclarationId,InvoiceCounterKey"

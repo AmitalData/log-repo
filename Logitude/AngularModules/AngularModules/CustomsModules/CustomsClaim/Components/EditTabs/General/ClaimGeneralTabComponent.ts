@@ -20,6 +20,7 @@ import { ClaimPMService } from '../../../../../Customs/Services/StandardPMs/Clai
 import { ClientPMService } from '../../../../../Customs/Services/StandardPMs/ClientPMService';
 import { Validator } from '../../../../../Infrastructure/Validators/Validator';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
+import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 @Component({
     
@@ -43,6 +44,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
     public CurrentEditComponentId: string;
     private isControlEnabled: boolean = true;
     IsClientPassportEnabled: boolean = false;
+    _declarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
 
     public ClaimPMService: ClaimPMService = new ClaimPMService;
     public ClientMessagesService: ClientMessagesService = new ClientMessagesService;
@@ -514,6 +516,34 @@ export class ClaimGeneralTabComponent extends BaseComponent {
     }
 
 
+    NavigateToDeclarationButtonClicked(item: ClaimsRelatedEntityLineComponent) {
+        debugger;
+        this._declarationExtendedListService.GetSingleDeclarationByNumber(item.ClaimEntityNumber?.trim(), SessionLocator.Tenant).subscribe((myResult: any) => {
+
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError) {
+                var entity = mm.Result;
+                if (entity != null) {
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.currentSession.SessionLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'Customs.Declaration', BackButtonLabel: "הצהרת יבוא" });
+                            //cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                            //    DeclarationEventManager.DisplayModeChanged.emit(null);
+                            //});
+                        });
+                }
+                else {
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Width = 250;
+                    messageWindow.Height = 150;
+                    messageWindow.RTL = true;
+                    messageWindow.Show("לא נמצאה הצהרה");
+                }
+            }
+        });
+    }
+
     CancelOrObjectionButtonClicked(item: ClaimsRelatedEntityLineComponent) {
         if (!this.IsControlEnabled) return;
 
@@ -624,6 +654,10 @@ export class ClaimsRelatedEntityLineComponent extends BaseComponent {
 
     public get ClaimEntityTypeName() { return this.entityPM.ClaimEntityTypeName; }
     public set ClaimEntityTypeName(newValue: string) { this.entityPM.ClaimEntityTypeName = newValue; }
+
+    public get ClaimEntityType() { return this.entityPM.ClaimEntityTypeCode; }
+    public set ClaimEntityType(newValue: string) { this.entityPM.ClaimEntityTypeCode = newValue; }
+
 
     public get ClaimEntityNumber() { return this.entityPM.ClaimEntityNumber; }
     public set ClaimEntityNumber(newValue: string) { this.entityPM.ClaimEntityNumber = newValue; }

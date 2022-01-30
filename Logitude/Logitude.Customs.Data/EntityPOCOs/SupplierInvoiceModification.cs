@@ -45,6 +45,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
      [Key]
         [Column("ModificationCounterKey" ,Order = 3)]
 	    public int ModificationCounterKey { get; set; }
+        [Column("TypeDesc")]
+	    public string TypeDesc { get; set; }
     }
 }
 	 
