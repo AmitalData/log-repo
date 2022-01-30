@@ -41,15 +41,73 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                  AccountName = a.Account != null ? a.Account.EnglishName : null,
                                                  IsCancelled = a.IsCancelled,
                                              });
+
             return query;
         }
 
 		private IQueryable<Reconciliation> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<Reconciliation> iQueryable,int tenant)
         {
+            var reconciliationLinesQueryOperations = GetReconciliationLinesQueryOperations(queryOperations);
+            if (reconciliationLinesQueryOperations == null)
+                return iQueryable;
+            GenericFilter filter = new GenericFilter();
+            var reconciliationLinesQuery = GetIQueryableReconciliation(tenant);
+            reconciliationLinesQuery = filter.GetFilteredQuery(reconciliationLinesQueryOperations, reconciliationLinesQuery);
+            iQueryable = iQueryable.Where(w => reconciliationLinesQuery.Where(e=>e.ReconciliationId == w.Id).Any());
+            
             return iQueryable;
 		}
 
-		private IQueryable<Reconciliation> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<Reconciliation> iQueryable,int tenant)
+        private IQueryable<ReconciliationLineList> GetIQueryableReconciliation(int tenant)
+        {
+            return context.ReconciliationLines.Include(e=>e.LedgerTransaction.Account).Select(a=>
+            new ReconciliationLineList()
+            {
+                ReconciliationId = a.ReconciliationId,
+                TransactionId = a.TransactionId,
+                TransactionAmount =Math.Abs( 
+                (a.LedgerTransaction != null ? 
+                    a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountCredit : a.LedgerTransaction.ForeignAmountCredit
+                    : 0
+                ) == 0 ?
+                    -1 * (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountDebit : a.LedgerTransaction.ForeignAmountDebit : 0)
+                    : (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountCredit : a.LedgerTransaction.ForeignAmountCredit : 0)
+                    )
+
+                
+
+            }
+            );
+        }
+
+        private QueryOperations GetReconciliationLinesQueryOperations(QueryOperations queryOperations)
+        {
+            var filterFieldName = "TransactionAmount";
+            var reconciliationAmountFieldOperations = queryOperations.QueryFilterItems.Where(e => e.FieldName == filterFieldName).FirstOrDefault();
+            if (reconciliationAmountFieldOperations == null)
+                return null;
+            var reconciliationLinesQueryOperations = CreateReconciliationLinesQueryOperations(reconciliationAmountFieldOperations);
+            return reconciliationLinesQueryOperations;
+        }
+
+        private QueryOperations CreateReconciliationLinesQueryOperations(QueryFilterItem reconciliationAmountFieldOperations)
+        {
+            return new QueryOperations()
+            {
+                GetAll = true,
+                QueryFilterItems = new List<QueryFilterItem>()
+                {
+                    new QueryFilterItem()
+                    {
+                        FieldName = reconciliationAmountFieldOperations.FieldName,
+                        FieldValue = decimal.Parse(reconciliationAmountFieldOperations.FieldValue.ToString()),
+                        Operator = reconciliationAmountFieldOperations.Operator
+                    }
+                }
+            };
+        }
+
+        private IQueryable<Reconciliation> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<Reconciliation> iQueryable,int tenant)
         {
 			return iQueryable;
 		}
