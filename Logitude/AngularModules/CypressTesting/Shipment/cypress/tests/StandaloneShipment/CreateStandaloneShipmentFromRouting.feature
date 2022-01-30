@@ -1,3 +1,4 @@
+@devrelease @standalone
 Feature: Create Standalone Shipment from Routing
     The user creates a Direct Import Ocean FCL shipment, create standalone shipment from pickup,create standalone shipment  from pickup child,
     create standalone shipment from routing
@@ -19,32 +20,28 @@ Feature: Create Standalone Shipment from Routing
     Scenario: Create standalone shipment from routing in pickup screen
         Given the user open the shipment and navigate to RoutingsTab workspace
         And add Standalone Shipment With Pickup leg with the following details
-            | From        | Partner            |
-            | FromPartner | Testagent          |
-            | To          | CasualAddress      |
-            | ToCountry   | State Of Palestine |
-            | ToCity      | Bethlehem          |
+            | From        | Partner             |
+            | FromPartner | TestConsigneeImport |
+            | To          | CasualAddress       |
+            | ToCountry   | State Of Palestine  |
+            | ToCity      | Bethlehem           |
         When create shipment
         Then a domestic inland shipment should create
-        And the cancel ,operational close Shipment,convert to custom file and Send Response action in more button shouldn't be dim
+        And the cancel, operational close Shipment, convert to custom file and Send Response actions in more button shouldn't be dim
         And all other actions should be dim
-        And all fields should be dim in pickup window
+        And the pickup will add all fields should be dim in pickup window
         And the link of standalon should display
 
     Scenario: Create standalone shipment from routing in Delivary screen
-        Given the user in the shipment routings tab
-        And add Standalone Shipment With delivary leg with the following details
-            | Shipper  | TestShipperExport      |
+        Given the user in the shipment's routings tab
+        And add Standalone Shipment With delivery leg with the following details
             | From     | Port                   |
-            | FromName | Brandscheid/Westerwald |
-            | To       | Casual Address         |
-            | Country  | Germany                |
-            | City     | test                   |
+            | FromPort | Brandscheid/Westerwald |
+            | To       | Port                   |
+            | ToPort   | Brandshagen            |
         When create shipment
         Then a domestic inland shipment should create
-        And delivary leg will create
-        And the cancel ,operational close Shipment,convert to custom file and Send Response action in more button shouldn't be dim
+        And the cancel, operational close Shipment, convert to custom file and Send Response actions in more button shouldn't be dim
         And all other actions should be dim
-        And all fields should be dim in pickup window
+        And the delivery will add all fields should be dim in delivery window
         And the link of standalon should display
-

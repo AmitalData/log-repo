@@ -42,7 +42,6 @@ Feature: Add Two Container with the same container number from two standalone sh
         Then the direct shipment should save successfully
         And The container appear in the pickup
 
-
     Scenario: Create standalone shipment when the second  pickup is FullResponsibility and from partner to partner with same countries
         Given the user in the shipment's routong tab
         And add a new pickup leg with the following details
@@ -65,4 +64,3 @@ Feature: Add Two Container with the same container number from two standalone sh
             | Bulk        | ABCD1234560     | 100         |
         When save shipment
         Then a validation message with "Cannot have 2 containers with same number" error should appear
-

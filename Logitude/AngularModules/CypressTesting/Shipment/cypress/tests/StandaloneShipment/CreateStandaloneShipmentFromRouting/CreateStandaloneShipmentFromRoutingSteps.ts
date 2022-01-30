@@ -42,7 +42,7 @@ Then("the shipment should create successfully", () => {
 });
 //#endregion
 
-//#region create Standalone shipment
+//#region create Standalone shipment from pickup routing 
 Given("the user open the shipment and navigate to RoutingsTab workspace", () => {
   Actions.OpenShipment(shipmentNumber);
   cy.Click(ShipmentSelectors.RoutingsTab, null)
@@ -55,20 +55,49 @@ Given("add Standalone Shipment With Pickup leg with the following details", (dat
   StandaloneAction.CreateStandaloneShipmentFromRoutingDetails(PickupDelivarytData);
 });
 
-When("create shipment",()=>{
-  cy.DefineRequestWait(RestAPI.POST, URLs.Shipment, RequestAliases.ShipmentStandaloneRequest)
+When("create shipment", () => {
+  cy.DefineRequestWait(RestAPI.POST, URLs.Shipment, RequestAliases.ShipmentRequest)
   cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, ShipmentConstants.Create)
 })
 
 Then("a domestic inland shipment should create", () => {
-  BaseAssertion.AssertStatusCode(RequestAliases.ShipmentStandaloneRequest, 200);
+  BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });
 
 Then("the cancel, operational close Shipment, convert to custom file and Send Response actions in more button shouldn't be dim", () => {
   cy.Click(BaseSelectors.ToggleButtonClass + BaseSelectors.LastElement, null)
   StandaloneAction.AssertShipmenteMenuButtonsEnabled()
 })
-
 Then("all other actions should be dim", () => {
   StandaloneAction.AssertShipmenteMenuButtonsDisabled()
 })
+
+Then("the pickup will add all fields should be dim in pickup window", () => {
+  cy.Navigate(ShipmentSelectors.Backbutton + BaseSelectors.LastElement, true)
+  cy.Click(ShipmentSelectors.EditPickUp, null)
+  StandaloneAction.AssertShipmentPickupDelivaryWindowFields(BaseSelectors.BeDisabled)
+})
+
+Then("the link of standalon should display", () => {
+  BaseAssertion.AssertElementExist(ShipmentSelectors.StandaloneShipmentHyperlink)
+})
+//#endregion
+
+//#region create Standalone shipment from delivery routing 
+Given("the user in the shipment's routings tab", () => {
+  cy.Click(ShipmentSelectors.CloseBtn, null)
+  cy.Click(ShipmentSelectors.RoutingToggle, null)
+  cy.Click(ShipmentSelectors.Delivery, null)
+  cy.Click(BaseSelectors.Button, ShipmentConstants.AddStandAloneShipmentWithDelivery)
+})
+Given("add Standalone Shipment With delivery leg with the following details", (dataTable) => {
+  PickupDelivarytData = Assists.CreateInstance<PickupDelivaryDetails>(dataTable, true);
+  StandaloneAction.CreateStandaloneShipmentFromRoutingDetails(PickupDelivarytData);
+});
+
+Then("the delivery will add all fields should be dim in delivery window", () => {
+  cy.Navigate(ShipmentSelectors.Backbutton + BaseSelectors.LastElement, true)
+  cy.Click(ShipmentSelectors.EditPickUp, null)
+  StandaloneAction.AssertShipmentPickupDelivaryWindowFields(BaseSelectors.BeDisabled)
+})
+//#endregion

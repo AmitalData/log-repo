@@ -24,7 +24,3 @@ Feature: Add Two container with the same container number in forwarder shipment
             | Bulk        | 10              | 100         |
         When save shipment
         Then a validation message with "Cannot have 2 containers with the same number, you can use inside packages to add detailed packages" error should appear
-
-
-
-

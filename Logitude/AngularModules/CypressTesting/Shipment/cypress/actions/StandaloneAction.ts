@@ -57,7 +57,6 @@ export function CreateStandaloneShipment() {
 }
 
 export function AssertShipmenteMenuButtonsEnabled() {
-   BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentBConvertToCustomFile + BaseSelectors.LastElement, BaseSelectors.NotBeDisabled)
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentBOperationalClose + BaseSelectors.LastElement, BaseSelectors.NotBeDisabled)
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentBSendResponse + BaseSelectors.LastElement, BaseSelectors.NotBeDisabled)
    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentBCancelShipment + BaseSelectors.LastElement, BaseSelectors.NotBeDisabled)
@@ -122,6 +121,13 @@ export function StandaloneShipmentOpenPackageTab(){
    cy.Click(ShipmentSelectors.AddPackage, null)
    cy.Click(ShipmentSelectors.AddPackagesInStandalone, null)
 }
+
+export function CreateStandaloneShipmentFromRoutingDetails(pickupdelivaryDetails: PickupDelivaryDetails) {
+   FillPickupDeliveryRouting(pickupdelivaryDetails)
+   FillStandaloneShipmentFromTypeDetails(pickupdelivaryDetails)
+   FillStandaloneShipmentToTypeDetails(pickupdelivaryDetails)
+}
+
 export function OpenRoutingTabAddPickUp(){
   cy.Click(ShipmentSelectors.RoutingsTab, null)
   cy.Click(ShipmentSelectors.AddPickUp, null)
@@ -151,10 +157,4 @@ export function FillStandaloneShipmentToTypeDetails(standaloneDetails: PickupDel
       cy.FillLogLov(ShipmentSelectors.ShipmentInlandDomesticToCountry, standaloneDetails.ToCountry,true)
       cy.FillLogTextBox(ShipmentSelectors.ShipmentInlandDomesticToCity, standaloneDetails.ToCity)
    }
-}
-
-export function CreateStandaloneShipmentFromRoutingDetails(pickupdelivaryDetails: PickupDelivaryDetails) {
-   FillPickupDeliveryRouting(pickupdelivaryDetails)
-   FillStandaloneShipmentFromTypeDetails(pickupdelivaryDetails)
-   FillStandaloneShipmentToTypeDetails(pickupdelivaryDetails)
 }
