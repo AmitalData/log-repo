@@ -19,5 +19,6 @@ export class EntityStatusList {
 		DisplayName: string;
 		StatusLocalWeight: number;
 		EntityStatusTypeCode: string;
+		AllowPartial: boolean;
 	
 }

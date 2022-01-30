@@ -1842,6 +1842,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.FBLIsFromStock = shipment.FBLIsFromStock;
             shipmentPM.StatusId = shipment.StatusId;
             shipmentPM.StatusLocation = shipment.StatusLocation;
+            shipmentPM.PartialStatusAmount = shipment.PartialStatusAmount;
             shipmentPM.StatusDate = shipment.StatusDate;
             shipmentPM.LastSentByUserId = shipment.LastSentByUserId;
             shipmentPM.ProfitCurrencyId = shipment.ProfitCurrencyId;
@@ -1891,6 +1892,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         {
                             shipmentPM.StatusDate = masterData.StatusDate;
                             shipmentPM.StatusLocation = masterData.StatusLocation;
+                            shipmentPM.PartialStatusAmount = masterData.PartialStatusAmount;
                         }
                     }
 
@@ -4856,6 +4858,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         StatusName = s.EntityStatus != null ? s.EntityStatus.Name : null,
                                                         StatusDate = s.StatusDate,
                                                         StatusLocation = s.StatusLocation,
+                                                        PartialStatusAmount=s.PartialStatusAmount,
                                                         ForeignPartnerCountryCode = s.ForeignPartnerCountryCode,
                                                         AgentSharedManifestRef = s.AgentSharedManifestRef,
                                                         IsManifestSentToAgent = s.IsManifestSentToAgent,
@@ -11880,6 +11883,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          StatusName = s.EntityStatus != null ? s.EntityStatus.Name : null,
                                                          StatusDate = s.StatusDate,
                                                          StatusLocation = s.StatusLocation,
+                                                         PartialStatusAmount = s.PartialStatusAmount,
                                                          ForeignPartnerCountryCode = s.ForeignPartnerCountryCode,
                                                          DescriptionOfGoods = s.DescriptionOfGoods,
                                                          AgentSharedManifestRef = s.AgentSharedManifestRef,
@@ -13687,6 +13691,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          StatusName = s.EntityStatus != null ? s.EntityStatus.Name : null,
                                                          StatusDate = s.StatusDate,
                                                          StatusLocation = s.StatusLocation,
+                                                         PartialStatusAmount = s.PartialStatusAmount,
                                                          ForeignPartnerCountryCode = s.ForeignPartnerCountryCode,
                                                          DescriptionOfGoods = s.DescriptionOfGoods,
                                                          AgentSharedManifestRef = s.AgentSharedManifestRef,

@@ -3342,6 +3342,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="PartialStatusAmount"
+    Type="nvarchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"

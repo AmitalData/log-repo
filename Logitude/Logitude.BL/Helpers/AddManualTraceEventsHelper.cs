@@ -181,6 +181,7 @@ namespace Logitude.BL.Helpers
                                     entityPM.StatusId = eventType.EntityStatusId;
                                     entityPM.StatusDate = newTraceEvent.EventDateTime;
                                     entityPM.StatusLocation = null;
+                                    entityPM.PartialStatusAmount = null;
                                     entityPM.LastStatusLogDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                                     entityPM.IsStatusChange = true;
                                     myResult.StatusChanged = true;
@@ -189,6 +190,7 @@ namespace Logitude.BL.Helpers
                                     myResult.StatusName = newStatus.Name;
                                     myResult.StatusDate = entityPM.StatusDate;
                                     myResult.StatusLocation = entityPM.StatusLocation;
+                                    myResult.PartialStatusAmount = entityPM.PartialStatusAmount;
                                     myResult.LastStatusLogDate = entityPM.LastStatusLogDate;
                                 }
 
@@ -207,6 +209,7 @@ namespace Logitude.BL.Helpers
                                         entityPM.StatusId = newStatusId;
                                         entityPM.StatusDate = newTraceEvent.EventDateTime;
                                         entityPM.StatusLocation = null;
+                                        entityPM.PartialStatusAmount = null;
                                         entityPM.LastStatusLogDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                                         entityPM.IsStatusChange = true;
                                         myResult.StatusChanged = true;
@@ -215,6 +218,7 @@ namespace Logitude.BL.Helpers
                                         myResult.StatusName = newStatus.Name;
                                         myResult.StatusDate = entityPM.StatusDate;
                                         myResult.StatusLocation = entityPM.StatusLocation;
+                                        myResult.PartialStatusAmount = entityPM.PartialStatusAmount;
                                         myResult.LastStatusLogDate = entityPM.LastStatusLogDate;
                                     }
                                 }

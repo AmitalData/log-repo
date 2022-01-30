@@ -79,8 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-
-		public const string HashString = "f73cfdeb5f83daebafb7f6e0f6c67047";
+		public const string HashString = "0f6945ffa807ed640e781d84a795b450";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2465,8 +2464,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_GeneralMCOthersEntityStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.EntityStatus", DefaultText = "Entity Status",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMCCustomerTeam = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.CustomerTeam", DefaultText = "Customer Teams",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
- 		   
-			TextCode GeneralTextCode_GeneralOWrongVatNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.WrongVatNumber", DefaultText = "Wrong Vat Number",LocalDefaultText = @"חפ שגוי", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralOWrongVatNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.WrongVatNumber", DefaultText = "Wrong Vat Number",LocalDefaultText = @"חפ שגוי", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

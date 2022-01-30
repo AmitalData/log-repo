@@ -56,6 +56,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   DisplayName = !string.IsNullOrEmpty(a.DisplayName) ? a.DisplayName : a.Name,
                                                   EntityStatusTypeCode = a.EntityStatusTypeCode,
                                                   StatusLocalWeight = a.StatusLocalWeight,
+                                                  AllowPartial = a.AllowPartial,
                                               });;
                         foreach (var s in entitystatuses)
                         {
@@ -111,6 +112,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                  DisplayName = !string.IsNullOrEmpty(a.DisplayName) ? a.DisplayName : a.Name,
                                                  EntityStatusTypeCode = a.EntityStatusTypeCode,
                                                  StatusLocalWeight = a.StatusLocalWeight,
+                                                 AllowPartial = a.AllowPartial,
                                              }).FirstOrDefault();
 
                     entity = status;
@@ -149,6 +151,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   DisplayName = !string.IsNullOrEmpty(a.DisplayName) ? a.DisplayName : a.Name,
                                                   EntityStatusTypeCode = a.EntityStatusTypeCode,
                                                   StatusLocalWeight = a.StatusLocalWeight,
+                                                  AllowPartial = a.AllowPartial,
                                               });
                         foreach (var s in entitystatuses)
                         {
@@ -204,6 +207,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                  DisplayName = !string.IsNullOrEmpty(a.DisplayName) ? a.DisplayName : a.Name,
                                                  EntityStatusTypeCode = a.EntityStatusTypeCode,
                                                  StatusLocalWeight = a.StatusLocalWeight,
+                                                 AllowPartial = a.AllowPartial,
                                              }).FirstOrDefault();
 
                     entity = status;
@@ -235,6 +239,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DisplayName = !string.IsNullOrEmpty(a.DisplayName) ? a.DisplayName : a.Name,
                         EntityStatusTypeCode = a.EntityStatusTypeCode,
                         StatusLocalWeight = a.StatusLocalWeight,
+                        AllowPartial = a.AllowPartial,
                     });
         }
 
@@ -255,6 +260,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                       DisplayName = !string.IsNullOrEmpty(entity.DisplayName) ? entity.DisplayName : entity.Name,
                                                       EntityStatusTypeCode = entity.EntityStatusTypeCode,
                                                       StatusLocalWeight = entity.StatusLocalWeight,
+                                                      AllowPartial = entity.AllowPartial,
                                                   };
             return result;
         }

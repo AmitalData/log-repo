@@ -15,6 +15,7 @@ namespace Logitude.Server.Tools.Models
         public string OperationalStatusId { get; set; }
         public string StatusName { get; set; }
         public string StatusLocation { get; set; }
+        public string PartialStatusAmount { get; set; }
         public DateTime? StatusDate { get; set; }
         public DateTime? LastStatusLogDate { get; set; }
         public string LastSharedEventId { get; set; }

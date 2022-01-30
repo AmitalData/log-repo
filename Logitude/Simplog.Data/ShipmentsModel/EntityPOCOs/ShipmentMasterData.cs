@@ -87,7 +87,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string StatusId { get; set; }
         public DateTime? StatusDate { get; set; }
         public string StatusLocation { get; set; }
-
+        public string PartialStatusAmount { get; set; }
         public string CargonautFWBStatusCode { get; set; }
         public DateTime? CargonautFWBStatusDate { get; set; }
         public string MainCarriageCarrierPrefix { get; set; }

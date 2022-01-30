@@ -117,6 +117,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.VolumeUnitCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.StatusId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.StatusLocation).HasMaxLength(40).IsUnicode(true);
+            this.Property(t => t.PartialStatusAmount).HasMaxLength(40).IsUnicode(true);
             this.Property(t => t.MainHarmonize).HasMaxLength(18).IsUnicode(false);
             this.Property(t => t.DangerousFlashPoint).HasMaxLength(8).IsUnicode(false);
             this.Property(t => t.DangerousIMDGCode).HasMaxLength(4).IsUnicode(false);
@@ -818,6 +819,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.PreForwardingVesselName).HasColumnName("PreForwardingVesselName");
             this.Property(t => t.OnForwardingVesselName).HasColumnName("OnForwardingVesselName");
             this.Property(t => t.PrivateLabelAgentName).HasColumnName("PrivateLabelAgentName");
+            this.Property(t => t.PartialStatusAmount).HasColumnName("PartialStatusAmount");
 
             if (dbms == "oracle")
             {

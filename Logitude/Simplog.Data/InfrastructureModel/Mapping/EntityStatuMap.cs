@@ -60,7 +60,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
             this.Property(t => t.StatusLocalWeight).HasColumnName("StatusLocalWeight");
             this.Property(t => t.EntityStatusTypeCode).HasColumnName("EntityStatusTypeCode");
-            
+            this.Property(t => t.AllowPartial).HasColumnName("AllowPartial");
             // Relationships
             //this.HasRequired(t => t.ObjectTable)
             //    .WithMany(t => t.EntityStatus)

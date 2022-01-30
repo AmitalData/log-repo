@@ -97,6 +97,7 @@ export class StringToColorPipe {
                 }
             case "Printed":
             case "Pick Up":
+            case "Partially Pick Up":
             case "On Hand":
                 {
                     color = "#F37021";
@@ -107,6 +108,7 @@ export class StringToColorPipe {
             case "Cleared":
             case "Delivery":
             case "Delivered":
+            case "Partially Delivered":
                 {
                     color = "#2BB673";
                     break;
