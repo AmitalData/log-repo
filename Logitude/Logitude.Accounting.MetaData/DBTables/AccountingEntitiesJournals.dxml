@@ -5,6 +5,14 @@
   DBType="Main"
   Module="Accounting">
   <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
     Name="Tenant"
     Type="int">
     <Constraints
@@ -29,14 +37,6 @@
     Type="varchar"
     Size="100">
     <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Id"
-    Type="int"
-    Identity="true">
-    <Constraints
-      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column

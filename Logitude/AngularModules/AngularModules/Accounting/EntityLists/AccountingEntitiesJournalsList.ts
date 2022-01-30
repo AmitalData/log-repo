@@ -8,11 +8,11 @@
 
 export class AccountingEntitiesJournalList {
    
+	Id: string;
 	Tenant: number;
 	AccountingEntityId: string;
 	AccountingEntityCode: string;
 	Action: string;
-	Id: number;
 	ChildEntityId: string;
 	
 }

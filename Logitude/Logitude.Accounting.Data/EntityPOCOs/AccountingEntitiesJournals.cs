@@ -18,7 +18,10 @@ namespace Logitude.Accounting.Data.EntityPOCOs
     {
 	 string dbms;
 
-           [Column("Tenant")]
+        [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
+        [Column("Tenant")]
 	    public int Tenant { get; set; }
         [Column("AccountingEntityId")]
 	    public string AccountingEntityId { get; set; }
@@ -26,9 +29,6 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string AccountingEntityCode { get; set; }
         [Column("Action")]
 	    public string Action { get; set; }
-     [Key]
-        [Column("Id")]
-	    public int Id { get; set; }
         [Column("ChildEntityId")]
 	    public string ChildEntityId { get; set; }
     }

@@ -22,11 +22,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
           public enum POCOPropertyNames
           { 
 		     None,  
+	         Id, 
 	         Tenant, 
 	         AccountingEntityId, 
 	         AccountingEntityCode, 
 	         Action, 
-	         Id, 
 	         ChildEntityId,
 	      }
 
@@ -34,11 +34,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	      public enum PMPropertyNames
           { 
 		     None,  
+	         Id, 
 	         Tenant, 
 	         AccountingEntityId, 
 	         AccountingEntityCode, 
 	         Action, 
-	         Id, 
 	         ChildEntityId,
 	      }
 
@@ -77,6 +77,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 		public void POCOToPM(AccountingEntitiesJournalPM entityPM, AccountingEntitiesJournal entityPOCO)
         {
 			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
             {
 					entityPM.Tenant = entityPOCO.Tenant;
@@ -95,11 +100,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Action))
             {
 					entityPM.Action = entityPOCO.Action;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
-            {
-					entityPM.Id = entityPOCO.Id;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ChildEntityId))

@@ -105,7 +105,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                             }
                         default:
                             {
-                                query2 = query2.OrderByDescending(d => d.AccountingEntityId);
+                                query2 = query2.OrderByDescending(d => d.Id);
                                 break;
                             }
                     }
@@ -114,7 +114,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             }
 		    else
             {
-                query2 = query2.OrderByDescending(d => d.AccountingEntityId);
+                query2 = query2.OrderByDescending(d => d.Id);
             }
 			if(!queryOperations.GetAll)
 			{
@@ -131,7 +131,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public AccountingEntitiesJournalList GetSingle(int id)
+        public AccountingEntitiesJournalList GetSingle(string id)
         {
             IQueryable<AccountingEntitiesJournal> AccountingEntitiesJournalQuery = (from a in context.AccountingEntitiesJournals
                                                        where a.Id == id
