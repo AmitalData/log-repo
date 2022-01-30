@@ -21,7 +21,7 @@ namespace Cloud.Sign.App
         {
             InitializeComponent();
             SetBaseControls();
-            InitView(typeof(InternalWindow));
+            InitView();
             if (SelectedCert == null)
             {
                 lblCertName.Text = "No Card Connected";

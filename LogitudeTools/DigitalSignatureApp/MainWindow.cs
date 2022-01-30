@@ -88,7 +88,7 @@ namespace Cloud.Sign.App
             FromLogOutBtn = FromLogOut;
             InitializeComponent();
             SetBaseControls();
-            InitView(typeof(MainWindow));
+            InitView();
             if (FromLogOut)
             {
                 this.WindowState = FormWindowState.Normal;
@@ -121,7 +121,7 @@ namespace Cloud.Sign.App
             //reg.SetValue("Cloud.Sign.App", Application.ExecutablePath.ToString());
             InitializeComponent();
             SetBaseControls();
-            InitView(typeof(MainWindow));
+            InitView();
             //this.WindowState = FormWindowState.Minimized;
             Minimize(true);
             this.Hide();

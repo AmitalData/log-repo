@@ -154,6 +154,10 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ContextMenus.cs" />
+    <Compile Include="EnvironmentSettings\IEnvironmentSetting.cs" />
+    <Compile Include="EnvironmentSettings\Settings\DsvSettings.cs" />
+    <Compile Include="EnvironmentSettings\Settings\LogBoxSettings.cs" />
+    <Compile Include="EnvironmentSettings\Settings\PrivateLabelSettings.cs" />
     <Compile Include="Helpers\LoginParameters.cs" />
     <Compile Include="Helpers\SignatureHubClient.cs" />
     <Compile Include="Helpers\StatusData.cs" />
