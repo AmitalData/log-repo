@@ -416,7 +416,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
       Styles: { width: '90px' },
       IsCustomTemplate: true,
       ServerSideSortable: true,
-      SortByName: 'SortedImporterCode'
+      SortByName: 'ImporterCode'
     });
 
     this.columns.push({
@@ -495,9 +495,9 @@ export class BulkFeedPendingComponent extends BaseComponent {
     this.goodsDescription = newValue;
   }
 
-  private weightFrom: string;
+  private weightFrom: number;
   public get WeightFrom() { return this.weightFrom; }
-  public set WeightFrom(newValue: string) {
+  public set WeightFrom(newValue: number) {
     this.weightFrom = newValue;
   }
 
