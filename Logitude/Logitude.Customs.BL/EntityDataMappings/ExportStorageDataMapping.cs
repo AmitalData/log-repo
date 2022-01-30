@@ -48,13 +48,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
         {
             var declarationQueryService = new DeclarationQueryService(entityPOCO.Tenant);
 
-            DeclarationPM declarationPM = entityPOCO.DeclarationId != null ? declarationQueryService.GetSingleDeclarationById(entityPOCO.DeclarationId, entityPOCO.Tenant) : null;
 
-            DeclarationPM declarationPM = new DeclarationPM();
-            if (!String.IsNullOrWhiteSpace(entityPOCO.DeclarationId))//fix crush !!!!
-            {
-                declarationPM = declarationQueryService.GetSingleDeclarationById(entityPOCO.DeclarationId, entityPOCO.Tenant);
-            }
+            DeclarationPM declarationPM = entityPOCO.DeclarationId != null ? declarationQueryService.GetSingleDeclarationById(entityPOCO.DeclarationId, entityPOCO.Tenant) : new DeclarationPM();
+
 
                 
 
