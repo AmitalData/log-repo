@@ -27,16 +27,16 @@ using iTextSharp.text;
 
 namespace Cloud.Sign.App
 {
-    public partial class MainWindow : Form
+    public partial class MainWindow : BaseForm
     {
-        public string Version = "2.42";
+        public string Version = "3.0";
         //RegistryKey reg = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
         object _Obj = new object();
         public string Token = "";
         public string Email = "";
         public DateTime LastSigned;
         string URI = ConfigurationManager.AppSettings["SystemUrl"].ToString();//"http://localhost:9996";
-        string Environment = ConfigurationManager.AppSettings["Environment"].ToString();
+
         public X509Certificate2 selected;
         public int Tenant;
         public string Company;
@@ -87,6 +87,8 @@ namespace Cloud.Sign.App
             this.allowVisible = FromLogOut;
             FromLogOutBtn = FromLogOut;
             InitializeComponent();
+            SetBaseControls();
+            InitView();
             if (FromLogOut)
             {
                 this.WindowState = FormWindowState.Normal;
@@ -102,6 +104,13 @@ namespace Cloud.Sign.App
             }
         }
 
+        private void SetBaseControls()
+        {
+            this.notifyIcon = ni;
+            this.pictureBox = pictureBox1;
+            this.label = label1;
+        }
+
         public async void CallMe()
         {
             await LoginUsingToken();
@@ -111,6 +120,8 @@ namespace Cloud.Sign.App
         {
             //reg.SetValue("Cloud.Sign.App", Application.ExecutablePath.ToString());
             InitializeComponent();
+            SetBaseControls();
+            InitView();
             //this.WindowState = FormWindowState.Minimized;
             Minimize(true);
             this.Hide();
@@ -139,7 +150,7 @@ namespace Cloud.Sign.App
             {
                 if (!StopTimer && DateTime.Now.Hour == 23 && DateTime.Now.Minute >= 58 && DateTime.Now.Minute <= 59)
                 {
-                    
+
                     try
                     {
                         if (!string.IsNullOrEmpty(this.Token))
@@ -171,7 +182,7 @@ namespace Cloud.Sign.App
                                         System.Threading.Thread.Sleep(myTimeSpan);  // Wait 24 Hours.
                                     }
                                 }
-                            } 
+                            }
                         }
                     }
                     catch (Exception ex)
@@ -201,7 +212,7 @@ namespace Cloud.Sign.App
                     var myTimeSpan = new TimeSpan(0, 1, 0);
                     System.Threading.Thread.Sleep(myTimeSpan);  // Wait 1 Min.
                 }
-               
+
             }
         }
 
@@ -212,7 +223,7 @@ namespace Cloud.Sign.App
                 if (!StopTimer)
                 {
                     var GetURI = URI + "/api/LogBoxSignatureClient/GetSignAppLastVersion?Tenant=" + Tenant;
-                    
+
                     try
                     {
                         using (var client = new HttpClient())
@@ -248,7 +259,7 @@ namespace Cloud.Sign.App
 
                         errorMessage = errorMessage + ex.StackTrace;
                         LogFileUtil.Log("VersionTimerwork_DoWork" + errorMessage, LogFileUtil.LogLevel.Debug);
-                    } 
+                    }
 
                 }
                 System.Threading.Thread.Sleep(1800000);  // Wait 30 min.
@@ -263,7 +274,7 @@ namespace Cloud.Sign.App
             while (true)
             {
                 if (!StopTimer)
-                { 
+                {
                     var GetURI = URI + "/api/LogBoxSignatureClient/GetServerStatus?Tenant=" + Tenant;
 
                     //Uploader.Uploader up = new Uploader.Uploader();
@@ -281,16 +292,7 @@ namespace Cloud.Sign.App
                             {
                                 InternalForm.ConnectionStateChanged(true, true);
                                 MyMessage = DialogResult.None;
-                                if (Environment == "DSV")
-                                {
-                                    ni.Icon = Resources.dsv;
-                                    ni.BalloonTipText = "You can access DSV sign application from here.";
-                                }
-                                else
-                                {
-                                    ni.Icon = Resources.logboxicon1;
-                                    ni.BalloonTipText = "You can access LogBox sign application from here.";
-                                }
+                                SetBalloonTipText();
                             }
                             else
                             {
@@ -389,8 +391,6 @@ namespace Cloud.Sign.App
             }
         }
 
-         
-
         public void CheckStatus()
         {
             SignSamplePdf(out mystatus, out mymessage);
@@ -478,16 +478,8 @@ namespace Cloud.Sign.App
                 }
                 if (!IsActive || !IsValidCert || !IsLogged)
                 {
-                    if (Environment == "DSV")
-                    {
-                        ni.Icon = Resources.dsvInActive;
-                        ni.BalloonTipTitle = "DSV Sign Application";
-                    }
-                    else
-                    {
-                        ni.Icon = Resources.logboxiconInActive;
-                        ni.BalloonTipTitle = "LogBox Sign Application";
-                    }
+                    SetInactiveIcon();
+                    SetBalloonTipTitle();
                     if (IsLogged == false)
                     {
                         ni.BalloonTipText = "Application disconnected , please login again.";
@@ -504,14 +496,7 @@ namespace Cloud.Sign.App
                 else
                 {
                     ShowBalloon = true;
-                    if (Environment == "DSV")
-                    {
-                        ni.Icon = Resources.dsv;
-                    }
-                    else
-                    {
-                        ni.Icon = Resources.logboxicon1;
-                    }
+                    SetDefaultIcon();
 
                 }
                 if (string.IsNullOrEmpty(Token))
@@ -573,14 +558,7 @@ namespace Cloud.Sign.App
 
                 errorMessage = errorMessage + ex.StackTrace;
                 LogFileUtil.Log("UpdateAppStatus" + errorMessage, LogFileUtil.LogLevel.All);
-                if (Environment == "DSV")
-                {
-                    ni.Icon = Resources.dsvInActive;
-                }
-                else
-                {
-                    ni.Icon = Resources.logboxiconInActive;
-                }
+                SetInactiveIcon();
 
                 ni.BalloonTipText = "The Server is not reachable.";
                 ni.ShowBalloonTip(1000);
@@ -591,6 +569,7 @@ namespace Cloud.Sign.App
                 //}
             }
         }
+
         DialogResult MyMessage;
         private void MainWindow_Resize(object sender, EventArgs e)
         {
@@ -612,48 +591,17 @@ namespace Cloud.Sign.App
             //this.Invoke((MethodInvoker)delegate
             //{
             // Put the icon in the system tray and allow it react to mouse clicks.
-            if (Environment == "DSV")
-            {
-                ni.BalloonTipTitle = "DSV Sign Application";
-                ni.BalloonTipText = "You can access DSV sign application from here.";
-            }
-            else
-            {
-                ni.BalloonTipTitle = "LogBox Sign Application";
-                ni.BalloonTipText = "You can access LogBox sign application from here.";
-            }
+            SetMinimizeScreenMessage();
             ni.MouseClick += new MouseEventHandler(ni_MouseClick);
             if (InActive || selected == null)
             {
-                if (Environment == "DSV")
-                {
-                    ni.Icon = Resources.dsvInActive;
-                }
-                else
-                {
-                    ni.Icon = Resources.logboxiconInActive;
-                }
-
+                SetInactiveIcon();
             }
             else
             {
-                if (Environment == "DSV")
-                {
-                    ni.Icon = Resources.dsv;
-                }
-                else
-                {
-                    ni.Icon = Resources.logboxicon1;
-                }
+                SetDefaultIcon();
             }
-            if (Environment == "DSV")
-            {
-                ni.Text = "DSV Sign Application";
-            }
-            else
-            {
-                ni.Text = "LogBox Sign Application";
-            }
+            SetDefaultText();
             ni.Visible = true;
             ni.ShowBalloonTip(500);
 
@@ -852,14 +800,7 @@ namespace Cloud.Sign.App
 
                 errorMessage = errorMessage + ex.StackTrace;
                 LogFileUtil.Log("btnLogin_Click" + errorMessage, LogFileUtil.LogLevel.All);
-                if (Environment == "DSV")
-                {
-                    ni.Icon = Resources.dsvInActive;
-                }
-                else
-                {
-                    ni.Icon = Resources.logboxiconInActive;
-                }
+                SetInactiveIcon();
 
                 ni.BalloonTipText = "The Server is not reachable.";
                 if (MyMessage != DialogResult.OK)
@@ -1038,14 +979,7 @@ namespace Cloud.Sign.App
 
                     errorMessage = errorMessage + ex.StackTrace;
                     LogFileUtil.Log("MyCheckRequestTimer_Tick" + errorMessage, LogFileUtil.LogLevel.All);
-                    if (Environment == "DSV")
-                    {
-                        ni.Icon = Resources.dsvInActive;
-                    }
-                    else
-                    {
-                        ni.Icon = Resources.logboxiconInActive;
-                    }
+                    SetInactiveIcon();
 
                     ni.BalloonTipText = "The Server is not reachable.";
                     if (MyMessage != DialogResult.OK)
@@ -1219,7 +1153,7 @@ namespace Cloud.Sign.App
                                     position = 0;
                                     counter = -1;
                                     //DocsQueue.Remove(MyResult.DocumentFilingId);
-                                } 
+                                }
                                 else
                                 {
                                     //if (message == "PIN Code Is Required")
@@ -1241,15 +1175,7 @@ namespace Cloud.Sign.App
                                     //{
                                     if (message == "PDF header signature not found")
                                     {
-                                        if (Environment == "DSV")
-                                        {
-                                            ni.Icon = Resources.dsvInActive;
-                                        }
-                                        else
-                                        {
-                                            ni.Icon = Resources.logboxiconInActive;
-                                        }
-
+                                        SetInactiveIcon();
                                         ni.BalloonTipText = "The file you are trying to sign is corrupted.";
                                         ni.ShowBalloonTip(1500);
                                         LogFileUtil.Log("SignRequestRecieved-CurruptedFile " + MyResult.DocumentFilingId, LogFileUtil.LogLevel.All);
@@ -1298,7 +1224,7 @@ namespace Cloud.Sign.App
 
                                             }
                                         }
-                                        MessageBox.Show("The PDF you are trying to sign is invalid.","Invalid PDF");
+                                        MessageBox.Show("The PDF you are trying to sign is invalid.", "Invalid PDF");
                                     }
                                     else if (message == "service down")
                                     {
@@ -1327,15 +1253,8 @@ namespace Cloud.Sign.App
                                             {
 
                                             }
-                                        }
-                                        if (Environment == "DSV")
-                                        {
-                                            ni.Icon = Resources.dsvInActive;
-                                        }
-                                        else
-                                        {
-                                            ni.Icon = Resources.logboxiconInActive;
-                                        }
+                                        }             
+                                        SetInactiveIcon();
 
                                         ni.BalloonTipText = "An error occured during the sign process";
                                         ni.ShowBalloonTip(1500);
@@ -1351,7 +1270,7 @@ namespace Cloud.Sign.App
                                         //    }
                                         //}
                                     }
-                                    
+
                                     //}
                                     //else
                                     //{
@@ -1402,15 +1321,7 @@ namespace Cloud.Sign.App
                                 LogFileUtil.Log("SignRequestRecieved-Else " + MyResult.DocumentFilingId, LogFileUtil.LogLevel.All);
                                 if (!string.IsNullOrEmpty(MyResult.DocumentFilingId))
                                 {
-                                    if (Environment == "DSV")
-                                    {
-                                        ni.Icon = Resources.dsvInActive;
-                                    }
-                                    else
-                                    {
-                                        ni.Icon = Resources.logboxiconInActive;
-                                    }
-
+                                    SetInactiveIcon();
                                     ni.BalloonTipText = "The file you are trying to sign is corrupted.";
                                     ni.ShowBalloonTip(1500);
                                     FileInfo = new FileInformation();
@@ -1461,15 +1372,8 @@ namespace Cloud.Sign.App
                 }
 
                 errorMessage = errorMessage + ex.StackTrace;
-                LogFileUtil.Log("SignRequestRecieved" + errorMessage, LogFileUtil.LogLevel.All);
-                if (Environment == "DSV")
-                {
-                    ni.Icon = Resources.dsvInActive;
-                }
-                else
-                {
-                    ni.Icon = Resources.logboxiconInActive;
-                }
+                LogFileUtil.Log("SignRequestRecieved" + errorMessage, LogFileUtil.LogLevel.All);          
+                SetInactiveIcon();
 
                 ni.BalloonTipText = "The Server is not reachable.";
                 ni.ShowBalloonTip(1000);

@@ -65,14 +65,6 @@
             // 
             // pictureBox1
             // 
-            if (Environment == "DSV")
-            {
-                this.pictureBox1.Image = global::Cloud.Sign.App.Properties.Resources.HeaderLogo;
-            }
-            else
-            {
-                this.pictureBox1.Image = global::Cloud.Sign.App.Properties.Resources.LogBox;
-            }
             this.pictureBox1.Location = new System.Drawing.Point(253, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(148, 59);
@@ -87,14 +79,6 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(138, 18);
             this.label1.TabIndex = 2;
-            if (Environment == "DSV")
-            {
-                this.label1.Text = "DSV Sign Client - Beta";
-            }
-            else
-            {
-                this.label1.Text = "LogBox Sign Client - Beta";
-            }
             // 
             // lblLoggedEmail
             // 
@@ -337,16 +321,6 @@
             this.MaximizeBox = false;
             this.Name = "InternalWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            if (Environment == "DSV")
-            {
-                this.Text = "DSV Sign App";
-                this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.DsvIcon")));
-            }
-            else
-            {
-                this.Text = "LogBox Sign App";
-                this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            } 
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.InternalWindow_FormClosing);
             this.Load += new System.EventHandler(this.InternalWindow_Load);
