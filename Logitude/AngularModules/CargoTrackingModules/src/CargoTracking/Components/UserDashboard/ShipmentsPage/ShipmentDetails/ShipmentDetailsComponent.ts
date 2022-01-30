@@ -87,6 +87,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     approvalMessage: string;
     PartnersPanel: string = "PartnersPanel";
     MaxHeightForPartnersPanel: number = 600;
+    MaxNumberOfCarachterForMobile: number = 15;
 
     PartnerCardTypesOfShipmentTransportMode = {
         'A': "AIRLINES",
@@ -107,7 +108,11 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     get DeclarationApprovalEnabled()
     {
         const isCustomShipment = this.cargoTrackingShipmentPM.EntityType == this.EntityType_Customs;
-        return isCustomShipment && this.cargoTrackingShipmentPM.ActivatedForDeclarationApprove;
+        const haveResponse = this.cargoTrackingShipmentPM.ApprovedDate || this.cargoTrackingShipmentPM.DenyReason;
+        const responseRequired = this.cargoTrackingShipmentPM.IsImporterApprovalRequried;
+        return isCustomShipment
+                && this.cargoTrackingShipmentPM.ActivatedForDeclarationApprove
+                && ( responseRequired || haveResponse );
     }
 
     get ShowShipmentAsDeclaration() {  return this.isDeclarationLink && this.DeclarationApprovalEnabled; }
@@ -284,7 +289,8 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
 
     private SetDeniedDeclarationMessage()
     {
-        this.approvalMessage = declineResponseMessage + '\n"' + this.cargoTrackingShipmentPM.DenyReason+'"';
+        const denyDate = this.datePipe.transform(this.cargoTrackingShipmentPM.DenyDate, 'dd/MM/yyyy, HH:mm');
+        this.approvalMessage = declineResponseMessage + '\n"' + this.cargoTrackingShipmentPM.DenyReason+'"'+ ' ' + denyDate;
     }
 
     private SetApprovedDeclarationMessage()
@@ -686,6 +692,23 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     }
 
     //#endregion
+
+    GetSlice(text: string, numberOfCharacter) {
+
+        var result = text
+        if (text?.length > numberOfCharacter && !this.IsMobileView) {
+                result = text.slice(0, numberOfCharacter) + "..."
+        }
+        if (text?.length > this.MaxNumberOfCarachterForMobile && this.IsMobileView) {
+                result = text.slice(0, this.MaxNumberOfCarachterForMobile) + "..."
+        }
+        return result;
+
+    }
+
+    ContainsHebrew(str: string) {
+        return (/[\u0590-\u05FF]/).test(str)
+    }
 
     GetModeIcon()
     {

@@ -6669,7 +6669,7 @@
       <ScreenField
         Column="0"
         Row="1"
-        ObjectFieldName="&quot;StartDate&quot;"
+        ObjectFieldName="&quot;CreateDate&quot;"
         ScreenName="CustomsChargesHeaderScreen" />
       <ScreenField
         Column="1"
@@ -6679,7 +6679,7 @@
       <ScreenField
         Column="1"
         Row="1"
-        ObjectFieldName="&quot;ExpirationDate&quot;"
+        ObjectFieldName="&quot;UpdateDate&quot;"
         ScreenName="CustomsChargesHeaderScreen" />
       <ScreenField
         Column="2"

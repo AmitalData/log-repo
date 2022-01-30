@@ -114,7 +114,7 @@ using Simplog.Data.CommonDataModel;
 				   if(MyEntityPM.GLAccountId != null)
 				   {
 					   GLAccountQueryService GLAccountService2 = new GLAccountQueryService(Tenant);
-					   					   temp.GLAccount = GLAccountService2.GLAccountCustomDataMapping(MyEntityPM.GLAccountId,Tenant,ComputingPartnerName); 
+					   					   temp.GLAccount = GLAccountService2.GLAccountVendorDataMapping(MyEntityPM,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   

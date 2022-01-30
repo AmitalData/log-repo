@@ -674,6 +674,26 @@ export class CargoTrackingShipmentPM {
     public set ConnectedShipmentsNumbers(newValue: string) { if (this.connectedShipmentsNumbers != newValue) { this.connectedShipmentsNumbers = newValue; this.MarkAsDirty("ConnectedShipmentsNumbers"); } }
        
 	 
+    private invoicedDate: Date;
+    public get InvoicedDate() { return this.invoicedDate; }
+    public set InvoicedDate(newValue: Date) { if (this.invoicedDate != newValue) { this.invoicedDate = newValue; this.MarkAsDirty("InvoicedDate"); } }
+       
+	 
+    private invoicedDone: boolean;
+    public get InvoicedDone() { return this.invoicedDone; }
+    public set InvoicedDone(newValue: boolean) { if (this.invoicedDone != newValue) { this.invoicedDone = newValue; this.MarkAsDirty("InvoicedDone"); } }
+       
+	 
+    private invoicedNotes: string;
+    public get InvoicedNotes() { return this.invoicedNotes; }
+    public set InvoicedNotes(newValue: string) { if (this.invoicedNotes != newValue) { this.invoicedNotes = newValue; this.MarkAsDirty("InvoicedNotes"); } }
+       
+	 
+    private invoicedExceptionReason: string;
+    public get InvoicedExceptionReason() { return this.invoicedExceptionReason; }
+    public set InvoicedExceptionReason(newValue: string) { if (this.invoicedExceptionReason != newValue) { this.invoicedExceptionReason = newValue; this.MarkAsDirty("InvoicedExceptionReason"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		

@@ -101,52 +101,6 @@
                                 </td>
                             </tr>
 
-                            <!-- ZipCode -->
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'ZipCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
-
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td style="width: 230px;">
-                                                <LogTextBox [ObjectFieldName]="'ZipCode'" [Text]="DataContext.ZipCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                            </td>
-
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-
-                            <!-- City -->
-                            <tr >
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'City'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
-
-                                <td>
-                                    <table>
-                                        <tr>
-                                           <td class="FormFieldRow" style="width: 194px;">
-                                                <LogTextBox [ObjectFieldName]="'City'" [Text]="DataContext.City" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                            </td>
-
-                                            <td style="width: 5px;">
-                                                <div></div>
-                                            </td>
-
-                                            <td>
-                                                <span class="hyperlink" [class.HyperlinkDisabled]="!DataContext.IsEditingEnabled" (click)="DataContext.SelectCityCommand()">Select</span>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-
                             <!-- CountryId -->
                             <tr class="FormFieldRow">
                                 <td>
@@ -168,6 +122,57 @@
 
                                             <td>
                                                 <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <!-- ZipCode -->
+                            <tr>
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'ZipCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td class="FormFieldRow" style="width: 194px;">
+                                                <LogTextBox [ObjectFieldName]="'ZipCode'" [Text]="DataContext.ZipCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+                                            <td style="width: 5px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td *ngIf="DataContext.CountryCode == 'MX'">
+                                                <span class="hyperlink" [class.HyperlinkDisabled]="!DataContext.IsEditingEnabled" (click)="DataContext.SelectZipCode()">Select</span>
+                                            </td>
+                                            <td *ngIf="DataContext.CountryCode != 'MX'"></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <!-- City -->
+                            <tr>
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'City'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td class="FormFieldRow" style="width: 194px;">
+                                                <LogTextBox [ObjectFieldName]="'City'" [Text]="DataContext.City" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+                                            <td style="width: 5px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td>
+                                                <span class="hyperlink" [class.HyperlinkDisabled]="!DataContext.IsEditingEnabled" (click)="DataContext.SelectCityCommand()">Select</span>
                                             </td>
                                         </tr>
                                     </table>

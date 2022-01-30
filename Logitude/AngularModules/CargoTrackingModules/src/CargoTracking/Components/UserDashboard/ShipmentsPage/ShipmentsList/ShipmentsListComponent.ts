@@ -76,6 +76,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     SupplierOrClientValue: string;
     ShowMobileSearch: boolean = false;
     ShipmenTypeForRouting: string;
+    RoutingPortNames: string;
     public SortOptions = SortOptions;
     MasterOrHouseLabel: string = "";
     EntityType_Customs = "C";
@@ -501,8 +502,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         }
     }
 
-
-
+    SetRoutingPortNames(shipment: CargoTrackingShipmentList) {
+        this.RoutingPortNames = shipment.FromPortName + " to " + shipment.ToPortName; 
+    }
 
     private InitComponent() {
         this.InitForm();
@@ -514,7 +516,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         var allreferences = reference?.split(',');
         if (allreferences?.length > 4) {
 
-            var morereferences = allreferences.slice(4, allreferences.length + 1)
+            var morereferences = allreferences.slice(3, allreferences.length + 1)
             this.MoreReferenceText = morereferences.join(',');
 
         }
@@ -643,17 +645,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
     BuildShipmentReferences(shipment: CargoTrackingShipmentList) {
         this.references = shipment.CustomerReference != null ? shipment.CustomerReference.split(',') : [];
-        if (shipment.EntityType == 'O') {
-            this.AddShipmentReferencesForOrderShipment(shipment);
-        }
     }
 
-    private AddShipmentReferencesForOrderShipment(shipment: CargoTrackingShipmentList) {
-        if (shipment.PoNumber != null)
-            this.references.push(shipment.PoNumber);
-        if (shipment.BookingNotes != null)
-            this.references.push(shipment.BookingNotes );
-    }
 
     masterLabel = 'Master';
     houseLabel = 'House';

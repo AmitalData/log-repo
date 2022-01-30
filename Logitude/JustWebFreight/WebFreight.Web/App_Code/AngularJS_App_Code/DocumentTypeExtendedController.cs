@@ -118,7 +118,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             }
         }
 
-        public HttpResponseMessage GetShareDocumentByObjectTableAndEntityIdAndshipmentLevel(string entityId, string agentId, string agentReference, string objectTableId, string shipmentLevelCode, int tenant)
+        public HttpResponseMessage GetShareDocumentByObjectTableAndEntityIdAndshipmentLevel(string entityId, string agentId, string agentReference, string objectTableId, string shipmentLevelCode, int tenant, string shareDocumentsFrom)
         {
             try
             {
@@ -126,7 +126,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
 
-                List<ShipmentShareDocumentsData> shareDocumentClassLists = documentTypeQuery.GetShareDocumentByObjectTableAndEntityIdAndshipmentLevel(entityId, agentId, agentReference , objectTableId, shipmentLevelCode, tenant);
+                List<ShipmentShareDocumentsData> shareDocumentClassLists = documentTypeQuery.GetShareDocumentByObjectTableAndEntityIdAndshipmentLevel(entityId, agentId, agentReference , objectTableId, shipmentLevelCode, tenant, shareDocumentsFrom);
                 return Request.CreateResponse(HttpStatusCode.OK, shareDocumentClassLists);
 
             }

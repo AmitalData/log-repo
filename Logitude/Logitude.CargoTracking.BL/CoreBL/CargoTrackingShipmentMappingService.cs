@@ -134,8 +134,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             CargoTrackingPortPM fromPort = GetCargoPort(cargoShipmentPM.FromPortId);
             CargoTrackingPortPM toPort = GetCargoPort(cargoShipmentPM.ToPortId);
 
-            cargoShipmentPM.RouteFromPortCode = fromPort?.Code;
-            cargoShipmentPM.RouteToPortCode = toPort?.Code;
+            cargoShipmentPM.RouteFromPortName = fromPort?.EnglishName;
+            cargoShipmentPM.RouteToPortName = toPort?.EnglishName;
         }
 
         private void SetTenantFields()
@@ -150,7 +150,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             ShipmentAdditionalCloudData cloudData = GetShipmentCloud(cargoShipmentPM);
             cargoShipmentPM.IsImporterApprovalRequried = cloudData?.IsImporterApprovalRequried ?? false;
             cargoShipmentPM.ApprovedDate = cloudData?.ApproveDateTime;
-            //cargoShipmentPM.DenyDate = cloudData?.DenyDate;
+            cargoShipmentPM.DenyDate = cloudData?.DenyDate;
             cargoShipmentPM.DenyReason = cloudData?.DenyReason;
         }
 

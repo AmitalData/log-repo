@@ -89,9 +89,8 @@ export class ShipmentsComponent {
     public IsQueryVisible_ShippingInstructionsLast7Days: boolean = false;
     public IsQueryVisible_ContainerStatusLast7Days: boolean = false;
     public IsQueryVisible_EBookingInProgress: boolean = false;
-
+    public IsDeparturesArrivalsVisible: boolean = false;
     private SetQueriesVisibility() {
-
         this.IsNewButtonVisible = false;
         if (!FeatureLocator.IsPackage_EAWB() && !SessionLocator.TenantPM.IsHybrid) {
             if (FeatureLocator.HasFeaturePermession("Shipment", "NEW")) {
@@ -110,6 +109,7 @@ export class ShipmentsComponent {
         this.IsQueryVisible_ExpectedDepartures = FeatureLocator.HasFeaturePermession("Shipment", "EXPECTEDDEPATURE") ? true : false;
         this.IsQueryVisible_AirlinesUpdates = FeatureLocator.HasFeaturePermession("Shipment", "AIRLINESUPDATES") ? true : false;
         this.IsMessagingStockVisible = SessionLocator.TenantManagementJS.IsAWBStockPrepaid;
+        this.IsDeparturesArrivalsVisible = FeatureLocator.HasFeaturePermession("Shipment", "DeparturesArrivals") ? true : false;
 
         // Others
         this.IsQueryVisible_AllFollowUps = FeatureLocator.HasFeaturePermession("Shipment", "ALLFOLLOWUPS") ? true : false;

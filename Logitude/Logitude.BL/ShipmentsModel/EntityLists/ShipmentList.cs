@@ -585,6 +585,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string DestinationWarehouseName { get; set; } 
         public string ShippingAgent { get; set; }
         public string PrivateLabelAgentName { get; set; }
-
+        public int? StatusWeight { get; set; }
     }
 }

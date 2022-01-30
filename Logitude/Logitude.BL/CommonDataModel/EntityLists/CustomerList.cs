@@ -18,10 +18,15 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string RankId { get; set; }
 
         [DataMember]
+        public string TeamId { get; set; }
+
+        [DataMember]
         public string RankCode { get; set; }
 
         [DataMember]
         public string RankName { get; set; }
+        [DataMember]
+        public string TeamName { get; set; }
 
         [DataMember]
         public string IndustryId { get; set; }

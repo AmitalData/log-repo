@@ -165,7 +165,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                         {
 
                             currentTenantObjectFields = (from a in context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable")
-                                                         where (a.Tenant == tenant) && a.ObjectTableId == objectTableId && a.InActive == false && (a.AllowedinAutomationConditions == true || a.CanAutomateSetValue == true || a.DisplayInAutomationAsEnitity == true || a.AutomationEmailRecipient == true || a.IsCustom || a.FieldName == "DescriptionOfGoods" || a.FieldName == "MainCarriageFinalDestinationETA" || a.FieldName == "MainCarriageFinalDestinationATA" || a.FieldName == "MainCarriageETD" || a.FieldName == "MainCarriageATD")
+                                                         where (a.Tenant == tenant || (a.DisplayInAutomationAsEnitity == true && a.Tenant == 0)) && a.ObjectTableId == objectTableId && a.InActive == false && (a.AllowedinAutomationConditions == true || a.CanAutomateSetValue == true || a.DisplayInAutomationAsEnitity == true || a.AutomationEmailRecipient == true || a.IsCustom || a.FieldName == "DescriptionOfGoods" || a.FieldName == "MainCarriageFinalDestinationETA" || a.FieldName == "MainCarriageFinalDestinationATA" || a.FieldName == "MainCarriageETD" || a.FieldName == "MainCarriageATD")
                                                          select a).ToList();
                             currentTenantObjectFields = currentTenantObjectFields.Concat(GetEntityAutomationObjectFields(tenant, currentTenantObjectFields)).ToList();
                             scope.Complete();
@@ -213,9 +213,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             #endregion
 
 
-            result = zeroTenantObjectFields.Concat(currentTenantObjectFields).ToList();
-
-
+            result = zeroTenantObjectFields.Union(currentTenantObjectFields).ToList();
 
 
 
@@ -223,7 +221,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
 
         }
-        private List<ObjectField> GetEntityAutomationObjectFields(int tenant, List<ObjectField> currentTenantObjectFields)
+        private List<ObjectField> GetEntityAutomationObjectFields(int tenant,  List<ObjectField> currentTenantObjectFields)
         {
             List<ObjectField> automationEntityObjectFieldLists = new List<ObjectField>();
             if (currentTenantObjectFields != null && currentTenantObjectFields.Count > 0)
@@ -231,9 +229,12 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                 List<string> entityAutomationObjectTableIds = currentTenantObjectFields.Where(d => d.DisplayInAutomationAsEnitity && !string.IsNullOrEmpty(d.LookUpTableId)).GroupBy(d => d.LookUpTableId).Select(d => d.First().LookUpTableId).ToList();
                 if (entityAutomationObjectTableIds.Count > 0)
                 {
+
                     automationEntityObjectFieldLists = (from a in context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable")
-                                                        where (a.Tenant == tenant) && entityAutomationObjectTableIds.Contains(a.ObjectTableId) && (a.AllowedinAutomationConditions == true || a.CanAutomateSetValue == true || a.AutomationEmailRecipient == true)
-                                                        select a).ToList();
+                                                 where (a.Tenant == tenant) && entityAutomationObjectTableIds.Contains(a.ObjectTableId) && a.InActive == false && (a.AllowedinAutomationConditions == true || a.CanAutomateSetValue == true || a.DisplayInAutomationAsEnitity == true || a.AutomationEmailRecipient == true || a.IsCustom || a.FieldName == "DescriptionOfGoods" || a.FieldName == "MainCarriageFinalDestinationETA" || a.FieldName == "MainCarriageFinalDestinationATA" || a.FieldName == "MainCarriageETD" || a.FieldName == "MainCarriageATD")
+                                                 select a).ToList();
+
+
                 }
             }
 

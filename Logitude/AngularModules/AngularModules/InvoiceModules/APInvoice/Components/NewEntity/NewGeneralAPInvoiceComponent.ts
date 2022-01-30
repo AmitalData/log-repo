@@ -33,7 +33,7 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-    
+
     templateUrl: './NewGeneralAPInvoiceComponent.html',
 })
 
@@ -51,6 +51,10 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     DisplayFieldsFromList:string;
     DisplayLocalFieldsFromList:string;
     VendorLovSizeForFullAccounting:number;
+    ShowLanguageFilterOnVendorSearchWindow: boolean = false;
+    ColumnsWidths: any[] = [];
+    ForceShowLocalAndEnglishColumns = false;
+
     constructor(private entityResourceService: EntityResourceService) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -62,13 +66,31 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
         }
     }
 
+
     private InitializeVendorLov() {
         if (this.IsAccountingActivated) {
             this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
             this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
             this.VendorLovSizeForFullAccounting = 550;
+            this.ForceShowLocalAndEnglishColumns = true;
+            this.FillLOVColumnsWidths();
         }
     }
+
+
+    FillLOVColumnsWidths()
+    {
+        this.ColumnsWidths = [
+            { ColumnName: 'Code', Width: 40 },
+            { ColumnName: 'CalculatedEnglishName', Width: 120 },
+            { ColumnName: 'LocalName', Width: 120 },
+            { ColumnName: 'GLAccountDisplayNumber', Width: 120 },
+            { ColumnName: 'CityName', Width: 85 },
+            { ColumnName: 'CountryCode', Width: 60 },
+            { ColumnName: 'PartnerTypeName', Width: 60 }
+        ];
+    }
+
 
     public AllVatTypes: VatTypeList[] = [];
     private myCardListService: CardListService;
@@ -113,6 +135,8 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
             this.IsResourcesReady = true;
             this.SetUIProperties();
             this.LoadData();
+
+            this.ShowLanguageFilterOnVendorSearchWindow = SessionLocator.TenantPM.AccountingActivated;
         });
     }
 
@@ -315,7 +339,7 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
             this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, false);
 
         }
-      
+
 
     }
     get VendorName() { return this.EntityPM.VendorName; }
@@ -336,7 +360,7 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     set InvoiceNumber(value: string) {
         if (this.EntityPM.InvoiceNumber != value) {
             this.EntityPM.InvoiceNumber = value;
-            this.CheckDuplication();          
+            this.CheckDuplication();
         }
     }
 
@@ -640,8 +664,8 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
      invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
     OkButtonClicked() {
         var errors: string[] = [];
-       
-        var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");      
+
+        var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         this.CheckSpecialCharacters() != null ? errors.push(this.CheckSpecialCharacters()) : null;
         if (AppTool.IsNullOrEmpty(this.EntityPM.VendorId)) {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.VendorId")));
@@ -705,7 +729,7 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
         if (this.ValidationErrorsList.length == 0) {
             this.CompleteSubmission();
         }
-    
+
     }
 
     ValidateInvoiceNumber(errors:string[]) {
@@ -738,7 +762,7 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
             }
         });
     }
-    
+
     CompleteSubmission() {
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
 

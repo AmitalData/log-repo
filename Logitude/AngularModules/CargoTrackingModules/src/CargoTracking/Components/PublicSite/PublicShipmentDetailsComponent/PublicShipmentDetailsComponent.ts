@@ -178,6 +178,8 @@ export class PublicShipmentDetailsComponent implements OnInit
     }
 
     Delivered: boolean = false;
+    InvoicedDone: boolean = false;
+
     AssignedTruckerDone: boolean = false;
     InProgressShipment: boolean = false;
     DileveredIconColor: string;
@@ -213,6 +215,10 @@ export class PublicShipmentDetailsComponent implements OnInit
                     this.Delivered = true;
                     this.DileveredIconColor = CargoTrackingBrandingData.SecondaryColor;
                 }
+                else if (this.Shipment.CurrentMilestoneCode == CargoTrackingMilestones.Invoiced) {
+                    this.InvoicedDone = true;
+                    this.DileveredIconColor = CargoTrackingBrandingData.SecondaryColor;
+                }
                 else if (this.Shipment.CurrentMilestoneCode == CargoTrackingMilestones.AssignedToTrucker) {
                     this.AssignedTruckerDone = true;
                     this.DileveredIconColor = CargoTrackingBrandingData.SecondaryColor;
@@ -237,7 +243,7 @@ export class PublicShipmentDetailsComponent implements OnInit
     public ShipmentReference: string;
 
     SetShipmentDetails() {
-        if (this.Shipment.ShipmentLevelCode == ShipmentLevels.Direct) {
+        if (this.Shipment.ShipmentLevelCode == ShipmentLevels.Direct.toString()) {
             this.ShipmentLabel = "Master";
             this.ShipmentReference = this.Shipment.Master;
         }
@@ -324,14 +330,43 @@ export class PublicShipmentDetailsComponent implements OnInit
 
     }
 
-
+    get GetContainerLabel()
+    {
+        return "(" + ShipmentTypeLabel.get(this.Shipment.ShipmentTypeCode) + " " + ShipmentLevels[this.Shipment.ShipmentLevelCode] + ")";
+    }
 }
 
 
- enum ShipmentLevels {
-    Direct = "D",
-    House = "H"
+enum ShipmentLevels {
+    Customs = <any>"A",
+    Console = <any>"C",
+    Direct = <any>"D",
+    House = <any>"H"
 }
+
+export enum ShipmentTypes {
+    Air = "Air",
+    FCL = "FCL",
+    FCLD = "FCLD",
+    FTL = "FTL",
+    LCL = "LCL",
+    LCLD = "LCLD",
+    LTL = "LTL",
+    MyGI = "MyGI",
+    MyGO = "MyGO"
+}
+
+export const ShipmentTypeLabel = new Map<string, string>([
+    [ShipmentTypes.Air, 'Air'],
+    [ShipmentTypes.FCL, 'FCL'],
+    [ShipmentTypes.FCLD, 'FCL'],
+    [ShipmentTypes.FTL, 'FTL'],
+    [ShipmentTypes.LCL, 'LCL'],
+    [ShipmentTypes.LCLD, 'LCL'],
+    [ShipmentTypes.LTL, 'LTL'],
+    [ShipmentTypes.MyGI, 'My Groupage Inland'],
+    [ShipmentTypes.MyGO, 'My Groupage Ocean'],
+  ]);
 
 export class Milestone
 {

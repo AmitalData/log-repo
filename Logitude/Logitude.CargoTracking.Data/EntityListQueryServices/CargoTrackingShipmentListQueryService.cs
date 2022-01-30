@@ -69,7 +69,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                ClearanceDate = shipment.ClearanceDate,
                                                                CreateDate = shipment.CreateDate,
                                                                DirectionId = shipment.DirectionId,
-                                                               CustomerReference = shipment.CustomerReference,
+                                                               CustomerReference =  shipment.EntityType == OrderType ? shipment.CustomerReference + ","+ shipment.BookingNotes +"," + shipment.PoNumber : shipment.CustomerReference,
                                                                AssignedCustomsAgentDate = shipment.AssignedCustomsAgentDate,
                                                                AssignedCustomsAgentDone = shipment.AssignedCustomsAgentDone,
                                                                AssignedCustomsAgentEstDate = shipment.AssignedCustomsAgentEstDate,
@@ -153,7 +153,10 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                SupplyDateTime = shipment.SupplyDateTime,
                                                                DescriptionOfGoods = shipment.DescriptionOfGoods,
 
-
+                                                               InvoicedDate = shipment.InvoicedDate,
+                                                               InvoicedDone = shipment.InvoicedDone,
+                                                               InvoicedExceptionReason = shipment.InvoicedExceptionReason,
+                                                               InvoicedNotes = shipment.InvoicedNotes,
 
                                                                ATAETASortingField = shipment.ArrivalDate != null ? shipment.ArrivalDate: shipment.ArrivalEstimationDate,
                                                                ATDETDSortingField = shipment.DepartureDate != null ? shipment.DepartureDate : shipment.DepartureEstimationDate,

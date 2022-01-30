@@ -100,9 +100,13 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     ConstantPageSize: number = 100;
     UsingLogGridV2: boolean = false;
     LanguageFilterValue: string;
-    ShowLanguageFilter: boolean = SessionLocator?.LoggedUserPM?.ShowLocalNameInLOV && SessionLocator?.TenantPM?.AccountingActivated;
+    @Input() ForceShowLanguageFilter: boolean = false;
 
-
+    public get ShowLanguageFilter(): boolean
+    {
+        return  SessionLocator?.LoggedUserPM?.ShowLocalNameInLOV
+            && SessionLocator?.TenantPM?.AccountingActivated;
+    }
 
 
     constructor() {
@@ -174,7 +178,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         this.DisplayFieldsFromList = args.DisplayFieldsFromList;
         this.DisplayLocalFieldsFromList = args.DisplayLocalFieldsFromList;
         this.LanguageFilterValue = args.LanguageFilterValue;
-        this.ShowLanguageFilter = SessionLocator.TenantPM.AccountingActivated && args.ShowLanguageFilter;
+        this.ForceShowLanguageFilter = args.ForceShowLanguageFilterOnSearchWindow;
 
         if (this.IsTenantZeroSearch) {
             this.IsAllDataVisible = true;
@@ -260,10 +264,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
 
         var objectTableId = this.ObjectTableId;
         var lookupFields: any[];
-        if (this.DisplayLocalFieldsFromList && this.LanguageFilterValue == localLanguageCode) {
-            var fields: string[] = this.DisplayLocalFieldsFromList.split(',');
-            lookupFields = window.ObjectFields.filter(d => d.ObjectTableId == this.LookUpTable.Id && fields.lastIndexOf(d.FieldName) > -1);
-        } else if (this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined) {
+        if (this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined) {
             var fields: string[] = this.DisplayFieldsFromList.split(',');
             lookupFields = window.ObjectFields.filter(d => d.ObjectTableId == this.LookUpTable.Id && fields.lastIndexOf(d.FieldName) > -1);
         }
@@ -896,6 +897,7 @@ export class CustomEntityArgs {
     public LanguageFilterValue: string;
     public HideEdit: boolean;
     public ShowLanguageFilter: boolean;
+    public ForceShowLanguageFilterOnSearchWindow: boolean;
 
 
 }

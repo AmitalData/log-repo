@@ -510,6 +510,17 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("JournalNumber",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.JournalNumber")));
 
         this.columns.push({
+            FieldName: 'AccountDisplayNumber',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("LedgerTransaction.F.AccountDisplayNumber"), // 'Original Account.',
+            Styles: { width: '100px' },
+            HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
+            IsCustomTemplate: true
+        });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("AccountDisplayNumber", 'Text', TextCodeTranslator.Translate("LedgerTransaction.F.AccountDisplayNumber")));
+
+        this.columns.push({
             FieldName: 'Notes',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.Notes"), // 'Notes',

@@ -929,6 +929,8 @@ namespace WebFreight.Web.WcfApi
             shipmentAdditionalCloudData.GatepassDocumentsReady = entityPM.GatepassDocumentsReady;
             shipmentAdditionalCloudData.GoodsClassification = entityPM.GoodsClassification;
             shipmentAdditionalCloudData.DocumentInspection = entityPM.DocumentInspection;
+            shipmentAdditionalCloudData.InvoiceIssuedDate = entityPM.InvoiceIssuedDate;
+
             UpdateShipmentAdditionalCloudData(shipmentAdditionalCloudDataRepository, shipmentAdditionalCloudData);
 
         }

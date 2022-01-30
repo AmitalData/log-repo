@@ -406,7 +406,16 @@ namespace Logitude.Infrastructure.BL
 			});
 			 
             all.Add(new ToggleDetails()
-            {    
+            {
+
+                Code = "ODA",
+                Name = "On Update Document Automation Tab",
+                SearchFields = "ODA,On Update Document Automation Tab",
+                Description = "On Update Document Automation Tab",
+            });
+
+            all.Add(new ToggleDetails()
+            {
                 Code = "AEV", 
                 Name = "Automation Event Creation", 
                 SearchFields = "AEV,Automation Event Creation", 
@@ -507,6 +516,22 @@ namespace Logitude.Infrastructure.BL
                 Name = "Containers DWH", 
                 SearchFields = "Containers DWH,Allow Tenants to Show Containers Fact on BI Report Screent,BCF", 
                 Description = "Allow Tenants to Show Containers Fact on BI Report Screen", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "DFP", 
+                Name = "Sharing Documents Via Shared links", 
+                SearchFields = "DFP,Sharing Documents Via Shared links Permission", 
+                Description = "Sharing Documents Via Shared links Permission", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CTF", 
+                Name = "Customer Team Field", 
+                SearchFields = "CTF,Customer Team Field", 
+                Description = "Show Customer Team Field", 
 			});
 			
             return all;

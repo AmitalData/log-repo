@@ -21,7 +21,7 @@ import {ApiQueryFilters, FilterItem} from '../../../Infrastructure/DataContracts
 import {ObservableCollection} from '../../../Infrastructure/Utilities/ObservableCollection';
 import {AppTool, DateTool} from '../../../Infrastructure/Tools';
 import {ReconcileEventManager} from '../../Utilities/ReconcileEventManager';
-import {ReconciliationExtendedPMService} from '../../Services/ExtendedPMs/ReconciliationExtendedPMService';
+import {ReconcileExcelDataArgs, ReconciliationExtendedPMService} from '../../Services/ExtendedPMs/ReconciliationExtendedPMService';
 import {LedgerTransactionExtendedListService} from '../../Services/ExtendedLists/LedgerTransactionExtendedListService';
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
@@ -207,6 +207,8 @@ export class LineModel extends BaseComponent {
 
 }
 
+const exportToExcelWindowWidth = 500;
+const exportToExcelWindowHeight = 200;
 @Component({
     selector: 'ReconcileComponent',
     moduleId: './Accounting/Components/Others/',
@@ -381,9 +383,37 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         }
 
     public ExportToExcelClick(){
-        this.AddAccountIdFilterForFilterAgrs();
-        this.AddIsReconciledFiltersForFilterAgrs();
-        this.LogitudeGridExportToExcelComponent.ExportToExcelExcute("LedgerTransaction",this.filterAgrs,this.QueryColumns);
+        this.ValidationErrorsList = [];
+        if(this.SelectedLines.Length == 0)
+            this.ValidationErrorsList = [TextCodeTranslator.Translate("Reconciliation.O.NoLinesSelected") ];
+        else
+            this.ShowExportToExcelWindow();
+    }
+
+    private ShowExportToExcelWindow()
+    {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = exportToExcelWindowWidth;
+        logitudeWindow.Height = exportToExcelWindowHeight;
+        logitudeWindow.WindowArgs = this.GetExportToExcelWindowArgs();
+        logitudeWindow.Title = TextCodeTranslator.Translate("General.B.ExportingDataToExcel");
+        logitudeWindow.Show('./Infrastructure/Components/Export2ExcelControl/Export2ExcelControl');
+    }
+
+    private GetExportToExcelWindowArgs()
+    {
+        var args: ReconcileExcelDataArgs = new ReconcileExcelDataArgs();
+        args.QueryColumns = this.QueryColumns;
+        args.Tenant = SessionLocator.Tenant;
+        args.Data = this.SelectedLines.Collection.map((d: LineModel) => d.LedgerTransactionPM);
+
+        var windowArgs: any = {};
+        windowArgs.ReconcileExcelDataArgs = args;
+        windowArgs.tenant = SessionLocator.Tenant;
+        windowArgs.ObjectTableName = this.ObjectTableName;
+        windowArgs.QueryName = this.ObjectTableName;
+        windowArgs.QueryType = "DraftReconciliation";
+        return windowArgs;
     }
 
     public AddAccountIdFilterForFilterAgrs(){
@@ -1798,6 +1828,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     public GetInternalReconcileAPPaymentAlertMessage(){
         return TextCodeTranslator.Translate('APPayment.M.PaymentCreatedWithReconciliation').replace('#number',this.createdPaymentNumber);
     }
+
+
 }
 
 export class DatesHelper

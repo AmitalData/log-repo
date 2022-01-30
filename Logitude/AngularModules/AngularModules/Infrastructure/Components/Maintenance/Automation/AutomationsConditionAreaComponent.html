@@ -48,9 +48,11 @@
                                         <div class="SimpleGridViewHeader">
                                             <table>
                                                 <tr>
-                                                    <td *ngIf="!NoEntity" style="width: 150px; min-width: 150px;">Entity</td>
-                                                    <td [ngStyle]="{'min-width':NoEntity? '230px' : '200px','width':NoEntity? '230px' : '200px'}">Field</td>
+                                                    <td *ngIf="CondationListType != 'Set'" style="width: 150px; min-width: 150px;">Entity</td>
+                                                    <td  style="width: 200px; min-width: 200px;">Field</td>
                                                     <td *ngIf="CanSetValueFromField" style="width: 165px; min-width: 165px;">Operator</td>
+                                                    <td *ngIf="CondationListType == 'Set'" style="width: 150px; min-width: 150px;">Entity</td>
+
                                                     <td style="width: 215px; min-width:215px">Value</td>
                                                     <td style="width: 100%; min-width:100%"></td>
                                                 </tr>
@@ -69,7 +71,7 @@
 
 
 
-                                                                            <td *ngIf="!NoEntity" style="width: 150px; min-width: 150px; max-width: 150px;">
+                                                                            <td *ngIf="CondationListType != 'Set'" style="width: 150px; min-width: 150px; max-width: 150px;">
 
                                                                                 <div style="text-align:left;width:145px">
                                                                                     <ComboBox style="width:115px;" (SelectedItemChanged)="item.AutomationEntityListValueChanged($event)" [ItemsSource]="item.AutomationEntityLists" [SelectedItem]="item.SelectedAutomationEntity" [Binding]="'DisplayName'"></ComboBox>
@@ -78,9 +80,9 @@
                                                                             </td>
 
 
-                                                                            <td [ngStyle]="{'min-width':NoEntity ? '230px' : '200px','max-width':NoEntity ? '230px' : '200px','width':NoEntity ? '230px' : '200px'}">
+                                                                            <td style="width: 200px; min-width: 200px;max-width:200px" >
 
-                                                                                <div [ngStyle]="{'width':NoEntity ? '225px' : '195px'}" style="text-align:center">
+                                                                                <div  style="text-align:center;width:195px">
 
                                                                                     <LogLov *ngIf="item.IsRefreshAutomationCondationField" (SelectedItemChanged)="item.CustomFieldValueChanged($event)"
                                                                                             [ObjectFieldName]="'ObjectFieldCode'"
@@ -123,6 +125,18 @@
 
                                                                             </td>
 
+
+                                                                            <td *ngIf="CondationListType == 'Set'  " style="width: 150px; min-width: 150px; max-width: 150px;">
+                                                                                <div style="text-align:left;width:145px">
+                                                                                    <ComboBox [IsDisabled]="!(item.SelectedOperator && item.SelectedCustomField && item.SelectedOperator.Code == 'SF' && item.SelectedCustomField.DataTypeCode != 'Boolean')" style="width:115px;" (SelectedItemChanged)="item.AutomationEntityListValueChanged($event)" [ItemsSource]="item.AutomationEntityLists" [SelectedItem]="item.SelectedAutomationEntity" [Binding]="'DisplayName'"></ComboBox>
+                                                                                </div>
+
+                                                                            </td>
+
+
+
+
+
                                                                             <td style="width: 215px; min-width: 215px; max-width: 215px;">
 
                                                                                 <table [style.width]="item.IsSystemVariables ? '220px':'240px'" *ngIf="!item.IsHideGeneralControl && item.SelectedCustomField" style="height:22px">
@@ -131,16 +145,16 @@
                                                                                         <!--System Variables-->
                                                                                         <td *ngIf="item.IsSystemVariables">
                                                                                             <ComboBox (SelectedItemChanged)="item.SystemVariableCondationValueChanged($event)" [ItemsSource]="item.SystemVariableOperatorLists" [SelectedItem]="item.SelectedSystemVariableOperator" [Binding]="'Name'"></ComboBox>
-                                                                                       
+
                                                                                         </td>
 
 
                                                                                         <!--Boolean-->
                                                                                         <td style="width:107px" *ngIf="item.SelectedCustomField.DataTypeCode == 'Boolean' && !item.IsSystemVariables">
-                                                                                            <ComboBox style="width:107px;" (SelectedItemChanged)="item.BooleanListValueChanged($event)" [ItemsSource]="item.BooleanList" [SelectedItem]="item.IsChecked" ></ComboBox>
+                                                                                            <ComboBox style="width:107px;" (SelectedItemChanged)="item.BooleanListValueChanged($event)" [ItemsSource]="item.BooleanList" [SelectedItem]="item.IsChecked"></ComboBox>
                                                                                         </td>
 
-                                                                                     
+
                                                                                         <!--Others-->
                                                                                         <td *ngIf="item.SelectedCustomField.DataTypeCode != 'Boolean' && !item.IsSystemVariables">
 
@@ -157,7 +171,6 @@
                                                                                                         [SelectedValue]="item.CustomObjectFieldCode"
                                                                                                         [HideColumns]="true"
                                                                                                         [HideLastColumn]="true"
-                                                                                                     
                                                                                                         [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
                                                                                                 </LogLov>
 
@@ -174,8 +187,8 @@
                                                                                                         [HideLastColumn]="true"
                                                                                                         [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
                                                                                                 </LogLov>
-                                                                                                
-                                                                                                 <!--<ComboBox style="width:202px;" (SelectedItemChanged)="item.ValueChange($event)" [ItemsSource]="item.CustomAutomationConditionsFieldLists" [SelectedItem]="item.SelectedCustomAutomationConditionsField" [Binding]="'AutomateFieldDefaultText'"></ComboBox>-->
+
+                                                                                                <!--<ComboBox style="width:202px;" (SelectedItemChanged)="item.ValueChange($event)" [ItemsSource]="item.CustomAutomationConditionsFieldLists" [SelectedItem]="item.SelectedCustomAutomationConditionsField" [Binding]="'AutomateFieldDefaultText'"></ComboBox>-->
                                                                                             </div>
 
 

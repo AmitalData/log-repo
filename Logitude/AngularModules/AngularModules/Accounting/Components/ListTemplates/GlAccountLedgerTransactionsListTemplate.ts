@@ -201,12 +201,10 @@ export class GlAccountLedgerTransactionsListTemplate {
         else return this.showLocal ? "סכום פתוח " : "Open transaction";
     }
 
-    OpenGLAccount() {
-        var account2open = this.rowData["OppositeAccountId"];
-
-
-
+    OpenGLAccount(fieldName :string) {
+        var account2open = this.rowData[fieldName];
         var tableName = "GLAccount";
+
         SessionLocator.DynamicLoader.Load(
             "./Infrastructure/Components/EditComponent/EditComponent",
             this.CurrentSession.SessionLocation.viewContainerRef

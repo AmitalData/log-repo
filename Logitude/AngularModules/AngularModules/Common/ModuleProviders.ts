@@ -89,6 +89,8 @@ import {MetodoPagoListService} from './Services/StandardLists/MetodoPagoListServ
 import {CustomerTenantAccessPMService} from './Services/StandardPMs/CustomerTenantAccessPMService';
 import {UsoCFDIListService} from './Services/StandardLists/UsoCFDIListService';
 import {RegimenFiscalListService} from './Services/StandardLists/RegimenFiscalListService';
+import {PostalCodeListService} from './Services/StandardLists/PostalCodeListService';
+import {PostalCodePMService} from './Services/StandardPMs/PostalCodePMService';
 import {ReportsTemplateListService} from './Services/StandardLists/ReportsTemplateListService';
 import {ReportsTemplatesVersionListService} from './Services/StandardLists/ReportsTemplatesVersionListService';
 import {AccountingSettingPMService} from './Services/StandardPMs/AccountingSettingPMService';
@@ -214,6 +216,8 @@ import { ProductItemListService } from './Services/StandardLists/ProductItemList
 import { DocumentFileService } from './Services/DocumentServices/DocumentFileService';
 import { PortTimeZoneListService } from './Services/StandardLists/PortTimeZoneListService';
 import { PortTimeZonePMService } from './Services/StandardPMs/PortTimeZonePMService';
+import { CustomerTeamPMService } from './Services/StandardPMs/CustomerTeamPMService';
+import { CustomerTeamListService } from './Services/StandardLists/CustomerTeamListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -394,6 +398,8 @@ export class ModuleProviders {
             case "MetodoPagoListService": { myResult = new MetodoPagoListService(); break; }
             case "UsoCFDIListService": { myResult = new UsoCFDIListService(); break; }
             case "RegimenFiscalListService": { myResult = new RegimenFiscalListService(); break; }
+            case "PostalCodeListService": { myResult = new PostalCodeListService(); break; }
+            case "PostalCodePMService": { myResult = new PostalCodePMService(); break; }
             case "ComputingPartnerPMService": { myResult = new ComputingPartnerPMService(); break; }
             case "ComputingPartnerTranslationPMService": { myResult = new ComputingPartnerTranslationPMService(); break; }
             case "CustomerTenantAccessMenuButtonsHandler": { myResult = new CustomerTenantAccessMenuButtonsHandler(); break; }
@@ -431,6 +437,8 @@ export class ModuleProviders {
             case "ShippingLineExtendedPMService": { myResult = new ShippingLineExtendedPMService(); break; }
             case "PortTimeZoneListService": { myResult = new PortTimeZoneListService(); break; }
             case "PortTimeZonePMService": { myResult = new PortTimeZonePMService(); break; }
+            case "CustomerTeamPMService": { myResult = new CustomerTeamPMService(); break; }
+            case "CustomerTeamListService": { myResult = new CustomerTeamListService(); break; }
         }
 
         return myResult;

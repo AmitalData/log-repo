@@ -254,6 +254,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new QuoteMap());
             modelBuilder.Configurations.Add(new QuoteTypeMap());
             modelBuilder.Configurations.Add(new RankMap());
+            modelBuilder.Configurations.Add(new CustomerTeamMap());
             modelBuilder.Configurations.Add(new RateClassMap());
             modelBuilder.Configurations.Add(new RatesTableMap());
             modelBuilder.Configurations.Add(new RestrictionMap());
@@ -492,6 +493,7 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<CardContact> CardContacts { get; set; }
         public IDbSet<PartnerType> PartnerTypes { get; set; }
         public IDbSet<Rank> Ranks { get; set; }
+        public IDbSet<CustomerTeam> CustomerTeams { get; set; }
         public IDbSet<User> Users { get; set; }
         public IDbSet<Department> Departments { get; set; }
         public IDbSet<Branch> Branches { get; set; }
@@ -1006,6 +1008,7 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<RegistryDateType> RegistryDateTypes { get; set; }
         public IDbSet<UsoCFDI> UsoCFDIs { get; set; }
         public IDbSet<RegimenFiscal> RegimenFiscals { get; set; }
+        public IDbSet<PostalCode> PostalCodes { get; set; }
         public IDbSet<ReportsTemplate> ReportsTemplates { get; set; }
         public IDbSet<ReportsTemplatesVersion> ReportsTemplatesVersions { get; set; }
         public IDbSet<FeatureChange> FeatureChanges { get; set; }

@@ -330,6 +330,12 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string Leg5VesselId { get; set; }
         [ForeignKey("Leg5VesselId")]
         public virtual Vessel Vessel5Leg { get; set; }
+        public string EmptyContainerReturnFrom { get; set; }
+        public string EmptyContainerReturnTo { get; set; }
+        public DateTime? EmptyContainerReturnETA { get; set; }
+        public DateTime? EmptyContainerReturnETD { get; set; }
+        public DateTime? EmptyContainerReturnATD { get; set; }
+        public DateTime? EmptyContainerReturnATA { get; set; }
 
     }
 }

@@ -379,6 +379,7 @@
     <Compile Include="ArtemusAnalyzerWorkerRole.cs" />
     <Compile Include="AutoSignUpMailWorkerRole.cs" />
     <Compile Include="AutoSignUpWorkerRole.cs" />
+    <Compile Include="CargoDisconnectWorkerRole.cs" />
     <Compile Include="CollaborationToolContainerUpdateWR.cs" />
     <Compile Include="CollaborationToolShipmentUpdateWR.cs" />
     <Compile Include="CollaborationToolTaskWR.cs" />
@@ -405,6 +406,7 @@
     <Compile Include="Services\SAT\SATProfact40Service.cs" />
     <Compile Include="Stimulsoft\fonts\StimulsoftFontsService.cs" />
     <Compile Include="Tasks\ContainerAutomaticallyClosingTask.cs" />
+    <Compile Include="Tasks\RecalculateCashbooksTotalsTask.cs" />
     <Compile Include="UpdatePortTimeZoneWR.cs" />
     <Compile Include="WebHookCommunicationWorkerRole.cs" />
     <Compile Include="Service References\LoginServiceReference\Reference.cs">

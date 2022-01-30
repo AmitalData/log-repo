@@ -95,6 +95,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ActivityWatch).HasColumnName("ActivityWatch");
             this.Property(t => t.PrimaryContactEmail).HasColumnName("PrimaryContactEmail");
             this.Property(t => t.RankId).HasColumnName("RankId");
+            this.Property(t => t.TeamId).HasColumnName("TeamId");
+            this.Property(t => t.TeamName).HasColumnName("TeamName");
             this.Property(t => t.IndustryId).HasColumnName("IndustryId");
             this.Property(t => t.LeadSourceId).HasColumnName("LeadSourceId");
             this.Property(t => t.LastQuoteDate).HasColumnName("LastQuoteDate");

@@ -374,6 +374,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             container.TerminalId = this.initializer.EntityPM?.DestinationWarehouseId;
             this.MapContainerFieldsFromShipmentPickup(container);
             this.MapContainerFieldsFromShipmentDelivery(container);
+            this.HandleContainerFieldsFromEmptyContainerReturn(container);
         }
 
         private void SendAutomaticallyOceanOnsightsRequest()
@@ -589,6 +590,82 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.ShipmentDeliveryTruckerId = shipmentDeliveryPM.CarrierId;
         }
 
+        private void HandleContainerFieldsFromEmptyContainerReturn(ContainerPM containerPM)
+        {
+            if (string.IsNullOrEmpty(containerPM.ShipmentPackagesId))
+                return;
+
+            ShipmentPackage shipmentPackage = initializer.ShipmentPackageRepository.GetSingleShipmentPackage(containerPM.ShipmentPackagesId, initializer.Tenant);
+            ShipmentPackagePM shipmentPackagePM = initializer.ShipmentPackagesChangeSet.FirstOrDefault(package => package.Id == containerPM.ShipmentPackagesId);
+
+            if (IsShipmentPackageDisconnectingToEmptyContainerReturn(shipmentPackage, shipmentPackagePM))
+            {
+                MapDeletedEmptyContainerReturnFields(containerPM);
+            }
+            else if (IsShipmentPackageConnectedToEmptyContainerReturn(shipmentPackage, shipmentPackagePM))
+            {
+                MapEmptyContainerReturnFields(shipmentPackagePM, containerPM);
+            }
+        }
+
+        private bool IsShipmentPackageDisconnectingToEmptyContainerReturn(ShipmentPackage shipmentPackage, ShipmentPackagePM shipmentPackagePM)
+        {
+            if (shipmentPackage == null)
+                return false;
+
+            if (shipmentPackagePM == null)
+                return false;
+
+            if (!string.IsNullOrEmpty(shipmentPackagePM.EmptyContainerReturnId))
+                return false;
+
+            if (!string.IsNullOrEmpty(shipmentPackage.EmptyContainerReturnId))
+                return false;
+
+           if (!shipmentPackage.IsEmptyContainerReturnFU)
+                return false;
+
+            return true;
+        }
+
+        private bool IsShipmentPackageConnectedToEmptyContainerReturn(ShipmentPackage shipmentPackage, ShipmentPackagePM shipmentPackagePM)
+        {
+            if (shipmentPackage == null)
+                return false;
+
+            if (shipmentPackagePM == null)
+                return false;
+
+            if (string.IsNullOrEmpty(shipmentPackagePM.EmptyContainerReturnId))
+                return false;
+
+            if (string.IsNullOrEmpty(shipmentPackage.EmptyContainerReturnId))
+                return false;
+
+            return true;
+        }
+
+        private void MapEmptyContainerReturnFields(ShipmentPackagePM shipmentPackagePM, ContainerPM containerPM)
+        {
+            containerPM.EmptyContainerReturnATA = shipmentPackagePM.EmptyContainerReturnATA;
+            containerPM.EmptyContainerReturnATD = shipmentPackagePM.EmptyContainerReturnATD;
+            containerPM.EmptyContainerReturnETD = shipmentPackagePM.EmptyContainerReturnETD;
+            containerPM.EmptyContainerReturnETA = shipmentPackagePM.EmptyContainerReturnETA;
+            ShipmentDeliveryPM shipmentDeliveryPM = initializer.ShipmentDeliveriesChangeSet.FirstOrDefault(x => x.Id == shipmentPackagePM.EmptyContainerReturnId);
+            containerPM.EmptyContainerReturnTo = GetLastDeliveryToAddress(shipmentDeliveryPM);
+            containerPM.EmptyContainerReturnFrom = GetLastDeliveryFromAddress(shipmentDeliveryPM);
+        }
+
+        private void MapDeletedEmptyContainerReturnFields(ContainerPM containerPM)
+        {
+            containerPM.EmptyContainerReturnTo = null;
+            containerPM.EmptyContainerReturnFrom = null;
+            containerPM.EmptyContainerReturnATA = null;
+            containerPM.EmptyContainerReturnATD = null;
+            containerPM.EmptyContainerReturnETD = null;
+            containerPM.EmptyContainerReturnETA = null;
+        }
+
         private ShipmentPickUpPM GetShipmentPickUpPMByContainerEntityId(ContainerPM entityPM)
         {
             foreach (ShipmentPickUpPM shipmentPickUpPM in initializer.EntityPM.ShipmentPickUps)
@@ -641,6 +718,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private string GetFirstPickupFromAddress(ShipmentPickUpPM shipmentPickUpPM)
         {
+            if (shipmentPickUpPM == null)
+                return "";
+
             if(shipmentPickUpPM.PickUpDeliveryFromTypeCode == "PART")
             {
                 return GetPartnerCardAddress(shipmentPickUpPM.FromPartnerCardId);
@@ -658,6 +738,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private string GetFirstPickupToAddress(ShipmentPickUpPM shipmentPickUpPM)
         {
+            if (shipmentPickUpPM == null)
+                return "";
+
             if (shipmentPickUpPM.PickUpDeliveryToTypeCode == "PART")
             {
                 return GetPartnerCardAddress(shipmentPickUpPM.ToPartnerCardId);
@@ -675,6 +758,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private string GetLastDeliveryFromAddress(ShipmentDeliveryPM shipmentDeliveryPM)
         {
+            if (shipmentDeliveryPM == null)
+                return "";
+
             if (shipmentDeliveryPM.PickUpDeliveryFromTypeCode == "PART")
             {
                 return GetPartnerCardAddress(shipmentDeliveryPM.FromPartnerCardId);
@@ -692,6 +778,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private string GetLastDeliveryToAddress(ShipmentDeliveryPM shipmentDeliveryPM)
         {
+            if (shipmentDeliveryPM == null)
+                return "";
+
             if (shipmentDeliveryPM.PickUpDeliveryToTypeCode == "PART")
             {
                 return GetPartnerCardAddress(shipmentDeliveryPM.ToPartnerCardId);

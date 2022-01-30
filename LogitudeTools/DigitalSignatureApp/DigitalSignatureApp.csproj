@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Cloud.Sign.App</RootNamespace>
-    <AssemblyName>DSV sign app</AssemblyName>
+    <AssemblyName>Sign app</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -19,7 +19,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <PublishUrl>C:\SignApp\PreDSV\</PublishUrl>
+    <PublishUrl>D:\sign\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -29,11 +29,11 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>https://pre.dsv.co.il/dsvsignapp/</InstallUrl>
+    <InstallUrl>http://localhost:9996/dsvsignapp/</InstallUrl>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>38</ApplicationRevision>
-    <ApplicationVersion>2.0.0.38</ApplicationVersion>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>3.0.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -150,7 +150,14 @@
     <Compile Include="AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="BaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ContextMenus.cs" />
+    <Compile Include="EnvironmentSettings\IEnvironmentSetting.cs" />
+    <Compile Include="EnvironmentSettings\Settings\DsvSettings.cs" />
+    <Compile Include="EnvironmentSettings\Settings\LogBoxSettings.cs" />
+    <Compile Include="EnvironmentSettings\Settings\PrivateLabelSettings.cs" />
     <Compile Include="Helpers\LoginParameters.cs" />
     <Compile Include="Helpers\SignatureHubClient.cs" />
     <Compile Include="Helpers\StatusData.cs" />
@@ -217,6 +224,9 @@
     <Content Include="Images\logboxiconInActive.ico" />
     <None Include="Images\Warning.png" />
     <Content Include="logboxicon.ico" />
+    <None Include="Resources\PLInactiveLogo.png" />
+    <None Include="Resources\PLIcon.ico" />
+    <None Include="Resources\PLBlueGenericLogo.png" />
     <Content Include="temp\samplepdf.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

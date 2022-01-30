@@ -182,6 +182,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\ChargesExternalAccountsByProduct.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CheckDigitControlAlgorithm.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CreditLimitSetting.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\CustomerTeam.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerOpenFilesAmount.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\DWHEnvironmentSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\Horse.cs" />
@@ -189,6 +190,11 @@
     <Compile Include="CommonDataModel\EntityPOCOs\PortTimeZone.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\ProductItem.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CargoTenantMilestoneDefinition.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\PostalCode.cs" />
+    <Compile Include="CommonDataModel\Mapping\CustomerTeamMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\PostalCodeMap.cs" />
+    <Compile Include="CommonDataModel\Repositories\CustomerTeamRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\PostalCodeRepository.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\QuoteChargesType.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TariffCarrierTranslation.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UnassignedEntity.cs" />

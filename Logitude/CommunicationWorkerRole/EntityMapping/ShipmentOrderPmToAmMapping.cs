@@ -25,6 +25,7 @@ namespace CommunicationWorkerRole.EntityMapping
         public ShipmentOrderAM Map(int tenant, ShipmentOrderPM shipmentOrder)
         {
             Card agent = cardsReporistory.GetSingleCard(shipmentOrder.AgentId, tenant);
+            Card shipper = cardsReporistory.GetSingleCard(shipmentOrder.ShipperId, tenant);
 
             ShipmentOrderAM shipmentOrderAM = new ShipmentOrderAM();
             shipmentOrderAM.Id = shipmentOrder.Id;
@@ -41,16 +42,15 @@ namespace CommunicationWorkerRole.EntityMapping
             shipmentOrderAM.Quantity = shipmentOrder.Quantity;
             shipmentOrderAM.Weight = shipmentOrder.GrossWeight;
 
-            shipmentOrderAM.Shipper = GetShipper(shipmentOrder);
-            shipmentOrderAM.ShipperName = shipmentOrder.ShipperName;
+            shipmentOrderAM.Shipper = GetShipper(shipper);
+            shipmentOrderAM.ShipperName = shipper?.EnglishName;
             shipmentOrderAM.Incoterm = GetIncoterm(shipmentOrder);
 
             return shipmentOrderAM;
         }
 
-        private CodeProperties GetShipper(ShipmentOrderPM shipmentOrder)
-        {
-            Card card = cardsReporistory.GetSingleCard(shipmentOrder.ShipperId, tenant);
+        private CodeProperties GetShipper(Card card)
+        {           
             if (card == null) return null;
             return new CodeProperties()
             {

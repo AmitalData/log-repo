@@ -70,6 +70,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string SalesmanUserEnglishName { get; set; }
         public string AccountManagerUserName { get; set; }
         public string AccountManagerUserId { get; set; }
+        public string TeamId { get; set; }
+        public string TeamName { get; set; }
         public string CASSCode { get; set; }
         public string IATACode { get; set; }
         public string RegulatedAgentCode { get; set; }

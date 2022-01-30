@@ -33,6 +33,7 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly MaintenanceItemCustomer = "#MaintenanceItemCUST"
    public static readonly MaintenanceItemVATSettings = "#MaintenanceItemVATS"
    public static readonly MaintenanceItemReport = "#MaintenanceItemMTRP"
+   public static readonly MaintenanceItemAccountingSettings = "#MaintenanceItemACSE"
 
    //#endregion
 
@@ -334,7 +335,7 @@ export class MaintenanceSelectors extends RegexSelectors {
 
    //#region VATSettings
    public static readonly VATAppliesFor = "#AllPartners_ApplyVATRadio"
-   public static readonly VatFormatTypeCode = "#Tenant_VatFormatTypeCode"
+   public static readonly VatFormatType = "#Tenant_VatFormatTypeCode"
    public static readonly VATIsMandatoryFor = "#Tenant_VatMandatoryTypeCode"
    public static readonly VatSize = "#Tenant_VatSize"
    //#endregion
@@ -349,4 +350,12 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly AddTemplate = "[data-cy='AddMessageTemplate']"
    public static readonly SaveReport = "#Report-Save"
    //#endregion
+
+    //#region Accounting Settings Maintenance
+    public static readonly AllowVoidARICheckBox="#AccountingSetting_AllowVoidARI"
+    public static readonly AllowVoidAPICheckBox="#AccountingSetting_AllowVoidAPI"
+    public static readonly VATNumber="#AccountingSetting_VatNumber"
+    public static readonly AllowVoidAPPayment="#AccountingSetting_AllowVoidARP"
+    public static readonly AllowVoidARPayment="#AccountingSetting_AllowVoidAPP"
+  //#endregion
 }

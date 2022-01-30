@@ -150,6 +150,10 @@ export class CargoTrackingShipmentList {
 	DenyDate: Date;
 	DenyReason: string;
 	ConnectedShipmentsNumbers: string;
+	InvoicedDate: Date;
+	InvoicedDone: boolean;
+	InvoicedNotes: string;
+	InvoicedExceptionReason: string;
 	
 }
  

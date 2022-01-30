@@ -197,7 +197,8 @@
                 <div>
                     <div class="title">Routing</div>
                     <ul>
-                        <li>{{cargoTrackingShipmentPM.RouteFromPortCode}} to {{cargoTrackingShipmentPM.RouteToPortCode}}
+                        <li>
+                            {{cargoTrackingShipmentPM.RouteFromPortName}} to {{cargoTrackingShipmentPM.RouteToPortName}}
                         </li>
                     </ul>
                 </div>
@@ -938,34 +939,34 @@
                                         </div>
                                         <div class="routing-card">
                                             <div class="route-card-body">
-                                                <div *ngIf="step.FromPortLabel != null || step.ToPortLabel != null"
-                                                    class="route-label">
-                                                    <div class="mobile-font-12"
-                                                        [attr.title]="step.ToolTipFromPortLabel">
-                                                        {{step.FromPortLabel}}
+                                                <div *ngIf="step.FromPortLabel != null || step.ToPortLabel != null" [ngStyle] ="{ 'direction' : (ContainsHebrew(step.FromPortLabel) || ContainsHebrew(step.ToPortLabel))? 'rtl' : 'ltr' }"
+                                                     class="route-label">
+                                                    <div class="mobile-font-12">
+                                                        <span [attr.title]="step.ToolTipFromPortLabel != null ? step.ToolTipFromPortLabel : step.FromPortLabel?.length > 6 ? step.FromPortLabel : ''">
+                                                            {{ step.ToPortLabel != null ? GetSlice(step.FromPortLabel,6) : GetSlice(step.FromPortLabel,15)}}
+                                                        </span>
                                                     </div>
-                                                    <div *ngIf="step.ToPortLabel != null"
-                                                        [attr.title]="step.ToolTipToPortLabel">
+                                                    <div class="mobile-font-12"  *ngIf="step.ToPortLabel != null">
                                                         >
-                                                        {{step.ToPortLabel}}
+                                                        <span [attr.title]="step.ToolTipToPortLabel != null ? step.ToolTipToPortLabel : step.ToPortLabel?.length > 6 ? step.ToPortLabel : ''">{{GetSlice(step.ToPortLabel,6)}}</span>
                                                     </div>
                                                 </div>
                                                 <div class="route-description TextTrimming" [title]="step.Description">
-                                                    {{step.Description}}</div>
+                                                    {{step.Description}}
+                                                </div>
                                                 <div class="routes">
                                                     <div *ngFor="let direction of step.Directions"
-                                                        class="route-direction">
+                                                         class="route-direction">
 
                                                         <svg style="transform: rotate(45deg);"
-                                                            [class.FlipImgDiagonal]="direction.Direction == 'in'"
-                                                            width="14" height="14" version="1.1"
-                                                            viewBox="0 0 512.17 512.17" xml:space="preserve"
-                                                            xmlns="http://www.w3.org/2000/svg" class="direction-icon">
-                                                            <g xmlns="http://www.w3.org/2000/svg">
-                                                                <path class=""
-                                                                    d="m479.05 283.92c-1.664-3.989-5.547-6.592-9.856-6.592h-116.88v-266.67c0-5.888-4.779-10.667-10.667-10.667h-170.67c-5.888 0-10.667 4.779-10.667 10.667v266.67h-117.33c-4.309 0-8.192 2.603-9.856 6.571-1.643 3.989-0.747 8.576 2.304 11.627l212.8 213.5c2.005 2.005 4.715 3.136 7.552 3.136s5.547-1.131 7.552-3.115l213.42-213.5c3.051-3.052 3.968-7.638 2.304-11.628z"
-                                                                    fill="var(--MainColor)" data-original="#000000" />
-
+                                                             [class.FlipImgDiagonal]="direction.Direction == 'in'"
+                                                             width="14" height="14" version="1.1"
+                                                             viewBox="0 0 512.17 512.17" xml:space="preserve"
+                                                             xmlns="http://www.w3.org/2000/svg" class="direction-icon">
+                                                        <g xmlns="http://www.w3.org/2000/svg">
+                                                        <path class=""
+                                                              d="m479.05 283.92c-1.664-3.989-5.547-6.592-9.856-6.592h-116.88v-266.67c0-5.888-4.779-10.667-10.667-10.667h-170.67c-5.888 0-10.667 4.779-10.667 10.667v266.67h-117.33c-4.309 0-8.192 2.603-9.856 6.571-1.643 3.989-0.747 8.576 2.304 11.627l212.8 213.5c2.005 2.005 4.715 3.136 7.552 3.136s5.547-1.131 7.552-3.115l213.42-213.5c3.051-3.052 3.968-7.638 2.304-11.628z"
+                                                              fill="var(--MainColor)" data-original="#000000" />
 
 
                                                             </g>

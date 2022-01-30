@@ -206,6 +206,11 @@ export class CustomerPM {
     public set RankId(newValue: string) { if (this.rankId != newValue) { this.rankId = newValue; this.MarkAsDirty("RankId"); } }
        
 	 
+    private teamId: string;
+    public get TeamId() { return this.teamId; }
+    public set TeamId(newValue: string) { if (this.teamId != newValue) { this.teamId = newValue; this.MarkAsDirty("TeamId"); } }
+       
+	 
     private vatTypeId: string;
     public get VatTypeId() { return this.vatTypeId; }
     public set VatTypeId(newValue: string) { if (this.vatTypeId != newValue) { this.vatTypeId = newValue; this.MarkAsDirty("VatTypeId"); } }
@@ -304,6 +309,11 @@ export class CustomerPM {
     private rankName: string;
     public get RankName() { return this.rankName; }
     public set RankName(newValue: string) { if (this.rankName != newValue) { this.rankName = newValue; this.MarkAsDirty("RankName"); } }
+       
+	 
+    private teamName: string;
+    public get TeamName() { return this.teamName; }
+    public set TeamName(newValue: string) { if (this.teamName != newValue) { this.teamName = newValue; this.MarkAsDirty("TeamName"); } }
        
 	 
     private rankCode: string;

@@ -96,5 +96,13 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
         {
             throw new NotImplementedException();
         }
+
+
+        public bool IsAnalyzeQueueExsit(byte[] analyzeQueueMessageBody)
+        {
+            return (from a in context.AnalyzeQueues
+                    where a.MessageBody == analyzeQueueMessageBody
+                    select a).Any();
+        }
     }
 }

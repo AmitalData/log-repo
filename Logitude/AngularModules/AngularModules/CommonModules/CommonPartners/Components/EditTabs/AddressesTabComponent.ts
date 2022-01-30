@@ -668,6 +668,17 @@ export class AddressItemClass extends BaseComponent {
         });
     }
 
+    SelectZipCode() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Select Zip Code";
+        logWindow.Show("./CommonModules/CommonOthers/Components/ZipCodeSelection/ZipCodeSelectionComponent");
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            if ($event) {
+                this.ZipCode = $event;
+            }
+        });
+    }
+
     public IsCopyMainAddress: boolean = false;
     CopyMainAddressClicked(isFromMainTab: boolean) {
         if (this.AddressTypeId == "P") {

@@ -287,6 +287,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     @Input() RunToggleMode: boolean;
     @Input() AutoCompleteSearchWindow: boolean;
     @Input() ForceShowAddLink: boolean;
+    @Input() ForceShowLocalAndEnglishColumns: boolean;
     showToggleButton: boolean;
     showPopup: boolean = false;
     ObjectTable: ObjectTablePM;
@@ -383,6 +384,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     _KeyDownSubscribe: any;
     @Output() KeyDownEvent: EventEmitter<any> = new EventEmitter();
     @Input() ColumnsWidths: ColumnsWidths[] = [];
+    @Input() ForceShowLanguageFilterOnSearchWindow: boolean = false;
 
     ngAfterViewInit() {
         this.RunComponent();
@@ -1129,11 +1131,17 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         let hasLocalCustomColumns=(this.DisplayLocalFieldsFromList != null && this.DisplayLocalFieldsFromList != undefined);
         let hasEnglishCustomColumns=(this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined);
 
-        if (hasEnglishCustomColumns && (this.LanguageFilterValue == 'E' || !hasLocalCustomColumns)) {
+        if (this.ForceShowLocalAndEnglishColumns) {
+
+            let allColumns = this.DisplayFieldsFromList.replace('EnglishName','EnglishName,LocalName')
+            fields = allColumns.split(',');
+            this.DropDownWidth += 145;
+
+        } else if (hasEnglishCustomColumns && (this.LanguageFilterValue == 'E' || !hasLocalCustomColumns)) {
             fields = this.DisplayFieldsFromList.split(',');
         }
-        else{
-            fields=this.DisplayLocalFieldsFromList.split(',');
+        else {
+            fields = this.DisplayLocalFieldsFromList.split(',');
         }
 
         lookupFields = window.ObjectFields.filter(d => d.ObjectTableId == this.LookUpTable.Id && fields.lastIndexOf(d.FieldName) > -1);
@@ -2210,7 +2218,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         args.DisplayFieldsFromList = this.DisplayFieldsFromList;
         args.DisplayLocalFieldsFromList = this.DisplayLocalFieldsFromList;
         args.LanguageFilterValue = this.LanguageFilterValue;
-        args.ShowLanguageFilter = this.ShowLanguageFilter;
+        args.ForceShowLanguageFilterOnSearchWindow = this.ForceShowLanguageFilterOnSearchWindow;
         var tablename = TextCodeTranslator.TranslateTablePlural(this.GetObjectTableName(this.LookUpTableName));
 
         if (tablename == "Cards") {
@@ -3466,6 +3474,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             this.SetCustomColumnsWidths();
             this.CalculateDropdownPanelWidthFromCustomColumnsWidths();
         }
+
+
 
         this.SetDisplayMemberPath();
     }

@@ -2623,6 +2623,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 ToPortId = shipmentPM.MainCarriageToPortId,
                 FromPortCode = shipmentPM.MainCarriageFromPortCode,
                 ToPortCode = shipmentPM.MainCarriageToPortCode,
+                FromPortName = shipmentPM.MainCarriageFromPortName,
+                ToPortName = shipmentPM.MainCarriageToPortName,
                 VesselId = shipmentPM.MainCarriageVesselId,
                 VesselName = shipmentPM.MainCarriageVesselName,
                 CarrierId = shipmentPM.MainCarriageCarrierId,
@@ -2645,6 +2647,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ToPortId = shipmentPM.Transshipment1ToPortId,
                     FromPortCode = shipmentPM.Transshipment1FromPortCode,
                     ToPortCode = shipmentPM.Transshipment1ToPortCode,
+                    FromPortName = shipmentPM.Transshipment1FromPortName,
+                    ToPortName = shipmentPM.Transshipment1ToPortName,
                     VesselId = shipmentPM.Transshipment1VesselId,
                     VesselName = shipmentPM.Transshipment1VesselName,
                     CarrierId = shipmentPM.Transshipment1CarrierId,
@@ -2668,6 +2672,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ToPortId = shipmentPM.Transshipment2ToPortId,
                     FromPortCode = shipmentPM.Transshipment2FromPortCode,
                     ToPortCode = shipmentPM.Transshipment2ToPortCode,
+                    FromPortName = shipmentPM.Transshipment2FromPortName,
+                    ToPortName = shipmentPM.Transshipment2ToPortName,
                     VesselId = shipmentPM.Transshipment2VesselId,
                     VesselName = shipmentPM.Transshipment2VesselName,
                     CarrierId = shipmentPM.Transshipment2CarrierId,
@@ -2692,6 +2698,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ToPortId = shipmentPM.Transshipment3ToPortId,
                     FromPortCode = shipmentPM.Transshipment3FromPortCode,
                     ToPortCode = shipmentPM.Transshipment3ToPortCode,
+                    FromPortName = shipmentPM.Transshipment3FromPortName,
+                    ToPortName = shipmentPM.Transshipment3ToPortName,
                     VesselId = shipmentPM.Transshipment3VesselId,
                     VesselName = shipmentPM.Transshipment3VesselName,
                     CarrierId = shipmentPM.Transshipment3CarrierId,
@@ -12522,6 +12530,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                OperationalStatusId = f.OperationalStatusId,
                                OperationalStatusName = f.OperationalStatusName,
                                PrivateLabelAgentName = f.PrivateLabelAgentName,
+                               StatusWeight = f.StatusWeight,
                            };
             return myResult;
         }
@@ -14265,7 +14274,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                      Transshipment3ToPortName = masterData.Transshipment3ToPort != null ? masterData.Transshipment3ToPort.EnglishName : null,
                                                      Transshipment3ToPortCode = masterData.Transshipment3ToPort != null ? masterData.Transshipment3ToPort.Code : null,
                                                      Transshipment3ToPortStateCode = masterData.Transshipment3ToPort != null ? masterData.Transshipment3ToPort.StateCode : null,
-                                                     Transshipment3ToPortCountryCode = masterData.Transshipment3ToPort != null ? masterData.Transshipment3ToPort.Country.Code : null
+                                                     Transshipment3ToPortCountryCode = masterData.Transshipment3ToPort != null ? masterData.Transshipment3ToPort.Country.Code : null,
+
+                                                     OnCarriageATA = masterData.OnCarriageATA,
+                                                     OnCarriageATD = masterData.OnCarriageATD,
+                                                     OnCarriageETA = masterData.OnCarriageETA,
+                                                     OnCarriageETD = masterData.OnCarriageETD,
+                                                     HasOnCarriage = masterData.OnCarriageFromPortId != null || masterData.OnCarriageToPortId != null ? true : false,
+
+                                                     PreCarriageATA = masterData.PreCarriageATA,
+                                                     PreCarriageATD = masterData.PreCarriageATD,
+                                                     PreCarriageETA = masterData.PreCarriageETA,
+                                                     PreCarriageETD = masterData.PreCarriageETD,
+                                                     HasPreCarriage = masterData.PreCarriageFromPortId != null || masterData.PreCarriageToPortId != null ? true : false
                                                  };
 
             return shipmentsMasterDataFieldsQuery.ToList();
@@ -14343,6 +14364,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentAdditionalFields.Transshipment3ToPortCode = shipmentMasterDataFields.Transshipment3ToPortCode;
                 shipmentAdditionalFields.Transshipment3ToPortStateCode = shipmentMasterDataFields.Transshipment3ToPortStateCode;
                 shipmentAdditionalFields.Transshipment3ToPortCountryCode = shipmentMasterDataFields.Transshipment3ToPortCountryCode;
+
+                shipmentAdditionalFields.OnCarriageATA = shipmentMasterDataFields.OnCarriageATA;
+                shipmentAdditionalFields.OnCarriageATD = shipmentMasterDataFields.OnCarriageATD;
+                shipmentAdditionalFields.OnCarriageETA = shipmentMasterDataFields.OnCarriageETA;
+                shipmentAdditionalFields.OnCarriageETD = shipmentMasterDataFields.OnCarriageETD;
+                shipmentAdditionalFields.HasOnCarriage = shipmentMasterDataFields.HasOnCarriage;
+
+                shipmentAdditionalFields.PreCarriageATA = shipmentMasterDataFields.PreCarriageATA;
+                shipmentAdditionalFields.PreCarriageATD = shipmentMasterDataFields.PreCarriageATD;
+                shipmentAdditionalFields.PreCarriageETA = shipmentMasterDataFields.PreCarriageETA;
+                shipmentAdditionalFields.PreCarriageETD = shipmentMasterDataFields.PreCarriageETD;
+                shipmentAdditionalFields.HasPreCarriage = shipmentMasterDataFields.HasPreCarriage;
             }
         }
 

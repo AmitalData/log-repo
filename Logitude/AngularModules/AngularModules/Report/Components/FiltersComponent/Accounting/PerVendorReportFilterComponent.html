@@ -77,12 +77,12 @@
             <ul float-start class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL">
                 <li float-start id="Vendor" (click)="VendorFilterItemClicked('Vendor')"
                     [class.SelectedFilter]="VendorFilterSelectedValue === 'Vendor'">
-                    {{'GLAccount.O.Vendor' | TextCodeTranslationPipe}}
+                    {{'TaxDeductionReport.O.Vendor' | TextCodeTranslationPipe}}
                 </li>
                 <li float-start id="All"
                     (click)="VendorFilterItemClicked('All')"
-                    [class.SelectedFilter]="VendorFilterSelectedValue === 'All'">
-                    {{'GLAccounts.Q.AllVendors' | TextCodeTranslationPipe}}
+                    [class.SelectedFilter]="VendorFilterSelectedValue === 'All'" style="width: 80px;">
+                    {{'TaxDeductionReport.O.AllVendors' | TextCodeTranslationPipe}}
                 </li>
             </ul>
         </td>
@@ -95,7 +95,7 @@
     <tr style="height: 32px;">
         <td style="width:10px"></td>
         <td class="Label" [style.text-align]="isRTL? 'right': 'left'" style="width: 150px;">
-            {{'GLAccount.O.Vendor' | TextCodeTranslationPipe}}:
+            {{'TaxDeductionReport.O.Vendor' | TextCodeTranslationPipe}}:
         </td>
         <td style="width:10px"></td>
         <td style="width:190px;">
@@ -140,7 +140,7 @@
     <tr style="height: 32px;">
         <td style="width:10px"></td>
         <td class="Label" [style.text-align]="isRTL? 'right': 'left'" style="width: 150px;">
-            {{'Accounting.General.O.ToDate' | TextCodeTranslationPipe}}
+            {{'TaxDeductionReport.O.ToDate' | TextCodeTranslationPipe}}:
         </td>
         <td style="width:10px"></td>
         <td style="width:150px;">

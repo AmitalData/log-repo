@@ -43,6 +43,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         const int GeneralTable_WithoutCustomCondition = 0;
         ShipmentMilestonesSyncService syncService = new ShipmentMilestonesSyncService();
         CargoReferencesSyncQueueService cargoReferencesSyncQueueService = new CargoReferencesSyncQueueService();
+        CargoDisconnectQueueService cargoDisconnectQueueService = new CargoDisconnectQueueService();
 
 
         public RecordUpdated UpdateCargoTrackingDataBase(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs)
@@ -414,6 +415,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.ForwardingShipmentsIds = GetForwardingShipmentsIds(bulkDataPreperation.SelectedDataTable);
                 syncService.IncremantalSyncShipmentMilstones(bulkDataPreperation);
                 cargoReferencesSyncQueueService.InsertToQueue(bulkDataPreperation);
+                cargoDisconnectQueueService.InsertToQueue(bulkDataPreperation);
             }
             return bulkDataPreperation;
         }
@@ -948,6 +950,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             }
             else
             {
+                var LastUpdate = ServiceHelper.GetTableLastUpdate(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName, updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
+                updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.ShipmentsWaterMark = LastUpdate;
                 UpdateCargoTrackingCondition(updateCargoTrackingRecords, ShipmentTable_GetAllCustomsShipmentsThatContainForwardingShipments);
                 UpdateCargoTrackingCondition(updateCargoTrackingRecords, ShipmentTable_GetAllNonCustomShipmentsThatContainForwardingShipments, true);
                 UpdateCargoTrackingCondition(updateCargoTrackingRecords, ShipmentTable_GetShipmentOrders, true);

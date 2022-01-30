@@ -56,6 +56,11 @@ export class QueryColumnsEditComponent {
     private _http: HttpClient;
     public serviceArgs: ServiceArgs;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsViewOnly: boolean = false;
+    public IsShowWarringMessage: boolean = false;
+     
+    public LayoutDirection: string = 'ltr';
+
     constructor(private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
         this._http = ServiceHelper.HttpClient;
@@ -67,6 +72,9 @@ export class QueryColumnsEditComponent {
         else {
             this.SearchFieldsId = "QueryColumnSearchFields_" + this.CurrentSession.GetNewId("QueryColumnSearchFields");
         }
+
+        //RTL Layout
+        this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         //this.Run();
     }
 
@@ -102,6 +110,9 @@ export class QueryColumnsEditComponent {
         var copy = false;
 
         var currentQuery = window.Queries.filter(d => d.UniqueCode == this.QueryCode)[0];
+
+        this.SetIsViewOnlyOption(currentQuery);
+
         this.addedQueryColumnList = [];
         this.removedQueryColumnList = [];
         //queriesByUser = TenantContext.Current.Queries.Where(d => d.UserId == TenantContext.Current.LoggedContactId).ToList();
@@ -194,7 +205,15 @@ export class QueryColumnsEditComponent {
     }
 
     //txtSearch_TextChanged
-    private searchText: string;
+    private searchText: string; 
+
+    private SetIsViewOnlyOption(currentQuery: any) {
+        if (currentQuery.SharedByUserId && currentQuery.SharedByUserId != SessionLocator.LoggedUserId && currentQuery.IsViewOnly) {
+            this.IsViewOnly = true;
+            this.IsShowWarringMessage = true;
+        }
+    }
+
     public get SearchText() { return this.searchText; }
     public set SearchText(newValue: string) {
         this.searchText = newValue;

@@ -158,7 +158,7 @@ namespace Logitude.Accounting.BL.InterestService
                 BatchTaskExecutionQueryService batchTaskExecutionQueryService = new BatchTaskExecutionQueryService(tenant);
                 BatchTaskExecutionPM batchTaskExecutionPM = batchTaskExecutionQueryService.GetSingle(InterestLastBatchService.CreateInvoicesBatchId, false, false);
 
-                if (batchTaskExecutionPM.StatusCode != "D" && batchTaskExecutionPM.StatusCode != "F")
+                if (batchTaskExecutionPM != null && batchTaskExecutionPM.StatusCode != "D" && batchTaskExecutionPM.StatusCode != "F")
                 {
                     ContactPM contact = GetLoggedContact(tenant);
                     bool showLocals = !contact.DontShowLocal;

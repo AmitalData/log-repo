@@ -469,6 +469,17 @@ export class AddEditPartnerAddressComponent extends BaseComponent {
         this.SetUIProperties_StateRequired();
     }
 
+    SelectZipCode() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Select Zip Code";
+        logWindow.Show("./CommonModules/CommonOthers/Components/ZipCodeSelection/ZipCodeSelectionComponent");
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            if ($event) {
+                this.ZipCode = $event;
+            }
+        });
+    }
+
     SelectCityCommand() {
         var args = new CitySelectionArgs(this.CountryId);
         var logWindow = new LogitudeWindow();

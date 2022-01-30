@@ -28,7 +28,7 @@ namespace CommunicationWorkerRole
         {
             if (General.IsUpdating())
             {
-                Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
+                Thread.Sleep(60000);
                 return;
             }
 
@@ -40,21 +40,19 @@ namespace CommunicationWorkerRole
             catch (Exception exception)
             {
                 ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Importer Shipment Order Queue worker role start", null, null);
-                Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
+                Thread.Sleep(10000);
             }
         }
 
         private void ExecuteQueue()
         {
-            var queueResponse = queueService.Receive(new TimeSpan(0, 0, 0, 0, 10));
+            var queueResponse = queueService.Receive();
             if (queueResponse == null || queueResponse.MessageId == null)
             {
                 return;
             }
 
-            ThreadStart executeDocumentsThreadStart = () => new ImporterShipmentOrdersService(queueService, queueResponse).ExecuteQueue();
-            executeDocumentsThreadStart += () => { LogDoneItemInMemory(); };
-            new Thread(executeDocumentsThreadStart) { IsBackground = true }.Start();
+            new ImporterShipmentOrdersService(queueService, queueResponse).ExecuteQueue();
         }
 
         private void ConnectClient()
