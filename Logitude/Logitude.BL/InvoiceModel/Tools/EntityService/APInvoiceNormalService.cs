@@ -43,6 +43,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -2156,17 +2157,17 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
         private void AddAccountingEntitiesJournalConstraint(JournalPM entityPM)
         {
-            AccountingEntitiesJournalRepository accountingEntitiesJournalRepository = new AccountingEntitiesJournalRepository(entityPM.Tenant);
-            var accountingEntitiesJournal = AccountingEntitiesJournalConstraint(entityPM);
-            accountingEntitiesJournalRepository.Add(accountingEntitiesJournal);
-            accountingEntitiesJournalRepository.SubmitChanges();
+            var accountingEntitiesJournal = CreateAccountingEntitiesJournalConstraint(entityPM);
+            IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
+            AccountingEntitiesJournalUpdateService service = new AccountingEntitiesJournalUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+            accountingEntitiesJournal.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+            service.Update(accountingEntitiesJournal, true);
         }
 
-        private AccountingEntitiesJournal AccountingEntitiesJournalConstraint(JournalPM entityPM)
+        private AccountingEntitiesJournalPM CreateAccountingEntitiesJournalConstraint(JournalPM entityPM)
         {
-            return new AccountingEntitiesJournal()
+            return new AccountingEntitiesJournalPM()
             {
-                Id = 0,
                 Tenant = entityPM.Tenant,
                 AccountingEntityCode = entityPM.AccountingEntityCode,
                 AccountingEntityId = entityPM.AccountingEntityId,
