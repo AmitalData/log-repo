@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsDocumentUploadUpdateClass
    {  		
-		public const string HashString = "0d8162ae78cc72e3b7d22aff9b787ca9";
+		public const string HashString = "d9972d1856dbee874f34b316908be52c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customs Document Upload",
 			      				    Code =  "3813",
-			      				    Name =  "Customs.PointerLevel Query Group",
+			      				    Name =  "Customs.CustomsDocumentUpload Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
 			      				    GenerateDomainService =  false,

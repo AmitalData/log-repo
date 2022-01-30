@@ -1318,7 +1318,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                             {
                                 SupplierInvoiceModificationPM.TypeDesc = expense.InvExpDescription;
                             }
-                             }
+
                             SupplierInvoiceModificationPM.DeclarationId = this._MySupplierInvoicePM.DeclarationId;
                             if (this._MySupplierInvoicePM.InvoiceCounterKey > 0) SupplierInvoiceModificationPM.InvoiceCounterKey = this._MySupplierInvoicePM.InvoiceCounterKey;
                             SupplierInvoiceModificationPM.Tenant = (this._MyDeclarationPM.Tenant > 0) ? this._MyDeclarationPM.Tenant : ResolvedTenant();
