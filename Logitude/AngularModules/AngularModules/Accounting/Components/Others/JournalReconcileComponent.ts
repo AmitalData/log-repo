@@ -352,7 +352,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
 
         this._ReconciliationExtendedPMService.CreateJournalReconcile(
             myReconciliationLines,
-            this._GLAccountPMId, this.GLAccount.Id, this.AccountingDate.toUTCString(), this.DueDate.toUTCString(), this.RefDate.toUTCString(),
+            this._GLAccountPMId, this.GLAccount.Id, this.AccountingDate.toUTCString(), this.DueDate ? this.DueDate.toUTCString() : null, this.RefDate? this.RefDate.toUTCString() : null,
             this.reference1, this.reference2, this.reference3, this.Notes)
             .subscribe(
             (res:ServiceResponse) => {
