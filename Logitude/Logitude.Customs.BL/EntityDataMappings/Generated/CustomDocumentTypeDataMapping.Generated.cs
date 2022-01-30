@@ -30,7 +30,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         PointerLevel, 
 	         AutoSetOriginalDocumentTrue, 
 	         IsCourierManadatory, 
-	         IsDiamondManadatory,
+	         IsDiamondManadatory, 
+	         CustomsDocumentUpload,
 	      }
 
 
@@ -46,7 +47,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AutoSetOriginalDocumentTrue, 
 	         PointerLevelName, 
 	         IsCourierManadatory, 
-	         IsDiamondManadatory,
+	         IsDiamondManadatory, 
+	         CustomsDocumentUpload, 
+	         CustomsDocumentUploadName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -93,6 +96,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDiamondManadatory))
             {
 				entityPOCO.IsDiamondManadatory = entityPM.IsDiamondManadatory;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsDocumentUpload))
+            {
+				entityPOCO.CustomsDocumentUpload = entityPM.CustomsDocumentUpload;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -146,6 +154,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsDiamondManadatory = entityPOCO.IsDiamondManadatory;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsDocumentUpload))
+            {
+					entityPM.CustomsDocumentUpload = entityPOCO.CustomsDocumentUpload;
+            }
+
 		}
 
 		public void PMToOldPM(CustomDocumentTypePM entityPM, CustomDocumentTypePM oldEntityPM)
@@ -190,6 +203,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDiamondManadatory))
             {
                 oldEntityPM.IsDiamondManadatory = entityPM.IsDiamondManadatory;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsDocumentUpload))
+            {
+                oldEntityPM.CustomsDocumentUpload = entityPM.CustomsDocumentUpload;
             }
 			
 		}

@@ -6,20 +6,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class CustomDocumentTypeList {
+export class CustomsDocumentUploadList {
    
 	Code: string;
-	EnglishName: string;
 	LocalName: string;
 	SearchFields: string;
-	Inactive: boolean;
-	PointerLevel: string;
-	AutoSetOriginalDocumentTrue: boolean;
-	PointerLevelName: string;
-	IsCourierManadatory: boolean;
-	IsDiamondManadatory: boolean;
-	CustomsDocumentUpload: string;
-	CustomsDocumentUploadName: string;
+	EnglishName: string;
 	
 }
  
