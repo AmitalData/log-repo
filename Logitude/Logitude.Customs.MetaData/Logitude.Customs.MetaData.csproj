@@ -554,6 +554,8 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\ExportReference.lxml" />
+    <None Include="EntityFiles\ExportStorge.lxml" />
+    <None Include="EntityFiles\CustomsDocumentUpload.lxml" />
     <None Include="EntityFiles\StuffingSiteType.lxml" />
     <None Include="EntityFiles\HandingCode.lxml" />
     <None Include="EntityFiles\NDMessageActionCode.lxml" />
