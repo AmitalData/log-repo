@@ -1,11 +1,11 @@
-import {Component, Output, EventEmitter , OnInit , AfterViewInit} from '@angular/core';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
-import {ListComponentArgs} from '../../../../Infrastructure/Args';
-import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
+import { Component, Output, EventEmitter, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { InfraSettings } from '../../../../Infrastructure/Utilities/InfraSettings';
+import { ListComponentArgs } from '../../../../Infrastructure/Args';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { CustomsSettingExtendedListService } from '../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -22,6 +22,8 @@ import { DeclarationExtendedListService } from '../../../../Customs/Services/Ext
 import { DeclarationCourierStatusWebService } from '../../../../Customs/Services/WebServices/DeclarationCourierStatusWebService';
 import { CourierWorksheetSharedDataService } from '../../../../Customs/Services/DataChange/CourierWorksheetSharedDataService';
 import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
+import { CourierDeclarationFiltersMenuComponent } from './FiltersMenu/CourierDeclarationFiltersMenuComponent';
+import { CardPMService } from 'Common/Services/StandardPMs/CardPMService';
 
 @Component({
     templateUrl: './CourierDeclarationWorkspaceComponent.html',
@@ -29,7 +31,7 @@ import { CourierMasterService } from 'Customs/Services/Others/CourierMasterServi
 })
 
 export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
-  public ObjectTableName: any;
+    public ObjectTableName: any;
 
     @Output() ReloadUserQueries = new EventEmitter();
     public RecentGLAccountsCount: number = 0;
@@ -37,6 +39,9 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     private _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
     _CourierMasterService: CourierMasterService = new CourierMasterService();
     _EntityListService: EntityListService = new EntityListService();
+    _CardPMService: CardPMService = new CardPMService();
+    @ViewChild(CourierDeclarationFiltersMenuComponent) courierDeclarationFiltersMenuComponent: CourierDeclarationFiltersMenuComponent;
+
 
     // Queries Features
     public OpenCourierMasterVisibility: boolean = true;
@@ -45,6 +50,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     public CourierMasterOpenIndividualVisibility: boolean = true;
     public UnReleasedIndividualVisibility: boolean = true;
     public WithoutIdVisibility: boolean = true;
+    public IntegratorCode :string="";
     public WithoutClassificationVisibility: boolean = true;
     public PendingPaymentVisibility: boolean = true;
     public PendingCustomsVisibility: boolean = true;
@@ -52,18 +58,18 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     public isRTL: boolean = false;
     public isScreenLoaded: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public counters:any;
+    public counters: any;
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() onQueryChangeEvent = new EventEmitter();
-    
-    constructor(public _CourierWorksheetSharedDataService:CourierWorksheetSharedDataService,public _declarationCourierStatusWebService: DeclarationCourierStatusWebService) {
+
+    constructor(public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public _declarationCourierStatusWebService: DeclarationCourierStatusWebService) {
         //this.LoadAllScreenData();
         this.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
-            this._entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe((response: any) => { 
+            this._entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe((response: any) => {
                 {
-                    _declarationCourierStatusWebService.GetQueriesCounts().subscribe(
-                       (data:any) => {
+                    _declarationCourierStatusWebService.GetQueriesCounts(this.IntegratorCode).subscribe(
+                        (data: any) => {
                             this.counters = data.Result;
                             this.CurrentSession.StopBusyIndicator();
                             this.isScreenLoaded = true;
@@ -77,16 +83,28 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     }
+
+    ApplyFilters(val: string) {
+        this.IntegratorCode=val;
+        this._declarationCourierStatusWebService.GetQueriesCounts(this.IntegratorCode).subscribe(
+            (data: any) => {
+                this.counters = data.Result;
+                //this.BuildColumns();
+                this.RefreshList();
+            });
+
+    }
+
     ngAfterViewInit() {
         this._CourierWorksheetSharedDataService.CurrentMessage
             .subscribe(message => {
                 if (message == "DoRefresh") {
                     this.RefreshButtonClicked();
-                   
+
                 }
 
                 this.LoadAllScreenData();
-     
+
 
             });
 
@@ -95,13 +113,13 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     public IsQueryVisible_MyViewsGroup: boolean = true;
 
     RefreshButtonClicked() {
-        this._declarationCourierStatusWebService.GetQueriesCounts().subscribe(
-            (data:any) => {
+        this._declarationCourierStatusWebService.GetQueriesCounts(this.IntegratorCode).subscribe(
+            (data: any) => {
                 this.counters = data.Result;
                 this.LoadAllScreenData();
                 this.RefreshList();
             });
-     
+
     }
 
     public LoadAllScreenData() {
@@ -110,11 +128,21 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
         this.ReloadUsersQuery();
     }
 
+    public filters: ApiQueryFilters;
+    FilterChange($event) {
+        this.filters = new ApiQueryFilters();
+        this.filters = $event.Filters;
+        var IntegratorFilter = this.filters.AdditionalFilters.filter(a => a.FieldName == "IntegratorCode");
+        if(IntegratorFilter.length>0){
+            this.ApplyFilters(IntegratorFilter[0].FieldValue);
+        }
+    }
+
     SetQueriesVisibility() {
         //this.OpenCourierMasterVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "ACTIVEGLACCOUNTS") ? true : false;
         this.OpenCourierMasterVisibility = true;
         this.AllCourierDeclarationVisibility = true;
-        this.UnReleasedFastProcessVisibility = true ;
+        this.UnReleasedFastProcessVisibility = true;
         this.CourierMasterOpenIndividualVisibility = true;
         this.UnReleasedIndividualVisibility = true;
         this.WithoutIdVisibility = true;
@@ -201,7 +229,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
                     {
                         displayTitle = "Open Courier Master";
                         displayTitle = TextCodeTranslator.Translate("Customs.CourierMaster.O.CourierMasterOpen");
-                        
+
                         break;
                     }
                 case "UnReleasedFastProcess":
@@ -268,7 +296,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
             //filters.SortBy = this.currentSortingCol;
             //filters.SortDirection = this.currentSortingDir;
 
-            this.BuildFiltersForQuery(filters);
+            filters=this.BuildFiltersForQuery(filters);
 
             var listArgs = new ListComponentArgs();
             listArgs.QueryCode = myQueryCode;
@@ -285,30 +313,35 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
                         cmpRef.instance.Run(listArgs);
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => {
                             this.LoadAllScreenData();
-                        this._declarationCourierStatusWebService.GetQueriesCounts().subscribe(
-                            (data:any) => {
-                                this.counters = data.Result;
+                            this._declarationCourierStatusWebService.GetQueriesCounts(this.IntegratorCode).subscribe(
+                                (data: any) => {
+                                    this.counters = data.Result;
 
-                                this.CurrentSession.AddMenuReference(cmpRef);
-                                 this.RefreshList();
-                            });
-                    });
+                                    this.CurrentSession.AddMenuReference(cmpRef);
+                                    this.RefreshList();
+                                });
+                        });
                     });
             });
         }
     }
 
     BuildFiltersForQuery(filters: ApiQueryFilters = null) {
-
         filters = new ApiQueryFilters();
+        if (this.filters?.AdditionalFilters?.length > 0) {
+            var excludeIntegratorFilter = this.filters.AdditionalFilters.filter(a => a.FieldName == "IntegratorCode");
+            if (excludeIntegratorFilter) {
+                filters.addAdditionalFilter(excludeIntegratorFilter[0]?.FieldName, excludeIntegratorFilter[0]?.FieldValue, null, null, "Equal", false, false, false, "LookUp");
+            }
+        }
         //filters.addAdditionalFilter("CourierMasterId", this.entityPM.Id, null, null, "Equals", false, false, false, "string");
         filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
-
+        return filters;
     }
 
 
 
-    
+
 
     //public RecentGLAccountsList: GLAccountList[];
     //LoadRecentGLAccounts() {
@@ -326,7 +359,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     //        }
     //    });
     //}
-    
+
 
     public columns: any[] = null;
     BuildColumns() {
@@ -420,7 +453,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
         //sortingCol: "CourierHawb",
         //sortingDir: "Descending",
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
-            var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
+            var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, this.filters);
             return tempo;
 
         },
@@ -428,8 +461,10 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
 
     filterAgrs: ApiQueryFilters;
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
-
         filters = new ApiQueryFilters();
+        if (this.filters?.AdditionalFilters.length > 0) {
+            filters = this.filters;
+        }
         filters.PageSize = take;
         filters.PageIndex = skip;
         filters.GetAll = false;
@@ -437,8 +472,8 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
         filters.SortBy = sortingCol;
         filters.SortDirection = sortingDir;
         this.BuildFiltersForCourierMasterQuery(filters);
-         var myout = this._EntityListService.getExtendedByFilters("Customs.CourierMaster", filters);
-         return myout;
+        var myout = this._EntityListService.getExtendedByFilters("Customs.CourierMaster", filters);
+        return myout;
     }
 
     RefreshList() {

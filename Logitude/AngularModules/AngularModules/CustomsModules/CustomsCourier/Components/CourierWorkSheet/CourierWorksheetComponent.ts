@@ -323,7 +323,6 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     }
 
     SendALLCorrectManifest(courierDeclarationStatusCode: string) {
-        debugger;
         if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
