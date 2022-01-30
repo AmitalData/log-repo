@@ -113,6 +113,12 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
                     "Courier New": 'Courier New',
                     "Lucida Sans Unicode": 'Lucida Sans Unicode',
                     "Trebuchet MS": 'Trebuchet MS',
+
+                    "Century Gothic": 'Century Gothic',
+                    "Garamond": 'Garamond',
+                    "Perpetua": 'Perpetua',
+                    "Lucida Bright": 'Lucida Bright',
+
                 },
                 tableStyles: {
                     All: 'All',
