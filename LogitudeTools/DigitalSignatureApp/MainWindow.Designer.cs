@@ -230,14 +230,6 @@ namespace Cloud.Sign.App
 
         #endregion
 
-        private void InitDSVView(System.ComponentModel.ComponentResourceManager resources)
-        {
-            this.pictureBox1.Image = global::Cloud.Sign.App.Properties.Resources.HeaderLogo;
-            this.label1.Text = "DSV Sign Client";
-            this.Text = "DSV Sign App";
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.DsvIcon")));
-        }
-
         private System.Windows.Forms.NotifyIcon ni;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;

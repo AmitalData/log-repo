@@ -121,6 +121,21 @@ namespace Cloud.Sign.App
             }
             notifyIcon.Text = "LogBox Sign Application";
         }
+
+        protected void SetBalloonTipTitle()
+        {
+            if (Environment == "DSV")
+            {
+                notifyIcon.BalloonTipTitle = "DSV Sign Application";
+                return;
+            }
+            if (Environment == "PL")
+            {
+                notifyIcon.BalloonTipTitle = "Sign Application";
+                return;
+            }
+            notifyIcon.BalloonTipTitle = "LogBox Sign Application";
+        }
         protected void SetInactiveIcon()
         {
             if (Environment == "DSV")

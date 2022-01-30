@@ -479,7 +479,7 @@ namespace Cloud.Sign.App
                 if (!IsActive || !IsValidCert || !IsLogged)
                 {
                     SetInactiveIcon();
-                    SetDefaultText();
+                    SetBalloonTipTitle();
                     if (IsLogged == false)
                     {
                         ni.BalloonTipText = "Application disconnected , please login again.";
