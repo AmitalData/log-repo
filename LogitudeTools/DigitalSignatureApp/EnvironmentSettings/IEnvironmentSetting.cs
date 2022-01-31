@@ -12,5 +12,6 @@ namespace Cloud.Sign.App.EnvironmentSettings
         string BalloonTipText { get; }
         string BalloonTipTitle { get; }
         Icon InactiveIcon { get; }
+        Icon HeaderIcon { get; }
     }
 }

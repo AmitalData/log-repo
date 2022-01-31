@@ -26,5 +26,6 @@ namespace Cloud.Sign.App.EnvironmentSettings.Settings
 
         public Icon InactiveIcon => Resources.logboxiconInActive;
 
+        public Icon HeaderIcon => Resources.logboxicon1;
     }
 }
