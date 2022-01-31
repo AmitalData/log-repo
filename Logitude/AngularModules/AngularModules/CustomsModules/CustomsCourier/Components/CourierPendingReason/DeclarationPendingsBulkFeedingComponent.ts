@@ -177,7 +177,7 @@ export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
         const listPendingRemark = this.DeclarationPendingItemsSource.Collection.map(x => x.PendingRemarks)
 
         if (this.haveDuplicates(listPending))
-            return this.showMessage("יש שתי רשומות עם אותו קו עיכוב");
+            return this.showMessage("יש שתי רשומות עם אותו קוד עיכוב");
 
         SessionLocator.SelectedSession.StartBusyIndicatorSaving();
         const msg: string =  await this.pendingWebService.postBulkFeeding(listPending, listPendingRemark, this.declarationIdsList, this.courierMasterId, this.checkboxAll, this.allWithoutdeclarationIdsList)
