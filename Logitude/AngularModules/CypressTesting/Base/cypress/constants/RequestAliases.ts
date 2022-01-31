@@ -29,6 +29,9 @@ export class RequestAliases {
     public static readonly SentToCustomer = 'SentToCustomer';
     public static readonly SendReport = 'SendReport';
     public static readonly ShipmentViews = 'ShipmentViews';
+    public static readonly EntityResource = 'EntityResource';
+    public static readonly ObjectFields = 'ObjectFields';
+
 
     public static readonly PrintQuotationWindowOpen = 'PrintQuotationWindowOpen';
 
