@@ -18,17 +18,43 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalPages
         
         public override decimal CalculateClosingBalance()
         {
-            ReconcileExternalPage pageThatContainsTheDate = GetThePageContainsTheDate();
+            List<ReconcileExternalPage> pagesThatContainsTheDate = GetPagesContainsTheDate();
 
+            if (pagesThatContainsTheDate.Count() == 2 && CheckIfPagesHasCrossDate(pagesThatContainsTheDate))
+            {
+                var latestPage = pagesThatContainsTheDate.Last();
+                var firstPage = pagesThatContainsTheDate.First();
+                bool pagesHasCrossDates = latestPage.FromDate == firstPage.ToDate;
+                if(pagesHasCrossDates)
+                    return CalculateBalanceByPage(latestPage);
+                return 0;
+
+            }
+            else
+            {
+                return CalculateBalanceByPage(pagesThatContainsTheDate.FirstOrDefault());
+            }
+        }
+
+        private decimal CalculateBalanceByPage(ReconcileExternalPage pageThatContainsTheDate)
+        {
             List<ReconcileExternalPageLine> lines = GetPageLinesOrderedByReferenceDate(pageThatContainsTheDate);
 
             decimal linesSummationUpToDate = GetLinesSummationUpToDate(date, lines);
             return pageThatContainsTheDate.StartBalance + linesSummationUpToDate;
         }
 
-        private ReconcileExternalPage GetThePageContainsTheDate()
+        private List<ReconcileExternalPage> GetPagesContainsTheDate()
         {
-            return externalPages.FirstOrDefault(page => page.FromDate <= date && date <= page.ToDate);
+            return externalPages.Where(page => page.FromDate <= date && date <= page.ToDate).OrderBy(page=>page.FromDate).ToList();
+        }
+
+        private bool CheckIfPagesHasCrossDate(List<ReconcileExternalPage> pagesThatContainsTheDate)
+        {
+            var latestPage = pagesThatContainsTheDate.Last();
+            var firstPage = pagesThatContainsTheDate.First();
+            bool pagesHasCrossDates = latestPage.FromDate == firstPage.ToDate;
+            return pagesHasCrossDates;
         }
 
         private decimal GetLinesSummationUpToDate(DateTime date, List<ReconcileExternalPageLine> lines)
