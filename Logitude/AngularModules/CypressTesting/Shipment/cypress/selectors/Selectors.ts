@@ -59,6 +59,11 @@ export class ShipmentSelectors extends RegexSelectors {
   //#endregion
 
   //#region Create shipment
+  
+  public static readonly ShipmentInlandDomesticFromCountry = '#Shipment_InlandDomesticFromCountryId';
+  public static readonly ShipmentInlandDomesticFromCity = '#Shipment_InlandDomesticFromCity';
+  public static readonly ShipmentInlandDomesticToCountry = '#Shipment_InlandDomesticToCountryId';
+  public static readonly ShipmentInlandDomesticToCity = '#Shipment_InlandDomesticToCity';
   public static readonly NewShipmentToggleButton = '#NEWSHIP .LogitudeToggleButtonContainer';
   public static readonly NewShipmentToggleButtonItem = '#NEWSHIP .LogitudeToggleButtonItem';
   public static readonly ShipmentMainCarriageFromPort = '#Shipment_MainCarriageFromPortId';
@@ -447,6 +452,8 @@ export class ShipmentSelectors extends RegexSelectors {
   //#region Delivery Leg standalone
   public static readonly EditDelivery = "#Edit-Delivery"
   public static readonly EditPickUp = "#Edit-PickUp"
+  public static readonly EditDeliveryNumber = '[id^=Edit-Delivery]'
+  public static readonly EditPickUpNumber = '[id^=Edit-PickUp]'
   public static readonly DeliveryToPartnerName = "#ShipmentPickUpDelivery_ToPartnerCardId"
   public static readonly PickUpDeliveryToPort = "#ShipmentPickUpDelivery_ToPortId"
   public static readonly PickUpDeliveryFromPort = "#ShipmentPickUpDelivery_FromPortId"
@@ -472,6 +479,9 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ComponentBusyIndicator = "div[id^='EditComponentBusyIndicator']:last";
   public static readonly FullResponsibilityCheckBox = "#CheckBox_0_8_LBL"
   public static readonly Printbutton = "#printbutton"
+  public static readonly ShipmentMainCarriageFromPartner = "#Shipment_MainCarriageFromPartnerId"
+  public static readonly ShipmentMainCarriageToPartner = "#Shipment_MainCarriageToPartnerId"
+  
   //#endregion
   //#region Shipment view
   public static readonly ShipmentList = "#Shipments-O-Q";
