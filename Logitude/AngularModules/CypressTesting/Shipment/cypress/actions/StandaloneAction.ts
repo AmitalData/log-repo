@@ -161,13 +161,13 @@ export function FillDomesticInlandToTypeDetails(standaloneDetails: PickupDelivar
 
 export function AddStandaloneWithDeliveryFromRouting() {
    cy.Click(ShipmentSelectors.CloseBtn, null)
-   cy.Click(ShipmentSelectors.RoutingToggle + BaseSelectors.LastElement, null)
+   cy.Click(ShipmentSelectors.RoutingToggle, null)
    cy.Click(ShipmentSelectors.Delivery + BaseSelectors.LastElement, null)
    cy.Click(BaseSelectors.Button, ShipmentConstants.AddStandAloneShipmentWithDelivery)
 }
 
 export function AddStandaloneWithPickupFromRouting() {
-   cy.Click(ShipmentSelectors.RoutingToggle+BaseSelectors.LastElement, null)
+   cy.Click(ShipmentSelectors.RoutingToggle, null)
    cy.Click(ShipmentSelectors.PickUp+BaseSelectors.LastElement, null)
    cy.Click(BaseSelectors.Button, ShipmentConstants.AddStandAloneShipmentWithPickup)
 }
