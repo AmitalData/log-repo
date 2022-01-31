@@ -74,6 +74,25 @@
                         <td><div></div></td>
                     </tr>
 
+                    <tr class="FormFieldRow">
+                        <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'Accounting.General.O.DueDate' | TextCodeTranslationPipe}}</td>
+
+                        <td style="width: 180px;">
+                            <LogDatePicker [ObjectFieldName]="'DueDate'" [ObjectTableName]="ObjectTableName"
+                                           [DataContext]="DataContext" [HideColumns]="true" [ForceFocus]="forceFocus"></LogDatePicker>
+                        </td>
+                        <td><div></div></td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'Accounting.General.O.RefDate' | TextCodeTranslationPipe}}</td>
+
+                        <td style="width: 180px;">
+                            <LogDatePicker [ObjectFieldName]="'RefDate'" [ObjectTableName]="ObjectTableName"
+                                           [DataContext]="DataContext" [HideColumns]="true" [ForceFocus]="forceFocus"></LogDatePicker>
+                        </td>
+                        <td><div></div></td>
+                    </tr>
 
 
                     <!-- References -->

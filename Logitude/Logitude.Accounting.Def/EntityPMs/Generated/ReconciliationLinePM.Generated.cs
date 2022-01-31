@@ -321,12 +321,12 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private DateTime dueDate ;
+	  private DateTime? dueDate ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime DueDate  
+       public DateTime? DueDate  
 	   {
 	    
 	     get
@@ -337,7 +337,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(dueDate != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DueDate",OldValue=dueDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DueDate",OldValue=dueDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   dueDate=value;
 		   }
@@ -731,6 +731,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExcelTransactionAmount",OldValue=excelTransactionAmount,NewValue=value,PropertyType="decimal"};
 		    NotifyPropertyChanged(values);
 		   excelTransactionAmount=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? refDate ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? RefDate  
+	   {
+	    
+	     get
+		{
+		   return refDate;
+		 }
+		 set
+		 {
+		   if(refDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RefDate",OldValue=refDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   refDate=value;
 		   }
 			
 		 }
