@@ -997,9 +997,11 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
                     if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC") {
                         if (this.EntityPM.TypeCode == "AFC") {
                             this.PriceSteps = this.tariffSetting.AirDefaultSteps;
+                            this.EntityPM.UnitOfMeasurementCode = this.tariffSetting.AirUnitOfMeasurementCode;
                         }
                         else {
                             this.PriceSteps = this.tariffSetting.LCLDefaultSteps;
+                            this.EntityPM.UnitOfMeasurementCode = this.tariffSetting.LCLUnitOfMeasurementCode;
                         }
 
                         this.PriceStepsText = this.GetPriceSteps(this.PriceSteps);                        
@@ -1044,13 +1046,14 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
     EditPriceSteps() {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Price Steps";
-        logWindow.WindowArgs = this.PriceSteps;
+        logWindow.WindowArgs = [this.PriceSteps, this.EntityPM.UnitOfMeasurementCode];
         logWindow.Show("./TariffModule/Components/NewEntity/TariffPriceStepsComponent");
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
                 if (d != "cancel") {
                     var steps = s.DefaultPriceSteps;
                     this.EntityPM.PriceSteps = steps;
+                    this.EntityPM.UnitOfMeasurementCode = s.UnitOfMeasurementCode;
                     this.PriceSteps = steps;
                     this.PriceStepsText = this.GetPriceSteps(this.PriceSteps);
                 }

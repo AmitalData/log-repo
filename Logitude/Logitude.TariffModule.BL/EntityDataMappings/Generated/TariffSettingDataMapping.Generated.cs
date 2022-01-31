@@ -29,7 +29,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         AirDefaultStepsId, 
 	         LCLDefaultStepsId, 
 	         ContainerDefaults, 
-	         DefaultCurrencyId,
+	         DefaultCurrencyId, 
+	         AirUnitOfMeasurementCode, 
+	         LCLUnitOfMeasurementCode,
 	      }
 
 
@@ -45,7 +47,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         AirDefaultSteps, 
 	         LCLDefaultSteps, 
 	         ContainerDefaults, 
-	         DefaultCurrencyId,
+	         DefaultCurrencyId, 
+	         AirUnitOfMeasurementCode, 
+	         LCLUnitOfMeasurementCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -87,6 +91,16 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DefaultCurrencyId))
             {
 				entityPOCO.DefaultCurrencyId = entityPM.DefaultCurrencyId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AirUnitOfMeasurementCode))
+            {
+				entityPOCO.AirUnitOfMeasurementCode = entityPM.AirUnitOfMeasurementCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LCLUnitOfMeasurementCode))
+            {
+				entityPOCO.LCLUnitOfMeasurementCode = entityPM.LCLUnitOfMeasurementCode;
 			}
 			}
 
@@ -133,6 +147,16 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.DefaultCurrencyId = entityPOCO.DefaultCurrencyId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AirUnitOfMeasurementCode))
+            {
+					entityPM.AirUnitOfMeasurementCode = entityPOCO.AirUnitOfMeasurementCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LCLUnitOfMeasurementCode))
+            {
+					entityPM.LCLUnitOfMeasurementCode = entityPOCO.LCLUnitOfMeasurementCode;
+            }
+
 		}
 
 		public void PMToOldPM(TariffSettingPM entityPM, TariffSettingPM oldEntityPM)
@@ -172,6 +196,16 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DefaultCurrencyId))
             {
                 oldEntityPM.DefaultCurrencyId = entityPM.DefaultCurrencyId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AirUnitOfMeasurementCode))
+            {
+                oldEntityPM.AirUnitOfMeasurementCode = entityPM.AirUnitOfMeasurementCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LCLUnitOfMeasurementCode))
+            {
+                oldEntityPM.LCLUnitOfMeasurementCode = entityPM.LCLUnitOfMeasurementCode;
             }
 			
 		}

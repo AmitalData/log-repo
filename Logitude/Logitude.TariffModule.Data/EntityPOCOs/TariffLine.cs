@@ -236,6 +236,11 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public bool IsFromAllOtherCountries { get; set; }
         [Column("IsToAllOtherCountries")]
 	    public bool IsToAllOtherCountries { get; set; }
+        [ForeignKey("UnitOfMeasurement")]
+        [Column("UnitOfMeasurementCode")]
+	    public string UnitOfMeasurementCode { get; set; }
+	      
+        public virtual WeightUnit UnitOfMeasurement { get; set; }
     }
 }
 	 

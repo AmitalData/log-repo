@@ -31,7 +31,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         SearchFields, 
 	         Name, 
 	         Inactive, 
-	         Steps,
+	         Steps, 
+	         UnitOfMeasurementCode,
 	      }
 
 
@@ -49,7 +50,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         Inactive, 
 	         Steps, 
 	         CreatedByUserName, 
-	         UpdatedByUserName,
+	         UpdatedByUserName, 
+	         UnitOfMeasurementCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -101,6 +103,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Steps))
             {
 				entityPOCO.Steps = entityPM.Steps;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnitOfMeasurementCode))
+            {
+				entityPOCO.UnitOfMeasurementCode = entityPM.UnitOfMeasurementCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -159,6 +166,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.Steps = entityPOCO.Steps;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UnitOfMeasurementCode))
+            {
+					entityPM.UnitOfMeasurementCode = entityPOCO.UnitOfMeasurementCode;
+            }
+
 		}
 
 		public void PMToOldPM(PriceStepPM entityPM, PriceStepPM oldEntityPM)
@@ -208,6 +220,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Steps))
             {
                 oldEntityPM.Steps = entityPM.Steps;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnitOfMeasurementCode))
+            {
+                oldEntityPM.UnitOfMeasurementCode = entityPM.UnitOfMeasurementCode;
             }
 			
 		}

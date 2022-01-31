@@ -194,6 +194,8 @@ namespace Logitude.TariffModule.Data.EntityMapping
             this.Property(t => t.IsFromAllOtherCountries).HasColumnName("IsFromAllOtherCountries");
 
             this.Property(t => t.IsToAllOtherCountries).HasColumnName("IsToAllOtherCountries");
+
+            this.Property(t => t.UnitOfMeasurementCode).HasColumnName("UnitOfMeasurementCode").HasMaxLength(3).IsUnicode(false);
         }
     }
 }

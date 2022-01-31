@@ -25,7 +25,7 @@ export class AddEditTariffLineComponent  {
     public IsViaFieldVisible: boolean = true;
     public IsPortsVisible: boolean = true;
     public IsAir: boolean = false;
-
+    public UnitOfMeasurementCode: string = "";
     constructor() {
         
     }
@@ -34,9 +34,11 @@ export class AddEditTariffLineComponent  {
         this.DataContext = args['DataContext'];
         this.EntityPM = args['EntityPM'];
         this.TariffType = args['TariffType'];
+        this.UnitOfMeasurementCode = args['UnitOfMeasurementCode'];
         this.SetOriginDependencyFilterValue();
         this.GetTariffType();
         this.SetFieldsVisiblity();
+        this.SetUnitOfMeasurementCode();
         this.Clone();
     }
 
@@ -61,6 +63,12 @@ export class AddEditTariffLineComponent  {
     GetTariffType() {
         if (this.TariffType == "AFC" || this.TariffType == "ASC") {
             this.IsAir = true;
+        }
+    }
+
+    SetUnitOfMeasurementCode() {
+        if (this.TariffType == "AFC" || this.TariffType == "OLC") {
+            this.EntityPM.UnitOfMeasurementCode = this.UnitOfMeasurementCode;
         }
     }
 

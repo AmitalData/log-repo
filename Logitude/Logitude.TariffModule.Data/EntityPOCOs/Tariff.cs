@@ -218,6 +218,11 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
         public virtual Card CustomsBroker { get; set; }
         [Column("CustomsBrokerPartnerTypeId")]
 	    public string CustomsBrokerPartnerTypeId { get; set; }
+        [ForeignKey("UnitOfMeasurement")]
+        [Column("UnitOfMeasurementCode")]
+	    public string UnitOfMeasurementCode { get; set; }
+	      
+        public virtual WeightUnit UnitOfMeasurement { get; set; }
     }
 }
 	 

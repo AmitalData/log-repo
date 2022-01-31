@@ -89,9 +89,8 @@ namespace Logitude.TariffModule.BL.CLoseTable
        }
 
 	    public void MapPoco(TariffType newPoco)
-        {
-            newPoco.DirectionCode = this.DirectionCode;
-            newPoco.TransportModeCode = this.TransportModeCode;  
+        {   
+		    newPoco.TransportModeCode = this.TransportModeCode;  
 		    newPoco.Code = this.Code;  
 		    newPoco.Name = this.Name;  
 			newPoco.SearchFields = GetSearchFields(this);    

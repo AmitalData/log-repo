@@ -119,13 +119,14 @@ export class TariffMenuButtonsHandler {
         
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Price Steps";
-        logWindow.WindowArgs = this.EntityPM.PriceSteps;
+        logWindow.WindowArgs = [this.EntityPM.PriceSteps, this.EntityPM.UnitOfMeasurementCode];
         logWindow.Show("./TariffModule/Components/NewEntity/TariffPriceStepsComponent");
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
                 if (d != "cancel") {
                     var steps = s.DefaultPriceSteps;
                     this.EntityPM.PriceSteps = steps;
+                    this.EntityPM.UnitOfMeasurementCode = s.UnitOfMeasurementCode;
                     this.CurrentSession.CurrentEditComponent.SaveChanges();
                    // this.CurrentSession.SessionEvent.emit("PriceStepsModified");
                 }

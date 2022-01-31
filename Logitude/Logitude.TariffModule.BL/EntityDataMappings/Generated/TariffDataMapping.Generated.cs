@@ -74,7 +74,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         LastUsedDate, 
 	         FreightChargeId, 
 	         CustomsBrokerId, 
-	         CustomsBrokerPartnerTypeId,
+	         CustomsBrokerPartnerTypeId, 
+	         UnitOfMeasurementCode,
 	      }
 
 
@@ -151,7 +152,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         FreightChargeId, 
 	         CustomsBrokerId, 
 	         CustomsBrokerName, 
-	         CustomsBrokerPartnerTypeId,
+	         CustomsBrokerPartnerTypeId, 
+	         UnitOfMeasurementCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -418,6 +420,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsBrokerPartnerTypeId))
             {
 				entityPOCO.CustomsBrokerPartnerTypeId = entityPM.CustomsBrokerPartnerTypeId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnitOfMeasurementCode))
+            {
+				entityPOCO.UnitOfMeasurementCode = entityPM.UnitOfMeasurementCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -691,6 +698,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.CustomsBrokerPartnerTypeId = entityPOCO.CustomsBrokerPartnerTypeId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UnitOfMeasurementCode))
+            {
+					entityPM.UnitOfMeasurementCode = entityPOCO.UnitOfMeasurementCode;
+            }
+
 		}
 
 		public void PMToOldPM(TariffPM entityPM, TariffPM oldEntityPM)
@@ -955,6 +967,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsBrokerPartnerTypeId))
             {
                 oldEntityPM.CustomsBrokerPartnerTypeId = entityPM.CustomsBrokerPartnerTypeId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnitOfMeasurementCode))
+            {
+                oldEntityPM.UnitOfMeasurementCode = entityPM.UnitOfMeasurementCode;
             }
 			
 		}

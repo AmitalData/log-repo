@@ -46,6 +46,7 @@ export class TariffList {
 	CustomsBrokerPartnerTypeId: string;
 	DirectionCode: string;
 	DirectionName: string;
+	UnitOfMeasurementCode: string;
 	
 }
  
