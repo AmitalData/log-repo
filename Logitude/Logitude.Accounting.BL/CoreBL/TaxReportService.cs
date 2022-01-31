@@ -341,9 +341,21 @@ namespace Logitude.Accounting.BL.CoreBL
             if (!string.IsNullOrEmpty(transaction.OriginalJournalId))
             {
                 var orginalJournal = ledgerTransactons.Where(x => x.JournalId == transaction.OriginalJournalId).FirstOrDefault();
-                transmitStatusCode = orginalJournal.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit 
-                    ? TaxReportLineTransmitStatusValues.Fortransmit
-                    : TaxReportLineTransmitStatusValues.Notfortransmitatall;
+                if (orginalJournal == null)
+                {
+
+                    LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(transaction.Tenant);
+                    var journalAdditionalData = ledgerTransactionRepository.GetJournalAdditionalDataByJournalId(transaction.OriginalJournalId, transaction.Tenant);
+                    transmitStatusCode = journalAdditionalData.TaxReportTransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit
+                        ? TaxReportLineTransmitStatusValues.Fortransmit
+                        : TaxReportLineTransmitStatusValues.Notfortransmitatall;
+                }
+                else
+                {
+                    transmitStatusCode = orginalJournal.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit
+                        ? TaxReportLineTransmitStatusValues.Fortransmit
+                        : TaxReportLineTransmitStatusValues.Notfortransmitatall;
+                }
             }
             else if (transaction.IsVoided == true && transaction.TransmitStatusCode != TaxReportLineTransmitStatusValues.Fortransmit)
             {
