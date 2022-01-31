@@ -178,6 +178,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCTZIP", // Unifreight Table Custom ZIP
 "UCB2750", // שידור הצהרות בלדר
 "DCAMU", // multi update 
+"UCADPE", // הזנה גורפת PENDING
 
             };
 
@@ -321,7 +322,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB9999", // ניתוח מחדש
 "8326", // שאילתא לתצהיר יבואן
 "DCAMU", // multi update 
-"DCAUAC" // multi update 
+"DCAUAC", // multi update 
+"UCADPE" // add multi pending
 
 
             };
@@ -446,7 +448,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "2751",
 "2757",
 "DCAMU", // multi update 
-"DCAUAC"
+"DCAUAC",
+"UCADPE"
 //"8302" //בקשה לטופס הצהרה
 };
 

@@ -4,15 +4,16 @@ import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
 import { ObjectTablePM } from "Infrastructure/EntityPMs/ObjectTablePM";
 import { EntityListService } from "Infrastructure/Services/EntityListService";
 import { EntityResourceService } from "Infrastructure/Services/EntityResourceService";
-import { Observable } from "rxjs";
-import { take } from "rxjs/operators";
+import { ServiceHelper } from "Infrastructure/Utilities/ServiceHelper";
+import { defer, Observable } from "rxjs";
+import { catchError, map, take } from "rxjs/operators";
 import { filterIsNotNull } from "../../Services/new-quote-data/new-quote-data.service";
 declare const window: any;
 
 @Injectable()
 export class LogtuideTableDataService {
   private _entityResourceService: EntityResourceService = new EntityResourceService();
-  
+
   constructor(
     private entityListService: EntityListService,
   ) { }
@@ -39,5 +40,19 @@ export class LogtuideTableDataService {
         .subscribe((res: ServiceResponse) =>
           resolve(res.Result)
         ));
+  }
+
+  standartSendAjax(ajax: Observable<any>) {
+    return defer(() => {
+      return ajax.pipe(map(response => {
+        const serviceResponse: ServiceResponse = new ServiceResponse();
+        serviceResponse.Result = response;
+        return serviceResponse;
+      }), catchError(ServiceHelper.HandleServiceError));
+    });
+  }
+
+  sendAjaxAndGetDataStandart(ajax: Observable<any>) {
+    return this.getDataFromService(this.standartSendAjax(ajax));
   }
 }

@@ -3330,7 +3330,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     }
 
     DoRefresh() {
-        debugger;
+        
         this.MyScrollTop = 0;
         this.MySelectedRowIndex = null;
         this.CurrentQueryFilters = new ApiQueryFilters();//this.listArgs.Filters;
