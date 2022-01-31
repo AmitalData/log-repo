@@ -21,6 +21,7 @@ namespace Logitude.BL.Helpers
             DWOTId = dWOTId;
             Tenant = tenant;  
         }
+        // refactoring old code
         public List<DWFactGroup> GetFactFieldsGroups()
         {
 
@@ -102,12 +103,27 @@ namespace Logitude.BL.Helpers
 
         private DWFactGroup GetDWFactGroup(int ParentFactIndex, IGrouping<string, DWObjectFieldPM> fact)
         {
-            DWFactGroup DWFactGroup = new DWFactGroup(); 
+            DWFactGroup DWFactGroup = new DWFactGroup();
+              
             var factName = fact.Key.Split('_');
-            DWFactGroup.Key = factName[1] + " " + factName[0];  
+            DWFactGroup.Key = fact.Key.Replace('_', ' ');
+            if (factName.Length > 1)
+            { 
+                DWFactGroup.Key = factName[1] + " " + factName[0];
+            } 
             DWFactGroup.FieldsGroupList = new List<DWFieldsGroup>();
-            DWFactGroup.Index = fact.Key == DWOTId ? 1 : ParentFactIndex + 1;
+            DWFactGroup.Index = GetDWFactGroupIndex(fact, ParentFactIndex);
             return DWFactGroup;
+        }
+
+        private int GetDWFactGroupIndex(IGrouping<string, DWObjectFieldPM> fact, int parentFactIndex) 
+        { 
+            if (DWOTId == "Fact_MasterCharges" && fact.Key != "Fact_Shipments")
+            {
+                return 1;
+            }
+            var index = fact.Key == DWOTId ? 1 : parentFactIndex + 1;
+            return index;
         }
 
         private List<DWFactGroup> RemoveFactInvoiceCustomFieldsCategory(string factCode, List<DWFactGroup> dWFactGroup)

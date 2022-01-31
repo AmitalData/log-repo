@@ -457,7 +457,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     private SearchFieldChanged(newValue: string) {
         this.AllGroupsDataSource.forEach((Group) => {
             var temp = Group.FieldsList.filter(a => a.Name.toLowerCase().indexOf(newValue.toLowerCase()) > -1 || a.DisplayName.toLowerCase().indexOf(newValue.toLowerCase()) > -1);
-            this.DataSource.filter(a => a.Key == Group.Key)[0].FieldsList = temp;
+            this.DataSource.filter(a => a.Key == Group.Key && a.Fact == Group.Fact)[0].FieldsList = temp;
 
             if (temp.length == 0)
                 this.OpenCloseGroup(Group, false);
@@ -509,11 +509,32 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
 
     private OpenCloseGroup(Group, open) {
         let detailsIcon = open ? "./Images/CellIcons/Arrowup.png" : "./Images/CellIcons/Arrowdown.png";
+        this.OpenFactGroup(Group, open, detailsIcon); 
         this.DataSource.filter(a => a.Key == Group.Key && a.Fact == Group.Fact)[0].IsDetailesOpened = open;
         this.DataSource.filter(a => a.Key == Group.Key && a.Fact == Group.Fact)[0].DetailsIcon = detailsIcon;
     }
 
     private selectedItem: DWObjectFieldsDetails;
+
+    private OpenFactGroup(Group: any, open: any, detailsIcon: string) {
+        this.FactGroupsDataSource.forEach((FactGroup) => { 
+            var groupFactNameStrings = Group.fact.split('_');
+            groupFactName = Group.fact.replace('_', ' ');
+            if (groupFactNameStrings.length > 1) {
+                var groupFactName = groupFactNameStrings[1] + ' ' + groupFactNameStrings[0];
+            }
+
+            if (FactGroup.Key == groupFactName && open) {
+                this.SetOpenFactOptions(FactGroup, open, detailsIcon);
+            }
+        });
+    }
+
+    private SetOpenFactOptions(FactGroup: any, open: any, detailsIcon: string) {
+        FactGroup.IsDetailesOpened = open;
+        FactGroup.DetailsIcon = detailsIcon;
+    }
+
     public get SelectedItem() { return this.selectedItem; }
     public set SelectedItem(newValue: DWObjectFieldsDetails) {
         this.selectedItem = newValue;
