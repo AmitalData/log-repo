@@ -575,6 +575,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                            NG_9100_MSG_OutgoingMessageRequestMessagingService>
                            ((new NG_9100_MSG_OutgoingMessageRequestMessagingService()).MainInterfaceCode);
         }
+
+        }
         public static void InitContainer()
         {
             Debug.WriteLine("this method its to enshur static constractor is up ");

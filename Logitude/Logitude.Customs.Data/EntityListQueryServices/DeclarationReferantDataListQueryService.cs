@@ -33,6 +33,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                              .Include("DeclarationOffice")
                                                              .Include("DeclarationStatusType")
                                                              .Include("Importer")
+                                                             .Include("PackageType")
                                                              on a.DeclarationId equals d.Id
                                                               select new DeclarationReferantDataList()
                                                              {
@@ -136,11 +137,13 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  CancelRequestStatusCode=d.CancelRequestStatusCode,
                                                                  IsExceptionReasonsListNull = string.IsNullOrEmpty( a.ExceptionReasonsList) , 
                                                                   IsManualPayment = a.IsManualPayment,
+                                                                 Commodity=a.Commodity,
                                                                  ReferantUserName="",
                                                                  DepartmentName="",
-                                                                 Commodity=a.Commodity,
+                                                                 PackageTypeCode = a.PackageType.LocalName,
                                                                  LastStatusRemarks=a.LastStatusRemarks,
  
+
 
                                                                  
                                                               }) ;

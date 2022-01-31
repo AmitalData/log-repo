@@ -53,7 +53,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
 
         protected override int ResolvedTenant()
         {
-            if(this._MyDeclarationPM != null && this._MyDeclarationPM.Tenant > 0)
+            if (this._MyDeclarationPM != null && this._MyDeclarationPM.Tenant > 0)
             {
                 return this._MyDeclarationPM.Tenant;
             }
@@ -61,7 +61,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             {
                 return base.ResolvedTenant();
             }
-            return RequestParams.Tenant; 
+            return RequestParams.Tenant;
         }
 
         public SivugUpsertService()
@@ -154,7 +154,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             //if (!string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20200220HD341093.isNewHandleDocSIPointer"])) isNewHandleDocSIPointer = true;
             isNewHandleDocSIPointer = true;
             int minute = DateTime.Now.Minute;
-            
+
             if (this.RequestParams != null)
             {
                 this.RequestParams.CFIFILEMFileNo = this._MyDeclarationPM.CustomFileNo;
@@ -443,7 +443,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
 
                                 myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
                             }
-                            else if(customsDocument.CommChanged== "true")
+                            else if (customsDocument.CommChanged == "true")
                             {
                                 myDocumentId.DocumentVersion = myDocumentId.DocumentVersion + 1;
                                 myDocumentId.DocumentStatusCode = null;
@@ -516,7 +516,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             AppendLogLine("LOGITUDEFILE = " + this._SIVUG.LOGITUDEFILE);
         }
 
-        
+
 
         public override string GetAssemblyQualifiedName()
         {
@@ -633,7 +633,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
 
                         if (isNewHandleDocSIPointer)
                         {
-                            
+
                         }
                         else
                         {
@@ -664,7 +664,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
 
                         return;
                     }
-                    else if(this._INVOICE.QUE_TYPE == "SYS")
+                    else if (this._INVOICE.QUE_TYPE == "SYS")
                     {
                         AppendLogLine("this._INVOICE.QUE_TYPE == 'SYS'");
 
@@ -700,7 +700,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     {
                         this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Update;
                     }
-                     
+
                 }
             }
 
@@ -744,7 +744,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             {
                 if (isNewHandleDocSIPointer)
                 {
-                    
+
                 }
                 else
                 {
@@ -803,7 +803,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             {
                 this._MySupplierInvoicePM.IncotermCode = TranslateTermsOfSaleType(this._INVOICE.INCOTERM_ID);
             }
-                
+
             if (this._INVOICE.SI_COUNTER != null) this._MySupplierInvoicePM.UnfInvoiceCounterKey = this._INVOICE.SI_COUNTER;
             VendorCommissionQueryService vendorCommissionQuery = new VendorCommissionQueryService(CustomContext.GetContext(ResolvedTenant()));
             VendorCommissionPM commisionPM = vendorCommissionQuery.GetSingleCommisionByVendorAndCustomer(this._MySupplierInvoicePM.VendorId, this._MyDeclarationPM.CustomerId, ResolvedTenant());
@@ -957,7 +957,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 }
                 SupplierInvoiceItemPM.ClassificationCode = invoiceItem.CLASSIFICATIONCODE;
                 SupplierInvoiceItemPM.TradeAgreementCode = TranslateTradeAgreementCode(invoiceItem.TRADEAGREEMENTCODE);
-                
+
                 if (invoiceItem.QUANTITY != null && !String.IsNullOrWhiteSpace(invoiceItem.QUANTITY))
                 {
                     if (decimal.TryParse(invoiceItem.QUANTITY, out decimal1))
@@ -1093,7 +1093,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     {
                         int tenant = ResolvedTenant();
                         string email = AuthenticationUtil.ResolveUserIdentityName(tenant);
-                        string id= RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
+                        string id = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
                         if (!string.IsNullOrWhiteSpace(id))
                         {
                             ContactRepository contactrep = new ContactRepository(tenant);
@@ -1112,7 +1112,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
 
                 if (invoiceItem.EXPENSES != null && invoiceItem.EXPENSES.Count() > 0)
                 {
-                    SupplierInvoiceItemPM.SupplierInvoiceItemsMods = GetSupplierInvoiceItemsModsPM(invoiceItem,SupplierInvoiceItemPM);
+                    SupplierInvoiceItemPM.SupplierInvoiceItemsMods = GetSupplierInvoiceItemsModsPM(invoiceItem, SupplierInvoiceItemPM);
                 }
 
                 if (int.TryParse(invoiceItem.LINE_ID, out int1))
@@ -1128,7 +1128,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     SupplierInvoiceItemPM.Tenant = ResolvedTenant();
                     SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Insert;
                 }
-                    SupplierInvoiceItemPMList.Add(SupplierInvoiceItemPM);
+                SupplierInvoiceItemPMList.Add(SupplierInvoiceItemPM);
                 /*
                 }
                 else
@@ -1151,7 +1151,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 return null;
             }
             var taxExemptCode = new ValidCustomsItemQueryService(ResolvedTenant());
-            var myTaxExemptCode = taxExemptCode.GetSingle(amitalTaxExemptCode,false,true);
+            var myTaxExemptCode = taxExemptCode.GetSingle(amitalTaxExemptCode, false, true);
             if (myTaxExemptCode == null)
             {
                 AppendLogLine("amitalTaxExemptCode = " + amitalTaxExemptCode + " could not translate to Logitude Id");
@@ -1165,7 +1165,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
 
         private List<SupplierInvioceItemCertificatPM> GetSupplierInvoiceItemCertificatePM(AmitalMessaging.Customs.CustomFile.Sivug.INVOICEITEMS invoiceItem, SupplierInvoiceItemPM supplierInvoiceItemPM)
         {
-           
+
             var supplierInvoiceItemCertificatePMList = new List<SupplierInvioceItemCertificatPM>();
 
             foreach (var cert in invoiceItem.CERTIFICATES)
@@ -1217,18 +1217,18 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
         }
 
 
-        private List<SupplierInvoiceModificationPM> GetSupplierInvoiceModificationsPM(INVOICE iNVOICE) 
+        private List<SupplierInvoiceModificationPM> GetSupplierInvoiceModificationsPM(INVOICE iNVOICE)
         {
             var SupplierInvoiceModificationPMList = new List<SupplierInvoiceModificationPM>();
             if (this._MySupplierInvoicePM.SupplierInvoiceModifications != null && this._MySupplierInvoicePM.SupplierInvoiceModifications.Count() > 0)
             {
                 SupplierInvoiceModificationPMList = this._MySupplierInvoicePM.SupplierInvoiceModifications;
             }
-            
+
             decimal decimal1 = 0;
 
             {
-                
+
                 if (iNVOICE.INV_EXPENSES != null)
                 {
 
@@ -1313,29 +1313,31 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                                     SupplierInvoiceModificationPM.TypeCode = mymodificationAndDiscountType.Code;
                                 }
                             }
+
                             if (!String.IsNullOrWhiteSpace(expense.InvExpDescription))
                             {
                                 SupplierInvoiceModificationPM.TypeDesc = expense.InvExpDescription;
                             }
+
                             SupplierInvoiceModificationPM.DeclarationId = this._MySupplierInvoicePM.DeclarationId;
                             if (this._MySupplierInvoicePM.InvoiceCounterKey > 0) SupplierInvoiceModificationPM.InvoiceCounterKey = this._MySupplierInvoicePM.InvoiceCounterKey;
                             SupplierInvoiceModificationPM.Tenant = (this._MyDeclarationPM.Tenant > 0) ? this._MyDeclarationPM.Tenant : ResolvedTenant();
                             SupplierInvoiceModificationPM.ChangeSetOp = ChangeSetOperation.Insert;
 
                             SupplierInvoiceModificationPMList.Add(SupplierInvoiceModificationPM);
-
                         }
                     }
                 }
-                
-                return SupplierInvoiceModificationPMList;
             }
+
+            return SupplierInvoiceModificationPMList;
         }
+
 
 
         private List<SupplierInvoiceItemsModPM> GetSupplierInvoiceItemsModsPM(INVOICEITEMS invoiceItem, SupplierInvoiceItemPM supplierInvoiceItemPM)
         {
-           
+
             var SupplierInvoiceItemsModPMList = new List<SupplierInvoiceItemsModPM>();
             if (supplierInvoiceItemPM.SupplierInvoiceItemsMods != null && supplierInvoiceItemPM.SupplierInvoiceItemsMods.Count() > 0)
             {
@@ -1345,7 +1347,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             decimal decimal1 = 0;
 
             {
-                
+
                 if (invoiceItem.EXPENSES != null)
                 {
 
@@ -1442,7 +1444,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                         }
                     }
                 }
-                
+
                 return SupplierInvoiceItemsModPMList;
             }
         }
