@@ -939,6 +939,8 @@ namespace Cloud.Sign.App
 
         private void GetPrivateLabelData()
         {
+            if (Environment != "PL" || selectedCompany == null) return;
+
             SharedPrivateLabelTenant.tenantManagmentPrivateLabel = null;
             using (var client = new HttpClient())
             {
