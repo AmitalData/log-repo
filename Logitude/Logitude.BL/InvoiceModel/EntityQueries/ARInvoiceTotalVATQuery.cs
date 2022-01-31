@@ -49,7 +49,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                        VatTypeId = a.VatTypeId,
                        VATPercent = a.VatPercent,
                        VatTypeName = a.VatType == null ? null : a.VatType.EnglishName,
-                       VatTypeCell = a.VatType == null ? null : (a.VatType.EnglishName + " (" + a.VatPercent + "%)"), 
+                       VatTypeCell = a.VatType == null ? null : (a.VatType.EnglishName + " (" + a.VatPercent + "%)"),
+                       VatTypeCode = a.VatType == null ? null : a.VatType.Code,
                        IsRegionalTax = a.IsRegionalTax,
                    };
         }
