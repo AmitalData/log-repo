@@ -1395,7 +1395,8 @@ on record.JournalId equals j.Id
                         TransmitStatusCode = m.TaxReportTransmitStatusCode,
                         IsVoided = j.IsVoided,
                         TaxReportId = m.TaxReportId,
-                        OriginalJournalId = j.OriginalJournalId
+                        OriginalJournalId = j.OriginalJournalId,
+                        Tenant = a.Tenant
                     }
                     
                     ).ToList();
