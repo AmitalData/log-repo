@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.BL.EntityQueryServices;
+﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
@@ -95,8 +96,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             AddJournalLines(paymentChequePM, paymentPM, journal, creditAccount);
 
                             JournalUpdateService journalUpdateService = new JournalUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-                            journalUpdateService.Update(journal, true);
 
+                            journalUpdateService.Update(journal, true);
+                            AddAccountingEntitieJournal(journal, AccountingEntitieActions.PaymentCheque);
                             paymentChequePM.JournalNumber = journal.JournalNumber;
                         }
                     }
@@ -114,6 +116,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 paymentChequePM.UpdatedByUserId = contact.Id;
             }
+        }
+        private void AddAccountingEntitieJournal(JournalPM entityPM, string action, string ChildEntityId = null)
+        {
+            IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
+            AccountingEntitiesJournalUpdateService service = new AccountingEntitiesJournalUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+            service.AddAccountingEntitieJournal(entityPM, action, ChildEntityId);
         }
         private static bool CheckIfPaymentChequeHasAjournal(PaymentChequePM paymentCheque)
         {

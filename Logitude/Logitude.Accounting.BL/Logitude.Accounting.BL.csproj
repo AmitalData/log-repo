@@ -165,6 +165,7 @@
     <Compile Include="APIDataContract\QueryService\RevenueExpenseTypeQueryService.Generated.cs" />
     <Compile Include="APIDataContract\ReconcileMethod.Generated.cs" />
     <Compile Include="APIDataContract\RevenueExpenseType.Generated.cs" />
+    <Compile Include="CloseTables\AccountingEntitieActions.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AccountingEntityDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ARPaymentChequeStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AutomaticExternalReconcileMethodDetails.Generated.cs" />
@@ -730,6 +731,7 @@
     <Compile Include="EntityUpdateServiceExt\GLAccountUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\JournalVoidUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\PaymentChequeUpdateServiceExt.cs" />
+    <Compile Include="EntityUpdateServices\AccountingEntitiesJournalsUpdateService.cs" />
     <Compile Include="EntityUpdateServices\AccountingIntegrityCheckUpdateService.cs" />
     <Compile Include="EntityUpdateServices\AccountingNoteUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ARPaymentChequeUpdateService.cs" />

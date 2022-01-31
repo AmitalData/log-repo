@@ -44,6 +44,7 @@ using Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.BL.CloseTables;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -383,6 +384,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (journalPM != null)
                 {
                     var journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalVoidUpdateServiceExt), "JournalVoidUpdateServiceExt", new ParameterOverride("", 1)) as IJournalVoidUpdateServiceExt;
+                    AddAccountingEntitieJournal(journalPM, AccountingEntitieActions.APInvoiceVoid, journalPM.Id);
                     journalUpdate.Update(journalPM, new StornoOverrideM()
                     {
                         AccountingEntityCode = "4",
@@ -2150,31 +2152,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                  
 
                     IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
-                    AddAccountingEntitiesJournalConstraint(journal);
+                    AddAccountingEntitieJournal(journal, AccountingEntitieActions.APInvoiceApprove);
                     journalUpdate.Update(journal);
                 }
             }
         }
-        private void AddAccountingEntitiesJournalConstraint(JournalPM entityPM)
+        private void AddAccountingEntitieJournal(JournalPM entityPM, string action, string ChildEntityId = null)
         {
-            var accountingEntitiesJournal = CreateAccountingEntitiesJournalConstraint(entityPM);
             IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
-            AccountingEntitiesJournalUpdateService service = new AccountingEntitiesJournalUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-            accountingEntitiesJournal.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-            service.Update(accountingEntitiesJournal, true);
+            AccountingEntitiesJournalUpdateService service = new AccountingEntitiesJournalUpdateService(MyContext,new Dictionary<string, IContext>(), entityPM.Tenant);
+            service.AddAccountingEntitieJournal(entityPM, action, ChildEntityId);
         }
 
-        private AccountingEntitiesJournalPM CreateAccountingEntitiesJournalConstraint(JournalPM entityPM)
-        {
-            return new AccountingEntitiesJournalPM()
-            {
-                Tenant = entityPM.Tenant,
-                AccountingEntityCode = entityPM.AccountingEntityCode,
-                AccountingEntityId = entityPM.AccountingEntityId,
-                Action = "Add",
-                ChildEntityId = null
-            };
-        }
+       
         private GLAccountPM getCreditGLAccount(string vendorId, int tenant)
         {
             GLAccountPM glaAccount = null;
