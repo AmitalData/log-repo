@@ -37,7 +37,7 @@ export class AddEditTariffLineComponent  {
         this.UnitOfMeasurementCode = args['UnitOfMeasurementCode'];
         this.SetOriginDependencyFilterValue();
         this.GetTariffType();
-        this.SetViaFieldVisiblity();
+        this.SetFieldsVisiblity();
         this.SetUnitOfMeasurementCode();
         this.Clone();
     }

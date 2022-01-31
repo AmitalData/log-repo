@@ -95,6 +95,27 @@ export class TariffSettingComponent extends BaseComponent {
         }
     }
 
+    get LCLUnitOfMeasurementCode() {
+        if (this.EntityPM != null) {
+            return this.EntityPM.LCLUnitOfMeasurementCode;
+        }
+    }
+    set LCLUnitOfMeasurementCode(value: string) {
+        if (this.EntityPM.LCLUnitOfMeasurementCode != value) {
+            this.EntityPM.LCLUnitOfMeasurementCode = value;
+        }
+    }
+    get AirUnitOfMeasurementCode() {
+        if (this.EntityPM != null) {
+            return this.EntityPM.AirUnitOfMeasurementCode;
+        }
+    }
+    set AirUnitOfMeasurementCode(value: string) {
+        if (this.EntityPM.AirUnitOfMeasurementCode != value) {
+            this.EntityPM.AirUnitOfMeasurementCode = value;
+        }
+    }
+
     get LCLDefaultStepsId() {
         if (this.EntityPM != null) {
             return this.EntityPM.LCLDefaultStepsId;
@@ -309,6 +330,10 @@ export class TariffSettingComponent extends BaseComponent {
                         this.AirDefaultStepsId = s.EntityPM.Id;
                         this.EntityPM.AirUnitOfMeasurementCode = s.EntityPM.UnitOfMeasurementCode;
 
+                    }
+                    if (this.AirDefaultStepsId == this.LCLDefaultStepsId) {
+                        this.EntityPM.LCLUnitOfMeasurementCode = s.EntityPM.UnitOfMeasurementCode;
+                        this.EntityPM.AirUnitOfMeasurementCode = s.EntityPM.UnitOfMeasurementCode;
                     }
                     this.CurrentSession.SessionEvent.emit("TariffStepsRefresh");
                 }
