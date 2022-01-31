@@ -12033,13 +12033,14 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -18807,7 +18808,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
- 
   <Query
     Code="&quot;OpenCourierMaster&quot;"
     TextCode="&quot;Courier Master Open&quot;"
@@ -19588,6 +19588,13 @@
         IsPredefined="true"
         Operator="&quot;NotEqual&quot;"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;Pending&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -20089,8 +20096,8 @@
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
         IndexOrder="0" />
-	</QueryFilters>
-</Query>
+    </QueryFilters>
+  </Query>
   <Query
     Code="&quot;AllCourierDeclarations&quot;"
     TextCode="&quot;All Courier Declarations&quot;"

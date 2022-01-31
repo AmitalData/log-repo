@@ -5515,5 +5515,14 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;CourierWSPendingTab&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Customs.CourierMaster.Features.CourierWSPendingTab&quot;"
+      FeatureDefaultText="&quot;Courier Declaration Workspace Pending Tab&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
