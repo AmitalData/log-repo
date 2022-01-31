@@ -112,11 +112,11 @@ export function AddPcakagesInStandaloneShipment(packagesDetails: PackagesDetails
    cy.FillLogLov(ShipmentSelectors.PackageType, packagesDetails.PackageType, true)
    cy.FillLogTextBox(ShipmentSelectors.ContainerNumber, packagesDetails.ContainerNumber)
    cy.FillLogTextBox(ShipmentSelectors.PackageWeight, packagesDetails.GrossWeight.toString())
-   cy.Click(ShipmentSelectors.OceanPackageOKButton,null)
+   cy.Click(ShipmentSelectors.OceanPackageOKButton, null)
    cy.Click(BaseSelectors.RedButton, ShipmentConstants.Ok)
-   
+
 }
-export function StandaloneShipmentOpenPackageTab(){
+export function StandaloneShipmentOpenPackageTab() {
    cy.Click(ShipmentSelectors.PackagesTab_Number + BaseSelectors.LastElement, null)
    cy.Click(ShipmentSelectors.AddPackage, null)
    cy.Click(ShipmentSelectors.AddPackagesInStandalone, null)
@@ -128,10 +128,10 @@ export function CreateDomesticInlandFromRoutingDetails(pickupdelivaryDetails: Pi
    FillDomesticInlandToTypeDetails(pickupdelivaryDetails)
 }
 
-export function OpenRoutingTabAddPickUp(){
-  cy.Click(ShipmentSelectors.RoutingsTab, null)
-  cy.Click(ShipmentSelectors.AddPickUp, null)
-  cy.Click(BaseSelectors.Button, ShipmentConstants.AddPickUp)
+export function OpenRoutingTabAddPickUp() {
+   cy.Click(ShipmentSelectors.RoutingsTab, null)
+   cy.Click(ShipmentSelectors.AddPickUp, null)
+   cy.Click(BaseSelectors.Button, ShipmentConstants.AddPickUp)
 }
 export function FillDomesticInlandFromTypeDetails(standaloneDetails: PickupDelivaryDetails) {
    if (standaloneDetails.From == ShipmentConstants.Partner) {
@@ -154,7 +154,20 @@ export function FillDomesticInlandToTypeDetails(standaloneDetails: PickupDelivar
       cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageToPort, standaloneDetails.ToPort, true)
    }
    else {
-      cy.FillLogLov(ShipmentSelectors.ShipmentInlandDomesticToCountry, standaloneDetails.ToCountry,true)
+      cy.FillLogLov(ShipmentSelectors.ShipmentInlandDomesticToCountry, standaloneDetails.ToCountry, true)
       cy.FillLogTextBox(ShipmentSelectors.ShipmentInlandDomesticToCity, standaloneDetails.ToCity)
    }
+}
+
+export function AddStandaloneWithDeliveryFromRouting() {
+   cy.Click(ShipmentSelectors.CloseBtn, null)
+   cy.Click(ShipmentSelectors.RoutingToggle + BaseSelectors.LastElement, null)
+   cy.Click(ShipmentSelectors.Delivery + BaseSelectors.LastElement, null)
+   cy.Click(BaseSelectors.Button, ShipmentConstants.AddStandAloneShipmentWithDelivery)
+}
+
+export function AddStandaloneWithPickupFromRouting() {
+   cy.Click(ShipmentSelectors.RoutingToggle+BaseSelectors.LastElement, null)
+   cy.Click(ShipmentSelectors.PickUp+BaseSelectors.LastElement, null)
+   cy.Click(BaseSelectors.Button, ShipmentConstants.AddStandAloneShipmentWithPickup)
 }

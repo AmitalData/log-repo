@@ -16,7 +16,7 @@ import { PackagesDetails } from "cypress/models/PackagesDetails";
 let shipmentDetails: ShipmentDetails;
 let PickupDelivarytData: PickupDelivaryDetails;
 let shipmentNumber: string;
-let StandaloneShipmenNumber: string;
+
 
 //#region create direct shipment
 Given("the user logged in and navigates to shipments workspace", () => {
@@ -46,9 +46,13 @@ Then("the shipment should create successfully", () => {
 Given("the user open the shipment and navigate to RoutingsTab workspace", () => {
   Actions.OpenShipment(shipmentNumber);
   cy.Click(ShipmentSelectors.RoutingsTab, null)
-  cy.Click(ShipmentSelectors.AddPickUp, null)
-  cy.Click(BaseSelectors.Button, ShipmentConstants.AddStandAloneShipmentWithPickup)
+  StandaloneAction.AddStandaloneWithPickupFromRouting()
 });
+
+Given("the user in the shipment's routings tab add standalone with pickup", () => {
+  cy.Click(ShipmentSelectors.CloseBtn, null)
+  StandaloneAction.AddStandaloneWithPickupFromRouting()
+})
 
 Given("add Standalone Shipment With Pickup leg with the following details", (dataTable) => {
   PickupDelivarytData = Assists.CreateInstance<PickupDelivaryDetails>(dataTable, true);
@@ -74,7 +78,7 @@ Then("all other actions should be dim", () => {
 
 Then("the pickup will add all fields should be dim in pickup window", () => {
   cy.Navigate(ShipmentSelectors.Backbutton + BaseSelectors.LastElement, true)
-  cy.Click(ShipmentSelectors.EditPickUp, null)
+  cy.Click(ShipmentSelectors.EditPickUpNumber + BaseSelectors.LastElement, null)
   StandaloneAction.AssertShipmentPickupDelivaryWindowFields(BaseSelectors.BeDisabled)
 })
 
@@ -85,10 +89,7 @@ Then("the link of standalon should display", () => {
 
 //#region create Standalone shipment from delivery routing 
 Given("the user in the shipment's routings tab", () => {
-  cy.Click(ShipmentSelectors.CloseBtn, null)
-  cy.Click(ShipmentSelectors.RoutingToggle+BaseSelectors.LastElement, null)
-  cy.Click(ShipmentSelectors.Delivery+BaseSelectors.LastElement, null)
-  cy.Click(BaseSelectors.Button, ShipmentConstants.AddStandAloneShipmentWithDelivery)
+  StandaloneAction.AddStandaloneWithDeliveryFromRouting()
 })
 Given("add Standalone Shipment With delivery leg with the following details", (dataTable) => {
   PickupDelivarytData = Assists.CreateInstance<PickupDelivaryDetails>(dataTable, true);
@@ -97,7 +98,7 @@ Given("add Standalone Shipment With delivery leg with the following details", (d
 
 Then("the delivery will add all fields should be dim in delivery window", () => {
   cy.Navigate(ShipmentSelectors.Backbutton + BaseSelectors.LastElement, true)
-  cy.Click(ShipmentSelectors.EditPickUp, null)
+  cy.Click(ShipmentSelectors.EditDeliveryNumber + BaseSelectors.LastElement, null)
   StandaloneAction.AssertShipmentPickupDelivaryWindowFields(BaseSelectors.BeDisabled)
 })
 //#endregion

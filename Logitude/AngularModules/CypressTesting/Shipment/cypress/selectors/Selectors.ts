@@ -447,6 +447,8 @@ export class ShipmentSelectors extends RegexSelectors {
   //#region Delivery Leg standalone
   public static readonly EditDelivery = "#Edit-Delivery"
   public static readonly EditPickUp = "#Edit-PickUp"
+  public static readonly EditDeliveryNumber = '[id^=Edit-Delivery]'
+  public static readonly EditPickUpNumber = '[id^=Edit-PickUp]'
   public static readonly DeliveryToPartnerName = "#ShipmentPickUpDelivery_ToPartnerCardId"
   public static readonly PickUpDeliveryToPort = "#ShipmentPickUpDelivery_ToPortId"
   public static readonly PickUpDeliveryFromPort = "#ShipmentPickUpDelivery_FromPortId"
