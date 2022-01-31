@@ -159,8 +159,10 @@
     <Compile Include="EnvironmentSettings\Settings\LogBoxSettings.cs" />
     <Compile Include="EnvironmentSettings\Settings\PrivateLabelSettings.cs" />
     <Compile Include="Helpers\LoginParameters.cs" />
+    <Compile Include="Helpers\SharedPrivateLabelTenant.cs" />
     <Compile Include="Helpers\SignatureHubClient.cs" />
     <Compile Include="Helpers\StatusData.cs" />
+    <Compile Include="Helpers\TenantManagmentPrivateLabelsPM.cs" />
     <Compile Include="Helpers\UserData.cs" />
     <Compile Include="InternalWindow.cs">
       <SubType>Form</SubType>
@@ -225,8 +227,8 @@
     <None Include="Images\Warning.png" />
     <Content Include="logboxicon.ico" />
     <None Include="Resources\PLInactiveLogo.png" />
-    <None Include="Resources\PLIcon.ico" />
     <None Include="Resources\PLBlueGenericLogo.png" />
+    <None Include="Resources\PLIcon.ico" />
     <Content Include="temp\samplepdf.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

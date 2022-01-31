@@ -17,6 +17,7 @@ namespace Cloud.Sign.App.Helpers
         public bool GetToken { get; set; }
         public int MobileVersion { get; set; }
         public bool IsAngularLogin { get; set; }
+        public bool IsFromPLSignApp { get; set; }
 
     }
 

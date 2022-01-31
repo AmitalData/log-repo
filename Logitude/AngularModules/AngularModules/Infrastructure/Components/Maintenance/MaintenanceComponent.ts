@@ -165,6 +165,10 @@ export class MaintenanceComponent {
                     this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
                 }
             }
+
+            else if (item.Code == "CUTE") {
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            }
         });
 
         this.BuildPersonalSettings();

@@ -22,10 +22,19 @@ namespace Cloud.Sign.App
 
         private IEnvironmentSetting GetEnvironmentSettings()
         {
-            return AppDomain.CurrentDomain.GetAssemblies().SelectMany(s => s.GetTypes())
-                        .Where(p => typeof(IEnvironmentSetting).IsAssignableFrom(p) && p.Namespace.StartsWith(settingsNameSpace))
-                        .Select(x => Activator.CreateInstance(x) as IEnvironmentSetting)
-                        .FirstOrDefault(x => x.Environment == Environment);
+            try
+            {
+                return AppDomain.CurrentDomain.GetAssemblies().SelectMany(s => s.GetTypes())
+              .Where(p => typeof(IEnvironmentSetting).IsAssignableFrom(p) && p.Namespace.StartsWith(settingsNameSpace))
+              .Select(x => Activator.CreateInstance(x) as IEnvironmentSetting)
+              .FirstOrDefault(x => x.Environment == Environment);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Please provide Environment Setting for " + Environment);
+                return null;
+            }
+
         }
 
         protected void InitView()

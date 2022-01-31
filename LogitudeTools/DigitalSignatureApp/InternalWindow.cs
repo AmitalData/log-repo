@@ -489,6 +489,7 @@ namespace Cloud.Sign.App
                     lblLoggedCompany.Text = MainForm.Company;
                 }
             }
+            InitView();
             //lblLastSigned.Text = LastSigned.ToShortDateString() + " " + LastSigned.ToShortTimeString();
             ShowMeInvoker = this.Invoke((MethodInvoker)delegate
             {
