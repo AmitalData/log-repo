@@ -2353,15 +2353,7 @@ namespace WebFreight.Web.Helpers
         {
             Report currentTenantReport = copyReportTemplateArgs.myReports.Where(d => d.Code == copyReportTemplateArgs.report.Code && d.Tenant == copyReportTemplateArgs.tenant).FirstOrDefault();
             if (currentTenantReport == null) return copyReportTemplateArgs.isChangeReport;
-            ReportsTemplate currentTenantReportsTemplate = null;
-            if (copyReportTemplateArgs.systemReportTemplate.TemplateType == "M")
-            {
-                currentTenantReportsTemplate = GetCurrentTenantReportsTemplate(currentTenantReport, currentTenantReport.DefaultMessageTemplateId);
-            }
-            else
-            {
-                currentTenantReportsTemplate = GetCurrentTenantReportsTemplate(currentTenantReport, currentTenantReport.DefaultTemplateId);
-            }
+            ReportsTemplate currentTenantReportsTemplate = GetCurrentTenantReportsTemplate(currentTenantReport, copyReportTemplateArgs.systemReportTemplate.TemplateType);
 
             if (currentTenantReportsTemplate == null)
             {
@@ -2436,12 +2428,17 @@ namespace WebFreight.Web.Helpers
             }
         }
 
-        private ReportsTemplate GetCurrentTenantReportsTemplate(Report currentTenantReport, string currentTenantReportDefaultTemplateId)
+        private ReportsTemplate GetCurrentTenantReportsTemplate(Report currentTenantReport, string systemReportTemplateType)
         {
+            if(systemReportTemplateType == "M")
+            {
+               return myTenantReportsTemplate.Where(d => d.ReportId == currentTenantReport.Id && d.Id == currentTenantReport.DefaultMessageTemplateId).FirstOrDefault();
+            }
+
             ReportsTemplate currentTenantReportsTemplate = myTenantReportsTemplate.Where(d => d.ReportId == currentTenantReport.Id && d.IsSystem).FirstOrDefault();
             if (currentTenantReportsTemplate == null)
             {
-                currentTenantReportsTemplate = myTenantReportsTemplate.Where(d => d.ReportId == currentTenantReport.Id && d.Id == currentTenantReportDefaultTemplateId).FirstOrDefault();
+                currentTenantReportsTemplate = myTenantReportsTemplate.Where(d => d.ReportId == currentTenantReport.Id && d.Id == currentTenantReport.DefaultTemplateId).FirstOrDefault();
             }
 
             return currentTenantReportsTemplate;
