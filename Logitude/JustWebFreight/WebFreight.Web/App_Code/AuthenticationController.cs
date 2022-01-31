@@ -935,7 +935,7 @@ namespace WebFreight.Web
                         }
                         else
                         {
-                            if (privatelabel == null && (!string.IsNullOrEmpty(companyAccess.PrivateLabelId) && !companyAccess.HasLogboxAccess))
+                            if (privatelabel == null && (!string.IsNullOrEmpty(companyAccess.PrivateLabelId) && !companyAccess.HasLogboxAccess) && !loginParameters.IsFromPLSignApp)
                             {
                                 data = new UserData()
                                 {
