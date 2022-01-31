@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
+using System.Data.Entity.Infrastructure;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -61,6 +62,8 @@ namespace Logitude.Customs.Data.Repsitories
 
         public Client GetSingleClientByCode(string code, int Tenant)
         {
+            //SELECT * FROM AMINEt_MAIN.Declarations Extent1 WHERE((Extent1.DeclarationNumber = :p__linq__0) OR ((Extent1.DeclarationNumber IS NULL) AND(:p__linq__0 IS NULL))) AND(Extent1.Tenant = :p__linq__1)
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
             Client client = (from a in context.Clients
                              where a.Code == code
