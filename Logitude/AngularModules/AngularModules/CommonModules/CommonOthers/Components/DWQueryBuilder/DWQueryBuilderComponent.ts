@@ -21,7 +21,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import { CustomEntityArgs } from '../../../../Infrastructure/Components/LogitudeComponents/DWLogSearchWindowComponent';
 import { DWQueryBuilderBaseComponent, ObjectFieldOperator, DWFieldsGroup, MultiSelectedValue, ValueDetails, DWObjectFieldsDetails, DWFactsGroup } from '../../../../InfrastructureModules/InfrastructureBIReport/Components/Workspaces/DWQueryBuilderBaseComponent';
- 
+import { forEach } from 'cypress/types/lodash';
 @Component({
     selector: 'DWQueryBuilder',
     templateUrl: './DWQueryBuilderComponent.html',
@@ -241,10 +241,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
                                     }
                                 })
                                  
-                                var factview = new DWFactsGroup(Fact.Key, FactCategory);
-                                factview.IsDetailesOpened = true;
-                                factview.DetailsIcon = "./Images/CellIcons/Arrowup.png";
-                                FactGroups.push(factview) 
+                                this.CreateFactView(Fact, FactCategory, FactGroups); 
                             });
 
                             this.DataSource = MyGroups;
@@ -262,6 +259,13 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
                 }
             });
         });
+    }
+
+    private CreateFactView(Fact: any, FactCategory: any[], FactGroups: any[]) {
+        var factview = new DWFactsGroup(Fact.Key, FactCategory);
+        factview.IsDetailesOpened = true;
+        factview.DetailsIcon = "./Images/CellIcons/Arrowup.png";
+        FactGroups.push(factview);
     }
 
     private SetFactView(FactGroups: any[]) {
