@@ -53,6 +53,14 @@ export class ClientSearchByIDComponent
 
     SetWindowArgs(menuArg: any) {
         this.OnMassageDisplayMethod();
+        if (menuArg.Mode == "DeclarationGeneralComponent") {
+            this.IsExternalId = menuArg.IsExternalId;
+            this.ExternalId=menuArg.ImporterCode;
+            this.IsPassport = menuArg.IsPassport;
+            this.PassportNumber = menuArg.PassportNumber;
+            this.PassportTypeCode = menuArg.PassportTypeCode;
+            this.PassportCountryCode = menuArg.PassportCountryCode;
+            }
     }
 
     @ViewChild(CustomMessageWrapperComponent)
