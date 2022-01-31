@@ -20,9 +20,8 @@ import { DWQueryBuilderHelper } from '../../../../Infrastructure/Helpers/DWQuery
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import { CustomEntityArgs } from '../../../../Infrastructure/Components/LogitudeComponents/DWLogSearchWindowComponent';
-import { DWQueryBuilderBaseComponent, ObjectFieldOperator, DWFieldsGroup, MultiSelectedValue, ValueDetails, DWObjectFieldsDetails } from '../../../../InfrastructureModules/InfrastructureBIReport/Components/Workspaces/DWQueryBuilderBaseComponent';
+import { DWQueryBuilderBaseComponent, ObjectFieldOperator, DWFieldsGroup, MultiSelectedValue, ValueDetails, DWObjectFieldsDetails, DWFactsGroup } from '../../../../InfrastructureModules/InfrastructureBIReport/Components/Workspaces/DWQueryBuilderBaseComponent';
 import { forEach } from 'cypress/types/lodash';
-
 @Component({
     selector: 'DWQueryBuilder',
     templateUrl: './DWQueryBuilderComponent.html',
@@ -57,8 +56,8 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     private ComponentRef;
     private CurrentSession = SessionLocator.SelectedSession;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
- 
-    DataSource: any[];
+
+    DataSource: any[]; 
     AllFieldsDataSource: DWObjectFieldsDetails[];
     AllGroupsDataSource: DWFieldsGroup[];
     SelectedFieldsDataSource: DWObjectFieldsDetails[] = [];
@@ -85,6 +84,8 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     //KPIFeatureToggle: any;
     private ChargesFactMeasurementFields: string[] = ['Gross Weight Per Ton', 'Order Gross Weight', 'Order Gross Weight in Ton',
         'Order Volume', 'Total Volume (CBM)', 'Volumetric Weight', 'Number of Packages', 'Order Number of Packages','Gross Weight (KG)'];
+
+    FactGroupsDataSource: any[];
 
     @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -177,59 +178,75 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
                             this.CurrentSession.CurrentWindow.StopBusyIndicator();
                             var MyGroups = [];
                             var MyAllGroups = [];
-                            Result.Result.forEach((Group) => {
-                                if (Group.FieldsList.filter(a => a.DisplayInQueryBuilder == true).length > 0) {
-                                    var view = new DWFieldsGroup(Group.Key, Group.FieldsList);
-                                    if (MyGroups.length == 0) {
-                                        view.IsDetailesOpened = true;
-                                        view.DetailsIcon = "./Images/CellIcons/Arrowup.png";
-                                    }
-                                    else {
-                                        view.IsDetailesOpened = false;
-                                        view.DetailsIcon = "./Images/CellIcons/Arrowdown.png";
-                                    }
-                                    var MyInnerList = [];
-                                    view.FieldsList.forEach((field) => {
-                                        if (this.DisplayFieldInQueryBuilder(field)) {
-                                            var MyItem = new DWObjectFieldsDetails(field, this);
-                                            MyItem.ParentDataTypeCode = field.DataTypeCode;
-                                            MyItem.Category1 = field.Category1;
-                                            MyItem.Category2 = field.Category2;
-                                            MyInnerList.push(MyItem);
-                                            this.ObsList.push(MyItem);
-                                            this.ObsListAll.push(MyItem);
-                                        }
-                                    });
+                            var FactGroups = []; 
+                            var FactCategory = [];
 
-                                    var view1 = new DWFieldsGroup(Group.Key, Group.FieldsList);
-                                    if (MyAllGroups.length == 0) {
-                                        view1.IsDetailesOpened = true;
-                                        view1.DetailsIcon = "./Images/CellIcons/Arrowup.png";
-                                    }
-                                    else {
-                                        view1.IsDetailesOpened = false;
-                                        view1.DetailsIcon = "./Images/CellIcons/Arrowdown.png";
-                                    }
-                                    var MyInnerList1 = [];
-                                    view1.FieldsList.forEach((field) => {
-                                        if (this.DisplayFieldInQueryBuilder(field)) {
-                                            var MyItem = new DWObjectFieldsDetails(field, this);
-                                            MyItem.ParentDataTypeCode = field.DataTypeCode;
-                                            MyItem.Category1 = field.Category1;
-                                            MyItem.Category2 = field.Category2;
-                                            MyInnerList1.push(MyItem);
-                                            this.ObsList.push(MyItem);
-                                            this.ObsListAll.push(MyItem);
-                                        }
-                                    });
+                            Result.Result.forEach((Fact) => {
 
-                                    view.FieldsList = MyInnerList;
-                                    view1.FieldsList = MyInnerList1;
-                                    MyGroups.push(view);
-                                    MyAllGroups.push(view1);
-                                }
+                                FactCategory = []; 
+                                Fact.FieldsGroupList.forEach((Group) => {
+                                    if (Group.FieldsList.filter(a => a.DisplayInQueryBuilder == true).length > 0) { 
+
+                                        var view = new DWFieldsGroup(Group.Key, Group.FieldsList);
+                                        view.Fact = Group.Fact;
+                                        if (MyGroups.length == 0) {
+                                            view.IsDetailesOpened = true;
+                                            view.DetailsIcon = "./Images/CellIcons/Arrowup.png";
+                                        }
+                                        else {
+                                            view.IsDetailesOpened = false;
+                                            view.DetailsIcon = "./Images/CellIcons/Arrowdown.png";
+                                        }
+                                        var MyInnerList = [];
+                                        view.FieldsList.forEach((field) => {
+                                            if (this.DisplayFieldInQueryBuilder(field)) {
+                                                var MyItem = new DWObjectFieldsDetails(field, this);
+                                                MyItem.ParentDataTypeCode = field.DataTypeCode;
+                                                MyItem.Category1 = field.Category1;
+                                                MyItem.Category2 = field.Category2;
+                                                MyInnerList.push(MyItem);
+                                                this.ObsList.push(MyItem);
+                                                this.ObsListAll.push(MyItem);
+                                            }
+                                        });
+
+                                        var view1 = new DWFieldsGroup(Group.Key, Group.FieldsList);
+                                        view1.Fact = Group.Fact;
+                                        if (MyAllGroups.length == 0) {
+                                            view1.IsDetailesOpened = true;
+                                            view1.DetailsIcon = "./Images/CellIcons/Arrowup.png";
+                                        }
+                                        else {
+                                            view1.IsDetailesOpened = false;
+                                            view1.DetailsIcon = "./Images/CellIcons/Arrowdown.png";
+                                        }
+                                        var MyInnerList1 = [];
+                                        view1.FieldsList.forEach((field) => {
+                                            if (this.DisplayFieldInQueryBuilder(field)) {
+                                                var MyItem = new DWObjectFieldsDetails(field, this);
+                                                MyItem.ParentDataTypeCode = field.DataTypeCode;
+                                                MyItem.Category1 = field.Category1;
+                                                MyItem.Category2 = field.Category2;
+                                                MyInnerList1.push(MyItem);
+                                                this.ObsList.push(MyItem);
+                                                this.ObsListAll.push(MyItem);
+                                            }
+                                        });
+
+                                        view.FieldsList = MyInnerList;
+                                        view1.FieldsList = MyInnerList1;
+                                        FactCategory.push(view);
+                                        MyGroups.push(view);
+                                        MyAllGroups.push(view1); 
+                                    }
+                                })
+                                 
+                                this.CreateFactView(Fact, FactCategory, FactGroups); 
                             });
+
                             this.DataSource = MyGroups;
+                            var AllFactGroups = this.SetFactView(FactGroups);
+                            this.FactGroupsDataSource = AllFactGroups;
                             this.AllGroupsDataSource = MyAllGroups;
                             this.AllFieldsDataSource = this.ObsList;
                         }
@@ -242,6 +259,24 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
                 }
             });
         });
+    }
+
+    private CreateFactView(Fact: any, FactCategory: any[], FactGroups: any[]) {
+        var factview = new DWFactsGroup(Fact.Key, FactCategory);
+        factview.IsDetailesOpened = true;
+        factview.DetailsIcon = "./Images/CellIcons/Arrowup.png";
+        FactGroups.push(factview);
+    }
+
+    private SetFactView(FactGroups: any[]) {
+        var AllFactGroups = [];
+        FactGroups.forEach((Group) => {
+            var factView = new DWFactsGroup(Group.key, Group.fieldsList);
+            factView.IsDetailesOpened = true;
+            factView.DetailsIcon = "./Images/CellIcons/Arrowup.png";
+            AllFactGroups.push(factView);
+        });
+        return AllFactGroups;
     }
 
     DisplayFieldInQueryBuilder(field) {
@@ -422,7 +457,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     private SearchFieldChanged(newValue: string) {
         this.AllGroupsDataSource.forEach((Group) => {
             var temp = Group.FieldsList.filter(a => a.Name.toLowerCase().indexOf(newValue.toLowerCase()) > -1 || a.DisplayName.toLowerCase().indexOf(newValue.toLowerCase()) > -1);
-            this.DataSource.filter(a => a.Key == Group.Key)[0].FieldsList = temp;
+            this.DataSource.filter(a => a.Key == Group.Key && a.Fact == Group.Fact)[0].FieldsList = temp;
 
             if (temp.length == 0)
                 this.OpenCloseGroup(Group, false);
@@ -464,7 +499,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
                 this.OpenCloseGroup(Group, true);
             else
                 this.OpenCloseGroup(Group, false);
-            this.DataSource.filter(a => a.Key == Group.Key)[0].FieldsList = Group.FieldsList;
+            this.DataSource.filter(a => a.Key == Group.Key && a.Fact == Group.Fact)[0].FieldsList = Group.FieldsList;
             Group.FieldsList.forEach((fieldsList) => {
                 fieldsList.IsViewTree = false;
             });
@@ -474,11 +509,32 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
 
     private OpenCloseGroup(Group, open) {
         let detailsIcon = open ? "./Images/CellIcons/Arrowup.png" : "./Images/CellIcons/Arrowdown.png";
-        this.DataSource.filter(a => a.Key == Group.Key)[0].IsDetailesOpened = open;
-        this.DataSource.filter(a => a.Key == Group.Key)[0].DetailsIcon = detailsIcon;
+        this.OpenFactGroup(Group, open, detailsIcon); 
+        this.DataSource.filter(a => a.Key == Group.Key && a.Fact == Group.Fact)[0].IsDetailesOpened = open;
+        this.DataSource.filter(a => a.Key == Group.Key && a.Fact == Group.Fact)[0].DetailsIcon = detailsIcon;
     }
 
     private selectedItem: DWObjectFieldsDetails;
+
+    private OpenFactGroup(Group: any, open: any, detailsIcon: string) {
+        this.FactGroupsDataSource.forEach((FactGroup) => { 
+            var groupFactNameStrings = Group.fact.split('_');
+            groupFactName = Group.fact.replace('_', ' ');
+            if (groupFactNameStrings.length > 1) {
+                var groupFactName = groupFactNameStrings[1] + ' ' + groupFactNameStrings[0];
+            }
+
+            if (FactGroup.Key == groupFactName && open) {
+                this.SetOpenFactOptions(FactGroup, open, detailsIcon);
+            }
+        });
+    }
+
+    private SetOpenFactOptions(FactGroup: any, open: any, detailsIcon: string) {
+        FactGroup.IsDetailesOpened = open;
+        FactGroup.DetailsIcon = detailsIcon;
+    }
+
     public get SelectedItem() { return this.selectedItem; }
     public set SelectedItem(newValue: DWObjectFieldsDetails) {
         this.selectedItem = newValue;
@@ -595,7 +651,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
 
     btnAdd_Click(item) {
         this.SelectedItem = item.IsMultipleSelection ? new DWObjectFieldsDetails(item) : item;
-       
+
         var myCurrentItem = this.SelectedFieldsDataSource.filter(a => a.DisplayName == this.SelectedItem.DisplayName);
 
         if (this.MatchAddColumnConditions(myCurrentItem) && this.ValidateQuereyFields()) {
@@ -606,12 +662,12 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
 
     private ValidateQuereyFields() {
         //validate Measurement Fields
-        var isValidate = true; 
+        var isValidate = true;
         let IsChargesFactMeasurementField = this.ChargesFactMeasurementFields.filter(a => a == this.SelectedItem.DisplayName)[0] ? true : false
-         
+
         if (!this.HasValitaionError(IsChargesFactMeasurementField)) {
-            return isValidate;  
-        } 
+            return isValidate;
+        }
         this.ShowValidateMessage("You are not allowed to add " + this.SelectedItem.DisplayName + " column unless you add the Shipment Number or Master Shipment Number column");
         isValidate = false;
     }
@@ -692,7 +748,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
 
         if (isChargesFactMeasurementField && !this.hasShipmentOrMasterNumberField() && (this.FactTableName == "Fact_Charges" || this.FactTableName == "Fact_MasterCharges")) {
             this.ShowValidateMessage("You are not allowed to add " + selectedItem.DisplayName + " filter unless you add the Shipment Number or Master Shipment Number column");
-             
+
             return;
         }
         var view = new DWObjectFieldsDetails(item.BaseDWObjectField, this);
@@ -938,7 +994,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
             this.messageWindow.Show(this.messageWindow.Message);
             return;
         }
- 
+
         if ((this.hasMeasurementFieldsInFactCharges() || this.hasMeasurementFilterInFactCharges()) && !this.hasShipmentOrMasterNumberField()) {
             this.ShowValidateMessage("Please add Shipment Number or Master Shipment Number column to load the data");
             return;
@@ -1047,12 +1103,12 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
             this.messageWindow.Show(this.messageWindow.Message);
             return;
         }
-          
+
         if ((this.hasMeasurementFieldsInFactCharges() || this.hasMeasurementFilterInFactCharges()) && !this.hasShipmentOrMasterNumberField()) {
             this.ShowValidateMessage("You are not allowed to save changes unless you add the Shipment Number or Master Shipment Number column");
             return;
         }
-         
+
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ..");
         this._DWObjectTablePMService.get(this.FactTableName).subscribe((myResult:any) => {
             if (!myResult.HasError) {
@@ -1099,7 +1155,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     }
 
     NotExist: boolean = true;
-    private hasShipmentOrMasterNumberField() { 
+    private hasShipmentOrMasterNumberField() {
         return this.SelectedFieldsDataSource.filter(a => a.DisplayName == "Shipment Number" || a.DisplayName == "Master Shipment Number")[0];
     }
 
@@ -1107,10 +1163,10 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
 
         if (this.FactTableName != "Fact_Charges" &&  this.FactTableName != "Fact_MasterCharges") {
             return false;
-        }  
+        }
         var measurementFields = this.SelectedFieldsDataSource.filter(element => this.IsFactChargesMeasurementFields(element) == true);
         return measurementFields.length != 0;
-        
+
     }
 
     private hasMeasurementFilterInFactCharges() {
@@ -1122,7 +1178,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
         return measurementFilters.length != 0;
 
     }
-      
+
     private GetMeasurementFilters() {
         return this.SelectedFiltersDataSource.filter(item => this.HasMeasuremenFtilter(item));
     }
@@ -1133,7 +1189,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
 
     IsFactChargesMeasurementFields(element: DWObjectFieldsDetails): boolean {
         var chargesFactMeasurementField = this.ChargesFactMeasurementFields.filter(a => a == element.Name)[0];
-        return chargesFactMeasurementField != null; 
+        return chargesFactMeasurementField != null;
     }
 
     EditButtonClicked(getSingle: boolean = false) {
