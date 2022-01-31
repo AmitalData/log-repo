@@ -229,6 +229,7 @@
     <None Include="Resources\PLInactiveLogo.png" />
     <None Include="Resources\PLBlueGenericLogo.png" />
     <None Include="Resources\PLIcon.ico" />
+    <None Include="Resources\PlWhite.ico" />
     <Content Include="temp\samplepdf.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

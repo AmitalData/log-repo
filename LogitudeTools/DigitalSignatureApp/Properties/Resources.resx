@@ -175,4 +175,7 @@
   <data name="PLIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PLIcon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="PlWhite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PlWhite.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

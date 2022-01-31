@@ -233,6 +233,16 @@ namespace Cloud.Sign.App.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
+        public static System.Drawing.Icon PlWhite {
+            get {
+                object obj = ResourceManager.GetObject("PlWhite", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
         public static System.Drawing.Icon signature {
             get {
                 object obj = ResourceManager.GetObject("signature", resourceCulture);

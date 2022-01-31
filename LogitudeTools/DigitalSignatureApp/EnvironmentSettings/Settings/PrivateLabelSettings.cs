@@ -88,6 +88,21 @@ namespace Cloud.Sign.App.EnvironmentSettings.Settings
             }
         }
 
+        public Icon HeaderIcon
+        {
+            get
+            {
+
+                if (SharedPrivateLabelTenant.tenantManagmentPrivateLabel?.SmallLogo == null)
+                    return Resources.PlWhite;
+
+                using (var ms = new MemoryStream(SharedPrivateLabelTenant.tenantManagmentPrivateLabel.SmallLogo))
+                {
+                    return IconFromImage(Image.FromStream(ms));
+                }
+            }
+        }
+
         private Icon IconFromImage(Image img)
         {
             var ms = new System.IO.MemoryStream();

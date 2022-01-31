@@ -43,7 +43,7 @@ namespace Cloud.Sign.App
             pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             label.Text = environmentSetting.LabelText;
             this.Text = environmentSetting.HeaderText;
-            this.Icon = environmentSetting.Icon;
+            this.Icon = environmentSetting.HeaderIcon;
         }
 
         protected void SetBalloonTipText()
