@@ -1097,6 +1097,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              MasterShipmentNumbers = a.MasterShipmentNumbers,
                              HouseNumbers = a.HouseNumbers,
                              GlobalTaxCalculation = a.GlobalTaxCalculation,
+                             IsEquipment = a.IsEquipment,
 
                          };
 

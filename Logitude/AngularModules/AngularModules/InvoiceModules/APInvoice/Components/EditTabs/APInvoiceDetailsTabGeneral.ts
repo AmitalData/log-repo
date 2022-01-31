@@ -940,6 +940,13 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
     }
 
+    get IsEquipment() { return this.EntityPM.IsEquipment; }
+    set IsEquipment(newValue: boolean) {
+        if (this.EntityPM.IsEquipment != newValue) {
+            this.EntityPM.IsEquipment = newValue;
+        }
+    }
+
     get DueDate() { return this.EntityPM.DueDate; }
     set DueDate(newValue: Date) {
         if (this.EntityPM.DueDate != newValue) {

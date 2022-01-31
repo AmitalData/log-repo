@@ -501,6 +501,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsEquipment"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="VendorId"
     ReferencedTable="Cards"

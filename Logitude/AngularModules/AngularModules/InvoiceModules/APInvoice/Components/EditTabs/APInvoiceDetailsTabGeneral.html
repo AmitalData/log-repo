@@ -166,12 +166,17 @@
                                                 </td>
                                             </tr>
                                             <tr class="FormFieldRow">
-                                                <td style="width: 5px;">
-                                                    <div></div>
-                                                </td>
+                                  
 
                                                 <td [style.text-align]="isRTL ? 'right' : 'left'" style="font-size:10px; color:#1B90CB;">
                                                     {{RelativeRateDate}}
+                                                </td>
+
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'IsEquipment'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <CheckBox  [IsChecked]="IsEquipment" (Checked)="IsEquipment = $event"></CheckBox>
                                                 </td>
                                             </tr>
 
