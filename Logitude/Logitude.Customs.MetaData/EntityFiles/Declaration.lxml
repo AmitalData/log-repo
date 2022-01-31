@@ -19158,7 +19158,7 @@
     </QueryFilters>
   </Query>
   <Query
-    Code="&quot;DeclarationInConstraint&quot;"
+    Code="&quot;CourierMasterOpenIndividual&quot;"
     TextCode="&quot;Courier Master Open Individual&quot;"
     LocalTextCode="&quot;שטרי מטען פרטניים פתוחים&quot;"
     QueryGroupCode="&quot;VHQG&quot;"
@@ -19173,72 +19173,72 @@
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;DeclarationInConstraint&quot;"
+        QueryCode="&quot;CourierMasterOpenIndividual&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;CustomFileNo&quot;"
         ColumnWidth="110" />
       <QueryColumn
-        QueryCode="&quot;DeclarationInConstraint&quot;"
+        QueryCode="&quot;CourierMasterOpenIndividual&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;CourierHAWB&quot;"
         ColumnWidth="120" />
       <QueryColumn
-        QueryCode="&quot;DeclarationInConstraint&quot;"
+        QueryCode="&quot;CourierMasterOpenIndividual&quot;"
         IndexOrder="2"
         ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="160" />
       <QueryColumn
-        QueryCode="&quot;DeclarationInConstraint&quot;"
+        QueryCode="&quot;CourierMasterOpenIndividual&quot;"
         IndexOrder="3"
         ObjectFieldName="&quot;DeclarationNumber&quot;"
         ColumnWidth="120" />
       <QueryColumn
-        QueryCode="&quot;DeclarationInConstraint&quot;"
+        QueryCode="&quot;CourierMasterOpenIndividual&quot;"
         IndexOrder="4"
         ObjectFieldName="&quot;ProcedureCurrentName&quot;"
         ColumnWidth="150" />
       <QueryColumn
-        QueryCode="&quot;DeclarationInConstraint&quot;"
+        QueryCode="&quot;CourierMasterOpenIndividual&quot;"
         IndexOrder="5"
         ObjectFieldName="&quot;TotalInvoiceAmountInUSD&quot;"
         ColumnWidth="150" />
       <QueryColumn
-        QueryCode="&quot;DeclarationInConstraint&quot;"
+        QueryCode="&quot;CourierMasterOpenIndividual&quot;"
         IndexOrder="6"
         ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
         ColumnWidth="190" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
-        QueryCode="&quot;DeclarationInConstraint&quot;"
+        QueryCode="&quot;CourierMasterOpenIndividual&quot;"
         PredefinedValue="&quot;false&quot;"
         ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
         IndexOrder="0" />
       <QueryFilter
-        QueryCode="&quot;DeclarationInConstraint&quot;"
+        QueryCode="&quot;CourierMasterOpenIndividual&quot;"
         PredefinedValue="&quot;I&quot;"
         ObjectFieldName="&quot;FastIndividualProcessCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
         IndexOrder="0" />
       <QueryFilter
-        QueryCode="&quot;DeclarationInConstraint&quot;"
+        QueryCode="&quot;CourierMasterOpenIndividual&quot;"
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsCourierDeclaration&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
         IndexOrder="0" />
       <QueryFilter
-        QueryCode="&quot;DeclarationInConstraint&quot;"
+        QueryCode="&quot;CourierMasterOpenIndividual&quot;"
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsCancelled&quot;"
         IsPredefined="true"
         Operator="&quot;NotEqual&quot;"
         IndexOrder="0" />
       <QueryFilter
-        QueryCode="&quot;DeclarationInConstraint&quot;"
+        QueryCode="&quot;CourierMasterOpenIndividual&quot;"
         PredefinedValue="&quot;false&quot;"
         ObjectFieldName="&quot;AmendmentDontDisplayInList&quot;"
         IsPredefined="true"
