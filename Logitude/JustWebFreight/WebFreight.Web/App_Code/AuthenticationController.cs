@@ -635,7 +635,7 @@ namespace WebFreight.Web
                 //{
                     url = url.Split(':')[0];
                 //}
-                if (!url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
+                if (!loginParameters.IsFromPLSignApp && !url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
                 {
                     TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(0);
                     privatelabel = query.GetSingleActivePMByUrl(url);
@@ -906,8 +906,11 @@ namespace WebFreight.Web
 
                     loginsList = loginsList.Where(s => s.LicensedUser == true || s.IsUser == false).OrderBy(c => c.CompanyName).ToList();
 
-                    List<string> logboxAccessiblePrivateLabelTenantsIds = GetLogboxAccessiblePrivateLabelTenantsIds(url);
-                    MapHasLogboxAccessPrivateLabelTenants(loginsList, logboxAccessiblePrivateLabelTenantsIds);
+                    if (!loginParameters.IsFromPLSignApp)
+                    {
+                        List<string> logboxAccessiblePrivateLabelTenantsIds = GetLogboxAccessiblePrivateLabelTenantsIds(url);
+                        MapHasLogboxAccessPrivateLabelTenants(loginsList, logboxAccessiblePrivateLabelTenantsIds);
+                    }
 
                     if (loginsList.Count == 1)
                     {
@@ -989,7 +992,12 @@ namespace WebFreight.Web
                     else
                     {
                         var temp = new List<CompanyLogin>();
-                        if (privatelabel != null)
+
+                        if (loginParameters.IsFromPLSignApp)
+                        {
+                            temp = loginsList.Where(x=>x.PrivateLabelId != null).ToList();
+                        }
+                        else if (privatelabel != null)
                         {
                             temp = loginsList.Where(a => a.PrivateLabelId == privatelabel.Id).ToList();
                         }

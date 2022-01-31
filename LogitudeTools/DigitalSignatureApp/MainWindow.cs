@@ -47,6 +47,7 @@ namespace Cloud.Sign.App
         BackgroundWorker MyCheckRequestTimerwork = new BackgroundWorker();
         BackgroundWorker VersionTimerwork = new BackgroundWorker();
         BackgroundWorker LogOutTimerwork = new BackgroundWorker();
+        CompanyLogin selectedCompany;
 
 
         private bool allowVisible;
@@ -703,6 +704,7 @@ namespace Cloud.Sign.App
                     LoginParam.GetToken = true;
                     LoginParam.Email = txtEmail.Text;
                     LoginParam.Password = txtPassword.Text;
+                    LoginParam.IsFromPLSignApp = Environment == "PL";
                     Email = txtEmail.Text;
                     var PostURI = URI + "/api/Authentication";
                     //client.DefaultRequestHeaders.Add("X-Real-IP", "192.168.1.180");
@@ -716,14 +718,7 @@ namespace Cloud.Sign.App
                         var MyResult = JsonConvert.DeserializeObject<UserData>(Data);
                         if (MyResult.CompanyLogins != null)
                         {
-                            if (Environment == "DSV")
-                            {
-                                MyResult.CompanyLogins = MyResult.CompanyLogins.Where(a => a.PrivateLabelId != null).ToList();
-                            }
-                            else
-                            {
-                                MyResult.CompanyLogins = MyResult.CompanyLogins.Where(a => a.PrivateLabelId == null || a.HasLogboxAccess).ToList();
-                            }
+                            MyResult.CompanyLogins = FilterTenants(MyResult.CompanyLogins);
                         }
                         if (MyResult.IsLocked)
                         {
@@ -754,6 +749,7 @@ namespace Cloud.Sign.App
                                 var MyData = resultData.Content.ReadAsStringAsync().Result;
                                 var SubResult = JsonConvert.DeserializeObject<UserData>(Data);
                                 Token = SubResult.Token;
+                                selectedCompany = MyResult.CompanyLogins.FirstOrDefault();
                                 await ContinueLoginProcess(Token, false);
                             }
                             else
@@ -810,9 +806,17 @@ namespace Cloud.Sign.App
                 }
             }
         }
+
+        private List<CompanyLogin> FilterTenants(List<CompanyLogin> companyLogins)
+        {
+            if (Environment == "DSV" || Environment == "PL") return companyLogins.Where(a => a.PrivateLabelId != null).ToList();
+            return companyLogins.Where(a => a.PrivateLabelId == null || a.HasLogboxAccess).ToList();
+        }
+
         bool IsWorkerActive = false;
         private async Task ContinueLoginProcess(string token, bool ShowCerts = true)
         {
+            GetPrivateLabelData();
             PNLLoginInfo.Show();
             PNLTenantInfo.Hide();
             btnLogin.Show();
@@ -930,6 +934,29 @@ namespace Cloud.Sign.App
                 //MessageBox.Show("MyTimer_Tick Timer");
                 MyTimerwork.DoWork += new DoWorkEventHandler(MyTimer_Tick);
                 MyTimerwork.RunWorkerAsync();
+            }
+        }
+
+        private void GetPrivateLabelData()
+        {
+            SharedPrivateLabelTenant.tenantManagmentPrivateLabel = null;
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add("Token", Token);
+                var PostURI = URI + "/api/tenantmanagmentprivatelabels/getsingle?id=" + selectedCompany.PrivateLabelId;
+                var resultData = client.GetAsync(PostURI);
+                resultData.Wait();
+                if (resultData.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var Data = resultData.Result.Content.ReadAsStringAsync().Result;
+                    var MyResult = JsonConvert.DeserializeObject<TenantManagmentPrivateLabelsPM>(Data);
+                    SharedPrivateLabelTenant.tenantManagmentPrivateLabel = MyResult;
+                }
+                else
+                {
+                    lblError.Text = "Wrong user name or password !!";
+                    lblError.Visible = true;
+                }
             }
         }
 
@@ -1253,7 +1280,7 @@ namespace Cloud.Sign.App
                                             {
 
                                             }
-                                        }             
+                                        }
                                         SetInactiveIcon();
 
                                         ni.BalloonTipText = "An error occured during the sign process";
@@ -1372,7 +1399,7 @@ namespace Cloud.Sign.App
                 }
 
                 errorMessage = errorMessage + ex.StackTrace;
-                LogFileUtil.Log("SignRequestRecieved" + errorMessage, LogFileUtil.LogLevel.All);          
+                LogFileUtil.Log("SignRequestRecieved" + errorMessage, LogFileUtil.LogLevel.All);
                 SetInactiveIcon();
 
                 ni.BalloonTipText = "The Server is not reachable.";
@@ -1876,12 +1903,13 @@ namespace Cloud.Sign.App
             {
                 Tenant = (int)cobTenants.SelectedValue;
                 Company = ((CompanyLogin)cobTenants.SelectedItem).CompanyName;
-
+                selectedCompany = ((CompanyLogin)cobTenants.SelectedItem);
             }
             catch (Exception)
             {
                 Tenant = ((CompanyLogin)cobTenants.SelectedValue).Tenant;
                 Company = ((CompanyLogin)cobTenants.SelectedValue).CompanyName;
+                selectedCompany = ((CompanyLogin)cobTenants.SelectedValue);
             }
 
         }
@@ -1999,6 +2027,7 @@ namespace Cloud.Sign.App
                                 Email = MyResult.UserName;
                                 Token = tempToken;
                                 Company = (MyResult.CompanyLogins != null) ? MyResult.CompanyLogins.Where(a => a.Tenant == Tenant).FirstOrDefault().CompanyName : "";
+                                this.selectedCompany = MyResult.CompanyLogins.Where(a => a.Tenant == Tenant).FirstOrDefault();
                             }
                             else
                             {
