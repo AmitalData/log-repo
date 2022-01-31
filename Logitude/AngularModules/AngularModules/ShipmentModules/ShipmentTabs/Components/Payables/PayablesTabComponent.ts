@@ -58,6 +58,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     public IsResourcesReady: boolean = false;
     public myDomainService: ShipmentDomainService;
     public IsPriceCheckVisible: boolean = false;
+    public IsCustomsChargesVisible: boolean = false;
     public myUserListService: UserListService = null;
     public ComponentRef: any;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -298,6 +299,9 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
             this.IsPriceCheckVisible = true;
         }
 
+        if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CCT")[0]) {
+            //this.IsCustomsChargesVisible = true;
+        }
 
         var isEditingEnabled: boolean = true;
 
