@@ -11,7 +11,7 @@
             <mat-select-trigger class="mat-select-trigger">{{Title}}</mat-select-trigger>
             <mat-option class="{{selection.Name}}" matInput *ngFor="let selection of MultipleSelectionList" [value]="selection" (click)="SelectFilter(selection)">
                 {{selection.Name}}
-                <span *ngIf="selection.Count != null">({{selection.Count}})</span>
+                <span *ngIf="selection.Count">({{selection.Count}})</span>
             </mat-option>
         </mat-select>
         <img class="sort-img" *ngIf="ShowSortIcon" src="./assets/images/icons/sort.svg" [class.FlipImgVert]="!IsSortDescending" alt=" " />
