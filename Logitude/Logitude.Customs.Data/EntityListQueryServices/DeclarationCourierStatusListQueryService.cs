@@ -276,7 +276,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                     from cj in cpjoin.Where(t => t.PackageMeasureQualifierCode == "2" && t.GrossMassMeasure.HasValue).DefaultIfEmpty()
 
                     join s in context.SupplierInvoices on cd.Declaration.Id equals s.DeclarationId into sjoin
-                    from sj in sjoin.DefaultIfEmpty()            
+                    from sj in sjoin.Take(1).DefaultIfEmpty()            
 
                     group cj by new
                     {
