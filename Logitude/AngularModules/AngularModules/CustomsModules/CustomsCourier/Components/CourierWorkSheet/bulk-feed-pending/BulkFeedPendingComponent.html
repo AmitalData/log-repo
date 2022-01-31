@@ -53,14 +53,14 @@
               [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
 
   
-    <LogTextBox class="input-from" [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true"
-                [ObjectFieldName]="'WeightFrom'"   [DataContext]="DataContext" [InputType]="'number'"  [Placeholder]="'Customs.General.O.From' | TextCodeTranslationPipe">
-    </LogTextBox>
+    <LogTextBoxV2 class="input-from" [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true"
+                [ObjectFieldName]="'WeightFrom'"   [DataContext]="DataContext" [InputType]="'decimal'"  [Placeholder]="'Customs.General.O.From' | TextCodeTranslationPipe">
+    </LogTextBoxV2>
  
 
-    <LogTextBox class="input-to" [ngStyle]='' [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true"   [Placeholder]="'Customs.General.O.To' | TextCodeTranslationPipe"
-                [ObjectFieldName]="'WeightTo'"  [DataContext]="DataContext" [InputType]="'number'">
-    </LogTextBox>
+    <LogTextBoxV2 class="input-to" [ngStyle]='' [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true"   [Placeholder]="'Customs.General.O.To' | TextCodeTranslationPipe"
+                [ObjectFieldName]="'WeightTo'"  [DataContext]="DataContext" [InputType]="'decimal'">
+    </LogTextBoxV2>
 
     <LogLabel class="label-incoterm" [Text]="'Customs.General.O.TermsOfSale' | TextCodeTranslationPipe"
               [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>

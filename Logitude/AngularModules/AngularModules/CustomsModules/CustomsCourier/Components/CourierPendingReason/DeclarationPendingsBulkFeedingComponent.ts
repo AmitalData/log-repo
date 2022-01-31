@@ -20,12 +20,12 @@ import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { PendingWebService } from '../../../../Customs/Services/WebServices/PendingWebService';
 
 @Component({
-    templateUrl: './DeclarationPendingsBulkFeedingComponent.html',     
+    templateUrl: './DeclarationPendingsBulkFeedingComponent.html',
     selector: 'app-declaration-pendings-bulk-feeding'
 })
 
 export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
-   // @Output() OkClick = new EventEmitter<DeclarationCourierStatusPM>();
+    // @Output() OkClick = new EventEmitter<DeclarationCourierStatusPM>();
     @Output() cancelClicked = new EventEmitter<DeclarationCourierStatusPM>();
 
     public ObjectTableName: string = "Customs.DeclarationPending";
@@ -169,37 +169,45 @@ export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
     */
     //#endregion
 
+    haveDuplicates(arr: any[]): boolean { return arr.some((item, index) => arr.indexOf(item) != index) }
+
+
     async onOkClick() {
-        //console.log(declarationCourierStatus)
         const listPending = this.DeclarationPendingItemsSource.Collection.map(x => x.CourierPendingReasonCode)
         const listPendingRemark = this.DeclarationPendingItemsSource.Collection.map(x => x.PendingRemarks)
 
+        if (this.haveDuplicates(listPending))
+            return this.showMessage("יש שתי רשומות עם אותו קו עיכוב");
+
         SessionLocator.SelectedSession.StartBusyIndicatorSaving();
-        const res = await this.pendingWebService.postBulkFeeding(listPending, listPendingRemark, this.declarationIdsList, this.courierMasterId, this.checkboxAll, this.allWithoutdeclarationIdsList)
+        const msg: string =  await this.pendingWebService.postBulkFeeding(listPending, listPendingRemark, this.declarationIdsList, this.courierMasterId, this.checkboxAll, this.allWithoutdeclarationIdsList)
         SessionLocator.SelectedSession.StopBusyIndicator();
 
+        this.showMessage(msg);
+        SessionLocator.SelectedSession.CloseCurrentWindow();
+        // this.CancelButtonClicked()
+    }
+
+
+    showMessage(msg: string): void {
         const myMessageWindow = new MessageWindow();
         myMessageWindow.Width = 250;
         myMessageWindow.Height = 150;
-        myMessageWindow.Show(res);
-        SessionLocator.SelectedSession.StopBusyIndicator();
-        SessionLocator.SelectedSession.CloseCurrentWindow();
-
-       // this.CancelButtonClicked()
+        myMessageWindow.Show(msg);
     }
 
 
     Add() {
-        debugger;
+
         if (!this.IsDisplayOnly) {
 
             var item: DeclarationPendingPM = new DeclarationPendingPM(this.DeclarationCourierStatus);
-            
+
             item.DeclarationID = ''; //this.DeclarationCourierStatus.DeclarationId;
             item.Tenant = SessionLocator.Tenant;//  this.DeclarationCourierStatus.Tenant;
             item.IsDirty = true;
             item.Status = "A";
-           // this.DeclarationCourierStatus.AddDeclarationPending(item);
+            // this.DeclarationCourierStatus.AddDeclarationPending(item);
             //if (!this.DeclarationPendingsList.includes(item)) {
             var item1 = new DeclarationPendingLine(item, this);
             this.DeclarationPendingItemsSource.Insert(item1);
@@ -222,7 +230,7 @@ export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
                     if (this.DeclarationPendingItemsSource.Collection.length == 0) {
                         this.IsChanged = false;
                     }
-               //     this.DeclarationCourierStatus.RemoveDeclarationPending(item.entityPM);
+                    //     this.DeclarationCourierStatus.RemoveDeclarationPending(item.entityPM);
                 }
             });
             /*
@@ -265,13 +273,13 @@ export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
                 }
 
             });
-            
+
         }
         else {
             SessionLocator.SelectedSession.CloseCurrentWindowEmit('cancel');
             this.cancelClicked.emit()
         }
-        
+
 
     }
 
@@ -280,8 +288,6 @@ export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
     hasRequest: boolean;
     notMandatoryIsNotEmpty: boolean = false;
     OkButtonClicked() {
-
-        debugger;
         this.ValidationErrorsList = [];
         var errors: string[] = [];
         this.isValid = true;
@@ -307,7 +313,7 @@ export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
                     }
                     existCodeList.push(item.CourierPendingReasonCode);
                 });
-                
+
                 /*
                 if (item.PendingRemarks == null) {
                     errors.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.PendingRemarks")));
@@ -336,7 +342,7 @@ export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
                     if (errors.length == 0) {
                         var isSave = 1;
 
-                        if(this.notUpdateSelf)
+                        if (this.notUpdateSelf)
                             //this.OkClick.emit(this.DeclarationCourierStatus)
                             this.onOkClick();
                         else if (isSave == 1) {
@@ -376,7 +382,7 @@ export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
 
                 var isSave = 1;
 
-                if(this.notUpdateSelf) 
+                if (this.notUpdateSelf)
                     // this.OkClick.emit(this.DeclarationCourierStatus)
                     this.onOkClick();
                 else if (isSave == 1) {
@@ -403,7 +409,7 @@ export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
     public SelectedRow: any = null;
     OnRowSelected(itemComponent: any) {
         this.SelectedRow = itemComponent;
-       // this.IsChanged = true;
+        // this.IsChanged = true;
     }
 
     OnRowEnded($event) {
@@ -431,7 +437,7 @@ export class DeclarationPendingLine extends BaseComponent {
     constructor(EntityPM: DeclarationPendingPM, Parent: DeclarationPendingsBulkFeedingComponent) {
         super();
         this.entityPM = EntityPM;
-        
+
         this._StatusItems.push({ 'Key': "A", 'Value': "Active" });
         this._StatusItems.push({ 'Key': "S", 'Value': "Solved" });
         this.parent = Parent;
@@ -443,11 +449,11 @@ export class DeclarationPendingLine extends BaseComponent {
     _SelectedItemStatus: KeyValuePair;
     get SelectedItemStatus() {
         if (this.Status == "S") {
-            this._SelectedItemStatus =this._StatusItems[1];
+            this._SelectedItemStatus = this._StatusItems[1];
         } else {
-            this._SelectedItemStatus =this._StatusItems[0];
+            this._SelectedItemStatus = this._StatusItems[0];
         }
-        return this._SelectedItemStatus; 
+        return this._SelectedItemStatus;
     }
     set SelectedItemStatus(value) {
         if (this._SelectedItemStatus != value) {
@@ -507,7 +513,7 @@ export class DeclarationPendingLine extends BaseComponent {
 
         }
     }
-    
+
     //#endregion
 
     SetLocalName(entity, fieldName) {
@@ -520,7 +526,7 @@ export class DeclarationPendingLine extends BaseComponent {
     }
 
 
-    
+
 
     valid: boolean = true;
 
