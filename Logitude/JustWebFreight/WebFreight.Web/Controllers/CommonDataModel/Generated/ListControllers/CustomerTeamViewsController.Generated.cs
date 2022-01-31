@@ -57,7 +57,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("CustomerTeam", "READ", authToken.Tenant);
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				CustomerTeamRepository  customerTeamRepository = new CustomerTeamRepository(MyContext);
@@ -95,7 +94,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("CustomerTeam", "READ", authToken.Tenant);
 
 
 				ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
@@ -127,7 +125,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				int tenant = authToken.Tenant;
 				                
-				SecurityUtility.CheckContactFeature("CustomerTeam", "READ", authToken.Tenant);
 	
                 QueryOperations queryOperations = new QueryOperations()
                 {

@@ -57,7 +57,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                SecurityUtility.CheckContactFeature("CustomerTeam", "READ", authToken.Tenant);
                 CustomerTeamQuery customerTeamQuery = new CustomerTeamQuery(authToken.Tenant);
                 CustomerTeamPM customerTeamPM = customerTeamQuery.GetSinglePM(id, authToken.Tenant);
                 
@@ -88,7 +87,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("CustomerTeam", "NEW", authToken.Tenant);
                         SecurityUtility.AuthenticationOnEntityTenant("CustomerTeam", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
@@ -137,7 +135,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("CustomerTeam", "UPDATE", authToken.Tenant);
                         SecurityUtility.AuthenticationOnEntityTenant("CustomerTeam", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "CustomerTeam" + entityPM.Id + entityPM.Tenant;
