@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "869134d2c94b8337566adf03a338fb62";
+		public const string HashString = "08aaaf02c7e24eb2f04a935a8757f2e5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -15402,7 +15402,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  
 
 			   TextCode DeclarationTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.CourierMasterOpenIndividual", DefaultText = @"Courier Master Open Individual",LocalDefaultText = "שטרי מטען פרטניים פתוחים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature DeclarationFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.DeclarationInConstraint", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.DeclarationInConstraint", NameTextCodeDefaultText = "DeclarationInConstraint", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
+			   Feature DeclarationFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.CourierMasterOpenIndividual", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.CourierMasterOpenIndividual", NameTextCodeDefaultText = "CourierMasterOpenIndividual", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationObjectTable, addedFeatures, addedTextCodes);
  
 
 			   TextCode DeclarationTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.UnReleasedIndividual", DefaultText = @"UnReleased Fast Process",LocalDefaultText = "לא שוחררו מכס פרטני", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
@@ -15551,35 +15551,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query DeclarationInConstraintQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_2.Id, NameTextCodeCode = DeclarationTextCode_2.Code, ObjectTableName = "Customs.Declaration", Code = "DeclarationInConstraint",  QueryGroupCode = "VHQG", IndexOrder = 2, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_2.Id,FeatureUniqeCode= DeclarationFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query CourierMasterOpenIndividualQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_2.Id, NameTextCodeCode = DeclarationTextCode_2.Code, ObjectTableName = "Customs.Declaration", Code = "CourierMasterOpenIndividual",  QueryGroupCode = "VHQG", IndexOrder = 2, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_2.Id,FeatureUniqeCode= DeclarationFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn DeclarationInConstraintQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn CourierMasterOpenIndividualQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn DeclarationInConstraintQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.CourierHAWB" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn CourierMasterOpenIndividualQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.CourierHAWB" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn DeclarationInConstraintQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 160 }, addedQueryColumns);
+			 QueryColumn CourierMasterOpenIndividualQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 160 }, addedQueryColumns);
 
-			 QueryColumn DeclarationInConstraintQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.DeclarationNumber" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn CourierMasterOpenIndividualQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.DeclarationNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn DeclarationInConstraintQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn CourierMasterOpenIndividualQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn DeclarationInConstraintQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.TotalInvoiceAmountInUSD" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn CourierMasterOpenIndividualQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.TotalInvoiceAmountInUSD" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn DeclarationInConstraintQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 190 }, addedQueryColumns);
+			 QueryColumn CourierMasterOpenIndividualQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 190 }, addedQueryColumns);
 
-             AdvancedQueryFilter DeclarationInConstraintQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsClosedForFollowUp", PredefinedValue = "false",PredefinedValue2 = null, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
-
-
-             AdvancedQueryFilter DeclarationInConstraintQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.FastIndividualProcessCode", PredefinedValue = "I",PredefinedValue2 = null, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter CourierMasterOpenIndividualQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsClosedForFollowUp", PredefinedValue = "false",PredefinedValue2 = null, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter DeclarationInConstraintQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCourierDeclaration", PredefinedValue = "true",PredefinedValue2 = null, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter CourierMasterOpenIndividualQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.FastIndividualProcessCode", PredefinedValue = "I",PredefinedValue2 = null, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter DeclarationInConstraintQueryFilter_3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
+             AdvancedQueryFilter CourierMasterOpenIndividualQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCourierDeclaration", PredefinedValue = "true",PredefinedValue2 = null, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter DeclarationInConstraintQueryFilter_4 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.AmendmentDontDisplayInList", PredefinedValue = "false",PredefinedValue2 = null, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter CourierMasterOpenIndividualQueryFilter_3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter CourierMasterOpenIndividualQueryFilter_4 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.AmendmentDontDisplayInList", PredefinedValue = "false",PredefinedValue2 = null, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
