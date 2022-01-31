@@ -9824,12 +9824,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -15907,9 +15908,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 
              AdvancedQueryFilter PendingQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
-
-
-             AdvancedQueryFilter PendingQueryFilter_3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.AmendmentDontDisplayInList", PredefinedValue = "false",PredefinedValue2 = null, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
