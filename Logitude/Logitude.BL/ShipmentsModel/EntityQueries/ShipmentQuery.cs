@@ -12293,6 +12293,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                OpenPayablesInProfitCurrency = f.OpenPayablesInProfitCurrency,
                                CustomerReference1 = f.CustomerReference1,
                                CustomerReference2 = f.CustomerReference2,
+                               CustomerReference3 = f.CustomerReference3,
+                               PrivateLabelInvoiceNumber = f.PrivateLabelInvoiceNumber,
                                IssuingCarrierAgentId = f.IssuingCarrierAgentId,
                                IncotermCode = f.IncotermCode,
                                MainCarriageCarrierId = f.MainCarriageCarrierId,

@@ -14,7 +14,9 @@ namespace Logitude.ShipmentOrderModule.Def.EntityAMs
         public int CustomerTenantNumber { get; set; }
         public double? Volume { get; set; }
         public string TransportModeId { get; set; }
-        public string OrderNumber { get; set; }
+        public string OrderNumber { get; set; } 
+        public string CustomerReferences { get; set; }
+         
         public string AgentName { get; set; }
         public DateTime? MainCarriageATA { get; set; }
         public DateTime? MainCarriageETA { get; set; }

@@ -1,4 +1,4 @@
-﻿import {Component, ChangeDetectorRef} from '@angular/core';
+import {Component, ChangeDetectorRef} from '@angular/core';
 import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
