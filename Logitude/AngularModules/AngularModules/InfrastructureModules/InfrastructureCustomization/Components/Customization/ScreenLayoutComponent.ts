@@ -273,10 +273,12 @@ export class ScreenLayoutComponent extends BaseComponent {
         event.preventDefault();
     }
 
-    onMyDrop(event: DragEvent, item: ScreenRowDetails, row: number) {
+    onMyDrop(event: DragEvent, item: ScreenRowDetails, column: number) {
         this.Modified = true;
         var id = event.dataTransfer.getData("Id");
         var fieldCode = event.dataTransfer.getData("FieldCode");
+
+        var position = this.GetElementPosition(event, item);
         var myitem: ObjectFieldPM = this.banckStackFields.filter(d => d.Id == id)[0];
 
         if (myitem) {
@@ -301,11 +303,11 @@ export class ScreenLayoutComponent extends BaseComponent {
                 screenField.ScreenId = this.SelectedItem.ScreenPM.Id;
                 screenField.ScreenCode = this.SelectedItem.ScreenPM.Code;
                 screenField.Tenant = SessionLocator.Tenant;
-                screenField.Row = Rows.ScreenFieldPMs.length;
+                screenField.Row = position;
                 screenField.ObjectFieldCode = myitem.FieldCode;
 
-                Rows.ScreenFieldPMs.push(screenField);
-                Rows.ObjectFieldPMs.push(myitem);
+                Rows.ScreenFieldPMs.splice(position, 0, screenField);
+                Rows.ObjectFieldPMs.splice(position, 0, myitem);
 
             }
         }
@@ -319,15 +321,15 @@ export class ScreenLayoutComponent extends BaseComponent {
                         sItem.ObjectFieldPMs = sItem.ObjectFieldPMs.filter(a => a.Id != id);
                         sItem.ScreenFieldPMs = sItem.ScreenFieldPMs.filter(a => a.ObjectFieldCode != fieldCode);
                         SField.Column = item.ColumnIndex;
-                        SField.Row = Rows.ScreenFieldPMs ? Rows.ScreenFieldPMs.length : 0;
+                        SField.Row = position;
                         if (Rows.ScreenFieldPMs == null) {
                             Rows.ScreenFieldPMs = [];
                         }
                         if (Rows.ObjectFieldPMs == null) {
                             Rows.ObjectFieldPMs = [];
                         }
-                        Rows.ObjectFieldPMs.push(temp[0]);
-                        Rows.ScreenFieldPMs.push(SField);
+                        Rows.ObjectFieldPMs.splice(position, 0, temp[0]);
+                        Rows.ScreenFieldPMs.splice(position, 0, SField);
                     }
                     if (sItem.ColumnIndex == item.ColumnIndex) {
                         sItem.ScreenFieldPMs.forEach(myfield => {
@@ -340,6 +342,26 @@ export class ScreenLayoutComponent extends BaseComponent {
         }
     }
 
+    private GetElementPosition(event: DragEvent, screenRowDetails: ScreenRowDetails): number {
+        var itemLists: HTMLElement[] = Array.from(document.getElementsByName('listItem'));
+        itemLists = itemLists?.filter(x => Number(x.getAttribute("column")) == screenRowDetails.ColumnIndex)
+        if (!itemLists || itemLists.length == 0) return 0;
+
+        var droppedYPosition = Number(event.y);
+        var closestElement: HTMLElement;
+        itemLists.forEach(element => {
+            if (droppedYPosition > Number(element.getBoundingClientRect().top)) closestElement = element;
+        });
+        if (!closestElement) return screenRowDetails.ScreenFieldPMs.length;
+
+        var position = Number(closestElement.getAttribute("row"));
+        return this.IsLastItem(position, screenRowDetails) ? position + 1 : position;
+    }
+
+    IsLastItem(position: number, screenRowDetails: any) {
+        return position + 1 == (screenRowDetails.ScreenFieldPMs?.length ?? 0);
+    }
+
     OnObjectFieldDragStart(event, item) {
         if (item) {
             event.dataTransfer.setData("Id", item.Id);
@@ -347,7 +369,7 @@ export class ScreenLayoutComponent extends BaseComponent {
         }
     }
 
-    OnScreenFieldDragStart(event, item1) {
+    OnScreenFieldDragStart(event: DragEvent, item1) {
         if (item1) {
             event.dataTransfer.setData("Id", item1.Id);
             event.dataTransfer.setData("FieldCode", item1.FieldCode);
