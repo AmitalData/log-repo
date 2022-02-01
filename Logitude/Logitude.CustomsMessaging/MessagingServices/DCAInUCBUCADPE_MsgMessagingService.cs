@@ -81,6 +81,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 tenant = tenant,
                 requestParamsData = requestParamsData,
+                queryOperations = queryOperations,
                 ResponseContentHeader = new DefaultResponseContentHeader()
                 {
                     TransmitionDateTime = transmitionDateTime

@@ -447,6 +447,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             IQueryable<DeclarationCourierStatusList> query2 = GetDeclarationCourierStatusforPendingBulkFeed(queryOperations);
 
+            var cargoDescriptionF = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CargoDescription").FirstOrDefault();
+            if (cargoDescriptionF != null && !string.IsNullOrEmpty(cargoDescriptionF.FieldValue?.ToString()))
+            {
+                string description = cargoDescriptionF.FieldValue.ToString().ToLower();
+                query2 = query2.Where(x => x.CargoDescription.ToLower().Contains(description));
+            }
+
             query2 = filter.GetFilteredQuery<DeclarationCourierStatusList>(listQueryOperation, query2);
             int count = query2.ToList().Count();
             return count;
