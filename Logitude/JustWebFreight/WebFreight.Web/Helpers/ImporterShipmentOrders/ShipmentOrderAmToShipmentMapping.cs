@@ -21,6 +21,7 @@ namespace WebFreight.Web.Helpers.ImporterShipmentOrders
             shipment.Volume = shipmentOrder.Volume;
             shipment.TransportModeId = shipmentOrder.TransportModeId;
             shipment.ForwarderShipmentNumber = shipmentOrder.OrderNumber;
+            shipment.CustomerReference3 = shipmentOrder.CustomerReferences;
             shipment.PrivateLabelAgentName = shipmentOrder.AgentName;
             shipment.MainCarriageATA = shipmentOrder.MainCarriageATA;
             shipment.MainCarriageETA = shipmentOrder.MainCarriageETA;

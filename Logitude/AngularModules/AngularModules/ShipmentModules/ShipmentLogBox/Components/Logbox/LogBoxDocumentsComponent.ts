@@ -100,6 +100,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     public ShipmentPackagesLabel: string = "";
     public ShowShipmentPackagesLabelLink: boolean = false;
     public ShipmentPackageTitle: string = "";
+    public ReferencesLabel: string = "";
 
     constructor(public http: HttpClient, public serviceArgs: ServiceArgs, private _entityListService: EntityListService) {
         super();
@@ -199,6 +200,8 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                   this.DocsSentToAgent = myResult.Result.DocsSentToAgent;
                     this.SetMainCarriageDates();
                     this.SetShipmentPackageLabel();
+                    this.SetReferencesLabel();
+
                   this._EntityStatusExtendedListService.getSingle("INPS").subscribe((Status: ServiceResponse) => {
                     if (Status.Result && (myResult.Result.StatusId == Status.Result.Id)) {
                       this.DisableAddDocumentButton = true;
@@ -238,6 +241,29 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
             this.SetMainCarriageArrivalDate();
             this.SetMainCarriageDepartureDate();
 
+    }
+
+    SetReferencesLabel() {
+        this.ReferencesLabel = "";
+        this.SetLogboxReferencesLabel();
+        if (this.SelectedShipment && this.IsPrivateLabel) {
+            this.SetPrivateLabelReferencesLabel();
+        } 
+    }
+
+    private SetPrivateLabelReferencesLabel() {
+
+        if (this.SelectedShipment.DirectionId == 'E' && !this.SelectedShipment.ForwarderShipmentNumber) {
+            this.ReferencesLabel = (this.SelectedShipment.CustomerReference3 ? this.SelectedShipment.CustomerReference3 : '') + (this.SelectedShipment.PrivateLabelInvoiceNumber ? '/' + this.SelectedShipment.PrivateLabelInvoiceNumber : '');
+        }
+        if (this.SelectedShipment.ForwarderShipmentNumber || this.SelectedShipment.DirectionId !='E') {
+            this.ReferencesLabel = (this.SelectedShipment.CustomerReference3 ? this.SelectedShipment.CustomerReference3 : '');
+        } 
+    }
+
+    private SetLogboxReferencesLabel() {
+        if (this.IsPrivateLabel) return; 
+         this.ReferencesLabel = this.SelectedShipment ? ((this.SelectedShipment.CustomerReference1 ? this.SelectedShipment.CustomerReference1 : '') + (this.SelectedShipment.CustomerReference2 ? '/' + this.SelectedShipment.CustomerReference2 : '')) : '';
          
     }
 
