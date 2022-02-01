@@ -19,7 +19,13 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPMToPOCO(AccountingEntityJournalPM entityPM, AccountingEntityJournal entityPOCO)
         {
-            entityPOCO.Id = entityPM.Id;
+            AddPOCOPropertyName(POCOPropertyNames.Id);
+            AddPOCOPropertyName(POCOPropertyNames.Tenant);
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                entityPOCO.Id = entityPM.Id;
+                entityPOCO.Tenant = entityPM.Tenant;
+            }
         }
 
         public void CustomPOCOToPM(AccountingEntityJournalPM entityPM, AccountingEntityJournal entityPOCO)
