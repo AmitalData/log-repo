@@ -24,30 +24,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public override void Update(DCAInUCBUCADPEResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
-            int i = 0;
-            AddMultiPendingsRequestParams rp = customResponse.requestParamsData;
-            ICustomContext customContext = CustomContext.GetContext(customResponse.tenant);
-
-            List<string> declarationIdsList = rp.checkboxAll ?
-               new DeclarationCourierStatusListQueryService(customContext).GetDeclarationCourierStatusListPendingBulk(customResponse.queryOperations, customResponse.tenant).Select(x => x.DeclarationId).ToList() :
-                rp.declarationIdsList.ToList();
-
-
-            if(rp.checkboxAll && rp.allWithoutdeclarationIdsList != null && rp.allWithoutdeclarationIdsList.Count()>0)
-            {
-                declarationIdsList.RemoveAll(x => rp.allWithoutdeclarationIdsList.Contains(x));
-            }
-
-
-
-            rp.listPending.ToList().ForEach(pendingCode =>
-            {
-                declarationIdsList.ForEach(declarationId =>
-                    UpdateDeclarationPending(customResponse.tenant, declarationId, pendingCode, rp.listPendingRemark[i], customContext));
-
-                i++;
-            });
-
+            UpdateDeclarationPendings(customResponse);
 
             this.MyResponseData = new INF_MSG_GenericResponseData();
             this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
@@ -59,8 +36,32 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.UserMessage = "ההצהרות עודכנו";
         }
 
+        public void UpdateDeclarationPendings(DCAInUCBUCADPEResponseContentHeader customResponse)
+        {
+            int i = 0;
+            AddMultiPendingsRequestParams rp = customResponse.requestParamsData;
+            ICustomContext customContext = CustomContext.GetContext(customResponse.tenant);
 
-        public void UpdateDeclarationPending(int tenant, string declarationId, string courierReasonCode, string pendingRemark, ICustomContext customContext)
+            List<string> declarationIdsList = rp.checkboxAll ?
+               new DeclarationCourierStatusListQueryService(customContext).GetDeclarationCourierStatusListPendingBulk(customResponse.queryOperations, customResponse.tenant).Select(x => x.DeclarationId).ToList() :
+                rp.declarationIdsList.ToList();
+
+
+            if (rp.checkboxAll && rp.allWithoutdeclarationIdsList != null && rp.allWithoutdeclarationIdsList.Count() > 0)
+                declarationIdsList.RemoveAll(x => rp.allWithoutdeclarationIdsList.Contains(x));
+
+
+            rp.listPending.ToList().ForEach(pendingCode =>
+            {
+                declarationIdsList.ForEach(declarationId =>
+                    UpdateDeclarationPending(customResponse.tenant, declarationId, pendingCode, rp.listPendingRemark[i], customContext));
+
+                i++;
+            });
+        }
+
+
+        private void UpdateDeclarationPending(int tenant, string declarationId, string courierReasonCode, string pendingRemark, ICustomContext customContext)
         {
             Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine(" UCADPA start update DeclarationId: " + declarationId + " pending code: " + courierReasonCode);
             DeclarationCourierStatusPM myDeclarationCourierStatusPM = new DeclarationCourierStatusQueryService(tenant).GetSingle(declarationId, true, false);
