@@ -154,7 +154,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
             this.TracePickUpArrangedEvent(itemPM, itemPOCO, shipmentPM);
 
-            if (IsAllowPartial(shipmentPM.StatusId))
+            if (IsAllowingPartial(shipmentPM.StatusId))
             {
                 ComputePartialStatusAmount(DepartedCode);
             }
@@ -307,7 +307,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                 this.TraceDeliveryArrangedEvent(itemPM, itemPOCO, shipmentPM);
 
-                if (IsAllowPartial(shipmentPM.StatusId))
+                if (IsAllowingPartial(shipmentPM.StatusId))
                 {
                     ComputePartialStatusAmount(ArrivedCode_New);
                 }
@@ -334,12 +334,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                 if (itemPOCO.ATD != null)
                 {
-                    this.DeleteTraceEvent("PICD");
+                    this.DeleteTraceEvent("PICD", itemPM.PickUpDeliveryNumber, itemPOCO.ATD);
                 }
 
                 if (IsFirstPickup(itemPM, shipmentPM) && (itemPOCO.ETA != null || itemPOCO.ETD != null))
                 {
                     this.DeleteTraceEvent("PCAR");
+                }
+
+                if (IsAllowingPartial(shipmentPM.StatusId))
+                {
+                    ComputePartialStatusAmount("PICD");
                 }
             }
             //}
@@ -353,7 +358,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 if (itemPOCO.ATA != null)
                 {
                     this.DeleteTraceEvent("PIOD");
-                    this.DeleteTraceEvent("DEAR", itemPOCO.PickUpDeliveryNumber);
+                    this.DeleteTraceEvent("DEAR", itemPOCO.PickUpDeliveryNumber, itemPOCO.ATA);
 
                     ShipmentDeliveryPM lastDelivery = entityPM.ShipmentDeliveries.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
                     if (RoutingDate.IsAllDeliveriesHaveDates(entityPM) && lastDelivery != null)
@@ -369,6 +374,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 if (IsFirstDelivery(itemPM, shipmentPM) && (itemPOCO.ETA != null || itemPOCO.ETD != null))
                 {
                     this.DeleteTraceEvent("DLAR");
+                }
+
+
+                if (IsAllowingPartial(shipmentPM.StatusId))
+                {
+                    ComputePartialStatusAmount("DEAR");
                 }
             }
             //}

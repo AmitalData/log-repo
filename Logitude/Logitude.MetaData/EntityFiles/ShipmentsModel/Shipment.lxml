@@ -99375,7 +99375,8 @@
       IsSharedLogisticsEnabled="false"
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
-      IsFollowUp="false" />
+      IsFollowUp="false"
+      EntityStatusCode="&quot;SDLD&quot;" />
     <EventType
       Code="&quot;PIAR&quot;"
       ObjectTableName="&quot;Shipment&quot;"
