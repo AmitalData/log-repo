@@ -17,5 +17,7 @@ namespace Logitude.Accounting.Def.EntityPMs
         public const string BankDepositCancel = "BankDepositCancel";
         public const string BankDepositOutOfDeposit = "BankDepositOutOfDeposit";
         public const string BankDepositChequeRedemption = "BankDepositChequeRedemption";
+        public const string YearTransferApprove = "YearTransferApprove";
+        public const string YearTransferCancel = "YearTransferCancel";
     }
 }
