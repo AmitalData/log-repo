@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Logitude.Accounting.BL.CloseTables
+{
+    public static class AccountingEntitieActions
+    {
+        public const string APInvoiceApprove = "APInvoiceApprove";
+        public const string APInvoiceVoid = "APInvoiceVoid ";
+        public const string APPaymentApprove = "APPaymentApprove";
+        public const string APPaymentVoid = "APPaymentVoid";
+        public const string PaymentCheque = "PaymentCheque";
+    }
+}
