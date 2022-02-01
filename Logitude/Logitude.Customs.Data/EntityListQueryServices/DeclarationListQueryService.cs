@@ -18,6 +18,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Customs.Data.CustomFilters;
 using System.Web;
+using System.Data.Entity.SqlServer;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
 {
@@ -192,7 +193,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                     DeclarationId = rec.myDeclarationCourierStatuses.DeclarationId/*myDeclarations.Id*/,
                     TerminalReleaseDate = rec.myDeclarationCourierStatuses.TerminalReleaseDate != null ? rec.myDeclarationCourierStatuses.TerminalReleaseDate : null,
                     //CourierMasterId = rec.CourierMasterId,
-                    IsClosedForFollowUp = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.IsClosedForFollowUp : false,
+                    IsClosedForFollowUp =   rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.IsClosedForFollowUp : false,
                     //FastIndividualProcessName = "",
                     FastIndividualProcessCode = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.FastIndividualProcessCode : null,
                     TotalInvoiceAmountInUSD = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.TotalInvoiceAmountInUSD : null,
