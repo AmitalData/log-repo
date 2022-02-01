@@ -14,5 +14,8 @@ namespace Logitude.Accounting.Def.EntityPMs
         public const string APPaymentVoid = "APPaymentVoid";
         public const string PaymentCheque = "PaymentCheque";
         public const string BankDepositApprove = "BankDepositApprove";
+        public const string BankDepositCancel = "BankDepositCancel";
+        public const string BankDepositOutOfDeposit = "BankDepositOutOfDeposit";
+        public const string BankDepositChequeRedemption = "BankDepositChequeRedemption";
     }
 }

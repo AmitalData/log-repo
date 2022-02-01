@@ -251,6 +251,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     AccountingEntityReference = journalPM.AccountingEntityReference,
                 };
                 journalPM = service.VoidJournal(journalPM.Id, tenant, StornoOverrideM);
+                AddAccountingEntityJournal(journalPM, AccountingEntityJournalActions.BankDepositCancel);
             }
             else
             {
@@ -303,6 +304,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         #endregion
 
+        public void AddAccountingEntityJournal(JournalPM journal,string actionName, string childEntityId = null)
+        {
+            IAccountingContext context = AccountingContext.GetContext(journal.Tenant);
+            AccountingEntityJournalUpdateService service = new AccountingEntityJournalUpdateService(context, new Dictionary<string, IContext>(), journal.Tenant);
+            service.AddAccountingEntitieJournal(journal, actionName, childEntityId);
+        }
     }
 
 
