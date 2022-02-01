@@ -41,10 +41,6 @@ using Logitude.BL.InvoiceModel.Tools.Behaviours;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours;
-using Logitude.Accounting.BL.EntityUpdateServices;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data;
-using Logitude.Accounting.BL.CloseTables;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -384,7 +380,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (journalPM != null)
                 {
                     var journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalVoidUpdateServiceExt), "JournalVoidUpdateServiceExt", new ParameterOverride("", 1)) as IJournalVoidUpdateServiceExt;
-                    AddAccountingEntitieJournal(journalPM, AccountingEntitieActions.APInvoiceVoid, journalPM.Id);
+                    AddAccountingEntitieJournal(journalPM, AccountingEntityJournalActions.APInvoiceVoid, journalPM.Id);
                     journalUpdate.Update(journalPM, new StornoOverrideM()
                     {
                         AccountingEntityCode = "4",
@@ -2152,15 +2148,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                  
 
                     IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
-                    AddAccountingEntitieJournal(journal, AccountingEntitieActions.APInvoiceApprove);
+                    AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.APInvoiceApprove);
                     journalUpdate.Update(journal);
                 }
             }
         }
         private void AddAccountingEntitieJournal(JournalPM entityPM, string action, string ChildEntityId = null)
         {
-            IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
-            AccountingEntitiesJournalUpdateService service = new AccountingEntitiesJournalUpdateService(MyContext,new Dictionary<string, IContext>(), entityPM.Tenant);
+            IAccountingEntityJournalUpdateServiceExt service = ContainerAccessor.Container.Resolve(typeof(IAccountingEntityJournalUpdateServiceExt), "AccountingEntityJournalUpdateServiceExt", new ParameterOverride("", 1)) as IAccountingEntityJournalUpdateServiceExt;
             service.AddAccountingEntitieJournal(entityPM, action, ChildEntityId);
         }
 

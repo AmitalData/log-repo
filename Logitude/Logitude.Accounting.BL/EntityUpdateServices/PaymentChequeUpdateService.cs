@@ -3,6 +3,7 @@ using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
@@ -98,7 +99,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             JournalUpdateService journalUpdateService = new JournalUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
 
                             journalUpdateService.Update(journal, true);
-                            AddAccountingEntitieJournal(journal, AccountingEntitieActions.PaymentCheque);
+                            AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.PaymentCheque);
                             paymentChequePM.JournalNumber = journal.JournalNumber;
                         }
                     }
@@ -119,8 +120,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         private void AddAccountingEntitieJournal(JournalPM entityPM, string action, string ChildEntityId = null)
         {
-            IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
-            AccountingEntitiesJournalUpdateService service = new AccountingEntitiesJournalUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+            IAccountingEntityJournalUpdateServiceExt service = ContainerAccessor.Container.Resolve(typeof(IAccountingEntityJournalUpdateServiceExt), "AccountingEntityJournalUpdateServiceExt", new ParameterOverride("", 1)) as IAccountingEntityJournalUpdateServiceExt;
             service.AddAccountingEntitieJournal(entityPM, action, ChildEntityId);
         }
         private static bool CheckIfPaymentChequeHasAjournal(PaymentChequePM paymentCheque)

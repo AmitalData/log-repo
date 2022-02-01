@@ -14,10 +14,10 @@ using Logitude.Accounting.Data;
 namespace Logitude.Accounting.Data.EntityMapping
 {
  
-    public class AccountingEntitiesJournalMap : EntityTypeConfiguration<AccountingEntitiesJournal>
+    public class AccountingEntityJournalMap : EntityTypeConfiguration<AccountingEntityJournal>
     {
 	    string dbms;
-        public AccountingEntitiesJournalMap()
+        public AccountingEntityJournalMap()
         { 
 				this.ToTable("AccountingEntitiesJournals");
 		

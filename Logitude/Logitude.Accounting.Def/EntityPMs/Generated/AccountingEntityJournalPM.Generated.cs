@@ -16,7 +16,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 {
    [CustomValidation(typeof(AccountingClassLevelValidator), "ValidateClass")]
    [DataContract]
-   public partial class AccountingEntitiesJournalPM : EntityPM
+   public partial class AccountingEntityJournalPM : EntityPM
    {
    	  private string id ;
 	  

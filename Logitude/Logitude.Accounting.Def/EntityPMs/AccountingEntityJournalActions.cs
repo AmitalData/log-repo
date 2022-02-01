@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.Accounting.BL.CloseTables
+namespace Logitude.Accounting.Def.EntityPMs
 {
-    public static class AccountingEntitieActions
+    public static class AccountingEntityJournalActions
     {
         public const string APInvoiceApprove = "APInvoiceApprove";
         public const string APInvoiceVoid = "APInvoiceVoid ";

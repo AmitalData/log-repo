@@ -22,19 +22,19 @@ using Logitude.Accounting.Data;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 { 
-   public partial class AccountingEntitiesJournalUpdateService:EntityUpdateService<AccountingEntitiesJournal,AccountingEntitiesJournalPM,EntityPM>
+   public partial class AccountingEntityJournalUpdateService
    {
 
-        public void AddAccountingEntitieJournal(JournalPM entityPM,string action,string ChildEntityId = null)
+        public void AddAccountingEntitieJournal(JournalPM journalPM,string actionName,string childEntityId = null)
         {
-            var accountingEntitiesJournal = CreateAccountingEntitiesJournalConstraint(entityPM, action, ChildEntityId);
-            accountingEntitiesJournal.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-            Update(accountingEntitiesJournal, true);
+            var accountingEntityJournal = CreateAccountingEntityJournal(journalPM, actionName, childEntityId);
+            accountingEntityJournal.ChangeSetOp = ChangeSetOperation.Insert;
+            Update(accountingEntityJournal, true);
         }
 
-        private AccountingEntitiesJournalPM CreateAccountingEntitiesJournalConstraint(JournalPM entityPM, string action, string childEntityId)
+        private AccountingEntityJournalPM CreateAccountingEntityJournal(JournalPM entityPM, string action, string childEntityId)
         {
-            return new AccountingEntitiesJournalPM()
+            return new AccountingEntityJournalPM()
             {
                 Tenant = entityPM.Tenant,
                 AccountingEntityCode = entityPM.AccountingEntityCode,

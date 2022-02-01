@@ -77,20 +77,20 @@ using Logitude.CargoTracking.Data.EntityPOCOs;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
-   public class AccountingEntitiesJournalUpdateClass
+   public class AccountingEntityJournalUpdateClass
    {  		
-		public const string HashString = "cf33727a3d61bb12baa6475eb5170f89";
+		public const string HashString = "352372117f3996a8baa43e909b63c22c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "AccountingEntitiesJournal",
+	             				    ObjectTableName =  "AccountingEntityJournal",
 			      				    IsNew =  true,
 			      				    DBTableName =  "AccountingEntitiesJournals",
-			      				    ObjectTableSingular =  "AccountingEntitiesJournal",
-			      				    ObjectTablePlural =  "AccountingEntitiesJournals",
+			      				    ObjectTableSingular =  "Accounting Entity Journal",
+			      				    ObjectTablePlural =  "Accounting Entities Journals",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -118,8 +118,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "Accounting Entities Journals",
-			      				    Code =  "c25f",
+			      				    DefaultText =  "Accounting Entity Journal",
+			      				    Code =  "6d59",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -132,7 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
-			      				    HashString =  AccountingEntitiesJournalUpdateClass.HashString,
+			      				    HashString =  AccountingEntityJournalUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -144,7 +144,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AccountingEntityId",
-					  						ObjectTableName =  "AccountingEntitiesJournal",
+					  						ObjectTableName =  "AccountingEntityJournal",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  15,
@@ -203,7 +203,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AccountingEntityCode",
-					  						ObjectTableName =  "AccountingEntitiesJournal",
+					  						ObjectTableName =  "AccountingEntityJournal",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  5,
@@ -262,7 +262,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Action",
-					  						ObjectTableName =  "AccountingEntitiesJournal",
+					  						ObjectTableName =  "AccountingEntityJournal",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  100,
@@ -321,7 +321,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ChildEntityId",
-					  						ObjectTableName =  "AccountingEntitiesJournal",
+					  						ObjectTableName =  "AccountingEntityJournal",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  15,
@@ -381,15 +381,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
-		   ObjectTable AccountingEntitiesJournalObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingEntitiesJournal" && d.Tenant == 0).FirstOrDefault();
-		   //List<ObjectField> AccountingEntitiesJournalObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AccountingEntitiesJournal").ToList();
+		   ObjectTable AccountingEntityJournalObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingEntityJournal" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> AccountingEntityJournalObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AccountingEntityJournal").ToList();
 		       
 	      
 
-	         Screen AccountingEntitiesJournalAccountingEntitiesJournalHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AccountingEntitiesJournal.HeaderScreen", Name = "AccountingEntitiesJournalHeaderScreen", ObjectTableId = AccountingEntitiesJournalObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen AccountingEntityJournalAccountingEntitiesJournalHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AccountingEntityJournal.HeaderScreen", Name = "AccountingEntitiesJournalHeaderScreen", ObjectTableId = AccountingEntityJournalObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
-		    AccountingEntitiesJournalObjectTable.HeaderScreenId = AccountingEntitiesJournalAccountingEntitiesJournalHeaderScreenScreen0.Id;
-		    AccountingEntitiesJournalObjectTable.HeaderScreenCode = AccountingEntitiesJournalAccountingEntitiesJournalHeaderScreenScreen0.Code;
+		    AccountingEntityJournalObjectTable.HeaderScreenId = AccountingEntityJournalAccountingEntitiesJournalHeaderScreenScreen0.Id;
+		    AccountingEntityJournalObjectTable.HeaderScreenCode = AccountingEntityJournalAccountingEntitiesJournalHeaderScreenScreen0.Code;
 
 	   		  
 
@@ -401,18 +401,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
-		   ObjectTable AccountingEntitiesJournalObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingEntitiesJournal" && d.Tenant == 0).FirstOrDefault(); 
+		   ObjectTable AccountingEntityJournalObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingEntityJournal" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature AccountingEntitiesJournalFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = AccountingEntitiesJournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingEntitiesJournal.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingEntitiesJournalObjectTable);
-		   Feature AccountingEntitiesJournalFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = AccountingEntitiesJournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingEntitiesJournal.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingEntitiesJournalObjectTable);
-		   Feature AccountingEntitiesJournalFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = AccountingEntitiesJournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingEntitiesJournal.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingEntitiesJournalObjectTable);
-		   Feature AccountingEntitiesJournalFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = AccountingEntitiesJournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingEntitiesJournal.Features.PackageFeature", NameTextCodeDefaultText = "AccountingEntitiesJournal Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingEntitiesJournalObjectTable);    
+		   Feature AccountingEntityJournalFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = AccountingEntityJournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingEntityJournal.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingEntityJournalObjectTable);
+		   Feature AccountingEntityJournalFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = AccountingEntityJournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingEntityJournal.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingEntityJournalObjectTable);
+		   Feature AccountingEntityJournalFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = AccountingEntityJournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingEntityJournal.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingEntityJournalObjectTable);
+		   Feature AccountingEntityJournalFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = AccountingEntityJournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingEntityJournal.Features.PackageFeature", NameTextCodeDefaultText = "AccountingEntityJournal Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingEntityJournalObjectTable);    
 	    
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable AccountingEntitiesJournalObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingEntitiesJournal" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable AccountingEntityJournalObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingEntityJournal" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -426,7 +426,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = AccountingEntitiesJournalObjectTable.Id,
+                ObjectTableId = AccountingEntityJournalObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -444,7 +444,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = AccountingEntitiesJournalObjectTable.Id,
+                ObjectTableId = AccountingEntityJournalObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 

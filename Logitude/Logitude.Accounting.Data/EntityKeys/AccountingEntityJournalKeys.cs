@@ -10,7 +10,7 @@ using Simplog.Server.Infrastructure;
   
 namespace Logitude.Accounting.Data.EntityKeys
 {
-   public partial class AccountingEntitiesJournalKeys : EntityKeyFields
+   public partial class AccountingEntityJournalKeys : EntityKeyFields
    {
    	  public string Id  { get; set; }
 	  
@@ -26,7 +26,7 @@ namespace Logitude.Accounting.Data.EntityKeys
 
       public override string GetEntityPMName()
       {
-          return "AccountingEntitiesJournalPM";
+          return "AccountingEntityJournalPM";
       }
 	 
    }

@@ -22,48 +22,48 @@ using Logitude.Accounting.Data;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 { 
-   public partial class AccountingEntitiesJournalUpdateService:EntityUpdateService<AccountingEntitiesJournal,AccountingEntitiesJournalPM,EntityPM>
+   public partial class AccountingEntityJournalUpdateService:EntityUpdateService<AccountingEntityJournal,AccountingEntityJournalPM,EntityPM>
    {
    
-        AccountingEntitiesJournalRepository entityRepository;
-        public AccountingEntitiesJournalUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+        AccountingEntityJournalRepository entityRepository;
+        public AccountingEntityJournalUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
             : base(mainContext,additionalContexts, tenant)
         {
             IAccountingContext  context = mainContext as AccountingContext;
             context = context ??mainContext as IAccountingContext ; //Up line is A BUG -and i need it 4 Fakes
-            Mapping = new AccountingEntitiesJournalDataMapping();
-            Repository = new AccountingEntitiesJournalRepository(context);
+            Mapping = new AccountingEntityJournalDataMapping();
+            Repository = new AccountingEntityJournalRepository(context);
         }
 
        
         private IAccountingContext currentContext;
-        public AccountingEntitiesJournalUpdateService(int tenant)
+        public AccountingEntityJournalUpdateService(int tenant)
         {
             currentContext = AccountingContext.GetContext(tenant);
         }
 
-        public AccountingEntitiesJournalUpdateService(IAccountingContext context)
+        public AccountingEntityJournalUpdateService(IAccountingContext context)
         {
             currentContext = context;
         }
 
 		
-		protected override EntityKeyFields GetKeys(AccountingEntitiesJournalPM entityPM)
+		protected override EntityKeyFields GetKeys(AccountingEntityJournalPM entityPM)
         {
-            AccountingEntitiesJournalKeys entityKeys = new AccountingEntitiesJournalKeys() { Id = entityPM.Id };
+            AccountingEntityJournalKeys entityKeys = new AccountingEntityJournalKeys() { Id = entityPM.Id };
             return entityKeys;
         }
 
 		
-		protected override void FillDefaultValuesOnCreate(AccountingEntitiesJournalPM entityPM)
+		protected override void FillDefaultValuesOnCreate(AccountingEntityJournalPM entityPM)
         {     
   
 		
-		    entityPM.Id = IdCounter.GetNumber("AccountingEntitiesJournal", entityPM.Tenant); 
+		    entityPM.Id = IdCounter.GetNumber("AccountingEntityJournal", entityPM.Tenant); 
 					
 	    }
         
-		protected override void FillDefaultValuesOnUpdate(AccountingEntitiesJournalPM entityPM)
+		protected override void FillDefaultValuesOnUpdate(AccountingEntityJournalPM entityPM)
         {       
            
         }

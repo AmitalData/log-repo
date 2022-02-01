@@ -10,7 +10,7 @@ using System.Runtime.Serialization;
 namespace Logitude.Accounting.Data.EntityLists
 {
    [DataContract]
-   public partial class AccountingEntitiesJournalList
+   public partial class AccountingEntityJournalList
    {
    
        [Key]

@@ -12,66 +12,66 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.Accounting.Data.Repositories
 {
-   public partial class AccountingEntitiesJournalRepository:IRepository<AccountingEntitiesJournal>
+   public partial class AccountingEntityJournalRepository:IRepository<AccountingEntityJournal>
    {
    
         private IAccountingContext currentContext;
-        public AccountingEntitiesJournalRepository(int tenant)
+        public AccountingEntityJournalRepository(int tenant)
         {
             currentContext = AccountingContext.GetContext(tenant);
         }
 
-        public AccountingEntitiesJournalRepository(IAccountingContext context)
+        public AccountingEntityJournalRepository(IAccountingContext context)
         {
             currentContext = context;
         }
 
 		 
 		
-		public  AccountingEntitiesJournal GetSingle(string id, int tenant)
+		public  AccountingEntityJournal GetSingle(string id, int tenant)
         {
             return (from a in context.AccountingEntitiesJournals
                     where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
-        public IQueryable<AccountingEntitiesJournal> GetAll(int tenant)
+        public IQueryable<AccountingEntityJournal> GetAll(int tenant)
         {
             return from a in context.AccountingEntitiesJournals  
                    where a.Tenant == tenant
                    select a;
         }
 				 
-        public AccountingEntitiesJournal GetSingle(EntityKeyFields entityKeys)
+        public AccountingEntityJournal GetSingle(EntityKeyFields entityKeys)
         {
-            AccountingEntitiesJournalKeys keys = entityKeys as AccountingEntitiesJournalKeys;
+            AccountingEntityJournalKeys keys = entityKeys as AccountingEntityJournalKeys;
             return (from a in context.AccountingEntitiesJournals
                     where a.Id == keys.Id
                     select a).FirstOrDefault();
         }
 		         
         partial void onAdd();//Partial Methods Definition in Generated
-        public void Add(AccountingEntitiesJournal entity)
+        public void Add(AccountingEntityJournal entity)
         {
             onAdd();
             context.AccountingEntitiesJournals.Add(entity);
         }
 
-        public void Remove(AccountingEntitiesJournal entity)
+        public void Remove(AccountingEntityJournal entity)
         {
             context.AccountingEntitiesJournals.Attach(entity);
             context.AccountingEntitiesJournals.Remove(entity);
         }
 
         partial void onUpdate();//Partial Methods Definition in Generated
-        public void Update(AccountingEntitiesJournal entity)
+        public void Update(AccountingEntityJournal entity)
         {
             onUpdate();
             context.AccountingEntitiesJournals.Attach(entity);
             context.SetAsModified(entity);
         }
 
-        public List<AccountingEntitiesJournal> All()
+        public List<AccountingEntityJournal> All()
         {
             return context.AccountingEntitiesJournals.ToList();
         }

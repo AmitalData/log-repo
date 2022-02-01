@@ -12,10 +12,10 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.Accounting.Data.Repositories
 {
-   public partial class AccountingEntitiesJournalRepository:IRepository<AccountingEntitiesJournal>
+   public partial class AccountingEntityJournalRepository:IRepository<AccountingEntityJournal>
    {
         
-		public List<AccountingEntitiesJournal> GetMulti(EntityKeyFields entityKeys)
+		public List<AccountingEntityJournal> GetMulti(EntityKeyFields entityKeys)
         {
             
 			throw new NotImplementedException();

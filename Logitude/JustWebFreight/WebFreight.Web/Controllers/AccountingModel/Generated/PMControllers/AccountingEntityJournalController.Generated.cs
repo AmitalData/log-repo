@@ -61,13 +61,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
-                AccountingEntitiesJournalQueryService accountingEntitiesJournalQuery = new AccountingEntitiesJournalQueryService(MyContext);
-				accountingEntitiesJournalQuery.InitializeSettings();
-                AccountingEntitiesJournalPM accountingEntitiesJournalPM = accountingEntitiesJournalQuery.GetSingle(id,true,false);
+                AccountingEntityJournalQueryService accountingEntityJournalQuery = new AccountingEntityJournalQueryService(MyContext);
+				accountingEntityJournalQuery.InitializeSettings();
+                AccountingEntityJournalPM accountingEntityJournalPM = accountingEntityJournalQuery.GetSingle(id,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             
-                return Request.CreateResponse(HttpStatusCode.OK, accountingEntitiesJournalPM);
+                return Request.CreateResponse(HttpStatusCode.OK, accountingEntityJournalPM);
 			 }
             catch (Exception ex)
             {
@@ -79,7 +79,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
          
 		
 		
-	   public HttpResponseMessage Post(AccountingEntitiesJournalPM entityPM)
+	   public HttpResponseMessage Post(AccountingEntityJournalPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -93,12 +93,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                     
                         IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
-                        AccountingEntitiesJournalUpdateService service = new AccountingEntitiesJournalUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        AccountingEntityJournalUpdateService service = new AccountingEntityJournalUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
                         service.Update(entityPM, true);
 
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("AccountingEntitiesJournal", 0, true);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("AccountingEntityJournal", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
                         //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
@@ -125,7 +125,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         }
 
 
-        public HttpResponseMessage Put(AccountingEntitiesJournalPM entityPM)
+        public HttpResponseMessage Put(AccountingEntityJournalPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -139,12 +139,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                         IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
-                        AccountingEntitiesJournalUpdateService service = new AccountingEntitiesJournalUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        AccountingEntityJournalUpdateService service = new AccountingEntityJournalUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 						service.InitializeEntityPM(entityPM);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                         service.Update(entityPM, true);
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("AccountingEntitiesJournal", 0, true);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("AccountingEntityJournal", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
                         //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
