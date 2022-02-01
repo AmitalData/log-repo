@@ -178,6 +178,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCTZIP", // Unifreight Table Custom ZIP
 "UCB2750", // שידור הצהרות בלדר
 "DCAMU", // multi update 
+"UCADPE", // הזנה גורפת PENDING
 
             };
 

@@ -128,6 +128,7 @@
     <None Include="DBScripts\Post\202107071340_SetCustomsDocumentsDefinitionDeclarationType.sxml" />
     <None Include="DBScripts\Post\202106061800_AddComputingPartners.sxml" />
     <None Include="DBScripts\Post\202111101341_InterfaceManagementDefaultPriority89.sxml" />
+    <None Include="DBScripts\Post\20220131_UpdateTerminalReleaseDate.sxml" />
     <None Include="DBScripts\Pre\202108111402_AddONSearchResult.sxml" />
     <None Include="DBScripts\Post\202201031031_SearchFieldCourierMaster.sxml" />
     <None Include="DBScripts\Post\2022010514_InterfaceTenantDefS8251.sxml" />

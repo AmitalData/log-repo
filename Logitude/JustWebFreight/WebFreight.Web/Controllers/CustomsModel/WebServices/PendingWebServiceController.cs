@@ -1,9 +1,11 @@
 ﻿using Logitude.BL.Security;
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.CustomsMessaging.ResponseServices;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
@@ -13,6 +15,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 
 namespace WebFreight.Web.Controllers.WebServices
@@ -20,7 +23,7 @@ namespace WebFreight.Web.Controllers.WebServices
     public class PendingWebServiceController : ApiController
     {
         [HttpGet]
-        public HttpResponseMessage DeclarationsforBulkFeed(string courierMasterId, string goodsDescription, string weightFrom, string weightTo, string incotermCode, string searchFilter, string totalInvoice, string fastIndividualProcess, int? skip = null, int? take = null)
+        public HttpResponseMessage DeclarationsforBulkFeed(string courierMasterId, string goodsDescription, string weightFrom, string weightTo, string incotermCode, string searchFilter, string totalInvoice, string fastIndividualProcess, int? skip = null, int? take = null, string sortingCol = null, string sortingDir = null)
         {
             try
             {
@@ -28,9 +31,12 @@ namespace WebFreight.Web.Controllers.WebServices
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 
-                var res =  new DeclarationRepository(tenant).GetforPendingBulkFeed(courierMasterId, goodsDescription, weightFrom, weightTo, incotermCode, searchFilter, totalInvoice, fastIndividualProcess, skip, take);
-
-                return Request.CreateResponse(HttpStatusCode.OK, res);
+                var declarations = new DeclarationRepository(tenant).GetforPendingBulkFeed(courierMasterId, goodsDescription, weightFrom, weightTo, incotermCode, searchFilter, totalInvoice, fastIndividualProcess, skip, take, sortingCol, sortingDir);
+                //ServiceResponse response = new ServiceResponse();
+                //response.Count = declarations.Count();
+                //response.Result = declarations;
+                //return Request.CreateResponse(HttpStatusCode.OK, response);
+                return Request.CreateResponse(HttpStatusCode.OK, declarations);
             }
             catch (Exception ex)
             {
@@ -40,14 +46,31 @@ namespace WebFreight.Web.Controllers.WebServices
 
 
         [HttpPost]
-        public HttpResponseMessage BulkFeeding([FromBody]AddMultiPendingsRequestParams requestParamsData)
+        public HttpResponseMessage BulkFeeding([FromBody] AddMultiPendingsRequestParams requestParamsData)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 
-                string res = new DCAInUCBUCADPE_MsgMessagingService().CreateCRS(authToken.Tenant, requestParamsData.listPending, requestParamsData.listPendingRemark, requestParamsData.declarationIdsList);
+
+                //int i = 0;
+                //ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+
+                //List<string> declarationIdsList = requestParamsData.checkboxAll ?
+                //    new DeclarationCourierStatusQueryService(customContext).GetByMasterID_DeclarationIdList(authToken.Tenant, requestParamsData.courierMasterId) :
+                //    requestParamsData.declarationIdsList.ToList();
+
+                //requestParamsData.listPending.ToList().ForEach(pendingCode =>
+                //{
+                //    declarationIdsList.ForEach(declarationId =>
+                //        new UniCourierBatchSendUCADPE_MsgResponseService().UpdateDeclarationPending(authToken.Tenant, declarationId, pendingCode, requestParamsData.listPendingRemark[i], customContext));
+
+                //    i++;
+                //});
+
+
+                string res = new DCAInUCBUCADPE_MsgMessagingService().CreateCRS(authToken.Tenant, requestParamsData.listPending, requestParamsData.listPendingRemark, requestParamsData.declarationIdsList, requestParamsData.courierMasterId, requestParamsData.checkboxAll , requestParamsData.allWithoutdeclarationIdsList);
 
                 return Request.CreateResponse(HttpStatusCode.OK, res);
             }

@@ -2867,7 +2867,7 @@ namespace Logitude.Customs.Def.ClosedTable
             {
                 Code = "UCADPE",
                 InOut = InOutEnum.I.ToString(),
-                Description = "נה גורפת PENDING",
+                Description = "הזנה גורפת PENDING",
                 DcaPrefixName = "UCADPE_OUT",
                 DefaultSendOptionsCode = null,
                 DefaultPriority = 5,
@@ -2875,7 +2875,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Active = true,
                 SendAsDual = false,
                 ResponseInterfaceCode = "",
-                InterfaceType = "C",
+                InterfaceType = "B",
             });
             //CLAIM_5005_ContinuousRequestOnClaimFileMessagingService
             all.Add(new InterfaceManagementDetails()

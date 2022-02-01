@@ -110,6 +110,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     IsFiltered: boolean = false;
     IsMamanEnabled: boolean = false;
     isAllowAccounting: boolean = false;
+    isAllowBulkPendind: boolean = false;
     IsILOVLEnabled: boolean = false;
     IsILSWSEnabled: boolean = false;
 
@@ -148,6 +149,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         this.GetMamanPUR();
         this.GetIsSendDocumentsFromQueueButton();
         this.isAllowAccounting = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowAccounting")
+        this.isAllowBulkPendind = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowBulkPendind")
     }
     //PseventRowSelectEventSubscribe: any;
     ngOnDestroy() {
@@ -1653,6 +1655,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 filters.addAdditionalFilter("CourierCustomStatusCode", "2", "1", null, "NotEqual", false, false, false, "string");
 
 
+
                 break;
             }
         }
@@ -2465,8 +2468,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
     openBulkFeedPending() {
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 800;
-        logitudeWindow.Height = 735;
+        logitudeWindow.Width = 1500;
+        logitudeWindow.Height = 800;
         logitudeWindow.IsShowCloseButton = true;
         logitudeWindow.Title = "הזנה גורפת PENDING";
         logitudeWindow.WindowArgs = { CourierMasterPM: this.entityPM };        

@@ -42,31 +42,30 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DCAInUCBUCADPEResponseContentHeader customsResponse)
         {
-            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
             var genericRequestParams = new GenericRequestParams()
             {
                 Tenant = customsResponse.tenant,
-                AppicationId = customsResponse.declarationIdsList[0],
+                AppicationId = customsResponse.courierMasterId,
                 LoggingEnabled = true,
                 InterfaceTypeCode = this.MainInterfaceCode,
                 MainInterfaceCode = this.MainInterfaceCode,
                 LoggingObjectTableId = objectTableId,
-                LoggingEntityId = customsResponse.declarationIdsList[0],
+                LoggingEntityId = customsResponse.courierMasterId,
                 //LoggingUserId = customsResponse.LoggingUserId,
 
             };
 
-            genericRequestParams.RequestName = "עידכון פנדינג גורף";
+            genericRequestParams.RequestName = "הזנה גורפת PENDING";
 
             return genericRequestParams;
         }
 
-        public string CreateCRS(int tenant, string[] listPending, string[] listPendingRemark, string[] declarationIdsList)
+        public string CreateCRS(int tenant, string[] listPending, string[] listPendingRemark, string[] declarationIdsList, string courierMasterId, bool checkboxAll , string[] allwithoutDeclarationIdsList)
         {
-            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.DeclarationPending");
-            var objectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.CourierPendingReason");
+            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
-            var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, null, objectTableId2, null, null, true);
+            var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, courierMasterId, null, null, null, true);
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
             {
                 return "קיים מסר זהה בתהליך";
@@ -83,7 +82,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 listPending = listPending,
                 listPendingRemark = listPendingRemark,
                 declarationIdsList = declarationIdsList,
-                
+                courierMasterId = courierMasterId,
+                checkboxAll = checkboxAll,
+                CustomFileNo = courierMasterId,
+                allwithoutDeclarationIdsList = allwithoutDeclarationIdsList , 
                 ResponseContentHeader = new DefaultResponseContentHeader()
                 {
                     TransmitionDateTime = transmitionDateTime
@@ -152,7 +154,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string[] listPending { get; set; }
         public string[] listPendingRemark { get; set; }
         public string[] declarationIdsList { get; set; }
+        public string[] allwithoutDeclarationIdsList { get; set; }
 
+        public string courierMasterId { get; set; }
+        public bool checkboxAll { get; set; }
+        public string CustomFileNo { get; set; }
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     }
 }
