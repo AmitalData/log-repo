@@ -74,6 +74,14 @@
                                                     <LogTextBox [ObjectFieldName]="'AmountInInvoiceCurrency'" [Text]="AmountInInvoiceCurrency" [InputType]="'sigdouble'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                 </td>
                                             </tr>
+                                            <tr *ngIf="accountingActivated" class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'IsEquipment'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <CheckBox [IsChecked]="IsEquipment" (Checked)="IsEquipment = $event"></CheckBox>
+                                                </td>
+                                           </tr>
                                         </table>
                                     </td>
 
@@ -154,7 +162,11 @@
                                                     <LogDatePicker [ObjectFieldName]="'InvoiceDate'" [SelectedDateValue]="InvoiceDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
                                                 </td>
                                             </tr>
-
+                                            <tr *ngIf="accountingActivated" class="FormFieldRow">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
                                         </table>
                                     </td>
 
@@ -166,25 +178,15 @@
                                                 </td>
                                             </tr>
                                             <tr class="FormFieldRow">
-                                  
-
                                                 <td [style.text-align]="isRTL ? 'right' : 'left'" style="font-size:10px; color:#1B90CB;">
                                                     {{RelativeRateDate}}
                                                 </td>
-
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'IsEquipment'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                </td>
-                                                <td>
-                                                    <CheckBox  [IsChecked]="IsEquipment" (Checked)="IsEquipment = $event"></CheckBox>
-                                                </td>
-                                            </tr>
-
                                             <tr>
                                                 <td>
                                                     <div></div>
                                                 </td>
                                             </tr>
+                                
                                         </table>
                                     </td>
 
@@ -195,6 +197,7 @@
                     </tr>
 
                     <tr style="height: 15px;">
+           
                         <td>
                             <div></div>
                         </td>

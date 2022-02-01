@@ -869,6 +869,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                             if (!myResponse.HasError) {
                                 this.glaccount = myResponse.Result;
                                 this.EntityPM.VendorGLAccountId = this.glaccount.Id;
+                                this.EntityPM.IsEquipment = this.glaccount.IsEquipmentVendor;
                             }
                         });
                     }
