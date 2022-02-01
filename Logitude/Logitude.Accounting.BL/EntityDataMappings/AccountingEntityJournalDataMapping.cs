@@ -10,6 +10,7 @@ using Logitude.Server.Tools;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs; 
 using Logitude.Accounting.Data;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
