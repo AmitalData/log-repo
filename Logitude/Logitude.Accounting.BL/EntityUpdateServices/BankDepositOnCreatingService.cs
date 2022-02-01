@@ -82,7 +82,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             BankDepositJournalCreator depositJournalCreator = new BankDepositJournalCreator(depositPM);
             depositJournalCreator.CreateJounal();
+
+
         }
+
 
         public virtual void DepositChequesForBankDeposit(BankDepositPM depositPM)
         {
