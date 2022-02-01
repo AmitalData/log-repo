@@ -269,50 +269,63 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
+
+        public List<DeclarationCourierPendingTabRecord> GetWorkSpacePendingTab(int tenant, string IntegratorId)
+        {
+            IQueryable<DeclarationCourierStatus> qDeclarationCourierStatuses = GetQueryableDeclarationCourierStatuses(tenant, IntegratorId);
+            var qDeclarationIDCourierPendingReasonCode = (from dcs in qDeclarationCourierStatuses
+                                                          join dp in context.DeclarationPendings on dcs.DeclarationId equals dp.DeclarationID
+
+                                                          where dp.Status == "A" // Active
+                                                          select new { dp.CourierPendingReasonCode, dp.DeclarationID }
+                    );
+            var mygQ = (from DeclarationIDCourierPendingReasonCode in qDeclarationIDCourierPendingReasonCode
+                            //CourierPendingReasonName = cpr.LocalName ?? cpr.EnglishName,
+                        group DeclarationIDCourierPendingReasonCode by DeclarationIDCourierPendingReasonCode.CourierPendingReasonCode into CourierPendingReasonCodeGroupByCod
+                        select new { Code = CourierPendingReasonCodeGroupByCod.Key, Count = CourierPendingReasonCodeGroupByCod.Count() }
+                     );
+            bool test55 = false;
+            if (test55)
+            {
+
+            }
+            var mygQWithLocalName = (
+                from gb in mygQ
+                join cpr in context.CourierPendingReasons on gb.Code equals cpr.Code
+                select new DeclarationCourierPendingTabRecord { Code = gb.Code, Name = cpr.LocalName, Count = gb.Count }
+                );
+            var res = mygQWithLocalName.ToList();
+            return res;
+
+
+        }
         public DeclarationCourierStatusSummary GetQueriesCounts(int tenant,string IntegratorId)
         {
             DeclarationCourierStatusSummary declarationCourierStatusSummary = new DeclarationCourierStatusSummary();
-            IQueryable<DeclarationCourierStatus> declarationCourierStatuses=(from dc in context.DeclarationCourierStatuses select dc);
-            if (string.IsNullOrWhiteSpace(IntegratorId) || IntegratorId=="null") {
-               declarationCourierStatuses = (from dc in context.DeclarationCourierStatuses//.Include("Declaration")
-                                                                                                                                //  join d in context.CourierDeclarations on dc.DeclarationId equals d.DeclarationId
-                                                                                                                                //  join dm in context.CourierMasters
-                                                                                                                                // on d.CourierMasterId equals dm.Id
-                                                                                   where dc.Tenant == tenant && dc.Declaration.IsCourierDeclaration == true 
-                                                                                   select dc);
-            }
-            else
-            {
-                declarationCourierStatuses = (from dc in context.DeclarationCourierStatuses//.Include("Declaration")
-                                                                                            join d in context.CourierDeclarations on dc.DeclarationId equals d.DeclarationId
-                                                                                            join dm in context.CourierMasters
-                                                                                            on d.CourierMasterId equals dm.Id
-                                              where dc.Tenant == tenant && dc.Declaration.IsCourierDeclaration == true && dm.IntegratorCode == IntegratorId
-                                              select dc);
-            }
+            IQueryable<DeclarationCourierStatus> qDeclarationCourierStatuses = GetQueryableDeclarationCourierStatuses(tenant, IntegratorId);
 
-            var counters = (from a in declarationCourierStatuses
+            var counters = (from a in qDeclarationCourierStatuses
 
                             group a by 1 into groupBy1
                             select new DeclarationCourierStatusSummary
                             {
 
-                                OpenCourierMasterCount = declarationCourierStatuses.Count(x => x.IsClosedForFollowUp == false),
-                                UnReleasedFastProcessCount = declarationCourierStatuses.Count(x => x.FastIndividualProcessCode == "F" && (x.Declaration.HatraDate == null || x.Declaration.HatraDate == DateTime.MinValue)),
-                                WithoutIdCount = declarationCourierStatuses.Count(x => x.IsClosedForFollowUp == false && x.CourierPendingReasonList.Contains("902")),
-                                WithoutClassificationCount = declarationCourierStatuses.Count(x => x.IsCourierMissingClassification == true),
-                                PendingPaymentCount = declarationCourierStatuses.Count(x => x.CourierPendingReasonList.Contains("900")),
-                                PendingCustomsCount = declarationCourierStatuses.Count(x => x.IsClosedForFollowUp == false && x.Declaration.CourierCustomStatusCode == "2"),
-                                PendingCount = declarationCourierStatuses.Count(x => !string.IsNullOrEmpty(x.CourierPendingReasonList)),
-                                AllCourierDeclarationsCount = declarationCourierStatuses.Count(),
-                                CourierMasterOpenIndividualCount = declarationCourierStatuses.Count(x => x.IsClosedForFollowUp == false && x.FastIndividualProcessCode == "I"),
-                                UnReleasedIndividualCount = declarationCourierStatuses.Count(x => x.FastIndividualProcessCode == "I" && (x.Declaration.HatraDate == null || x.Declaration.HatraDate == DateTime.MinValue))
+                                OpenCourierMasterCount = qDeclarationCourierStatuses.Count(x => x.IsClosedForFollowUp == false),
+                                UnReleasedFastProcessCount = qDeclarationCourierStatuses.Count(x => x.FastIndividualProcessCode == "F" && (x.Declaration.HatraDate == null || x.Declaration.HatraDate == DateTime.MinValue)),
+                                WithoutIdCount = qDeclarationCourierStatuses.Count(x => x.IsClosedForFollowUp == false && x.CourierPendingReasonList.Contains("902")),
+                                WithoutClassificationCount = qDeclarationCourierStatuses.Count(x => x.IsCourierMissingClassification == true),
+                                PendingPaymentCount = qDeclarationCourierStatuses.Count(x => x.CourierPendingReasonList.Contains("900")),
+                                PendingCustomsCount = qDeclarationCourierStatuses.Count(x => x.IsClosedForFollowUp == false && x.Declaration.CourierCustomStatusCode == "2"),
+                                PendingCount = qDeclarationCourierStatuses.Count(x => !string.IsNullOrEmpty(x.CourierPendingReasonList)),
+                                AllCourierDeclarationsCount = qDeclarationCourierStatuses.Count(),
+                                CourierMasterOpenIndividualCount = qDeclarationCourierStatuses.Count(x => x.IsClosedForFollowUp == false && x.FastIndividualProcessCode == "I"),
+                                UnReleasedIndividualCount = qDeclarationCourierStatuses.Count(x => x.FastIndividualProcessCode == "I" && (x.Declaration.HatraDate == null || x.Declaration.HatraDate == DateTime.MinValue))
                             }); ;
 
 
-      declarationCourierStatusSummary= counters.FirstOrDefault();
+            declarationCourierStatusSummary = counters.FirstOrDefault();
 
-                        
+
 
 
 
@@ -332,5 +345,45 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         }
 
+        private IQueryable<DeclarationCourierStatus> GetQueryableDeclarationCourierStatuses(int tenant, string IntegratorId)
+        {
+            IQueryable<DeclarationCourierStatus> declarationCourierStatuses = (from dc in context.DeclarationCourierStatuses select dc);
+            if (string.IsNullOrWhiteSpace(IntegratorId) || IntegratorId == "null")
+            {
+                declarationCourierStatuses = (from dcs in context.DeclarationCourierStatuses//.Include("Declaration")
+                                                                                            //  join d in context.CourierDeclarations on dc.DeclarationId equals d.DeclarationId
+                                                                                            //  join dm in context.CourierMasters
+                                                                                            // on d.CourierMasterId equals dm.Id
+                                              join d in context.Declarations on dcs.DeclarationId equals d.Id
+                                              where dcs.Tenant == tenant
+
+                                                                                    //&& dc.Declaration.IsCourierDeclaration == true 
+                                                                                    && d.IsCourierDeclaration == true && d.AmendmentDontDisplayInList == false && d.IsCancelled != true
+                                                                                    && dcs.IsClosedForFollowUp != true
+
+
+                                              select dcs);
+            }
+            else
+            {
+                declarationCourierStatuses = (from dcs in context.DeclarationCourierStatuses//.Include("Declaration")
+
+                                              join d in context.Declarations on dcs.DeclarationId equals d.Id
+
+                                              join cd in context.CourierDeclarations on dcs.DeclarationId equals cd.DeclarationId
+                                              join dm in context.CourierMasters
+                                              on cd.CourierMasterId equals dm.Id
+                                              where dcs.Tenant == tenant
+                                              //&& dcs.Declaration.IsCourierDeclaration == true 
+                                              && dm.IntegratorCode == IntegratorId
+
+                                              && d.IsCourierDeclaration == true && d.AmendmentDontDisplayInList == false && d.IsCancelled != true
+                                              && dcs.IsClosedForFollowUp != true
+
+                                              select dcs);
+            }
+
+            return declarationCourierStatuses;
+        }
     }
 }

@@ -24,6 +24,8 @@ import { CourierWorksheetSharedDataService } from '../../../../Customs/Services/
 import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
 import { CourierDeclarationFiltersMenuComponent } from './FiltersMenu/CourierDeclarationFiltersMenuComponent';
 import { CardPMService } from 'Common/Services/StandardPMs/CardPMService';
+import { TabFilter } from '../CourierWorkSheet/CourierWorksheetComponent';
+import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 
 @Component({
     templateUrl: './CourierDeclarationWorkspaceComponent.html',
@@ -62,7 +64,23 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() onQueryChangeEvent = new EventEmitter();
 
+
+
+    _TabFilterList: TabFilter[] = [];
+    _SelectedTabFilter: TabFilter;
+    set SelectedTabFilter(val: TabFilter) { this._SelectedTabFilter = val; }
+    public PendingObservableList: ObservableCollection;
+
     constructor(public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public _declarationCourierStatusWebService: DeclarationCourierStatusWebService) {
+
+        this._TabFilterList.push(new TabFilter("OPN", "טיסות פתוחות ", null, null));
+        this._TabFilterList.push(new TabFilter("PEN", "Pending ", null, null));
+        this._SelectedTabFilter = this._TabFilterList[0];
+        this.PendingObservableList = new ObservableCollection([]);
+        
+        
+
+
         //this.LoadAllScreenData();
         this.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
@@ -75,6 +93,8 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
                             this.isScreenLoaded = true;
                             this.BuildColumns();
                             this.RefreshList();
+
+
                         });
 
                 }
@@ -477,6 +497,10 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     }
 
     RefreshList() {
+        this._declarationCourierStatusWebService.GetWorkSpacePendingTab(this.IntegratorCode).subscribe(
+            (data: any) => {
+                this.PendingObservableList.InsertCollection(data.Result);
+            });
 
         setTimeout(() => {
             this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
@@ -507,4 +531,25 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     ViewInitCompleted($event) {
     }
 
+
+
+
+
+    TabFilterClick(item) {
+        this.SelectedTabFilter = item;
+        //this._CourierWorksheetSharedDataService._SelectedItems.Collection = [];
+        
+
+        //switch (item.Code) {
+            
+        //    case "ACC":
+        //        this._SelectedACCValue = 'W';
+        //        break;
+        //    case "HOLD":
+        //        if (this.SelectedPendingCodeFilter == null && this._PendingCodes != null && this._PendingCodes.length > 0) this.SelectedPendingCodeFilter = this._PendingCodes[0];
+        //        break;
+        //}
+       
+
+    }
 }
