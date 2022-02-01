@@ -12,12 +12,12 @@ import { DeclarationCourierStatusPMService } from '../../../../Customs/Services/
 import { DeclarationPendingPM } from '../../../../Customs/EntityPMs/DeclarationPendingPM';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { DeclarationPM } from '../../../../Customs/EntityPMs/DeclarationPM';
-import { DeclarationPMService } from '../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import { CourierPendingReasonPM } from '../../../../Customs/EntityPMs/CourierPendingReasonPM';
 import { DeclarationExtendedListService } from '../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { KeyValuePair } from '../CourierWorkSheet/CourierWorksheetComponent';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { PendingWebService } from '../../../../Customs/Services/WebServices/PendingWebService';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
     templateUrl: './DeclarationPendingsBulkFeedingComponent.html',
@@ -55,6 +55,8 @@ export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
 
     checkboxAll: boolean;
     courierMasterId: string;
+    filter: ApiQueryFilters = null as any;
+
     constructor(private pendingWebService: PendingWebService) {
         super();
         this.DeclarationPendingItemsSource = new ObservableCollection([]);
@@ -85,89 +87,12 @@ export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
                 this.BuildDeclarationPendingList();
                 this.IsDisplayOnly = args.IsDisplayOnly;
                 this.parent = args.parent;
+                this.filter = args.filter;
                 var table = window.ObjectTables.filter(d => d.Name === 'Customs.DeclarationPending')[0];
-                /*
-                if (!AppTool.IsNullOrEmpty(args.DeclarationId)) {
-                    this._DeclarationExtendedListService.GetDeclarationPendingListPMByDeclarationId(args.DeclarationId).subscribe((response: ServiceResponse) => {
-                        if (!response.HasError) {
-                            this.DeclarationPendingsList.push(response.Result);
-                        }
-                    });
-                }
-                */
             });
-
-            //SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-            //this.declarationPMService.get(args.DeclarationId).subscribe((response: ServiceResponse) => {
-            //    SessionLocator.SelectedSession.StopBusyIndicator();
-            //    this.declarationPM = response.Result;
-            //});
-            //this.CourierHawb = args.CourierHawb;
-            /*
-            if (args.Mode == "FromDeclaration") {
-                SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-                //this.declarationPendingPMService.get(args.DeclarationId, "").subscribe((response: ServiceResponse) => {
-                //    SessionLocator.SelectedSession.StopBusyIndicator();
-                  //  var declarationPendingPM: DeclarationPendingPM = response.Result;
-                var declarationPendingPM: DeclarationPendingPM = this.DeclarationCourierStatus.;
-                    if (declarationPendingPM != null) {
-                        this.DeclarationPendingsList.push(declarationPendingPM);
-                        if (!AppTool.IsNullOrEmpty(declarationPendingPM.CourierPendingReasonCode) || !AppTool.IsNullOrEmpty(declarationPendingPM.PendingRemarks)) {
-                            this._IsNewPending = false;
-                            //this.CourierPendingReasonCode = declarationPendingPM.CourierPendingReasonCode;
-                            //this.PendingRemarks = declarationPendingPM.PendingRemarks;
-                        }
-                    }
-                });
-            }
-            else {
-                //if (args.Mode == "Update") {
-                //   this._IsNewPending = false;
-                //   this.CourierPendingReasonCode = args.CourierPendingReasonCode;
-                //   this.PendingRemarks = args.PendingRemarks;
-                //}
-                if (args.DeclarationIdList != null) {
-                    args.DeclarationIdList.forEach((declarationPendingPM: DeclarationPendingPM) => {
-                        this.DeclarationPendingsList.push(declarationPendingPM);
-                    });
-                }
-            }
-            */
         }
     }
-    /*
-    //#region Properties
-    private _CourierHawb: string;
-    public get CourierHawb() { return this._CourierHawb; }
-    public set CourierHawb(newValue: string) {
-        this._CourierHawb = newValue;
-    }
 
-    private _CourierPendingReasonCode: string;
-    public get CourierPendingReasonCode() { return this._CourierPendingReasonCode; }
-    public set CourierPendingReasonCode(newValue: string) {
-        this._CourierPendingReasonCode = newValue;
-    }
-
-    private _CourierPendingReasonName: string;
-    public get CourierPendingReasonName() { return this._CourierPendingReasonName; }
-    public set CourierPendingReasonName(newValue: string) {
-        this._CourierPendingReasonName = newValue;
-    }
-
-    private _PendingRemarks: string;
-    public get PendingRemarks() { return this._PendingRemarks; }
-    public set PendingRemarks(newValue: string) {
-        this._PendingRemarks = newValue;
-    }
-
-    private _Status: string;
-    public get Status() { return this._Status; }
-    public set Status(newValue: string) {
-        this._Status = newValue;
-    }
-    */
-    //#endregion
 
     haveDuplicates(arr: any[]): boolean { return arr.some((item, index) => arr.indexOf(item) != index) }
 
@@ -177,10 +102,10 @@ export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
         const listPendingRemark = this.DeclarationPendingItemsSource.Collection.map(x => x.PendingRemarks)
 
         if (this.haveDuplicates(listPending))
-            return this.showMessage("?? ??? ?????? ?? ???? ??? ?????");
+            return this.showMessage("?? ???? ?????? ??? ?? ???? ??? ?????");
 
         SessionLocator.SelectedSession.StartBusyIndicatorSaving();
-        const msg: string =  await this.pendingWebService.postBulkFeeding(listPending, listPendingRemark, this.declarationIdsList, this.courierMasterId, this.checkboxAll, this.allWithoutdeclarationIdsList)
+        const msg: string = await this.pendingWebService.postBulkFeeding(listPending, listPendingRemark, this.declarationIdsList, this.courierMasterId, this.checkboxAll, this.allWithoutdeclarationIdsList, this.filter)
         SessionLocator.SelectedSession.StopBusyIndicator();
 
         this.showMessage(msg);
@@ -308,7 +233,7 @@ export class DeclarationPendingsBulkFeedingComponent extends BaseComponent {
                 var existCodeList: string[] = [];
                 this.DeclarationPendingItemsSource.Collection.forEach((item: DeclarationPendingLine) => {
                     if (existCodeList != null && item != null && existCodeList.indexOf(item.CourierPendingReasonCode) > -1) {
-                        errors.push("כבר קיימת רשומה עם קוד עיכוב " + item.CourierPendingReasonName);
+                        errors.push("??? ????? ????? ?? ??? ????? " + item.CourierPendingReasonName);
                         this.inValid = true;
                         this.isValid = false;
                     }
@@ -551,7 +476,7 @@ export class DeclarationPendingLine extends BaseComponent {
             this.UIProperties.SetValidity("CourierPendingReasonCode", "Customs.DeclarationPending", true, "");
             if (this.parent.DeclarationPendingItemsSource != null && this.parent.DeclarationPendingItemsSource.Collection.find(d => d.CourierPendingReasonCode == newValue) != null) {
                 this.valid = false;
-                this.UIProperties.SetValidity("CourierPendingReasonCode", "Customs.DeclarationPending", false, "??? ????? ????? ?? ??? ?????" + newValue);
+                this.UIProperties.SetValidity("CourierPendingReasonCode", "Customs.DeclarationPending", false, "??? ????? ????? ?? ??? ????? " + newValue);
             }
         }
         if (this.valid != true && logCellTemplate != null && CourierPendingReasonLovBox != null) {

@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { ServiceHelper } from "Infrastructure/Utilities/ServiceHelper";
 import { LogtuideTableDataService } from "QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service";
 import { Observable } from "rxjs";
@@ -44,16 +45,24 @@ export class PendingWebService {
     }
 
 
-    postBulkFeeding(listPending: string[], listPendingRemark: string[], declarationIdsList: string[], courierMasterId: string, checkboxAll: boolean, allWithoutdeclarationIdsList:string[]) {
+    postBulkFeeding(
+        listPending: string[],
+        listPendingRemark: string[],
+        declarationIdsList: string[],
+        courierMasterId: string,
+        checkboxAll: boolean,
+        allWithoutdeclarationIdsList: string[],
+        customFilter: ApiQueryFilters) {
+
         const ajax: Observable<any> = this._http.post(
-            this._apiUrl + "/BulkFeeding",
+            this._apiUrl + "/BulkFeeding?" + this.logtuideTableDataService.apiQueryFilterToQueryString(customFilter),
             {
                 listPending: listPending,
                 listPendingRemark: listPendingRemark,
                 declarationIdsList: declarationIdsList,
+                allWithoutdeclarationIdsList: allWithoutdeclarationIdsList,
                 courierMasterId: courierMasterId,
-                checkboxAll: checkboxAll,
-                allWithoutdeclarationIdsList: allWithoutdeclarationIdsList
+                checkboxAll: !!checkboxAll,
             },
             {
                 headers: ServiceHelper.GetHttpHeaders().headers,
@@ -62,7 +71,6 @@ export class PendingWebService {
 
         return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax) as Promise<any>;
     }
-
 }
 
 
