@@ -230,23 +230,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                     }
                 }
 
-                string ArrivedCode = "PIOD";
+                //string ArrivedCode = "PIOD";
                 string ArrivedCode_New = "DEAR";
                 if (RoutingDate.IsDateAddedOrModified(itemPM.ATA, itemPOCO.ATA))
                 {
-                    this.DeleteTraceEvent(ArrivedCode, itemPM.PickUpDeliveryNumber, itemPOCO.ATA);
+                    //this.DeleteTraceEvent(ArrivedCode, itemPM.PickUpDeliveryNumber, itemPOCO.ATA);
                     this.CreateTraceEvent(ArrivedCode_New, itemPM.ATA, itemPM);
 
-                    ShipmentDeliveryPM lastDelivery = entityPM.ShipmentDeliveries.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
-                    if (RoutingDate.IsAllDeliveriesHaveDates(entityPM) && lastDelivery != null)
-                    {
-                        this.CreateTraceEvent(ArrivedCode, lastDelivery.ATA, lastDelivery);
-                    }
+                    //ShipmentDeliveryPM lastDelivery = entityPM.ShipmentDeliveries.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                    //if (RoutingDate.IsAllDeliveriesHaveDates(entityPM) && lastDelivery != null)
+                    //{
+                    //    this.CreateTraceEvent(ArrivedCode, lastDelivery.ATA, lastDelivery);
+                    //}
                 }
 
                 else if (RoutingDate.IsDateRemoved(itemPM.ATA, itemPOCO.ATA))
                 {
-                    this.DeleteTraceEvent(ArrivedCode);
+                   // this.DeleteTraceEvent(ArrivedCode);
                     this.DeleteTraceEvent(ArrivedCode_New, itemPM.PickUpDeliveryNumber, itemPOCO.ATA);
                 }
 
@@ -254,11 +254,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 {
                     if (itemPM.ATA != null)
                     {
-                        if (IsCurrentStatus(ArrivedCode))
+                        if (IsCurrentStatus(ArrivedCode_New))
                         {
                             if (itemPM.PickUpDeliveryToTypeCode != itemPOCO.PickUpDeliveryToTypeCode)
                             {
-                                this.UpdateLocation(ArrivedCode);
+                                this.UpdateLocation(ArrivedCode_New);
                             }
 
                             else
@@ -269,7 +269,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                                         {
                                             if (itemPM.ToAddressId != itemPOCO.ToAddressId)
                                             {
-                                                this.UpdateLocation(ArrivedCode);
+                                                this.UpdateLocation(ArrivedCode_New);
                                             }
 
                                             break;
@@ -279,7 +279,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                                         {
                                             if (itemPM.ToPortId != itemPOCO.ToPortId)
                                             {
-                                                this.UpdateLocation(ArrivedCode);
+                                                this.UpdateLocation(ArrivedCode_New);
                                             }
 
                                             break;
@@ -289,7 +289,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                                         {
                                             if (itemPM.ToAddressCity != itemPOCO.ToAddressCity)
                                             {
-                                                this.UpdateLocation(ArrivedCode);
+                                                this.UpdateLocation(ArrivedCode_New);
                                             }
 
                                             break;
@@ -299,10 +299,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                         }
                     }
 
-                    else
-                    {
-                        this.DeleteTraceEvent(ArrivedCode);
-                    }
+                    //else
+                    //{
+                    //    this.DeleteTraceEvent(ArrivedCode_New);
+                    //}
                 }
 
                 this.TraceDeliveryArrangedEvent(itemPM, itemPOCO, shipmentPM);
