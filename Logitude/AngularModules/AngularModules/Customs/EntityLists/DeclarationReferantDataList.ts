@@ -87,10 +87,5 @@ export class DeclarationReferantDataList {
 	LastStatusRemarks: string;
 	ReferantUserName: string;
 	DepartmentName: string;
-	Commodity: string;
-	LastStatusRemarks: string;
-	ReferantUserName: string;
-	DepartmentName: string;
-	
 }
  
