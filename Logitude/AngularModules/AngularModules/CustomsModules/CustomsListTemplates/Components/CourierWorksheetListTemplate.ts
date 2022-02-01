@@ -784,7 +784,7 @@ export class CourierWorksheetListTemplate {
 
       //  this._CourierWorksheetSharedDataService.connectedSelectAll = false;
 
-        debugger;
+       
         this.IsDeclarationChecked = !this.IsDeclarationChecked;
         //if (event.IsChecked) {
         if (this.IsDeclarationChecked) {

@@ -276,7 +276,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                     from cj in cpjoin.Where(t => t.PackageMeasureQualifierCode == "2" && t.GrossMassMeasure.HasValue).DefaultIfEmpty()
 
                     join s in context.SupplierInvoices on cd.Declaration.Id equals s.DeclarationId into sjoin
-                    from sj in sjoin.Take(1).DefaultIfEmpty()            
+                    from sj in sjoin.Take(1).DefaultIfEmpty()
 
                     group cj by new
                     {
@@ -311,10 +311,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                         FastIndividualProcessCode = t2.Key.FastIndividualProcessCode,
                     });
 
-                                                                            
-            var cargoDescriptionF = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CargoDescription").FirstOrDefault();
-            if (cargoDescriptionF != null && !string.IsNullOrEmpty(cargoDescriptionF.FieldValue?.ToString()))
-                q1 = q1.Where(x => x.CargoDescription.ToLower().Contains(cargoDescriptionF.FieldValue.ToString().ToLower()));
 
             q1 = q1.OrderBy(x => x.DeclarationId);
 
@@ -345,6 +341,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             query2 = filter.GetFilteredQuery<DeclarationCourierStatusList>(listQueryOperation, query2);
 
+            var cargoDescriptionF = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CargoDescription").FirstOrDefault();
+            if (cargoDescriptionF != null && !string.IsNullOrEmpty(cargoDescriptionF.FieldValue?.ToString()))
+            {
+                string description = cargoDescriptionF.FieldValue.ToString().ToLower();
+                query2 = query2.Where(x => x.CargoDescription.ToLower().Contains(description));
+            }
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DeclarationCourierStatusList).GetProperty(queryOperations.SortByColumnName);
@@ -360,6 +363,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                     {
                         query2 = sortClass.GetSorterQuery<DeclarationCourierStatusList, string>(queryOperations, query2);
                     }
+                    else if (queryOperations.SortByColumnName == "ImporterCode")
+                        query2 = sortClass.GetSorterQuery<DeclarationCourierStatusList, string>(queryOperations, query2);
                     else
                     {
                         switch (objectField.DataTypeCode.ToLower())

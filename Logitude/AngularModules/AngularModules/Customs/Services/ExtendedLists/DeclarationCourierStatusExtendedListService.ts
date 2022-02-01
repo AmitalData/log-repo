@@ -23,7 +23,7 @@ export class DeclarationCourierStatusExtendedListService {
     }
 
     getByFilters(filters: ApiQueryFilters) {
-        debugger;
+       
         var pendingView = filters.AdditionalFilters.findIndex(x => x.FieldName == "pendingView");
         if (pendingView>0) {
             this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CourierDeclarationPendingListExtended';

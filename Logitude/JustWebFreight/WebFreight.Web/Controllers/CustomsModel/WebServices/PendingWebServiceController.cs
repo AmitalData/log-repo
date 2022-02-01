@@ -8,6 +8,7 @@ using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.ResponseServices;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using WebFreight.Web.Controllers.CustomsModel.Extended;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 
@@ -45,14 +47,16 @@ namespace WebFreight.Web.Controllers.WebServices
         }
 
 
+        //[HttpGet]
         [HttpPost]
-        public HttpResponseMessage BulkFeeding([FromBody] AddMultiPendingsRequestParams requestParamsData)
+        public HttpResponseMessage BulkFeeding([FromBody] AddMultiPendingsRequestParams requestParamsData, [FromUri] ApiQueryFilters filters)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 
+                QueryOperations queryOperations = CourierDeclarationPendingListExtendedController.CreateQueryOperationsPendingBulk(filters, authToken.Tenant);
 
                 //int i = 0;
                 //ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
@@ -70,7 +74,7 @@ namespace WebFreight.Web.Controllers.WebServices
                 //});
 
 
-                string res = new DCAInUCBUCADPE_MsgMessagingService().CreateCRS(authToken.Tenant, requestParamsData.listPending, requestParamsData.listPendingRemark, requestParamsData.declarationIdsList, requestParamsData.courierMasterId, requestParamsData.checkboxAll , requestParamsData.allWithoutdeclarationIdsList);
+                string res =  new DCAInUCBUCADPE_MsgMessagingService().CreateCRS(authToken.Tenant, requestParamsData, queryOperations);
 
                 return Request.CreateResponse(HttpStatusCode.OK, res);
             }
@@ -80,7 +84,5 @@ namespace WebFreight.Web.Controllers.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-
     }
 }
