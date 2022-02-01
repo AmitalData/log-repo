@@ -297,6 +297,11 @@
         color: #595B5B;
         line-height: 11px;
     }
+
+    .FactName {
+        font-weight: bold;
+        font-size: 14px;
+    }
 </style>
 
     <table>
@@ -338,13 +343,13 @@
                                                                     <!--top:0px;-->
                                                                     <tr style="text-align:left;vertical-align:middle" *ngFor="let Group of FactGroupsDataSource">
                                                                         <td style="min-height:30px;">
-                                                                            <table class="noselect">
+                                                                            <table class="noselect" style="border-bottom: 1pt solid white;">
                                                                                 <tr>
                                                                                     <td>
                                                                                         <div (click)="Group.GroupClicked()" style="width:100%;height:100%;padding-top:2px;background-color: #E4E4E4;border-bottom: 1px solid;border-top: 1px solid;border-color:rgb(167, 169, 172);height: 27px;">
                                                                                             <div style="text-align: left;width: 100%;height: 100%;">
                                                                                                 <img [src]="Group.DetailsIcon" style="vertical-align: middle;float: left" />
-                                                                                                <label style="margin:5px;vertical-align: middle;">{{Group.Key}}</label>
+                                                                                                <label class="FactName" style="margin:5px;vertical-align: middle;">{{Group.Key}}</label>
                                                                                             </div>
                                                                                         </div>
                                                                                     </td>
@@ -547,8 +552,9 @@
                                                                                         </table>
                                                                                     </td>
                                                                                 </tr>
+                                                                               
                                                                             </table>
-
+                                                                            
 
                                                                         </td>
 

@@ -262,7 +262,10 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     }
 
     private CreateFactView(Fact: any, FactCategory: any[], FactGroups: any[]) {
+
+
         var factview = new DWFactsGroup(Fact.Key, FactCategory);
+
         factview.IsDetailesOpened = true;
         factview.DetailsIcon = "./Images/CellIcons/Arrowup.png";
         FactGroups.push(factview);
@@ -270,10 +273,18 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
 
     private SetFactView(FactGroups: any[]) {
         var AllFactGroups = [];
+
+        
         FactGroups.forEach((Group) => {
             var factView = new DWFactsGroup(Group.key, Group.fieldsList);
-            factView.IsDetailesOpened = true;
-            factView.DetailsIcon = "./Images/CellIcons/Arrowup.png";
+            if (AllFactGroups.length == 0) {
+                factView.IsDetailesOpened = true;
+                factView.DetailsIcon = "./Images/CellIcons/Arrowup.png";
+            }
+            else {
+                factView.IsDetailesOpened = false;
+                factView.DetailsIcon = "./Images/CellIcons/Arrowdown.png";
+            } 
             AllFactGroups.push(factView);
         });
         return AllFactGroups;
