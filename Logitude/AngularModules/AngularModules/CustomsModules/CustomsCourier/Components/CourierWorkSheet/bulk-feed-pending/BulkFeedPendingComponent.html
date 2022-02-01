@@ -54,12 +54,12 @@
 
   
     <LogTextBoxV2 class="input-from" [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true"
-                [ObjectFieldName]="'WeightFrom'"   [DataContext]="DataContext" [InputType]="'decimal'"  [Placeholder]="'Customs.General.O.From' | TextCodeTranslationPipe">
+                [ObjectFieldName]="'WeightFrom'"   [DataContext]="DataContext" [InputType]="'decimal'" [DigitsAfterPoint]='2' [Placeholder]="'Customs.General.O.From' | TextCodeTranslationPipe">
     </LogTextBoxV2>
  
 
     <LogTextBoxV2 class="input-to" [ngStyle]='' [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true"   [Placeholder]="'Customs.General.O.To' | TextCodeTranslationPipe"
-                [ObjectFieldName]="'WeightTo'"  [DataContext]="DataContext" [InputType]="'decimal'">
+                [ObjectFieldName]="'WeightTo'"  [DataContext]="DataContext" [InputType]="'decimal'"  [DigitsAfterPoint]='2'>
     </LogTextBoxV2>
 
     <LogLabel class="label-incoterm" [Text]="'Customs.General.O.TermsOfSale' | TextCodeTranslationPipe"
@@ -71,7 +71,7 @@
         </LogLov>
     </div>
 
-    <button class="Button" (click)="RefreshList()">
+    <button class="Button" (click)="search()">
         {{'Customs.General.O.Search' | TextCodeTranslationPipe}}
     </button>
 

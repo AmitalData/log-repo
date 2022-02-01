@@ -55,8 +55,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         PackageQuantity, 
 	         ForwarderId, 
 	         IsManualPayment, 
+	         PackageTypeCode, 
 	         Commodity, 
 	         LastStatusRemarks,
+
 	      }
 
 
@@ -103,8 +105,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ForwarderName, 
 	         FclLclName, 
 	         IsManualPayment, 
+	         PackageTypeCode, 
 	         Commodity, 
 	         LastStatusRemarks,
+
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -278,10 +282,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.Commodity = entityPM.Commodity;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PackageTypeCode))
+            {
+				entityPOCO.PackageTypeCode = entityPM.PackageTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Commodity))
+            {
+				entityPOCO.Commodity = entityPM.Commodity;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusRemarks))
             {
 				entityPOCO.LastStatusRemarks = entityPM.LastStatusRemarks;
 			}
+
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
@@ -462,7 +477,23 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastStatusRemarks))
             {
 					entityPM.LastStatusRemarks = entityPOCO.LastStatusRemarks;
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PackageTypeCode))
+            {
+					entityPM.PackageTypeCode = entityPOCO.PackageTypeCode;
             }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Commodity))
+            {
+					entityPM.Commodity = entityPOCO.Commodity;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastStatusRemarks))
+            {
+					entityPM.LastStatusRemarks = entityPOCO.LastStatusRemarks;
+            }
+
+		}
+
 
 		}
 
@@ -635,13 +666,18 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.Commodity = entityPM.Commodity;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PackageTypeCode))
+            {
+                oldEntityPM.PackageTypeCode = entityPM.PackageTypeCode;
+            }
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusRemarks))
             {
                 oldEntityPM.LastStatusRemarks = entityPM.LastStatusRemarks;
             }
 			
-		}
 
+		}
+ 
 	    public void EncodeBase64NVARCHARFields(DeclarationReferantDataPM entityPM)
         {
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 

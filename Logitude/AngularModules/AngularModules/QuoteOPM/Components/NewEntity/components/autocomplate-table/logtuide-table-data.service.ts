@@ -36,7 +36,8 @@ export class LogtuideTableDataService {
     })
   }
 
-  getDataFromService(ob: Observable<any>): Promise<any> {
+
+  getDataFromService(ob: Observable<any>): Promise<any[]> {
     return new Promise<any[]>((resolve, reject) =>
       ob.pipe(filterIsNotNull(), take(1))
         .subscribe(
@@ -45,6 +46,7 @@ export class LogtuideTableDataService {
         )
     )
   }
+
 
   standartSendAjax(ajax: Observable<any>) {
     return defer(() => {
@@ -56,7 +58,40 @@ export class LogtuideTableDataService {
     });
   }
 
+  
   sendAjaxAndGetDataStandart(ajax: Observable<any>) {
     return this.getDataFromService(this.standartSendAjax(ajax));
+  }
+
+
+  apiQueryFilterToQueryString(filters: ApiQueryFilters): string {
+    let urlparameters: string = '';
+    var mykeys = Object.keys(filters);
+    var addtionalFiltersValues = null;
+
+    for (var i in mykeys) {
+      var propName = mykeys[i];
+      var propValue = filters[propName];
+      var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+
+      if (urlparameters != "?") {
+        urlparameters = urlparameters.concat('&');
+      }
+
+      if (!ignoreFilter) {
+        propValue = encodeURIComponent(propValue);
+        urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+      }
+
+      if (propName == "AdditionalFilters" && propValue.length > 0) {
+        addtionalFiltersValues = JSON.stringify(propValue);
+      }
+    }
+
+    if (addtionalFiltersValues) {
+      urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+    }
+
+    return urlparameters;
   }
 }

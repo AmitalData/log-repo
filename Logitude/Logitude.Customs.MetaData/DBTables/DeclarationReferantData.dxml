@@ -227,6 +227,13 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="PackageTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="Commodity"
     Type="varchar"
     Size="5">
@@ -275,6 +282,11 @@
     ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PackageTypeCode"
+    ReferencedTable="PackingTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
   <Index
     Columns="IsClosedForFollowUp" />
   <Index

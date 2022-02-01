@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "caa5965167f17416b7bfa86a189a0bdd";
+		public const string HashString = "1427b6324de14f79b36e86eb77d10e94";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -15913,7 +15913,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
              AdvancedQueryFilter PendingQueryFilter_3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.AmendmentDontDisplayInList", PredefinedValue = "false",PredefinedValue2 = null, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 
-             AdvancedQueryFilter PendingQueryFilter_4 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsClosedForFollowUp", PredefinedValue = "true",PredefinedValue2 = null, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
+             AdvancedQueryFilter PendingQueryFilter_4 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsClosedForFollowUp", PredefinedValue = "false",PredefinedValue2 = null, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   
 	      

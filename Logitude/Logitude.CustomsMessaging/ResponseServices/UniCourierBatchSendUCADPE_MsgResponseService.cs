@@ -1,6 +1,7 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityListQueryServices;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
@@ -24,24 +25,25 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public override void Update(DCAInUCBUCADPEResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
             int i = 0;
+            AddMultiPendingsRequestParams rp = customResponse.requestParamsData;
             ICustomContext customContext = CustomContext.GetContext(customResponse.tenant);
 
-            List<string> declarationIdsList = customResponse.checkboxAll ?
-                new DeclarationCourierStatusQueryService(customContext).GetByMasterID_DeclarationIdList(customResponse.tenant, customResponse.courierMasterId) :
-                customResponse.declarationIdsList.ToList();
+            List<string> declarationIdsList = rp.checkboxAll ?
+               new DeclarationCourierStatusListQueryService(customContext).GetDeclarationCourierStatusListPendingBulk(customResponse.queryOperations, customResponse.tenant).Select(x => x.DeclarationId).ToList() :
+                rp.declarationIdsList.ToList();
 
 
-            if(customResponse.checkboxAll && customResponse.allwithoutDeclarationIdsList != null && customResponse.allwithoutDeclarationIdsList.Count()>0)
+            if(rp.checkboxAll && rp.allWithoutdeclarationIdsList != null && rp.allWithoutdeclarationIdsList.Count()>0)
             {
-                declarationIdsList.RemoveAll(x => customResponse.allwithoutDeclarationIdsList.Contains(x));
+                declarationIdsList.RemoveAll(x => rp.allWithoutdeclarationIdsList.Contains(x));
             }
 
 
 
-            customResponse.listPending.ToList().ForEach(pendingCode =>
+            rp.listPending.ToList().ForEach(pendingCode =>
             {
                 declarationIdsList.ForEach(declarationId =>
-                    UpdateDeclarationPending(customResponse.tenant, declarationId, pendingCode, customResponse.listPendingRemark[i], customContext));
+                    UpdateDeclarationPending(customResponse.tenant, declarationId, pendingCode, rp.listPendingRemark[i], customContext));
 
                 i++;
             });

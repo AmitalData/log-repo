@@ -738,7 +738,7 @@ export class CourierWorksheetListTemplate {
                     confirm.Title = "מחיקת Pending";
                     confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
                     confirm.ShowNoButton = true;
-                    confirm.Show("האם למחוק Pending?");
+                    confirm.Show("הםם למחוק Pending?");
                     confirm.WindowClosed.subscribe((event: any) => {
                         if (confirm.Yes) {
                             this.DeletePending(response.Result);
@@ -784,6 +784,7 @@ export class CourierWorksheetListTemplate {
 
       //  this._CourierWorksheetSharedDataService.connectedSelectAll = false;
 
+       
         this.IsDeclarationChecked = !this.IsDeclarationChecked;
         //if (event.IsChecked) {
         if (this.IsDeclarationChecked) {
@@ -847,54 +848,54 @@ export class CourierWorksheetListTemplate {
 
     SendMamanSpecialAction(declarationId: string, actionCode: string, mamanSpecialActionCode: string) {
         var titleText: string = "מסר פעולות מיוחדות";
-        var questionText: string = "אשר שליחת מסר ביטול פעולה מיוחדת";
+        var questionText: string = "םשר שליחת מסר ביטול פעולה מיוחדת";
         var declarationMamanSpecialActionPM: DeclarationMamanSpecialActionPM = null;
 
         switch (mamanSpecialActionCode) {
             case "2": {
                 if (actionCode == "U") {
                     titleText = "הפקת תעודת עיכוב";
-                    questionText = "אשר שליחת מסר פעולה מיוחדת של תעודת עיכוב למסוף";
+                    questionText = "םשר שליחת מסר פעולה מיוחדת של תעודת עיכוב למסוף";
                     if (this.DelayCertificateDetails != null) {
                         declarationMamanSpecialActionPM = this.DelayCertificateDetails;
                     }
                 }
                 else if (actionCode == "C") {
                     titleText = "ביטול תעודת עיכוב";
-                    questionText = "אשר שליחת מסר ביטול פעולה מיוחדת של תעודת עיכוב למסוף";
+                    questionText = "םשר שליחת מסר ביטול פעולה מיוחדת של תעודת עיכוב למסוף";
                 }
                 break;
             }
             case "4": {
                 titleText = "ביטול הפקת מדבקה";
-                questionText = "אשר שליחת מסר ביטול פעולה מיוחדת של הדפסת מדבקה";
+                questionText = "םשר שליחת מסר ביטול פעולה מיוחדת של הדפסת מדבקה";
                 break;
             }
             case "5": {
                 if (actionCode == "U") {
                     titleText = "הדפסת מסמכים";
-                    questionText = "אשר שליחת מסר פעולה מיוחדת של הדפסת מסמכים";
+                    questionText = "םשר שליחת מסר פעולה מיוחדת של הדפסת מסמכים";
                     if (this.PrintDocumentsDetails != null) {
                         declarationMamanSpecialActionPM = this.PrintDocumentsDetails;
                     }
                 }
                 else if (actionCode == "C") {
                     titleText = "ביטול הדפסת מסמכים";
-                    questionText = "אשר שליחת מסר ביטול פעולה מיוחדת של הדפסת מסמכים";
+                    questionText = "םשר שליחת מסר ביטול פעולה מיוחדת של הדפסת מסמכים";
                 }
                 break;
             }
             case "6": {
                 if (actionCode == "U") {
                     titleText = "סב''ן";
-                    questionText = "אשר שליחת מסר פעולה מיוחדת של שליחה לסב''ן";
+                    questionText = "םשר שליחת מסר פעולה מיוחדת של שליחה לסב''ן";
                     if (this.SbanDetails != null) {
                         declarationMamanSpecialActionPM = this.SbanDetails;
                     }
                 }
                 else if (actionCode == "C") {
                     titleText = "ביטול סב''ן";
-                    questionText = "אשר שליחת מסר ביטול פעולה מיוחדת של שליחה לסב''ן";
+                    questionText = "םשר שליחת מסר ביטול פעולה מיוחדת של שליחה לסב''ן";
                 }
                 break;
             }
@@ -970,7 +971,7 @@ export class CourierWorksheetListTemplate {
 
         if (SetEvetActive==0) {
                       
-            confirm.Show("אשר ביטול סגירת ש.מ.ב")
+            confirm.Show("םשר ביטול סגירת ש.מ.ב")
             confirm.WindowClosed.subscribe((event: any) => {
                 if (confirm.Yes) {
                     confirm.Close();
@@ -987,7 +988,7 @@ export class CourierWorksheetListTemplate {
             });
         }
         else {  // SetEvetActive==0
-            confirm.Show("אשר סגירת ש.מ.ב")
+            confirm.Show("םשר סגירת ש.מ.ב")
             confirm.WindowClosed.subscribe((event: any) => {
                 if (confirm.Yes) {
                     confirm.Close();
