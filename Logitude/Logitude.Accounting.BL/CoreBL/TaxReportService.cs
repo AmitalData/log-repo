@@ -199,6 +199,7 @@ namespace Logitude.Accounting.BL.CoreBL
             
             List<string> apInvoiceIds = ledgerTransactons.Where(d => d.AccountingEntity == "4").Select(d => d.AccountingEntityId).ToList();
             List<APInvoicePM> voidedAPInvoices = aPInvoiceQueryService.GetVoidedAPInvoicesByIds(apInvoiceIds, tenant, taxReport.TaxReportMonth);
+            List<APInvoicePM> allAPInvoices = aPInvoiceQueryService.GetAllAPInvoicesByIds(apInvoiceIds, tenant);
 
             glAccountIds.AddRange(oppositeglAccountIds);
             glAccountIds.AddRange(parentGLAccounts.Select(d => d.Id).ToList());
@@ -241,7 +242,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     transmitStatusCode = SetTransmitStatusForVoidedInvoiceTransaction(ledgerTransactons, transaction, transmitStatusCode);
                 }
 
-
+                APInvoicePM aPInvoicePM = allAPInvoices.Find(a => a.Id == transaction.AccountingEntityId);
                 TaxReportLinePM inputReportLine = new TaxReportLinePM()
                 {
 
@@ -255,7 +256,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     VatAmount = Math.Round(InputVatAmount.Value, MidpointRounding.AwayFromZero),
                     VatableInvoiceAmount = 0,// Math.Round(InputInvoiceAmount.Value, MidpointRounding.AwayFromZero),
                     TotalInvoiceAmount = Math.Round(InputInvoiceAmount.Value, MidpointRounding.AwayFromZero),
-                    IsEquipment = account != null ? account.IsEquipmentVendor : false,
+                    IsEquipment = aPInvoicePM != null ? aPInvoicePM.IsEquipment : account != null ? account.IsEquipmentVendor : false,
                     IsManuallyChanged = true,
                     TaxReportId = taxReport.Id,
                     ChangeSetOp = ChangeSetOperation.Insert,

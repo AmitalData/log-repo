@@ -351,5 +351,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ConcurrencyGUID { get; set; }
         public string NewConcurrencyGUID { get; set; }
+        public bool IsEquipment { get; set; }
+
     }
 }

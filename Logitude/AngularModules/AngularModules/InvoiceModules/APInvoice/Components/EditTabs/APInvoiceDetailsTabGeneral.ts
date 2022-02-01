@@ -869,6 +869,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                             if (!myResponse.HasError) {
                                 this.glaccount = myResponse.Result;
                                 this.EntityPM.VendorGLAccountId = this.glaccount.Id;
+                                this.EntityPM.IsEquipment = this.glaccount.IsEquipmentVendor;
                             }
                         });
                     }
@@ -937,6 +938,13 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     set PaymentTermName(newValue: string) {
         if (this.EntityPM.PaymentTermName != newValue) {
             this.EntityPM.PaymentTermName = newValue;
+        }
+    }
+
+    get IsEquipment() { return this.EntityPM.IsEquipment; }
+    set IsEquipment(newValue: boolean) {
+        if (this.EntityPM.IsEquipment != newValue) {
+            this.EntityPM.IsEquipment = newValue;
         }
     }
 
