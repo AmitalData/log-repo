@@ -19665,10 +19665,10 @@
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;Pending&quot;"
-        PredefinedValue="&quot;true&quot;"
+        PredefinedValue="&quot;false&quot;"
         ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
         IsPredefined="true"
-        Operator="&quot;NotEqual&quot;"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>
