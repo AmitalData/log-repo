@@ -262,10 +262,9 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     }
 
     private SetLogboxReferencesLabel() {
-        if (!this.IsPrivateLabel) {
-            this.ReferencesLabel = this.SelectedShipment ? ((this.SelectedShipment.CustomerReference1 ? this.SelectedShipment.CustomerReference1 : '') + (this.SelectedShipment.CustomerReference2 ? '/' + this.SelectedShipment.CustomerReference2 : '')) : '';
-
-        }
+        if (this.IsPrivateLabel) return; 
+         this.ReferencesLabel = this.SelectedShipment ? ((this.SelectedShipment.CustomerReference1 ? this.SelectedShipment.CustomerReference1 : '') + (this.SelectedShipment.CustomerReference2 ? '/' + this.SelectedShipment.CustomerReference2 : '')) : '';
+         
     }
 
     SetShipmentPackageLabel() {
