@@ -132,13 +132,20 @@ export class UserDashboardComponent implements AfterViewInit, OnInit,OnDestroy
         if (userName) {
             var splitted = userName.split(" ");
             if (splitted.length == 1)
-                this.UserNameFirstLetters = splitted[0][0];
+                this.UserNameFirstLetters = this.getFirstCharacter(splitted[0]);
             else if (splitted.length >= 2)
-                this.UserNameFirstLetters = splitted[0][0] + splitted[1][0];
-            else if (splitted.length == 0)
-                this.UserNameFirstLetters = "Aa";
+                this.UserNameFirstLetters = this.getFirstCharacter(splitted[0]) + this.getFirstCharacter(splitted[1]);
 
         }
+        if(!this.UserNameFirstLetters || this.UserNameFirstLetters.length == 0)
+            this.UserNameFirstLetters = "Aa";
+    }
+    getFirstCharacter(text:string){
+        var result = '';
+        if(text && text.length > 0 ){
+            return text[0];
+        }
+        return result;
     }
 
     private Authenticate()
