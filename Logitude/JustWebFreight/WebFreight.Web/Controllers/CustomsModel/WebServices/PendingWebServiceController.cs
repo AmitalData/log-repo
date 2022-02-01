@@ -8,6 +8,7 @@ using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.ResponseServices;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using WebFreight.Web.Controllers.CustomsModel.Extended;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 
@@ -46,31 +48,17 @@ namespace WebFreight.Web.Controllers.WebServices
 
 
         [HttpPost]
-        public HttpResponseMessage BulkFeeding([FromBody] AddMultiPendingsRequestParams requestParamsData)
+        public HttpResponseMessage BulkFeeding([FromBody] AddMultiPendingsRequestParams requestParamsData, [FromUri] ApiQueryFilters filters)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 
-
-                //int i = 0;
-                //ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
-
-                //List<string> declarationIdsList = requestParamsData.checkboxAll ?
-                //    new DeclarationCourierStatusQueryService(customContext).GetByMasterID_DeclarationIdList(authToken.Tenant, requestParamsData.courierMasterId) :
-                //    requestParamsData.declarationIdsList.ToList();
-
-                //requestParamsData.listPending.ToList().ForEach(pendingCode =>
-                //{
-                //    declarationIdsList.ForEach(declarationId =>
-                //        new UniCourierBatchSendUCADPE_MsgResponseService().UpdateDeclarationPending(authToken.Tenant, declarationId, pendingCode, requestParamsData.listPendingRemark[i], customContext));
-
-                //    i++;
-                //});
-
-
-                string res = new DCAInUCBUCADPE_MsgMessagingService().CreateCRS(authToken.Tenant, requestParamsData.listPending, requestParamsData.listPendingRemark, requestParamsData.declarationIdsList, requestParamsData.courierMasterId, requestParamsData.checkboxAll , requestParamsData.allWithoutdeclarationIdsList);
+                QueryOperations queryOperations = CourierDeclarationPendingListExtendedController.CreateQueryOperationsPendingBulk(filters, authToken.Tenant);
+                string res = new DCAInUCBUCADPE_MsgMessagingService().CreateCRS(authToken.Tenant, requestParamsData, queryOperations);
+                //TestPending(authToken.Tenant, requestParamsData, queryOperations);
+                //string res = "aa";
 
                 return Request.CreateResponse(HttpStatusCode.OK, res);
             }
@@ -81,6 +69,16 @@ namespace WebFreight.Web.Controllers.WebServices
             }
         }
 
+        private void TestPending(int tenant, AddMultiPendingsRequestParams requestParamsData, QueryOperations queryOperations)
+        {
+            var customResponse = new DCAInUCBUCADPEResponseContentHeader()
+            {
+                tenant = tenant,
+                requestParamsData = requestParamsData,
+                queryOperations = queryOperations,
+            };
 
+            new UniCourierBatchSendUCADPE_MsgResponseService().UpdateDeclarationPendings(customResponse);
+        }
     }
 }

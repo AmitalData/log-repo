@@ -55,73 +55,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 if (filters.Tenant != null)
                     tenant = tenant;
 
-                QueryOperations queryOperations = new QueryOperations()
-                {
-                    ObjectTableName = "Customs.DeclarationCourierStatus",
-                    PageIndex = filters.PageIndex,
-                    PageSize = filters.PageSize,
-                    QuerySection = "Customs.DeclarationCourierStatus",
-                    SortByColumnName = filters.SortBy,
-                    SortDirectin = filters.SortDirection,
-                    GetAll = filters.GetAll,
-                };
-
-                List<ObjectField> DeclarationCourierStatusObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.DeclarationCourierStatus", tenant);
-                List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
-
-                for (int i = 1; i <= 10; i++)
-                {
-                    object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);
-                    object filterValue1 = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Value")).GetValue(filters);
-                    object filterOperatorProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Operator")).GetValue(filters);
-                    object filterValue2 = null;
-
-                    if (filterNameProp != null)
-                    {
-                        string filterName = filterNameProp.ToString();
-                        string filterOperator = filterOperatorProp != null ? filterOperatorProp.ToString() : "Equals";
-
-                        ObjectField field = DeclarationCourierStatusObjectFields.FirstOrDefault(f => f.FieldName == filterName);
-                        if (field != null)
-                        {
-                            string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
-                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
-
-                            string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
-                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
-
-                            queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-                        }
-                        else
-                            queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
-                    }
-                }
-                if (!string.IsNullOrEmpty(filters.AdditionalFilters))
-                {
-                    JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
-                    var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
-
-                    foreach (QueryFilterItem filter in filters_list)
-                    {
-                        ObjectField field = DeclarationCourierStatusObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
-                        if (field != null)
-                        {
-                            string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
-                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
-
-                            string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
-                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
-
-                            bool isCustom = filter.FieldName == "CargoDescription" || filter.FieldName == "CourierMasterId" ? filter.IsCustom : field.IsCustomFilter;
-
-                            queryOperations.SetFilter(filter.FieldName, value1, isCustom, filter.Operator, value2, field.DisplayInList);
-                        }
-                        else
-                        {
-                            queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
-                        }
-                    }
-                }
+                QueryOperations queryOperations = CreateQueryOperationsPendingBulk(filters, tenant);
                 ICustomContext MyContext = CustomContext.GetContext(tenant);
                 DeclarationCourierStatusListQueryService declarationListQueryService = new DeclarationCourierStatusListQueryService(MyContext);
                 List<DeclarationCourierStatusList> entityLists = declarationListQueryService.GetDeclarationCourierStatusListPendingBulk(queryOperations, tenant);
@@ -142,6 +76,79 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        public static QueryOperations CreateQueryOperationsPendingBulk(ApiQueryFilters filters, int tenant)
+        {
+            QueryOperations queryOperations = new QueryOperations()
+            {
+                ObjectTableName = "Customs.DeclarationCourierStatus",
+                PageIndex = filters.PageIndex,
+                PageSize = filters.PageSize,
+                QuerySection = "Customs.DeclarationCourierStatus",
+                SortByColumnName = filters.SortBy,
+                SortDirectin = filters.SortDirection,
+                GetAll = filters.GetAll,
+            };
+
+            List<ObjectField> DeclarationCourierStatusObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.DeclarationCourierStatus", tenant);
+            List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
+
+            for (int i = 1; i <= 10; i++)
+            {
+                object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);
+                object filterValue1 = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Value")).GetValue(filters);
+                object filterOperatorProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Operator")).GetValue(filters);
+                object filterValue2 = null;
+
+                if (filterNameProp != null)
+                {
+                    string filterName = filterNameProp.ToString();
+                    string filterOperator = filterOperatorProp != null ? filterOperatorProp.ToString() : "Equals";
+
+                    ObjectField field = DeclarationCourierStatusObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+                    if (field != null)
+                    {
+                        string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
+                        object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+
+                        string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
+                        object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+
+                        queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
+                    }
+                    else
+                        queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
+                }
+            }
+            if (!string.IsNullOrEmpty(filters.AdditionalFilters))
+            {
+                JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
+                var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
+
+                foreach (QueryFilterItem filter in filters_list)
+                {
+                    ObjectField field = DeclarationCourierStatusObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                    if (field != null)
+                    {
+                        string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
+                        object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+
+                        string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
+                        object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+
+                        bool isCustom = filter.FieldName == "CargoDescription" || filter.FieldName == "CourierMasterId" ? filter.IsCustom : field.IsCustomFilter;
+
+                        queryOperations.SetFilter(filter.FieldName, value1, isCustom, filter.Operator, value2, field.DisplayInList);
+                    }
+                    else
+                    {
+                        queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                    }
+                }
+            }
+
+            return queryOperations;
         }
     }
 }

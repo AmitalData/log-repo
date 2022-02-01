@@ -8,6 +8,7 @@ using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.CustomsMessaging.Testers.Messages;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -46,12 +47,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var genericRequestParams = new GenericRequestParams()
             {
                 Tenant = customsResponse.tenant,
-                AppicationId = customsResponse.courierMasterId,
+                AppicationId = customsResponse.requestParamsData.courierMasterId,
                 LoggingEnabled = true,
                 InterfaceTypeCode = this.MainInterfaceCode,
                 MainInterfaceCode = this.MainInterfaceCode,
                 LoggingObjectTableId = objectTableId,
-                LoggingEntityId = customsResponse.courierMasterId,
+                LoggingEntityId = customsResponse.requestParamsData.courierMasterId,
                 //LoggingUserId = customsResponse.LoggingUserId,
 
             };
@@ -61,11 +62,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
             return genericRequestParams;
         }
 
-        public string CreateCRS(int tenant, string[] listPending, string[] listPendingRemark, string[] declarationIdsList, string courierMasterId, bool checkboxAll , string[] allwithoutDeclarationIdsList)
+        public string CreateCRS(int tenant, AddMultiPendingsRequestParams requestParamsData, QueryOperations queryOperations)
         {
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
-            var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, courierMasterId, null, null, null, true);
+            var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, requestParamsData.courierMasterId, null, null, null, true);
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
             {
                 return "קיים מסר זהה בתהליך";
@@ -79,13 +80,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var myDCAInUCBUCADPEResponseContentHeader = new DCAInUCBUCADPEResponseContentHeader()
             {
                 tenant = tenant,
-                listPending = listPending,
-                listPendingRemark = listPendingRemark,
-                declarationIdsList = declarationIdsList,
-                courierMasterId = courierMasterId,
-                checkboxAll = checkboxAll,
-                CustomFileNo = courierMasterId,
-                allwithoutDeclarationIdsList = allwithoutDeclarationIdsList , 
+                requestParamsData = requestParamsData,
+                queryOperations = queryOperations,
                 ResponseContentHeader = new DefaultResponseContentHeader()
                 {
                     TransmitionDateTime = transmitionDateTime
@@ -151,14 +147,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public Logitude.CustomsMessaging.Testers.Messages.DefaultResponseContentHeader ResponseContentHeader { get; set; }
 
         public int tenant { get; set; }
-        public string[] listPending { get; set; }
-        public string[] listPendingRemark { get; set; }
-        public string[] declarationIdsList { get; set; }
-        public string[] allwithoutDeclarationIdsList { get; set; }
-
-        public string courierMasterId { get; set; }
-        public bool checkboxAll { get; set; }
-        public string CustomFileNo { get; set; }
+        public AddMultiPendingsRequestParams requestParamsData { get; set; }
+        public QueryOperations queryOperations { get; set; }
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     }
 }

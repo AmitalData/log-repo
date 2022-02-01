@@ -1,14 +1,8 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { MessageWindow } from 'Controls/Windows/MessageWindow';
-import { AddMultiPendingsRequestParams } from 'Customs/DataContract/RequestParams/AddMultiPendingsRequestParams';
-import { CourierDeclarationList } from 'Customs/EntityLists/CourierDeclarationList';
-import { DeclarationCourierStatusList } from 'Customs/EntityLists/DeclarationCourierStatusList';
 import { CourierMasterPM } from 'Customs/EntityPMs/CourierMasterPM';
-import { CustomsRequestsSheetPM } from 'Customs/EntityPMs/CustomsRequestsSheetPM';
-import { DeclarationCourierStatusPM } from 'Customs/EntityPMs/DeclarationCourierStatusPM';
 import { CourierWorksheetSharedDataService } from 'Customs/Services/DataChange/CourierWorksheetSharedDataService';
 import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
-import { CourierDeclarationListService } from 'Customs/Services/StandardLists/CourierDeclarationListService';
 import { DeclarationCourierStatusPMService } from 'Customs/Services/StandardPMs/DeclarationCourierStatusPMService';
 import { DeclarationsforBulkFeed, PendingWebService } from 'Customs/Services/WebServices/PendingWebService';
 import { CourierMasterValidator } from 'Customs/Validators/CourierMasterValidator';
@@ -18,10 +12,8 @@ import { EntityListService } from 'Infrastructure/Services/EntityListService';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
-import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { AppTool } from '../../../../../Infrastructure/Tools';
-import { DeclarationPendingsBulkFeedingComponent } from '../../CourierPendingReason/DeclarationPendingsBulkFeedingComponent';
 import { DropdownMenuFilterComponent } from '../DropdownMenuFilterComponent';
 
 @Component({
@@ -34,7 +26,6 @@ export class BulkFeedPendingComponent extends BaseComponent {
   @Output() MenuHeaderchangeevent = new EventEmitter();
 
   @ViewChild(DropdownMenuFilterComponent) MyDropdownMenuFilterComponent: DropdownMenuFilterComponent = new DropdownMenuFilterComponent(null, null);
-  @ViewChild(DeclarationPendingsBulkFeedingComponent) DeclarationPendingsBulkFeedingComponent: DeclarationPendingsBulkFeedingComponent;
 
   DataContext: BulkFeedPendingComponent = this;
   ObjectTableName: string = "Customs.DeclarationCourierStatus";
@@ -88,18 +79,46 @@ export class BulkFeedPendingComponent extends BaseComponent {
   };
 
 
+  constructor(
+    private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService,
+  ) {
+    super();
+  }
+
+
+  ngOnInit() {
+    this.buildColumns();
+
+    this.RefreshList();
+  }
+
 
   getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
+    filters = this.getFilter(filters, take, skip, sortingCol, sortingDir);
 
-    debugger;
 
+
+
+    var myout = this._entityListService
+      .getExtendedByFilters("Customs.DeclarationCourierStatus", filters);
+    myout.then(res => {
+      this._stratSearch = false;
+      //this.CurrentSession.StopBusyIndicator();
+    });
+
+    return myout;
+
+  }
+
+
+  private getFilter(filters: ApiQueryFilters = null, take: any = null, skip: any = null, sortingCol: any = null, sortingDir: any = null): ApiQueryFilters {
     if (filters == null) {
       filters = new ApiQueryFilters();
     }
 
     filters.PageSize = take;
     filters.PageIndex = skip;
-    filters.GetAll = false;
+    filters.GetAll = this._CourierWorksheetSharedDataService.connectedSelectAll;
     filters.GetCount = true;
 
     if (AppTool.IsNullOrEmpty(sortingCol)) {
@@ -122,18 +141,15 @@ export class BulkFeedPendingComponent extends BaseComponent {
     if (!AppTool.IsNullOrEmpty(this.IncotermCode))
       filters.addAdditionalFilter("IncoTermCode", this.IncotermCode, null, null, "Equals", false, false, false, "string");
 
-    if (!AppTool.IsNullOrEmpty(this.WeightFrom))
+    if (!AppTool.IsNullOrEmpty(this.WeightFrom) && !AppTool.IsNullOrEmpty(this.WeightTo))
+      filters.addAdditionalFilter("GrossMassMeasure", this.WeightFrom, this.WeightTo, null, "Between", false, false, false, "number");
+    else if (!AppTool.IsNullOrEmpty(this.WeightFrom))
       filters.addAdditionalFilter("GrossMassMeasure", this.WeightFrom, null, null, "GreaterThanOrEqual", false, false, false, "number");
-
-    if (!AppTool.IsNullOrEmpty(this.WeightTo))
+    else if (!AppTool.IsNullOrEmpty(this.WeightTo))
       filters.addAdditionalFilter("GrossMassMeasure", this.WeightTo, null, null, "LessThanOrEqual", false, false, false, "number");
 
     if (!AppTool.IsNullOrEmpty(this.GoodsDescription))
       filters.addAdditionalFilter("CargoDescription", this.GoodsDescription, null, null, "Contains", true, false, false, "string");
-
-    if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
-      filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter.toLowerCase(), null, null, "Contains", false, false, false, "string", false, true);
-    }
 
 
     switch (this._SelectedFastIndividualProcessValue) {
@@ -163,21 +179,11 @@ export class BulkFeedPendingComponent extends BaseComponent {
       }
     }
 
+    if (!AppTool.IsNullOrEmpty(this.SearchFilter))
+      filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter.toLowerCase(), null, null, "Contains", false, false, false, "string");
 
-
-
-    var myout = this._entityListService
-      .getExtendedByFilters("Customs.DeclarationCourierStatus", filters);
-    myout.then(res => {
-      this._stratSearch = false;
-      //this.CurrentSession.StopBusyIndicator();
-    });
-
-    return myout;
-
+    return filters;
   }
-
-
 
   AddPendings() {
     if (!this._CourierWorksheetSharedDataService._SelectedItems?.Collection?.length && !this._CourierWorksheetSharedDataService.connectedSelectAll)
@@ -191,6 +197,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
     windowArgs.allWithoutdeclarationIdsList = this._CourierWorksheetSharedDataService._UnSelectedItems.Collection;
     windowArgs.checkboxAll = this._CourierWorksheetSharedDataService.connectedSelectAll;
     windowArgs.notUpdateSelf = true;
+    windowArgs.filter = this.getFilter();
 
 
     //windowArgs.CourierPendingReasonList = this._CourierWorksheet.CourierPendingReasonList;
@@ -209,56 +216,16 @@ export class BulkFeedPendingComponent extends BaseComponent {
   }
 
 
-  // declartionList = [];
-  constructor(
-    private pendingWebService: PendingWebService,
-    private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService,
-    private logtuideTableDataService: LogtuideTableDataService,
-  ) {
-    super();
-  }
-
-
-  ngOnInit() {
-    this.buildColumns();
-
-    this.RefreshList();
-
-    //  this.initPendingList()
-  }
-
-
   SetWindowArgs(args: any) {
     this.CourierMasterPM = args?.CourierMasterPM;
   }
 
 
   async RefreshList() {
-    // this.declartionList = await this.pendingWebService.getDeclarationsforBulkFeed(this.CourierMasterPM.Id, this.goodsDescription || '', this.weightFrom || '', this.weightTo || '', this.incotermCode || '', this.SearchFilter || '', this._SelectedTotalInvoiceValue || '', this._SelectedFastIndividualProcessValue || '', 0, 100)
     // this.ItemsSource.AppendCollection(this.declartionList)
     setTimeout(() => {
       this.MenuHeaderchangeevent.emit({ filters: this.filterAgrs, ignorefilter: false });
     }, 10);
-  }
-
-
-  async initPendingList() {
-    const filters = new ApiQueryFilters();
-    filters.GetAll = false;
-    filters.PageSize = 1;
-    filters.PageIndex = 0;
-    filters.addAdditionalFilter("CourierMasterId", this.CourierMasterPM.Id, null, null, "Equals", false, false, false, "string");
-    filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
-
-    const CourierDeclarationsStatusList: DeclarationCourierStatusList = (await this.logtuideTableDataService.getDataFromService((await new EntityListService().getExtendedByFilters("Customs.DeclarationCourierStatus", filters) as any)))[0];
-    const CourierDeclarationsStatusPM = await this.logtuideTableDataService.getDataFromService(new DeclarationCourierStatusPMService().get(CourierDeclarationsStatusList.DeclarationId))
-    const args = {
-      // DeclarationCourierStatus: (await this.logtuideTableDataService.getDataFromService(this.declarationCourierStatusPMService.get(this.declartionList[0]?.DeclarationId))),
-      DeclarationCourierStatus: CourierDeclarationsStatusPM,
-      notUpdateSelf: true
-    }
-
-    this.DeclarationPendingsBulkFeedingComponent.SetWindowArgs(args);
   }
 
 
@@ -299,43 +266,15 @@ export class BulkFeedPendingComponent extends BaseComponent {
 
   onSearchTextChangeEvent(text: string) {
     this.SearchFilter = text;
+    this.search()
+  }
+
+  search() {
+    this.declarationIdsList = []
+    this._CourierWorksheetSharedDataService._SelectedItems.Clear();
     this.RefreshList();
   }
 
-  // async OnRowEnded($event) {
-  //   console.log("this.ItemsSource.Length : " + this.ItemsSource.Length, $event);
-  //   if (($event) == this.ItemsSource.Length) {
-  //     //setTimeout(() => this.Add(), 1);
-  //     // this.Add();
-
-  //     this.declartionList = await this.pendingWebService.getDeclarationsforBulkFeed(this.CourierMasterPM.Id, this.goodsDescription || '', this.weightFrom || '', this.weightTo || '', this.incotermCode || '', this.SearchFilter || '', this._SelectedTotalInvoiceValue || '', this._SelectedFastIndividualProcessValue || '', 0, 100)
-  //     this.ItemsSource.AppendCollection(this.declartionList)
-  //   }
-  // }
-
-  // OnFocus() {
-  //   // if (this.ItemsSource.Length == 0) {
-  //   //     this.Add();
-  //   // }
-  // }
-
-
-  //async onOkClick(declarationCourierStatus: DeclarationCourierStatusPM) {
-  //  console.log(declarationCourierStatus)
-  //  const listPending = declarationCourierStatus.DeclarationPendings.map(x => x.CourierPendingReasonCode)
-  //  const listPendingRemark = declarationCourierStatus.DeclarationPendings.map(x => x.PendingRemarks)
-
-  //  SessionLocator.SelectedSession.StartBusyIndicatorSaving();
-  //  const res = await this.pendingWebService.postBulkFeeding(listPending, listPendingRemark, this.declarationIdsList, this.CourierMasterPM.Id, this.checkboxAll)
-  //  SessionLocator.SelectedSession.StopBusyIndicator();
-
-  //  const myMessageWindow = new MessageWindow();
-  //  myMessageWindow.Width = 250;
-  //  myMessageWindow.Height = 150;
-  //  myMessageWindow.Show(res);
-  //  SessionLocator.SelectedSession.StopBusyIndicator();
-  //  this.CancelButtonClicked()
-  //}
 
 
   CancelButtonClicked() {
@@ -477,13 +416,6 @@ export class BulkFeedPendingComponent extends BaseComponent {
     });
   }
 
-
-  //getRows(skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) {
-  //  return new Promise<any>((resolve, reject) => {
-  //    const res = this.pendingWebService.getDeclarationsforBulkFeed(this.CourierMasterPM.Id, this.goodsDescription || '', this.weightFrom || '', this.weightTo || '', this.incotermCode || '', this.SearchFilter || '', this._SelectedTotalInvoiceValue || '', this._SelectedFastIndividualProcessValue || '', skip, take, sortingCol, sortingDir);
-  //    resolve(res)
-  //  })
-  //}
 
   ViewInitCompleted(e) { }
   OnRowSelected(e) { }

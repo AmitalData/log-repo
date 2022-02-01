@@ -183,24 +183,24 @@ export class ApiQueryFilters {
             params.FieldValue3 = encodeURIComponent(params.FieldValue3)
             //FieldValue = FieldValue.replace("%20", " ");
         }
-    }
-    var existedItem = this.AdditionalFilters.find(d => d.FieldName == params.FieldName);
-    if (!existedItem || params.ForceEnableAdd) {
-        var item = new FilterItem(
-          params.FieldName,
-          params.FieldValue, 
-          params.FieldValue2,
-          params.FieldValue3,
-          params.Operator,
-          params.IsCustom,
-          params.DisplayInList,
-          params.IsCustomField, 
-          params.FieldDataType,
-          params.IgnoreFilter,
-          params.IsCacheOnClient,
-          params.IsLookUpFilter);
-        this.AdditionalFilters.push(item);
-    }
+        }
+        var existedItem = this.AdditionalFilters.find(d => d.FieldName == params.FieldName);
+        if (!existedItem || params.ForceEnableAdd) {
+            var item = new FilterItem(
+            params.FieldName,
+            params.FieldValue, 
+            params.FieldValue2,
+            params.FieldValue3,
+            params.Operator,
+            params.IsCustom,
+            params.DisplayInList,
+            params.IsCustomField, 
+            params.FieldDataType,
+            params.IgnoreFilter,
+            params.IsCacheOnClient,
+            params.IsLookUpFilter);
+            this.AdditionalFilters.push(item);
+        }
     }
 
     public queryId: string;
