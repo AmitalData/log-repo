@@ -919,6 +919,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string debitAccountEnglishName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DebitAccountEnglishName  
+	   {
+	    
+	     get
+		{
+		   return debitAccountEnglishName;
+		 }
+		 set
+		 {
+		   if(debitAccountEnglishName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DebitAccountEnglishName",OldValue=debitAccountEnglishName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   debitAccountEnglishName=value;
+		   }
+			
+		 }
+	   }
+	  private string creditAccountEnglishName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreditAccountEnglishName  
+	   {
+	    
+	     get
+		{
+		   return creditAccountEnglishName;
+		 }
+		 set
+		 {
+		   if(creditAccountEnglishName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreditAccountEnglishName",OldValue=creditAccountEnglishName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   creditAccountEnglishName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

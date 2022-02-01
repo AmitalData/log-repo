@@ -222,6 +222,16 @@ export class JournalLinePM {
     public set DebitAccountCOACode(newValue: string) { if (this.debitAccountCOACode != newValue) { this.debitAccountCOACode = newValue; this.MarkAsDirty("DebitAccountCOACode"); } }
        
 	 
+    private debitAccountEnglishName: string;
+    public get DebitAccountEnglishName() { return this.debitAccountEnglishName; }
+    public set DebitAccountEnglishName(newValue: string) { if (this.debitAccountEnglishName != newValue) { this.debitAccountEnglishName = newValue; this.MarkAsDirty("DebitAccountEnglishName"); } }
+       
+	 
+    private creditAccountEnglishName: string;
+    public get CreditAccountEnglishName() { return this.creditAccountEnglishName; }
+    public set CreditAccountEnglishName(newValue: string) { if (this.creditAccountEnglishName != newValue) { this.creditAccountEnglishName = newValue; this.MarkAsDirty("CreditAccountEnglishName"); } }
+       
+	 
 
     public OldEntityPM: JournalLinePM;
 	
