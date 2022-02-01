@@ -19,7 +19,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPMToPOCO(AccountingEntityJournalPM entityPM, AccountingEntityJournal entityPOCO)
         {
-            //throw new NotImplementedException();
+            entityPOCO.Id = entityPM.Id;
         }
 
         public void CustomPOCOToPM(AccountingEntityJournalPM entityPM, AccountingEntityJournal entityPOCO)
