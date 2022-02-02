@@ -118,6 +118,8 @@ namespace CommunicationWorkerRole
                     return GetCustomPickListValueById(Tenant, EntityId);
                 case "DeleteCustomPickListValue":
                     return EntityId;
+                case "DisconectFromContact":
+                    return JsonConvert.DeserializeObject(EntityId);
                 default:
                     return null;
             }
@@ -236,6 +238,8 @@ namespace CommunicationWorkerRole
                     return KakaMessageTypes.CustomPickList;
                 case "DeleteCustomPickListValue":
                     return KakaMessageTypes.DeleteCustomPickListValue;
+                case "DisconectFromContact":
+                    return KakaMessageTypes.DisconectFromContact;
                 default:
                     return 0;
             }
