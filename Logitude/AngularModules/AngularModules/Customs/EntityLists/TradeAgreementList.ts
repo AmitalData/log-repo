@@ -13,6 +13,7 @@ export class TradeAgreementList {
 	LocalName: string;
 	SearchFields: string;
 	Inactive: boolean;
+	CustomsBookTypeID: number;
 	
 }
  
