@@ -1,7 +1,0 @@
-﻿<Script DBType="Main" Module="Accounting" AOT="false">
-  <Sql Version="1">
-    <![CDATA[
-	  update TextCodes set LocalDefaultText = N'תאריך פרעון' where Code = 'Accounting.General.O.DueDate'
-     ]]>
- </Sql>
-</Script>
