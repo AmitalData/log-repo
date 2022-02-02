@@ -47,7 +47,6 @@ namespace WebFreight.Web.Controllers.WebServices
         }
 
 
-        //[HttpGet]
         [HttpPost]
         public HttpResponseMessage BulkFeeding([FromBody] AddMultiPendingsRequestParams requestParamsData, [FromUri] ApiQueryFilters filters)
         {
@@ -57,24 +56,9 @@ namespace WebFreight.Web.Controllers.WebServices
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 
                 QueryOperations queryOperations = CourierDeclarationPendingListExtendedController.CreateQueryOperationsPendingBulk(filters, authToken.Tenant);
-
-                //int i = 0;
-                //ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
-
-                //List<string> declarationIdsList = requestParamsData.checkboxAll ?
-                //    new DeclarationCourierStatusQueryService(customContext).GetByMasterID_DeclarationIdList(authToken.Tenant, requestParamsData.courierMasterId) :
-                //    requestParamsData.declarationIdsList.ToList();
-
-                //requestParamsData.listPending.ToList().ForEach(pendingCode =>
-                //{
-                //    declarationIdsList.ForEach(declarationId =>
-                //        new UniCourierBatchSendUCADPE_MsgResponseService().UpdateDeclarationPending(authToken.Tenant, declarationId, pendingCode, requestParamsData.listPendingRemark[i], customContext));
-
-                //    i++;
-                //});
-
-
-                string res =  new DCAInUCBUCADPE_MsgMessagingService().CreateCRS(authToken.Tenant, requestParamsData, queryOperations);
+                string res = new DCAInUCBUCADPE_MsgMessagingService().CreateCRS(authToken.Tenant, requestParamsData, queryOperations);
+                //TestPending(authToken.Tenant, requestParamsData, queryOperations);
+                //string res = "aa";
 
                 return Request.CreateResponse(HttpStatusCode.OK, res);
             }
@@ -83,6 +67,18 @@ namespace WebFreight.Web.Controllers.WebServices
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        private void TestPending(int tenant, AddMultiPendingsRequestParams requestParamsData, QueryOperations queryOperations)
+        {
+            var customResponse = new DCAInUCBUCADPEResponseContentHeader()
+            {
+                tenant = tenant,
+                requestParamsData = requestParamsData,
+                queryOperations = queryOperations,
+            };
+
+            new UniCourierBatchSendUCADPE_MsgResponseService().UpdateDeclarationPendings(customResponse);
         }
     }
 }

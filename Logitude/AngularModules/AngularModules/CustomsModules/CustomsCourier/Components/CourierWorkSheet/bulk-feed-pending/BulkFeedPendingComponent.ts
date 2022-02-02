@@ -118,7 +118,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
 
     filters.PageSize = take;
     filters.PageIndex = skip;
-    filters.GetAll = false;
+    filters.GetAll = this._CourierWorksheetSharedDataService.connectedSelectAll;
     filters.GetCount = true;
 
     if (AppTool.IsNullOrEmpty(sortingCol)) {
