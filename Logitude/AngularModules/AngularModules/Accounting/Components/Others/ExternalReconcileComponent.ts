@@ -393,8 +393,10 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     private GetTransactionsYears()
     {
         return this.TransactionSelectedLines.Collection
+            .filter(e=>e.LedgerTransactionPM.AccountId != this.BankAccountPM.TransferGLAcccountId)
             .reduce((result, current: TransactionLineModel) =>
             {
+                
                 const year = new Date(current.LedgerTransactionPM.AccountingDate).getFullYear();
                 result[year] = (result[year] || 0) + 1;
                 return result;
