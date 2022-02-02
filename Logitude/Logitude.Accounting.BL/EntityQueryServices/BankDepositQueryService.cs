@@ -380,6 +380,17 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             // save journal
             JournalUpdateService journalUpdateService = new JournalUpdateService(accountingContext, new Dictionary<string, IContext>(), tenant);
             journalUpdateService.Update(journalPM, true);
+
+            AddAccountingEntityJournal(journalPM, AccountingEntityJournalActions.BankDepositOutOfDeposit, arpChequeId);
+
+        }
+
+
+        public void AddAccountingEntityJournal(JournalPM journal,string actionName, string childEntityId = null)
+        {
+            IAccountingContext context = AccountingContext.GetContext(journal.Tenant);
+            AccountingEntityJournalUpdateService service = new AccountingEntityJournalUpdateService(context, new Dictionary<string, IContext>(), journal.Tenant);
+            service.AddAccountingEntitieJournal(journal, actionName, childEntityId);
         }
 
         private void AutoReconcileChequesTransactions(string bankDepositId, int tenant, ARPaymentChequePM chequePM, JournalPM journalPM)

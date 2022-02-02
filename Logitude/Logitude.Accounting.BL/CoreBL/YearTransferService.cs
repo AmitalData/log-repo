@@ -8,6 +8,7 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -84,7 +85,17 @@ namespace Logitude.Accounting.BL.CoreBL
                 tenant);
             var JournalUP = new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
             JournalUP.Update(journalPM, true);
+
+            AddAccountingEntityJournal(journalPM, AccountingEntityJournalActions.YearTransferApprove);
+
             return journalPM;
+        }
+
+        public void AddAccountingEntityJournal(JournalPM journal, string actionName, string childEntityId = null)
+        {
+            IAccountingContext context = AccountingContext.GetContext(journal.Tenant);
+            AccountingEntityJournalUpdateService service = new AccountingEntityJournalUpdateService(context, new Dictionary<string, IContext>(), journal.Tenant);
+            service.AddAccountingEntitieJournal(journal, actionName, childEntityId);
         }
 
         public void CheckThrowExceptionIfNeeded(IAccountingContext accountingContext, int YYyear, int tenant)
@@ -204,6 +215,9 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             JournalPM originalPM = CheckCancelYear(accountingContext, YYyear, tenant);
             JournalPM stornoJournalPM = DoCancelYear(accountingContext, originalPM, tenant);
+
+            AddAccountingEntityJournal(stornoJournalPM, AccountingEntityJournalActions.YearTransferCancel);
+
             return stornoJournalPM;
         }
 

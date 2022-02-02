@@ -96,6 +96,7 @@
     <None Include="DBScripts\202103240820_usp_AccountingStreamingTypes.sxml" />
     <None Include="DBTables\AccountingCompanyType.dxml" />
     <None Include="DBTables\AccountingEntity.dxml" />
+    <None Include="DBTables\AccountingEntityJournal.dxml" />
     <None Include="DBTables\AccountingIntegrityCheck.dxml" />
     <None Include="DBTables\AccountingNote.dxml" />
     <None Include="DBTables\AccountingPeriod.dxml" />
