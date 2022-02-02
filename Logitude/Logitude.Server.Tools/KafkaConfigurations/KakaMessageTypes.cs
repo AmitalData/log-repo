@@ -25,5 +25,6 @@
         public static long ContainerCreate = 21;
         public static long CustomPickList = 22;
         public static long DeleteCustomPickListValue = 23;
+        public static long DisconectFromContact = 24;
     }
 }
