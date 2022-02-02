@@ -29,7 +29,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         {
             var gov = mehesTableRow.MyTradeAgreement?? new TradeAgreement();
             return base.IsEqual(mehesTableRow, curDbPM)
-                && gov.CustomsBookTypeID == curDbPM.CustomsBookTypeID
+                && gov.CustomsBookTypeID == curDbPM.CustomsBookTypeID;
 
 
         }
