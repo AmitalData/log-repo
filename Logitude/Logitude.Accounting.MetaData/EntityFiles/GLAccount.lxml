@@ -17143,6 +17143,18 @@
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
     <TextCode
+      Code="&quot;YearTransfer.O.TwoOrFourDigits&quot;"
+      DefaultText="&quot;Enter year in either two or four digits only&quot;"
+      LocalDefaultText="&quot;יש להזין שנה בשתי ספרות או בארבע ספרות בלבד&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;YearTransfer.O.PastYears&quot;"
+      DefaultText="&quot;Enter past years only&quot;"
+      LocalDefaultText="&quot;יש להזין שנים קודמות בלבד&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
       Code="&quot;General.MC.ACC.System1000&quot;"
       DefaultText="&quot;System 1000&quot;"
       LocalDefaultText="&quot;מערכת 1000&quot;"
