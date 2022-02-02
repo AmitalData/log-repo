@@ -42,6 +42,8 @@ using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.BL.Resolvers;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
@@ -86,6 +88,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             {
                 try
                 {
+                    CheckIfTheCashBookInDepositProgress(entityPM);
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         string logKey = PerformanceLogger.LogCurrentTime();
@@ -127,6 +130,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
+        private void CheckIfTheCashBookInDepositProgress(BankDepositPM depositPM)
+        {
+            CashBookRepository repo = new CashBookRepository(depositPM.Tenant);
+            CashBook cshbk = repo.GetSingle(depositPM.CashBookId, depositPM.Tenant);
+            if (cshbk.InDepositingProgress)
+            {
+                throw new ApplicationException(TextCodesTranslator.TranslateText("Cashbook.O.InDepositingProgressMessage",
+                    depositPM.Tenant, LoggedContactResolver.GetLoggedContactShowLocal(depositPM.Tenant)));
+            }
+            else
+            {
+                
+                cshbk.InDepositingProgress = true;
+                repo.Update(cshbk);
+                repo.SubmitChanges();
+            }
+        }
 
         public HttpResponseMessage Put(BankDepositPM entityPM)
         {
