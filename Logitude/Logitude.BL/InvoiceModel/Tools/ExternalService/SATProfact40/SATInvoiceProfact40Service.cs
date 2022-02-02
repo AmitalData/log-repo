@@ -632,9 +632,13 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         private Profact.TimbraCFDI40.ComprobanteReceptor GetNewComprobanteReceptorInstance(Card billToCard, Address billToAddress)
         {
             string billToAddressZipCode = "";
-            if (billToAddress != null && string.IsNullOrEmpty(billToAddress.ZipCode))
+            if (billToAddress != null && !string.IsNullOrEmpty(billToAddress.ZipCode))
             {
-                billToAddressZipCode = GetBillToAddressZipCode(billToAddress, billToAddressZipCode);
+                billToAddressZipCode = GetBillToAddressZipCode(billToAddress);
+            }
+
+            if (string.IsNullOrEmpty(billToAddressZipCode)) {
+                throw new ApplicationException("Bill To Address Zip Code is required");
             }
 
             return new Profact.TimbraCFDI40.ComprobanteReceptor
@@ -645,7 +649,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             };
         }
 
-        private string GetBillToAddressZipCode(Address billToAddress, string billToAddressZipCode)
+        private string GetBillToAddressZipCode(Address billToAddress)
         {
             PostalCodeQuery postalCodeQuery = new PostalCodeQuery(arInvoicePM.Tenant);
             PostalCodePM postalCodePM = postalCodeQuery.GetSinglePM(billToAddress.ZipCode);
@@ -655,10 +659,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             }
             else
             {
-                billToAddressZipCode = billToAddress.ZipCode;
+                return billToAddress.ZipCode;
             }
-
-            return billToAddressZipCode;
         }
 
         private Address GetBillToAddress()
