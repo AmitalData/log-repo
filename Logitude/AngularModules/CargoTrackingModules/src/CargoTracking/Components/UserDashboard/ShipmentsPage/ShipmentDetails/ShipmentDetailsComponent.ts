@@ -697,10 +697,17 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
 
         var result = text
         if (text?.length > numberOfCharacter && !this.IsMobileView) {
+            if(!this.ContainsHebrew(text))
                 result = text.slice(0, numberOfCharacter) + "..."
+            else
+                result = "..." + text.slice(0, numberOfCharacter)
+
         }
         if (text?.length > this.MaxNumberOfCarachterForMobile && this.IsMobileView) {
+            if(!this.ContainsHebrew(text))
                 result = text.slice(0, this.MaxNumberOfCarachterForMobile) + "..."
+            else
+                result = "..." + text.slice(0, this.MaxNumberOfCarachterForMobile)
         }
         return result;
 

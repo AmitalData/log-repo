@@ -561,7 +561,7 @@ h1 {
         margin-top: 20px;
     }
     .route-label > div{
-        display: inline;
+        display: inline-block;
     }
     .routing-card::before {
         z-index: 10;
