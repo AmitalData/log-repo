@@ -543,9 +543,9 @@ ID List :
                                                 DataSetToTableData(customResponse,
                                                 (newResponseTableData, dr) =>
                                                 {
-                                                    var newExt =
-                                                        SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
+                                                    var newExt = SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
                                                     newExt.MyTradeAgreement = new Helpers.ClosedTable.TradeAgreement();
+
                                                     if (!writeHighlight)
                                                     {
                                                         writeHighlight = true;
