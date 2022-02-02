@@ -175,6 +175,66 @@ namespace Logitude.CRM.Data.EntityPOCOs
 	    public string OpportunityTypeId { get; set; }
 	      
         public virtual OpportunityType OpportunityType { get; set; }
+        [Column("Field11")]
+	    public string Field11 { get; set; }
+        [Column("Field12")]
+	    public string Field12 { get; set; }
+        [Column("Field13")]
+	    public string Field13 { get; set; }
+        [Column("Field14")]
+	    public string Field14 { get; set; }
+        [Column("Field15")]
+	    public string Field15 { get; set; }
+        [Column("Field16")]
+	    public string Field16 { get; set; }
+        [Column("Field17")]
+	    public string Field17 { get; set; }
+        [Column("Field18")]
+	    public string Field18 { get; set; }
+        [Column("Field19")]
+	    public string Field19 { get; set; }
+        [Column("Field20")]
+	    public string Field20 { get; set; }
+        [Column("Field21")]
+	    public string Field21 { get; set; }
+        [Column("Field22")]
+	    public string Field22 { get; set; }
+        [Column("Field23")]
+	    public string Field23 { get; set; }
+        [Column("Field24")]
+	    public string Field24 { get; set; }
+        [Column("Field25")]
+	    public string Field25 { get; set; }
+        [Column("Field26")]
+	    public string Field26 { get; set; }
+        [Column("Field27")]
+	    public string Field27 { get; set; }
+        [Column("Field28")]
+	    public string Field28 { get; set; }
+        [Column("Field29")]
+	    public string Field29 { get; set; }
+        [Column("Field30")]
+	    public string Field30 { get; set; }
+        [Column("Field31")]
+	    public string Field31 { get; set; }
+        [Column("Field32")]
+	    public string Field32 { get; set; }
+        [Column("Field33")]
+	    public string Field33 { get; set; }
+        [Column("Field34")]
+	    public string Field34 { get; set; }
+        [Column("Field35")]
+	    public string Field35 { get; set; }
+        [Column("Field36")]
+	    public string Field36 { get; set; }
+        [Column("Field37")]
+	    public string Field37 { get; set; }
+        [Column("Field38")]
+	    public string Field38 { get; set; }
+        [Column("Field39")]
+	    public string Field39 { get; set; }
+        [Column("Field40")]
+	    public string Field40 { get; set; }
     }
 }
 	 

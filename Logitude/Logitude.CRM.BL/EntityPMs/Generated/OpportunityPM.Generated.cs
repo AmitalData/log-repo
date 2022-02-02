@@ -1804,6 +1804,696 @@ namespace Logitude.CRM.BL.EntityPMs
 			
 		 }
 	   }
+	  private CustomFieldClass field11 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field11  
+	   {
+	    
+	     get
+		{
+		   return field11;
+		 }
+		 set
+		 {
+		   if(field11 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field11",OldValue=field11,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field11=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field12 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field12  
+	   {
+	    
+	     get
+		{
+		   return field12;
+		 }
+		 set
+		 {
+		   if(field12 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field12",OldValue=field12,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field12=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field13 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field13  
+	   {
+	    
+	     get
+		{
+		   return field13;
+		 }
+		 set
+		 {
+		   if(field13 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field13",OldValue=field13,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field13=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field14 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field14  
+	   {
+	    
+	     get
+		{
+		   return field14;
+		 }
+		 set
+		 {
+		   if(field14 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field14",OldValue=field14,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field14=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field15 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field15  
+	   {
+	    
+	     get
+		{
+		   return field15;
+		 }
+		 set
+		 {
+		   if(field15 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field15",OldValue=field15,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field15=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field16 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field16  
+	   {
+	    
+	     get
+		{
+		   return field16;
+		 }
+		 set
+		 {
+		   if(field16 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field16",OldValue=field16,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field16=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field17 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field17  
+	   {
+	    
+	     get
+		{
+		   return field17;
+		 }
+		 set
+		 {
+		   if(field17 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field17",OldValue=field17,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field17=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field18 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field18  
+	   {
+	    
+	     get
+		{
+		   return field18;
+		 }
+		 set
+		 {
+		   if(field18 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field18",OldValue=field18,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field18=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field19 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field19  
+	   {
+	    
+	     get
+		{
+		   return field19;
+		 }
+		 set
+		 {
+		   if(field19 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field19",OldValue=field19,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field19=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field20 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field20  
+	   {
+	    
+	     get
+		{
+		   return field20;
+		 }
+		 set
+		 {
+		   if(field20 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field20",OldValue=field20,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field20=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field21 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field21  
+	   {
+	    
+	     get
+		{
+		   return field21;
+		 }
+		 set
+		 {
+		   if(field21 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field21",OldValue=field21,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field21=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field22 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field22  
+	   {
+	    
+	     get
+		{
+		   return field22;
+		 }
+		 set
+		 {
+		   if(field22 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field22",OldValue=field22,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field22=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field23 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field23  
+	   {
+	    
+	     get
+		{
+		   return field23;
+		 }
+		 set
+		 {
+		   if(field23 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field23",OldValue=field23,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field23=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field24 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field24  
+	   {
+	    
+	     get
+		{
+		   return field24;
+		 }
+		 set
+		 {
+		   if(field24 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field24",OldValue=field24,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field24=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field25 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field25  
+	   {
+	    
+	     get
+		{
+		   return field25;
+		 }
+		 set
+		 {
+		   if(field25 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field25",OldValue=field25,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field25=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field26 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field26  
+	   {
+	    
+	     get
+		{
+		   return field26;
+		 }
+		 set
+		 {
+		   if(field26 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field26",OldValue=field26,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field26=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field27 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field27  
+	   {
+	    
+	     get
+		{
+		   return field27;
+		 }
+		 set
+		 {
+		   if(field27 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field27",OldValue=field27,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field27=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field28 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field28  
+	   {
+	    
+	     get
+		{
+		   return field28;
+		 }
+		 set
+		 {
+		   if(field28 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field28",OldValue=field28,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field28=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field29 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field29  
+	   {
+	    
+	     get
+		{
+		   return field29;
+		 }
+		 set
+		 {
+		   if(field29 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field29",OldValue=field29,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field29=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field30 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field30  
+	   {
+	    
+	     get
+		{
+		   return field30;
+		 }
+		 set
+		 {
+		   if(field30 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field30",OldValue=field30,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field30=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field31 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field31  
+	   {
+	    
+	     get
+		{
+		   return field31;
+		 }
+		 set
+		 {
+		   if(field31 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field31",OldValue=field31,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field31=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field32 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field32  
+	   {
+	    
+	     get
+		{
+		   return field32;
+		 }
+		 set
+		 {
+		   if(field32 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field32",OldValue=field32,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field32=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field33 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field33  
+	   {
+	    
+	     get
+		{
+		   return field33;
+		 }
+		 set
+		 {
+		   if(field33 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field33",OldValue=field33,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field33=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field34 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field34  
+	   {
+	    
+	     get
+		{
+		   return field34;
+		 }
+		 set
+		 {
+		   if(field34 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field34",OldValue=field34,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field34=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field35 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field35  
+	   {
+	    
+	     get
+		{
+		   return field35;
+		 }
+		 set
+		 {
+		   if(field35 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field35",OldValue=field35,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field35=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field36 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field36  
+	   {
+	    
+	     get
+		{
+		   return field36;
+		 }
+		 set
+		 {
+		   if(field36 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field36",OldValue=field36,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field36=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field37 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field37  
+	   {
+	    
+	     get
+		{
+		   return field37;
+		 }
+		 set
+		 {
+		   if(field37 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field37",OldValue=field37,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field37=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field38 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field38  
+	   {
+	    
+	     get
+		{
+		   return field38;
+		 }
+		 set
+		 {
+		   if(field38 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field38",OldValue=field38,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field38=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field39 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field39  
+	   {
+	    
+	     get
+		{
+		   return field39;
+		 }
+		 set
+		 {
+		   if(field39 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field39",OldValue=field39,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field39=value;
+		   }
+			
+		 }
+	   }
+	  private CustomFieldClass field40 ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field40  
+	   {
+	    
+	     get
+		{
+		   return field40;
+		 }
+		 set
+		 {
+		   if(field40 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field40",OldValue=field40,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   field40=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
