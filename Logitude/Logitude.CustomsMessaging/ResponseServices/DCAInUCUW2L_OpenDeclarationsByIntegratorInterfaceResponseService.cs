@@ -137,6 +137,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var documentsFilingIds = _documentsFilingQuery.GetByexternalentityreference("CFIFILEM", customFileNo, requestParams.Tenant)
             .Where(r => r.EntityId == null || r.EntityId.Trim() == string.Empty)
             .Select(r => r.Id).ToList();
+            if (documentsFilingIds.Count==0)
+            {
+                LogMessagingUtil.Instance.AppendLine($"ConnectDocumentsfilingService.Connect:GetByexternalentityreference:{customFileNo}.Where(r => r.EntityId == null || r.EntityId.Trim() == string.Empty) not found any !!");
+
+
+            }
             foreach (string documentsFilingId in documentsFilingIds)
             {
                 UpdatePaymentDocument(documentsFilingId, DeclarationId, requestParams.Tenant, requestParams.LoggingUserId);
@@ -166,9 +172,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 //documentsFilingPM.ExternalEntityReference = _PaymentOrderPM.AccountingCustomFile;
                 documentsFilingPM.IsHybrid = true;//this is as substituteto hybrid !!!!
                 documentsFilingService.Update(documentsFilingPM, null, LoggedUserId);
-                LogMessagingUtil.Instance.AppendLine("Connect  document " + documentsFilingPM.Code + " to DeclarationId:" + DeclarationId);
+                LogMessagingUtil.Instance.AppendLine("UpdatePaymentDocument:Connect  document " + documentsFilingPM.Code + " to DeclarationId:" + DeclarationId);
             }
-
+            else
+            {
+                LogMessagingUtil.Instance.AppendLine($"UpdatePaymentDocument:GetSinglePM(documentsFilingId)-bad:{documentsFilingPM?.EntityId}");
+            }
         }
     }
 
