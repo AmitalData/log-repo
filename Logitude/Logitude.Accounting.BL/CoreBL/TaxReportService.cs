@@ -124,9 +124,9 @@ namespace Logitude.Accounting.BL.CoreBL
                         //}
                         //else
                         //{
-                        outputreference = invoice.InvoiceNumber;
+                        outputreference = invoice.CustomerRef != null ? invoice.CustomerRef : invoice.InvoiceNumber;
                         //}
-                     
+
                         if (!string.IsNullOrEmpty(invoice.VatNumber))
                         {
                             vatNumber = invoice.VatNumber;
@@ -137,7 +137,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             VatNumber = vatNumber,
                             Reference = outputreference,
-                            OriginalReference = outputreference,
+                            OriginalReference = invoice.InvoiceNumber,
                             ReferecneGroup = null,
                             ReferenceDate = invoice.InvoiceDate,
                             JournalId = a.Id,
