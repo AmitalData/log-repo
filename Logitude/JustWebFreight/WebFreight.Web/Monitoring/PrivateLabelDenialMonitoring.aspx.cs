@@ -16,10 +16,11 @@ using System.Data.Entity.Core.Objects;
 using Simplog.Data.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using System.Data.Entity;
+using Simplog.Data.InfrastructureModel;
 
 namespace WebFreight.Web.Monitoring
 {
-    public partial class ShipmentInterfaceMonitoringStatus : System.Web.UI.Page
+    public partial class PrivateLabelDenialMonitoring : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -54,30 +55,30 @@ namespace WebFreight.Web.Monitoring
             {
                 try
                 {
-                    isFailed = CheckIfAnyCommunicationLogsFailed();
+                    isFailed = CheckIfAnyQueueMessagesFailed();
                 }
                 catch (Exception errorInfo)
                 {
-                    ExceptionHandler.HandleException(errorInfo, DateTime.Now, 0, "", "ShipmentInterfaceMonitoringStatus", "Bug in ShipmentInterfaceMonitoringStatus Method : globaldbRep.All()", null);
+                    ExceptionHandler.HandleException(errorInfo, DateTime.Now, 0, "", "PrivateLabelDenialMonitoring", "Bug in PrivateLabelDenialMonitoring Method : globaldbRep.All()", null);
                 }
                 scope.Complete();
             }
             return isFailed;
         }
 
-        private static bool CheckIfAnyCommunicationLogsFailed()
+        private static bool CheckIfAnyQueueMessagesFailed()
         {
-            DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(0);
+            DateTime todayDateTime = DateTime.Now;
             DateTime twoDaysBefore = todayDateTime.AddDays(-2);
-            ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
-
-            return (from a in commonDataContext.CommunicationLogs
-                    where a.CreateDateUTC > twoDaysBefore
-                    && a.Subject == "Shipment Interface"
-                    && ((a.CommunicationStatusTypeCode == "W" && (EntityFunctions.DiffMinutes(a.CreateDateUTC, todayDateTime) > 5)) || a.CommunicationStatusTypeCode == "F")
+            IWebFreightContext context = WebFreightContext.GetContext(0);
+            return (from a in context.QueueMessages
+                    where a.CreateDateTime > twoDaysBefore
+                    && a.QueueDefinitionCode == "PrivateLabelDenialQueue" && ((a.Status == 0
+                    && (EntityFunctions.DiffMinutes(a.CreateDateTime, todayDateTime) > 5)) || a.Status == -1)
                     select a).Any();
 
         }
+
 
     }
 }
