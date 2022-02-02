@@ -216,7 +216,8 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
 
                 ImporterVat = importerVat,
                 BoxBarcode = crateNumber,
-               
+                //StorageSite = myDeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().StorageSiteCode ?? ""
+
 
             };
 
@@ -393,6 +394,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
         public string ImporterVat { get; set; }
 
         public string BoxBarcode { get; set; }
+        //public string StorageSite { get; set; }
 
     }
 
