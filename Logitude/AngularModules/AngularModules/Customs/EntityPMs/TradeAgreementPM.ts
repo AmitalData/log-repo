@@ -49,6 +49,11 @@ export class TradeAgreementPM {
     public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
        
 	 
+    private customsBookTypeID: number;
+    public get CustomsBookTypeID() { return this.customsBookTypeID; }
+    public set CustomsBookTypeID(newValue: number) { if (this.customsBookTypeID != newValue) { this.customsBookTypeID = newValue; this.MarkAsDirty("CustomsBookTypeID"); } }
+       
+	 
 
     public OldEntityPM: TradeAgreementPM;
 		

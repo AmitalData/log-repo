@@ -39,4 +39,10 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="CustomsBookTypeID"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>
