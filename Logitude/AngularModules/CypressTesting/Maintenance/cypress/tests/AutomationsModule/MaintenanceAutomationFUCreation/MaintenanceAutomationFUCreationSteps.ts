@@ -1,4 +1,4 @@
-import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
+import { Given, When, Then, And} from "cypress-cucumber-preprocessor/steps";
 import * as Assists from "../../../../../Base/cypress/assists/Assists";
 import { AutomationsDetails } from "../../../models/AutomationsModuleDetails/AutomationsDetails"
 import * as AutomationsActions from "../../../actions/AutomationsModuleActions/AutomationsActions";
@@ -6,11 +6,7 @@ import { AutomationsSelectors } from "../../../selectors/AutomationsModulesSelec
 import { ConditionsDetails } from "cypress/models/AutomationsModuleDetails/ConditionsDetails";
 import { AutomationsConstants } from "../../../constants/AutomationsConstants/AutomationsConstants";
 import { SetFieldValueResultDetails } from "cypress/models/AutomationsModuleDetails/SetFieldValueResultDetails";
-import { EmailResultDetails } from "cypress/models/AutomationsModuleDetails/EmailResultDetails";
-import { DocsFollowUpCreationDetails } from "cypress/models/AutomationsModuleDetails/DocsFollowUpCreationDetails";
 import { FollowUpCreationDetails } from "cypress/models/AutomationsModuleDetails/FollowUpCreationDetails";
-import { SendInterfaceDetails } from "cypress/models/AutomationsModuleDetails/SendInterfaceDetails";
-import { EventCreationDetails } from "cypress/models/AutomationsModuleDetails/EventCreationDetails";
 import * as ShipmentActions from "../../../../../Shipment/cypress/actions/Actions";
 import { ShipmentSelectors } from "../../../../../Shipment/cypress/selectors/Selectors";
 import * as BaseAssertion from "../../../../../Base/cypress/actions/Assertion"
@@ -20,9 +16,9 @@ import { BaseSelectors } from "../../../../../Base/cypress/selectors/BaseSelecto
 
 //#region variables
 let automationsDetails: AutomationsDetails
-let setFieldValueResultDetailes: SetFieldValueResultDetails
 let shipmentDetails: ShipmentDetails;
 let conditionsDetails:ConditionsDetails[];
+let followUpCreationDetails:FollowUpCreationDetails;
 //#endregion
 
 //#region Create new automation 
@@ -46,10 +42,6 @@ Given("the user add the following condition", (dataTable) => {
     AutomationsActions.AddConditions(conditionsDetails)
 
 });
-Given("the use adds Set Fields Value result", (dataTable) => {
-    setFieldValueResultDetailes = Assists.CreateInstance<SetFieldValueResultDetails>(dataTable, true);
-    AutomationsActions.addResultSetFieldsValue(setFieldValueResultDetailes)
-});
 
 When("create automation", () => {
     AutomationsActions.addAutomation()
@@ -59,10 +51,11 @@ Then("the new automation should create successfully", () => {
     AutomationsActions.AssertAddAutomation()
 });
 
-Given("the use adds Email result", (dataTable) => {
-    let emailResultDetails = Assists.CreateInstance<EmailResultDetails>(dataTable, true);
-    AutomationsActions.addResultEmail(emailResultDetails)
+Given("the user adds follow up creation result", (dataTable) => {
+    followUpCreationDetails = Assists.CreateInstance<FollowUpCreationDetails>(dataTable, true);
+    AutomationsActions.addResultFUCreation(followUpCreationDetails)
 });
+
 
 //#endregion
 
@@ -121,10 +114,10 @@ Then("the direct should create successfully", () => {
 Then("the direct should update successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });
-Then("the Automation should executed successfully", () => {
-    AutomationsActions.AssertSFVAutomationExecution(setFieldValueResultDetailes,automationsDetails.Name)
+Then("the automation with follow up creation result should executed successfully", () => {
+    AutomationsActions.AssertFUCAutomationExecution(followUpCreationDetails,automationsDetails.Name)
 });
-Then("the Automation shouldn't executed", () => {
+Then("the automation shouldn't executed", () => {
    AutomationsActions.assertAutomationNotExecuted(automationsDetails.Name)
 });
 

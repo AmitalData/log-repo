@@ -2,21 +2,14 @@ import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
 import * as Assists from "../../../../../Base/cypress/assists/Assists";
 import { AutomationsDetails } from "../../../models/AutomationsModuleDetails/AutomationsDetails"
 import * as AutomationsActions from "../../../actions/AutomationsModuleActions/AutomationsActions";
-import { AutomationsSelectors } from "../../../selectors/AutomationsModulesSelectors/AutomationsSelectors"
 import { ConditionsDetails } from "cypress/models/AutomationsModuleDetails/ConditionsDetails";
-import { AutomationsConstants } from "../../../constants/AutomationsConstants/AutomationsConstants";
 import { SetFieldValueResultDetails } from "cypress/models/AutomationsModuleDetails/SetFieldValueResultDetails";
-import { EmailResultDetails } from "cypress/models/AutomationsModuleDetails/EmailResultDetails";
-import { DocsFollowUpCreationDetails } from "cypress/models/AutomationsModuleDetails/DocsFollowUpCreationDetails";
-import { FollowUpCreationDetails } from "cypress/models/AutomationsModuleDetails/FollowUpCreationDetails";
-import { SendInterfaceDetails } from "cypress/models/AutomationsModuleDetails/SendInterfaceDetails";
-import { EventCreationDetails } from "cypress/models/AutomationsModuleDetails/EventCreationDetails";
 import * as ShipmentActions from "../../../../../Shipment/cypress/actions/Actions";
 import { ShipmentSelectors } from "../../../../../Shipment/cypress/selectors/Selectors";
 import * as BaseAssertion from "../../../../../Base/cypress/actions/Assertion"
 import { RequestAliases } from "../../../../../Base/cypress/constants/RequestAliases";
 import { ShipmentDetails } from "../../../../../Shipment/cypress/models/ShipmentDetails";
-import { BaseSelectors } from "../../../../../Base/cypress/selectors/BaseSelectors";
+
 
 //#region variables
 let automationsDetails: AutomationsDetails
@@ -57,11 +50,6 @@ When("create automation", () => {
 
 Then("the new automation should create successfully", () => {
     AutomationsActions.AssertAddAutomation()
-});
-
-Given("the use adds Email result", (dataTable) => {
-    let emailResultDetails = Assists.CreateInstance<EmailResultDetails>(dataTable, true);
-    AutomationsActions.addResultEmail(emailResultDetails)
 });
 
 //#endregion

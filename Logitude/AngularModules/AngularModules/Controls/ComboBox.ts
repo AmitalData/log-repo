@@ -7,7 +7,7 @@ import {ObjectsLocator} from '../Infrastructure/Locators/ObjectsLocator';
     selector: 'ComboBox',
 
     templateUrl: './ComboBox.html',
-    inputs: ['ItemsSource', 'SelectedItem', 'Binding', 'IsDisabled', 'WaterMark', 'IsBlueBox', 'IsGreenButton', 'FocusOnMe', 'SelectedValue', 'SelectedValuePath', 'MaxHeight', 'WithCheckBoxes', 'WithIcons', 'CyData'],
+    inputs: ['ItemsSource', 'SelectedItem', 'Binding', 'IsDisabled', 'WaterMark', 'IsBlueBox', 'IsGreenButton', 'FocusOnMe', 'SelectedValue', 'SelectedValuePath', 'MaxHeight', 'WithCheckBoxes', 'WithIcons', 'CyData','ListType'],
 })
 
 export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
@@ -58,6 +58,7 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     public SearchTextId: string = "SearchTextId";
     public CyData: string;
+    public ListType: string;
 
     constructor(private cd: ChangeDetectorRef) {
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;

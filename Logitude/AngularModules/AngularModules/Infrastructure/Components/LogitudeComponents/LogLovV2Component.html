@@ -533,7 +533,8 @@
                             <table>
                                 <tr>
                                     <td style="position:relative">
-                                        <input [id]="ElementId"
+                                        <input [attr.data-cy]="DataCy" 
+                                               [id]="ElementId"
                                                [disabled]="IsDisabled"
                                                [(ngModel)]="SearchTextNgModel"
                                                (keydown)="OnSearchIputKeyDown($event)"

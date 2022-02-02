@@ -46,7 +46,7 @@ import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSec
     inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', 'LookUpTableName', 'DisplayMemberPath', 'SelectedValuePath','IsDisabled',
         'PlaceHolder', 'DependencyFilter1Value', 'DependencyFilter2Value', 'DependencyFilter3Value', "HideColumns", "HideLastColumn", "DependencyFilter1IsList",
         "DependencyFilter2IsList", "DependencyFilter3IsList", "DependencyFilter1IsListExact", "DependencyFilter2IsListExact", "DependencyFilter3IsListExact",
-         "AutoFocus", "IsTenantZeroSearch", "ShowInActive", "FocusOnMe", "IsFreeText", "AlwaysEnabled", "IgnoreCustomFieldCheck", "IsDecendingSort","CustomizedWidth"],
+        "AutoFocus", "IsTenantZeroSearch", "ShowInActive", "FocusOnMe", "IsFreeText", "AlwaysEnabled", "IgnoreCustomFieldCheck", "IsDecendingSort", "CustomizedWidth", 'DataCy'],
 })
 
 export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
@@ -94,6 +94,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     public IsFreeText: boolean = false;
     public AlwaysEnabled: boolean = false;
     public IgnoreCustomFieldCheck: boolean = false;
+    public DataCy: string;
     LayoutDirection: string = 'ltr';
     private dataContext: BaseComponent;
     uiProperty: UIProperty;

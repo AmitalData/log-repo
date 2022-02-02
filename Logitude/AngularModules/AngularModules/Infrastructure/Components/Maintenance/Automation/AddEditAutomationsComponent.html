@@ -223,7 +223,7 @@
                                                                                             </td>
                                                                                             <td [style.width]="(ResultCodeSelected.Code =='FOLLOWUP' ||ResultCodeSelected.Code =='DOCOUTFOLLOWUP'|| ResultCodeSelected.Code =='DOCINFOLLOWUP') ?'270px':'200px'">
                                                                                                 <div [style.width]="(ResultCodeSelected.Code =='FOLLOWUP' ||ResultCodeSelected.Code =='DOCOUTFOLLOWUP'|| ResultCodeSelected.Code =='DOCINFOLLOWUP') ?'270px':'200px'" style="text-align:left;">
-                                                                                                    <ComboBox [CyData]="'AutomationResultList'"  [style.width]="(ResultCodeSelected.Code =='FOLLOWUP' ||ResultCodeSelected.Code =='DOCOUTFOLLOWUP'|| ResultCodeSelected.Code =='DOCINFOLLOWUP') ?'270px':'200px'" (SelectedItemChanged)="ResultCodeListValueChanged($event)" [ItemsSource]="ResultCodeList" [SelectedItem]="ResultCodeSelected" [Binding]="'Name'"></ComboBox>
+                                                                                                    <ComboBox [CyData]="'AutomationResultList'" [ListType]="''" [style.width]="(ResultCodeSelected.Code =='FOLLOWUP' ||ResultCodeSelected.Code =='DOCOUTFOLLOWUP'|| ResultCodeSelected.Code =='DOCINFOLLOWUP') ?'270px':'200px'" (SelectedItemChanged)="ResultCodeListValueChanged($event)" [ItemsSource]="ResultCodeList" [SelectedItem]="ResultCodeSelected" [Binding]="'Name'"></ComboBox>
                                                                                                 </div>
                                                                                             </td>
                                                                                             <td>
@@ -448,7 +448,7 @@
                                                                                                             </td>
                                                                                                             <td style="width:200px">
                                                                                                                 <div style="text-align:left;width:200px;">
-                                                                                                                    <ComboBox [CyData]="'DocumentTypeList'" style="width:200px;" (SelectedItemChanged)="DocumentTypeSelected = $event" [ItemsSource]="DocumentTypeLists" [SelectedItem]="DocumentTypeSelected" [Binding]="'Name'"></ComboBox>
+                                                                                                                    <ComboBox [CyData]="'DocumentTypeList'" [ListType]="''" style="width:200px;" (SelectedItemChanged)="DocumentTypeSelected = $event" [ItemsSource]="DocumentTypeLists" [SelectedItem]="DocumentTypeSelected" [Binding]="'Name'"></ComboBox>
                                                                                                                 </div>
                                                                                                             </td>
                                                                                                             <td>
@@ -537,7 +537,7 @@
 
                                                                                                                             <td style="vertical-align:central;width:203px">
                                                                                                                                 <div style="text-align:left;width:203px;vertical-align:central">
-                                                                                                                                    <ComboBox style="width:203px;" (SelectedItemChanged)="DocumentTypeTemplateReportSelected = $event" [ItemsSource]="DocumentTypeTemplateReportLists" [SelectedItem]="DocumentTypeTemplateReportSelected" [Binding]="DocumentTypeReportTemplateBinding"></ComboBox>
+                                                                                                                                    <ComboBox [CyData]="'DocumentTypeTemplatesList'" [ListType]="''" style="width:203px;" (SelectedItemChanged)="DocumentTypeTemplateReportSelected = $event" [ItemsSource]="DocumentTypeTemplateReportLists" [SelectedItem]="DocumentTypeTemplateReportSelected" [Binding]="DocumentTypeReportTemplateBinding"></ComboBox>
 
                                                                                                                                 </div>
                                                                                                                             </td>

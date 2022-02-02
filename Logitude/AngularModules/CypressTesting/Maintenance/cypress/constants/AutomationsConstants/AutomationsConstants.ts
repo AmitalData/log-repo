@@ -1,8 +1,8 @@
 export class AutomationsConstants {
     public static readonly OnUpdate="ONUPDATE"
     public static readonly OnCreate="ONCREATE"
-    public static readonly AndArea = "AND AREA"
-    public static readonly OrArea = "OR AREA"
+    public static readonly AndArea = "And"
+    public static readonly OrArea = "Or"
     public static readonly boolean="BOOLEAN"
     public static readonly strings="STRINGS"
     public static readonly date="DATE"
@@ -16,7 +16,12 @@ export class AutomationsConstants {
     public static readonly EqualsField="EQUALSFIELD"  
     public static readonly DoesNotEqualField="DOESNOTEQUALFIELD"  
     public static readonly DoesNotContainField="DOESNOTCONTAINFIELD"
+    
+    public static readonly DataCy="[data-cy='"
+    public static readonly EndDataCy="']"
 
+    public static readonly True="TRUE"
+    public static readonly False="FALSE"
     public static readonly GreaterThan="GREATERTHAN"
     public static readonly LessThan="LESSTHAN"
     public static readonly GreaterThanOrEquals="GREATERTHANOREQUALS"
@@ -46,6 +51,7 @@ export class AutomationsConstants {
     public static readonly EventCreation="EVENT CREATION"
     public static readonly Immediately="IMMEDIATELY"
     public static readonly Delayed="DELAYED"
+    public static readonly Salesman='Salesman'
 
     public static readonly HouseBillOfLadingDoc="HUOSE BILL OF LADING"
     public static readonly DeliveryNoteDoc="DELIVERY NOTE (GOODS)"

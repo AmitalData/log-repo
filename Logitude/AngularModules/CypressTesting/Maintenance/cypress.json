@@ -1,5 +1,5 @@
 {
-    "numTestsKeptInMemory": 100,
+    "numTestsKeptInMemory": 1,
     "watchForFileChanges": false,
     "viewportWidth": 1200,
     "viewportHeight": 800,
