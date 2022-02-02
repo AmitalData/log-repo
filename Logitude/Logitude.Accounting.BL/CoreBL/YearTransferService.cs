@@ -644,17 +644,33 @@ GLAccountTotalDateTypeValues.Accountingdate, CalculateBalanceIsNotIncludeSo_endO
 
         private DateTime CheckYear(int YYyear)
         {
-            if (YYyear.ToString().Length != 2)
+            bool useLocal = true;
+            int yylen = YYyear.ToString().Length;
+            if (yylen != 2 && yylen != 4)
             {
-                throw new Exception("You must enter two characters only, חובה להזין רק שני תווים בשדה");
+                string text = TranslateTextsClassTranslate("YearTransfer.O.TwoOrFourDigits", 0, useLocal);
+                if (String.IsNullOrEmpty(text)) text = "Enter year in either two or four digits only";
+                throw new Exception(text); //("Enter year in either two or four digits only, יש להזין שנה בשתי ספרות או בארבע ספרות בלבד");
             }
+
             DateTime endOfYearUserInput = DateTime.MaxValue;
-            string OldDateStr = "YY-12-31";
-            OldDateStr = OldDateStr.Replace("YY", YYyear.ToString());
-            DateTime.TryParseExact(OldDateStr, "yy-MM-dd", null, DateTimeStyles.AllowWhiteSpaces, out endOfYearUserInput);
+            if (yylen == 4)
+            {
+                string OldDateStr = "YYYY-12-31";
+                OldDateStr = OldDateStr.Replace("YYYY", YYyear.ToString());
+                DateTime.TryParseExact(OldDateStr, "yyyy-MM-dd", null, DateTimeStyles.AllowWhiteSpaces, out endOfYearUserInput);
+            }
+            else
+            {
+                string OldDateStr = "YY-12-31";
+                OldDateStr = OldDateStr.Replace("YY", YYyear.ToString());
+                DateTime.TryParseExact(OldDateStr, "yy-MM-dd", null, DateTimeStyles.AllowWhiteSpaces, out endOfYearUserInput);
+            }
             if (endOfYearUserInput.Year >= DateTime.Now.Year)
             {
-                throw new Exception("“ You must choose past years only” “אתה חייב לבחור שנים קודמות בלבד");
+                string text = TranslateTextsClassTranslate("YearTransfer.O.PastYears", 0, useLocal);
+                if (String.IsNullOrEmpty(text)) text = "Enter past years only";
+                throw new Exception(text); //Enter past years only, יש להזין שנים קודמות בלבד");
             }
             return endOfYearUserInput;
 
