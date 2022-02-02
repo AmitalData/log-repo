@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TradeAgreementUpdateClass
    {  		
-		public const string HashString = "f1fd3cc0e46798f83ba999a3ce1417a2";
+		public const string HashString = "8dba14a5295ad239d46c51350c9d5780";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -481,6 +481,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CustomsBookTypeID",
 					  						ListPropertyPath =  "CustomsBookTypeID",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -553,11 +554,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn TradeAgreementQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeAgreementQuery.Id,QueryCode = TradeAgreementQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.TradeAgreement.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn TradeAgreementQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeAgreementQuery.Id,QueryCode = TradeAgreementQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.TradeAgreement.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TradeAgreementQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeAgreementQuery.Id,QueryCode = TradeAgreementQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.TradeAgreement.CustomsBookTypeID" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn TradeAgreementQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeAgreementQuery.Id,QueryCode = TradeAgreementQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.TradeAgreement.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TradeAgreementQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeAgreementQuery.Id,QueryCode = TradeAgreementQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.TradeAgreement.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn TradeAgreementQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeAgreementQuery.Id,QueryCode = TradeAgreementQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.TradeAgreement.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TradeAgreementQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeAgreementQuery.Id,QueryCode = TradeAgreementQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.TradeAgreement.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn TradeAgreementQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeAgreementQuery.Id,QueryCode = TradeAgreementQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.TradeAgreement.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

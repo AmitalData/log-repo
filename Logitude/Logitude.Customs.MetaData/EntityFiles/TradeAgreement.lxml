@@ -465,6 +465,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CustomsBookTypeID&quot;"
     ListPropertyPath="&quot;CustomsBookTypeID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -496,7 +497,7 @@
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
-    GenerateInList="false"
+    GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"
     IncludeInSearchField="false"
@@ -537,16 +538,21 @@
       <QueryColumn
         QueryCode="&quot;TradeAgreement&quot;"
         IndexOrder="1"
+        ObjectFieldName="&quot;CustomsBookTypeID&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;TradeAgreement&quot;"
+        IndexOrder="2"
         ObjectFieldName="&quot;EnglishName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;TradeAgreement&quot;"
-        IndexOrder="2"
+        IndexOrder="3"
         ObjectFieldName="&quot;LocalName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;TradeAgreement&quot;"
-        IndexOrder="3"
+        IndexOrder="4"
         ObjectFieldName="&quot;Inactive&quot;"
         ColumnWidth="130" />
     </QueryColumns>
