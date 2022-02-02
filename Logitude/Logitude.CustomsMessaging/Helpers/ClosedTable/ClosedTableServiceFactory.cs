@@ -371,6 +371,25 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
                         );
                     }
                     break;
+                case "2009":
+                case "TradeAgreementTypeView":
+                    {
+                        closedTableService = new Update2009TradeAgreementTypeView(customContext, entitySystemTables,
+                          (mycustomContext) =>
+                          {
+                              return new
+                                  TradeAgreementUpdateService(mycustomContext, new Dictionary<string, IContext>(), tenant);
+                          },
+                        (mycustomContext) =>
+                        {
+                            var qs = new TradeAgreementQueryService(mycustomContext);
+                            return qs as ICanGetAllClosedTable<TradeAgreementPM>;
+                        }
+                        , tenant
+                        , false
+                        );
+                    }
+                    break;
                 default:
 
                     break;
