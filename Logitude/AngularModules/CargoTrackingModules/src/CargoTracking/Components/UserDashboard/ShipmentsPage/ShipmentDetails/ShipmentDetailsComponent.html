@@ -939,7 +939,7 @@
                                         </div>
                                         <div class="routing-card">
                                             <div class="route-card-body">
-                                                <div *ngIf="step.FromPortLabel != null || step.ToPortLabel != null" [ngStyle] ="{ 'direction' : (ContainsHebrew(step.FromPortLabel) || ContainsHebrew(step.ToPortLabel))? 'rtl' : 'ltr' }"
+                                                <div *ngIf="step.FromPortLabel != null || step.ToPortLabel != null" 
                                                      class="route-label">
                                                     <div class="mobile-font-12">
                                                         <span [attr.title]="step.ToolTipFromPortLabel != null ? step.ToolTipFromPortLabel : step.FromPortLabel?.length > 6 ? step.FromPortLabel : ''">
