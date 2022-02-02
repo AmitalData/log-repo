@@ -10,25 +10,26 @@ using Logitude.Server.Tools;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs; 
 using Logitude.Accounting.Data;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
    
-   public partial class AccountingEntitiesJournalDataMapping: IMapping<AccountingEntitiesJournalPM, AccountingEntitiesJournal>
+   public partial class AccountingEntityJournalDataMapping: IMapping<AccountingEntityJournalPM, AccountingEntityJournal>
    {
 
-        public void CustomPMToPOCO(AccountingEntitiesJournalPM entityPM, AccountingEntitiesJournal entityPOCO)
+        public void CustomPMToPOCO(AccountingEntityJournalPM entityPM, AccountingEntityJournal entityPOCO)
         {
             AddPOCOPropertyName(POCOPropertyNames.Id);
             AddPOCOPropertyName(POCOPropertyNames.Tenant);
-            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 entityPOCO.Id = entityPM.Id;
                 entityPOCO.Tenant = entityPM.Tenant;
             }
         }
 
-        public void CustomPOCOToPM(AccountingEntitiesJournalPM entityPM, AccountingEntitiesJournal entityPOCO)
+        public void CustomPOCOToPM(AccountingEntityJournalPM entityPM, AccountingEntityJournal entityPOCO)
         {
             //throw new NotImplementedException();
         }

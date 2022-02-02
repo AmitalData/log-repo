@@ -17,7 +17,7 @@ using Logitude.Accounting.Data;
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
    
-   public partial class AccountingEntitiesJournalDataMapping: IMapping<AccountingEntitiesJournalPM, AccountingEntitiesJournal>,IMappingEncodeBase64NVARCHARFields<AccountingEntitiesJournalPM>
+   public partial class AccountingEntityJournalDataMapping: IMapping<AccountingEntityJournalPM, AccountingEntityJournal>,IMappingEncodeBase64NVARCHARFields<AccountingEntityJournalPM>
    {
           public enum POCOPropertyNames
           { 
@@ -45,7 +45,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
     
-	    public void PMToPOCO(AccountingEntitiesJournalPM entityPM, AccountingEntitiesJournal entityPOCO)
+	    public void PMToPOCO(AccountingEntityJournalPM entityPM, AccountingEntityJournal entityPOCO)
         {
 			 
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
@@ -74,7 +74,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			}
 			}
 
-		public void POCOToPM(AccountingEntitiesJournalPM entityPM, AccountingEntitiesJournal entityPOCO)
+		public void POCOToPM(AccountingEntityJournalPM entityPM, AccountingEntityJournal entityPOCO)
         {
 			 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
@@ -109,7 +109,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
 		}
 
-		public void PMToOldPM(AccountingEntitiesJournalPM entityPM, AccountingEntitiesJournalPM oldEntityPM)
+		public void PMToOldPM(AccountingEntityJournalPM entityPM, AccountingEntityJournalPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
@@ -140,7 +140,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			
 		}
 
-	    public void EncodeBase64NVARCHARFields(AccountingEntitiesJournalPM entityPM)
+	    public void EncodeBase64NVARCHARFields(AccountingEntityJournalPM entityPM)
         {
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {

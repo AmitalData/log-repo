@@ -47,7 +47,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
-    public partial class AccountingEntitiesJournalViewsController : ApiController
+    public partial class AccountingEntityJournalViewsController : ApiController
     {
 	  
        
@@ -60,11 +60,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
-                AccountingEntitiesJournalListQueryService accountingEntitiesJournalQuery = new AccountingEntitiesJournalListQueryService(MyContext);
-                AccountingEntitiesJournalList accountingEntitiesJournalList = accountingEntitiesJournalQuery.GetSingle(id);
+                AccountingEntityJournalListQueryService accountingEntityJournalQuery = new AccountingEntityJournalListQueryService(MyContext);
+                AccountingEntityJournalList accountingEntityJournalList = accountingEntityJournalQuery.GetSingle(id);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
-                return Request.CreateResponse(HttpStatusCode.OK,  accountingEntitiesJournalList);
+                return Request.CreateResponse(HttpStatusCode.OK,  accountingEntityJournalList);
             }
             catch (Exception ex)
             {
@@ -82,8 +82,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
-                AccountingEntitiesJournalListQueryService accountingEntitiesJournalQuery = new AccountingEntitiesJournalListQueryService(MyContext);
-                List<AccountingEntitiesJournalList> result = accountingEntitiesJournalQuery.GetList(authToken.Tenant);
+                AccountingEntityJournalListQueryService accountingEntityJournalQuery = new AccountingEntityJournalListQueryService(MyContext);
+                List<AccountingEntityJournalList> result = accountingEntityJournalQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -108,17 +108,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "AccountingEntitiesJournal",
+                    ObjectTableName = "AccountingEntityJournal",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "AccountingEntitiesJournals",
+                    QuerySection = "AccountingEntityJournals",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
 				
-				List<ObjectField> AccountingEntitiesJournalObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("AccountingEntitiesJournal",tenant);
+				List<ObjectField> AccountingEntityJournalObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("AccountingEntityJournal",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -141,7 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             //}
 						//}
                         //ToDo: Get object field by name and set the remained filter properties
-						ObjectField field = AccountingEntitiesJournalObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = AccountingEntityJournalObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                        if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -169,7 +169,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = AccountingEntitiesJournalObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = AccountingEntityJournalObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -192,14 +192,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
 
                 IAccountingContext MyContext = AccountingContext.GetContext(tenant);
-				AccountingEntitiesJournalListQueryService accountingEntitiesJournalQuery = new AccountingEntitiesJournalListQueryService(MyContext);
+				AccountingEntityJournalListQueryService accountingEntityJournalQuery = new AccountingEntityJournalListQueryService(MyContext);
 
-                List<AccountingEntitiesJournalList> entityLists = accountingEntitiesJournalQuery.GetList(queryOperations, tenant);
+                List<AccountingEntityJournalList> entityLists = accountingEntityJournalQuery.GetList(queryOperations, tenant);
 				
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = accountingEntitiesJournalQuery.GetListCount(queryOperations, tenant);
+                    int count = accountingEntityJournalQuery.GetListCount(queryOperations, tenant);
                     response.Count = count;
                 }
 

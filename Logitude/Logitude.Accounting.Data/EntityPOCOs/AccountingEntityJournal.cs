@@ -14,7 +14,7 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 namespace Logitude.Accounting.Data.EntityPOCOs
 {
    
-    public class AccountingEntitiesJournal
+    public class AccountingEntityJournal
     {
 	 string dbms;
 

@@ -17,33 +17,35 @@ using Logitude.Accounting.Data.EntityLists;
 namespace Logitude.Accounting.Data.EntityListQueryServices
 { 
 
-    public partial class AccountingEntitiesJournalListQueryService
+    public partial class AccountingEntityJournalListQueryService
     {
-	    private IQueryable<AccountingEntitiesJournalList> GetIqueryableList(IQueryable<AccountingEntitiesJournal> iQueryable)
+	    private IQueryable<AccountingEntityJournalList> GetIqueryableList(IQueryable<AccountingEntityJournal> iQueryable)
         {
-		IQueryable<AccountingEntitiesJournalList> query = (from a in iQueryable
-                                            select new AccountingEntitiesJournalList()
+		IQueryable<AccountingEntityJournalList> query = (from a in iQueryable
+                                            select new AccountingEntityJournalList()
 											{
                      
+					                          Id = a.Id,
+					
 					                          Tenant = a.Tenant,
 					
 					                          AccountingEntityId = a.AccountingEntityId,
 					
 					                          AccountingEntityCode = a.AccountingEntityCode,
 					
-					                          ChildEntityId = a.ChildEntityId,
-					
 					                          Action = a.Action,
+					
+					                          ChildEntityId = a.ChildEntityId,
 					
 		                    	            });
             return query;
 		}
 
-		private IQueryable<AccountingEntitiesJournal> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<AccountingEntitiesJournal> iQueryable, int tenant)
+		private IQueryable<AccountingEntityJournal> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<AccountingEntityJournal> iQueryable, int tenant)
         {
 			throw new NotImplementedException();
 		}
-				private IQueryable<AccountingEntitiesJournal> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<AccountingEntitiesJournal> iQueryable, int tenant)
+				private IQueryable<AccountingEntityJournal> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<AccountingEntityJournal> iQueryable, int tenant)
         {
 			return iQueryable;
 		}

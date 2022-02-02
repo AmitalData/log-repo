@@ -46,6 +46,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <UniqueConstraint
-    Columns="Tenant,AccountingEntityId,AccountingEntityCode,ChildEntityId,Action" />
+<UniqueConstraint
+   Columns="Tenant,AccountingEntityId,AccountingEntityCode,ChildEntityId,Action" />
 </Table>
