@@ -1554,6 +1554,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
         }
 
+        private void AddAccountingEntitieJournal(JournalPM entityPM, string action, string ChildEntityId = null)
+        {
+            IAccountingEntityJournalUpdateServiceExt service = ContainerAccessor.Container.Resolve(typeof(IAccountingEntityJournalUpdateServiceExt), "AccountingEntityJournalUpdateServiceExt", new ParameterOverride("", 1)) as IAccountingEntityJournalUpdateServiceExt;
+            service.AddAccountingEntitieJournal(entityPM, action, ChildEntityId);
+        }
+
         private void VoidARPaymentInFullAccounting(ARPaymentPM entityPm, bool setVoided)
         {
             int tenant = entityPm.Tenant;
@@ -1802,8 +1808,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     AccountingEntityReference = paymentPM.PaymentNo,
                     ChequeNumbersToExcludeFromStorno = returnedToCustomerChequesNumbers
                 });
-
-                voidARPaymentJounal();
+                AddAccountingEntitieJournal(journalPM, AccountingEntityJournalActions.ARPaymentVoid);
+                 // voidARPaymentJounal(); not needed anymore
                 JournalPM voidedByJournal = GetApprovedJournalByAccountingEntityId(entityPm);
 
                 paymentPM.VoidedByJournalNumber = voidedByJournal != null ? voidedByJournal.JournalNumber : null;
