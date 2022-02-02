@@ -533,6 +533,34 @@ ID List :
                                                 });
                         return extList;
 
+                    }                
+                case "2009":
+                case "TradeAgreementTypeView":
+                    {
+                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
+                        Logitude.CustomsMessaging.Helpers.ClosedTable.
+                                                    ManipulateCustomResponse.
+                                                DataSetToTableData(customResponse,
+                                                (newResponseTableData, dr) =>
+                                                {
+                                                    var newExt = SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
+                                                    newExt.MyTradeAgreement = new Helpers.ClosedTable.TradeAgreement();
+
+                                                    if (!writeHighlight)
+                                                    {
+                                                        writeHighlight = true;
+                                                    }
+                                                    if (dr["CustomsBookTypeID"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        int.TryParse(dr["CustomsBookTypeID"]?.ToString(), out int val);
+                                                        newExt.MyTradeAgreement.CustomsBookTypeID = val;
+                                                    }                                                 
+                                                
+                                                    extList.Add(newExt);
+                                                });
+                        return extList;
+
                     }
                 case "1423":
                 case "CertificateExemptionType":

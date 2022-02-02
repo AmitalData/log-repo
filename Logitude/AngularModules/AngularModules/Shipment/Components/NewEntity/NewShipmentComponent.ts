@@ -41,7 +41,7 @@ import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import {EntityListService} from '../../../Infrastructure/Services/EntityListService';
 import { ChildDirective } from '../../../Infrastructure/Directives/ChildDirective';
 import { ContactInputTemplateArgs } from '../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
-import { ShipmentSubTypeListService } from '../../Services/StandardLists/ShipmentSubTypeListService';
+import { ShipmentSubTypeListService } from '../../services/standardlists/shipmentsubtypelistservice';
 import { ShipmentSubTypeList } from '../../EntityLists/ShipmentSubTypeList';
 import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';

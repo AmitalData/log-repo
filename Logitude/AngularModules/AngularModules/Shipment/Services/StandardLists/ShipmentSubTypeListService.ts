@@ -19,7 +19,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
-import {ShipmentSubTypeList} from '../../EntityLists/ShipmentSubTypeList';
+import { ShipmentSubTypeList } from 'Shipment/EntityLists/ShipmentSubTypeList';
 
 @Injectable()
 
