@@ -21,8 +21,8 @@ import { IdGeneratorPipe } from '../Pipes/IdGeneratorPipe';
 
         <tr>
             <td style="width: 16px; min-width: 16px; padding:0 !important;">
-                <div class="LogitudeCheckBox" [style.zIndex]="ZIndex">
-                    <input [attr.data-cy]="DataCy" [attr.id]="ControlId" type="checkbox" [disabled]="!IsEnabled" [checked]="IsChecked" (click)="OnClick()" (blur)="OnLostFocus()" />
+                <div [attr.data-cy]="DataCy" class="LogitudeCheckBox" [style.zIndex]="ZIndex">
+                    <input  [attr.id]="ControlId" type="checkbox" [disabled]="!IsEnabled" [checked]="IsChecked" (click)="OnClick()" (blur)="OnLostFocus()" />
                     <label [attr.id]="ControlId2" [attr.for]="ControlId"></label>
                 </div>
             </td>

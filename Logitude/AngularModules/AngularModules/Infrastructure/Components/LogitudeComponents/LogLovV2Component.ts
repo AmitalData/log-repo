@@ -48,7 +48,7 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
         'PlaceHolder', 'DependencyFilter1Value', 'DependencyFilter2Value', 'DependencyFilter3Value', "HideColumns", "HideLastColumn", "DependencyFilter1IsList",
         "DependencyFilter2IsList", "DependencyFilter3IsList", "DependencyFilter1IsListExact", "DependencyFilter2IsListExact", "DependencyFilter3IsListExact",
         "AutoFocus", "IsTenantZeroSearch", "ShowInActive", "FocusOnMe", "IsFreeText", "AlwaysEnabled", "IgnoreCustomFieldCheck", "IsDecendingSort", "CustomizedWidth",
-        "ShowInActivePopUpWindow", "IgnoreFeatureCheck"],
+        "ShowInActivePopUpWindow", "IgnoreFeatureCheck","DataCy"],
 })
 
 export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
@@ -97,6 +97,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     public AlwaysEnabled: boolean = false;
     public IgnoreCustomFieldCheck: boolean = false;
     public IgnoreFeatureCheck: boolean = false;
+    public DataCy: string;
     LayoutDirection: string = 'ltr';
     private dataContext: BaseComponent;
     uiProperty: UIProperty;
