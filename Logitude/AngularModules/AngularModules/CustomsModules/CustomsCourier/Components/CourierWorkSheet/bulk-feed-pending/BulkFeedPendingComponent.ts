@@ -118,7 +118,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
 
     filters.PageSize = take;
     filters.PageIndex = skip;
-    filters.GetAll = this._CourierWorksheetSharedDataService.connectedSelectAll;
+    filters.GetAll = false;
     filters.GetCount = true;
 
     if (AppTool.IsNullOrEmpty(sortingCol)) {
@@ -198,6 +198,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
     windowArgs.checkboxAll = this._CourierWorksheetSharedDataService.connectedSelectAll;
     windowArgs.notUpdateSelf = true;
     windowArgs.filter = this.getFilter();
+    windowArgs.filter.GetAll = this._CourierWorksheetSharedDataService.connectedSelectAll;
 
 
     //windowArgs.CourierPendingReasonList = this._CourierWorksheet.CourierPendingReasonList;
