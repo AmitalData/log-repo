@@ -83,28 +83,28 @@ namespace WebFreight.Web.CustomModel.DomainServices
             return queryService.GetListCount(queryOperations, tenant);
         }
 
-        //public List<ExportStorgeList> GetExportStorgeFilters(byte[] xmlFilters, int tenant)
-        //{
-        //    SecurityUtility.AuthenticationOnTenant(tenant);
-        //    ////SecurityUtility.CheckContactFeature("Customs.Declaration", "READ", tenant);
+        public List<ExportStorageList> GetExportStorageFilters(byte[] xmlFilters, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            ////SecurityUtility.CheckContactFeature("Customs.Declaration", "READ", tenant);
 
-        //    customContext = CustomContext.GetContext(tenant); 
-        //    ExportStorgeListQueryService listService = new ExportStorgeListQueryService(customContext);
-        //    QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-        //    return listService.GetList(queryOperations, tenant);
+            customContext = CustomContext.GetContext(tenant);
+            ExportStorageListQueryService listService = new ExportStorageListQueryService(customContext);
+            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
+            return listService.GetList(queryOperations, tenant);
 
 
-        //}
+        }
 
-        //public int GetExportStorgeFiltersCount(byte[] xmlFilters, int tenant)
-        //{
-        //    SecurityUtility.AuthenticationOnTenant(tenant);
-        //    //SecurityUtility.CheckContactFeature("Customs.Declaration", "READ", tenant);
-        //    customContext = CustomContext.GetContext(tenant);
-        //    ExportStorgeListQueryService queryService = new ExportStorgeListQueryService(customContext);
-        //    QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-        //    return queryService.GetListCount(queryOperations, tenant);
-        //}
+        public int GetExportStorageFiltersCount(byte[] xmlFilters, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            //SecurityUtility.CheckContactFeature("Customs.Declaration", "READ", tenant);
+            customContext = CustomContext.GetContext(tenant);
+            ExportStorageListQueryService queryService = new ExportStorageListQueryService(customContext);
+            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
+            return queryService.GetListCount(queryOperations, tenant);
+        }
 
 
         public List<ContainerizationList> GetContainerizationFilters(byte[] xmlFilters, int tenant)
@@ -116,8 +116,6 @@ namespace WebFreight.Web.CustomModel.DomainServices
             ContainerizationListQueryService listService = new ContainerizationListQueryService(customContext);
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
             return listService.GetList(queryOperations, tenant);
-
-
         }
 
         public int GetContainerizationFiltersCount(byte[] xmlFilters, int tenant)
