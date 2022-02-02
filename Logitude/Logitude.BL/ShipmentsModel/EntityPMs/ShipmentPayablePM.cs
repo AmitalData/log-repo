@@ -201,6 +201,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string TariffId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool IsCustomsChargesTariff { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string TariffNumber { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

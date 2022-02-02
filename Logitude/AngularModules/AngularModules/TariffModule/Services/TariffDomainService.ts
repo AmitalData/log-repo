@@ -347,6 +347,18 @@ export class TariffDomainService {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+
+    GetAvailableCustomsChargesTariffs(args: CustomsChargesTariffSearchArgs) {
+        return defer(() => {
+            return this._http.post(this._apiUrl + "/PostAvailableCustomsChargesTariffs", JSON.stringify(args), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+                pmresponse.Result = result;
+                return pmresponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 }
 
 export class TariffSummery {
@@ -518,10 +530,9 @@ export class UpdateSurchargeArgs {
 }
 
 export class TariffSearchArgs {
-
     OriginPortId: string;
     DestinationPortId: string;
-    ViaPortId: string;
+    ViaPortId: string;    
     Date: string;
     Weight : number;
     WeightCode: string;
@@ -542,4 +553,40 @@ export class TariffSearchArgs {
     Quantity4: number;
     Quantity5: number;
     ProductId: string;
+}
+
+export class CustomsChargesTariffSearchArgs {
+    FromCountryId: string;
+    ToCountryId: string;
+    MainCarriageATD: Date;
+    MainCarriageETD: Date;
+    CustomAgentExportId: string;
+    CustomAgentImportId: string;
+    GrossWeight: number;
+    ChargeableWeight: number;
+    Volume: number;
+    GrossWeightUnitCode: string;
+    ChargeableWeightUnitCode: string;
+    VolumeUnitCode: string;
+    CustomsChargesPayables: CustomsChargesPayable[] = [];
+}
+
+export class CustomsChargesPayable {
+    ChargeTypeId: string;
+    ChargeTypeCode: string;
+    ChargeTypeName: string;
+    UnitOfMesurmentId: string;
+    UnitOfMesurmentCode: string;
+    TariffId: string;
+    TariffNumber: string;
+    VersionId: number;
+    TariffLineId: string;
+    CurrencyId: string;
+    Price: number;
+    ActualPrice: number;
+    MinPrice: number;
+    ActualMinPrice: number;
+    IsMinIconVisible: boolean;
+    IsDifferentCurrency: boolean;
+    Notes: string;
 }

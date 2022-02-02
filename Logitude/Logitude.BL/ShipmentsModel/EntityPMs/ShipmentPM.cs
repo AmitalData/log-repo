@@ -472,6 +472,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string MainCarriageFinalDestinationPortCountryCode { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string MainCarriageFinalDestinationPortCountryId{ get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string MainCarriageFinalDestinationPortCountryName { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

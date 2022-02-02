@@ -93,6 +93,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.TariffNumber = itemPM.TariffNumber;
             itemPoco.TariffLineId = itemPM.TariffLineId;
             itemPoco.TariffVersion = itemPM.TariffVersion;
+            itemPoco.IsCustomsChargesTariff = itemPM.IsCustomsChargesTariff;
             itemPoco.VatAmountLocal = itemPM.VatAmountLocal;
             itemPoco.VatAmountProfit = itemPM.VatAmountProfit;
             itemPoco.ProratedAmountInLocalCurrency = itemPM.ProratedAmountInLocalCurrency;

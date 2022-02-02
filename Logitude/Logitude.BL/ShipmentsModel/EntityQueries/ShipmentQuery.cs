@@ -452,6 +452,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.MainCarriageFinalDestinationPortCode = mainCarriageFinalDestinationPort.Code;
                         shipmentPM.MainCarriageFinalDestinationPortName = mainCarriageFinalDestinationPort.EnglishName;
                         shipmentPM.MainCarriageFinalDestinationPortCountryCode = mainCarriageFinalDestinationPort.CountryCode;
+                        shipmentPM.MainCarriageFinalDestinationPortCountryId = mainCarriageFinalDestinationPort.CountryId;
                         shipmentPM.MainCarriageFinalDestinationPortCountryName = mainCarriageFinalDestinationPort.CountryName;
                     }
 

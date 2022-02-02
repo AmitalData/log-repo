@@ -84,6 +84,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.TariffLineId).HasColumnName("TariffLineId");
             this.Property(t => t.TariffId).HasColumnName("TariffId");
             this.Property(t => t.TariffVersion).HasColumnName("TariffVersion");
+            this.Property(t => t.IsCustomsChargesTariff).HasColumnName("IsCustomsChargesTariff");
             this.Property(t => t.ProratedAmountInLocalCurrency).HasColumnName("ProratedAmountInLocalCurrency");
             this.Property(t => t.ProratedAmountInProfitCurrency).HasColumnName("ProratedAmountInProfitCurrency");
 

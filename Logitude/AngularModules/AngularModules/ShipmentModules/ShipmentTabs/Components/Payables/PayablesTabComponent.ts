@@ -33,7 +33,7 @@ import { QuotePM } from '../../../../Quote/EntityPMs/QuotePM';
 import { QuotePMService } from '../../../../Quote/Services/StandardPMs/QuotePMService';
 import { CardList } from '../../../../Common/EntityLists/CardList';
 import { CardListService } from '../../../../Common/Services/StandardLists/CardListService';
-import { TariffDomainService, TariffSearchSummary, SurchargeSummary } from '../../../../TariffModule/Services/TariffDomainService';
+import { TariffDomainService, TariffSearchSummary, SurchargeSummary, CustomsChargesPayable, CustomsChargesTariffSearchArgs } from '../../../../TariffModule/Services/TariffDomainService';
 import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
 import { APInvoiceListService } from '../../../../Invoice/Services/StandardLists/APInvoiceListService';
 import { APInvoiceList } from '../../../../Invoice/EntityLists/APInvoiceList';
@@ -62,6 +62,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     public myUserListService: UserListService = null;
     public ComponentRef: any;
     private CurrentSession = SessionLocator.SelectedSession;
+    private myChargesTypeListService: ChargesTypeListService;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = entityArgs.EntityPM;
         this.OriginShipment = entityArgs.OriginEntity;
@@ -74,6 +75,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         this.ItemsSource = new ObservableCollection([]);
         this.myDomainService = new ShipmentDomainService();
         this.myUserListService = new UserListService();
+        this.myChargesTypeListService = new ChargesTypeListService();
         this.Listen();
         this.SetEditEnabled();
         this.LoadRequiredData();
@@ -300,7 +302,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         }
 
         if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CCT")[0]) {
-            //this.IsCustomsChargesVisible = true;
+            this.IsCustomsChargesVisible = true;
         }
 
         var isEditingEnabled: boolean = true;
@@ -1096,6 +1098,11 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                 this.RunViewQuote();
                 break;
             }
+
+            case "AddCustomsCharges": {
+                this.GetCustomsChargesTariffs();
+                break;
+            }
         }
 
         this.StopSavingFlags();
@@ -1489,6 +1496,136 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                 });
             }
         }
+    }
+
+    AddCustomsChargesClicked() {
+        if (AppTool.IsNullOrEmpty(this.EntityPM.CustomAgentExportId && AppTool.IsNullOrEmpty(this.EntityPM.CustomAgentImportId))) {
+            var messageWindow: MessageWindow = new MessageWindow();
+            messageWindow.Show("Custom Agent Export or Custom Agent Import is required");
+        }
+
+        else {
+            if (this.EntityPM.IsDirty) {
+                if (!this.SavingRequested) {
+                    this.SavingRequested = true;
+                    this.SavingRequestCode = "AddCustomsCharges";
+                    this.SaveChanges();
+                }
+            }          
+
+            else {
+                this.GetCustomsChargesTariffs();
+            }
+        }
+    }
+    private GetCustomsChargesTariffs() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+
+        var date: Date = DateTool.GetCurrentDateAsUtc();
+
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageATD)) {
+            date = this.EntityPM.MainCarriageATD;
+        }
+        else if (!AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageETD)) {
+            date = this.EntityPM.MainCarriageETD;
+        }
+
+        var volume: number = this.EntityPM.Volume;
+        if (AppTool.IsNullOrEmpty(this.EntityPM.Volume)) {
+            var ratio: number = 6.00;
+            volume = AppTool.ComputePackageVolume(null, null, null, null, this.EntityPM.ChargeableWeight, ratio, null, this.EntityPM.VolumeUnitCode, this.EntityPM.GrossWeightUnitCode);
+        }
+
+        var args: CustomsChargesTariffSearchArgs = new CustomsChargesTariffSearchArgs();
+        args.FromCountryId = this.EntityPM.FromCountryId;
+        args.ToCountryId = this.EntityPM.MainCarriageFinalDestinationPortCountryId;;
+        args.MainCarriageATD = this.EntityPM.MainCarriageATD;
+        args.MainCarriageETD = this.EntityPM.MainCarriageETD;
+        args.CustomAgentExportId = this.EntityPM.CustomAgentExportId;
+        args.CustomAgentImportId = this.EntityPM.CustomAgentImportId;
+        args.GrossWeight = this.EntityPM.GrossWeight;
+        args.ChargeableWeight = this.EntityPM.ChargeableWeight;
+        args.Volume = this.EntityPM.Volume;
+        args.GrossWeightUnitCode = this.EntityPM.GrossWeightUnitCode;
+        args.ChargeableWeightUnitCode = this.EntityPM.ChargeableWeightUnitCode;
+        args.VolumeUnitCode = this.EntityPM.VolumeUnitCode;
+
+        var tariffService: TariffDomainService = new TariffDomainService();
+        tariffService.GetAvailableCustomsChargesTariffs(args).subscribe((res: ServiceResponse) => {
+            if (!res.HasError) {
+                if (res.Result) {
+                    args = res.Result;
+                    this.CreateCustomChargesPayables(args.CustomsChargesPayables);
+                }
+            }
+
+            else {
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = res.ErrorsArray;
+                this.CurrentSession.StopBusyIndicator();
+            }
+        });
+    }
+    private CreateCustomChargesPayables(customsChargesPayables: CustomsChargesPayable[]) {
+        if (customsChargesPayables != null) {
+            customsChargesPayables.forEach((payable: CustomsChargesPayable) => {
+                this.AddNewTariffPayable(payable);
+            });
+        }
+
+        this.BuildItemsSource();
+        this.CurrentSession.StopBusyIndicator();
+    }
+    private AddNewTariffPayable(payable: CustomsChargesPayable) {
+        this.myChargesTypeListService.getSingleFromCache(payable.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var chargesType: ChargesTypeList = myResponse.Result;
+                var shipmentPayable: ShipmentPayablePM = this.ShipmentGenerator.GeneratePayablesFromTariff(chargesType);
+                shipmentPayable.IsCustomsChargesTariff = true;
+                shipmentPayable.TariffId = payable.TariffId;
+                shipmentPayable.TariffNumber = payable.TariffNumber;
+                shipmentPayable.TariffLineId = payable.TariffLineId;
+                shipmentPayable.TariffVersion = payable.VersionId;
+                shipmentPayable.ShipmentPayableLineStatusCode = "EMPT";
+                shipmentPayable.ShipmentPayableAmountTypeCode = "ACCU";
+                shipmentPayable.ShipmentId = this.EntityPM.Id;
+                shipmentPayable.ShipmentNumber = this.EntityPM.ShipmentNumber;
+                shipmentPayable.CreateDate = DateTool.GetCurrentDateAsUtc();
+                shipmentPayable.Tenant = this.EntityPM.Tenant;
+                shipmentPayable.CreatedByUserId = SessionLocator.LoggedUserId;
+                shipmentPayable.UpdateDate = DateTool.GetCurrentDateAsUtc();
+                shipmentPayable.UpdateByUserId = SessionLocator.LoggedUserId;
+                this.ShipmentGenerator.CalculatePayableVatAmount(shipmentPayable);
+
+                var itemComponent = new ShipmentPayableItem(shipmentPayable, this, true);                
+                itemComponent.CurrencyId = payable.CurrencyId;
+                itemComponent.Rate = this.ShipmentGenerator.GetCurrencyRate(shipmentPayable.CurrencyId);
+                itemComponent.ProfitCurrencyExchangeRate = this.ShipmentGenerator.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
+                itemComponent.MeasurementId = payable.UnitOfMesurmentId;
+
+                var expectedAmount = payable.ActualPrice;
+                itemComponent.ExpectedAmount = AppTool.Round(expectedAmount, 2);
+
+                //if (newQuantity != null) {
+                //    itemComponent.Quantity = AppTool.Round(newQuantity, 3);
+
+                //    if (payable.UnitOfMesurmentCode == "PRVL" || payable.UnitOfMesurmentCode == "PRFR") {
+                //        var price = shipmentPayable.ExpectedAmount * 100;
+                //        itemComponent.UnitPrice = AppTool.Round(price / shipmentPayable.Quantity, 3);
+                //    }
+
+                //    else {
+                //        itemComponent.UnitPrice = expectedAmount != null ? AppTool.Round(expectedAmount / newQuantity, 3) : null;
+                //    }
+                //}
+
+                itemComponent.OpenAmount = shipmentPayable.ExpectedAmount;                
+                itemComponent.Notes = payable.Notes;                
+                itemComponent.MinAmount = payable.IsDifferentCurrency ? payable.ActualMinPrice : payable.MinPrice;
+                //shipmentPayable.VendorId = payable.SellerId;
+                //shipmentPayable.VendorName = payable.SellerName;
+                this.EntityPM.AddPayable(shipmentPayable);                
+            }
+        });
     }
 }
 export class ShipmentPayableItem extends BaseComponent {

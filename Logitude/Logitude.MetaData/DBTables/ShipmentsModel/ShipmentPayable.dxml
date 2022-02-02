@@ -373,6 +373,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsCustomsChargesTariff"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="ShipmentId"
     ReferencedTable="Shipments"

@@ -1,6 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.TariffModule.BL.DataContracts;
 using Logitude.TariffModule.BL.EntityPMs;
 using Logitude.TariffModule.BL.EntityQueryServices;
@@ -23,14 +22,7 @@ using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
 using Syncfusion.XlsIO;
 using System.Data;
-using System.ComponentModel;
-using System.IO;
 using System.Xml.Serialization;
-using Stimulsoft.Base.Excel;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Data.SqlClient;
-using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using Simplog.Data.CommonDataModel;
 using Logitude.Server.Tools.Counters;
@@ -44,15 +36,17 @@ using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Server.Tools.QueueService;
 using WebFreight.Web.Helpers.APIHelpers;
 using System.Reflection;
-using Stimulsoft.Report.Export;
 using Logitude.BL.Helpers;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.EntityLists;
 using Logitude.TariffModule.Data.EntityListQueryServices;
 using Logitude.TariffModule.BL.Helpers;
-using Simplog.Data.ShipmentsModel.Repositories;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Logitude.BL.DataContracts;
+using Logitude.BL.InfrastructureModel.EntityLists;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -107,7 +101,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Tariff", "READ", tenant);
-                
+
                 DateTime? betweenDate = DateHelper.GetDate(args.Date);
                 if (betweenDate == null)
                 {
@@ -117,7 +111,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 PriceCheckManager priceCheckManager = new PriceCheckManager(args, tenant);
                 List<TariffSearchSummary> myResult = priceCheckManager.GetSummary();
-                
+
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
 
@@ -177,7 +171,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                 Tenant = d.Tenant,
                                                 DefaultPriceSteps = d.DefaultPriceSteps,
                                                 DefaultWarningPercentage = d.DefaultWarningPercentage,
-                                                AirDefaultStepsId = d.AirDefaultStepsId, 
+                                                AirDefaultStepsId = d.AirDefaultStepsId,
                                                 LCLDefaultStepsId = d.LCLDefaultStepsId,
                                                 ContainerDefaults = d.ContainerDefaults,
                                                 DefaultCurrencyId = d.DefaultCurrencyId,
@@ -226,8 +220,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             data = this.ExportAirFreightCostLinesToExcel(tariff, tariffVersion.TariffLines, tenant, type);
                         }
-                        
-                        else if(tariff.TypeCode == "OFC")
+
+                        else if (tariff.TypeCode == "OFC")
                         {
                             data = this.ExportOceanFCLFreightCostLinesToExcel(tariff, tariffVersion.TariffLines, tenant, type);
                         }
@@ -303,7 +297,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             table_multi.Columns.Add("From Multi-Ports");
             DataRow row0 = table_multi.NewRow();
             row0[0] = "To Multi-Ports";
-            table_multi.Rows.Add(row0);           
+            table_multi.Rows.Add(row0);
             sheet1.ImportDataTable(table_multi, true, 1, 1);
 
             // Build excel headers 
@@ -383,18 +377,19 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     foreach (var item in tariffLines)
                     {
                         DataRow row = table.NewRow();
-                        if(tariff.TypeCode == "AFC")
+                        if (tariff.TypeCode == "AFC")
                         {
                             row[0] = item.OriginPortCode ?? null;
                             row[1] = item.DestinationPortCode ?? null;
                             row[2] = item.ViaPortCode ?? null;
-                        } else
+                        }
+                        else
                         {
                             row[0] = item.OriginPortCombinedCode ?? null;
                             row[1] = item.DestinationPortCombinedCode ?? null;
                             row[2] = item.ViaPortCombinedCode ?? null;
                         }
-                        
+
                         row[3] = item.MinPrice ?? null;
                         row[4] = item.Step1Price ?? null;
 
@@ -573,12 +568,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         row[2] = item.ViaPortCombinedCode ?? null;
 
                         int rowIndex = 3;
-                        
+
                         if (item.Surcharge1Price.HasValue)
                         {
                             row[rowIndex++] = item.Surcharge1Price ?? null;
                         }
-                        
+
                         if (item.Surcharge2Price.HasValue)
                         {
                             row[rowIndex++] = item.Surcharge2Price ?? null;
@@ -588,12 +583,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             row[rowIndex++] = item.Surcharge3Price ?? null;
                         }
-                        
+
                         if (item.Surcharge4Price.HasValue)
                         {
                             row[rowIndex++] = item.Surcharge4Price ?? null;
                         }
-                        
+
                         if (item.Surcharge5Price.HasValue)
                         {
                             row[rowIndex++] = item.Surcharge5Price ?? null;
@@ -669,7 +664,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        private string TariffType = ""; 
+        private string TariffType = "";
         [ActionName("PostUploadExcelFile")]
         public HttpResponseMessage PostUploadExcelFile(TariffFilterParameter filter)
         {
@@ -850,7 +845,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 /*From Port*/
                 string fromPortCode = rowData[0];
-                if(!Regex.IsMatch(fromPortCode, @"^[a-zA-Z0-9]+$"))
+                if (!Regex.IsMatch(fromPortCode, @"^[a-zA-Z0-9]+$"))
                 {
                     fromPortCode = Regex.Replace(fromPortCode, @"[^a-zA-Z0-9]+", "");
                 }
@@ -1592,7 +1587,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     errorText = errorText + ", Missing Destination Port";
                 }
             }
-            
+
             if (!string.IsNullOrEmpty(item.Surcharge1PriceText) && item.Surcharge1Price == null)
             {
                 error = true;
@@ -1747,7 +1742,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
             }
-            
+
             item.HasErrors = error;
             item.ErrorText = errorText;
         }
@@ -2008,7 +2003,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         List<FromToClass> routs = this.ComputeRoutsList(args.From, args.To, authToken.Tenant, tariff.TypeCode);
                         bool isValid = this.ValidateStartDate(tariff, iDraftVersion, routs, args.StartDate, tariffContext);
 
-                        if(isValid)
+                        if (isValid)
                         {
                             int currentLinesCount = iDraftVersion.TariffLines.Count;
 
@@ -2026,7 +2021,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             {
                                 mySurchargesText = "";
                                 TariffLinePM myLine = iDraftVersion.TariffLines.Where(d => d.OriginPortId == rout.FromCode && d.DestinationPortId == rout.ToCode).FirstOrDefault();
-                                
+
                                 // Update
                                 if (myLine != null)
                                 {
@@ -2037,7 +2032,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     {
                                         string[] charge_array = charge.Split(',');
 
-                                        if(tariff.TypeCode == "OFS")
+                                        if (tariff.TypeCode == "OFS")
                                         {
                                             var arrayChargeType = "";
 
@@ -2244,7 +2239,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 containersPricePM = new TariffLinesContainersPricePM()
                 {
-                    ChangeSetOp = ChangeSetOperation.Insert,                    
+                    ChangeSetOp = ChangeSetOperation.Insert,
                     Tenant = tariffLine.Tenant,
                     TariffId = tariffLine.TariffId,
                     SurchargeId = chargeId,
@@ -2339,7 +2334,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (typeCode.StartsWith("A"))
                     {
                         areasFromPorts.Add(from[2]);
-                    } else
+                    }
+                    else
                     {
                         areasFromPorts.Add(from[3]);
                     }
@@ -2361,7 +2357,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 if (typeCode.StartsWith("A"))
                                 {
                                     areasToPorts.Add(to[2]);
-                                } else
+                                }
+                                else
                                 {
                                     areasToPorts.Add(to[3]);
                                 }
@@ -2423,7 +2420,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                         if (typeCode.StartsWith("A"))
                                         {
                                             areasToPorts.Add(to[2]);
-                                        } else
+                                        }
+                                        else
                                         {
                                             areasToPorts.Add(to[3]);
                                         }
@@ -2487,7 +2485,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             return myResult;
         }
-        
+
         public HttpResponseMessage GetTariffsLogsByTariffId(string tariffId, int version)
         {
             string token = HttpContext.Current.Request.Headers["Token"];
@@ -2511,7 +2509,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             string loggedUserEmail = authToken.Email;
             SecurityUtility.AuthenticationOnTenant(tenant);
             ITariffModuleContext iContext = TariffModuleContext.GetContext(tenant);
-            TariffVersionQueryService iTariffVersionQueryService = new TariffVersionQueryService(iContext);          
+            TariffVersionQueryService iTariffVersionQueryService = new TariffVersionQueryService(iContext);
             List<TariffVersionPM> entityPMs = iTariffVersionQueryService.GetAllVersionsWithLines(tariffId, tenant);
             return Request.CreateResponse(HttpStatusCode.OK, entityPMs);
         }
@@ -2526,7 +2524,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Tariff", "READ", tenant);
-                
+
                 string mail = SecurityUtility.GetAuthenticatedUser();
                 ContactQuery contactQuery = new ContactQuery(tenant);
                 ContactPM contact = contactQuery.GetContactByEmailOnly(mail, tenant);
@@ -2639,7 +2637,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         tariffLineRepository.SubmitChanges();
                     }
                 }
-                
+
                 return Request.CreateResponse(HttpStatusCode.OK, "ok");
             }
 
@@ -2663,10 +2661,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 freightTariffId = this.FixFilter(freightTariffId);
                 shipmentId = this.FixFilter(shipmentId);
-                
+
                 PriceCheckManager priceCheckManager = new PriceCheckManager(freightTariffId, shipmentId, tariffType, tenant);
                 List<TariffSearchSummary> myResult = priceCheckManager.GetSummaryForExistedTariff();
-                
+
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
 
@@ -2699,6 +2697,364 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        private CustomsChargesTariffSearchArgs customsChargesTariffSearchArgs;
+        private List<RatesTableList> ratesList;
+        private ICommonDataContext commonContext;
+        [ActionName("PostAvailableCustomsChargesTariffs")]
+        public HttpResponseMessage PostAvailableCustomsChargesTariffs(CustomsChargesTariffSearchArgs args)
+        {
+            try
+            {
+                this.customsChargesTariffSearchArgs = args;
+                this.customsChargesTariffSearchArgs.CustomsChargesPayables = new List<CustomsChargesPayable>();
+                int tenant = this.AuthenticateAPIRequest();
+
+                IQueryable<Tariff> tariffs = this.GetTariffs(tenant);
+                List<TariffLine> tariffLines = this.GetTariffLines(tariffs, tenant);
+                this.ratesList = this.GetRates(tenant);
+                this.commonContext = CommonDataContext.GetContext(tenant);
+                foreach (TariffLine tariffLine in tariffLines)
+                {
+                    Tariff tariff = tariffs.Where(d => d.Id == tariffLine.TariffId).FirstOrDefault();                    
+                    this.customsChargesTariffSearchArgs.CustomsChargesPayables.AddRange(this.CreatePayablesFromCustomChargesLine(tariffLine, tariff));
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, this.customsChargesTariffSearchArgs);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        private int AuthenticateAPIRequest()
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+            return authToken.Tenant;
+        }
+        private IQueryable<Tariff> GetTariffs(int tenant)
+        {
+            TariffRepository tariffRepository = new TariffRepository(tenant);
+            IQueryable<Tariff> tariffs = tariffRepository.GetActiveCustomsChargesTariffs(tenant);
+
+            if (!string.IsNullOrEmpty(customsChargesTariffSearchArgs.CustomAgentExportId))
+            {
+                tariffs = tariffs.Where(d => d.CustomsBrokerId == customsChargesTariffSearchArgs.CustomAgentExportId);
+            }
+
+            if (!string.IsNullOrEmpty(customsChargesTariffSearchArgs.CustomAgentImportId))
+            {
+                tariffs = tariffs.Where(d => d.CustomsBrokerId == customsChargesTariffSearchArgs.CustomAgentImportId);
+            }
+
+            return tariffs;
+        }        
+        private List<TariffLine> GetTariffLines(IQueryable<Tariff> tariffs, int tenant)
+        {
+            List<TariffLine> myResult = new List<TariffLine>();
+            TariffVersionRepository tariffVersionRepository = new TariffVersionRepository(tenant);
+            TariffLineRepository tariffLineRepository = new TariffLineRepository(tenant);
+            DateTime? dateFilter = this.GetCustomsChargesDateFilter(tenant);
+            foreach (Tariff tariff in tariffs)
+            {
+                IQueryable<TariffVersion> tariffVersions = tariffVersionRepository.GetActiveVersionsByTariffId(tariff.Id, tenant);
+                List<int> versionIds = tariffVersions.Select(a => a.Version).ToList();
+                IQueryable<TariffLine> tariffLines = tariffLineRepository.GetAllTariffLinesByTariffIdAndVersions(tariff.Id, versionIds, tenant);
+
+                tariffLines = tariffLines.Where(p => System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= System.Data.Entity.DbFunctions.TruncateTime(dateFilter)
+                               && (p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= System.Data.Entity.DbFunctions.TruncateTime(dateFilter)) : true));
+
+                myResult.Add(this.FilterTariffLinesBasedOnCountries(tariffLines));
+            }
+
+            return myResult;
+        }
+        private List<RatesTableList> GetRates(int tenant)
+        {
+            IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
+            RatesTableRepository ratesTableRepository = new RatesTableRepository(MyContext);
+            IQueryable<RatesTable> entityPocos = ratesTableRepository.GetRatesTables(tenant);
+
+            RatesTableQuery ratesTableQuery = new RatesTableQuery(ratesTableRepository);
+            IQueryable<RatesTableList> entityLists = ratesTableQuery.GetIQueryableEntityList(entityPocos);
+            entityLists = entityLists.OrderByDescending(r => r.ValueDate);
+
+            return entityLists.ToList();
+        }
+        private DateTime? GetCustomsChargesDateFilter(int tenant)
+        {
+            DateTime? date = TenantServerConfigration.GetCurrentDateTime(tenant);
+
+            if (customsChargesTariffSearchArgs.MainCarriageATD != null)
+            {
+                date = customsChargesTariffSearchArgs.MainCarriageATD;
+            }
+
+            else if (customsChargesTariffSearchArgs.MainCarriageETD != null)
+            {
+                date = customsChargesTariffSearchArgs.MainCarriageETD;
+            }
+
+            return date;
+        }
+        private TariffLine FilterTariffLinesBasedOnCountries(IQueryable<TariffLine> tariffLines)
+        {
+            List<TariffLine> test = tariffLines.ToList();
+            IQueryable<TariffLine> filteredLines = tariffLines.Where(p => p.FromCountryId == customsChargesTariffSearchArgs.FromCountryId && p.ToCountryId == customsChargesTariffSearchArgs.ToCountryId);
+
+            if (filteredLines.Count() == 0)
+            {
+                filteredLines = tariffLines.Where(p => p.FromCountryId == customsChargesTariffSearchArgs.FromCountryId && p.IsToAllOtherCountries);
+            }
+
+            if (filteredLines.Count() == 0)
+            {
+                filteredLines = tariffLines.Where(p => p.IsFromAllOtherCountries && p.ToCountryId == customsChargesTariffSearchArgs.ToCountryId);
+            }
+
+            if (filteredLines.Count() == 0)
+            {
+                filteredLines = tariffLines.Where(p => p.IsFromAllOtherCountries && p.IsToAllOtherCountries);
+            }
+
+            return filteredLines.FirstOrDefault();
+        }
+        private List<CustomsChargesPayable> CreatePayablesFromCustomChargesLine(TariffLine tariffLine, Tariff tariff)
+        {
+            List<CustomsChargesPayable> payables = new List<CustomsChargesPayable>();
+            for (int i = 1; i <= 10; i++)
+            {
+                decimal? myQuantity = 1;
+                string chargeId = (string)tariff.GetType().GetProperty("Surcharge" + i + "Id").GetValue(tariff);
+                string measurementId = (string)tariff.GetType().GetProperty("Surcharge" + i + "UOM").GetValue(tariff);
+
+                Measurement measurement = this.commonContext.Measurements.Where(p => p.Tenant == tariff.Tenant && p.Id == measurementId).FirstOrDefault();
+                ChargesType chargesType = this.commonContext.ChargesTypes.Where(p => p.Tenant == tariff.Tenant && p.Id == chargeId).FirstOrDefault();
+
+                if (measurement != null && chargesType != null)
+                {
+                    decimal? price = (decimal?)tariffLine.GetType().GetProperty("Surcharge" + i + "Price").GetValue(tariffLine);
+                    decimal? minPrice = (decimal?)tariffLine.GetType().GetProperty("Surcharge" + i + "MinPrice").GetValue(tariffLine);
+
+                    if (price != null)
+                    {
+                        CustomsChargesPayable payable = new CustomsChargesPayable()
+                        {
+                            TariffId = tariff.Id,
+                            TariffNumber = tariff.TariffNumber,
+                            TariffLineId = tariffLine.Id,
+                            VersionId = tariffLine.Version,
+                            ChargeTypeCode = chargesType.Code,
+                            ChargeTypeName = chargesType.EnglishName,
+                            ChargeTypeId = chargesType.Id,
+                            UnitOfMesurmentCode = measurement.Code,
+                            UnitOfMesurmentId = measurement.Id,
+                            IsDifferentCurrency = tariffLine.IsDifferentCurrenciesPerCharge,
+                            Notes = tariffLine.Notes,
+                        };
+                        
+                        payable.CurrencyId = tariffLine.CurrencyId != null ? tariffLine.CurrencyId : tariff.CurrencyId;
+                        if (tariffLine.IsDifferentCurrenciesPerCharge)
+                        {
+                            payable.CurrencyId = (string)tariffLine.GetType().GetProperty("Surcharge" + i + "CurrencyId").GetValue(tariffLine);
+                        }
+
+                        decimal? actualPrice = 0;
+                        switch (measurement.Code)
+                        {
+                            case "BTEU":
+                            case "FIXD":
+                            case "PRVL":
+                            case "PRFR":
+                            case "QTY":
+                                {
+                                    myQuantity = 1;
+                                    break;
+                                }
+
+                            case "GRWT": { myQuantity = (decimal?)customsChargesTariffSearchArgs.GrossWeight; break; }
+                            case "CHWT": { myQuantity = (decimal?)customsChargesTariffSearchArgs.ChargeableWeight; break; }
+                            case "VOLU": { myQuantity = (decimal?)customsChargesTariffSearchArgs.Volume; break; }
+                            case "GWTN": { myQuantity = (decimal?)this.ComputeGrossWeigh_Kg_Ton(customsChargesTariffSearchArgs.GrossWeight, customsChargesTariffSearchArgs.GrossWeightUnitCode, "ton"); break; }
+                            case "CWKG": { myQuantity = (decimal?)this.ComputeChargeableWeight_Kg(customsChargesTariffSearchArgs.ChargeableWeight, customsChargesTariffSearchArgs.ChargeableWeightUnitCode); break; }
+                            case "GWKG": { myQuantity = (decimal?)this.ComputeGrossWeigh_Kg_Ton(customsChargesTariffSearchArgs.GrossWeight, customsChargesTariffSearchArgs.GrossWeightUnitCode, "kg"); break; }
+                            case "VCBM": { myQuantity = (decimal?)this.ComputeVolumeInCBM(customsChargesTariffSearchArgs.Volume, customsChargesTariffSearchArgs.VolumeUnitCode); break; }
+                            default: { break; }
+                        }
+
+                        if (measurement.Code == "PRVL" || measurement.Code == "PRFR")
+                        {
+                            actualPrice = myQuantity * ( price / 100);
+                        }
+                        else
+                        {
+                            actualPrice = price * myQuantity;
+                        }
+
+                        var linePrice = this.CalculateLocalAmount((actualPrice == null ? 0 : actualPrice.Value), payable.CurrencyId, tariff.Tenant);
+                        decimal? calculatedMinPrice = null;
+                        decimal? actualMinimumPrice = null;
+                        if (minPrice != null)
+                        {
+                            actualMinimumPrice = (decimal)minPrice;
+                            calculatedMinPrice = this.CalculateLocalAmount(actualMinimumPrice.Value, payable.CurrencyId, tariff.Tenant);
+                            if (calculatedMinPrice > linePrice)
+                            {
+                                linePrice = calculatedMinPrice.Value;
+                                payable.IsMinIconVisible = true;
+                            }
+                        }
+
+                        payable.Price = linePrice;
+                        payable.ActualPrice = actualPrice == null ? 0 : actualPrice.Value;
+                        payable.MinPrice = calculatedMinPrice;
+                        payable.ActualMinPrice = actualMinimumPrice;                        
+                        payables.Add(payable);
+                    }
+                }
+            }
+
+            return payables;
+        }
+        private double? ComputeGrossWeigh_Kg_Ton(double? grossWeight, string grossWeightUnitCode, string type)
+        {
+            double? weigh_Kg = null;
+            double? weigh_Ton = null;
+
+            if (grossWeight != null)
+            {
+                double factorOfConvert = 1;
+
+                if (!string.IsNullOrEmpty(grossWeightUnitCode))
+                {
+                    switch (grossWeightUnitCode.ToUpper())
+                    {
+                        case "KG": { factorOfConvert = 1; break; }
+                        case "LB": { factorOfConvert = 0.45359237; break; }
+                        case "MT": { factorOfConvert = 1000; break; }
+                    }
+                }
+
+                weigh_Kg = grossWeight * factorOfConvert;
+            }
+
+            if (weigh_Kg != null)
+            {
+                weigh_Kg = Round(weigh_Kg, 3);
+
+                weigh_Ton = weigh_Kg / 1000;
+            }
+
+            if (weigh_Ton != null)
+            {
+                weigh_Ton = Round(weigh_Ton, 3);
+            }
+
+            if (type == "kg")
+                return weigh_Kg;
+            return weigh_Ton;
+        }
+        private double? ComputeChargeableWeight_Kg(double? chargeableWeight, string chargeableWeightUnitCode)
+        {
+            double? weigh_Kg = null;
+
+            if (chargeableWeight != null)
+            {
+                double factorOfConvert = 1;
+
+                if (!String.IsNullOrEmpty(chargeableWeightUnitCode))
+                {
+                    switch (chargeableWeightUnitCode.ToUpper())
+                    {
+                        case "KG": { factorOfConvert = 1; break; }
+                        case "LB": { factorOfConvert = 0.45359237; break; }
+                        case "MT": { factorOfConvert = 1000; break; }
+                    }
+                }
+
+                weigh_Kg = chargeableWeight * factorOfConvert;
+            }
+
+            if (weigh_Kg != null)
+            {
+                weigh_Kg = Round(weigh_Kg, 3);
+            }
+            return weigh_Kg;
+        }
+        private double? ComputeVolumeInCBM(double? volume, string volumeCode)
+        {
+            double? volumeInCBM = null;
+
+            if (volume != null)
+            {
+                double factorOfConvert = 1;
+
+                if (!String.IsNullOrEmpty(volumeCode))
+                {
+                    switch (volumeCode.ToUpper())
+                    {
+                        case "CBM": { factorOfConvert = 1; break; }
+                        case "CBI": { factorOfConvert = 61024; break; }
+                        case "CBF": { factorOfConvert = 35.315; break; }
+                    }
+                }
+                volumeInCBM = volume * factorOfConvert;
+            }
+
+            if (volumeInCBM != null)
+            {
+                volumeInCBM = Round(volumeInCBM, 3);
+            }
+            return volumeInCBM;
+        }
+        private decimal CalculateLocalAmount(decimal amount, string tariffLineCurrencyId, int tenant)
+        {
+            string localCurrencyId = this.GetTenantLocalCurrency(tenant);
+            decimal amountInTariffCurr;
+
+            if (localCurrencyId == tariffLineCurrencyId)
+            {
+                amountInTariffCurr = amount;
+            }
+            else
+            {
+                RatesTableList rateList = this.ratesList.Find(d => d.BaseCurrencyId == localCurrencyId && d.ForeignCurrencyId == tariffLineCurrencyId);
+                var rate = rateList == null ? 0 : rateList.Rate;
+                amountInTariffCurr = amount * (decimal)rate;
+            }
+
+            return amountInTariffCurr;
+        }
+        private string GetTenantLocalCurrency(int tenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant myTenant = tenantRepository.GetSingleByTenant(tenant);
+            return myTenant?.CurrencyId;
+        }
+        private double? Round(double? value, int digits)
+        {
+            double? myValue = null;
+
+            if (value != null)
+            {
+                myValue = Convert.ToDouble(value);
+            }
+
+            double? myResult = myValue;
+
+            if (myValue != null && digits >= 1 && digits <= 15)
+            {
+                string mySTR = String.Format("{0:N" + digits + "}", myValue);
+
+                myResult = Convert.ToDouble(mySTR);
+            }
+
+            return myResult;
         }
     }
 
@@ -2821,5 +3177,43 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public DateTime? StartDate { get; set; }
         public string StartDateText { get; set; }
         public string TransitTime { get; set; }
+    }
+
+    public class CustomsChargesTariffSearchArgs
+    {
+        public string FromCountryId { get; set; }
+        public string ToCountryId { get; set; }
+        public DateTime? MainCarriageATD { get; set; }
+        public DateTime? MainCarriageETD { get; set; }
+        public string CustomAgentExportId { get; set; }
+        public string CustomAgentImportId { get; set; }
+        public double? GrossWeight { get; set; }
+        public double? ChargeableWeight { get; set; }
+        public double? Volume { get; set; }
+        public string GrossWeightUnitCode { get; set; }
+        public string ChargeableWeightUnitCode { get; set; }
+        public string VolumeUnitCode { get; set; }
+        public List<CustomsChargesPayable> CustomsChargesPayables { get; set; }
+    }
+
+    public class CustomsChargesPayable
+    {
+        public string ChargeTypeId { get; set; }
+        public string ChargeTypeCode { get; set; }
+        public string ChargeTypeName { get; set; }
+        public string UnitOfMesurmentId { get; set; }
+        public string UnitOfMesurmentCode { get; set; }        
+        public string TariffId { get; set; }        
+        public string TariffNumber { get; set; }
+        public int VersionId { get; set; }
+        public string TariffLineId { get; set; }
+        public string CurrencyId { get; set; }
+        public decimal? Price { get; set; }
+        public decimal? ActualPrice { get; set; }        
+        public decimal? MinPrice { get; set; }
+        public decimal? ActualMinPrice { get; set; }
+        public bool IsMinIconVisible { get; set; }  
+        public bool IsDifferentCurrency { get; set; }
+        public string Notes { get; set; }
     }
 }
