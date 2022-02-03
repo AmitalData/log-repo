@@ -5538,6 +5538,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isExportClosed ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsExportClosed  
+	   {
+	    
+	     get
+		{
+		   return isExportClosed;
+		 }
+		 set
+		 {
+		   if(isExportClosed != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsExportClosed",OldValue=isExportClosed,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isExportClosed=value;
+		   }
+			
+		 }
+	   }
+	  private string exportClosedErrorXML ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportClosedErrorXML  
+	   {
+	    
+	     get
+		{
+		   return exportClosedErrorXML;
+		 }
+		 set
+		 {
+		   if(exportClosedErrorXML != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportClosedErrorXML",OldValue=exportClosedErrorXML,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exportClosedErrorXML=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
