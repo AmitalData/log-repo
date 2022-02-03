@@ -3809,9 +3809,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
 
                     IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
+                    AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.ARInvoiceApprove);
                     journalUpdate.Update(journal);
                 }
             }
+        }
+
+        private void AddAccountingEntitieJournal(JournalPM entityPM, string action, string ChildEntityId = null)
+        {
+            IAccountingEntityJournalUpdateServiceExt service = ContainerAccessor.Container.Resolve(typeof(IAccountingEntityJournalUpdateServiceExt), "AccountingEntityJournalUpdateServiceExt", new ParameterOverride("", 1)) as IAccountingEntityJournalUpdateServiceExt;
+            service.AddAccountingEntitieJournal(entityPM, action, ChildEntityId);
         }
 
         private void AutoReconcileAutoCreditInvoiceWithAutoCreditedInvoice(JournalPM journal)

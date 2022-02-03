@@ -19,5 +19,11 @@ namespace Logitude.Accounting.Def.EntityPMs
         public const string BankDepositChequeRedemption = "BankDepositChequeRedemption";
         public const string YearTransferApprove = "YearTransferApprove";
         public const string YearTransferCancel = "YearTransferCancel";
+        public const string ARInvoiceApprove = "ARInvoiceApprove";
+        public const string ARInvoiceVoid = "ARInvoiceVoid ";
+        public const string ARPaymentApprove = "ARPaymentApprove";
+        public const string ARPaymentVoid = "ARPaymentVoid";
+        public const string ARPaymentReturnToCustomer = "ARPaymentReturnToCustomer";
+        public const string RevaluationApprove = "RevaluationApprove";
     }
 }
