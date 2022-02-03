@@ -16,10 +16,11 @@ using System.Data.Entity.Core.Objects;
 using Simplog.Data.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using System.Data.Entity;
+using Simplog.Data.InfrastructureModel;
 
 namespace WebFreight.Web.Monitoring
 {
-    public partial class ShipmentInterfaceMonitoringStatus : System.Web.UI.Page
+    public partial class AutoSignUpMonitoring : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -54,30 +55,31 @@ namespace WebFreight.Web.Monitoring
             {
                 try
                 {
-                    isFailed = CheckIfAnyCommunicationLogsFailed();
+                    isFailed = CheckIfAnyAutoSignupEmailsFailed();
                 }
                 catch (Exception errorInfo)
                 {
-                    ExceptionHandler.HandleException(errorInfo, DateTime.Now, 0, "", "ShipmentInterfaceMonitoringStatus", "Bug in ShipmentInterfaceMonitoringStatus Method : globaldbRep.All()", null);
+                    ExceptionHandler.HandleException(errorInfo, DateTime.Now, 0, "", "AutoSignUpMonitoring", "Bug in AutoSignUpMonitoring Method : globaldbRep.All()", null);
                 }
                 scope.Complete();
             }
             return isFailed;
         }
 
-        private static bool CheckIfAnyCommunicationLogsFailed()
+        private static bool CheckIfAnyAutoSignupEmailsFailed()
         {
-            DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(0);
+            DateTime todayDateTime = DateTime.Now;
             DateTime twoDaysBefore = todayDateTime.AddDays(-2);
-            ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
+            IGlobalContext globalContext = GlobalContext.GetContext();
 
-            return (from a in commonDataContext.CommunicationLogs
-                    where a.CreateDateUTC > twoDaysBefore
-                    && a.Subject == "Shipment Interface"
-                    && ((a.CommunicationStatusTypeCode == "W" && (EntityFunctions.DiffMinutes(a.CreateDateUTC, todayDateTime) > 5)) || a.CommunicationStatusTypeCode == "F")
+            return (from a in globalContext.AutoSignupEmails
+                    where a.CreateDate > twoDaysBefore
+                    && ((a.Status == "New"
+                    && (EntityFunctions.DiffMinutes(a.CreateDate, todayDateTime) > 5)) || a.Status == "Fail")
                     select a).Any();
 
         }
+
 
     }
 }
