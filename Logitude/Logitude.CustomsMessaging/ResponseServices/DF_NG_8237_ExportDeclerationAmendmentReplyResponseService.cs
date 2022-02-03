@@ -292,10 +292,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                             case "1":
 
                                                 var declarationParent = myDeclarationQueryService.GetAcceptDeclarationAmendment(_MyDeclarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
-                                          //  _MyDeclarationPM.AmendmentStatus = "3";
 
                                             _MyDeclarationPM.AmendmentDontDisplayInList = false;
-                                                UpdateReplacingDeclaration(requestParams, myDeclarationQueryService, myDeclarationUpdateService);
+                                            //  _MyDeclarationPM.AmendmentStatus = "3";
+                                            UpdateReplacingDeclaration(requestParams, myDeclarationQueryService, myDeclarationUpdateService);
                                                 if(_MyDeclarationPM.AmendmentOriginalDeclartation!= declarationParent.AmendmentOriginalDeclartation)
                                                 {
                                                     UpdateParentDec(myDeclarationUpdateService, declarationParent);
