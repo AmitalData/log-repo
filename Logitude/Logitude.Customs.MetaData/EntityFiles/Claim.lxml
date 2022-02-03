@@ -4622,7 +4622,7 @@
   <Query
     Code="&quot;Close Claim Files&quot;"
     TextCode="&quot;Close Claim Files&quot;"
-    LocalTextCode="&quot;תביעות פתוחות&quot;"
+    LocalTextCode="&quot;תביעות סגורות&quot;"
     QueryGroupCode="&quot;d8f1&quot;"
     IndexOrder="2"
     ObjectTableName="&quot;Customs.Claim&quot;"
@@ -4668,9 +4668,10 @@
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;Close Claim Files&quot;"
-        PredefinedValue="&quot;1&quot;"
+        PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsClosed&quot;"
         IsPredefined="true"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>
