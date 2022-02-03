@@ -1022,6 +1022,19 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsExportClosed"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ExportClosedErrorXML"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"

@@ -1384,6 +1384,16 @@ export class DeclarationPM {
     public set AmendmentTypeName(newValue: string) { if (this.amendmentTypeName != newValue) { this.amendmentTypeName = newValue; this.MarkAsDirty("AmendmentTypeName"); } }
        
 	 
+    private isExportClosed: boolean;
+    public get IsExportClosed() { return this.isExportClosed; }
+    public set IsExportClosed(newValue: boolean) { if (this.isExportClosed != newValue) { this.isExportClosed = newValue; this.MarkAsDirty("IsExportClosed"); } }
+       
+	 
+    private exportClosedErrorXML: string;
+    public get ExportClosedErrorXML() { return this.exportClosedErrorXML; }
+    public set ExportClosedErrorXML(newValue: string) { if (this.exportClosedErrorXML != newValue) { this.exportClosedErrorXML = newValue; this.MarkAsDirty("ExportClosedErrorXML"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		
