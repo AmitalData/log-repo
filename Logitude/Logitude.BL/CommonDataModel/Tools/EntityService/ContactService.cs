@@ -669,7 +669,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 queueservice.InitializeQueue("CToolLookups", 0);
                 var queueMessage = new Dictionary<string, string>() {
                 { "Entity", "DisconectFromContact" },
-                { "EntityId", "{" + "\"ContactId\":" + "\"" + cardContact.ContactId + "\"," + "\"CardId\":" + "\"" + cardContact.CardId + "\"," + "\"Tenant\":" + 100 + "}" },
+                { "EntityId", "{" + "\"ContactId\":" + "\"" + cardContact.ContactId + "\"," + "\"CardId\":" + "\"" + cardContact.CardId + "\"," + "\"Tenant\":" + tenant + "}" },
                 { "Tenant", tenant.ToString()}};
                 queueservice.Send(queueMessage, tenant);
             }
