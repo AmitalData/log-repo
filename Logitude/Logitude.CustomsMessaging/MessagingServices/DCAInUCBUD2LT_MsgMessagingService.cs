@@ -242,7 +242,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                                 From = "Logitude",
                                 InOut = "O",
 
-                             };
+                            };
 
 
                             var message = Encoding.UTF8.GetBytes(xmlESBResponseXmlClass);
@@ -251,42 +251,16 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
 
-
-                            var queuename = "ucbud2lt";
-                            var args = new Dictionary<string, object>();
-
-                            //   var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
-                            var factory = RabbitmqHelper.GetConnectionFactory();
-
-                            using (var connection = factory.CreateConnection())
-                            using (var channel = connection.CreateModel())
-                            {
-
-                                channel.BasicQos(0, 5, true);
-
-                                //args.Add("x-queue-mode", "lazy");
-                                //channel.QueueDeclare(queue: queuename,
-                                //                    durable: true,
-                                //                    exclusive: false,
-                                //                    autoDelete: false,
-                                //                    arguments: args);
-
-                                RabbitmqHelper.DeclareQueue(channel, queuename);
+                            string InterfaceTypeCode = "ucbud2lt";
+                            String rabbitMQCode = RabbitmqHelper.GetRabbitMQCode(tenant);
 
 
-                                var header = new Dictionary<string, object>();
-                                var prop = channel.CreateBasicProperties();
-                                prop.Persistent = true;
-                                prop.MessageId = communicationLogId;
-                                prop.DeliveryMode = 2; //persistent
-                                prop.Headers = header;
+                            var rabbitPublishService = new RabbitPublishService();
+                            rabbitPublishService.Publish(message, communicationLogId, InterfaceTypeCode, rabbitMQCode,5);
 
-                                channel.BasicPublish(exchange: "",
-                                                             routingKey: queuename,
-                                                             basicProperties: prop,
-                                                             body: message);
 
-                            }
+
+                            
                         }
                         catch (Exception)
                         {
@@ -322,6 +296,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         }
 
+        
 
     }
 

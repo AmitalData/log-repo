@@ -1,4 +1,4 @@
- 
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,9 +13,9 @@ using System.Data.Entity;
 
 namespace Logitude.Customs.Data.Repsitories
 {
-   public partial class DeclarationCourierStatusRepository:IRepository<DeclarationCourierStatus>
-   {
-        
+    public partial class DeclarationCourierStatusRepository : IRepository<DeclarationCourierStatus>
+    {
+
 
         public List<DeclarationCourierStatus> GetMulti(EntityKeyFields entityKeys)
         {
@@ -32,7 +32,8 @@ namespace Logitude.Customs.Data.Repsitories
                  string SelectedStatusValue,
                  string SelectedTotalInvoiceValue,
                  string SelectedFastIndividualProcessValue,
-                 string SelectedCustomStatusValue
+                 string SelectedCustomStatusValue,
+                 string SelectedFinalReleaseValue
                  )
         {
             var repoCourierDeclaration = new CourierDeclarationRepository(this.context);
@@ -45,7 +46,7 @@ namespace Logitude.Customs.Data.Repsitories
                      orderby rDec.CourierHAWB ascending
                      select status);
 
-            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, q);
+            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, SelectedFinalReleaseValue, q);
 
             var pocos = q.ToList();
 
@@ -71,7 +72,7 @@ namespace Logitude.Customs.Data.Repsitories
 
         }
         public List<DeclarationCourierStatus> GetByMasterIDCourierManifestStatusCode(int tenant, string CourierMasterId, string CourierManifestStatusCode
-            , string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, string SelectedCustomStatusValue
+            , string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, string SelectedCustomStatusValue, string SelectedFinalReleaseValue
             )
         {
             var repoCourierDeclaration = new CourierDeclarationRepository(this.context);
@@ -82,7 +83,7 @@ namespace Logitude.Customs.Data.Repsitories
                      on dec.DeclarationId equals status.DeclarationId
                      orderby rDec.CourierHAWB ascending
                      select status);
-            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, q);
+            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, SelectedFinalReleaseValue, q);
             var pocos = q.ToList();
             return pocos;
 
@@ -92,8 +93,8 @@ namespace Logitude.Customs.Data.Repsitories
         {
             IQueryable<DeclarationCourierStatus> q = GetBy(tenant, CourierMasterId);
             var list = q
-                .Where( r=> r.CourierPendingReasonList!=null &&  r.CourierPendingReasonList!="")
-                .Select(r=>r.CourierPendingReasonList)
+                .Where(r => r.CourierPendingReasonList != null && r.CourierPendingReasonList != "")
+                .Select(r => r.CourierPendingReasonList)
                 .ToList();
             var myList = list
                 .Select(p => p.Split(',').ToList()).ToList()
@@ -138,7 +139,7 @@ namespace Logitude.Customs.Data.Repsitories
         }
 
         public List<DeclarationCourierStatus> GetByMasterIDCourierDocumentStatus(int tenant, string CourierMasterId, string DocumentStatusCode
-    , string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, string SelectedCustomStatusValue)
+    , string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, string SelectedCustomStatusValue, string SelectedFinalReleaseValue)
         {
             var repoCourierDeclaration = new CourierDeclarationRepository(this.context);
             var repoDeclaration = new DeclarationRepository(this.context);
@@ -148,7 +149,7 @@ namespace Logitude.Customs.Data.Repsitories
                      on dec.DeclarationId equals status.DeclarationId
                      orderby rDec.CourierHAWB ascending
                      select status);
-            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, q);
+            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, SelectedFinalReleaseValue, q);
             var pocos = q.ToList();
 
             return pocos;
@@ -156,7 +157,7 @@ namespace Logitude.Customs.Data.Repsitories
         }
 
 
-        public IQueryable<DeclarationCourierStatus> MoreFilter(string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, string SelectedCustomStatusValue, IQueryable<DeclarationCourierStatus> q)
+        public IQueryable<DeclarationCourierStatus> MoreFilter(string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, string SelectedCustomStatusValue, string SelectedFinalReleaseValue, IQueryable<DeclarationCourierStatus> q)
         {
             switch (SelectedBOLValue)
             {
@@ -227,11 +228,27 @@ namespace Logitude.Customs.Data.Repsitories
                         break;
                     }
             }
+
+            switch (SelectedFinalReleaseValue)
+            {
+                case "Y":
+                    {
+                        q = q.Where(r => r.Declaration.HatraDate.HasValue);
+                        break;
+                    }
+                case "N":
+                    {
+                        q = q.Where(r => !r.Declaration.HatraDate.HasValue);
+                        break;
+                    }
+            }
+
+
             return q;
         }
 
 
-        public List<DeclarationCourierStatus> GetDeclarationsByIds(List<string> declarationIds,int tenant)
+        public List<DeclarationCourierStatus> GetDeclarationsByIds(List<string> declarationIds, int tenant)
         {
 
             List<DeclarationCourierStatus> declarations = (from a in context.DeclarationCourierStatuses
@@ -246,9 +263,9 @@ namespace Logitude.Customs.Data.Repsitories
         {
 
             DeclarationCourierStatus declarations = (from a in context.DeclarationCourierStatuses
-                                                           where declarationIds.Contains(a.DeclarationId)
-                                                           where a.Tenant == tenant
-                                                           select a).FirstOrDefault();
+                                                     where declarationIds.Contains(a.DeclarationId)
+                                                     where a.Tenant == tenant
+                                                     select a).FirstOrDefault();
 
             return declarations;
 
@@ -256,10 +273,10 @@ namespace Logitude.Customs.Data.Repsitories
 
         public List<DeclarationCourierStatus> GetDeclarationsByPendings(List<string> declarationIds, int tenant, string pending)
         {
-        //    var test = context.DeclarationCourierStatuses.Where(a=> a.Tenant == tenant && a.CourierPendingReasonList.Contains(pending));
+            //    var test = context.DeclarationCourierStatuses.Where(a=> a.Tenant == tenant && a.CourierPendingReasonList.Contains(pending));
 
-            List<DeclarationCourierStatus> declarations = context.DeclarationCourierStatuses.Where(a => a.Tenant == tenant 
-            &&  (("," +a.CourierPendingReasonList + ",").Contains("," +pending +","))).ToList();
+            List<DeclarationCourierStatus> declarations = context.DeclarationCourierStatuses.Where(a => a.Tenant == tenant
+            && (("," + a.CourierPendingReasonList + ",").Contains("," + pending + ","))).ToList();
 
 
             //List<DeclarationCourierStatus> declarations1 =  context.DeclarationCourierStatuses.Where(a=> declarationIds.Contains(a.DeclarationId)
@@ -285,10 +302,9 @@ namespace Logitude.Customs.Data.Repsitories
         }
         public int CountOpenDeclarations(string couriermasterid, int tenant)
         {
-            var courierDecs = context.CourierDeclarations.Where(y => y.CourierMasterId == couriermasterid).Select(y=>y.DeclarationId); 
-            return (context.DeclarationCourierStatuses.Count(x => x.IsClosedForFollowUp==false && courierDecs.Contains(x.DeclarationId)));
+            var courierDecs = context.CourierDeclarations.Where(y => y.CourierMasterId == couriermasterid).Select(y => y.DeclarationId);
+            return (context.DeclarationCourierStatuses.Count(x => x.IsClosedForFollowUp == false && courierDecs.Contains(x.DeclarationId)));
         }
     }
 
 }
-   

@@ -172,6 +172,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDecReferantData
                 {
                     _DeclarationReferantDataPM.OrderMoney = true;
                 }
+                if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.LastStatusRemarks)) _DeclarationReferantDataPM.LastStatusRemarks = _LogitudeDeclarationReferantData.LastStatusRemarks;
 
                 myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
 

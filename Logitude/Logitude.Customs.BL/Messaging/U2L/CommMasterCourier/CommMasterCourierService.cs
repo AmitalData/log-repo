@@ -201,7 +201,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                     }
                     else
                     {
-                        _CourierMasterPM.EstimatedArrivalDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeMasterCourier.EstimatedArrivalDate, "LogitudeMasterCourier.EstimatedArrivalDate");
+                        try
+                        {
+                            _CourierMasterPM.EstimatedArrivalDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeMasterCourier.EstimatedArrivalDate, "LogitudeMasterCourier.EstimatedArrivalDate");
+                        }
+                        catch (Exception)
+                        {
+                            AppendLogLine("EstimatedArrivalDate not saved - format not valid");
+                        }
                     }
                 }
                 if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.DepartureDate) && _CourierMasterPM.DepartureDate.HasValue == false)
@@ -212,7 +219,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                     }
                     else
                     {
-                        _CourierMasterPM.DepartureDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeMasterCourier.DepartureDate, "LogitudeMasterCourier.DepartureDate");
+                        try
+                        {
+                            _CourierMasterPM.DepartureDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeMasterCourier.DepartureDate, "LogitudeMasterCourier.DepartureDate");
+                        }
+                        catch (Exception)
+                        {
+                            AppendLogLine("DepartureDate not saved - format not valid");
+                        }
                     }
                 }
                 if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.GatewayPortCode) && string.IsNullOrWhiteSpace(_CourierMasterPM.GatewayPortCode)) _CourierMasterPM.GatewayPortCode = TranslateInternationalSite(_LogitudeMasterCourier.GatewayPortCode);

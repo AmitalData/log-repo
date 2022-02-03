@@ -4,6 +4,9 @@ import {InfrastructureModule} from '../../Infrastructure/Module_INFR';
 import {Components, ModuleDeclarations} from './ModuleDeclarations';
 import { ModuleCustomsControls } from '../CustomsControls/ModuleCustomsControls';
 import { ModuleSharedPrimeNG } from './ModuleSharedPrimeNG';
+import { PendingWebService } from 'Customs/Services/WebServices/PendingWebService';
+import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
+import { CourierWorksheetSharedDataService } from 'Customs/Services/DataChange/CourierWorksheetSharedDataService';
 //import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
@@ -38,6 +41,11 @@ import { ModuleSharedPrimeNG } from './ModuleSharedPrimeNG';
     exports: [...Components, ModuleCustomsControls, ModuleSharedPrimeNG],
     declarations: [...Components],
     entryComponents: [...Components],
+    providers: [
+        PendingWebService,
+        LogtuideTableDataService,
+        CourierWorksheetSharedDataService,
+    ]
 })
 
 export class ModuleCustomsCourier {

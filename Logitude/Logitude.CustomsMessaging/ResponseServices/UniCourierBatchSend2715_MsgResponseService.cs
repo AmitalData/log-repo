@@ -72,7 +72,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         customResponse.SelectedStatusValue,
                         customResponse.SelectedTotalInvoiceValue,
                         customResponse.SelectedFastIndividualProcessValue,
-                        customResponse.SelectedCustomStatusValue);
+                        customResponse.SelectedCustomStatusValue,
+                        customResponse.SelectedFinalReleaseValue);
 
                 }
                 if (listPoco.Count == 0)

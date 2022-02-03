@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
@@ -23,6 +23,13 @@ export class DeclarationCourierStatusExtendedListService {
     }
 
     getByFilters(filters: ApiQueryFilters) {
+       
+        var pendingView = filters.AdditionalFilters.findIndex(x => x.FieldName == "pendingView");
+        if (pendingView>0) {
+            this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CourierDeclarationPendingListExtended';
+              filters.AdditionalFilters.slice(pendingView,1);
+
+        }
 
         var urlparameters = '/getbyfilters?';
         var mykeys = Object.keys(filters);

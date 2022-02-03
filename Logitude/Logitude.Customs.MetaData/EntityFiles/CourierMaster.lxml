@@ -488,7 +488,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;SearchFields&quot;"
     DefaultText="&quot;Search ...&quot;"
-    FullLocalDefaultText="&quot;שטר מטען ראשי/שטר מטען פנימי/קידומת חברת תעופה&quot;"
+    FullLocalDefaultText="&quot;ש.מ.ר/ש.מ.פ,/חב' תעופה/אינטגרטור&quot;"
     ListFieldLable="&quot;SearchFieldsListLable&quot;"
     ListLableDefaultText="&quot;Search ...&quot;"
     HelpTextCode="&quot;SearchFields&quot;"
@@ -5447,6 +5447,18 @@
       LocalDefaultText="&quot;הצהרות פתוחות לפי טיסה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CourierMaster.CourierCustomStatus.FinalRelease&quot;"
+      DefaultText="&quot;Final release&quot;"
+      LocalDefaultText="&quot;התרה סופית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CourierMaster.CourierCustomStatus.NotReleased&quot;"
+      DefaultText="&quot;Not Released&quot;"
+      LocalDefaultText="&quot;ללא התרה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -5499,6 +5511,15 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.CourierMaster.Features.ExportCourierMasterExtended&quot;"
       FeatureDefaultText="&quot;יצא לאקסל מורכב&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;AllowBulkPendind&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.CourierMaster.Features.AllowBulkPendind&quot;"
+      FeatureDefaultText="&quot;AllowBulkPendind&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

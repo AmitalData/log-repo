@@ -459,7 +459,12 @@ export class ModificationItemModel extends BaseComponent {
     }
 
     //#region Properties
-
+    get TypeDesc() { return this.ModificationPM.TypeDesc; }
+    set TypeDesc(value: string) {
+        if (this.ModificationPM.TypeDesc != value) {
+            this.ModificationPM.TypeDesc = value;
+        }
+    }
     get TypeCode() { return this.ModificationPM.TypeCode; }
     set TypeCode(value: string) {
         if (this.ModificationPM.TypeCode != value) {

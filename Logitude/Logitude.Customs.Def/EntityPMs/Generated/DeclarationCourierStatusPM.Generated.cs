@@ -1619,6 +1619,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool finalRelease ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool FinalRelease  
+	   {
+	    
+	     get
+		{
+		   return finalRelease;
+		 }
+		 set
+		 {
+		   if(finalRelease != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FinalRelease",OldValue=finalRelease,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   finalRelease=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? hatraDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? HatraDate  
+	   {
+	    
+	     get
+		{
+		   return hatraDate;
+		 }
+		 set
+		 {
+		   if(hatraDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HatraDate",OldValue=hatraDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   hatraDate=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -447,7 +447,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             ((new DCAInUCB8250_MsgMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                            DCAInUCB2715_MsgMessagingService>   
+                            DCAInUCB2715_MsgMessagingService>
                             ((new DCAInUCB2715_MsgMessagingService()).MainInterfaceCode);
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                            DCAInUCB2715SendNow_MsgMessagingService>
@@ -555,7 +555,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
         DCAInUCBClosePending_MsgMessagingService>
         ((new DCAInUCBClosePending_MsgMessagingService()).MainInterfaceCode);
 
-
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+             DCAInUCBUCADPE_MsgMessagingService>
+             ((new DCAInUCBUCADPE_MsgMessagingService()).MainInterfaceCode);
         }
         public static void InitContainer()
         {
@@ -622,10 +624,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 anaO = ContainerAccessor.Container.Resolve<IMessagingServiceInterfaceType>(mainInterfaceCode);
             }
-            if (anaO==null)
+            if (anaO == null)
             {
-                throw new Exception("CustomsMessagingSheetWR: anaO==null >>ProcessMessage():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + mainInterfaceCode );
-                
+                throw new Exception("CustomsMessagingSheetWR: anaO==null >>ProcessMessage():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + mainInterfaceCode);
+
             }
 
             anaO.CurrentCustomsCommandWR = myCustomsCommandEnum;

@@ -13,6 +13,7 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.Data.DataContracts;
 using System.Data.Entity;
+ 
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -203,7 +204,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 #endif
 
 
-
+ 
 
         public List<KeyValuePair<string, string>> GetByMasterIDStorageSiteCode(int tenant, string CourierMasterId,
          List<string> storageSiteCodeList)

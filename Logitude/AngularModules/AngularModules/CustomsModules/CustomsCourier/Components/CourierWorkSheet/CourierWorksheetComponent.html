@@ -226,7 +226,7 @@
                                                         <button style="text-align:right" (click)="SendALLSVG(true)">בקרת
                                                             סיווגים</button>
                                                         <button style="text-align:right" (click)="Export2Excel()"
-                                                            [disabled]="IsDisplayOnly">{{'יצם לםקסל' }}<img
+                                                            [disabled]="IsDisplayOnly">{{'יצוא לאקסל' }}<img
                                                                 class="CenterCenter" title="Export To Excel"
                                                                 class="certOkImg"
                                                                 style="position: relative; width: 10px; margin-bottom: 8px; opacity: 0.8;"
@@ -245,9 +245,7 @@
                                                                 class="certOkImg"
                                                                 style="position: relative; margin-bottom: 8px; width: 10px; opacity: 0.8; "
                                                                 src="./Images/Buttons/excelicon.png" /></button>
-
-
-
+                                                        <button *ngIf='isAllowBulkPendind' style="text-align:right" (click)="openBulkFeedPending()">הזנה גורפת PENDING</button>
                                                     </div>
 
                                                 </div>
@@ -262,7 +260,7 @@
                                                         <td colspan="2" style="font-weight:bold; font-size:16px; ">
                                                             {{'סהכ ש.מ.ב '}} {{ DataSource.rowCount }}</td>
                                                         <td *ngIf="IsFiltered || SearchFilter != null"
-                                                            style="font-weight:bold; font-size:16px; ">&nbsp;{{'מתםימים
+                                                            style="font-weight:bold; font-size:16px; ">&nbsp;{{'מתאימים
                                                             לחיתוך'}}</td>
                                                         <td></td>
                                                     </tr>
@@ -1053,7 +1051,7 @@
                                                                     </div>
 
                                                                     <div dir="RTL" class="class-dropdownfilter-content">
-                                                                        <div style="width:240px;height:320px">
+                                                                        <div>
                                                                             <table>
                                                                                 <tr class="FormFieldRow"
                                                                                     style="height:20px">
@@ -1334,6 +1332,29 @@
                                                                                                 |
                                                                                                 TextCodeTranslationPipe
                                                                                                 }}
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr class="FormFieldRow" style="height:22px">
+                                                                                    <td style="width: 240px">
+                                                                                        <LogLabel [ObjectFieldName]="'FinalRelease'" [DataContext]="DataContext" [TextCode]="'Customs.CourierMaster.CourierCustomStatus.FinalRelease'"> </LogLabel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr class="FormFieldRow" style="height:22px">
+                                                                                    <td style="width: 240px; height:20px">
+                                                                                        <ul class="FiltersMenu" style="float:right; padding-right: 10px;">
+                                                                                            <li (click)="SelectedFinalReleaseValueClick('Y')" style="width:55px;" [class.SelectedFilter]="_SelectedFinalReleaseValue === 'Y'">
+                                                                                                {{'Customs.CourierMaster.CourierCustomStatus.Hatara' | TextCodeTranslationPipe }}
+                                                                                            </li>
+
+                                                                                            <li (click)="SelectedFinalReleaseValueClick('N')" style="width:55px;" [class.SelectedFilter]="_SelectedFinalReleaseValue === 'N'">
+                                                                                                {{'Customs.CourierMaster.CourierCustomStatus.NotReleased' | TextCodeTranslationPipe }}
+                                                                                            </li>
+
+                                                                                            <li (click)="SelectedFinalReleaseValueClick('A')" style="width:55px;" [class.SelectedFilter]="_SelectedFinalReleaseValue === 'A'">
+                                                                                                {{'Customs.General.O.All' | TextCodeTranslationPipe }}
                                                                                             </li>
                                                                                         </ul>
                                                                                     </td>

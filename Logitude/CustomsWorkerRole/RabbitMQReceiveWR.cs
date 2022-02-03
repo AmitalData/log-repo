@@ -109,11 +109,211 @@ namespace CustomsWorkerRole
 
         public override bool OnStart()
         {
-            WorkUntil_AnalyzeQueue_Empty_Db_NOTINUSE();
+            //WorkUntil_AnalyzeQueue_Empty_Db_NOTINUSE();
+            if (WorkerRoleServiceLocator.PleaseShutDown)
+            {
                 return true;
+            }
+
+            List<int> listTenant = GetCourierTenant();
+            if (listTenant.Count==0)
+            {
+                Thread.Sleep(5000);
+                return true;
+            }
+            var workers = new List<Task>();
+            foreach (var currTenant in listTenant)
+            {
+                var task = new Task(async (myState) =>
+                {
+                    int tenant = (int)myState;
+                    while (!WorkerRoleServiceLocator.PleaseShutDown)
+                    {
+                        
+                        ConsumePerTenant(tenant);
+                    }
+
+                }, state: currTenant);
+                task.Start();
+                workers.Add(task);
+            }
+
+
+            var t=Task.WhenAll(workers.ToArray());
+            t.Wait();
+            return true;
 
         }
 
+        private List<int> GetCourierTenant()
+        {
+            var _SeedDefaultTenant = 1; 
+            var customsSettingQueryService = new CustomsSettingQueryService(_SeedDefaultTenant);
+            var res = customsSettingQueryService.GetAll().Where(r => r.CompanyType == "B").Select(r=>r.Tenant).ToList();//Courier
+            return res;
+        }
+
+        private void ConsumePerTenant(int currTenant)
+        {
+            string RabbitMQLogFILE = "RabbitMQLog" + currTenant.ToString();
+
+            Logger.LogMe("START", false, RabbitMQLogFILE);
+            var customRabbitMQQueue = new CustomRabbitMQQueue();
+            var allQueueDetails = customRabbitMQQueue.GetAllQueueDetails()
+             .Where(r => r.AnalyzeQueueService != AnalyzeMQQueueServiceEnum.none)
+            .ToList();
+
+
+            EventHandler<BasicDeliverEventArgs> consumerEventArgs = null;
+            EventingBasicConsumer consumer = null;
+
+            var factory = RabbitmqHelper.GetConnectionFactory();
+
+            
+            try
+            {
+                //GWSFLOGITUDE > GGGFRABBITMQ
+                string rabbitMQCode = RabbitmqHelper.GetRabbitMQCode(currTenant);
+                //var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123"  };
+                factory.RequestedHeartbeat = TimeSpan.FromSeconds(600);
+                using (var connection = factory.CreateConnection())
+                using (var channel = connection.CreateModel())
+                {
+                    try
+                    {
+
+                        connection.ConnectionShutdown += Connection_ConnectionShutdown;
+
+                        Logger.LogMe("CONNECTION", false, RabbitMQLogFILE);
+
+                        channel.BasicQos(0, 5, true);
+
+                        RabbitmqHelper.DeclareQueue(channel, rabbitMQCode,true);
+                        AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
+
+
+                        consumerEventArgs = (model, ea) =>
+                        {
+                            if (channel == null)
+                                return;
+                            if (!channel.IsOpen)
+                                return;
+
+                            string messageId = "";
+                            try
+                            {
+                                var body = ea.Body.ToArray();
+                                var message = Encoding.UTF8.GetString(body);
+                                messageId = ea.BasicProperties.MessageId;
+                                Logger.LogMe("RUN", false, RabbitMQLogFILE);
+                                Logger.LogMe("START  Exec : " + messageId, false, RabbitMQLogFILE);
+                                string log = "";
+                                bool success = false;
+                                object oInterfaceTypeCode = "";
+                                // ea.BasicProperties.Headers.TryGetValue("InterfaceTypeCode", out oInterfaceTypeCode);
+                                
+                                string interfaceTypeCode = Encoding.UTF8.GetString(ea.BasicProperties.Headers["InterfaceTypeCode"] as byte[]);
+                                if (string.IsNullOrWhiteSpace(interfaceTypeCode))
+                                {
+                                    Logger.LogMe("No interfaceTypeCode in header " + messageId, true, RabbitMQLogFILE);
+                                    channel.BasicAck(ea.DeliveryTag, false);
+                                    return;
+                                }
+                                var myQueueDetails = allQueueDetails.FirstOrDefault(r => r.Code == interfaceTypeCode);
+                                if (myQueueDetails==null)
+                                {
+                                    Logger.LogMe($"messageId={messageId} header InterfaceTypeCode ={interfaceTypeCode}  but not exist in customRabbitMQQueue.GetAllQueueDetails " , true, RabbitMQLogFILE);
+                                    channel.BasicAck(ea.DeliveryTag, false);
+                                    return;
+                                }
+
+
+                                try
+                                {
+                                    Exec(customRabbitMQQueue, myQueueDetails, analyzeQueueRepository, messageId, currTenant, message, out log, out success);
+                                }
+                                catch (Exception)
+                                {
+                                    success = false;
+                                    // throw;
+                                }
+                                Logger.LogMe("END  Exec : " + messageId, false, RabbitMQLogFILE);
+                                Logger.LogMe("END  Exec : " + messageId + " , Log:" + log, false, RabbitMQLogFILE);
+
+                                LogDoneItemInMemory();
+
+
+
+                                if (success)
+                                {
+                                    Logger.LogMe("BasicAck : " + messageId, false, RabbitMQLogFILE);
+
+                                    channel.BasicAck(ea.DeliveryTag, false);
+                                }
+                                else
+                                {
+                                    channel.BasicNack(ea.DeliveryTag, false, true);
+
+                                }
+
+                            }
+
+                            catch (Exception ex)
+                            {
+
+                                Logger.LogMe(ex.Message, false, RabbitMQLogFILE);
+
+
+                            }
+
+                        };
+
+                        consumer = new EventingBasicConsumer(channel);
+                        consumer.Received += consumerEventArgs;
+
+                        channel.BasicConsume(queue: rabbitMQCode,
+                                            autoAck: false,
+                                            consumer: consumer);
+
+                        while (!WorkerRoleServiceLocator.PleaseShutDown)
+                        {
+
+                            Thread.Sleep(100);
+                            bool getOut = false;
+                            if (getOut)
+                            {
+                                break;
+                            }
+                        }
+
+
+                    }
+
+                    catch (Exception e)
+                    {
+
+                    }
+
+                    finally
+                    {
+                        channel.Close();
+                        connection.Close();
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.LogMe(e.Message, false, RabbitMQLogFILE);
+
+                ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "CustomsAnalyzeQueueWR : Run() Method", null);
+                Thread.Sleep(5000);
+            }
+
+
+        }
+
+        
 
         private static void Connection_ConnectionShutdown(object sender, ShutdownEventArgs e)
         {
@@ -137,6 +337,7 @@ namespace CustomsWorkerRole
             //    }
             //}
         }
+#if false
         private void WorkUntil_AnalyzeQueue_Empty_Db_NOTINUSE()
         {
             Logger.LogMe("START", false, "RabbitMQLog");
@@ -175,7 +376,7 @@ namespace CustomsWorkerRole
                                    
                                      channel.BasicQos(0, 5, true);
 
-                                      RabbitmqHelper.DeclareQueue(channel, queue.Code);
+                                      RabbitmqHelper.DeclareQueue(channel, queue.Code,true);
                                      AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
 
                                 
@@ -247,6 +448,11 @@ namespace CustomsWorkerRole
                                     {
                                        
                                         Thread.Sleep(100);
+                                        bool getOut = false;
+                                        if (getOut)
+                                        {
+                                            break;
+                                        }
                                     }
 
  
@@ -289,13 +495,15 @@ namespace CustomsWorkerRole
             }
         }
 
-        private void Exec(CustomRabbitMQQueue customRabbitMQQueue, QueueDetails queue, AnalyzeQueueRepository analyzeQueueRepository, string communicationLogId, int tenant , string message, out string log, out bool success)
+
+#endif
+        public void Exec(CustomRabbitMQQueue customRabbitMQQueue, QueueDetails queue, AnalyzeQueueRepository analyzeQueueRepository, string communicationLogId, int tenant , string message, out string log, out bool success)
         {
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 var serviceAnalyzer = customRabbitMQQueue.GetCustomAnalyzerQueueService(queue);
                 //ArtemusAnalyzer analyzer = new Artemus(analyzeQueue, analyzeQueueRepository);
-                serviceAnalyzer.Run( analyzeQueueRepository, tenant , communicationLogId , message ,out  log, out success);
+                serviceAnalyzer.Run( analyzeQueueRepository, tenant , communicationLogId , message , queue, out  log, out success);
                 scope.Complete();
             }
         }

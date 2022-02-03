@@ -36,7 +36,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
 
             //SELECT * FROM AMINEt_MAIN.Declarations Extent1 WHERE((Extent1.DeclarationNumber = :p__linq__0) OR ((Extent1.DeclarationNumber IS NULL) AND(:p__linq__0 IS NULL))) AND(Extent1.Tenant = :p__linq__1)
-         (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
             return (from a in context.Declarations
                     where a.DeclarationNumber == number && a.Tenant == tenant
@@ -45,7 +45,7 @@ namespace Logitude.Customs.Data.Repsitories
 
 
 
-        public Declaration GetDeclarationNotAmendmentDontDisplayInList(string id,string amendmentOriginalDeclartation,  int tenant)
+        public Declaration GetDeclarationNotAmendmentDontDisplayInList(string id, string amendmentOriginalDeclartation, int tenant)
         {
 
             //SELECT * FROM AMINEt_MAIN.Declarations Extent1 WHERE((Extent1.DeclarationNumber = :p__linq__0) OR ((Extent1.DeclarationNumber IS NULL) AND(:p__linq__0 IS NULL))) AND(Extent1.Tenant = :p__linq__1)
@@ -63,7 +63,7 @@ namespace Logitude.Customs.Data.Repsitories
             //SELECT * FROM AMINEt_MAIN.Declarations Extent1 WHERE((Extent1.DeclarationNumber = :p__linq__0) OR ((Extent1.DeclarationNumber IS NULL) AND(:p__linq__0 IS NULL))) AND(Extent1.Tenant = :p__linq__1)
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
-           
+
             bool newBL = true;
             if (newBL)// TRING  FILENO=60255210
             {
@@ -108,10 +108,10 @@ namespace Logitude.Customs.Data.Repsitories
                         && a.Tenant == tenant
                         select a).FirstOrDefault();
             }
-            
 
 
-            
+
+
         }
 
 
@@ -132,8 +132,8 @@ namespace Logitude.Customs.Data.Repsitories
             // && a.Id==id
 
             var list = (from a in context.Declarations
-                        where a.Tenant == tenant  && a.CancelRequestNumber != null
-                        select  a.CancelRequestNumber  ).ToList();
+                        where a.Tenant == tenant && a.CancelRequestNumber != null
+                        select a.CancelRequestNumber).ToList();
 
             int? max = 0;
 
@@ -155,7 +155,7 @@ namespace Logitude.Customs.Data.Repsitories
             //          select a).Max(rec => Convert.ToInt32( rec.AmendmentRequestNumber));
 
             var list = (from a in context.Declarations
-                         where a.Tenant == tenant && a.AmendmentRequestNumber!= null
+                        where a.Tenant == tenant && a.AmendmentRequestNumber != null
                         select a.AmendmentRequestNumber).ToList();
 
             int max = 0;
@@ -361,7 +361,7 @@ namespace Logitude.Customs.Data.Repsitories
         }
         public string GetIdByCustomFileNo(string customFileNo, int tenant)
         {
-         
+
             if (String.IsNullOrWhiteSpace(customFileNo)) return "";
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
@@ -430,7 +430,7 @@ namespace Logitude.Customs.Data.Repsitories
         }
 
         public List<Declaration> GetDeclarationsById(List<string> declarationIds)
-        { 
+        {
             List<Declaration> declarations = (from a in context.Declarations
                                               where declarationIds.Contains(a.Id)
                                               select a).ToList();
@@ -448,11 +448,11 @@ namespace Logitude.Customs.Data.Repsitories
             return declarations;
 
         }
-        public List<Declaration> GetDeclarationsByIdAndClientID(List<string> declarationIds,string clientID)
+        public List<Declaration> GetDeclarationsByIdAndClientID(List<string> declarationIds, string clientID)
         {
             DateTime month3ago = DateTime.Now.AddDays(-90);
             List<Declaration> declarations = (from a in context.Declarations
-                                              where a.CustomerId==clientID && a.CreateDateTime > month3ago && declarationIds.Contains(a.Id)
+                                              where a.CustomerId == clientID && a.CreateDateTime > month3ago && declarationIds.Contains(a.Id)
                                               select a).ToList();
 
             return declarations;
@@ -466,9 +466,9 @@ namespace Logitude.Customs.Data.Repsitories
                     select a);
         }
 
-        
 
-        public Declaration GetDeclarationByFunctionalReferenceID( string functionalReferenceID, int tenant)
+
+        public Declaration GetDeclarationByFunctionalReferenceID(string functionalReferenceID, int tenant)
         {
             //Declaration declarationParent = (from a in context.Declarations
             //                           where declarationNumber == a.DeclarationNumber
@@ -476,7 +476,7 @@ namespace Logitude.Customs.Data.Repsitories
 
 
             Declaration declaration = (from a in context.Declarations
-                                              where functionalReferenceID ==a.AmendmentRequestNumber && a.Tenant== tenant
+                                       where functionalReferenceID == a.AmendmentRequestNumber && a.Tenant == tenant
                                        select a).FirstOrDefault();
 
             return declaration;
@@ -587,7 +587,7 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.DeclarationId == declarationId && a.Tenant == tenant && a.TradeAgreementCode != null
                     select a).Count();
         }
-        public List<string> GetIdsThatIsChanged(int tenant,List<string> DecIds)
+        public List<string> GetIdsThatIsChanged(int tenant, List<string> DecIds)
         {
 
             var declarations = (from a in context.Declarations
@@ -603,8 +603,8 @@ namespace Logitude.Customs.Data.Repsitories
         public IQueryable<Declaration> GetCourierConnectedDeclaratins(string CourierMasterId, int tenant)
         {
             var /*List<string>*/ courierDeclarations = (from a in context.CourierDeclarations
-                                                where a.CourierMasterId == CourierMasterId && a.Tenant == tenant
-                                                select a.DeclarationId)/*.ToList()*/;
+                                                        where a.CourierMasterId == CourierMasterId && a.Tenant == tenant
+                                                        select a.DeclarationId)/*.ToList()*/;
 
             IQueryable<Declaration> declarations = (from a in context.Declarations
                                                     where courierDeclarations.Contains(a.Id)
@@ -636,8 +636,8 @@ namespace Logitude.Customs.Data.Repsitories
                                            select a.DeclarationId);
 
                 declarations = (from a in context.Declarations
-                                                        where !courierDeclarations.Contains(a.Id) && a.IsCourierDeclaration == true
-                                                        select a);
+                                where !courierDeclarations.Contains(a.Id) && a.IsCourierDeclaration == true
+                                select a);
             }
             else
             {
@@ -680,13 +680,13 @@ namespace Logitude.Customs.Data.Repsitories
         public string GetCusomFileNoForDeclaration(string declarationId, int tenant)
         {
             Declaration dec = (from a in context.Declarations
-                    where a.Id == declarationId && a.Tenant == tenant
-                    select a).FirstOrDefault();
+                               where a.Id == declarationId && a.Tenant == tenant
+                               select a).FirstOrDefault();
 
             return dec != null ? dec.CustomFileNo : null;
         }
 
-        public Declaration GetDeclarationByDecNoAndVersion(string decNo,string version ,  int tenant)
+        public Declaration GetDeclarationByDecNoAndVersion(string decNo, string version, int tenant)
         {
             if (String.IsNullOrWhiteSpace(decNo)) return null;
             if (String.IsNullOrWhiteSpace(version)) return null;
@@ -725,7 +725,7 @@ namespace Logitude.Customs.Data.Repsitories
                   from rec in context.Declarations
                   where rec.AmendmentOriginalDeclartation == id && rec.Tenant == tenant
                   select rec
-                  ).OrderByDescending(x=>x.CreateDateTime)
+                  ).OrderByDescending(x => x.CreateDateTime)
                   .FirstOrDefault();
         }
 
@@ -735,39 +735,346 @@ namespace Logitude.Customs.Data.Repsitories
             if (String.IsNullOrWhiteSpace(id)) return null;
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
-            Declaration declaration = GetSingleDeclarationById( id  , tenant);
-           
-            if (declaration.IsAmendment== true)
-            {      Declaration declarationOrg = GetSingleDeclarationById(declaration.AmendmentOriginalDeclartation, tenant);
+            Declaration declaration = GetSingleDeclarationById(id, tenant);
+
+            if (declaration.IsAmendment == true)
+            {
+                Declaration declarationOrg = GetSingleDeclarationById(declaration.AmendmentOriginalDeclartation, tenant);
 
                 var myQ = (from a in context.Declarations
-                           where (a.AmendmentOriginalDeclartation == declarationOrg.Id || a.Id== declarationOrg.Id ) && a.Id != id
+                           where (a.AmendmentOriginalDeclartation == declarationOrg.Id || a.Id == declarationOrg.Id) && a.Id != id
                            select a);
                 return myQ.ToList();
-               }
+            }
 
             else
             {
-                    var myQ = (from a in context.Declarations
-                               where a.AmendmentOriginalDeclartation == id
-                               select a);
-                    return myQ.ToList();
-                }
-           
-
-
-          
+                var myQ = (from a in context.Declarations
+                           where a.AmendmentOriginalDeclartation == id
+                           select a);
+                return myQ.ToList();
+            }
         }
-        public string GetHatraDateForDecId(string decId,int tenant)
+
+        public List<DeclarationPendingBulkFeed> GetforPendingBulkFeed(string courierMasterId, string goodsDescription, string weightFrom, string weightTo, string incotermCode, string SearchFilter, string totalInvoice, string fastIndividualProcess, int? skip = null, int? take = null, string sortingCol = null, string sortingDir = null)
+        {
+            int weightFromInt = 0;
+            int weightToInt = 0;
+
+            var q1 = (from cd in context.CourierDeclarations.Where(cd => cd.CourierMasterId == courierMasterId)
+
+                      join d in context.Declarations on cd.DeclarationId equals d.Id
+
+                      join dcs in context.DeclarationCourierStatuses on d.Id equals dcs.DeclarationId
+
+                      join cp in context.ConsignmentPackages on d.Id equals cp.DeclarationId into cpjoin
+                      from cpj in cpjoin.Where(cp => cp.PackageMeasureQualifierCode == "2").DefaultIfEmpty()
+
+                      join c in context.Clients on d.ImporterId equals c.Id into cjoin
+                      from cj in cjoin.DefaultIfEmpty()
+
+                      join s in (from temp in context.SupplierInvoices
+                                 group temp by temp.DeclarationId into temp2
+                                 where temp2.Count() > 0
+                                 select new { DeclarationId = temp2.Key, SupplierInvoices = temp2.FirstOrDefault() })
+                               on d.Id equals s.DeclarationId into sjoin
+                      from sj in sjoin.DefaultIfEmpty()
+
+                          //join s in context.SupplierInvoices on d.Id equals s.DeclarationId into sjoin
+                          //let sj = context.SupplierInvoices.Where(s=> d.Id == s.DeclarationId).FirstOrDefault()
+                      orderby d.Id
+
+                      select new
+                      {
+                          DeclarationId = d.Id,
+                          CourierHAWB = d.CourierHAWB,
+                          Importername = d.ImporterName,
+                          Cargodescription = d.CargoDescription,
+                          Casualimporteraddress1 = d.CasualImporterAddress1,
+                          Casualimporteraddress2 = d.CasualImporterAddress2,
+                          Casualimportercity = d.CasualImporterCity,
+                          TotalInvoiceAmountInUSD = dcs.TotalInvoiceAmountInUSD,
+                          PackageMeasureQualifierCode1 = cpj != null ? cpj.PackageMeasureQualifierCode : "0",// t.AsEnumerable().Sum(cpj => int.Parse(cpj.PackageMeasureQualifierCode)),
+                          Code = cj != null ? cj.Code : d.ImporterCode,
+                          IncotermCode = sj != null ? sj.SupplierInvoices.IncotermCode : "",
+                          CourierSearchFields = d.CourierSearchFields,
+                          FastIndividualProcessCode = dcs.FastIndividualProcessCode
+                      });
+
+            if (skip.HasValue)
+                q1 = q1.OrderBy(x => x.CourierHAWB).Skip(skip.Value);
+
+            if (take.HasValue)
+                q1 = q1.Take(take.Value);
+
+            if (!string.IsNullOrEmpty(incotermCode))
+                q1 = q1.Where(s => s.IncotermCode == incotermCode);
+
+            if (!string.IsNullOrEmpty(goodsDescription))
+                q1 = q1.Where(s => s.Cargodescription.Contains(goodsDescription));
+
+            if (!string.IsNullOrEmpty(SearchFilter))
+                q1 = q1.Where(s => s.CourierSearchFields.Contains(SearchFilter));
+
+
+            switch (totalInvoice)
+            {
+                case "75":
+                    {
+                        q1 = q1.Where(r => r.TotalInvoiceAmountInUSD <= 75);
+
+                        break;
+                    }
+                case "500":
+                    {
+                        q1 = q1.Where(r => r.TotalInvoiceAmountInUSD > 75 && r.TotalInvoiceAmountInUSD <= 500);
+                        break;
+                    }
+                case "1000":
+                    {
+                        q1 = q1.Where(r => r.TotalInvoiceAmountInUSD > 500 && r.TotalInvoiceAmountInUSD <= 1000);
+
+                        break;
+                    }
+            }
+
+            switch (fastIndividualProcess)
+            {
+                case "F":
+                case "I":
+                    {
+                        q1 = q1.Where(r => r.FastIndividualProcessCode == fastIndividualProcess);
+                        break;
+                    }
+            }
+
+
+            var res = q1.ToList();
+
+
+            var q2 = res.GroupBy(d =>
+                new
+                {
+                    d.DeclarationId,
+                    d.CourierHAWB,
+                    d.Importername,
+                    d.Cargodescription,
+                    d.Casualimporteraddress1,
+                    d.Casualimporteraddress2,                    
+                    d.Casualimportercity,
+                    d.TotalInvoiceAmountInUSD,
+                    d.PackageMeasureQualifierCode1,
+                    d.Code,
+                    d.IncotermCode
+                }).Select(t => new DeclarationPendingBulkFeed()
+                {
+                    DeclarationId = t.Key.DeclarationId,
+                    CourierHAWB = t.Key.CourierHAWB,
+                    Importername = t.Key.Importername,
+                    Cargodescription = t.Key.Cargodescription,
+                    Casualimporteraddress = t.Key.Casualimporteraddress1 + " " + t.Key.Casualimporteraddress2,
+                    Casualimportercity = t.Key.Casualimportercity,
+                    TotalInvoiceAmountInUSD = t.Key.TotalInvoiceAmountInUSD,
+                    PackageMeasureQualifierCode = t.Sum(cpj => Convert.ToInt32(cpj.PackageMeasureQualifierCode1)),
+                    Code = t.Key.Code,
+                    IncotermCode = t.Key.IncotermCode
+                });
+
+            if (int.TryParse(weightFrom, out weightFromInt))
+                q2 = q2.Where(s => s.PackageMeasureQualifierCode >= weightFromInt);
+
+            if (int.TryParse(weightTo, out weightToInt))
+                q2 = q2.Where(s => s.PackageMeasureQualifierCode <= weightToInt);
+
+            if (!string.IsNullOrEmpty(sortingCol))
+            {
+                var sortBy = new Dictionary<string, Func<IEnumerable<DeclarationPendingBulkFeed>, IEnumerable<DeclarationPendingBulkFeed>>>()
+                {
+                    { "CourierHAWB", lus => lus.OrderBy(lu => lu.CourierHAWB) },
+                    { "Importername", lus => lus.OrderBy(lu => lu.Importername) },
+                    { "Code", lus => lus.OrderBy(lu => lu.Code) },
+                    { "Cargodescription", lus => lus.OrderBy(lu => lu.Cargodescription) },
+                    { "IncotermCode", lus => lus.OrderBy(lu => lu.IncotermCode) },
+                    { "TotalInvoiceAmountInUSD", lus => lus.OrderBy(lu => lu.TotalInvoiceAmountInUSD) },
+                    { "PackageMeasureQualifierCode", lus => lus.OrderBy(lu => lu.PackageMeasureQualifierCode) },
+                    { "Casualimportercity", lus => lus.OrderBy(lu => lu.Casualimportercity) },
+                };
+                q2 = sortBy[sortingCol](q2);
+
+                if (sortingDir == "Descending")
+                    q2 = q2.Reverse();
+            };
+
+            var res2 = q2.ToList();
+
+            return res2;
+
+            //var declarationsQ = (from d in context.Declarations
+            //                     join dcs in context.DeclarationCourierStatuses on d.Id equals dcs.DeclarationId
+            //                     select new
+            //                     {
+            //                         Id = dcs.DeclarationId,
+            //                         Importername = d.ImporterName,
+            //                         Cargodescription = d.CargoDescription,
+            //                         Casualimporteraddress1 = d.CasualImporterAddress1,
+            //                         Casualimporteraddress2 = d.CasualImporterAddress2,
+            //                         Casualimportercity = d.CasualImporterCity,
+            //                         Importerid = d.ImporterId,
+            //                         Importercode = d.ImporterCode,
+            //                         Totalinvoiceamountinus = dcs.TotalInvoiceAmountInUSD
+            //                     });
+
+            //if (skip.HasValue)
+            //    declarationsQ = declarationsQ.OrderBy(x=> x.Id).Skip(skip.Value);
+
+            //if (take.HasValue)
+            //    declarationsQ = declarationsQ.Take(take.Value);
+
+
+            //var q = (from d in declarationsQ
+            //         join cp in context.ConsignmentPackages on d.Id equals cp.DeclarationId into cpjoin
+            //         from cpj in cpjoin.Where(cp => cp.PackageMeasureQualifierCode == "2").DefaultIfEmpty()
+
+            //         join c in context.Clients on d.Importerid equals c.Id into cjoin
+            //         from cj in cjoin.DefaultIfEmpty()
+
+            //         join s in context.SupplierInvoices on d.Id equals s.DeclarationId into sjoin
+            //         from sj in sjoin.Where(s => string.IsNullOrEmpty(incotermCode) || s.IncotermCode == incotermCode).DefaultIfEmpty()
+
+            //         group cpj by new
+            //         {
+            //             d.Id,
+            //             d.Importername,
+            //             d.Cargodescription,
+            //             d.Casualimporteraddress1,
+            //             d.Casualimporteraddress2,
+            //             d.Casualimportercity,
+            //             //d.Importerid,
+            //             d.Importercode,
+            //             d.Totalinvoiceamountinus,
+            //             cj.Code,
+            //             sj.IncotermCode,
+            //         } into t
+            //         select new DeclarationPendingBulkFeed()
+            //         {
+            //             Id = t.Key.Id,
+            //             Importername = t.Key.Importername,
+            //             Cargodescription = t.Key.Cargodescription,
+            //             Casualimporteraddress1 = t.Key.Casualimporteraddress1,
+            //             Casualimporteraddress2 = t.Key.Casualimporteraddress2,
+            //             Casualimportercity = t.Key.Casualimportercity,
+            //             Totalinvoiceamountinus = t.Key.Totalinvoiceamountinus,
+            //             PackageMeasureQualifierCode1 = 0,// t.Sum(cpj => Convert.ToInt32(cpj != null ? cpj.PackageMeasureQualifierCode : "0")),
+            //             Code = t.Key.Code ?? t.Key.Importercode,
+            //             IncotermCode = t.Key.IncotermCode
+            //         });
+
+
+
+            //select new TempBulkFeedPending(
+            //    d.Id,
+            //    d.Importername,
+            //    d.Cargodescription,
+            //    d.Casualimporteraddress1,
+            //    d.Casualimporteraddress2,
+            //    d.Casualimportercity,
+            //    d.Totalinvoiceamountinus,
+            //    cpj.PackageMeasureQualifierCode,// t.AsEnumerable().Sum(cpj => int.Parse(cpj.PackageMeasureQualifierCode)),
+            //    cj != null ? cj.Code : d.Importercode,
+            //    sj != null ? sj.IncotermCode : ""
+            //));
+
+
+            //select new TempBulkFeedPending()
+            //{
+            //    Id = d.Id,
+            //    Importername = d.Importername,
+            //    Cargodescription = d.Cargodescription,
+            //    Casualimporteraddress1 = d.Casualimporteraddress1,
+            //    Casualimporteraddress2 = d.Casualimporteraddress2,
+            //    Casualimportercity = d.Casualimportercity,
+            //    Totalinvoiceamountinus = d.Totalinvoiceamountinus,
+            //    PackageMeasureQualifierCode1 = cpj.PackageMeasureQualifierCode,// t.AsEnumerable().Sum(cpj => int.Parse(cpj.PackageMeasureQualifierCode)),
+            //    Code = cj != null ? cj.Code : d.Importercode,
+            //    IncotermCode = sj != null ? sj.IncotermCode : ""
+            //});
+
+            //var z = declarationsQ.ToList();
+            //var res = q.ToList();
+            //return res;
+        }
+
+        public string GetHatraDateForDecId(string decId, int tenant)
         {
             var HatraDateQuery = (from a in context.Declarations
-                             where a.Id == decId && a.Tenant == tenant
-                             select a.HatraDate);
+                                  where a.Id == decId && a.Tenant == tenant
+                                  select a.HatraDate);
             return HatraDateQuery.FirstOrDefault().ToString();
+        }
+    }
+
+    public class DeclarationPendingBulkFeed
+    {
+        public string DeclarationId { get; set; }
+        public string CourierHAWB { get; set; }
+        public string Importername { get; set; }
+        public string Cargodescription { get; set; }
+        public string Casualimporteraddress { get; set; }
+        
+        public string Casualimportercity { get; set; }
+        public decimal? TotalInvoiceAmountInUSD { get; set; }
+        public int PackageMeasureQualifierCode { get; set; }
+        public string Code { get; set; }
+        public string IncotermCode { get; set; }
+
+        public DeclarationPendingBulkFeed() { }
+
+        public DeclarationPendingBulkFeed(string declarationId, string courierHAWB, string importername, string cargodescription, string casualimporteraddress, string casualimportercity, decimal? totalInvoiceAmountInUSD, int packageMeasureQualifierCode, string code, string incotermCode)
+        {
+            DeclarationId = declarationId;
+            CourierHAWB = courierHAWB;
+            Importername = importername;
+            Cargodescription = cargodescription;
+            Casualimporteraddress = casualimporteraddress;            
+            Casualimportercity = casualimportercity;
+            TotalInvoiceAmountInUSD = totalInvoiceAmountInUSD;
+            PackageMeasureQualifierCode = packageMeasureQualifierCode;
+            Code = code;
+            IncotermCode = incotermCode;
+        }
+    }
+
+    public class TempBulkFeedPending
+    {
+        public string Id { get; set; }
+        public string Importername { get; set; }
+        public string Cargodescription { get; set; }
+        public string Casualimporteraddress1 { get; set; }
+        public string Casualimporteraddress2 { get; set; }
+        public string Casualimportercity { get; set; }
+        public decimal? Totalinvoiceamountinus { get; set; }
+        public string PackageMeasureQualifierCode1 { get; set; }
+        public string Code { get; set; }
+        public string IncotermCode { get; set; }
+
+        public TempBulkFeedPending() { }
+
+        public TempBulkFeedPending(string id, string importername, string cargodescription, string casualimporteraddress1, string casualimporteraddress2, string casualimportercity, decimal? totalinvoiceamountinus, string packageMeasureQualifierCode1, string code, string incotermCode)
+        {
+            Id = id;
+            Importername = importername;
+            Cargodescription = cargodescription;
+            Casualimporteraddress1 = casualimporteraddress1;
+            Casualimporteraddress2 = casualimporteraddress2;
+            Casualimportercity = casualimportercity;
+            Totalinvoiceamountinus = totalinvoiceamountinus;
+            PackageMeasureQualifierCode1 = packageMeasureQualifierCode1;
+            Code = code;
+            IncotermCode = incotermCode;
         }
     }
     //class TotM {
 
 }
-  
+
 

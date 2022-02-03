@@ -369,9 +369,30 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     //                    this._MyDeclarationPM.Consignments[0].OriginCountryCode = null;
                 }
 
-                if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.CargoDescription)) this._MyDeclarationPM.Consignments[0].CargoDescription = _LogitudeCommDecFile.CargoDescription;
+                if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.CargoDescription))
+                {
+                    if(_LogitudeCommDecFile.CargoDescription.Length > 255)
+                    {
+                        AppendLogLine("_LogitudeCommDecFile.CargoDescription.Substring(0, 255)");
+                        _LogitudeCommDecFile.CargoDescription = _LogitudeCommDecFile.CargoDescription.Substring(0, 255);
+                    }
+                    this._MyDeclarationPM.Consignments[0].CargoDescription = _LogitudeCommDecFile.CargoDescription;
+
+                }
                 //this._MyDeclarationPM.Consignments[0].ManifestDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCommDecFile.ManifestDate, "LogitudeCommDecFile.ManifestDate");
-                if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.ArrivalDateTime)) this._MyDeclarationPM.Consignments[0].UnloadDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCommDecFile.ArrivalDateTime, "LogitudeCommDecFile.ArrivalDateTime");
+                if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.ArrivalDateTime))
+                {
+                    try
+                    {
+                        this._MyDeclarationPM.Consignments[0].UnloadDate = 
+                            AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCommDecFile.ArrivalDateTime, "LogitudeCommDecFile.ArrivalDateTime");
+                    }
+                    catch (Exception)
+                    {
+                        AppendLogLine("Consignments[0].UnloadDate not saved - _LogitudeCommDecFile.ArrivalDateTime format not valid");
+                    }
+
+                }
 
                 if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.OriginCountryId))
                 {
@@ -565,6 +586,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     }
                 }
             }
+
             this._LOGICUSTFILE = XmlGenericUtil<LOGICUSTFILE>.DeSerializeObject(xmlLOGICUSTFILE);
             if (_LOGICUSTFILE.LogitudeCustomsFile == null || _LOGICUSTFILE.LogitudeCustomsFile.Length != 1)
             {
@@ -1244,12 +1266,8 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                                 myCourierDeclarationUpdateService.Update(_CourierDeclarationPMPMDiferentMaster, true);
 
 
-                                if (true)
+                                if (false)
                                 {
-
-
-
-
 
 
                                     CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(_context);
@@ -1271,38 +1289,33 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                                         }
                                         catch (Exception)
                                         {
-
                                             AppendLogLine("UCUDO:concurrentKiller:Have in the middle in the last 15 min- not open  UCUDO");
                                             haveUCUDOInProgress = true;
                                         }
 
-                                            // customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(_tenant, "UCUW2L", "", "", null, null, _CourierDeclarationPMPMDiferentMaster.CourierMasterId, true);
-                                            //customsRequestsSheetPMList = customsRequestsSheetPMList.Where(x => x.Id != _PBId).ToList();
-                                            //  if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0)
-                                            //  {
-
-                                            if (!haveUCUDOInProgress)
+                                        // customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(_tenant, "UCUW2L", "", "", null, null, _CourierDeclarationPMPMDiferentMaster.CourierMasterId, true);
+                                        //customsRequestsSheetPMList = customsRequestsSheetPMList.Where(x => x.Id != _PBId).ToList();
+                                        //  if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0)
+                                        //  {
+                                        if (!haveUCUDOInProgress)
+                                        {
+                                            var messagingService = new DCAInUCUDO_UpdateOpenDeclarationsMessagingService();
+                                            UpdateOpenDeclarationsRequestParams requestParams2 = new UpdateOpenDeclarationsRequestParams()
                                             {
 
-                                                var messagingService = new DCAInUCUDO_UpdateOpenDeclarationsMessagingService();
+                                                LoggingUserId = Curruser,
+                                                Tenant = _tenant,
+                                                LoggingEntityId = _CourierDeclarationPMPMDiferentMaster.CourierMasterId,
 
-                                                UpdateOpenDeclarationsRequestParams requestParams2 = new UpdateOpenDeclarationsRequestParams()
-                                                {
+                                            };
 
-                                                    LoggingUserId = Curruser,
-                                                    Tenant = _tenant,
-                                                    LoggingEntityId = _CourierDeclarationPMPMDiferentMaster.CourierMasterId,
-
-                                                };
-
-                                                string message = messagingService.CreateCRS(_tenant, Curruser, requestParams2);
-
-                                            }
+                                            string message = messagingService.CreateCRS(_tenant, Curruser, requestParams2);
 
                                         }
+                                        //}
                                     }
                                 }
-                            
+                            }
                             catch (DbEntityValidationException ex)
                             {
                                 var FormatedException = ExceptionFormatUtil.GetFormated(ex);

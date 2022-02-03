@@ -31,7 +31,7 @@ import { HarmonizeCodeListService } from './Services/StandardLists/HarmonizeCode
 import { CustomsTransferHeaderListService } from './Services/StandardLists/CustomsTransferHeaderListService';
 import { CustomsTransferHeaderPMService } from './Services/StandardPMs/CustomsTransferHeaderPMService';
 import { AWBAdditionalHandlingInfoListService } from './Services/StandardLists/AWBAdditionalHandlingInfoListService';
-import { ShipmentSubTypeListService } from './Services/StandardLists/ShipmentSubTypeListService';
+import { ShipmentSubTypeListService } from './services/standardlists/shipmentsubtypelistservice';
 import { ShipmentSubTypePMService } from './Services/StandardPMs/ShipmentSubTypePMService';
 import { ContainerListService } from './Services/StandardLists/ContainerListService';
 import { ContainerPMService } from './Services/StandardPMs/ContainerPMService';

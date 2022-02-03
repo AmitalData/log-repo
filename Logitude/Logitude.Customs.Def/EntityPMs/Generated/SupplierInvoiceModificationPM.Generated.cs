@@ -231,6 +231,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string typeDesc ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TypeDesc  
+	   {
+	    
+	     get
+		{
+		   return typeDesc;
+		 }
+		 set
+		 {
+		   if(typeDesc != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TypeDesc",OldValue=typeDesc,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   typeDesc=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
