@@ -70,6 +70,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
     constructor(private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService,public declarationAmendmentSharedDataService: DeclarationAmendmentSharedDataService,
         private entityArgs: EntityArgs, private _declarationWebService: DeclarationWebService) {
         super();
+        debugger;
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
                 this.EntityPM = this.entityArgs.EntityPM;
                 this.id = this.EntityPM.Id;
