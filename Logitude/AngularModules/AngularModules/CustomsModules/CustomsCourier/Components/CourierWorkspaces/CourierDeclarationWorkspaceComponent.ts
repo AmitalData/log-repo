@@ -26,8 +26,8 @@ import { CourierDeclarationFiltersMenuComponent } from './FiltersMenu/CourierDec
 import { CardPMService } from 'Common/Services/StandardPMs/CardPMService';
 import { TabFilter } from '../CourierWorkSheet/CourierWorksheetComponent';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
-import { debug } from 'console';
-
+//import { debug } from 'console';
+declare var window: any;
 
 declare var PieClick, makePieChart, ResetItemPie;
 
@@ -79,11 +79,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
 
     constructor(public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public _declarationCourierStatusWebService: DeclarationCourierStatusWebService) {
 
-        this._TabFilterList.push(new TabFilter("OPN", "טיסות פתוחות ", null, null));
-        this._TabFilterList.push(new TabFilter("PEN", "Pending ", null, null));
-        this._SelectedTabFilter = this._TabFilterList[0];
-        this.PendingObservableList = new ObservableCollection([]);
-        
+        this.InitializePending();
         
 
 
@@ -520,20 +516,20 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     }
 
        RefreshList() {
-        
-        this._declarationCourierStatusWebService.GetWorkSpacePendingTab(this.IntegratorCode).subscribe(
-            (data: any) => {
-                this.PendingObservableList.InsertCollection(data.Result);
-                this.DeclarationCourierPendingTabRecords = data.Result;
-                let count = 0;
-                for (var i = 0; i < this.DeclarationCourierPendingTabRecords.length; i++) {
-                    var cur = this.DeclarationCourierPendingTabRecords[i];
-                    count += cur.Count;
-                }
-                this.PendingTabCount = count;
-                this.FillPie()
-            });
-
+           if (this.CourierWSPendingTab) {
+               this._declarationCourierStatusWebService.GetWorkSpacePendingTab(this.IntegratorCode).subscribe(
+                   (data: any) => {
+                       this.PendingObservableList.InsertCollection(data.Result);
+                       this.DeclarationCourierPendingTabRecords = data.Result;
+                       let count = 0;
+                       for (var i = 0; i < this.DeclarationCourierPendingTabRecords.length; i++) {
+                           var cur = this.DeclarationCourierPendingTabRecords[i];
+                           count += cur.Count;
+                       }
+                       this.PendingTabCount = count;
+                       this.FillPie()
+                   });
+           }
         setTimeout(() => {
             this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
         }, 10);
@@ -605,13 +601,30 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
 
     }
 
+    public CourierWSPendingTab: boolean = false;
     public PieData: any;
     public pieChartLabels: string[] = [];
     public pieChartData: number[] = [];
-    private CurrentTop10DebtorsChart: any;
-    public TopFiveDashboardId: string = "TopFiveDashboardId_";
-    public TopFiveDashboardLegendId: string;
+    private CurrentPendingPie: any;
+    public PendingPieId: string = "TopFiveDashboardId_";
+    public PendingPieLegendId: string;
+    private InitializePending() {
 
+        var table = window.ObjectTables.filter(d => d.Name === 'Customs.CourierMaster')[0];
+        var ikeaFeature = FeatureLocator.Features.filter(f => (f.Code == "CourierWSPendingTab") && f.ObjectTableId == table.Id)[0];
+        
+        if (!AppTool.IsNullOrEmpty( ikeaFeature)) {
+            this.CourierWSPendingTab= true;
+        }
+
+        this._TabFilterList.push(new TabFilter("OPN", "טיסות פתוחות ", null, null));
+        this._TabFilterList.push(new TabFilter("PEN", "Pending ", null, null));
+        this._SelectedTabFilter = this._TabFilterList[0];
+        this.PendingObservableList = new ObservableCollection([]);
+
+        this.PendingPieId = "PendingPie_" + this.CurrentSession.GetNewId("PendingPie");
+        this.PendingPieLegendId == "PendingPieLegend_" + this.CurrentSession.GetNewId("PendingPie");
+    }
     FillPie() {
         var fullData = [];
         this.pieChartLabels = [];
@@ -624,12 +637,12 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
             this.pieChartData.push(element.Count);
         });
 
-        if (this.CurrentTop10DebtorsChart != null) {
-            this.CurrentTop10DebtorsChart.clear();
-            this.CurrentTop10DebtorsChart = null;
+        if (this.CurrentPendingPie != null) {
+            this.CurrentPendingPie.clear();
+            this.CurrentPendingPie = null;
         }
 
-        this.CurrentTop10DebtorsChart = makePieChart(this.TopFiveDashboardId, fullData, false, true, this.TopFiveDashboardLegendId);
+        this.CurrentPendingPie = makePieChart(this.PendingPieId, fullData, false, true, this.PendingPieLegendId);
     }
 
 }

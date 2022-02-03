@@ -151,7 +151,7 @@
                         <table>
 
                             <!--Tabs filter open/pending -->
-                            <tr style="height:30px">
+                            <tr style="height:30px" *ngIf="CourierWSPendingTab">
                                 <td>
                                     <table>
                                         <tr>
@@ -245,7 +245,7 @@
 
 
                             <!--OPENCOURIERMASTERS-->
-                            <tr [style.visibility]="this._SelectedTabFilter.Code =='OPN' ? 'visible' : 'collapse'">
+                            <tr [style.visibility]="this._SelectedTabFilter.Code  !='PEN' ? 'visible' : 'collapse'">
                                 <td>
                                     <table>
                                         <tr class="SectionHeader">
@@ -366,7 +366,7 @@
 
 
                                     <tr style="height:100%;">
-                                        <td style="height: 100%;width:50%;background-color: white; ">
+                                        <td style="height: 100%;width:25%;background-color: white; ">
 
                                             <div class="GeneratedGridContainer" style="padding:5px;vertical-align:top;top:0;position:absolute">
 
@@ -422,16 +422,16 @@
                                             </div>
                                         </td>
                                         
-                                        <td style="height: 100%; width: 50%; background-color: white; ">
+                                        <td style="height: 100%; width: 75%; background-color: white; ">
                                             <table>
                                                 <tr>
                                                     <td>
-                                                        <div [attr.id]="TopFiveDashboardId" class="MediaFill"  (click)="PindingClicking()"></div>
+                                                        <div [attr.id]="PendingPieId" class="MediaFill"  (click)="PindingClicking()"></div>
                                                     </td>
                                                     <td style="width:100px;min-width:100px;overflow-y:auto">
                                                         <div class="MediaFill">
                                                             <ScrollViewer [Small]="true">
-                                                                <div [attr.id]="TopFiveDashboardLegendId" style="position:relative;width:100%;float:left"></div>
+                                                                <div [attr.id]="PendingPieLegendId" style="position:relative;width:100%;float:left"></div>
                                                             </ScrollViewer>
                                                         </div>
                                                     </td>
