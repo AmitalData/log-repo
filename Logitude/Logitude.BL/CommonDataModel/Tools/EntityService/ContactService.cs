@@ -161,6 +161,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             this.DeleteAdditionalService(service);
                         }
 
+                        AddDisconectFromContactKafkaQueueMessage(myCardContact);
                         CardContactRepository.Remove(myCardContact);
                         CardContactRepository.SubmitChanges();
                     }
@@ -657,6 +658,20 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (itemPoco != null)
             {
                 cardContactAdditionalServiceRepository.Remove(itemPoco);
+            }
+        }
+
+        private void AddDisconectFromContactKafkaQueueMessage(CardContact cardContact)
+        {
+            if (FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
+            {
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("CToolLookups", 0);
+                var queueMessage = new Dictionary<string, string>() {
+                { "Entity", "DisconectFromContact" },
+                { "EntityId", "{" + "\"ContactId\":" + "\"" + cardContact.ContactId + "\"," + "\"CardId\":" + "\"" + cardContact.CardId + "\"," + "\"Tenant\":" + tenant + "}" },
+                { "Tenant", tenant.ToString()}};
+                queueservice.Send(queueMessage, tenant);
             }
         }
 

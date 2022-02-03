@@ -161,9 +161,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 CardContactRepository CardContactRepository = new Simplog.Data.CommonDataModel.Repositories.CardContactRepository(objectContext);
                 CardContact cardContact = CardContactRepository.GetCardContactByContactAndCard(entityPM.Id, entityPM.ContactId, entityPM.Tenant);
+                AddDisconectFromContactKafkaQueueMessage(cardContact);
                 CardContactRepository.Remove(cardContact);
                 CardContactRepository.SubmitChanges();
-                AddDisconectFromContactKafkaQueueMessage(cardContact);
             }
             if((entityPM.PartnerTypeId== PartnerTypes.Customer || entityPM.PartnerTypeId == PartnerTypes.Vendor || entityPM.PartnerTypeId == PartnerTypes.AccountingPartner) && entityPM.GLAccountId !=null)
             {
@@ -287,7 +287,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 queueservice.InitializeQueue("CToolLookups", 0);
                 var queueMessage = new Dictionary<string, string>() {
                 { "Entity", "DisconectFromContact" },
-                { "EntityId", "{" + "\"ContactId\":" + "\"" + cardContact.ContactId + "\"," + "\"CardId\":" + "\"" + cardContact.CardId + "\"}" },
+                { "EntityId", "{" + "\"ContactId\":" + "\"" + cardContact.ContactId + "\"," + "\"CardId\":" + "\"" + cardContact.CardId + "\"," + "\"Tenant\":" + tenant + "}" },
                 { "Tenant", tenant.ToString()}};
                 queueservice.Send(queueMessage, tenant);
             }
