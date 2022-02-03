@@ -3991,8 +3991,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature CourierMasterFeature_ExportMasterExtended = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportMasterExtended", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.ExportCourierMasterExtended", NameTextCodeDefaultText = @"יצא לאקסל מורכב" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
 
-		   Feature CourierMasterFeature_AllowBulkPendind = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AllowBulkPendind", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.AllowBulkPendind", NameTextCodeDefaultText = @"AllowBulkPendind" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
-
    
 	    
 		}

@@ -24,6 +24,7 @@ import { CourierWorksheetNGComponent } from './Components/CourierWorkSheet/Couri
 import { CourierWorksheetNGListTemplate } from '../CustomsListTemplates/Components/CourierWorksheetNGListTemplate';
 import { BulkFeedPendingComponent } from './Components/CourierWorkSheet/bulk-feed-pending/BulkFeedPendingComponent';
 import { DeclarationPendingsBulkFeedingComponent } from './Components/CourierPendingReason/DeclarationPendingsBulkFeedingComponent';
+import { CourierDeclarationFiltersMenuComponent } from './Components/CourierWorkspaces/FiltersMenu/CourierDeclarationFiltersMenuComponent';
 
 export const Components =
     [
@@ -53,6 +54,7 @@ export const Components =
         //CourierWorksheetNGTComponent,
         CourierWorksheetNGComponent,
         CourierWorksheetNGListTemplate,
+        CourierDeclarationFiltersMenuComponent,
     ];
 
 export class ModuleDeclarations {
@@ -88,7 +90,8 @@ export class ModuleDeclarations {
             //case "CourierWorksheetNGTComponent": { myResult = CourierWorksheetNGTComponent; break; }
             case "CourierWorksheetNGComponent": { myResult = CourierWorksheetNGComponent; break; }
             case "CourierWorksheetNGListTemplate": { myResult = CourierWorksheetNGListTemplate; break; }
-                
+            case "CourierDeclarationFiltersMenuComponent": { myResult = CourierDeclarationFiltersMenuComponent; break; }
+
                 
                 
                 
