@@ -568,6 +568,14 @@ export class CustomsChargesTariffSearchArgs {
     GrossWeightUnitCode: string;
     ChargeableWeightUnitCode: string;
     VolumeUnitCode: string;
+    TEU: number;
+    ValueOfGoods: number;
+    FriehgtAmount: number;
+    NoOfPackages: number;
+    ForiegnChargesAmount: number;
+    LocalCurrencyId: string;
+    ProfitCurrencyId: string;
+    ProfitRate: number;
     CustomsChargesPayables: CustomsChargesPayable[] = [];
 }
 
@@ -582,11 +590,14 @@ export class CustomsChargesPayable {
     VersionId: number;
     TariffLineId: string;
     CurrencyId: string;
+    CurrencyCode: string;
+    ExpectedAmount: number;
+    LocalExpectedAmount: number;
+    ProfitExpectedAmount: number;
+    MinAmount: number;
+    Quantity: number;
     Price: number;
-    ActualPrice: number;
-    MinPrice: number;
-    ActualMinPrice: number;
-    IsMinIconVisible: boolean;
     IsDifferentCurrency: boolean;
     Notes: string;
+    Rate: number;
 }

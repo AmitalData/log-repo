@@ -156,6 +156,7 @@
     <Compile Include="EntityUpdateServices\TariffVersionAllInChargeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TariffVersionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TariffVersionUploadedExcelUpdateService.cs" />
+    <Compile Include="Helpers\CustomsChargesGenerator.cs" />
     <Compile Include="Helpers\PriceCheckManager.cs" />
     <Compile Include="Helpers\TariffLineHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -36,10 +36,14 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     public AllRates: LastRate[] = [];
     public IsUnassigedValidationVisible: boolean = false;
+    public OldCustomAgentExportId: string = null;
+    public OldCustomAgentImportId: string = null;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
 
+        this.OldCustomAgentExportId = this.EntityPM.CustomAgentExportId;
+        this.OldCustomAgentImportId = this.EntityPM.CustomAgentImportId;
         this.IsUnassigedValidationVisible = false;
 
         if (this.EntityPM.HasUnassignedData && FeatureLocator.HasFeaturePermession("Shipment", "UpdateUnassignedData")) {
@@ -1290,6 +1294,12 @@ export class PartnerItem extends BaseComponent {
         if (this.EntityPM.CustomAgentExportId != newValue) {
             this.EntityPM.CustomAgentExportId = newValue;
             this.GetPartnerCard();
+
+            if (!AppTool.IsNullOrEmpty(newValue)) {
+                if (newValue != this.fatherComponent.OldCustomAgentExportId) {
+                    this.CurrentSession.FireEvent("CustomAgentPartnersChanged");
+                }
+            }
         }
     }
 
@@ -1300,6 +1310,12 @@ export class PartnerItem extends BaseComponent {
         if (this.EntityPM.CustomAgentImportId != newValue) {
             this.EntityPM.CustomAgentImportId = newValue;
             this.GetPartnerCard();
+
+            if (!AppTool.IsNullOrEmpty(newValue)) {
+                if (newValue != this.fatherComponent.OldCustomAgentImportId) {
+                    this.CurrentSession.FireEvent("CustomAgentPartnersChanged");
+                }
+            }
         }
     }
 

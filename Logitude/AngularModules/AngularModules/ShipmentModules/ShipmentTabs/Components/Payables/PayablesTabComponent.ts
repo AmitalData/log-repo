@@ -97,6 +97,10 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                 else if (s == "OriginShipmentLoaded") {
                     this.OriginShipment = this.entityArgs.OriginEntity;
                 }
+
+                else if (s == "CustomAgentPartnersChanged") {
+                    this.CheckUpdateCustomsCharges();
+                }
             });
 
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -1231,11 +1235,9 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         if (item != null) {
             var editWindow = new LogitudeWindow();
             editWindow.ShowHeaderButtons = true;
-            editWindow.Title = "Price Check";
+            editWindow.Title = item.EntityPM.IsCustomsChargesTariff ? "Edit Tariff" : "Price Check";
             editWindow.Height = 770;
             editWindow.Width = 1500;
-
-
             var argumentsPriceCheck = { VersionId: item.TariffVersion, LineId: item.TariffLineId, ChargeableWeightInKG: this.EntityPM.OrderChargeableWeight };
             editWindow.EditComponentArguments = argumentsPriceCheck;
             editWindow.ShowEditComponent(item.TariffId, "Tariff");
@@ -1498,6 +1500,24 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         }
     }
 
+    public UpdateCustomsChargesMessage: string;
+    public UpdateCustomsChargesMessageWidth: number = 0;
+    public IsUpdateCustomsChargesVisible: boolean = false;
+    CheckUpdateCustomsCharges() {
+        var updateMessage: string = null;
+
+        if (this.EntityPM.ShipmentPayables.filter(d => d.IsCustomsChargesTariff).length > 0) {
+            updateMessage = "Shipment details have been updated, would you like to update the generated customs charges?";
+        }
+
+        this.UpdateCustomsChargesMessage = updateMessage;
+        this.UpdateCustomsChargesMessageWidth = AppTool.GetTextWidth(updateMessage, 11);
+        this.IsUpdateCustomsChargesVisible = AppTool.IsNullOrEmpty(updateMessage) ? false : true;
+    }
+    UpdateCustomsChargesClicked() {
+
+    }
+
     AddCustomsChargesClicked() {
         if (AppTool.IsNullOrEmpty(this.EntityPM.CustomAgentExportId && AppTool.IsNullOrEmpty(this.EntityPM.CustomAgentImportId))) {
             var messageWindow: MessageWindow = new MessageWindow();
@@ -1521,21 +1541,6 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     private GetCustomsChargesTariffs() {
         this.CurrentSession.StartBusyIndicatorLoading();
 
-        var date: Date = DateTool.GetCurrentDateAsUtc();
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageATD)) {
-            date = this.EntityPM.MainCarriageATD;
-        }
-        else if (!AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageETD)) {
-            date = this.EntityPM.MainCarriageETD;
-        }
-
-        var volume: number = this.EntityPM.Volume;
-        if (AppTool.IsNullOrEmpty(this.EntityPM.Volume)) {
-            var ratio: number = 6.00;
-            volume = AppTool.ComputePackageVolume(null, null, null, null, this.EntityPM.ChargeableWeight, ratio, null, this.EntityPM.VolumeUnitCode, this.EntityPM.GrossWeightUnitCode);
-        }
-
         var args: CustomsChargesTariffSearchArgs = new CustomsChargesTariffSearchArgs();
         args.FromCountryId = this.EntityPM.FromCountryId;
         args.ToCountryId = this.EntityPM.MainCarriageFinalDestinationPortCountryId;;
@@ -1549,6 +1554,14 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         args.GrossWeightUnitCode = this.EntityPM.GrossWeightUnitCode;
         args.ChargeableWeightUnitCode = this.EntityPM.ChargeableWeightUnitCode;
         args.VolumeUnitCode = this.EntityPM.VolumeUnitCode;
+        args.ValueOfGoods = this.EntityPM.ValueOfGoods;
+        args.NoOfPackages = this.IsFCLEntity ? this.EntityPM.NumberOfContainers : this.EntityPM.NumberOfPackages;
+        args.TEU = this.EntityPM.TEU;
+        args.FriehgtAmount = ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount");;
+        args.ForiegnChargesAmount = ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal");
+        args.LocalCurrencyId = SessionLocator.LocalCurrencyId;
+        args.ProfitCurrencyId = this.EntityPM.ProfitCurrencyId;
+        args.ProfitRate = this.EntityPM.ProfitExchangeRate;
 
         var tariffService: TariffDomainService = new TariffDomainService();
         tariffService.GetAvailableCustomsChargesTariffs(args).subscribe((res: ServiceResponse) => {
@@ -1588,41 +1601,35 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                 shipmentPayable.ShipmentPayableLineStatusCode = "EMPT";
                 shipmentPayable.ShipmentPayableAmountTypeCode = "ACCU";
                 shipmentPayable.ShipmentId = this.EntityPM.Id;
+                shipmentPayable.ChargesTypeId = chargesType.Id;
+                shipmentPayable.ChargesTypeCode = chargesType.Code;
+                shipmentPayable.ChargesTypeName = chargesType.EnglishName;
+                shipmentPayable.ChargesGroupCode = chargesType.ChargesGroupCode;
                 shipmentPayable.ShipmentNumber = this.EntityPM.ShipmentNumber;
                 shipmentPayable.CreateDate = DateTool.GetCurrentDateAsUtc();
                 shipmentPayable.Tenant = this.EntityPM.Tenant;
                 shipmentPayable.CreatedByUserId = SessionLocator.LoggedUserId;
                 shipmentPayable.UpdateDate = DateTool.GetCurrentDateAsUtc();
                 shipmentPayable.UpdateByUserId = SessionLocator.LoggedUserId;
-                this.ShipmentGenerator.CalculatePayableVatAmount(shipmentPayable);
-
-                var itemComponent = new ShipmentPayableItem(shipmentPayable, this, true);                
-                itemComponent.CurrencyId = payable.CurrencyId;
-                itemComponent.Rate = this.ShipmentGenerator.GetCurrencyRate(shipmentPayable.CurrencyId);
-                itemComponent.ProfitCurrencyExchangeRate = this.ShipmentGenerator.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
-                itemComponent.MeasurementId = payable.UnitOfMesurmentId;
-
-                var expectedAmount = payable.ActualPrice;
-                itemComponent.ExpectedAmount = AppTool.Round(expectedAmount, 2);
-
-                //if (newQuantity != null) {
-                //    itemComponent.Quantity = AppTool.Round(newQuantity, 3);
-
-                //    if (payable.UnitOfMesurmentCode == "PRVL" || payable.UnitOfMesurmentCode == "PRFR") {
-                //        var price = shipmentPayable.ExpectedAmount * 100;
-                //        itemComponent.UnitPrice = AppTool.Round(price / shipmentPayable.Quantity, 3);
-                //    }
-
-                //    else {
-                //        itemComponent.UnitPrice = expectedAmount != null ? AppTool.Round(expectedAmount / newQuantity, 3) : null;
-                //    }
-                //}
-
-                itemComponent.OpenAmount = shipmentPayable.ExpectedAmount;                
-                itemComponent.Notes = payable.Notes;                
-                itemComponent.MinAmount = payable.IsDifferentCurrency ? payable.ActualMinPrice : payable.MinPrice;
+                shipmentPayable.MeasurementId = payable.UnitOfMesurmentId;
+                shipmentPayable.MeasurementCode = payable.UnitOfMesurmentCode;
+                shipmentPayable.CurrencyId = payable.CurrencyId;
+                shipmentPayable.CurrencyCode = payable.CurrencyCode;
+                shipmentPayable.Rate = payable.Rate;
+                shipmentPayable.ProfitCurrencyExchangeRate = this.ShipmentGenerator.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
+                shipmentPayable.Quantity = payable.Quantity;
+                shipmentPayable.ExpectedAmount = AppTool.Round(payable.ExpectedAmount, 2);
+                shipmentPayable.ExpectedAmountLocal = AppTool.Round(payable.LocalExpectedAmount, 2);
+                shipmentPayable.ExpectedAmountInProfitCurrency = AppTool.Round(payable.ProfitExpectedAmount, 2);
+                shipmentPayable.OpenAmount = AppTool.Round(shipmentPayable.ExpectedAmount, 2);
+                shipmentPayable.OpenAmountInLocalCurrency = AppTool.Round(payable.LocalExpectedAmount, 2);
+                shipmentPayable.OpenAmountInProfitCurrency = AppTool.Round(payable.ProfitExpectedAmount, 2);
+                shipmentPayable.Notes = payable.Notes;
+                shipmentPayable.MinAmount = AppTool.Round(payable.MinAmount, 2);
+                shipmentPayable.UnitPrice = AppTool.Round(payable.Price, 3);
                 //shipmentPayable.VendorId = payable.SellerId;
                 //shipmentPayable.VendorName = payable.SellerName;
+                this.ShipmentGenerator.CalculatePayableVatAmount(shipmentPayable);
                 this.EntityPM.AddPayable(shipmentPayable);                
             }
         });
