@@ -188,6 +188,7 @@ export class SharedLogisticsDocumentPermissiosComponent implements OnInit {
             .then(cmpRef => {
                 this.SharedDocumentPage = cmpRef.instance;
                 this.SharedDocumentPage.FullComponentsVisibility = false;
+                this.SharedDocumentPage.FromAgentView = true;
             });
 
     }

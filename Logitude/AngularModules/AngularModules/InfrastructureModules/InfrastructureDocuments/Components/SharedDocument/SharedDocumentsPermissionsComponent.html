@@ -69,13 +69,15 @@
                                                                     <td style="width: 200px; min-width: 200px">Document
                                                                         Type Copy</td>
                                                                     <td
-                                                                        style="width: 80px; min-width: 80px;text-align:center">
+                                                                        style="width: 80px; min-width: 80px;text-align:center"
+                                                                        [ngStyle]="{'width': FromAgentView ? '130px' : '80px' }">
                                                                         Master</td>
                                                                     <td
-                                                                        style="width:80px; min-width:80px;text-align:center ">
+                                                                        style="width:80px; min-width:80px;text-align:center " *ngIf="!FromAgentView">
                                                                         Direct</td>
                                                                     <td
-                                                                        style="width:80px; min-width:80px;text-align:center ">
+                                                                        style="width:80px; min-width:80px;text-align:center "
+                                                                        [ngStyle]="{'width': FromAgentView ? '130px' : '80px' }">
                                                                         House</td>
                                                                     <td>
                                                                         <div style="width:100%;min-width:100%"></div>
@@ -119,7 +121,8 @@
                                                                                             </td>
 
                                                                                             <td class="GridViewCell"
-                                                                                                style="width: 80px; min-width: 80px; max-width: 80px;">
+                                                                                                style="width: 80px; min-width: 80px;"
+                                                                                                [ngStyle]="{'width': FromAgentView ? '130px' : '80px', 'min-width': FromAgentView ? '130px' : '80px'}">
                                                                                                 <div class="MediaFill">
                                                                                                     <div
                                                                                                         class="MediaFillRelative">
@@ -139,7 +142,8 @@
 
 
                                                                                             <td class="GridViewCell"
-                                                                                                style="width: 80px; min-width: 80px; max-width: 80px;">
+                                                                                                style="width: 80px; min-width: 80px; max-width: 80px;"
+                                                                                                *ngIf="!FromAgentView">
                                                                                                 <div class="MediaFill">
                                                                                                     <div
                                                                                                         class="MediaFillRelative">
@@ -156,7 +160,8 @@
                                                                                             </td>
 
                                                                                             <td class="GridViewCell"
-                                                                                                style="width: 80px; min-width: 80px; max-width: 80px;">
+                                                                                                style="width: 80px; min-width: 80px;"
+                                                                                                [ngStyle]="{'width': FromAgentView ? '130px' : '80px', 'min-width': FromAgentView ? '130px' : '80px'}">
                                                                                                 <div class="MediaFill">
                                                                                                     <div
                                                                                                         class="MediaFillRelative">

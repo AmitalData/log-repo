@@ -252,7 +252,7 @@ export class ShipmentHelperComponent implements OnDestroy {
     }
 
     private IsShareShipment() {
-        return (this.EntityPM.DirectionId == "E" && (this.EntityPM.ShipmentLevelCode == "C" || this.EntityPM.ShipmentLevelCode == "D"));
+        return ((this.EntityPM.DirectionId == "E" || this.EntityPM.DirectionId == "R" ) && (this.EntityPM.ShipmentLevelCode == "C" || this.EntityPM.ShipmentLevelCode == "H"));
     }
 
     private ShowHideShipmentContainersSimulatorButton() {
