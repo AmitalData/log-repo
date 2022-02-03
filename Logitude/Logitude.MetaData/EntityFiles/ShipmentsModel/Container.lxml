@@ -8669,7 +8669,7 @@
     MinLength="0"
     MaxLength="10"
     IsRequired="false"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="true"
