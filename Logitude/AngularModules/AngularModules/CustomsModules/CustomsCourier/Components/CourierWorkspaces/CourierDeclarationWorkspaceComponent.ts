@@ -26,6 +26,10 @@ import { CourierDeclarationFiltersMenuComponent } from './FiltersMenu/CourierDec
 import { CardPMService } from 'Common/Services/StandardPMs/CardPMService';
 import { TabFilter } from '../CourierWorkSheet/CourierWorksheetComponent';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
+//import { debug } from 'console';
+declare var window: any;
+
+declare var PieClick, makePieChart, ResetItemPie;
 
 @Component({
     templateUrl: './CourierDeclarationWorkspaceComponent.html',
@@ -66,18 +70,16 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
 
 
 
-    _TabFilterList: TabFilter[] = [];
-    _SelectedTabFilter: TabFilter;
+    public _TabFilterList: TabFilter[] = [];
+    public PendingTabCount: number;
+    public _SelectedTabFilter: TabFilter;
+    
     set SelectedTabFilter(val: TabFilter) { this._SelectedTabFilter = val; }
     public PendingObservableList: ObservableCollection;
 
     constructor(public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public _declarationCourierStatusWebService: DeclarationCourierStatusWebService) {
 
-        this._TabFilterList.push(new TabFilter("OPN", "טיסות פתוחות ", null, null));
-        this._TabFilterList.push(new TabFilter("PEN", "Pending ", null, null));
-        this._SelectedTabFilter = this._TabFilterList[0];
-        this.PendingObservableList = new ObservableCollection([]);
-        
+        this.InitializePending();
         
 
 
@@ -305,6 +307,9 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
                     {
                         displayTitle = "Pending";
                         displayTitle = TextCodeTranslator.Translate("Customs.CourierMaster.O.Pending");
+                        if (!AppTool.IsNullOrEmpty(this.PendingCode)) {
+                            filters.addAdditionalFilter("CourierPendingReasonList", this.PendingCode, null, null, "Contains", false, false, false, "String");
+                        }
 
                         break;
                     }
@@ -316,8 +321,11 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
             //filters.SortBy = this.currentSortingCol;
             //filters.SortDirection = this.currentSortingDir;
 
-            filters=this.BuildFiltersForQuery(filters);
-
+            filters = this.BuildFiltersForQuery(filters);
+            if (myQueryCode == "Pending" && !AppTool.IsNullOrEmpty(this.PendingCode)) {
+                filters.addAdditionalFilter("CourierPendingReasonList", this.PendingCode, null, null, "Contains", false, false, false, "String");
+            }
+            
             var listArgs = new ListComponentArgs();
             listArgs.QueryCode = myQueryCode;
             listArgs.Filters = filters;
@@ -332,9 +340,11 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                            this.PendingCode = null;
                             this.LoadAllScreenData();
                             this._declarationCourierStatusWebService.GetQueriesCounts(this.IntegratorCode).subscribe(
                                 (data: any) => {
+                                    
                                     this.counters = data.Result;
 
                                     this.CurrentSession.AddMenuReference(cmpRef);
@@ -354,6 +364,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
                 filters.addAdditionalFilter(excludeIntegratorFilter[0]?.FieldName, excludeIntegratorFilter[0]?.FieldValue, null, null, "Equal", false, false, false, "LookUp");
             }
         }
+        
         //filters.addAdditionalFilter("CourierMasterId", this.entityPM.Id, null, null, "Equals", false, false, false, "string");
         filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
         return filters;
@@ -495,13 +506,30 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
         var myout = this._EntityListService.getExtendedByFilters("Customs.CourierMaster", filters);
         return myout;
     }
+    DeclarationCourierPendingTabRecords: DeclarationCourierPendingTabRecord[] = [];
+    PindingClicking() {
+        if (PieClick() != null) {
+            this.OnQuoteClick(PieClick());
+            ResetItemPie();
+        }
 
-    RefreshList() {
-        this._declarationCourierStatusWebService.GetWorkSpacePendingTab(this.IntegratorCode).subscribe(
-            (data: any) => {
-                this.PendingObservableList.InsertCollection(data.Result);
-            });
+    }
 
+       RefreshList() {
+           if (this.CourierWSPendingTab) {
+               this._declarationCourierStatusWebService.GetWorkSpacePendingTab(this.IntegratorCode).subscribe(
+                   (data: any) => {
+                       this.PendingObservableList.InsertCollection(data.Result);
+                       this.DeclarationCourierPendingTabRecords = data.Result;
+                       let count = 0;
+                       for (var i = 0; i < this.DeclarationCourierPendingTabRecords.length; i++) {
+                           var cur = this.DeclarationCourierPendingTabRecords[i];
+                           count += cur.Count;
+                       }
+                       this.PendingTabCount = count;
+                       this.FillPie()
+                   });
+           }
         setTimeout(() => {
             this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
         }, 10);
@@ -526,6 +554,26 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
         if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
             filters.addAdditionalFilter("SearchFields", this.SearchFilter.toLowerCase(), null, null, "Contains", false, false, false, "string", false, true);
         }
+    }
+    PendingClick(item) {
+        //alert(item);
+        
+    }
+    PendingCode: any;
+    onCellPendingClick($event, item) {
+        //alert(item);
+        this.PendingCode=item.Code;
+        this.ViewCourierMasterQuery('Pending')
+    }
+
+    OnQuoteClick(e) {
+
+        var item = this.DeclarationCourierPendingTabRecords[e.index];
+
+        this.PendingCode = item.Code;
+        this.ViewCourierMasterQuery('Pending')
+
+
     }
 
     ViewInitCompleted($event) {
@@ -552,4 +600,54 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
        
 
     }
+
+    public CourierWSPendingTab: boolean = false;
+    public PieData: any;
+    public pieChartLabels: string[] = [];
+    public pieChartData: number[] = [];
+    private CurrentPendingPie: any;
+    public PendingPieId: string = "TopFiveDashboardId_";
+    public PendingPieLegendId: string;
+    private InitializePending() {
+
+        var table = window.ObjectTables.filter(d => d.Name === 'Customs.CourierMaster')[0];
+        var ikeaFeature = FeatureLocator.Features.filter(f => (f.Code == "CourierWSPendingTab") && f.ObjectTableId == table.Id)[0];
+        
+        if (!AppTool.IsNullOrEmpty( ikeaFeature)) {
+            this.CourierWSPendingTab= true;
+        }
+
+        this._TabFilterList.push(new TabFilter("OPN", "טיסות פתוחות ", null, null));
+        this._TabFilterList.push(new TabFilter("PEN", "Pending ", null, null));
+        this._SelectedTabFilter = this._TabFilterList[0];
+        this.PendingObservableList = new ObservableCollection([]);
+
+        this.PendingPieId = "PendingPie_" + this.CurrentSession.GetNewId("PendingPie");
+        this.PendingPieLegendId == "PendingPieLegend_" + this.CurrentSession.GetNewId("PendingPie");
+    }
+    FillPie() {
+        var fullData = [];
+        this.pieChartLabels = [];
+        this.pieChartData = [];
+
+        this.DeclarationCourierPendingTabRecords.forEach(element => {
+            var amount = AppTool.Round(element.Count, 3);
+            fullData.push({ label: element.Name, data: amount })
+            this.pieChartLabels.push(element.Name);
+            this.pieChartData.push(element.Count);
+        });
+
+        if (this.CurrentPendingPie != null) {
+            this.CurrentPendingPie.clear();
+            this.CurrentPendingPie = null;
+        }
+
+        this.CurrentPendingPie = makePieChart(this.PendingPieId, fullData, false, true, this.PendingPieLegendId);
+    }
+
 }
+class DeclarationCourierPendingTabRecord {
+    public Code: string ;
+    public Name: string;
+    public Count: number;
+    }

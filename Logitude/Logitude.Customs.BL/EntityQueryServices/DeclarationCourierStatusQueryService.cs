@@ -294,7 +294,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 join cpr in context.CourierPendingReasons on gb.Code equals cpr.Code
                 select new DeclarationCourierPendingTabRecord { Code = gb.Code, Name = cpr.LocalName, Count = gb.Count }
                 );
-            var res = mygQWithLocalName.ToList();
+            var res = mygQWithLocalName.ToList().OrderByDescending(r => r.Count).ToList();
             return res;
 
 
