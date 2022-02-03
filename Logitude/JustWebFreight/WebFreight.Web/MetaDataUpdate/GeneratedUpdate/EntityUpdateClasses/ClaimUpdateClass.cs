@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ClaimUpdateClass
    {  		
-		public const string HashString = "2a8bfd90403d1f551a997b56bfbbb854";
+		public const string HashString = "2102bccc2f18e3ab3cf35eb351f98b8f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3698,6 +3698,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			   TextCode ClaimTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Claim.Q.AllClaimFiles", DefaultText = @"All Claim Files",LocalDefaultText = "כל התביעות", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ClaimFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Claim.Q.AllClaimFiles", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, NameTextCodeCode = "Claim.Features.AllClaimFiles", NameTextCodeDefaultText = "All Claim Files", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ClaimObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode ClaimTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Claim.Q.CloseClaimFiles", DefaultText = @"Close Claim Files",LocalDefaultText = "תביעות פתוחות", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ClaimFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Claim.Q.CloseClaimFiles", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, NameTextCodeCode = "ClaimFeatures.CloseClaimFiles", NameTextCodeDefaultText = "Close Claim Files", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ClaimObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -3735,6 +3739,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 QueryColumn AllClaimFilesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClaimFilesQuery.Id,QueryCode = AllClaimFilesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Claim.CustomsFiles" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn AllClaimFilesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClaimFilesQuery.Id,QueryCode = AllClaimFilesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Claim.IsClosed" , ColumnWidth = 100 }, addedQueryColumns);
+  
+	      
+
+			  Query CloseClaimFilesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ClaimTextCode_2.Id, NameTextCodeCode = ClaimTextCode_2.Code, ObjectTableName = "Customs.Claim", Code = "Close Claim Files",  QueryGroupCode = "d8f1", IndexOrder = 2, Tenant = 0, ObjectTableId = ClaimObjectTable.Id, QuerySection = "Customs.Claim", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ClaimFeature_2.Id,FeatureUniqeCode= ClaimFeature_2.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn CloseClaimFilesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseClaimFilesQuery.Id,QueryCode = CloseClaimFilesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Claim.TapagNumber" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CloseClaimFilesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseClaimFilesQuery.Id,QueryCode = CloseClaimFilesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Claim.CustomerName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CloseClaimFilesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseClaimFilesQuery.Id,QueryCode = CloseClaimFilesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Claim.FollowDate" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CloseClaimFilesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseClaimFilesQuery.Id,QueryCode = CloseClaimFilesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Claim.SubmitDate" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CloseClaimFilesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseClaimFilesQuery.Id,QueryCode = CloseClaimFilesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Claim.CustomsFiles" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CloseClaimFilesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseClaimFilesQuery.Id,QueryCode = CloseClaimFilesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Claim.IsClosed" , ColumnWidth = 100 }, addedQueryColumns);
+
+             AdvancedQueryFilter CloseClaimFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Claim.IsClosed", PredefinedValue = "1",PredefinedValue2 = null, QueryId = CloseClaimFilesQuery.Id,QueryCode = CloseClaimFilesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

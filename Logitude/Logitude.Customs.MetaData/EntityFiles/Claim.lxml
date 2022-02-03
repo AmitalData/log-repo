@@ -56,6 +56,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;7284&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -4617,6 +4618,61 @@
         ColumnWidth="100" />
     </QueryColumns>
     <QueryFilters />
+  </Query>
+  <Query
+    Code="&quot;Close Claim Files&quot;"
+    TextCode="&quot;Close Claim Files&quot;"
+    LocalTextCode="&quot;תביעות פתוחות&quot;"
+    QueryGroupCode="&quot;d8f1&quot;"
+    IndexOrder="2"
+    ObjectTableName="&quot;Customs.Claim&quot;"
+    QuerySection="&quot;Customs.Claim&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;CreateDate&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;Close Claim Files&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;TapagNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Close Claim Files&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;CustomerName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Close Claim Files&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;FollowDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Close Claim Files&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;SubmitDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Close Claim Files&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;CustomsFiles&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Close Claim Files&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;Close Claim Files&quot;"
+        PredefinedValue="&quot;1&quot;"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        IsPredefined="true"
+        IndexOrder="0" />
+    </QueryFilters>
   </Query>
   <Screen
     Name="&quot;ClaimHeaderScreen&quot;"
