@@ -30,5 +30,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             maxCounter = entityPM.LineNumber = maxCounter.Value + 1;
         }
+
+
+        public void FastDeleteComposition(Logitude.Customs.Data.EntityKeys.DeclarationKeys entityKeyFields)
+        {
+            (Repository as Logitude.Customs.Data.Repsitories.DeclarationExportRecipientRepository).FastDeleteMulti(entityKeyFields);
+        }
     }
 }

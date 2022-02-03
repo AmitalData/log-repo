@@ -446,6 +446,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string AmedmentType { get; set; }
 	      
         public virtual AmedmentType CustomsAmedmentType { get; set; }
+        [Column("IsExportClosed")]
+	    public bool IsExportClosed { get; set; }
+        [Column("ExportClosedErrorXML")]
+	    public string ExportClosedErrorXML { get; set; }
     }
 }
 	 

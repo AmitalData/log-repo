@@ -133,6 +133,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     public addedVehicles: any[] = [];
 
     private CurrentSession = SessionLocator.SelectedSession;
+    public tradeAgreementFilter: ApiQueryFilters = null as any;
 
     constructor(
         private cd: ChangeDetectorRef,
@@ -173,6 +174,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         this.IFritz_feature = FeatureLocator.Features.filter(d => d.Code == "IFRITZ")[0];
         console.log("IFritz feature: ", this.IFritz_feature);
 
+        this.initTradeAgreementFilter();
+
     }
     ngOnInit() {
         if (this.allowExport) {
@@ -188,6 +191,14 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             this.setAdjustmentsWarning(this.IncotermCode)
         }
     }
+
+
+    initTradeAgreementFilter() {
+        this.tradeAgreementFilter = new ApiQueryFilters();
+        this.tradeAgreementFilter.addAdditionalFilter("CustomsBookTypeID", 2, null, null, "Equal", false, false, false, "number");
+    }
+
+
     public SelectInvoiceItemMethod(res) {
         var item: SupplierInvoiceItemLine = this.ItemsSource.Collection.filter(d => d.SequenceNumeric == res.filter)[0];
         //this.SelectedRow = item;

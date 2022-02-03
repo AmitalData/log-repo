@@ -32,6 +32,16 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.DeclarationId == declarationId && a.Tenant == tenant
                     select a).Max(d => (int?)d.LineNumber) ?? 0;
         }
+
+
+        public void FastDeleteMulti(DeclarationKeys entityKeyFields)
+        {
+            //throw new Exception("preventing Clear Consignments - Validation (CALL#291407)");
+            LogitudeSettings.HandleLogMe("DeclarationId:" + entityKeyFields.GetFullKey() + Environment.NewLine + Environment.StackTrace.ToString(), false, "DeclarationExportRecipientRepositoryFastDeleteMulti", new DateTime(2017, 11, 1));
+
+            (context as DbContextBase)
+                .DeleteWhere<DeclarationExportRecipient>(rec => rec.DeclarationId == entityKeyFields.Id);
+        }
     }
 
 }
