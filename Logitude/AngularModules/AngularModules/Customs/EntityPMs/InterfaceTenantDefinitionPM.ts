@@ -64,6 +64,26 @@ export class InterfaceTenantDefinitionPM {
     public set DcaRenameFilePrefix(newValue: string) { if (this.dcaRenameFilePrefix != newValue) { this.dcaRenameFilePrefix = newValue; this.MarkAsDirty("DcaRenameFilePrefix"); } }
        
 	 
+    private queueType: string;
+    public get QueueType() { return this.queueType; }
+    public set QueueType(newValue: string) { if (this.queueType != newValue) { this.queueType = newValue; this.MarkAsDirty("QueueType"); } }
+       
+	 
+    private useRabbitMQ: boolean;
+    public get UseRabbitMQ() { return this.useRabbitMQ; }
+    public set UseRabbitMQ(newValue: boolean) { if (this.useRabbitMQ != newValue) { this.useRabbitMQ = newValue; this.MarkAsDirty("UseRabbitMQ"); } }
+       
+	 
+    private queueGroupCode: string;
+    public get QueueGroupCode() { return this.queueGroupCode; }
+    public set QueueGroupCode(newValue: string) { if (this.queueGroupCode != newValue) { this.queueGroupCode = newValue; this.MarkAsDirty("QueueGroupCode"); } }
+       
+	 
+    private sendTime: string;
+    public get SendTime() { return this.sendTime; }
+    public set SendTime(newValue: string) { if (this.sendTime != newValue) { this.sendTime = newValue; this.MarkAsDirty("SendTime"); } }
+       
+	 
 
     public OldEntityPM: InterfaceTenantDefinitionPM;
 		
