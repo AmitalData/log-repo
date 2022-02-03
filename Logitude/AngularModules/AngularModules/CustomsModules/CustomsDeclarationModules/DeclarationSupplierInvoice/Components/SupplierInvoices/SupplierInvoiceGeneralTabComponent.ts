@@ -195,7 +195,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
     initTradeAgreementFilter() {
         this.tradeAgreementFilter = new ApiQueryFilters();
-        this.tradeAgreementFilter.addAdditionalFilter("CustomsBookTypeID", '1', null, null, "Equal", false, false, false, "number", false, true);
+        this.tradeAgreementFilter.addAdditionalFilter("CustomsBookTypeID", 2, null, null, "Equal", false, false, false, "number");
     }
 
 
