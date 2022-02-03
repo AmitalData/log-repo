@@ -134,6 +134,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Files\DIM_Countries.dwml" />
+    <None Include="Files\DIM_CustomerTeams.dwml" />
     <None Include="Files\DIM_InvoiceMainTypes.dwml" />
     <None Include="Files\DIM_InvoiceStatus.dwml" />
     <None Include="Files\DIM_InvoiceTypes.dwml" />

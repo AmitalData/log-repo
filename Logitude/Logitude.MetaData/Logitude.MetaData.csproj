@@ -182,7 +182,9 @@
     <None Include="DBOthers\CommonDataModel\Procedures\usp_UpdatePortSearchFieldsFunction.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\usp_UpdateShippingLineSearchFieldsFunction.dxml" />
     <None Include="DBOthers\CommonDataModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateVatTypes.dxml" />
+    <None Include="DBOthers\CommonDataModel\Triggers\TriggerOnCreate_AutomaticLastUpdateCustomerTeams.dxml" />
     <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdateDateVatTypes.dxml" />
+    <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdateDateCustomerTeams.dxml" />
     <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateShipmentSubTypes.dxml" />
     <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateShipmentSubTypes.dxml" />
     <None Include="DBScripts\CommonModel\202111301830_UpdateContainerEntityStatusesNames.sxml" />
@@ -191,6 +193,7 @@
     <None Include="DBScripts\CommonModel\202111101034_UpdateUsersSecurityLevelWithNullValues.sxml" />
     <None Include="DBScripts\CommonModel\202109021051_AddDefaultValueForSecurityLevel.sxml" />
     <None Include="DBScripts\CommonModel\202109021049_UpdateUsersSecurityLevel.sxml" />
+    <None Include="DBScripts\CommonModel\UpdateAutomaticLastUpdateDateOnCustomerTeam.sxml" />
     <None Include="DBScripts\CommonModel\UpdateDocumentKPIFields.sxml" />
     <None Include="DBScripts\CommonModel\UpdatePortsSearchFields.sxml" />
     <None Include="DBScripts\CommonModel\UpdateShippingLinesSearchFields.sxml" />
@@ -664,6 +667,7 @@
     <None Include="DBTables\CommonDataModel\CustomerSalesNote.dxml" />
     <None Include="DBTables\CommonDataModel\CustomerSize.dxml" />
     <None Include="DBTables\CommonDataModel\CustomerStatus.dxml" />
+    <None Include="DBTables\CommonDataModel\CustomerTeam.dxml" />
     <None Include="DBTables\CommonDataModel\CustomerTenantAccess.dxml" />
     <None Include="DBTables\CommonDataModel\CustomerTenantAccessCard.dxml" />
     <None Include="DBTables\CommonDataModel\CustomerTenantAccessCardsBatch.dxml" />

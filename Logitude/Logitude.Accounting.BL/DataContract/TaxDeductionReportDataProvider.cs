@@ -502,11 +502,11 @@ namespace Logitude.Accounting.BL.DataContract
             }
             foreach (TaxDeductionReportLine item in groupeddeductionLines)
             {
-              //  var deductionPercentage = item.TaxDeductionLocalAmount ==0 ? 0 : item.TaxDeductionLocalAmount / (item.TaxDeductionLocalAmount + (decimal) item.AmountInLocalCurrency);
+                var deductionPercentage = Math.Round((double)((item.TaxDeductionLocalAmount == 0 ? 0 : item.TaxDeductionLocalAmount / (decimal)item.AmountInLocalCurrency) * 100), 2);
                 ByVendorList groupedbyVendor = new ByVendorList()
                 {
                     Month = item.MonthOfRegisterDate,
-                    TaxDeductionPercentage =(int?)Math.Round((double)item.TaxDeductionPercentage, MidpointRounding.AwayFromZero),
+                    TaxDeductionPercentage = (int?)deductionPercentage,
                     VendorId = item.VendorId,
                 };
                 groupedbyVendor.EndYearBalance = 0;
@@ -753,11 +753,10 @@ namespace Logitude.Accounting.BL.DataContract
 
             return (from a in deductionLines
                     group a by
-                        new { a.VendorId, a.TaxDeductionPercentage } into g
+                        new { a.VendorId } into g
                     select new TaxDeductionReportLine
                     {
                         VendorId = g.Key.VendorId,
-                        TaxDeductionPercentage = g.Key.TaxDeductionPercentage,
                         AmountInLocalCurrency = g.Sum(s => s.AmountInLocalCurrency),
                         TaxDeductionLocalAmount = g.Sum(s => s.TaxDeductionLocalAmount)
 

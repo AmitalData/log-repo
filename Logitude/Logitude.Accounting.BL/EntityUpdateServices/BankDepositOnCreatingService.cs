@@ -33,7 +33,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         public void OnCreating(BankDepositPM depositPM)
         {
             CashBookPM cashBookPM = GetCashbookById(depositPM.Tenant, depositPM.CashBookId);
-            CheckIfTheCashBookInDepositProgress(depositPM, cashBookPM);
             try
             {
                 SetEntityId(depositPM);
@@ -64,19 +63,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 throw new ApplicationException(exc.Message);
             }
 
-        }
-        private void CheckIfTheCashBookInDepositProgress(BankDepositPM depositPM, CashBookPM cashBookPM)
-        {
-            if (cashBookPM.InDepositingProgress)
-            {
-                throw new ApplicationException(TextCodesTranslator.TranslateText("Cashbook.O.InDepositingProgressMessage",
-                    depositPM.Tenant, LoggedContactResolver.GetLoggedContactShowLocal(depositPM.Tenant)));
-            }
-            else
-            {
-                cashBookPM.InDepositingProgress = true;
-                SubmitCashbook(depositPM.Tenant, cashBookPM);
-            }
         }
         public virtual void CreateJournalForBankDeposit(BankDepositPM depositPM)
         {

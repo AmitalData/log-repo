@@ -478,12 +478,12 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private void AddSuccessInsertVendorLine(GLAccountWithholdingTaxPM entityPM, VendorLineDTO newVendorLine)
         {
-            this.MyResultLoadFlatFile.SuccessVendorList.Add($"Success insert Vendor Number:{newVendorLine.VendorCode} / Rate {newVendorLine.DeductionPercentage} / From {newVendorLine.StartDate} / To {newVendorLine.EndDate} =new DbId:{entityPM.Id}/DBFromDate:{entityPM.FromDate}  ");
+            this.MyResultLoadFlatFile.SuccessVendorList.Add($"Success insert Vendor Number:{newVendorLine.VendorCode}-{newVendorLine.VendorName} / Rate {newVendorLine.DeductionPercentage} / From {newVendorLine.StartDate} / To {newVendorLine.EndDate} =new DbId:{entityPM.Id}/DBFromDate:{entityPM.FromDate}  ");
         }
 
         private void AddSuccessUpdateVendorLine(GLAccountWithholdingTaxPM entityPM, VendorLineDTO newVendorLine)
         {
-            this.MyResultLoadFlatFile.SuccessVendorList.Add($"Success insert Vendor Number:{newVendorLine.VendorCode} / Rate {newVendorLine.DeductionPercentage} / From {newVendorLine.StartDate} / To {newVendorLine.EndDate} =new DbId:{entityPM.Id}/DBFromDate:{entityPM.FromDate}  ");
+            this.MyResultLoadFlatFile.SuccessVendorList.Add($"Success update Vendor Number:{newVendorLine.VendorCode}-{newVendorLine.VendorName} / Rate {newVendorLine.DeductionPercentage} / From {newVendorLine.StartDate} / To {newVendorLine.EndDate} =new DbId:{entityPM.Id}/DBFromDate:{entityPM.FromDate}  ");
         }
 
         private List<VendorLineDTO> CreateVendorLinesDTOFromFile(string FileContent, out int? tenant)

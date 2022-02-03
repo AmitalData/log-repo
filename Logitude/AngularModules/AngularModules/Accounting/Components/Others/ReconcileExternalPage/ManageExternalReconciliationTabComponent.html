@@ -1,4 +1,4 @@
-﻿<table>
+<table>
     <tr>
         <td>
             <div class="TableHolder">
@@ -35,7 +35,30 @@
                                                 </td>
                                                 <td><div></div></td>
                                             </tr>
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 100px;padding-right: 10px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'Accounting.General.O.Amount' | TextCodeTranslationPipe}}</td>
 
+                                                <td style="width: 140px;">
+                                   
+                                                        <ComboBox [ItemsSource]="operatorsList" [Binding]="'LocalName'"
+                                                                  [SelectedItem]="selectedAmountOperator"
+                                                                  (SelectedItemChanged)="AmountOperatorChanged($event)"></ComboBox>
+                                                    
+                                                        
+                                                </td>
+                                                <td style="width: 30px;"><div></div></td>
+                                                <td style="width: 30px;"><div></div></td>
+
+                                                <td style="width: 30px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <LogTextBox [InputType]="'double'" [NoObjectField]="true"
+                                                    [ObjectFieldName]="'Amount'" [Text]="Amount" [HideColumns]="true"
+                                                    (ValueChanged)="AmountTextChanged($event)" [DebounceTime]="400"
+                                                    [ObjectTableName]="'Reconciliation'" [DataContext]="this"></LogTextBox>
+                                                </td>
+
+                                                
+                                                <td><div></div></td>
+                                            </tr>
                                         </table>
                                 </tr>
                                 <tr><td><div></div></td></tr>
@@ -72,7 +95,7 @@
                         <td colspan="5" style="height: 100%;">
 
                             <div class="GeneratedGridContainer">
-                                <logitude-grid GridWidth="100%"
+                                <logitude-grid #DataGrid GridWidth="100%"
                                                GridHeight="100%"
                                                [ObjectTable]="'ExternalReconciliation'"
                                                [dataSource]="DataSource"

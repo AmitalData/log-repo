@@ -48,7 +48,7 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
         'PlaceHolder', 'DependencyFilter1Value', 'DependencyFilter2Value', 'DependencyFilter3Value', "HideColumns", "HideLastColumn", "DependencyFilter1IsList",
         "DependencyFilter2IsList", "DependencyFilter3IsList", "DependencyFilter1IsListExact", "DependencyFilter2IsListExact", "DependencyFilter3IsListExact",
         "AutoFocus", "IsTenantZeroSearch", "ShowInActive", "FocusOnMe", "IsFreeText", "AlwaysEnabled", "IgnoreCustomFieldCheck", "IsDecendingSort", "CustomizedWidth",
-        "ShowInActivePopUpWindow"],
+        "ShowInActivePopUpWindow", "IgnoreFeatureCheck"],
 })
 
 export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
@@ -96,6 +96,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     public IsFreeText: boolean = false;
     public AlwaysEnabled: boolean = false;
     public IgnoreCustomFieldCheck: boolean = false;
+    public IgnoreFeatureCheck: boolean = false;
     LayoutDirection: string = 'ltr';
     private dataContext: BaseComponent;
     uiProperty: UIProperty;
@@ -1708,12 +1709,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
         this.LovMessage = null;
 
-        if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
+        if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
 
             this.LovMessage = "Your package doesn't include this module..";
             return;
         }
-        else if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "READ") && this.LookUpTable.EnableSecurity) {
+        else if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "READ") && this.LookUpTable.EnableSecurity) {
             this.LovMessage = "You have no permission to view entities of this type.";
             return;
         }
@@ -2163,13 +2164,13 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
     SearchButtonClicked() {
 
-        if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
+        if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("Your package doesn't include this module..");
             return;
         }
 
-        else if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "READ") && this.LookUpTable.EnableSecurity) {
+        else if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "READ") && this.LookUpTable.EnableSecurity) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("You have no permission to view entities of this type.");
             return;
@@ -2486,13 +2487,13 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
     // Edit Button Commands
     OnEditValue() {
-        if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "UPDATE") && this.LookUpTable.EnableSecurity) {
+        if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "UPDATE") && this.LookUpTable.EnableSecurity) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("You have no permission to edit an entity of this type.");
             return;
         }
 
-        if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
+        if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("Your package doesn't include this module..");
             return;
@@ -2633,13 +2634,13 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         objectTableName = this.GetObjectTableName(objectTableName);
         var originalTable: ObjectTablePM = window.ObjectTables.filter(d => d.Name?.toLowerCase() === objectTableName.toLocaleLowerCase())[0];
 
-        if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "NEW") && this.LookUpTable.EnableSecurity) {
+        if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "NEW") && this.LookUpTable.EnableSecurity) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("You have no permission to add a new entity of this type.");
             return;
         }
 
-        if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
+        if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("Your package doesn't include this module..");
             return;
