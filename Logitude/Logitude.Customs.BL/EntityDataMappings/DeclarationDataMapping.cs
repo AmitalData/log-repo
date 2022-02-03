@@ -99,12 +99,25 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.CancelRequestStatusName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.AmendmentRejectionReasonName);
 
-            var amendmentStatusRepository = new AmendmentStatusQueryService(entityPOCO.Tenant);
-            var amendmentStatus = amendmentStatusRepository.GetSingle(entityPOCO.AmendmentStatus,false,true);
-            if (amendmentStatus != null)
+            if (entityPM.Direction == "E")
             {
-                entityPM.AmendmentStatusName = amendmentStatus.Name;
+                var DeclarationStatementTypeQueryService = new DeclarationStatementTypeQueryService(entityPOCO.Tenant);
+                var amendmentStatus = DeclarationStatementTypeQueryService.GetSingle(entityPOCO.AmendmentStatus, false, true);
+                if (amendmentStatus != null)
+                {
+                    entityPM.AmendmentStatusName = amendmentStatus.LocalName;
 
+                }
+            }
+            else
+            {
+                var amendmentStatusRepository = new AmendmentStatusQueryService(entityPOCO.Tenant);
+                var amendmentStatus = amendmentStatusRepository.GetSingle(entityPOCO.AmendmentStatus, false, true);
+                if (amendmentStatus != null)
+                {
+                    entityPM.AmendmentStatusName = amendmentStatus.Name;
+
+                }
             }
 
           

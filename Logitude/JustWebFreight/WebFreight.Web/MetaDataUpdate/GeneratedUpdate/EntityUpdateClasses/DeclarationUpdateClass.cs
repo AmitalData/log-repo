@@ -85,8 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-
-		public const string HashString = "5353212597f584995e4bc97855feecb4";
+		public const string HashString = "9df9455d6369b7ecf5ef30d5bcd59c25";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -10616,8 +10615,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "AmendmentStatus",
 					  						ObjectTableName =  "Customs.Declaration",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Customs.AmendmentStatus",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  3,
 					  						IsRequired =  false,
