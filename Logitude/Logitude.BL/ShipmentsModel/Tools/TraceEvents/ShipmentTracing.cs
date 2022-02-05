@@ -343,7 +343,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.DeleteTraceEvent("BKAR");
             }
         }
-
+        public void TracePODReceived(bool isPODReceived, DateTime? podReceivedDate)
+        {
+            if (!isPODReceived && podReceivedDate == null)
+            {
+                this.DeleteTraceEvent("PIOD");
+            }
+            else
+            {
+                this.CreateTraceEvent("PIOD");
+            }
+        }
         private void TraceCustomsData()
         {
             if ((entityPoco.CustomsClearanceDate == null || entityPoco.FreightRelease == null || entityPoco.TerminalAvailable == null) && (entityPM.CustomsClearanceDate != null && entityPM.FreightRelease != null && entityPM.TerminalAvailable != null))

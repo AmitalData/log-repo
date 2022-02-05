@@ -43,6 +43,7 @@ namespace CommunicationWorkerRole
         ShipmentRepository shipmentRepository;
         IShipmentsContext shipmentContext;
         ContainerService containerService;
+        ShipmentPM shipmentPM;
 
         public override bool OnStart()
         {
@@ -234,12 +235,12 @@ namespace CommunicationWorkerRole
                 this.UpdateContainer(container, podReceivedDate);
             }
         }
-        private static List<ContainerPM> GetShipmentContainers(string shipmentId, int tenant)
+        private List<ContainerPM> GetShipmentContainers(string shipmentId, int tenant)
         {
             ContainerQuery containerQuery = new ContainerQuery(tenant);
             List<ContainerPM> containerPMs = new List<ContainerPM>();
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-            var shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
+            shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
             var shipmentContainers = shipmentPM?.ShipmentPackages?.Where(a => !string.IsNullOrEmpty(a.ContainerEntityId));
             foreach (ShipmentPackagePM shipmentPackagePM in shipmentContainers)
             {
@@ -256,118 +257,9 @@ namespace CommunicationWorkerRole
    
         private void HandelPODShipmentEvent(bool isPODReceived, DateTime? podReceivedDate)
         {
-            if (!isPODReceived && podReceivedDate == null)
-            {
-                this.DeleteTraceEvent("PIOD"); 
-            }
-            else
-            {
-                this.CreateTraceEvent("PIOD");
-            }
-        }
-
-        private void DeleteTraceEvent(string eventTypeCode)
-        {
-            if (!string.IsNullOrEmpty(eventTypeCode))
-            {
-                EventType eventType = allEventTypes.Where(d => d.Code == eventTypeCode).FirstOrDefault();
-
-                if (eventType != null)
-                {
-                    List<TraceEvent> AllEventTraces = this.traceEventRepository.GetAllTraceEventsByEventType(shipment?.Id, eventType.Id, tenant).ToList();
-
-                    if (AllEventTraces.Count > 0)
-                    {
-                        foreach (TraceEvent iTraceEvent in AllEventTraces)
-                        {
-                            iTraceEvent.Deleted = true;
-                            traceEventRepository.Update(iTraceEvent);
-                        }
-
-                        traceEventRepository.SubmitChanges();
-
-                        if (!string.IsNullOrEmpty(eventType.EntityStatusId))
-                        {
-                            TraceEvent previousEvent = null;
-
-                            List<TraceEvent> iTraceEventList = (from a in objectContext.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
-                                                                where a.Tenant == tenant
-                                                                && a.EntityId == shipment.Id
-                                                                && a.ObjectTableId == objectTableId
-                                                                && a.EventType.EntityStatus != null
-                                                                && a.Deleted == false
-                                                                select a).ToList();
-
-                            foreach (TraceEvent e in iTraceEventList)
-                            {
-                                if (!e.Deleted)
-                                {
-                                    if (e.EventType.EntityStatus != null)
-                                    {
-                                        if (previousEvent == null)
-                                        {
-                                            previousEvent = e;
-                                        }
-
-                                        else
-                                        {
-                                            if (e.EventType.EntityStatus.StatusWeight > previousEvent.EventType.EntityStatus.StatusWeight)
-                                            {
-                                                previousEvent = e;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            string statusId = null;
-                            DateTime? statusDate;
-                            DateTime? lastStatusLogDate;
-                            string statusLocation;
-                            if (previousEvent != null)
-                            {
-                                statusId = previousEvent.EventType.EntityStatusId;
-                                statusDate = previousEvent.EventDateTime;
-                                lastStatusLogDate = previousEvent.EventDateTime;
-                                statusLocation = previousEvent.Location;
-                            }
-                            else
-                            {
-                                EventType firstEventType = allEventTypes.Where(d => d.Code == "ORDR").FirstOrDefault();
-                                statusId = firstEventType.EntityStatusId;
-                                statusDate = shipment.CreateDateTime;
-                                lastStatusLogDate = shipment.CreateDateTime;
-                                statusLocation = null;
-                            }
-
-                            shipment.StatusId = statusId;
-                            shipment.StatusDate = statusDate;
-                            shipment.StatusLocation = statusLocation;
-                            shipment.LastStatusLogDate = lastStatusLogDate;
-
-                            if (shipment.ShipmentLevelCode == "D" || shipment.ShipmentLevelCode == "C")
-                            {
-                                var entityMasterData = shipmentMasterDataRepository.GetSingleMasterData(shipment.Id);
-                                entityMasterData.StatusId = statusId;
-                                entityMasterData.StatusDate = statusDate;
-                                entityMasterData.StatusLocation = statusLocation;
-                                shipmentMasterDataRepository.Update(entityMasterData);
-                                shipmentMasterDataRepository.SubmitChanges();
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        private void CreateTraceEvent(string eventTypeCode)
-        {
-            EventTracer.CreateTraceEvent(new EventTracerArgs()
-            {
-                Tenant = tenant,
-                EventTypeCode = eventTypeCode,
-                UserId = shipment?.UpdatedByUserId,
-                EntityId = shipment?.Id,
-                ObjectTableName = "Shipment"
-            });
+            var isNew = false;
+            var shipmentTracing = new ShipmentTracing(shipmentPM, shipment, null, shipment?.UpdatedByUserId, isNew);
+            shipmentTracing.TracePODReceived(isPODReceived, podReceivedDate);
         }
     }
 }

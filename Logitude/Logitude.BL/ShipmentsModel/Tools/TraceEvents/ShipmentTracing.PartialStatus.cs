@@ -52,7 +52,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 entityMasterData.PartialStatusAmount = entityPM.PartialStatusAmount;
             }
 
-            this.ComputePartialStatusId(partialStatusAmount, eventTypeCode);
+            if (partialStatusAmount != null)
+            {
+                this.ComputePartialStatusId(partialStatusAmount, eventTypeCode);
+            }
         }
 
         private void ComputePartialStatusId(string partialStatusAmount, string eventTypeCode)
