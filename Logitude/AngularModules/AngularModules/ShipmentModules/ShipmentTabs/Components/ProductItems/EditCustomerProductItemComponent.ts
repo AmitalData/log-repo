@@ -392,6 +392,34 @@ export class CustomerHTSCode extends BaseComponent {
         }
     }
 
+    get VATPercentage() { return this.EntityPM.VATPercentage; }
+    set VATPercentage(newValue: number) {
+        if (this.EntityPM.VATPercentage != newValue) {
+            this.EntityPM.VATPercentage = AppTool.Round(newValue, 1);
+        }
+    }
+
+    get DutiesPercentage() { return this.EntityPM.DutiesPercentage; }
+    set DutiesPercentage(newValue: number) {
+        if (this.EntityPM.DutiesPercentage != newValue) {
+            this.EntityPM.DutiesPercentage = AppTool.Round(newValue, 1);
+        }
+    }
+
+    get OtherDuties() { return this.EntityPM.OtherDuties; }
+    set OtherDuties(newValue: string) {
+        if (this.EntityPM.OtherDuties != newValue) {
+            this.EntityPM.OtherDuties = newValue;
+        }
+    }
+
+    get Remarks() { return this.EntityPM.Remarks; }
+    set Remarks(newValue: string) {
+        if (this.EntityPM.Remarks != newValue) {
+            this.EntityPM.Remarks = newValue;
+        }
+    }
+
     get IsCheckBoxesEnabled() {
         var isEnabled = false;
 

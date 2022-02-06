@@ -15,5 +15,9 @@ export class HTSCodeList {
 		ApprovedByCustomer: boolean;
 		InActive: boolean;
 		LineNumber: number;
+		VATPercentage: number;
+		DutiesPercentage: number;
+		OtherDuties: string;
+		Remarks: string;
 	
 }

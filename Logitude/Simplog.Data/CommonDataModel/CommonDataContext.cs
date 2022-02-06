@@ -466,7 +466,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new DWHEnvironmentSettingMap());
             modelBuilder.Configurations.Add(new PortTimeZoneMap());
             modelBuilder.Configurations.Add(new UnassignedEntityMap());
-
+            modelBuilder.Configurations.Add(new HTSCodeMap());
 
             base.OnModelCreating(modelBuilder);
         }

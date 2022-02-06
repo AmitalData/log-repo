@@ -121,6 +121,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     CountryEnglishName = country!=null ? country.EnglishName :"",
                                                     InActive = a.InActive,
                                                     LineNumber = a.LineNumber,
+                                                    VATPercentage = a.VATPercentage,
+                                                    DutiesPercentage = a.DutiesPercentage,
+                                                    OtherDuties = a.OtherDuties,
+                                                    Remarks = a.Remarks,
                                                 }).ToList();
 
             

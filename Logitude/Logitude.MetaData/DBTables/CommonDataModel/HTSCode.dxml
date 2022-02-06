@@ -58,6 +58,36 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="VATPercentage"
+    Type="decimal"
+    Precision="18"
+    Scale="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DutiesPercentage"
+    Type="decimal"
+    Precision="18"
+    Scale="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OtherDuties"
+    Type="varchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Remarks"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ItemId"
     ReferencedTable="ProductItems"

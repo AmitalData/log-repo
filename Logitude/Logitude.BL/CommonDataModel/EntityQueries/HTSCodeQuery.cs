@@ -50,6 +50,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     ApprovedByCustomer = entityPoco.ApprovedByCustomer,
                     InActive = entityPoco.InActive,
                     LineNumber = entityPoco.LineNumber,
+                    VATPercentage = entityPoco.VATPercentage,
+                    DutiesPercentage = entityPoco.DutiesPercentage,
+                    OtherDuties = entityPoco.OtherDuties,
+                    Remarks = entityPoco.Remarks,
                 };
             }
 
@@ -69,6 +73,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  ApprovedByCustomer = entity.ApprovedByCustomer,
                                                  InActive = entity.InActive,
                                                  LineNumber = entity.LineNumber,
+                                                 VATPercentage = entity.VATPercentage,
+                                                 DutiesPercentage = entity.DutiesPercentage,
+                                                 OtherDuties = entity.OtherDuties,
+                                                 Remarks = entity.Remarks,
                                              };
             return result;
         }
@@ -88,6 +96,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             ApprovedByCustomer = entity.ApprovedByCustomer,
                                             InActive = entity.InActive,
                                             LineNumber = entity.LineNumber,
+                                            VATPercentage = entity.VATPercentage,
+                                            DutiesPercentage = entity.DutiesPercentage,
+                                            OtherDuties = entity.OtherDuties,
+                                            Remarks = entity.Remarks,
                                         }).ToList();
 
             return hTSCodes;
@@ -108,6 +120,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         ApprovedByCustomer = a.ApprovedByCustomer,
                         InActive = a.InActive,
                         LineNumber = a.LineNumber,
+                        VATPercentage = a.VATPercentage,
+                        DutiesPercentage = a.DutiesPercentage,
+                        OtherDuties = a.OtherDuties,
+                        Remarks = a.Remarks,
                     }).FirstOrDefault();
         }
 
@@ -130,6 +146,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                 ApprovedByCustomer = a.ApprovedByCustomer,
                                 InActive = a.InActive,
                                 LineNumber = a.LineNumber,
+                                VATPercentage = a.VATPercentage,
+                                DutiesPercentage = a.DutiesPercentage,
+                                OtherDuties = a.OtherDuties,
+                                Remarks = a.Remarks,
                             }).ToList();
             }
 

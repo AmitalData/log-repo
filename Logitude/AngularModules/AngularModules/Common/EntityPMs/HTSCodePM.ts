@@ -78,6 +78,26 @@ export class HTSCodePM {
     public set LineNumber(newValue: number) { if (this.lineNumber != newValue) { this.lineNumber = newValue; this.MarkAsDirty("LineNumber"); } }
        
 	 
+    private vATPercentage: number;
+    public get VATPercentage() { return this.vATPercentage; }
+    public set VATPercentage(newValue: number) { if (this.vATPercentage != newValue) { this.vATPercentage = newValue; this.MarkAsDirty("VATPercentage"); } }
+       
+	 
+    private dutiesPercentage: number;
+    public get DutiesPercentage() { return this.dutiesPercentage; }
+    public set DutiesPercentage(newValue: number) { if (this.dutiesPercentage != newValue) { this.dutiesPercentage = newValue; this.MarkAsDirty("DutiesPercentage"); } }
+       
+	 
+    private otherDuties: string;
+    public get OtherDuties() { return this.otherDuties; }
+    public set OtherDuties(newValue: string) { if (this.otherDuties != newValue) { this.otherDuties = newValue; this.MarkAsDirty("OtherDuties"); } }
+       
+	 
+    private remarks: string;
+    public get Remarks() { return this.remarks; }
+    public set Remarks(newValue: string) { if (this.remarks != newValue) { this.remarks = newValue; this.MarkAsDirty("Remarks"); } }
+       
+	 
 
     public OldEntityPM: HTSCodePM;
 	    

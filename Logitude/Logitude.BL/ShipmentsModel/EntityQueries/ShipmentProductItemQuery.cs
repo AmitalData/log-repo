@@ -44,6 +44,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        UPC = a.UPC,
                        OriginCountryId = a.OriginCountryId,
                        OriginCountryName = a.OriginCountry == null ? null : a.OriginCountry.EnglishName,
+                       VATPercentage = a.VATPercentage,
+                       DutiesPercentage = a.DutiesPercentage,
+                       OtherDuties = a.OtherDuties,
+                       Remarks = a.Remarks,
                    }).FirstOrDefault();
 
             return myResult;
@@ -70,6 +74,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        UPC = a.UPC,
                        OriginCountryId = a.OriginCountryId,
                        OriginCountryName = a.OriginCountry == null ? null : a.OriginCountry.EnglishName,
+                       VATPercentage = a.VATPercentage,
+                       DutiesPercentage = a.DutiesPercentage,
+                       OtherDuties = a.OtherDuties,
+                       Remarks = a.Remarks,
                    }).ToList();
 
             return shipmentProductItems;
