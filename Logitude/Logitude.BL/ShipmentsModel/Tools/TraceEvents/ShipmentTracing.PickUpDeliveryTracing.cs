@@ -357,14 +357,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             {
                 if (itemPOCO.ATA != null)
                 {
-                    this.DeleteTraceEvent("PIOD");
+                    //this.DeleteTraceEvent("PIOD");
                     this.DeleteTraceEvent("DEAR", itemPOCO.PickUpDeliveryNumber, itemPOCO.ATA);
 
-                    ShipmentDeliveryPM lastDelivery = entityPM.ShipmentDeliveries.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
-                    if (RoutingDate.IsAllDeliveriesHaveDates(entityPM) && lastDelivery != null)
-                    {
-                        this.CreateTraceEvent("PIOD", lastDelivery.ATA, lastDelivery);
-                    }
+                    //ShipmentDeliveryPM lastDelivery = entityPM.ShipmentDeliveries.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                    //if (RoutingDate.IsAllDeliveriesHaveDates(entityPM) && lastDelivery != null)
+                    //{
+                       // this.CreateTraceEvent("PIOD", lastDelivery.ATA, lastDelivery);
+                    //}
                 }
 
                 if (itemPOCO.ATD != null)

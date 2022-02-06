@@ -902,7 +902,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             string notes = null;
 
-            if (eventTypeCode == "PIAR" || eventTypeCode == "PICD")
+            if (eventTypeCode == "PIAR" || eventTypeCode == "PICD" || eventTypeCode == "RCS")
             {
                 notes = myPickUp.PickUpDeliveryNumber;
             }
@@ -1127,7 +1127,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                         if (!string.IsNullOrEmpty(eventType.EntityStatusId))
                         {
                             var isCheckThePreviousEvent = this.IsCheckThePreviousEvent(entityPM, eventType);
-                            if (entityPM.StatusId == eventType.EntityStatusId && isCheckThePreviousEvent)
+                            EntityStatus currentEventEntityStatus = allEntityStatuses.Where(d => d.Id == entityPM.StatusId).FirstOrDefault();
+                            if ((entityPM.StatusId == eventType.EntityStatusId && isCheckThePreviousEvent) || this.IsEventTypeConnectedToMulitStatuses(eventType, currentEventEntityStatus))
                             {
                                 TraceEvent previousEvent = null;
 
@@ -1279,14 +1280,30 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                                 }
                             }
 
-                            if (!isCheckThePreviousEvent)
+                           
+                            if (!isCheckThePreviousEvent || currentEventEntityStatus.Code == partialPickupStatus || currentEventEntityStatus.Code == partialDeliveredStatus)
                             {
-                                HandlePickUpDeliveryPreviousEvent(eventType);
+                                HandlePickUpDeliveryPreviousEvent(eventType, currentEventEntityStatus);
                             }
                         }
                     }
                 }
             }
+        }
+
+        private bool IsEventTypeConnectedToMulitStatuses(EventType eventType, EntityStatus currentEventEntityStatus)
+        {
+            if (eventType.Code == pickedUpEventCode && currentEventEntityStatus.Code == partialPickupStatus)
+            {
+                return true;
+            }
+
+            if (eventType.Code == deliveryArrivedEventCode || currentEventEntityStatus.Code == partialDeliveredStatus)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private bool IsGetTraceEventsByEventDateAndType(DateTime? eventDateTime, string eventTypeCode)
@@ -1398,6 +1415,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                                     entityMasterData.StatusLocation = entityPM.StatusLocation;
                                 }
                             }
+                            ComputePartialStatusAmount(args.EventTypeCode);
                         }
                     }
                 }                

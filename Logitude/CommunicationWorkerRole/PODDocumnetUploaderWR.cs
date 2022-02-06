@@ -254,12 +254,26 @@ namespace CommunicationWorkerRole
             container.PODReceivedOnDate = podReceivedDate;
             containerService.Update(container);
         }
-   
+
         private void HandelPODShipmentEvent(bool isPODReceived, DateTime? podReceivedDate)
         {
             var isNew = false;
-            var shipmentTracing = new ShipmentTracing(shipmentPM, shipment, null, shipment?.UpdatedByUserId, isNew);
+            ShipmentMasterData master = this.GetMasterShipment();
+            var shipmentTracing = new ShipmentTracing(shipmentPM, shipment, master, shipment?.UpdatedByUserId, isNew);
             shipmentTracing.TracePODReceived(isPODReceived, podReceivedDate);
+        }
+
+        private ShipmentMasterData GetMasterShipment()
+        {
+            ShipmentMasterData master = null;
+            if (shipmentPM.ShipmentLevelCode == "D" || shipmentPM.ShipmentLevelCode == "C")
+            {
+                master = (from d in shipmentContext.ShipmentMasterDatas
+                          where d.Id == shipment.MasterShipmentDataId
+                          select d).FirstOrDefault();
+            }
+
+            return master;
         }
     }
 }

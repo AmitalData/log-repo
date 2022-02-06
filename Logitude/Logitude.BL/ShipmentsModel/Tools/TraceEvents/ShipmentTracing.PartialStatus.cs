@@ -12,6 +12,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         string deliveryArrivedEventCode = "DEAR";
         string partialDeliveredStatus = "PSDL";
         string partialPickupStatus = "PSHP";
+        string  pickedUpArrivedCode = "RCS";
 
         private bool IsAllowingPartial(string entityStatusId)
         {
@@ -32,59 +33,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             return true;
         }
 
-        private void ComputePartialStatusAmount(string eventTypeCode)
-        {
-            string partialStatusAmount = null;
-            if (eventTypeCode == pickedUpEventCode)
-            {
-                partialStatusAmount = ComputePartialStatusAmountShipmentPickUps();
-            }
-
-            if (eventTypeCode == deliveryArrivedEventCode)
-            {
-                partialStatusAmount = ComputePartialStatusAmountShipmentDeliveries();
-            }
-
-            entityPM.PartialStatusAmount = partialStatusAmount;
-            entityPoco.PartialStatusAmount = entityPM.PartialStatusAmount;
-            if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
-            {
-                entityMasterData.PartialStatusAmount = entityPM.PartialStatusAmount;
-            }
-
-            if (partialStatusAmount != null)
-            {
-                this.ComputePartialStatusId(partialStatusAmount, eventTypeCode);
-            }
-        }
-
-        private void ComputePartialStatusId(string partialStatusAmount, string eventTypeCode)
-        {
-            EntityStatus partiallyEntityStatus = null;
-            var deliveredStatus = "SDLD";
-            var pickupStatus = "SHPK";
-          
-            if (eventTypeCode == pickedUpEventCode)
-            {
-                partiallyEntityStatus = string.IsNullOrEmpty(partialStatusAmount) ? allEntityStatuses.Where(d => d.Code == pickupStatus).FirstOrDefault() : allEntityStatuses.Where(d => d.Code == partialPickupStatus).FirstOrDefault();
-            }
-
-            if (eventTypeCode == deliveryArrivedEventCode)
-            {
-                partiallyEntityStatus = string.IsNullOrEmpty(partialStatusAmount) ? allEntityStatuses.Where(d => d.Code == deliveredStatus).FirstOrDefault() : allEntityStatuses.Where(d => d.Code == partialDeliveredStatus).FirstOrDefault();
-            }
-
-            if (partiallyEntityStatus == null)
-            {
-                return;
-            }
-            entityPM.StatusId = partiallyEntityStatus?.Id;
-            entityPoco.StatusId = entityPM.StatusId;
-            if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
-            {
-                entityMasterData.StatusId = entityPM.StatusId;
-            }
-        }
 
         private string ComputePartialStatusAmountShipmentPickUps()
         {
@@ -114,7 +62,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             }
 
             var shipmentDeliveriesNotEmptyATDCount = entityPM.ShipmentDeliveries.Where(a => a.ChangeSetOp != ChangeSetOperation.Delete && a.ATA != null).Count();
-            if (shipmentDeliveriesNotEmptyATDCount == 0 || shipmentDeliveriesNotEmptyATDCount == shipmentDeliveriesCount)
+            if (shipmentDeliveriesNotEmptyATDCount ==0 || shipmentDeliveriesNotEmptyATDCount == shipmentDeliveriesCount)
             {
                 return null;
             }
@@ -126,11 +74,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             if (eventType?.Code != deliveryArrivedEventCode && eventType?.Code != pickedUpEventCode)
             {
-                return false;
-            }
-            if (!IsAllowingPartial(eventType.EntityStatusId))
-            {
-                return false;
+                return true;
             }
             if (eventType?.Code == pickedUpEventCode)
             {
@@ -142,11 +86,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 var isDeliveryExist = entityPM.ShipmentDeliveries.Where(a => a.ChangeSetOp != ChangeSetOperation.Delete && a.ATA != null).Any();
                 return isDeliveryExist ? false : true;
             }
-
             return true;
         }
 
-        private void HandlePickUpDeliveryPreviousEvent(EventType eventType)
+        private void HandlePickUpDeliveryPreviousEvent(EventType eventType, EntityStatus currentEventEntityStatus)
         {
             var isPickUpDeliveryPreviousEvent = false;
             if (eventType?.Code == pickedUpEventCode)
@@ -157,11 +100,62 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             {
                 isPickUpDeliveryPreviousEvent = entityPM.ShipmentDeliveries.Where(a => a.ChangeSetOp != ChangeSetOperation.Delete && a.ATA != null).Any();
             }
-            if (isPickUpDeliveryPreviousEvent)
+            if (isPickUpDeliveryPreviousEvent || currentEventEntityStatus.Code == partialPickupStatus || currentEventEntityStatus.Code == partialDeliveredStatus)
             {
                 ComputePartialStatusAmount(eventType.Code);
             }
         }
+        private void ComputePartialStatusAmount(string eventTypeCode)
+        {
+            string partialStatusAmount = null;
+            if (eventTypeCode == pickedUpEventCode)
+            {
+                partialStatusAmount = ComputePartialStatusAmountShipmentPickUps();
+            }
 
+            if (eventTypeCode == deliveryArrivedEventCode)
+            {
+                partialStatusAmount = ComputePartialStatusAmountShipmentDeliveries();
+            }
+
+            entityPM.PartialStatusAmount = partialStatusAmount;
+            entityPoco.PartialStatusAmount = entityPM.PartialStatusAmount;
+            if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
+            {
+                entityMasterData.PartialStatusAmount = entityPM.PartialStatusAmount;
+            }
+
+            if (partialStatusAmount != null)
+            {
+                this.ComputePartialStatusId(partialStatusAmount, eventTypeCode);
+            }
+        }
+        private void ComputePartialStatusId(string partialStatusAmount, string eventTypeCode)
+        {
+            EntityStatus partiallyEntityStatus = null;
+            var deliveredStatus = "SDLD";
+            var pickupStatus = "SHPK";
+
+            if (eventTypeCode == pickedUpEventCode)
+            {
+                partiallyEntityStatus = string.IsNullOrEmpty(partialStatusAmount) ? allEntityStatuses.Where(d => d.Code == pickupStatus).FirstOrDefault() : allEntityStatuses.Where(d => d.Code == partialPickupStatus).FirstOrDefault();
+            }
+
+            if (eventTypeCode == deliveryArrivedEventCode)
+            {
+                partiallyEntityStatus = string.IsNullOrEmpty(partialStatusAmount) ? allEntityStatuses.Where(d => d.Code == deliveredStatus).FirstOrDefault() : allEntityStatuses.Where(d => d.Code == partialDeliveredStatus).FirstOrDefault();
+            }
+
+            if (partiallyEntityStatus == null)
+            {
+                return;
+            }
+            entityPM.StatusId = partiallyEntityStatus?.Id;
+            entityPoco.StatusId = entityPM.StatusId;
+            if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
+            {
+                entityMasterData.StatusId = entityPM.StatusId;
+            }
+        }
     }
 }
