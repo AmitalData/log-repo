@@ -76,14 +76,14 @@ namespace WebFreight.Web.ReportsWebServices
                 myDataProvider.AirlineLogo = DataProviders.General.GetCarrierLogo(shipmentPM.MainCarriageCarrierId, tenant);
 
                 #region Amounts
-                if (shipmentPM.GrossWeight != null)
+                if (shipmentPM.ChargeableWeight != null)
                 {
-                    myDataProvider.ChargeableWeight = String.Format("{0:#,0.00}", shipmentPM.GrossWeight.Value);
+                    myDataProvider.ChargeableWeight = String.Format("{0:#,0.00}", shipmentPM.ChargeableWeight.Value);
                 }
 
-                if (shipmentPM.GrossWeightUnitCode != null)
+                if (shipmentPM.ChargeableWeightUnitCode != null)
                 {
-                    myDataProvider.ChargeableWeight = myDataProvider.ChargeableWeight + " " + shipmentPM.GrossWeightUnitCode;
+                    myDataProvider.ChargeableWeight = myDataProvider.ChargeableWeight + " " + shipmentPM.ChargeableWeightUnitCode;
                 }
 
                 if (shipmentPM.NumberOfPackages != null)
