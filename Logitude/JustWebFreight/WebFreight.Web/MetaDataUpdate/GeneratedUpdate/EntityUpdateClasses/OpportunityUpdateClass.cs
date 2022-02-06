@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class OpportunityUpdateClass
    {  		
-		public const string HashString = "457e4509a9d64ba724a127abf7b23907";
+		public const string HashString = "36f464490b34f006e26540409e9a0215";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    AllowCustomFields =  true,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
-			      				    MaxNumberOfCustomFields =  10,
+			      				    MaxNumberOfCustomFields =  40,
 			      				    NewWizardControlName =  "Logitude.CRM.NewOpportunityCommand",
 			      				    DefaultText =  "Opportunity",
 			      				    Code =  "APPO",

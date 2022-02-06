@@ -101,7 +101,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                     count = list.Count;
                 }
 
-                if(ObjectTable.Name == "Shipment" || ObjectTable.Name == "Master")
+                if(ObjectTable.Name == "Shipment" || ObjectTable.Name == "Master" || ObjectTable.Name == "Opportunity")
                 {
                     allowedCount = 40;
                 }

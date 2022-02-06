@@ -72,7 +72,37 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         ConcurrencyGUID, 
 	         ClosingReasonId, 
 	         IsCancelled, 
-	         OpportunityTypeId,
+	         OpportunityTypeId, 
+	         Field11, 
+	         Field12, 
+	         Field13, 
+	         Field14, 
+	         Field15, 
+	         Field16, 
+	         Field17, 
+	         Field18, 
+	         Field19, 
+	         Field20, 
+	         Field21, 
+	         Field22, 
+	         Field23, 
+	         Field24, 
+	         Field25, 
+	         Field26, 
+	         Field27, 
+	         Field28, 
+	         Field29, 
+	         Field30, 
+	         Field31, 
+	         Field32, 
+	         Field33, 
+	         Field34, 
+	         Field35, 
+	         Field36, 
+	         Field37, 
+	         Field38, 
+	         Field39, 
+	         Field40,
 	      }
 
 
@@ -151,7 +181,37 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         CustomerExternalId, 
 	         IsCopy, 
 	         CopyFromEntityId, 
-	         IsCustomerBlockedBusinessUnit,
+	         IsCustomerBlockedBusinessUnit, 
+	         Field11, 
+	         Field12, 
+	         Field13, 
+	         Field14, 
+	         Field15, 
+	         Field16, 
+	         Field17, 
+	         Field18, 
+	         Field19, 
+	         Field20, 
+	         Field21, 
+	         Field22, 
+	         Field23, 
+	         Field24, 
+	         Field25, 
+	         Field26, 
+	         Field27, 
+	         Field28, 
+	         Field29, 
+	         Field30, 
+	         Field31, 
+	         Field32, 
+	         Field33, 
+	         Field34, 
+	         Field35, 
+	         Field36, 
+	         Field37, 
+	         Field38, 
+	         Field39, 
+	         Field40,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -408,6 +468,156 @@ namespace Logitude.CRM.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OpportunityTypeId))
             {
 				entityPOCO.OpportunityTypeId = entityPM.OpportunityTypeId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field11))
+            {
+				entityPOCO.Field11 = entityPM.Field11!= null ? entityPM.Field11.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field12))
+            {
+				entityPOCO.Field12 = entityPM.Field12!= null ? entityPM.Field12.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field13))
+            {
+				entityPOCO.Field13 = entityPM.Field13!= null ? entityPM.Field13.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field14))
+            {
+				entityPOCO.Field14 = entityPM.Field14!= null ? entityPM.Field14.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field15))
+            {
+				entityPOCO.Field15 = entityPM.Field15!= null ? entityPM.Field15.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field16))
+            {
+				entityPOCO.Field16 = entityPM.Field16!= null ? entityPM.Field16.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field17))
+            {
+				entityPOCO.Field17 = entityPM.Field17!= null ? entityPM.Field17.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field18))
+            {
+				entityPOCO.Field18 = entityPM.Field18!= null ? entityPM.Field18.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field19))
+            {
+				entityPOCO.Field19 = entityPM.Field19!= null ? entityPM.Field19.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field20))
+            {
+				entityPOCO.Field20 = entityPM.Field20!= null ? entityPM.Field20.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field21))
+            {
+				entityPOCO.Field21 = entityPM.Field21!= null ? entityPM.Field21.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field22))
+            {
+				entityPOCO.Field22 = entityPM.Field22!= null ? entityPM.Field22.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field23))
+            {
+				entityPOCO.Field23 = entityPM.Field23!= null ? entityPM.Field23.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field24))
+            {
+				entityPOCO.Field24 = entityPM.Field24!= null ? entityPM.Field24.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field25))
+            {
+				entityPOCO.Field25 = entityPM.Field25!= null ? entityPM.Field25.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field26))
+            {
+				entityPOCO.Field26 = entityPM.Field26!= null ? entityPM.Field26.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field27))
+            {
+				entityPOCO.Field27 = entityPM.Field27!= null ? entityPM.Field27.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field28))
+            {
+				entityPOCO.Field28 = entityPM.Field28!= null ? entityPM.Field28.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field29))
+            {
+				entityPOCO.Field29 = entityPM.Field29!= null ? entityPM.Field29.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field30))
+            {
+				entityPOCO.Field30 = entityPM.Field30!= null ? entityPM.Field30.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field31))
+            {
+				entityPOCO.Field31 = entityPM.Field31!= null ? entityPM.Field31.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field32))
+            {
+				entityPOCO.Field32 = entityPM.Field32!= null ? entityPM.Field32.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field33))
+            {
+				entityPOCO.Field33 = entityPM.Field33!= null ? entityPM.Field33.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field34))
+            {
+				entityPOCO.Field34 = entityPM.Field34!= null ? entityPM.Field34.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field35))
+            {
+				entityPOCO.Field35 = entityPM.Field35!= null ? entityPM.Field35.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field36))
+            {
+				entityPOCO.Field36 = entityPM.Field36!= null ? entityPM.Field36.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field37))
+            {
+				entityPOCO.Field37 = entityPM.Field37!= null ? entityPM.Field37.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field38))
+            {
+				entityPOCO.Field38 = entityPM.Field38!= null ? entityPM.Field38.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field39))
+            {
+				entityPOCO.Field39 = entityPM.Field39!= null ? entityPM.Field39.Value : null;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field40))
+            {
+				entityPOCO.Field40 = entityPM.Field40!= null ? entityPM.Field40.Value : null;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -671,6 +881,156 @@ namespace Logitude.CRM.BL.EntityDataMappings
 					entityPM.OpportunityTypeId = entityPOCO.OpportunityTypeId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field11))
+            {
+				entityPM.Field11 = new CustomFieldClass("Field11", "Opportunity", entityPOCO.Field11);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field12))
+            {
+				entityPM.Field12 = new CustomFieldClass("Field12", "Opportunity", entityPOCO.Field12);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field13))
+            {
+				entityPM.Field13 = new CustomFieldClass("Field13", "Opportunity", entityPOCO.Field13);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field14))
+            {
+				entityPM.Field14 = new CustomFieldClass("Field14", "Opportunity", entityPOCO.Field14);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field15))
+            {
+				entityPM.Field15 = new CustomFieldClass("Field15", "Opportunity", entityPOCO.Field15);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field16))
+            {
+				entityPM.Field16 = new CustomFieldClass("Field16", "Opportunity", entityPOCO.Field16);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field17))
+            {
+				entityPM.Field17 = new CustomFieldClass("Field17", "Opportunity", entityPOCO.Field17);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field18))
+            {
+				entityPM.Field18 = new CustomFieldClass("Field18", "Opportunity", entityPOCO.Field18);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field19))
+            {
+				entityPM.Field19 = new CustomFieldClass("Field19", "Opportunity", entityPOCO.Field19);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field20))
+            {
+				entityPM.Field20 = new CustomFieldClass("Field20", "Opportunity", entityPOCO.Field20);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field21))
+            {
+				entityPM.Field21 = new CustomFieldClass("Field21", "Opportunity", entityPOCO.Field21);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field22))
+            {
+				entityPM.Field22 = new CustomFieldClass("Field22", "Opportunity", entityPOCO.Field22);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field23))
+            {
+				entityPM.Field23 = new CustomFieldClass("Field23", "Opportunity", entityPOCO.Field23);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field24))
+            {
+				entityPM.Field24 = new CustomFieldClass("Field24", "Opportunity", entityPOCO.Field24);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field25))
+            {
+				entityPM.Field25 = new CustomFieldClass("Field25", "Opportunity", entityPOCO.Field25);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field26))
+            {
+				entityPM.Field26 = new CustomFieldClass("Field26", "Opportunity", entityPOCO.Field26);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field27))
+            {
+				entityPM.Field27 = new CustomFieldClass("Field27", "Opportunity", entityPOCO.Field27);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field28))
+            {
+				entityPM.Field28 = new CustomFieldClass("Field28", "Opportunity", entityPOCO.Field28);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field29))
+            {
+				entityPM.Field29 = new CustomFieldClass("Field29", "Opportunity", entityPOCO.Field29);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field30))
+            {
+				entityPM.Field30 = new CustomFieldClass("Field30", "Opportunity", entityPOCO.Field30);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field31))
+            {
+				entityPM.Field31 = new CustomFieldClass("Field31", "Opportunity", entityPOCO.Field31);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field32))
+            {
+				entityPM.Field32 = new CustomFieldClass("Field32", "Opportunity", entityPOCO.Field32);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field33))
+            {
+				entityPM.Field33 = new CustomFieldClass("Field33", "Opportunity", entityPOCO.Field33);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field34))
+            {
+				entityPM.Field34 = new CustomFieldClass("Field34", "Opportunity", entityPOCO.Field34);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field35))
+            {
+				entityPM.Field35 = new CustomFieldClass("Field35", "Opportunity", entityPOCO.Field35);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field36))
+            {
+				entityPM.Field36 = new CustomFieldClass("Field36", "Opportunity", entityPOCO.Field36);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field37))
+            {
+				entityPM.Field37 = new CustomFieldClass("Field37", "Opportunity", entityPOCO.Field37);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field38))
+            {
+				entityPM.Field38 = new CustomFieldClass("Field38", "Opportunity", entityPOCO.Field38);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field39))
+            {
+				entityPM.Field39 = new CustomFieldClass("Field39", "Opportunity", entityPOCO.Field39);
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field40))
+            {
+				entityPM.Field40 = new CustomFieldClass("Field40", "Opportunity", entityPOCO.Field40);
+            }
+
 		}
 
 		public void PMToOldPM(OpportunityPM entityPM, OpportunityPM oldEntityPM)
@@ -925,6 +1285,156 @@ namespace Logitude.CRM.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OpportunityTypeId))
             {
                 oldEntityPM.OpportunityTypeId = entityPM.OpportunityTypeId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field11))
+            {
+                oldEntityPM.Field11 = entityPM.Field11;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field12))
+            {
+                oldEntityPM.Field12 = entityPM.Field12;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field13))
+            {
+                oldEntityPM.Field13 = entityPM.Field13;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field14))
+            {
+                oldEntityPM.Field14 = entityPM.Field14;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field15))
+            {
+                oldEntityPM.Field15 = entityPM.Field15;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field16))
+            {
+                oldEntityPM.Field16 = entityPM.Field16;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field17))
+            {
+                oldEntityPM.Field17 = entityPM.Field17;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field18))
+            {
+                oldEntityPM.Field18 = entityPM.Field18;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field19))
+            {
+                oldEntityPM.Field19 = entityPM.Field19;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field20))
+            {
+                oldEntityPM.Field20 = entityPM.Field20;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field21))
+            {
+                oldEntityPM.Field21 = entityPM.Field21;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field22))
+            {
+                oldEntityPM.Field22 = entityPM.Field22;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field23))
+            {
+                oldEntityPM.Field23 = entityPM.Field23;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field24))
+            {
+                oldEntityPM.Field24 = entityPM.Field24;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field25))
+            {
+                oldEntityPM.Field25 = entityPM.Field25;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field26))
+            {
+                oldEntityPM.Field26 = entityPM.Field26;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field27))
+            {
+                oldEntityPM.Field27 = entityPM.Field27;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field28))
+            {
+                oldEntityPM.Field28 = entityPM.Field28;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field29))
+            {
+                oldEntityPM.Field29 = entityPM.Field29;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field30))
+            {
+                oldEntityPM.Field30 = entityPM.Field30;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field31))
+            {
+                oldEntityPM.Field31 = entityPM.Field31;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field32))
+            {
+                oldEntityPM.Field32 = entityPM.Field32;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field33))
+            {
+                oldEntityPM.Field33 = entityPM.Field33;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field34))
+            {
+                oldEntityPM.Field34 = entityPM.Field34;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field35))
+            {
+                oldEntityPM.Field35 = entityPM.Field35;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field36))
+            {
+                oldEntityPM.Field36 = entityPM.Field36;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field37))
+            {
+                oldEntityPM.Field37 = entityPM.Field37;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field38))
+            {
+                oldEntityPM.Field38 = entityPM.Field38;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field39))
+            {
+                oldEntityPM.Field39 = entityPM.Field39;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field40))
+            {
+                oldEntityPM.Field40 = entityPM.Field40;
             }
 			
 		}

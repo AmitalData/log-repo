@@ -172,6 +172,66 @@ namespace Logitude.CRM.Data.EntityLists
        public string CopyFromEntityId  { get; set; }
        [DataMember]
        public bool IsCustomerBlockedBusinessUnit  { get; set; }
+       [DataMember]
+       public string Field11  { get; set; }
+       [DataMember]
+       public string Field12  { get; set; }
+       [DataMember]
+       public string Field13  { get; set; }
+       [DataMember]
+       public string Field14  { get; set; }
+       [DataMember]
+       public string Field15  { get; set; }
+       [DataMember]
+       public string Field16  { get; set; }
+       [DataMember]
+       public string Field17  { get; set; }
+       [DataMember]
+       public string Field18  { get; set; }
+       [DataMember]
+       public string Field19  { get; set; }
+       [DataMember]
+       public string Field20  { get; set; }
+       [DataMember]
+       public string Field21  { get; set; }
+       [DataMember]
+       public string Field22  { get; set; }
+       [DataMember]
+       public string Field23  { get; set; }
+       [DataMember]
+       public string Field24  { get; set; }
+       [DataMember]
+       public string Field25  { get; set; }
+       [DataMember]
+       public string Field26  { get; set; }
+       [DataMember]
+       public string Field27  { get; set; }
+       [DataMember]
+       public string Field28  { get; set; }
+       [DataMember]
+       public string Field29  { get; set; }
+       [DataMember]
+       public string Field30  { get; set; }
+       [DataMember]
+       public string Field31  { get; set; }
+       [DataMember]
+       public string Field32  { get; set; }
+       [DataMember]
+       public string Field33  { get; set; }
+       [DataMember]
+       public string Field34  { get; set; }
+       [DataMember]
+       public string Field35  { get; set; }
+       [DataMember]
+       public string Field36  { get; set; }
+       [DataMember]
+       public string Field37  { get; set; }
+       [DataMember]
+       public string Field38  { get; set; }
+       [DataMember]
+       public string Field39  { get; set; }
+       [DataMember]
+       public string Field40  { get; set; }
    }
 
 }
