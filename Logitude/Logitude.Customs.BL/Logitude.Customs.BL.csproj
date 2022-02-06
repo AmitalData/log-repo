@@ -1072,6 +1072,7 @@
     <Compile Include="EntityQueryServices\IncotemrsFileValidationQueryService.cs" />
     <Compile Include="EntityQueryServices\ClientsPoaQueryService.cs" />
     <Compile Include="EntityQueryServices\ContainerizationQueryService.cs" />
+    <Compile Include="EntityQueryServices\CustomsEnvironmentSettingQueryService.cs" />
     <Compile Include="EntityQueryServices\DeclarationReferantDataQueryService.cs" />
     <Compile Include="EntityQueryServices\ExportStorageQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\AmedmentTypeQueryService.Generated.cs" />

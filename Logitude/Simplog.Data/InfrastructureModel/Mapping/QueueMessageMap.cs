@@ -63,8 +63,15 @@ namespace Simplog.Data.InfrastructureModel.Mapping
               .IsUnicode(false)
 
               ;
-            
 
+            #region TomerRequest
+            this.Property(t => t.RabbitMQCreateDate).HasColumnName("RabbitMQCreateDate");
+            this.Property(t => t.RabbitMQRetryNumber).HasColumnName("RabbitMQRetryNumber");
+            this.Property(t => t.RabbitMQErrMess).HasColumnName("RabbitMQErrMess").HasMaxLength(256)
+               .IsUnicode(false); ;
+
+
+            #endregion
             #endregion
         }
     }

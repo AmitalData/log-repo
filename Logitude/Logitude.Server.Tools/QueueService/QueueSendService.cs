@@ -163,6 +163,8 @@ namespace Logitude.Server.Tools.QueueService
         }
         //public int ProcessState { get; set; }
 
+
+        
         public int Tenant { get; set; }
 
         public string InterfaceTypeCode { get; set; }
@@ -182,6 +184,28 @@ namespace Logitude.Server.Tools.QueueService
         }
 
         public bool UseRabbitMQ { get;  set; }
-        public string QueueCodeRabbit { get; set; }
+        public string QueueGroupCodeRabbit { get; set; }
     }
+    public class RabbitQueueCodeService
+    {
+        public static string GetRabbitQueueCode(string QueueDefinitionCode, string QueueGroupCodeRabbit)
+        {
+            string env = GetEnv();
+            string myQueueCodeRabbit = QueueDefinitionCode;// $"AN_{env}_{this.QueueCode}";
+            if (!string.IsNullOrEmpty(QueueGroupCodeRabbit))
+            {
+                myQueueCodeRabbit = $"{myQueueCodeRabbit}_{QueueGroupCodeRabbit}";
+            }
+            myQueueCodeRabbit += "_" + env;
+            return myQueueCodeRabbit.ToLower();
+        }
+
+        private static string GetEnv()
+        {
+            var uri = new Uri(LogitudeSettings.LogitudeURL);
+            var branchEnv = uri.LocalPath.Trim(@"\"[0]).Trim(@"/"[0]);
+            return branchEnv;
+        }
+    }
+    
 }

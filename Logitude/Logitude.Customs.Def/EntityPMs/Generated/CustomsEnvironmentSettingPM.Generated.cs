@@ -137,6 +137,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string rabbitPassword ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RabbitPassword  
+	   {
+	    
+	     get
+		{
+		   return rabbitPassword;
+		 }
+		 set
+		 {
+		   if(rabbitPassword != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RabbitPassword",OldValue=rabbitPassword,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   rabbitPassword=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -69,11 +69,11 @@ namespace Logitude.Server.Tools.QueueService
 
         public string MessageId { get; set; }
 
-        public void SafeAbandon()
+        public bool SafeAbandon()
         {
 
             var myCustomDbQueueService = new CustomDbQueueService(CustomDbQueueParams,this);
-            myCustomDbQueueService.SafeAbandon();
+            return myCustomDbQueueService.SafeAbandon();
         }
         public void SafeComplete()
         {
