@@ -34,7 +34,7 @@ namespace Logitude.TariffModule.BL.Helpers
 
         public CustomsChargesTariffSearchArgs GeneratePayables()
         {
-            IQueryable<Tariff> tariffs = this.GetTariffs(tenant);
+            List<Tariff> tariffs = this.GetTariffs(tenant);
             List<TariffLine> tariffLines = this.GetTariffLines(tariffs, tenant);
             
             foreach (TariffLine tariffLine in tariffLines)
@@ -58,24 +58,26 @@ namespace Logitude.TariffModule.BL.Helpers
 
             return entityLists.ToList();
         }
-        private IQueryable<Tariff> GetTariffs(int tenant)
+        private List<Tariff> GetTariffs(int tenant)
         {
             TariffRepository tariffRepository = new TariffRepository(tenant);
             IQueryable<Tariff> tariffs = tariffRepository.GetActiveCustomsChargesTariffs(tenant);
 
+            List<Tariff> myResult = new List<Tariff>();
+
             if (!string.IsNullOrEmpty(customsChargesTariffSearchArgs.CustomAgentExportId))
             {
-                tariffs = tariffs.Where(d => d.CustomsBrokerId == customsChargesTariffSearchArgs.CustomAgentExportId);
+                myResult.AddRange(tariffs.Where(d => d.CustomsBrokerId == customsChargesTariffSearchArgs.CustomAgentExportId));
             }
 
             if (!string.IsNullOrEmpty(customsChargesTariffSearchArgs.CustomAgentImportId))
             {
-                tariffs = tariffs.Where(d => d.CustomsBrokerId == customsChargesTariffSearchArgs.CustomAgentImportId);
+                myResult.AddRange(tariffs.Where(d => d.CustomsBrokerId == customsChargesTariffSearchArgs.CustomAgentImportId));
             }
 
-            return tariffs;
+            return myResult;
         }
-        private List<TariffLine> GetTariffLines(IQueryable<Tariff> tariffs, int tenant)
+        private List<TariffLine> GetTariffLines(List<Tariff> tariffs, int tenant)
         {
             List<TariffLine> myResult = new List<TariffLine>();
             TariffVersionRepository tariffVersionRepository = new TariffVersionRepository(tenant);
@@ -90,11 +92,16 @@ namespace Logitude.TariffModule.BL.Helpers
                 tariffLines = tariffLines.Where(p => System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= System.Data.Entity.DbFunctions.TruncateTime(dateFilter)
                                && (p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= System.Data.Entity.DbFunctions.TruncateTime(dateFilter)) : true));
 
-                myResult.Add(this.FilterTariffLinesBasedOnCountries(tariffLines));
+                TariffLine customChargesLine = this.FilterTariffLinesBasedOnCountries(tariffLines);
+
+                if (customChargesLine != null)
+                {
+                    myResult.Add(customChargesLine);
+                }
             }
 
             return myResult;
-        }        
+        }     
         private DateTime? GetCustomsChargesDateFilter(int tenant)
         {
             DateTime? date = TenantServerConfigration.GetCurrentDateTime(tenant);
@@ -113,9 +120,8 @@ namespace Logitude.TariffModule.BL.Helpers
         }
         private TariffLine FilterTariffLinesBasedOnCountries(IQueryable<TariffLine> tariffLines)
         {
-            List<TariffLine> test = tariffLines.ToList();
             IQueryable<TariffLine> filteredLines = tariffLines.Where(p => p.FromCountryId == customsChargesTariffSearchArgs.FromCountryId && p.ToCountryId == customsChargesTariffSearchArgs.ToCountryId);
-
+            
             if (filteredLines.Count() == 0)
             {
                 filteredLines = tariffLines.Where(p => p.FromCountryId == customsChargesTariffSearchArgs.FromCountryId && p.IsToAllOtherCountries);
@@ -177,6 +183,8 @@ namespace Logitude.TariffModule.BL.Helpers
                             UnitOfMesurmentId = measurement.Id,
                             IsDifferentCurrency = tariffLine.IsDifferentCurrenciesPerCharge,
                             Notes = tariffLine.Notes,
+                            CustomsBrokerId = tariff.CustomsBrokerId,
+                            CustomsBrokerName = tariff.CustomsBroker?.EnglishName,
                         };
 
                         payable.CurrencyId = tariffLine.CurrencyId != null ? tariffLine.CurrencyId : tariff.CurrencyId;
@@ -452,5 +460,7 @@ namespace Logitude.TariffModule.BL.Helpers
         public bool IsDifferentCurrency { get; set; }
         public string Notes { get; set; }
         public double? Rate { get; set; }
+        public string CustomsBrokerId { get; set; }
+        public string CustomsBrokerName { get; set; }
     }
 }

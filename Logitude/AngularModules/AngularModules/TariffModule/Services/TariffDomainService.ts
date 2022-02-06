@@ -600,4 +600,6 @@ export class CustomsChargesPayable {
     IsDifferentCurrency: boolean;
     Notes: string;
     Rate: number;
+    CustomsBrokerId: string;
+    CustomsBrokerName: string;
 }

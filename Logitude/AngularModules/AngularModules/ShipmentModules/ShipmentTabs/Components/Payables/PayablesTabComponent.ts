@@ -88,7 +88,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
-            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe((s: string) => {
                 if (s == "PayablesGenerated") {
                     this.BuildItemsSource();
                     this.ComputeShipmentFields();
@@ -98,8 +98,13 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                     this.OriginShipment = this.entityArgs.OriginEntity;
                 }
 
-                else if (s == "CustomAgentPartnersChanged") {
+                else if (s == "UpdateCustomsCharges") {
                     this.CheckUpdateCustomsCharges();
+                }
+
+                else if (s.indexOf("UpdateCustomsChargesPartnerDeleted") > -1) {
+                    var args = s.split(',');
+                    this.CheckUpdateCustomsCharges(args[1]);
                 }
             });
 
@@ -1503,19 +1508,38 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     public UpdateCustomsChargesMessage: string;
     public UpdateCustomsChargesMessageWidth: number = 0;
     public IsUpdateCustomsChargesVisible: boolean = false;
-    CheckUpdateCustomsCharges() {
+    private deletedPartnerId: string;
+    CheckUpdateCustomsCharges(deletedId: string = null) {
         var updateMessage: string = null;
 
         if (this.EntityPM.ShipmentPayables.filter(d => d.IsCustomsChargesTariff).length > 0) {
-            updateMessage = "Shipment details have been updated, would you like to update the generated customs charges?";
+            updateMessage = "Shipment details have been updated, update the generated customs charges?";
         }
 
         this.UpdateCustomsChargesMessage = updateMessage;
         this.UpdateCustomsChargesMessageWidth = AppTool.GetTextWidth(updateMessage, 11);
         this.IsUpdateCustomsChargesVisible = AppTool.IsNullOrEmpty(updateMessage) ? false : true;
+        this.deletedPartnerId = deletedId;
     }
     UpdateCustomsChargesClicked() {
+        var deletedCustomsPayables: ShipmentPayablePM[] = this.EntityPM.ShipmentPayables.filter(d => d.IsCustomsChargesTariff
+            && !(d.ShipmentPayableLineStatusCode == 'PACC' || d.ShipmentPayableLineStatusCode == 'ACCT'));
 
+        if (!AppTool.IsNullOrEmpty(this.deletedPartnerId)) {
+            deletedCustomsPayables = deletedCustomsPayables.filter(d => d.VendorId == this.deletedPartnerId);
+        }
+
+        if (deletedCustomsPayables.length > 0) {
+            deletedCustomsPayables.forEach((item: ShipmentPayablePM) => {
+                this.EntityPM.RemovePayable(item);
+            });
+
+            this.UpdateCustomsChargesMessage = null;
+            this.UpdateCustomsChargesMessageWidth = 0;
+            this.IsUpdateCustomsChargesVisible = false;
+            this.deletedPartnerId = null;
+            this.AddCustomsChargesClicked();
+        }
     }
 
     AddCustomsChargesClicked() {
@@ -1589,50 +1613,54 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         this.CurrentSession.StopBusyIndicator();
     }
     private AddNewTariffPayable(payable: CustomsChargesPayable) {
-        this.myChargesTypeListService.getSingleFromCache(payable.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                var chargesType: ChargesTypeList = myResponse.Result;
-                var shipmentPayable: ShipmentPayablePM = this.ShipmentGenerator.GeneratePayablesFromTariff(chargesType);
-                shipmentPayable.IsCustomsChargesTariff = true;
-                shipmentPayable.TariffId = payable.TariffId;
-                shipmentPayable.TariffNumber = payable.TariffNumber;
-                shipmentPayable.TariffLineId = payable.TariffLineId;
-                shipmentPayable.TariffVersion = payable.VersionId;
-                shipmentPayable.ShipmentPayableLineStatusCode = "EMPT";
-                shipmentPayable.ShipmentPayableAmountTypeCode = "ACCU";
-                shipmentPayable.ShipmentId = this.EntityPM.Id;
-                shipmentPayable.ChargesTypeId = chargesType.Id;
-                shipmentPayable.ChargesTypeCode = chargesType.Code;
-                shipmentPayable.ChargesTypeName = chargesType.EnglishName;
-                shipmentPayable.ChargesGroupCode = chargesType.ChargesGroupCode;
-                shipmentPayable.ShipmentNumber = this.EntityPM.ShipmentNumber;
-                shipmentPayable.CreateDate = DateTool.GetCurrentDateAsUtc();
-                shipmentPayable.Tenant = this.EntityPM.Tenant;
-                shipmentPayable.CreatedByUserId = SessionLocator.LoggedUserId;
-                shipmentPayable.UpdateDate = DateTool.GetCurrentDateAsUtc();
-                shipmentPayable.UpdateByUserId = SessionLocator.LoggedUserId;
-                shipmentPayable.MeasurementId = payable.UnitOfMesurmentId;
-                shipmentPayable.MeasurementCode = payable.UnitOfMesurmentCode;
-                shipmentPayable.CurrencyId = payable.CurrencyId;
-                shipmentPayable.CurrencyCode = payable.CurrencyCode;
-                shipmentPayable.Rate = payable.Rate;
-                shipmentPayable.ProfitCurrencyExchangeRate = this.ShipmentGenerator.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
-                shipmentPayable.Quantity = payable.Quantity;
-                shipmentPayable.ExpectedAmount = AppTool.Round(payable.ExpectedAmount, 2);
-                shipmentPayable.ExpectedAmountLocal = AppTool.Round(payable.LocalExpectedAmount, 2);
-                shipmentPayable.ExpectedAmountInProfitCurrency = AppTool.Round(payable.ProfitExpectedAmount, 2);
-                shipmentPayable.OpenAmount = AppTool.Round(shipmentPayable.ExpectedAmount, 2);
-                shipmentPayable.OpenAmountInLocalCurrency = AppTool.Round(payable.LocalExpectedAmount, 2);
-                shipmentPayable.OpenAmountInProfitCurrency = AppTool.Round(payable.ProfitExpectedAmount, 2);
-                shipmentPayable.Notes = payable.Notes;
-                shipmentPayable.MinAmount = AppTool.Round(payable.MinAmount, 2);
-                shipmentPayable.UnitPrice = AppTool.Round(payable.Price, 3);
-                //shipmentPayable.VendorId = payable.SellerId;
-                //shipmentPayable.VendorName = payable.SellerName;
-                this.ShipmentGenerator.CalculatePayableVatAmount(shipmentPayable);
-                this.EntityPM.AddPayable(shipmentPayable);                
-            }
-        });
+        var alreadyAddedPayable: ShipmentPayablePM = this.EntityPM.ShipmentPayables.filter(d => d.TariffId == payable.TariffId && d.ChargesTypeId == payable.ChargeTypeId)[0];
+
+        if (alreadyAddedPayable == null) {
+            this.myChargesTypeListService.getSingleFromCache(payable.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    var chargesType: ChargesTypeList = myResponse.Result;
+                    var shipmentPayable: ShipmentPayablePM = this.ShipmentGenerator.GeneratePayablesFromTariff(chargesType);
+                    shipmentPayable.IsCustomsChargesTariff = true;
+                    shipmentPayable.TariffId = payable.TariffId;
+                    shipmentPayable.TariffNumber = payable.TariffNumber;
+                    shipmentPayable.TariffLineId = payable.TariffLineId;
+                    shipmentPayable.TariffVersion = payable.VersionId;
+                    shipmentPayable.ShipmentPayableLineStatusCode = "EMPT";
+                    shipmentPayable.ShipmentPayableAmountTypeCode = "ACCU";
+                    shipmentPayable.ShipmentId = this.EntityPM.Id;
+                    shipmentPayable.ChargesTypeId = chargesType.Id;
+                    shipmentPayable.ChargesTypeCode = chargesType.Code;
+                    shipmentPayable.ChargesTypeName = chargesType.EnglishName;
+                    shipmentPayable.ChargesGroupCode = chargesType.ChargesGroupCode;
+                    shipmentPayable.ShipmentNumber = this.EntityPM.ShipmentNumber;
+                    shipmentPayable.CreateDate = DateTool.GetCurrentDateAsUtc();
+                    shipmentPayable.Tenant = this.EntityPM.Tenant;
+                    shipmentPayable.CreatedByUserId = SessionLocator.LoggedUserId;
+                    shipmentPayable.UpdateDate = DateTool.GetCurrentDateAsUtc();
+                    shipmentPayable.UpdateByUserId = SessionLocator.LoggedUserId;
+                    shipmentPayable.MeasurementId = payable.UnitOfMesurmentId;
+                    shipmentPayable.MeasurementCode = payable.UnitOfMesurmentCode;
+                    shipmentPayable.CurrencyId = payable.CurrencyId;
+                    shipmentPayable.CurrencyCode = payable.CurrencyCode;
+                    shipmentPayable.Rate = payable.Rate;
+                    shipmentPayable.ProfitCurrencyExchangeRate = this.ShipmentGenerator.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
+                    shipmentPayable.Quantity = payable.Quantity;
+                    shipmentPayable.ExpectedAmount = AppTool.Round(payable.ExpectedAmount, 2);
+                    shipmentPayable.ExpectedAmountLocal = AppTool.Round(payable.LocalExpectedAmount, 2);
+                    shipmentPayable.ExpectedAmountInProfitCurrency = AppTool.Round(payable.ProfitExpectedAmount, 2);
+                    shipmentPayable.OpenAmount = AppTool.Round(shipmentPayable.ExpectedAmount, 2);
+                    shipmentPayable.OpenAmountInLocalCurrency = AppTool.Round(payable.LocalExpectedAmount, 2);
+                    shipmentPayable.OpenAmountInProfitCurrency = AppTool.Round(payable.ProfitExpectedAmount, 2);
+                    shipmentPayable.Notes = payable.Notes;
+                    shipmentPayable.MinAmount = AppTool.Round(payable.MinAmount, 2);
+                    shipmentPayable.UnitPrice = AppTool.Round(payable.Price, 3);
+                    shipmentPayable.VendorId = payable.CustomsBrokerId;
+                    shipmentPayable.VendorName = payable.CustomsBrokerName;
+                    this.ShipmentGenerator.CalculatePayableVatAmount(shipmentPayable);
+                    this.EntityPM.AddPayable(shipmentPayable);
+                }
+            });
+        }
     }
 }
 export class ShipmentPayableItem extends BaseComponent {

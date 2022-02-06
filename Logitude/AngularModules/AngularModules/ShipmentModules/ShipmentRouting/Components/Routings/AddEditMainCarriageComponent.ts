@@ -40,7 +40,8 @@ export class AddEditMainCarriageComponent extends BaseComponent {
     public FatherComponent: RoutingsTabComponent;
     public LabelWidth: number = 100;
     private CurrentSession = SessionLocator.SelectedSession;
-    private oldCountryId: string = null;
+    private oldFromCountryId: string = null;
+    private oldToCountryId: string = null;
     public IsVesselFreeTextVisible: boolean = false;
     constructor() {
         super();
@@ -65,7 +66,8 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         this.ObjectTableName = args['ObjectTableName'];
         this.FatherComponent = args['FatherComponent'];
         this.LabelWidth = this.EntityPM.TransportModeId == "I" ? 115 : 100;
-        this.oldCountryId = this.EntityPM.ToCountryId;
+        this.oldFromCountryId = this.EntityPM.FromCountryId;
+        this.oldToCountryId = this.EntityPM.ToCountryId;
 
         if (this.EntityPM.TransportModeId == "A") {
             this.LabelWidth = 80;
@@ -1859,7 +1861,7 @@ export class AddEditMainCarriageComponent extends BaseComponent {
             }
 
             var updateProductItems: boolean = false
-            if (this.oldCountryId != this.EntityPM.ToCountryId) {
+            if (this.oldToCountryId != this.EntityPM.ToCountryId) {
                 if (this.EntityPM.ShipmentProductItems.length > 0) {
                     if (!ShipmentTool.IsShipmentProductItemsEmpty(this.EntityPM.ShipmentProductItems)) {
                         updateProductItems = true;
@@ -1873,6 +1875,12 @@ export class AddEditMainCarriageComponent extends BaseComponent {
                             confirmationMessage = confirmationMessage + ", " + "All product items in this shipment will be updated";
                         }
                     }
+                }
+            }
+
+            if (this.EntityPM.ShipmentPayables.filter(d => d.IsCustomsChargesTariff).length > 0) {
+                if (this.oldToCountryId != this.EntityPM.ToCountryId || this.oldFromCountryId != this.EntityPM.FromCountryId) {
+                    this.CurrentSession.FireEvent("UpdateCustomsCharges");
                 }
             }
 
