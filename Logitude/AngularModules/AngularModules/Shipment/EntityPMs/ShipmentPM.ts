@@ -4056,15 +4056,15 @@ export class ShipmentPM {
 
     private warehouseLegCutOffDate: Date;
     public get WarehouseLegCutOffDate() { return this.warehouseLegCutOffDate; }
-    public set WarehouseLegCutOffDate(newValue: Date) { this.warehouseLegCutOffDate = newValue; this.MarkAsDirty(); }
+    public set WarehouseLegCutOffDate(newValue: Date) { this.warehouseLegCutOffDate = newValue; this.MarkAsDirty("WarehouseLegCutOffDate"); }
 
     private warehouseLegVGMCutOffDate: Date;
     public get WarehouseLegVGMCutOffDate() { return this.warehouseLegVGMCutOffDate; }
-    public set WarehouseLegVGMCutOffDate(newValue: Date) { this.warehouseLegVGMCutOffDate = newValue; this.MarkAsDirty(); }
+    public set WarehouseLegVGMCutOffDate(newValue: Date) { this.warehouseLegVGMCutOffDate = newValue; this.MarkAsDirty("WarehouseLegVGMCutOffDate"); }
 
     private aMSClosingDate: Date;
     public get AMSClosingDate() { return this.aMSClosingDate; }
-    public set AMSClosingDate(newValue: Date) { this.aMSClosingDate = newValue; this.MarkAsDirty(); }
+    public set AMSClosingDate(newValue: Date) { this.aMSClosingDate = newValue; this.MarkAsDirty("AMSClosingDate"); }
 
     private updatedByPartner: string;
     public get UpdatedByPartner() { return this.updatedByPartner; }

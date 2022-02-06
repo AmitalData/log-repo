@@ -237,6 +237,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.TraceTerminalData();
                 this.TraceAccruals();
                 this.TraceBookingArrangement();
+                this.TraceFollowUpDates();
             }
         }
 
@@ -341,6 +342,36 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             else if (entityMasterData != null && entityMasterData.MainCarriageETD != null && entityPM.MainCarriageETD == null)
             {
                 this.DeleteTraceEvent("BKAR");
+            }
+        }
+
+        private void TraceFollowUpDates()
+        {
+            if (entityPoco.WarehouseLegCutOffDate != null && entityPM.WarehouseLegCutOffDate == null)
+            {
+                this.DeleteTraceEvent("WCDU");
+            }
+            else if (entityPoco.WarehouseLegCutOffDate != entityPM.WarehouseLegCutOffDate)
+            {
+                this.CreateTraceEvent("WCDU", entityPM.WarehouseLegCutOffDate);
+            }
+
+            if (entityPoco.WarehouseLegVGMCutOffDate != null && entityPM.WarehouseLegVGMCutOffDate == null)
+            {
+                this.DeleteTraceEvent("VGMU");
+            }
+            else if (entityPoco.WarehouseLegVGMCutOffDate != entityPM.WarehouseLegVGMCutOffDate)
+            {
+                this.CreateTraceEvent("VGMU", entityPM.WarehouseLegVGMCutOffDate);
+            }
+
+            if (entityPoco.AMSClosingDate != null && entityPM.AMSClosingDate == null)
+            {
+                this.DeleteTraceEvent("AMSU");
+            }
+            else if (entityPoco.AMSClosingDate != entityPM.AMSClosingDate)
+            {
+                this.CreateTraceEvent("AMSU", entityPM.AMSClosingDate);
             }
         }
 

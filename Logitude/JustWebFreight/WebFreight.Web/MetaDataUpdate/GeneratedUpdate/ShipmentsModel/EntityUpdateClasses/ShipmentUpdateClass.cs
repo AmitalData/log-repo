@@ -79,8 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
- 
-		public const string HashString = "e51b67kjkaad39f466bacf42bf03d736baf";
+		public const string HashString = "4ffdf1dad4be57bcf85f86e78b5853de";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -48103,6 +48102,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "InvoiceIssuedDate",
 					  						ListPropertyPath =  "InvoiceIssuedDate",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -51861,6 +51861,69 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
+                ObjectTableId = ShipmentObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "WCDU",
+                EnglishName =  "Warehouse Cut-Off Updated",
+                LocalName =  "Warehouse Cut-Off Updated",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                EventTypeCategoryCode =  "OPE",
+                IsFollowUp =  true,
+                FollowUpEnglishName =  "Warehouse Cut-Off",
+                FollowUpLocalName =  "Warehouse Cut-Off",
+                ObjectTableId = ShipmentObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "VGMU",
+                EnglishName =  "VGM Cut-Off Updated",
+                LocalName =  "VGM Cut-Off Updated",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                EventTypeCategoryCode =  "OPE",
+                IsFollowUp =  true,
+                FollowUpEnglishName =  "VGM Cut-Off",
+                FollowUpLocalName =  "VGM Cut-Off",
+                ObjectTableId = ShipmentObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "AMSU",
+                EnglishName =  "AMS Closing Updating",
+                LocalName =  "AMS Closing Updating",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                EventTypeCategoryCode =  "OPE",
+                IsFollowUp =  true,
+                FollowUpEnglishName =  "AMS Closing Date",
+                FollowUpLocalName =  "AMS Closing Date",
                 ObjectTableId = ShipmentObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
