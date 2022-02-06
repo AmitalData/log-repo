@@ -175,6 +175,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="EventTrigger"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerRoleId"
     ReferencedTable="Roles"

@@ -38,6 +38,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             eventType.AllowedInAutomation = eventTypePM.AllowedInAutomation;
             eventType.CustomField = eventTypePM.CustomField;
             eventType.IsStatusNotModified = eventTypePM.IsStatusNotModified;
+            eventType.EventTrigger = eventTypePM.EventTrigger;
 
         }
     }

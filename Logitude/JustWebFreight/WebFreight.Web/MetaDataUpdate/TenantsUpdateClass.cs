@@ -2593,8 +2593,8 @@ namespace WebFreight.Web.MetaDataUpdate
                         //updatedEventType.SearchFields = eventType.SearchFields;
                         //updatedEventType.EventTypeCategoryCode = eventType.EventTypeCategoryCode;
                         //updatedEventType.AllowedInAutomation = eventType.AllowedInAutomation;
-                        //updatedEventType.UpdateDate = eventType.UpdateDate;
-                        //eventTypesRepository.Update(updatedEventType);
+                        updatedEventType.EventTrigger = eventType.EventTrigger;
+                        eventTypesRepository.Update(updatedEventType);
                     }
                 }
                 else
