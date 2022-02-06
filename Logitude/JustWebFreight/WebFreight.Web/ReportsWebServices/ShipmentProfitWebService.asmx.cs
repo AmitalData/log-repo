@@ -254,6 +254,7 @@ namespace WebFreight.Web.ReportsWebServices
                 provider.VolumeUnitCode = shipmentPM.VolumeUnitCode;
                 provider.IsAccrualsApproved = shipmentPM.IsAccrualsApproved;
                 provider.AccrualsApprovalDate = shipmentPM.AccrualsApprovalDate;
+                provider.QuoteNumber = shipmentPM.QuoteNumber;
                 #endregion
 
                 #region Group by ChargeType
