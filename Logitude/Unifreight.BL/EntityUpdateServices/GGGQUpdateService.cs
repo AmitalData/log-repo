@@ -37,8 +37,8 @@ namespace Unifreight.BL.EntityUpdateServices
             GGGQPM ExistGGGQPM = myGGGQQueryService.GetByPrimary(entityPM.PRIMARYNUM, entityPM.ENTNAME, entityPM.ORIGINQUE, entityPM.FORMID);
             if(ExistGGGQPM != null && !string.IsNullOrWhiteSpace(ExistGGGQPM.QUEID))
             {
-                entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.None;
-                return;
+                //entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.None;
+                //return;
             }
             entityPM.CREATEDATE = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now;
             entityPM.QUEID = CommCounterUtil.GetUnique30(entityPM.CREATEDATE);
