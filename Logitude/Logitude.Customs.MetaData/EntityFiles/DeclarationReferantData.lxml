@@ -6265,7 +6265,7 @@
     DefaultText="&quot;Remove Inclusive Visibility&quot;"
     ListFieldLable="&quot;RemoveInclusiveVisibilityListLable&quot;"
     ListLableDefaultText="&quot;Remove Inclusive Visibility&quot;"
-    ListLocalDefaultText="&quot;מחיקה בכוללת&quot;"
+    ListLocalDefaultText="&quot;מחיקה מכוללת&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
