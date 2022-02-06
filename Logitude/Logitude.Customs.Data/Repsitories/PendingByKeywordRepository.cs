@@ -45,18 +45,21 @@ namespace Logitude.Customs.Data.Repsitories
                 string wordtemp = "," + word + ",";
                 var pendingByKeyword = new List<PendingByKeyword>();
                 PendingByKeywords.ForEach(r => {
-                    if (r.SearchType == "2")
+                    if (!string.IsNullOrWhiteSpace(r.KeywordsList))
                     {
-                        var tempList = r.KeywordsList.ToLower().Split(',').ToList();
-                        tempList.RemoveAll(s => string.IsNullOrWhiteSpace(s));
+                        if (r.SearchType == "2")
+                        {
+                            var tempList = r.KeywordsList.ToLower().Split(',').ToList();
+                            tempList.RemoveAll(s => string.IsNullOrWhiteSpace(s));
 
-                        if (tempList.FirstOrDefault(x=>word.Contains(x)) != null){
-                            pendingByKeyword.Add(r);
+                            if (tempList.FirstOrDefault(x=>word.Contains(x)) != null){
+                                pendingByKeyword.Add(r);
+                            }
                         }
-                    }
-                    else
-                    {
-                        if(r.KeywordsList.ToLower().Contains(wordtemp)) { pendingByKeyword.Add(r); }
+                        else
+                        {
+                            if(r.KeywordsList.ToLower().Contains(wordtemp)) { pendingByKeyword.Add(r); }
+                        }
                     }
                 });
                 //if (pendingByKeyword != null && !String.IsNullOrWhiteSpace(pendingByKeyword.CourierPendingReasonCode)) pendingReasonCodeList.Add(pendingByKeyword.CourierPendingReasonCode);
