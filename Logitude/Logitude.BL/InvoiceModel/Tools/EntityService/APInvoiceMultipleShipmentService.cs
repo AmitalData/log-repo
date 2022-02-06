@@ -894,6 +894,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 else
                 {
+                    List<ShipmentPayable> childPayables = shipmentPayableRepository.GetChildPayablesByParentPayable(payable.Id, tenant);
+                    List<string> payablesId = childPayables.Select(s => s.Id).ToList();
+                    List<PayableProratedAmount> payableProratedAmounts = payableProratedAmountRepository.GetPayableProratedAmountsByPayablesIds(payablesId, tenant);
+                    foreach (PayableProratedAmount item in payableProratedAmounts)
+                    {
+                        payableProratedAmountRepository.Remove(item);
+                    }
+
                     payable.CorrectionAmount = null;
                     payable.CorrectionByUserId = null;
                     payable.CorrectionDate = null;

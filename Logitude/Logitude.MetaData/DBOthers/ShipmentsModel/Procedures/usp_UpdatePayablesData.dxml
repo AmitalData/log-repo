@@ -219,13 +219,10 @@ BEGIN
 		END
 		
 		-- Fill Invoice Lines
-		if(@InvoiceId_PARAM is not null and @InvoiceId_PARAM != 'no invoice')
-		BEGIN
-			insert into @InvoiceLinesTable
-			SELECT LineNumber, EntityPayableId, APInvoiceId, LocalCurrencyAmount, ProfitCurrencyAmount
-			From APInvoiceLines
-			Where Tenant = @Tenant and EntityId = @MasterId
-		END
+		insert into @InvoiceLinesTable
+		SELECT LineNumber, EntityPayableId, APInvoiceId, LocalCurrencyAmount, ProfitCurrencyAmount
+		From APInvoiceLines
+		Where Tenant = @Tenant and EntityId = @MasterId
 
 		-- Loop Master Payables (1: Not PRFR)
 		BEGIN
