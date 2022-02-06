@@ -3,7 +3,7 @@
 	<Sql Version="1">
 	</Sql>
 
-	<Oracle Version="4">
+	<Oracle Version="6">
 		<![CDATA[
 		            declare
  n int := 0;
@@ -11,8 +11,8 @@ begin
   select count(*) into n
   from INTERFACETENANTDEFINITIONS
  where code='8251';
-  if n = 0 then
-  insert into INTERFACETENANTDEFINITIONS values ('1-999','1','8251','','2','0','1','',null,0,null,null); 
+  if n = 999 then
+  insert into INTERFACETENANTDEFINITIONS values ('1-999','1','8251','','2','0','1',''); 
   else
   update INTERFACETENANTDEFINITIONS set active=
  case 

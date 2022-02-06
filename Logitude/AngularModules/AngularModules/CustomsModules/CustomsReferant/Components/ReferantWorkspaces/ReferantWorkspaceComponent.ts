@@ -14,6 +14,7 @@ import { DeclarationReferantDataFiltersMenuComponent } from '../FiltersMenu/Decl
 import { AdvancedQueryFiltersPMService } from 'Infrastructure/Services/StandardPMs/AdvancedQueryFiltersPMService';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { ServiceArgs } from 'Infrastructure/DataContracts/ServiceArgs';
+import { debounce, debounceTime } from 'rxjs/operators';
 declare var makeAmBarChart, BarClick, ResetItem: any;
 
 @Component({
@@ -87,63 +88,67 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     getFiltersFromDb() {
         this._declarationReferantDataWebService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, "Customs.DeclarationReferantData.AllCases").subscribe((myResult: any) => {
             var listArgs = new ListComponentArgs();
-            var AdditionalFilters: FilterItem[]=new Array();
+            this.CurrentSession.StopBusyIndicator();
+            this.isScreenLoaded = true;
+            var AdditionalFilters: FilterItem[] = new Array();
             if (myResult) {
                 var ReferantUserIdFilter = myResult.filter(a => a.ObjectFieldName == "ReferentUserId");
-                if (ReferantUserIdFilter.length>0) {
-                    AdditionalFilters.push(new FilterItem("ReferentUserId", ReferantUserIdFilter[0].PredefinedValue , null, null, "InListExact", false, false, false, "string", null, null, null));
+                if (ReferantUserIdFilter.length > 0) {
+                    AdditionalFilters.push(new FilterItem("ReferentUserId", ReferantUserIdFilter[0].PredefinedValue, null, null, "InListExact", false, false, false, "string", null, null, null));
                 }
                 var DepartmentNameFilter = myResult.filter(a => a.ObjectFieldName == "DepartmentName");
-                if (DepartmentNameFilter.length>0) {
+                if (DepartmentNameFilter.length > 0) {
                     AdditionalFilters.push(new FilterItem("DepartmentName", DepartmentNameFilter[0].PredefinedValue, null, null, "Equal", false, false, false, "string", null, null, null));
                 }
                 var ReferantUserNameFilter = myResult.filter(a => a.ObjectFieldName == "ReferantUserName");
-                if (ReferantUserNameFilter.length>0) {
+                if (ReferantUserNameFilter.length > 0) {
                     AdditionalFilters.push(new FilterItem("ReferantUserName", ReferantUserNameFilter[0].PredefinedValue, null, null, "Equal", false, false, false, "string", null, null, null));
                 }
                 var DepartmentIdFilter = myResult.filter(a => a.ObjectFieldName == "DepartmentId");
-                if (DepartmentIdFilter.length>0) {
+                if (DepartmentIdFilter.length > 0) {
                     AdditionalFilters.push(new FilterItem("DepartmentId", DepartmentIdFilter[0].PredefinedValue, null, null, "InListExact", false, false, false, "string", null, null, null));
                 }
                 var TransportModeIdFilter = myResult.filter(a => a.ObjectFieldName == "TransportModeId");
-                if (TransportModeIdFilter.length>0) {
+                if (TransportModeIdFilter.length > 0) {
                     AdditionalFilters.push(new FilterItem("TransportModeId", TransportModeIdFilter[0].PredefinedValue, null, null, "Equals", false, true, false, "string", null, null, null));
                 }
             }
-            if(AdditionalFilters.length>0){
-                listArgs.QuerySection=myResult[0].QueryId;
+            if (AdditionalFilters.length > 0) {
+                listArgs.QuerySection = myResult[0].QueryId;
+            }else{
+                this.applyQueriesCount();
             }
             listArgs.Filters = AdditionalFilters;
             this.declarationReferantDataFiltersMenuComponent.SetFiltersMenu(listArgs);
+            //this.applyQueriesCount();
         });
     }
-
 
     constructor(public _declarationReferantDataWebService: DeclarationReferantDataWebService) {
         this.setFilters();
         this.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationReferantData").subscribe((response: any) => {
-
-            _declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).subscribe(
-                (data: any) => {
-                    this.counters = data.Result;
-
-
-                    if (this.CurrentSession == null) {
-                        this.ChartID = "ChartID_-1_-1";
-                    }
-
-                    else {
-                        this.ChartID = "ChartID_" + this.CurrentSession.GetChartId();
-                    }
-
-                    this.InProgressDeclarationReferantDataId = this.InProgressDeclarationReferantDataId + this.CurrentSession.GetChartId();
-                    this.LoadInProgressDeclarationReferantDatasDashboard();
-
-                    this.isScreenLoaded = true;
-                    this.CurrentSession.StopBusyIndicator();
-                });
         });
+
+    }
+
+    applyQueriesCount() {
+        this.GetFilterForQueriesCount();
+        this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).subscribe(
+            (data: any) => {
+                this.counters = data.Result;
+                if (this.CurrentSession == null) {
+                    this.ChartID = "ChartID_-1_-1";
+                }
+                else {
+                    this.ChartID = "ChartID_" + this.CurrentSession.GetChartId();
+                }
+                this.InProgressDeclarationReferantDataId = this.InProgressDeclarationReferantDataId + this.CurrentSession.GetChartId();
+                this.LoadInProgressDeclarationReferantDatasDashboard();
+
+                this.isScreenLoaded = true;
+                this.CurrentSession.StopBusyIndicator();
+            });
     }
 
     public IsQueryVisible_MyViewsGroup: boolean = true;
@@ -368,12 +373,15 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     viewFilters = new ApiQueryFilters();
 
 
-    FilterChange($event) {
-        this.filters = new ApiQueryFilters();
-        this.filters = $event.Filters;
-        this.ApplyFilters(this.filters);
+    FilterChange($event, IsFilterFromDbLoadd: boolean) {
+        if (IsFilterFromDbLoadd) {
+            this.filters = new ApiQueryFilters();
+            this.filters = $event.Filters;
+            this.ApplyFilters(this.filters);
+        }
     }
     RefreshButtonClicked() {
+        this.GetFilterForQueriesCount();
         this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).subscribe(
             (data: any) => {
                 this.counters = data.Result;
@@ -384,11 +392,8 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     }
 
     ApplyFilters(filters) {
-        this.viewFilters.AdditionalFilters = this.filters.AdditionalFilters.filter(a => a.FieldName == "ReferentUserId" || a.FieldName == "DepartmentId" || a.FieldName == "TransportModeId" || a.FieldName == "ReferantUserName" || a.FieldName == "DepartmentName");
-        this.RefId = this.declarationReferantDataFiltersMenuComponent.LOVListUsers.map(({ Id }) => Id).toString();
-        this.DepId = this.declarationReferantDataFiltersMenuComponent.LOVListDepartment.map(({ Id }) => Id).toString();
-        this.TransportModeId = this.declarationReferantDataFiltersMenuComponent.SelectedValue;
-        this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).subscribe(
+        this.GetFilterForQueriesCount();
+        this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).pipe(debounceTime(1000)).subscribe(
             (data: any) => {
                 this.counters = data.Result;
                 this.InProgressDeclarationReferantDataId = this.InProgressDeclarationReferantDataId + this.CurrentSession.GetChartId();
@@ -485,6 +490,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => {
                             this.filters.AdditionalFilters = this.filters.AdditionalFilters.filter(x => x.FieldName == "TransportModeId" || x.FieldName == "ReferentUserId" || x.FieldName == "DepartmentName" || x.FieldName == "ReferantUserName" || x.FieldName == "DepartmentId");
                             this.LoadAllScreenData();
+                            this.GetFilterForQueriesCount();
                             this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).subscribe(
                                 (data: any) => {
                                     this.counters = data.Result;
@@ -493,6 +499,15 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                         });
                     });
             });
+        }
+    }
+
+    public GetFilterForQueriesCount() {
+        if (this.filters?.AdditionalFilters.length > 0) {
+            this.viewFilters.AdditionalFilters = this.filters.AdditionalFilters.filter(a => a.FieldName == "ReferentUserId" || a.FieldName == "DepartmentId" || a.FieldName == "TransportModeId" || a.FieldName == "ReferantUserName" || a.FieldName == "DepartmentName");
+            this.RefId = this.declarationReferantDataFiltersMenuComponent.LOVListUsers.map(({ Id }) => Id).toString();
+            this.DepId = this.declarationReferantDataFiltersMenuComponent.LOVListDepartment.map(({ Id }) => Id).toString();
+            this.TransportModeId = this.declarationReferantDataFiltersMenuComponent.SelectedValue;
         }
     }
 

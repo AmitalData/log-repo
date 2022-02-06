@@ -95,11 +95,11 @@
         </td>
         <td style="width:10px; vertical-align:middle; font-size:11px; color : #6E7172;">
             <div *ngIf="CurrentScreenIsWorkSpace">
-                <button id="{{ ObjectTableName+'-Save' | IdGeneratorPipe}}" *ngIf="!apiQueryFiltersChanged "
+                <button title="שמירת חתכים" id="{{ ObjectTableName+'-Save' | IdGeneratorPipe}}" *ngIf="!apiQueryFiltersChanged "
                     class="Button" (click)="PreventDoubleClickSaveFilters($event)">
                     <img src="./Images/Buttons/Save.png">
                 </button> 
-                <button id="{{ ObjectTableName+'-Save' | IdGeneratorPipe}}" *ngIf="apiQueryFiltersChanged "
+                <button title="שמירת חתכים" id="{{ ObjectTableName+'-Save' | IdGeneratorPipe}}" *ngIf="apiQueryFiltersChanged "
                     class="EntityChangesButton" (click)="PreventDoubleClickSaveFilters($event)">
                     <img src="./Images/Buttons/Save.Red.png">
                 </button>
