@@ -333,6 +333,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ExceptionResolvedDescription { get; set; }        
         public DateTime? ExceptionDate { get; set; }
         public bool HasException { get; set; }
+        public bool IsUpdateEntityException { get; set; }
+        public bool IsExceptionResolved { get; set; }
         public string LastExceptionDescription { get; set; }
     }
 }

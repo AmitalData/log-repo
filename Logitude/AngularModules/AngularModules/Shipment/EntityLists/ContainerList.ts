@@ -241,5 +241,12 @@ export class ContainerList {
 		Leg3VesselId: string;
 		Leg4VesselId: string;
 		Leg5VesselId: string;
+		IsExceptionResolved: boolean;
+		ExceptionDescription: string;
+		ExceptionResolvedDescription: string;
+		LastExceptionDescription: string;
+		ExceptionDate: Date;
+		HasException: boolean;
+		HasExceptionMessage: string;
 	
 }

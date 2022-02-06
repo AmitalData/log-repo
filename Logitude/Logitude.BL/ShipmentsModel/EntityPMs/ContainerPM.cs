@@ -337,5 +337,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? ExceptionDate { get; set; }
         public bool HasException { get; set; }
         public string HasExceptionMessage { get; set; }
+        public bool IsUpdateEntityException { get; set; }
+
     }
 }

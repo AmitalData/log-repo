@@ -8,6 +8,8 @@ import { AppTool } from '../../../Infrastructure/Tools';
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
+import { MenuButtonsTemplateArgs } from './MenuButtonsTemplateComponent';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 export class ContainerMenuButtonsHandler implements OnDestroy {
     public EntityPM: ContainerPM;
@@ -103,6 +105,19 @@ export class ContainerMenuButtonsHandler implements OnDestroy {
                             button.IsDisabled = true;
                         }
                     }
+                    if (button.EventCode == "CExceptionResolved") {
+                        if (buttonEnabled) {
+                            if (!this.EntityPM.HasException) {
+                                button.IsDisabled = true;
+                            }
+                            else {
+                                button.IsDisabled = false;
+                            }
+                        }
+                        else {
+                            button.IsDisabled = true;
+                        }
+                    }
                 }
                 return menuButtons;
             }
@@ -127,6 +142,10 @@ export class ContainerMenuButtonsHandler implements OnDestroy {
                     case "ReopenContainer": {
                         this.IsReopen = true;
                         this.entityArgs.EditComponent.SaveChanges();
+                        break;
+                    }
+                    case "CExceptionResolved": {
+                        this.ExceptionResolvedContainer();
                         break;
                     }
                     default: {
@@ -187,4 +206,36 @@ export class ContainerMenuButtonsHandler implements OnDestroy {
     private ResetButtonClicked() {
         this.isButtonClicked = false;
     }
+
+    private ExceptionResolvedContainer() {
+
+        var args = new MenuButtonsTemplateArgs();
+        args.ObjectTableName = "Container";
+        args.EntityPM = this.EntityPM;
+        args.NotesHeader = "Exception Resolved Notes";
+        args.IsNotesStackPanelVisible = true;
+        args.EventNote = "";
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = args;
+        logWindow.Width = 500;
+        logWindow.Height = 300;
+        logWindow.Title = "Exception Resolved";
+        logWindow.Show('./Shipment/Components/MenuButtons/MenuButtonsTemplateComponent');
+        logWindow.ComponentLoaded.subscribe(s => {
+            logWindow.WindowClosed.subscribe(d => {
+                var notes = s.EventNotes;
+                if (d == "confirm") {
+                    if (!AppTool.IsNullOrEmpty(notes))
+                        this.EntityPM.ExceptionResolvedDescription = notes;
+                    this.EntityPM.IsExceptionResolved = true;
+                    this.EntityPM.HasException = false;
+                    this.entityArgs.EditComponent.SaveChanges();
+                }
+
+                this.ResetButtonClicked();
+            });
+        });
+    }
+
+
 }

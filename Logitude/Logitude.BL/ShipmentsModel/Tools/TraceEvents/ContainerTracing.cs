@@ -339,6 +339,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             TracPreCarriageArrived();
             TracPreCarriageDeparted();
             TraceCancelledEvent();
+            TraceExceptionResolved();
         }
         private void GetLoggedUser()
         {
@@ -712,6 +713,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             if (!container.IsCancelled && containerPM.IsCancelled)
             {
                 this.CreateTraceEvent("CCCO", containerPM.CancelledDate);
+            }
+        }
+
+        private void TraceExceptionResolved()
+        {
+            if (container.HasException && containerPM.IsExceptionResolved)
+            {
+                this.CreateTraceEvent("EXRE", containerPM.ExceptionDate);
             }
         }
 

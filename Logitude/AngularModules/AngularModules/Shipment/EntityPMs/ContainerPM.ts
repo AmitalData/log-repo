@@ -1236,6 +1236,41 @@ export class ContainerPM {
     public set Leg5VesselId(newValue: string) { if (this.leg5VesselId != newValue) { this.leg5VesselId = newValue; this.MarkAsDirty("Leg5VesselId"); } }
        
 	 
+    private isExceptionResolved: boolean;
+    public get IsExceptionResolved() { return this.isExceptionResolved; }
+    public set IsExceptionResolved(newValue: boolean) { if (this.isExceptionResolved != newValue) { this.isExceptionResolved = newValue; this.MarkAsDirty("IsExceptionResolved"); } }
+       
+	 
+    private exceptionDescription: string;
+    public get ExceptionDescription() { return this.exceptionDescription; }
+    public set ExceptionDescription(newValue: string) { if (this.exceptionDescription != newValue) { this.exceptionDescription = newValue; this.MarkAsDirty("ExceptionDescription"); } }
+       
+	 
+    private exceptionResolvedDescription: string;
+    public get ExceptionResolvedDescription() { return this.exceptionResolvedDescription; }
+    public set ExceptionResolvedDescription(newValue: string) { if (this.exceptionResolvedDescription != newValue) { this.exceptionResolvedDescription = newValue; this.MarkAsDirty("ExceptionResolvedDescription"); } }
+       
+	 
+    private lastExceptionDescription: string;
+    public get LastExceptionDescription() { return this.lastExceptionDescription; }
+    public set LastExceptionDescription(newValue: string) { if (this.lastExceptionDescription != newValue) { this.lastExceptionDescription = newValue; this.MarkAsDirty("LastExceptionDescription"); } }
+       
+	 
+    private exceptionDate: Date;
+    public get ExceptionDate() { return this.exceptionDate; }
+    public set ExceptionDate(newValue: Date) { if (this.exceptionDate != newValue) { this.exceptionDate = newValue; this.MarkAsDirty("ExceptionDate"); } }
+       
+	 
+    private hasException: boolean;
+    public get HasException() { return this.hasException; }
+    public set HasException(newValue: boolean) { if (this.hasException != newValue) { this.hasException = newValue; this.MarkAsDirty("HasException"); } }
+       
+	 
+    private hasExceptionMessage: string;
+    public get HasExceptionMessage() { return this.hasExceptionMessage; }
+    public set HasExceptionMessage(newValue: string) { if (this.hasExceptionMessage != newValue) { this.hasExceptionMessage = newValue; this.MarkAsDirty("HasExceptionMessage"); } }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		

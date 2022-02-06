@@ -47,9 +47,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Leg3VesselId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Leg4VesselId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Leg5VesselId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.ExceptionDescription).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.ExceptionResolvedDescription).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.LastExceptionDescription).HasMaxLength(2000).IsUnicode(true);
+            this.Property(t => t.ExceptionDescription).HasMaxLength(500).IsUnicode(true);
+            this.Property(t => t.ExceptionResolvedDescription).HasMaxLength(500).IsUnicode(true);
+            this.Property(t => t.LastExceptionDescription).HasMaxLength(500).IsUnicode(true);
 
             this.ToTable("Containers");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -244,6 +244,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ExceptionDate).HasColumnName("ExceptionDate");
             this.Property(t => t.HasException).HasColumnName("HasException");
             this.Property(t => t.LastExceptionDescription).HasColumnName("LastExceptionDescription");
+            this.Property(t => t.IsUpdateEntityException).HasColumnName("IsUpdateEntityException");
+            this.Property(t => t.IsExceptionResolved).HasColumnName("IsExceptionResolved");
 
             this.HasOptional(t => t.CarrierCard).WithMany().HasForeignKey(d => d.MainCarriageCarrierId).WillCascadeOnDelete(false); 
             this.HasOptional(t => t.ShipmentPackage).WithMany().HasForeignKey(d => d.ShipmentPackagesId).WillCascadeOnDelete(false);
