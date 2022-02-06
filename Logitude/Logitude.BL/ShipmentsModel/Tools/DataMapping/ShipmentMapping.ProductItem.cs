@@ -28,6 +28,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.ASIN = itemPM.ASIN;
             itemPoco.UPC = itemPM.UPC;
             itemPoco.OriginCountryId = itemPM.OriginCountryId;
+            itemPoco.VATPercentage = itemPM.VATPercentage;
+            itemPoco.DutiesPercentage = itemPM.DutiesPercentage;
+            itemPoco.OtherDuties = itemPM.OtherDuties;
+            itemPoco.Remarks = itemPM.Remarks;
         }
     }
 }

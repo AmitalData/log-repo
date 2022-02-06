@@ -11,7 +11,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public int Tenant { get; set; }
         public string ItemId { get; set; }
         [ForeignKey("ItemId")]
-        public virtual ProductItem  Item { get; set; }
+        public virtual ProductItem Item { get; set; }
         public string DestinationCountryId { get; set; }
         [ForeignKey("DestinationCountryId")]
         public virtual Country Country { get; set; }
@@ -19,5 +19,9 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool ApprovedByCustomer { get; set; }
         public bool InActive { get; set; }
         public int? LineNumber { get; set; }
+        public decimal? VATPercentage { get; set; }
+        public decimal? DutiesPercentage { get; set; }
+        public string OtherDuties { get; set; }
+        public string Remarks { get; set; }
     }
 }

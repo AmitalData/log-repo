@@ -150,8 +150,8 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
                             if (customerProductItem) {
                                 var logitudeWindow = new LogitudeWindow();
                                 logitudeWindow.Title = "Edit Customer Product Item";
-                                logitudeWindow.Height = 550;
-                                logitudeWindow.Width = 800; 
+                                logitudeWindow.Height = 650;
+                                logitudeWindow.Width = 1000; 
                                 logitudeWindow.WindowArgs = { EntityPM: customerProductItem, ShipmentPM: this.EntityPM };
                                 logitudeWindow.Show('./ShipmentModules/ShipmentTabs/Components/ProductItems/EditCustomerProductItemComponent');
                                 logitudeWindow.ComponentLoaded.subscribe(comp => {
@@ -198,6 +198,10 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
         if (htsCode) {
             shipmentProductItem.HTSCode = htsCode.Code;
             shipmentProductItem.ApprovedByCustomer = htsCode.ApprovedByCustomer;
+            shipmentProductItem.VATPercentage = htsCode.VATPercentage;
+            shipmentProductItem.DutiesPercentage = htsCode.DutiesPercentage;
+            shipmentProductItem.OtherDuties = htsCode.OtherDuties;
+            shipmentProductItem.Remarks = htsCode.Remarks;
         }
     }
 
@@ -241,6 +245,10 @@ export class ProductItem extends BaseComponent {
         if (AppTool.IsNullOrEmpty(this.ProductItemId)) {
             this.HTSCode = null;
             this.ApprovedByCustomer = false;
+            this.VATPercentage = null;
+            this.DutiesPercentage = null;
+            this.OtherDuties = null;
+            this.Remarks = null;
         }
 
         else {
@@ -250,11 +258,19 @@ export class ProductItem extends BaseComponent {
                     if (htsCode) {
                         this.HTSCode = htsCode.Code;
                         this.ApprovedByCustomer = htsCode.ApprovedByCustomer;
+                        this.VATPercentage = htsCode.VATPercentage;
+                        this.DutiesPercentage = htsCode.DutiesPercentage;
+                        this.OtherDuties = htsCode.OtherDuties;
+                        this.Remarks = htsCode.Remarks;
                     }
 
                     else {
                         this.HTSCode = null;
                         this.ApprovedByCustomer = false;
+                        this.VATPercentage = null;
+                        this.DutiesPercentage = null;
+                        this.OtherDuties = null;
+                        this.Remarks = null;
                     }
                 }
             });
@@ -358,6 +374,34 @@ export class ProductItem extends BaseComponent {
     set OriginCountryName(newValue: string) {
         if (this.EntityPM.OriginCountryName != newValue) {
             this.EntityPM.OriginCountryName = newValue;
+        }
+    }
+
+    get VATPercentage() { return this.EntityPM.VATPercentage; }
+    set VATPercentage(newValue: number) {
+        if (this.EntityPM.VATPercentage != newValue) {
+            this.EntityPM.VATPercentage = AppTool.Round(newValue, 1);
+        }
+    }
+
+    get DutiesPercentage() { return this.EntityPM.DutiesPercentage; }
+    set DutiesPercentage(newValue: number) {
+        if (this.EntityPM.DutiesPercentage != newValue) {
+            this.EntityPM.DutiesPercentage = AppTool.Round(newValue, 1);
+        }
+    }
+
+    get OtherDuties() { return this.EntityPM.OtherDuties; }
+    set OtherDuties(newValue: string) {
+        if (this.EntityPM.OtherDuties != newValue) {
+            this.EntityPM.OtherDuties = newValue;
+        }
+    }
+
+    get Remarks() { return this.EntityPM.Remarks; }
+    set Remarks(newValue: string) {
+        if (this.EntityPM.Remarks != newValue) {
+            this.EntityPM.Remarks = newValue;
         }
     }
 

@@ -24,12 +24,10 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.ApprovedByCustomer = entityPM.ApprovedByCustomer;
             poco.InActive = entityPM.InActive;
             poco.LineNumber = entityPM.LineNumber;
-            BuildSearchField(entityPM, poco);
-        }
-
-        private static void BuildSearchField(HTSCodePM entityPM, HTSCode entityPoco)
-        {
-  
+            poco.VATPercentage = entityPM.VATPercentage;
+            poco.DutiesPercentage = entityPM.DutiesPercentage;
+            poco.OtherDuties = entityPM.OtherDuties;
+            poco.Remarks = entityPM.Remarks;
         }
     }
 }
