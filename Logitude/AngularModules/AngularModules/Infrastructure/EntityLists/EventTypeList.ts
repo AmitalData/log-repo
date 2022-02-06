@@ -33,5 +33,6 @@ export class EventTypeList {
 		AllowedInAutomation: boolean;
 		CustomField: string;
 		EntityStatusWeight: number;
+		EventTrigger: string;
 	
 }

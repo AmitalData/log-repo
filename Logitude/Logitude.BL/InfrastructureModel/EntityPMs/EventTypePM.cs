@@ -114,5 +114,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool IsStatusNotModified { get; set; }
 
         public string PartnerCode { get; set; }
+        [DataMember]
+        public string EventTrigger { get; set; }
+
     }
 }

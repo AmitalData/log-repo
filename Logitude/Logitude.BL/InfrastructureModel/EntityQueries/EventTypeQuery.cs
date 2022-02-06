@@ -70,6 +70,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   AllowedInAutomation = a.AllowedInAutomation,
                                                   CustomField = a.CustomField,
                                                   IsStatusNotModified = a.IsStatusNotModified,
+                                                  EventTrigger = a.EventTrigger,
                                               });
 
                         foreach (var s in entitystatuses)
@@ -123,6 +124,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   AllowedInAutomation = a.AllowedInAutomation,
                                   CustomField = a.CustomField,
                                   IsStatusNotModified = a.IsStatusNotModified,
+                                  EventTrigger = a.EventTrigger,
                               }).FirstOrDefault();
                 }
 
@@ -164,6 +166,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      AllowedInAutomation = a.AllowedInAutomation,
                                                      CustomField = a.CustomField,
                                                      IsStatusNotModified = a.IsStatusNotModified,
+                                                     EventTrigger = a.EventTrigger,
 
                                                  };
             return eventTypes;
@@ -212,6 +215,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   AllowedInAutomation = a.AllowedInAutomation,
                                                   CustomField = a.CustomField,
                                                   IsStatusNotModified = a.IsStatusNotModified,
+                                                  EventTrigger = a.EventTrigger,
 
                                               });
 
@@ -264,6 +268,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   AllowedInAutomation = a.AllowedInAutomation,
                                   CustomField = a.CustomField,
                                   IsStatusNotModified = a.IsStatusNotModified,
+                                  EventTrigger = a.EventTrigger,
 
                               }).FirstOrDefault();
                 }
@@ -311,6 +316,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                               AllowedInAutomation = a.AllowedInAutomation,
                                               CustomField = a.CustomField,
                                               IsStatusNotModified = a.IsStatusNotModified,
+                                              EventTrigger = a.EventTrigger,
                                           }).FirstOrDefault();
 
                     return entity;
@@ -356,6 +362,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                       AllowedInAutomation = a.AllowedInAutomation,
                                                       CustomField = a.CustomField,
                                                       IsStatusNotModified = a.IsStatusNotModified,
+                                                      EventTrigger = a.EventTrigger,
 
                                                   });
 
@@ -408,6 +415,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                       AllowedInAutomation = a.AllowedInAutomation,
                                       CustomField = a.CustomField,
                                       IsStatusNotModified = a.IsStatusNotModified,
+                                      EventTrigger = a.EventTrigger,
 
                                   }).FirstOrDefault();
                     }
@@ -459,6 +467,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    IsSharedLogisticsEnabled = eventType.IsSharedLogisticsEnabled,
                                                    AllowedInAutomation = eventType.AllowedInAutomation,
                                                    CustomField = eventType.CustomField,
+                                                   EventTrigger = eventType.EventTrigger,
                                                };
             return result;
         }
@@ -496,6 +505,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      AllowedInAutomation = a.AllowedInAutomation,
                                                      CustomField = a.CustomField,
                                                      IsStatusNotModified = a.IsStatusNotModified,
+                                                     EventTrigger = a.EventTrigger,
 
                                                  };
             return eventTypes;
@@ -534,6 +544,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      AllowedInAutomation = a.AllowedInAutomation,
                                                      CustomField = a.CustomField,
                                                      IsStatusNotModified = a.IsStatusNotModified,
+                                                     EventTrigger = a.EventTrigger,
 
                                                  };
             return eventTypes;

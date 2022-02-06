@@ -180,6 +180,11 @@ export class EventTypePM {
     public set PartnerCode(newValue: string) { if (this.partnerCode != newValue) { this.partnerCode = newValue; this.MarkAsDirty("PartnerCode"); } }
        
 	 
+    private eventTrigger: string;
+    public get EventTrigger() { return this.eventTrigger; }
+    public set EventTrigger(newValue: string) { if (this.eventTrigger != newValue) { this.eventTrigger = newValue; this.MarkAsDirty("EventTrigger"); } }
+       
+	 
 
     public OldEntityPM: EventTypePM;
 		
