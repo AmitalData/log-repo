@@ -16,7 +16,7 @@
                                 <td>
                                     <div></div>
                                 </td>
-                                <td style="width: 20px; padding-right: 2px;float:right;vertical-align:central;">
+                                <td *ngIf="!this.IsCustomFieldsMenue" style="width: 20px; padding-right: 2px;float:right;vertical-align:central;">
                                     <IconButton [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsAddButtonEnabled" (click)="AddCustomField()"></IconButton> <!--(click)="DataContext.AddPackageItemMethod()" [disabled]="!DataContext.IsEditingEnabled"-->
                                 </td>
                             </tr>

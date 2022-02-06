@@ -66,7 +66,7 @@ export class CustomFieldsComponent {
         this.CustomFieldsCollection = new ObservableCollection(this.loadedFields);
 
         var fieldsCount = this.GetCustomFieldsCount();
-        this.IsAddButtonEnabled = ((this.CustomFieldsCollection.Length < fieldsCount) &&  !this.IsCustomFieldsMenue) ? true : false;
+        this.IsAddButtonEnabled = this.CustomFieldsCollection.Length < fieldsCount ? true : false;
 
         //var objectTablePM: ObjectTablePM;
         //var tableName: string;
