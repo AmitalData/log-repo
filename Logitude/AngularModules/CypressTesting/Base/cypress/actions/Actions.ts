@@ -143,7 +143,7 @@ function GetMonth(monthNum: string) {
     }
 }
 
-function GetMonthNumber(monthName: string) {
+export function GetMonthNumber(monthName: string) {
     switch (monthName) {
         case "Jan": return "01";
         case "Feb": return "02";
@@ -196,7 +196,7 @@ export function AddDaysToTodayDate(days: number) {
     return FormateTheDateString(date.toDateString().split(" "))
 }
 
-function FormateTheDateString(dateList: string[]) {
+export function FormateTheDateString(dateList: string[]) {
     var dd = dateList[2];
     var mm = GetMonthNumber(dateList[1])
     var yyyy = dateList[3];

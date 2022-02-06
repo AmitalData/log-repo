@@ -99,6 +99,8 @@ export class AutomationsSelectors extends RegexSelectors {
 
     //shipment side selectors
     public static readonly ShipmentAudit="[id='ShipmentTHAudit']"
+    public static readonly ShipmentTHCustoms="[id='ShipmentTHCustoms']"
+    public static readonly ShipmentCustomsClearanceDate="[id='date_Shipment_CustomsClearanceDate']"
     public static readonly Refresh="[data-cy='Refresh']"
     public static readonly AutomationTab="[data-cy='Automation']"
     public static readonly TabControlBody="[class='TabControlBody']"
@@ -108,4 +110,6 @@ export class AutomationsSelectors extends RegexSelectors {
     public static readonly SimpleGridViewBody="[class='SimpleGridViewBody']"
     public static readonly RedX="img[src='./Images/RedX.png']"
     public static readonly SimpleGridViewRowRowHover="[class='SimpleGridViewRow RowHover']"
+    public static readonly HelperFollowups="[data-cy='HelperFollowups']"
+    public static readonly FollowupsBody="[class='LogitudeHelperFollowupsBody']"
 }
