@@ -84,6 +84,7 @@ export class DeclarationReferantDataList {
 	IsManualPayment: boolean;
 	Commodity: string;
 	LastStatusRemarks: string;
+	RemoveInclusiveVisibility: string;
 	
 }
  
