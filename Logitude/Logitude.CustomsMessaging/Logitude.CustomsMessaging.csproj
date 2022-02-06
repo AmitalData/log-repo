@@ -201,6 +201,7 @@
     <Compile Include="Helpers\ClosedTable\Update1416ModificationAndDiscountType.cs" />
     <Compile Include="MessagingServices\DCAInDF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg.cs" />
     <Compile Include="MessagingServices\DCAInUCB2715SendNow_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCB2715_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCBUCADPE_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCBUpdateAllCertificateWithoutResponse_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCBMultiUpdate_MsgMessagingService.cs" />
@@ -248,7 +249,7 @@
     <Compile Include="MessagingServices\DCAInST_60_SpecialActivityExecutionReportMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInST_NG_10_SpecialActivityResponseMessagingServices.cs" />
     <Compile Include="MessagingServices\DCAInUCB1170_MsgMessagingService.cs" />
-    <Compile Include="MessagingServices\DCAInUCB2715_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCBSendDelayForm_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCB2750_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCB2755_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCB9999ReAnAnalysis_MsgMessagingService.cs" />
@@ -396,6 +397,7 @@
     <Compile Include="ResponseServices\DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsgResponseService.cs" />
 
     <Compile Include="ResponseServices\MultiUpdateBatchUCBCMSS_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSendDelayForm_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSendUCADPE_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UpdateAllCertificateBatchUCB_MsgResponseService.cs" />
 
