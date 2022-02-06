@@ -491,6 +491,11 @@
                         </courier-filter-button>
                     </div>
                 </div>
+
+
+                <div *ngIf="FieldName == 'RemoveInclusiveVisibility'">
+                    <img class="CenterCenter" style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/Buttons/Delete.over.png" (click)="onRemoveInclusiveVisibilityClick($event)"/>
+                </div>
             </div>
             <!-- PaymentOrder -->
             <div *ngIf="ObjectTableName == 'Customs.PaymentOrder'">
