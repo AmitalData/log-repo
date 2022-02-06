@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
-		public const string HashString = "093246ca91c6488b038976cdec866ab1";
+		public const string HashString = "d4a2d161860e40174c4372ad204c8064";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5073,7 +5073,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Remove Inclusive Visibility",
 					  						ListFieldLable =  "RemoveInclusiveVisibilityListLable",
 					  						ListLableDefaultText =  "Remove Inclusive Visibility",
-					  						ListLocalDefaultText =  "מחיקה בכוללת",
+					  						ListLocalDefaultText =  "מחיקה מכוללת",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
