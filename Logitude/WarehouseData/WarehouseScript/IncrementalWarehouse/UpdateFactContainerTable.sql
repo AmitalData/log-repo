@@ -97,7 +97,7 @@
  declare @GateOut as datetime
  declare @FreeDays as int
  declare @GateIn as datetime
- declare @AvailablityDate as datetime
+ declare @AvailabilityDate as datetime
  declare @AvailabilityLocationPort as int
  --@[DeclareCustomFieldsVariable]
 
@@ -149,7 +149,7 @@
 	@ActualPODVesselArrival, @ActualPODDischarge, @EstimatedPODDeparture, @ActualPODDeparture, @emptyReturnLocationPort, @EstimatedEmptyReturn, @ActualEmptyReturn, @MainCarriageATA, @MainCarriageETA, @MainCarriageETD,
 	@MainCarriageATD, @PreCarriageATD, @onCarriageLocationPort, @EstimatedOnCarriageDeparture, @OnCarriageETD, @ActualOnCarriageDeparture, @OnCarriageATD, @lIFLocationPort, @ActualLIFArrival, @PreCarriageETD, @EstimatedLIFArrival,
 	@CreateDate, @createdByUser, @UpdateDate, @updatedByUser, @CurrentStatus, @CurrentStatusDate, @ClosedDate, @IsClosed, @status, @ShipmentId,@LastFreeDayDate,@GateOut,@FreeDays,@CursorCustomFieldsVariable,
-	@GateIn, @AvailablityDate, @AvailabilityLocationPort
+	@GateIn, @AvailabilityDate, @AvailabilityLocationPort
 	
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
@@ -172,7 +172,7 @@
 	 [Estimated POD Departure], [Actual POD Departure], [Empty Return Location Port], [Estimated Empty Return], [Actual Empty Return], [Container Main Carriage ATA], [Container Main Carriage ETA], [Container Main Carriage ETD], 
 	 [Container Main Carriage ATD], [Container Pre Carriage ETD], [On Carriage Location Port], [Estimated On Carriage Departure], [Container On Carriage ETD], [Actual On Carriage Departure], [Container On Carriage ATD], [LIF Location Port], [Actual LIF Arrival], [Container Pre Carriage ATD], [Estimated LIF Arrival],
 	 [Create Date], [Created By], [Update Date], [Updated By], [Current Status], [Current Status Date], [Closed Date], [Is Closed], [Status], [Shipment Id],[Last Free Day],[POD Gate Out],[Free Days],[CustomFieldNamesVariable],
-	 [POL Gate In],[Availablity Date],[Availability Location Port])
+	 [POL Gate In],[Availability Date],[Availability Location Port])
 
 	 values(@Id, @SourceTenant, @ParentTenant,dbo.GetDateFormateAsNumber(@ActualEmptyPickupDate), @emptyPickupLocationPort, dbo.GetDateFormateAsNumber(@EstimatedEmptyPickupDate), @preCarriageLocationPort, @pOLLocationPort, dbo.GetDateFormateAsNumber(@EstimatedPOLArrival),
 	 dbo.GetDateFormateAsNumber(@ActualPOLArrival), dbo.GetDateFormateAsNumber(@EstimatedPOLLoaded), dbo.GetDateFormateAsNumber(@ActualPOLLoaded), dbo.GetDateFormateAsNumber(@EstimatedPOLVesselDeparture), dbo.GetDateFormateAsNumber(@ActualPOLVesselDeparture), @transshipment1LocationPort, dbo.GetDateFormateAsNumber(@EstimatedTrans1VesselArrival), dbo.GetDateFormateAsNumber(@ActualTransshipment1VesselArrival),
@@ -184,7 +184,7 @@
 	 dbo.GetDateFormateAsNumber(@EstimatedPODDeparture), dbo.GetDateFormateAsNumber(@ActualPODDeparture), @emptyReturnLocationPort, dbo.GetDateFormateAsNumber(@EstimatedEmptyReturn), dbo.GetDateFormateAsNumber(@ActualEmptyReturn), dbo.GetDateFormateAsNumber(@MainCarriageATA), dbo.GetDateFormateAsNumber(@MainCarriageETA), dbo.GetDateFormateAsNumber(@MainCarriageETD),
 	 dbo.GetDateFormateAsNumber(@MainCarriageATD), dbo.GetDateFormateAsNumber(@PreCarriageETD), @onCarriageLocationPort, dbo.GetDateFormateAsNumber(@EstimatedOnCarriageDeparture), dbo.GetDateFormateAsNumber(@OnCarriageETD), dbo.GetDateFormateAsNumber(@ActualOnCarriageDeparture), dbo.GetDateFormateAsNumber(@OnCarriageATD), @lIFLocationPort, dbo.GetDateFormateAsNumber(@ActualLIFArrival), dbo.GetDateFormateAsNumber(@PreCarriageATD), dbo.GetDateFormateAsNumber(@EstimatedLIFArrival),
 	 dbo.GetDateFormateAsNumber(@CreateDate), @createdByUser, dbo.GetDateFormateAsNumber(@UpdateDate), @updatedByUser, @CurrentStatus, dbo.GetDateFormateAsNumber(@CurrentStatusDate), dbo.GetDateFormateAsNumber(@ClosedDate), @IsClosed, @status,@ShipmentId, dbo.GetDateFormateAsNumber(@LastFreeDayDate), dbo.GetDateFormateAsNumber(@GateOut), @FreeDays,[CustomFieldValuesVariable],
-	 dbo.GetDateFormateAsNumber(@GateIn), dbo.GetDateFormateAsNumber(@AvailablityDate), @AvailabilityLocationPort)
+	 dbo.GetDateFormateAsNumber(@GateIn), dbo.GetDateFormateAsNumber(@AvailabilityDate), @AvailabilityLocationPort)
 
 		END TRY 
 BEGIN CATCH  
@@ -207,7 +207,7 @@ FETCH NEXT FROM ContainersCursor INTO @Id,@Tenant, @SourceTenant, @ParentTenant,
 	@ActualPODVesselArrival, @ActualPODDischarge, @EstimatedPODDeparture, @ActualPODDeparture, @emptyReturnLocationPort, @EstimatedEmptyReturn, @ActualEmptyReturn, @MainCarriageATA, @MainCarriageETA, @MainCarriageETD,
 	@MainCarriageATD, @PreCarriageATD, @onCarriageLocationPort, @EstimatedOnCarriageDeparture, @OnCarriageETD, @ActualOnCarriageDeparture, @OnCarriageATD, @lIFLocationPort, @ActualLIFArrival, @PreCarriageETD, @EstimatedLIFArrival,
 	@CreateDate, @createdByUser, @UpdateDate, @updatedByUser, @CurrentStatus, @CurrentStatusDate, @ClosedDate, @IsClosed, @status, @ShipmentId,@LastFreeDayDate,@GateOut,@FreeDays,@CursorCustomFieldsVariable,
-	@GateIn, @AvailablityDate, @AvailabilityLocationPort
+	@GateIn, @AvailabilityDate, @AvailabilityLocationPort
 
 			End
 	CLOSE ContainersCursor
