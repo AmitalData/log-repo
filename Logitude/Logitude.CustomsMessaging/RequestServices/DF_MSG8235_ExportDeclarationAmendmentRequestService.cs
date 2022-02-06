@@ -313,8 +313,8 @@ namespace Logitude.CustomsMessaging.RequestServices
                 this.MyRequestSheetParam.RequestDescription = "תיקון הצהרת יצוא" + _DeclarationPMOrg.DeclarationNumber + " " + _DeclarationPMOrg.VersionId;
             }
 
-            if (!isExportClose)
-            {
+            //if (!isExportClose)
+            //{
                 req.Response.FunctionalReferenceID = new ResponseFunctionalReferenceIDType
                 {
                     Value = string.IsNullOrEmpty(_DeclarationPM.AmendmentRequestNumber) ? GetNextAmendmentRequestNumber() : _DeclarationPM.AmendmentRequestNumber
@@ -322,7 +322,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 functionalReferenceID = req.Response.FunctionalReferenceID.Value;
 
                 req.Response.IssueDateTime = DataTypeConvertorUtil.Convert(DateTime.Now);
-            }
+           // }
             
             req.Response.AdditionalInformation = AdditionalInformation();
 

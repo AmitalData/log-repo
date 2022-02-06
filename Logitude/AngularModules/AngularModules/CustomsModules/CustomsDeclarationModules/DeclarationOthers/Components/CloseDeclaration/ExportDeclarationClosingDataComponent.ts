@@ -15,6 +15,8 @@ import { DeclarationEditComponentController } from '../../../../../Customs/Contr
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { DeclarationWebService } from '../../../../../Customs/Services/WebServices/DeclarationWebService';
 import { AmendmentRequestParams } from '../../../../../Customs/DataContract/RequestParams/AmendmentRequestParams';
+import { debug } from 'console';
+import { AppTool } from '../../../../../Infrastructure/Tools';
 
 @Component({
     selector: 'ExportDeclarationClosingDataComponent',
@@ -173,24 +175,40 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
         CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession, searchParams.PBId, "שליחת מסר סגירה", false, myShowProgressBarParams)
             .then((res) => {
-                //this.ResponseData = res;
-                
-                    var myDeclarationEditComponentController = this.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
-                    myDeclarationEditComponentController.CustomsAnswersShowManifest = false;
-
-                    this.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "DCCR";
-                    this.CurrentSession.CurrentEditComponent.SetSelectedTab();
-                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+              
                 
             }
-            ).catch((err) => {
-                this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+        ).catch((err) => {
+                 this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                 this.ValidationErrors.push(err);
                 this.FillValidationErrors("Errors");
             });
 
         this.DeclarationService.PostSendDeclarationClosingAmendment(searchParams).subscribe((response: ServiceResponse) => {
-            SessionLocator.SelectedSession.CloseCurrentWindow();
+             if (!AppTool.IsNullOrEmpty(response) && !AppTool.IsNullOrEmpty(response.Result) && !AppTool.IsNullOrEmpty(response.Result.UserMessage)) {
+                this.ValidationErrors.push(response.Result.UserMessage);
+                this.FillValidationErrors("Errors");
+            }
+
+            //DOTO
+
+            //if success
+            if (response.Result) {
+
+
+                this.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "DCCR";
+                this.CurrentSession.CurrentEditComponent.SetSelectedTab();
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            }
+            //if reject
+            else {
+                this.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "DEGC";
+                this.CurrentSession.CurrentEditComponent.SetSelectedTab();
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            }
+        
+
+          //  SessionLocator.SelectedSession.CloseCurrentWindow();
         });
 
     }

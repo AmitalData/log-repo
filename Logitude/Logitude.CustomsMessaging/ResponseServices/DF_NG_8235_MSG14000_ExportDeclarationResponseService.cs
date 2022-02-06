@@ -6,13 +6,14 @@ using Logitude.Customs.BL.BL;
 using System.Xml.Serialization;
 using System.Xml.Linq;
 using UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference;
+using Logitude.CustomsMessaging.MessagingServices;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class DF_NG_8235_MSG14000_ExportDeclarationResponseService :
-        ResponseServiceBase<INF_MSG_GenericResponseData, DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg, GenericRequestParams>
+        ResponseServiceBase<INF_MSG_GenericResponseData, DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg, AmendmentRequestParams>
     {
-        public override void OnRequestFail(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customResponse, GenericRequestParams requestParams)
+        public override void OnRequestFail(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customResponse, AmendmentRequestParams requestParams)
         {
             if (!String.IsNullOrWhiteSpace(requestParams.AppicationId))
             {
@@ -22,7 +23,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
         public override INF_MSG_GenericResponseData GetResponse(
-            DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customResponse, GenericRequestParams requestParams)
+            DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customResponse, AmendmentRequestParams requestParams)
         {
 
             /// itzik test     TestTrans(requestParams);
@@ -30,7 +31,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
 
-        public override void Update(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customResponse, GenericRequestParams requestParams)
+        public override void Update(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customResponse, AmendmentRequestParams requestParams)
         {
 
             DF_NG_8237_ExportDeclerationAmendmentReplyResponseService dF_NG_8237_ImportDeclerationAmendmentReplyResponseService = new DF_NG_8237_ExportDeclerationAmendmentReplyResponseService();
