@@ -75,11 +75,17 @@ using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.BL;
 using Logitude.CargoTracking.Data.EntityPOCOs;
 
+//using Amital.QuoteOPM.BL.CLoseTable;
+using Amital.QuoteOPM.Data.Repsitories;
+using Amital.QuoteOPM.Data.EntityPOCOs;
+using Amital.QuoteOPM.BL;
+
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsEnvironmentSettingUpdateClass
    {  		
-		public const string HashString = "1dff41ee18d610fcb3f1ed7b8a6de3ca";
+		public const string HashString = "60546d2f67bbfda5fce5fb1336bf3148";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customs Environment Setting",
-			      				    Code =  "bfd6",
+			      				    Code =  "2b9f",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",

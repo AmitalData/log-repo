@@ -169,7 +169,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             var interfaceTenantDefinitionQueryService = new InterfaceTenantDefinitionQueryService(queueSendModel.Tenant);
             var currInterfaceTenantDefinition =interfaceTenantDefinitionQueryService.GetFromCacheByTenatCode(queueSendModel.Tenant, queueSendModel.InterfaceTypeCode);
             queueSendModel.UseRabbitMQ = currInterfaceTenantDefinition.UseRabbitMQ;
-            queueSendModel.QueueCodeRabbit = currInterfaceTenantDefinition.QueueGroupCode;
+            queueSendModel.QueueGroupCodeRabbit = currInterfaceTenantDefinition.QueueGroupCode;
             if (!string.IsNullOrWhiteSpace(queueSendModel.InterfaceTypeCode) && queueSendModel.TenantPriority == null)
             {
                 //var interfaceTenantDefinitionQueryService = new InterfaceTenantDefinitionQueryService(queueSendModel.Tenant);

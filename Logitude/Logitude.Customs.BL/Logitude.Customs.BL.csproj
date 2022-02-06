@@ -1060,6 +1060,7 @@
     <Compile Include="EntityQueryServices\CargoIdentifireTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\ClientsPoaQueryService.cs" />
     <Compile Include="EntityQueryServices\ContainerizationQueryService.cs" />
+    <Compile Include="EntityQueryServices\CustomsEnvironmentSettingQueryService.cs" />
     <Compile Include="EntityQueryServices\DeclarationReferantDataQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\AmedmentTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AmendCancellRequestInitiatorQueryService.Generated.cs" />

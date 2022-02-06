@@ -26,6 +26,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string RabbitHost  { get; set; }
        [DataMember]
        public string RabbitUserName  { get; set; }
+       [DataMember]
+       public string RabbitPassword  { get; set; }
    }
 
 }

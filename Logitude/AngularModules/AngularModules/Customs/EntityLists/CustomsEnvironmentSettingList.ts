@@ -13,6 +13,7 @@ export class CustomsEnvironmentSettingList {
 	UseRabbitMQ: boolean;
 	RabbitHost: string;
 	RabbitUserName: string;
+	RabbitPassword: string;
 	
 }
  

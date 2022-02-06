@@ -205,7 +205,7 @@ namespace AmitalCustomsWindowsService
 
 
 
-        public void AddWorkerFromAppSettingDB<TWorker>(bool suppresDoOnlyCheck = false)
+        public void AddWorkerFromAppSettingDB<TWorker>(bool suppresDoOnlyCheck = false,String queueDefinitionCode=null, WorkerQueueType workerQueueType= WorkerQueueType.DB)
        where TWorker : Logitude.Server.Tools.WorkerEntryPointDoneLog, new()
         {
             if (suppresDoOnlyCheck)
@@ -215,7 +215,7 @@ namespace AmitalCustomsWindowsService
             var type = typeof(TWorker);
             var typeName = type.Name;
 
-            var workerOnce = new WorkerOnce<TWorker>(1, _Workers.Count) { ServiceStarted = true };
+            var workerOnce = new WorkerOnce<TWorker>(1, _Workers.Count) { ServiceStarted = true , QueueDefinitionCode = queueDefinitionCode , WorkerQueueType  =workerQueueType };
 
             _Workers.Add(workerOnce);
             _Threads.Add(null);
