@@ -2724,6 +2724,21 @@ namespace Logitude.Customs.Def.ClosedTable
             });
             all.Add(new InterfaceManagementDetails()
             {
+                Code = "UCBSEDF",
+                InOut = InOutEnum.I.ToString(),
+                Description = "שידור תעודות עיכוב",
+                DcaPrefixName = "UnifreightCourier_UCBSendDelayForm_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                InterfaceType = "B",
+                //  NeedSignature = false
+            });
+            all.Add(new InterfaceManagementDetails()
+            {
                 Code = "UCB2715SendNow",
 
                 ///DCAInUniCourierBatchSend_MsgMessagingService

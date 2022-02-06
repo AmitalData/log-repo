@@ -33,6 +33,7 @@ import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { SendClosePendingRequestParams } from 'Customs/DataContract/RequestParams/SendClosePendingRequestParams';
+import { SendALLDelayFormParams } from '../../../../Customs/DataContract/RequestParams/SendALLDelayFormParams';
 
 @Component({
 
@@ -668,6 +669,15 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             this._SelectedDECToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyDECToSend") + ' (' + this._CourierWorksheetSharedDataService._SelectedItems.Collection.length + ')';
         }
         return this._SelectedDECToBatchSendButtonText;
+    }
+
+    private _SelectedDECToDelayFormButtonText: string = "";
+    public get SelectedDECToDelayFormButtonText(): string {
+        this._SelectedDECToDelayFormButtonText = "הפקת תעודות עיכוב";
+        if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
+            this._SelectedDECToDelayFormButtonText = "הפקת תעודות עיכוב" + ' (' + this._CourierWorksheetSharedDataService._SelectedItems.Collection.length + ')';
+        }
+        return this._SelectedDECToDelayFormButtonText;
     }
 
     private _SelectedMNFToBatchSendButtonText: string = "";
@@ -2124,6 +2134,29 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 });
             });
 
+    }
+
+    SendDelayForm() {
+
+        var currRequestParams = new SendALLDelayFormParams();
+        currRequestParams.LoggingEnabled = true;
+        currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+        currRequestParams.Tenant = SessionLocator.Tenant;
+        currRequestParams.CourierMasterId = this.entityPM.Id;
+        currRequestParams.HAWB = this.entityPM.HAWB;
+        if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
+            currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
+        }
+        
+        this._CourierMasterService.PostSendDelayFormForDeclarations(currRequestParams)
+            .subscribe((res: any) => {
+                this.currentSession.StopBusyIndicator();
+                var myMessageWindow = new MessageWindow();
+                myMessageWindow.Show(res.Result);
+                myMessageWindow.WindowClosed.subscribe(s => {
+                    this.RefreshButtonClicked();
+                });
+            });
     }
 
     private GetIsSendDocumentsFromQueueButton() {

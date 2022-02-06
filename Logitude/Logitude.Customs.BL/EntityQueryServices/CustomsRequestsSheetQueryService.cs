@@ -170,6 +170,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 ///"8302" //בקשה לטופס הצהרה
 
 "UCB2715", // שידור מסמכים שגויים ראשי - מפצל
+"UCBSEDF",// שידור תעודות עיכוב ראשי - מפצל
 "UCBCTML", // שידור הגשה בלדר
 "UCBCMSS", //שינוי אתר איחסון לבלדר
 "ClosePending",//סגירה גורפת ל-Pending
@@ -315,6 +316,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 ///"8302" //בקשה לטופס הצהרה
 
 "UCB2715", // שידור מסמכים שגויים ראשי - מפצל
+"UCBSEDF",// שידור תעודות עיכוב ראשי - מפצל
 "UCB2715SendNow", // שידור מסמכים שגויים ראשי - מפצל
 "UCBCTML", // שידור הגשה בלדר
 "UCBCMSS", //שינוי אתר איחסון לבלדר
