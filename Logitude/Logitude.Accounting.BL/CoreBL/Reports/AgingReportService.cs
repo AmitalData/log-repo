@@ -89,8 +89,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             IQueryable<GLAccountTotalByMonthsDTOAging> qTotalByMonthAcc = null;
 
 
-            using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
-            {
+            
                 _AccountingContext = AccountingContext.GetContext(_Param.Tenant);
                 (_AccountingContext as System.Data.Entity.DbContext).Database.CommandTimeout = 300;
 
@@ -546,7 +545,6 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     //LogitudeXmlSerializer.SerializeObjectToJosnString<DataTable>(_PivotTable);
                 }
                 return xml;
-            }
         }
 
         private void InitDates(out List<DateTime> listPeriods, out DateTime lessThan, out DateTime graterThen_OpenTransactionsFutureDueDate, out DateTime myorderLessThanExclusive, out List<DateTime> listLessThanExclusivePeriods)

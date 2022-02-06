@@ -99,5 +99,6 @@ export class APInvoiceList {
 		MasterShipmentNumbers: string;
 		HouseNumbers: string;
 		GlobalTaxCalculation: string;
+		IsEquipment: boolean;
 	
 }

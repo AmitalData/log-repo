@@ -368,6 +368,16 @@ namespace Logitude.Accounting.BL.Utils
             // End
             journalUpdateService.Update(newJournal, true);
 
+            AddAccountingEntityJournal(newJournal, AccountingEntityJournalActions.BankDepositChequeRedemption, aRPaymentCheque.Id);
+
+        }
+
+
+        public static void AddAccountingEntityJournal(JournalPM journal, string actionName, string childEntityId = null)
+        {
+            IAccountingContext context = AccountingContext.GetContext(journal.Tenant);
+            AccountingEntityJournalUpdateService service = new AccountingEntityJournalUpdateService(context, new Dictionary<string, IContext>(), journal.Tenant);
+            service.AddAccountingEntitieJournal(journal, actionName, childEntityId);
         }
 
 

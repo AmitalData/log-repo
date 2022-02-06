@@ -381,9 +381,9 @@
                             <span *ngIf="ShipmentPM && IsPrivateLabel == true && ShipmentPM.ForwarderPartnerId == ShipmentPM.ForwardingPartnerId" style="vertical-align:middle;font-size:12px;color:#6E7172;">{{'( ' + AgentLable + ' Forwarding ' + (SelectedShipment ? (SelectedShipment.IncotermCode && SelectedShipment.IncotermCode != '---' ? ( ' - ' + SelectedShipment.IncotermCode + ' ' ) : '' ): '') + ')'}}</span>
                             <span *ngIf="ShipmentPM && IsPrivateLabel == true && ShipmentPM.ForwarderPartnerId != ShipmentPM.ForwardingPartnerId
                                          && SelectedShipment && SelectedShipment.IncotermCode && SelectedShipment.IncotermCode != '---'" style="vertical-align:middle;font-size:12px;color:#6E7172;">{{'( ' + (SelectedShipment ? (SelectedShipment.IncotermCode && SelectedShipment.IncotermCode != '---' ? ( ' ' + SelectedShipment.IncotermCode + ' ' ) : '' ): '') + ')'}}</span>
-                        </td> 
+                        </td>
                         <td style="float:right;min-width:170px;">
-                            <span style="vertical-align:middle;font-size:12px;color:#6E7172;float:left;">{{SelectedShipment ? ((SelectedShipment.CustomerReference1? SelectedShipment.CustomerReference1 : '') + '/' + (SelectedShipment.CustomerReference2 ? SelectedShipment.CustomerReference2 : '')) : ''}}</span>
+                            <span style="vertical-align:middle;font-size:12px;color:#6E7172;float:left;">{{ ReferencesLabel }}</span>
                         </td>
                     </tr>
                     <tr>

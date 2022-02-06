@@ -180,6 +180,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              HouseNumbers = a.HouseNumbers,
                              GlobalTaxCalculation = a.GlobalTaxCalculation,
                              ConcurrencyGUID = a.ConcurrencyGUID,
+                             IsEquipment = a.IsEquipment,
                          });          
 
             return query;
@@ -1097,6 +1098,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              MasterShipmentNumbers = a.MasterShipmentNumbers,
                              HouseNumbers = a.HouseNumbers,
                              GlobalTaxCalculation = a.GlobalTaxCalculation,
+                             IsEquipment = a.IsEquipment,
 
                          };
 
@@ -1303,6 +1305,19 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                          };
 
             return result;
+        }
+        public List<APInvoicePM> GetAllAPInvoicesByIds(List<string> Ids, int tenant)
+        {
+            List<APInvoicePM> invoicePMs = (from a in repository.context.APInvoices
+                                            where Ids.Contains(a.Id) && a.Tenant == tenant
+                                            select new APInvoicePM()
+                                            {
+                                                Id = a.Id,
+                                                IsEquipment = a.IsEquipment,
+
+                                            }).ToList();
+
+            return invoicePMs;
         }
 
         public List<APInvoicePM> GetVoidedAPInvoicesByIds(List<string> Ids, int tenant, DateTime taxReportDate)

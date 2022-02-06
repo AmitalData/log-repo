@@ -46,6 +46,8 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
             journal = InitJournal();
             CreateJournalLines();
             SubmitJournal();
+            AddAccountingEntityJournal(AccountingEntityJournalActions.BankDepositApprove);
+
         }
         private void CreateJournalLines()
         {
@@ -192,6 +194,12 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
             myJournalUpdateService.Update(journal, true);
         }
 
+        public void AddAccountingEntityJournal(string actionName, string childEntityId = null)
+        {
+            IAccountingContext context = AccountingContext.GetContext(journal.Tenant);
+            AccountingEntityJournalUpdateService service = new AccountingEntityJournalUpdateService(context, new Dictionary<string, IContext>(), journal.Tenant);
+            service.AddAccountingEntitieJournal(journal, actionName, childEntityId);
+        }
         private CashBookPM GetCashbookById(string id)
         {
             CashBookQueryService cashBookQueryService = new CashBookQueryService(Tenant);

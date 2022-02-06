@@ -34,6 +34,7 @@ namespace CommunicationWorkerRole.EntityMapping
             shipmentOrderAM.Volume = shipmentOrder.Volume;
             shipmentOrderAM.TransportModeId = shipmentOrder.TransportModeId;
             shipmentOrderAM.OrderNumber = shipmentOrder.OrderNumber;
+            shipmentOrderAM.CustomerReferences = shipmentOrder.CustomerReferences; 
             shipmentOrderAM.AgentName = agent?.EnglishName;
             shipmentOrderAM.MainCarriageATA = shipmentOrder.ATA;
             shipmentOrderAM.MainCarriageATD = shipmentOrder.ATD;

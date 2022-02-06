@@ -35,6 +35,7 @@ export class NewGLAccountComponent extends BaseComponent {
     WindowArgsPassed: boolean = false;
 
     public AccountTypeCode = "1";
+    public OtherType = "3";
 
 
     public isRTL: boolean = false;
@@ -239,6 +240,7 @@ export class NewGLAccountComponent extends BaseComponent {
                 this.IsMultiCurrencyCheckboxEnabled = true;
                 this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
                 this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, true);
+                this.RevenueExpenseType = this.OtherType;
             }
 
 

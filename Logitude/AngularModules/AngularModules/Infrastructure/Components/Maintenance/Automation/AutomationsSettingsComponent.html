@@ -17,7 +17,7 @@
                             <li *ngIf="IsShowTabUpdate" [class.Selected]="SelectedTabCode == 'UPA'" (click)="SelectedTabCode = 'UPA'">
                                 <div class="InnerChild" style="color:black;width:100px">
 
-                                    <div style="width:100px;text-align:center;font-size:11px;color:black" class="InnerChild">
+                                    <div [attr.data-cy]="'OnUpdateAutomationTabTitle'" style="width:100px;text-align:center;font-size:11px;color:black" class="InnerChild">
                                         <span>{{OnUpdateAutomationTabTitle}}</span>
                                     </div>
                                 </div>
@@ -77,7 +77,7 @@
 
                                                         <td class="CellStretched" style="width:25px; min-width:25px; max-width:25px; position: relative;">
 
-                                                            <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddAutomation('OnCreate')"></IconButton>
+                                                            <IconButton [DataCy]="'AddAutomationOnCreate'"  [Name]="'Add'" [IsSmall]="true" (click)="AddAutomation('OnCreate')"></IconButton>
 
                                                         </td>
 
@@ -276,7 +276,7 @@
 
                                                         <td class="CellStretched" style="width:25px; min-width:25px; max-width:25px; position: relative;">
 
-                                                            <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddAutomation('OnUpdate')"></IconButton>
+                                                            <IconButton [DataCy]="'AddAutomationOnUpdate'" [Name]="'Add'" [IsSmall]="true" (click)="AddAutomation('OnUpdate')"></IconButton>
 
                                                         </td>
 

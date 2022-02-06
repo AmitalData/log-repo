@@ -430,7 +430,10 @@ export class MaintenanceComponent {
                 item.ObjectTableName = "Container Settings";
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
-            
+
+           var item = this.AddCustomFieldsMenu(item);
+        
+
          
             var item1 = new MenusTablePM();
             item1.CategoryTypeCode = "CMS";
@@ -493,6 +496,16 @@ export class MaintenanceComponent {
             }
         }
     }
+    private AddCustomFieldsMenu(item: MenusTablePM) {
+        var item = new MenusTablePM();
+        item.CategoryTypeCode = "CMS";
+        item.Icon = "Settings";
+        item.Code = "CFMM";
+        item.ObjectTableName = "Custom Fields";
+        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        return item;
+    }
+
     private BuildPersonalSettings() {
         if (FeatureLocator.HasFeaturePermession("General", "PERSONALSETTINGS")) {
 
@@ -967,6 +980,13 @@ export class MaintenanceComponent {
                     logitudeWindow.Show('./Infrastructure/Components/Maintenance/Automation/MainMenuAutomationComponent');
                     break;
                 }
+
+                case "CFMM": { 
+                    var { logWindow, windowArgs }: { logWindow: LogitudeWindow; windowArgs: any; } = this.ShowCustomizationWindow(logWindow, windowArgs);
+                    break;
+                }
+                     
+
                 case "SYIN": {
                     this._entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe((response:any) => {
                         this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(tenantResp => {
@@ -1579,6 +1599,18 @@ export class MaintenanceComponent {
         }
     }
     
+    private ShowCustomizationWindow(logWindow: LogitudeWindow, windowArgs: any) {
+        var logWindow = new LogitudeWindow();
+        var windowArgs: any = {};
+        windowArgs.IsCustomFieldsMenue = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Title = "Object Names";
+        logWindow.IsShowCloseButton = true;
+        logWindow.Width = 800;
+        logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/CustomizationMainComponent');
+        return { logWindow, windowArgs };
+    }
+
     DoJoker(text: string) {
         switch (text) {
             case "jokerinv":

@@ -21,7 +21,7 @@
         <tr class="TabTitleRow">
             <td>Audit</td>
             <td style="width: 21px;">
-                <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                <IconButton [DataCy]="'Refresh'" [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
             </td>
             <td style="width: 2px;"><div style="width:2px"></div></td>
         </tr>
@@ -81,7 +81,7 @@
                                                                                             </div>
                                                                                         </td>
                                                                                         <!--HasExecutedRecord-->
-                                                                                        <td class="GridViewCell" style="width: 300px; min-width: 300px; max-width: 300px; position: relative;">
+                                                                                        <td [attr.data-cy]="'ifHasExecutedRecord'"  class="GridViewCell" style="width: 300px; min-width: 300px; max-width: 300px; position: relative;">
 
                                                                                             <div style="width:295px">
                                                                                                 <img class="CenterCenter" style="width:20px;height:20px" *ngIf="item.HasExecutedRecord" src="./Images/Icons/MiniGreenTick.png" />
@@ -202,7 +202,7 @@
                                                             <li [class.Selected]="SelectedTabCode == 'AUT'" (click)="SelectedTabCode = 'AUT'">
                                                                 <div class="InnerChild" style="color:#1B90CB;width:80px">
 
-                                                                    <div style="width:80px;text-align:center;font-size:11px;color:#1B90CB" class="InnerChild">
+                                                                    <div [attr.data-cy]="'Automation'"  style="width:80px;text-align:center;font-size:11px;color:#1B90CB" class="InnerChild">
                                                                         <span>Automation</span>
                                                                     </div>
                                                                 </div>
@@ -259,7 +259,7 @@
 
 
                                                                                                                                 <!--FieldName-->
-                                                                                                                                <td class="GridViewCell" style="width: 300px; min-width: 300px; max-width: 300px; position: relative;">
+                                                                                                                                <td [attr.data-cy]="item.FieldName"  class="GridViewCell" style="width: 300px; min-width: 300px; max-width: 300px; position: relative;">
 
 
                                                                                                                                     {{item.FieldName}}
@@ -274,7 +274,7 @@
                                                                                                                                 </td>
 
                                                                                                                                 <!--NewValue-->
-                                                                                                                                <td class="GridViewCell" style="width: 400px; min-width: 400px; max-width: 400px; position: relative;">
+                                                                                                                                <td [attr.data-cy]="item.NewValue" class="GridViewCell" style="width: 400px; min-width: 400px; max-width: 400px; position: relative;">
 
                                                                                                                                     {{item.NewValue}}
 

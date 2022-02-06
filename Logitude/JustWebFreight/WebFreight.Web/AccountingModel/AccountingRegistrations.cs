@@ -1,7 +1,6 @@
 ﻿//using Logitude.Accounting.BL.CoreBL.Reconcile;
 using Logitude.Accounting.BL.CoreBL.Reconcile;
 using Logitude.Accounting.BL.EntityQueryServiceExt;
-using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServiceExt;
 using Logitude.Accounting.Def.BLExt;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
@@ -34,6 +33,7 @@ namespace WebFreight.Web.AccountingModel
             ContainerAccessor.Container.RegisterType<IInterestTransactionUpdateServiceExt, InterestTransactionUpdateServiceExt>("InterestTransactionUpdateServiceExt", new InjectionFactory(c => new InterestTransactionUpdateServiceExt()));
             ContainerAccessor.Container.RegisterType<IInterestReportUpdateServiceExt, InterestReportUpdateServiceExt>("InterestReportUpdateServiceExt", new InjectionFactory(c => new InterestReportUpdateServiceExt()));
             ContainerAccessor.Container.RegisterType<IInterestReportsConnectedInvoiceUpdateServiceExt, InterestReportsConnectedInvoiceUpdateServiceExt>("InterestReportsConnectedInvoiceUpdateServiceExt", new InjectionFactory(c => new InterestReportsConnectedInvoiceUpdateServiceExt()));
+            ContainerAccessor.Container.RegisterType<IAccountingEntityJournalUpdateServiceExt, AccountingEntityJournalUpdateServiceExt>("AccountingEntityJournalUpdateServiceExt", new InjectionFactory(c => new AccountingEntityJournalUpdateServiceExt()));
 
             // Query Service
             ContainerAccessor.Container.RegisterType<ICashBookQueryServiceExt, CashBookQueryServiceExt>("CashBookQueryServiceExt", new InjectionFactory(c => new CashBookQueryServiceExt()));

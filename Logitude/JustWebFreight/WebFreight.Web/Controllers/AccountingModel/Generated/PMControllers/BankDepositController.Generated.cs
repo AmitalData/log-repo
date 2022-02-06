@@ -96,8 +96,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("BankDeposit", "NEW", authToken.Tenant);
-	                        SecurityUtility.AuthenticationOnEntityTenant("BankDeposit", entityPM.Tenant, authToken.Tenant);
-	                    
+                        SecurityUtility.AuthenticationOnEntityTenant("BankDeposit", entityPM.Tenant, authToken.Tenant);
+
                         IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
                         BankDepositUpdateService service = new BankDepositUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -110,7 +110,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
                         //if (loggedContact != null)
                         //{
-                           //ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "N", loggedContact.Id);
+                        //ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "N", loggedContact.Id);
                         //}
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -118,9 +118,19 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);
                     }
                 }
-
+                catch (InvalidOperationException exc)
+                {
+                    var apiException = new APIException()
+                    {
+                        ErrorType = "ApplicationException",
+                        ErrorMessage = exc.Message,
+                        ShortErrorMessage = exc.Message
+                    };
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, apiException);
+                }
                 catch (Exception ex)
                 {
+                    ResetCashBookInDepositProgress(entityPM);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
                 }
             }
@@ -136,8 +146,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             CashBook cshbk = repo.GetSingle(depositPM.CashBookId, depositPM.Tenant);
             if (cshbk.InDepositingProgress)
             {
-                throw new ApplicationException(TextCodesTranslator.TranslateText("Cashbook.O.InDepositingProgressMessage",
+                throw new InvalidOperationException(TextCodesTranslator.TranslateText("Cashbook.O.InDepositingProgressMessage",
                     depositPM.Tenant, LoggedContactResolver.GetLoggedContactShowLocal(depositPM.Tenant)));
+                throw new ApplicationException();
             }
             else
             {
@@ -147,6 +158,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 repo.SubmitChanges();
             }
         }
+
+        private void ResetCashBookInDepositProgress(BankDepositPM depositPM)
+        {
+            CashBookRepository repo = new CashBookRepository(depositPM.Tenant);
+            CashBook cshbk = repo.GetSingle(depositPM.CashBookId, depositPM.Tenant);
+            cshbk.InDepositingProgress = false;
+            repo.Update(cshbk);
+            repo.SubmitChanges();
+        }
+
+
 
         public HttpResponseMessage Put(BankDepositPM entityPM)
         {

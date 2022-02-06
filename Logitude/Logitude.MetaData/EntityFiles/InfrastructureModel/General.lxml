@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;72e3&quot;"
+  Code="&quot;04a5&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -2036,7 +2036,7 @@
     <TextCode
       Code="&quot;Accounting.General.O.DueDate&quot;"
       DefaultText="&quot;Due Date&quot;"
-      LocalDefaultText="&quot;תאריך לתשלום&quot;"
+      LocalDefaultText="&quot;תאריך פרעון&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -7224,7 +7224,6 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-
     <Feature
       Code="&quot;General.Features.CustomerTeam&quot;"
       FeatureTypeCode="&quot;MENU&quot;"

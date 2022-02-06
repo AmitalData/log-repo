@@ -1235,6 +1235,31 @@ class JournalLineModel extends BaseComponent {
         }
     }
 
+    get DebitAccountNumber() { return this.JournalLinePM.DebitAccountNumber; }
+    set DebitAccountNumber(value: string) {
+        if (this.JournalLinePM.DebitAccountNumber != value) {
+            this.JournalLinePM.DebitAccountNumber = value;
+        }
+    }
+    get DebitAccountEnglishName() { return this.JournalLinePM.DebitAccountEnglishName; }
+    set DebitAccountEnglishName(value: string) {
+        if (this.JournalLinePM.DebitAccountEnglishName != value) {
+            this.JournalLinePM.DebitAccountEnglishName = value;
+        }
+    }
+    get CreditAccountEnglishName() { return this.JournalLinePM.CreditAccountEnglishName; }
+    set CreditAccountEnglishName(value: string) {
+        if (this.JournalLinePM.CreditAccountEnglishName != value) {
+            this.JournalLinePM.CreditAccountEnglishName = value;
+        }
+    }
+    get CreditAccountNumber() { return this.JournalLinePM.CreditAccountNumber; }
+    set CreditAccountNumber(value: string) {
+        if (this.JournalLinePM.CreditAccountNumber != value) {
+            this.JournalLinePM.CreditAccountNumber = value;
+        }
+    }
+
     get CurrencyCode() { return this.JournalLinePM.CurrencyCode; }
     set CurrencyCode(value: string) {
         if (this.JournalLinePM.CurrencyCode != value) {
@@ -1252,11 +1277,11 @@ class JournalLineModel extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(value)) {
             this.CreditAccountName = value.LocalName;
 
-            this.SetCurrencyForSingleAccount(value, ActionCode.Credit.toString(), ActionCode.DebitAndCredit.toString());                      
+            this.SetCurrencyForSingleAccount(value, ActionCode.Credit.toString(), ActionCode.DebitAndCredit.toString());
             if (!AppTool.IsNullOrEmpty(this.Currency)) {
                 this.SplittedCheck();
             }
-           
+
 
         } else {
             this.CreditAccountName = null;
@@ -1275,7 +1300,7 @@ class JournalLineModel extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(value)) {
             this.DebitAccountName = value.LocalName;
             this.SetCurrencyForSingleAccount(value, ActionCode.Debit.toString(), ActionCode.DebitAndCredit.toString());
-           
+
             if (!AppTool.IsNullOrEmpty(this.Currency)) {
                 this.SplittedCheck();
             }

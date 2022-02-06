@@ -216,7 +216,7 @@
                         <button class="declaration-approval-toolbar-button__red animate"
                             (click)="DenyDeclaration()">דחיה</button>
                         <button class="declaration-approval-toolbar-button__green animate"
-                            (click)="ApproveDeclaration()">םושר</button>
+                            (click)="ApproveDeclaration()">אישור</button>
                     </div>
                 </div>
 
@@ -939,16 +939,16 @@
                                         </div>
                                         <div class="routing-card">
                                             <div class="route-card-body">
-                                                <div *ngIf="step.FromPortLabel != null || step.ToPortLabel != null" [ngStyle] ="{ 'direction' : (ContainsHebrew(step.FromPortLabel) || ContainsHebrew(step.ToPortLabel))? 'rtl' : 'ltr' }"
+                                                <div *ngIf="step.FromPortLabel != null || step.ToPortLabel != null" 
                                                      class="route-label">
                                                     <div class="mobile-font-12">
-                                                        <span [attr.title]="step.ToolTipFromPortLabel != null ? step.ToolTipFromPortLabel : step.FromPortLabel?.length > 6 ? step.FromPortLabel : ''">
-                                                            {{ step.ToPortLabel != null ? GetSlice(step.FromPortLabel,6) : GetSlice(step.FromPortLabel,15)}}
+                                                        <span [attr.title]="step.ToolTipFromPortLabel != null ? step.ToolTipFromPortLabel : step.FromPortLabel?.length > 5 ? step.FromPortLabel : ''">
+                                                            {{ step.ToPortLabel != null ? GetSlice(step.FromPortLabel,5) : GetSlice(step.FromPortLabel,14)}}
                                                         </span>
                                                     </div>
                                                     <div class="mobile-font-12"  *ngIf="step.ToPortLabel != null">
-                                                        >
-                                                        <span [attr.title]="step.ToolTipToPortLabel != null ? step.ToolTipToPortLabel : step.ToPortLabel?.length > 6 ? step.ToPortLabel : ''">{{GetSlice(step.ToPortLabel,6)}}</span>
+                                                        &nbsp;>
+                                                        <span [attr.title]="step.ToolTipToPortLabel != null ? step.ToolTipToPortLabel : step.ToPortLabel?.length > 5 ? step.ToPortLabel : ''">{{GetSlice(step.ToPortLabel,5)}}</span>
                                                     </div>
                                                 </div>
                                                 <div class="route-description TextTrimming" [title]="step.Description">

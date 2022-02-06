@@ -70,7 +70,7 @@ namespace Logitude.BL.Helpers
                 FactFieldsGroups.Add(DWFactGroup);
                 ParentFactIndex = ++ParentFactIndex;
             }
-
+            FactFieldsGroups = FactFieldsGroups.OrderBy(a => a.Index).ToList();
             FactFieldsGroups = RemoveFactInvoiceCustomFieldsCategory(DWOTId, FactFieldsGroups);
             FactFieldsGroups = FactFieldsGroups.OrderBy(a => a.Index).ToList();
             return FactFieldsGroups;
@@ -132,6 +132,7 @@ namespace Logitude.BL.Helpers
 
             foreach (var fact in FactGroups)
             {
+                fact.FieldsGroupList = fact.FieldsGroupList.OrderBy(a => a.Index).ToList(); 
                 if (factCode == "Fact_Invoices")
                 {
                     DWFieldsGroup customFieldsCategroy = fact.FieldsGroupList.FirstOrDefault(categroy => categroy.Key == "Custom Fields");

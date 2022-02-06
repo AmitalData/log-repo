@@ -158,7 +158,9 @@ private selectedMonth: CodeNameClass;
 
             errors.push(s);
         }
-       
+        if (this.entityPM.ByMonth){
+            this.entityPM.Month.setFullYear(this.entityPM.TaxYear)
+        }
 
         this.ValidationErrorsList = errors;
 

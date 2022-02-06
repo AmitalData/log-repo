@@ -9,11 +9,15 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.BL.Resolvers;
 using Logitude.CustomsMessaging.Common.Gen;
 using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -40,6 +44,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         const string StatusCode_VATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed = "9";
         const string TaxReportLineInputType = "I";
         const string ReferenceGroupDefaultValue = "0000";
+        const string APInvoiceAccountingEntity = "4";
+
         protected override void OnCreating(TaxReportLinePM entityPM, EntityPM entityParentPM)
         {
             entityPM.IsManuallyChanged = true;
@@ -72,11 +78,51 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
                 entityPM.UpdatedByUserId = GetLoggedContact(entityPM.Tenant).Id;
+                if(entityPM.OutputOrInput == TaxReportLineInputType)
+                {
+                    UpdateAPInvoiceIfIsEquipmentChanged(entityPM, entityPOCO);
+                }
             }
                 
             CheckSmallCashAPinvoiceFromThePreviousMonth(entityPM);
 
             base.OnUpdating(entityPM, entityPOCO);
+        }
+
+        private void UpdateAPInvoiceIfIsEquipmentChanged(TaxReportLinePM entityPM, TaxReportLine entityPOCO)
+        {
+            JournalPM journal = GetJournalPM(entityPM);
+            if (journal != null && journal.AccountingEntityCode == APInvoiceAccountingEntity)
+            {
+                if (entityPM.IsEquipment != entityPOCO.IsEquipment)
+                {
+                    UpdateAPInvoice(entityPM, journal);
+                }
+            }
+        }
+        private static JournalPM GetJournalPM(TaxReportLinePM entityPM)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(entityPM.Tenant);
+            JournalQueryService journalQuery = new JournalQueryService(accountingContext);
+            JournalPM journal = journalQuery.GetSingle(entityPM.JournalId, false, false);
+            return journal;
+        }
+        private void UpdateAPInvoice(TaxReportLinePM entityPM, JournalPM journal)
+        {
+            APInvoicePM invoice = GetAPInvoice(entityPM.Tenant, journal.AccountingEntityId);
+            invoice.IsEquipment = entityPM.IsEquipment;
+            SubmitAPInvoiceChanges(entityPM.Tenant, invoice);
+        }
+        private APInvoicePM GetAPInvoice(int tenant, string id)
+        {
+            APInvoiceQuery apInvoiceQuery = new APInvoiceQuery(tenant);
+            return apInvoiceQuery.GetSinglePM(id, tenant);
+        }
+        private static void SubmitAPInvoiceChanges(int tenant, APInvoicePM invoice)
+        {
+            IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
+            APInvoiceService aRInvoiceService = new APInvoiceService(MyContext,tenant);
+            aRInvoiceService.Update(invoice);
         }
         private static void RecalculateReportTotals(TaxReportLinePM taxReportLinePM)
         {

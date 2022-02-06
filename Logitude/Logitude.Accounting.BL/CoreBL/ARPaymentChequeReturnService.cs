@@ -57,6 +57,12 @@ namespace Logitude.Accounting.BL.CoreBL
             CreateJournal();
         }
 
+        private void AddAccountingEntitieJournal(JournalPM entityPM, string action, string ChildEntityId = null)
+        {
+            IAccountingEntityJournalUpdateServiceExt service = ContainerAccessor.Container.Resolve(typeof(IAccountingEntityJournalUpdateServiceExt), "AccountingEntityJournalUpdateServiceExt", new ParameterOverride("", 1)) as IAccountingEntityJournalUpdateServiceExt;
+            service.AddAccountingEntitieJournal(entityPM, action, ChildEntityId);
+        }
+
         private void UpdateChequeStatusAsReturnedToCustomer(ARPaymentChequePM cheque)
         {
             cheque.ChangeSetOp = ChangeSetOperation.Update;
@@ -84,6 +90,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             InitJournal();
             CreateJournalLines();
+            AddAccountingEntitieJournal(createdJournal, AccountingEntityJournalActions.ARPaymentReturnToCustomer);
             SubmitJournal();
 
         }

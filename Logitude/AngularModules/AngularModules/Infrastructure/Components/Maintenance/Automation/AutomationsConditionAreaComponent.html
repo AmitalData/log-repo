@@ -23,7 +23,7 @@
 
                             <td class="CellStretched" style="width:25px; min-width:25px; max-width:25px; position: relative;">
 
-                                <IconButton *ngIf="!IsDisabled" [Name]="'Add'" [IsSmall]="true" (click)="AddAutomationConditionMethod()"></IconButton>
+                                <IconButton   [attr.data-cy]="cyData" *ngIf="!IsDisabled" [Name]="'Add'" [IsSmall]="true" (click)="AddAutomationConditionMethod()"></IconButton>
 
                             </td>
 
@@ -64,7 +64,7 @@
                                                 <tr style="height: 1px;">
                                                     <td>
                                                         <table>
-                                                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of AutomationCondationLists">
+                                                            <tr class="SimpleGridViewRow RowHover"  *ngFor="let item of AutomationCondationLists ; let itemIndex =index;">
                                                                 <td>
                                                                     <table>
                                                                         <tr class="FormFieldRow" (click)="SelectedAutomationCondationList = item" [class.RowSelected]="item === SelectedAutomationCondationList">
@@ -72,9 +72,13 @@
 
 
                                                                             <td *ngIf="CondationListType != 'Set'" style="width: 150px; min-width: 150px; max-width: 150px;">
+                                                                                                                                                               
+
+
+
 
                                                                                 <div style="text-align:left;width:145px">
-                                                                                    <ComboBox style="width:115px;" (SelectedItemChanged)="item.AutomationEntityListValueChanged($event)" [ItemsSource]="item.AutomationEntityLists" [SelectedItem]="item.SelectedAutomationEntity" [Binding]="'DisplayName'"></ComboBox>
+                                                                                    <ComboBox [CyData]="(CondationListType +'EntityList')" [ListType]="CondationListType" style="width:115px;" (SelectedItemChanged)="item.AutomationEntityListValueChanged($event)" [ItemsSource]="item.AutomationEntityLists" [SelectedItem]="item.SelectedAutomationEntity" [Binding]="'DisplayName'"></ComboBox>
                                                                                 </div>
 
                                                                             </td>
@@ -84,7 +88,8 @@
 
                                                                                 <div  style="text-align:center;width:195px">
 
-                                                                                    <LogLov *ngIf="item.IsRefreshAutomationCondationField" (SelectedItemChanged)="item.CustomFieldValueChanged($event)"
+                                                                                    <LogLov [DataCy]="(CondationListType +'AutomationObjectFieldLov'+itemIndex)"
+                                                                                            *ngIf="item.IsRefreshAutomationCondationField" (SelectedItemChanged)="item.CustomFieldValueChanged($event)"
                                                                                             [ObjectFieldName]="'ObjectFieldCode'"
                                                                                             [QueryFilterItems]="item.AutomationCondationFieldListFilterItems"
                                                                                             [ObjectTableName]="'ObjectField'"
@@ -98,7 +103,8 @@
                                                                                             [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
                                                                                     </LogLov>
 
-                                                                                    <LogLov *ngIf="!item.IsRefreshAutomationCondationField" (SelectedItemChanged)="item.CustomFieldValueChanged($event)"
+                                                                                    <LogLov [DataCy]="(CondationListType + 'AutomationObjectFieldLov'+itemIndex)"
+                                                                                            *ngIf="!item.IsRefreshAutomationCondationField" (SelectedItemChanged)="item.CustomFieldValueChanged($event)"
                                                                                             [ObjectFieldName]="'ObjectFieldCode'"
                                                                                             [QueryFilterItems]="item.AutomationCondationFieldListFilterItems"
                                                                                             [ObjectTableName]="'ObjectField'"
@@ -120,7 +126,7 @@
                                                                             <td *ngIf="CanSetValueFromField" style="width: 165px; min-width: 165px; max-width: 165px;">
 
                                                                                 <div style="text-align:left;width:160px">
-                                                                                    <ComboBox style="width:160px;" (SelectedItemChanged)="item.OperatorListValueChanged($event)" [ItemsSource]="item.OperatorList" [SelectedItem]="item.SelectedOperator" [Binding]="'Name'"></ComboBox>
+                                                                                    <ComboBox [CyData]="(CondationListType +'OperatorsList')" [ListType]="CondationListType" style="width:160px;" (SelectedItemChanged)="item.OperatorListValueChanged($event)" [ItemsSource]="item.OperatorList" [SelectedItem]="item.SelectedOperator" [Binding]="'Name'"></ComboBox>
                                                                                 </div>
 
                                                                             </td>
@@ -144,14 +150,14 @@
 
                                                                                         <!--System Variables-->
                                                                                         <td *ngIf="item.IsSystemVariables">
-                                                                                            <ComboBox (SelectedItemChanged)="item.SystemVariableCondationValueChanged($event)" [ItemsSource]="item.SystemVariableOperatorLists" [SelectedItem]="item.SelectedSystemVariableOperator" [Binding]="'Name'"></ComboBox>
+                                                                                            <ComboBox [ListType]="CondationListType" (SelectedItemChanged)="item.SystemVariableCondationValueChanged($event)" [ItemsSource]="item.SystemVariableOperatorLists" [SelectedItem]="item.SelectedSystemVariableOperator" [Binding]="'Name'"></ComboBox>
 
                                                                                         </td>
 
 
                                                                                         <!--Boolean-->
                                                                                         <td style="width:107px" *ngIf="item.SelectedCustomField.DataTypeCode == 'Boolean' && !item.IsSystemVariables">
-                                                                                            <ComboBox style="width:107px;" (SelectedItemChanged)="item.BooleanListValueChanged($event)" [ItemsSource]="item.BooleanList" [SelectedItem]="item.IsChecked"></ComboBox>
+                                                                                            <ComboBox [ListType]="CondationListType" style="width:107px;" (SelectedItemChanged)="item.BooleanListValueChanged($event)" [ItemsSource]="item.BooleanList" [SelectedItem]="item.IsChecked" ></ComboBox>
                                                                                         </td>
 
 
@@ -160,7 +166,8 @@
 
                                                                                             <!--Custom Fields Combox-->
                                                                                             <div style="width:202px;" *ngIf="item.IsCustomCombox">
-                                                                                                <LogLov *ngIf="!item.IsRefreshObjectFieldLov" (SelectedItemChanged)="item.ObjectFieldCondationValueChange($event)"
+                                                                                                <LogLov  [DataCy]="(CondationListType + 'AutomationObjectFieldLov'+itemIndex)"
+                                                                                                        *ngIf="!item.IsRefreshObjectFieldLov" (SelectedItemChanged)="item.ObjectFieldCondationValueChange($event)"
                                                                                                         [ObjectFieldName]="'CustomObjectFieldCode'"
                                                                                                         [QueryFilterItems]="item.CustomAutomationCondationFieldListFilterItems"
                                                                                                         [ObjectTableName]="'ObjectField'"
@@ -174,7 +181,8 @@
                                                                                                         [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
                                                                                                 </LogLov>
 
-                                                                                                <LogLov *ngIf="item.IsRefreshObjectFieldLov" (SelectedItemChanged)="item.ObjectFieldCondationValueChange($event)"
+                                                                                                <LogLov [DataCy]="(CondationListType + 'AutomationObjectFieldLov'+itemIndex)"
+                                                                                                        *ngIf="item.IsRefreshObjectFieldLov" (SelectedItemChanged)="item.ObjectFieldCondationValueChange($event)"
                                                                                                         [ObjectFieldName]="'CustomObjectFieldCode'"
                                                                                                         [QueryFilterItems]="item.CustomAutomationCondationFieldListFilterItems"
                                                                                                         [ObjectTableName]="'ObjectField'"
@@ -206,11 +214,11 @@
 
                                                                                                                 <table>
                                                                                                                     <tr>
-
-                                                                                                                        <td><ComboBox style="width:80px" (SelectedItemChanged)="item.DateTypeListCondationValueChanged($event)" [ItemsSource]="item.DateTypeList" [SelectedItem]="item.SelectedDateType" [Binding]="'Name'"></ComboBox></td>
+                                                                                                                        
+                                                                                                                        <td><ComboBox [CyData]="(CondationListType +'DateOperatorsList')" [ListType]="CondationListType" style="width:80px" (SelectedItemChanged)="item.DateTypeListCondationValueChanged($event)" [ItemsSource]="item.DateTypeList" [SelectedItem]="item.SelectedDateType" [Binding]="'Name'"></ComboBox></td>
                                                                                                                         <td *ngIf="item.IsModeDate" style="width:5px"><div style="width:5px"></div></td>
-                                                                                                                        <td *ngIf="item.IsModeDate" style="width:131px"><LogDatePicker [InputType]="'date'" [HideColumns]="true" [IsFreeValue]="true" [NoValidation]="true" [SelectedDateValue]="item.FieldValue" (ValueChanged)="item.DatePickerCondationValueChange($event)" [ObjectFieldName]="item.SelectedCustomField.FieldName" [ObjectTableName]="item.SelectedCustomField.ObjectTableName" [DataContext]="item"></LogDatePicker></td>
-                                                                                                                        <td style="width:70px" *ngIf="!item.IsModeDate"><input (change)="item.NumericUpDownCondationValueChanged()" style="width:57px;height:22px;margin-left:5px;" type="number" step="1" [(ngModel)]="item.FieldValue" /></td>
+                                                                                                                        <td *ngIf="item.IsModeDate" style="width:131px"><LogDatePicker [attr.data-cy]="'Date'" [InputType]="'date'" [HideColumns]="true" [IsFreeValue]="true" [NoValidation]="true" [SelectedDateValue]="item.FieldValue" (ValueChanged)="item.DatePickerCondationValueChange($event)" [ObjectFieldName]="item.SelectedCustomField.FieldName" [ObjectTableName]="item.SelectedCustomField.ObjectTableName" [DataContext]="item"></LogDatePicker></td>
+                                                                                                                        <td style="width:70px" *ngIf="!item.IsModeDate"><input [attr.data-cy]="(CondationListType +'Value')" (change)="item.NumericUpDownCondationValueChanged()" style="width:57px;height:22px;margin-left:5px;" type="number" step="1" [(ngModel)]="item.FieldValue" /></td>
                                                                                                                         <td *ngIf="item.IsModeDate" style="width:20px"><div style="width:20px"></div></td>
                                                                                                                         <td *ngIf="!item.IsModeDate" style="width:10px"><div style="width:10px"></div></td>
                                                                                                                     </tr>
@@ -220,6 +228,7 @@
 
                                                                                                             <div *ngIf="item.SelectedCustomField.DataTypeCode == 'LookUp'">
                                                                                                                 <LogLov (SelectedItemChanged)="item.LogLovCondationValueChange($event)" [ObjectFieldName]="'FieldValue'"
+                                                                                                                        [DataCy]="(CondationListType + 'AutomationObjectFieldLov'+itemIndex)"
                                                                                                                         [ObjectTableName]="item.SelectedCustomField.ObjectTableName"
                                                                                                                         [DataContext]="item"
                                                                                                                         [IsFreeText]="true"
@@ -227,7 +236,8 @@
                                                                                                                         [HideLastColumn]="true"
                                                                                                                         [SelectedValue]="item.FieldValue"
                                                                                                                         [LookUpTableName]="item.SelectedCustomField.ObjectTable_LookUpTableName"
-                                                                                                                        [SelectedItemObject]="item.FieldValue">
+                                                                                                                        [SelectedItemObject]="item.FieldValue"
+                                                                                                                        >
                                                                                                                 </LogLov>
 
                                                                                                             </div>
@@ -252,7 +262,7 @@
                                                                                                         <td *ngIf="item.SelectedCustomField && item.IsRefrachCustomField">
 
                                                                                                             <div *ngIf="item.SelectedCustomField.DataTypeCode == 'Text' || item.SelectedCustomField.DataTypeCode == 'nText' || item.SelectedCustomField.DataTypeCode == 'Integer' || item.SelectedCustomField.DataTypeCode == 'Double' || item.SelectedCustomField.DataTypeCode == 'SigDouble' ||item.SelectedCustomField.DataTypeCode == 'Decimal'">
-                                                                                                                <LogTextBox [NoValidation]="true" [HideLastColumn]="true" [Text]="item.FieldValue" [IsFreeText]="true" (ValueChanged)="item.TextBoxCondationValueChange($event)" style="height:22px" [IsMultiline]="item.IsMultiline" [ObjectFieldName]="item.SelectedCustomField.FieldName" [ObjectTableName]="item.SelectedCustomField.ObjectTableName" [DataContext]="item"></LogTextBox>
+                                                                                                                <LogTextBox  [NoValidation]="true" [HideLastColumn]="true" [Text]="item.FieldValue" [IsFreeText]="true" (ValueChanged)="item.TextBoxCondationValueChange($event)" style="height:22px" [IsMultiline]="item.IsMultiline" [ObjectFieldName]="item.SelectedCustomField.FieldName" [ObjectTableName]="item.SelectedCustomField.ObjectTableName" [DataContext]="item"></LogTextBox>
                                                                                                             </div>
 
                                                                                                             <div *ngIf="item.SelectedCustomField.DataTypeCode == 'DateTime' || item.SelectedCustomField.DataTypeCode == 'Date'">
@@ -260,10 +270,10 @@
                                                                                                                 <table>
                                                                                                                     <tr>
 
-                                                                                                                        <td><ComboBox style="width:80px" (SelectedItemChanged)="item.DateTypeListCondationValueChanged($event)" [ItemsSource]="item.DateTypeList" [SelectedItem]="item.SelectedDateType" [Binding]="'Name'"></ComboBox></td>
+                                                                                                                        <td><ComboBox [CyData]="(CondationListType +'DateOperatorsList')" [ListType]="CondationListType"  style="width:80px" (SelectedItemChanged)="item.DateTypeListCondationValueChanged($event)" [ItemsSource]="item.DateTypeList" [SelectedItem]="item.SelectedDateType" [Binding]="'Name'"></ComboBox></td>
                                                                                                                         <td *ngIf="item.IsModeDate" style="width:5px"><div style="width:5px"></div></td>
                                                                                                                         <td *ngIf="item.IsModeDate" style="width:131px"><LogDatePicker [HideColumns]="true" [InputType]="'date'" [IsFreeValue]="true" [NoValidation]="true" [SelectedDateValue]="item.FieldValue" (ValueChanged)="item.DatePickerCondationValueChange($event)" [ObjectFieldName]="item.SelectedCustomField.FieldName" [ObjectTableName]="item.SelectedCustomField.ObjectTableName" [DataContext]="item"></LogDatePicker></td>
-                                                                                                                        <td style="width:70px" *ngIf="!item.IsModeDate"><input (change)="item.NumericUpDownCondationValueChanged()" style="width:57px;height:22px;margin-left:5px;" type="number" step="1" [(ngModel)]="item.FieldValue" /></td>
+                                                                                                                        <td style="width:70px" *ngIf="!item.IsModeDate"><input  [attr.data-cy]="(CondationListType +'Value')"  (change)="item.NumericUpDownCondationValueChanged()" style="width:57px;height:22px;margin-left:5px;" type="number" step="1" [(ngModel)]="item.FieldValue" /></td>
                                                                                                                         <td *ngIf="item.IsModeDate" style="width:20px"><div style="width:20px"></div></td>
                                                                                                                         <td *ngIf="!item.IsModeDate" style="width:10px"><div style="width:10px"></div></td>
                                                                                                                     </tr>
@@ -273,6 +283,7 @@
 
                                                                                                             <div *ngIf="item.SelectedCustomField.DataTypeCode == 'LookUp'">
                                                                                                                 <LogLov (SelectedItemChanged)="item.LogLovCondationValueChange($event)" [ObjectFieldName]="'FieldValue'"
+                                                                                                                        [DataCy]="(CondationListType + 'AutomationObjectFieldLov'+itemIndex)"
                                                                                                                         [ObjectTableName]="item.SelectedCustomField.ObjectTableName"
                                                                                                                         [DataContext]="item"
                                                                                                                         [IsFreeText]="true"

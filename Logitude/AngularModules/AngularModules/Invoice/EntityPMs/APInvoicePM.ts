@@ -849,6 +849,11 @@ export class APInvoicePM {
     public set NewConcurrencyGUID(newValue: string) { if (this.newConcurrencyGUID != newValue) { this.newConcurrencyGUID = newValue; this.MarkAsDirty("NewConcurrencyGUID"); } }
        
 	 
+    private isEquipment: boolean;
+    public get IsEquipment() { return this.isEquipment; }
+    public set IsEquipment(newValue: boolean) { if (this.isEquipment != newValue) { this.isEquipment = newValue; this.MarkAsDirty("IsEquipment"); } }
+       
+	 
 
     public OldEntityPM: APInvoicePM;
 		
