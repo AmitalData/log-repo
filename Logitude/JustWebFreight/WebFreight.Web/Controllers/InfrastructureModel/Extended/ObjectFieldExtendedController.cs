@@ -34,5 +34,43 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetObjectFieldByName(string objectFieldName,string querySection)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(authToken.Tenant);
+                var objectFieldPMs = objectFieldQuery.GetObjectFieldByName(objectFieldName, querySection);
+                return Request.CreateResponse(HttpStatusCode.OK, objectFieldPMs);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage GetSingleQuery(string UniqueCode)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                QueryQuery queryQuery = new QueryQuery(authToken.Tenant);
+                QueryPM queryPM = queryQuery.GetSingleQueryPM(UniqueCode);
+
+                return Request.CreateResponse(HttpStatusCode.OK, queryPM);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
     }
 }

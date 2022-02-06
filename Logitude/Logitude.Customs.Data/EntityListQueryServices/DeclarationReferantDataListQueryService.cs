@@ -140,7 +140,9 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  Commodity=a.Commodity,
                                                                  LastStatusRemarks=a.LastStatusRemarks,
                                                                  PackageTypeCode = a.PackageType.LocalName
-
+                                                                 ReferantUserName="",
+                                                                 DepartmentName="",
+                                                                
                                                                  
                                                               }) ;
                                                                 
@@ -151,12 +153,10 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
         private IQueryable<DeclarationReferantData> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<DeclarationReferantData> iQueryable, int tenant)
         {
             DeclarationReferantDataCustomFilters filters = new DeclarationReferantDataCustomFilters();
-
             var filter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "RetrievData");
             if (filter == null)
             {
-
-                iQueryable = filters.GetFilteredQuery(iQueryable);
+                //iQueryable = filters.GetFilteredQuery(iQueryable);
                 //iQueryable = filters.GetFreelancerDeclarationReferantDatas(queryOperations, iQueryable, tenant,context);
             }
             iQueryable = filters.GetFreelancerDeclarationReferantDatas(queryOperations, iQueryable, tenant, context);

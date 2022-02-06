@@ -158,29 +158,30 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
             }
         }
 
+
         //public HttpResponseMessage Delete(string objectfieldid, string queryid,int tenant)
         //{
-            //try
-            //{
-            //    string token = HttpContext.Current.Request.Headers["Token"];
-            //    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            //    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            //    IWebFreightContext objectContext = WebFreightContext.GetContext(tenant);
-            //    AdvancedQueryFilterRepository repo = new AdvancedQueryFilterRepository(tenant);
-            //    var temp = repo.GetSingleAdvancedQueryfilter(entityPM.Id);
-            //    if (temp != null)
-            //    {
-            //        repo.Remove(temp);
-            //        repo.SubmitChanges();
-            //    }
-            //    return Request.CreateResponse(HttpStatusCode.OK, entityPM);
-            //}
-            //catch (Exception ex)
-            //{
-            //    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            //}
+        //try
+        //{
+        //    string token = HttpContext.Current.Request.Headers["Token"];
+        //    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+        //    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+        //    IWebFreightContext objectContext = WebFreightContext.GetContext(tenant);
+        //    AdvancedQueryFilterRepository repo = new AdvancedQueryFilterRepository(tenant);
+        //    var temp = repo.GetSingleAdvancedQueryfilter(entityPM.Id);
+        //    if (temp != null)
+        //    {
+        //        repo.Remove(temp);
+        //        repo.SubmitChanges();
+        //    }
+        //    return Request.CreateResponse(HttpStatusCode.OK, entityPM);
         //}
-        
-	    
+        //catch (Exception ex)
+        //{
+        //    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+        //}
+        //}
+
+
     }
 }
