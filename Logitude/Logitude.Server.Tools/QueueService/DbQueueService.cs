@@ -221,7 +221,7 @@ namespace Logitude.Server.Tools.QueueService
                             UseRabbitMQPar.Value = 0;
                         }
 
-                        string myQueueCodeRabbit = GetQueueCodeRabbit(queueSendModel);
+                        string myQueueCodeRabbit = RabbitQueueCodeService.GetRabbitQueueCode(this.QueueCode, queueSendModel.QueueGroupCodeRabbit);
                         QueueCodeRabbitPar.Value = myQueueCodeRabbit.ToLower();
 
                         cmd.Parameters.Add(queueCodePar);
@@ -349,24 +349,6 @@ namespace Logitude.Server.Tools.QueueService
             return queueMessageId;
         }
 
-        private string GetQueueCodeRabbit(QueueSendModel queueSendModel)
-        {
-            string env = GetEnv();
-            string myQueueCodeRabbit = this.QueueCode;// $"AN_{env}_{this.QueueCode}";
-            if (!string.IsNullOrEmpty(queueSendModel?.QueueCodeRabbit))
-            {
-                myQueueCodeRabbit = $"{myQueueCodeRabbit}_{queueSendModel?.QueueCodeRabbit}";
-            }
-            myQueueCodeRabbit += "_" + env;
-            return myQueueCodeRabbit;
-        }
-
-        private string GetEnv()
-        {
-            var uri = new Uri(LogitudeSettings.LogitudeURL);
-            var branchEnv = uri.LocalPath.Trim(@"\"[0]).Trim(@"/"[0]);
-            return branchEnv;
-        }
 
         private static void AddQueueDetailsToRequestHeaders(string messageBody, string sQueueMessageId)
         { 

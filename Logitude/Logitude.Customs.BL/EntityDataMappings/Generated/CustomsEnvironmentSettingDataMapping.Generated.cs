@@ -38,7 +38,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         EnvironmentCode, 
 	         UseRabbitMQ, 
 	         RabbitHost, 
-	         RabbitUserName,
+	         RabbitUserName, 
+	         RabbitPassword,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -60,6 +61,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RabbitUserName))
             {
 				entityPOCO.RabbitUserName = entityPM.RabbitUserName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RabbitPassword))
+            {
+				entityPOCO.RabbitPassword = entityPM.RabbitPassword;
 			}
 			}
 
@@ -91,6 +97,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.RabbitUserName = entityPOCO.RabbitUserName;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RabbitPassword))
+            {
+					entityPM.RabbitPassword = entityPOCO.RabbitPassword;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsEnvironmentSettingPM entityPM, CustomsEnvironmentSettingPM oldEntityPM)
@@ -110,6 +121,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RabbitUserName))
             {
                 oldEntityPM.RabbitUserName = entityPM.RabbitUserName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RabbitPassword))
+            {
+                oldEntityPM.RabbitPassword = entityPM.RabbitPassword;
             }
 			
 		}

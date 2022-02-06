@@ -30,6 +30,10 @@ using System.Transactions;
 using Logitude.Server.Tools.Utils;
 using System.Configuration;
 using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
+using Logitude.CustomsMessaging.RabbitMQ;
+using Logitude.Customs.BL.CloseTables;
+using RabbitMQ.Client.Events;
+using RabbitMQ.Client;
 
 namespace CustomsWorkerRole
 {
@@ -92,6 +96,12 @@ namespace CustomsWorkerRole
             {
                 myClass = _QueueNameOverride;
             }
+            if (!string.IsNullOrWhiteSpace(base.QueueDefinitionCode))
+            {
+
+                this._RabbitQueueCode = RabbitQueueCodeService.GetRabbitQueueCode(this.GetType().Name, base.QueueDefinitionCode);
+            }
+                
             string emailQueueName = ThreadedRoleEntryPoint.GetQueueByEnviroment(myClass); //Amitalqueue
 
             if (LogitudeSettings.QueueServiceMode != "db")
@@ -118,7 +128,17 @@ namespace CustomsWorkerRole
             }
             else
             {
-                _CustomDbQueueService = new CustomDbQueueService(myClass, 0);
+                switch (base.WorkerQueueType)
+                {
+
+                    case WorkerQueueType.RabbitMQ:
+                        break;
+                    case WorkerQueueType.DB:
+                    default:
+                        _CustomDbQueueService = new CustomDbQueueService(myClass, 0);
+                        break;
+                }
+                
             }
 
 
@@ -170,6 +190,8 @@ namespace CustomsWorkerRole
 
 
         DateTime _LastGC = DateTime.MinValue;
+        private string _RabbitQueueCode;
+
         public override void WorkOnce()
         {
             try
@@ -191,7 +213,22 @@ namespace CustomsWorkerRole
                 //}
                 //else
                 //{
-                WorkUntilQEmpty_Db();
+
+
+                switch (base.WorkerQueueType)
+                {
+
+                    case WorkerQueueType.RabbitMQ:
+                        WorkUntilPrcossesStop_RabbitMQ();
+                        break;
+                    case WorkerQueueType.DB:
+                    default:
+                        {
+                            WorkUntilQEmpty_Db();
+                        }
+                        break;
+                }
+                
                 //}
 
             }
@@ -205,9 +242,198 @@ namespace CustomsWorkerRole
         }
 
 
-      
 
-     
+
+
+
+
+        private static void Connection_ConnectionShutdown(object sender, ShutdownEventArgs e)
+        {
+            Console.WriteLine("Connection broke!");
+        }
+            
+        void WorkUntilPrcossesStop_RabbitMQ()
+        {
+            EventHandler<BasicDeliverEventArgs> consumerEventArgs = null;
+            try
+            {
+                var factory = RabbitmqHelper.GetConnectionFactory();
+                //var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123"  };
+                factory.RequestedHeartbeat = TimeSpan.FromSeconds(600);
+                using (var connection = factory.CreateConnection())
+                using (var channel = connection.CreateModel())
+                {
+                    try
+                    {
+
+                        connection.ConnectionShutdown += Connection_ConnectionShutdown;
+
+                        
+
+                        channel.BasicQos(0, 5, true);
+
+                        
+                        RabbitmqHelper.DeclareQueue(channel, this._RabbitQueueCode, true);
+                        
+
+
+                        consumerEventArgs = (model, ea) =>
+                        {
+                            if (channel == null)
+                                return;
+                            if (!channel.IsOpen)
+                                return;
+
+                            string messageId = "";
+                            CustomDBQueueMessage customDBQueueMessage = null;
+                            try
+                            {
+                                var body = ea.Body.ToArray();
+                                var message = Encoding.UTF8.GetString(body);
+                                messageId = ea.BasicProperties.MessageId;
+                                string log = "";
+                                
+                                
+
+
+
+
+
+
+                                customDBQueueMessage = _CustomDbQueueService.GetRabbitMQPseudoByMessageId(long.Parse(messageId)) ;
+                                if (customDBQueueMessage == null)
+                                {
+
+                                    ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRoleRabbitMQ", $"GetRabbitMQPseudoByMessageId not found({messageId})", null);
+                                    Thread.Sleep(100);
+                                    return;
+
+                                }
+                                
+                                LogMessagingUtilWR.Instance.AppendLine("ProcessMessage_Db");
+                                bool successProcessMessage = false;
+                                using (TransactionScope queue_TransactionScope = TransactionFactory.GetTransaction())
+                                {
+                                    try
+                                    {
+                                        successProcessMessage = ProcessMessage_Db(customDBQueueMessage);
+                                        LogMessagingUtilWR.Instance.AppendLine($"successProcessMessage:{successProcessMessage}");
+                                        if (successProcessMessage)
+                                        {
+                                            customDBQueueMessage.SafeComplete();  //RemoveQueueMessage(messageId);
+                                            queue_TransactionScope.Complete();
+
+                                        }
+
+                                    }
+                                    catch (Exception)
+                                    {
+
+                                        queue_TransactionScope.Dispose();
+                                        successProcessMessage = false;
+                                    }
+                                    finally
+                                    {
+
+                                        bool isTimeToEndDueMaxTries = false;
+                                        try
+                                        {
+                                            if (successProcessMessage)
+                                            {
+                                                channel.BasicAck(ea.DeliveryTag, false);
+                                            }
+                                            else
+                                            {
+                                                using (var Abandon_Queue_scope = new TransactionScope(TransactionScopeOption.RequiresNew))
+                                                {
+
+                                                    isTimeToEndDueMaxTries = customDBQueueMessage.SafeAbandon();
+                                                    Abandon_Queue_scope.Complete();
+                                                }
+                                                if (isTimeToEndDueMaxTries)
+                                                {
+                                                    channel.BasicAck(ea.DeliveryTag, false);
+                                                }
+                                                else
+                                                {
+                                                    channel.BasicNack(ea.DeliveryTag, false, true);
+                                                }
+                                                
+
+                                            }
+                                        }
+                                        catch (Exception eee)
+                                        {
+
+                                            ExceptionHandler.HandleException(eee, DateTime.Now, 0, "", "WorkerRoleRabbitMQ", $"WorkUntilPrcossesStop_RabbitMQ{messageId}", null);
+                                            Thread.Sleep(1000);
+                                        }
+
+                                        PerformanceM.LastInstance.QueueSuccessComplete = true;
+                                    }
+                                }
+
+                                
+
+
+
+                                LogDoneItemInMemory();
+
+
+                            }
+
+                            catch (Exception ex)
+                            {
+
+                                //Logger.LogMe(ex.Message, false, RabbitMQLogFILE);
+
+
+                            }
+
+                        };
+
+                        var consumer = new EventingBasicConsumer(channel);
+                        consumer.Received += consumerEventArgs;
+
+                        channel.BasicConsume(queue: base.QueueDefinitionCode,
+                                            autoAck: false,
+                                            consumer: consumer);
+
+                        while (!WorkerRoleServiceLocator.PleaseShutDown)
+                        {
+
+                            Thread.Sleep(100);
+                            bool getOut = false;
+                            if (getOut)
+                            {
+                                break;
+                            }
+                        }
+
+
+                    }
+
+                    catch (Exception e)
+                    {
+
+                    }
+
+                    finally
+                    {
+                        channel.Close();
+                        connection.Close();
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+
+                ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "CustomsAnalyzeQueueWR : Run() Method", null);
+                Thread.Sleep(5000);
+            }
+        }
+
 
 
 

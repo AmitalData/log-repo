@@ -45,5 +45,22 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         [Column("HaveRabbitMQ")]
         public string HaveRabbitMQ { get; set; }
 
+
+
+
+
+        #region tomer
+        [Column("RabbitMQCreateDate")]
+        public DateTime RabbitMQCreateDate { get; set; }
+
+        [Column("RabbitMQRetryNumber")]
+        public int RabbitMQRetryNumber { get; set; }
+
+        [Column("RabbitMQErrMess")]
+        public string RabbitMQErrMess { get; set; }
+
+
+        #endregion
+
     }
 }
