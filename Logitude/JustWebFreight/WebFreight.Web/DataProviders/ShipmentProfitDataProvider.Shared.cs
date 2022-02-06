@@ -122,6 +122,7 @@ namespace WebFreight.Web.DataProviders
         public string CustomerContactName { get; set; }
         public string CustomerContactEmail { get; set; }
         public string ProjectNumber { get; set; }
+        public string QuoteNumber { get; set; }
     }
 
     public class ProfitDetailsClass
