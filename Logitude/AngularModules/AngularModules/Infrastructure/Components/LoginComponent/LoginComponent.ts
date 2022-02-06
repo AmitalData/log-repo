@@ -43,7 +43,6 @@ import { ObjectsUpdater } from '../../Locators/ObjectsUpdater';
 //import { DWObjectFieldExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/DWObjectFieldExtendedPMService';
 import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 import { GeneralDomainService } from '../../../Infrastructure/Services/GeneralDomainService';
-import { TenantList } from 'Common/EntityLists/TenantList';
 
 @Component({
 
@@ -173,18 +172,15 @@ export class LoginComponent implements OnInit {
         //  if(isDevMode())
         //     this.developerLogin();
     }
-
-    async developerLogin() {
-        this.Email = 'itzik@amital.co.il'
-        this.Password = '';
-        this.LoginClicked();
-
-        while(!this.TenantList?.length)
-            await new Promise<void>(resolve => setTimeout(() => resolve(), 100))
-
-        this.SelectedCompany = this.TenantList.find(d => d.Tenant == 1);
-        this.ContinueClicked()
-    }
+    // async developerLogin() {
+    //     this.Email = 'itzik@amital.co.il'
+    //     this.Password = '';
+    //     this.LoginClicked(); 
+    //     while (!this.TenantList?.length)
+    //         await new Promise<void>(resolve => setTimeout(() => resolve(), 100));
+    //     this.SelectedCompany = this.TenantList.find(d => d.Tenant == 6);
+    //     this.ContinueClicked()
+    // }
 
 
     IsShowLoginForm: boolean = false;

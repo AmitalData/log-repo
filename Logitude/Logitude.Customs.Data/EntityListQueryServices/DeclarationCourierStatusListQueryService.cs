@@ -193,6 +193,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   IsAmendment = d.IsAmendment == true ? true : false,
                                                                   CargoDescription = d.CargoDescription,
                                                                   FinalRelease = !d.HatraDate.HasValue,
+
                                                               });
 
 
