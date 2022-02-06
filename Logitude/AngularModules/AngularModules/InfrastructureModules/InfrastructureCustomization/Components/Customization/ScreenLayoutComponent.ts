@@ -348,6 +348,8 @@ export class ScreenLayoutComponent extends BaseComponent {
         if (!itemLists || itemLists.length == 0) return 0;
 
         var droppedYPosition = Number(event.y);
+        if (droppedYPosition < Number(itemLists[0].getBoundingClientRect().top)) return 0;
+
         var closestElement: HTMLElement;
         itemLists.forEach(element => {
             if (droppedYPosition > Number(element.getBoundingClientRect().top)) closestElement = element;
