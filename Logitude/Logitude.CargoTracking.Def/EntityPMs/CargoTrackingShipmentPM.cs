@@ -58,9 +58,9 @@ namespace Logitude.CargoTracking.Def.EntityPMs
         [DataMember]
         public string ShipmentOrderPONumber { get; set; }
         [DataMember]
-        public string RouteFromPortCode { get; set; }
+        public string RouteFromPortName { get; set; }
         [DataMember]
-        public string RouteToPortCode { get; set; }
+        public string RouteToPortName { get; set; }
         [DataMember]
         public string SHOBookingConfirmationNumber { get; set; }
         [DataMember]

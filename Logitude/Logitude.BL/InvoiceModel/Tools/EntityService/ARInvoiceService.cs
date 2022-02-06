@@ -3727,7 +3727,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         journalLine.CurrencyId = theEntityPm.InvoiceCurrencyId;
                         journalLine.ForeignAmount = (decimal)theEntityPm.AmountInInvoiceCurrency;
                         journalLine.ExchangeRate = (decimal)theEntityPm.InvoiceCurrencyExchangeRate;
-                        journalLine.Reference1 = theEntityPm.InvoiceNumber;
+                        journalLine.Reference1 = theEntityPm.CustomerRef != null ? theEntityPm.CustomerRef: theEntityPm.InvoiceNumber;
                         journalLine.Reference2 = theEntityPm.MainEntityReference;
                         journalLine.Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber;
                         journalLine.Notes = theEntityPm.PrintNotes;
@@ -3756,7 +3756,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                                 CurrencyId = g.Key.ForiegnCurrencyId,
                                                                 ForeignAmount = (decimal)g.Sum(a => a.ForiegnCurrencyAmount),
                                                                 ExchangeRate = (decimal)g.Key.ForiegnExchangeRate,
-                                                                Reference1 = theEntityPm.InvoiceNumber,
+                                                                Reference1 = theEntityPm.CustomerRef != null ? theEntityPm.CustomerRef : theEntityPm.InvoiceNumber,
                                                                 Reference2 = theEntityPm.MainEntityReference,
                                                                 Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
                                                                 Notes = theEntityPm.PrintNotes,
@@ -3792,7 +3792,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 CurrencyId = theEntityPm.InvoiceCurrencyId,
                                 ForeignAmount = (decimal)vat.InvoiceCurrencyVATAmount,
                                 ExchangeRate = (decimal)theEntityPm.InvoiceCurrencyExchangeRate,
-                                Reference1 = theEntityPm.InvoiceNumber,
+                                Reference1 = theEntityPm.CustomerRef != null ? theEntityPm.CustomerRef : theEntityPm.InvoiceNumber,
                                 Reference2 = theEntityPm.MainEntityReference,
                                 Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
                                 DebitAccountId = glAccount == null ? "" : glAccount.Id,
@@ -3809,9 +3809,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
 
                     IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
+                    AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.ARInvoiceApprove);
                     journalUpdate.Update(journal);
                 }
             }
+        }
+
+        private void AddAccountingEntitieJournal(JournalPM entityPM, string action, string ChildEntityId = null)
+        {
+            IAccountingEntityJournalUpdateServiceExt service = ContainerAccessor.Container.Resolve(typeof(IAccountingEntityJournalUpdateServiceExt), "AccountingEntityJournalUpdateServiceExt", new ParameterOverride("", 1)) as IAccountingEntityJournalUpdateServiceExt;
+            service.AddAccountingEntitieJournal(entityPM, action, ChildEntityId);
         }
 
         private void AutoReconcileAutoCreditInvoiceWithAutoCreditedInvoice(JournalPM journal)
@@ -3902,7 +3909,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                     CurrencyId = g.Key.ForiegnCurrencyId,
                                                     ForeignAmount = (decimal)g.Sum(a => a.ForiegnCurrencyAmount),
                                                     ExchangeRate = (decimal?) g.Sum(a=> a.ForiegnExchangeRate)/g.Count(),//(decimal)g.Key.ForiegnExchangeRate,
-                                                    Reference1 = invoice.InvoiceNumber,
+                                                    Reference1 = invoice.CustomerRef != null ? invoice.CustomerRef : invoice.InvoiceNumber,
                                                     Reference2 = invoice.MainEntityReference,
                                                     Reference3 = !string.IsNullOrEmpty(invoice.HouseNumber) ? invoice.HouseNumber : invoice.MasterNumber,
                                                     Notes = invoice.PrintNotes,
@@ -3957,7 +3964,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 CurrencyId = invoice.InvoiceCurrencyId,
                 ForeignAmount = (decimal)vat.InvoiceCurrencyVATAmount,
                 ExchangeRate = (decimal)invoice.InvoiceCurrencyExchangeRate,
-                Reference1 = invoice.InvoiceNumber,
+                Reference1 = invoice.CustomerRef != null ? invoice.CustomerRef : invoice.InvoiceNumber,
                 Reference2 = invoice.MainEntityReference,
                 Reference3 = !string.IsNullOrEmpty(invoice.HouseNumber) ? invoice.HouseNumber : invoice.MasterNumber,
                 DebitAccountId = glAccount == null ? "" : glAccount.Id,

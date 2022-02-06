@@ -650,6 +650,9 @@ export class CargoTrackingShipmentMappedPM {
     public get DenyReason() { return this.denyReason; }
     public set DenyReason(newValue: string) { if (this.denyReason != newValue) { this.denyReason = newValue; this.MarkAsDirty("DenyReason"); } }
 
+    private connectedShipmentsNumbers: string;
+    public get ConnectedShipmentsNumbers() { return this.connectedShipmentsNumbers; }
+    public set ConnectedShipmentsNumbers(newValue: string) { if (this.connectedShipmentsNumbers != newValue) { this.connectedShipmentsNumbers = newValue; this.MarkAsDirty("ConnectedShipmentsNumbers"); } }
 
 
 
@@ -688,8 +691,8 @@ export class CargoTrackingShipmentMappedPM {
     public ShipmentTypeName: string;
     public ShipmentOrderQuantity: number;
     public ShipmentOrderPONumber: string;
-    public RouteToPortCode: string;
-    public RouteFromPortCode: string;
+    public RouteToPortName: string;
+    public RouteFromPortName: string;
     public SHOBookingConfirmationNumber: string;
     public SHOCarrierName: string;
     public SHOPODate: Date;

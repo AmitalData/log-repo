@@ -8,6 +8,7 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -84,7 +85,17 @@ namespace Logitude.Accounting.BL.CoreBL
                 tenant);
             var JournalUP = new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
             JournalUP.Update(journalPM, true);
+
+            AddAccountingEntityJournal(journalPM, AccountingEntityJournalActions.YearTransferApprove);
+
             return journalPM;
+        }
+
+        public void AddAccountingEntityJournal(JournalPM journal, string actionName, string childEntityId = null)
+        {
+            IAccountingContext context = AccountingContext.GetContext(journal.Tenant);
+            AccountingEntityJournalUpdateService service = new AccountingEntityJournalUpdateService(context, new Dictionary<string, IContext>(), journal.Tenant);
+            service.AddAccountingEntitieJournal(journal, actionName, childEntityId);
         }
 
         public void CheckThrowExceptionIfNeeded(IAccountingContext accountingContext, int YYyear, int tenant)
@@ -204,6 +215,9 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             JournalPM originalPM = CheckCancelYear(accountingContext, YYyear, tenant);
             JournalPM stornoJournalPM = DoCancelYear(accountingContext, originalPM, tenant);
+
+            AddAccountingEntityJournal(stornoJournalPM, AccountingEntityJournalActions.YearTransferCancel);
+
             return stornoJournalPM;
         }
 
@@ -630,17 +644,33 @@ GLAccountTotalDateTypeValues.Accountingdate, CalculateBalanceIsNotIncludeSo_endO
 
         private DateTime CheckYear(int YYyear)
         {
-            if (YYyear.ToString().Length != 2)
+            bool useLocal = true;
+            int yylen = YYyear.ToString().Length;
+            if (yylen != 2 && yylen != 4)
             {
-                throw new Exception("You must enter two characters only, חובה להזין רק שני תווים בשדה");
+                string text = TranslateTextsClassTranslate("YearTransfer.O.TwoOrFourDigits", 0, useLocal);
+                if (String.IsNullOrEmpty(text)) text = "Enter year in either two or four digits only";
+                throw new Exception(text); //("Enter year in either two or four digits only, יש להזין שנה בשתי ספרות או בארבע ספרות בלבד");
             }
+
             DateTime endOfYearUserInput = DateTime.MaxValue;
-            string OldDateStr = "YY-12-31";
-            OldDateStr = OldDateStr.Replace("YY", YYyear.ToString());
-            DateTime.TryParseExact(OldDateStr, "yy-MM-dd", null, DateTimeStyles.AllowWhiteSpaces, out endOfYearUserInput);
+            if (yylen == 4)
+            {
+                string OldDateStr = "YYYY-12-31";
+                OldDateStr = OldDateStr.Replace("YYYY", YYyear.ToString());
+                DateTime.TryParseExact(OldDateStr, "yyyy-MM-dd", null, DateTimeStyles.AllowWhiteSpaces, out endOfYearUserInput);
+            }
+            else
+            {
+                string OldDateStr = "YY-12-31";
+                OldDateStr = OldDateStr.Replace("YY", YYyear.ToString());
+                DateTime.TryParseExact(OldDateStr, "yy-MM-dd", null, DateTimeStyles.AllowWhiteSpaces, out endOfYearUserInput);
+            }
             if (endOfYearUserInput.Year >= DateTime.Now.Year)
             {
-                throw new Exception("“ You must choose past years only” “אתה חייב לבחור שנים קודמות בלבד");
+                string text = TranslateTextsClassTranslate("YearTransfer.O.PastYears", 0, useLocal);
+                if (String.IsNullOrEmpty(text)) text = "Enter past years only";
+                throw new Exception(text); //Enter past years only, יש להזין שנים קודמות בלבד");
             }
             return endOfYearUserInput;
 

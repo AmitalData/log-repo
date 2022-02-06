@@ -23,26 +23,33 @@ export class AddEditTariffLineComponent  {
     public DestinationDependencyFilterValue = "A";
     public ViaDependencyFilterValue = "A";
     public IsViaFieldVisible: boolean = true;
+    public IsPortsVisible: boolean = true;
     public IsAir: boolean = false;
-
+    public UnitOfMeasurementCode: string = "";
     constructor() {
         
-    }
-
-    SetViaFieldVisiblity() {
-        if (this.TariffType == "OFS" || this.TariffType == "OSC" || this.TariffType == "ASC") {
-            this.IsViaFieldVisible = false;
-        }
     }
 
     SetWindowArgs(args) {
         this.DataContext = args['DataContext'];
         this.EntityPM = args['EntityPM'];
         this.TariffType = args['TariffType'];
+        this.UnitOfMeasurementCode = args['UnitOfMeasurementCode'];
         this.SetOriginDependencyFilterValue();
         this.GetTariffType();
-        this.SetViaFieldVisiblity();
+        this.SetFieldsVisiblity();
+        this.SetUnitOfMeasurementCode();
         this.Clone();
+    }
+
+    SetFieldsVisiblity() {
+        if (this.TariffType == "OFS" || this.TariffType == "OSC" || this.TariffType == "ASC" || this.TariffType == "ICC" || this.TariffType == "ECC") {
+            this.IsViaFieldVisible = false;
+
+            if (this.TariffType == "ICC" || this.TariffType == "ECC") {
+                this.IsPortsVisible = false;
+            }
+        }
     }
 
     SetOriginDependencyFilterValue() {
@@ -56,6 +63,12 @@ export class AddEditTariffLineComponent  {
     GetTariffType() {
         if (this.TariffType == "AFC" || this.TariffType == "ASC") {
             this.IsAir = true;
+        }
+    }
+
+    SetUnitOfMeasurementCode() {
+        if (this.TariffType == "AFC" || this.TariffType == "OLC") {
+            this.EntityPM.UnitOfMeasurementCode = this.UnitOfMeasurementCode;
         }
     }
 
@@ -145,6 +158,31 @@ export class AddEditTariffLineComponent  {
                     }
                 }
             }
+
+            else if (this.TariffType == "ICC" || this.TariffType == "ECC") {
+                if (AppTool.IsNullOrEmpty(this.DataContext.ToCountryId) && !this.DataContext.IsToAllOtherCountries) {
+                    errors.push("To country or to all other countries is required");
+                }
+
+                if (AppTool.IsNullOrEmpty(this.DataContext.FromCountryId) && !this.DataContext.IsFromAllOtherCountries) {
+                    errors.push("From country or from all other countries is required");
+                }
+
+                if (this.DataContext.IsDifferentCurrenciesPerCharge) {
+                    for (var i = 1; i <= 10; i++) {
+                        if (this.DataContext.FatherComponent["Surcharge" + i + "PriceVisibility"]) {
+                            if (AppTool.IsNullOrEmpty(this.DataContext["Surcharge" + i + "CurrencyId"])) {
+                                errors.push("Surcharge " + i + " Currency Field is Required");
+                            }
+                        }
+                    }
+                }
+                else {
+                    if (AppTool.IsNullOrEmpty(this.DataContext.CurrencyId)) {
+                        errors.push("Currency Field is Required");
+                    }
+                }
+            }
         }
 
         this.ValidationErrorsList = errors;
@@ -197,6 +235,12 @@ export class AddEditTariffLineComponent  {
         this.myCloner.AddField('ViaPortName');
         this.myCloner.AddField('StartDate');
         this.myCloner.AddField('ExpirationDate');
+        this.myCloner.AddField('FromCountryId');
+        this.myCloner.AddField('FromCountryCode');
+        this.myCloner.AddField('FromCountryName');
+        this.myCloner.AddField('ToCountryId');
+        this.myCloner.AddField('ToCountryCode');
+        this.myCloner.AddField('ToCountryName');
 
         if (this.TariffType == "AFC" || this.TariffType == "OLC") {
             this.myCloner.AddField('MinPrice');
@@ -210,7 +254,7 @@ export class AddEditTariffLineComponent  {
             this.myCloner.AddField('Step8Price');            
         }
 
-        else if (this.TariffType == "ASC" || this.TariffType == "OSC" || this.TariffType == "OFC" || this.TariffType == "OFS") {
+        else if (this.TariffType == "ASC" || this.TariffType == "OSC" || this.TariffType == "OFC" || this.TariffType == "OFS" || this.TariffType == "ICC" || this.TariffType == "ECC") {
             this.myCloner.AddField('Surcharge1Price');
             this.myCloner.AddField('Surcharge2Price');
             this.myCloner.AddField('Surcharge3Price');
@@ -253,6 +297,8 @@ export class AddEditTariffLineComponent  {
             this.myCloner.AddField('CurrencyId');
             this.myCloner.AddField('CurrencyCode');
             this.myCloner.AddField('IsDifferentCurrenciesPerCharge');
+            this.myCloner.AddField('IsFromAllOtherCountries');
+            this.myCloner.AddField('IsToAllOtherCountries');
         }
 
         this.myCloner.AddEntity(this.EntityPM);

@@ -51,7 +51,7 @@
                         </td>
                     </tr>
 
-                    <tr class="FormFieldRow" *ngIf="EntityPM.SATInterfaceCode === 'PROF' || EntityPM.SATInterfaceCode === 'PROF33'">
+                    <tr class="FormFieldRow" *ngIf="EntityPM.SATInterfaceCode === 'PROF' || EntityPM.SATInterfaceCode === 'PROF33' || EntityPM.SATInterfaceCode === 'PROF40'">
                         <td style="width:120px; ">
                             <LogLabel [ObjectFieldName]="'Token'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
                         </td>
@@ -93,7 +93,7 @@
                         </td>
                     </tr>
 
-                    <tr class="FormFieldRow" *ngIf="EntityPM.SATInterfaceCode === 'PROF' || EntityPM.SATInterfaceCode === 'PROF33'">
+                    <tr class="FormFieldRow" *ngIf="EntityPM.SATInterfaceCode === 'PROF' || EntityPM.SATInterfaceCode === 'PROF33' || EntityPM.SATInterfaceCode === 'PROF40'">
 
                         <td style="width:120px; ">
                             <LogLabel [ObjectFieldName]="'MetodoPagoCode'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
@@ -124,7 +124,7 @@
 
                         <td>
                             <a *ngIf="EntityPM.SATInterfaceCode === 'CONT'" href="http://www.integratunegocioenlinea.com.mx/" target="_blank">http://www.integratunegocioenlinea.com.mx</a>
-                            <a *ngIf="EntityPM.SATInterfaceCode === 'PROF' || EntityPM.SATInterfaceCode === 'PROF33'" href="http://profact.com.mx/" target="_blank">http://profact.com.mx</a>
+                            <a *ngIf="EntityPM.SATInterfaceCode === 'PROF' || EntityPM.SATInterfaceCode === 'PROF33' || EntityPM.SATInterfaceCode === 'PROF40'" href="http://profact.com.mx/" target="_blank">http://profact.com.mx</a>
                             <!--<Hyperlink style="margin-left:3px;" (click)="ViewDropboxConnection()" [FontSize]="12" [Text]="'Dropbox Connection'"></Hyperlink>-->
                         </td>
 
@@ -134,7 +134,7 @@
                         </td>
                     </tr>
 
-                    <tr class="FormFieldRow" *ngIf="((EntityPM.SATInterfaceCode === 'PROF' || EntityPM.SATInterfaceCode === 'PROF33') && IsCartaPorteSettingsEnabled)">
+                    <tr class="FormFieldRow" *ngIf="((EntityPM.SATInterfaceCode === 'PROF' || EntityPM.SATInterfaceCode === 'PROF33' || EntityPM.SATInterfaceCode === 'PROF40') && IsCartaPorteSettingsEnabled)">
 
 
                         <td style="width:185px;">

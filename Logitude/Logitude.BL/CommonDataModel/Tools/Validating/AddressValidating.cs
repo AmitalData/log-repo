@@ -8,6 +8,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.BL.CommonDataModel.Tools.Validating
 {
@@ -47,7 +48,30 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
                         }
                     }
                 }
+
+                ValidatePostalCode(entityPM, myCountry);
+                
             }
+        }
+
+        private static void ValidatePostalCode(AddressPM addressPM, Country country)
+        {
+            if (country.Code != "MX" || string.IsNullOrEmpty(addressPM.ZipCode))
+            {
+                return;
+            }
+            PostalCodePM postalCodePM = GetPostalCodePM(addressPM);
+            if (postalCodePM == null)
+            {
+                throw new ApplicationException("This ZipCode doesn't exist in " + country.EnglishName + " country");
+            }
+        }
+
+        private static PostalCodePM GetPostalCodePM(AddressPM addressPM)
+        {
+            PostalCodeQuery postalCodeQuery = new PostalCodeQuery(addressPM.Tenant);
+            PostalCodePM postalCodePM = postalCodeQuery.GetSinglePMByCountryCode(addressPM.ZipCode, addressPM.CountryCode);
+            return postalCodePM;
         }
 
         private static void ValidateAddressType(AddressPM entityPM)

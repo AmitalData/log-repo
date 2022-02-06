@@ -124,6 +124,66 @@ namespace Logitude.CRM.Data.EntityMapping
             this.Property(t => t.IsCancelled).HasColumnName("IsCancelled");
 
             this.Property(t => t.OpportunityTypeId).HasColumnName("OpportunityTypeId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Field11).HasColumnName("Field11").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field12).HasColumnName("Field12").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field13).HasColumnName("Field13").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field14).HasColumnName("Field14").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field15).HasColumnName("Field15").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field16).HasColumnName("Field16").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field17).HasColumnName("Field17").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field18).HasColumnName("Field18").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field19).HasColumnName("Field19").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field20).HasColumnName("Field20").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field21).HasColumnName("Field21").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field22).HasColumnName("Field22").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field23).HasColumnName("Field23").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field24).HasColumnName("Field24").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field25).HasColumnName("Field25").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field26).HasColumnName("Field26").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field27).HasColumnName("Field27").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field28).HasColumnName("Field28").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field29).HasColumnName("Field29").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field30).HasColumnName("Field30").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field31).HasColumnName("Field31").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field32).HasColumnName("Field32").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field33).HasColumnName("Field33").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field34).HasColumnName("Field34").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field35).HasColumnName("Field35").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field36).HasColumnName("Field36").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field37).HasColumnName("Field37").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field38).HasColumnName("Field38").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field39).HasColumnName("Field39").HasMaxLength(250).IsUnicode(true);
+
+            this.Property(t => t.Field40).HasColumnName("Field40").HasMaxLength(250).IsUnicode(true);
         }
     }
 }

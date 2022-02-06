@@ -14,5 +14,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
         public DataTable DataTable { get; set; }
         public string SearchField { get; set; }
         public string CoulmnName { get; set; }
-     }
+        public string ReferenceFromShipmentId { get; internal set; }
+    }
 }

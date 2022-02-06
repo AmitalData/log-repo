@@ -296,6 +296,16 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public DateTime? DenyDate  { get; set; }
        [DataMember]
        public string DenyReason  { get; set; }
+       [DataMember]
+       public string ConnectedShipmentsNumbers  { get; set; }
+       [DataMember]
+       public DateTime? InvoicedDate  { get; set; }
+       [DataMember]
+       public bool? InvoicedDone  { get; set; }
+       [DataMember]
+       public string InvoicedNotes  { get; set; }
+       [DataMember]
+       public string InvoicedExceptionReason  { get; set; }
    }
 
 }

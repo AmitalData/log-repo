@@ -500,9 +500,9 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         private void CreatePaymentJournalIfNotCreated()
         {
             JournalPM journal = GetPaymentJournal();
-            if (journal == null)
+            if (journal == null) {
                 CreateNewPaymentJournal();
-
+            }
         }
 
 
@@ -517,8 +517,15 @@ namespace Logitude.BL.InvoiceModel.CoreBL
 
             AutoExternalReconcileBankTransferPageLines();
 
+            AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.ARPaymentApprove);
             SubmitJournal();
             return journal;
+        }
+
+        private void AddAccountingEntitieJournal(JournalPM entityPM, string action, string ChildEntityId = null)
+        {
+            IAccountingEntityJournalUpdateServiceExt service = ContainerAccessor.Container.Resolve(typeof(IAccountingEntityJournalUpdateServiceExt), "AccountingEntityJournalUpdateServiceExt", new ParameterOverride("", 1)) as IAccountingEntityJournalUpdateServiceExt;
+            service.AddAccountingEntitieJournal(entityPM, action, ChildEntityId);
         }
 
         private void AutoExternalReconcileBankTransferPageLines()

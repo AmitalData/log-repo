@@ -72,7 +72,10 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         TariffProductId, 
 	         SellerPartnerTypeId, 
 	         LastUsedDate, 
-	         FreightChargeId,
+	         FreightChargeId, 
+	         CustomsBrokerId, 
+	         CustomsBrokerPartnerTypeId, 
+	         UnitOfMeasurementCode,
 	      }
 
 
@@ -146,7 +149,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         SellerPartnerTypeId, 
 	         IsRefreshTranslations, 
 	         LastUsedDate, 
-	         FreightChargeId,
+	         FreightChargeId, 
+	         CustomsBrokerId, 
+	         CustomsBrokerName, 
+	         CustomsBrokerPartnerTypeId, 
+	         UnitOfMeasurementCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -403,6 +410,21 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FreightChargeId))
             {
 				entityPOCO.FreightChargeId = entityPM.FreightChargeId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsBrokerId))
+            {
+				entityPOCO.CustomsBrokerId = entityPM.CustomsBrokerId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsBrokerPartnerTypeId))
+            {
+				entityPOCO.CustomsBrokerPartnerTypeId = entityPM.CustomsBrokerPartnerTypeId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnitOfMeasurementCode))
+            {
+				entityPOCO.UnitOfMeasurementCode = entityPM.UnitOfMeasurementCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -666,6 +688,21 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.FreightChargeId = entityPOCO.FreightChargeId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsBrokerId))
+            {
+					entityPM.CustomsBrokerId = entityPOCO.CustomsBrokerId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsBrokerPartnerTypeId))
+            {
+					entityPM.CustomsBrokerPartnerTypeId = entityPOCO.CustomsBrokerPartnerTypeId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UnitOfMeasurementCode))
+            {
+					entityPM.UnitOfMeasurementCode = entityPOCO.UnitOfMeasurementCode;
+            }
+
 		}
 
 		public void PMToOldPM(TariffPM entityPM, TariffPM oldEntityPM)
@@ -920,6 +957,21 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FreightChargeId))
             {
                 oldEntityPM.FreightChargeId = entityPM.FreightChargeId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsBrokerId))
+            {
+                oldEntityPM.CustomsBrokerId = entityPM.CustomsBrokerId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsBrokerPartnerTypeId))
+            {
+                oldEntityPM.CustomsBrokerPartnerTypeId = entityPM.CustomsBrokerPartnerTypeId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnitOfMeasurementCode))
+            {
+                oldEntityPM.UnitOfMeasurementCode = entityPM.UnitOfMeasurementCode;
             }
 			
 		}

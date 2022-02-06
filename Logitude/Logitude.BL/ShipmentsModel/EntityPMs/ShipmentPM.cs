@@ -2104,6 +2104,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? DocumentInspection { get; set; }
         public DateTime? GatepassDocumentsReady { get; set; }
         public DateTime? GoodsClassification { get; set; }
+        public DateTime? InvoiceIssuedDate { get; set; }
+
         public bool IsImporterApprovalRequired { get; set; }
         public bool SendUpdatesToAgentEnabled { get; set; }
         public bool UpdateSendUpdatesToAgentEnabledField { get; set; }
@@ -2812,8 +2814,10 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public int LegIndex { get; set; }
         public string FromPortId { get; set; }
         public string FromPortCode { get; set; }
+        public string FromPortName { get; set; }
         public string ToPortId { get; set; }
         public string ToPortCode { get; set; }
+        public string ToPortName { get; set; }
         public string CarrierId { get; set; }
         public string CarrierName { get; set; }
         public string CarrierNumber { get; set; }

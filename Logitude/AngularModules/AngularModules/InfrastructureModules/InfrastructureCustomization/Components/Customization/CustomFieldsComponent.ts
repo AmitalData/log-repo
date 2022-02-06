@@ -26,7 +26,7 @@ export class CustomFieldsComponent {
     public IsAddButtonEnabled: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     private MaxNumberOfCustomFields: number;
-
+    public IsCustomFieldsMenue: boolean = false;
     constructor() {
         this.myService = new GeneralDomainService();
         this.CustomFieldsCollection = new ObservableCollection([]);
@@ -40,18 +40,25 @@ export class CustomFieldsComponent {
         this.ObjectTableId = args['ObjectTableId'];
         this.ObjectTableName = args['ObjectTableName'];
         this.MaxNumberOfCustomFields = args['MaxNumberOfCustomFields'];
+        this.IsCustomFieldsMenue = args['IsCustomFieldsMenue'];
 
         this.myService.GetCustomFieldsByTableId(this.ObjectTableId).subscribe((myResult: ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
 
                 this.loadedFields = myResponse.Result;
+                this.filterPickListCustomFields();
                 if (this.loadedFields != null) {
                     this.BuildItemsSource();
                 }
             }
         });
         //this.BuildItemsSource();
+    }
+
+    private filterPickListCustomFields() {
+        if (this.IsCustomFieldsMenue)
+            this.loadedFields = this.loadedFields.filter(a => a.DataTypeCode == "PickList");
     }
 
     private BuildItemsSource() {
@@ -161,6 +168,7 @@ export class CustomFieldsComponent {
                             if (!myResponse.HasError) {
 
                                 this.loadedFields = myResponse.Result;
+                                this.filterPickListCustomFields();
                                 if (this.loadedFields != null) {
                                     this.BuildItemsSource();
                                 }

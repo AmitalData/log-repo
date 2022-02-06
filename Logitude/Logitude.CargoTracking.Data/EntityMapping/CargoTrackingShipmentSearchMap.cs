@@ -35,7 +35,9 @@ namespace Logitude.CargoTracking.Data.EntityMapping
 
             this.Property(t => t.IsPublic).HasColumnName("IsPublic");
 
-            this.Property(t => t.ReferenceType).HasColumnName("ReferenceType").IsRequired().HasMaxLength(30).IsUnicode(false);
+            this.Property(t => t.ReferenceType).HasColumnName("ReferenceType").IsRequired().HasMaxLength(200).IsUnicode(false);
+
+            this.Property(t => t.ReferenceFromShipmentId).HasColumnName("ReferenceFromShipmentId").HasMaxLength(30).IsUnicode(false);
         }
     }
 }

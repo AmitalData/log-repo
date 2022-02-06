@@ -363,6 +363,20 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="QuoteChargesGroupCode"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="QuoteChargesGroupId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ReceivableAccountId"
     ReferencedTable="Accounts1"
@@ -411,6 +425,11 @@
   <Relation
     ForeignKeyColumn="PayablesDefaultCurrencyId"
     ReferencedTable="Currencies"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="QuoteChargesGroupId"
+    ReferencedTable="QuoteChargesGroups"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

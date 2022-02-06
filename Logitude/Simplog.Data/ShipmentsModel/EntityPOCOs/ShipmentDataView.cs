@@ -244,6 +244,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string CustomerContactId { get; set; }
         public string CustomerReference1 { get; set; }
         public string CustomerReference2 { get; set; }
+        public string CustomerReference3 { get; set; }
+        public string PrivateLabelInvoiceNumber { get; set; }
+         
         public string CustomerName { get; set; }
         public string CustomerNote { get; set; }
         public string CustomerContactName { get; set; }

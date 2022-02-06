@@ -296,6 +296,29 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
+	  private string unitOfMeasurementCode ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UnitOfMeasurementCode  
+	   {
+	    
+	     get
+		{
+		   return unitOfMeasurementCode;
+		 }
+		 set
+		 {
+		   if(unitOfMeasurementCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UnitOfMeasurementCode",OldValue=unitOfMeasurementCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   unitOfMeasurementCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

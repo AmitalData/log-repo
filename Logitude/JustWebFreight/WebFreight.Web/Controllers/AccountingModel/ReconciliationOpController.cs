@@ -43,6 +43,8 @@ using WebFreight.Web.DataContracts;
 using Simplog.Data.Helpers;
 using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.BL.CoreBL.Reconcile;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.Server.Tools.StorageService;
 
 namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsController.cs
 {
@@ -653,6 +655,8 @@ tenant);
             string TheAccountId,
             string AdjustAccountId,
             DateTime AccountDate,
+            DateTime? DueDate,
+            DateTime? RefDate,
             string Ref1,
             string Ref2,
             string Ref3,
@@ -674,7 +678,7 @@ tenant);
                     .Create(
                     accountingContext, authToken.Tenant
                     , ReconciliationLines, TheAccountId, AdjustAccountId,
-                    AccountDate, Ref1, Ref2, Ref3, Remarks);
+                    AccountDate, DueDate, RefDate, Ref1, Ref2, Ref3, Remarks);
 
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, pm);
 
@@ -739,6 +743,47 @@ tenant);
 
         }
 
+        public HttpResponseMessage PostReconcileExcelData(ReconcileExcelDataArgs args)
+        {
+            SecurityUtility.AuthenticationOnTenant(args.Tenant);
+
+            ExportToExcelArgs excelArgs = BuildExportToExcelArguments(args);
+            var excelFile = new ExportToExcelHelper().ExportDataToExcel(excelArgs);
+            BlobFileInfo fileInfo = SaveFileToStorage(args, excelFile);
+
+            return Request.CreateResponse(HttpStatusCode.OK, fileInfo.FileName);
+        }
+
+        private static BlobFileInfo SaveFileToStorage(ReconcileExcelDataArgs args, byte[] excelFile)
+        {
+            BlobFileInfo fileInfo = new BlobFileInfo()
+            {
+                FileName = "DraftReconciliation-" + DateTime.Now.ToShortDateString(),
+                FolderName = "others",
+                Extension = "xls",
+                Tenant = args.Tenant,
+                FileSize = excelFile.Length,
+            };
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            storageservice.Write(excelFile, fileInfo);
+            return fileInfo;
+        }
+
+        private static ExportToExcelArgs BuildExportToExcelArguments(ReconcileExcelDataArgs args)
+        {
+            return new ExportToExcelArgs()
+            {
+                Data = args.Data.GetEnumerator(),
+                QueryColumns = args.QueryColumns,
+                Tenant = args.Tenant,
+                QueryPM = new QueryPM()
+                {
+                    ObjectTableName = "Reconciliation",
+                    DisplayText = "Draft Reconciliation",
+                    Tenant = args.Tenant
+                }
+            };
+        }
     }
 
 
@@ -749,5 +794,13 @@ tenant);
 
         public List<LedgerTransactionList> OpenReconciliation { get; set; }
         public List<LedgerTransactionList> OpenReconciliationDraft { get; set; }
+    }
+
+
+    public class ReconcileExcelDataArgs
+    {
+        public List<LedgerTransactionPM> Data { get; set; }
+        public List<QueryColumnPM> QueryColumns { get; set; }
+        public int Tenant { get; set; }
     }
 }

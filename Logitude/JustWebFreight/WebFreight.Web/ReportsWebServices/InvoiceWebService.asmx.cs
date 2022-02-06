@@ -1020,10 +1020,39 @@ namespace WebFreight.Web.ReportsWebServices
                                 }
                         }
 
-                        Address fromAddress = addressRepository.GetSingleAddress(shipment.MainCarriageFromAddressId, shipment.Tenant);
-                        if (fromAddress != null)
+                        switch (shipment.InlandDomesticFromTypeCode)
                         {
-                            invoicedataprovider.FromLocation = fromAddress.City + " " + (fromAddress.Country != null ? fromAddress.Country.Code : "");
+                            case "PART":
+                                {
+                                    Address fromAddress = addressRepository.GetSingleAddress(shipment.MainCarriageFromAddressId, shipment.Tenant);
+                                    if (fromAddress != null)
+                                    {
+                                        invoicedataprovider.FromLocation = fromAddress.City + " " + (fromAddress.Country != null ? fromAddress.Country.Code : "");
+                                    }
+                                    break;
+                                }
+
+                            case "PORT":
+                                {
+                                    invoicedataprovider.FromLocation = shipment.MainCarriageFromPortName;
+                                    break;
+                                }
+
+                            case "CASL":
+                                {
+                                    invoicedataprovider.FromLocation = shipment.InlandDomesticFromCity;
+
+                                    if (!string.IsNullOrEmpty(shipment.InlandDomesticFromCountryId))
+                                    {
+                                        CountryRepository countryRepository = new CountryRepository(tenant);
+                                        Country country = countryRepository.GetSingleCountry(shipment.InlandDomesticFromCountryId, tenant);
+                                        if (country != null)
+                                        {
+                                            invoicedataprovider.FromLocation += " " + country.Code;
+                                        }
+                                    }
+                                    break;
+                                }
                         }
 
                         invoicedataprovider.FinalLocation = invoicedataprovider.ToLocation;
@@ -1954,7 +1983,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 reportinvoiceline.UOMPercentage = "%";
                             }
 
-                            if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33"))
+                            if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33" || satSetting.SATInterfaceCode == "PROF40"))
                             {
                                 ComputingPartnerTranslationHelper computingPartnerHelper = new ComputingPartnerTranslationHelper(currentInvoice.Tenant);
                                 reportinvoiceline.ClaveUnidad = computingPartnerHelper.GetComputingPartnerCodeTranslation(myMeasurement.Code, "G-Profact", "Measurement");
@@ -2145,7 +2174,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 reportinvoiceline.UOMPercentage = "%";
                             }
 
-                            if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33"))
+                            if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33" || satSetting.SATInterfaceCode == "PROF40"))
                             {
                                 ComputingPartnerTranslationHelper computingPartnerHelper = new ComputingPartnerTranslationHelper(currentInvoice.Tenant);
                                 reportinvoiceline.ClaveUnidad = computingPartnerHelper.GetComputingPartnerCodeTranslation(myMeasurement.Code, "G-Profact", "Measurement");
@@ -2251,7 +2280,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
 
 
-                if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33"))
+                if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33" || satSetting.SATInterfaceCode == "PROF40"))
                 {
                     if (!string.IsNullOrEmpty(currentInvoice.SATXML))
                     {
@@ -2259,9 +2288,13 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             MapProfact32Fields(currentInvoice, invoicedataprovider, tenantSettings);
                         }
-                        else
+                        else if (satSetting.SATInterfaceCode == "PROF33")
                         {
                             MapProfact33Fields(currentInvoice, invoicedataprovider, tenantSettings);
+                        }
+                        else
+                        {
+                            MapProfact40Fields(currentInvoice, invoicedataprovider, tenantSettings);
                         }
                     }
                     else
@@ -2311,7 +2344,7 @@ namespace WebFreight.Web.ReportsWebServices
                     }
 
                     var FrenchFractionsExpense = "";
-                    if (resulyFirstdigits > 0)
+                    if (resulyFirstdigits > 0)  
                     {
                         FrenchFractionsExpense = resulyFirstdigits + " Cts";
                     }
@@ -2735,6 +2768,11 @@ namespace WebFreight.Web.ReportsWebServices
             //string cadenaOriginalString = GetCadenaOrignialField(currentInvoice, "33");
             //invoicedataprovider.SAT.CadenaOriginal = cadenaOriginalString;
 
+        }
+
+        private static void MapProfact40Fields(ARInvoice currentInvoice, InvoiceDataProvider invoicedataprovider, Tenant tenantSettings)
+        {
+            SATInvoiceProfact40DataProviderMappingFields.MapProfact40Fields(currentInvoice, invoicedataprovider, tenantSettings);
         }
 
         private static string GetSATTimbreFiscalDigitalValue(string attributeName, System.Xml.XmlElement timbreFiscalDigitalElement)
@@ -3261,7 +3299,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 reportinvoiceline.UOMPercentage = "%";
                             }
 
-                            if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33"))
+                            if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33" || satSetting.SATInterfaceCode == "PROF40"))
                             {
                                 ComputingPartnerTranslationHelper computingPartnerHelper = new ComputingPartnerTranslationHelper(entityPOCO.Tenant);
                                 reportinvoiceline.ClaveUnidad = computingPartnerHelper.GetComputingPartnerCodeTranslation(myMeasurement.Code, "G-Profact", "Measurement");
@@ -3432,7 +3470,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 reportinvoiceline.UOMPercentage = "%";
                             }
 
-                            if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33"))
+                            if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33" || satSetting.SATInterfaceCode == "PROF40"))
                             {
                                 ComputingPartnerTranslationHelper computingPartnerHelper = new ComputingPartnerTranslationHelper(entityPOCO.Tenant);
                                 reportinvoiceline.ClaveUnidad = computingPartnerHelper.GetComputingPartnerCodeTranslation(myMeasurement.Code, "G-Profact", "Measurement");
@@ -3750,13 +3788,42 @@ namespace WebFreight.Web.ReportsWebServices
                                     #region From:To Location
                                     if (myShipment.TransportModeId == "I" && myShipment.DirectionId == "D")
                                     {
-                                        if (!string.IsNullOrEmpty(myShipment.MainCarriageFromAddressId))
+                                        switch (myShipment.InlandDomesticFromTypeCode)
                                         {
-                                            Address myAddress = addressRepository.GetSingleAddress(myShipment.MainCarriageFromAddressId, tenant);
-                                            if (myAddress != null)
-                                            {
-                                                myRecord.FromLocation = myAddress.City + " " + (myAddress.Country != null ? myAddress.Country.Code : "");
-                                            }
+                                            case "PART":
+                                                {
+                                                    if (!string.IsNullOrEmpty(myShipment.MainCarriageFromAddressId))
+                                                    {
+                                                        Address myAddress = addressRepository.GetSingleAddress(myShipment.MainCarriageFromAddressId, tenant);
+                                                        if (myAddress != null)
+                                                        {
+                                                            myRecord.FromLocation = myAddress.City + " " + (myAddress.Country != null ? myAddress.Country.Code : "");
+                                                        }
+                                                    }
+                                                    break;
+                                                }
+
+                                            case "PORT":
+                                                {
+                                                    myRecord.FromLocation = myShipment.MainCarriageFromPortName;
+                                                    break;
+                                                }
+
+                                            case "CASL":
+                                                {
+                                                    myRecord.FromLocation = myShipment.InlandDomesticFromCity;
+
+                                                    if (!string.IsNullOrEmpty(myShipment.InlandDomesticFromCountryId))
+                                                    {
+                                                        CountryRepository countryRepository = new CountryRepository(tenant);
+                                                        Country country = countryRepository.GetSingleCountry(myShipment.InlandDomesticFromCountryId, tenant);
+                                                        if (country != null)
+                                                        {
+                                                            myRecord.FromLocation += " " + country.Code;
+                                                        }
+                                                    }
+                                                    break;
+                                                }
                                         }
 
                                         switch (myShipment.InlandDomesticToTypeCode)
@@ -3948,7 +4015,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
 
 
-                if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33"))
+                if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33" || satSetting.SATInterfaceCode == "PROF40"))
                 {
                     if (!string.IsNullOrEmpty(entityPOCO.SATXML))
                     {
@@ -3956,9 +4023,13 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             MapProfact32Fields(entityPOCO, invoiceDataProvider, tenantSettings);
                         }
-                        else
+                        else if (satSetting.SATInterfaceCode == "PROF33")
                         {
                             MapProfact33Fields(entityPOCO, invoiceDataProvider, tenantSettings);
+                        }
+                        else
+                        {
+                            MapProfact40Fields(entityPOCO, invoiceDataProvider, tenantSettings);
                         }
                     }
                     else

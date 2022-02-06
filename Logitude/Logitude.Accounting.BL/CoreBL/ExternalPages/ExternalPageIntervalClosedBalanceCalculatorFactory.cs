@@ -16,7 +16,8 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalPages
             this.date = date;
             this.externalPages = externalPages;
 
-            if (dateWithinAPage != null) return new DateWithingAPageClosedBalanceCalculator(date, externalPages, tenant);
+            if(dateIsInStartDateOfAPage != null) return new DateWithingAPageClosedBalanceCalculator(date, externalPages, tenant);
+            else if(dateIsInsidePage != null) return new DateWithingAPageClosedBalanceCalculator(date, externalPages, tenant);
             else if (date > LastPage.ToDate) return new DateAfterAllPagesClosedBalanceCalculator(date, externalPages, tenant);
             else if (date < FirstPage.FromDate) return new DateBeforeAllPagesClosedBalanceCalculator(date, externalPages, tenant);
             else if (MostRecentPageBeforeTheDate != null) return new DateBetweenPagesClosedBalanceCalculator(date, externalPages, tenant);
@@ -25,8 +26,11 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalPages
         }
 
 
-
-        private ReconcileExternalPage dateWithinAPage
+        private ReconcileExternalPage dateIsInStartDateOfAPage
+        {
+            get { return externalPages.FirstOrDefault(page => page.FromDate == date); }
+        }
+        private ReconcileExternalPage dateIsInsidePage
         {
             get { return externalPages.FirstOrDefault(page => page.FromDate <= date && date <= page.ToDate); }
         }

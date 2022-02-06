@@ -336,5 +336,12 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public bool IsUpdateEntityException { get; set; }
         public bool IsExceptionResolved { get; set; }
         public string LastExceptionDescription { get; set; }
+        public string EmptyContainerReturnFrom { get; set; }
+        public string EmptyContainerReturnTo { get; set; }
+        public DateTime? EmptyContainerReturnETA { get; set; }
+        public DateTime? EmptyContainerReturnETD { get; set; }
+        public DateTime? EmptyContainerReturnATD { get; set; }
+        public DateTime? EmptyContainerReturnATA { get; set; }
+
     }
 }

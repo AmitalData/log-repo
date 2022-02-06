@@ -23,6 +23,8 @@ export class CustomizationMainComponent {
     public ItemsSource1Hidden: boolean = false;
     public ItemsSource2Hidden: boolean = false;
     public IsButtonEnabled: boolean = false;
+    public IsCustomFieldsMenue: boolean = false;
+
     private myService: GeneralDomainService;
     private entityResourceService: EntityResourceService
     private CurrentSession = SessionLocator.SelectedSession;
@@ -33,6 +35,9 @@ export class CustomizationMainComponent {
         this.LoadPermessions();
     }
 
+    SetWindowArgs(args: any) {
+        this.IsCustomFieldsMenue = args.IsCustomFieldsMenue;
+    }
     private searchText: string = null;
     public get SearchText() { return this.searchText; }
     public set SearchText(value: string) {
@@ -116,6 +121,7 @@ export class CustomizationMainComponent {
     }
 
     HaveObjectTableAccess(table: ObjectTablePM): boolean {
+        if (this.IsCustomFieldsMenue) return true;
         if (!this.IsObjectTableFilterEnabled) return true;
         if (!this.IsCustomizationToggleActive) return false;
         return this.HaveFieldsCustomization(table.Name) || this.HaveRulesCustomization(table.Name);
@@ -200,7 +206,7 @@ export class CustomizationMainComponent {
                 var logWindow = new LogitudeWindow();
                 logWindow.Title = "Custom Fields: " + this.selectedRow.DefaultText;
                 logWindow.IsFillScreen_115 = true;
-                logWindow.WindowArgs = { ObjectTableId: table.Id, ObjectTableName: table.Name, MaxNumberOfCustomFields: table.MaxNumberOfCustomFields }; //this.selectedRow.ObjectTableID;
+                logWindow.WindowArgs = { ObjectTableId: table.Id, ObjectTableName: table.Name, MaxNumberOfCustomFields: table.MaxNumberOfCustomFields, IsCustomFieldsMenue: this.IsCustomFieldsMenue}; //this.selectedRow.ObjectTableID;
                 logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/CustomFieldsComponent');
             });
         }

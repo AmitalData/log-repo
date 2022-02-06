@@ -1,6 +1,7 @@
 import {ApiQueryFilters} from '../DataContracts/ApiQueryFilters';
 import {BluesnapContractListService} from '../Services/StandardLists/BluesnapContractListService';
-import {ChargesGroupListService} from '../Services/StandardLists/ChargesGroupListService';
+import { ChargesGroupListService } from '../Services/StandardLists/ChargesGroupListService';
+import { QuoteChargesGroupListService } from '../Services/StandardLists/QuoteChargesGroupListService';
 import {CustomPickListListService} from '../Services/StandardLists/CustomPickListListService';
 import {EntityStatusListService} from '../Services/StandardLists/EntityStatusListService';
 import {EventTypeListService} from '../Services/StandardLists/EventTypeListService';
@@ -58,6 +59,7 @@ import { JournalActionTypeListService } from '../../Accounting/Services/Standard
 import { BluesnapContractTypeListService } from '../Services/StandardLists/BluesnapContractTypeListService'; 
 import { HorseListService } from '../../Common/Services/StandardLists/HorseListService';
 import { PortTimeZoneListService } from '../../Common/Services/StandardLists/PortTimeZoneListService';
+import { CustomerTeamListService } from '../../Common/Services/StandardLists/CustomerTeamListService';
 
 //customs
 import {InternationalSiteListService} from '../../Customs/Services/StandardLists/InternationalSiteListService'; 
@@ -141,6 +143,7 @@ export class CachedDataManagerServices {
         switch (name) { 
             case "BluesnapContractListService": { myResult = new BluesnapContractListService(); break; }
             case "ChargesGroupListService": { myResult = new ChargesGroupListService(); break; }
+            case "QuoteChargesGroupListService": { myResult = new QuoteChargesGroupListService(); break; }
             case "CustomPickListListService": { myResult = new CustomPickListListService(); break; }
             case "EntityStatusListService": { myResult = new EntityStatusListService(); break; }
             case "EventTypeListService": { myResult = new EventTypeListService(); break; }
@@ -243,6 +246,7 @@ export class CachedDataManagerServices {
             case "ShipmentSubTypeListService": { myResult = new ShipmentSubTypeListService(); break; }
             case "HorseListService": { myResult = new HorseListService(); break; }
             case "PortTimeZoneListService": { myResult = new PortTimeZoneListService(); break; }
+            case "CustomerTeamListService": { myResult = new CustomerTeamListService(); break; }
 
             default: {
 

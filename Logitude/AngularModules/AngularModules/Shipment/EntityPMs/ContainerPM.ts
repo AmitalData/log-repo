@@ -1236,6 +1236,36 @@ export class ContainerPM {
     public set Leg5VesselId(newValue: string) { if (this.leg5VesselId != newValue) { this.leg5VesselId = newValue; this.MarkAsDirty("Leg5VesselId"); } }
        
 	 
+    private emptyContainerReturnFrom: string;
+    public get EmptyContainerReturnFrom() { return this.emptyContainerReturnFrom; }
+    public set EmptyContainerReturnFrom(newValue: string) { if (this.emptyContainerReturnFrom != newValue) { this.emptyContainerReturnFrom = newValue; this.MarkAsDirty("EmptyContainerReturnFrom"); } }
+       
+	 
+    private emptyContainerReturnTo: string;
+    public get EmptyContainerReturnTo() { return this.emptyContainerReturnTo; }
+    public set EmptyContainerReturnTo(newValue: string) { if (this.emptyContainerReturnTo != newValue) { this.emptyContainerReturnTo = newValue; this.MarkAsDirty("EmptyContainerReturnTo"); } }
+       
+	 
+    private emptyContainerReturnETA: Date;
+    public get EmptyContainerReturnETA() { return this.emptyContainerReturnETA; }
+    public set EmptyContainerReturnETA(newValue: Date) { if (this.emptyContainerReturnETA != newValue) { this.emptyContainerReturnETA = newValue; this.MarkAsDirty("EmptyContainerReturnETA"); } }
+       
+	 
+    private emptyContainerReturnETD: Date;
+    public get EmptyContainerReturnETD() { return this.emptyContainerReturnETD; }
+    public set EmptyContainerReturnETD(newValue: Date) { if (this.emptyContainerReturnETD != newValue) { this.emptyContainerReturnETD = newValue; this.MarkAsDirty("EmptyContainerReturnETD"); } }
+       
+	 
+    private emptyContainerReturnATD: Date;
+    public get EmptyContainerReturnATD() { return this.emptyContainerReturnATD; }
+    public set EmptyContainerReturnATD(newValue: Date) { if (this.emptyContainerReturnATD != newValue) { this.emptyContainerReturnATD = newValue; this.MarkAsDirty("EmptyContainerReturnATD"); } }
+       
+	 
+    private emptyContainerReturnATA: Date;
+    public get EmptyContainerReturnATA() { return this.emptyContainerReturnATA; }
+    public set EmptyContainerReturnATA(newValue: Date) { if (this.emptyContainerReturnATA != newValue) { this.emptyContainerReturnATA = newValue; this.MarkAsDirty("EmptyContainerReturnATA"); } }
+       
+	 
     private isExceptionResolved: boolean;
     public get IsExceptionResolved() { return this.isExceptionResolved; }
     public set IsExceptionResolved(newValue: boolean) { if (this.isExceptionResolved != newValue) { this.isExceptionResolved = newValue; this.MarkAsDirty("IsExceptionResolved"); } }

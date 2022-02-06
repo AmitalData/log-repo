@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter, AfterViewInit, OnDestroy, ChangeDetectorRef}  from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, AfterViewInit, OnDestroy, ChangeDetectorRef, ViewChild}  from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -15,6 +15,8 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import {BankAccountPMService} from '../../../Services/StandardPMs/BankAccountPMService';
+import { Operators } from 'Accounting/DataContracts/Operators';
+import { LogGridComponent } from 'Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent';
 
 @Component({
     templateUrl: './ManageExternalReconciliationTabComponent.html'
@@ -27,10 +29,14 @@ export class ManageExternalReconciliationTabComponent extends BaseComponent impl
     public isRTL: boolean = false;
     public CurrentEditComponentId: string;
 
+    @ViewChild('DataGrid') DataGrid:LogGridComponent;
+
     @Output() onQueryChangeEvent = new EventEmitter();
     @Output() MenuHeaderchangeevent = new EventEmitter();
     dateFilter: FilterItem;
     searchFieldFilter: FilterItem;
+    amountFieldFilter: FilterItem;
+
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private _entityListService: EntityListService = new EntityListService();
     private CurrentSession = SessionLocator.SelectedSession;
@@ -38,6 +44,23 @@ export class ManageExternalReconciliationTabComponent extends BaseComponent impl
     private LoadCompletedEvent: any = null;
     private TabSelectedEvent: any = null;
     Title: string;
+
+    operatorsList =
+    [{Code:Operators.Equals, EnglishName: 'Equals', LocalName: TextCodeTranslator.Translate("Accounting.General.O.Equals") },
+        {Code:Operators.NotEqual, EnglishName: 'Not Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.NotEqual") },
+        {Code:Operators.LargerThan, EnglishName: 'Larger Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LargerThan") },
+        {Code:Operators.LessThan, EnglishName: 'Less Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThan") },
+        {Code:Operators.LessThanOrEqual, EnglishName: 'Less Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThanOrEqual") },
+        {Code:Operators.GreaterThanOrEqual, EnglishName: 'Greater Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.GreaterThanOrEqual") },
+    ];
+    selectedAmountOperator:{Code:string, EnglishName: string, LocalName: string };
+    amount: number;
+    get Amount() { return this.amount; }
+    set Amount(value: number) {
+        if (this.amount != value) {
+            this.amount = value;
+        }
+    }
 
     showLocals:boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
@@ -189,6 +212,31 @@ export class ManageExternalReconciliationTabComponent extends BaseComponent impl
             this.RefreshButtonClicked();
         }
     }
+
+    AmountOperatorChanged($event){
+        this.selectedAmountOperator = $event
+        this.AmountTextChanged(this.Amount);
+    }
+    AmountTextChanged(num) {
+        if (!AppTool.IsNullOrEmpty(num) && !AppTool.IsNullOrEmpty(this.amount)&& this.selectedAmountOperator ) {
+            var amountFieldName = 'ReconciliationAmount';
+            this.timerToken = setTimeout(() => {
+                if (!AppTool.IsNullOrEmpty(num) && !AppTool.IsNullOrEmpty(this.amount)) {
+                    this.amountFieldFilter = new FilterItem(amountFieldName, Math.abs(num), null, null, this.selectedAmountOperator.Code, true, false, false, "number", false);
+                    this.RefreshButtonClicked();
+                } else {
+                    this.amountFieldFilter = null;
+                    this.RefreshButtonClicked();
+                }
+            }, 700);
+
+        } else {
+            this.timerToken = setTimeout(() => {
+                this.amountFieldFilter = null;
+                    this.RefreshButtonClicked();
+            }, 700);
+        }
+    }
     //#endregion
 
     //#region Data
@@ -256,6 +304,7 @@ export class ManageExternalReconciliationTabComponent extends BaseComponent impl
         sortingDir: "Descending",
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
             var tempo = this.GetRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
+            this.DataGrid.DetectChangesTimer();
             return tempo;
         },
     };
@@ -271,6 +320,9 @@ export class ManageExternalReconciliationTabComponent extends BaseComponent impl
         }
         if (this.searchFieldFilter) {
             filters.AdditionalFilters.push(this.searchFieldFilter);
+        }
+        if (this.amountFieldFilter) {
+            filters.AdditionalFilters.push(this.amountFieldFilter);
         }
 
         filters.PageSize = 50;

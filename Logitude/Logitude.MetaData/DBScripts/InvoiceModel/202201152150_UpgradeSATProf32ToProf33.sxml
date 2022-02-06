@@ -1,0 +1,12 @@
+﻿<Script DBType="Main" Module="Invoice" TargetTableName="SATInterfaceSettings">
+  <Sql Version="1">
+    <![CDATA[
+    
+    UPDATE SATInterfaceSettings SET SATInterfaceCode = 'PROF33' where SATInterfaceCode = 'PROF'
+    DELETE FROM SATInterfaces WHERE CODE='PROF'
+			
+    ]]>
+  </Sql>
+</Script>
+
+

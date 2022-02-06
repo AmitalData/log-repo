@@ -181,6 +181,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private string referenceFromShipmentId ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ReferenceFromShipmentId  
+	   {
+	    
+	     get
+		{
+		   return referenceFromShipmentId;
+		 }
+		 set
+		 {
+		   if(referenceFromShipmentId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReferenceFromShipmentId",OldValue=referenceFromShipmentId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   referenceFromShipmentId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

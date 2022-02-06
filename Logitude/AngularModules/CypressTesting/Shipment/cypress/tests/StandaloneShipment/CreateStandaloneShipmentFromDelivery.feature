@@ -1,4 +1,4 @@
-@devrelease
+@standalone @devrelease
 Feature: Create Standalone Shipment From Delivery
     The user creates a direct import ocean FCL shipment,
     create standalone shipment when delivery is from partner to port with the same countries,
@@ -42,7 +42,7 @@ Feature: Create Standalone Shipment From Delivery
 
     Scenario: Create standalone shipment when the Delivery is FullResponsibility and from partner to partner with different countries
         Given the user in the shipment's routings tab
-        And add a new Delivery leg with the following details
+        And add Standalone Shipment With delivery leg with the following details
             | FullResponsibility | True                      |
             | From               | Partner                   |
             | FromPartner        | Israeli Tenant            |

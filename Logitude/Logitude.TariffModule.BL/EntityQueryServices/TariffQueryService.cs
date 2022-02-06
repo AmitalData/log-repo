@@ -48,7 +48,9 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
             tariffsSummary.OceanLCLFreightCount = this.repository.GetAll(tenant).Where(p => p.TypeCode == "OLC").Count();
             tariffsSummary.OceanFCLFreightCount = this.repository.GetAll(tenant).Where(p => p.TypeCode == "OFC").Count();
             tariffsSummary.OceanFCLSurchargesCount = this.repository.GetAll(tenant).Where(p => p.TypeCode == "OFS").Count();
-            
+            tariffsSummary.ImportCustomsChargesCount = this.repository.GetAll(tenant).Where(p => p.TypeCode == "ICC").Count();
+            tariffsSummary.ExportCustomsChargesCount = this.repository.GetAll(tenant).Where(p => p.TypeCode == "ECC").Count();
+
             return tariffsSummary;
         }
 

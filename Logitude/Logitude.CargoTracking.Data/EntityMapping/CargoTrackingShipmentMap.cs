@@ -248,6 +248,14 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.IsOperationalClosed).HasColumnName("IsOperationalClosed");
 
             this.Property(t => t.DenyDate).HasColumnName("DenyDate");
+
+            this.Property(t => t.InvoicedDate).HasColumnName("InvoicedDate");
+
+            this.Property(t => t.InvoicedDone).HasColumnName("InvoicedDone");
+
+            this.Property(t => t.InvoicedNotes).HasColumnName("InvoicedNotes").IsMaxLength().IsUnicode(true);
+
+            this.Property(t => t.InvoicedExceptionReason).HasColumnName("InvoicedExceptionReason").IsMaxLength().IsUnicode(true);
         }
     }
 }

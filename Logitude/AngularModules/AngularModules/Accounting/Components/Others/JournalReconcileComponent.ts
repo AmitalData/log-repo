@@ -192,7 +192,24 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         }
     }
 
-    
+    dueDate: Date;
+    get DueDate() { return this.dueDate; }
+    set DueDate(value: Date) {
+        if (this.dueDate != value) {
+            
+            this.dueDate = value;
+        }
+    }
+
+    refDate: Date;
+    get RefDate() { return this.refDate; }
+    set RefDate(value: Date) {
+        if (this.refDate != value) {
+            
+            this.refDate = value;
+        }
+    }
+
     _AccountingDate: Date;
     get AccountingDate() { return this._AccountingDate; }
     set AccountingDate(value: Date) {
@@ -335,7 +352,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
 
         this._ReconciliationExtendedPMService.CreateJournalReconcile(
             myReconciliationLines,
-            this._GLAccountPMId, this.GLAccount.Id, this.AccountingDate.toUTCString(),
+            this._GLAccountPMId, this.GLAccount.Id, this.AccountingDate.toUTCString(), this.DueDate ? this.DueDate.toUTCString() : null, this.RefDate? this.RefDate.toUTCString() : null,
             this.reference1, this.reference2, this.reference3, this.Notes)
             .subscribe(
             (res:ServiceResponse) => {

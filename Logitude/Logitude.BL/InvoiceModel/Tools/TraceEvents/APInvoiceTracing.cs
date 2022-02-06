@@ -40,14 +40,21 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
 
             else if(!isCreatedAPInvoiceCopied)
             {
-                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                if(entityPM.IsEquipment != invoice.IsEquipment)
                 {
-                    Tenant = entityPM.Tenant,
-                    EventTypeCode = "UPPI",
-                    UserId = loggedContact.Id,
-                    EntityId = entityPM.Id,
-                    ObjectTableName = "APInvoice",
-                });
+                    CreateEventForUpdateIsEquipment(entityPM, invoice, loggedContact, showLocals);
+                }
+
+                else {
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "UPPI",
+                        UserId = loggedContact.Id,
+                        EntityId = entityPM.Id,
+                        ObjectTableName = "APInvoice",
+                    });
+                }
             }
 
             if (entityPM.SetApproved)
@@ -106,6 +113,19 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                 EntityId = entityPM.Id,
                 ObjectTableName = "APInvoice",
                 Notes = string.Concat(TranslateTextsClass.Translate("APInvoice.M.CopiedFromAPInvoiceNumber", entityPM.Tenant, showLocals), ' ', entityPM.CopiedFrom)
+            });
+        }
+        private static void CreateEventForUpdateIsEquipment(APInvoicePM entityPM, APInvoice invoice, ContactPM loggedContact, bool showLocals)
+        {
+            var notes = string.Concat(TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals), invoice.IsEquipment.ToString(), TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals), entityPM.IsEquipment.ToString());
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                Tenant = entityPM.Tenant,
+                EventTypeCode = "UPPI",
+                UserId = loggedContact.Id,
+                EntityId = entityPM.Id,
+                ObjectTableName = "APInvoice",
+                Notes = notes,
             });
         }
     }

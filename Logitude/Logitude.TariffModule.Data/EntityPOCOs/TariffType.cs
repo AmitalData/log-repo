@@ -30,6 +30,11 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public string TransportModeCode { get; set; }
 	      
         public virtual TransportMode TransportMode { get; set; }
+        [ForeignKey("Direction")]
+        [Column("DirectionCode")]
+	    public string DirectionCode { get; set; }
+	      
+        public virtual Direction Direction { get; set; }
     }
 }
 	 

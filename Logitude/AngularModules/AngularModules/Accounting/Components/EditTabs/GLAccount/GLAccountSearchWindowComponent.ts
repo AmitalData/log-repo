@@ -85,7 +85,6 @@ export class GLAccountSearchWindowComponent extends BaseComponent implements OnI
             filters.addAdditionalFilter("IsParent","11", null, null, "Equals", true, false, false, "string");
        // }
         filters.addAdditionalFilter("Id", this.EntityPM.Id, null, null, "Exclude", false, false, false, "string");
-        filters.addAdditionalFilter("AccountTypeCode", this.EntityPM.AccountTypeCode, null, null, "Equals", false, false, false, "string");
 
        
        return this.entityListService.getByFilters("GLAccount", filters);

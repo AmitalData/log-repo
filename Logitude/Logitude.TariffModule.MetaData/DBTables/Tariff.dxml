@@ -76,7 +76,7 @@
     Type="varchar"
     Size="15">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="CurrencyId"
@@ -352,6 +352,27 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CustomsBrokerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomsBrokerPartnerTypeId"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="UnitOfMeasurementCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
@@ -501,5 +522,15 @@
     ForeignKeyColumn="FreightChargeId"
     ReferencedTable="ChargesTypes"
     ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CustomsBrokerId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="UnitOfMeasurementCode"
+    ReferencedTable="WeightUnits"
+    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
 </Table>

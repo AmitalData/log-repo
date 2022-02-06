@@ -81,6 +81,12 @@
     <None Include="DBScripts\202005262050_FillFreightChargeTypeIdOfTariffTable.sxml" />
     <None Include="DBScripts\202006211023_SetTariffSettingDefaultCurrency.sxml" />
     <None Include="DBScripts\202009152130_AddNewTariffProducts.sxml" />
+    <None Include="DBScripts\202201301600_FillUnitOfMeasurementCodeinTariffLines.sxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DBScripts\202201301600_FillUnitOfMeasurementCode.sxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="DBScripts\202103242130_FillSellerPartnerTypeId.sxml">
       <SubType>Designer</SubType>
     </None>

@@ -2,14 +2,15 @@ import * as Actions from "../../actions/Actions";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { ContactDetails } from "../../models/ContactDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
+import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
 
-Given("the user logged in and open maintenance menu", () => {
+Given("the user logged in and open contacts menu", () => {
     cy.Login();
-    Actions.OpenMaintenanceMenu();
+    cy.Click(BaseSelectors.ContactsMenu, null)
 });
 
 Given("a contact with the following details", (dataTable) => {
-    Actions.OpenContactsList();
+    //Actions.OpenContactsList();
     Actions.OpenNewContactWizard();
     FillContactDetails(dataTable);
 });
@@ -62,7 +63,7 @@ Then("contact details should change successfully", () => {
     Actions.AssertContactDetailsValues();
 });
 
-function FillContactDetails(dataTable: any){
+function FillContactDetails(dataTable: any) {
     let contactDetails = Assists.CreateInstance<ContactDetails>(dataTable, true);
     Actions.FillContactDetails(contactDetails);
 }

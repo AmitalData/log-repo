@@ -141,6 +141,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return pocoGLAccountCard;
         }
 
+        public IQueryable<GLAccount> GetQueryAllSmallCashbookAccount(int tenant)
+        {
+            var pocoGLAccount = this.repository.GetQueryAllSmallCashbookAccount(tenant);
+            return pocoGLAccount;
+        }
+
 
 
         public List<int> GetTenantByNextDueDate(DateTime today, List<string> accountTypeCodeList)
@@ -649,6 +655,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public List<GLAccountPM> GetByDisplayNumber(string displayNumber, int tenant)
         {
             List<GLAccount> pocos = this.repository.GetByDisplayNumber(displayNumber, tenant);
+            return pocos.Select(rec => this.GetEntityPM(rec)).ToList();
+        }
+        public List<GLAccountPM> GetByDisplayNumberEnding(string displayNumberEnding, int tenant)
+        {
+            List<GLAccount> pocos = this.repository.GetByDisplayNumberEnding(displayNumberEnding, tenant);
             return pocos.Select(rec => this.GetEntityPM(rec)).ToList();
         }
 

@@ -181,6 +181,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                 LCLDefaultStepsId = d.LCLDefaultStepsId,
                                                 ContainerDefaults = d.ContainerDefaults,
                                                 DefaultCurrencyId = d.DefaultCurrencyId,
+                                                AirUnitOfMeasurementCode = d.AirUnitOfMeasurementCode,
+                                                LCLUnitOfMeasurementCode = d.LCLUnitOfMeasurementCode
                                             }).FirstOrDefault();
 
                 IInfrastructureContext iInfrastructureContext = InfrastructureContext.GetContext(entityPM.Tenant);

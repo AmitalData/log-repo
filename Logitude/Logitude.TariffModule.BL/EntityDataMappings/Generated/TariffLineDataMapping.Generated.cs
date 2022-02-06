@@ -103,7 +103,12 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Surcharge9CurrencyId, 
 	         Surcharge10CurrencyId, 
 	         ViaPortId, 
-	         ViaPortText,
+	         ViaPortText, 
+	         FromCountryId, 
+	         ToCountryId, 
+	         IsFromAllOtherCountries, 
+	         IsToAllOtherCountries, 
+	         UnitOfMeasurementCode,
 	      }
 
 
@@ -215,7 +220,16 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         ViaPortName, 
 	         ViaPortCombinedCode, 
 	         ViaPortCode, 
-	         ViaPortHasWrongTransMode,
+	         ViaPortHasWrongTransMode, 
+	         FromCountryId, 
+	         ToCountryId, 
+	         FromCountryCode, 
+	         ToCountryCode, 
+	         FromCountryName, 
+	         ToCountryName, 
+	         IsFromAllOtherCountries, 
+	         IsToAllOtherCountries, 
+	         UnitOfMeasurementCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -627,6 +641,31 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ViaPortText))
             {
 				entityPOCO.ViaPortText = entityPM.ViaPortText;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromCountryId))
+            {
+				entityPOCO.FromCountryId = entityPM.FromCountryId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToCountryId))
+            {
+				entityPOCO.ToCountryId = entityPM.ToCountryId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsFromAllOtherCountries))
+            {
+				entityPOCO.IsFromAllOtherCountries = entityPM.IsFromAllOtherCountries;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsToAllOtherCountries))
+            {
+				entityPOCO.IsToAllOtherCountries = entityPM.IsToAllOtherCountries;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnitOfMeasurementCode))
+            {
+				entityPOCO.UnitOfMeasurementCode = entityPM.UnitOfMeasurementCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1045,6 +1084,31 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.ViaPortText = entityPOCO.ViaPortText;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromCountryId))
+            {
+					entityPM.FromCountryId = entityPOCO.FromCountryId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToCountryId))
+            {
+					entityPM.ToCountryId = entityPOCO.ToCountryId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsFromAllOtherCountries))
+            {
+					entityPM.IsFromAllOtherCountries = entityPOCO.IsFromAllOtherCountries;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsToAllOtherCountries))
+            {
+					entityPM.IsToAllOtherCountries = entityPOCO.IsToAllOtherCountries;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UnitOfMeasurementCode))
+            {
+					entityPM.UnitOfMeasurementCode = entityPOCO.UnitOfMeasurementCode;
+            }
+
 		}
 
 		public void PMToOldPM(TariffLinePM entityPM, TariffLinePM oldEntityPM)
@@ -1454,6 +1518,31 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ViaPortText))
             {
                 oldEntityPM.ViaPortText = entityPM.ViaPortText;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromCountryId))
+            {
+                oldEntityPM.FromCountryId = entityPM.FromCountryId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToCountryId))
+            {
+                oldEntityPM.ToCountryId = entityPM.ToCountryId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsFromAllOtherCountries))
+            {
+                oldEntityPM.IsFromAllOtherCountries = entityPM.IsFromAllOtherCountries;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsToAllOtherCountries))
+            {
+                oldEntityPM.IsToAllOtherCountries = entityPM.IsToAllOtherCountries;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnitOfMeasurementCode))
+            {
+                oldEntityPM.UnitOfMeasurementCode = entityPM.UnitOfMeasurementCode;
             }
 			
 		}

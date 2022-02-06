@@ -60,7 +60,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 accountingContext = AccountingContext.GetContext(tenant);
                 _FullAccountingSettingPM = GetFullAccountingSettings(accountingContext, tenant);
                 ValidateFlatFile(tenant);
-                if (!this._fatal)
+                if (!this._fatal && this._goodCount > 0)
                 {
                     IAccountingContext MyContext = AccountingContext.GetContext(tenant);
 
@@ -76,53 +76,55 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         foreach (InterestTransactionSrcLineDTO itLine in _SrcLinesDTO)
                         {
-                            count++;
-                            bool errors = false;
-
-                            InterestTransactionPM newItPM = new InterestTransactionPM()
+                            if (!itLine.ErrorInLine)
                             {
-                                ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-                                Tenant = tenant,
+                                count++;
+                                bool errors = false;
 
-                                CreateDateTime = @now,
-                                UpdateDateTime = @now,
+                                InterestTransactionPM newItPM = new InterestTransactionPM()
+                                {
+                                    ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                                    Tenant = tenant,
 
-                                GLAccountId = itLine.GLAccountId,
-                                InterestEntityTypeCode = "3", //(Journal)
-                                EntityId = itLine.JournalId,
-                                OriginalEntityLineNumber = itLine.JournalLineNumber,
+                                    CreateDateTime = @now,
+                                    UpdateDateTime = @now,
 
-                                AccountEntityCode = null,
-                                ForeignAmount = itLine.ForeignAmount,
-                                LocalAmount = itLine.LocalAmount,
-                                CurrencyId = itLine.CurrencyId,
+                                    GLAccountId = itLine.GLAccountId,
+                                    InterestEntityTypeCode = "3", //(Journal)
+                                    EntityId = itLine.JournalId,
+                                    OriginalEntityLineNumber = itLine.JournalLineNumber,
 
-                                InterestValueDate = itLine.InterestValueDate,
-                                IsCancelled = false,
-                                IsClosed = false,
-                            };
+                                    AccountEntityCode = null,
+                                    ForeignAmount = itLine.ForeignAmount,
+                                    LocalAmount = itLine.LocalAmount,
+                                    CurrencyId = itLine.CurrencyId,
 
-
-
-
-
+                                    InterestValueDate = itLine.InterestValueDate,
+                                    IsCancelled = false,
+                                    IsClosed = false,
+                                };
 
 
-                            var itSvc = new InterestTransactionUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
-                            itSvc.Update(newItPM, true);
+
+
+
+
+
+                                var itSvc = new InterestTransactionUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
+                                itSvc.Update(newItPM, true);
+                            }
 
                         }
 
+                        String errorLines = "";
                         if (MyCSVFlatFileLoadResult.ErrorRowList.Count > 0)
                         {
-                            string text_1 = MyCSVFlatFileLoadResult.ErrorRowList.FirstOrDefault();
-                            throw new ApplicationException($"{text_1}");
+                            MyCSVFlatFileLoadResult.ErrorRowList.ForEach(item => errorLines += item.ToString() + "\n");
                         }
-                        //    if (MyFlatFileLoadResult.ExceptionVendorList.Count > 0)
-                        //    {
-                        //        string text = MyFlatFileLoadResult.ExceptionVendorList.FirstOrDefault();
-                        //        throw new ApplicationException($"{text}");
-                        //    }
+                        if (!String.IsNullOrEmpty(errorLines))
+                        {
+                            throw new ApplicationException($"{errorLines}");
+                        }
                         scope.Complete();
 
                     }
@@ -175,7 +177,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private List<InterestTransactionSrcLineDTO> CreateJournalSrcLinesDTOFromFile(string FileContent, out int? tenant)
         {
             tenant = null;
-            bool reading_Lines = false;
+     //       bool reading_Lines = false;
             bool finished = false;
             var interestSrcLines = new List<InterestTransactionSrcLineDTO>();
             var lines = FileContent.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
@@ -191,19 +193,19 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     continue;// remark do nothing ...
                 }
-                var rowtype = rawLine.Split(',')[0];///.Substring(0, 1);
-
-                if (!reading_Lines)
-                {
-                    reading_Lines = true;
-                    continue;
-                }
-                else if (InterestTransactionSrcLineDTO.RowType.Contains(rowtype))
-                {
-                    if (!reading_Lines)
-                    {
-                        reading_Lines = true;
-                    }
+     //           var rowtype = rawLine.Split(',')[0];///.Substring(0, 1);
+//
+     //           if (!reading_Lines)
+     //           {
+     //               reading_Lines = true;
+     //               continue;
+     //           }
+     //           else if (InterestTransactionSrcLineDTO.RowType.Contains(rowtype))
+     //           {
+      //              if (!reading_Lines)
+      //              {
+      //                  reading_Lines = true;
+       //             }
                     string accountingCurrencyId = "";
                     if (tenant.HasValue)
                     {
@@ -214,13 +216,13 @@ namespace Logitude.Accounting.BL.CoreBL
                     InterestTransactionSrcLineDTO interestLine = InterestTransactionSrcLineDTO.Create(rawLine, accountingCurrencyId);
                     interestSrcLines.Add(interestLine);
 
-                }
-                else
-                {
-                    string text = TranslateTextsClassTranslate("InterestTransactionsCSV.O.NotValidRowType", 0, useLocal);
-                    if (String.IsNullOrEmpty(text)) text = "Not a valid Row Type";
-                    throw new ApplicationException($"{text}  {rawLine}");
-                }
+     //           }
+     //           else
+     //           {
+     //               string text = TranslateTextsClassTranslate("InterestTransactionsCSV.O.NotValidRowType", 0, useLocal);
+     //               if (String.IsNullOrEmpty(text)) text = "Not a valid Row Type";
+     //               throw new ApplicationException($"{text}  {rawLine}");
+     //           }
                 if (finished)
                 {
                     break;
@@ -237,7 +239,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (date == DateTime.MinValue)
             {
                 throw new
-                    Exception($"{fieldname} should be  yyyyMMddHHmm  Substring({pos}) ={txtDateTime}  ");
+                    Exception($"{fieldname} should be in the {@format} format, while Substring({pos}) ={rawLine}  ");
             }
 
             return date;
@@ -361,14 +363,14 @@ namespace Logitude.Accounting.BL.CoreBL
                             foreach (JournalLinePM journalLine in journalPM.JournalLines)
                             {
                                 if ((journalLine.ActionCode == "1" || journalLine.ActionCode == "3") && itLine.CreditAmount != 0m && journalLine.CreditAccountId == itLine.GLAccountId
-                                    && (journalLine.Reference1 == itLine.Rererence || journalLine.Reference2 == itLine.Rererence || String.IsNullOrWhiteSpace(itLine.Rererence)))
+                                    && (journalLine.Reference1 == itLine.Reference || journalLine.Reference2 == itLine.Reference || String.IsNullOrWhiteSpace(itLine.Reference)))
                                 {
                                     lineFound = true;
                                     jlPM = journalLine;
                                     break;
                                 }
                                 else if ((journalLine.ActionCode == "2" || journalLine.ActionCode == "3") && itLine.DebitAmount != 0m && journalLine.DebitAccountId == itLine.GLAccountId
-                                    && (journalLine.Reference1 == itLine.Rererence || journalLine.Reference2 == itLine.Rererence || String.IsNullOrWhiteSpace(itLine.Rererence)))
+                                    && (journalLine.Reference1 == itLine.Reference || journalLine.Reference2 == itLine.Reference || String.IsNullOrWhiteSpace(itLine.Reference)))
                                 {
                                     lineFound = true;
                                     jlPM = journalLine;
@@ -446,8 +448,8 @@ namespace Logitude.Accounting.BL.CoreBL
     class Opening_LineDTO_ITCSV
     {
         //public const string RowType = "ס"; // סוג כרטיס,... 
-        public static List<String> RowType = new List<String>(new string[]
-            { "ס", "A", "DebitCredit"});
+    //    public static List<String> RowType = new List<String>(new string[]
+    //        { "ס", "A", "DebitCredit"});
         public string RawLine { get; set; }
         private const bool useLocal = true;
 
@@ -459,75 +461,37 @@ namespace Logitude.Accounting.BL.CoreBL
         internal static Opening_LineDTO_ITCSV Create(string rawLine)
         {
 
-            rawLine = rawLine ?? "";
-            bool startsWithRowTypeOk = false;
-            string actualRowType = "";
-            if (rawLine.Length >= 1)
-            {
-                actualRowType = rawLine.Split(',')[0]; ////rawLine.Substring(0, 1);
-                if (RowType.Contains(actualRowType) || (actualRowType.Length >= 1 && RowType.Contains(actualRowType.Substring(0, 1)))) startsWithRowTypeOk = true;
-            }
+    //        rawLine = rawLine ?? "";
+    //        bool startsWithRowTypeOk = false;
+    //        string actualRowType = "";
+    //        if (rawLine.Length >= 1)
+     //       {
+     //           actualRowType = rawLine.Split(',')[0]; ////rawLine.Substring(0, 1);
+     //           if (RowType.Contains(actualRowType) || (actualRowType.Length >= 1 && RowType.Contains(actualRowType.Substring(0, 1)))) startsWithRowTypeOk = true;
+     //       }
 
-            if (!startsWithRowTypeOk || actualRowType == "")
-            {
-                string text = TranslateTextsClassTranslate("InterestTransactionsCSV.O.DoesntStartWithHeaderLine", 0, useLocal);
-                if (String.IsNullOrEmpty(text)) text = "does not start with a Header Line";
-                throw new ApplicationException($"{text} {RowType} ");
-            }
+    //        if (!startsWithRowTypeOk || actualRowType == "")
+    //        {
+    //            string text = TranslateTextsClassTranslate("InterestTransactionsCSV.O.DoesntStartWithHeaderLine", 0, useLocal);
+    //            if (String.IsNullOrEmpty(text)) text = "does not start with a Header Line";
+    //            throw new ApplicationException($"{text} {RowType} ");
+     //       }
 
             var rec = new Opening_LineDTO_ITCSV();
-            rec.RawLine = rawLine;
+           rec.RawLine = rawLine;
             return rec;
         }
     }
 
-    //class Closing_LineDTO
-    //{
-    //    public const string RowType = "X";
-    //    private const bool useLocal = true;
-
-    //    public static string TranslateTextsClassTranslate(string textCodeCode, int tenant, bool getLocalDefaultText)
-    //    {
-    //        return TranslateTextsClass.Translate(textCodeCode, tenant, getLocalDefaultText);
-    //    }
-
-    //    public string RawLine { get; set; }
-    //    //public string DeductionFileNum { get; private set; }
-
-    //    //public long TotalVendorNumber { get; set; }
-    //    //public long TotalValidRecords { get; set; }
-    //    //public long TotalInvalidRecords { get; set; }
-
-    //    internal static Closing_LineDTO Create(string rawLine)
-    //    {
-
-    //        rawLine = rawLine ?? "";
-    //        if (!rawLine.StartsWith(RowType))
-    //        {
-    //            string text = TranslateTextsClassTranslate("InterestTransactionsCSV.O.DoesntStartWithRowType", 0, useLocal);
-    //            throw new ApplicationException($"{text} {RowType} ");
-    //        }
-
-    //        var rec = new Closing_LineDTO();
-    //        rec.RawLine = rawLine;
-    //        //rec.DeductionFileNum = rawLine.Substring(2 - 1, 9);
-
-    //        //rec.TotalVendorNumber = long.Parse(rawLine.Substring(11 - 1, 4));
-    //        //rec.TotalValidRecords = long.Parse(rawLine.Substring(15 - 1, 4));
-    //        //rec.TotalInvalidRecords = long.Parse(rawLine.Substring(19 - 1, 4));
-
-
-    //        return rec;
-    //    }
-    //}
+    
 
 
 
 
     class InterestTransactionSrcLineDTO
     {
-        public static List<String> RowType = new List<String>(new string[]
-            { "d", "c", "D", "C", "ז", "ח", "1", "2", "3"});
+  //      public static List<String> RowType = new List<String>(new string[]
+  //          { "d", "c", "D", "C", "ז", "ח", "1", "2", "3"});
 
         public const string _EmptyDate = "00000000";
         private const bool useLocal = true;
@@ -556,7 +520,7 @@ namespace Logitude.Accounting.BL.CoreBL
         public decimal CreditAmount { get; private set; }
         public decimal LocalAmount { get; private set; }
         public decimal ForeignAmount { get; private set; }
-        public string Rererence { get; private set; }
+        public string Reference { get; private set; }
         public string Remarks { get; private set; }
         public string ExternalNumber { get; private set; }
 
@@ -605,7 +569,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             if (count > 2)
             {
-                txtDateTime = values[2].TrimEnd(' ');
+                txtDateTime = values[2].TrimEnd(' ').Replace('/','.');
                 if (txtDateTime.Length >= 10)
                 {
                     txtDateTime = txtDateTime.Substring(0, 10);
@@ -670,7 +634,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             if (count > 6)
             {
-                rec.Rererence = values[6];
+                rec.Reference = values[6];
             }
 
             if (count > 7)
@@ -681,7 +645,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             if (count > 8)
             {
-                txtDateTime = values[8].TrimEnd(' ');
+                txtDateTime = values[8].TrimEnd(' ').Replace('/', '.');
                 if (txtDateTime.Length >= 10)
                 {
                     txtDateTime = txtDateTime.Substring(0, 10);

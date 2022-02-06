@@ -561,21 +561,26 @@ export class EditComponent implements OnDestroy {
                 myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === myObjectTableId);
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
+
             else {
-
                 myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "APPayment.HeaderScreen")[0];
-
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
         }
+
         else if (this.ObjectTableName == "APInvoice") {
             this.GenerateAPInvoiceHeader(myHeaderScreen, myObjectFields);
-
-
         }
+
         else if (this.ObjectTableName == "Tariff") {
             if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
                 myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code == "Tariff.SurchagesHeaderScreen")[0];
+                myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === this.ObjectTableId);
+                this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
+            }
+
+            else if (this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "ICC") {
+                myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code == "Tariff.CustomsChargesHeaderScreen")[0];
                 myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === this.ObjectTableId);
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
@@ -586,40 +591,10 @@ export class EditComponent implements OnDestroy {
             }
         }
 
-        //else if (this.ObjectTableName == "Customs.Declaration") {
-        //    if (this.EntityPM.IsCourierDeclaration == true) {
-        //        this._entityResourceService.getEntityResourceByTableName("Customs.CourierDeclaration", 0).subscribe((response:any) => {
-        //            var myObjectTable = window.ObjectTables.filter(x => x.Name === "Customs.CourierDeclaration")[0];
-        //            var myObjectTableId = myObjectTable.Id;
-
-        //            myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code.indexOf("HeaderScreen") != -1)[0];
-        //            myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === myObjectTableId);
-        //            this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
-        //        });
-        //    }
-        //    else {
-        //        this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
-        //    }
-        //}
-
         else {
             this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     private GenerateAPInvoiceHeader(headerScreen:any, objectFields:any) {
 

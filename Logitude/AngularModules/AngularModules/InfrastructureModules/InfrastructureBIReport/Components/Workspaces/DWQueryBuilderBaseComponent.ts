@@ -282,6 +282,41 @@ export class ValueDetails {
     public Header: string;
     public Row: string;
 }
+ 
+
+export class DWFactsGroup {
+    constructor(Key: string, FieldsList: any[]) {
+        this.Key = Key;
+        this.FieldsList = FieldsList;
+    }
+
+    private key: string;
+    public get Key() { return this.key; }
+    public set Key(newValue: string) { this.key = newValue; }
+
+    private fieldsList: any[];
+    public get FieldsList() { return this.fieldsList; }
+    public set FieldsList(newValue: any[]) { this.fieldsList = newValue; }
+
+    private detailsIcon: string = "./Images/CellIcons/Arrowup.png";
+    public get DetailsIcon() { return this.detailsIcon; }
+    public set DetailsIcon(newValue: string) { this.detailsIcon = newValue; }
+
+    private isDetailesOpened: boolean = false;
+    public get IsDetailesOpened() { return this.isDetailesOpened; }
+    public set IsDetailesOpened(newValue: boolean) { this.isDetailesOpened = newValue; }
+
+    GroupClicked() {
+        this.IsDetailesOpened = !this.IsDetailesOpened;
+        if (!this.IsDetailesOpened) {
+            this.DetailsIcon = "./Images/CellIcons/Arrowdown.png";
+        }
+        else {
+            this.DetailsIcon = "./Images/CellIcons/Arrowup.png";
+        }
+    }
+}
+
 
 export class DWFieldsGroup {
     constructor(Key: string, FieldsList: any[]) {
@@ -292,6 +327,10 @@ export class DWFieldsGroup {
     private key: string;
     public get Key() { return this.key; }
     public set Key(newValue: string) { this.key = newValue; }
+
+    private fact: string;
+    public get Fact() { return this.fact; }
+    public set Fact(newValue: string) { this.fact = newValue; }
 
     private fieldsList: any[];
     public get FieldsList() { return this.fieldsList; }
@@ -384,7 +423,9 @@ export class DWObjectFieldsDetails
             this.IsPrimaryKey = DWObjectField.IsPrimaryKey;
             this.IsMeasurement = DWObjectField.IsMeasurement;
             this.AggregationTypeCode = DWObjectField.AggregationTypeCode;
-            this.IsCustom = DWObjectField.IsCustom;
+            this.IsCustom = DWObjectField.IsCustom; 
+           //this.Code = DWObjectField.Code;
+
             if (DWObjectField.FilterType) {
                 this.FilterType = DWObjectField.FilterType;
             }
@@ -559,7 +600,7 @@ export class DWObjectFieldsDetails
 
                 this.TranslationText = this.GetTranslationText(this);
                 this.DisplayName = this.ComputeDisplayName(this);//(AppTool.IsNullOrEmpty(this.DisplayName)) ? (this.DWObjectTableCode + ' ' + this.Code) : (this.DisplayName);
-                this.ParentDimTabelName = this.DimensionTableCode;
+                this.ParentDimTabelName = this.DimensionTableCode; 
                 if (!AppTool.IsNullOrEmpty(this.DimensionTableDisplayName)) {
                     this.DimensionTableDisplayName = this.DimensionTableDisplayName;
                 }
@@ -1003,7 +1044,7 @@ export class DWObjectFieldsDetails
         this.DataTypeCode = DWObjectField.DataTypeCode;
         this.DimensionTableCode = DWObjectField.DimensionTableCode;
         this.TranslationText = this.GetTranslationText(DWObjectField);
-        this.DisplayName = this.ComputeDisplayName(DWObjectField);//(AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) ? (DWObjectField.DWObjectTableCode + ' ' + DWObjectField.Code) : (DWObjectField.DisplayName);
+        this.DisplayName = this.ComputeDisplayName(DWObjectField);//(AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) ? (DWObjectField.DWObjectTableCode + ' ' + DWObjectField.Code) : (DWObjectField.DisplayName); 
 
         if (!AppTool.IsNullOrEmpty(DWObjectField.DimensionTableDisplayName)) {
             this.DimensionTableDisplayName = DWObjectField.DimensionTableDisplayName;

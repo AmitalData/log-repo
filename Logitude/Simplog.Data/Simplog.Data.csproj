@@ -182,6 +182,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\ChargesExternalAccountsByProduct.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CheckDigitControlAlgorithm.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CreditLimitSetting.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\CustomerTeam.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerOpenFilesAmount.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\DWHEnvironmentSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\Horse.cs" />
@@ -189,6 +190,12 @@
     <Compile Include="CommonDataModel\EntityPOCOs\PortTimeZone.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\ProductItem.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CargoTenantMilestoneDefinition.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\PostalCode.cs" />
+    <Compile Include="CommonDataModel\Mapping\CustomerTeamMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\PostalCodeMap.cs" />
+    <Compile Include="CommonDataModel\Repositories\CustomerTeamRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\PostalCodeRepository.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\QuoteChargesType.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TariffCarrierTranslation.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UnassignedEntity.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UserLastSettings.cs" />
@@ -363,6 +370,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\UserLicense.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UserPermittedProduct.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UsersReleaseNotesDisplay.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\RegimenFiscal.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UsoCFDI.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\VatFormatType.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\VATTypesGroup.cs" />
@@ -480,6 +488,7 @@
     <Compile Include="CommonDataModel\Mapping\UserLicenseMap.cs" />
     <Compile Include="CommonDataModel\Mapping\UserPermittedProductMap.cs" />
     <Compile Include="CommonDataModel\Mapping\UsersReleaseNotesDisplayMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\RegimenFiscalMap.cs" />
     <Compile Include="CommonDataModel\Mapping\UsoCFDIMap.cs" />
     <Compile Include="CommonDataModel\Mapping\VatFormatTypeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\VATTypesGroupMap.cs" />
@@ -581,6 +590,7 @@
     <Compile Include="CommonDataModel\Repositories\NumberFormatRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\UsersReleaseNotesDisplayRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AccountingPartnerRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\RegimenFiscalRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\VatUniquePartnerTypeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\WarehouseStoragePricingRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\WarehouseTypeRepository.cs" />
@@ -620,6 +630,7 @@
     <Compile Include="InfrastructureModel\Mapping\EntityStatusTypeMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\MultiEntityUpdateLogMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\QueryExportExecutionLogMap.cs" />
+    <Compile Include="InfrastructureModel\Mapping\QuoteChargesGroupMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\WokerRoleNameMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWSubQueryMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\RuleUpdateHistoryMap.cs" />
@@ -635,6 +646,7 @@
     <Compile Include="InfrastructureModel\Repositories\EntityStatusTypeRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\MultiEntityUpdateLogRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\QueryExportExecutionLogRepository.cs" />
+    <Compile Include="InfrastructureModel\Repositories\QuoteChargesGroupRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\WorkerRoleNameRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWSubQueryRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWQueryRepository.cs" />

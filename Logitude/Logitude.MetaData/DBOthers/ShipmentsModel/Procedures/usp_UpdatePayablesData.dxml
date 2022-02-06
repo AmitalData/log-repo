@@ -812,8 +812,8 @@ BEGIN
 									@HouseId,
 									@HousePayableId,
 									@ProrateInvoiceId,
-									@ProrateAmountInLocalCurrency,
-									@ProrateAmountInProfitCurrency
+									isnull(@ProrateAmountInLocalCurrency,0),
+									isnull(@ProrateAmountInProfitCurrency,0)
 									)                         
 								end 
 								
@@ -1154,8 +1154,8 @@ BEGIN
 									@HouseId,
 									@HousePayableId,
 									@ProrateInvoiceId,
-									@ProrateAmountInLocalCurrency,
-									@ProrateAmountInProfitCurrency
+									isnull(@ProrateAmountInLocalCurrency,0),
+									isnull(@ProrateAmountInProfitCurrency,0)
 									)
 								end
 
@@ -1483,8 +1483,8 @@ BEGIN
 									@HouseId,
 									@HousePayableId,
 									@ProrateInvoiceId,
-									@ProrateAmountInLocalCurrency,
-									@ProrateAmountInProfitCurrency
+									isnull(@ProrateAmountInLocalCurrency,0),
+									isnull(@ProrateAmountInProfitCurrency,0)
 									)
 									end
 								FETCH NEXT FROM ProrateCursor INTO @LocalForeignAmount, @ProfitForeignAmount, @ProrateInvoiceId

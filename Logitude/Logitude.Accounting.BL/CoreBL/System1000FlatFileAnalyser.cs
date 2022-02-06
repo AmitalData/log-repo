@@ -4,6 +4,8 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityKeys;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -121,7 +123,9 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             GLAccountWithholdingTaxQueryService gLAccountWithholdingTaxQueryService = new GLAccountWithholdingTaxQueryService(tenant);
             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(MyContext);
 
+            bool to_do = true;
             string vendorStripped = vendorLineDTO.VendorCode.TrimStart('0');
             string sentVatStripped = vendorLineDTO.SentVATNum.TrimStart('0');
             string locatedVatStripped = vendorLineDTO.LocatedVATNum.TrimStart('0');
@@ -129,81 +133,127 @@ namespace Logitude.Accounting.BL.CoreBL
                     && (p.VatNumber.Replace(" ", "").EndsWith(sentVatStripped) || p.VatNumber.Replace(" ", "").EndsWith(locatedVatStripped))).FirstOrDefault();
             if (oneVendor == null)
             {
-                string text_44 = TranslateTextsClassTranslate("System1000.O.NotFound", 0, useLocal);
-                string text_2 = TranslateTextsClassTranslate("System1000.O.VendorNo", 0, useLocal);
-                MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.Add($"{text_2} {vendorLineDTO.VendorCode} {text_44} ");
-                return;
-            }
-
-            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(MyContext);
-            GLAccountUpdateService gLAccountUpdateService = new GLAccountUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
-
-            GLAccountPM gLAccountPM = gLAccountQueryService.GetSinglePM(oneVendor.Id, oneVendor.Tenant);
-            if (gLAccountPM == null)
-            {
-                string text_44 = TranslateTextsClassTranslate("System1000.O.NotFound", 0, useLocal);
-                string text_2 = TranslateTextsClassTranslate("System1000.O.VendorNo", 0, useLocal);
-                string text_acc = TranslateTextsClassTranslate("GLTransactionReport.O.GLAccountNo", 0, useLocal);
-                MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.Add($"{text_2} {vendorLineDTO.VendorCode} - {text_acc} {text_44} ");
-                return;
-            }
-
-            gLAccountQueryService.GetComposition(new GLAccountKeys() { Id = oneVendor.Id }, gLAccountPM);
-
-
-            if (vendorLineDTO.DeductionPercentage == 100m) // 100m = no deduction  
-            {
-                // De-activate all current and future lines 
-                DateTime date = DateTime.Today;
-                gLAccountPM.GLAccountWithholdingTaxes.ForEach(taxLine => 
+                List<GLAccountPM> gLAccountPMList = gLAccountQueryService.GetByDisplayNumberEnding(vendorLineDTO.VendorCode, tenant);
+                if (gLAccountPMList != null)
                 {
-                     if (!taxLine.Inactive && ((taxLine.FromDate < date && (taxLine.ToDate > date || taxLine.ToDate == date)) || taxLine.FromDate == date || taxLine.FromDate > date))
-                     {
-                        taxLine.Inactive = true;
-                        taxLine.Changed = true;
-                        taxLine.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                        taxLine.CurrentContextTag = GLAccountWithholdingTaxUpdateService.RaiseEventWBLKConst;
-                        this.AddSuccessUpdateVendorLine(taxLine, vendorLineDTO);
-                        gLAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                    GLAccountPM oneGoodGLAccountPM = gLAccountPMList.Where(p => !p.ExcludeFromDeductionReport && !p.Smallcashbook).FirstOrDefault();
+                    if (oneGoodGLAccountPM == null)
+                    {
+                        to_do = false;
                     }
-                });
-                gLAccountUpdateService.Update(gLAccountPM, true);
-           }
-            else
+                    else
+                    {
+                        CardQuery cardQueryService = new CardQuery(tenant);
+                        List<CardList> cardListList = cardQueryService.GetAllCardsByGLAccount(oneGoodGLAccountPM.Id, tenant);
+                        if (cardListList != null)
+                        {
+                            List<CardList> goodCardListList = cardListList.Where(c => c.CountryCode == "IL").ToList<CardList>();
+                            if (goodCardListList == null)
+                            {
+                                to_do = false;
+                            }
+                            else
+                            {
+                                if (goodCardListList.Where(c => (c.VatNumber.Replace(" ", "").EndsWith(sentVatStripped) || c.VatNumber.Replace(" ", "").EndsWith(locatedVatStripped))).FirstOrDefault() != null)
+                                {
+                                    // must not get there
+                                    string text_441 = TranslateTextsClassTranslate("System1000.O.NotFound", 0, useLocal);
+                                    string text_21 = TranslateTextsClassTranslate("System1000.O.VendorNo", 0, useLocal);
+                                    MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.Add($"{text_21} {vendorLineDTO.VendorCode} {text_441} (Code 1)");
+                                    return;
+                                }
+                                else
+                                {
+                                    string vatNumberinDB = goodCardListList.FirstOrDefault().VatNumber;
+                                    string text_442 = TranslateTextsClassTranslate("System1000.O.FoundVatNumber", 0, useLocal);
+                                    string text_22 = TranslateTextsClassTranslate("System1000.O.VendorNo", 0, useLocal);
+                                    MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.Add($"{text_22} {vendorLineDTO.VendorCode} {text_442} [{vatNumberinDB}]");
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (to_do)
             {
-                // If there is a row with the same data in with the same values, do not create a new line.
-                GLAccountWithholdingTaxPM existingLine = gLAccountPM.GLAccountWithholdingTaxes.Where(a => !a.Inactive && (vendorLineDTO.StartDate.HasValue && a.FromDate == vendorLineDTO.StartDate.Value)
-                                                && (vendorLineDTO.EndDate.HasValue && a.ToDate == vendorLineDTO.EndDate.Value)).FirstOrDefault();
-                if (existingLine != null && existingLine.Percentage == vendorLineDTO.DeductionPercentage)
+                if (oneVendor == null)
                 {
-                    // do nothing;
+                    string text_44 = TranslateTextsClassTranslate("System1000.O.NotFound", 0, useLocal);
+                    string text_2 = TranslateTextsClassTranslate("System1000.O.VendorNo", 0, useLocal);
+                    MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.Add($"{text_2} {vendorLineDTO.VendorCode} {text_44} ");
+                    return;
+                }
+                GLAccountPM gLAccountPM = gLAccountQueryService.GetSinglePM(oneVendor.Id, oneVendor.Tenant);
+                if (gLAccountPM == null)
+                {
+                    string text_44 = TranslateTextsClassTranslate("System1000.O.NotFound", 0, useLocal);
+                    string text_2 = TranslateTextsClassTranslate("System1000.O.VendorNo", 0, useLocal);
+                    string text_acc = TranslateTextsClassTranslate("GLTransactionReport.O.GLAccountNo", 0, useLocal);
+                    MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.Add($"{text_2} {vendorLineDTO.VendorCode} - {text_acc} {text_44} ");
+                    return;
+                }
+
+                GLAccountUpdateService gLAccountUpdateService = new GLAccountUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+
+
+                gLAccountQueryService.GetComposition(new GLAccountKeys() { Id = oneVendor.Id }, gLAccountPM);
+
+
+                if (vendorLineDTO.DeductionPercentage == 100m) // 100m = no deduction  
+                {
+                    // De-activate all current and future lines 
+                    DateTime date = DateTime.Today;
+                    gLAccountPM.GLAccountWithholdingTaxes.ForEach(taxLine =>
+                    {
+                        if (!taxLine.Inactive && ((taxLine.FromDate < date && (taxLine.ToDate > date || taxLine.ToDate == date)) || taxLine.FromDate == date || taxLine.FromDate > date))
+                        {
+                            taxLine.Inactive = true;
+                            taxLine.Changed = true;
+                            taxLine.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                            taxLine.CurrentContextTag = GLAccountWithholdingTaxUpdateService.RaiseEventWBLKConst;
+                            this.AddSuccessUpdateVendorLine(taxLine, vendorLineDTO);
+                            gLAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                        }
+                    });
+                    gLAccountUpdateService.Update(gLAccountPM, true);
                 }
                 else
                 {
-                    // De-activate all overlapping lines 
-                    gLAccountPM.GLAccountWithholdingTaxes.ForEach(overLine =>
+                    // If there is a row with the same data in with the same values, do not create a new line.
+                    GLAccountWithholdingTaxPM existingLine = gLAccountPM.GLAccountWithholdingTaxes.Where(a => !a.Inactive && (vendorLineDTO.StartDate.HasValue && a.FromDate == vendorLineDTO.StartDate.Value)
+                                                    && (vendorLineDTO.EndDate.HasValue && a.ToDate == vendorLineDTO.EndDate.Value)).FirstOrDefault();
+                    if (existingLine != null && existingLine.Percentage == vendorLineDTO.DeductionPercentage)
                     {
-                        if (!overLine.Inactive && (!((vendorLineDTO.EndDate.HasValue && overLine.FromDate > vendorLineDTO.EndDate.Value)
-                                                || (vendorLineDTO.StartDate.HasValue && overLine.ToDate < vendorLineDTO.StartDate.Value))) )
+                        // do nothing;
+                    }
+                    else
+                    {
+                        // De-activate all overlapping lines 
+                        gLAccountPM.GLAccountWithholdingTaxes.ForEach(overLine =>
                         {
-                            overLine.Inactive = true;
-                            overLine.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                            overLine.Changed = true;
-                            overLine.CurrentContextTag = GLAccountWithholdingTaxUpdateService.RaiseEventWLDAConst;
-                            this.AddSuccessUpdateVendorLine(overLine, vendorLineDTO);
-                        }
-                    });
+                            if (!overLine.Inactive && (!((vendorLineDTO.EndDate.HasValue && overLine.FromDate > vendorLineDTO.EndDate.Value)
+                                                    || (vendorLineDTO.StartDate.HasValue && overLine.ToDate < vendorLineDTO.StartDate.Value))))
+                            {
+                                overLine.Inactive = true;
+                                overLine.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                                overLine.Changed = true;
+                                overLine.CurrentContextTag = GLAccountWithholdingTaxUpdateService.RaiseEventWLDAConst;
+                                this.AddSuccessUpdateVendorLine(overLine, vendorLineDTO);
+                            }
+                        });
 
 
 
-                    GLAccountWithholdingTaxPM newLine = CreateNewLineFromDTO(vendorLineDTO, oneVendor);
-                    newLine.CurrentContextTag = GLAccountWithholdingTaxUpdateService.RaiseEventAWNCConst;
-                    newLine.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-                    gLAccountPM.GLAccountWithholdingTaxes.Add(newLine);
-                    gLAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                    this.AddSuccessInsertVendorLine(newLine, vendorLineDTO);
-                    gLAccountUpdateService.Update(gLAccountPM, true);
-               }
+                        GLAccountWithholdingTaxPM newLine = CreateNewLineFromDTO(vendorLineDTO, oneVendor);
+                        newLine.CurrentContextTag = GLAccountWithholdingTaxUpdateService.RaiseEventAWNCConst;
+                        newLine.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                        gLAccountPM.GLAccountWithholdingTaxes.Add(newLine);
+                        gLAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                        this.AddSuccessInsertVendorLine(newLine, vendorLineDTO);
+                        gLAccountUpdateService.Update(gLAccountPM, true);
+                    }
+                }
             }
         }
 
@@ -428,12 +478,12 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private void AddSuccessInsertVendorLine(GLAccountWithholdingTaxPM entityPM, VendorLineDTO newVendorLine)
         {
-            this.MyResultLoadFlatFile.SuccessVendorList.Add($"Success insert Vendor Number:{newVendorLine.VendorCode} / Rate {newVendorLine.DeductionPercentage} / From {newVendorLine.StartDate} / To {newVendorLine.EndDate} =new DbId:{entityPM.Id}/DBFromDate:{entityPM.FromDate}  ");
+            this.MyResultLoadFlatFile.SuccessVendorList.Add($"Success insert Vendor Number:{newVendorLine.VendorCode}-{newVendorLine.VendorName} / Rate {newVendorLine.DeductionPercentage} / From {newVendorLine.StartDate} / To {newVendorLine.EndDate} =new DbId:{entityPM.Id}/DBFromDate:{entityPM.FromDate}  ");
         }
 
         private void AddSuccessUpdateVendorLine(GLAccountWithholdingTaxPM entityPM, VendorLineDTO newVendorLine)
         {
-            this.MyResultLoadFlatFile.SuccessVendorList.Add($"Success insert Vendor Number:{newVendorLine.VendorCode} / Rate {newVendorLine.DeductionPercentage} / From {newVendorLine.StartDate} / To {newVendorLine.EndDate} =new DbId:{entityPM.Id}/DBFromDate:{entityPM.FromDate}  ");
+            this.MyResultLoadFlatFile.SuccessVendorList.Add($"Success update Vendor Number:{newVendorLine.VendorCode}-{newVendorLine.VendorName} / Rate {newVendorLine.DeductionPercentage} / From {newVendorLine.StartDate} / To {newVendorLine.EndDate} =new DbId:{entityPM.Id}/DBFromDate:{entityPM.FromDate}  ");
         }
 
         private List<VendorLineDTO> CreateVendorLinesDTOFromFile(string FileContent, out int? tenant)

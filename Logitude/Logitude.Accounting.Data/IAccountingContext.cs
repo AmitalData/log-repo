@@ -19,6 +19,7 @@ namespace Logitude.Accounting.Data
    
        	 IDbSet<AccountingCompanyType> AccountingCompanyTypes { get; }
 		 IDbSet<AccountingEntity> AccountingEntities { get; }
+		 IDbSet<AccountingEntityJournal> AccountingEntitiesJournals { get; }
 		 IDbSet<AccountingIntegrityCheck> AccountingIntegrityChecks { get; }
 		 IDbSet<AccountingNote> AccountingNotes { get; }
 		 IDbSet<AccountingPeriod> AccountingPeriods { get; }

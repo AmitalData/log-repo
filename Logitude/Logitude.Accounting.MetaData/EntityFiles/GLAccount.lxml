@@ -17279,6 +17279,18 @@
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
     <TextCode
+      Code="&quot;YearTransfer.O.TwoOrFourDigits&quot;"
+      DefaultText="&quot;Enter year in either two or four digits only&quot;"
+      LocalDefaultText="&quot;יש להזין שנה בשתי ספרות או בארבע ספרות בלבד&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;YearTransfer.O.PastYears&quot;"
+      DefaultText="&quot;Enter past years only&quot;"
+      LocalDefaultText="&quot;יש להזין שנים קודמות בלבד&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
       Code="&quot;General.MC.ACC.System1000&quot;"
       DefaultText="&quot;System 1000&quot;"
       LocalDefaultText="&quot;מערכת 1000&quot;"
@@ -17450,6 +17462,12 @@
       Code="&quot;System1000.O.NoVendors&quot;"
       DefaultText="&quot;No Vendors found with Vat Number and Deduction File Number&quot;"
       LocalDefaultText="&quot;לא אותרו ספקים עם תיק ניכויים ועם מספר עוסק מורשה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.FoundVatNumber&quot;"
+      DefaultText="&quot;Found Vat Number&quot;"
+      LocalDefaultText="&quot;אותר מספר עוסק מורשה&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -17809,6 +17827,12 @@
       Code="&quot;GLAccount.O.Main&quot;"
       DefaultText="&quot;Main&quot;"
       LocalDefaultText="&quot;ראשי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.UnsavedChangesSaveBeforeContinue&quot;"
+      DefaultText="&quot;You have Unsaved changes, please save them before you continue&quot;"
+      LocalDefaultText="&quot;קיימים שינויים שטרם נשמרו, אנא בצע שמירה לפני היציאה.&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

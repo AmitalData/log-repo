@@ -14,6 +14,7 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import { RecoCallback } from '../../DataContracts/RecoCallback';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
+import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 
 @Injectable()
 
@@ -29,7 +30,7 @@ export class ReconciliationExtendedPMService {
     insert(entityPM: ReconciliationPM) {
         var mappedEntity: ReconciliationPM;
         mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-        return this.httpClient.post(this._apiUrl, JSON.stringify(mappedEntity),  ServiceHelper.GetHttpHeaders()).pipe(
+        return this.httpClient.post(this._apiUrl + '/PostInsertReconciliation', JSON.stringify(mappedEntity),  ServiceHelper.GetHttpHeaders()).pipe(
             map((res:RecoCallback) => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -107,11 +108,13 @@ export class ReconciliationExtendedPMService {
     CreateJournalReconcile(
         myReconciliationLines: ReconciliationLinePM[],
 
-        TheAccountId: string, AdjustAccountId: string, AccountDate: string, Ref1: string, Ref2: string, Ref3: string, Remarks: string) {
+        TheAccountId: string, AdjustAccountId: string, AccountDate: string, DueDate: string, RefDate: string, Ref1: string, Ref2: string, Ref3: string, Remarks: string) {
             return this.httpClient.post(this._apiUrl + "/PostCreateJournalReconcile?"
             + "&TheAccountId=" + TheAccountId
             + "&AdjustAccountId=" + AdjustAccountId
             +"&AccountDate=" + AccountDate
+            +"&DueDate=" + DueDate
+            +"&RefDate=" + RefDate
             +"&Ref1=" + Ref1
             +"&Ref2=" + Ref2
             +"&Ref3=" + Ref3
@@ -390,4 +393,32 @@ export class ReconciliationExtendedPMService {
         return entityPM;
     }
 
+
+    PostReconcileExcelData(args: ReconcileExcelDataArgs) {
+        return this.httpClient.post(this._apiUrl + '/PostReconcileExcelData?', JSON.stringify(args),  ServiceHelper.GetHttpHeaders()).pipe(
+            map((res:RecoCallback) => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                var _callBack: RecoCallback = res;
+                if(_callBack)
+                {
+                    serviceResponse.Result = _callBack;
+                }
+                else
+                {
+                    console.log("[WARNING!!] no callback for reconciliation!");
+                }
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+    }
+
+}
+
+export class ReconcileExcelDataArgs
+{
+    Data: any[] = [];
+    QueryColumns: QueryColumnPM[] = [];
+    Tenant: number;
 }

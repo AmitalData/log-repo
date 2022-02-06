@@ -59,6 +59,11 @@ export class CargoTrackingShipmentSearchPM {
     public set ReferenceType(newValue: string) { if (this.referenceType != newValue) { this.referenceType = newValue; this.MarkAsDirty("ReferenceType"); } }
        
 	 
+    private referenceFromShipmentId: string;
+    public get ReferenceFromShipmentId() { return this.referenceFromShipmentId; }
+    public set ReferenceFromShipmentId(newValue: string) { if (this.referenceFromShipmentId != newValue) { this.referenceFromShipmentId = newValue; this.MarkAsDirty("ReferenceFromShipmentId"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentSearchPM;
 		

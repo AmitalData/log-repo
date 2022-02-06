@@ -79,6 +79,26 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.IsEditExchangeRateVisible = true;
         }
         this.InitializeVendorLov();
+        this.SetDefaultValuesForVendorGLAccount();
+    }
+
+    SetDefaultValuesForVendorGLAccount() {
+         this.myCardListService.getSingle(this.EntityPM.VendorId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var list: CardList = myResponse.Result;
+                if (list != null) {
+                    if (!AppTool.IsNullOrEmpty(list.GLAccountId)) {
+                        this.myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
+                            if (!myResponse.HasError) {
+                                this.glaccount = myResponse.Result;
+                                this.EntityPM.VendorGLAccountId = this.glaccount.Id;
+                                this.EntityPM.IsEquipment = this.glaccount.IsEquipmentVendor;
+                            }
+                        });
+                    }
+                }
+            }
+        });
     }
 
     private InitializeVendorLov() {
@@ -869,6 +889,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                             if (!myResponse.HasError) {
                                 this.glaccount = myResponse.Result;
                                 this.EntityPM.VendorGLAccountId = this.glaccount.Id;
+                                this.EntityPM.IsEquipment = this.glaccount.IsEquipmentVendor;
                             }
                         });
                     }
@@ -937,6 +958,13 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     set PaymentTermName(newValue: string) {
         if (this.EntityPM.PaymentTermName != newValue) {
             this.EntityPM.PaymentTermName = newValue;
+        }
+    }
+
+    get IsEquipment() { return this.EntityPM.IsEquipment; }
+    set IsEquipment(newValue: boolean) {
+        if (this.EntityPM.IsEquipment != newValue) {
+            this.EntityPM.IsEquipment = newValue;
         }
     }
 

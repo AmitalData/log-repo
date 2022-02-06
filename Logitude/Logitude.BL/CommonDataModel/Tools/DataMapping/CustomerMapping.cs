@@ -30,6 +30,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.LogBoxActivated = entityPM.LogBoxActivated;
             entityPOCO.IsPrivateLabelCustomer = entityPM.IsPrivateLabelCustomer;
             entityPOCO.RankId = entityPM.RankId;
+            entityPOCO.TeamId = entityPM.TeamId;
             entityPOCO.AccountManagerUserId = entityPM.AccountManagerUserId;
             entityPOCO.SalesmanUserId = entityPM.SalesmanUserId;
             entityPOCO.CollectorId = entityPM.CollectorId;
@@ -139,6 +140,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.BillToId = entityPM.BillToId;
             entityCard.MetodoPagoCode = entityPM.MetodoPagoCode;
             entityCard.UsoCFDICode = entityPM.UsoCFDICode;
+            entityCard.RegimenFiscalCode = entityPM.RegimenFiscalCode;
             entityCard.IsAutonomy = entityPM.IsAutonomy;
             if (!entityPM.IsFirstContactToAdd)
             {
@@ -279,6 +281,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 BillToName = a.Card.EnglishName,
                 Id = a.Id,
                 RankId = a.RankId,
+                TeamId = a.TeamId,
                 AccountManagerUserId = a.AccountManagerUserId,
                 SalesmanUserId = a.SalesmanUserId,
                 SalesmanUserEnglishName = a.SalesmanUser == null ? null : (a.SalesmanUser.Contact == null ? null : a.SalesmanUser.Contact.EnglishName),

@@ -67,6 +67,16 @@ export class ChargesTypePM {
     public set ChargesGroupId(newValue: string) { if (this.chargesGroupId != newValue) { this.chargesGroupId = newValue; this.MarkAsDirty("ChargesGroupId"); } }
        
 	 
+    private quoteChargesGroupCode: string;
+    public get QuoteChargesGroupCode() { return this.quoteChargesGroupCode; }
+    public set QuoteChargesGroupCode(newValue: string) { if (this.quoteChargesGroupCode != newValue) { this.quoteChargesGroupCode = newValue; this.MarkAsDirty("QuoteChargesGroupCode"); } }
+       
+	 
+    private quoteChargesGroupId: string;
+    public get QuoteChargesGroupId() { return this.quoteChargesGroupId; }
+    public set QuoteChargesGroupId(newValue: string) { if (this.quoteChargesGroupId != newValue) { this.quoteChargesGroupId = newValue; this.MarkAsDirty("QuoteChargesGroupId"); } }
+       
+	 
     private measurementId: string;
     public get MeasurementId() { return this.measurementId; }
     public set MeasurementId(newValue: string) { if (this.measurementId != newValue) { this.measurementId = newValue; this.MarkAsDirty("MeasurementId"); } }

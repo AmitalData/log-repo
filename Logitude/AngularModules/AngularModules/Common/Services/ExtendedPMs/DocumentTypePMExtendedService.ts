@@ -1,4 +1,4 @@
-﻿
+
 
 
 import {Injectable, } from '@angular/core';
@@ -89,12 +89,12 @@ export class DocumentTypePMExtendedService {
         }),catchError(ServiceHelper.HandleServiceError));
     }
 
-    GetShareDocumentByObjectTableAndEntityIdAndshipmentLevel(entityId: string, agentId: string, agentReference: string, objecttableId: string, shipmentLevelCode: string, tenant: number) {
+    GetShareDocumentByObjectTableAndEntityIdAndshipmentLevel(entityId: string, agentId: string, agentReference: string, objecttableId: string, shipmentLevelCode: string, tenant: number, shareDocumentsFrom: string) {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return this._http.get(this._apiUrl + '/GetShareDocumentByObjectTableAndEntityIdAndshipmentLevel/?' + 'entityId=' + entityId + '&agentId=' + agentId + '&agentReference=' + agentReference + '&objecttableId=' + objecttableId + '&shipmentLevelCode=' + shipmentLevelCode + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + '/GetShareDocumentByObjectTableAndEntityIdAndshipmentLevel/?' + 'entityId=' + entityId + '&agentId=' + agentId + '&agentReference=' + agentReference + '&objecttableId=' + objecttableId + '&shipmentLevelCode=' + shipmentLevelCode + '&tenant=' + tenant + '&shareDocumentsFrom=' + shareDocumentsFrom,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             var result :any = response;
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();

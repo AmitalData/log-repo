@@ -182,6 +182,11 @@ export class ReconciliationLinePM {
     public set ExcelTransactionAmount(newValue: number) { if (this.excelTransactionAmount != newValue) { this.excelTransactionAmount = newValue; this.MarkAsDirty("ExcelTransactionAmount"); } }
        
 	 
+    private refDate: Date;
+    public get RefDate() { return this.refDate; }
+    public set RefDate(newValue: Date) { if (this.refDate != newValue) { this.refDate = newValue; this.MarkAsDirty("RefDate"); } }
+       
+	 
 
     public OldEntityPM: ReconciliationLinePM;
 	

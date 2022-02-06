@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLExt\IAutoReconcileARPaymentService.cs" />
+    <Compile Include="EntityPMs\AccountingEntityJournalActions.cs" />
     <Compile Include="EntityPMs\AccountingEnum.Shared.cs" />
     <Compile Include="EntityPMs\AccountingIntegrityCheckPM.cs" />
     <Compile Include="EntityPMs\AccountingPeriodPM.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="EntityPMs\AutomaticReconcilePM.cs" />
     <Compile Include="EntityPMs\ChartOfAccountPM.cs" />
     <Compile Include="EntityPMs\Generated\AccountingCompanyTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AccountingEntityJournalPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AccountingEntityPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AccountingIntegrityCheckPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AccountingNotePM.Generated.cs" />
@@ -189,6 +191,7 @@
     <Compile Include="EntityQueryServicesExt\IGLAccountWithholdingTaxQueryServiceExt.cs" />
     <Compile Include="EntityQueryServicesExt\IJournalQueryServiceExt.cs" />
     <Compile Include="EntityQueryServicesExt\IPaymentChequeQueryServiceExt.cs" />
+    <Compile Include="EntityUpdateServicesExt\AccountingEntityJournalUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\IARPaymentChequeUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\GLAccountCardsDataUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\IInterestReportsConnectedInvoiceUpdateServiceExt.cs" />

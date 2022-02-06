@@ -165,7 +165,11 @@ namespace Logitude.BL.Helpers
                                     string newStatusId = eventType.EntityStatusId;
                                     EntityStatus oldStatus = EntityStatusRepository.GetSingleEntityStatus(oldStatusId, tenant, true);
                                     EntityStatus newStatus = EntityStatusRepository.GetSingleEntityStatus(newStatusId, tenant, true);
-                                    if (newStatus.StatusWeight >= oldStatus.StatusWeight)
+
+                                    var oldStatusStatusWeight = oldStatus.StatusLocalWeight != null ? oldStatus.StatusLocalWeight : oldStatus.StatusWeight;
+                                    var newStatusStatusWeight = newStatus.StatusLocalWeight != null ? newStatus.StatusLocalWeight : newStatus.StatusWeight;
+
+                                    if (newStatusStatusWeight >= oldStatusStatusWeight)
                                     {
                                         entityPM.OperationalStatusId = newStatusId;
                                         entityPM.IsOperationalStatusChange = true;
@@ -201,7 +205,11 @@ namespace Logitude.BL.Helpers
                                     string newStatusId = eventType.EntityStatusId;
                                     EntityStatus oldStatus = EntityStatusRepository.GetSingleEntityStatus(oldStatusId, tenant, true);
                                     EntityStatus newStatus = EntityStatusRepository.GetSingleEntityStatus(newStatusId, tenant, true);
-                                    if (newStatus.StatusWeight >= oldStatus.StatusWeight)
+
+                                    var oldStatusStatusWeight = oldStatus.StatusLocalWeight != null ? oldStatus.StatusLocalWeight : oldStatus.StatusWeight;
+                                    var newStatusStatusWeight = newStatus.StatusLocalWeight != null ? newStatus.StatusLocalWeight : newStatus.StatusWeight;
+
+                                    if (newStatusStatusWeight >= oldStatusStatusWeight)
                                     {
                                         entityPM.StatusId = newStatusId;
                                         entityPM.StatusDate = newTraceEvent.EventDateTime;

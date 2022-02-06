@@ -41,7 +41,7 @@ export class APInvoiceMenuButtonsHandler {
                         case "SaveAPInvoice": {
                             myButtonIsDisabled = true;
 
-                            if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "WA") {
+                            if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "WA" || (this.EntityPM.StatusCode == this.approvedStatusCode && SessionLocator.TenantPM.AccountingActivated == true)) {
                                 myButtonIsDisabled = false;
                             }
 
@@ -165,6 +165,7 @@ export class APInvoiceMenuButtonsHandler {
                         }
 
                         case "CopyInvoice": {
+                            button.IsHidden = !SessionLocator.TenantPM.AccountingActivated;
                             myButtonIsDisabled = this.SetEnableForCopyInvoiceButton(myButtonIsDisabled);
                             break;
                         }
@@ -380,7 +381,7 @@ export class APInvoiceMenuButtonsHandler {
 
         if (this.isValid) {
             this.ValidateInvoiceDate();
-          
+
         }
 
         else {
@@ -411,7 +412,7 @@ if (response != null) {
                     this.entityArgs.EditComponent.ValidationErrorsList  = response.ErrorsArray;
                 }
             }
-           
+
         });
 
     }
@@ -420,7 +421,7 @@ if (response != null) {
 
         let confirmWindow = new ConfirmWindow();
         confirmWindow.ShowWarningImage = true;
-   
+
         confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.Cancel");
         confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Ok");
         confirmWindow.WindowClosed.subscribe((event: any) => {

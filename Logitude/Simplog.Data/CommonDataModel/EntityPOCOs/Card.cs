@@ -116,7 +116,10 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string UsoCFDICode { get; set; }
 
         [ForeignKey("UsoCFDICode")]
-        public virtual UsoCFDI UsoCFDI { get; set; }     
+        public virtual UsoCFDI UsoCFDI { get; set; }  
+        public string RegimenFiscalCode { get; set; }
+        [ForeignKey("RegimenFiscalCode")]
+        public virtual RegimenFiscal RegimenFiscal { get; set; }
 
         public virtual Trucker Trucker { get; set; }
         public virtual Airline Airline { get; set; }

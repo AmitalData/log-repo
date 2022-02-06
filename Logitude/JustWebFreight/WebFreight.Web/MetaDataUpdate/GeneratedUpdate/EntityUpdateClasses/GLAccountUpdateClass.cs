@@ -79,8 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-
-		public const string HashString = "4492ddf078b5ac5172b05207b36d8ca9";
+		public const string HashString = "48d45297102c55b0e1ce1086ce3dc7bc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -12661,6 +12660,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_System1000ONoVendors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.NoVendors", DefaultText = "No Vendors found with Vat Number and Deduction File Number",LocalDefaultText = @"לא אותרו ספקים עם תיק ניכויים ועם מספר עוסק מורשה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode GLAccountTextCode_System1000OFoundVatNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FoundVatNumber", DefaultText = "Found Vat Number",LocalDefaultText = @"אותר מספר עוסק מורשה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
  		   TextCode GLAccountTextCode_GLAccountONoCreditDefined = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NoCreditDefined", DefaultText = "Credit balance not defined",LocalDefaultText = @"לא הוגדרה מסגרת אשראי ללקוח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountOCreditStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CreditStatus ", DefaultText = "Credit Status",LocalDefaultText = @"מצב אשראי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
@@ -12780,6 +12781,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountOSplit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Split", DefaultText = "Split",LocalDefaultText = @"מפוצל", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountOMain = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Main", DefaultText = "Main",LocalDefaultText = @"ראשי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOUnsavedChangesSaveBeforeContinue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.UnsavedChangesSaveBeforeContinue", DefaultText = "You have Unsaved changes, please save them before you continue",LocalDefaultText = @"קיימים שינויים שטרם נשמרו, אנא בצע שמירה לפני היציאה.", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

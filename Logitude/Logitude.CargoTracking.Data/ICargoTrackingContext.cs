@@ -17,7 +17,8 @@ namespace Logitude.CargoTracking.Data
     public partial interface ICargoTrackingContext : IContext
     {
    
-       	 IDbSet<CargoReferencesSyncQueue> CargoReferencesSyncQueues { get; }
+       	 IDbSet<CargoDisconnectQueue> CargoDisconnectQueues { get; }
+		 IDbSet<CargoReferencesSyncQueue> CargoReferencesSyncQueues { get; }
 		 IDbSet<CargoTrackingCard> CargoTrackingCards { get; }
 		 IDbSet<CargoTrackingCountry> CargoTrackingCountries { get; }
 		 IDbSet<CargoTrackingHeaderEntityType> CargoTrackingHeaderEntityTypes { get; }

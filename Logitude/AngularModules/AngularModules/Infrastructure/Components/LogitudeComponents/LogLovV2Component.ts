@@ -48,11 +48,11 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
         'PlaceHolder', 'DependencyFilter1Value', 'DependencyFilter2Value', 'DependencyFilter3Value', "HideColumns", "HideLastColumn", "DependencyFilter1IsList",
         "DependencyFilter2IsList", "DependencyFilter3IsList", "DependencyFilter1IsListExact", "DependencyFilter2IsListExact", "DependencyFilter3IsListExact",
         "AutoFocus", "IsTenantZeroSearch", "ShowInActive", "FocusOnMe", "IsFreeText", "AlwaysEnabled", "IgnoreCustomFieldCheck", "IsDecendingSort", "CustomizedWidth",
-        "ShowInActivePopUpWindow"],
+        "ShowInActivePopUpWindow", "IgnoreFeatureCheck","DataCy"],
 })
 
 export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
-    
+
     private forceFocus: any;
     @Input()
     public get ForceFocus() {
@@ -96,6 +96,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     public IsFreeText: boolean = false;
     public AlwaysEnabled: boolean = false;
     public IgnoreCustomFieldCheck: boolean = false;
+    public IgnoreFeatureCheck: boolean = false;
+    public DataCy: string;
     LayoutDirection: string = 'ltr';
     private dataContext: BaseComponent;
     uiProperty: UIProperty;
@@ -212,7 +214,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             }
         });
     }
-   
+
     SetSelectedItemInActiveField() {
         this.UpdateSelectedEntity(this.SelectedItem?.Id);
     }
@@ -287,6 +289,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     @Input() RunToggleMode: boolean;
     @Input() AutoCompleteSearchWindow: boolean;
     @Input() ForceShowAddLink: boolean;
+    @Input() ForceShowLocalAndEnglishColumns: boolean;
     showToggleButton: boolean;
     showPopup: boolean = false;
     ObjectTable: ObjectTablePM;
@@ -383,6 +386,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     _KeyDownSubscribe: any;
     @Output() KeyDownEvent: EventEmitter<any> = new EventEmitter();
     @Input() ColumnsWidths: ColumnsWidths[] = [];
+    @Input() ForceShowLanguageFilterOnSearchWindow: boolean = false;
 
     ngAfterViewInit() {
         this.RunComponent();
@@ -1129,11 +1133,17 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         let hasLocalCustomColumns=(this.DisplayLocalFieldsFromList != null && this.DisplayLocalFieldsFromList != undefined);
         let hasEnglishCustomColumns=(this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined);
 
-        if (hasEnglishCustomColumns && (this.LanguageFilterValue == 'E' || !hasLocalCustomColumns)) {
+        if (this.ForceShowLocalAndEnglishColumns) {
+
+            let allColumns = this.DisplayFieldsFromList.replace('EnglishName','EnglishName,LocalName')
+            fields = allColumns.split(',');
+            this.DropDownWidth += 145;
+
+        } else if (hasEnglishCustomColumns && (this.LanguageFilterValue == 'E' || !hasLocalCustomColumns)) {
             fields = this.DisplayFieldsFromList.split(',');
         }
-        else{
-            fields=this.DisplayLocalFieldsFromList.split(',');
+        else {
+            fields = this.DisplayLocalFieldsFromList.split(',');
         }
 
         lookupFields = window.ObjectFields.filter(d => d.ObjectTableId == this.LookUpTable.Id && fields.lastIndexOf(d.FieldName) > -1);
@@ -1708,12 +1718,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
         this.LovMessage = null;
 
-        if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
+        if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
 
             this.LovMessage = "Your package doesn't include this module..";
             return;
         }
-        else if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "READ") && this.LookUpTable.EnableSecurity) {
+        else if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "READ") && this.LookUpTable.EnableSecurity) {
             this.LovMessage = "You have no permission to view entities of this type.";
             return;
         }
@@ -2163,13 +2173,13 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
     SearchButtonClicked() {
 
-        if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
+        if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("Your package doesn't include this module..");
             return;
         }
 
-        else if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "READ") && this.LookUpTable.EnableSecurity) {
+        else if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "READ") && this.LookUpTable.EnableSecurity) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("You have no permission to view entities of this type.");
             return;
@@ -2208,6 +2218,9 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         args.IsAddDisabled = this.isAddDisabled;
         args.IsEditDisabled = this.isEditDisabled;
         args.DisplayFieldsFromList = this.DisplayFieldsFromList;
+        args.DisplayLocalFieldsFromList = this.DisplayLocalFieldsFromList;
+        args.LanguageFilterValue = this.LanguageFilterValue;
+        args.ForceShowLanguageFilterOnSearchWindow = this.ForceShowLanguageFilterOnSearchWindow;
         var tablename = TextCodeTranslator.TranslateTablePlural(this.GetObjectTableName(this.LookUpTableName));
 
         if (tablename == "Cards") {
@@ -2234,10 +2247,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             // Get Selected value
             var id = null;
             var tenant = null;
+            let languageCode = this.LanguageFilterValue;
             if (args.indexOf(',')) {
                 var argsarr = args.split(',');
                 id = argsarr[0];
                 tenant = argsarr[1];
+                languageCode = argsarr[2];
             }
             else {
                 id = args;
@@ -2254,12 +2269,17 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                             if (myResponse instanceof ServiceResponse) {
                                 list = myResponse.Result;
                             }
+
+                            this.LanguageFilterValue = languageCode;
+                            this.SetDisplayMemberPath();
+
                             this.isSelectedFromList = true;
                             this.SearchTextNgModel = list[this.DisplayMemberPath];
                             this.OldSearchInput = this.SearchTextNgModel;
                             this.DisplayValue = list[this.DisplayMemberPath];
                             this.SelectedItem = list;
                             this.SetToolTipInfo();
+
                             var value = this.DataContext[this.ObjectFieldName];
                             if (this.ObjectField && this.ObjectField.IsCustom && this.IgnoreCustomFieldCheck == false) {
                                 var customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];
@@ -2486,13 +2506,13 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
     // Edit Button Commands
     OnEditValue() {
-        if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "UPDATE") && this.LookUpTable.EnableSecurity) {
+        if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "UPDATE") && this.LookUpTable.EnableSecurity) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("You have no permission to edit an entity of this type.");
             return;
         }
 
-        if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
+        if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("Your package doesn't include this module..");
             return;
@@ -2633,13 +2653,13 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         objectTableName = this.GetObjectTableName(objectTableName);
         var originalTable: ObjectTablePM = window.ObjectTables.filter(d => d.Name?.toLowerCase() === objectTableName.toLocaleLowerCase())[0];
 
-        if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "NEW") && this.LookUpTable.EnableSecurity) {
+        if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "NEW") && this.LookUpTable.EnableSecurity) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("You have no permission to add a new entity of this type.");
             return;
         }
 
-        if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
+        if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("Your package doesn't include this module..");
             return;
@@ -3457,8 +3477,10 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             this.CalculateDropdownPanelWidthFromCustomColumnsWidths();
         }
 
+
+
         this.SetDisplayMemberPath();
-    }  
+    }
 }
 
 export class EntityArgs {

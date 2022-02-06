@@ -27,8 +27,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='IsPublic' Type='bit'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='ReferenceType' Type='varchar' Size='30'>"+
+"  <Column Name='ReferenceType' Type='varchar' Size='200'>"+
 "    <Constraints Nullable='false' />"+
+"  </Column>"+
+"  <Column Name='ReferenceFromShipmentId' Type='varchar' Size='30'>"+
+"    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Index Columns='Tenant,SearchFields,IsPublic' />"+
 "  <Index Columns='Tenant,ShipmentId,IsPublic' />"+

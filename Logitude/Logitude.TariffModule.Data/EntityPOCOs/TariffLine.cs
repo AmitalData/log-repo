@@ -222,6 +222,25 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
         public virtual Port ViaPort { get; set; }
         [Column("ViaPortText")]
 	    public string ViaPortText { get; set; }
+        [ForeignKey("FromCountry")]
+        [Column("FromCountryId")]
+	    public string FromCountryId { get; set; }
+	      
+        public virtual Country FromCountry { get; set; }
+        [ForeignKey("ToCountry")]
+        [Column("ToCountryId")]
+	    public string ToCountryId { get; set; }
+	      
+        public virtual Country ToCountry { get; set; }
+        [Column("IsFromAllOtherCountries")]
+	    public bool IsFromAllOtherCountries { get; set; }
+        [Column("IsToAllOtherCountries")]
+	    public bool IsToAllOtherCountries { get; set; }
+        [ForeignKey("UnitOfMeasurement")]
+        [Column("UnitOfMeasurementCode")]
+	    public string UnitOfMeasurementCode { get; set; }
+	      
+        public virtual WeightUnit UnitOfMeasurement { get; set; }
     }
 }
 	 

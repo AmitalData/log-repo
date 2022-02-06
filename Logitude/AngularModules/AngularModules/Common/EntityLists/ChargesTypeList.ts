@@ -21,6 +21,9 @@ export class ChargesTypeList {
 		ChargesGroupId: string;
 		ChargesGroupCode: string;
 		ChargesGroupName: string;
+		QuoteChargesGroupCode: string;
+		QuoteChargesGroupId: string;
+		QuoteChargesGroupName: string;
 		VatTypeId: string;
 		VatTypeName: string;
 		VatTypePercentage: number;

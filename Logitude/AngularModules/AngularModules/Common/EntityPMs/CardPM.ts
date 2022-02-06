@@ -169,6 +169,11 @@ export class CardPM {
     public set AccountManagerUserId(newValue: string) { if (this.accountManagerUserId != newValue) { this.accountManagerUserId = newValue; this.MarkAsDirty("AccountManagerUserId"); } }
        
 	 
+    private teamId: string;
+    public get TeamId() { return this.teamId; }
+    public set TeamId(newValue: string) { if (this.teamId != newValue) { this.teamId = newValue; this.MarkAsDirty("TeamId"); } }
+       
+	 
     private salesmanBusinessUnitId: string;
     public get SalesmanBusinessUnitId() { return this.salesmanBusinessUnitId; }
     public set SalesmanBusinessUnitId(newValue: string) { if (this.salesmanBusinessUnitId != newValue) { this.salesmanBusinessUnitId = newValue; this.MarkAsDirty("SalesmanBusinessUnitId"); } }
@@ -437,6 +442,11 @@ export class CardPM {
     private usoCFDICode: string;
     public get UsoCFDICode() { return this.usoCFDICode; }
     public set UsoCFDICode(newValue: string) { if (this.usoCFDICode != newValue) { this.usoCFDICode = newValue; this.MarkAsDirty("UsoCFDICode"); } }
+       
+	 
+    private regimenFiscalCode: string;
+    public get RegimenFiscalCode() { return this.regimenFiscalCode; }
+    public set RegimenFiscalCode(newValue: string) { if (this.regimenFiscalCode != newValue) { this.regimenFiscalCode = newValue; this.MarkAsDirty("RegimenFiscalCode"); } }
        
 	 
     private isInternationalPartner: boolean;

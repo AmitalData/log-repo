@@ -33,6 +33,7 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.BL.InvoiceModel.EntityOtherServices;
 using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.Accounting.Data;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -330,6 +331,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             JournalPM journalPM = GetJournalByAccountingEntityId(aPPaymentPM);
             if (journalPM != null)
             {
+                AddAccountingEntitieJournal(journalPM, AccountingEntityJournalActions.APPaymentVoid, journalPM.Id);
                 VoidJournal(journalPM, aPPaymentPM);
                
             }
@@ -1325,8 +1327,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             AutoInternalReconcileAPPaymentLines(paymentPM, journal);
             if (paymentPM.TaxDeductionLocalAmount != 0 || paymentPM.VendorAddressId == tenantPOCO.AddressId)
                 AddCreditJournalLineForTaxGLAccount(paymentPM, paymentPM.Tenant, tenantPOCO, journal);
-
+            AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.APPaymentApprove);
             SubmitJournal(journal);
+        }
+
+        private void AddAccountingEntitieJournal(JournalPM entityPM, string action, string ChildEntityId = null)
+        {
+            IAccountingEntityJournalUpdateServiceExt service = ContainerAccessor.Container.Resolve(typeof(IAccountingEntityJournalUpdateServiceExt), "AccountingEntityJournalUpdateServiceExt", new ParameterOverride("", 1)) as IAccountingEntityJournalUpdateServiceExt;
+            service.AddAccountingEntitieJournal(entityPM, action, ChildEntityId);
         }
 
         private static void SubmitJournal(JournalPM journal)

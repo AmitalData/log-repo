@@ -174,7 +174,8 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
           //  return listService.GetList(queryOperations, tenant);
             List<GLAccountList> list = listService.GetList(queryOperations, tenant);
-            foreach (var gLAccountList in list)
+            List<GLAccountList> ActiveGLAccountList = list.Where(a => a.Inactive == false).ToList();
+            foreach (var gLAccountList in ActiveGLAccountList)
             {
 
                 if (!String.IsNullOrEmpty(gLAccountList.CustomerGLAccountId))
@@ -196,7 +197,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
                     }
                 }
             }
-            return list;
+            return ActiveGLAccountList;
 
         }
 

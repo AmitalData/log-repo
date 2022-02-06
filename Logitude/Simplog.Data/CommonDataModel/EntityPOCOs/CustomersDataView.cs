@@ -51,6 +51,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string Field10 { get; set; }
         public string RankCode { get; set; }
         public string RankName { get; set; }
+        public string TeamName { get; set; }
         public int? SharedLogisticsInvitationStatusCode { get; set; }
         public string SharedLogisticsInvitationStatusName { get; set; }
         public bool IsActiveForMobile { get; set; }
@@ -98,6 +99,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool EnableConsolidationInvoices { get; set; }
         public bool ActivityWatch { get; set; }
         public string RankId { get; set; }
+        public string TeamId { get; set; }
         public string IndustryId { get; set; }
         public string LeadSourceId { get; set; }
         public string InvoiceCurrencyCode { get; set; }
@@ -118,6 +120,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string SATForeignRFC { get; set; }
         public string MetodoPagoCode { get; set; }
         public string UsoCFDICode { get; set; }
+        public string RegimenFiscalCode { get; set; }
         public string ZipCode { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }

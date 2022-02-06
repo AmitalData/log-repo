@@ -489,6 +489,16 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     #endregion
                 }
 
+                if (isNewEntity)
+                {
+                    if (itemContactPM.SetAsPrimaryForCard)
+                    {
+                        entityPM.PrimaryContactId = itemContactPM.Id;
+                        entityPM.PrimaryContactPhone = itemContactPM.BusinessPhone;
+                        entityPM.PrimaryContactName = itemContactPM.EnglishName;
+                    }
+                }
+
                 CardContact newCardContact = new CardContact()
                 {
                     CardId = entityPM.Id,

@@ -19,7 +19,7 @@
                         </td>
 
                         <td style="width: 1px" *ngIf="IsAddContainerVisible">
-                            <button [disabled]="!IsAddContainerEnabled" class="Button" (click)="AddContainerClicked()">Add Container</button>
+                            <button [attr.data-cy]="'AddContainerFromPickup'" [disabled]="!IsAddContainerEnabled" class="Button" (click)="AddContainerClicked()">Add Container</button>
                         </td>
 
                         <td style="width:5px;">

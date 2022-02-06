@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;e4df&quot;"
+  Code="&quot;04a5&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -2036,7 +2036,7 @@
     <TextCode
       Code="&quot;Accounting.General.O.DueDate&quot;"
       DefaultText="&quot;Due Date&quot;"
-      LocalDefaultText="&quot;תאריך לתשלום&quot;"
+      LocalDefaultText="&quot;תאריך פרעון&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -5104,6 +5104,17 @@
       DefaultText="&quot;Entity Status&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.CustomerTeam&quot;"
+      DefaultText="&quot;Customer Teams&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.WrongVatNumber&quot;"
+      DefaultText="&quot;Wrong Vat Number&quot;"
+      LocalDefaultText="&quot;חפ שגוי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -7200,6 +7211,24 @@
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.SHAREDCARGOTRACKING&quot;"
       FeatureDefaultText="&quot;Shared Cargo Tracking&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;QUOTECHARGESGROUP&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.QUOTECHARGESGROUP&quot;"
+      FeatureDefaultText="&quot;Quote Charges Types&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;General.Features.CustomerTeam&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.General.Features.CustomerTeam&quot;"
+      FeatureDefaultText="&quot;Customer Teams&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

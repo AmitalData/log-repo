@@ -77,9 +77,6 @@ namespace WebFreight.Web.Monitoring
                     && ((a.CommunicationStatusTypeCode == "W" && (EntityFunctions.DiffMinutes(a.CreateDateUTC, todayDateTime) > 5)) || a.CommunicationStatusTypeCode == "F")
                     select a).Any();
 
-
-
-
         }
 
     }

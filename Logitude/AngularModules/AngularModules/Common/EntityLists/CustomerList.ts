@@ -10,8 +10,10 @@ export class CustomerList {
    		Id: string;
 		Tenant: number;
 		RankId: string;
+		TeamId: string;
 		RankCode: string;
 		RankName: string;
+		TeamName: string;
 		IndustryId: string;
 		LeadSourceId: string;
 		SalesmanUserId: string;
@@ -133,6 +135,7 @@ export class CustomerList {
 		SATForeignRFC: string;
 		MetodoPagoCode: string;
 		UsoCFDICode: string;
+		RegimenFiscalCode: string;
 		ZipCode: string;
 		Address1: string;
 		Address2: string;

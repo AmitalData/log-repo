@@ -241,6 +241,12 @@ export class ContainerList {
 		Leg3VesselId: string;
 		Leg4VesselId: string;
 		Leg5VesselId: string;
+		EmptyContainerReturnFrom: string;
+		EmptyContainerReturnTo: string;
+		EmptyContainerReturnETA: Date;
+		EmptyContainerReturnETD: Date;
+		EmptyContainerReturnATD: Date;
+		EmptyContainerReturnATA: Date;
 		IsExceptionResolved: boolean;
 		ExceptionDescription: string;
 		ExceptionResolvedDescription: string;

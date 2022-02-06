@@ -12,7 +12,7 @@
 
                     <!-- Name -->
                     <tr class="FormFieldRow">
-                        <td style="width:120px;">
+                        <td style="width:150px;">
                             <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
 
@@ -41,7 +41,7 @@
                     </tr>
 
                     <!-- Seller -->
-                    <tr class="FormFieldRow">
+                    <tr class="FormFieldRow" *ngIf="IsSellerVisible">
                         <td>
                             <LogLabel [ObjectFieldName]="'SellerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
@@ -54,10 +54,33 @@
                                     [DependencyFilter1IsList]="true"
                                     [HideMaintenanceIcon]="true"
                                     [DependencyFilter1Value]="SellerDependancy"
-                                    [LookUpTableName]="'Card'">
+                                    [LookUpTableName]="'Card'"
+                                    (SelectedItemChanged)="Seller = $event">
                             </LogLov>
                         </td>
 
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- CustomsBrokerId -->
+                    <tr class="FormFieldRow" *ngIf="IsCustomsBrokerVisible">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'CustomsBrokerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td>
+                            <LogLov [ObjectFieldName]="'CustomsBrokerId'"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [SelectedValue]="CustomsBrokerId"
+                                    [DataContext]="DataContext"
+                                    [DependencyFilter1IsList]="true"
+                                    [HideMaintenanceIcon]="true"
+                                    [DependencyFilter1Value]="CustomsBrokerDependancy"
+                                    [LookUpTableName]="'Card'"
+                                    (SelectedItemChanged)="CustomsBroker = $event">
+                            </LogLov>
+                        </td>
                         <td>
                             <div></div>
                         </td>
@@ -76,6 +99,27 @@
                                     [DataContext]="DataContext"
                                     [HideMaintenanceIcon]="true"
                                     [LookUpTableName]="'Currency'">
+                            </LogLov>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- Unit Of Measurement -->
+                    <tr *ngIf="IsUnitOfMeasurementFieldVisible" class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'UnitOfMeasurementCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogLov [ObjectFieldName]="'UnitOfMeasurementCode'"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [SelectedValue]="UnitOfMeasurementCode"
+                                    [DataContext]="DataContext"
+                                    [HideMaintenanceIcon]="true"
+                                    [LookUpTableName]="'WeightUnit'">
                             </LogLov>
                         </td>
 
@@ -145,8 +189,12 @@
             <td style="width: 450px;" *ngIf="VisibileSurchargesArea">
                 <table>
                     <tr class="TabTitleRow">
-                        <td>
+                        <td *ngIf="EntityPM.TypeCode != 'ICC' && EntityPM.TypeCode != 'ECC'">
                             Surcharges
+                        </td>
+
+                        <td *ngIf="EntityPM.TypeCode == 'ICC' || EntityPM.TypeCode == 'ECC'">
+                            Customs Charges
                         </td>
                     </tr>
 

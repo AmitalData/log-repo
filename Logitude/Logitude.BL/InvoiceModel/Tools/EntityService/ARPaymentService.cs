@@ -389,7 +389,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             //update amounts
             if (theEntityPm.IsFullAccounting == true)
-                UpdateFullAccountPaymentAmount(theEntityPm, gla.ReconcileMethodCode == "0");
+                UpdateFullAccountPaymentAmount(theEntityPm);
 
 
             // PaymentCheque And CashBook
@@ -440,7 +440,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             // Full Accounting => Reconciliation
             if (theEntityPm.IsFullAccounting == true)
             {
-                if (string.IsNullOrEmpty(theEntityPm.GLAccountId))
+                if (string.IsNullOrEmpty(theEntityPm.GLAccountId) && !theEntityPm.UpdateAmountAndStatuses)
                     throw new ApplicationException("Hey! no glaccount provided!!");
 
                 if (theEntityPm.StatusCode != "VD" && theEntityPm.ARPaymentChequeReplicas.Count == 0)
@@ -1554,6 +1554,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
         }
 
+        private void AddAccountingEntitieJournal(JournalPM entityPM, string action, string ChildEntityId = null)
+        {
+            IAccountingEntityJournalUpdateServiceExt service = ContainerAccessor.Container.Resolve(typeof(IAccountingEntityJournalUpdateServiceExt), "AccountingEntityJournalUpdateServiceExt", new ParameterOverride("", 1)) as IAccountingEntityJournalUpdateServiceExt;
+            service.AddAccountingEntitieJournal(entityPM, action, ChildEntityId);
+        }
+
         private void VoidARPaymentInFullAccounting(ARPaymentPM entityPm, bool setVoided)
         {
             int tenant = entityPm.Tenant;
@@ -1802,8 +1808,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     AccountingEntityReference = paymentPM.PaymentNo,
                     ChequeNumbersToExcludeFromStorno = returnedToCustomerChequesNumbers
                 });
-
-                voidARPaymentJounal();
+                AddAccountingEntitieJournal(journalPM, AccountingEntityJournalActions.ARPaymentVoid);
+                 // voidARPaymentJounal(); not needed anymore
                 JournalPM voidedByJournal = GetApprovedJournalByAccountingEntityId(entityPm);
 
                 paymentPM.VoidedByJournalNumber = voidedByJournal != null ? voidedByJournal.JournalNumber : null;
@@ -2152,7 +2158,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             return amount2reconcile;
         }
 
-        void UpdateFullAccountPaymentAmount(ARPaymentPM paymentPM, bool useLocalRecoMethod)
+        void UpdateFullAccountPaymentAmount(ARPaymentPM paymentPM)
         {
             //
             // update payment amount:

@@ -186,6 +186,16 @@ namespace Logitude.TariffModule.Data.EntityMapping
             this.Property(t => t.ViaPortId).HasColumnName("ViaPortId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.ViaPortText).HasColumnName("ViaPortText").HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.FromCountryId).HasColumnName("FromCountryId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ToCountryId).HasColumnName("ToCountryId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.IsFromAllOtherCountries).HasColumnName("IsFromAllOtherCountries");
+
+            this.Property(t => t.IsToAllOtherCountries).HasColumnName("IsToAllOtherCountries");
+
+            this.Property(t => t.UnitOfMeasurementCode).HasColumnName("UnitOfMeasurementCode").HasMaxLength(3).IsUnicode(false);
         }
     }
 }

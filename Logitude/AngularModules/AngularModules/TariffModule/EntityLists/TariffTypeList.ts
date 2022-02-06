@@ -12,6 +12,7 @@ export class TariffTypeList {
 	Name: string;
 	SearchFields: string;
 	TransportModeCode: string;
+	DirectionCode: string;
 	
 }
  

@@ -269,7 +269,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     LastExceptionDescription = container.LastExceptionDescription,
                     ExceptionDescription = container.ExceptionDescription,
                     IsUpdateEntityException = container.IsUpdateEntityException,
-                    IsExceptionResolved = container.IsExceptionResolved
+                    IsExceptionResolved = container.IsExceptionResolved,
+                    EmptyContainerReturnTo = container.EmptyContainerReturnTo,
+                    EmptyContainerReturnFrom = container.EmptyContainerReturnFrom,
+                    EmptyContainerReturnETA = container.EmptyContainerReturnETA,
+                    EmptyContainerReturnATA = container.EmptyContainerReturnATA,
+                    EmptyContainerReturnATD = container.EmptyContainerReturnATD,
+                    EmptyContainerReturnETD = container.EmptyContainerReturnETD,
                 };
 
                 if (container.EntityStatus != null)
@@ -544,6 +550,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         HasException = container.HasException,
                         LastExceptionDescription = container.LastExceptionDescription,
                         ExceptionDescription = container.ExceptionDescription,
+                        EmptyContainerReturnTo = container.EmptyContainerReturnTo,
+                        EmptyContainerReturnFrom = container.EmptyContainerReturnFrom,
+                        EmptyContainerReturnETA = container.EmptyContainerReturnETA,
+                        EmptyContainerReturnATA = container.EmptyContainerReturnATA,
+                        EmptyContainerReturnATD = container.EmptyContainerReturnATD,
+                        EmptyContainerReturnETD = container.EmptyContainerReturnETD,
                     }).ToList();
         }
 
@@ -797,7 +809,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    ExceptionDescription = container.ExceptionDescription,
                                                    IsUpdateEntityException = container.IsUpdateEntityException,
                                                    IsExceptionResolved = container.IsExceptionResolved
-                                                   
+                                                   EmptyContainerReturnTo = container.EmptyContainerReturnTo,
+                                                   EmptyContainerReturnFrom = container.EmptyContainerReturnFrom,
+                                                   EmptyContainerReturnETA = container.EmptyContainerReturnETA,
+                                                   EmptyContainerReturnATA = container.EmptyContainerReturnATA,
+                                                   EmptyContainerReturnATD = container.EmptyContainerReturnATD,
+                                                   EmptyContainerReturnETD = container.EmptyContainerReturnETD,
                                                };
             return result;
         }
@@ -1037,6 +1054,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ExceptionDescription = container.ExceptionDescription,
                     IsUpdateEntityException = container.IsUpdateEntityException,
                     IsExceptionResolved = container.IsExceptionResolved
+                    EmptyContainerReturnTo = container.EmptyContainerReturnTo,
+                    EmptyContainerReturnFrom = container.EmptyContainerReturnFrom,
+                    EmptyContainerReturnETA = container.EmptyContainerReturnETA,
+                    EmptyContainerReturnATA = container.EmptyContainerReturnATA,
+                    EmptyContainerReturnATD = container.EmptyContainerReturnATD,
+                    EmptyContainerReturnETD = container.EmptyContainerReturnETD,
                 };
                 MapCustomFields(containerPM, container);
             }
@@ -1290,6 +1313,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ExceptionDescription = container.ExceptionDescription,
                     IsUpdateEntityException = container.IsUpdateEntityException,
                     IsExceptionResolved = container.IsExceptionResolved
+                    EmptyContainerReturnTo = container.EmptyContainerReturnTo,
+                    EmptyContainerReturnFrom = container.EmptyContainerReturnFrom,
+                    EmptyContainerReturnETA = container.EmptyContainerReturnETA,
+                    EmptyContainerReturnATA = container.EmptyContainerReturnATA,
+                    EmptyContainerReturnATD = container.EmptyContainerReturnATD,
+                    EmptyContainerReturnETD = container.EmptyContainerReturnETD,
                 };
             }
 
@@ -1531,6 +1560,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ExceptionDescription = container.ExceptionDescription,
                     IsUpdateEntityException = container.IsUpdateEntityException,
                     IsExceptionResolved = container.IsExceptionResolved
+                    EmptyContainerReturnTo = container.EmptyContainerReturnTo,
+                    EmptyContainerReturnFrom = container.EmptyContainerReturnFrom,
+                    EmptyContainerReturnETA = container.EmptyContainerReturnETA,
+                    EmptyContainerReturnATA = container.EmptyContainerReturnATA,
+                    EmptyContainerReturnATD = container.EmptyContainerReturnATD,
+                    EmptyContainerReturnETD = container.EmptyContainerReturnETD,
                 };
                 MapCustomFields(containerPM, container);
             }

@@ -29,6 +29,7 @@ import { OceanFCLSurchargeVersionTabComponent } from './Components/EditTabs/Tari
 import { AddTariffContainersComponent } from './Components/NewEntity/AddTariffContainersComponent';
 import { ChooseCountryComponent } from './Components/EditTabs/Tariff/ChooseCountryComponent';
 import { UploadedExcelsComponent } from './Components/EditTabs/Tariff/UploadedExcelsComponent';
+import { CustomChargesVersionTabComponent } from './Components/EditTabs/Tariff/CustomChargesVersionTabComponent';
 
 export const Components =
     [
@@ -61,6 +62,7 @@ export const Components =
         TariffShortTitleComponent,
         ChooseCountryComponent,
         UploadedExcelsComponent,
+        CustomChargesVersionTabComponent,
     ];
 
 export const ControlsComponents =
@@ -101,8 +103,8 @@ export class ModuleDeclarations {
             case "NewTariffProductsComponent": { myResult = NewTariffProductsComponent; break; }
             case "TariffShortTitleComponent": { myResult = TariffShortTitleComponent; break; }
             case "ChooseCountryComponent": { myResult = ChooseCountryComponent; break; }
-            case "UploadedExcelsComponent": { myResult = UploadedExcelsComponent; break;}
-        
+            case "UploadedExcelsComponent": { myResult = UploadedExcelsComponent; break; }
+            case "CustomChargesVersionTabComponent": { myResult = CustomChargesVersionTabComponent; break; }
         }
 
         return myResult;

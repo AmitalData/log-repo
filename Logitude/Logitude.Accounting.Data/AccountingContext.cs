@@ -72,6 +72,8 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new AccountingEntityMap());
 	
+            modelBuilder.Configurations.Add(new AccountingEntityJournalMap());
+	
             modelBuilder.Configurations.Add(new AccountingIntegrityCheckMap());
 	
             modelBuilder.Configurations.Add(new AccountingNoteMap());
@@ -720,6 +722,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<AccountingEntity> AccountingEntities 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<AccountingEntityJournal> AccountingEntitiesJournals 
 	 {
 	      get; set;
 	 

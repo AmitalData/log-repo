@@ -56,6 +56,13 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return textcodes;
         }
 
+        public IQueryable<TextCode> GetTextCodesByTenantForCustomization(int tenant)
+        {
+            IQueryable<TextCode> textcodes = from a in context.TextCodes
+                                             where (a.Tenant == tenant || a.Tenant == 0)
+                                             select a;
+            return textcodes;
+        }
 
         public List<TextCode> GetTextCodesByTenantAndObjectTable(int tenant, string objectTableName)
         {

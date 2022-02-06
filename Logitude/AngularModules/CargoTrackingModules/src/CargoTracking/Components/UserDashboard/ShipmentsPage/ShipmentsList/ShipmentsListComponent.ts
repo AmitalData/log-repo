@@ -76,6 +76,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     SupplierOrClientValue: string;
     ShowMobileSearch: boolean = false;
     ShipmenTypeForRouting: string;
+    RoutingPortNames: string;
     public SortOptions = SortOptions;
     MasterOrHouseLabel: string = "";
     EntityType_Customs = "C";
@@ -501,8 +502,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         }
     }
 
-
-
+    SetRoutingPortNames(shipment: CargoTrackingShipmentList) {
+        this.RoutingPortNames = shipment.FromPortName + " to " + shipment.ToPortName; 
+    }
 
     private InitComponent() {
         this.InitForm();
@@ -514,7 +516,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         var allreferences = reference?.split(',');
         if (allreferences?.length > 4) {
 
-            var morereferences = allreferences.slice(4, allreferences.length + 1)
+            var morereferences = allreferences.slice(3, allreferences.length + 1)
             this.MoreReferenceText = morereferences.join(',');
 
         }
@@ -589,7 +591,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
             this.ShipmentSearchInput.Tenant = this.tenant;
             var shipmentFilters = this.BuildShipmentFilters();
             this.LoadShipments();
-            this.LoadShipmentsCounter();
+            //this.LoadShipmentsCounter();
             this.SetShipmentsScrollPosition();
         }
     }
@@ -609,14 +611,14 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         return filter;
     }
 
-    private LoadShipmentsCounter() {
-        let filter = this.filterWithAllCustomersWhenCustomersNotSelected();
-        this.searchService.GetUserShipmentsCounter(filter).subscribe((counter: any) => {
-            this.ShipmentsCounter = counter;
-            this.BuildToggleFilters();
-            this.SetShipmentsScrollPosition();
-        });
-    }
+    // private LoadShipmentsCounter() {
+    //     let filter = this.filterWithAllCustomersWhenCustomersNotSelected();
+    //     this.searchService.GetUserShipmentsCounter(filter).subscribe((counter: any) => {
+    //         this.ShipmentsCounter = counter;
+    //         this.BuildToggleFilters();
+    //         this.SetShipmentsScrollPosition();
+    //     });
+    // }
 
 
     private InitiateShipmentDataSource() {
@@ -641,18 +643,11 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         return shipmentFilters;
     }
 
-
-
-
-
-
-
-
-
-    SplitReference(reference: string) {
-        this.references = reference != null ? reference.split(',') : null;
-
+    BuildShipmentReferences(shipment: CargoTrackingShipmentList) {
+        this.references = shipment.CustomerReference != null ? shipment.CustomerReference.split(',') : [];
     }
+
+
     masterLabel = 'Master';
     houseLabel = 'House';
     SetMasterOrHouseLabel(shipment: CargoTrackingShipmentList) {
@@ -808,22 +803,22 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
     }
 
-    BuildToggleFilters() {
-        this.shipmentTypeMultipleSelection.MultipleSelectionList.map(x => {
-            x.Count = this.setCounterForshipmentTypeMultipleSelect(x);
-            return x;
-        });
-        this.shipmentDirectionMultipleSelection.MultipleSelectionList.map(x => {
-            x.Count = this.setCounterForDirectionMultipleSelect(x);
-            return x;
-        });
-        this.shipmentMoreFiltersMultipleSelection.MultipleSelectionList.map(x => {
-            x.Count = this.setCounterForMoreFiltersMultipleSelect(x);
-            return x;
-        });
+    // BuildToggleFilters() {
+    //     this.shipmentTypeMultipleSelection.MultipleSelectionList.map(x => {
+    //         x.Count = this.setCounterForshipmentTypeMultipleSelect(x);
+    //         return x;
+    //     });
+    //     this.shipmentDirectionMultipleSelection.MultipleSelectionList.map(x => {
+    //         x.Count = this.setCounterForDirectionMultipleSelect(x);
+    //         return x;
+    //     });
+    //     this.shipmentMoreFiltersMultipleSelection.MultipleSelectionList.map(x => {
+    //         x.Count = this.setCounterForMoreFiltersMultipleSelect(x);
+    //         return x;
+    //     });
 
-        this.changeDetector.detectChanges();
-    }
+    //     this.changeDetector.detectChanges();
+    // }
 
     setCounterForshipmentTypeMultipleSelect(toggleFilter: ToggleFilter): number {
         if (toggleFilter.Code == shipmentTypeCodes.Air) {

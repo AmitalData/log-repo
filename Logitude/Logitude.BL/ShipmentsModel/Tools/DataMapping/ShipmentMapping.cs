@@ -1871,7 +1871,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityMasterData.DepartureArrivalFromDate = entityPM.DepartureArrivalFromDate;
             entityMasterData.DepartureArrivalToDate = entityPM.DepartureArrivalToDate;
         }
-        private static void ComputeMainCarriageFinalDestinationDates(ShipmentMasterData entityMasterData, ShipmentPM entityPM)
+        public static void ComputeMainCarriageFinalDestinationDates(ShipmentMasterData entityMasterData, ShipmentPM entityPM, bool isChangeShipmetPMOnly = false)
         {
             DateTime? to_ETA = null;
             DateTime? to_ATA = null;
@@ -1902,6 +1902,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             entityPM.MainCarriageFinalDestinationETA = to_ETA;
             entityPM.MainCarriageFinalDestinationATA = to_ATA;
+
+            if (isChangeShipmetPMOnly) return;
             entityMasterData.MainCarriageFinalDestinationETA = entityPM.MainCarriageFinalDestinationETA;
             entityMasterData.MainCarriageFinalDestinationATA = entityPM.MainCarriageFinalDestinationATA;
         }

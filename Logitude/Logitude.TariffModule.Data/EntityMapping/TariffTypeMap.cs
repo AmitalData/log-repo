@@ -30,6 +30,8 @@ namespace Logitude.TariffModule.Data.EntityMapping
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
 
             this.Property(t => t.TransportModeCode).HasColumnName("TransportModeCode").HasMaxLength(1).IsFixedLength();
+
+            this.Property(t => t.DirectionCode).HasColumnName("DirectionCode").HasMaxLength(1).IsFixedLength();
         }
     }
 }

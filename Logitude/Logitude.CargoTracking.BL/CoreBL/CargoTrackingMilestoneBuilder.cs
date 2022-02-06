@@ -416,6 +416,8 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Name = invoiced.EnglishName,
                 LocalName = invoiced.LocalName,
                 Weight = invoiced.Weight.HasValue ? invoiced.Weight.Value : 0,
+                Date = shipment.InvoicedDate,
+                Done = shipment.InvoicedDone,
                 Notes = null,
                 IsCurrent = false,
             });

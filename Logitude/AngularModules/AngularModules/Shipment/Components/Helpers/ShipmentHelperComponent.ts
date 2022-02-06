@@ -14,7 +14,7 @@ import {ShipmentDomainService} from '../../../Shipment/Services/ShipmentDomainSe
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ShipmentContainersWebService } from '../../../Shipment/Services/ShipmentContainersWebService';
-import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList';
+import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList'; 
 
 @Component({
     
@@ -29,7 +29,7 @@ export class ShipmentHelperComponent implements OnDestroy {
     public IsAnalyzeChampXMLButtonVisible: boolean = false;
     _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsSimulatorVisible: boolean = false;
+    public IsSimulatorVisible: boolean = false; 
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {        
         this.IsFollowupsVisible = FeatureLocator.HasFeaturePermession("Shipment", "Shipment.Followups");
         this.IsSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "ContainerStatusSimulator");
@@ -91,8 +91,13 @@ export class ShipmentHelperComponent implements OnDestroy {
                         else if (this.isSharingDocumentRequested) {
                             this.StartSharingDocument();
                         }
+                        else if (this.ShareDocumentsViaEmailInSendControl) {
+                            this.ShowSharedDocument();
+                        }
+                         
                     }
-                    
+
+                    this.ShareDocumentsViaEmailInSendControl = false;
                     this.isShareManifestRequested = false;
                     this.isUpdateSharedAgentRequested = false;
                     this.isSharingDocumentRequested = false;
@@ -175,6 +180,9 @@ export class ShipmentHelperComponent implements OnDestroy {
     public IsUpdateSharedAgentButtonVisible: boolean = false;
     public IsShareDocumentsButtonVisible: boolean = false;
     public IsShareManifestButtonVisible: boolean = false;
+    public IsShareDocumentsViaEmailVisible: boolean = false; 
+    private ShareDocumentsViaEmailInSendControl: boolean = false;
+
     BuildComponent() {
         this.EntityTitle = this.EntityPM.ShipmentLevelCode == "C" ? "Master" : "Shipment";
         this.SetAWBWizardButton();
@@ -182,7 +190,9 @@ export class ShipmentHelperComponent implements OnDestroy {
 
         var isUpdateSharedAgentButtonVisible: boolean = false;
         var isShareDocumentsButtonVisible: boolean = false;
-        var isShareManifestButtonVisible: boolean = false;
+        var isShareManifestButtonVisible: boolean = false; 
+      
+        this.SetShareDocumentsViaEmailVisibility(); 
 
         if (FeatureLocator.HasFeaturePermession("Shipment", "AgentSharedManifest")) {
             if (this.EntityPM.DirectionId == "E" && (this.EntityPM.ShipmentLevelCode == "C" || this.EntityPM.ShipmentLevelCode == "D")) {
@@ -201,7 +211,7 @@ export class ShipmentHelperComponent implements OnDestroy {
                 isShareDocumentsButtonVisible = true;
             }
         }
-
+         
         this.IsUpdateSharedAgentButtonVisible = isUpdateSharedAgentButtonVisible;
         this.IsShareDocumentsButtonVisible = isShareDocumentsButtonVisible;
         this.IsShareManifestButtonVisible = isShareManifestButtonVisible;
@@ -234,6 +244,17 @@ export class ShipmentHelperComponent implements OnDestroy {
     public IsSendBookingVisible: boolean = false;
 
     public IsShipmentContainersSimulatorVisible: boolean = false;
+
+    private SetShareDocumentsViaEmailVisibility() {
+        if (FeatureLocator.HasFeaturePermession("Shipment", "ShareDocumentsViaEmail") && this.IsShareShipment()) {
+            this.IsShareDocumentsViaEmailVisible = true; 
+        }
+    }
+
+    private IsShareShipment() {
+        return ((this.EntityPM.DirectionId == "E" || this.EntityPM.DirectionId == "R" ) && (this.EntityPM.ShipmentLevelCode == "C" || this.EntityPM.ShipmentLevelCode == "H"));
+    }
+
     private ShowHideShipmentContainersSimulatorButton() {
         this.IsShipmentContainersSimulatorVisible = false;
         if (FeatureLocator.HasFeaturePermession("Shipment", "INTTRASimulator")) {
@@ -486,7 +507,21 @@ export class ShipmentHelperComponent implements OnDestroy {
             ServiceLocator.SendTotangoUserActivity("Shipment", "Notes update");
         }
     }
-    
+
+
+    ShareDocumentsViaEmailClicked() {
+
+        this.ShareDocumentsViaEmailInSendControl = true;
+        if (this.EntityPM.IsDirty) { 
+           this.CurrentSession.CurrentEditComponent.SaveChanges();
+        } 
+        else
+        {
+            this.ShowSharedDocument()
+            this.ShareDocumentsViaEmailInSendControl = false;
+        }  
+    }
+
     //ShareDocument
     isSharingDocumentRequested: boolean = false;
     ShareDocumentsClicked() {
@@ -495,7 +530,7 @@ export class ShipmentHelperComponent implements OnDestroy {
             this.isSharingDocumentRequested = true;
             this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
-        else {
+        else { 
             this.StartSharingDocument();
         }
 
@@ -504,14 +539,7 @@ export class ShipmentHelperComponent implements OnDestroy {
 
         if (this.EntityPM.IsManifestSentToAgent) {
 
-            var windowArgs: any = {};
-            windowArgs.EntityPM = this.EntityPM;
-            var logWindow = new LogitudeWindow();
-            logWindow.Width = 1000;
-            logWindow.Height = 600;
-            logWindow.Title = "Share Documents";
-            logWindow.WindowArgs = windowArgs;
-            logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/SharedDocument/SharedDocumentComponent");
+            this.ShowSharedDocument();
 
         }
         else {
@@ -524,6 +552,19 @@ export class ShipmentHelperComponent implements OnDestroy {
 
       //ShareManifest
     isShareManifestRequested: boolean = false;
+
+    private ShowSharedDocument() {
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        windowArgs.ShareDocumentsViaEmail = this.ShareDocumentsViaEmailInSendControl;
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1000;
+        logWindow.Height = 600;
+        logWindow.Title = "Share Documents";
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/SharedDocument/SharedDocumentComponent");
+    }
+
     ShareManifestClicked() {
         if (this.EntityPM.IsDirty) {
             this.isShareManifestRequested = true;

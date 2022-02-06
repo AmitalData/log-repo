@@ -149,6 +149,11 @@ export class CargoTrackingShipmentList {
 	ApprovedDate: Date;
 	DenyDate: Date;
 	DenyReason: string;
+	ConnectedShipmentsNumbers: string;
+	InvoicedDate: Date;
+	InvoicedDone: boolean;
+	InvoicedNotes: string;
+	InvoicedExceptionReason: string;
 	
 }
  
