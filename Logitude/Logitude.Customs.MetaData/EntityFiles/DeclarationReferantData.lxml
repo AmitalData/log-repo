@@ -6044,7 +6044,7 @@
     DefaultText="&quot;Remove Inclusive Visibility&quot;"
     ListFieldLable="&quot;RemoveInclusiveVisibilityListLable&quot;"
     ListLableDefaultText="&quot;Remove Inclusive Visibility&quot;"
-    ListLocalDefaultText="&quot;מחיקה&quot;"
+    ListLocalDefaultText="&quot;מחיקה בכוללת&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -8030,12 +8030,6 @@
       Code="&quot;Customs.DeclarationReferantData.NewButton&quot;"
       DefaultText="&quot;New Button&quot;"
       LocalDefaultText="&quot;פתיחת תיק חדש&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.DeclarationReferantData.RemoveInclusive&quot;"
-      DefaultText="&quot;RemoveInc lusive&quot;"
-      LocalDefaultText="&quot;מחיקה בכוללת&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
