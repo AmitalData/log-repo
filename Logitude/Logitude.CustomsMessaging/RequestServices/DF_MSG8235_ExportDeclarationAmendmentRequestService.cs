@@ -48,7 +48,7 @@ using UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceRef
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
-    public class DF_MSG8235_ExportDeclarationAmendmentRequestService : RequestServiceBase<DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg, GenericRequestParams>
+    public class DF_MSG8235_ExportDeclarationAmendmentRequestService : RequestServiceBase<DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg, AmendmentRequestParams>
     {
         private ICustomContext _context;
         private DeclarationPM _DeclarationPM;
@@ -57,7 +57,9 @@ namespace Logitude.CustomsMessaging.RequestServices
         private Stopwatch _Stopwatch;
         private AmitalContext _AmitalContext;
          private string _userId;
-        public override void ManipulateRequestParams(GenericRequestParams requestParams)
+
+        private bool isExportClose=false;
+        public override void ManipulateRequestParams(AmendmentRequestParams requestParams)
         {
             if (requestParams.RequestVIA == SendRequestVIA.DCABatch)
             {
@@ -188,11 +190,12 @@ namespace Logitude.CustomsMessaging.RequestServices
             var declarationQueryService = new DeclarationQueryService(_context);
             declarationQueryService.LoadSupplierInvoicesItemsParentsOnly = true;
             _DeclarationPM = declarationQueryService.GetSingle(requestParams.AppicationId, true, false);
-            _DeclarationPMOrg = declarationQueryService.GetAcceptDeclarationAmendment(_DeclarationPM.AmendmentOriginalDeclartation, _DeclarationPM.Tenant);
+            
+            _DeclarationPMOrg = isExportClose ? _DeclarationPM:  declarationQueryService.GetAcceptDeclarationAmendment(_DeclarationPM.AmendmentOriginalDeclartation, _DeclarationPM.Tenant);
         }
 
 
-        public override void PostGetRequest(DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg customRequest, GenericRequestParams requestParams)
+        public override void PostGetRequest(DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg customRequest, AmendmentRequestParams requestParams)
         {
             if (this._context == null)
             {
@@ -200,7 +203,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
         }
  
-        public override DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg GetRequest(GenericRequestParams requestParams)
+        public override DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg GetRequest(AmendmentRequestParams requestParams)
         {
 
             
@@ -275,6 +278,10 @@ namespace Logitude.CustomsMessaging.RequestServices
                 var dic = UnifreightListsUtil.Deserialize(requestParams.UnifreightListOnServerOnly);
                 fromMevaker = !String.IsNullOrWhiteSpace(UnifreightListsUtil.GetValue(ref dic, "FromMevaker"));
             }
+
+            isExportClose = requestParams.IsExportClose;
+
+
             var req = new DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg();
             CreateDeclarationPM(requestParams);
             var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
@@ -287,6 +294,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 CheckTaxationDateTime(_DeclarationPM);
             }
 
+
             LogMessagingUtil.Instance.AppendLine("declaration retrieve from db");
 
              req.Response = new UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference.Response();
@@ -296,7 +304,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             this.MyRequestSheetParam.CustomFileNo = _DeclarationPMOrg.CustomFileNo;
             this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             this.MyRequestSheetParam.EntityId1 = _DeclarationPMOrg.Id;
-            if (_DeclarationPM.AmedmentType == "2")
+            if (isExportClose)
             {
                 this.MyRequestSheetParam.RequestDescription = "סגירת הצהרת יצוא" + _DeclarationPMOrg.DeclarationNumber + " " + _DeclarationPMOrg.VersionId;
             }
@@ -305,13 +313,21 @@ namespace Logitude.CustomsMessaging.RequestServices
                 this.MyRequestSheetParam.RequestDescription = "תיקון הצהרת יצוא" + _DeclarationPMOrg.DeclarationNumber + " " + _DeclarationPMOrg.VersionId;
             }
 
-            req.Response.FunctionalReferenceID = new ResponseFunctionalReferenceIDType { Value = string.IsNullOrEmpty(_DeclarationPM.AmendmentRequestNumber) ? GetNextAmendmentRequestNumber() : _DeclarationPM.AmendmentRequestNumber
-            };
-            functionalReferenceID = req.Response.FunctionalReferenceID.Value;
+            if (!isExportClose)
+            {
+                req.Response.FunctionalReferenceID = new ResponseFunctionalReferenceIDType
+                {
+                    Value = string.IsNullOrEmpty(_DeclarationPM.AmendmentRequestNumber) ? GetNextAmendmentRequestNumber() : _DeclarationPM.AmendmentRequestNumber
+                };
+                functionalReferenceID = req.Response.FunctionalReferenceID.Value;
 
-            req.Response.IssueDateTime = DataTypeConvertorUtil.Convert(DateTime.Now);
+                req.Response.IssueDateTime = DataTypeConvertorUtil.Convert(DateTime.Now);
+            }
+            
             req.Response.AdditionalInformation = AdditionalInformation();
-            if(_DeclarationPM.AmedmentType == "2")
+
+
+            if(isExportClose)
             {
                 req.Response.FunctionCode = new ResponseFunctionCodeType { Value = "3" };
             }
@@ -321,7 +337,11 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
             //req.Attachments = GetAttachments();
             LogMessagingUtil.Instance.AppendLine("declaration build" + requestParams.AppicationId);
+
+            if(!isExportClose)
              UpdateDeclaration(req.Response, requestParams.LoggingUserId);
+
+
             _context = null;
             return req;
         }
@@ -357,29 +377,10 @@ namespace Logitude.CustomsMessaging.RequestServices
         {
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), _DeclarationPM.Tenant);
             _DeclarationPM.AmendmentissueDate = DateTime.Now;
-            _DeclarationPM.AmendmentRequestNumber = response.FunctionalReferenceID.Value;
+            if (!isExportClose) _DeclarationPM.AmendmentRequestNumber = response.FunctionalReferenceID.Value;
+
             _DeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-            //var myUpdateEventContextTagModel = new EventContextTagModel()
-            //{
-            //    CallProccessID = EventContextTagModel.ProccessEnum.None,
-            //    EventCode = "DCH",
-            //    EventRemarks = "Declaration Changed By Customs",
-            //    FUStatusRemarks = "בוצע תיקון הצהרה" + _DeclarationPM.DeclarationNumber,
-            //};
-
-
-            //_DeclarationPM.CurrentContextTag = myUpdateEventContextTagModel;
-
-            //EventTracer.CreateTraceEvent(new EventTracerArgs()
-            //{
-            //    Tenant = _DeclarationPM.Tenant,
-            //    EventTypeCode = "DCH",
-            //    UserId = _userId,
-            //    EntityId = _DeclarationPMOrg.Id,
-            //    ObjectTableName = "Customs.Declaration",
-            //    Notes = "-  בוצע תיקון הצהרה" + (_DeclarationPMOrg != null ? _DeclarationPMOrg.DeclarationNumber : _DeclarationPM.DeclarationNumber)
-            //});
-
+ 
 
             var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
             {
@@ -400,8 +401,6 @@ namespace Logitude.CustomsMessaging.RequestServices
                     xml_status = "new",
                     status_id = "DCH",
                     status_DateTime = DateTime.Now,
-                    //status_place = "FRA",
-                    //status_save = "no_fail",
                     comments = "בוצע תיקון הצהרה - " + (_DeclarationPMOrg != null ? _DeclarationPMOrg.DeclarationNumber : _DeclarationPM.DeclarationNumber) + " מספר בקשה  - " + _DeclarationPM.AmendmentRequestNumber,
                 }
             };
@@ -418,16 +417,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             };
             _DeclarationPM.CurrentContextTag = myUpdateEventContextTagModel;
 
-            //var myUpdateEventContextTagModel = new EventContextTagModel()
-            //{
-            //    CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
-            //    EventCode = "DCH",
-            //    EventRemarks = "Declaration Changed By Customs",
-            //    FUStatusRemarks = "בוצע תיקון הצהרה" +  _DeclarationPMOrg.DeclarationNumber,
-            //};
-
-            //_DeclarationPMOrg.CurrentContextTag = myUpdateEventContextTagModel;
-            //declarationUpdateService.Update(_DeclarationPMOrg, true);
+ 
 
             declarationUpdateService.Update(_DeclarationPM, true);
         }
@@ -450,27 +440,30 @@ namespace Logitude.CustomsMessaging.RequestServices
         {
           List< ResponseAdditionalInformation>  responseAdditionalInformation = new List<ResponseAdditionalInformation>();
 
-            if (!string.IsNullOrEmpty(_DeclarationPM.AmendmentRemarks))
+            if (!isExportClose)
             {
-                
-                responseAdditionalInformation.Add(  new ResponseAdditionalInformation { StatementTypeCode = new AdditionalInformationStatementTypeCodeType { Value = "29"  } , Content = new AdditionalDocumentTypeTextType { Value = _DeclarationPM.AmendmentRemarks }  });
-              }
+                if (!string.IsNullOrEmpty(_DeclarationPM.AmendmentRemarks))
+                {
 
-            if (_DeclarationPM.AmendmentDeficitInitiated==true)
-            {
-                responseAdditionalInformation.Add(  new ResponseAdditionalInformation { StatementTypeCode = new AdditionalInformationStatementTypeCodeType { Value = "25" }, Content = new AdditionalDocumentTypeTextType { Value = "1" } } );
-            }
+                    responseAdditionalInformation.Add(new ResponseAdditionalInformation { StatementTypeCode = new AdditionalInformationStatementTypeCodeType { Value = "29" }, Content = new AdditionalDocumentTypeTextType { Value = _DeclarationPM.AmendmentRemarks } });
+                }
 
-            if (!string.IsNullOrEmpty(_DeclarationPM.AmendDeficitInitiatedReasTo))
-            {
-                responseAdditionalInformation.Add(  new ResponseAdditionalInformation { StatementTypeCode = new AdditionalInformationStatementTypeCodeType { Value = "26" }, Content = new AdditionalDocumentTypeTextType { Value = _DeclarationPM.AmendDeficitInitiatedReasTo  } });
+                if (_DeclarationPM.AmendmentDeficitInitiated == true)
+                {
+                    responseAdditionalInformation.Add(new ResponseAdditionalInformation { StatementTypeCode = new AdditionalInformationStatementTypeCodeType { Value = "25" }, Content = new AdditionalDocumentTypeTextType { Value = "1" } });
+                }
+
+                if (!string.IsNullOrEmpty(_DeclarationPM.AmendDeficitInitiatedReasTo))
+                {
+                    responseAdditionalInformation.Add(new ResponseAdditionalInformation { StatementTypeCode = new AdditionalInformationStatementTypeCodeType { Value = "26" }, Content = new AdditionalDocumentTypeTextType { Value = _DeclarationPM.AmendDeficitInitiatedReasTo } });
+                }
+                if (!string.IsNullOrEmpty(_DeclarationPM.ReplacingRepairRequest))
+                {
+                    responseAdditionalInformation.Add(new ResponseAdditionalInformation { StatementTypeCode = new AdditionalInformationStatementTypeCodeType { Value = "24" }, Content = new AdditionalDocumentTypeTextType { Value = _DeclarationPM.ReplacingRepairRequest } });
+                }
+
             }
-           if(!string.IsNullOrEmpty(_DeclarationPM.ReplacingRepairRequest))
-            { 
-                responseAdditionalInformation.Add(new ResponseAdditionalInformation { StatementTypeCode = new AdditionalInformationStatementTypeCodeType { Value = "24" }, Content = new AdditionalDocumentTypeTextType { Value = _DeclarationPM.ReplacingRepairRequest } });
-            }
-            if (_DeclarationPM.AmedmentType == "2")
-            {
+            else { 
                 responseAdditionalInformation.Add(new ResponseAdditionalInformation { StatementTypeCode = new AdditionalInformationStatementTypeCodeType { Value = "28" }, Content = new AdditionalDocumentTypeTextType { Value = "declaration closed" } });
             }
             return responseAdditionalInformation.ToArray();

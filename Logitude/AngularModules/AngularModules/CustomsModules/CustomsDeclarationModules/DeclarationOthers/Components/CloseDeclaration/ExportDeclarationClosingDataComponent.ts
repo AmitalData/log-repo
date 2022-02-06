@@ -14,6 +14,7 @@ import { CustomMessageProgressComponent, ShowProgressBarParams } from '../../../
 import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { DeclarationWebService } from '../../../../../Customs/Services/WebServices/DeclarationWebService';
+import { AmendmentRequestParams } from '../../../../../Customs/DataContract/RequestParams/AmendmentRequestParams';
 
 @Component({
     selector: 'ExportDeclarationClosingDataComponent',
@@ -154,7 +155,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
    
     SendAmendmentCloseDeclaration(event: CustomSendOptionsArgs) {
         this.CurrentSession.CurrentEditComponent.StartBusyIndicator("שליחת מסר סגירת הצהרה");
-        var searchParams: GenericRequestParams = new GenericRequestParams();
+        var searchParams: AmendmentRequestParams = new AmendmentRequestParams();
         searchParams.Tenant = SessionLocator.Tenant;
         searchParams.AppicationId = this.EntityPM.DeclarationId;
         searchParams.LoggingEnabled = true;
@@ -166,6 +167,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         searchParams.ResponseName = "Amendment Declaration Response";
         searchParams.RequestVIA = event.RequestVIA;
         searchParams.ForcePersonalSign = event.ForcePersonalSign;
+        searchParams.IsExportClose = true;
         //searchParams.TestCase = event.TestCase;
         let myShowProgressBarParams: ShowProgressBarParams = null;
 
