@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
-		public const string HashString = "99fc1700e7254de0f4157d4e4041c05c";
+		public const string HashString = "1e6836876b406299a7b9ef20acde8bab";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5052,6 +5052,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "RemoveInclusiveVisibility",
 					  						ListPropertyPath =  "RemoveInclusiveVisibility",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -5981,6 +5982,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesToPay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesToPay", DefaultText = "Files To Pay",LocalDefaultText = @"תיקים לתשלום", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataNewButton = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.NewButton", DefaultText = "New Button",LocalDefaultText = @"פתיחת תיק חדש", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataRemoveInclusive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.RemoveInclusive", DefaultText = "RemoveInc lusive",LocalDefaultText = @"מחיקה בכוללת", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataRemoveInclusiveMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.RemoveInclusiveMessage", DefaultText = "Please confirm the deletion from the query all inclusive",LocalDefaultText = @"נא אשר מחיקת התיק משאילתא תיקים בכוללת", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
