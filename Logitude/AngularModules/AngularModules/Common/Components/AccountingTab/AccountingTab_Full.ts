@@ -210,9 +210,9 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
         const isAccountingPartner = this.CardList.PartnerTypeId == AccountingPartners.AccountingPartner;
         const isAgent = this.CardList.PartnerTypeId == AccountingPartners.Agent;
 
-        if (this.CardList.PartnerTypeId == 'CS' || this.CardList.PartnerTypeId == 'CC' || this.CardList.PartnerTypeId == 'CG' || this.CardList.PartnerTypeId == 'CH' || this.CardList.PartnerTypeId == 'CO')
+        if (this.CardList.PartnerTypeId == 'CS' || this.CardList.PartnerTypeId == 'CC' || this.CardList.PartnerTypeId == 'CG' || this.CardList.PartnerTypeId == 'CH' )
             chartOfAccountTypeCode = '3';
-        else if(!isAccountingPartner && !isAgent){
+        else if ((!isAccountingPartner && !isAgent) || this.CardList.PartnerTypeId == AccountingPartners.Coloader) {
             chartOfAccountTypeCode = '4';
           }
         args.PartnerId = this.CardList.PartnerTypeId;
