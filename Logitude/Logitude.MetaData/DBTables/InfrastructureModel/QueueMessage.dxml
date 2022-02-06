@@ -141,7 +141,7 @@
     Type="varchar"
     Size="256">
 	<Constraints
-      Nullable="false" />
+      Nullable="true" />
 	</Column>
 	
 	
