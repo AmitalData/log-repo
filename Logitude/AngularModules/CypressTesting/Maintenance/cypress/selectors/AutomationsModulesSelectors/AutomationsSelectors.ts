@@ -65,10 +65,10 @@ export class AutomationsSelectors extends RegexSelectors {
     public static readonly DateIsEmpty ="[data-cy='Is Empty']"
     public static readonly DateIsnotEmpty ="[data-cy='Is not Empty']"
     //Date Value Operators
-    public static readonly TodayMinuse="@Today-"
-    public static readonly TodayPluse="@Today+"
-    public static readonly OldValueMinuse="[data-cy='@Old Value-']"
-    public static readonly OldValuePluse="[data-cy='@Old Value+']"
+    public static readonly TodayMinus="@Today-"
+    public static readonly TodayPlus="@Today+"
+    public static readonly OldValueMinus="[data-cy='@Old Value-']"
+    public static readonly OldValuePlus="[data-cy='@Old Value+']"
     public static readonly Date="Date"
     //Results 
     public static readonly AutomationResultList="[data-cy='AutomationResultList']"

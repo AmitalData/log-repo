@@ -175,17 +175,17 @@ function chooseDateOperator(conditionsDetails: ConditionsDetails, conditionNo: n
         cy.get(AutomationsSelectors.DateIsnotEmpty).eq(j).click()
 
     if (conditionsDetails.OperatorValue != null) { /// to sepatrate function 
-        if (conditionsDetails.OperatorValue.toUpperCase() == AutomationsConstants.TodayMinuse)//@Today-
-        { setDateOperatorAndValue(AutomationsSelectors.TodayMinuse, conditionsDetails, conditionNo) }
+        if (conditionsDetails.OperatorValue.toUpperCase() == AutomationsConstants.TodayMinus)//@Today-
+        { setDateOperatorAndValue(AutomationsSelectors.TodayMinus, conditionsDetails, conditionNo) }
         else if (conditionsDetails.OperatorValue.toUpperCase() == AutomationsConstants.TodayPlus)//@Today+
-            setDateOperatorAndValue(AutomationsSelectors.TodayPluse,
+            setDateOperatorAndValue(AutomationsSelectors.TodayPlus,
                 conditionsDetails, conditionNo)
 
-        else if (conditionsDetails.OperatorValue.toUpperCase() == AutomationsConstants.OldValueMinuse)//@Old Value-
-            setDateOperatorAndValue(AutomationsSelectors.OldValueMinuse, conditionsDetails, conditionNo)
+        else if (conditionsDetails.OperatorValue.toUpperCase() == AutomationsConstants.OldValueMinus)//@Old Value-
+            setDateOperatorAndValue(AutomationsSelectors.OldValueMinus, conditionsDetails, conditionNo)
 
         else if (conditionsDetails.OperatorValue.toUpperCase() == AutomationsConstants.OldValuePlus)//@Old Value+
-            setDateOperatorAndValue(AutomationsSelectors.OldValuePluse, conditionsDetails, conditionNo)
+            setDateOperatorAndValue(AutomationsSelectors.OldValuePlus, conditionsDetails, conditionNo)
 
         else if (conditionsDetails.OperatorValue.toUpperCase() == AutomationsConstants.Date)//Date
         {
@@ -366,7 +366,7 @@ export function AddDaysToTodayDate(days: string, Operatorvalue: string) {
         date.setDate(date.getDate());
     else if (Operatorvalue.toUpperCase() == AutomationsConstants.TodayPlus)
         date.setDate(date.getDate() + parseInt(days));
-    else if (Operatorvalue.toUpperCase() == AutomationsConstants.TodayMinuse)
+    else if (Operatorvalue.toUpperCase() == AutomationsConstants.TodayMinus)
         date.setDate(date.getDate() - parseInt(days));
     return BaseActions.FormateTheDateString(date.toDateString().split(" "))
 
@@ -381,7 +381,7 @@ export function AddDaysToTodayDateMonthName(days: string, Operatorvalue: string)
     else if (Operatorvalue.toUpperCase() == AutomationsConstants.TodayPlus)
         date.setDate(date.getDate() + parseInt(days));
 
-    else if (Operatorvalue.toUpperCase() == AutomationsConstants.TodayMinuse)
+    else if (Operatorvalue.toUpperCase() == AutomationsConstants.TodayMinus)
         date.setDate(date.getDate() - parseInt(days));
 
     return FormateTheDateStringMonthName(date.toDateString().split(" "))
