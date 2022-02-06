@@ -232,6 +232,9 @@ export class DeclarationReferantDataPM {
     private lastStatusRemarks: string;
     public get LastStatusRemarks() { return this.lastStatusRemarks; }
     public set LastStatusRemarks(newValue: string) { if (this.lastStatusRemarks != newValue) { this.lastStatusRemarks = newValue; this.MarkAsDirty("LastStatusRemarks"); } }
+    private packageTypeCode: string;
+    public get PackageTypeCode() { return this.packageTypeCode; }
+    public set PackageTypeCode(newValue: string) { if (this.packageTypeCode != newValue) { this.packageTypeCode = newValue; this.MarkAsDirty("PackageTypeCode"); } }
        
 	 
 
@@ -262,4 +265,4 @@ export class DeclarationReferantDataPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

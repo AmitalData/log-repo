@@ -57,6 +57,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsManualPayment, 
 	         Commodity, 
 	         LastStatusRemarks,
+	         PackageTypeCode,
 	      }
 
 
@@ -105,6 +106,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsManualPayment, 
 	         Commodity, 
 	         LastStatusRemarks,
+	         PackageTypeCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -276,6 +278,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Commodity))
             {
 				entityPOCO.Commodity = entityPM.Commodity;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PackageTypeCode))
+            {
+				entityPOCO.PackageTypeCode = entityPM.PackageTypeCode;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusRemarks))
@@ -463,6 +470,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
 					entityPM.LastStatusRemarks = entityPOCO.LastStatusRemarks;
             }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PackageTypeCode))
+            {
+					entityPM.PackageTypeCode = entityPOCO.PackageTypeCode;
+            }
 
 		}
 
@@ -639,8 +650,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 oldEntityPM.LastStatusRemarks = entityPM.LastStatusRemarks;
             }
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PackageTypeCode))
+            {
+                oldEntityPM.PackageTypeCode = entityPM.PackageTypeCode;
+            }
 			
 		}
+
 
 	    public void EncodeBase64NVARCHARFields(DeclarationReferantDataPM entityPM)
         {

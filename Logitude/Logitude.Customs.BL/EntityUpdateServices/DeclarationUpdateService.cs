@@ -834,6 +834,27 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
                     }
                 }
+
+                var package = entityPM.Consignments.SelectMany(c => c.ConsignmentPackages.Select(p => new { c, p }))
+                              .Where(g => g.p.PackageMeasureQualifierCode == "2").FirstOrDefault(x=>x.p.PackageTypeCode != null)?.p;
+                if(package != null)
+                {
+                    if(referant.PackageTypeCode != package.PackageTypeCode)
+                    {
+                        referant.PackageTypeCode = package.PackageTypeCode;
+                        referant.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                }
+                else
+                {
+                    if (referant.PackageTypeCode != null)
+                    {
+                        referant.PackageTypeCode = null;
+                        referant.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                }
+
+
                 logData = $"entityPM.CustomFileNo={entityPM.CustomFileNo}, referant.NewFile={referant.NewFile}, before update2";
                 LogitudeSettings.HandleLogMe("Referant update " + logData, false, "referant.NewFile", stopLogAt);
                 if (referant.NewFile != false)
