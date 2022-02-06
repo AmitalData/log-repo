@@ -22,6 +22,7 @@ using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using System.Collections.Generic;
+using System;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -160,6 +161,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 CardContactRepository CardContactRepository = new Simplog.Data.CommonDataModel.Repositories.CardContactRepository(objectContext);
                 CardContact cardContact = CardContactRepository.GetCardContactByContactAndCard(entityPM.Id, entityPM.ContactId, entityPM.Tenant);
+                AddDisconectFromContactKafkaQueueMessage(cardContact);
                 CardContactRepository.Remove(cardContact);
                 CardContactRepository.SubmitChanges();
             }
@@ -274,6 +276,20 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         }
                     }
                 }
+            }
+        }
+
+        private void AddDisconectFromContactKafkaQueueMessage(CardContact cardContact)
+        {
+            if (FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
+            {
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("CToolLookups", 0);
+                var queueMessage = new Dictionary<string, string>() {
+                { "Entity", "DisconectFromContact" },
+                { "EntityId", "{" + "\"ContactId\":" + "\"" + cardContact.ContactId + "\"," + "\"CardId\":" + "\"" + cardContact.CardId + "\"," + "\"Tenant\":" + tenant + "}" },
+                { "Tenant", tenant.ToString()}};
+                queueservice.Send(queueMessage, tenant);
             }
         }
 
