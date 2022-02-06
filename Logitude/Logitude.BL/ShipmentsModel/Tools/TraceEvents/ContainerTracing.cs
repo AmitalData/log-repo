@@ -720,7 +720,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             if (container.HasException && containerPM.IsExceptionResolved)
             {
-                this.CreateTraceEvent("EXRE", containerPM.ExceptionDate);
+                this.CreateTraceEvent("CRES", containerPM.ExceptionDate);
             }
         }
 

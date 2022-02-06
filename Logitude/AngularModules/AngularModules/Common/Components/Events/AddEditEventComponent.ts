@@ -79,6 +79,7 @@ export class AddEditEventComponent {
                                                 this.CurrentSession.CurrentEditComponent.LoadCompleted.emit(true);
                                                 break;
                                             }
+
                                         }
                                     }
                                 }

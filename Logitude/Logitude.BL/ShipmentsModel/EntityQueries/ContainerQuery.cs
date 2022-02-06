@@ -808,7 +808,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    LastExceptionDescription = container.LastExceptionDescription,
                                                    ExceptionDescription = container.ExceptionDescription,
                                                    IsUpdateEntityException = container.IsUpdateEntityException,
-                                                   IsExceptionResolved = container.IsExceptionResolved
+                                                   IsExceptionResolved = container.IsExceptionResolved,
                                                    EmptyContainerReturnTo = container.EmptyContainerReturnTo,
                                                    EmptyContainerReturnFrom = container.EmptyContainerReturnFrom,
                                                    EmptyContainerReturnETA = container.EmptyContainerReturnETA,
@@ -1053,7 +1053,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     LastExceptionDescription = container.LastExceptionDescription,
                     ExceptionDescription = container.ExceptionDescription,
                     IsUpdateEntityException = container.IsUpdateEntityException,
-                    IsExceptionResolved = container.IsExceptionResolved
+                    IsExceptionResolved = container.IsExceptionResolved,
                     EmptyContainerReturnTo = container.EmptyContainerReturnTo,
                     EmptyContainerReturnFrom = container.EmptyContainerReturnFrom,
                     EmptyContainerReturnETA = container.EmptyContainerReturnETA,
@@ -1312,7 +1312,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     LastExceptionDescription = container.LastExceptionDescription,
                     ExceptionDescription = container.ExceptionDescription,
                     IsUpdateEntityException = container.IsUpdateEntityException,
-                    IsExceptionResolved = container.IsExceptionResolved
+                    IsExceptionResolved = container.IsExceptionResolved,
                     EmptyContainerReturnTo = container.EmptyContainerReturnTo,
                     EmptyContainerReturnFrom = container.EmptyContainerReturnFrom,
                     EmptyContainerReturnETA = container.EmptyContainerReturnETA,
@@ -1559,7 +1559,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     LastExceptionDescription = container.LastExceptionDescription,
                     ExceptionDescription = container.ExceptionDescription,
                     IsUpdateEntityException = container.IsUpdateEntityException,
-                    IsExceptionResolved = container.IsExceptionResolved
+                    IsExceptionResolved = container.IsExceptionResolved,
                     EmptyContainerReturnTo = container.EmptyContainerReturnTo,
                     EmptyContainerReturnFrom = container.EmptyContainerReturnFrom,
                     EmptyContainerReturnETA = container.EmptyContainerReturnETA,
