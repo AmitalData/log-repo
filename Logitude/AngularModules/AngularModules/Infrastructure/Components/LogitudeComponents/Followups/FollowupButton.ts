@@ -233,7 +233,8 @@ export class FollowupButton implements OnInit, OnDestroy {
 
             }
             else if (legType.indexOf("CustomsClearanceDate") > -1 || legType.indexOf("FreightRelease") > -1 || legType.indexOf("TerminalAvailable") > -1
-                || legType.indexOf("MAWBOBLDate") > -1 || legType.indexOf("CutoffDate") > -1 ) {
+                || legType.indexOf("MAWBOBLDate") > -1 || legType.indexOf("CutoffDate") > -1
+                || legType.indexOf("WarehouseLegCutOffDate") > -1 || legType.indexOf("WarehouseLegVGMCutOffDate") > -1 || legType.indexOf("AMSClosingDate") > -1) {
                 if (this.ShipmentPM) {
                     myExpDate = DateTool.GetDateParts(this.ShipmentPM[this.ExpDateName]).DateObject;
                     myActDate = DateTool.GetDateParts(this.ShipmentPM[this.ActDateName]).DateObject;
@@ -398,6 +399,24 @@ export class FollowupButton implements OnInit, OnDestroy {
                 case "CutoffDate": {
                     this.ExpDateName = "CutoffDate";
                     this.ActDateName = "CutoffDate";
+                    break;
+                }
+
+                case "WarehouseLegCutOffDate": {
+                    this.ExpDateName = "WarehouseLegCutOffDate";
+                    this.ActDateName = "WarehouseLegCutOffDate";
+                    break;
+                }
+
+                case "WarehouseLegVGMCutOffDate": {
+                    this.ExpDateName = "WarehouseLegVGMCutOffDate";
+                    this.ActDateName = "WarehouseLegVGMCutOffDate";
+                    break;
+                }
+
+                case "AMSClosingDate": {
+                    this.ExpDateName = "AMSClosingDate";
+                    this.ActDateName = "AMSClosingDate";
                     break;
                 }
 
@@ -566,6 +585,23 @@ export class FollowupButton implements OnInit, OnDestroy {
                                     dateTime = this.ShipmentPM.CutoffDate;
                                     break;
                                 }
+                            case "WarehouseLegCutOffDate": {
+                                eventTypeCode = "WCDU";
+                                dateTime = this.ShipmentPM.WarehouseLegCutOffDate;
+                                break;
+                            }
+
+                            case "WarehouseLegVGMCutOffDate": {
+                                eventTypeCode = "VGMU";
+                                dateTime = this.ShipmentPM.WarehouseLegVGMCutOffDate;
+                                break;
+                            }
+
+                            case "AMSClosingDate": {
+                                eventTypeCode = "AMSU";
+                                dateTime = this.ShipmentPM.AMSClosingDate;
+                                break;
+                            }
                         }
 
                         var myService = new EventTypeListService();
