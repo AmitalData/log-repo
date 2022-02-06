@@ -49,6 +49,11 @@ export class CustomsEnvironmentSettingPM {
     public set RabbitUserName(newValue: string) { if (this.rabbitUserName != newValue) { this.rabbitUserName = newValue; this.MarkAsDirty("RabbitUserName"); } }
        
 	 
+    private rabbitPassword: string;
+    public get RabbitPassword() { return this.rabbitPassword; }
+    public set RabbitPassword(newValue: string) { if (this.rabbitPassword != newValue) { this.rabbitPassword = newValue; this.MarkAsDirty("RabbitPassword"); } }
+       
+	 
 
     public OldEntityPM: CustomsEnvironmentSettingPM;
 		
