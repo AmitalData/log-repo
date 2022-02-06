@@ -65,10 +65,10 @@ export class AutomationsSelectors extends RegexSelectors {
     public static readonly DateIsEmpty ="[data-cy='Is Empty']"
     public static readonly DateIsnotEmpty ="[data-cy='Is not Empty']"
     //Date Value Operators
-    public static readonly TodayMinuse="@Today-"
-    public static readonly TodayPluse="@Today+"
-    public static readonly OldValueMinuse="[data-cy='@Old Value-']"
-    public static readonly OldValuePluse="[data-cy='@Old Value+']"
+    public static readonly TodayMinus="@Today-"
+    public static readonly TodayPlus="@Today+"
+    public static readonly OldValueMinus="[data-cy='@Old Value-']"
+    public static readonly OldValuePlus="[data-cy='@Old Value+']"
     public static readonly Date="Date"
     //Results 
     public static readonly AutomationResultList="[data-cy='AutomationResultList']"
@@ -99,6 +99,8 @@ export class AutomationsSelectors extends RegexSelectors {
 
     //shipment side selectors
     public static readonly ShipmentAudit="[id='ShipmentTHAudit']"
+    public static readonly ShipmentTHCustoms="[id='ShipmentTHCustoms']"
+    public static readonly ShipmentCustomsClearanceDate="[id='date_Shipment_CustomsClearanceDate']"
     public static readonly Refresh="[data-cy='Refresh']"
     public static readonly AutomationTab="[data-cy='Automation']"
     public static readonly TabControlBody="[class='TabControlBody']"
@@ -108,4 +110,6 @@ export class AutomationsSelectors extends RegexSelectors {
     public static readonly SimpleGridViewBody="[class='SimpleGridViewBody']"
     public static readonly RedX="img[src='./Images/RedX.png']"
     public static readonly SimpleGridViewRowRowHover="[class='SimpleGridViewRow RowHover']"
+    public static readonly HelperFollowups="[data-cy='HelperFollowups']"
+    public static readonly FollowupsBody="[class='LogitudeHelperFollowupsBody']"
 }

@@ -12,8 +12,6 @@ import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion";
 import { RestAPI } from "../../../../Base/cypress/constants/RestAPI";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions";
 
-
-
 export function OpenAutomationMenu() {
     cy.Click(AutomationsSelectors.AutomationsMenu, null)
 }
@@ -177,17 +175,17 @@ function chooseDateOperator(conditionsDetails: ConditionsDetails, conditionNo: n
         cy.get(AutomationsSelectors.DateIsnotEmpty).eq(j).click()
 
     if (conditionsDetails.OperatorValue != null) { /// to sepatrate function 
-        if (conditionsDetails.OperatorValue.toUpperCase() == AutomationsConstants.TodayMinuse)//@Today-
-        { setDateOperatorAndValue(AutomationsSelectors.TodayMinuse, conditionsDetails, conditionNo) }
+        if (conditionsDetails.OperatorValue.toUpperCase() == AutomationsConstants.TodayMinus)//@Today-
+        { setDateOperatorAndValue(AutomationsSelectors.TodayMinus, conditionsDetails, conditionNo) }
         else if (conditionsDetails.OperatorValue.toUpperCase() == AutomationsConstants.TodayPlus)//@Today+
-            setDateOperatorAndValue(AutomationsSelectors.TodayPluse,
+            setDateOperatorAndValue(AutomationsSelectors.TodayPlus,
                 conditionsDetails, conditionNo)
 
-        else if (conditionsDetails.OperatorValue.toUpperCase() == AutomationsConstants.OldValueMinuse)//@Old Value-
-            setDateOperatorAndValue(AutomationsSelectors.OldValueMinuse, conditionsDetails, conditionNo)
+        else if (conditionsDetails.OperatorValue.toUpperCase() == AutomationsConstants.OldValueMinus)//@Old Value-
+            setDateOperatorAndValue(AutomationsSelectors.OldValueMinus, conditionsDetails, conditionNo)
 
         else if (conditionsDetails.OperatorValue.toUpperCase() == AutomationsConstants.OldValuePlus)//@Old Value+
-            setDateOperatorAndValue(AutomationsSelectors.OldValuePluse, conditionsDetails, conditionNo)
+            setDateOperatorAndValue(AutomationsSelectors.OldValuePlus, conditionsDetails, conditionNo)
 
         else if (conditionsDetails.OperatorValue.toUpperCase() == AutomationsConstants.Date)//Date
         {
@@ -340,12 +338,12 @@ export function AssertSFVAutomationExecution(setFieldValueResultDetailes: SetFie
     })
     cy.get(AutomationsSelectors.AutomationTab).click()
     cy.get(AutomationsSelectors.TabControlBody).eq(1).within(() => {
-        cy.get(AutomationsSelectors.MiniGreenTick).should("exist");
+        BaseAssertion.AssertElementExist(AutomationsSelectors.MiniGreenTick)
         cy.contains(AutomaionName)
     })
 
-    cy.get("[id='ShipmentTHCustoms']").click()
-    BaseAssertion.AssertElementHaveValue("[id='date_Shipment_CustomsClearanceDate']",
+    cy.get(AutomationsSelectors.ShipmentTHCustoms).click()
+    BaseAssertion.AssertElementHaveValue(AutomationsSelectors.ShipmentCustomsClearanceDate,
         AddDaysToTodayDate(setFieldValueResultDetailes.Value, setFieldValueResultDetailes.Operatorvalue))
     cy.get(AutomationsSelectors.ShipmentSaveClose).click()
 }
@@ -366,24 +364,11 @@ export function AddDaysToTodayDate(days: string, Operatorvalue: string) {
     var date = new Date();
     if (Operatorvalue.toUpperCase() == AutomationsConstants.date)
         date.setDate(date.getDate());
-    else
+    else if (Operatorvalue.toUpperCase() == AutomationsConstants.TodayPlus)
         date.setDate(date.getDate() + parseInt(days));
-
-    return FormateTheDateString(date.toDateString().split(" "))
-
-}
-
-function FormateTheDateString(dateList: string[]) {
-
-    var dd = dateList[2];
-
-    var mm = GetMonth(dateList[1])
-
-    var yyyy = dateList[3];
-
-    var DateFormat = dd + '/' + mm + '/' + yyyy;
-
-    return DateFormat;
+    else if (Operatorvalue.toUpperCase() == AutomationsConstants.TodayMinus)
+        date.setDate(date.getDate() - parseInt(days));
+    return BaseActions.FormateTheDateString(date.toDateString().split(" "))
 
 }
 
@@ -392,11 +377,14 @@ export function AddDaysToTodayDateMonthName(days: string, Operatorvalue: string)
     var date = new Date();
     if (Operatorvalue.toUpperCase() == AutomationsConstants.date)
         date.setDate(date.getDate());
-    else
+
+    else if (Operatorvalue.toUpperCase() == AutomationsConstants.TodayPlus)
         date.setDate(date.getDate() + parseInt(days));
 
-    return FormateTheDateStringMonthName(date.toDateString().split(" "))
+    else if (Operatorvalue.toUpperCase() == AutomationsConstants.TodayMinus)
+        date.setDate(date.getDate() - parseInt(days));
 
+    return FormateTheDateStringMonthName(date.toDateString().split(" "))
 }
 
 function FormateTheDateStringMonthName(dateList: string[]) {
@@ -410,38 +398,6 @@ function FormateTheDateStringMonthName(dateList: string[]) {
     var DateFormat = dd + ' ' + mm + ' ' + yyyy;
 
     return DateFormat;
-
-}
-function GetMonth(monthNum: string) {
-
-    switch (monthNum) {
-
-        case "Jan": return "01";
-
-        case "Feb": return "02";
-
-        case "Mar": return "03";
-
-        case "Apr": return "04";
-
-        case "May": return "05";
-
-        case "Jun": return "06";
-
-        case "Jul": return "07";
-
-        case "Aug": return "08";
-
-        case "Sep": return "09";
-
-        case "Oct": return "10";
-
-        case "Nov": return "11";
-
-        case "Dec": return "12";
-
-    }
-
 }
 
 export function assertAutomationNotExecuted(AutomaionName: string) {
@@ -453,7 +409,7 @@ export function assertAutomationNotExecuted(AutomaionName: string) {
     cy.get(AutomationsSelectors.AutomationTab).click()
     cy.get(AutomationsSelectors.TabControlBody).eq(1).within(() => {
         cy.get(AutomationsSelectors.SimpleGridViewRowRowHover).within(() => {
-            cy.get(AutomationsSelectors.RedX).should("exist");
+            BaseAssertion.AssertElementExist(AutomationsSelectors.RedX)
             cy.contains(AutomaionName)
         })
     })
@@ -469,12 +425,12 @@ export function AssertFUCAutomationExecution(followUpCreationDetails: FollowUpCr
 
     cy.get(AutomationsSelectors.AutomationTab).click()
     cy.get(AutomationsSelectors.TabControlBody).eq(1).within(() => {
-        cy.get(AutomationsSelectors.MiniGreenTick).should("exist");
+        BaseAssertion.AssertElementExist(AutomationsSelectors.MiniGreenTick)
         cy.contains(AutomaionName)
     })
 
-    cy.get("img[src='./_Resources/Images/Icons/Followups/Followup_Black.png']").eq(1).click()
-    cy.get("[class='LogitudeHelperFollowupsBody']").within(() => {
+    cy.get(AutomationsSelectors.HelperFollowups).click()
+    cy.get(AutomationsSelectors.FollowupsBody).within(() => {
         //cy.contains(followUpCreationDetails.FollowUpType)
         cy.contains(followUpCreationDetails.Notes)
     })

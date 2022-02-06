@@ -99,7 +99,8 @@
     <!-- Head -->
     <div class="MediaFillAbsolute" [class.LogitudeHelperFollowupsHeadOpened]="IsOpened">
         <div class="CenterCenter" style="width: 34px; height: 14px;">
-            <button [attr.id]="ComponentButtonId"
+            <button [attr.data-cy]="'HelperFollowups'" 
+                    [attr.id]="ComponentButtonId"
                     class="MediaFillRelative"
                     (click)="OnButtonClicked()"
                     (blur)="OnButtonLostFocus()"

@@ -32,9 +32,9 @@ export class AutomationsConstants {
     public static readonly GreaterThanOrEqualsField="GREATERTHANOREQUALSFIELD"
     public static readonly Changed="CHANGED"
     public static readonly ChangedTo="CHANGEDTO"
-    public static readonly TodayMinuse="TODAYMINUSE"
+    public static readonly TodayMinus="TODAYMINUS"
     public static readonly TodayPlus="TODAYPLUS"
-    public static readonly OldValueMinuse="OLDVALUEMINUSE"
+    public static readonly OldValueMinus="OLDVALUEMINUSE"
     public static readonly OldValuePlus="OLDVALUEPLUS"
     public static readonly Date="DATE"
 
