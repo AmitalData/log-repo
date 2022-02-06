@@ -31,9 +31,10 @@ BEGIN
 	)
 
 	declare @Tenant as int
-	declare @MasterId as varchar(15)
+	declare @MasterId as varchar(15)	
 
-	select @Tenant = Tenant, @MasterId = MasterShipmentDataId from Shipments where Id = @ShipmentId_PARAM
+	select 
+	@Tenant = Tenant, @MasterId = MasterShipmentDataId from Shipments where Id = @ShipmentId_PARAM
 
 	if (@MasterId is not null)
 	BEGIN
@@ -76,8 +77,7 @@ BEGIN
 			declare @AllHousesTotalTEU as float
 			declare @AllHousesTotalVolume as float
 			declare @AllHousesTotalGrossWeight as float
-			declare @AllHousesTotalVolumetrics as float
-			declare @AllHousesTotalChargeables as float
+			declare @AllHousesTotalChargeableWeight as float
 			declare @AllHousesTotalGrossWeightPerTon as float	
 			declare @AllHousesTotalNumberOfPackages as float
 			declare @AllHousesTotalNumberOfContainers as float	
@@ -93,8 +93,7 @@ BEGIN
 				@AllHousesTotalTEU = sum(isnull(TEU,0)),
 				@AllHousesTotalVolume = sum(isnull(Volume,0)),
 				@AllHousesTotalGrossWeight = sum(isnull(GrossWeight,0)),
-				@AllHousesTotalVolumetrics = sum(isnull(VolumetricWeight,0)),
-				@AllHousesTotalChargeables = sum(isnull(ChargeableWeight,0)),
+				@AllHousesTotalChargeableWeight = sum(isnull(ChargeableWeight,0)),
 				@AllHousesTotalGrossWeightPerTon = sum(isnull(GrossWeightPerTon,0)),
 				@AllHousesTotalNumberOfPackages = sum(isnull(NumberOfPackages,0)),
 				@AllHousesTotalNumberOfContainers = sum(isnull(NumberOfContainers,0)),
@@ -110,8 +109,7 @@ BEGIN
 				set @AllHousesTotalTEU = 0
 				set @AllHousesTotalVolume = 0
 				set @AllHousesTotalGrossWeight = 0
-				set @AllHousesTotalVolumetrics = 0
-				set @AllHousesTotalChargeables = 0
+				set @AllHousesTotalChargeableWeight = 0
 				set @AllHousesTotalGrossWeightPerTon = 0
 				set @AllHousesTotalNumberOfPackages = 0
 				set @AllHousesTotalNumberOfContainers = 0
@@ -121,9 +119,10 @@ BEGIN
 				set @AllHousesGrossWeightPerStorageDays = 0
 			end
 
-			-- 03
+			-- 03	
 			declare @MasterTypeId as varchar(5)
 			declare @MasterTransportModeId as varchar(1)		
+			
 			select
 			@MasterTypeId = ShipmentTypeId,
 			@MasterTransportModeId = TransportModeId
@@ -156,6 +155,8 @@ BEGIN
 			declare @MasterPayablePackageTypeId as varchar(15)
 			declare @MasterPayableOpenAmount as float
 			declare @MasterPayableExpectedAmount as float
+			declare @MasterPayableExpectedAmount_Local as float
+			declare @MasterPayableExpectedAmount_Profit as float
 			declare @MasterPayableAccountedAmount as float
 			declare @MasterPayableVatProfitAmount as float
 			declare @MasterPayableVatLocalAmount as float
@@ -202,8 +203,7 @@ BEGIN
 			declare @HousePercentForeignChargesLocalAmount as float
 			declare @VatAmountLocal as float
 			declare @VatAmountProfit as float
-
-		declare @AllHousesQuantities as float
+			declare @AllHousesQuantities as float
 		END
 
 		-- House Payable Prorate Variables
@@ -219,22 +219,19 @@ BEGIN
 		END
 		
 		-- Fill Invoice Lines
-		if(@InvoiceId_PARAM is not null and @InvoiceId_PARAM != 'no invoice')
-		BEGIN
-			insert into @InvoiceLinesTable
-			SELECT LineNumber, EntityPayableId, APInvoiceId, LocalCurrencyAmount, ProfitCurrencyAmount
-			From APInvoiceLines
-			Where Tenant = @Tenant and EntityId = @MasterId
-		END
+		insert into @InvoiceLinesTable
+		SELECT LineNumber, EntityPayableId, APInvoiceId, LocalCurrencyAmount, ProfitCurrencyAmount
+		From APInvoiceLines
+		Where Tenant = @Tenant and EntityId = @MasterId
 
 		-- Loop Master Payables (1: Not PRFR)
 		BEGIN
 			DECLARE MasterPayables1Cursor CURSOR READ_ONLY
 			FOR
-			SELECT Id, Quantity, UnitPrice, VendorId, ChargesTypeId, MeasurementId, PrepaidCollectId, DueTypeCode, AWBPrint, CurrencyId, Rate, ProfitCurrencyExchangeRate, ShipmentPayableLineStatusCode, ShipmentPayableAmountTypeCode, CreatedByUserId, UpdateByUserId, CreateDate, UpdateDate, ValueDate, OpenAmount, AccountedAmount, ExpectedAmount, IATACodeId, VatAmountLocal, VatAmountProfit
+			SELECT Id, Quantity, UnitPrice, VendorId, ChargesTypeId, MeasurementId, PrepaidCollectId, DueTypeCode, AWBPrint, CurrencyId, Rate, ProfitCurrencyExchangeRate, ShipmentPayableLineStatusCode, ShipmentPayableAmountTypeCode, CreatedByUserId, UpdateByUserId, CreateDate, UpdateDate, ValueDate, OpenAmount, AccountedAmount, ExpectedAmount, ExpectedAmountLocal, ExpectedAmountInProfitCurrency, IATACodeId, VatAmountLocal, VatAmountProfit
 			FROM ShipmentPayables
 			WHERE Tenant = @Tenant AND ShipmentId = @MasterId AND (MeasurementId != @PRFR_Id OR MeasurementId is null OR MeasurementId != @PFCL_Id)
-			OPEN MasterPayables1Cursor FETCH NEXT FROM MasterPayables1Cursor INTO @MasterPayableId, @MasterPayableQuantity, @MasterPayableUnitPrice, @MasterPayableVendorId, @MasterPayableChargesTypeId, @MasterPayableMeasurementId, @MasterPayablePrepaidCollectId, @MasterPayableDueTypeCode, @MasterPayableAWBPrint, @MasterPayableCurrencyId, @MasterPayableRate, @MasterPayableProfitRate, @MasterPayableLineStatusCode, @MasterPayableAmountTypeCode, @MasterPayableCreatedByUserId, @MasterPayableUpdatedByUserId, @MasterPayableCreateDate, @MasterPayableUpdateDate, @MasterPayableValueDate, @MasterPayableOpenAmount, @MasterPayableAccountedAmount, @MasterPayableExpectedAmount, @MasterPayableIATACodeId, @MasterPayableVatLocalAmount, @MasterPayableVatProfitAmount
+			OPEN MasterPayables1Cursor FETCH NEXT FROM MasterPayables1Cursor INTO @MasterPayableId, @MasterPayableQuantity, @MasterPayableUnitPrice, @MasterPayableVendorId, @MasterPayableChargesTypeId, @MasterPayableMeasurementId, @MasterPayablePrepaidCollectId, @MasterPayableDueTypeCode, @MasterPayableAWBPrint, @MasterPayableCurrencyId, @MasterPayableRate, @MasterPayableProfitRate, @MasterPayableLineStatusCode, @MasterPayableAmountTypeCode, @MasterPayableCreatedByUserId, @MasterPayableUpdatedByUserId, @MasterPayableCreateDate, @MasterPayableUpdateDate, @MasterPayableValueDate, @MasterPayableOpenAmount, @MasterPayableAccountedAmount, @MasterPayableExpectedAmount, @MasterPayableExpectedAmount_Local, @MasterPayableExpectedAmount_Profit, @MasterPayableIATACodeId, @MasterPayableVatLocalAmount, @MasterPayableVatProfitAmount
 			WHILE @@FETCH_STATUS = 0
 			BEGIN
 				
@@ -413,7 +410,7 @@ BEGIN
 									set @OpenAmountInLocalCurrency = 0
 									set @OpenAmountInProfitCurrency = 0
 									set @ProrateAmountInLocalCurrency = 0
-									set @ProrateAmountInProfitCurrency = 0
+									set @ProrateAmountInProfitCurrency = 0									
 								END
 						
 								-- Compute Ration, Quantity, UnitPrice
@@ -473,9 +470,9 @@ BEGIN
 									-- Chargeable Weight
 									else if (@MasterPayableMeasurementId = @CHWT_Id)
 									BEGIN
-										if (@AllHousesTotalChargeables <> 0)
+										if (@AllHousesTotalChargeableWeight <> 0)
 										begin
-											set @Ratio = @MasterPayableQuantity / @AllHousesTotalChargeables
+											set @Ratio = @MasterPayableQuantity / @AllHousesTotalChargeableWeight
 										end
 
 										set @Quantity = @HouseChargeableWeight
@@ -584,9 +581,9 @@ BEGIN
 
 									else if ((@MasterTransportModeId = 'O' AND @MasterTypeId = 'MyGO') OR (@MasterTransportModeId = 'I' AND @MasterTypeId = 'MyGI'))
 									BEGIN
-										if (@AllHousesTotalChargeables <> 0)
+										if (@AllHousesTotalChargeableWeight <> 0)
 										begin
-											set @Ratio = @MasterPayableQuantity / @AllHousesTotalChargeables
+											set @Ratio = @MasterPayableQuantity / @AllHousesTotalChargeableWeight
 										end
 
 										set @Quantity = @HouseChargeableWeight
@@ -676,8 +673,8 @@ BEGIN
 									BEGIN
 										if (@HouseTEU <> 0)
 										begin
-											set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @HouseTEU
-											set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @HouseTEU
+											set @ProrateAmountInLocalCurrency = (@HouseTEU / @AllHousesTotalTEU) * @LocalForeignAmount
+											set @ProrateAmountInProfitCurrency = (@HouseTEU / @AllHousesTotalTEU) * @ProfitForeignAmount 
 										end
 									END
 
@@ -686,8 +683,8 @@ BEGIN
 									BEGIN
 										if (@HouseVolume <> 0)
 										begin
-											set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @HouseVolume
-											set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @HouseVolume
+											set @ProrateAmountInLocalCurrency = (@HouseVolume / @AllHousesTotalVolume) * @LocalForeignAmount
+											set @ProrateAmountInProfitCurrency = (@HouseVolume / @AllHousesTotalVolume) * @ProfitForeignAmount
 										end
 									END
 
@@ -696,8 +693,8 @@ BEGIN
 									BEGIN
 										if (@HouseGrossWeight <> 0)
 										begin
-											set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @HouseGrossWeight
-											set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @HouseGrossWeight
+											set @ProrateAmountInLocalCurrency = (@HouseGrossWeight / @AllHousesTotalGrossWeight) * @LocalForeignAmount
+											set @ProrateAmountInProfitCurrency = (@HouseGrossWeight / @AllHousesTotalGrossWeight) *  @ProfitForeignAmount
 										end
 									END
 
@@ -706,8 +703,8 @@ BEGIN
 									BEGIN
 										if (@HouseChargeableWeight <> 0)
 										begin
-											set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @HouseChargeableWeight
-											set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @HouseChargeableWeight
+											set @ProrateAmountInLocalCurrency = (@HouseChargeableWeight / @AllHousesTotalChargeableWeight) * @LocalForeignAmount
+											set @ProrateAmountInProfitCurrency = (@HouseChargeableWeight / @AllHousesTotalChargeableWeight) * @ProfitForeignAmount
 										end
 									END
 
@@ -716,8 +713,8 @@ BEGIN
 									BEGIN
 										if (@HouseGrossWeightPerTon <> 0)
 										begin
-											set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @HouseGrossWeightPerTon
-											set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @HouseGrossWeightPerTon
+											set @ProrateAmountInLocalCurrency = (@HouseGrossWeightPerTon / @AllHousesTotalGrossWeightPerTon) * @LocalForeignAmount
+											set @ProrateAmountInProfitCurrency = (@HouseGrossWeightPerTon / @AllHousesTotalGrossWeightPerTon) * @ProfitForeignAmount
 										end
 									END
                 
@@ -726,8 +723,8 @@ BEGIN
 									BEGIN
 										if (@HouseGrossWeightPerStorageDays <> 0)
 										begin
-											set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @HouseGrossWeightPerStorageDays
-											set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @HouseGrossWeightPerStorageDays
+											set @ProrateAmountInLocalCurrency = (@HouseGrossWeightPerStorageDays / @AllHousesGrossWeightPerStorageDays) * @LocalForeignAmount
+											set @ProrateAmountInProfitCurrency = (@HouseGrossWeightPerStorageDays / @AllHousesGrossWeightPerStorageDays) * @ProfitForeignAmount
 										end
 									END
 
@@ -736,8 +733,8 @@ BEGIN
 									BEGIN
 										if (@HouseGrossWeightInKG <> 0)
 										begin
-											set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @HouseGrossWeightInKG
-											set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @HouseGrossWeightInKG
+											set @ProrateAmountInLocalCurrency = (@HouseGrossWeightInKG / @AllHousesTotalGrossWeightInKG) * @LocalForeignAmount
+											set @ProrateAmountInProfitCurrency = (@HouseGrossWeightInKG / @AllHousesTotalGrossWeightInKG) * @ProfitForeignAmount
 										end
 									END
 
@@ -746,8 +743,8 @@ BEGIN
 									BEGIN
 										if (@HouseChargeableWeightInKG <> 0)
 										begin
-											set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @HouseChargeableWeightInKG
-											set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @HouseChargeableWeightInKG
+											set @ProrateAmountInLocalCurrency = (@HouseChargeableWeightInKG / @AllHousesTotalChargeableWeightInKG) * @LocalForeignAmount
+											set @ProrateAmountInProfitCurrency = (@HouseChargeableWeightInKG / @AllHousesTotalChargeableWeightInKG) * @ProfitForeignAmount
 										end
 									END
 
@@ -756,16 +753,16 @@ BEGIN
 									BEGIN
 										if (@HouseVolumeInCBM <> 0)
 										begin
-											set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @HouseVolumeInCBM
-											set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @HouseVolumeInCBM
+											set @ProrateAmountInLocalCurrency = (@HouseVolumeInCBM / @AllHousesTotalVolumeInCBM) * @LocalForeignAmount
+											set @ProrateAmountInProfitCurrency = (@HouseVolumeInCBM / @AllHousesTotalVolumeInCBM) * @ProfitForeignAmount
 										end
 									END
 
 									-- Percent of Value
 									else if (@MasterPayableMeasurementId = @PRVL_Id)
 									BEGIN
-										set @ProrateAmountInLocalCurrency = @LocalForeignAmount / (@HouseValueOfGoods * @MasterPayableUnitPrice)
-										set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / (@HouseValueOfGoods * @MasterPayableUnitPrice)
+										set @ProrateAmountInLocalCurrency = (@ExpectedAmountLocal / @MasterPayableExpectedAmount_Local) * @LocalForeignAmount
+										set @ProrateAmountInProfitCurrency = (@ExpectedAmountInProfitCurrency / @MasterPayableExpectedAmount_Profit) * @ProfitForeignAmount
 									END
 
 									-- Quantity
@@ -775,8 +772,8 @@ BEGIN
 										begin
 											if (@HouseNumberOfPackages <> 0)
 											begin
-												set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @HouseNumberOfPackages
-												set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @HouseNumberOfPackages
+												set @ProrateAmountInLocalCurrency = (@HouseNumberOfPackages / @AllHousesTotalNumberOfPackages) * @LocalForeignAmount
+												set @ProrateAmountInProfitCurrency = (@HouseNumberOfPackages / @AllHousesTotalNumberOfPackages) * @ProfitForeignAmount
 											end
 										end
 
@@ -784,9 +781,9 @@ BEGIN
 										begin
 											if (@HouseNumberOfContainers <> 0)
 											begin
-												set @ProrateAmountInLocalCurrency = @LocalForeignAmount / @HouseNumberOfContainers
-												set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / @HouseNumberOfContainers
-											end
+												set @ProrateAmountInLocalCurrency = (@HouseNumberOfContainers / @AllHousesTotalNumberOfContainers) * @LocalForeignAmount
+												set @ProrateAmountInProfitCurrency = (@HouseNumberOfContainers / @AllHousesTotalNumberOfContainers) * @ProfitForeignAmount
+											end 
 										end											
 									END
 
@@ -812,8 +809,8 @@ BEGIN
 									@HouseId,
 									@HousePayableId,
 									@ProrateInvoiceId,
-									isnull(@ProrateAmountInLocalCurrency,0),
-									isnull(@ProrateAmountInProfitCurrency,0)
+									isnull(Round(@ProrateAmountInLocalCurrency,3),0),
+									isnull(Round(@ProrateAmountInProfitCurrency,3),0)
 									)                         
 								end 
 								
@@ -874,7 +871,7 @@ BEGIN
 					DEALLOCATE Houses1Cursor
 				END
 
-			FETCH NEXT FROM MasterPayables1Cursor INTO @MasterPayableId, @MasterPayableQuantity, @MasterPayableUnitPrice, @MasterPayableVendorId, @MasterPayableChargesTypeId, @MasterPayableMeasurementId, @MasterPayablePrepaidCollectId, @MasterPayableDueTypeCode, @MasterPayableAWBPrint, @MasterPayableCurrencyId, @MasterPayableRate, @MasterPayableProfitRate, @MasterPayableLineStatusCode, @MasterPayableAmountTypeCode, @MasterPayableCreatedByUserId, @MasterPayableUpdatedByUserId, @MasterPayableCreateDate, @MasterPayableUpdateDate, @MasterPayableValueDate, @MasterPayableOpenAmount, @MasterPayableAccountedAmount, @MasterPayableExpectedAmount, @MasterPayableIATACodeId, @MasterPayableVatLocalAmount, @MasterPayableVatProfitAmount
+			FETCH NEXT FROM MasterPayables1Cursor INTO @MasterPayableId, @MasterPayableQuantity, @MasterPayableUnitPrice, @MasterPayableVendorId, @MasterPayableChargesTypeId, @MasterPayableMeasurementId, @MasterPayablePrepaidCollectId, @MasterPayableDueTypeCode, @MasterPayableAWBPrint, @MasterPayableCurrencyId, @MasterPayableRate, @MasterPayableProfitRate, @MasterPayableLineStatusCode, @MasterPayableAmountTypeCode, @MasterPayableCreatedByUserId, @MasterPayableUpdatedByUserId, @MasterPayableCreateDate, @MasterPayableUpdateDate, @MasterPayableValueDate, @MasterPayableOpenAmount, @MasterPayableAccountedAmount, @MasterPayableExpectedAmount, @MasterPayableExpectedAmount_Local, @MasterPayableExpectedAmount_Profit, @MasterPayableIATACodeId, @MasterPayableVatLocalAmount, @MasterPayableVatProfitAmount
 			END
 			CLOSE MasterPayables1Cursor
 			DEALLOCATE MasterPayables1Cursor
@@ -884,10 +881,10 @@ BEGIN
 		BEGIN
 			DECLARE MasterPayables2Cursor CURSOR READ_ONLY
 			FOR
-			SELECT Id, Quantity, UnitPrice, VendorId, ChargesTypeId, MeasurementId, PrepaidCollectId, DueTypeCode, AWBPrint, CurrencyId, Rate, ProfitCurrencyExchangeRate, ShipmentPayableLineStatusCode, ShipmentPayableAmountTypeCode, CreatedByUserId, UpdateByUserId, CreateDate, UpdateDate, ValueDate, OpenAmount, AccountedAmount, ExpectedAmount, IATACodeId, VatAmountLocal, VatAmountProfit
+			SELECT Id, Quantity, UnitPrice, VendorId, ChargesTypeId, MeasurementId, PrepaidCollectId, DueTypeCode, AWBPrint, CurrencyId, Rate, ProfitCurrencyExchangeRate, ShipmentPayableLineStatusCode, ShipmentPayableAmountTypeCode, CreatedByUserId, UpdateByUserId, CreateDate, UpdateDate, ValueDate, OpenAmount, AccountedAmount, ExpectedAmount, ExpectedAmountLocal, ExpectedAmountInProfitCurrency, IATACodeId, VatAmountLocal, VatAmountProfit
 			FROM ShipmentPayables
 			WHERE Tenant = @Tenant AND ShipmentId = @MasterId AND MeasurementId = @PRFR_Id
-			OPEN MasterPayables2Cursor FETCH NEXT FROM MasterPayables2Cursor INTO @MasterPayableId, @MasterPayableQuantity, @MasterPayableUnitPrice, @MasterPayableVendorId, @MasterPayableChargesTypeId, @MasterPayableMeasurementId, @MasterPayablePrepaidCollectId, @MasterPayableDueTypeCode, @MasterPayableAWBPrint, @MasterPayableCurrencyId, @MasterPayableRate, @MasterPayableProfitRate, @MasterPayableLineStatusCode, @MasterPayableAmountTypeCode, @MasterPayableCreatedByUserId, @MasterPayableUpdatedByUserId, @MasterPayableCreateDate, @MasterPayableUpdateDate, @MasterPayableValueDate, @MasterPayableOpenAmount, @MasterPayableAccountedAmount, @MasterPayableExpectedAmount, @MasterPayableIATACodeId,  @MasterPayableVatLocalAmount, @MasterPayableVatProfitAmount
+			OPEN MasterPayables2Cursor FETCH NEXT FROM MasterPayables2Cursor INTO @MasterPayableId, @MasterPayableQuantity, @MasterPayableUnitPrice, @MasterPayableVendorId, @MasterPayableChargesTypeId, @MasterPayableMeasurementId, @MasterPayablePrepaidCollectId, @MasterPayableDueTypeCode, @MasterPayableAWBPrint, @MasterPayableCurrencyId, @MasterPayableRate, @MasterPayableProfitRate, @MasterPayableLineStatusCode, @MasterPayableAmountTypeCode, @MasterPayableCreatedByUserId, @MasterPayableUpdatedByUserId, @MasterPayableCreateDate, @MasterPayableUpdateDate, @MasterPayableValueDate, @MasterPayableOpenAmount, @MasterPayableAccountedAmount, @MasterPayableExpectedAmount, @MasterPayableExpectedAmount_Local, @MasterPayableExpectedAmount_Profit, @MasterPayableIATACodeId,  @MasterPayableVatLocalAmount, @MasterPayableVatProfitAmount
 			WHILE @@FETCH_STATUS = 0
 			BEGIN
 
@@ -1128,8 +1125,8 @@ BEGIN
 									-- Percent of Freight
 									else if (@MasterPayableMeasurementId = @PRFR_Id)
 									BEGIN
-										set @ProrateAmountInLocalCurrency = @LocalForeignAmount / (@Quantity * @UnitPrice / 100)
-										set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / (@Quantity * @UnitPrice / 100)
+										set @ProrateAmountInLocalCurrency = (@ExpectedAmountLocal / @MasterPayableExpectedAmount_Local) * @LocalForeignAmount
+										set @ProrateAmountInProfitCurrency = (@ExpectedAmountInProfitCurrency / @MasterPayableExpectedAmount_Profit) * @ProfitForeignAmount
 									END
 
 									SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
@@ -1154,8 +1151,8 @@ BEGIN
 									@HouseId,
 									@HousePayableId,
 									@ProrateInvoiceId,
-									isnull(@ProrateAmountInLocalCurrency,0),
-									isnull(@ProrateAmountInProfitCurrency,0)
+									isnull(Round(@ProrateAmountInLocalCurrency,3),0),
+									isnull(Round(@ProrateAmountInProfitCurrency,3),0)
 									)
 								end
 
@@ -1215,7 +1212,7 @@ BEGIN
 					DEALLOCATE Houses2Cursor
 				END
 
-			FETCH NEXT FROM MasterPayables2Cursor INTO @MasterPayableId, @MasterPayableQuantity, @MasterPayableUnitPrice, @MasterPayableVendorId, @MasterPayableChargesTypeId, @MasterPayableMeasurementId, @MasterPayablePrepaidCollectId, @MasterPayableDueTypeCode, @MasterPayableAWBPrint, @MasterPayableCurrencyId, @MasterPayableRate, @MasterPayableProfitRate, @MasterPayableLineStatusCode, @MasterPayableAmountTypeCode, @MasterPayableCreatedByUserId, @MasterPayableUpdatedByUserId, @MasterPayableCreateDate, @MasterPayableUpdateDate, @MasterPayableValueDate, @MasterPayableOpenAmount, @MasterPayableAccountedAmount, @MasterPayableExpectedAmount, @MasterPayableIATACodeId, @MasterPayableVatLocalAmount, @MasterPayableVatProfitAmount
+			FETCH NEXT FROM MasterPayables2Cursor INTO @MasterPayableId, @MasterPayableQuantity, @MasterPayableUnitPrice, @MasterPayableVendorId, @MasterPayableChargesTypeId, @MasterPayableMeasurementId, @MasterPayablePrepaidCollectId, @MasterPayableDueTypeCode, @MasterPayableAWBPrint, @MasterPayableCurrencyId, @MasterPayableRate, @MasterPayableProfitRate, @MasterPayableLineStatusCode, @MasterPayableAmountTypeCode, @MasterPayableCreatedByUserId, @MasterPayableUpdatedByUserId, @MasterPayableCreateDate, @MasterPayableUpdateDate, @MasterPayableValueDate, @MasterPayableOpenAmount, @MasterPayableAccountedAmount, @MasterPayableExpectedAmount, @MasterPayableExpectedAmount_Local, @MasterPayableExpectedAmount_Profit, @MasterPayableIATACodeId, @MasterPayableVatLocalAmount, @MasterPayableVatProfitAmount
 			END
 			CLOSE MasterPayables2Cursor
 			DEALLOCATE MasterPayables2Cursor
@@ -1225,10 +1222,10 @@ BEGIN
 		BEGIN
 		DECLARE MasterPayables3Cursor CURSOR READ_ONLY
 		FOR
-		SELECT Id, Quantity, UnitPrice, VendorId, ChargesTypeId, MeasurementId, PrepaidCollectId, DueTypeCode, AWBPrint, CurrencyId, Rate, ProfitCurrencyExchangeRate, ShipmentPayableLineStatusCode, ShipmentPayableAmountTypeCode, CreatedByUserId, UpdateByUserId, CreateDate, UpdateDate, ValueDate, OpenAmount, AccountedAmount, ExpectedAmount, IATACodeId, VatAmountLocal, VatAmountProfit
+		SELECT Id, Quantity, UnitPrice, VendorId, ChargesTypeId, MeasurementId, PrepaidCollectId, DueTypeCode, AWBPrint, CurrencyId, Rate, ProfitCurrencyExchangeRate, ShipmentPayableLineStatusCode, ShipmentPayableAmountTypeCode, CreatedByUserId, UpdateByUserId, CreateDate, UpdateDate, ValueDate, OpenAmount, AccountedAmount, ExpectedAmount, ExpectedAmountLocal, ExpectedAmountInProfitCurrency, IATACodeId, VatAmountLocal, VatAmountProfit
 		FROM ShipmentPayables
 		WHERE Tenant = @Tenant AND ShipmentId = @MasterId AND MeasurementId = @PFCL_Id 
-		OPEN MasterPayables3Cursor FETCH NEXT FROM MasterPayables3Cursor INTO @MasterPayableId, @MasterPayableQuantity, @MasterPayableUnitPrice, @MasterPayableVendorId, @MasterPayableChargesTypeId, @MasterPayableMeasurementId, @MasterPayablePrepaidCollectId, @MasterPayableDueTypeCode, @MasterPayableAWBPrint, @MasterPayableCurrencyId, @MasterPayableRate, @MasterPayableProfitRate, @MasterPayableLineStatusCode, @MasterPayableAmountTypeCode, @MasterPayableCreatedByUserId, @MasterPayableUpdatedByUserId, @MasterPayableCreateDate, @MasterPayableUpdateDate, @MasterPayableValueDate, @MasterPayableOpenAmount, @MasterPayableAccountedAmount, @MasterPayableExpectedAmount, @MasterPayableIATACodeId, @MasterPayableVatLocalAmount, @MasterPayableVatProfitAmount
+		OPEN MasterPayables3Cursor FETCH NEXT FROM MasterPayables3Cursor INTO @MasterPayableId, @MasterPayableQuantity, @MasterPayableUnitPrice, @MasterPayableVendorId, @MasterPayableChargesTypeId, @MasterPayableMeasurementId, @MasterPayablePrepaidCollectId, @MasterPayableDueTypeCode, @MasterPayableAWBPrint, @MasterPayableCurrencyId, @MasterPayableRate, @MasterPayableProfitRate, @MasterPayableLineStatusCode, @MasterPayableAmountTypeCode, @MasterPayableCreatedByUserId, @MasterPayableUpdatedByUserId, @MasterPayableCreateDate, @MasterPayableUpdateDate, @MasterPayableValueDate, @MasterPayableOpenAmount, @MasterPayableAccountedAmount, @MasterPayableExpectedAmount, @MasterPayableExpectedAmount_Local, @MasterPayableExpectedAmount_Profit, @MasterPayableIATACodeId, @MasterPayableVatLocalAmount, @MasterPayableVatProfitAmount
 		WHILE @@FETCH_STATUS = 0
 		BEGIN
 
@@ -1457,8 +1454,8 @@ BEGIN
 									-- Percent of foreign charges local amounts
 									else if (@MasterPayableMeasurementId = @PFCL_Id)
 									BEGIN
-										set @ProrateAmountInLocalCurrency = @LocalForeignAmount / (@Quantity * @UnitPrice / 100)
-										set @ProrateAmountInProfitCurrency = @ProfitForeignAmount / (@Quantity * @UnitPrice / 100)
+										set @ProrateAmountInLocalCurrency = (@ExpectedAmountLocal / @MasterPayableExpectedAmount_Local) * @LocalForeignAmount
+										set @ProrateAmountInProfitCurrency = (@ExpectedAmountInProfitCurrency / @MasterPayableExpectedAmount_Profit) * @ProfitForeignAmount
 									END
 
 									SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
@@ -1483,8 +1480,8 @@ BEGIN
 									@HouseId,
 									@HousePayableId,
 									@ProrateInvoiceId,
-									isnull(@ProrateAmountInLocalCurrency,0),
-									isnull(@ProrateAmountInProfitCurrency,0)
+									isnull(Round(@ProrateAmountInLocalCurrency,3),0),
+									isnull(Round(@ProrateAmountInProfitCurrency,3),0)
 									)
 									end
 								FETCH NEXT FROM ProrateCursor INTO @LocalForeignAmount, @ProfitForeignAmount, @ProrateInvoiceId
@@ -1543,7 +1540,7 @@ BEGIN
 				DEALLOCATE Houses3Cursor
 			END
 
-		FETCH NEXT FROM MasterPayables3Cursor INTO @MasterPayableId, @MasterPayableQuantity, @MasterPayableUnitPrice, @MasterPayableVendorId, @MasterPayableChargesTypeId, @MasterPayableMeasurementId, @MasterPayablePrepaidCollectId, @MasterPayableDueTypeCode, @MasterPayableAWBPrint, @MasterPayableCurrencyId, @MasterPayableRate, @MasterPayableProfitRate, @MasterPayableLineStatusCode, @MasterPayableAmountTypeCode, @MasterPayableCreatedByUserId, @MasterPayableUpdatedByUserId, @MasterPayableCreateDate, @MasterPayableUpdateDate, @MasterPayableValueDate, @MasterPayableOpenAmount, @MasterPayableAccountedAmount, @MasterPayableExpectedAmount, @MasterPayableIATACodeId, @MasterPayableVatLocalAmount, @MasterPayableVatProfitAmount
+		FETCH NEXT FROM MasterPayables3Cursor INTO @MasterPayableId, @MasterPayableQuantity, @MasterPayableUnitPrice, @MasterPayableVendorId, @MasterPayableChargesTypeId, @MasterPayableMeasurementId, @MasterPayablePrepaidCollectId, @MasterPayableDueTypeCode, @MasterPayableAWBPrint, @MasterPayableCurrencyId, @MasterPayableRate, @MasterPayableProfitRate, @MasterPayableLineStatusCode, @MasterPayableAmountTypeCode, @MasterPayableCreatedByUserId, @MasterPayableUpdatedByUserId, @MasterPayableCreateDate, @MasterPayableUpdateDate, @MasterPayableValueDate, @MasterPayableOpenAmount, @MasterPayableAccountedAmount, @MasterPayableExpectedAmount, @MasterPayableExpectedAmount_Local, @MasterPayableExpectedAmount_Profit, @MasterPayableIATACodeId, @MasterPayableVatLocalAmount, @MasterPayableVatProfitAmount
 		END
 		CLOSE MasterPayables3Cursor
 		DEALLOCATE MasterPayables3Cursor
