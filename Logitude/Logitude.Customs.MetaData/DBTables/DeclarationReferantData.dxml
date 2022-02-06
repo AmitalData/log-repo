@@ -227,6 +227,13 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="PackageTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="Commodity"
     Type="varchar"
     Size="5">
@@ -237,13 +244,6 @@
     Name="LastStatusRemarks"
     Type="nvarchar"
     Size="1000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PackageTypeCode"
-    Type="varchar"
-    Size="4">
     <Constraints
       Nullable="true" />
   </Column>

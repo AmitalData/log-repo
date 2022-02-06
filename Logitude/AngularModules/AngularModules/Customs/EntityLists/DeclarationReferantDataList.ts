@@ -82,9 +82,9 @@ export class DeclarationReferantDataList {
 	CancelRequestStatusCode: string;
 	IsExceptionReasonsListNull: boolean;
 	IsManualPayment: boolean;
+	PackageTypeCode: string;
 	Commodity: string;
 	LastStatusRemarks: string;
-	PackageTypeCode: string;
 	ReferantUserName: string;
 	DepartmentName: string;
 	

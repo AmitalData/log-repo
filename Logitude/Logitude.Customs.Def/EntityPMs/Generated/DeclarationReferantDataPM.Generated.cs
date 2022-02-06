@@ -940,6 +940,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string packageTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PackageTypeCode  
+	   {
+	    
+	     get
+		{
+		   return packageTypeCode;
+		 }
+		 set
+		 {
+		   if(packageTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeCode",OldValue=packageTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   packageTypeCode=value;
+		   }
+			
+		 }
+	   }
 	  private string commodity ;
 	  	  
        
@@ -982,29 +1005,6 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastStatusRemarks",OldValue=lastStatusRemarks,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   lastStatusRemarks=value;
-		   }
-			
-		 }
-	   }
-	  private string packageTypeCode ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PackageTypeCode  
-	   {
-	    
-	     get
-		{
-		   return packageTypeCode;
-		 }
-		 set
-		 {
-		   if(packageTypeCode != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeCode",OldValue=packageTypeCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   packageTypeCode=value;
 		   }
 			
 		 }

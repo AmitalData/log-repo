@@ -106,15 +106,15 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual Card ForwarderCard { get; set; }
         [Column("IsManualPayment")]
 	    public bool IsManualPayment { get; set; }
-        [Column("Commodity")]
-	    public string Commodity { get; set; }
-        [Column("LastStatusRemarks")]
-	    public string LastStatusRemarks { get; set; }
         [ForeignKey("PackageType")]
         [Column("PackageTypeCode")]
 	    public string PackageTypeCode { get; set; }
 	      
         public virtual PackingType PackageType { get; set; }
+        [Column("Commodity")]
+	    public string Commodity { get; set; }
+        [Column("LastStatusRemarks")]
+	    public string LastStatusRemarks { get; set; }
     }
 }
 	 
