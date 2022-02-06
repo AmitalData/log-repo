@@ -21,7 +21,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         public void HandleDeclarationApproval(DeclarationApprovalArgs declarationApprovalArgs)
         {
             GetCargoShipment(declarationApprovalArgs);
-
+            declarationApprovalArgs.ShipmentNumber = cargoTrackingShipmentPM.ShipmentNumber;
             if (declarationApprovalArgs.Approved == true)
                 ApproveDeclaration(declarationApprovalArgs);
             else if (declarationApprovalArgs.Denied == true)
@@ -218,7 +218,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         Parameters = new List<Parameter>()
                         {
                             new Parameter{ Name = "Code", Order = 0, Value = "VDA" }
-                            ,new Parameter{ Name = "ShipmentSecurityKey", Order = 1, Value = declarationApprovalArgs.ShipmentSecurityKey }
+                            ,new Parameter{ Name = "ShipmentNumber", Order = 1, Value = declarationApprovalArgs.ShipmentNumber }
                         }
                     }
                 };
@@ -235,7 +235,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         Parameters = new List<Parameter>()
                         {
                             new Parameter{ Name = "Code", Order = 0, Value = "VDD" },
-                            new Parameter{ Name = "ShipmentSecurityKey", Order = 1, Value = declarationApprovalArgs.ShipmentSecurityKey }
+                            new Parameter{ Name = "ShipmentNumber", Order = 1, Value = declarationApprovalArgs.ShipmentNumber }
                         }
                     }
                 };
@@ -247,6 +247,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     public class DeclarationApprovalArgs
     {
         public int Tenant { get; set; }
+        public string ShipmentNumber { get; set; }
         public string ShipmentSecurityKey { get; set; }
         public bool? Approved { get; set; }
         public bool? Denied { get; set; }
