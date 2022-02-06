@@ -765,7 +765,7 @@
                                             <log-cell-template [IgnoreMods]="true">
                                                 <CheckBox [IsChecked]="item.IsChecked || item.IsReconciled || item.PaymentReconciledAmount != 0"
                                                           (Checked)="item.IsChecked = $event"
-                                                          [IsEnabled]="!item.IsReconciled && (item.PaymentReconciledAmount == 0) && !(IsGridReadOnly || IsDisplayOnly) && !isMultipleCheques && !isMultipleBankTransfers">
+                                                          [IsEnabled]="!item.IsReconciled && (item.PaymentReconciledAmount == 0) && !(IsGridReadOnly || IsDisplayOnly) && !isMultipleBankTransfers">
                                                 </CheckBox>
                                             </log-cell-template>
                                         </ng-template>
@@ -834,7 +834,7 @@
                                                                 [InputType]="'decimal'" [DigitsAfterPoint]="2"
                                                                 [DataContext]="item" [ObjectTableName]="item.ObjectTableName"
                                                                 [HideColumns]="true" [Text]="item.AmountToReconcile"
-                                                                [ForceDisable]="IsDisplayOnly || isMultipleCheques"
+                                                                [ForceDisable]="IsDisplayOnly "
                                                                 (LostFocus)="item.OnAmountToReconcileLostFocus(logcelltemplate,AmountToReconcileTextBox)">
                                                     </LogTextBox>
                                                 </div>
