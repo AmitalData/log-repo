@@ -3241,7 +3241,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             DateTime dateForInterest;
 
-            if (entityPM.ARInvoiceTypeCode == ARInvoiceTypeValues.InterestInvoice)
+            if (entityPM.ARInvoiceTypeCode == ARInvoiceTypeValues.InterestInvoice || entityPM.ARInvoiceTypeCode == ARInvoiceTypeValues.CreditNote)
                 dateForInterest = entityPM.InvoiceDate.Value;
             else if (invoiceLine.ValueDate != null)
                 dateForInterest = invoiceLine.ValueDate.Value;
