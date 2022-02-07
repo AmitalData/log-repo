@@ -33,5 +33,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public int? StatusLocalWeight { get; set; }
         [DataMember]
         public string EntityStatusTypeCode { get; set; }
+        [DataMember]
+        public bool  AllowPartial { get; set; }
     }
 }

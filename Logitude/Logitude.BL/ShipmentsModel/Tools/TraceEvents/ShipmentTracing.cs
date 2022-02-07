@@ -344,7 +344,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.DeleteTraceEvent("BKAR");
             }
         }
-
+        public void TracePODReceived(bool isPODReceived, DateTime? podReceivedDate)
+        {
+            if (!isPODReceived && podReceivedDate == null)
+            {
+                this.DeleteTraceEvent("PIOD");
+            }
+            else
+            {
+                this.CreateTraceEvent("PIOD");
+            }
+        }
         private void TraceFollowUpDates()
         {
             if (entityPoco.WarehouseLegCutOffDate != null && entityPM.WarehouseLegCutOffDate == null)
@@ -813,7 +823,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                     myResult = entityPM.Transshipment2ETA;
                 }
             }
-            else 
+            else
             if (entityPM.Transshipment1ToPortId != null)
             {
                 if (entityPM.Transshipment1ETA != null)
@@ -826,7 +836,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 myResult = entityPM.MainCarriageETA;
 
             }
-           
+
             return myResult;
         }
 
@@ -923,7 +933,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             string notes = null;
 
-            if (eventTypeCode == "PIAR")
+            if (eventTypeCode == "PIAR" || eventTypeCode == "PICD" || eventTypeCode == "RCS")
             {
                 notes = myPickUp.PickUpDeliveryNumber;
             }
@@ -1024,7 +1034,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                                     }
                                 }
                             }
-                        }                        
+                        }
                         #endregion
 
                         #region Dates
@@ -1071,6 +1081,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                             {
                                 ComputeEventStatus(args);
                             }
+
+                            if (IsAllowingPartial(eventType.EntityStatusId))
+                            {
+                                ComputePartialStatusAmount(args.EventTypeCode);
+                            }
                         }
                         #endregion
 
@@ -1109,6 +1124,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 }
             }
         }
+
         private void DeleteTraceEvent(string eventTypeCode, string pickupDeliveryIndex = null, DateTime? eventDateTime = null)
         {
             if (!string.IsNullOrEmpty(eventTypeCode))
@@ -1119,14 +1135,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 {
                     List<TraceEvent> AllEventTraces = this.traceEventRepository.GetAllTraceEventsByEventType(entityPM.Id, eventType.Id, tenant).ToList();
 
-                    if (!string.IsNullOrEmpty(pickupDeliveryIndex) && (eventTypeCode == "PIAR" || eventTypeCode == "DEAR"))
+                    if (!string.IsNullOrEmpty(pickupDeliveryIndex) && (eventTypeCode == "PIAR" || eventTypeCode == "DEAR" || eventTypeCode== "PICD"))
                     {
                         AllEventTraces = AllEventTraces.Where(d => d.Notes == pickupDeliveryIndex).ToList();
                     }
 
-                    if (eventDateTime != null && (eventTypeCode == "DLAR" || eventTypeCode == "PCAR"))
+                    if (IsGetTraceEventsByEventDateAndType(eventDateTime, eventTypeCode))
                     {
-                        AllEventTraces = GetPickupDeliveryArrangedTraceEventsByEventDate(AllEventTraces, eventDateTime);
+                        AllEventTraces = GetTraceEventsByEventDateAndType(AllEventTraces, eventDateTime);
                     }
 
                     if (AllEventTraces.Count > 0)
@@ -1141,8 +1157,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                         if (!string.IsNullOrEmpty(eventType.EntityStatusId))
                         {
-
-                            if (entityPM.StatusId == eventType.EntityStatusId)
+                            var isCheckThePreviousEvent = this.IsCheckThePreviousEvent(entityPM, eventType);
+                            EntityStatus currentEventEntityStatus = allEntityStatuses.Where(d => d.Id == entityPM.StatusId).FirstOrDefault();
+                            if ((entityPM.StatusId == eventType.EntityStatusId && isCheckThePreviousEvent) || this.IsEventTypeConnectedToMulitStatuses(eventType, currentEventEntityStatus))
                             {
                                 TraceEvent previousEvent = null;
 
@@ -1153,7 +1170,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                                                                     && a.EventType.EntityStatus != null
                                                                     && a.Deleted == false
                                                                     select a).ToList();
-                                
+
                                 if (FeatureToggleHelper.HasFeatureToggle("OPS", tenant))
                                 {
                                     iTraceEventList = iTraceEventList.Where(d => d.EventType.EntityStatus.EntityStatusTypeCode != "O").ToList();
@@ -1189,7 +1206,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                                     entityPM.StatusId = previousEvent.EventType.EntityStatusId;
                                     entityPM.StatusDate = previousEvent.EventDateTime;
                                     entityPM.LastStatusLogDate = previousEvent.EventDateTime;
-
+                                    entityPM.PartialStatusAmount = null;
                                     switch (previousEvent.EventType.Code)
                                     {
                                         case "PICD":
@@ -1211,6 +1228,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                                                 break;
                                             }
                                     }
+
                                 }
 
                                 else
@@ -1220,11 +1238,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                                     entityPM.StatusDate = entityPM.CreateDateTime;
                                     entityPM.LastStatusLogDate = entityPM.CreateDateTime;
                                     entityPM.StatusLocation = null;
+                                    entityPM.PartialStatusAmount = null;
                                 }
 
                                 entityPoco.StatusId = entityPM.StatusId;
                                 entityPoco.StatusDate = entityPM.StatusDate;
                                 entityPoco.StatusLocation = entityPM.StatusLocation;
+                                entityPoco.PartialStatusAmount = entityPM.PartialStatusAmount;
                                 entityPoco.LastStatusLogDate = entityPM.LastStatusLogDate;
 
                                 if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
@@ -1232,9 +1252,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                                     entityMasterData.StatusId = entityPM.StatusId;
                                     entityMasterData.StatusDate = entityPM.StatusDate;
                                     entityMasterData.StatusLocation = entityPM.StatusLocation;
+                                    entityMasterData.PartialStatusAmount = entityPM.PartialStatusAmount;
                                 }
                             }
-
                             else if (FeatureToggleHelper.HasFeatureToggle("OPS", tenant) && entityPM.OperationalStatusId == eventType.EntityStatusId)
                             {
                                 List<TraceEvent> iTraceEventList = (from a in objectContext.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
@@ -1290,11 +1310,48 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                                     entityMasterData.OperationalStatusId = entityPM.OperationalStatusId;
                                 }
                             }
+
+                           
+                            if (!isCheckThePreviousEvent || currentEventEntityStatus.Code == partialPickupStatus || currentEventEntityStatus.Code == partialDeliveredStatus)
+                            {
+                                HandlePickUpDeliveryPreviousEvent(eventType, currentEventEntityStatus);
+                            }
                         }
                     }
                 }
             }
         }
+
+        private bool IsEventTypeConnectedToMulitStatuses(EventType eventType, EntityStatus currentEventEntityStatus)
+        {
+            if (eventType.Code == pickedUpEventCode && currentEventEntityStatus.Code == partialPickupStatus)
+            {
+                return true;
+            }
+
+            if (eventType.Code == deliveryArrivedEventCode || currentEventEntityStatus.Code == partialDeliveredStatus)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool IsGetTraceEventsByEventDateAndType(DateTime? eventDateTime, string eventTypeCode)
+        {
+            if (eventDateTime == null)
+            {
+                return false;
+            }
+
+            if (eventTypeCode != "DLAR" && eventTypeCode != "PCAR" && eventTypeCode != "DEAR" && eventTypeCode != "PICD")
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         private void ComputeEventStatus(EventStatusTracerArgs args)
         {
             EventType newEventType = allEventTypes.Where(d => d.Code == args.EventTypeCode).FirstOrDefault();
@@ -1389,6 +1446,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                                     entityMasterData.StatusLocation = entityPM.StatusLocation;
                                 }
                             }
+                            ComputePartialStatusAmount(args.EventTypeCode);
                         }
                     }
                 }                
@@ -1779,6 +1837,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                             entityPM.StatusId = orderStatus.Id;
                             entityPM.StatusDate = entityPM.CreateDateTime;
                             entityPM.StatusLocation = null;
+                            entityPM.PartialStatusAmount = null;
                             entityPM.LastStatusLogDate = entityPM.CreateDateTime;
                         }
 
@@ -1964,6 +2023,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                             entityPM.StatusId = orderStatus.Id;
                             entityPM.StatusDate = entityPM.CreateDateTime;
                             entityPM.StatusLocation = null;
+                            entityPM.PartialStatusAmount = null;
                             entityPM.LastStatusLogDate = entityPM.CreateDateTime;
                         }
 

@@ -157,7 +157,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string ExactStatusName { get; set; }
         public DateTime? StatusDate { get; set; }
         public string StatusLocation { get; set; }
-
+        public string PartialStatusAmount { get; set; }
         public string Master { get; set; }
         public string DirectionName { get; set; }
         public string TransportModeName { get; set; }
@@ -586,5 +586,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string ShippingAgent { get; set; }
         public string PrivateLabelAgentName { get; set; }
         public int? StatusWeight { get; set; }
+       
     }
 }

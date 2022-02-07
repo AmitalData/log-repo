@@ -3092,6 +3092,7 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <Compile Include="ShipmentsModel\Tools\TraceEvents\ShipmentTracing.PartialStatus.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AccountingModel\APIDataContract\QueryService\" />

@@ -40,6 +40,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.MainCarriageFinalDestinationPortId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.StatusId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.StatusLocation).HasMaxLength(40).IsUnicode(true);
+            this.Property(t => t.PartialStatusAmount).HasMaxLength(40).IsUnicode(true);
             this.Property(t => t.MasterShipmentNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.FWBStatusCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.MainCarriageFromPartnerId).HasMaxLength(15).IsUnicode(false);
@@ -176,6 +177,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ManifestReason).HasColumnName("ManifestReason");
             this.Property(t => t.ManifestStatusCode).HasColumnName("ManifestStatusCode");
             this.Property(t => t.StatusLocation).HasColumnName("StatusLocation");
+            this.Property(t => t.PartialStatusAmount).HasColumnName("PartialStatusAmount");
             this.Property(t => t.DepartureArrivalFromDate).HasColumnName("DepartureArrivalFromDate");
             this.Property(t => t.DepartureArrivalToDate).HasColumnName("DepartureArrivalToDate");
             this.Property(t => t.ProrateReceivables).HasColumnName("ProrateReceivables");

@@ -218,6 +218,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     entityMasterData.StatusId = entityPM.StatusId;
                     entityMasterData.StatusDate = entityPM.StatusDate;
                     entityMasterData.StatusLocation = entityPM.StatusLocation;
+                    entityMasterData.PartialStatusAmount = entityPM.PartialStatusAmount;
                 }
             }
 
@@ -512,6 +513,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.StatusDate = entityPM.StatusDate;
             entityPoco.StatusLocation = entityPM.StatusLocation;
             entityPoco.LastStatusLogDate = entityPM.LastStatusLogDate;
+            entityPoco.PartialStatusAmount = entityPM.PartialStatusAmount;
             if (entityMasterData != null)
             {
                 if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
@@ -519,6 +521,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     entityMasterData.StatusId = entityPM.StatusId;
                     entityMasterData.StatusDate = entityPM.StatusDate;
                     entityMasterData.StatusLocation = entityPM.StatusLocation;
+                    entityMasterData.PartialStatusAmount = entityPM.PartialStatusAmount;
                 }
             }
 

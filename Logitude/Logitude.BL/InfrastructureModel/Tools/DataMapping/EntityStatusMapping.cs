@@ -30,6 +30,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityStatus.SearchFields = entityStatusPM.Code + "," + entityStatusPM.Name + "," + (table != null ? table.Name : "");
             entityStatus.EntityStatusTypeCode = entityStatusPM.EntityStatusTypeCode;
             entityStatus.StatusLocalWeight = entityStatusPM.StatusLocalWeight;
+            entityStatus.AllowPartial = entityStatusPM.AllowPartial;
         }
     }
 }

@@ -90,6 +90,11 @@ export class EntityStatusPM {
     public set EntityStatusTypeCode(newValue: string) { if (this.entityStatusTypeCode != newValue) { this.entityStatusTypeCode = newValue; this.MarkAsDirty("EntityStatusTypeCode"); } }
        
 	 
+    private allowPartial: boolean;
+    public get AllowPartial() { return this.allowPartial; }
+    public set AllowPartial(newValue: boolean) { if (this.allowPartial != newValue) { this.allowPartial = newValue; this.MarkAsDirty("AllowPartial"); } }
+       
+	 
 
     public OldEntityPM: EntityStatusPM;
 		

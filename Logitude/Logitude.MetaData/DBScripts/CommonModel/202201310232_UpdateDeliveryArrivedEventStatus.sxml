@@ -1,0 +1,11 @@
+﻿<Script DBType="Main" Module="Common">
+  <Sql Version="1">
+    <![CDATA[
+       update EventTypes 
+	   set EntityStatusId = (select id from EntityStatus where code = 'SDLD' and tenant = EventTypes.Tenant)
+       where code = 'DEAR'    
+    ]]>
+</Sql>
+</Script>
+
+
