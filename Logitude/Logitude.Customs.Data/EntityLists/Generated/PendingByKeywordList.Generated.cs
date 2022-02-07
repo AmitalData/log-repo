@@ -34,6 +34,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string SearchType  { get; set; }
        [DataMember]
        public string SearchTypesName  { get; set; }
+       [DataMember]
+       public string Remove  { get; set; }
    }
 
 }
