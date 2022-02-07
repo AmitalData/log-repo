@@ -45,6 +45,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
     public class MN_MSG8374_CargoSplitResponseService : ResponseServiceBase<INF_MSG_GenericResponseData, MN_MSG8374_CargoSplitRequestFeedBack_Message, CargoSplitRequestParams>
     {
+        DeclarationPM declaration = new DeclarationPM();
 
         public override void Update(MN_MSG8374_CargoSplitRequestFeedBack_Message customResponse, CargoSplitRequestParams requestParams)
         {
@@ -161,7 +162,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         userMess = RaiseDeclarationCargoSplitResponseStatus(_DeclarationCargoSplitPM, customResponse, requestParams);
                         if (userMess != null) exceptionMessage = userMess;
                     }
-                    if (customResponse.CargoSplitRequestResponse.CargoIdentifier != null)
+                    if (customResponse.CargoSplitRequestResponse.CargoIdentifier != null && declaration.Direction!="E")
                     {
                         if (_DeclarationCargoSplitPM.DecCargoSplitCargoIdentifiers != null)
                         {
@@ -271,7 +272,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
             string notificationStatusCode = "";
             string assigneToNotificationTypeCode = "I";
             string customsFileNo = "";
-            DeclarationPM declaration = new DeclarationPM();
 
             if (!string.IsNullOrWhiteSpace(_DeclarationCargoSplitPM.DeclarationId))
             {

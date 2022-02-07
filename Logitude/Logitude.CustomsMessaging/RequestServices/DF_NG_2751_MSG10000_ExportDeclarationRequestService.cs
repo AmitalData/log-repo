@@ -1366,7 +1366,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                     declarationGoodsShipmentAdditionalDocument.DMExtensions = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemAdditionalDocumentDMExtensions();
                     //mirit20131222 declarationGoodsShipmentAdditionalDocument.DMExtensions.AttachmentID = SetIDTypeValue<AttachmentIDType>(CertificateItem.CustomsAttachmentID);
                     declarationGoodsShipmentAdditionalDocument.DMExtensions.LPCOTypeCode = SetCodeTypeValue<LpcoTypeCodeType>(CertificateItem.ResConfirmationTypeCode);
-                    // declarationGoodsShipmentAdditionalDocument.DMExtensions.requirementLicenseType = SetCodeTypeValue<DeclarationGoodsShipmentGovernmentAgencyGoodsItemAdditionalDocumentDMExtensionsRequirementLicenseType>(CertificateItem.ReqConfirmationTypeCode);
+                      declarationGoodsShipmentAdditionalDocument.DMExtensions.RequirementLicenseType = SetCodeTypeValue<requirementLicenseType>(CertificateItem.ReqConfirmationTypeCode);
                     declarationGoodsShipmentAdditionalDocument.DMExtensions.ExternalAttachmentID = SetIDTypeValue<ExternalAttachmentIDType>(CertificateItem.CustomsAttachmentID);
                     declarationGoodsShipmentAdditionalDocument.DMExtensions.SequenceNumeric = CertificateItem.SequenceNumeric; // moran 1.8.16 - Task 21933
                                                                                                                                //   declarationGoodsShipmentAdditionalDocument.DMExtensions.SequenceNumericSpecified = true; // moran 8.8.16 - Task 21933
@@ -1401,7 +1401,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         {
             var goodsItemAdditionalDocumentDMExtensions = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemAdditionalDocumentDMExtensions();
             //mirit20131222 goodsItemAdditionalDocumentDMExtensions.AttachmentID = SetIDTypeValue<AttachmentIDType>(supplierInvoiceItemsCertificatesPM.CustomsAttachmentID);
-            //goodsItemAdditionalDocumentDMExtensions.requirementLicenseType = SetCodeTypeValue<DeclarationGoodsShipmentGovernmentAgencyGoodsItemAdditionalDocumentDMExtensionsRequirementLicenseType>(supplierInvoiceItemsCertificatesPM.ReqConfirmationTypeCode);
+             goodsItemAdditionalDocumentDMExtensions.RequirementLicenseType = SetCodeTypeValue<requirementLicenseType>(supplierInvoiceItemsCertificatesPM.ReqConfirmationTypeCode);
             goodsItemAdditionalDocumentDMExtensions.LPCOTypeCode = SetCodeTypeValue<LpcoTypeCodeType>(supplierInvoiceItemsCertificatesPM.ResConfirmationTypeCode);
             goodsItemAdditionalDocumentDMExtensions.SequenceNumeric = supplierInvoiceItemsCertificatesPM.SequenceNumeric; // moran 1.8.16 - Task 21933
                                                                                                                           //  goodsItemAdditionalDocumentDMExtensions.SequenceNumericSpecified = true; // moran 8.8.16 - Task 21933

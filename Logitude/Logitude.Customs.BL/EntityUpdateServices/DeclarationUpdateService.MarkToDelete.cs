@@ -227,8 +227,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             var myDeclarationConstraintUpdateService = new DeclarationConstraintUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
             myDeclarationConstraintUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
-
-            DeclarationConsignmentsFastDelete(declarationPM,dbContext);
+          
+            DeclarationConsignmentsFastDelete(declarationPM, dbContext);
+            DeclarationRecipientFastDelete(declarationPM,dbContext);
             DeclarationSupplierInvoicesFastDelete(declarationPM,dbContext);
 
             var myDeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
@@ -320,6 +321,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             var myConsignmentUpdateService = new ConsignmentUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
             myConsignmentUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
+        }
+
+        public void DeclarationRecipientFastDelete(DeclarationPM declarationPM, ICustomContext dbContext)
+        {
+            
+
+            var declarationExportRecipientUpdateService = new DeclarationExportRecipientUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
+            declarationExportRecipientUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
         }
 
         public void DeclarationSupplierInvoiceItemsParentsFastDelete(DeclarationPM declarationPM)
