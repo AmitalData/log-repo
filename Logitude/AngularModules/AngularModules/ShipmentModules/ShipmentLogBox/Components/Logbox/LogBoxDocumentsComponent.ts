@@ -270,12 +270,12 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     SetShipmentPackageLabel() {
         this.ShipmentPackagesLabel = "";
         this.ShowShipmentPackagesLabelLink = false;
-        if (this.SelectedShipment && (this.ShipmentTypeId === 'FCL' || this.ShipmentTypeId === 'FCLD') && this.SelectedShipment.TransportModeId != 'A') { 
+        if (this.SelectedShipment && (this.ShipmentTypeId === 'FCL' || this.ShipmentTypeId === 'FCLD')) { 
             this.SetFCLShipmentPackages();
             return this.ShipmentPackagesLabel;
          }
 
-        if (this.SelectedShipment && (this.ShipmentTypeId != 'FCL' && this.ShipmentTypeId != 'FCLD') || (this.SelectedShipment && this.SelectedShipment.TransportModeId == 'A')) {
+        if (this.SelectedShipment && (this.ShipmentTypeId != 'FCL' && this.ShipmentTypeId != 'FCLD')) {
             this.SetLCLShipmentPackage(); 
             return this.ShipmentPackagesLabel;
         }
@@ -296,7 +296,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
             this.ShowShipmentPackagesLabelLink = true; 
         }
 
-        if (this.ShipmentPM && this.SelectedShipment.TransportModeId == 'O' && this.ShipmentPM.ShipmentOrderPackages.length != 0 && (this.SelectedShipment.PackagesQuantity == null || this.SelectedShipment.PackagesQuantity == 0)) {
+        if (this.ShipmentPM && this.ShipmentPM.ShipmentOrderPackages.length != 0 && (this.SelectedShipment.PackagesQuantity == null || this.SelectedShipment.PackagesQuantity == 0)) {
             this.ShipmentPackagesLabel = this.ShipmentPM ? ((this.ShipmentPM.ShipmentOrderPackages.length == 0 ? 0 : this.GetShipmentOrderQuantity()) + ' Pcs' + ' / ' + (this.ShipmentPM.OrderGrossWeight == null ? 0 : this.ShipmentPM.OrderGrossWeight) + ' Kgm') : '';
             this.ShowShipmentPackagesLabelLink = true; 
         }
