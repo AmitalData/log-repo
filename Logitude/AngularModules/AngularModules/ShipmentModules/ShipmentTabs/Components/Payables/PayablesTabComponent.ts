@@ -63,6 +63,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     public ComponentRef: any;
     private CurrentSession = SessionLocator.SelectedSession;
     private myChargesTypeListService: ChargesTypeListService;
+    private newAddedTariffPayableCount = 0;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = entityArgs.EntityPM;
         this.OriginShipment = entityArgs.OriginEntity;
@@ -1538,12 +1539,12 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
             this.UpdateCustomsChargesMessageWidth = 0;
             this.IsUpdateCustomsChargesVisible = false;
             this.deletedPartnerId = null;
-            this.AddCustomsChargesClicked();
+            this.AddCustomsChargesClicked(false);
         }
     }
 
-    AddCustomsChargesClicked() {
-        if (AppTool.IsNullOrEmpty(this.EntityPM.CustomAgentExportId && AppTool.IsNullOrEmpty(this.EntityPM.CustomAgentImportId))) {
+    AddCustomsChargesClicked(isAddingNewCharges:boolean) {
+        if (AppTool.IsNullOrEmpty(this.EntityPM.CustomAgentExportId) && AppTool.IsNullOrEmpty(this.EntityPM.CustomAgentImportId) && isAddingNewCharges) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("Custom Agent Export or Custom Agent Import is required");
         }
@@ -1604,6 +1605,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     }
     private CreateCustomChargesPayables(customsChargesPayables: CustomsChargesPayable[]) {
         if (customsChargesPayables != null) {
+            this.newAddedTariffPayableCount = 0;
             customsChargesPayables.forEach((payable: CustomsChargesPayable) => {
                 this.AddNewTariffPayable(payable);
             });
@@ -1611,11 +1613,16 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
 
         this.BuildItemsSource();
         this.CurrentSession.StopBusyIndicator();
+        if (this.newAddedTariffPayableCount == 0) {
+            var messageWindow: MessageWindow = new MessageWindow();
+            messageWindow.Show("No Available Customs Charges Can Be Added");
+        }
     }
     private AddNewTariffPayable(payable: CustomsChargesPayable) {
         var alreadyAddedPayable: ShipmentPayablePM = this.EntityPM.ShipmentPayables.filter(d => d.TariffId == payable.TariffId && d.ChargesTypeId == payable.ChargeTypeId)[0];
 
         if (alreadyAddedPayable == null) {
+            this.newAddedTariffPayableCount += 1;
             this.myChargesTypeListService.getSingleFromCache(payable.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
                     var chargesType: ChargesTypeList = myResponse.Result;
