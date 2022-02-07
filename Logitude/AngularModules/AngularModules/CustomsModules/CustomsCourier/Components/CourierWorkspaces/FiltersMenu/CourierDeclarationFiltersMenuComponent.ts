@@ -4,7 +4,6 @@ import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { EntityResourceService } from "Infrastructure/Services/EntityResourceService";
 import { AppTool } from "Infrastructure/Tools";
 import { FeatureLocator } from "Infrastructure/Utilities/FeatureLocator";
-import { DenyReasonComponent } from "ShipmentModules/ShipmentLogBox/Components/Logbox/DenyReasonComponent";
 
 @Component({
     selector: 'CourierDeclarationFiltersMenuComponent',
