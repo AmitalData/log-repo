@@ -14,6 +14,7 @@ using Simplog.Data.Helpers;
 using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure;
 using System.Threading.Tasks;
+using Simplog.Global.Data.GlobalModel;
 
 namespace CommunicationWorkerRole.Analyzers
 {
@@ -167,7 +168,8 @@ namespace CommunicationWorkerRole.Analyzers
 
         private void InsertNewAnalyzeQueue()
         {
-            analyzeQueueReposiory = new AnalyzeQueueRepository();
+            IGlobalContext globalContext = GlobalContext.GetContext();
+            analyzeQueueReposiory = new AnalyzeQueueRepository(globalContext);
             byte[] analyzeQueueMessageBody = this.GetAnalyzeQueueByteArray();
             if (this.IsAnalyzeQueueExsit(analyzeQueueMessageBody))
             {

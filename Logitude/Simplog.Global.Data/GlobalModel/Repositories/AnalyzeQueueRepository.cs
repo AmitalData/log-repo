@@ -100,9 +100,11 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
         public bool IsAnalyzeQueueExsit(byte[] analyzeQueueMessageBody)
         {
-            return (from a in context.AnalyzeQueues
-                    where a.MessageBody == analyzeQueueMessageBody
-                    select a).Any();
+            var isAnalyzeQueueExsit = (from a in context.AnalyzeQueues
+                                       where a.MessageBody.Equals(analyzeQueueMessageBody)
+                                       select a).Any();
+
+            return isAnalyzeQueueExsit;
         }
     }
 }
