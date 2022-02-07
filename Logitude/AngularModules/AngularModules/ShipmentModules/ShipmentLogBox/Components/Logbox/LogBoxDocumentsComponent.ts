@@ -286,12 +286,11 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
 
         this.ShipmentPackageTitle = "Packages";
         this.ShipmentPackagesLabel = "0 Pcs / 0 Kgm";
-
-        if ((this.SelectedShipment.PackagesQuantity == null || this.SelectedShipment.PackagesQuantity == 0) && (this.ShipmentPM && this.ShipmentPM.ShipmentOrderPackages.length == 0)) {
+        if ((this.ShipmentPM.ShipmentPackages.length == 0) && (this.ShipmentPM && this.ShipmentPM.ShipmentOrderPackages.length == 0)) {
             this.ShipmentPackagesLabel = this.SelectedShipment ? ((this.SelectedShipment.PackagesQuantity == null ? 0 : this.SelectedShipment.PackagesQuantity) + ' Pcs' + ' / ' + (this.SelectedShipment.GrossWeight == null ? 0 : this.SelectedShipment.GrossWeight) + ' Kgm') : '';
             this.ShowShipmentPackagesLabelLink = false; 
         }
-        if ((this.SelectedShipment.PackagesQuantity != null && this.SelectedShipment.PackagesQuantity != 0)) {
+        if ((this.ShipmentPM.ShipmentPackages.length != 0)) {
             this.ShipmentPackagesLabel = this.SelectedShipment ? ((this.SelectedShipment.PackagesQuantity == null ? 0 : this.SelectedShipment.PackagesQuantity) + ' Pcs' + ' / ' + (this.SelectedShipment.GrossWeight == null ? 0 : this.SelectedShipment.GrossWeight) + ' Kgm') : '';
             this.ShowShipmentPackagesLabelLink = true; 
         }
@@ -307,17 +306,17 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         this.ShipmentPackageTitle = "Containers";
         this.ShipmentPackagesLabel = "0 Containers";
 
-        if ((this.SelectedShipment.PackagesQuantity == null || this.SelectedShipment.PackagesQuantity == 0) && (this.ShipmentPM && this.ShipmentPM.ShipmentOrderPackages.length == 0)) {
+        if ((this.ShipmentPM.ShipmentPackages.length == 0) && (this.ShipmentPM && this.ShipmentPM.ShipmentOrderPackages.length == 0)) {
             this.ShipmentPackagesLabel = (this.SelectedShipment.PackagesQuantity == null ? "0" : this.SelectedShipment.PackagesQuantity) + ' Containers';
             this.ShowShipmentPackagesLabelLink = false; 
         }
 
-        if (this.SelectedShipment.PackagesQuantity != null && this.SelectedShipment.PackagesQuantity != 0) {
+        if ((this.ShipmentPM.ShipmentPackages.length != 0)) {
             this.ShipmentPackagesLabel = (this.SelectedShipment.PackagesQuantity == null ? 0 : this.SelectedShipment.PackagesQuantity) + ' Containers';
             this.ShowShipmentPackagesLabelLink = true; 
         }
 
-        if (this.ShipmentPM && this.ShipmentPM.ShipmentOrderPackages.length != 0 && (this.SelectedShipment.PackagesQuantity == null || this.SelectedShipment.PackagesQuantity == 0)) {
+        if (this.ShipmentPM && this.ShipmentPM.ShipmentOrderPackages.length != 0) {
             this.ShipmentPackagesLabel = this.ShipmentPM ? ((this.ShipmentPM.ShipmentOrderPackages.length == 0 ? 0 : this.ShipmentPM.ShipmentOrderPackages.length) + ' Containers') : '';
             this.ShowShipmentPackagesLabelLink = true; 
         }
