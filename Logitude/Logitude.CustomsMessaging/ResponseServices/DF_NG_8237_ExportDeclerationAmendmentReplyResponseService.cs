@@ -267,7 +267,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             case "29":
                                 {
                                     if (additionalInformation.Content != null)
-                                        _MyDeclarationPM.AmendmentRemarks += '\n' + additionalInformation.Content.Value;
+                                        _MyDeclarationPM.AmendmentRemarks = additionalInformation.Content.Value;
                                     if(!string.IsNullOrEmpty(_MyDeclarationPM.AmendmentRemarks)&&  _MyDeclarationPM.AmendmentRemarks.Length>=511)
                                     {
                                         _MyDeclarationPM.AmendmentRemarks = _MyDeclarationPM.AmendmentRemarks.Substring(0, 511);
