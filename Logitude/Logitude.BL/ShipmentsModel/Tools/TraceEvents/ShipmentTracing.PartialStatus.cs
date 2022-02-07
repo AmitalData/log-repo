@@ -43,8 +43,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 return null;
             }
 
-            var pickUpsWithATA = entityPM.ShipmentPickUps.Where(d => d.ATA != null && d.ChangeSetOp != ChangeSetOperation.Delete).Any();
-            if (!pickUpsWithATA)
+            var pickUpsWithATACount = entityPM.ShipmentPickUps?.Where(d => d.ATA == null && d.ChangeSetOp != ChangeSetOperation.Delete).Count();
+            if (pickUpsWithATACount == 0)
             {
                 return null;
             }
@@ -131,10 +131,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 entityMasterData.PartialStatusAmount = entityPM.PartialStatusAmount;
             }
 
-            if (partialStatusAmount != null)
-            {
-                this.ComputePartialStatusId(partialStatusAmount, eventTypeCode);
-            }
+            this.ComputePartialStatusId(partialStatusAmount, eventTypeCode);
+            
         }
         private void ComputePartialStatusId(string partialStatusAmount, string eventTypeCode)
         {
