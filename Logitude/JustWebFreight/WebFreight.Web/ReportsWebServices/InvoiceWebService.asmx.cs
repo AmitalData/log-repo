@@ -1016,6 +1016,7 @@ namespace WebFreight.Web.ReportsWebServices
                             case "CASL":
                                 {
                                     invoicedataprovider.ToLocation =  this.SetToLocationFromInlanDomesticCasual(shipment.InlandDomesticToCity, shipment.InlandDomesticToCountryId, tenant);
+                                    invoicedataprovider.ToCasualAddressZipCode = shipment.InlandDomesticToZipCode;
                                     break;
                                 }
                         }
@@ -1041,6 +1042,7 @@ namespace WebFreight.Web.ReportsWebServices
                             case "CASL":
                                 {
                                     invoicedataprovider.FromLocation = shipment.InlandDomesticFromCity;
+                                    invoicedataprovider.FromCasualAddressZipCode = shipment.InlandDomesticFromZipCode;
 
                                     if (!string.IsNullOrEmpty(shipment.InlandDomesticFromCountryId))
                                     {
