@@ -237,7 +237,6 @@ export class DeclarationReferantDataPM {
     private lastStatusRemarks: string;
     public get LastStatusRemarks() { return this.lastStatusRemarks; }
     public set LastStatusRemarks(newValue: string) { if (this.lastStatusRemarks != newValue) { this.lastStatusRemarks = newValue; this.MarkAsDirty("LastStatusRemarks"); } }
-
        
 	 
 
@@ -268,4 +267,4 @@ export class DeclarationReferantDataPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

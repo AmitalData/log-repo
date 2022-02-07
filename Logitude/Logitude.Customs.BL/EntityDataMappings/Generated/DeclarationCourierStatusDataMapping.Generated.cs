@@ -127,6 +127,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LastMileServiceType, 
 	         CargoDescription, 
 	         FinalRelease, 
+	         HatraDate, 
 	         HatraDate,
 	      }
 

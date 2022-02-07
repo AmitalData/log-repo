@@ -188,6 +188,8 @@ namespace Logitude.Customs.Data.EntityLists
        public decimal GrossMassMeasure  { get; set; }
        [DataMember]
        public string IncoTermCode  { get; set; }
+       [DataMember]
+       public DateTime? HatraDate  { get; set; }
    }
 
 }

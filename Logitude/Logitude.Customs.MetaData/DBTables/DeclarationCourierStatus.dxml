@@ -191,19 +191,18 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="TerminalReleaseDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="ShopId"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="TerminalReleaseDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-
   <Column
     Name="LastMileServiceType"
     Type="nvarchar"
