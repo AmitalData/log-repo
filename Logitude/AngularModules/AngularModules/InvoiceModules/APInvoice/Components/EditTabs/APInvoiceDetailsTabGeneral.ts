@@ -79,27 +79,8 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.IsEditExchangeRateVisible = true;
         }
         this.InitializeVendorLov();
-        this.SetDefaultValuesForVendorGLAccount();
     }
 
-    SetDefaultValuesForVendorGLAccount() {
-         this.myCardListService.getSingle(this.EntityPM.VendorId).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                var list: CardList = myResponse.Result;
-                if (list != null) {
-                    if (!AppTool.IsNullOrEmpty(list.GLAccountId)) {
-                        this.myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
-                            if (!myResponse.HasError) {
-                                this.glaccount = myResponse.Result;
-                                this.EntityPM.VendorGLAccountId = this.glaccount.Id;
-                                this.EntityPM.IsEquipment = this.glaccount.IsEquipmentVendor;
-                            }
-                        });
-                    }
-                }
-            }
-        });
-    }
 
     private InitializeVendorLov() {
         if (this.accountingActivated) {

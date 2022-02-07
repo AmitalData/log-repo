@@ -319,7 +319,10 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
                                         var glaccount = myResponse.Result;
                                         if (glaccount != null) {
                                             this.EntityPM.VendorGLAccountId = glaccount.Id;
+                                            this.EntityPM.IsEquipment = glaccount.IsEquipmentVendor;
                                         }
+                                        else
+                                            this.EntityPM.IsEquipment = false;
                                     }
                                 });
                             }
