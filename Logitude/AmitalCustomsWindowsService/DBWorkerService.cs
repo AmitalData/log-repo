@@ -226,6 +226,9 @@ namespace AmitalCustomsWindowsService
         {
 
             var suppresDoOnlyCheck = false;
+            string queueDefinitionCode = null;    
+            WorkerQueueType workerQueueType = WorkerQueueType.DB;
+
             var addWorkerFromAppSettingMethodInfoDB = typeof(DBWorkerService).GetMethod("AddWorkerFromAppSettingDB");
             if (addWorkerFromAppSettingMethodInfoDB == null)
             {
@@ -277,7 +280,8 @@ namespace AmitalCustomsWindowsService
                     for (int i = 0; i < batchServicesDefinitionPM.NumberOfThreads; i++)
                     {
                         var AddWorkerFromAppSettingGenericMethod = addWorkerFromAppSettingMethodInfoDB.MakeGenericMethod(new Type[] { worker.GetType() });
-                        AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck });
+                        AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck, (object)queueDefinitionCode, (object)workerQueueType });
+                    
                     }
                 }
             }
