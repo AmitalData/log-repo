@@ -43,6 +43,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 return null;
             }
 
+            var pickUpsWithATA = entityPM.ShipmentPickUps.Where(d => d.ATA != null && d.ChangeSetOp != ChangeSetOperation.Delete).Any();
+            if (pickUpsWithATA)
+            {
+                return null;
+            }
+
             var shipmentPickUpsNotEmptyATDCount = entityPM.ShipmentPickUps.Where(a => a.ChangeSetOp != ChangeSetOperation.Delete && a.ATD != null).Count();
             if (shipmentPickUpsNotEmptyATDCount == 0 || shipmentPickUpsNotEmptyATDCount == shipmentPickUpsCount)
             {

@@ -5,7 +5,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System.Collections.Generic;
 using System.Linq;
 using Simplog.Data.ShipmentsModel.Repositories;
-
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 {
