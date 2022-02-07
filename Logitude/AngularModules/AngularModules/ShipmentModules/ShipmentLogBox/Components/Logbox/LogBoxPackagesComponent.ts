@@ -48,7 +48,7 @@ export class LogBoxPackagesComponent implements OnInit, AfterViewInit {
 
     }
     ngOnInit() {
-        if ((!this.ShipmentPM.ForwarderShipmentNumber) || (this.ShipmentPM && this.ShipmentPM.ShipmentPackages.length != 0)) {
+        if ((!this.ShipmentPM.ForwarderShipmentNumber) || (this.ShipmentPM && this.ShipmentPM.ShipmentPackages.length == 0)) {
             this.showShipmentOrderPackages = true;
         }
     }
