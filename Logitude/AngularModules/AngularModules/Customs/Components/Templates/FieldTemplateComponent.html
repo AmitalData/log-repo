@@ -661,6 +661,14 @@
                 </div>
             </div>
 
+            <div *ngIf="ObjectTableName == 'Customs.PendingByKeyword'">
+                <div *ngIf="FieldName == 'Remove'" style="position:relative;width:100%; height: 100%; text-align: center;">
+                    <img src="./_Resources/Images/Icons/Followups/DeleteFollowup_Red.png"
+                        (click)='onRemovePendingByKeywordClick($event)' />
+                </div>
+            </div>
+
+
             <!-- Spot Light -->
             <div *ngIf="IsSpotLightTemplate">
                 <div #SpotLight></div>
