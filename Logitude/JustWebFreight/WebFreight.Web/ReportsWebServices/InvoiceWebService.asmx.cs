@@ -1751,6 +1751,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicedataprovider.AmountsInEnglishWithZero = FirstCharToUpper(numbersConverterToWords.NumbersToEnglish((int)invoiceAmount.Value) + " ") + invoicedataprovider.InvoicecurrencyLocalName + " " + strWithZeros;
                 invoicedataprovider.AmountInWordsRussian = FirstCharToUpper(numbersConverterToWords.NumbersToRussian((int)invoiceAmount.Value) + " ") + invoicedataprovider.InvoicecurrencyLocalName + " " + strWithZeros;
 
+                invoicedataprovider.LocalAmountInWordsSpanish = FirstCharToUpper(numbersConverterToWords.NumbersToSpanish((int)invoiceAmountLocal.Value) + " ") + invoicedataprovider.InvoicecurrencyLocalName + " " + str;
 
                 invoicedataprovider.AmountDueInInvoiceCurrency = currentInvoice.AmountDue;
                 invoicedataprovider.AmountDueInLocalCurrency = currentInvoice.AmountDueInLocalCurrency;
@@ -1936,6 +1937,7 @@ namespace WebFreight.Web.ReportsWebServices
                                             reportinvoiceline.VatIndication = "*";
                                             reportinvoiceline.VATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceAmount);
                                             reportinvoiceline.VATableAmountInInvoiceCurrency_double = invoiceline.InvoiceAmount;
+                                            reportinvoiceline.VATableAmountInLocalCurrency_double = invoiceline.LocalAmount;
                                         }
 
                                         else
@@ -1943,6 +1945,7 @@ namespace WebFreight.Web.ReportsWebServices
                                             reportinvoiceline.VatIndication = "";
                                             reportinvoiceline.NONVATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceAmount);
                                             reportinvoiceline.NONVATableAmountInInvoiceCurrency_double = invoiceline.InvoiceAmount;
+                                            reportinvoiceline.NONVATableAmountInLocalCurrency_double = invoiceline.LocalAmount;
                                         }
 
                                         double vatamountinlocalcurrency = (invoiceline.LocalAmount * (vattypepercentageList[0].Percentage != null ? (vattypepercentageList[0].Percentage / 100) : 0)).Value;
@@ -1970,6 +1973,7 @@ namespace WebFreight.Web.ReportsWebServices
                                     reportinvoiceline.VatAmountInInvoiceCurrency_Double = this.ComputeVatAmount_MultiVat(allVATTypesGroups, allVATTypes, loadingDate, invoiceline.InvoiceAmount, invoiceline.VatTypeId, tenant);
                                     reportinvoiceline.VATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceAmount);
                                     reportinvoiceline.VATableAmountInInvoiceCurrency_double = invoiceline.InvoiceAmount;
+                                    reportinvoiceline.VATableAmountInLocalCurrency_double = invoiceline.LocalAmount;
                                 }
                             }
                             #endregion
@@ -2129,12 +2133,14 @@ namespace WebFreight.Web.ReportsWebServices
                                         reportinvoiceline.VatIndication = "*";
                                         reportinvoiceline.VATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceCurrencyAmount);
                                         reportinvoiceline.VATableAmountInInvoiceCurrency_double = invoiceline.InvoiceCurrencyAmount;
+                                        reportinvoiceline.VATableAmountInLocalCurrency_double = invoiceline.LocalCurrencyAmount;
                                     }
                                     else
                                     {
                                         reportinvoiceline.VatIndication = "";
                                         reportinvoiceline.NONVATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceCurrencyAmount);
                                         reportinvoiceline.NONVATableAmountInInvoiceCurrency_double = invoiceline.InvoiceCurrencyAmount;
+                                        reportinvoiceline.NONVATableAmountInLocalCurrency_double = invoiceline.LocalCurrencyAmount;
                                     }
 
                                     double vatamountinlocalcurrency = ((invoiceline.LocalCurrencyAmount != null ? invoiceline.LocalCurrencyAmount : 0) * (myPercentage != null ? (myPercentage / 100) : 0)).Value;
@@ -2161,6 +2167,7 @@ namespace WebFreight.Web.ReportsWebServices
                                     reportinvoiceline.VatAmountInInvoiceCurrency_Double = this.ComputeVatAmount_MultiVat(allVATTypesGroups, allVATTypes, loadingDate, invoiceline.InvoiceCurrencyAmount, invoiceline.VatTypeId, tenant);
                                     reportinvoiceline.VATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceCurrencyAmount);
                                     reportinvoiceline.VATableAmountInInvoiceCurrency_double = invoiceline.InvoiceCurrencyAmount;
+                                    reportinvoiceline.VATableAmountInLocalCurrency_double = invoiceline.LocalCurrencyAmount;
                                 }
                             }
                         }
@@ -2224,6 +2231,9 @@ namespace WebFreight.Web.ReportsWebServices
 
                 invoicedataprovider.TotalVATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoicedataprovider.InvoiceLinesList.Sum(s => s.VATableAmountInInvoiceCurrency_double));
                 invoicedataprovider.TotalNONVATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoicedataprovider.InvoiceLinesList.Sum(s => s.NONVATableAmountInInvoiceCurrency_double));
+
+                invoicedataprovider.TotalVATableAmountInLocalCurrency = String.Format("{0:#,0.00}", invoicedataprovider.InvoiceLinesList.Sum(s => s.VATableAmountInLocalCurrency_double));
+                invoicedataprovider.TotalNONVATableAmountInLocalCurrency = String.Format("{0:#,0.00}", invoicedataprovider.InvoiceLinesList.Sum(s => s.NONVATableAmountInLocalCurrency_double));
 
                 invoicedataprovider.ExpenseInvoiceLinesList = invoicedataprovider.InvoiceLinesList.Where(d => d.IsExpense).ToList();
                 invoicedataprovider.NoExpenseInvoiceLinesList = invoicedataprovider.InvoiceLinesList.Where(d => !d.IsExpense).ToList();
@@ -3245,12 +3255,14 @@ namespace WebFreight.Web.ReportsWebServices
                                         reportinvoiceline.VatIndication = "*";
                                         reportinvoiceline.VATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceAmount);
                                         reportinvoiceline.VATableAmountInInvoiceCurrency_double = invoiceline.InvoiceAmount;
+                                        reportinvoiceline.VATableAmountInLocalCurrency_double = invoiceline.LocalAmount;
                                     }
                                     else
                                     {
                                         reportinvoiceline.VatIndication = "";
                                         reportinvoiceline.NONVATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceAmount);
                                         reportinvoiceline.NONVATableAmountInInvoiceCurrency_double = invoiceline.InvoiceAmount;
+                                        reportinvoiceline.NONVATableAmountInLocalCurrency_double = invoiceline.LocalAmount;
                                     }
 
                                     double vatamountinlocalcurrency = (invoiceline.LocalAmount * (vattypepercentageList[0].Percentage != null ? (vattypepercentageList[0].Percentage / 100) : 0)).Value;
@@ -3278,6 +3290,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 reportinvoiceline.VatAmountInInvoiceCurrency_Double = this.ComputeVatAmount_MultiVat(allVATTypesGroups, allVATTypes, loadingDate, invoiceline.InvoiceAmount, invoiceline.VatTypeId, tenant);
                                 reportinvoiceline.VATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceAmount);
                                 reportinvoiceline.VATableAmountInInvoiceCurrency_double = invoiceline.InvoiceAmount;
+                                reportinvoiceline.VATableAmountInLocalCurrency_double = invoiceline.LocalAmount;
                             }
                         }
                         #endregion
@@ -3416,12 +3429,14 @@ namespace WebFreight.Web.ReportsWebServices
                                         reportinvoiceline.VatIndication = "*";
                                         reportinvoiceline.VATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceCurrencyAmount);
                                         reportinvoiceline.VATableAmountInInvoiceCurrency_double = invoiceline.InvoiceCurrencyAmount;
+                                        reportinvoiceline.VATableAmountInLocalCurrency_double = invoiceline.LocalCurrencyAmount;
                                     }
                                     else
                                     {
                                         reportinvoiceline.VatIndication = "";
                                         reportinvoiceline.NONVATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceCurrencyAmount);
                                         reportinvoiceline.NONVATableAmountInInvoiceCurrency_double = invoiceline.InvoiceCurrencyAmount;
+                                        reportinvoiceline.NONVATableAmountInLocalCurrency_double = invoiceline.LocalCurrencyAmount;
                                     }
 
                                     double vatamountinlocalcurrency = ((invoiceline.LocalCurrencyAmount != null ? invoiceline.LocalCurrencyAmount : 0) * (vattypepercentageList[0].Percentage != null ? (vattypepercentageList[0].Percentage / 100) : 0)).Value;
@@ -3449,6 +3464,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 reportinvoiceline.VatAmountInInvoiceCurrency_Double = this.ComputeVatAmount_MultiVat(allVATTypesGroups, allVATTypes, loadingDate, invoiceline.InvoiceCurrencyAmount, invoiceline.VatTypeId, tenant);
                                 reportinvoiceline.VATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceCurrencyAmount);
                                 reportinvoiceline.VATableAmountInInvoiceCurrency_double = invoiceline.InvoiceCurrencyAmount;
+                                reportinvoiceline.VATableAmountInLocalCurrency_double = invoiceline.LocalCurrencyAmount;
                             }
                         }
                         #endregion
@@ -3512,6 +3528,9 @@ namespace WebFreight.Web.ReportsWebServices
 
                 invoiceDataProvider.TotalVATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceDataProvider.InvoiceLinesList.Sum(s => s.VATableAmountInInvoiceCurrency_double));
                 invoiceDataProvider.TotalNONVATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceDataProvider.InvoiceLinesList.Sum(s => s.NONVATableAmountInInvoiceCurrency_double));
+
+                invoiceDataProvider.TotalVATableAmountInLocalCurrency = String.Format("{0:#,0.00}", invoiceDataProvider.InvoiceLinesList.Sum(s => s.VATableAmountInLocalCurrency_double));
+                invoiceDataProvider.TotalNONVATableAmountInLocalCurrency = String.Format("{0:#,0.00}", invoiceDataProvider.InvoiceLinesList.Sum(s => s.NONVATableAmountInLocalCurrency_double));
 
                 invoiceDataProvider.ExpenseInvoiceLinesList = invoiceDataProvider.InvoiceLinesList.Where(d => d.IsExpense).ToList();
                 invoiceDataProvider.NoExpenseInvoiceLinesList = invoiceDataProvider.InvoiceLinesList.Where(d => !d.IsExpense).ToList();
@@ -3688,6 +3707,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoiceDataProvider.AmountInWordsSpanishWithZero = FirstCharToUpper(numbersConverterToWords.NumbersToSpanish((int)invoiceAmount.Value) + " ") + invoiceDataProvider.InvoicecurrencyLocalName + " " + strWithZeros;
                 invoiceDataProvider.AmountsInEnglishWithZero = FirstCharToUpper(numbersConverterToWords.NumbersToEnglish((int)invoiceAmount.Value) + " ") + invoiceDataProvider.InvoicecurrencyLocalName + " " + strWithZeros;
                 invoiceDataProvider.AmountInWordsRussian = FirstCharToUpper(numbersConverterToWords.NumbersToRussian((int)invoiceAmount.Value) + " ") + invoiceDataProvider.InvoicecurrencyLocalName + " " + strWithZeros;
+                invoiceDataProvider.LocalAmountInWordsSpanish = FirstCharToUpper(numbersConverterToWords.NumbersToSpanish((int)invoiceAmountLocal.Value) + " ") + invoiceDataProvider.InvoicecurrencyLocalName + " " + str;
 
                 #endregion
 
