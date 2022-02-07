@@ -187,15 +187,6 @@ group by tot.[AccountId]
 having SUM(tot.[LocalAmountDebit]-  tot.[LocalAmountCredit]) !=0  or  SUM(tot.[ForeignAmountDebit]-  tot.[ForeignAmountCredit]) !=0  
 
 
-
-
-
-
-update  GLAccountMoreDatas 
-set GLAccountMoreDatas.BalanceInLocalCurrency = ISNULL ( GLAccountMoreDatas.BalanceInLocalCurrency, 0 )   + toUpdate.AccountingDateDeltaAmount
-from @GLAccountStruct toUpdate
-where  GLAccountMoreDatas.AccountId = toUpdate.AccountId and  GLAccountMoreDatas.Tenant = @pTenant 
-
 SELECT @myrowcount = @@ROWCOUNT
 print N'affected rows :'
 print @myrowcount 

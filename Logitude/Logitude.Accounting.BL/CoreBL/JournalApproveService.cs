@@ -248,7 +248,29 @@ namespace Logitude.Accounting.BL.CoreBL
                     //if (_ExecAsSP)
                     //{
                     this.Exec_usp_AccountingStreaming(myLedgerTransactionsWithCounters, allGLAccountTotalByMonths.ToList(), gLAccountAgingDataPMs);
-
+                    // update BalanceInLocalCurrency
+                    var allGLAccountTotalByMonthsForAccountingOnly = allGLAccountTotalByMonths.Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate);
+                    var glAccountsToUpdate = (from tot in allGLAccountTotalByMonthsForAccountingOnly
+                                              group tot by tot.AccountId into groupByAccId
+                                              select new
+                                              {
+                                                  AccountId = groupByAccId.Key,
+                                                  LocalAmountDifference = groupByAccId.Sum(r => r.LocalAmountDebit - r.LocalAmountCredit)
+                                              }
+                                       )
+                                       .ToList();
+                    var gLAccountMoreDataQueryService = new GLAccountMoreDataQueryService(_AccountingContext);
+                    var gLAccountMoreDataUpdateService = new GLAccountMoreDataUpdateService(_AccountingContext, new Dictionary<string, IContext>(), _Tenant);
+                    var glAccounts = allGLAccountTotalByMonthsForAccountingOnly.Select(x => x.AccountId).ToList();
+                    var gLAccountMoreDataPMList = gLAccountMoreDataQueryService.GetByGLAccountsIdList(glAccounts, _Tenant);
+                    glAccountsToUpdate.ForEach(x =>
+                    {
+                        var glAccountMoreDataPM =  gLAccountMoreDataPMList.Where(acc => acc.AccountId == x.AccountId).First();
+                        glAccountMoreDataPM.BalanceInLocalCurrency = glAccountMoreDataPM.BalanceInLocalCurrency + x.LocalAmountDifference;
+                        glAccountMoreDataPM.ChangeSetOp = ChangeSetOperation.Update;
+                        gLAccountMoreDataUpdateService.Update(glAccountMoreDataPM, true);
+                    });
+                    
                     Impersonate();
                     //CreateReconcileFromStorno(myLedgerTransactionsWithCounters);
                     ICreateAutoReconcileWhileStreamingService myCreateAutoReconcileWhileStreamingService = new CreateAutoReconcileWhileStreamingService();
