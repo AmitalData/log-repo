@@ -163,7 +163,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 bool UnionreturnsDistinctvalues = true;
                 if (UnionreturnsDistinctvalues)
                 {
-                    qThe = qNotInTot.Concat(qNotInGLAcc).Concat(qDiff)
+                    qThe = qNotInTot.Take(30).Concat(qNotInGLAcc.Take(30)).Concat(qDiff.Take(30))
                         //.Concat(qTotalOpenAmountInTransactionDiffBalanceInLocalCurrency)
                         //.Concat(qTotalOpenAmountInTransactionDiffBalanceInForeign); 
                         ;
