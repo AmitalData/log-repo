@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Shipment">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
           
 declare @Tenant as int
@@ -7,7 +7,7 @@ declare @Code as varchar(10)
 declare @Name as varchar(100)
 declare @NewId as varchar(15)
 declare @ObjectTableId as varchar(15)
-
+ 
 BEGIN
        DECLARE DataCursor CURSOR READ_ONLY
        FOR

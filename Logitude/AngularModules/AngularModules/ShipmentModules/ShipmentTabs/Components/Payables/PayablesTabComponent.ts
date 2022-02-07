@@ -1509,6 +1509,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     public UpdateCustomsChargesMessage: string;
     public UpdateCustomsChargesMessageWidth: number = 0;
     public IsUpdateCustomsChargesVisible: boolean = false;
+    public IsUpdatingCustomsCharges: boolean = false;
     private deletedPartnerId: string;
     CheckUpdateCustomsCharges(deletedId: string = null) {
         var updateMessage: string = null;
@@ -1543,7 +1544,8 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         }
     }
 
-    AddCustomsChargesClicked(isAddingNewCharges:boolean) {
+    AddCustomsChargesClicked(isAddingNewCharges: boolean) {
+        this.IsUpdatingCustomsCharges = !isAddingNewCharges;
         if (AppTool.IsNullOrEmpty(this.EntityPM.CustomAgentExportId) && AppTool.IsNullOrEmpty(this.EntityPM.CustomAgentImportId) && isAddingNewCharges) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("Custom Agent Export or Custom Agent Import is required");
@@ -1613,7 +1615,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
 
         this.BuildItemsSource();
         this.CurrentSession.StopBusyIndicator();
-        if (this.newAddedTariffPayableCount == 0) {
+        if (this.newAddedTariffPayableCount == 0 && !this.IsUpdatingCustomsCharges ) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("No Available Customs Charges Can Be Added");
         }
