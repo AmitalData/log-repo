@@ -740,7 +740,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             {
                 return;
             }
-            this.DeleteTraceEvent(traceEvent.EventType.Code);
+
             TraceEvent lastExceptiontraceEvent = traceEventRep.GetLastExceptionTraceEventByContainerId(containerPM.Id, traceEvent.EventType.Code, containerPM.Tenant);
             if (lastExceptiontraceEvent == null || lastExceptiontraceEvent.Id != traceEvent.Id)
             {
