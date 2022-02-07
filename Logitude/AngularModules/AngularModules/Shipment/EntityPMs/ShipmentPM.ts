@@ -883,7 +883,11 @@ export class ShipmentPM {
     private mainCarriageFinalDestinationPortName: string;
     public get MainCarriageFinalDestinationPortName() { return this.mainCarriageFinalDestinationPortName; }
     public set MainCarriageFinalDestinationPortName(newValue: string) { if (this.mainCarriageFinalDestinationPortName != newValue) { this.mainCarriageFinalDestinationPortName = newValue; this.MarkAsDirty("MainCarriageFinalDestinationPortName"); } }
-       
+
+    private mainCarriageFinalDestinationPortCountryId: string;
+    public get MainCarriageFinalDestinationPortCountryId() { return this.mainCarriageFinalDestinationPortCountryId; }
+    public set MainCarriageFinalDestinationPortCountryId(newValue: string) { if (this.mainCarriageFinalDestinationPortCountryId != newValue) { this.mainCarriageFinalDestinationPortCountryId = newValue; this.MarkAsDirty("MainCarriageFinalDestinationPortCountryId"); } }
+
 	 
     private mainCarriageFinalDestinationPortCountryCode: string;
     public get MainCarriageFinalDestinationPortCountryCode() { return this.mainCarriageFinalDestinationPortCountryCode; }

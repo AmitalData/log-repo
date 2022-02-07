@@ -35,11 +35,10 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
     public ItemsCollection: PartnerItem[];
     private CurrentSession = SessionLocator.SelectedSession;
     public AllRates: LastRate[] = [];
-    public IsUnassigedValidationVisible: boolean = false;
+    public IsUnassigedValidationVisible: boolean = false;    
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
-        this.ObjectTableName = this.entityArgs.ObjectTableName;
-
+        this.ObjectTableName = this.entityArgs.ObjectTableName;        
         this.IsUnassigedValidationVisible = false;
 
         if (this.EntityPM.HasUnassignedData && FeatureLocator.HasFeaturePermession("Shipment", "UpdateUnassignedData")) {
@@ -294,6 +293,7 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     this.DeleteUassignedPartners(myPartnerItem.Code);
+                    this.DeleteCustomAgentPartners(myPartnerItem.Code, myPartnerItem.PartnerId);
                     if (myPartnerItem.IsCustomer) {
                         this.SetDefaultCustomer();
                     }
@@ -314,6 +314,13 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
             });
         }
     }
+    private DeleteCustomAgentPartners(code: string, partnerId) {
+        if (code == "CSAEX" || code == "CSAIM") {
+            if (this.EntityPM.ShipmentPayables.filter(d => d.IsCustomsChargesTariff && d.VendorId == partnerId).length > 0) {
+                this.CurrentSession.FireEvent("UpdateCustomsChargesPartnerDeleted," + partnerId);
+            }
+        }
+    }
 
     DeleteUassignedPartners(code: string) {
         if (!["CONSI", "SHIPR"].includes(code))
@@ -327,7 +334,6 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
             this.RemoveUnassignedPartner("Consignee");
         }
     }
-
     RemoveUnassignedPartner(fieldName : string ) {
         var shipperUnassigned = this.EntityPM.ShipmentUnassignedFields.find(x => x.FieldName == fieldName);
         if (shipperUnassigned != null) {
@@ -1289,7 +1295,7 @@ export class PartnerItem extends BaseComponent {
     set CustomAgentExportId(newValue: string) {
         if (this.EntityPM.CustomAgentExportId != newValue) {
             this.EntityPM.CustomAgentExportId = newValue;
-            this.GetPartnerCard();
+            this.GetPartnerCard();            
         }
     }
 

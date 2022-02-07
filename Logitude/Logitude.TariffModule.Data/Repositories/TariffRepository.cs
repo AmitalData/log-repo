@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.TariffModule.Data.Repositories
 {
@@ -41,6 +42,13 @@ namespace Logitude.TariffModule.Data.Repositories
         {
             return from a in context.Tariffs
                    where a.Tenant == tenant && Ids.Contains(a.Id)
+                   select a;
+        }
+
+        public IQueryable<Tariff> GetActiveCustomsChargesTariffs(int tenant)
+        {
+            return from a in context.Tariffs.Include("CustomsBroker")
+                   where a.Tenant == tenant && !a.InActive && (a.TypeCode == "ICC" || a.TypeCode == "ECC")
                    select a;
         }
 

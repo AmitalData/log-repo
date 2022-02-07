@@ -22,6 +22,8 @@ export class AddEditPartnerComponent implements OnInit {
     private oldCustomerPartnerId: string = null;
     public ValidationErrorsList: string[];
     private CurrentSession = SessionLocator.SelectedSession;
+    private oldCustomAgentExportId: string = null;
+    private oldCustomAgentImportId: string = null;
     constructor() {
 
     }
@@ -35,6 +37,9 @@ export class AddEditPartnerComponent implements OnInit {
         this.EntityPM = dataContext.EntityPM;
         this.isMyCustomer = dataContext.IsCustomer;
         this.oldCustomerPartnerId = this.EntityPM.CustomerId;
+        this.oldCustomAgentExportId = this.EntityPM.CustomAgentExportId;
+        this.oldCustomAgentImportId = this.EntityPM.CustomAgentImportId;
+
         this.Clone();
     }
 
@@ -139,8 +144,7 @@ export class AddEditPartnerComponent implements OnInit {
             }
 
             else {
-                this.CurrentSession.CloseCurrentWindowEmit("OK");
-                this.CurrentSession.FireEvent("ShipmentPartnersChanged");
+                this.CloseWindow();                
             }
         }
     }
@@ -150,10 +154,28 @@ export class AddEditPartnerComponent implements OnInit {
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.EntityPM.ShipmentProductItems = [];
-                this.CurrentSession.CloseCurrentWindowEmit("OK");
-                this.CurrentSession.FireEvent("ShipmentPartnersChanged");
+                this.CloseWindow();
             }
         });
+    }
+
+    private CloseWindow() {
+        if (this.EntityPM.ShipmentPayables.filter(d => d.IsCustomsChargesTariff).length > 0) {
+            if (this.DataContext.Code == "CSAEX") {
+                if (this.oldCustomAgentExportId != this.EntityPM.CustomAgentExportId) {
+                    this.CurrentSession.FireEvent("UpdateCustomsCharges");
+                }
+            }
+
+            else if (this.DataContext.Code == "CSAIM") {
+                if (this.oldCustomAgentImportId != this.EntityPM.CustomAgentImportId) {
+                    this.CurrentSession.FireEvent("UpdateCustomsCharges");
+                }
+            }
+        }
+
+        this.CurrentSession.CloseCurrentWindowEmit("OK");
+        this.CurrentSession.FireEvent("ShipmentPartnersChanged");
     }
 
     private myCloner: Cloner;

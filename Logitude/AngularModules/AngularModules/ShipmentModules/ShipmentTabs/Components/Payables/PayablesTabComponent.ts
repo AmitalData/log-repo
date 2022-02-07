@@ -33,7 +33,7 @@ import { QuotePM } from '../../../../Quote/EntityPMs/QuotePM';
 import { QuotePMService } from '../../../../Quote/Services/StandardPMs/QuotePMService';
 import { CardList } from '../../../../Common/EntityLists/CardList';
 import { CardListService } from '../../../../Common/Services/StandardLists/CardListService';
-import { TariffDomainService, TariffSearchSummary, SurchargeSummary } from '../../../../TariffModule/Services/TariffDomainService';
+import { TariffDomainService, TariffSearchSummary, SurchargeSummary, CustomsChargesPayable, CustomsChargesTariffSearchArgs } from '../../../../TariffModule/Services/TariffDomainService';
 import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
 import { APInvoiceListService } from '../../../../Invoice/Services/StandardLists/APInvoiceListService';
 import { APInvoiceList } from '../../../../Invoice/EntityLists/APInvoiceList';
@@ -58,9 +58,12 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     public IsResourcesReady: boolean = false;
     public myDomainService: ShipmentDomainService;
     public IsPriceCheckVisible: boolean = false;
+    public IsCustomsChargesVisible: boolean = false;
     public myUserListService: UserListService = null;
     public ComponentRef: any;
     private CurrentSession = SessionLocator.SelectedSession;
+    private myChargesTypeListService: ChargesTypeListService;
+    private newAddedTariffPayableCount = 0;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = entityArgs.EntityPM;
         this.OriginShipment = entityArgs.OriginEntity;
@@ -73,6 +76,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         this.ItemsSource = new ObservableCollection([]);
         this.myDomainService = new ShipmentDomainService();
         this.myUserListService = new UserListService();
+        this.myChargesTypeListService = new ChargesTypeListService();
         this.Listen();
         this.SetEditEnabled();
         this.LoadRequiredData();
@@ -85,7 +89,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
-            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe((s: string) => {
                 if (s == "PayablesGenerated") {
                     this.BuildItemsSource();
                     this.ComputeShipmentFields();
@@ -93,6 +97,15 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
 
                 else if (s == "OriginShipmentLoaded") {
                     this.OriginShipment = this.entityArgs.OriginEntity;
+                }
+
+                else if (s == "UpdateCustomsCharges") {
+                    this.CheckUpdateCustomsCharges();
+                }
+
+                else if (s.indexOf("UpdateCustomsChargesPartnerDeleted") > -1) {
+                    var args = s.split(',');
+                    this.CheckUpdateCustomsCharges(args[1]);
                 }
             });
 
@@ -298,6 +311,9 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
             this.IsPriceCheckVisible = true;
         }
 
+        if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CCT")[0]) {
+            this.IsCustomsChargesVisible = true;
+        }
 
         var isEditingEnabled: boolean = true;
 
@@ -1092,6 +1108,11 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                 this.RunViewQuote();
                 break;
             }
+
+            case "AddCustomsCharges": {
+                this.GetCustomsChargesTariffs();
+                break;
+            }
         }
 
         this.StopSavingFlags();
@@ -1220,11 +1241,9 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         if (item != null) {
             var editWindow = new LogitudeWindow();
             editWindow.ShowHeaderButtons = true;
-            editWindow.Title = "Price Check";
+            editWindow.Title = item.EntityPM.IsCustomsChargesTariff ? "Edit Tariff" : "Price Check";
             editWindow.Height = 770;
             editWindow.Width = 1500;
-
-
             var argumentsPriceCheck = { VersionId: item.TariffVersion, LineId: item.TariffLineId, ChargeableWeightInKG: this.EntityPM.OrderChargeableWeight };
             editWindow.EditComponentArguments = argumentsPriceCheck;
             editWindow.ShowEditComponent(item.TariffId, "Tariff");
@@ -1484,6 +1503,170 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                     }
                 });
             }
+        }
+    }
+
+    public UpdateCustomsChargesMessage: string;
+    public UpdateCustomsChargesMessageWidth: number = 0;
+    public IsUpdateCustomsChargesVisible: boolean = false;
+    private deletedPartnerId: string;
+    CheckUpdateCustomsCharges(deletedId: string = null) {
+        var updateMessage: string = null;
+
+        if (this.EntityPM.ShipmentPayables.filter(d => d.IsCustomsChargesTariff).length > 0) {
+            updateMessage = "Shipment details have been updated, update the generated customs charges?";
+        }
+
+        this.UpdateCustomsChargesMessage = updateMessage;
+        this.UpdateCustomsChargesMessageWidth = AppTool.GetTextWidth(updateMessage, 11);
+        this.IsUpdateCustomsChargesVisible = AppTool.IsNullOrEmpty(updateMessage) ? false : true;
+        this.deletedPartnerId = deletedId;
+    }
+    UpdateCustomsChargesClicked() {
+        var deletedCustomsPayables: ShipmentPayablePM[] = this.EntityPM.ShipmentPayables.filter(d => d.IsCustomsChargesTariff
+            && !(d.ShipmentPayableLineStatusCode == 'PACC' || d.ShipmentPayableLineStatusCode == 'ACCT'));
+
+        if (!AppTool.IsNullOrEmpty(this.deletedPartnerId)) {
+            deletedCustomsPayables = deletedCustomsPayables.filter(d => d.VendorId == this.deletedPartnerId);
+        }
+
+        if (deletedCustomsPayables.length > 0) {
+            deletedCustomsPayables.forEach((item: ShipmentPayablePM) => {
+                this.EntityPM.RemovePayable(item);
+            });
+
+            this.UpdateCustomsChargesMessage = null;
+            this.UpdateCustomsChargesMessageWidth = 0;
+            this.IsUpdateCustomsChargesVisible = false;
+            this.deletedPartnerId = null;
+            this.AddCustomsChargesClicked(false);
+        }
+    }
+
+    AddCustomsChargesClicked(isAddingNewCharges:boolean) {
+        if (AppTool.IsNullOrEmpty(this.EntityPM.CustomAgentExportId) && AppTool.IsNullOrEmpty(this.EntityPM.CustomAgentImportId) && isAddingNewCharges) {
+            var messageWindow: MessageWindow = new MessageWindow();
+            messageWindow.Show("Custom Agent Export or Custom Agent Import is required");
+        }
+
+        else {
+            if (this.EntityPM.IsDirty) {
+                if (!this.SavingRequested) {
+                    this.SavingRequested = true;
+                    this.SavingRequestCode = "AddCustomsCharges";
+                    this.SaveChanges();
+                }
+            }          
+
+            else {
+                this.GetCustomsChargesTariffs();
+            }
+        }
+    }
+    private GetCustomsChargesTariffs() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+
+        var args: CustomsChargesTariffSearchArgs = new CustomsChargesTariffSearchArgs();
+        args.FromCountryId = this.EntityPM.FromCountryId;
+        args.ToCountryId = this.EntityPM.MainCarriageFinalDestinationPortCountryId;;
+        args.MainCarriageATD = this.EntityPM.MainCarriageATD;
+        args.MainCarriageETD = this.EntityPM.MainCarriageETD;
+        args.CustomAgentExportId = this.EntityPM.CustomAgentExportId;
+        args.CustomAgentImportId = this.EntityPM.CustomAgentImportId;
+        args.GrossWeight = this.EntityPM.GrossWeight;
+        args.ChargeableWeight = this.EntityPM.ChargeableWeight;
+        args.Volume = this.EntityPM.Volume;
+        args.GrossWeightUnitCode = this.EntityPM.GrossWeightUnitCode;
+        args.ChargeableWeightUnitCode = this.EntityPM.ChargeableWeightUnitCode;
+        args.VolumeUnitCode = this.EntityPM.VolumeUnitCode;
+        args.ValueOfGoods = this.EntityPM.ValueOfGoods;
+        args.NoOfPackages = this.IsFCLEntity ? this.EntityPM.NumberOfContainers : this.EntityPM.NumberOfPackages;
+        args.TEU = this.EntityPM.TEU;
+        args.FriehgtAmount = ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount");;
+        args.ForiegnChargesAmount = ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal");
+        args.LocalCurrencyId = SessionLocator.LocalCurrencyId;
+        args.ProfitCurrencyId = this.EntityPM.ProfitCurrencyId;
+        args.ProfitRate = this.EntityPM.ProfitExchangeRate;
+
+        var tariffService: TariffDomainService = new TariffDomainService();
+        tariffService.GetAvailableCustomsChargesTariffs(args).subscribe((res: ServiceResponse) => {
+            if (!res.HasError) {
+                if (res.Result) {
+                    args = res.Result;
+                    this.CreateCustomChargesPayables(args.CustomsChargesPayables);
+                }
+            }
+
+            else {
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = res.ErrorsArray;
+                this.CurrentSession.StopBusyIndicator();
+            }
+        });
+    }
+    private CreateCustomChargesPayables(customsChargesPayables: CustomsChargesPayable[]) {
+        if (customsChargesPayables != null) {
+            this.newAddedTariffPayableCount = 0;
+            customsChargesPayables.forEach((payable: CustomsChargesPayable) => {
+                this.AddNewTariffPayable(payable);
+            });
+        }
+
+        this.BuildItemsSource();
+        this.CurrentSession.StopBusyIndicator();
+        if (this.newAddedTariffPayableCount == 0) {
+            var messageWindow: MessageWindow = new MessageWindow();
+            messageWindow.Show("No Available Customs Charges Can Be Added");
+        }
+    }
+    private AddNewTariffPayable(payable: CustomsChargesPayable) {
+        var alreadyAddedPayable: ShipmentPayablePM = this.EntityPM.ShipmentPayables.filter(d => d.TariffId == payable.TariffId && d.ChargesTypeId == payable.ChargeTypeId)[0];
+
+        if (alreadyAddedPayable == null) {
+            this.newAddedTariffPayableCount += 1;
+            this.myChargesTypeListService.getSingleFromCache(payable.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    var chargesType: ChargesTypeList = myResponse.Result;
+                    var shipmentPayable: ShipmentPayablePM = this.ShipmentGenerator.GeneratePayablesFromTariff(chargesType);
+                    shipmentPayable.IsCustomsChargesTariff = true;
+                    shipmentPayable.TariffId = payable.TariffId;
+                    shipmentPayable.TariffNumber = payable.TariffNumber;
+                    shipmentPayable.TariffLineId = payable.TariffLineId;
+                    shipmentPayable.TariffVersion = payable.VersionId;
+                    shipmentPayable.ShipmentPayableLineStatusCode = "EMPT";
+                    shipmentPayable.ShipmentPayableAmountTypeCode = "ACCU";
+                    shipmentPayable.ShipmentId = this.EntityPM.Id;
+                    shipmentPayable.ChargesTypeId = chargesType.Id;
+                    shipmentPayable.ChargesTypeCode = chargesType.Code;
+                    shipmentPayable.ChargesTypeName = chargesType.EnglishName;
+                    shipmentPayable.ChargesGroupCode = chargesType.ChargesGroupCode;
+                    shipmentPayable.ShipmentNumber = this.EntityPM.ShipmentNumber;
+                    shipmentPayable.CreateDate = DateTool.GetCurrentDateAsUtc();
+                    shipmentPayable.Tenant = this.EntityPM.Tenant;
+                    shipmentPayable.CreatedByUserId = SessionLocator.LoggedUserId;
+                    shipmentPayable.UpdateDate = DateTool.GetCurrentDateAsUtc();
+                    shipmentPayable.UpdateByUserId = SessionLocator.LoggedUserId;
+                    shipmentPayable.MeasurementId = payable.UnitOfMesurmentId;
+                    shipmentPayable.MeasurementCode = payable.UnitOfMesurmentCode;
+                    shipmentPayable.CurrencyId = payable.CurrencyId;
+                    shipmentPayable.CurrencyCode = payable.CurrencyCode;
+                    shipmentPayable.Rate = payable.Rate;
+                    shipmentPayable.ProfitCurrencyExchangeRate = this.ShipmentGenerator.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
+                    shipmentPayable.Quantity = payable.Quantity;
+                    shipmentPayable.ExpectedAmount = AppTool.Round(payable.ExpectedAmount, 2);
+                    shipmentPayable.ExpectedAmountLocal = AppTool.Round(payable.LocalExpectedAmount, 2);
+                    shipmentPayable.ExpectedAmountInProfitCurrency = AppTool.Round(payable.ProfitExpectedAmount, 2);
+                    shipmentPayable.OpenAmount = AppTool.Round(shipmentPayable.ExpectedAmount, 2);
+                    shipmentPayable.OpenAmountInLocalCurrency = AppTool.Round(payable.LocalExpectedAmount, 2);
+                    shipmentPayable.OpenAmountInProfitCurrency = AppTool.Round(payable.ProfitExpectedAmount, 2);
+                    shipmentPayable.Notes = payable.Notes;
+                    shipmentPayable.MinAmount = AppTool.Round(payable.MinAmount, 2);
+                    shipmentPayable.UnitPrice = AppTool.Round(payable.Price, 3);
+                    shipmentPayable.VendorId = payable.CustomsBrokerId;
+                    shipmentPayable.VendorName = payable.CustomsBrokerName;
+                    this.ShipmentGenerator.CalculatePayableVatAmount(shipmentPayable);
+                    this.EntityPM.AddPayable(shipmentPayable);
+                }
+            });
         }
     }
 }

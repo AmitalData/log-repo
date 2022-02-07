@@ -429,7 +429,12 @@ export class ShipmentPayablePM {
     private payablesDisconnectedFromTariff: boolean;
     public get PayablesDisconnectedFromTariff() { return this.payablesDisconnectedFromTariff; }
     public set PayablesDisconnectedFromTariff(newValue: boolean) { if (this.payablesDisconnectedFromTariff != newValue) { this.payablesDisconnectedFromTariff = newValue; this.MarkAsDirty("PayablesDisconnectedFromTariff"); } }
-       
+
+
+    private isCustomsChargesTariff: boolean;
+    public get IsCustomsChargesTariff() { return this.isCustomsChargesTariff; }
+    public set IsCustomsChargesTariff(newValue: boolean) { if (this.isCustomsChargesTariff != newValue) { this.isCustomsChargesTariff = newValue; this.MarkAsDirty("IsCustomsChargesTariff"); } }
+
 	 
     private vatAmountLocal: number;
     public get VatAmountLocal() { return this.vatAmountLocal; }
