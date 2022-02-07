@@ -1030,6 +1030,7 @@
     <Compile Include="Controllers\CustomsModel\Extended\ContainerizationListExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomsRequestsSheetViewsExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\DecCargoSplitConExtendedController.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\PendingByKeywordsExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\AmedmentTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\BuyerRoleTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CargoTypeViewsController.Generated.cs" />
