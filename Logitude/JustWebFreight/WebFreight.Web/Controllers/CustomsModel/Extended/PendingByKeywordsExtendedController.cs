@@ -13,7 +13,7 @@ using WebFreight.Web.Helpers;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
-    public class PendingByKeywordsExtendedController : ApiController
+    public class PendingByKeywordExtendedController : ApiController
     {
         [HttpDelete]
         public HttpResponseMessage Delete(string id)

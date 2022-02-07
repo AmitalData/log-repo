@@ -21,11 +21,11 @@ import { ExceptionReasonList } from '../../EntityLists/ExceptionReasonList';
 
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { PhysicalChecksCloseSharedDataService } from '../../Services/DataChange/PhysicalChecksCloseSharedDataService';
-import { PendingByKeywordPMService } from 'Customs/Services/StandardPMs/PendingByKeywordPMService';
+import { PendingByKeywordWebService } from 'Customs/Services/ExtendedPMs/PendingByKeywordWebService';
 @Component({
 
     templateUrl: './FieldTemplateComponent.html',
-    providers: [ListComponentArgs],
+    providers: [ListComponentArgs, PendingByKeywordWebService],
 })
 
 export class FieldTemplateComponent {
@@ -40,12 +40,16 @@ export class FieldTemplateComponent {
     public IsHeaderScreenTemplate: boolean = false;
     courierMasterService: CourierMasterService = new CourierMasterService();
     customsAutonomyKeywordExtendedPMService: CustomsAutonomyKeywordExtendedPMService = new CustomsAutonomyKeywordExtendedPMService();
-    pendingByKeywordPMService: PendingByKeywordPMService = new PendingByKeywordPMService();
     exceptionReasonExtendedListService: ExceptionReasonExtendedListService = new ExceptionReasonExtendedListService();
     private _ListComponentArgs: ListComponentArgs;
     @ViewChild('SpotLight', { read: ViewContainerRef, static: false }) SpotLightViewContainerRef: ViewContainerRef;
     RowIndex: any;
-    constructor(private CD: ChangeDetectorRef, private entityResourceService: EntityResourceService, private _physicalChecksCloseSharedDataService: PhysicalChecksCloseSharedDataService) {
+    constructor(
+        private CD: ChangeDetectorRef, 
+        private entityResourceService: EntityResourceService, 
+        private _physicalChecksCloseSharedDataService: PhysicalChecksCloseSharedDataService,
+        private pendingByKeywordWebService: PendingByKeywordWebService,
+        ) {
         if (SessionLocator.SelectedSession.CurrentListComponent != null) {
             this._ListComponentArgs = SessionLocator.SelectedSession.CurrentListComponent._ListComponentArgs;
         } else {
@@ -795,14 +799,26 @@ export class FieldTemplateComponent {
     async onRemovePendingByKeywordClick(e: MouseEvent) {
         e.stopPropagation();
 
+        if(!(await this.confirmMsg(TextCodeTranslator.Translate('Accounting.General.O.Areyousuredeleteline')))) return;
+
         SessionLocator.SelectedSession.StartBusyIndicator("");
         
-        console.log(this.Entity);
+        await this.pendingByKeywordWebService.delete(this.Entity.Id)
         
         SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
 
-        // this.pendingByKeywordPMService.
         SessionLocator.SelectedSession.StopBusyIndicator();
+    }
+
+
+    private async confirmMsg(msg: string): Promise<boolean> {
+        var myConfirmWindow = new ConfirmWindow();
+        myConfirmWindow.Width = 400;
+        myConfirmWindow.Show(msg);
+
+        return new Promise<boolean>(resolve => 
+            myConfirmWindow.WindowClosed.subscribe(e => 
+                resolve(myConfirmWindow.Yes)));
     }
 }
 

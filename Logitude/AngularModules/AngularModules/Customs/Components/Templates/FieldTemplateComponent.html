@@ -657,9 +657,9 @@
             </div>
 
             <div *ngIf="ObjectTableName == 'Customs.PendingByKeyword'">
-                <div *ngIf="FieldName == 'Remove'" style="position:relative;width:100%; height: 100%;">            
-                    <img style="width:13px;height:13px;margin-top:-1px" src="./_Resources/Images/Icons/Followups/DeleteFollowup_Red.png" (click)='onRemovePendingByKeywordClick($event)'/>
-                    <!-- <img class="CenterCenter" style="width:15px;height:15px;margin-top:6px" src="./Images/CheckBoxIcon.png" /> -->
+                <div *ngIf="FieldName == 'Remove'" style="position:relative;width:100%; height: 100%; text-align: center;">
+                    <img src="./_Resources/Images/Icons/Followups/DeleteFollowup_Red.png"
+                        (click)='onRemovePendingByKeywordClick($event)' />
                 </div>
             </div>
 
