@@ -209,7 +209,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             }
 
             comprobante.Total = 0;
-            comprobante.Version = "3.3";
+            comprobante.Version = "4.0";
             comprobante.TipoDeComprobante = "P";
             comprobante.SubTotal = 0;
             comprobante.Serie = serie;
@@ -233,13 +233,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 Nombre = currentTenant.Company,
                 RegimenFiscal = "601"
             };
-
-
-            string billToCountryCode = (billToAddress != null ? (billToAddress.Country != null ? billToAddress.Country.Code : null) : null);
-            if (billToAddress.Country != null)
-            {
-                billToCountryCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(billToAddress.Country.Code, "G-Profact", "Country");
-            }
+            string billToCountryCode = GetBillToCountryCode(computingPartnerHelper, billToAddress);
 
             comprobante.Receptor = new Profact.TimbraCFDI40.ComprobanteReceptor();
             if (billToCountryCode == "MEX" || billToCountryCode == "MX")
@@ -282,51 +276,10 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             List<PagosPago> pagosPagoList = new List<PagosPago>();
             Pagos pagos = new Pagos
             {
-                Version = "1.0"
-            };
-            PagosPago pagoItem = new PagosPago
-            {
-                Monto = sATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(entityPM.AmountInPaymentCurrency != null ? (decimal)entityPM.AmountInPaymentCurrency.Value : 0),
-                MonedaP = paymentCurrency.Code
+                Version = "2.0",
             };
 
-            if (entityPM.SATPaymentMethodCode == "03" && entityPM.TipoCadenaPago == "01")
-            {
-                if (string.IsNullOrEmpty(entityPM.CertPago))
-                    throw new ApplicationException("Cert Pago is required");
-
-                if (string.IsNullOrEmpty(entityPM.SelloPago))
-                    throw new ApplicationException("Sello Pago is required");
-
-                if (string.IsNullOrEmpty(entityPM.CadPago))
-                    throw new ApplicationException("Cad Pago is required");
-
-                pagoItem.TipoCadPagoSpecified = true;
-                pagoItem.TipoCadPago = "01";
-                pagoItem.CertPago = Encoding.ASCII.GetBytes(entityPM.CertPago); //Wesam1
-                if (!string.IsNullOrEmpty(entityPM.CadPago))
-                    pagoItem.CadPago = entityPM.CadPago.Replace("|", "&#124;");
-                pagoItem.SelloPago = Encoding.ASCII.GetBytes(entityPM.SelloPago); //Wesam2
-
-            }
-
-
-            if (paymentCurrency.Code != "MXN")
-            {
-                pagoItem.TipoCambioP = (entityPM.PaymentCurrencyExchangeRate != null ? Convert.ToDecimal(entityPM.PaymentCurrencyExchangeRate.Value) : 0);
-                pagoItem.TipoCambioPSpecified = true;
-            }
-
-            pagoItem.FormaDePagoP = entityPM.SATPaymentMethodCode;
-            pagoItem.FechaPago = entityPM.RegisterDate.Value;
-
-            TimeSpan time = new TimeSpan(12, 00, 00);
-            DateTime resultdate = pagoItem.FechaPago.Date + time;
-            pagoItem.FechaPago = resultdate;
-            if (entityPM.FechaPago != null)
-            {
-                pagoItem.FechaPago = entityPM.FechaPago.Value;
-            }
+            PagosPago pagoItem = GetNewPagosPagoInstance(entityPM, paymentCurrency, billToCountryCode);
 
             List<PagosPagoDoctoRelacionado> doctos = new List<PagosPagoDoctoRelacionado>();
             int number = 1;
@@ -393,10 +346,10 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                     if (paymentCurrency.Code == "MXN" || paymentCurrency.Code == "MX")
                     {
                         decimal tipoCambioDR = 1 / (decimal)paymentInvoice.ExchangeRate.Value;
-                       // doctoItem.TipoCambioDR = sATBaseProfact40Service.GetDecimalWith6DigitsAfterPoint((tipoCambioDR)) + decimal.Parse("0.000001"); //Wesam5
+                        // doctoItem.TipoCambioDR = sATBaseProfact40Service.GetDecimalWith6DigitsAfterPoint((tipoCambioDR)) + decimal.Parse("0.000001"); //Wesam5
                     }
                     //else
-                       // doctoItem.TipoCambioDR = (decimal)paymentInvoice.ExchangeRate.Value; //Wesam6
+                    // doctoItem.TipoCambioDR = (decimal)paymentInvoice.ExchangeRate.Value; //Wesam6
 
                     //doctoItem.TipoCambioDRSpecified = true;//Wesam7
                 }
@@ -417,31 +370,30 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 doctoItem.Folio = invoiceComprobante.Folio;
                 //doctoItem.MetodoDePagoDR = invoiceComprobante.MetodoPago; //Wesam8
 
+                doctoItem.ObjetoImpDR = "02";
+
                 doctos.Add(doctoItem);
 
                 number++;
             });
 
-            if ((entityPM.AccountingPaymentMethodCode == "CC" || entityPM.AccountingPaymentMethodCode == "BT"
-               || entityPM.AccountingPaymentMethodCode == "CH")
-               && !string.IsNullOrEmpty(entityPM.ChequeOrPaymentRef))
-            {
-                pagoItem.NumOperacion = StringHelper.TruncateLongString(entityPM.ChequeOrPaymentRef, 100);
-            }
-
             pagoItem.DoctoRelacionado = doctos.ToArray();
-            pagosPagoList.Add(pagoItem);
 
+
+            pagosPagoList.Add(pagoItem);
 
             pagos.Pago = pagosPagoList.ToArray();
 
+            pagos.Totales = GetNewPagosTotalesInstance(pagoItem);
+
+
             List<XmlElement> LXmlComplementos = new List<XmlElement>();
             System.Xml.Serialization.XmlSerializerNamespaces nsPagos = new System.Xml.Serialization.XmlSerializerNamespaces();
-            nsPagos.Add("pago10", "http://www.sat.gob.mx/Pagos");
+            nsPagos.Add("pago20", "http://www.sat.gob.mx/Pagos");
             string xmlPagos = Profact.TimbraCFDI.XMLUtilerias.SerializaObjeto(pagos, typeof(Profact.TimbraCFDI40.Complementos.Pagos20.Pagos), nsPagos);
             XmlDocument docNominas = new XmlDocument();
             docNominas.LoadXml(xmlPagos);
-            comprobante.Pagos20Specified = true; //Wesam9
+            comprobante.Pagos20Specified = true;
             LXmlComplementos.Add(docNominas.DocumentElement);
 
             comprobante.Complemento = new Profact.TimbraCFDI40.ComprobanteComplemento
@@ -456,6 +408,170 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             arPaymentRepository.SubmitChanges();
 
 
+        }
+
+        private static string GetBillToCountryCode(ComputingPartnerTranslationHelper computingPartnerHelper, Address billToAddress)
+        {
+            string billToCountryCode = (billToAddress != null ? (billToAddress.Country != null ? billToAddress.Country.Code : null) : null);
+            if (billToAddress.Country != null)
+            {
+                billToCountryCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(billToAddress.Country.Code, "G-Profact", "Country");
+            }
+
+            return billToCountryCode;
+        }
+
+        private static PagosTotales GetNewPagosTotalesInstance(PagosPago pagoItem)
+        {
+            return new PagosTotales
+            {
+                MontoTotalPagos = pagoItem.Monto * pagoItem.TipoCambioP,
+                //TotalRetencionesIVA = 0,
+                //TotalRetencionesISR = 0,
+                //TotalRetencionesIEPS = 0,
+                //TotalTrasladosBaseIVA16 = 0,
+                //TotalTrasladosImpuestoIVA16 = 0,
+                //TotalTrasladosBaseIVA8 = 0,
+                //TotalTrasladosImpuestoIVA8 = 0,
+                //TotalTrasladosBaseIVA0 = 0,
+                //TotalTrasladosImpuestoIVA0 = 0,
+                //TotalTrasladosBaseIVAExento = 0
+            };
+        }
+
+        const string logitudeSATPaymentBankTransferMethod = "03";
+        const string sATPaymentBankTransferTypeCode = "01";
+
+        private PagosPago GetNewPagosPagoInstance(ARPaymentPM entityPM, Currency paymentCurrency, string billToCountryCode)
+        {
+            PagosPago pagoItem = new PagosPago
+            {
+                Monto = sATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(entityPM.AmountInPaymentCurrency != null ? (decimal)entityPM.AmountInPaymentCurrency.Value : 0),
+                MonedaP = paymentCurrency.Code,
+                FormaDePagoP = entityPM.SATPaymentMethodCode,
+                FechaPago = GetPagosPagoFechaPago(entityPM),
+                NumOperacion = GetPagosPagoNumOperacion(entityPM),
+                TipoCadPagoSpecified = GetPagosPagoTipoCadPagoSpecified(entityPM),
+                TipoCadPago = GetPagosPagoTipoCadPago(entityPM),
+                CertPago = GetPagosPagoCertPago(entityPM),
+                CadPago = GetPagosPagoCadPago(entityPM),
+                SelloPago = GetPagosPagoSelloPago(entityPM),
+                TipoCambioPSpecified = GetTipoCambioPSpecified(paymentCurrency),
+                TipoCambioP = GetTipoCambioP(entityPM, paymentCurrency),
+                RfcEmisorCtaOrd = GetRfcEmisorCtaOrd(entityPM, billToCountryCode),
+                //CtaOrdenante = "",
+                //RfcEmisorCtaBen = "",
+                //CtaBeneficiario = ""
+            };
+
+            return pagoItem;
+        }
+
+        private string GetRfcEmisorCtaOrd(ARPaymentPM entityPM, string billToCountryCode)
+        {
+            const string outSideMexicoRfc = "XEXX010101000";
+            List<string> paymentMethods = new List<string> { "02", "03", "04", "28", "29" };
+            bool isMexicoCountry = billToCountryCode == "MEX" || billToCountryCode == "MX";
+
+            if (!isMexicoCountry && paymentMethods.Contains(entityPM.SATPaymentMethodCode))
+            {
+                return outSideMexicoRfc;
+            }
+
+            return "";
+        }
+
+        private decimal GetTipoCambioP(ARPaymentPM entityPM, Currency paymentCurrency)
+        {
+            if (paymentCurrency.Code != "MXN")
+                return (entityPM.PaymentCurrencyExchangeRate != null ? Convert.ToDecimal(entityPM.PaymentCurrencyExchangeRate.Value) : 0);
+
+            return 0;
+        }
+
+        private bool GetTipoCambioPSpecified(Currency paymentCurrency)
+        {
+            return paymentCurrency.Code != "MXN";
+        }
+
+        private byte[] GetPagosPagoSelloPago(ARPaymentPM entityPM)
+        {
+            if (entityPM.SATPaymentMethodCode != logitudeSATPaymentBankTransferMethod || entityPM.TipoCadenaPago != sATPaymentBankTransferTypeCode) return null;
+            ValidatePagosPago(entityPM);
+
+            return Encoding.ASCII.GetBytes(entityPM.SelloPago);
+        }
+
+        private string GetPagosPagoCadPago(ARPaymentPM entityPM)
+        {
+            if (entityPM.SATPaymentMethodCode != logitudeSATPaymentBankTransferMethod || entityPM.TipoCadenaPago != sATPaymentBankTransferTypeCode) return null;
+            ValidatePagosPago(entityPM);
+
+            if (!string.IsNullOrEmpty(entityPM.CadPago))
+                return entityPM.CadPago.Replace("|", "&#124;");
+
+            return null;
+        }
+
+        private byte[] GetPagosPagoCertPago(ARPaymentPM entityPM)
+        {
+            if (entityPM.SATPaymentMethodCode != logitudeSATPaymentBankTransferMethod || entityPM.TipoCadenaPago != sATPaymentBankTransferTypeCode) return null;
+            ValidatePagosPago(entityPM);
+
+            return Encoding.ASCII.GetBytes(entityPM.CertPago);
+        }
+
+        private string GetPagosPagoTipoCadPago(ARPaymentPM entityPM)
+        {
+            if (entityPM.SATPaymentMethodCode != logitudeSATPaymentBankTransferMethod || entityPM.TipoCadenaPago != sATPaymentBankTransferTypeCode) return null;
+            ValidatePagosPago(entityPM);
+
+            return sATPaymentBankTransferTypeCode;
+        }
+
+        private bool GetPagosPagoTipoCadPagoSpecified(ARPaymentPM entityPM)
+        {
+            if (entityPM.SATPaymentMethodCode != logitudeSATPaymentBankTransferMethod || entityPM.TipoCadenaPago != sATPaymentBankTransferTypeCode) return false;
+            ValidatePagosPago(entityPM);
+            return true;
+        }
+
+        private void ValidatePagosPago(ARPaymentPM entityPM)
+        {
+            if (string.IsNullOrEmpty(entityPM.CertPago))
+                throw new ApplicationException("Cert Pago is required");
+
+            if (string.IsNullOrEmpty(entityPM.SelloPago))
+                throw new ApplicationException("Sello Pago is required");
+
+            if (string.IsNullOrEmpty(entityPM.CadPago))
+                throw new ApplicationException("Cad Pago is required");
+        }
+
+        private static string GetPagosPagoNumOperacion(ARPaymentPM entityPM)
+        {
+            string numOperacion = null;
+            if ((entityPM.AccountingPaymentMethodCode == "CC" || entityPM.AccountingPaymentMethodCode == "BT" || entityPM.AccountingPaymentMethodCode == "CH") && !string.IsNullOrEmpty(entityPM.ChequeOrPaymentRef))
+            {
+                numOperacion = StringHelper.TruncateLongString(entityPM.ChequeOrPaymentRef, 100);
+            }
+
+            return numOperacion;
+        }
+
+        private static DateTime GetPagosPagoFechaPago(ARPaymentPM entityPM)
+        {
+            DateTime fechaPago = entityPM.RegisterDate.Value;
+
+            TimeSpan time = new TimeSpan(12, 00, 00);
+            DateTime resultdate = fechaPago.Date + time;
+            fechaPago = resultdate;
+            if (entityPM.FechaPago != null)
+            {
+                fechaPago = entityPM.FechaPago.Value;
+            }
+
+            return fechaPago;
         }
 
         public void UpdateStatus()
@@ -481,7 +597,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
             double previouslySentPaymentsTotal = GetPreviouslySentPaymentsTotal(relatedInvoice);
             //double previouslyCanceledSentPaymentsTotal = GetPreviouslyCanceledSentPaymentsTotal(relatedInvoice);
-            
+
             if (previouslySentPaymentsTotal != 0)
             {
                 relatedInvoice.Invoice.SATInvoiceStatusCode = relatedInvoice.Invoice.AmountInInvoiceCurrency.Value == previouslySentPaymentsTotal ? "PD" : "PP";
@@ -536,7 +652,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             Pagos pagos = Profact.TimbraCFDI.XMLUtilerias.DeserializaObjeto<Pagos>(xmlPagos.OuterXml);
             PagosPago pagoItem = pagos.Pago[0];
             List<PagosPagoDoctoRelacionado> doctos = pagoItem.DoctoRelacionado.ToList();
-            
+
             return doctos;
         }
 
