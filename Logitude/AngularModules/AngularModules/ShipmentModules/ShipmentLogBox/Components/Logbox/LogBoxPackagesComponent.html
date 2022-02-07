@@ -117,8 +117,8 @@
                 </div>
 
                 <div class="SimpleGridViewBody" style="bottom:25px;">
-                    <table> 
-                        <ng-container *ngIf="(this.ShipmentPM && this.ShipmentPM.ShipmentPackages.length != 0)">
+                    <table *ngIf="!this.showShipmentOrderPackages"> 
+                        <ng-container *ngIf="this.ShipmentPM && this.ShipmentPM.ShipmentPackages.length != 0">
                             <tr class="SimpleGridViewRow bg" *ngFor="let item of ShipmentPM.ShipmentPackages; let i=index;">
 
                                 <td class="CellStretched  TextTrimming" style="width: 25px; max-width: 25px;padding-left: 4px;">
@@ -150,7 +150,7 @@
 
                             </tr>
                         </ng-container>
-                            <tr *ngIf="ShipmentPM.ShipmentPackages && ShipmentPM.ShipmentPackages.length == 0 && this.ShipmentPM && this.ShipmentPM.ShipmentOrderPackages.length == 0">
+                            <tr *ngIf="ShipmentPM.ShipmentPackages && ShipmentPM.ShipmentPackages.length == 0">
                                 <td colspan="5" style="height:60px;text-align:center;">
                                     <span style="font-size:13px;">No {{Title}} Data yet</span>
                                 </td>
@@ -164,8 +164,8 @@
                 </div>
 
                 <div class="SimpleGridViewBody" style="bottom:25px;">
-                    <table>
-                        <ng-container *ngIf="this.ShipmentPM && this.ShipmentPM.ShipmentPackages.length == 0 && this.ShipmentPM.ShipmentOrderPackages.length !=0">
+                    <table *ngIf="this.showShipmentOrderPackages">
+                        <ng-container *ngIf="this.ShipmentPM && this.ShipmentPM && this.ShipmentPM.ShipmentOrderPackages.length !=0">
 
                             <tr class="SimpleGridViewRow bg" *ngFor="let item of ShipmentPM.ShipmentOrderPackages; let i=index;">
 
@@ -197,7 +197,12 @@
 
                             </tr>
 
-                        </ng-container> 
+                        </ng-container>
+                        <tr *ngIf="this.ShipmentPM && this.ShipmentPM.ShipmentOrderPackages.length == 0">
+                            <td colspan="5" style="height:60px;text-align:center;">
+                                <span style="font-size:13px;">No {{Title}} Data yet</span>
+                            </td>
+                        </tr>
                         <tr>
                             <td colspan="5">
                                 <div></div>

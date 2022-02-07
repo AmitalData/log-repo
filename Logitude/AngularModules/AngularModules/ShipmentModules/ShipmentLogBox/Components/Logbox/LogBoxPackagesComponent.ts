@@ -40,6 +40,7 @@ export class LogBoxPackagesComponent implements OnInit, AfterViewInit {
    
     ShipmentPM: any;
     Title: string = "";
+    public showShipmentOrderPackages: boolean = false;
 
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
@@ -47,7 +48,9 @@ export class LogBoxPackagesComponent implements OnInit, AfterViewInit {
 
     }
     ngOnInit() {
-        
+        if (!this.ShipmentPM.ForwarderShipmentNumber) {
+            this.showShipmentOrderPackages = true;
+        }
     }
     ngAfterViewInit() {
 
