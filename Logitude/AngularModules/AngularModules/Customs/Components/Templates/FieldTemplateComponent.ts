@@ -21,6 +21,7 @@ import { ExceptionReasonList } from '../../EntityLists/ExceptionReasonList';
 
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { PhysicalChecksCloseSharedDataService } from '../../Services/DataChange/PhysicalChecksCloseSharedDataService';
+import { PendingByKeywordPMService } from 'Customs/Services/StandardPMs/PendingByKeywordPMService';
 @Component({
 
     templateUrl: './FieldTemplateComponent.html',
@@ -39,6 +40,7 @@ export class FieldTemplateComponent {
     public IsHeaderScreenTemplate: boolean = false;
     courierMasterService: CourierMasterService = new CourierMasterService();
     customsAutonomyKeywordExtendedPMService: CustomsAutonomyKeywordExtendedPMService = new CustomsAutonomyKeywordExtendedPMService();
+    pendingByKeywordPMService: PendingByKeywordPMService = new PendingByKeywordPMService();
     exceptionReasonExtendedListService: ExceptionReasonExtendedListService = new ExceptionReasonExtendedListService();
     private _ListComponentArgs: ListComponentArgs;
     @ViewChild('SpotLight', { read: ViewContainerRef, static: false }) SpotLightViewContainerRef: ViewContainerRef;
@@ -787,11 +789,21 @@ export class FieldTemplateComponent {
         else {
             alert("ShowGFUUSTS");
         }
-
     }
 
 
+    async onRemovePendingByKeywordClick(e: MouseEvent) {
+        e.stopPropagation();
 
+        SessionLocator.SelectedSession.StartBusyIndicator("");
+        
+        console.log(this.Entity);
+        
+        SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+
+        // this.pendingByKeywordPMService.
+        SessionLocator.SelectedSession.StopBusyIndicator();
+    }
 }
 
 //class MyClass {
