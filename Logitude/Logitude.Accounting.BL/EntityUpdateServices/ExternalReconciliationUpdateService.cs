@@ -51,6 +51,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void OnUpdating(ExternalReconciliationPM externalRecoPM)
         {
             this.externalRecoPM = externalRecoPM;
+            
             if (externalRecoPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
 
@@ -62,14 +63,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 RedeemARPaymentCheques(reconciliationLedgerTransactions);
                 RedeemPaymentCheques(reconciliationLedgerTransactions);
-
-                externalRecoPM.CrossYearReconcile = CheckCrossYearReconcile(reconciliationLedgerTransactions, reconciliationExternalPagesLines);
+                var accountingContext = MainContext as IAccountingContext;
+                var bankAccount = accountingContext.BankAccounts.Where(e => e.Id == externalRecoPM.BankAccountId).First();
+                externalRecoPM.CrossYearReconcile = CheckCrossYearReconcile(reconciliationLedgerTransactions, reconciliationExternalPagesLines, bankAccount);
             }
         }
 
-        private bool CheckCrossYearReconcile(List<LedgerTransactionPM> reconciliationLedgerTransactions, List<ReconcileExternalPageLinePM> reconciliationExternalPagesLines)
+        private bool CheckCrossYearReconcile(List<LedgerTransactionPM> reconciliationLedgerTransactions, List<ReconcileExternalPageLinePM> reconciliationExternalPagesLines, BankAccount bankAccount)
         {
-            var ledgerGroupedByYears = reconciliationLedgerTransactions.GroupBy(ledger => ledger.AccountingDate.Year).ToList();
+            var ledgerGroupedByYears = reconciliationLedgerTransactions.Where(e=>e.AccountId != bankAccount.TransferGLAcccountId).GroupBy(ledger => ledger.AccountingDate.Year).ToList();
             var pageLinesGroupedByYears = reconciliationExternalPagesLines.GroupBy(pageLine => pageLine.ReferenceDate.Year).ToList();
 
             var bothLinesSelected = pageLinesGroupedByYears.Count() > 0 && ledgerGroupedByYears.Count() > 0;
