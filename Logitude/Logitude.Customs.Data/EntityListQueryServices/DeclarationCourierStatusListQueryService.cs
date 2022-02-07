@@ -126,6 +126,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   CourierCustomStatusCode = d.CourierCustomStatusCode,
                                                                   CourierCustomStatusName = d.CourierCustomStatus != null ? d.CourierCustomStatus.LocalName : null,
                                                                   DeclarationStatusTypeName = d.DeclarationStatusType == null ? null : d.DeclarationStatusType.LocalName,
+                                                                  HatraDate = d.HatraDate,
                                                                   ImporterCode = d.ImporterCode,
                                                                   ImporterName = d.ImporterName != null ? d.ImporterName : (d.ImporterId != null ? d.Importer.FullName : d.ImporterName),
                                                                   SortedImporterCode = d.ImporterCode,
