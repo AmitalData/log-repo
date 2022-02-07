@@ -247,5 +247,12 @@ export class ContainerList {
 		EmptyContainerReturnETD: Date;
 		EmptyContainerReturnATD: Date;
 		EmptyContainerReturnATA: Date;
+		IsExceptionResolved: boolean;
+		ExceptionDescription: string;
+		ExceptionResolvedDescription: string;
+		LastExceptionDescription: string;
+		ExceptionDate: Date;
+		HasException: boolean;
+		HasExceptionMessage: string;
 	
 }

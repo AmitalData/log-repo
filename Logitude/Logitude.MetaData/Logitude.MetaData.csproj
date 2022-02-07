@@ -386,6 +386,7 @@
     <None Include="DBScripts\QuoteModel\202107251450_AddFromToLocationIncludeCountryToQuoteTemplateTextCode.sxml" />
     <None Include="DBScripts\QuoteModel\202108312250_DeleteFromRelatedDataToQuoteField.sxml" />
     <None Include="DBScripts\QuoteModel\202108312330_FillQuotePackagesQuantity.sxml" />
+    <None Include="DBScripts\ShipmentModel\202202051200_AddContainersExceptionEvents.sxml" />
     <None Include="DBScripts\ShipmentModel\202201221830_AddPODReceivedEventAndStatusToTenants.sxml" />
     <None Include="DBScripts\ShipmentModel\202109121000_FillShipperNotExporterReference1.ssxxml" />
     <None Include="DBScripts\QuoteModel\202109141136_FillFromToInlandDomesticTypes.sxml" />

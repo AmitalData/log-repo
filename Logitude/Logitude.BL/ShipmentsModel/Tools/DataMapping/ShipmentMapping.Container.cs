@@ -228,6 +228,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.Leg3VesselId = containerPM.Leg3VesselId;
             container.Leg4VesselId = containerPM.Leg4VesselId;
             container.Leg5VesselId = containerPM.Leg5VesselId;
+            container.ExceptionDate = containerPM.ExceptionDate;
+            container.ExceptionDescription = containerPM.ExceptionDescription;
+            container.ExceptionResolvedDescription = containerPM.ExceptionResolvedDescription;
+            container.HasException = containerPM.HasException;
+            container.LastExceptionDescription = containerPM.LastExceptionDescription;
+            container.IsExceptionResolved = containerPM.IsExceptionResolved;
+            container.IsUpdateEntityException = container.IsUpdateEntityException;
             container.EmptyContainerReturnETA = containerPM.EmptyContainerReturnETA;
             container.EmptyContainerReturnATA = containerPM.EmptyContainerReturnATA;
             container.EmptyContainerReturnETD = containerPM.EmptyContainerReturnETD;

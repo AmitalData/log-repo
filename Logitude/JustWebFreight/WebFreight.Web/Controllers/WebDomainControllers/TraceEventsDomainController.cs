@@ -101,6 +101,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     SecurityUtility.AuthenticationOnTenant(tenant);
 
                     bool isShipment = false;
+                    bool isContainer= false;
                     ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
                     ObjectTable objectTable = objectTableRepository.GetSingleObjectTable(args.ObjectTableId, tenant, true);
                     if (objectTable != null)
@@ -108,6 +109,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         if (objectTable.Name == "Shipment" || objectTable.Name == "Master")
                         {
                             isShipment = true;
+                        }
+                        if (objectTable.Name == "Container")
+                        {
+                            isContainer = true;
                         }
                     }
 
@@ -120,7 +125,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             ShipmentTracing.DeleteShipmentTraceEvent(entityPM, args.TraceEventId, tenant, args.IsExternal);
                         }
                     }
-
+                    else if (isContainer)
+                    {
+                        this.DeleteContainerTraceEvent(tenant, args);
+                        
+                    }
                     else
                     {
                         TraceEventRepository traceEventRepository = new TraceEventRepository(tenant);
@@ -144,6 +153,22 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-        }        
+        }
+
+        private void DeleteContainerTraceEvent(int tenant, TraceEventsServiceArgs args)
+        {
+            IShipmentsContext context = ShipmentsContext.GetContext(tenant);
+            ContainerRepository containerRepository = new ContainerRepository(context);
+            ContainerQuery containerQuery = new ContainerQuery(containerRepository);
+            ContainerPM containerPM = containerQuery.GetSinglePM(args.EntityId, tenant);
+            if (containerPM == null)
+            {
+                return;
+            }
+            Container container = containerRepository.GetSingleContainer(containerPM.Id, containerPM.Tenant);
+            var isNew = false;
+            ContainerTracing containerTracing = new ContainerTracing(containerPM, container, isNew);
+            containerTracing.DeleteContainerExceptionTraceEvent(args.TraceEventId, containerRepository, tenant);
+        }
     }
 }

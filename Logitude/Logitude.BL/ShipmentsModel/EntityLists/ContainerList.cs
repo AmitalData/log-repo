@@ -253,5 +253,14 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? EmptyContainerReturnETD { get; set; }
         public DateTime? EmptyContainerReturnATD { get; set; }
         public DateTime? EmptyContainerReturnATA { get; set; }
+        public bool IsExceptionResolved { get; set; }
+        public string ExceptionDescription { get; set; }
+        public string ExceptionResolvedDescription { get; set; }
+        public string LastExceptionDescription { get; set; }
+        public DateTime? ExceptionDate { get; set; }
+        public bool HasException { get; set; }
+        public string HasExceptionMessage { get; set; }
+        public bool IsUpdateEntityException { get; set; }
+
     }
 }

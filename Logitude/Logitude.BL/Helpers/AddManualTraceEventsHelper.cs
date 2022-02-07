@@ -26,6 +26,8 @@ namespace Logitude.BL.Helpers
     {
         public int tenant;
         private IWebFreightContext webFreightContext;
+        EventTypeRepository eventTypeRep;
+        IShipmentsContext objectContext;
 
         public AddManualTraceEventsHelper()
         {
@@ -40,6 +42,8 @@ namespace Logitude.BL.Helpers
         {
             this.tenant = tenant;
             webFreightContext = WebFreightContext.GetContext(tenant);
+            eventTypeRep = new EventTypeRepository(webFreightContext);
+            objectContext = ShipmentsContext.GetContext(tenant);
         }
 
 
@@ -66,7 +70,7 @@ namespace Logitude.BL.Helpers
             traceEventRepository.SubmitChanges();
             newTraceEventResult.LogDateTime = newTraceEvent.LogDateTime;
 
-            this.UpdateShipment(newTraceEvent, newTraceEventResult, args);
+            this.UpdateEntity(newTraceEvent, newTraceEventResult, args);
 
             return newTraceEventResult;
         }
@@ -81,7 +85,7 @@ namespace Logitude.BL.Helpers
             return contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant)?.Id;
         }
 
-        private void UpdateShipment(TraceEvent newTraceEvent, NewTraceEventResult newTraceEventResult, TraceEventsServiceArgs args)
+        private void UpdateEntity(TraceEvent newTraceEvent, NewTraceEventResult newTraceEventResult, TraceEventsServiceArgs args)
         {
             ObjectTableRepository objectTableRepository = new ObjectTableRepository(webFreightContext);
             ObjectTable objectTable = objectTableRepository.GetSingleObjectTable(args.ObjectTableId, tenant, true);
@@ -92,6 +96,11 @@ namespace Logitude.BL.Helpers
                 {
                     shipmentPM = GetShipmentPM(args);
                     this.OnInsertTraceEventForShipment(shipmentPM, args.EventTypeId, newTraceEvent, tenant, webFreightContext, newTraceEventResult);
+                }
+
+                if(objectTable.Name == "Container")
+                {
+                    UpdateContinerExceptionEvents(args, newTraceEvent);
                 }
 
                 if (objectTable.AllowCustomFields)
@@ -126,12 +135,10 @@ namespace Logitude.BL.Helpers
 
         private void OnInsertTraceEventForShipment(ShipmentPM entityPM, string eventTypeId, TraceEvent newTraceEvent, int tenant, IWebFreightContext webFreightContext, NewTraceEventResult myResult)
         {
-            IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
             ShipmentRepository shipmentRepository = new ShipmentRepository(objectContext);
 
             if (entityPM != null)
             {
-                EventTypeRepository eventTypeRep = new EventTypeRepository(webFreightContext);
                 EntityStatusRepository entityStatusRepository = new EntityStatusRepository(webFreightContext);
                 EventType eventType = eventTypeRep.GetSingleEventType(eventTypeId, tenant);
                 if (eventType != null)
@@ -319,6 +326,68 @@ namespace Logitude.BL.Helpers
                 entityPM.LastSharedEventNotes = null;
                 entityPM.LastSharedEventDate = null;
             }
+        }
+        private void UpdateContinerExceptionEvents(TraceEventsServiceArgs args, TraceEvent newTraceEvent)
+        {
+            EventType eventType = eventTypeRep.GetSingleEventType(args.EventTypeId, tenant);
+            ContainerPM containerPM = this.GetContinerPM(args);
+            this.MapHasExceptionContainerFields(containerPM,eventType,newTraceEvent);
+            this.MapExceptionResolvedContainerFields(containerPM, eventType, newTraceEvent);
+            this.UpdateContainer(containerPM, eventType);
+        }
+
+        private void MapHasExceptionContainerFields(ContainerPM entityPM, EventType eventType, TraceEvent newTraceEvent)
+        {
+            if (entityPM == null)
+                return;
+
+            if (eventType == null)
+                return;
+
+            if (eventType.Code != "CEXC")
+               return;
+            entityPM.ExceptionDate = newTraceEvent.EventDateTime;
+            entityPM.ExceptionDescription = entityPM.LastExceptionDescription = newTraceEvent.Notes;
+            entityPM.HasException = true;
+            entityPM.ExceptionResolvedDescription = null;
+            entityPM.IsUpdateEntityException = true;
+        }
+        private void MapExceptionResolvedContainerFields(ContainerPM entityPM, EventType eventType, TraceEvent newTraceEvent)
+        {
+            if (entityPM == null)
+                return;
+
+            if (eventType == null)
+                return;
+
+            if (eventType.Code != "CRES")
+                return;
+            entityPM.ExceptionResolvedDescription = newTraceEvent.Notes;
+            entityPM.HasException = false;
+            entityPM.ExceptionDescription = null;
+            entityPM.ExceptionDate = null;
+            entityPM.IsUpdateEntityException = true;
+        }
+
+        private ContainerPM GetContinerPM(TraceEventsServiceArgs args)
+        {
+            if (args.EntityPM != null)
+                return (ContainerPM)args.EntityPM;
+
+            ContainerQuery containerQuery = new ContainerQuery(tenant);
+            return containerQuery.GetSinglePM(args.EntityId, tenant);
+        }
+
+        private void UpdateContainer(ContainerPM containerPM, EventType eventType)
+        {
+            if (containerPM == null)
+                return;
+
+            if (eventType.Code != "CRES" && eventType.Code != "CEXC")
+                return;
+
+            ContainerService containerService = new ContainerService(objectContext,tenant);
+            containerService.Update(containerPM);
         }
 
     }
