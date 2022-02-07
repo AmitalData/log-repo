@@ -27,7 +27,10 @@ export class AddEditPendingByKeywordComponent
     extends BaseComponent
     implements OnInit{
     SearchByFieldCodes: KeyValuePair[] = [];
+    SearchTypes: KeyValuePair[] = [];
     SelectedItemSearchByField: KeyValuePair;
+    SelectedItemSearchType: KeyValuePair;
+
 
     public DataContext: any = this;
     public ObjectTableName: string = "Customs.PendingByKeyword";
@@ -46,6 +49,9 @@ export class AddEditPendingByKeywordComponent
         this.SearchByFieldCodes.push(new KeyValuePair("1", "תאור טובין"));
         this.SearchByFieldCodes.push(new KeyValuePair("2", "שם יבואן"));
 
+        this.SearchTypes.push(new KeyValuePair("1", "מילה"));
+        this.SearchTypes.push(new KeyValuePair("2", "חלק ממילה"));
+
         SessionLocator.SelectedSession.StartBusyIndicator("");
         this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
 
@@ -56,12 +62,14 @@ export class AddEditPendingByKeywordComponent
                 this.isWindowMode = true;
                 this.isNewRecord = true;
                 this.UIProperties.SetRequired("SearchByFieldCode", this.ObjectTableName, true);
+                this.UIProperties.SetRequired("SearchType", this.ObjectTableName, true);
 
             } else {
                 this.EntityPM = this.entityArgs.EntityPM;
                 this.SelectedItemSearchByField = this.SearchByFieldCodes.filter(r => r.Key == this.EntityPM.SearchByFieldCode)[0];
                 this.UIProperties.SetRequired("SearchByFieldCode", this.ObjectTableName, false);
-
+                this.SelectedItemSearchType = this.SearchTypes.filter(r => r.Key == this.EntityPM.SearchType)[0];
+                this.UIProperties.SetRequired("SearchType", this.ObjectTableName, false);
             }
             this.WarningMessage = "יש להזין רשימת מילות מפתח מופרדות בפסיק, ואת קוד העיכוב שיש להרים עבורן. (למשל: medicine, drug, תרופה) ניתן להזין את אותו קוד עיכוב מספר פעמים.";
         });
@@ -71,6 +79,14 @@ export class AddEditPendingByKeywordComponent
         this._SearchByFieldCode = evKey;
         this.EntityPM.SearchByFieldCode = this._SearchByFieldCode;
         this.UIProperties.SetRequired("SearchByFieldCode", this.ObjectTableName, false);
+        
+    }
+
+    public _SearchType: string; 
+    SearchTypeClicked(evKey) {
+        this._SearchType = evKey;
+        this.EntityPM.SearchType = this._SearchType;
+        this.UIProperties.SetRequired("SearchType", this.ObjectTableName, false);
         
     }
 
@@ -119,7 +135,7 @@ export class AddEditPendingByKeywordComponent
     //#endregion\
 
     OkButtonClicked() {
-
+        debugger;
         var errors = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 

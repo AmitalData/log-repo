@@ -33,13 +33,13 @@ namespace Unifreight.BL.EntityUpdateServices
 
         protected override void OnCreating(GGGQPM entityPM, EntityPM entityParentPM)
         {
-            var myGGGQQueryService = new GGGQQueryService(this.MainContext as AmitalContext);
-            GGGQPM ExistGGGQPM = myGGGQQueryService.GetByPrimary(entityPM.PRIMARYNUM, entityPM.ENTNAME, entityPM.ORIGINQUE, entityPM.FORMID);
-            if(ExistGGGQPM != null && !string.IsNullOrWhiteSpace(ExistGGGQPM.QUEID))
-            {
-                entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.None;
-                return;
-            }
+            //var myGGGQQueryService = new GGGQQueryService(this.MainContext as AmitalContext);
+            //GGGQPM ExistGGGQPM = myGGGQQueryService.GetByPrimary(entityPM.PRIMARYNUM, entityPM.ENTNAME, entityPM.ORIGINQUE, entityPM.FORMID);
+            //if(ExistGGGQPM != null && !string.IsNullOrWhiteSpace(ExistGGGQPM.QUEID))
+            //{
+                //entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.None;
+                //return;
+            //}
             entityPM.CREATEDATE = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now;
             entityPM.QUEID = CommCounterUtil.GetUnique30(entityPM.CREATEDATE);
             
