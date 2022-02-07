@@ -1102,14 +1102,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
             entityPM.IsCancelled = entityAM.IsCancelled;
 
-            if (!string.IsNullOrEmpty(entityAM.ShipperName))
-            {
-                entityPM.ShipperName = entityAM.ShipperName;
-            }
-            if (!string.IsNullOrEmpty(entityAM.ConsigneeName))
-            {
-                entityPM.ConsigneeName = entityAM.ConsigneeName;
-            }
+
+            entityPM.ShipperName = !string.IsNullOrEmpty(entityAM.ShipperName) ? entityAM.ShipperName : "";
+            entityPM.ConsigneeName = !string.IsNullOrEmpty(entityAM.ConsigneeName) ? entityAM.ConsigneeName : "";
+         
 
             if (!string.IsNullOrEmpty(entityAM.CarrierTransportDocumentNumber))
             {
