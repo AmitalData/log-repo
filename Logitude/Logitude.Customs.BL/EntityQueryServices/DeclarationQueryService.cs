@@ -2125,11 +2125,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             List<Declaration> declarations = repository.GetDeclarationAmendmentsById(tenant, id);
             List<AmendmentStatusPM> amendmentStatusPMs = new List<AmendmentStatusPM>();
-            AmendmentStatusRepository amendmentStatusRepository = new AmendmentStatusRepository(context);
             AmedmentTypeRepository amendmentTypesRepository = new AmedmentTypeRepository(context);
             List<DeclarationList> declarationLists = new List<DeclarationList>();
             UserRepository userRepository = new UserRepository(tenant);
-            var amendmentStatuses = amendmentStatusRepository.GetAll();
             var amendmentTypes = amendmentTypesRepository.GetAll();
             var users = userRepository.GetAll();
             var i = 1;
@@ -2150,7 +2148,18 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     AmedmentType = item.AmedmentType
                 };
                 if (item.AmendmentCorrectedByUserId != null) declarationList.AmendmentCorrectedByUserName = users.FirstOrDefault(x => x.Id == item.AmendmentCorrectedByUserId).Code;
-                if (item.AmendmentStatus != null) declarationList.AmendmentStatusName = amendmentStatuses.FirstOrDefault(x => x.Code == item.AmendmentStatus).Name;
+                if (item.Direction == "E")
+                {
+                    AmendmentRequestStatusRepository amendmentRequestStatusRepository = new AmendmentRequestStatusRepository(context);
+                    var amendmentRequestStatus = amendmentRequestStatusRepository.GetAll();
+                    if (item.AmendmentStatus != null) declarationList.AmendmentStatusName = amendmentRequestStatus.FirstOrDefault(x => x.Code == item.AmendmentStatus)?.LocalName;
+                }
+                else
+                {
+                    AmendmentStatusRepository amendmentStatusRepository = new AmendmentStatusRepository(context);
+                    var amendmentStatuses = amendmentStatusRepository.GetAll();
+                    if (item.AmendmentStatus != null) declarationList.AmendmentStatusName = amendmentStatuses.FirstOrDefault(x => x.Code == item.AmendmentStatus).Name;
+                }
                 if (item.AmedmentType != null) declarationList.AmendmentTypeName = amendmentTypes.FirstOrDefault(x => x.Code == item.AmedmentType).Name;
 
                 declarationLists.Add(declarationList);

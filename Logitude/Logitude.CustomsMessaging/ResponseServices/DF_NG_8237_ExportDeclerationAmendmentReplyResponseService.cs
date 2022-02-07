@@ -207,7 +207,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
  
                 foreach (var additionalInformation in customResponse.Response.AdditionalInformation)
                     {
-                    _MyDeclarationPM.AmendmentStatus = additionalInformation.StatementTypeCode.Value;
                         switch (additionalInformation.StatementTypeCode.Value)
                         {
                             case "16":
@@ -268,7 +267,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             case "29":
                                 {
                                     if (additionalInformation.Content != null)
-                                        _MyDeclarationPM.AmendmentRemarks = additionalInformation.Content.Value;
+                                        _MyDeclarationPM.AmendmentRemarks += '\n' + additionalInformation.Content.Value;
                                     if(!string.IsNullOrEmpty(_MyDeclarationPM.AmendmentRemarks)&&  _MyDeclarationPM.AmendmentRemarks.Length>=511)
                                     {
                                         _MyDeclarationPM.AmendmentRemarks = _MyDeclarationPM.AmendmentRemarks.Substring(0, 511);
@@ -287,15 +286,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 {
                                     if (additionalInformation.Content != null)
                                     {
-                                        switch (additionalInformation.Content.Value)
+                                    _MyDeclarationPM.AmendmentStatus = additionalInformation.Content.Value;
+                                    switch (additionalInformation.Content.Value)
                                         {
                                             case "1":
 
                                                 var declarationParent = myDeclarationQueryService.GetAcceptDeclarationAmendment(_MyDeclarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
+                                          //  _MyDeclarationPM.AmendmentStatus = "3";
 
                                             _MyDeclarationPM.AmendmentDontDisplayInList = false;
-                                            //  _MyDeclarationPM.AmendmentStatus = "3";
-                                            UpdateReplacingDeclaration(requestParams, myDeclarationQueryService, myDeclarationUpdateService);
+                                                UpdateReplacingDeclaration(requestParams, myDeclarationQueryService, myDeclarationUpdateService);
                                                 if(_MyDeclarationPM.AmendmentOriginalDeclartation!= declarationParent.AmendmentOriginalDeclartation)
                                                 {
                                                     UpdateParentDec(myDeclarationUpdateService, declarationParent);
@@ -485,7 +485,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                    }
  
-                    if (customResponse.Response.Error != null && (!new string[]{ "3","6"}.Contains( _MyDeclarationPM.AmendmentStatus)))
+                    if (customResponse.Response.Error != null && (!new string[]{ "1","2"}.Contains( _MyDeclarationPM.AmendmentStatus)))
                     {
                         DeclarationErrorPointerService mydDclarationErrorPointerService = new DeclarationErrorPointerService();
 
@@ -503,7 +503,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
  
                     }
-                    if(_MyDeclarationPM.AmendmentStatus == "3"  || _MyDeclarationPM.AmendmentStatus == "6")
+                    if(_MyDeclarationPM.AmendmentStatus == "1"  || _MyDeclarationPM.AmendmentStatus == "2")
                     {
                         _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status[0].NameCode.Value;
                         _MyDeclarationPM.PaymentDate = _MyDeclarationPMOrg.PaymentDate;
@@ -694,7 +694,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
 
 
-                if(_MyDeclarationPM.IsCourierDeclaration &&( _MyDeclarationPM.AmendmentStatus =="6" || _MyDeclarationPM.AmendmentStatus == "3" ) && _MyDeclarationPM.HatraDate ==null)
+                if(_MyDeclarationPM.IsCourierDeclaration &&( _MyDeclarationPM.AmendmentStatus =="1" || _MyDeclarationPM.AmendmentStatus == "2" ) && _MyDeclarationPM.HatraDate ==null)
 
                 {
                     var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
@@ -776,7 +776,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (!string.IsNullOrEmpty(_MyDeclarationPM.ReplacingRepairRequest))
             {
                 var declarationReplacing = myDeclarationQueryService.GetDeclarationAmendmentByIdAndAmendmentNo(requestParams.Tenant, _MyDeclarationPM.AmendmentOriginalDeclartation, _MyDeclarationPM.ReplacingRepairRequest);
-               // declarationReplacing.AmendmentStatus = "7";
+                declarationReplacing.AmendmentStatus = "9";
                 declarationReplacing.ChangeSetOp = ChangeSetOperation.Update;
                 myDeclarationUpdateService.Update(declarationReplacing, true);
 
