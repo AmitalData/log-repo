@@ -53,7 +53,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LoggingEntityReference = customsResponse.master,
 
                 LoggingUserId = customsResponse.LoggingUserId,
-                RequestName = $" שידור מסמכים שגויים " + customsResponse.master + " "
+                RequestName = $"שידור תעודות עיכוב"
             };
             if (customsResponse.ServerSplitDeclarationsList == null || (customsResponse.ServerSplitDeclarationsList != null && customsResponse.ServerSplitDeclarationsList.Count == 0))
 
