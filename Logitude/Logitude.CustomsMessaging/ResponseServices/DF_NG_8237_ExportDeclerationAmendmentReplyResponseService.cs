@@ -776,7 +776,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (!string.IsNullOrEmpty(_MyDeclarationPM.ReplacingRepairRequest))
             {
                 var declarationReplacing = myDeclarationQueryService.GetDeclarationAmendmentByIdAndAmendmentNo(requestParams.Tenant, _MyDeclarationPM.AmendmentOriginalDeclartation, _MyDeclarationPM.ReplacingRepairRequest);
-               // declarationReplacing.AmendmentStatus = "7";
+                declarationReplacing.AmendmentStatus = "9";
                 declarationReplacing.ChangeSetOp = ChangeSetOperation.Update;
                 myDeclarationUpdateService.Update(declarationReplacing, true);
 
