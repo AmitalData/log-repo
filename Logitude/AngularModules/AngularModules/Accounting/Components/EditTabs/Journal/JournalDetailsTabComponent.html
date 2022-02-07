@@ -489,7 +489,10 @@
                           <ng-template let-item>
                               <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
                                   <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
-                                      <span *ngIf="Approved || Voided" [attr.title]="item.CreditAccountNumber + ' - ' + item.CreditAccountEnglishName" class="hyperlink" (click)="item.GLAccountHyperlinkClicked()">{{item.CreditAccountName}}</span>
+                                      <span *ngIf="Approved || Voided" 
+                                      [attr.title]="(item.CreditAccountNumber ? item.CreditAccountNumber : '' ) +
+                                      (item.CreditAccountNumber && item.CreditAccountEnglishName ?' - ': '') + (item.CreditAccountEnglishName? item.CreditAccountEnglishName : '')"
+                                       class="hyperlink" (click)="item.GLAccountHyperlinkClicked()">{{item.CreditAccountName}}</span>
                                       <span *ngIf="!Approved && !Voided">{{item.CreditAccountName}}</span>
 
                                   </div>
@@ -518,7 +521,10 @@
                               <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
                                   <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
                                       <span></span>
-                                      <span *ngIf="(Approved || Voided) && item.DebitAccountName" class="hyperlink" [attr.title]="item.DebitAccountNumber + ' - ' + item.DebitAccountEnglishName" (click)="item.DebitAccountHyperlinkClicked()">{{item.DebitAccountName}}</span>
+                                      <span *ngIf="(Approved || Voided) && item.DebitAccountName" class="hyperlink" 
+                                      [attr.title]="(item.DebitAccountNumber ? item.DebitAccountNumber : '' ) +
+                                      (item.DebitAccountNumber && item.DebitAccountEnglishName ?' - ': '') + (item.DebitAccountEnglishName? item.DebitAccountEnglishName : '')"
+                                      (click)="item.DebitAccountHyperlinkClicked()">{{item.DebitAccountName}}</span>
                                       <span *ngIf="!Approved && !Voided">{{item.DebitAccountName}}</span>
                                   </div>
                                   <div *ngIf="logcelltemplate.IsEditMode">
