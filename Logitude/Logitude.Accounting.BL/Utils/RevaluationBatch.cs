@@ -19,9 +19,6 @@ using System.Transactions;
 using Logitude.Server.Tools.QueueService;
 using System.Threading;
 using Logitude.SystemLogs;
-using Logitude.Accounting.Def.EntityUpdateServicesExt;
-using Logitude.Server.Tools;
-using Microsoft.Practices.Unity;
 //using AmitalCustomsWindowsService.Utils;
 
 namespace Logitude.Accounting.BL.Utils
@@ -63,7 +60,7 @@ namespace Logitude.Accounting.BL.Utils
         {
             IAccountingContext context = AccountingContext.GetContext(tenant);
 
- 
+
             RevaluationListQueryService revaluationListQueryService = new RevaluationListQueryService(context);
             List<RevaluationList> revaluations = revaluationListQueryService.GetOpenRevaluationList(tenant);
             if (revaluations != null)
@@ -116,8 +113,8 @@ namespace Logitude.Accounting.BL.Utils
             {
                 using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(3)))
                 {
-                   IAccountingContext context = AccountingContext.GetContext(tenant);
-                   if (!String.IsNullOrEmpty(id))
+                    IAccountingContext context = AccountingContext.GetContext(tenant);
+                    if (!String.IsNullOrEmpty(id))
                     {
                         bool useLocal = true;
                         RevaluationListQueryService revaluationListQueryService = new RevaluationListQueryService(context);
@@ -134,9 +131,9 @@ namespace Logitude.Accounting.BL.Utils
                         RevaluationList revaluation = revaluationListQueryService.GetSingle(id);
                         if (revaluation != null && revaluation.RevaluationDate != null)
                         {
-                           FullAccountingSettingPM setting = settingQuery.GetSingleFullAccountingSetting(tenant);
-                           bool createRevaluationJournalinDetail = setting.CreateRevaluationJournal;
-                           string revaluationDiffAccountId = revaluation.RevaluationsGLAccountId;
+                            FullAccountingSettingPM setting = settingQuery.GetSingleFullAccountingSetting(tenant);
+                            bool createRevaluationJournalinDetail = setting.CreateRevaluationJournal;
+                            string revaluationDiffAccountId = revaluation.RevaluationsGLAccountId;
                             if (String.IsNullOrEmpty(revaluationDiffAccountId))
                             {
                                 string diffAccountId = "";
@@ -183,7 +180,7 @@ namespace Logitude.Accounting.BL.Utils
                         string errorMessage = e.Message.Split(new[] { '\r', '\n' }).FirstOrDefault();
                         _ResponseText = errorMessage;
                         _StatusCode = HttpStatusCode.InternalServerError;
-              //          UpdateRevaluationStatus(id, tenant, "2", errorMessage, context);
+                        //          UpdateRevaluationStatus(id, tenant, "2", errorMessage, context);
                     }
                     excScope.Complete();
                 }
@@ -246,8 +243,8 @@ namespace Logitude.Accounting.BL.Utils
                             {
                                 CurrencyQuery currencyQuery = new CurrencyQuery(gLAccountPM.Tenant);
                                 CurrencyPM curr = currencyQuery.GetSinglePM(item.CurrencyId, gLAccountPM.Tenant);
-//                              string revError = TranslateTextsClass.Translate("Revaluations.Q.RevaluationError", gLAccountPM.Tenant);
-//                              string rateNotFound = TranslateTextsClass.Translate("GLAccounts.Q.RateNotFound", gLAccountPM.Tenant);
+                                //                              string revError = TranslateTextsClass.Translate("Revaluations.Q.RevaluationError", gLAccountPM.Tenant);
+                                //                              string rateNotFound = TranslateTextsClass.Translate("GLAccounts.Q.RateNotFound", gLAccountPM.Tenant);
                                 string revError = TranslateTextsClassTranslate("Revaluations.Q.RevaluationError", 0, useLocal);
                                 string rateNotFound = TranslateTextsClassTranslate("GLAccounts.Q.RateNotFound", 0, useLocal);
                                 LogMessagingUtil.Instance.AppendLine(revError + curr.Code + rateNotFound + revaluationDate.ToShortDateString());
@@ -275,7 +272,7 @@ namespace Logitude.Accounting.BL.Utils
                             {
                                 journalLine_credit = lineList.FirstOrDefault<JournalLineList>(l => l.ActionCode == "1" && l.CurrencyId == item.CurrencyId);
                             }
-                           if (journalLine_credit == null)
+                            if (journalLine_credit == null)
                             {
                                 journalLine_credit = new JournalLineList
                                 {
@@ -289,7 +286,7 @@ namespace Logitude.Accounting.BL.Utils
                                     CurrencyId = item.CurrencyId, // was     ... = accountingCurrencyId,
                                     ForeignAmount = 0m, // was     ... = difference, 
                                     Reference1 = revaluation.RevaluationNumber.ToString(),
-//                                  Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", gLAccountPM.Tenant),
+                                    //                                  Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", gLAccountPM.Tenant),
                                     Notes = TranslateTextsClassTranslate("Revaluations.Q.Revaluation", 0, useLocal),
                                     DebitAccountId = createRevaluationJournalinDetail? gLAccountPM.Id:null,
                                 };
@@ -319,7 +316,7 @@ namespace Logitude.Accounting.BL.Utils
                                 CurrencyId = item.CurrencyId,
                                 ForeignAmount = 0m,
                                 Reference1 = revaluation.RevaluationNumber.ToString(),
-//                              Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", gLAccountPM.Tenant),
+                                //                              Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", gLAccountPM.Tenant),
                                 Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", 0, useLocal),
                             };
                             LogMessagingUtil.Instance.AppendLine("Debit Difference = " + difference);
@@ -330,7 +327,7 @@ namespace Logitude.Accounting.BL.Utils
                             {
                                 WriteJournal(journalUpdateService, lineList, revaluation);
                                 lineList.Clear();
-                              //  scope.Complete();
+                                //  scope.Complete();
                             }
                         }
                     }
@@ -344,15 +341,11 @@ namespace Logitude.Accounting.BL.Utils
             }
 
         }
-        private static void AddAccountingEntitieJournal(JournalPM entityPM, string action, string ChildEntityId = null)
-        {
-            IAccountingEntityJournalUpdateServiceExt service = ContainerAccessor.Container.Resolve(typeof(IAccountingEntityJournalUpdateServiceExt), "AccountingEntityJournalUpdateServiceExt", new ParameterOverride("", 1)) as IAccountingEntityJournalUpdateServiceExt;
-            service.AddAccountingEntitieJournal(entityPM, action, ChildEntityId);
-        }
+
         private static void WriteJournal(JournalUpdateService journalUpdateService, List<JournalLineList> lineList, RevaluationList revaluation)
         {
             // Start
-                JournalPM newJournal = new JournalPM();
+            JournalPM newJournal = new JournalPM();
 
             // Head
             newJournal.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -383,10 +376,10 @@ namespace Logitude.Accounting.BL.Utils
                     Line = LineNumber,
                     ActionCode = line.ActionCode,
                     CreditAccountId = line.CreditAccountId,
-                  //  CreditControlAccountId = line.CreditControlAccountId,
+                    //  CreditControlAccountId = line.CreditControlAccountId,
                     CurrencyId = line.CurrencyId,
                     DebitAccountId = line.DebitAccountId,
-                 //   DebitControlAccountId = line.DebitControlAccountId,
+                    //   DebitControlAccountId = line.DebitControlAccountId,
                     DocumentDate = line.DocumentDate,
                     AccountingDate = newJournal.AccountingDate,
                     DueDate = line.DueDate,
@@ -401,8 +394,6 @@ namespace Logitude.Accounting.BL.Utils
                 newJournal.JournalLines.Add(newJournalLine);
 
             }
-            AddAccountingEntitieJournal(newJournal, AccountingEntityJournalActions.RevaluationApprove);
-
             // End
             journalUpdateService.Update(newJournal, true);
 
@@ -498,7 +489,7 @@ namespace Logitude.Accounting.BL.Utils
                     myRevaluationBatch.RunAllOpenRevaluations(tenant);
 
                     myDbQueueService.Complete();
-                    
+
                 }
                 catch (Exception ex)
                 {
