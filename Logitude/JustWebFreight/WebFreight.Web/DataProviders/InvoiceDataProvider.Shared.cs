@@ -408,6 +408,7 @@ namespace WebFreight.Web.DataProviders
         public string NewAmountInWordsFrenchWithFraction { get; set; }
 
         public string AmountInWordsSpanish { get; set; }
+        public string LocalAmountInWordsSpanish { get; set; }
         public string AmountInWordsSpanishWithZero { get; set; }
         public string AmountInWordsEnglish { get; set; }
         public string AmountInWordsEnglishNoFR { get; set; }
@@ -430,6 +431,8 @@ namespace WebFreight.Web.DataProviders
 
         public string TotalVATableAmountInInvoiceCurrency { get; set; }
         public string TotalNONVATableAmountInInvoiceCurrency { get; set; }
+        public string TotalVATableAmountInLocalCurrency { get; set; }
+        public string TotalNONVATableAmountInLocalCurrency { get; set; }
 
         public string CompleteShipmentType { get; set; }
 
@@ -732,6 +735,8 @@ namespace WebFreight.Web.DataProviders
 
         public double? VATableAmountInInvoiceCurrency_double { get; set; }
         public double? NONVATableAmountInInvoiceCurrency_double { get; set; }
+        public double? VATableAmountInLocalCurrency_double { get; set; }
+        public double? NONVATableAmountInLocalCurrency_double { get; set; }
 
         public string VatAmountInForeignCurrency { get; set; }
         public string ForeignToInvoiceExchangeRate { get; set; }
