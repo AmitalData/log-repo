@@ -76,23 +76,24 @@ namespace WebFreight.Web.ReportsWebServices
                 myDataProvider.AirlineLogo = DataProviders.General.GetCarrierLogo(shipmentPM.MainCarriageCarrierId, tenant);
 
                 #region Amounts
+                if (shipmentPM.GrossWeight != null)
+                {
+                    myDataProvider.ChargeableWeight = String.Format("{0:#,0.00}", shipmentPM.GrossWeight.Value);
+                }
+
+                if (shipmentPM.GrossWeightUnitCode != null)
+                {
+                    myDataProvider.ChargeableWeight = myDataProvider.ChargeableWeight + " " + shipmentPM.GrossWeightUnitCode;
+                }
+
                 if (shipmentPM.ChargeableWeight != null)
                 {
-                    myDataProvider.ChargeableWeight = String.Format("{0:#,0.00}", shipmentPM.ChargeableWeight.Value);
+                    myDataProvider.ActualChargeableWeight = String.Format("{0:#,0.00}", shipmentPM.ChargeableWeight.Value);
                 }
 
                 if (shipmentPM.ChargeableWeightUnitCode != null)
                 {
-                    myDataProvider.ChargeableWeight = myDataProvider.ChargeableWeight + " " + shipmentPM.ChargeableWeightUnitCode;
-                }
-
-                if (shipmentPM.GrossWeight != null)
-                {
-                    myDataProvider.GrossWeight = String.Format("{0:#,0.00}", shipmentPM.GrossWeight.Value);
-                }
-                if (shipmentPM.GrossWeightUnitCode != null)
-                {
-                    myDataProvider.GrossWeight = myDataProvider.GrossWeight + " " + shipmentPM.GrossWeightUnitCode;
+                    myDataProvider.ActualChargeableWeight = myDataProvider.ChargeableWeight + " " + shipmentPM.ChargeableWeightUnitCode;
                 }
 
                 if (shipmentPM.NumberOfPackages != null)
@@ -221,7 +222,7 @@ namespace WebFreight.Web.ReportsWebServices
                     newlabel.NumberOfLabels = myDataProvider.NumberOfLabels;
                     newlabel.Contents = myDataProvider.Contents;
 
-                    newlabel.GrossWeight = myDataProvider.GrossWeight;
+                    newlabel.ActualChargeableWeight = myDataProvider.ActualChargeableWeight;
                     newlabel.ChargeableWeight = myDataProvider.ChargeableWeight;
                     newlabel.MainCarriageCarrierCode = myDataProvider.MainCarriageCarrierCode;
                     newlabel.MainCarriageCarrierName = myDataProvider.MainCarriageCarrierName;
