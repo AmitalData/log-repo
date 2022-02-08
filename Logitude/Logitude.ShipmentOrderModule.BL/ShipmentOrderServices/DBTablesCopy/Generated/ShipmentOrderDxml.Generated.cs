@@ -218,7 +218,7 @@ namespace Logitude.ShipmentOrderModule.BL.ShipmentOrderServices.DBTablesCopy.Gen
 "  <Relation ForeignKeyColumn='CarrierId' ReferencedTable='Cards' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='ShipmentId' ReferencedTable='Shipments' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='CustomerId' ReferencedTable='Cards' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
-"  <Relation ForeignKeyColumn='PlaceOfDeliveryId' ReferencedTable='Cards' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
+"  <Relation ForeignKeyColumn='PlaceOfDeliveryId' ReferencedTable='Ports' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='ShipmentTypeId' ReferencedTable='ShipmentTypes' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='PackageTypeId' ReferencedTable='PackageTypes' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Index Columns='Tenant,OrderNumber' />"+

@@ -231,31 +231,13 @@
 	<OnHandDate>2020-03-12T11:29:10.12</OnHandDate>
 	<OnHandNumber>123</OnHandNumber>
 	<IsOperationalClosed>true</IsOperationalClosed>
-	<PlaceOfDelivery Code="10011">
-		<EnglishName>agent 55</EnglishName>
-		<MainAddress>
-			<Name>Main Address</Name>
-			<Address1>address1</Address1>
-			<Address2>address2</Address2>
-			<Country Code="MX">
-				<EnglishName>Mexico</EnglishName>
-				<LocalName>Mexico</LocalName>
-			</Country>
-			<City>city</City>
-			<ZipCode>zip</ZipCode>
-			<PhoneNumber>phoneNumber</PhoneNumber>
-			<FaxNumber>fax</FaxNumber>
-			<State Code="JAL">
-				<EnglishName>Jalisco</EnglishName>
-				<LocalName>Jalisco</LocalName>
-			</State>
-			<AddressType>
-				<Name>Main</Name>
-			</AddressType>
-		</MainAddress>
-		<VatNumber>agentvat 5</VatNumber>
-		<IsDisconnectedFromGLAccount>false</IsDisconnectedFromGLAccount>
-		<ICAO />
+	<PlaceOfDelivery Code="ILASH" PortCode="ASH">
+		<LocalName>Ashdod</LocalName>
+		<EnglishName>Ashdod</EnglishName>
+		<Country Code="IL">
+			<EnglishName>Israel</EnglishName>
+			<LocalName>Israel</LocalName>
+		</Country>
 	</PlaceOfDelivery>
 	<DangerousGoods>true</DangerousGoods>
 	<CustomerTenantNumber>1</CustomerTenantNumber>

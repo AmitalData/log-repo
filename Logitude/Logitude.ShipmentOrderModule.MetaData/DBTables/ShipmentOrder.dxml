@@ -526,7 +526,7 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="PlaceOfDeliveryId"
-    ReferencedTable="Cards"
+    ReferencedTable="Ports"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
