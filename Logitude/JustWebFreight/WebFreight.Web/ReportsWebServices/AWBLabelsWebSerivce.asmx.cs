@@ -86,6 +86,15 @@ namespace WebFreight.Web.ReportsWebServices
                     myDataProvider.ChargeableWeight = myDataProvider.ChargeableWeight + " " + shipmentPM.ChargeableWeightUnitCode;
                 }
 
+                if (shipmentPM.GrossWeight != null)
+                {
+                    myDataProvider.GrossWeight = String.Format("{0:#,0.00}", shipmentPM.GrossWeight.Value);
+                }
+                if (shipmentPM.GrossWeightUnitCode != null)
+                {
+                    myDataProvider.GrossWeight = myDataProvider.GrossWeight + " " + shipmentPM.GrossWeightUnitCode;
+                }
+
                 if (shipmentPM.NumberOfPackages != null)
                 {
                     myDataProvider.TotalQuantity = shipmentPM.NumberOfPackages.ToString();
@@ -212,6 +221,7 @@ namespace WebFreight.Web.ReportsWebServices
                     newlabel.NumberOfLabels = myDataProvider.NumberOfLabels;
                     newlabel.Contents = myDataProvider.Contents;
 
+                    newlabel.GrossWeight = myDataProvider.GrossWeight;
                     newlabel.ChargeableWeight = myDataProvider.ChargeableWeight;
                     newlabel.MainCarriageCarrierCode = myDataProvider.MainCarriageCarrierCode;
                     newlabel.MainCarriageCarrierName = myDataProvider.MainCarriageCarrierName;
