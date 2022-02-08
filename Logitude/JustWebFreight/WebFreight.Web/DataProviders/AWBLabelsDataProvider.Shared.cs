@@ -13,7 +13,7 @@ namespace WebFreight.Web.DataProviders
         public string Transshipment1ToPortCode { get; set; }
         public string Transshipment2ToPortCode { get; set; }
         public string ChargeableWeight { get; set; }
-        public string GrossWeight { get; set; }
+        public string ActualChargeableWeight { get; set; }
         public string BarCode { get; set; }
         public string HouseBarCode { get; set; }
         public string BookingNumber { get; set; }
