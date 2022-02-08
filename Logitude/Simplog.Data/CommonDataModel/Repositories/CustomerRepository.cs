@@ -216,7 +216,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                    
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
-                            entity = (from a in context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Collector.Contact").Include("Classifier.Contact").Include("Region")
+                            entity = (from a in context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Collector.Contact").Include("Classifier.Contact").Include("Region").Include("CustomerTeam")
                                       where a.Tenant == tenant && a.Id == id
                                       select a).FirstOrDefault();
 
