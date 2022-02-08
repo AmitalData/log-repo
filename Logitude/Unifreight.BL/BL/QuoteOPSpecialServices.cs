@@ -30,7 +30,7 @@ namespace Unifreight.BL.BL
 
         public List<SpecialServices> GetItemsList(string DIRECTIONID, string TRANSSpecialServiceMODEID, QueryOperations queryOperations, bool getFromCache = true)
         {
-            if (false)
+            if (getFromCache)
             {
                 string cacheId = "specialServices" + DIRECTIONID + TRANSSpecialServiceMODEID + ";i:" + queryOperations.PageIndex + ";s:" + queryOperations.PageSize + ";d:" + queryOperations.SortDirectin + ";c:" + queryOperations.SortByColumnName + string.Join("", queryOperations.QueryFilterItems.Select(x => ";f:" + x.FieldName + ";v:" + x.FieldValue).ToArray());
                 return CacheHelper.GetFromCache(cacheId, () => GetItemsList(DIRECTIONID, TRANSSpecialServiceMODEID, queryOperations, false));
@@ -55,10 +55,10 @@ namespace Unifreight.BL.BL
 
             if (DIRECTIONID == "E" && TRANSSpecialServiceMODEID == "A")
                 return (from SpecialService in MainContext.ETBSERLVs
-                        select new SpecialServices { Name = SpecialService.NAMEENG, SERVLEVEL_ID = SpecialService.SERVLEVELID, SEARCHENG = SpecialService.SEARCHENG });
+                        select new SpecialServices { Name = SpecialService.NAMEENG, SERVLEVEL_ID = SpecialService.SERVLEVELID, SEARCHENG = SpecialService.SERVLEVELID + "," + SpecialService.NAMEENG });
 
             return (from SpecialService in MainContext.GTBSERLVs
-                    select new SpecialServices { Name = SpecialService.NAMEENG, SERVLEVEL_ID = SpecialService.SERVLEVELID, SEARCHENG = SpecialService.SEARCHENG }); ;
+                    select new SpecialServices { Name = SpecialService.NAMEENG, SERVLEVEL_ID = SpecialService.SERVLEVELID, SEARCHENG = SpecialService.SERVLEVELID + "," + SpecialService.NAMEENG }); ;
         }
 
         private IQueryable<SpecialServices> AddFilter(IQueryable<SpecialServices> query, QueryOperations queryOperations)
