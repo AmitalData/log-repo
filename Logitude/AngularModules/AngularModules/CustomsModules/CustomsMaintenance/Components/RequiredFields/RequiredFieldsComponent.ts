@@ -122,8 +122,10 @@ export class RequiredFieldsComponent extends BaseComponent {
             this.SelectedTable = table;
 
             this._EntityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe((res: any) => {
+                debugger;
                 this.customsRequierdFieldsWebService.GetCustomsRequiredFieldListsByObjectTable(table.Id)
                     .subscribe((response: ServiceResponse) => {
+                        debugger;
                         var res = response.Result;
                         this.IsNoFields = false;
 
