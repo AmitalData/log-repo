@@ -269,8 +269,17 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
 
         VatNumberValidator.ValidateVatFormat(args);
         VatNumberValidator.ValidateVatMandatory(args);
+        if(!AppTool.IsNullOrEmpty(this.VatNumber)){
+            this.UIProperties.SetRequired("VatNumber", this.ObjectTableName, args.Errors.length > 0 ? true : false);
+        }else{
+            if(SessionLocator.TenantPM.AccountingActivated){
+                this.UIProperties.SetRequired("VatNumber", this.ObjectTableName, true);
+            }
+        }
 
-        this.UIProperties.SetRequired("VatNumber", this.ObjectTableName, args.Errors.length > 0 ? true : false);
+       
+    
+        
         //}
 
         //else {
