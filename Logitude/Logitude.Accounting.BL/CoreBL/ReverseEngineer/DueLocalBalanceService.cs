@@ -379,7 +379,7 @@ namespace Logitude.Accounting.BL.CoreBL
                          where (!a.CalcDueInLocal.Equals(a.DBDueInLocal) || !a.CalcDueInForeign.Equals(a.DBDueInForeign) ||  !a.CalcNextDueDate.Equals(a.DBNextDueDate))
 
                          select a);
-                    var myDiffList = qDiff.ToList();
+                    var myDiffList = qDiff.Take(30).ToList();
                     myDiffList = myDiffList.Where(a => !a.CalcDueInLocal.Equals(a.DBDueInLocal) || !a.CalcDueInForeign.Equals(a.DBDueInForeign) || !a.CalcNextDueDate.Date.Equals(a.DBNextDueDate.Date)).ToList();
                     return myDiffList;
 

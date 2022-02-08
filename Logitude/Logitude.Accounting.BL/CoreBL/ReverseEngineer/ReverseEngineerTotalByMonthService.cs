@@ -206,9 +206,12 @@ namespace Logitude.Accounting.BL.CoreBL
                                          ForeignAmountDebit = totalByMonth.ForeignAmountDebit - joinr.ForeignAmountDebit,
                                          CHANGE_TYPE = Const_qDiff
                                      });
+
                         var GLAccountTotalByMonthsList =
                             //qNotinLedgerTransaction.Union(qNotinTotalByMonth).Union(qDiff).ToList();
-                            qNotinLedgerTransaction.Concat(qNotinTotalByMonth).Concat(qDiff).ToList();
+                            qNotinLedgerTransaction.Take(30)
+                            .Concat(qNotinTotalByMonth.Take(30))
+                            .Concat(qDiff.Take(30)).ToList();
                         ;
                         GLAccountTotalByMonthsList.ForEach(
                             r =>

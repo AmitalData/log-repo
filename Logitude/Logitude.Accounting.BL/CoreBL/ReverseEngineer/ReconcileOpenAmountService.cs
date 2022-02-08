@@ -74,7 +74,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                          });
 
                 q = q.Where(r => r.OpenAmount + r.TotalReconciliationAmount != r.LedgerAmount);
-                var list = q.ToList();
+                var list = q.Take(30).ToList();
 
                 return list;
             }

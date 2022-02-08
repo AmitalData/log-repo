@@ -43,7 +43,7 @@
             this.fixJourbalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.adHookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.agingFixRepoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.yearlyFixControlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.intgrityCheckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -136,7 +136,7 @@
             this.mupsOpenReconcileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadFileToolStripMenuItem,
             this.tESTADHOKToolStripMenuItem,
-            this.yearlyFixControlToolStripMenuItem});
+            this.intgrityCheckToolStripMenuItem});
             this.mupsOpenReconcileToolStripMenuItem.Name = "mupsOpenReconcileToolStripMenuItem";
             this.mupsOpenReconcileToolStripMenuItem.Size = new System.Drawing.Size(129, 20);
             this.mupsOpenReconcileToolStripMenuItem.Text = "MupsOpenReconcile";
@@ -193,12 +193,12 @@
             this.agingFixRepoToolStripMenuItem.Text = "AgingFixRepo";
             this.agingFixRepoToolStripMenuItem.Click += new System.EventHandler(this.agingFixRepoToolStripMenuItem_Click);
             // 
-            // yearlyFixControlToolStripMenuItem
+            // intgrityCheckToolStripMenuItem
             // 
-            this.yearlyFixControlToolStripMenuItem.Name = "yearlyFixControlToolStripMenuItem";
-            this.yearlyFixControlToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.yearlyFixControlToolStripMenuItem.Text = "YearlyFixControl";
-            this.yearlyFixControlToolStripMenuItem.Click += new System.EventHandler(this.yearlyFixControlToolStripMenuItem_Click);
+            this.intgrityCheckToolStripMenuItem.Name = "intgrityCheckToolStripMenuItem";
+            this.intgrityCheckToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.intgrityCheckToolStripMenuItem.Text = "IntgrityCheck";
+            this.intgrityCheckToolStripMenuItem.Click += new System.EventHandler(this.intgrityCheckToolStripMenuItem_Click);
             // 
             // FormAccountingTester
             // 
@@ -238,6 +238,6 @@
         private System.Windows.Forms.ToolStripMenuItem miscToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadBigJournalFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fixJourbalToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem yearlyFixControlToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem intgrityCheckToolStripMenuItem;
     }
 }

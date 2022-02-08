@@ -13,6 +13,7 @@ using Logitude.BL.Resolvers;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Update.PatchDistribution;
+using Newtonsoft.Json;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -277,21 +278,43 @@ namespace Logitude.Update.SandBox
             fixJournaRecolService.FixByJournalNumber(JournalNumber, Tenant);
         }
 
-        private void yearlyFixControlToolStripMenuItem_Click(object sender, EventArgs e)
+        private void intgrityCheckToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var batchYearlyFIXService = new BatchYearlyFIXService(
-                new Infrastructure.BL.EntityPMs.BatchTaskExecutionPM()
-                {
-                     PrametersXml = 
-@"<?xml version=""1.0"" encoding=""utf-16""?>
-<BatchYearlyFIXParams xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">
-  <Tenant>4</Tenant>
-  <Year>2021</Year>
-  <MyFixType>ReverseEngineerTotalByMonthServiceControl</MyFixType>
-</BatchYearlyFIXParams>"
-                });
-            batchYearlyFIXService.Execute();
+            AccountingIntegrityInParam param = new AccountingIntegrityInParam()
+            {
+                Tenant = 118 ,
+                FromMonthInclusive =  new DateTime( DateTime.Now.Year,1,1),
+                ToMonthInclusive = DateTime.Now,
 
+            };
+            string serializeObjectstring = "";
+            try
+            {
+
+
+
+                var accountingIntegrityService = new AccountingIntegrityService();
+
+                string errorMessage = accountingIntegrityService.CheckParams(param);
+                if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    throw new Exception(errorMessage);
+                }
+                var res = accountingIntegrityService.CheckIntegrity(param);
+
+                serializeObjectstring = JsonConvert.SerializeObject(res);
+
+
+
+            }
+            catch (Exception)
+            {
+                param = null;
+                throw;
+            }
+            finally
+            {
+            }
         }
     }
 }

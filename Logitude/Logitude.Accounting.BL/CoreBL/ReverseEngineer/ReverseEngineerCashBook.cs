@@ -83,7 +83,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
 
 
-                var l = qAccountingCurrencyId.Union(qForeignCurrencyId).ToList();
+                var l = qAccountingCurrencyId.Take(30).Union(qForeignCurrencyId.Take(30)).ToList();
                 CompareReport = new CompareReportM()
                 {
                     CompareReportName = "ReverseEngineerCashBook",
