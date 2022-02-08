@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExportStorageUpdateClass
    {  		
-		public const string HashString = "5d1bdbdf682bc81e871d14565ebb9509";
+		public const string HashString = "f8b37fb165ab8e24cfb9711a2d832c73";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1882,8 +1882,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature ExportStorageGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportStorage.Tab.General", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExportStorageFeatures.STGN", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ExportStorageObjectTable);
  
                  
-			   TextCode ExportStorageRequestSheetTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportStorage.TH.RequestSheets", DefaultText = "Request Sheet",LocalDefaultText = "גליון בקשות", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ExportStorageRequestSheetFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportStorage.Tab.RequestSheet", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExportStorageFeatures.ESRS", NameTextCodeDefaultText = "Request Sheet", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ExportStorageObjectTable);
+			   TextCode ExportStorageFeedbackToStorageTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportStorage.TH.FeedbackToStorage", DefaultText = "Feedback To Storage",LocalDefaultText = "משוב לאחסנה", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ExportStorageFeedbackToStorageFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportStorage.Tab.FeedbackToStorage", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExportStorageFeatures.STSR", NameTextCodeDefaultText = "Feedback To Storage", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ExportStorageObjectTable);
+ 
+                 
+			   TextCode ExportStorageRequestSheetTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportStorage.TH.RequestSheets", DefaultText = "Request Sheet",LocalDefaultText = "גליון בקשות", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ExportStorageRequestSheetFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportStorage.Tab.RequestSheet", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExportStorageFeatures.ESRS", NameTextCodeDefaultText = "Request Sheet", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ExportStorageObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -1891,7 +1895,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "STGN",HtmlComponentName = "ExportStorageGeneralTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsExportStorage/components/edit/ExportStorageGeneralTabComponent/ExportStorageGeneralTabComponent", FeatureId = ExportStorageGeneralFeature_TH0.Id,FeatureUniqeCode = ExportStorageGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.ExportStorage.ExportStorageGeneralTabComponent", ObjectTableId = ExportStorageObjectTable.Id, TabNameTextCodeId = ExportStorageGeneralTextCode_TH0.Id, TabNameTextCodeCode = ExportStorageGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ESRS",HtmlComponentName = "RequestSheetTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent", FeatureId = ExportStorageRequestSheetFeature_TH1.Id,FeatureUniqeCode = ExportStorageRequestSheetFeature_TH1.FeatureUniqeCode, ControlPath = "", ObjectTableId = ExportStorageObjectTable.Id, TabNameTextCodeId = ExportStorageRequestSheetTextCode_TH1.Id, TabNameTextCodeCode = ExportStorageRequestSheetTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "STSR",HtmlComponentName = "FeedbackToStorageTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsExportStorage/components/edit/FeedbackToStorageTabComponent/FeedbackToStorageTabComponent", FeatureId = ExportStorageFeedbackToStorageFeature_TH1.Id,FeatureUniqeCode = ExportStorageFeedbackToStorageFeature_TH1.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.ExportStorage.FeedbackToStorageTabComponent", ObjectTableId = ExportStorageObjectTable.Id, TabNameTextCodeId = ExportStorageFeedbackToStorageTextCode_TH1.Id, TabNameTextCodeCode = ExportStorageFeedbackToStorageTextCode_TH1.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ESRS",HtmlComponentName = "RequestSheetTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent", FeatureId = ExportStorageRequestSheetFeature_TH2.Id,FeatureUniqeCode = ExportStorageRequestSheetFeature_TH2.FeatureUniqeCode, ControlPath = "", ObjectTableId = ExportStorageObjectTable.Id, TabNameTextCodeId = ExportStorageRequestSheetTextCode_TH2.Id, TabNameTextCodeCode = ExportStorageRequestSheetTextCode_TH2.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -1952,7 +1958,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ExportStorageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ExportStorage" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ExportStorageTextCode_CustomsExportStorageOErrors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportStorage.O.Errors", DefaultText = "Errors",LocalDefaultText = @"שגיאות", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

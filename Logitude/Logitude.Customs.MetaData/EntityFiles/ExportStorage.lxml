@@ -2333,6 +2333,19 @@
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
+    TabName="&quot;Feedback To Storage&quot;"
+    TabLocalName="&quot;משוב לאחסנה&quot;"
+    ObjectTableName="&quot;Customs.ExportStorage&quot;"
+    Code="&quot;STSR&quot;"
+    ControlPath="&quot;Logitude.Customs.Views.ExportStorage.FeedbackToStorageTabComponent&quot;"
+    TextCode="&quot;Customs.ExportStorage.TH.FeedbackToStorage&quot;"
+    IsPackagable="true"
+    IndexOrder="0"
+    HtmlComponentURL="&quot;./CustomsModules/CustomsExportStorage/components/edit/FeedbackToStorageTabComponent/FeedbackToStorageTabComponent&quot;"
+    HtmlComponentName="&quot;FeedbackToStorageTabComponent&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
     TabName="&quot;Request Sheet&quot;"
     TabLocalName="&quot;גליון בקשות&quot;"
     ObjectTableName="&quot;Customs.ExportStorage&quot;"
@@ -2375,6 +2388,13 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;Customs.ExportStorage.O.Errors&quot;"
+      DefaultText="&quot;Errors&quot;"
+      LocalDefaultText="&quot;שגיאות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
