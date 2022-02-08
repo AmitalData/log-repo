@@ -90,7 +90,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             InitJournal();
             CreateJournalLines();
-            AddAccountingEntitieJournal(createdJournal, AccountingEntityJournalActions.ARPaymentReturnToCustomer);
+            AddAccountingEntitieJournal(createdJournal, AccountingEntityJournalActions.ARPaymentReturnToCustomer, cheque.Id);
             SubmitJournal();
 
         }
