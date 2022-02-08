@@ -93358,7 +93358,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="1000"
-    DisplayInList="true"
+    DisplayInList="false"
     IsCustomFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
