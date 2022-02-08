@@ -13,6 +13,8 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.Data.DataContracts;
 using System.Data.Entity;
+using System.Diagnostics;
+
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -266,6 +268,84 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             return declarationPMs;
         }
+
+
+
+        public DeclarationCourierStatusSummary GetQueriesCounts(int tenant,bool multi = true)
+        {
+            
+            if (multi)
+            {
+                return GetQueriesCountsMulti(tenant);
+            }
+            else
+            {
+                return GetQueriesCounts_Clasic(tenant);
+            }
+        }
+        public DeclarationCourierStatusSummary GetQueriesCountsMulti(int tenant)
+        {
+            DeclarationCourierStatusSummary declarationCourierStatusSummary = new DeclarationCourierStatusSummary();
+            //IQueryable<DeclarationCourierStatusCountDTO> declarationCourierStatuses = GetIQueryableDeclarationCourierStatusCountDTO(tenant);
+
+            var my = new DeclarationCourierStatusSummary();
+            var listOfTast = new List<Task>();
+            var stopwatch = Stopwatch.StartNew();
+            var tOpenCourierMasterCount = Task.Run(() =>
+            {
+                
+                my.OpenCourierMasterCount = GetIQueryableDeclarationCourierStatusCountDTO(tenant).Count(x => x.IsClosedForFollowUp == false);
+                my.TookOpenCourierMasterCount = stopwatch.ElapsedMilliseconds;
+            });
+            listOfTast.Add(tOpenCourierMasterCount);
+            var tUnReleasedFastProcessCount = Task.Run(() => { 
+                my.UnReleasedFastProcessCount = GetIQueryableDeclarationCourierStatusCountDTO(tenant).Count(x => x.FastIndividualProcessCode == "F" && (x.DeclarationHatraDate == null || x.DeclarationHatraDate == DateTime.MinValue));
+                my.TookUnReleasedFastProcessCount = stopwatch.ElapsedMilliseconds;
+            });
+            listOfTast.Add(tUnReleasedFastProcessCount);
+            var tWithoutIdCount = Task.Run(() => { 
+                my.WithoutIdCount = GetIQueryableDeclarationCourierStatusCountDTO(tenant).Count(x => x.IsClosedForFollowUp == false && x.CourierPendingReasonList.Contains("902"));
+                my.TookWithoutIdCount = stopwatch.ElapsedMilliseconds;
+            });
+            listOfTast.Add(tWithoutIdCount);
+
+
+            var tPendingPaymentCount = Task.Run(() =>
+            {
+                my.PendingPaymentCount = GetIQueryableDeclarationCourierStatusCountDTO(tenant).Count(x => x.CourierPendingReasonList.Contains("900"));
+                my.TookPendingPaymentCount = stopwatch.ElapsedMilliseconds;
+            }
+            );
+
+            listOfTast.Add(tPendingPaymentCount);
+
+            var tPendingCount = Task.Run(() =>
+            {
+                my.PendingCount = GetIQueryableDeclarationCourierStatusCountDTO(tenant).Count(x => !string.IsNullOrEmpty(x.CourierPendingReasonList));
+                my.TookPendingCount = stopwatch.ElapsedMilliseconds;
+            }
+            );
+            listOfTast.Add(tPendingCount);
+
+
+            var tWithoutClassificationCount = Task.Run(() =>
+            {
+                my.WithoutClassificationCount = GetIQueryableDeclarationCourierStatusCountDTO(tenant).Count(x => x.IsCourierMissingClassification == true);
+                my.TookWithoutClassificationCount = stopwatch.ElapsedMilliseconds;
+
+            }
+);
+            listOfTast.Add(tWithoutClassificationCount);
+
+
+            var tPendingCustomsCount = Task.Run(() =>
+            {
+                my.PendingCustomsCount = GetIQueryableDeclarationCourierStatusCountDTO(tenant).Count(x => x.IsClosedForFollowUp == false && x.DeclarationCourierCustomStatusCode == "2");
+                my.TookPendingCustomsCount = stopwatch.ElapsedMilliseconds;
+
+            }
+);
+            listOfTast.Add(tPendingCustomsCount);
 
 
 
