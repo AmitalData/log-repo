@@ -130,7 +130,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
            }
 
            );
-                var l = qDiff.ToList();
+                var l = qDiff.Take(30).ToList();
                 CompareReport = new CompareReportM()
                 {
                     CompareReportName = "totalControl=totalChilds",
