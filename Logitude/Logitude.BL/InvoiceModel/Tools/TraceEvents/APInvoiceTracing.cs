@@ -117,7 +117,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
         }
         private static void CreateEventForUpdateIsEquipment(APInvoicePM entityPM, APInvoice invoice, ContactPM loggedContact, bool showLocals)
         {
-            var notes = string.Concat(TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals), invoice.IsEquipment.ToString(), TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals), entityPM.IsEquipment.ToString());
+            string notes = GetTraceEventNotesForUpdateIsEquipment(entityPM, invoice, showLocals);
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {
                 Tenant = entityPM.Tenant,
@@ -128,5 +128,27 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                 Notes = notes,
             });
         }
+
+        private static string GetTraceEventNotesForUpdateIsEquipment(APInvoicePM entityPM, APInvoice invoice, bool showLocals)
+        {
+            string oldValue = GetBooleanText(invoice.IsEquipment, showLocals);
+            string newValue = GetBooleanText(entityPM.IsEquipment, showLocals);
+            return string.Concat(TranslateTextsClass.Translate("APInvoice.F.IsEquipment", entityPM.Tenant, showLocals), " ", TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals), oldValue, TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals), newValue);
+        }
+
+        private static string GetBooleanText(bool? value, bool showLocals)
+        {
+            if (value == true)
+            {
+                return TranslateTextsClass.Translate("Accounting.General.O.True", 0, showLocals);
+            }
+            else if (value == false || value == null)
+            {
+                return TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
+            }
+            else return TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
+        }
+
+ 
     }
 }
