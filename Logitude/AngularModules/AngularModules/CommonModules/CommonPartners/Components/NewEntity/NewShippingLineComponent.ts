@@ -103,7 +103,13 @@ export class NewShippingLineComponent extends BaseComponent implements OnInit {
     }
     private SetUIProperties_VAT() {
         var vatErrors = this.ValidateVatNumber();
-        this.UIProperties.SetRequired("VatNumber", this.ObjectTableName, vatErrors.length > 0 ? true : false);
+        if(!AppTool.IsNullOrEmpty(this.VatNumber)){
+            this.UIProperties.SetRequired("VatNumber", this.ObjectTableName, vatErrors.length > 0 ? true : false);
+        }else{
+            if(SessionLocator.TenantPM.AccountingActivated){
+                this.UIProperties.SetRequired("VatNumber", this.ObjectTableName, true);
+            }
+        }
     }
 
     get Code() { return this.ShippingLinePM.Code; }
