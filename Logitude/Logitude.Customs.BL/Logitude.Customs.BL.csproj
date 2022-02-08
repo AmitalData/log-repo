@@ -467,6 +467,7 @@
     <Compile Include="EntityDataMappings\DecDangersContactsDataMapping.cs" />
     <Compile Include="EntityDataMappings\DecisionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationCargoSplitDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DeclarationCasualDetailsDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationConsAcceptanceDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationConstraintDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationCourierStatusDataMapping.cs" />
@@ -673,6 +674,7 @@
     <Compile Include="EntityDataMappings\Generated\DecDangersContactsDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DecisionTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationCargoSplitDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DeclarationCasualDetailsDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationConsAcceptanceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationConstraintDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationCourierStatusDataMapping.Generated.cs" />
@@ -1077,6 +1079,7 @@
     <Compile Include="EntityQueryServices\Generated\CustomerClassificationTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomerIdentificationTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomerIndicationTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DeclarationCasualDetailsQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeliveryTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CancelRequestRejectReasonTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DocumentRejectTypeQueryService.Generated.cs" />
@@ -1619,6 +1622,7 @@
     <Compile Include="EntityUpdateServices\Generated\CustomerIdentificationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomerIndicationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsShipUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\DeclarationCasualDetailsUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationExportRecipientUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeliveryTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DocumentRejectTypeUpdateService.Generated.cs" />

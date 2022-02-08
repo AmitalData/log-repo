@@ -178,6 +178,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<DecisionType> DecisionTypes { get; }
 		 IDbSet<Declaration> Declarations { get; }
 		 IDbSet<DeclarationCargoSplit> DeclarationCargoSplits { get; }
+		 IDbSet<DeclarationCasualDetails> DeclarationCasualDetailses { get; }
 		 IDbSet<DeclarationConsAcceptance> DeclarationConsAcceptances { get; }
 		 IDbSet<DeclarationConstraint> DeclarationConstraints { get; }
 		 IDbSet<DeclarationCourierStatus> DeclarationCourierStatuses { get; }

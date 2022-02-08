@@ -523,6 +523,9 @@
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
+    <None Include="EntityFiles\DeclarationCasualDetails.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\ExportStorage.lxml" />
     <None Include="EntityFiles\PhysicalCheckSearchResultType.lxml" />
     <None Include="EntityFiles\AmendRequestRejectReasonType.lxml" />
