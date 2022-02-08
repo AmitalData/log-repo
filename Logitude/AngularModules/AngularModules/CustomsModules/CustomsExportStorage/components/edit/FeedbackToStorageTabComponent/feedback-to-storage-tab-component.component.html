@@ -1,0 +1,46 @@
+<h2 class="TabTitleRow haeder-feedback-to-storage"> {{'Customs.ExportStorage.TH.FeedbackToStorage' |
+    TextCodeTranslationPipe}} </h2>
+
+<p class="TabTitleRow"> {{'Customs.ExportStorage.O.Errors' | TextCodeTranslationPipe}} ({{exceptionslist.Collection.length}})</p>
+
+<div class="GeneratedGridContainer">
+    <!-- <div *ngIf="!exceptionslist.Collection.length" class="NoDataText">
+        {{'CashbookLine.O.NoDataFound' | TextCodeTranslationPipe}}
+    </div> -->
+
+    <logitude-edit-grid GridHeight="100%" [ItemSource]="exceptionslist" [IsDarkHeader]="true">
+
+        <log-column [header]="'Customs.ExportStorage.O.Description' | TextCodeTranslationPipe" [width]="'480'"
+            [Alignment]="'right'">
+            <ng-template let-item>
+                <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                    <div style="text-align: right;" class="TextTrimming">
+                        <span>{{item.ExeptionDescription}}</span>
+                    </div>
+                </log-cell-template>
+            </ng-template>
+        </log-column>
+
+        <log-column [header]="'Customs.ExportStorage.O.Level' | TextCodeTranslationPipe" [width]="'100'"
+            [Alignment]="'right'">
+            <ng-template let-item>
+                <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                    <div style="text-align: right;" class="TextTrimming">
+                        <span>{{item.ExceptionLevel}}</span>
+                    </div>
+                </log-cell-template>
+            </ng-template>
+        </log-column>
+
+        <log-column [header]="'Customs.ExportStorage.O.ErrorCode' | TextCodeTranslationPipe" [width]="'220'"
+            [Alignment]="'right'">
+            <ng-template let-item>
+                <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                    <div style="text-align: right;" class="TextTrimming">
+                        <span>{{item.ExeptionType}}</span>
+                    </div>
+                </log-cell-template>
+            </ng-template>
+        </log-column>
+    </logitude-edit-grid>
+</div>

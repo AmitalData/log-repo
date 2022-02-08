@@ -313,6 +313,8 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\CasualSupplierDetailsComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\DeclarationAmendment\DeclarationAmendmentComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.html" />
+    <Content Include="CustomsModules\CustomsExportStorage\components\edit\ExportStorageGeneralTabComponent\ExportStorageGeneralTabComponent.html" />
+    <Content Include="CustomsModules\CustomsExportStorage\components\edit\FeedbackToStorageTabComponent\feedback-to-storage-tab-component.component.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\CourierWorksheetNGListTemplate.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\CustomsContainerizationListTemplate.html" />
     <Content Include="CustomsModules\CustomsPhysicalCheck\Components\EditTabs\SearchReasult\PhysicalCheckSearchReasultTabComponent.html" />
@@ -487,6 +489,12 @@
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\SupplierInvoiceItem\ExporterInvoiceItemComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ExportDeclarationComponent.ts" />
     <Content Include="CustomsModules\CustomsGeneralRequests\Components\CopyDeclarationComponent.html" />
+    <TypeScriptCompile Include="CustomsModules\CustomsExportStorage\components\edit\ExportStorageGeneralTabComponent\ExportStorageGeneralTabComponent.spec.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsExportStorage\components\edit\ExportStorageGeneralTabComponent\ExportStorageGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsExportStorage\components\edit\FeedbackToStorageTabComponent\feedback-to-storage-tab-component.component.spec.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsExportStorage\components\edit\FeedbackToStorageTabComponent\FeedbackToStorageTabComponent.component.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsExportStorage\components\edit\FeedbackToStorageTabComponent\FeedbackToStorageTabComponentTypes.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsExportStorage\export-storage.module.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\Documents\SpecialActivityCustomsDocumentsController.ts" />
     <Content Include="CustomsModules\CustomsGeneralRequests\Components\EndPhysicalCheckComponent.html" />
     <Content Include="CustomsModules\CustomsGeneralRequests\Components\PhysicalCheckComponent.html" />
@@ -8961,6 +8969,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\bulk-feed-pending\BulkFeedPendingComponent.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CustomsModules\CustomsExportStorage\components\edit\ExportStorageGeneralTabComponent\ExportStorageGeneralTabComponent.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CustomsModules\CustomsExportStorage\components\edit\FeedbackToStorageTabComponent\feedback-to-storage-tab-component.component.scss" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
