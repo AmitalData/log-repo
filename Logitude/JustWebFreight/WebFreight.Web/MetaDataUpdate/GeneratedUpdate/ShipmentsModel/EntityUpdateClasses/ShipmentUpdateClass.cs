@@ -79,10 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-
-
-		public const string HashString = "370d6512f91e3ae814a3c1a32005757e";
-
+		public const string HashString = "c59e8ccbf5b7a4df5989b225043e0c9f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -35094,7 +35091,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
@@ -35157,7 +35154,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
@@ -51935,12 +51932,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
                 LocalName =  "Warehouse Cut-Off Updated",
                 IsManualEntry =  false,
                 ShortView =  true,
+                EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,
                 IsSharedLogisticsEnabled =  false,
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
-                EventTypeCategoryCode =  "OPE",
                 IsFollowUp =  true,
                 FollowUpEnglishName =  "Warehouse Cut-Off",
                 FollowUpLocalName =  "Warehouse Cut-Off",
@@ -51956,12 +51953,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
                 LocalName =  "VGM Cut-Off Updated",
                 IsManualEntry =  false,
                 ShortView =  true,
+                EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,
                 IsSharedLogisticsEnabled =  false,
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
-                EventTypeCategoryCode =  "OPE",
                 IsFollowUp =  true,
                 FollowUpEnglishName =  "VGM Cut-Off",
                 FollowUpLocalName =  "VGM Cut-Off",
@@ -51977,12 +51974,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
                 LocalName =  "AMS Closing Updating",
                 IsManualEntry =  false,
                 ShortView =  true,
+                EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,
                 IsSharedLogisticsEnabled =  false,
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
-                EventTypeCategoryCode =  "OPE",
                 IsFollowUp =  true,
                 FollowUpEnglishName =  "AMS Closing Date",
                 FollowUpLocalName =  "AMS Closing Date",
