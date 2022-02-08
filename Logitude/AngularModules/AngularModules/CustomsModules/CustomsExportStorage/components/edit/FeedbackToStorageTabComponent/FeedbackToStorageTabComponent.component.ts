@@ -5,7 +5,7 @@ import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
 import { Xml2jsonService } from 'Infrastructure/Services/xml2json/xml2json.service';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
-import { ExportStorageMsgXML, Exception, UIMessage } from './FeedbackToStorageTabComponentTypes';
+import { Exception, UIMessage } from './FeedbackToStorageTabComponentTypes';
 
 @Component({
   selector: 'app-feedback-to-storage-tab-component',
@@ -45,7 +45,7 @@ export class FeedbackToStorageTabComponent extends BaseComponent implements OnIn
 
 
   async initUIMessageTable() {
-    this.UIMessageTable = await this.logtuideTableDataService.getTable('Customs.UIMessage');    
+    this.UIMessageTable = await this.logtuideTableDataService.getTable('Customs.UIMessage');
   }
 
 
@@ -53,26 +53,16 @@ export class FeedbackToStorageTabComponent extends BaseComponent implements OnIn
     let xmlString: string = this.entityPM.StorErrorXML;
     if (!xmlString) return;
 
-    const xml: ExportStorageMsgXML = this.parseXmlString(xmlString);
-    if (!xml.ns0ESBResponse.Body.MN_MSG2791_ExportDeliveryAnswerMessage.Exception) return;
-
-    const exceptions: Exception[] = this.GetExeptionFromXml(xml);
+    const exceptions: Exception[] = this.parseXmlString(xmlString);
     this.updateExcptionLevel(exceptions);
     this.updateExcptionType(exceptions);
     this.insertData(exceptions);
   }
 
 
-  parseXmlString(xmlString: string): ExportStorageMsgXML {
+  parseXmlString(xmlString: string): Exception[] {
     xmlString = xmlString.replace(/:/g, '');
-    const xml: ExportStorageMsgXML = this.xml2jsonService.xml2json(xmlString);
-
-    return xml;
-  }
-
-
-  GetExeptionFromXml(xml: ExportStorageMsgXML): Exception[] {
-    const data: Exception[] | Exception = xml.ns0ESBResponse.Body.MN_MSG2791_ExportDeliveryAnswerMessage.Exception;
+    const data: Exception[] | Exception = this.xml2jsonService.xml2json(xmlString).Exception;
     const exceptions: Exception[] = Array.isArray(data) ? data : [data];
 
     return exceptions;
@@ -83,7 +73,7 @@ export class FeedbackToStorageTabComponent extends BaseComponent implements OnIn
     exceptions.forEach(e => e.ExceptionLevel = this.excptionTypes.find(ex => ex.id == e.ExceptionLevel)?.text);
   }
 
-  
+
   updateExcptionType(exceptions: Exception[]) {
     exceptions.forEach(e => e.ExeptionType = this.UIMessageTable.find(ex => ex.Code == e.ExeptionType)?.LocalName);
   }
