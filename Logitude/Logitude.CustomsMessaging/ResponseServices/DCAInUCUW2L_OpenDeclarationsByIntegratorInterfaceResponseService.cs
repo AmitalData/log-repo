@@ -35,6 +35,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Customs.BL.Messaging.U2L.CommDec;
 using Logitude.Server.Tools.Contracts;
+using System.Diagnostics;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -107,8 +108,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyResponseData.ApplicationID = customFileNo;
                 this.MyResponseData.HasException = true;
                 this.MyResponseData.Succeeded = false;
-                this.MyResponseData.UserMessage = ex.Message;
-                throw new Exception(ex.Message);
+                //this.MyResponseData.UserMessage = ex.Message;
+                //throw new Exception(ex.Message);
+
+                this.MyResponseData.UserMessage = ex.ToString();
+                throw;
             }
             // }
         }
@@ -133,8 +137,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             _DataContext = CommonDataContext.GetContext(requestParams.Tenant);
             //UpdatePaymentDocument(declarationId, requestParams.Tenant, requestParams.LoggingUserId);
+            var sw = Stopwatch.StartNew();
+            //check
+            LogMessagingUtil.Instance.AppendLine($"!!!!B4:GetByexternalentityreference");
             _documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
-            var documentsFilingIds = _documentsFilingQuery.GetByexternalentityreference("CFIFILEM", customFileNo, requestParams.Tenant)
+            var documentsFilingIdsList = _documentsFilingQuery.GetByexternalentityreference("CFIFILEM", customFileNo, requestParams.Tenant).ToList();
+            LogMessagingUtil.Instance.AppendLine($"!!!!after:GetByexternalentityreference {sw.ElapsedMilliseconds}");
+            var documentsFilingIds = documentsFilingIdsList
             .Where(r => r.EntityId == null || r.EntityId.Trim() == string.Empty)
             .Select(r => r.Id).ToList();
             if (documentsFilingIds.Count==0)
