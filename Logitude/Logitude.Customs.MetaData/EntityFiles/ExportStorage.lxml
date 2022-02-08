@@ -1572,7 +1572,7 @@
     ObjectTableName="&quot;Customs.ExportStorage&quot;"
     FieldsDataType="&quot;nText&quot;"
     MinLength="0"
-    MaxLength="512"
+    MaxLength="2000"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1581,7 +1581,7 @@
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
-    SystemMaxLength="512"
+    SystemMaxLength="2000"
     DisplayInList="true"
     IsCustomFilter="false"
     MultiLine="false"
@@ -1610,7 +1610,7 @@
     DefaultText="&quot;ErrorXML&quot;"
     ListFieldLable="&quot;StorErrorXMLListLable&quot;"
     ListLableDefaultText="&quot;ErrorXML&quot;"
-    IsNullable="false"
+    IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
@@ -2393,6 +2393,24 @@
       Code="&quot;Customs.ExportStorage.O.Errors&quot;"
       DefaultText="&quot;Errors&quot;"
       LocalDefaultText="&quot;שגיאות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.ExportStorage.O.Description&quot;"
+      DefaultText="&quot;Description&quot;"
+      LocalDefaultText="&quot;תיאור&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.ExportStorage.O.Level&quot;"
+      DefaultText="&quot;Level&quot;"
+      LocalDefaultText="&quot;רמה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.ExportStorage.O.ErrorCode&quot;"
+      DefaultText="&quot;Error Code&quot;"
+      LocalDefaultText="&quot;קוד שגיאה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
