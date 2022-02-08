@@ -218,8 +218,8 @@ using Logitude.ShipmentOrderModule.Data;
 				   temp.OnHandNumber = MyEntityPM.OnHandNumber;			  
 				   if(MyEntityPM.PlaceOfDeliveryId != null)
 				   {
-					   CardQueryService CardService17 = new CardQueryService(Tenant);
-					   					   temp.PlaceOfDelivery = CardService17.GetCardById(MyEntityPM.PlaceOfDeliveryId,Tenant); 
+					   ShipmentOrderPortQueryService ShipmentOrderPortService17 = new ShipmentOrderPortQueryService(Tenant);
+					   					   temp.PlaceOfDelivery = ShipmentOrderPortService17.GetShipmentOrderPortById(MyEntityPM.PlaceOfDeliveryId,Tenant); 
 			       
 					   				   }
 				   
@@ -507,10 +507,10 @@ using Logitude.ShipmentOrderModule.Data;
 					temp.LastExceptionDate = MyEntity.LastExceptionDate;
 					temp.OnHandDate = MyEntity.OnHandDate;
 					temp.OnHandNumber = MyEntity.OnHandNumber;
-					CardQueryService PlaceOfDeliveryCardService = new CardQueryService(Tenant);
+					ShipmentOrderPortQueryService PlaceOfDeliveryShipmentOrderPortService = new ShipmentOrderPortQueryService(Tenant);
 					if(MyEntity.PlaceOfDelivery != null)
 					{
-						var myPlaceOfDeliveryPM = PlaceOfDeliveryCardService.CardDataMappingAndValidatin(MyEntity.PlaceOfDelivery,Tenant,ComputingPartnerName);
+						var myPlaceOfDeliveryPM = PlaceOfDeliveryShipmentOrderPortService.ShipmentOrderPortDataMappingAndValidatin(MyEntity.PlaceOfDelivery,Tenant,ComputingPartnerName);
 												if(myPlaceOfDeliveryPM != null)
 						{
 							temp.PlaceOfDeliveryId = myPlaceOfDeliveryPM.Id;

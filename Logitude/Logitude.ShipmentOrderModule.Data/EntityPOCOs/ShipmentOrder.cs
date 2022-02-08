@@ -197,7 +197,7 @@ namespace Logitude.ShipmentOrderModule.Data.EntityPOCOs
         [Column("PlaceOfDeliveryId")]
 	    public string PlaceOfDeliveryId { get; set; }
 	      
-        public virtual Card PlaceOfDelivery { get; set; }
+        public virtual Port PlaceOfDelivery { get; set; }
         [Column("DangerousGoods")]
 	    public bool DangerousGoods { get; set; }
         [ForeignKey("ShipmentType")]

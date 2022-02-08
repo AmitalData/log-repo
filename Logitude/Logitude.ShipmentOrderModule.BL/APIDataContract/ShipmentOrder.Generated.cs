@@ -120,7 +120,7 @@ namespace Logitude.ShipmentOrderModule.BL.APIDataContract.ApiV1
     
     public string OnHandNumber { get; set; }
     
-    public Card PlaceOfDelivery { get; set; }
+    public ShipmentOrderPort PlaceOfDelivery { get; set; }
     
     public bool DangerousGoods { get; set; }
     

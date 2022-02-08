@@ -42,7 +42,7 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
             entityPM.ForwarderName = cards.Where(d => d.Id == entityPOCO.ForwarderId).Select(d => d.EnglishName).FirstOrDefault();
             entityPM.CarrierName = cards.Where(d => d.Id == entityPOCO.CarrierId).Select(d => d.EnglishName).FirstOrDefault();
             entityPM.CustomerName = cards.Where(d => d.Id == entityPOCO.CustomerId).Select(d => d.EnglishName).FirstOrDefault();
-            entityPM.PlaceOfDeliveryName = cards.Where(d => d.Id == entityPOCO.PlaceOfDeliveryId).Select(d => d.EnglishName).FirstOrDefault();
+            entityPM.PlaceOfDeliveryName = ports.Where(d => d.Id == entityPOCO.PlaceOfDeliveryId).Select(d => d.EnglishName).FirstOrDefault();
             entityPM.OriginPortName = ports.Where(d => d.Id == entityPOCO.OriginPortId).Select(d => d.EnglishName).FirstOrDefault();
             entityPM.DestinationPortName = ports.Where(d => d.Id == entityPOCO.DestinationPortId).Select(d => d.EnglishName).FirstOrDefault();
             entityPM.GatewayName = ports.Where(d => d.Id == entityPOCO.GatewayId).Select(d => d.EnglishName).FirstOrDefault();
@@ -110,8 +110,7 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
                 entityPOCO.CustomsAgentId,
                 entityPOCO.ForwarderId,
                 entityPOCO.CarrierId,
-                entityPOCO.CustomerId,
-                entityPOCO.PlaceOfDeliveryId
+                entityPOCO.CustomerId
             };
         }
         #endregion
@@ -120,7 +119,7 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
         private List<PortList> GetPortList(int tenant, ShipmentOrder entityPOCO)
         {
 
-            List<string> portIds = new List<string> { entityPOCO.OriginPortId, entityPOCO.DestinationPortId, entityPOCO.GatewayId };
+            List<string> portIds = new List<string> { entityPOCO.OriginPortId, entityPOCO.DestinationPortId, entityPOCO.GatewayId, entityPOCO.PlaceOfDeliveryId };
             PortQuery portQuery = new PortQuery(tenant);
             return portQuery.GetPortListsByListIds(portIds, tenant).ToList();
         }
