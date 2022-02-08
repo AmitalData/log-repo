@@ -63,7 +63,7 @@ namespace Unifreight.BL.EntityQueryServices
                         MTBCARRquery = MTBCARRquery.Where(o => o.AIRLINEID.ToLower().Contains(item.FieldValue.ToString().ToLower()));
                         break;
                     case "SearchFields":
-                        MTBCARRquery = MTBCARRquery.Where(o => o.SEARCHENG.ToLower().Contains(item.FieldValue.ToString().ToLower()));
+                        MTBCARRquery = MTBCARRquery.Where(o => (o.AIRLINEID + "," + o.NAMEENG + "," + o.BLPREFIX).ToLower().Contains(item.FieldValue.ToString().ToLower()));
                         break;
 
                 }

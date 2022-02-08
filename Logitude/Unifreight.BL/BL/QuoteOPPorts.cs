@@ -92,16 +92,16 @@ namespace Unifreight.BL.BL
             IQueryable<QPorts> baseQ;
 
             if (DIRECTIONID == "E" && TRANSPORTMODEID == "A")
-                baseQ = (from port in MainContext.ETBPORTs select new QPorts { NAMEENG = port.NAMEENG, PORTID = port.PORTID, COUNTRYID = port.COUNTRYID, SEARCHENG = port.SEARCHENG });
+                baseQ = (from port in MainContext.ETBPORTs select new QPorts { NAMEENG = port.NAMEENG, PORTID = port.PORTID, COUNTRYID = port.COUNTRYID, SEARCHENG = port.PORTID + "," + port.NAMEENG });
 
             else if (DIRECTIONID == "E" && TRANSPORTMODEID == "O")
-                baseQ = (from port in MainContext.MTBPORTs select new QPorts { NAMEENG = port.NAMEENG, PORTID = port.PORTID, COUNTRYID = port.COUNTRYID, SEARCHENG = port.SEARCHENG });
+                baseQ = (from port in MainContext.MTBPORTs select new QPorts { NAMEENG = port.NAMEENG, PORTID = port.PORTID, COUNTRYID = port.COUNTRYID, SEARCHENG = port.PORTID + "," + port.NAMEENG });
 
             else if (DIRECTIONID == "I" && TRANSPORTMODEID == "A")
-                baseQ = (from port in MainContext.ITBPORTs select new QPorts { NAMEENG = port.NAMEENG, PORTID = port.PORTID, COUNTRYID = port.COUNTRYID, SEARCHENG = port.SEARCHENG });
+                baseQ = (from port in MainContext.ITBPORTs select new QPorts { NAMEENG = port.NAMEENG, PORTID = port.PORTID, COUNTRYID = port.COUNTRYID, SEARCHENG = port.PORTID + "," + port.NAMEENG });
 
             else if (DIRECTIONID == "I" && TRANSPORTMODEID == "O")
-                baseQ = (from port in MainContext.RTBPORTs select new QPorts { NAMEENG = port.NAMEENG, PORTID = port.PORTID, COUNTRYID = port.COUNTRYID, SEARCHENG = port.SEARCHENG });
+                baseQ = (from port in MainContext.RTBPORTs select new QPorts { NAMEENG = port.NAMEENG, PORTID = port.PORTID, COUNTRYID = port.COUNTRYID, SEARCHENG = port.PORTID + "," + port.NAMEENG });
 
             else 
                 return null;

@@ -38,7 +38,7 @@ namespace Unifreight.BL.EntityQueryServices
         {
             return new ETBVENDKeys() { VENDORID = entityPOCO.VENDORID };
         }
-        public List<Carriers> GetList(QueryOperations queryOperations,string TRANSPORTMODEID)
+        public List<Carriers> GetList(QueryOperations queryOperations, string TRANSPORTMODEID)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -66,13 +66,13 @@ namespace Unifreight.BL.EntityQueryServices
                         ETBVENDquery = ETBVENDquery.Where(o => o.VENDORPREFIX.ToLower().Contains(item.FieldValue.ToString().ToLower()));
                         break;
                     case "SearchFields":
-                        ETBVENDquery = ETBVENDquery.Where(o => o.SEARCHENG.ToLower().Contains(item.FieldValue.ToString().ToLower()));
+                        ETBVENDquery = ETBVENDquery.Where(o => (o.VENDORID + "," + o.NAMEENG + "," + o.VENDORPREFIX).ToLower().Contains(item.FieldValue.ToString().ToLower()));
                         break;
                 }
             }
 
             //extra filters
-            ETBVENDquery = this.GetSpecialFilters(ETBVENDquery,TRANSPORTMODEID);
+            ETBVENDquery = this.GetSpecialFilters(ETBVENDquery, TRANSPORTMODEID);
 
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
@@ -130,7 +130,7 @@ namespace Unifreight.BL.EntityQueryServices
             {
                 Name = o.NAMEENG,
                 VENDOR_ID = o.VENDORID,
-                Prefix = TRANSPORTMODEID=="A"?o.VENDORPREFIX:"",
+                Prefix = TRANSPORTMODEID == "A" ? o.VENDORPREFIX : "",
             });
 
             if (queryOperations.PageSize != 0)
@@ -142,13 +142,13 @@ namespace Unifreight.BL.EntityQueryServices
             List<Carriers> carrier = res.ToList();
             return carrier;
         }
-        public IQueryable<ETBVEND> GetSpecialFilters(IQueryable<ETBVEND> ETBVENDquery,string TRANSPORTMODEID)
+        public IQueryable<ETBVEND> GetSpecialFilters(IQueryable<ETBVEND> ETBVENDquery, string TRANSPORTMODEID)
         {
-            if(TRANSPORTMODEID == "O")
+            if (TRANSPORTMODEID == "O")
             {
                 ETBVENDquery = GetFilterForOcean(ETBVENDquery);
             }
-            if(TRANSPORTMODEID == "A")
+            if (TRANSPORTMODEID == "A")
             {
                 ETBVENDquery = GetFilterForAir(ETBVENDquery);
             }
