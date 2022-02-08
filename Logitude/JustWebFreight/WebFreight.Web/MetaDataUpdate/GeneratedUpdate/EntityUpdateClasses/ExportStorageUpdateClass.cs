@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExportStorageUpdateClass
    {  		
-		public const string HashString = "f8b37fb165ab8e24cfb9711a2d832c73";
+		public const string HashString = "a638bd28a8b411f4c4b0b849653b8b42";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1255,7 +1255,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ObjectTableName =  "Customs.ExportStorage",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
-					  						MaxLength =  512,
+					  						MaxLength =  2000,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1263,7 +1263,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  512,
+					  						SystemMaxLength =  2000,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
@@ -1965,6 +1965,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   ObjectTable ExportStorageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ExportStorage" && d.Tenant == 0).FirstOrDefault(); 
 
  		   TextCode ExportStorageTextCode_CustomsExportStorageOErrors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportStorage.O.Errors", DefaultText = "Errors",LocalDefaultText = @"שגיאות", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ExportStorageTextCode_CustomsExportStorageODescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportStorage.O.Description", DefaultText = "Description",LocalDefaultText = @"תיאור", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ExportStorageTextCode_CustomsExportStorageOLevel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportStorage.O.Level", DefaultText = "Level",LocalDefaultText = @"רמה", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ExportStorageTextCode_CustomsExportStorageOErrorCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportStorage.O.ErrorCode", DefaultText = "Error Code",LocalDefaultText = @"קוד שגיאה", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -112,7 +112,7 @@
   <Column
     Name="StorErrorXML"
     Type="nvarchar"
-    Size="512">
+    Size="2000">
     <Constraints
       Nullable="true" />
   </Column>
