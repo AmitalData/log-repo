@@ -2475,6 +2475,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         //externalentityreference ='60206223',  externalentityname ='CFIFILEM',
         public IQueryable<DocumentsFiling> GetByexternalentityreference(string externalentityname, string externalentityreference, int tenant)
         {
+            (repository.context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
             return (from a in repository.context.DocumentsFilings
                     where a.ExternalEntityReference == externalentityreference && a.ExternalEntityName == externalentityname && a.Tenant == tenant && a.IsDeleted == false
                     select a);
