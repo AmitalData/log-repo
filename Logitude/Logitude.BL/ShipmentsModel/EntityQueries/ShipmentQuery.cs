@@ -14545,6 +14545,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             var shipmentsFilteredByCustomerId = repository.context.Shipments.Where(shipment => shipment.CustomerId == CustomerId &&
                                                                                                shipment.IsCancelled == false &&
                                                                                                shipment.IsStandalonePickupDelivery == false &&
+                                                                                               !shipment.TransportModeId.Equals("I") &&
+                                                                                               !shipment.DirectionId.Equals("I") &&
                                                                                                shipment.Tenant == tenant)
                                                                             .AsQueryable();
             var activeShipments = shipmentsFilteredByCustomerId.Where(shipment => shipment.IsOperationalClosed == false).AsQueryable();
@@ -14556,15 +14558,31 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private Tuple<int, int, int> GetShipmentStatusWeightCounts(IQueryable<ShipmentDataView> activeShipmentsDataViewFilteredByCustomerId, int leastStatusWeight, int greatestStatusWeight, string tansportModeId)
         {
-            int atOriginShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.StatusWeight < leastStatusWeight && 
-                                                                                                      (tansportModeId == null || shipment.TransportModeId == tansportModeId)).Count();
-            int inTransitShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.StatusWeight >= leastStatusWeight &&
+            var atOriginShipment = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.StatusWeight < leastStatusWeight && 
+                                                                                                      (tansportModeId == null || shipment.TransportModeId == tansportModeId));
+            var inTransitShipment = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.StatusWeight >= leastStatusWeight &&
                                                                                                        shipment.StatusWeight < greatestStatusWeight &&
-                                                                                                       (tansportModeId == null || shipment.TransportModeId == tansportModeId)).Count();
-            int atDestinationShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.StatusWeight >= greatestStatusWeight &&
-                                                                                                           (tansportModeId == null || shipment.TransportModeId == tansportModeId)).Count();
+                                                                                                       (tansportModeId == null || shipment.TransportModeId == tansportModeId));
+            var atDestinationShipment = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.StatusWeight >= greatestStatusWeight &&
+                                                                                                           (tansportModeId == null || shipment.TransportModeId == tansportModeId));
 
-            return Tuple.Create(atOriginShipmentCount, inTransitShipmentCount, atDestinationShipmentCount);
+            if (string.IsNullOrEmpty(tansportModeId))
+            {
+                atOriginShipment = atOriginShipment.Where(shipment => !shipment.TransportModeId.Equals("I") && !shipment.DirectionId.Equals("I"));
+                inTransitShipment = inTransitShipment.Where(shipment => !shipment.TransportModeId.Equals("I") && !shipment.DirectionId.Equals("I"));
+                atDestinationShipment = atDestinationShipment.Where(shipment => !shipment.TransportModeId.Equals("I") && !shipment.DirectionId.Equals("I"));
+                return Tuple.Create(atOriginShipment.Count(), inTransitShipment.Count(), atDestinationShipment.Count());
+            }
+
+            if (tansportModeId.Equals("I"))
+            {
+                atOriginShipment = atOriginShipment.Where(shipment => !shipment.DirectionId.Equals("I"));
+                inTransitShipment = inTransitShipment.Where(shipment => !shipment.DirectionId.Equals("I"));
+                atDestinationShipment = atDestinationShipment.Where(shipment => !shipment.DirectionId.Equals("I"));
+                return Tuple.Create(atOriginShipment.Count(), inTransitShipment.Count(), atDestinationShipment.Count());
+            }
+
+            return Tuple.Create(atOriginShipment.Count(), inTransitShipment.Count(), atDestinationShipment.Count());
         }
 
         private IQueryable<ShipmentDataView> GetActiveShipmentsDataViewFilteredByCustomerIdQuery(int tenant, string customerId)
