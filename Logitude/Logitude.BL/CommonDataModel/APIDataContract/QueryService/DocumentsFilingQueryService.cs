@@ -46,6 +46,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 return documentsFiling.Id;
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName(documentsFiling.EntityType.Name);
+            if (objectTableId == null) throw new ApplicationException("Invalid entity type");
+
             var documentTypeId = new DocumentTypeRepository(tenant).GetDocumentTypeIdByCodeAndObjectTable(documentsFiling.DocumentType.Code, objectTableId, tenant);
             if (string.IsNullOrEmpty(documentTypeId))
                 throw new ApplicationException("DocumentType with Code " + documentsFiling.DocumentType.Code + " doesn't exist");
