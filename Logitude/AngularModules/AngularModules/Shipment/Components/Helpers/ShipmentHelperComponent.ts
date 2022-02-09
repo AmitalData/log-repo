@@ -246,8 +246,8 @@ export class ShipmentHelperComponent implements OnDestroy {
     public IsShipmentContainersSimulatorVisible: boolean = false;
 
     private SetShareDocumentsViaEmailVisibility() {
-        if (FeatureLocator.HasFeaturePermession("Shipment", "ShareDocumentsViaEmail") && this.IsShareShipment()) {
-            this.IsShareDocumentsViaEmailVisible = true; 
+        if (FeatureLocator.HasFeaturePermession("Shipment", "ShareDocumentsViaEmail") && (this.EntityPM.DirectionId == "E" && (this.EntityPM.ShipmentLevelCode == "C" || this.EntityPM.ShipmentLevelCode == "D"))) { 
+                this.IsShareDocumentsViaEmailVisible = true; 
         }
     }
 

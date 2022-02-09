@@ -1,4 +1,4 @@
-﻿
+
 declare var System: any;
 declare var window: any;
 import {ServiceResponse} from '../DataContracts/ServiceResponse';
@@ -18,11 +18,12 @@ import {DocumentTypePMExtendedService} from '../../Common/Services/ExtendedPMs/D
 import {EntityPartner} from '../../Infrastructure/DataContracts/EntityPartner';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 
-export class GeneralEmailSender {
+export class GeneralEmailSender { 
     public ObjectTableName: string;
     public CurrentObjectTableId: string;
     PartnersObslist: EntityPartner[];
 
+    public IsShareDocumentsViaEmail: boolean = false;
     public ChildObjectTableId: string = "";
     public ChildEntityId: string;
     public CurrentEntityId: string;
@@ -62,7 +63,10 @@ export class GeneralEmailSender {
         this.ToSpecificeEmail = "";
 
     }
-
+     
+    SetIsShareDocumentsViaEmail() {
+        this.IsShareDocumentsViaEmail = true;
+    }
 
     SendMessage() {
 
@@ -218,15 +222,18 @@ export class GeneralEmailSender {
         SelectedInternalDocument.ToSpecificeEmail = this.ToSpecificeEmail;
 
 
+        var windowArgs: any = {};
+        windowArgs.IsShareDocumentsViaEmail = this.IsShareDocumentsViaEmail;
         var logWindow = new LogitudeWindow();
         logWindow.Width = sendWindowWidth;
         logWindow.Height = SelectedInternalDocument.WindowHeight = sendWindowHeight;
         logWindow.Title = "Send Message";
         logWindow.DataContext = SelectedInternalDocument;
         logWindow.NotifyOnClose = true;
-        logWindow.IsShowCloseButton = true;
+        logWindow.IsShowCloseButton = true; 
+        logWindow.WindowArgs = windowArgs;
         logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/SendDocumentComponent");
         this.LoadingSendingComponent = false;
 
     }
-}
+}   

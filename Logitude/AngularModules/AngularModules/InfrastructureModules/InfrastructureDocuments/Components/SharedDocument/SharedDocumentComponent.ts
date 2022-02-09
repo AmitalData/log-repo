@@ -231,6 +231,7 @@ export class SharedDocumentComponent implements OnInit {
             }
             if (!serviceResponse.HasError && serviceResponse.Result == true) {
                 this.ShowSendControl(attachmentsList);
+                this.CloseButtonClicked(); 
             }
         });
     }
@@ -242,6 +243,7 @@ export class SharedDocumentComponent implements OnInit {
 
     private ShowSendControl(attachmentsList: AttachmentsList[]) {
         var generalEmailSender = new GeneralEmailSender("Shipment", this.ShareDocumentsViaEmailDocumentTypeCode, this.EntityPM.Id, this.EntityPM.ShipmentNumber, this.EntityPM.CustomerId, "", "", "", attachmentsList, "", this.EntityPM, false, "QEMO");
+        generalEmailSender.SetIsShareDocumentsViaEmail();
         generalEmailSender.ShowFullSendControll();
     }
 
