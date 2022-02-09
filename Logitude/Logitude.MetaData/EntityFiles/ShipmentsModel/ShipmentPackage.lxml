@@ -37,7 +37,6 @@
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment Package&quot;"
   Code="&quot;e55d&quot;"
-  Code="&quot;7d57&quot;"
   Name="&quot;ShipmentPackage&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"

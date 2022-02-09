@@ -1301,6 +1301,11 @@ export class ContainerPM {
     public set HasExceptionMessage(newValue: string) { if (this.hasExceptionMessage != newValue) { this.hasExceptionMessage = newValue; this.MarkAsDirty("HasExceptionMessage"); } }
        
 	 
+    private isUpdateEntityException: boolean;
+    public get IsUpdateEntityException() { return this.isUpdateEntityException; }
+    public set IsUpdateEntityException(newValue: boolean) { if (this.isUpdateEntityException != newValue) { this.isUpdateEntityException = newValue; this.MarkAsDirty("IsUpdateEntityException"); } }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		
