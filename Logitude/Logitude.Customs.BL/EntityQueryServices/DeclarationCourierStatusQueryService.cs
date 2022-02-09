@@ -13,7 +13,7 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.Data.DataContracts;
 using System.Data.Entity;
- 
+using System.Diagnostics;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -299,7 +299,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
 
         }
-        public DeclarationCourierStatusSummary GetQueriesCounts(int tenant,string IntegratorId)
+        public DeclarationCourierStatusSummary GetQueriesCounts_Clasic(int tenant, string IntegratorId)
         {
             DeclarationCourierStatusSummary declarationCourierStatusSummary = new DeclarationCourierStatusSummary();
             IQueryable<DeclarationCourierStatus> qDeclarationCourierStatuses = GetQueryableDeclarationCourierStatuses(tenant, IntegratorId);
@@ -345,16 +345,18 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         }
 
-        private IQueryable<DeclarationCourierStatus> GetQueryableDeclarationCourierStatuses(int tenant, string IntegratorId)
+        private  IQueryable<DeclarationCourierStatus> GetQueryableDeclarationCourierStatuses(int tenant, string IntegratorId, ICustomContext mycontext=null)
         {
-            IQueryable<DeclarationCourierStatus> declarationCourierStatuses = (from dc in context.DeclarationCourierStatuses select dc);
+
+            var curcontext=mycontext ?? context;
+            IQueryable<DeclarationCourierStatus> declarationCourierStatuses = (from dc in curcontext.DeclarationCourierStatuses select dc);
             if (string.IsNullOrWhiteSpace(IntegratorId) || IntegratorId == "null")
             {
-                declarationCourierStatuses = (from dcs in context.DeclarationCourierStatuses//.Include("Declaration")
+                declarationCourierStatuses = (from dcs in curcontext.DeclarationCourierStatuses//.Include("Declaration")
                                                                                             //  join d in context.CourierDeclarations on dc.DeclarationId equals d.DeclarationId
                                                                                             //  join dm in context.CourierMasters
                                                                                             // on d.CourierMasterId equals dm.Id
-                                              join d in context.Declarations on dcs.DeclarationId equals d.Id
+                                              join d in curcontext.Declarations on dcs.DeclarationId equals d.Id
                                               where dcs.Tenant == tenant
 
                                                                                     //&& dc.Declaration.IsCourierDeclaration == true 
@@ -366,12 +368,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             else
             {
-                declarationCourierStatuses = (from dcs in context.DeclarationCourierStatuses//.Include("Declaration")
+                declarationCourierStatuses = (from dcs in curcontext.DeclarationCourierStatuses//.Include("Declaration")
 
-                                              join d in context.Declarations on dcs.DeclarationId equals d.Id
+                                              join d in curcontext.Declarations on dcs.DeclarationId equals d.Id
 
-                                              join cd in context.CourierDeclarations on dcs.DeclarationId equals cd.DeclarationId
-                                              join dm in context.CourierMasters
+                                              join cd in curcontext.CourierDeclarations on dcs.DeclarationId equals cd.DeclarationId
+                                              join dm in curcontext.CourierMasters
                                               on cd.CourierMasterId equals dm.Id
                                               where dcs.Tenant == tenant
                                               //&& dcs.Declaration.IsCourierDeclaration == true 
@@ -385,5 +387,187 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             return declarationCourierStatuses;
         }
+
+
+        public DeclarationCourierStatusSummary GetQueriesCountsMulti(int tenant, string integratorId)
+        {
+            DeclarationCourierStatusSummary declarationCourierStatusSummary = new DeclarationCourierStatusSummary();
+            //IQueryable<DeclarationCourierStatusCountDTO> declarationCourierStatuses = GetIQueryableDeclarationCourierStatusCountDTO(tenant);
+
+            var my = new DeclarationCourierStatusSummary();
+            var listOfTast = new List<Task>();
+            var stopwatch = Stopwatch.StartNew();
+            var tOpenCourierMasterCount = Task.Run(() =>
+            {
+
+                my.OpenCourierMasterCount = GetIQueryableDeclarationCourierStatusCountDTO(tenant, integratorId).Count(x => x.IsClosedForFollowUp == false);
+                my.TookOpenCourierMasterCount = stopwatch.ElapsedMilliseconds;
+            });
+            listOfTast.Add(tOpenCourierMasterCount);
+            var tUnReleasedFastProcessCount = Task.Run(() => {
+                my.UnReleasedFastProcessCount = GetIQueryableDeclarationCourierStatusCountDTO(tenant, integratorId).Count(x => x.FastIndividualProcessCode == "F" && (x.DeclarationHatraDate == null || x.DeclarationHatraDate == DateTime.MinValue));
+                my.TookUnReleasedFastProcessCount = stopwatch.ElapsedMilliseconds;
+            });
+            listOfTast.Add(tUnReleasedFastProcessCount);
+            var tWithoutIdCount = Task.Run(() => {
+                my.WithoutIdCount = GetIQueryableDeclarationCourierStatusCountDTO(tenant, integratorId).Count(x => x.IsClosedForFollowUp == false && x.CourierPendingReasonList.Contains("902"));
+                my.TookWithoutIdCount = stopwatch.ElapsedMilliseconds;
+            });
+            listOfTast.Add(tWithoutIdCount);
+
+
+            var tPendingPaymentCount = Task.Run(() =>
+            {
+                my.PendingPaymentCount = GetIQueryableDeclarationCourierStatusCountDTO(tenant, integratorId).Count(x => x.CourierPendingReasonList.Contains("900"));
+                my.TookPendingPaymentCount = stopwatch.ElapsedMilliseconds;
+            }
+            );
+
+            listOfTast.Add(tPendingPaymentCount);
+
+            var tPendingCount = Task.Run(() =>
+            {
+                my.PendingCount = GetIQueryableDeclarationCourierStatusCountDTO(tenant, integratorId).Count(x => !string.IsNullOrEmpty(x.CourierPendingReasonList));
+                my.TookPendingCount = stopwatch.ElapsedMilliseconds;
+            }
+            );
+            listOfTast.Add(tPendingCount);
+
+
+            var tWithoutClassificationCount = Task.Run(() =>
+            {
+                my.WithoutClassificationCount = GetIQueryableDeclarationCourierStatusCountDTO(tenant, integratorId).Count(x => x.IsCourierMissingClassification == true);
+                my.TookWithoutClassificationCount = stopwatch.ElapsedMilliseconds;
+
+            }
+);
+            listOfTast.Add(tWithoutClassificationCount);
+
+
+            var tPendingCustomsCount = Task.Run(() =>
+            {
+                my.PendingCustomsCount = GetIQueryableDeclarationCourierStatusCountDTO(tenant, integratorId).Count(x => x.IsClosedForFollowUp == false && x.DeclarationCourierCustomStatusCode == "2");
+                my.TookPendingCustomsCount = stopwatch.ElapsedMilliseconds;
+
+            }
+);
+            //    listOfTast.Add(tPendingCustomsCount);
+            //    var tAllCourierDeclarationsCount = Task.Run(() =>
+            //    {
+            //        my.AllCourierDeclarationsCount = GetIQueryableDeclarationCourierStatusCountDTO(tenant).Count();
+            //        my.TookAllCourierDeclarationsCount = stopwatch.ElapsedMilliseconds;
+            //    }
+            //);
+            //    listOfTast.Add(tAllCourierDeclarationsCount);
+
+
+            var tCourierMasterOpenIndividualCount = Task.Run(() =>
+            {
+                my.CourierMasterOpenIndividualCount = GetIQueryableDeclarationCourierStatusCountDTO(tenant, integratorId).Count(x => x.IsClosedForFollowUp == false && x.FastIndividualProcessCode == "I");
+                my.TookCourierMasterOpenIndividualCount = stopwatch.ElapsedMilliseconds;
+            }
+        );
+            listOfTast.Add(tCourierMasterOpenIndividualCount);
+
+
+
+            var tUnReleasedIndividualCount = Task.Run(() =>
+            {
+                my.UnReleasedIndividualCount = GetIQueryableDeclarationCourierStatusCountDTO(tenant, integratorId).Count(x => x.FastIndividualProcessCode == "I" && (x.DeclarationHatraDate == null || x.DeclarationHatraDate == DateTime.MinValue));
+                my.TookUnReleasedIndividualCount = stopwatch.ElapsedMilliseconds;
+
+            }
+        );
+            listOfTast.Add(tUnReleasedIndividualCount);
+
+            Task.WaitAll(listOfTast.ToArray());
+
+            //      var counters = (from a in declarationCourierStatuses
+
+            //                      group a by 1 into groupBy1
+            //                      select new DeclarationCourierStatusSummary
+            //                      {
+
+            //                          OpenCourierMasterCount = declarationCourierStatuses.Count(x => x.IsClosedForFollowUp == false),
+            //                          UnReleasedFastProcessCount = declarationCourierStatuses.Count(x => x.FastIndividualProcessCode == "F" && (x.DeclarationHatraDate == null || x.DeclarationHatraDate == DateTime.MinValue)),
+
+            //                          WithoutIdCount = declarationCourierStatuses.Count(x => x.IsClosedForFollowUp == false && x.CourierPendingReasonList.Contains("902")),
+            //                          PendingPaymentCount = declarationCourierStatuses.Count(x => x.CourierPendingReasonList.Contains("900")),
+            //                          PendingCount = declarationCourierStatuses.Count(x => !string.IsNullOrEmpty(x.CourierPendingReasonList)),
+
+
+            //                          WithoutClassificationCount = declarationCourierStatuses.Count(x => x.IsCourierMissingClassification == true),
+            //                          PendingCustomsCount = declarationCourierStatuses.Count(x => x.IsClosedForFollowUp == false && x.DeclarationCourierCustomStatusCode == "2"),
+            //                          AllCourierDeclarationsCount = declarationCourierStatuses.Count(),
+            //                          CourierMasterOpenIndividualCount = declarationCourierStatuses.Count(x => x.IsClosedForFollowUp == false && x.FastIndividualProcessCode == "I"),
+            //                          UnReleasedIndividualCount = declarationCourierStatuses.Count(x => x.FastIndividualProcessCode == "I" && (x.DeclarationHatraDate == null || x.DeclarationHatraDate == DateTime.MinValue))
+            //                      }); ;
+
+
+            //declarationCourierStatusSummary= counters.FirstOrDefault();
+
+            declarationCourierStatusSummary = my;
+
+
+
+
+
+            return declarationCourierStatusSummary;
+
+        }
+
+        private IQueryable<DeclarationCourierStatusCountDTO> GetIQueryableDeclarationCourierStatusCountDTO(int tenant,string IntegratorId)
+        {
+            var mycontext = CustomContext.GetContext(tenant);
+            IQueryable<DeclarationCourierStatus> qDeclarationCourierStatuses = GetQueryableDeclarationCourierStatuses(tenant, IntegratorId, mycontext);
+            IQueryable<DeclarationCourierStatusCountDTO> declarationCourierStatuses =
+                (from dc in mycontext.DeclarationCourierStatuses//.Include("Declaration")
+
+                 join d in mycontext.Declarations on dc.DeclarationId equals d.Id
+                 //  join dm in context.CourierMasters
+                 // on d.CourierMasterId equals dm.Id
+                 where dc.Tenant == tenant && d.IsCourierDeclaration == true
+                 where dc.IsClosedForFollowUp == false
+                 select new DeclarationCourierStatusCountDTO
+                 {
+                     CourierPendingReasonList = dc.CourierPendingReasonList,
+                     FastIndividualProcessCode = dc.FastIndividualProcessCode,
+                     IsClosedForFollowUp = dc.IsClosedForFollowUp,
+                     IsCourierMissingClassification = dc.IsCourierMissingClassification,
+                     DeclarationCourierCustomStatusCode = d.CourierCustomStatusCode,
+                     DeclarationHatraDate = d.HatraDate,
+
+                 }
+                      );
+            return declarationCourierStatuses;
+        }
+
+        public DeclarationCourierStatusSummary GetQueriesCounts(int tenant, string IntegratorId, bool multi = true)
+        {
+
+            if (multi)
+            {
+                return GetQueriesCountsMulti(tenant, IntegratorId);
+            }
+            else
+            {
+                return GetQueriesCounts_Clasic(tenant, IntegratorId);
+            }
+        }
+
+    }
+
+
+
+    class DeclarationCourierStatusCountDTO
+    {
+        public bool IsClosedForFollowUp { get; internal set; }
+        public string FastIndividualProcessCode { get; internal set; }
+        public string CourierPendingReasonList { get; internal set; }
+        public bool IsCourierMissingClassification { get; internal set; }
+        public DateTime? DeclarationHatraDate { get; internal set; }
+        public string DeclarationCourierCustomStatusCode { get; internal set; }
+
+        //public string CourierPendingReasonList { get; set; }
     }
 }

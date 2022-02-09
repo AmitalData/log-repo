@@ -213,7 +213,6 @@ export class DeclarationList {
 	IsHatraDateNull: boolean;
 	TerminalReleaseDate: Date;
 	IntegratorCode: string;
-	IsExportClosed: boolean;
 	
 }
  

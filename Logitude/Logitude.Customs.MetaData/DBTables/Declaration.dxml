@@ -1263,4 +1263,11 @@
     Columns="ExternalDeclarationNumber" />
   <Index
     Columns="VersionId" />
+
+	<!--
+	Invalid DXML Syntax: Unnecessary Index On Columns [CourierCustomStatusCode] In [Declaration.dxml] - fk 
+	<Index
+	  Columns="CourierCustomStatusCode" />-->
+
+	
 </Table>

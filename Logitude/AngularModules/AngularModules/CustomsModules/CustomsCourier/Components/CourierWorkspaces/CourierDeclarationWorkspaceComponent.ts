@@ -84,7 +84,8 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
 
 
         //this.LoadAllScreenData();
-        this.CurrentSession.StartBusyIndicatorLoading();
+        //this.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StopBusyIndicator();
         this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
             this._entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe((response: any) => {
                 {

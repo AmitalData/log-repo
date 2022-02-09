@@ -288,10 +288,17 @@ namespace AmitalCustomsWindowsService.Tester
             
         }
 
+        bool _MultiThreard = false;
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
- 
-
+            var sw = Stopwatch.StartNew();
+            int tenant =GetTenant();
+            _MultiThreard = !_MultiThreard;
+            var res=clsTester.CheckWSCourierStatistic(tenant, _MultiThreard);
+            Debug.WriteLine(res);
+            Debug.WriteLine(sw.ElapsedMilliseconds);
+            
+            return;
             var rabbitMQReceiveWR = new RabbitMQReceiveWR();
             var customRabbitMQQueue = new CustomRabbitMQQueue();
             var allQueueDetails = customRabbitMQQueue.GetAllQueueDetails()
@@ -307,11 +314,7 @@ namespace AmitalCustomsWindowsService.Tester
                 "NYC1MMYLAEOS6QWZ44GZPA00000000",3,"", out log, out success);
             ;
             return;
-             clsTester.TestUnifreightFUStatusTaskService();
-
-            Logitude.CustomsMessaging.Dca.WaitingTester.SendWaiting();
-            //clsTester.TestUpdateLOGITUDE_FILE();
-
+            clsTester.TestUpdateLOGITUDE_FILE();
             //clsTester.GetListByCourierHAWB();
 
             return;
