@@ -288,8 +288,17 @@ namespace AmitalCustomsWindowsService.Tester
             
         }
 
+        bool _MultiThreard = false;
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var sw = Stopwatch.StartNew();
+            int tenant =GetTenant();
+            _MultiThreard = !_MultiThreard;
+            var res=clsTester.CheckWSCourierStatistic(tenant, _MultiThreard);
+            Debug.WriteLine(res);
+            Debug.WriteLine(sw.ElapsedMilliseconds);
+            
+            return;
             var rabbitMQReceiveWR = new RabbitMQReceiveWR();
             var customRabbitMQQueue = new CustomRabbitMQQueue();
             var allQueueDetails = customRabbitMQQueue.GetAllQueueDetails()
