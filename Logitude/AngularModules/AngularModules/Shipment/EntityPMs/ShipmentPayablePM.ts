@@ -411,6 +411,11 @@ export class ShipmentPayablePM {
     public set TariffId(newValue: string) { if (this.tariffId != newValue) { this.tariffId = newValue; this.MarkAsDirty("TariffId"); } }
        
 	 
+    private isCustomsChargesTariff: boolean;
+    public get IsCustomsChargesTariff() { return this.isCustomsChargesTariff; }
+    public set IsCustomsChargesTariff(newValue: boolean) { if (this.isCustomsChargesTariff != newValue) { this.isCustomsChargesTariff = newValue; this.MarkAsDirty("IsCustomsChargesTariff"); } }
+       
+	 
     private tariffNumber: string;
     public get TariffNumber() { return this.tariffNumber; }
     public set TariffNumber(newValue: string) { if (this.tariffNumber != newValue) { this.tariffNumber = newValue; this.MarkAsDirty("TariffNumber"); } }
@@ -429,12 +434,7 @@ export class ShipmentPayablePM {
     private payablesDisconnectedFromTariff: boolean;
     public get PayablesDisconnectedFromTariff() { return this.payablesDisconnectedFromTariff; }
     public set PayablesDisconnectedFromTariff(newValue: boolean) { if (this.payablesDisconnectedFromTariff != newValue) { this.payablesDisconnectedFromTariff = newValue; this.MarkAsDirty("PayablesDisconnectedFromTariff"); } }
-
-
-    private isCustomsChargesTariff: boolean;
-    public get IsCustomsChargesTariff() { return this.isCustomsChargesTariff; }
-    public set IsCustomsChargesTariff(newValue: boolean) { if (this.isCustomsChargesTariff != newValue) { this.isCustomsChargesTariff = newValue; this.MarkAsDirty("IsCustomsChargesTariff"); } }
-
+       
 	 
     private vatAmountLocal: number;
     public get VatAmountLocal() { return this.vatAmountLocal; }

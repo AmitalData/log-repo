@@ -9402,7 +9402,7 @@
     IncludeInSearchField="false"
     AllowedinAutomationConditions="true"
     AutomationEmailRecipient="false"
-    CanAutomateSetValue="true"
+    CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="true"
     RecordType="&quot;Shipment&quot;"
     HasTemplate="false"

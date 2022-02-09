@@ -144,6 +144,7 @@ export class ShipmentList {
 		ExactStatusName: string;
 		StatusDate: Date;
 		StatusLocation: string;
+		PartialStatusAmount: string;
 		Master: string;
 		DirectionName: string;
 		TransportModeName: string;
@@ -490,6 +491,8 @@ export class ShipmentList {
 		HasUnassignedData: boolean;
 		DestinationWarehouseId: string;
 		DestinationWarehouseName: string;
+		ShippingAgent: string;
 		PrivateLabelAgentName: string;
+		StatusWeight: number;
 	
 }

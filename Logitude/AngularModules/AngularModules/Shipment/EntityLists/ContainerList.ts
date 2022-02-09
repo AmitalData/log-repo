@@ -254,5 +254,6 @@ export class ContainerList {
 		ExceptionDate: Date;
 		HasException: boolean;
 		HasExceptionMessage: string;
+		IsUpdateEntityException: boolean;
 	
 }
