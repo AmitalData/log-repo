@@ -256,6 +256,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.EmptyContainerReturnATA).HasColumnName("EmptyContainerReturnATA");
             this.Property(t => t.EmptyContainerReturnETD).HasColumnName("EmptyContainerReturnETD");
             this.Property(t => t.EmptyContainerReturnATD).HasColumnName("EmptyContainerReturnATD");
+            this.Property(t => t.OnCarriageGateOut).HasColumnName("OnCarriageGateOut");
+            this.Property(t => t.PreCarriageGateIn).HasColumnName("PreCarriageGateIn");
 
             this.HasOptional(t => t.CarrierCard).WithMany().HasForeignKey(d => d.MainCarriageCarrierId).WillCascadeOnDelete(false); 
             this.HasOptional(t => t.ShipmentPackage).WithMany().HasForeignKey(d => d.ShipmentPackagesId).WillCascadeOnDelete(false);

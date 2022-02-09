@@ -241,6 +241,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.EmptyContainerReturnATD = containerPM.EmptyContainerReturnATD;
             container.EmptyContainerReturnFrom = containerPM.EmptyContainerReturnFrom;
             container.EmptyContainerReturnTo = containerPM.EmptyContainerReturnTo;
+            container.PreCarriageGateIn = containerPM.PreCarriageGateIn;
+            container.OnCarriageGateOut = containerPM.OnCarriageGateOut;
 
             BuildSearchField(containerPM, container);
         }

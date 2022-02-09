@@ -255,5 +255,7 @@ export class ContainerList {
 		HasException: boolean;
 		HasExceptionMessage: string;
 		IsUpdateEntityException: boolean;
+		OnCarriageGateOut: Date;
+		PreCarriageGateIn: Date;
 	
 }
