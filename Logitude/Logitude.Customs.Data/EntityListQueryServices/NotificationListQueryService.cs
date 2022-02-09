@@ -66,7 +66,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                        ClosedByCustomOfficeUserName = a.ClosedByCustomOfficeUser != null ? (!string.IsNullOrEmpty(a.ClosedByCustomOfficeUser.Contact.LocalName) ? a.ClosedByCustomOfficeUser.Contact.LocalName : a.ClosedByCustomOfficeUser.Contact.EnglishName) : null, 
                                                                        CustomerId = a.CustomerId,
                                                                        CustomerName = a.Customer != null? a.Customer.Card.LocalName : null,
-
+                                                                       ResponseToMessage = a.ResponseToMessage,
                                                                    });
 
 

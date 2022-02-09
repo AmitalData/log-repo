@@ -99,6 +99,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CustomerId { get; set; }
 	      
         public virtual Customer Customer { get; set; }
+        [Column("ResponseToMessage")]
+	    public string ResponseToMessage { get; set; }
     }
 }
 	 

@@ -46,7 +46,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Description, 
 	         ClosedByAssignee, 
 	         BadjCount, 
-	         CustomerId,
+	         CustomerId, 
+	         ResponseToMessage,
 	      }
 
 
@@ -85,7 +86,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ClosedByCustomOfficeUserName, 
 	         ClosedByAssigneeName, 
 	         NotificationReplyLastLineNumber, 
-	         CustomerId,
+	         CustomerId, 
+	         ResponseToMessage,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -212,6 +214,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerId))
             {
 				entityPOCO.CustomerId = entityPM.CustomerId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ResponseToMessage))
+            {
+				entityPOCO.ResponseToMessage = entityPM.ResponseToMessage;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -345,6 +352,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CustomerId = entityPOCO.CustomerId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ResponseToMessage))
+            {
+					entityPM.ResponseToMessage = entityPOCO.ResponseToMessage;
+            }
+
 		}
 
 		public void PMToOldPM(NotificationPM entityPM, NotificationPM oldEntityPM)
@@ -471,6 +483,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.CustomerId = entityPM.CustomerId;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ResponseToMessage))
+            {
+                oldEntityPM.ResponseToMessage = entityPM.ResponseToMessage;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(NotificationPM entityPM)
@@ -491,6 +508,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.Description)) //T4 find type == nText 
             {
                 entityPM.Description = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Description));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ResponseToMessage)) //T4 find type == nText 
+            {
+                entityPM.ResponseToMessage = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ResponseToMessage));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

@@ -224,6 +224,11 @@ export class NotificationPM {
     public set CustomerId(newValue: string) { if (this.customerId != newValue) { this.customerId = newValue; this.MarkAsDirty("CustomerId"); } }
        
 	 
+    private responseToMessage: string;
+    public get ResponseToMessage() { return this.responseToMessage; }
+    public set ResponseToMessage(newValue: string) { if (this.responseToMessage != newValue) { this.responseToMessage = newValue; this.MarkAsDirty("ResponseToMessage"); } }
+       
+	 
 
     public OldEntityPM: NotificationPM;
 		

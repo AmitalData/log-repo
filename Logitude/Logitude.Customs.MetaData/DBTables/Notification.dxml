@@ -172,6 +172,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ResponseToMessage"
+    Type="nvarchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="NotificationDefinitionCode"
     ReferencedTable="NotificationDefinitions"
@@ -222,14 +229,10 @@
     ReferencedTable="Customers"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-
   <Index
-     Columns="BadjCount,AssigneToId,IsClosedByAssignee" />
-
+    Columns="BadjCount,AssigneToId,IsClosedByAssignee" />
   <Index
-      Columns="BadjCount" />
-
-  
+    Columns="BadjCount" />
   <Index
-      Columns="IsClosedByAssignee" />
+    Columns="IsClosedByAssignee" />
 </Table>

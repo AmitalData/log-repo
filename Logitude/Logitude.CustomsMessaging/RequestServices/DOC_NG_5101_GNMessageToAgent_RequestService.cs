@@ -55,12 +55,19 @@ namespace Logitude.CustomsMessaging.RequestServices
                 _DOC_NG_5101_GNMessageToAgent.MessageToAgent.responseToMessage = reference2Number;
                 _DOC_NG_5101_GNMessageToAgent.MessageToAgent.responseToMessageSpecified = true;
             }
+            else if(!string.IsNullOrWhiteSpace(myNotificationPM.ResponseToMessage))
+            {
+                int responseToMessage;
+                int.TryParse(myNotificationPM.ResponseToMessage, out responseToMessage);
+                _DOC_NG_5101_GNMessageToAgent.MessageToAgent.responseToMessage = responseToMessage;
+            }            
 
             _DOC_NG_5101_GNMessageToAgent.MessageToAgent.RelatedEntity = new ConnectedEntity()
             {
                 entityIdKey1 = myDeclarationPM.DeclarationNumber,
                 entityType = myDeclarationPM.Direction == "E" ? 11188 : 1055,
             };
+
 
             this.MyRequestSheetParam = new RequestSheetParam()
             {
