@@ -18,6 +18,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         public IncotemrsFileValidation MyIncotemrsFileValidation { get; set; }
         public CargoIdentifireType MyCargoIdentifireType { get; set; }
         public TradeAgreement MyTradeAgreement { get; set; }
+        public ConfirmationType MyConfirmationType { get; set; }
 
 
         internal static SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt CreateNew(SYSTBL_NG_9001_MSG_SystemTablesResponseTableData item)
@@ -102,5 +103,28 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
     public class TradeAgreement
     {
         public int CustomsBookTypeID { get; set; }
+    }
+
+
+    public class ConfirmationType
+    {
+        public int MalamID { get; set; }
+        public int State { get; set; }
+        public int Exempt_CertificateDocumentCategoryTypeID { get; set; }
+        public bool IsImport { get; set; }
+        public bool IsExemptOtherAuthority { get; set; }
+        public int ConfirmationComputerizationLevelTypeID { get; set; }
+        public bool IsCEO { get; set; }
+        public bool IsNeedDeclaration { get; set; }
+        public int CertificateDocumentCategoryTypeID { get; set; }
+        public int AuthorityID { get; set; }
+        public bool IsQuotaCheckNeeded { get; set; }
+        public int ExternalIDNumPerAuthority { get; set; }
+        public bool IsForCustomsItem { get; set; }
+        public bool IsPharmacy { get; set; }
+        public bool IsVeterinarian { get; set; }
+        public bool IsVehicleStandardization { get; set; }
+        public bool IsQuantityMandatory { get; set; }
+        public bool IsForCE { get; set; }
     }
 }

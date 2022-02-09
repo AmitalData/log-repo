@@ -594,6 +594,126 @@ ID List :
                         break;
 
                     }
+                case "1604":
+                case "ConfirmationType":
+                    {
+                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
+                        Logitude.CustomsMessaging.Helpers.ClosedTable.
+                                                    ManipulateCustomResponse.
+                                                DataSetToTableData(customResponse,
+                                                (newResponseTableData, dr) =>
+                                                {
+                                                    var newExt =
+                                                        SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
+                                                    newExt.MyConfirmationType = new Helpers.ClosedTable.ConfirmationType();
+                                                    if (!writeHighlight)
+                                                    {
+                                                        writeHighlight = true;
+                                                    }
+                                                    if (CheckDRString(dr["MalamID"]))
+                                                    {
+                                                        LogAddRow(newResponseTableData);
+                                                        int val = IntFromDR(dr["MalamID"]);
+                                                        newExt.MyConfirmationType.MalamID = val;
+                                                    }
+                                                    if (CheckDRString(dr["State"]))
+                                                    {
+                                                        LogAddRow(newResponseTableData);
+                                                        int val = IntFromDR(dr["State"]);
+                                                        newExt.MyConfirmationType.State = val;
+                                                    }
+                                                    if (CheckDRString(dr["Exempt_CertificateDocumentCategoryTypeID"]))
+                                                    {
+                                                        LogAddRow(newResponseTableData);
+                                                        int val = IntFromDR(dr["Exempt_CertificateDocumentCategoryTypeID"]);
+                                                        newExt.MyConfirmationType.Exempt_CertificateDocumentCategoryTypeID = val;
+                                                    }
+                                                    if (CheckDRBool(dr["IsImport"]))
+                                                    {
+                                                        LogAddRow(newResponseTableData);
+                                                        newExt.MyConfirmationType.IsImport = true;
+                                                    }
+                                                    if (CheckDRBool(dr["IsExemptOtherAuthority"]))
+                                                    {
+                                                        LogAddRow(newResponseTableData);
+                                                        newExt.MyConfirmationType.IsExemptOtherAuthority = true;
+                                                    }
+                                                    if (CheckDRString(dr["ConfirmationComputerizationLevelTypeID"]))
+                                                    {
+                                                        LogAddRow(newResponseTableData);
+                                                        int val = IntFromDR(dr["ConfirmationComputerizationLevelTypeID"]);
+                                                        newExt.MyConfirmationType.ConfirmationComputerizationLevelTypeID = val;
+                                                    }
+                                                    if (CheckDRBool(dr["IsCEO"]))
+                                                    {
+                                                        LogAddRow(newResponseTableData);
+                                                        newExt.MyConfirmationType.IsCEO = true;
+                                                    }
+                                                    if (CheckDRBool(dr["IsNeedDeclaration"]))
+                                                    {
+                                                        LogAddRow(newResponseTableData);
+                                                        newExt.MyConfirmationType.IsNeedDeclaration = true;
+                                                    }
+                                                    if (CheckDRString(dr["CertificateDocumentCategoryTypeID"]))
+                                                    {
+                                                        LogAddRow(newResponseTableData);
+                                                        int val = IntFromDR(dr["CertificateDocumentCategoryTypeID"]);
+                                                        newExt.MyConfirmationType.CertificateDocumentCategoryTypeID = val;
+                                                    }
+                                                    if (CheckDRString(dr["AuthorityID"]))
+                                                    {
+                                                        LogAddRow(newResponseTableData);
+                                                        int val = IntFromDR(dr["AuthorityID"]);
+                                                        newExt.MyConfirmationType.AuthorityID = val;
+                                                    }
+                                                    if (CheckDRBool(dr["IsQuotaCheckNeeded"]))
+                                                    {
+                                                        LogAddRow(newResponseTableData);
+                                                        newExt.MyConfirmationType.IsQuotaCheckNeeded = true;
+                                                    }
+                                                    if (CheckDRString(dr["ExternalIDNumPerAuthority"]))
+                                                    {
+                                                        LogAddRow(newResponseTableData);
+                                                        int val = IntFromDR(dr["ExternalIDNumPerAuthority"]);
+                                                        newExt.MyConfirmationType.ExternalIDNumPerAuthority = val;
+                                                    }
+                                                    if (CheckDRBool(dr["IsForCustomsItem"]))
+                                                    {
+                                                        LogAddRow(newResponseTableData);
+                                                        newExt.MyConfirmationType.IsForCustomsItem = true;
+                                                    }
+                                                    if (CheckDRBool(dr["IsPharmacy"]))
+                                                    {
+                                                        LogAddRow(newResponseTableData);
+                                                        newExt.MyConfirmationType.IsPharmacy = true;
+                                                    }
+                                                    if (CheckDRBool(dr["IsVeterinarian"]))
+                                                    {
+                                                        LogAddRow(newResponseTableData);
+                                                        newExt.MyConfirmationType.IsVeterinarian = true;
+                                                    }
+                                                    if (CheckDRBool(dr["IsVehicleStandardization"]))
+                                                    {
+                                                        LogAddRow(newResponseTableData);
+                                                        newExt.MyConfirmationType.IsVehicleStandardization = true;
+                                                    }
+                                                    if (CheckDRBool(dr["IsQuantityMandatory"]))
+                                                    {
+                                                        LogAddRow(newResponseTableData);
+                                                        newExt.MyConfirmationType.IsQuantityMandatory = true;
+                                                    }
+                                                    if (CheckDRBool(dr["IsForCE"]))
+                                                    {
+                                                        LogAddRow(newResponseTableData);
+                                                        newExt.MyConfirmationType.IsForCE = true;
+                                                    }
+
+                                                    extList.Add(newExt);
+                                                });
+                        return extList;
+                        break;
+
+                    }
                 case "23928":
                 case "IncotemrsFileValidation":
                     {
@@ -753,6 +873,24 @@ ID List :
             }
             return ext;
         }
+
+        private static int IntFromDR(object data)
+        {
+            int.TryParse(data?.ToString(), out int val);
+            return val;
+        }
+
+        private static bool CheckDRString(object data) =>
+            data.ToString() != null;            
+
+
+        private static bool CheckDRBool(object data) =>
+            data.ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase);
+        
+
+        private static void LogAddRow(SYSTBL_NG_9001_MSG_SystemTablesResponseTableData newResponseTableData) =>        
+            LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+        
 
         private SYSTBL_NG_9001_MSG_SystemTablesResponseTableData[] TruncateNameTo(SYSTBL_NG_9001_MSG_SystemTablesResponseTableData[] sYSTBL_NG_9001_MSG_SystemTablesResponseTableData, int iTrancateNameTo)
         {
