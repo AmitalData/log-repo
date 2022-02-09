@@ -93,7 +93,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 if (shipmentPM.ChargeableWeightUnitCode != null)
                 {
-                    myDataProvider.ActualChargeableWeight = myDataProvider.ChargeableWeight + " " + shipmentPM.ChargeableWeightUnitCode;
+                    myDataProvider.ActualChargeableWeight = myDataProvider.ActualChargeableWeight + " " + shipmentPM.ChargeableWeightUnitCode;
                 }
 
                 if (shipmentPM.NumberOfPackages != null)
