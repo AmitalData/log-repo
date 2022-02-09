@@ -233,7 +233,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.AmendmentRequestNumber).HasColumnName("AmendmentRequestNumber").HasMaxLength(9).IsUnicode(false);
 
-            this.Property(t => t.AmendmentStatus).HasColumnName("AmendmentStatus").HasMaxLength(3).IsUnicode(true);
+            this.Property(t => t.AmendmentStatus).HasColumnName("AmendmentStatus").HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.AmendmentissueDate).HasColumnName("AmendmentissueDate");
 

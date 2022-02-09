@@ -478,7 +478,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         }
 
 
-        public HttpResponseMessage PostSendDeclarationAmendment(GenericRequestParams requestParamsData)
+        public HttpResponseMessage PostSendDeclarationAmendment(AmendmentRequestParams requestParamsData)
         {
             try
             {
@@ -503,21 +503,21 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
 
         }
-        public HttpResponseMessage PostSendDeclarationClosingAmendment(GenericRequestParams requestParamsData)
+        public HttpResponseMessage PostSendDeclarationClosingAmendment(AmendmentRequestParams requestParamsData)
         {
             try
             {
-                DF_NG_2751_MSG10000_ExportDeclarationRequestService _dF_MSG10000_ExportDeclarationRequestService = new DF_NG_2751_MSG10000_ExportDeclarationRequestService();
-                var request = _dF_MSG10000_ExportDeclarationRequestService.GetRequest(requestParamsData);
-                string error = "";
-                DF_NG_2757_MSG10004_ExportAmendmentDeclarationResponseService dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService = new DF_NG_2757_MSG10004_ExportAmendmentDeclarationResponseService();
-                DeclarationPM declarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(request.Declaration, requestParamsData.Tenant, true, requestParamsData.AppicationId, out error, user: requestParamsData.LoggingUserId, isCopy: Convert.ToBoolean(requestParamsData.LoggingEntityId2), isClose: true);
+                //DF_NG_2751_MSG10000_ExportDeclarationRequestService _dF_MSG10000_ExportDeclarationRequestService = new DF_NG_2751_MSG10000_ExportDeclarationRequestService();
+                //var request = _dF_MSG10000_ExportDeclarationRequestService.GetRequest(requestParamsData);
+                //string error = "";
+                //DF_NG_2757_MSG10004_ExportAmendmentDeclarationResponseService dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService = new DF_NG_2757_MSG10004_ExportAmendmentDeclarationResponseService();
+                //DeclarationPM declarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(request.Declaration, requestParamsData.Tenant, true, requestParamsData.AppicationId, out error, user: requestParamsData.LoggingUserId, isCopy: Convert.ToBoolean(requestParamsData.LoggingEntityId2), isClose: true);
 
-                if (declarationPM == null)
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, error);
+                //if (declarationPM == null)
+                //    return Request.CreateResponse(HttpStatusCode.BadRequest, error);
 
-                requestParamsData.AppicationId = declarationPM.Id;
-                requestParamsData.LoggingEntityId = declarationPM.Id;
+                //requestParamsData.AppicationId = declarationPM.Id;
+                //requestParamsData.LoggingEntityId = declarationPM.Id;
                 INF_MSG_GenericResponseData responseData;
                 //var messagingService = new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService();
                 var messagingService = new DF_MSG8235_ExportDeclarationAmendmentMessagingService();

@@ -424,6 +424,8 @@ namespace Logitude.Customs.Data.EntityLists
        public DateTime? TerminalReleaseDate  { get; set; }
        [DataMember]
        public string IntegratorCode  { get; set; }
+       [DataMember]
+       public bool IsExportClosed  { get; set; }
    }
 
 }

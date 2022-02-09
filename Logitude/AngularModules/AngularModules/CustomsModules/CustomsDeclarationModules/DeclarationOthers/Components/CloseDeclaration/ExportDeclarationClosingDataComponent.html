@@ -233,34 +233,34 @@
                 </tr>
             </table>
 
-        </td>
-    </tr>
+            </td>
+        </tr>
+   
+        <tr style="height: 70px;">
+            <td>
+                <table>
+                    <tr style="float: left;padding-top: 40px;">
+                    
+                       <td style="width: 57px;">
+                           <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
+                       </td>
+                       <td style="width: 67px; padding-right: 10px;">
+                           <button class="RedButton" (click)="OkButtonClicked()" [disabled]="DeclarationIsClosed">{{'General.B.Save' |TextCodeTranslationPipe}}</button>
+                       </td>
 
-    <tr style="height: 70px;">
-        <td>
-            <table>
-                <tr style="float: left;padding-top: 40px;">
-
-                    <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel'
-                            |TextCodeTranslationPipe}}</button>
-                    </td>
-                    <td style="width: 67px; padding-right: 10px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="false">{{'General.B.Save'
-                            |TextCodeTranslationPipe}}</button>
-                    </td>
-
-                    <td style="padding-right: 10px;">
-                        <div style="display: inline-block; width: 110px; vertical-align: bottom;">
-                            <custom-send-options [IsDisabled]="!SendButtonEnabled" [AvoidDoubleClick]="true"
-                                [HaveTestCase]="'true'" #MyCustomSendOptionsComponent
-                                (SendButtonClicked)="SendButtonClicked($event)">
-                            </custom-send-options>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </td>
+                       <td style="padding-right: 10px;">
+                           <div style="display: inline-block; width: 110px; vertical-align: bottom;">
+                               <custom-send-options [IsDisabled]="DeclarationIsClosed"
+                                                    [AvoidDoubleClick]="true"
+                                                    [HaveTestCase]="'true'"
+                                                    #MyCustomSendOptionsComponent
+                                                    (SendButtonClicked)="SendButtonClicked($event)">
+                               </custom-send-options>
+                           </div>
+                       </td>  
+                    </tr>
+                </table>
+            </td>
 
     </tr>
 </table>

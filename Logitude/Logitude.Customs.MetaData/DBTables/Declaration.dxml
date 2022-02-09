@@ -731,7 +731,7 @@
   </Column>
   <Column
     Name="AmendmentStatus"
-    Type="nvarchar"
+    Type="varchar"
     Size="3">
     <Constraints
       Nullable="true" />
@@ -1263,11 +1263,4 @@
     Columns="ExternalDeclarationNumber" />
   <Index
     Columns="VersionId" />
-
-	<!--
-	Invalid DXML Syntax: Unnecessary Index On Columns [CourierCustomStatusCode] In [Declaration.dxml] - fk 
-	<Index
-	  Columns="CourierCustomStatusCode" />-->
-
-	
 </Table>

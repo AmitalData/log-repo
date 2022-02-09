@@ -1467,6 +1467,7 @@
     <TypeScriptCompile Include="Customs\Components\Spotlight\ReferantSpotlightDataTemplate.ts" />
     <TypeScriptCompile Include="Customs\Controller\PhysicalCheckEditComponentController.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\BankAccountToRefundRequestParams.ts" />
+    <TypeScriptCompile Include="Customs\DataContract\RequestParams\AmendmentRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\CargoSealsRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\CargoSplitRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\GatepassRequestMessageRequestParams.ts" />
