@@ -2769,6 +2769,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.CargoDescription = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CargoDescription));
             }
+            if (!String.IsNullOrWhiteSpace(entityPM.AmendmentStatus)) //T4 find type == nText 
+            {
+                entityPM.AmendmentStatus = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AmendmentStatus));
+            }
             if (!String.IsNullOrWhiteSpace(entityPM.AmendmentRemarks)) //T4 find type == nText 
             {
                 entityPM.AmendmentRemarks = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AmendmentRemarks));
