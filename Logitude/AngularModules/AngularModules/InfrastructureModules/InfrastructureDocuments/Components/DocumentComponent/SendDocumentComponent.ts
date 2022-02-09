@@ -118,6 +118,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
     IsEnableLinkDocOout: boolean = true;
     IsEnableLinkDocsSharedWithAgents: boolean = true;
+    public IsShareDocumentsViaEmail: boolean = false; 
     IsEnableLinkDocIn: boolean = true;
     IsSendDocumentSucceeded: boolean;
     IsSendDocumentFailed: boolean;
@@ -180,6 +181,10 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
         this.FetchAttachmentsLists();
+    }
+
+    SetWindowArgs(args: any) {
+        this.IsShareDocumentsViaEmail = args.IsShareDocumentsViaEmail;
     }
 
     CheckEditTemplateFeature() {
@@ -1144,8 +1149,10 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                                 this.CurrentSession.FireEvent(this.EventRefreshName);
                             }
 
-
+                           
                             this.CurrentSession.CurrentWindow.Close("SendEnd");
+
+                            this.ShowIndicationMessage();
 
                         });
                     }
@@ -1177,6 +1184,13 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
 
 
+    }
+
+    private ShowIndicationMessage() {
+        if (!this.IsShareDocumentsViaEmail) return; 
+            var messageWindow: MessageWindow = new MessageWindow();
+            messageWindow.Title = "Share Documents Via Email";
+            messageWindow.Show("Selected documents were shared successfully."); 
     }
 
     CloseButtonClicked() {
