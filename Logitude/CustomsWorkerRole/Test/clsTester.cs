@@ -318,7 +318,7 @@ SELECT TOP 1000 [Id]
         public static string CheckWSCourierStatistic(int tenant, bool multiThreard)
         {
             var declarationCourierStatusQueryService = new Logitude.Customs.BL.EntityQueryServices.DeclarationCourierStatusQueryService(tenant);
-            var counts = declarationCourierStatusQueryService.GetQueriesCounts(tenant,multiThreard);
+            var counts = declarationCourierStatusQueryService.GetQueriesCounts(tenant,"",multiThreard);
             var jsonSetting = ProxyUtil.JsonConvertSerialize(counts);
             return jsonSetting;
         }
