@@ -13,6 +13,24 @@ export class ConfirmationTypeList {
 	LocalName: string;
 	SearchFields: string;
 	Inactive: boolean;
+	MalamID: number;
+	State: number;
+	Exempt_CertificateDocument: number;
+	IsImport: boolean;
+	IsExemptOtherAuthority: boolean;
+	ConfirmationComputerization: number;
+	IsCEO: boolean;
+	IsNeedDeclaration: boolean;
+	CertificateDocumentCategory: number;
+	AuthorityID: number;
+	IsQuotaCheckNeeded: boolean;
+	ExternalIDNumPerAuthority: number;
+	IsForCustomsItem: boolean;
+	IsPharmacy: boolean;
+	IsVeterinarian: boolean;
+	IsVehicleStandardization: boolean;
+	IsQuantityMandatory: boolean;
+	IsForCE: boolean;
 	
 }
  
