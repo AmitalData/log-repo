@@ -93,7 +93,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             var shipmentAdditionalDataFields =
              "min(AdditionalData.GoodsClassification) as GoodsClassification, " +
              "min(AdditionalData.DocumentInspection) as DocumentInspection , " +
-             "AdditionalData.IsPaymentRequired as IsPaymentRequired , " +
              "min(AdditionalData.PaymentDateTime) as PaymentDateTime , " +
              "min(AdditionalData.PaymentRequestDateTime) as PaymentRequestDateTime , " +
              "min(AdditionalData.GatepassDocumentsReady) as GatepassDocumentsReady ";
@@ -166,7 +165,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
 
 
-            shipmentFields += ",AdditionalData.IsPaymentRequired";
+            
             var groupByScript =
                 $" GROUP BY {shipmentFields}" +
                 @", ConsigneeCard.EnglishName,
@@ -299,7 +298,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             var shipmentAdditionalDataFields =
              "min(AdditionalData.GoodsClassification) as GoodsClassification, " +
              "min(AdditionalData.DocumentInspection) as DocumentInspection , " +
-             "AdditionalData.IsPaymentRequired as IsPaymentRequired , " +
              "min(AdditionalData.PaymentDateTime) as PaymentDateTime , " +
              "min(AdditionalData.PaymentRequestDateTime) as PaymentRequestDateTime , " +
              "min(AdditionalData.GatepassDocumentsReady) as GatepassDocumentsReady ";
@@ -374,7 +372,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
 
             // Group By
-            shipmentFields += ",AdditionalData.IsPaymentRequired";
             var groupByScript =
                 $" GROUP BY {shipmentFields}" +
                 @", ConsigneeCard.EnglishName,
