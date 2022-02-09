@@ -45,6 +45,9 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
     IsHeaderVisible: boolean = false;
     IsFromCustomsAnswers: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    confirmationTypeFilter: ApiQueryFilters = null as any;
+
+
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -55,6 +58,7 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
             this.IKEAFeature = 'visibile';
         }
 
+        this.initConfirmationTypeFilter();
     }
     IKEAFeature: string = 'hidden';
     LineNumber: string;
@@ -129,6 +133,12 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
             }
 
         }
+    }
+
+
+    initConfirmationTypeFilter() {
+        this.confirmationTypeFilter = new ApiQueryFilters();
+        this.confirmationTypeFilter.addAdditionalFilter("IsImport", false, null, null, "Equals", false, false, false, "Boolean");
     }
 
 
