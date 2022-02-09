@@ -21,6 +21,8 @@ export class APInvoiceMenuButtonsHandler {
     public entityArgs: EntityArgs
     isFullAccounting: boolean = false;
     public approvedStatusCode: string = "AD";
+    public VoidStatusCode: string = "VD";
+    
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
@@ -81,7 +83,7 @@ export class APInvoiceMenuButtonsHandler {
 
                         case "VoidAPInvoice": {
                             if (SessionLocator.TenantPM.AccountingActivated == true) {
-                                if (this.EntityPM != null && this.EntityPM.IsExternalEntity) {
+                                if ((this.EntityPM != null && this.EntityPM.IsExternalEntity) || this.EntityPM.StatusCode == this.VoidStatusCode) {
                                     myButtonIsDisabled = true;
                                 }
                             }
