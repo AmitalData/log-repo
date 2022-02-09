@@ -75,7 +75,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             this.allEntityStatuses = entityStatusRepository.GetEntityStatusByTenantAndObjectTableId(tenant, objectTableId).ToList();
         }
-        private void CreateTraceEvent(string eventTypeCode, DateTime? eventDateTime,string notes)
+
+        private void CreateTraceEventWithNotes(string eventTypeCode, DateTime? eventDateTime, string notes)
+        {
+            this.CreateTraceEvent(eventTypeCode, eventDateTime, notes);
+        }
+        private void CreateTraceEventWithOutNotes(string eventTypeCode, DateTime? eventDateTime)
+        {
+            this.CreateTraceEvent(eventTypeCode, eventDateTime, "");
+        }
+
+        private void CreateTraceEvent(string eventTypeCode, DateTime? eventDateTime ,string notes)
         {
             this.CreateTraceEvent(new EventStatusTracerArgs()
             {
@@ -87,8 +97,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 Notes = notes,
                 EventTypeCode = eventTypeCode,
                 EventDateTime = eventDateTime,
-            }); 
+            });
         }
+
         public void CreateTraceEvent(EventStatusTracerArgs args)
         {
             this.HandleEventDates(args);
@@ -378,7 +389,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         }
         private void TraceOrderEvent()
         {
-            this.CreateTraceEvent("COOR", containerPM.CreateDate,null);
+            this.CreateTraceEventWithOutNotes("COOR", containerPM.CreateDate);
         }
         private void TraceUpdatedEvent()
         {
@@ -424,7 +435,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             if (containerPM.ActualEmptyPickupDate != null && container.ActualEmptyPickupDate == null)
             {
-                this.CreateTraceEvent("EMPS", containerPM.ActualEmptyPickupDate, null);
+                this.CreateTraceEventWithOutNotes("EMPS", containerPM.ActualEmptyPickupDate);
             }
 
             else if (containerPM.ActualEmptyPickupDate == null && container.ActualEmptyPickupDate != null)
@@ -436,7 +447,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             if (containerPM.ShipmentPickupATD != null && container.ShipmentPickupATD == null)
             {
-                this.CreateTraceEvent("PICS", containerPM.ShipmentPickupATD, null);
+                this.CreateTraceEventWithOutNotes("PICS", containerPM.ShipmentPickupATD);
             }
 
             else if (containerPM.ShipmentPickupATD == null && container.ShipmentPickupATD != null)
@@ -448,7 +459,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             if (containerPM.ActualTransshipment1VesselArrival != null && container.ActualTransshipment1VesselArrival == null)
             {
-                this.CreateTraceEvent("T1AV", containerPM.ActualTransshipment1VesselArrival, null);
+                this.CreateTraceEventWithOutNotes("T1AV", containerPM.ActualTransshipment1VesselArrival);
             }
 
             else if (containerPM.ActualTransshipment1VesselArrival == null && container.ActualTransshipment1VesselArrival != null)
@@ -460,7 +471,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             if (containerPM.ActualTrans1VesselDeparture != null && container.ActualTrans1VesselDeparture == null)
             {
-                this.CreateTraceEvent("T1DT", containerPM.ActualTrans1VesselDeparture, null);
+                this.CreateTraceEventWithOutNotes("T1DT", containerPM.ActualTrans1VesselDeparture);
             }
 
             else if (containerPM.ActualTrans1VesselDeparture == null && container.ActualTrans1VesselDeparture != null)
@@ -472,7 +483,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             if (containerPM.ActualTransshipment2VesselArrival != null && container.ActualTransshipment2VesselArrival == null)
             {
-                this.CreateTraceEvent("T2AV", containerPM.ActualTransshipment2VesselArrival, null);
+                this.CreateTraceEventWithOutNotes("T2AV", containerPM.ActualTransshipment2VesselArrival);
             }
 
             else if (containerPM.ActualTransshipment2VesselArrival == null && container.ActualTransshipment2VesselArrival != null)
@@ -484,7 +495,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             if (containerPM.ActualTrans2VesselDeparture != null && container.ActualTrans2VesselDeparture == null)
             {
-                this.CreateTraceEvent("T2DT", containerPM.ActualTrans2VesselDeparture, null);
+                this.CreateTraceEventWithOutNotes("T2DT", containerPM.ActualTrans2VesselDeparture);
             }
 
             else if (containerPM.ActualTrans2VesselDeparture == null && container.ActualTrans2VesselDeparture != null)
@@ -496,7 +507,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             if (containerPM.ActualTransshipment3VesselArrival != null && container.ActualTransshipment3VesselArrival == null)
             {
-                this.CreateTraceEvent("T3AV", containerPM.ActualTransshipment3VesselArrival, null);
+                this.CreateTraceEventWithOutNotes("T3AV", containerPM.ActualTransshipment3VesselArrival);
             }
 
             else if (containerPM.ActualTransshipment3VesselArrival == null && container.ActualTransshipment3VesselArrival != null)
@@ -508,7 +519,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             if (containerPM.ActualTrans3VesselDeparture != null && container.ActualTrans3VesselDeparture == null)
             {
-                this.CreateTraceEvent("T3DT", containerPM.ActualTrans3VesselDeparture, null);
+                this.CreateTraceEventWithOutNotes("T3DT", containerPM.ActualTrans3VesselDeparture);
             }
 
             else if (containerPM.ActualTrans3VesselDeparture == null && container.ActualTrans3VesselDeparture != null)
@@ -520,7 +531,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             if (containerPM.ActualPODDischarge != null && container.ActualPODDischarge == null)
             {
-                this.CreateTraceEvent("DSCH", containerPM.ActualPODDischarge, null);
+                this.CreateTraceEventWithOutNotes("DSCH", containerPM.ActualPODDischarge);
             }
 
             else if (containerPM.ActualPODDischarge == null && container.ActualPODDischarge != null)
@@ -532,7 +543,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             if (containerPM.ActualOnCarriageDeparture != null && container.ActualOnCarriageDeparture == null)
             {
-                this.CreateTraceEvent("UNDS", containerPM.ActualOnCarriageDeparture, null);
+                this.CreateTraceEventWithOutNotes("UNDS", containerPM.ActualOnCarriageDeparture);
             }
 
             else if (containerPM.ActualOnCarriageDeparture == null && container.ActualOnCarriageDeparture != null)
@@ -544,7 +555,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             if (containerPM.ActualEmptyReturn != null && container.ActualEmptyReturn == null)
             {
-                this.CreateTraceEvent("EMRT", containerPM.ActualEmptyReturn, null);
+                this.CreateTraceEventWithOutNotes("EMRT", containerPM.ActualEmptyReturn);
             }
             if (containerPM.ActualEmptyReturn == null && container.ActualEmptyReturn != null)
             {
@@ -556,7 +567,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             if ((containerPM.ActualOnCarriageDeparture != null && container.ActualOnCarriageDeparture == null) && containerPM.ActualPODDeparture == null)
             {
                 this.DeleteTraceEvent("GTOT");
-                this.CreateTraceEvent("GTOT", containerPM.ActualOnCarriageDeparture, null);
+                this.CreateTraceEventWithOutNotes("GTOT", containerPM.ActualOnCarriageDeparture);
             }
             else if ((containerPM.ActualOnCarriageDeparture == null && container.ActualOnCarriageDeparture != null) && containerPM.ActualPODDeparture == null)
             {
@@ -565,7 +576,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             else if ((containerPM.ActualPODDeparture != null && container.ActualPODDeparture == null) && containerPM.ActualOnCarriageDeparture == null)
             {
                 this.DeleteTraceEvent("GTOT");
-                this.CreateTraceEvent("GTOT", containerPM.ActualPODDeparture, null);
+                this.CreateTraceEventWithOutNotes("GTOT", containerPM.ActualPODDeparture);
             }
             else if ((containerPM.ActualPODDeparture == null && container.ActualPODDeparture != null) && containerPM.ActualOnCarriageDeparture == null)
             {
@@ -578,7 +589,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             if ((containerPM.ActualLIFArrival != null && container.ActualLIFArrival == null) && containerPM.ShipmentOnCarriageATA == null)
             {
                 this.DeleteTraceEvent("DPWH");
-                this.CreateTraceEvent("DPWH", containerPM.ActualLIFArrival, null);
+                this.CreateTraceEventWithOutNotes("DPWH", containerPM.ActualLIFArrival);
             }
             else if ((containerPM.ActualLIFArrival == null && container.ActualLIFArrival != null) && containerPM.ShipmentOnCarriageATA == null)
             {
@@ -587,7 +598,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             else if ((containerPM.ShipmentOnCarriageATA != null && container.ShipmentOnCarriageATA == null) && containerPM.ActualLIFArrival == null)
             {
                 this.DeleteTraceEvent("DPWH");
-                this.CreateTraceEvent("DPWH", containerPM.ShipmentOnCarriageATA, null);
+                this.CreateTraceEventWithOutNotes("DPWH", containerPM.ShipmentOnCarriageATA);
             }
             else if ((containerPM.ShipmentOnCarriageATA == null && container.ShipmentOnCarriageATA != null) && containerPM.ActualLIFArrival == null)
             {
@@ -600,7 +611,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             if ((containerPM.ActualOnCarriageDeparture != null && container.ActualOnCarriageDeparture == null) && containerPM.ShipmentOnCarriageATD == null)
             {
                 this.DeleteTraceEvent("ARWH");
-                this.CreateTraceEvent("ARWH", containerPM.ActualOnCarriageDeparture, null);
+                this.CreateTraceEventWithOutNotes("ARWH", containerPM.ActualOnCarriageDeparture);
             }
             else if ((containerPM.ActualOnCarriageDeparture == null && container.ActualOnCarriageDeparture != null) && containerPM.ShipmentOnCarriageATD == null)
             {
@@ -609,7 +620,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             else if ((containerPM.ShipmentOnCarriageATD != null && container.ShipmentOnCarriageATD == null) && containerPM.ActualOnCarriageDeparture == null)
             {
                 this.DeleteTraceEvent("ARWH");
-                this.CreateTraceEvent("ARWH", containerPM.ShipmentOnCarriageATD, null);
+                this.CreateTraceEventWithOutNotes("ARWH", containerPM.ShipmentOnCarriageATD);
             }
             else if ((containerPM.ShipmentOnCarriageATD == null && container.ShipmentOnCarriageATD != null) && containerPM.ActualOnCarriageDeparture == null)
             {
@@ -622,7 +633,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             if ((containerPM.ActualPODVesselArrival != null && container.ActualPODVesselArrival == null) && containerPM.ShipmentMainCarriageATA == null)
             {
                 this.DeleteTraceEvent("ARPD");
-                this.CreateTraceEvent("ARPD", containerPM.ActualPODVesselArrival, null);
+                this.CreateTraceEventWithOutNotes("ARPD", containerPM.ActualPODVesselArrival);
             }
             else if ((containerPM.ActualPODVesselArrival == null && container.ActualPODVesselArrival != null) && containerPM.ShipmentMainCarriageATA == null)
             {
@@ -631,7 +642,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             else if ((containerPM.ShipmentMainCarriageATA != null && container.ShipmentMainCarriageATA == null) && containerPM.ActualPODVesselArrival == null)
             {
                 this.DeleteTraceEvent("ARPD");
-                this.CreateTraceEvent("ARPD", containerPM.ShipmentMainCarriageATA, null);
+                this.CreateTraceEventWithOutNotes("ARPD", containerPM.ShipmentMainCarriageATA);
             }
             else if ((containerPM.ShipmentMainCarriageATA == null && container.ShipmentMainCarriageATA != null) && containerPM.ActualPODVesselArrival == null)
             {
@@ -644,7 +655,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             if ((containerPM.ActualPOLVesselDeparture != null && container.ActualPOLVesselDeparture == null) && containerPM.ShipmentMainCarriageATD == null)
             {
                 this.DeleteTraceEvent("POLD");
-                this.CreateTraceEvent("POLD", containerPM.ActualPOLVesselDeparture, null);
+                this.CreateTraceEventWithOutNotes("POLD", containerPM.ActualPOLVesselDeparture);
             }
             else if ((containerPM.ActualPOLVesselDeparture == null && container.ActualPOLVesselDeparture != null) && containerPM.ShipmentMainCarriageATD == null)
             {
@@ -653,7 +664,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             else if ((containerPM.ShipmentMainCarriageATD != null && container.ShipmentMainCarriageATD == null) && containerPM.ActualPOLVesselDeparture == null)
             {
                 this.DeleteTraceEvent("POLD");
-                this.CreateTraceEvent("POLD", containerPM.ShipmentMainCarriageATD, null);
+                this.CreateTraceEventWithOutNotes("POLD", containerPM.ShipmentMainCarriageATD);
             }
             else if ((containerPM.ShipmentMainCarriageATD == null && container.ShipmentMainCarriageATD != null) && containerPM.ActualPOLVesselDeparture == null)
             {
@@ -666,7 +677,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             if ((containerPM.ActualPOLArrival != null && container.ActualPOLArrival == null) && containerPM.ShipmentPreCarriageATA == null)
             {
                 this.DeleteTraceEvent("PCAV");
-                this.CreateTraceEvent("PCAV", containerPM.ActualPOLArrival, null);
+                this.CreateTraceEventWithOutNotes("PCAV", containerPM.ActualPOLArrival);
             }
             else if ((containerPM.ActualPOLArrival == null && container.ActualPOLArrival != null) && containerPM.ShipmentPreCarriageATA == null)
             {
@@ -675,7 +686,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             else if ((containerPM.ShipmentPreCarriageATA != null && container.ShipmentPreCarriageATA == null) && containerPM.ActualPOLArrival == null)
             {
                 this.DeleteTraceEvent("PCAV");
-                this.CreateTraceEvent("PCAV", containerPM.ShipmentPreCarriageATA, null);
+                this.CreateTraceEventWithOutNotes("PCAV", containerPM.ShipmentPreCarriageATA);
             }
             else if ((containerPM.ShipmentPreCarriageATA == null && container.ShipmentPreCarriageATA != null) && containerPM.ActualPOLArrival == null)
             {
@@ -688,7 +699,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             if ((containerPM.PreCarriageATD != null && container.PreCarriageATD == null) && containerPM.ShipmentPreCarriageATD == null)
             {
                 this.DeleteTraceEvent("PCDP");
-                this.CreateTraceEvent("PCDP", containerPM.PreCarriageATD, null);
+                this.CreateTraceEventWithOutNotes("PCDP", containerPM.PreCarriageATD);
             }
             else if ((containerPM.PreCarriageATD == null && container.PreCarriageATD != null) && containerPM.ShipmentPreCarriageATD == null)
             {
@@ -697,7 +708,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             else if ((containerPM.ShipmentPreCarriageATD != null && container.ShipmentPreCarriageATD == null) && containerPM.PreCarriageATD == null)
             {
                 this.DeleteTraceEvent("PCDP");
-                this.CreateTraceEvent("PCDP", containerPM.ShipmentPreCarriageATD, null);
+                this.CreateTraceEventWithOutNotes("PCDP", containerPM.ShipmentPreCarriageATD);
             }
             else if ((containerPM.ShipmentPreCarriageATD == null && container.ShipmentPreCarriageATD != null) && containerPM.PreCarriageATD == null)
             {
@@ -709,11 +720,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             if (container.IsCancelled && !containerPM.IsCancelled)
             {
-                this.CreateTraceEvent("RACO", containerPM.UpdateDate, null);
+                this.CreateTraceEventWithOutNotes("RACO", containerPM.UpdateDate);
             }
             if (!container.IsCancelled && containerPM.IsCancelled)
             {
-                this.CreateTraceEvent("CCCO", containerPM.CancelledDate, null);
+                this.CreateTraceEventWithOutNotes("CCCO", containerPM.CancelledDate);
             }
         }
 
@@ -721,7 +732,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             if (container.HasException && containerPM.IsExceptionResolved && !container.IsExceptionResolved)
             {
-                this.CreateTraceEvent("CRES", containerPM.ExceptionDate, containerPM.ExceptionResolvedDescription);
+                this.CreateTraceEventWithNotes("CRES", containerPM.ExceptionDate, containerPM.ExceptionResolvedDescription);
             }
         }
         public void DeleteContainerExceptionTraceEvent(string traceEventId, ContainerRepository containerRepository, int tenant)
