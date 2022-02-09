@@ -276,6 +276,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     EmptyContainerReturnATA = container.EmptyContainerReturnATA,
                     EmptyContainerReturnATD = container.EmptyContainerReturnATD,
                     EmptyContainerReturnETD = container.EmptyContainerReturnETD,
+                    OnCarriageGateOut = container.OnCarriageGateOut,
+                    PreCarriageGateIn = container.PreCarriageGateIn,
                 };
 
                 if (container.EntityStatus != null)
@@ -556,6 +558,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         EmptyContainerReturnATA = container.EmptyContainerReturnATA,
                         EmptyContainerReturnATD = container.EmptyContainerReturnATD,
                         EmptyContainerReturnETD = container.EmptyContainerReturnETD,
+                        OnCarriageGateOut = container.OnCarriageGateOut,
+                        PreCarriageGateIn = container.PreCarriageGateIn,
                     }).ToList();
         }
 
@@ -815,6 +819,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    EmptyContainerReturnATA = container.EmptyContainerReturnATA,
                                                    EmptyContainerReturnATD = container.EmptyContainerReturnATD,
                                                    EmptyContainerReturnETD = container.EmptyContainerReturnETD,
+                                                   OnCarriageGateOut = container.OnCarriageGateOut,
+                                                   PreCarriageGateIn = container.PreCarriageGateIn,
                                                };
             return result;
         }
@@ -1060,6 +1066,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     EmptyContainerReturnATA = container.EmptyContainerReturnATA,
                     EmptyContainerReturnATD = container.EmptyContainerReturnATD,
                     EmptyContainerReturnETD = container.EmptyContainerReturnETD,
+                    OnCarriageGateOut = container.OnCarriageGateOut,
+                    PreCarriageGateIn = container.PreCarriageGateIn,
                 };
                 MapCustomFields(containerPM, container);
             }
@@ -1319,6 +1327,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     EmptyContainerReturnATA = container.EmptyContainerReturnATA,
                     EmptyContainerReturnATD = container.EmptyContainerReturnATD,
                     EmptyContainerReturnETD = container.EmptyContainerReturnETD,
+                    OnCarriageGateOut = container.OnCarriageGateOut,
+                    PreCarriageGateIn = container.PreCarriageGateIn,
                 };
             }
 
@@ -1566,6 +1576,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     EmptyContainerReturnATA = container.EmptyContainerReturnATA,
                     EmptyContainerReturnATD = container.EmptyContainerReturnATD,
                     EmptyContainerReturnETD = container.EmptyContainerReturnETD,
+                    OnCarriageGateOut = container.OnCarriageGateOut,
+                    PreCarriageGateIn = container.PreCarriageGateIn,
                 };
                 MapCustomFields(containerPM, container);
             }

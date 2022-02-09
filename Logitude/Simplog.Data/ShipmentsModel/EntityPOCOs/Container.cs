@@ -342,6 +342,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? EmptyContainerReturnETD { get; set; }
         public DateTime? EmptyContainerReturnATD { get; set; }
         public DateTime? EmptyContainerReturnATA { get; set; }
+        public DateTime? OnCarriageGateOut { get; set; }
+        public DateTime? PreCarriageGateIn { get; set; }
 
     }
 }
