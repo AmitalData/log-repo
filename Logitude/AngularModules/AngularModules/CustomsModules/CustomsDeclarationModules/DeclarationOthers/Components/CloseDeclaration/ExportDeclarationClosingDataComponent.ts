@@ -15,7 +15,7 @@ import { DeclarationEditComponentController } from '../../../../../Customs/Contr
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { DeclarationWebService } from '../../../../../Customs/Services/WebServices/DeclarationWebService';
 import { AmendmentRequestParams } from '../../../../../Customs/DataContract/RequestParams/AmendmentRequestParams';
-import { AppTool } from '../../../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../../../Infrastructure/Tools';
 
 @Component({
     selector: 'ExportDeclarationClosingDataComponent',
