@@ -345,8 +345,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             }
 );
-            listOfTast.Add(tPendingCustomsCount);
-
+        //    listOfTast.Add(tPendingCustomsCount);
+        //    var tAllCourierDeclarationsCount = Task.Run(() =>
+        //    {
+        //        my.AllCourierDeclarationsCount = GetIQueryableDeclarationCourierStatusCountDTO(tenant).Count();
+        //        my.TookAllCourierDeclarationsCount = stopwatch.ElapsedMilliseconds;
+        //    }
+        //);
+        //    listOfTast.Add(tAllCourierDeclarationsCount);
 
 
         public List<DeclarationCourierPendingTabRecord> GetWorkSpacePendingTab(int tenant, string IntegratorId)
@@ -378,7 +384,33 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
 
         }
-        public DeclarationCourierStatusSummary GetQueriesCounts(int tenant,string IntegratorId)
+
+        private IQueryable<DeclarationCourierStatusCountDTO> GetIQueryableDeclarationCourierStatusCountDTO(int tenant)
+        {
+            var mycontext = CustomContext.GetContext(tenant);
+            IQueryable<DeclarationCourierStatusCountDTO> declarationCourierStatuses =
+                (from dc in mycontext.DeclarationCourierStatuses//.Include("Declaration")
+
+                 join d in mycontext.Declarations on dc.DeclarationId equals d.Id
+                 //  join dm in context.CourierMasters
+                 // on d.CourierMasterId equals dm.Id
+                 where dc.Tenant == tenant && d.IsCourierDeclaration == true
+                 //where dc.IsClosedForFollowUp == false
+                 select new DeclarationCourierStatusCountDTO
+                 {
+                     CourierPendingReasonList = dc.CourierPendingReasonList,
+                     FastIndividualProcessCode = dc.FastIndividualProcessCode,
+                     IsClosedForFollowUp = dc.IsClosedForFollowUp,
+                     IsCourierMissingClassification = dc.IsCourierMissingClassification,
+                     DeclarationCourierCustomStatusCode = d.CourierCustomStatusCode,
+                     DeclarationHatraDate = d.HatraDate,
+
+                 }
+                      );
+            return declarationCourierStatuses;
+        }
+
+        public DeclarationCourierStatusSummary GetQueriesCounts_Clasic(int tenant)
         {
             DeclarationCourierStatusSummary declarationCourierStatusSummary = new DeclarationCourierStatusSummary();
             IQueryable<DeclarationCourierStatus> qDeclarationCourierStatuses = GetQueryableDeclarationCourierStatuses(tenant, IntegratorId);
