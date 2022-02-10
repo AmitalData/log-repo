@@ -43,6 +43,7 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
     public ObjectTableName: string = "ARInvocie";
     public PrintButtonText: string = TextCodeTranslator.Translate("ARInvoice.B.Print");
     public BatchPrintServiceHelper:BatchPrintServiceHelper;
+    public searchText: string = "";
 
     constructor(private CD: ChangeDetectorRef) {
     super();
@@ -227,6 +228,14 @@ private selectedItems:ObservableCollection;
         });
 
     }
+
+    TextChanged(searchtext) {
+      this.timerToken = setTimeout(() => {
+          this.searchText = searchtext;
+          this.ValidateDate(null);
+      }, 500);
+  }
+
     private timerToken: any;
     ValidateDate(fieldName: any) {
         this.ValidationErrorsList = [];
@@ -286,6 +295,7 @@ private selectedItems:ObservableCollection;
 
         }
   }
+  
   private showPrintedInvoice: boolean = false;
   public get ShowPrintedInvoice() { return this.showPrintedInvoice; }
   public set ShowPrintedInvoice(value: boolean) {
@@ -360,6 +370,9 @@ private selectedItems:ObservableCollection;
     filters.addAdditionalFilter("ARInvoiceTypeCode", "IT", null ,null, "Equal", false, false, false, "string"); 
     filters.SortBy = sortingCol;
     filters.SortDirection = sortingDir;
+
+    if(this.searchText)
+    filters.addAdditionalFilter("InvoiceNumber", this.searchText, null, null, "Contains", false, false, false, "string");
 
 
     return this.entityListService.getByFilters("ARInvoice", filters);
