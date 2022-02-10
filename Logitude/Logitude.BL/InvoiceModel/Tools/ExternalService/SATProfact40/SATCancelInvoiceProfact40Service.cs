@@ -37,6 +37,7 @@ using System.Xml.Serialization;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Logitude.BL.Resolvers;
+using Profact.TimbraCFDI40;
 
 namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 {
@@ -44,13 +45,13 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
     {
         private ARInvoicePM arInvoicePM;
         private ARInvoice arInvoice;
-        private SATBaseProfact40Service sATBaseProfact40Service;
+        private SATCommunicationLogBuilder sATCommunicationLogBuilder;
 
         public SATCancelInvoiceProfact40Service(ARInvoicePM arInvoicePM, ARInvoice arInvoice)
         {
             this.arInvoicePM = arInvoicePM;
             this.arInvoice = arInvoice;
-            this.sATBaseProfact40Service = new SATBaseProfact40Service(arInvoicePM.Tenant);
+            this.sATCommunicationLogBuilder = new SATCommunicationLogBuilder(arInvoicePM.Tenant);
         }
 
         public void SendRequest()
@@ -58,17 +59,17 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             bool isValidToTransferToSAT = ValidateTransferToSAT();
             if (!isValidToTransferToSAT)
             {
-                SetSATTransferStatus("ND");
+                SetSATTransferStatus(SATData.NoTransferNeedSATTransferStatusCode);
                 return; 
             }
 
-            BuildProfactCommunicationLog40();
-            SetSATTransferStatus("TG");
+            BuildProfactCommunicationLog();
+            SetSATTransferStatus(SATData.InTransferingSATTransferStatusCode);
         }
 
         private bool ValidateTransferToSAT()
         {
-            if (arInvoice.SATTransferStatusCode == "TG")
+            if (arInvoice.SATTransferStatusCode == SATData.InTransferingSATTransferStatusCode)
                 throw new ApplicationException("You are not allowed to void the invoice while its status is Transferring to SAT");
 
             if (!string.IsNullOrEmpty(arInvoice.SATXML))
@@ -84,17 +85,17 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             arInvoice.SATTransferStatusCode = arInvoicePM.SATTransferStatusCode = sATStatusCode;
         }
 
-        private void BuildProfactCommunicationLog40()
+        private void BuildProfactCommunicationLog()
         {
-            Profact.TimbraCFDI40.Comprobante comprobante = GetProfact40Comprobante();
-            sATBaseProfact40Service.BuildProfactCommunicationLog40(new Profact40CommunicationLogArgs{ Comprobante = comprobante, EntityId = arInvoicePM.Id, EntityReference = arInvoicePM.InvoiceNumber.ToString(), IsCancellation = true });
+            Comprobante comprobante = GetProfactComprobante();
+            sATCommunicationLogBuilder.Build(new SATCommunicationLogArgs{ Comprobante = comprobante, EntityId = arInvoicePM.Id, EntityReference = arInvoicePM.InvoiceNumber.ToString(), IsCancellation = true });
         }
 
-        private Profact.TimbraCFDI40.Comprobante GetProfact40Comprobante()
+        private Comprobante GetProfactComprobante()
         {
             Encoding uTF8Encoding = Encoding.UTF8;
             byte[] profactoXMLData = uTF8Encoding.GetBytes(arInvoice.SATXML);
-            return LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI40.Comprobante>(profactoXMLData);
+            return LogitudeXmlSerializer.DeserializeObject<Comprobante>(profactoXMLData);
         }
     }
 }
