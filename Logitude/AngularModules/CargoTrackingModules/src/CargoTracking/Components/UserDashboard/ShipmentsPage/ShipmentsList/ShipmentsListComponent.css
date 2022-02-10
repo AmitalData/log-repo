@@ -141,6 +141,7 @@ h1{
     margin: 0 auto;
     height: auto;
     flex-grow: 1;
+    width: 100%;
 }
 
 .scrollable-table>.table {
@@ -956,5 +957,18 @@ h1{
 
     .no-result-div img {
         width: 80px;
+    }
+}
+
+
+@media screen and (min-height: 479px) and (orientation: landscape),
+(min-width: 479px) and (orientation: portrait)
+{
+    .column .circle-image div svg {
+        width: 40px;
+        height: 44px;
+        position: relative;
+        top: 20px;
+        padding-right: 5px;
     }
 }
