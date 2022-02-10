@@ -1665,29 +1665,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private DateTime? hatraDate ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime? HatraDate  
-	   {
-	    
-	     get
-		{
-		   return hatraDate;
-		 }
-		 set
-		 {
-		   if(hatraDate != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HatraDate",OldValue=hatraDate,NewValue=value,PropertyType="DateTime?"};
-		    NotifyPropertyChanged(values);
-		   hatraDate=value;
-		   }
-			
-		 }
-	   }
    }
    
 }
