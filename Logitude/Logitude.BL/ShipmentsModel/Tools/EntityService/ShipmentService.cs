@@ -2934,6 +2934,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             {
                                 AddImporterApprovalReceivedQueue();
                             }
+                            if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive && (!IsImporterApprovalRequiredOldValue && entityPM.IsImporterApprovalRequired))
+                            {
+                                AddImporterApprovalReceivedQueueForCargoTracking();
+                            }
                             shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
                             shipmentAdditionalCloudData.IsImporterApprovalRequried = entityPM.IsImporterApprovalRequired;
                             ClearApprovalDenialFields();
@@ -3014,6 +3018,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 behaviour.Handle();
                 this.initializer.IsUpdatingHousesFinalArrivalDate = behaviour.IsUpdatingHouses;
             }
+        }
+
+        private void AddImporterApprovalReceivedQueueForCargoTracking()
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("CargoTrackingImporterApprovalReceivedQueue", 0);
+            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, }, tenant, null, null);
         }
 
         private void ClearApprovalDenialFields()
