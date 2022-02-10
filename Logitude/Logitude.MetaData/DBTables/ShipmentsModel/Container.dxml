@@ -1472,6 +1472,18 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="PreCarriageGateIn"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OnCarriageGateOut"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

@@ -1843,8 +1843,17 @@ export class ShipmentPayableItem extends BaseComponent {
         this.SetMaxFromTarrifIconVisibility();
         this.SetOpenAmountCell();
         this.SetExpectedAmountCell();
-        this.IsAccountedAmountVisible = this.AccountedAmount != null && this.AccountedAmount != 0;
+
         this.IsInvoicesIconVisible = (this.EntityPM.ShipmentPayableLineStatusCode == "PACC" || this.EntityPM.ShipmentPayableLineStatusCode == "ACCT") ? true : false;
+        this.IsAccountedAmountVisible = false;
+
+        if (this.ExpectedAmount != 0 && this.ExpectedAmount != null) {
+            this.IsAccountedAmountVisible = this.AccountedAmount != null && this.AccountedAmount != 0;
+        }
+
+        else {
+            this.IsAccountedAmountVisible = this.IsInvoicesIconVisible;
+        }
     }
     SetSatusTypeToolTip() {
         var myResult: string;
@@ -1959,7 +1968,6 @@ export class ShipmentPayableItem extends BaseComponent {
     public IsOpenAmountVisible: boolean = false;
     public OpenAmountColor: string = null;
     SetOpenAmountCell() {
-
         var isOpenAmountVisible = true;
 
         if (AppTool.IsNullOrEmpty(this.OpenAmount)) {
@@ -1967,7 +1975,7 @@ export class ShipmentPayableItem extends BaseComponent {
         }
 
         else if (this.OpenAmount == 0) {
-            if (AppTool.IsNullOrZero(this.Quantity) || AppTool.IsNullOrZero(this.UnitPrice)) {
+            if (this.ExpectedAmount != 0 && (AppTool.IsNullOrZero(this.Quantity) || AppTool.IsNullOrZero(this.UnitPrice))) {
                 isOpenAmountVisible = false;
             }
         }

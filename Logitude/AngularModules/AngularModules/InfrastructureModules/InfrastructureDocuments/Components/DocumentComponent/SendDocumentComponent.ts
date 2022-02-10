@@ -1190,7 +1190,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         if (!this.IsShareDocumentsViaEmail) return; 
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Title = "Share Documents Via Email";
-            messageWindow.Show("Selected documents were shared successfully."); 
+            messageWindow.Show("Your email was sent successfully."); 
     }
 
     CloseButtonClicked() {

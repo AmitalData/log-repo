@@ -1306,6 +1306,16 @@ export class ContainerPM {
     public set IsUpdateEntityException(newValue: boolean) { if (this.isUpdateEntityException != newValue) { this.isUpdateEntityException = newValue; this.MarkAsDirty("IsUpdateEntityException"); } }
        
 	 
+    private onCarriageGateOut: Date;
+    public get OnCarriageGateOut() { return this.onCarriageGateOut; }
+    public set OnCarriageGateOut(newValue: Date) { if (this.onCarriageGateOut != newValue) { this.onCarriageGateOut = newValue; this.MarkAsDirty("OnCarriageGateOut"); } }
+       
+	 
+    private preCarriageGateIn: Date;
+    public get PreCarriageGateIn() { return this.preCarriageGateIn; }
+    public set PreCarriageGateIn(newValue: Date) { if (this.preCarriageGateIn != newValue) { this.preCarriageGateIn = newValue; this.MarkAsDirty("PreCarriageGateIn"); } }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		

@@ -1,39 +1,41 @@
-import {Component} from '@angular/core';
-import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {ARInvoicePM} from '../../../../Invoice/EntityPMs/ARInvoicePM';
-import {ARInvoiceLinePM} from '../../../../Invoice/EntityPMs/ARInvoiceLinePM';
-import {ARInvoiceTotalVATPM} from '../../../../Invoice/EntityPMs/ARInvoiceTotalVATPM';
-import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
-import {ShipmentReceivablePM} from '../../../../Shipment/EntityPMs/ShipmentReceivablePM';
-import {ARInvoicePMService} from '../../../../Invoice/Services/StandardPMs/ARInvoicePMService';
-import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {DateTool, AppTool, FormatTool, ArrayTool} from '../../../../Infrastructure/Tools';
-import {CurrencyRatesService, LastRate} from '../../../../Common/Services/CurrencyRatesService';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {InvoiceTool, InvoicePartnerType} from '../../../../Invoice/Tools';
-import {InvoiceTotalsClass} from '../../../../Invoice/Args';
-import {CardList} from '../../../../Common/EntityLists/CardList';
-import {AddressList} from '../../../../Common/EntityLists/AddressList';
-import {CurrencyList} from '../../../../Common/EntityLists/CurrencyList';
-import {PaymentTermList} from '../../../../Common/EntityLists/PaymentTermList';
-import {VatTypeList} from '../../../../Common/EntityLists/VatTypeList';
-import {ChargesTypeList} from '../../../../Common/EntityLists/ChargesTypeList';
-import {CardListService} from '../../../../Common/Services/StandardLists/CardListService';
-import {CurrencyListService} from '../../../../Common/Services/StandardLists/CurrencyListService';
-import {PaymentTermListService} from '../../../../Common/Services/StandardLists/PaymentTermListService';
-import {VatTypeListService} from '../../../../Common/Services/StandardLists/VatTypeListService';
-import {ChargesTypeListService} from '../../../../Common/Services/StandardLists/ChargesTypeListService';
-import {CommonDomainService} from '../../../../Common/Services/CommonDomainService';
-import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {VatTypePercentagePM} from '../../../../Common/EntityPMs/VatTypePercentagePM';
-import {InvoiceDomainService} from '../../../../Invoice/Services/InvoiceDomainService';
-import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { Component, ViewChild, ViewContainerRef } from '@angular/core';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ARInvoicePM } from '../../../../Invoice/EntityPMs/ARInvoicePM';
+import { ARInvoiceLinePM } from '../../../../Invoice/EntityPMs/ARInvoiceLinePM';
+import { ARInvoiceTotalVATPM } from '../../../../Invoice/EntityPMs/ARInvoiceTotalVATPM';
+import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';
+import { ShipmentReceivablePM } from '../../../../Shipment/EntityPMs/ShipmentReceivablePM';
+import { ARInvoicePMService } from '../../../../Invoice/Services/StandardPMs/ARInvoicePMService';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { DateTool, AppTool, FormatTool, ArrayTool } from '../../../../Infrastructure/Tools';
+import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { InvoiceTool, InvoicePartnerType } from '../../../../Invoice/Tools';
+import { InvoiceTotalsClass } from '../../../../Invoice/Args';
+import { CardList } from '../../../../Common/EntityLists/CardList';
+import { AddressList } from '../../../../Common/EntityLists/AddressList';
+import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
+import { PaymentTermList } from '../../../../Common/EntityLists/PaymentTermList';
+import { VatTypeList } from '../../../../Common/EntityLists/VatTypeList';
+import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList';
+import { CardListService } from '../../../../Common/Services/StandardLists/CardListService';
+import { CurrencyListService } from '../../../../Common/Services/StandardLists/CurrencyListService';
+import { PaymentTermListService } from '../../../../Common/Services/StandardLists/PaymentTermListService';
+import { VatTypeListService } from '../../../../Common/Services/StandardLists/VatTypeListService';
+import { ChargesTypeListService } from '../../../../Common/Services/StandardLists/ChargesTypeListService';
+import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { VatTypePercentagePM } from '../../../../Common/EntityPMs/VatTypePercentagePM';
+import { InvoiceDomainService } from '../../../../Invoice/Services/InvoiceDomainService';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
+declare var window: any;
 
 @Component({
-    
+
     templateUrl: './NewARInvoiceComponent.html',
 })
 
@@ -47,14 +49,15 @@ export class NewARInvoiceComponent extends BaseComponent {
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+
     constructor(private entityResourceService: EntityResourceService) {
         super();
 
-        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");          
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
         this.InitializeServices();
 
-       
+
 
         if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "Intercompany")) {
             this.IsIntercompanyVisible = true;
@@ -101,6 +104,66 @@ export class NewARInvoiceComponent extends BaseComponent {
     private EntityTableName: string = null;
     private EntityReceivables: any[] = [];
     private EntitySalesmanUserId: string = null;
+
+    ngOnInit() {
+        this.BuildAdditionalFields();
+    }
+
+
+    private timerToken: any;
+    private Retries: number = 0;
+    private GeneratedComponent: any;
+    private additionalFieldsScreenCode = "ARInvoice.AdditionalFields";
+    public ShowAdditionalFieldsScreen: boolean = false;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+
+    BuildAdditionalFields() {
+
+        var objectTableId = window.ObjectTables.filter((x: any) => x.Name === this.ObjectTableName)[0].Id;
+        var myScreen = window.Screens.filter((x: any) => x.ObjectTableId === objectTableId && x.Code.toLowerCase() == this.additionalFieldsScreenCode.toLowerCase())[0];
+
+        if (myScreen == null) return;
+
+        var myScreenFields = window.ScreenFields.filter((x: any) => x.ScreenId === myScreen.Id && x.Tenant === SessionInfo.LoggedUserTenant);
+
+        if (myScreenFields.length == 0) {
+            myScreenFields = window.ScreenFields.filter((x: any) => x.ScreenId === myScreen.Id);
+        }
+
+        if (myScreenFields.length != 0) {
+            this.ShowAdditionalFieldsScreen = true;
+            this.RunComponent();
+        }
+    }
+
+    RunComponent() {
+        if (this.viewContainerRef) this.LoadChildComponent();
+        else this.RunComponentTimer();
+    }
+
+    RunComponentTimer() {
+        this.Retries++;
+        if (this.timerToken) clearTimeout(this.timerToken);      
+        if (this.Retries < 20) this.timerToken = setTimeout(() => this.RunComponent(), 1);     
+    }
+
+    LoadChildComponent() {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
+            .then(cmpRef => {
+                this.GeneratedComponent = cmpRef.instance;
+                cmpRef.instance.LoadCompleted.subscribe(s => {
+                    this.SetUIProperties_GeneratedComponent();
+                });
+                var screenCode = this.additionalFieldsScreenCode;
+                cmpRef.instance.LabelWidth = 160;
+                cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
+            });
+    }
+
+    SetUIProperties_GeneratedComponent() {
+        if (this.GeneratedComponent) this.GeneratedComponent.SetEnabled(true);       
+    }
+
 
     SetWindowArgs(myarguments: any) {
         this.shipmentPM = myarguments["Shipment"];
@@ -152,16 +215,16 @@ export class NewARInvoiceComponent extends BaseComponent {
 
             this.SetUIProperties();
             this.BuildPartnersTypes();
-           this.LoadData();
+            this.LoadData();
 
             if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
-            this.DisplaySATSettings = true;
-            this.MetodoPagoCode = SessionLocator.SATInterfaceSettings.MetodoPagoCode;
+                this.DisplaySATSettings = true;
+                this.MetodoPagoCode = SessionLocator.SATInterfaceSettings.MetodoPagoCode;
 
-            if (AppTool.IsNullOrEmpty(this.MetodoPagoCode)) {
-              this.UIProperties.SetRequired("MetodoPagoCode", this.ObjectTableName, true);
+                if (AppTool.IsNullOrEmpty(this.MetodoPagoCode)) {
+                    this.UIProperties.SetRequired("MetodoPagoCode", this.ObjectTableName, true);
+                }
             }
-          }
         });
     }
 
@@ -232,7 +295,7 @@ export class NewARInvoiceComponent extends BaseComponent {
             isFieldVisible = true;
             isFieldtEnabled = true;
 
-            if (this.EntityPM.ARInvoiceTypeCode == "CI" || this.EntityPM.ARInvoiceTypeCode == "CC") {                
+            if (this.EntityPM.ARInvoiceTypeCode == "CI" || this.EntityPM.ARInvoiceTypeCode == "CC") {
                 isFieldVisible = false;
             }
 
@@ -261,18 +324,18 @@ export class NewARInvoiceComponent extends BaseComponent {
         }
     }
     SetUIProperties_Payment() {
-      this.UIProperties.SetRequired("SATPaymentMethodCode", this.ObjectTableName, false);
-      this.UIProperties.SetRequired("MetodoPagoCode", this.ObjectTableName, false);
+        this.UIProperties.SetRequired("SATPaymentMethodCode", this.ObjectTableName, false);
+        this.UIProperties.SetRequired("MetodoPagoCode", this.ObjectTableName, false);
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
-        if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
-          this.UIProperties.SetRequired("SATPaymentMethodCode", this.ObjectTableName, true);
-        }
+            if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
+                this.UIProperties.SetRequired("SATPaymentMethodCode", this.ObjectTableName, true);
+            }
 
-        if (AppTool.IsNullOrEmpty(this.MetodoPagoCode)) {
-          this.UIProperties.SetRequired("MetodoPagoCode", this.ObjectTableName, true);
+            if (AppTool.IsNullOrEmpty(this.MetodoPagoCode)) {
+                this.UIProperties.SetRequired("MetodoPagoCode", this.ObjectTableName, true);
+            }
         }
-      }
     }
 
     // BillTo
@@ -281,7 +344,7 @@ export class NewARInvoiceComponent extends BaseComponent {
     BuildPartnersTypes() {
 
         this.BillToDependencyValue1 = InvoiceTool.GetBillToPartnerTypes();
-        this.InvoicePartners = InvoiceTool.GetARInvoicePartners(this.shipmentPM);       
+        this.InvoicePartners = InvoiceTool.GetARInvoicePartners(this.shipmentPM);
 
         if (this.EntityPM.Id == null) {
             if (this.EntityTableName == "Shipment") {
@@ -438,8 +501,8 @@ export class NewARInvoiceComponent extends BaseComponent {
                 this.billToIsCustomer = false;
                 this.billToCorePartnerTypeId = null;
                 this.InvoiceCurrencyId = SessionLocator.TenantPM.CurrencyId;
-                this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;        
-                this.IsConstituentInvoice = false;      
+                this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
+                this.IsConstituentInvoice = false;
                 this.SetUIProperties_Constituent(this.IsConstituentInvoice);
 
                 this.EntityPM.BillToIsCreditLimitEnabled = false;
@@ -473,7 +536,7 @@ export class NewARInvoiceComponent extends BaseComponent {
                             this.EntityPM.BillToCreditLimitAmount = list.CreditLimitAmount;
                             this.EntityPM.BillToCreditLimitOpenBalance = list.CreditLimitOpenBalance;
                             this.EntityPM.BillToCreditLimitWarningPercentage = list.CreditLimitWarningPercentage;
-                            this.EntityPM.BillToBlockNewInvoiceCreation = list.BlockNewInvoiceCreation;                            
+                            this.EntityPM.BillToBlockNewInvoiceCreation = list.BlockNewInvoiceCreation;
 
                             if (!this.EntitySalesmanUserId) {
                                 this.EntityPM.SalesmanUserId = list.SalesmanUserId;
@@ -482,7 +545,7 @@ export class NewARInvoiceComponent extends BaseComponent {
                             if (!AppTool.IsNullOrEmpty(list.SATPaymentMethodCode)) {
                                 this.SATPaymentMethodCode = list.SATPaymentMethodCode;
                             }
-                      
+
                             if (!AppTool.IsNullOrEmpty(list.MetodoPagoCode)) {
                                 this.MetodoPagoCode = list.MetodoPagoCode;
                             }
@@ -491,9 +554,9 @@ export class NewARInvoiceComponent extends BaseComponent {
                             }
 
                             //if (!AppTool.IsNullOrEmpty(list.UsoCFDICode)) {
-                                this.UsoCFDICode = list.UsoCFDICode; 
+                            this.UsoCFDICode = list.UsoCFDICode;
                             //}
-                           
+
 
                             if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
                                 this.InvoiceCurrencyId = list.InvoiceCurrencyId;
@@ -502,7 +565,7 @@ export class NewARInvoiceComponent extends BaseComponent {
                             if (!AppTool.IsNullOrEmpty(list.PaymentTermId)) {
                                 this.PaymentTermId = list.PaymentTermId;
                             }
-                           
+
                             if (!AppTool.IsNullOrEmpty(list.BillingAddressId)) {
                                 this.BillToAddressId = list.BillingAddressId;
                             }
@@ -522,7 +585,7 @@ export class NewARInvoiceComponent extends BaseComponent {
             }
         }
     }
-    
+
     get BillToName() { return this.EntityPM.BillToName; }
     set BillToName(newValue: string) {
         if (this.EntityPM.BillToName != newValue) {
@@ -560,7 +623,7 @@ export class NewARInvoiceComponent extends BaseComponent {
                 });
             }
         }
-    }    
+    }
 
     get InvoiceCurrencyCode() { return this.EntityPM.InvoiceCurrencyCode; }
     set InvoiceCurrencyCode(value: string) {
@@ -620,7 +683,7 @@ export class NewARInvoiceComponent extends BaseComponent {
             this.EntityPM.PaymentTermId = newValue;
 
             if (AppTool.IsNullOrEmpty(newValue)) {
-                this.PaymentTermName = null;                
+                this.PaymentTermName = null;
             }
 
             else {
@@ -850,7 +913,7 @@ export class NewARInvoiceComponent extends BaseComponent {
     //Commands 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
-    }    
+    }
     OkButtonClicked() {
         var errors: string[] = [];
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -876,8 +939,8 @@ export class NewARInvoiceComponent extends BaseComponent {
         date2.setHours(23);
         date2.setMinutes(59);
 
-        
-        
+
+
         if (this.InvoiceDate == null) {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.InvoiceDate")));
         }
@@ -1190,7 +1253,7 @@ export class NewARInvoiceComponent extends BaseComponent {
 
         this.CurrentSession.StartBusyIndicatorLoading();
 
-        this.InitializeComponent();   
+        this.InitializeComponent();
     }
 
     InitializeComponent() {
@@ -1223,7 +1286,7 @@ export class NewARInvoiceComponent extends BaseComponent {
 
         if (this.EntityPM.ARInvoiceTypeCode != "MN") {
             filteredReceivables = filteredReceivables.filter(f => f.ShipmentReceivableLineStatusCode == "OAMT"
-                && ((f.MeasurementCode == "STFE" && f.ChargesTypeCode == "ISTOR") ||(  f.Quantity != null && f.UnitPrice != null))
+                && ((f.MeasurementCode == "STFE" && f.ChargesTypeCode == "ISTOR") || (f.Quantity != null && f.UnitPrice != null))
                 && f.ARInvoiceId == null && f.ARInvoiceLineId == null);
 
             switch (this.EntityPM.ARInvoiceTypeCode) {
@@ -1240,12 +1303,12 @@ export class NewARInvoiceComponent extends BaseComponent {
                 case "CD":
                 case "CC":
                     {
-                    if (!SessionLocator.AccountingSettingPM.AllowPositiveAmountsInTheCreditNote) {
-                        filteredReceivables = filteredReceivables.filter(f => f.UnitPrice < 0 || (f.MeasurementCode == "STFE" && f.ChargesTypeCode == "ISTOR" && f.TotalAmount < 0));
-                    }
+                        if (!SessionLocator.AccountingSettingPM.AllowPositiveAmountsInTheCreditNote) {
+                            filteredReceivables = filteredReceivables.filter(f => f.UnitPrice < 0 || (f.MeasurementCode == "STFE" && f.ChargesTypeCode == "ISTOR" && f.TotalAmount < 0));
+                        }
 
-                    break;
-                }
+                        break;
+                    }
             }
 
             if (this.EntityPM.PrepaidCollectId != null && this.EntityPM.PrepaidCollectId != "B") {
@@ -1327,7 +1390,7 @@ export class NewARInvoiceComponent extends BaseComponent {
                 else {
                     invoiceLine.InvoiceCurrencyAmount = AppTool.Round((invoiceLine.LocalCurrencyAmount / this.EntityPM.InvoiceCurrencyExchangeRate), 2)
                 }
-               
+
                 this.myChargesTypeListService.getSingleFromCache(invoiceLine.ChargesTypeId).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
 
@@ -1371,7 +1434,7 @@ export class NewARInvoiceComponent extends BaseComponent {
         else if (list) {
             invoiceLine.VatTypeId = list.VatTypeId;
         }
- 
+
         if (!AppTool.IsNullOrEmpty(invoiceLine.VatTypeId)) {
             var list_VAT: VatTypeList = this.AllVatTypes.filter(f => f.Id == invoiceLine.VatTypeId)[0];
             if (list_VAT) {
@@ -1495,7 +1558,7 @@ export class NewARInvoiceComponent extends BaseComponent {
 
                 var itemVatType = this.AllVatTypes.filter(f => f.Id == item.VatTypeId)[0];
 
-                var itemTotalVAT = new ARInvoiceTotalVATPM(null);                
+                var itemTotalVAT = new ARInvoiceTotalVATPM(null);
                 itemTotalVAT.Tenant = SessionLocator.Tenant;
                 itemTotalVAT.ARInvoiceId = this.EntityPM.Id;
                 itemTotalVAT.VatTypeId = item.VatTypeId;
@@ -1514,8 +1577,8 @@ export class NewARInvoiceComponent extends BaseComponent {
             });
         }
     }
-    ComputeTotals() {      
-        this.EntityPM.SubTotalInLocalCurrency = AppTool.Round(ArrayTool.Sum(this.EntityPM.InvoiceLines, "LocalCurrencyAmount"),2);
+    ComputeTotals() {
+        this.EntityPM.SubTotalInLocalCurrency = AppTool.Round(ArrayTool.Sum(this.EntityPM.InvoiceLines, "LocalCurrencyAmount"), 2);
         this.EntityPM.SubTotalInInvoiceCurrency = AppTool.Round(ArrayTool.Sum(this.EntityPM.InvoiceLines, "InvoiceCurrencyAmount"), 2);
         this.EntityPM.AmountInLocalCurrency = AppTool.Round(this.EntityPM.SubTotalInLocalCurrency + ArrayTool.Sum(this.EntityPM.TotalVATs, "LocalVATAmount"), 2);
         this.EntityPM.AmountInInvoiceCurrency = AppTool.Round(this.EntityPM.SubTotalInLocalCurrency + ArrayTool.Sum(this.EntityPM.TotalVATs, "InvoiceCurrencyVATAmount"), 2);
@@ -1530,7 +1593,7 @@ export class NewARInvoiceComponent extends BaseComponent {
 
         else {
             if (this.EntityPM.ProfitCurrencyExchangeRate != 0) {
-                this.EntityPM.AmountInProfitCurrency = AppTool.Round(this.EntityPM.AmountInLocalCurrency / this.EntityPM.ProfitCurrencyExchangeRate,2);
+                this.EntityPM.AmountInProfitCurrency = AppTool.Round(this.EntityPM.AmountInLocalCurrency / this.EntityPM.ProfitCurrencyExchangeRate, 2);
             }
         }
     }
