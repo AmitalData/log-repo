@@ -63,15 +63,29 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 RedeemARPaymentCheques(reconciliationLedgerTransactions);
                 RedeemPaymentCheques(reconciliationLedgerTransactions);
-                var accountingContext = MainContext as IAccountingContext;
-                var bankAccount = accountingContext.BankAccounts.Where(e => e.Id == externalRecoPM.BankAccountId).First();
+
+                BankAccount bankAccount = GetBankAccountConnectedToReconcile(externalRecoPM);
+
                 externalRecoPM.CrossYearReconcile = CheckCrossYearReconcile(reconciliationLedgerTransactions, reconciliationExternalPagesLines, bankAccount);
             }
         }
 
+        private static BankAccount GetBankAccountConnectedToReconcile(ExternalReconciliationPM externalRecoPM)
+        {
+            var accountingContext = AccountingContext.GetContext(externalRecoPM.Tenant);
+            var bankAccount = accountingContext.BankAccounts.Where(e => e.Id == externalRecoPM.BankAccountId).FirstOrDefault();
+            return bankAccount;
+        }
+
         private bool CheckCrossYearReconcile(List<LedgerTransactionPM> reconciliationLedgerTransactions, List<ReconcileExternalPageLinePM> reconciliationExternalPagesLines, BankAccount bankAccount)
         {
-            var ledgerGroupedByYears = reconciliationLedgerTransactions.Where(e=>e.AccountId != bankAccount.TransferGLAcccountId).GroupBy(ledger => ledger.AccountingDate.Year).ToList();
+            List<IGrouping<int, LedgerTransactionPM>> ledgerGroupedByYears;
+
+            if (bankAccount != null)
+                ledgerGroupedByYears = reconciliationLedgerTransactions.Where(e=>e.AccountId != bankAccount.TransferGLAcccountId).GroupBy(ledger => ledger.AccountingDate.Year).ToList();
+            else
+                ledgerGroupedByYears = reconciliationLedgerTransactions.GroupBy(ledger => ledger.AccountingDate.Year).ToList();
+
             var pageLinesGroupedByYears = reconciliationExternalPagesLines.GroupBy(pageLine => pageLine.ReferenceDate.Year).ToList();
 
             var bothLinesSelected = pageLinesGroupedByYears.Count() > 0 && ledgerGroupedByYears.Count() > 0;
