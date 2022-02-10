@@ -177,14 +177,14 @@ export function VoidAPInvoice() {
 export function AssertAPInvoiceMenuButtonsDisabled() {
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceCancelApprovalButton, BaseSelectors.BeDisabled)
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceReTransferButton, BaseSelectors.BeDisabled)
-    BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceCopyButton, BaseSelectors.BeDisabled)
+   // BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceCopyButton, BaseSelectors.BeDisabled)
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceVoidButton, BaseSelectors.NotBeDisabled)
 }
 
 export function AssertAPInvoiceMenuButtonsEnabled() {
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceCancelApprovalButton, BaseSelectors.NotBeDisabled)
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceReTransferButton, BaseSelectors.BeDisabled)
-    BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceCopyButton, BaseSelectors.NotBeDisabled)
+  //  BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceCopyButton, BaseSelectors.NotBeDisabled)
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceVoidButton, BaseSelectors.NotBeDisabled)
 }
 
