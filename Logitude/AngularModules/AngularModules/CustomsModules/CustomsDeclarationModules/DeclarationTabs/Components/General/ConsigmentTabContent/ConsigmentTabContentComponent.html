@@ -874,6 +874,17 @@
                                             <td><div></div></td>
                                             <td><div></div></td>
                                         </tr>
+                                        <tr *ngIf="ShowExcludeConsignmentBoolean">
+                                            <td style="vertical-align: middle;padding-top: 2px;">
+                                                <LogLabel [ObjectFieldName]="'ExcludeConsignment'" [DataContext]="DataContext" [ObjectTableName]="'Customs.Declaration'"></LogLabel>
+                                            </td>
+                                            <td>
+                                                <CheckBox style="float: right;" [IsEnabled]="!ParentIsDisplayOnly" [IsChecked]="ExcludeConsignment" (Checked)="ExcludeConsignment = $event"></CheckBox>
+                                                <HelpIcon style="float: right; padding-right: 10px;" [HideHeader]="true" [Text]="'Customs.Declaration.O.consignmentShoudlnotSent' | TextCodeTranslationPipe" [IconSize]="14"></HelpIcon>
+                                            </td>
+                                            <td></td>
+                                            <td><div></div></td>
+                                        </tr>
                                         <tr><td><div></div></td> </tr>
                                     </table>
                                 </td>
@@ -1236,10 +1247,13 @@
                                             <!-- ManifestDate -->
 
 
-                                            <td> <div></div> </td>
-                                            <td> <div></div> </td>
-
-                                            <td><div></div></td>
+                                            <td style="vertical-align: middle;padding-top: 2px;" *ngIf="ShowExcludeConsignmentBoolean">
+                                                <LogLabel [ObjectFieldName]="'ExcludeConsignment'" [DataContext]="DataContext" [ObjectTableName]="'Customs.Declaration'"></LogLabel>
+                                            </td>
+                                            <td *ngIf="ShowExcludeConsignmentBoolean">
+                                                <CheckBox style="float: right;" [IsEnabled]="!ParentIsDisplayOnly" [IsChecked]="ExcludeConsignment" (Checked)="ExcludeConsignment = $event"></CheckBox>
+                                                <HelpIcon style="float: right; padding-right: 10px;" [HideHeader]="true" [Text]="'Customs.Declaration.O.consignmentShoudlnotSent' | TextCodeTranslationPipe" [IconSize]="14"></HelpIcon>
+                                            </td>
 
                                         </tr>
 
