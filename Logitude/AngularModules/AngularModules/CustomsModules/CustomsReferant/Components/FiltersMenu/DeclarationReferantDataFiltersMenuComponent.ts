@@ -97,7 +97,6 @@ export class DeclarationReferantDataFiltersMenuComponent
             this.UserNameFilters.AdditionalFilters = args.Filters.filter(a => a.FieldName == "ReferantUserName");
             this.DepartmentFilters.AdditionalFilters = args.Filters.filter(a => a.FieldName == "DepartmentId");
             this.DepartmentNameFilters.AdditionalFilters = args.Filters.filter(a => a.FieldName == "DepartmentName");
-            //this.apiQueryFilters.addAdditionalFilter("RetrievData", true, null, null, "Equal", true, false, false, "string", this._LOVListUsers.length == 0);
             this.QueryId = args.QuerySection;
             if (!this.QueryId) {
                 var objectFieldPMExtendedService: ObjectFieldPMExtendedService = new ObjectFieldPMExtendedService();
@@ -110,6 +109,7 @@ export class DeclarationReferantDataFiltersMenuComponent
             }
         }
 
+        this.apiQueryFilters.addAdditionalFilter("RetrievData", true, null, null, "Equal", true, false, false, "string");
         var myService: UserListService = new UserListService();
         var UserListFromFilters = this.UserFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue);
         var UserNameListFromFilters = this.UserNameFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue);
@@ -136,6 +136,7 @@ export class DeclarationReferantDataFiltersMenuComponent
                     this.LOVListUsers.push(ul)
                 }
                 i++;
+                this._CD.detectChanges();
             }, this);
         } else {
 
@@ -174,14 +175,11 @@ export class DeclarationReferantDataFiltersMenuComponent
         //this.SelectedValueChangedEmitDepartment();
 
         //this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: false });
-        this.ApplyTransportSelectedStyle();
+        this.ApplyTransportSelectedStyle();     
         if (this.myViewChildrenMultiSelectLOVComponent != null) {
             this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
             this.myViewChildrenMultiSelectLOVComponent.last.Invalidate();
         }
-
-        this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: false });
-
         this._CD.detectChanges();
         this.apiQueryFiltersChanged = false;
     }
@@ -461,16 +459,15 @@ export class DeclarationReferantDataFiltersMenuComponent
 
             this._LOVListUsers.forEach(item => { this.UserNamesListString += item["LocalName"] + ","; });//Id: "1-3697"
             this.UserNamesListString = this.UserNamesListString.slice(0, -1); // trim last comma
-
+            this.apiQueryFilters.addAdditionalFilter("ReferantUserName", this.UserNamesListString, null, null, "Equal", true, false, false, "string", true);
+            this.apiQueryFilters.addAdditionalFilter("ReferentUserId", this.UsersListString, null, null, "InListExact", false, false, false, "string", this._LOVListUsers.length == 0);
 
         } else {
             this.UsersListString = "HowCare"
             //  UserNamesListString = "HowCare"LOVListUsers
             //RemoveFilter = true;
         }
-        this.apiQueryFilters.addAdditionalFilter("ReferantUserName", this.UserNamesListString, null, null, "Equal", true, false, false, "string", true);
-        this.apiQueryFilters.addAdditionalFilter("ReferentUserId", this.UsersListString, null, null, "InListExact", false, false, false, "string", this._LOVListUsers.length == 0);
-        this.apiQueryFilters.addAdditionalFilter("RetrievData", true, null, null, "Equal", true, false, false, "string", this._LOVListUsers.length == 0);
+        
         this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
         this.apiQueryFiltersChanged = true;
     }
@@ -488,14 +485,14 @@ export class DeclarationReferantDataFiltersMenuComponent
             this.DepartmentListString = this.DepartmentListString.slice(0, -1); // trim last comma
             this.LOVListDepartment.forEach(item => { this.DepartmentNamesListString += item["LocalName"] + ","; });//Id: "1-3697"
             this.DepartmentNamesListString = this.DepartmentNamesListString.slice(0, -1); // trim last comma
-
+            this.apiQueryFilters.addAdditionalFilter("DepartmentName", this.DepartmentNamesListString, null, null, "Equal", true, false, false, "string", true);
+            this.apiQueryFilters.addAdditionalFilter("DepartmentId", this.DepartmentListString, null, null, "InListExact", false, false, false, "string", this.LOVListDepartment.length == 0);
         } else {
             this.DepartmentListString = "HowCare";
             //  DepartmentNamesListString =  "HowCare";
-            RemoveFilter = true;
+           //RemoveFilter = true;
         }
-        this.apiQueryFilters.addAdditionalFilter("DepartmentName", this.DepartmentNamesListString, null, null, "Equal", true, false, false, "string", true);
-        this.apiQueryFilters.addAdditionalFilter("DepartmentId", this.DepartmentListString, null, null, "InListExact", false, false, false, "string", this.LOVListDepartment.length == 0);
+        
         this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
         this.apiQueryFiltersChanged = true;
 
