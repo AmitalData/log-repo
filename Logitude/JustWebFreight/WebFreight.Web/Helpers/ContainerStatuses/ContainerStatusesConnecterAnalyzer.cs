@@ -1243,6 +1243,8 @@ namespace WebFreight.Web.Helpers.Analyzers
                 container.Transshipment2LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment2Location);
                 container.Transshipment3LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment3Location);
                 container.Transshipment4LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment4Location);
+                container.GateIn = containerUpdatedFields.POLGateIn;
+                container.GateOut = containerUpdatedFields.PODGateOut;
                 container.IsAutomaticUpdates = true;
                 this.SaveContainer();
             }
@@ -1373,6 +1375,8 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.CustomsReleaseDate = this.ComputeCustomsReleaseDate();            
             containerUpdatedFields.CarrierReleaseDate = this.ComputeCarrierReleaseDate();
             containerUpdatedFields.AvailablityDate = this.ComputeAvailablityDate();
+            containerUpdatedFields.POLGateIn = this.ComputePOLGateIn();
+            containerUpdatedFields.PODGateOut = this.ComputPODGateOut();
             return containerUpdatedFields;
         }
 
@@ -2153,7 +2157,7 @@ namespace WebFreight.Web.Helpers.Analyzers
 
             return null;
         }
-        private DateTime? ComputeGateIn()
+        private DateTime? ComputePOLGateIn()
         {
             if (!string.IsNullOrEmpty(gateInDate_actual))
             {
@@ -2162,7 +2166,7 @@ namespace WebFreight.Web.Helpers.Analyzers
 
             return null;
         }
-        private DateTime? ComputeGateOut()
+        private DateTime? ComputPODGateOut()
         {
             if (!string.IsNullOrEmpty(pod_departure_actual))
             {
@@ -2690,8 +2694,8 @@ namespace WebFreight.Web.Helpers.Analyzers
         public DateTime? ActualLIFArrival { get; set; }
         public DateTime? EstimatedOnCarriageDeparture { get; set; }
         public DateTime? ActualOnCarriageDeparture { get; set; }
-        public DateTime? GateIn { get; set; }
-        public DateTime? GateOut { get; set; }
+        public DateTime? POLGateIn { get; set; }
+        public DateTime? PODGateOut { get; set; }
         public string EmptyReturnLocation { get; set; }
         public DateTime? EstimatedEmptyReturn { get; set; }
         public DateTime? ActualEmptyReturn { get; set; }
