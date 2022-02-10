@@ -13,6 +13,7 @@ using Logitude.BL.Resolvers;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Update.PatchDistribution;
+using Newtonsoft.Json;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -275,6 +276,45 @@ namespace Logitude.Update.SandBox
 
             var fixJournaRecolService = new FixJournaRecolService();
             fixJournaRecolService.FixByJournalNumber(JournalNumber, Tenant);
+        }
+
+        private void intgrityCheckToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AccountingIntegrityInParam param = new AccountingIntegrityInParam()
+            {
+                Tenant = 118 ,
+                FromMonthInclusive =  new DateTime( DateTime.Now.Year,1,1),
+                ToMonthInclusive = DateTime.Now,
+
+            };
+            string serializeObjectstring = "";
+            try
+            {
+
+
+
+                var accountingIntegrityService = new AccountingIntegrityService();
+
+                string errorMessage = accountingIntegrityService.CheckParams(param);
+                if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    throw new Exception(errorMessage);
+                }
+                var res = accountingIntegrityService.CheckIntegrity(param);
+
+                serializeObjectstring = JsonConvert.SerializeObject(res);
+
+
+
+            }
+            catch (Exception)
+            {
+                param = null;
+                throw;
+            }
+            finally
+            {
+            }
         }
     }
 }

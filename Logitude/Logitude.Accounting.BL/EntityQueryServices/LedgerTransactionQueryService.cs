@@ -398,9 +398,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             }
             else
             {
-                var rqNotinJournalLine = qNotinJournalLine.ToList();
-                var rqNotinLedgerTrans = qNotinLedgerTrans.ToList();
-                var rqDiff = qDiffAmount.ToList();
+                var rqNotinJournalLine = qNotinJournalLine.Take(30).ToList();
+                var rqNotinLedgerTrans = qNotinLedgerTrans.Take(30).ToList();
+                var rqDiff = qDiffAmount.Take(30).ToList();
                 return //rqNotinJournalLine.Union(rqNotinLedgerTrans).Union(rqDiff).ToList();
                 rqNotinJournalLine.Concat(rqNotinLedgerTrans).Concat(rqDiff).ToList();
             }
