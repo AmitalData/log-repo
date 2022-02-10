@@ -180,6 +180,8 @@ export class DeclarationReferantDataFiltersMenuComponent
             this.myViewChildrenMultiSelectLOVComponent.last.Invalidate();
         }
 
+        this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: false });
+
         this._CD.detectChanges();
         this.apiQueryFiltersChanged = false;
     }
