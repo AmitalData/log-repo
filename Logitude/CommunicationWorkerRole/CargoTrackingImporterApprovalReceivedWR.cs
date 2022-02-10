@@ -138,6 +138,7 @@ namespace CommunicationWorkerRole
                 return;
             }
             string ShipmentId = response.MessageValues["ShipmentId"].ToString();
+            int.TryParse(response.MessageValues["Tenant"], out tenant);
             var shipmentAdditionalCloudData = GetShipmentAdditionalCloudData(ShipmentId, tenant);
             if (shipmentAdditionalCloudData == null)
             {
@@ -269,7 +270,6 @@ namespace CommunicationWorkerRole
                     Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, null, commLog.CommunicationStatusTypeCode, "Before adding message to queue ImporterApprovalReceived " + DateTime.Now.ToString(), null);
                     SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, tenant);
                     Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, null, commLog.CommunicationStatusTypeCode, "after adding message to queue  ImporterApprovalReceived " + DateTime.Now.ToString(), null);
-
                 }
                 catch (Exception ex)
                 {
