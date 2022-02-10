@@ -173,7 +173,7 @@
                         <li *ngIf="ShipmentOrder?.PONumber != null">
                             <custom-label>{{ShipmentOrder?.PONumber}} </custom-label>
                         </li>
-                
+
                     </ul>
                     <ul *ngIf="showMoreReferences">
                         <li *ngFor="let ref of ShipmentReferences, let i = index">
@@ -833,7 +833,7 @@
                             (click)="MoveRoutingSlider('right')">
                             <img class="FlipImgHoriz" src="./assets/images/icons/right-arrow@2x.png" alt="" />
                         </div>
-                        <div *ngIf="!NoMilstonesFound" class="slider" [style.width.px]="routingSliderVisibleCardsWidth">
+                        <div *ngIf="!NoMilstonesFound" class="slider" style="width: 100%;">
                             <div class="cards" [style.margin-left.px]="routingSliderMarginLeft" style="height:212px">
                                 <div *ngIf="cargoTrackingShipmentPM.RoutingSteps?.length > 0" class="routing-timeline">
                                     <div class="routing-step" [class.active]="step.IsActive"
