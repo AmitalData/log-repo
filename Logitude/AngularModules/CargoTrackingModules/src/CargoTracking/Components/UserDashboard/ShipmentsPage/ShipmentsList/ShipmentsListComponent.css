@@ -546,7 +546,11 @@ h1{
     z-index: 99;
     width: 340px;
     transition: 1s all ;
+
     /* padding: 20px; */
+}
+.filters-sidebar ul{
+    max-height: calc(100% - 120px);
 }
 .weight-quantity{
     white-space: nowrap;
@@ -940,4 +944,17 @@ h1{
     font-weight: normal;
     padding-top: 5px;
     text-transform: capitalize;
+}
+
+
+
+@media screen and (max-height: 479px) and (orientation: landscape)
+{
+    .no-result-div {
+        padding-top: 25px !important;
+    }
+
+    .no-result-div img {
+        width: 80px;
+    }
 }

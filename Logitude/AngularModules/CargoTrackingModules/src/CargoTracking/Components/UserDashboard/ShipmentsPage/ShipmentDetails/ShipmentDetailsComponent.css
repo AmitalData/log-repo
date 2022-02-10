@@ -243,7 +243,7 @@ h1 {
             flex:50%;
             min-height:22px;
         }
-        
+
     .slider .card .title {
         font-size: 15px;
         font-weight: 600;
@@ -333,7 +333,9 @@ h1 {
         .back-to-shipments{
             display: block;
         }
-@media screen and (max-width: 479px) {
+
+@media screen and (max-width: 479px) and (orientation: portrait),
+(max-height: 479px) and (orientation: landscape) {
     .back-to-shipments{
         display: none;
     }
@@ -539,7 +541,10 @@ h1 {
 .routing-step.active .route-direction svg path{
     fill: #fff !important;
 }
-@media screen and (min-width: 479px){
+
+@media screen and (min-width: 479px) and (orientation: portrait),
+(min-height: 479px) and (orientation: landscape) {
+
     .routing-timeline{
         flex-flow: row wrap;
     }
@@ -653,7 +658,9 @@ h1 {
         margin-right:20px;
     }
 }
-@media screen and (max-width: 479px){
+
+@media screen and (max-width: 479px) and (orientation: portrait),
+(max-height: 479px) and (orientation: landscape) {
     .mobile-font-12{
         font-size: 12px;
     }
@@ -758,10 +765,11 @@ h1 {
 .partners-footer-buttons {
     margin-top: 20px;
 }
+@media screen and (max-width: 479px) and (orientation: portrait),
+(max-height: 479px) and (orientation: landscape) {
 
-@media screen and (max-width: 479px) {
     .partner-card {
-        width: calc(100vw - 80px) !important;
+        width: calc(100% - 40px) !important;
         margin-bottom: 15px;
         height: unset !important;
         min-height: unset !important;
@@ -929,8 +937,8 @@ h1 {
 }
 
 
-
-@media screen and (max-width: 479px) {
+@media screen and (max-width: 479px) and (orientation: portrait),
+(max-height: 479px) and (orientation: landscape) {
 
     .special-padding{
         padding: 50px 10px 0 10px;

@@ -119,8 +119,9 @@ h1{
     width: calc(100% - 30px);
   }
 
-
-  @media screen and (max-width: 700px) {
+  @media screen and (max-width: 700px) and (orientation: portrait),
+  (max-height: 700px) and (orientation: landscape)
+ {
     .sidebar {
       width: 100%;
       height: auto;
@@ -132,14 +133,16 @@ h1{
     div.content {margin-left: 0;}
   }
 
-  @media screen and (min-width: 480px) {
+  @media screen and (min-width: 479px) and (orientation: portrait),
+  (min-height: 479px) and (orientation: landscape) {
     .sidebar {
         padding-top: 93px;
         box-sizing: border-box;
     }
   }
 
-  @media screen and (max-width: 479px) {
+  @media screen and (max-width: 479px) and (orientation: portrait),
+  (max-height: 479px) and (orientation: landscape) {
     div.content {
       padding: 0 15px;
     }

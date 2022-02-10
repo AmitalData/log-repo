@@ -32,7 +32,7 @@ li {
 
 .truncateText{
     white-space: nowrap;
-    overflow: hidden; 
+    overflow: hidden;
     text-overflow: ellipsis;
 }
 li:hover {
@@ -136,7 +136,7 @@ li a {
     .page-title {
         margin-top: 70px !important;
         text-align: left;
-       
+
     }
     .column {
         display: block;
@@ -369,7 +369,10 @@ li a {
     }
 }
 
-@media screen and (min-width: 479px) {
+
+@media screen and (min-width: 479px) and (orientation: portrait),
+(min-height: 479px) and (orientation: landscape)
+{
     .scrollable-table {
         width: 100%;
         /* overflow-y: visible;
@@ -507,7 +510,7 @@ li a {
     /* padding-top: 130px; */
     width: 600px;
     margin: 0 auto;
-    
+
     margin-top: 80px;
     line-height: 18px;
     height: 140px;
@@ -519,7 +522,9 @@ li a {
     padding: 10px 15px;
 }
 
-@media screen and (max-width: 479px) {
+@media screen and (max-width: 479px) and (orientation: portrait),
+(max-height: 479px) and (orientation: landscape)
+{
     .search-text {
         /* margin: 0 20px; */
         /* width: 100%; */
@@ -590,3 +595,19 @@ li a {
     }
 }
 
+
+
+@media screen and (max-width: 479px) and (orientation: portrait),
+(max-height: 479px) and (orientation: landscape) {
+    .search-wrapper {
+        height: calc(96vh - 110px);
+        min-height: calc(96vh - 24px);
+    }
+    .no-result-div {
+        padding-top: 0px !important;
+    }
+    .vertical-center {
+        padding-top: 70px;
+    }
+
+}
