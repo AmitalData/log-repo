@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;04a5&quot;"
+  Code="&quot;48c9&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -7207,15 +7207,6 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-      Code="&quot;SHAREDCARGOTRACKING&quot;"
-      FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.SHAREDCARGOTRACKING&quot;"
-      FeatureDefaultText="&quot;Shared Cargo Tracking&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
-    <Feature
       Code="&quot;QUOTECHARGESGROUP&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.QUOTECHARGESGROUP&quot;"
@@ -7229,6 +7220,15 @@
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.General.Features.CustomerTeam&quot;"
       FeatureDefaultText="&quot;Customer Teams&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;SHLOGCARGOTRACKING&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.SHLOGCARGOTRACKING&quot;"
+      FeatureDefaultText="&quot;Shared Logistic Cargo Tracking&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
