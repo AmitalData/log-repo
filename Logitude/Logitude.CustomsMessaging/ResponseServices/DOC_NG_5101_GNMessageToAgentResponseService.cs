@@ -532,11 +532,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 DoUpdateNotification(notificationDefinitionCode, requestParams.Tenant, responseToMessage, notificationDescription, assigneToNotificationTypeCode);
             }
-
-            if (this._MyDeclarationPM != null && this._MyDeclarationPM.Direction == "E" && customResponse.MessageToAgent.responseToMessage != null)
-            {
-
-            }
         }
 
         private void DoUpdateNotification(string notificationDefinitionCode, int tenant, string responseToMessage, string description, string typeCode)
@@ -557,7 +552,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             newNotificationPM.DueDate = DateTime.Now;
             newNotificationPM.AssigneToNotificationTypeCode = typeCode;
             
-            if(this._MyDeclarationPM.Direction == "e")
+            if(this._MyDeclarationPM.Direction == "E")
                 newNotificationPM.ResponseToMessage = responseToMessage;
 
             string customerId = null;
