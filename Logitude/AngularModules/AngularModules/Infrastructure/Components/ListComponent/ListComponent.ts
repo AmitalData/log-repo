@@ -916,6 +916,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                         this.FiltersMenu = new ApiQueryFilters();
                                         this.FiltersMenu = $event.Filters;
                                         this.MenuHeaderchangeevent.emit({ Filters: $event.Filters, RemoveFilter: $event.RemoveFilter })
+                                        this.CD.detectChanges();
                                     });
 
                                 });
