@@ -220,6 +220,7 @@
     <None Include="DBScripts\GlobalModel\RemoveEntityChangeWorkerRole.sxml" />
     <None Include="DBScripts\InfrastructureModel\202111301850_UpdateContainerEntityStatuesNames.sxml" />
     <None Include="DBScripts\InfrastructureModel\202111081530_FillEntityStatusTypes.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202201160624_FillQuoteChargesGroup.sxml" />
     <None Include="DBScripts\InfrastructureModel\UpdateEntityStatusLocalWeight.sxml" />
     <None Include="DBScripts\InvoiceModel\202201152150_UpgradeSATProf32ToProf33.sxml" />
     <None Include="DBScripts\InvoiceModel\202111041254_FillARPaymentBankTranferFromARPayment.sxml" />
