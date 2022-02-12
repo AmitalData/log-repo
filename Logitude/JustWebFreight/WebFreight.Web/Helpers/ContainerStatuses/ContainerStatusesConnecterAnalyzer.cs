@@ -213,6 +213,10 @@ namespace WebFreight.Web.Helpers.Analyzers
         string PODShipmentUpdateIndicator = null;
         string computingPartnerCode;
         private bool IsUpdatingPackages = false;
+        private ContainersExternalData containersExternalData_DB;
+        private ContainersExternalData containersExternalData_New;
+        private ContainersExternalDataRepository containersExternalDataRepository;
+        private ContainersExternal containersExternal;
 
         public ContainerStatusesConnecterAnalyzer(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
         {
@@ -711,6 +715,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             this.vesselRepository = new VesselRepository(logitudeTenant.Value);
             this.portTimeZoneRepository = new PortTimeZoneRepository(logitudeTenant.Value);
             this.computingPartnerTranslator = new ComputingPartnerTranslationHelper(logitudeTenant.Value);
+            this.containersExternalDataRepository = new ContainersExternalDataRepository(shipmentContext);
         }
         private bool IsUpdatingShipmentAndContainer()
         {
@@ -1128,6 +1133,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (container != null)
             {
+                this.GetContainersExternalData();
                 ContainerUpdatedFields containerUpdatedFields = this.BuildContainerUpdatedFields();
                 this.FillFieldsNewValues("MainCarriageETD", containerUpdatedFields.MainCarriageETD, container);
                 this.FillFieldsNewValues("MainCarriageETA", containerUpdatedFields.MainCarriageETA, container);
@@ -1243,12 +1249,33 @@ namespace WebFreight.Web.Helpers.Analyzers
                 container.Transshipment2LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment2Location);
                 container.Transshipment3LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment3Location);
                 container.Transshipment4LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment4Location);
-                container.GateIn = containerUpdatedFields.POLGateIn;
-                container.GateOut = containerUpdatedFields.PODGateOut;
                 container.IsAutomaticUpdates = true;
                 this.SaveContainer();
             }
         }
+
+        private void GetContainersExternalData()
+        {
+            this.containersExternal = new ContainersExternal();
+            this.containersExternalData_DB = containersExternalDataRepository.GetSingleContainersExternalData(container.Id, container.Tenant);
+            if (containersExternalData_DB == null)
+            {
+                this.containersExternalData_DB = new ContainersExternalData() { Id = container.Id, Tenant = container.Tenant };
+                containersExternal.IsNew = true;
+            }
+            containersExternal.ContainersExternalData_DB = this.containersExternalData_DB;
+            containersExternal.IsFromOceanInsights = true;
+            this.SetContainersExternalData(containersExternal);
+        }
+
+        private void SetContainersExternalData(ContainersExternal containersExternal)
+        {
+            this.containersExternalData_New = new ContainersExternalData() { Id = container.Id, Tenant = container.Tenant };
+            this.containersExternalData_New.GateIn = this.ComputePOLGateIn();
+            this.containersExternalData_New.GateOut = this.ComputPODGateOut();
+            containersExternal.ContainersExternalData_New = this.containersExternalData_New;
+        }
+
         private void UpdatePackage()
         {
             this.IsUpdatingPackages = false;
@@ -1375,8 +1402,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.CustomsReleaseDate = this.ComputeCustomsReleaseDate();            
             containerUpdatedFields.CarrierReleaseDate = this.ComputeCarrierReleaseDate();
             containerUpdatedFields.AvailablityDate = this.ComputeAvailablityDate();
-            containerUpdatedFields.POLGateIn = this.ComputePOLGateIn();
-            containerUpdatedFields.PODGateOut = this.ComputPODGateOut();
+           
             return containerUpdatedFields;
         }
 
@@ -2345,7 +2371,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         private void SaveContainer()
         {
             ContainerService containerService = new ContainerService(shipmentContext, logitudeTenant.Value);
-            containerService.Update(container);
+            containerService.Update(container, containersExternal);
         }
         private void SaveShipment(ShipmentPM shipmentPM)
         {
@@ -2732,4 +2758,5 @@ namespace WebFreight.Web.Helpers.Analyzers
         public string TimeZoneSign { get; set; }
         public TimeSpan TimeZone { get; set; }
     }
+
 }
