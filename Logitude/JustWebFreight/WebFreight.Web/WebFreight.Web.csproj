@@ -3426,6 +3426,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBCustomsInformationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBInformationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ContainerFollowUpUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ContainersExternalDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ContainerStatusSourceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ContainerStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ContainerUpdateClass.cs" />
