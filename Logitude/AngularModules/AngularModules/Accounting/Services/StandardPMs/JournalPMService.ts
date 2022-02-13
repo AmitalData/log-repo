@@ -486,6 +486,8 @@ export class JournalPMService {
             }
 			 newJournalExternalReconcilePM.DisableMarkAsDirty = false;
 			 newJournalExternalReconcilePM.IsDirty = false;
+             newJournalExternalReconcilePM.ReconcileExternalPageLineId = newJournalExternalReconcilePM.ReconcileExternalPageLineId == null ? "-" 
+             : newJournalExternalReconcilePM.ReconcileExternalPageLineId;
             entityPM.JournalExternalReconciles.push(newJournalExternalReconcilePM);
         }
         if (oldJournalExternalReconciles) {
