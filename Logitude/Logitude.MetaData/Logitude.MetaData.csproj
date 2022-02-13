@@ -179,6 +179,7 @@
       <LastGenOutput>ControllersGenerator.cs</LastGenOutput>
       <LastOutputs>.\ControllersGenerator.cs</LastOutputs>
     </Content>
+    <None Include="EntityFiles\ShipmentsModel\ContainersExternalData.lxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\usp_UpdatePortSearchFieldsFunction.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\usp_UpdateShippingLineSearchFieldsFunction.dxml" />
     <None Include="DBOthers\CommonDataModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateVatTypes.dxml" />

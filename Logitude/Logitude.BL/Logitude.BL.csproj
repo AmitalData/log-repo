@@ -525,6 +525,7 @@
     <Compile Include="DataContracts\QuoteDashboardArguments.cs" />
     <Compile Include="ExternalService\IEntityAutomationMappingPMFields.cs" />
     <Compile Include="Helpers\AddManualTraceEventsHelper.cs" />
+    <Compile Include="Helpers\ContainersExternal.cs" />
     <Compile Include="Helpers\ContainerStatusesHelper.cs" />
     <Compile Include="Helpers\DWObjectFieldsGroupedService.cs" />
     <Compile Include="Helpers\ObjectFieldPropertyGetter.cs" />
@@ -2909,6 +2910,7 @@
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentTypeQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\SpecialServicesTypeQuery.cs" />
     <Compile Include="ShipmentsModel\Testing\General.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\ContainersExternalDataBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\IShipmentBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\MasterHousesBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviourFacade.cs" />
