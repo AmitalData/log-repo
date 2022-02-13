@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BankDepositUpdateClass
    {  		
-		public const string HashString = "152c2d64e5efa48d9968e4f7b0c19a54";
+		public const string HashString = "b66aa85642f5c5b2d38b116b662c08fd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2366,6 +2366,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode BankDepositTextCode_BankDepositODepositAmountmustbelessthanCashbook = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.O.DepositAmountmustbelessthanCashbook", DefaultText = "Deposit amount should be less than or equal cashbook total",LocalDefaultText = @"סכום ההפקדה צריך להיות קטן או שווה לסכום בקופה", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode BankDepositTextCode_BankDepositODepositCancelChequeMSG = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.O.DepositCancelChequeMSG", DefaultText = "The deposit can’t be cancelled, at least one one cheques have been redeemed, you should cancel the external reconciliation in order to return the cheque to the cashbook",LocalDefaultText = @"לא ניתן לבטל את ההפקדה, משום שהיא מכילה לפחות המחאה אחת שנפרעה, יש לבטל את ההתאמה החיצונית ע”מ להחזיר את ההמחאה לקופה", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankDepositTextCode_BankDepositOAlreadyDeposited = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.O.AlreadyDeposited", DefaultText = "There is a cheques was already deposited, please reload the screen",LocalDefaultText = @"קיים בהפקדה שיק שכבר הופקד. ( יש לרענן את המסך)", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
