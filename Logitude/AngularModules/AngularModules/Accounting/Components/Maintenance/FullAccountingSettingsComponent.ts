@@ -29,7 +29,9 @@ import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { BookingWizardPackageItem } from 'Booking/Components/BookingWizard/Packages/PackagesTabComponent';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 
+const DebtorsAndCreditorsChartOfAccountTypeCode = '7';
 @Component({
 
     selector: 'FullAccountingSettingsComponent',
@@ -52,6 +54,10 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     fullAccountingSettingListService: FullAccountingSettingListService;
     tenantPMService: TenantPMService;
     private CurrentSession = SessionLocator.SelectedSession;
+    public TaxInstitutionGLAccountFilterItems: ApiQueryFilters = new ApiQueryFilters();
+
+
+
     constructor(public serviceArgs: ServiceArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -99,6 +105,10 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         });
 
         this.UIProperties.SetEnabled("AccountingActivationDate", "Tenant", false);
+
+
+        this.TaxInstitutionGLAccountFilterItems.addAdditionalFilter('ChartOfAccountsTypeCode', DebtorsAndCreditorsChartOfAccountTypeCode, null, null, 'Equals', false, false, false, 'string', false);
+
 
     }
     InsertIfNotExist() {
@@ -149,7 +159,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
    public enableAllFields: boolean = false;
     SetUIProperties() {
 
-       
+
         if (this.AccountingActivated && this.AccountingActivationDate != null) {
             this.enableAllFields = true;
         }
@@ -504,6 +514,16 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             }
         }
     }
+
+
+    get TaxInstitutionGLAccountId() { return this.EntityPM.TaxInstitutionGLAccountId; }
+    set TaxInstitutionGLAccountId(value: string) {
+        if (this.EntityPM.TaxInstitutionGLAccountId != value) {
+            this.EntityPM.TaxInstitutionGLAccountId = value;
+        }
+    }
+
+
 
     //#endregion
 
