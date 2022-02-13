@@ -387,7 +387,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             if (FeatureLocator.HasFeaturePermession("Quote", "QouteEditExchangeRate")) {
                 if (this.SaleCurrencyId) {
                     if (this.SaleCurrencyId != SessionLocator.LocalCurrencyId) {
-                        isExchangeRateEnabled = false;
+                        isExchangeRateEnabled = true;
                     }
                 }
             }
