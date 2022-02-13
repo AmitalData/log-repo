@@ -42,7 +42,7 @@ namespace AmitalCustomsWindowsService.BL
             }
 
             _TWorker =  new TWorker();
-            _TWorker.QueueDefinitionCode = this.QueueDefinitionCode;
+            _TWorker.QueueGroupCodeRabbit = this.QueueDefinitionCode;
             _TWorker.WorkerQueueType = this.WorkerQueueType;
             _TWorker.DebugMode = debugMode;
             _TWorker.DebugObject = DebugObject;
@@ -151,9 +151,20 @@ namespace AmitalCustomsWindowsService.BL
         }
 
         public bool WhileServiceStarted_IsOut { get; private set; }
-        public string QueueDefinitionCode { get; internal set; }
-        public WorkerQueueType WorkerQueueType { get; internal set; }
+        public string QueueDefinitionCode
+        {
+            get { return _TWorker.QueueGroupCodeRabbit; }
+            set { _TWorker.QueueGroupCodeRabbit = value; }
 
+        }
+        public WorkerQueueType WorkerQueueType
+        {
+            get { return _TWorker.WorkerQueueType; }
+            set { _TWorker.WorkerQueueType = value; }
+
+        }
+
+       
         int _ManagedThreadId;
         
     }

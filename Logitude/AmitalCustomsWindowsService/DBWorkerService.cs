@@ -266,10 +266,15 @@ namespace AmitalCustomsWindowsService
                 listOfWorkerEntryPoint = new List<Logitude.Server.Tools.WorkerEntryPoint>();
                 listOfWorkerEntryPoint.Add(new DownloadDcaMessageSheetWR());
                 var AddWorkerFromAppSettingGenericMethod = addWorkerFromAppSettingMethodInfoDB.MakeGenericMethod(new Type[] { (new DownloadDcaMessageSheetWR()).GetType() });
-                AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck }); 
+                AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck, (object)queueDefinitionCode, (object)workerQueueType }); 
                 return;
             }
 
+            bool test = false;
+            if (test)
+            {
+                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName != "CustomsCommandGetCustomRequestWR").ToList();
+            }
 
 
             foreach (var batchServicesDefinitionPM in BatchServicesDefinitions)
@@ -292,6 +297,9 @@ namespace AmitalCustomsWindowsService
         private void SingletonFTPCommunicationLogQueue(List<Logitude.Server.Tools.WorkerEntryPoint> listOfWorkerEntryPoint)
         {
             var suppresDoOnlyCheck = false;
+            string queueDefinitionCode = null;
+            WorkerQueueType workerQueueType = WorkerQueueType.DB;
+
             var addWorkerFromAppSettingMethodInfoDB = typeof(DBWorkerService).GetMethod("AddWorkerFromAppSettingDB");
             //INSERT INTO "AMINET_GLOBAL"."BATCHSERVICESDEFINITIONS"(CODE, CLASSNAME) VALUES('SingletonFTPCommunicationWorkerRoleWinService', 'SingletonFTPCommunicationWorkerRoleWinService');
             //INSERT INTO "AMINET_GLOBAL"."BATCHSERVICESDEFINITIONMODS" VALUES('SingletonFTPCommunicationWorkerRoleWinService', '0', '1');
@@ -301,13 +309,13 @@ namespace AmitalCustomsWindowsService
             {
                 listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.SingletonFTPCommunicationWorkerRoleWinService());
                 var AddWorkerFromAppSettingGenericMethod = addWorkerFromAppSettingMethodInfoDB.MakeGenericMethod(new Type[] { (new SingletonFTPCommunicationWorkerRoleWinService()).GetType() });
-                AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck });
+                AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck, (object)queueDefinitionCode, (object)workerQueueType });
 
                 ///listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
 
                 listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
                 var AddWorkerFromAppSettingGenericMethodDown = addWorkerFromAppSettingMethodInfoDB.MakeGenericMethod(new Type[] { (new FTPToAnalyzeQueueWR()).GetType() });
-                AddWorkerFromAppSettingGenericMethodDown.Invoke(this, new object[] { (object)suppresDoOnlyCheck });
+                AddWorkerFromAppSettingGenericMethodDown.Invoke(this, new object[] { (object)suppresDoOnlyCheck, (object)queueDefinitionCode, (object)workerQueueType });
 
             }
 

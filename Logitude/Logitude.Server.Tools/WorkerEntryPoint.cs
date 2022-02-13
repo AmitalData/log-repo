@@ -140,7 +140,7 @@ namespace Logitude.Server.Tools
         public Dictionary<DateTime, int> DoneItemsInRange { get; set; }
         public string BatchServiceCode { get; set; }
         public decimal CPU { get; set; }
-        public string QueueDefinitionCode { get; set; }
+        public string QueueGroupCodeRabbit { get; set; }
         public WorkerQueueType WorkerQueueType { get; set; }
 
         public virtual bool OnStart()
