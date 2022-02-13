@@ -36,6 +36,14 @@ namespace Logitude.Accounting.BL
                 LocalName = "הסתיים", 
                 SearchFields = "2,Done,הסתיים", 
 			});
+			 
+            all.Add(new RevaluationStatusDetails()
+            {    
+                Code = "3", 
+                Name = "Failed", 
+                SearchFields = "3,Failed,נִכשָׁל", 
+                LocalName = "נִכשָׁל", 
+			});
 			
             return all;
        }
