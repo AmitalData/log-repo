@@ -208,6 +208,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
+        private void UpdateNoOfCourierHawbwWithoutHatara(CourierMasterPM _CourierMasterPM)
+        {
+            ICustomContext dbContext = CustomContext.GetContext(_CourierMasterPM.Tenant);
+            CourierMasterUpdateService courierMasterUpdateServiceUpdateService = new CourierMasterUpdateService(dbContext, new Dictionary<string, IContext>(), _CourierMasterPM.Tenant);
+            var myCourierMasterQueryService = new CourierMasterQueryService(dbContext);
+            _CourierMasterPM.ChangeSetOp = ChangeSetOperation.Update;
+            _CourierMasterPM.NoOfCourierHawbwWithoutHatara = myCourierMasterQueryService.CounNoOfCourierHawbwWithoutHatara(_CourierMasterPM.Id, _CourierMasterPM.Tenant).ToString();
+            courierMasterUpdateServiceUpdateService.Update(_CourierMasterPM, true);
+        }
         private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
         {
             AmitalContext amitalContext = AmitalContext.GetContext(tenant);
