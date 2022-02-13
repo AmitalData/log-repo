@@ -107,10 +107,15 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         this.UIProperties.SetEnabled("AccountingActivationDate", "Tenant", false);
 
 
-        this.TaxInstitutionGLAccountFilterItems.addAdditionalFilter('ChartOfAccountsTypeCode', DebtorsAndCreditorsChartOfAccountTypeCode, null, null, 'Equals', false, false, false, 'string', false);
+        this.BuildTaxInstituationFilterItems();
 
 
     }
+    private BuildTaxInstituationFilterItems()
+    {
+        this.TaxInstitutionGLAccountFilterItems.addAdditionalFilter('ChartOfAccountsTypeCode', DebtorsAndCreditorsChartOfAccountTypeCode, null, null, 'Equals', false, false, false, 'string', false);
+    }
+
     InsertIfNotExist() {
         console.log("There is no F. Accounting setting found for tenant: " + SessionLocator.Tenant);
         this.EntityPM = new FullAccountingSettingPM();
