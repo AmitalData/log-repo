@@ -4082,6 +4082,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return null;
         }
 
+        public int? GetTenantBySecurityKey(string key)
+        {
+            if (string.IsNullOrEmpty(key))
+                return null;
+
+            Shipment shipment = (from a in repository.context.Shipments
+                                 where a.SecurityKey == key
+                                 select a).FirstOrDefault();
+
+            if (shipment == null) return null;
+            return shipment.Tenant;
+        }
+
         private ShipmentPM MapShipmentToSecuredShipmentPMWithRestrictionFilters(Shipment shipment, int tenant)
         {
             ShipmentMasterData masterData = (from a in repository.context.ShipmentMasterDatas
