@@ -269,6 +269,24 @@ namespace AmitalCustomsWindowsService.Tester
                 default:
                     return;
             }
+
+            d.WorkerQueueType = checkBoxMQ.Checked ? Logitude.Server.Tools.WorkerQueueType.RabbitMQ : Logitude.Server.Tools.WorkerQueueType.DB;
+            Logitude.Server.Tools.WorkerRoleServiceLocator.PleaseShutDown = false;
+            if (checkBoxDebugMode.Checked)
+            {
+                Task.Run(async () => {
+
+                    var sw = Stopwatch.StartNew();
+                    while (sw.Elapsed<TimeSpan.FromSeconds(60))
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(2));
+                        Application.DoEvents();
+                    }    
+                    
+                    Logitude.Server.Tools.WorkerRoleServiceLocator.PleaseShutDown = true;
+
+                });
+            }
             d.ExecuteTask(); 
 
         }
@@ -1115,6 +1133,11 @@ namespace AmitalCustomsWindowsService.Tester
                 // Console.WriteLine(" Press [enter] to exit.");
                 // Console.ReadLine();
             }
+        }
+
+        private void checkBoxMQ_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -167,8 +167,12 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 return;
             }
             var interfaceTenantDefinitionQueryService = new InterfaceTenantDefinitionQueryService(queueSendModel.Tenant);
-            var currInterfaceTenantDefinition =interfaceTenantDefinitionQueryService.GetFromCacheByTenatCode(queueSendModel.Tenant, queueSendModel.InterfaceTypeCode);
-            queueSendModel.UseRabbitMQ = currInterfaceTenantDefinition.UseRabbitMQ;
+            var currInterfaceTenantDefinition = interfaceTenantDefinitionQueryService.GetFromCacheByTenatCode(queueSendModel.Tenant, queueSendModel.InterfaceTypeCode);
+
+            var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
+            var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
+            queueSendModel.UseRabbitMQ = customsEnvironmentSettingPM.UseRabbitMQ;//currInterfaceTenantDefinition.UseRabbitMQ;
+
             queueSendModel.QueueGroupCodeRabbit = currInterfaceTenantDefinition.QueueGroupCode;
             if (!string.IsNullOrWhiteSpace(queueSendModel.InterfaceTypeCode) && queueSendModel.TenantPriority == null)
             {

@@ -149,6 +149,13 @@ namespace Logitude.CustomsMessaging.RabbitMQ
             return (new ConnectionFactory() { HostName = HostName, UserName = UserName, Password = Password }); ;
         }
 
+        public static bool RabbitInUse()
+        {
+            var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
+            var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
+            return customsEnvironmentSettingPM.UseRabbitMQ;
+
+        }
         public static string GetRabbitMQCode(int currTenant)
         {
             ////CEREATE FROM GWSFLOGITUDE > GGGFRABBITMQ
