@@ -19,6 +19,9 @@ using System.Transactions;
 using Logitude.Server.Tools.QueueService;
 using System.Threading;
 using Logitude.SystemLogs;
+using Logitude.Accounting.Def.EntityUpdateServicesExt;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
 //using AmitalCustomsWindowsService.Utils;
 
 namespace Logitude.Accounting.BL.Utils
@@ -341,6 +344,11 @@ namespace Logitude.Accounting.BL.Utils
             }
 
         }
+        private static void AddAccountingEntitieJournal(JournalPM entityPM, string action, string ChildEntityId = null)
+        {
+            IAccountingEntityJournalUpdateServiceExt service = ContainerAccessor.Container.Resolve(typeof(IAccountingEntityJournalUpdateServiceExt), "AccountingEntityJournalUpdateServiceExt", new ParameterOverride("", 1)) as IAccountingEntityJournalUpdateServiceExt;
+            service.AddAccountingEntitieJournal(entityPM, action, ChildEntityId);
+        }
 
         private static void WriteJournal(JournalUpdateService journalUpdateService, List<JournalLineList> lineList, RevaluationList revaluation)
         {
@@ -394,6 +402,7 @@ namespace Logitude.Accounting.BL.Utils
                 newJournal.JournalLines.Add(newJournalLine);
 
             }
+            AddAccountingEntitieJournal(newJournal, AccountingEntityJournalActions.RevaluationApprove);
             // End
             journalUpdateService.Update(newJournal, true);
 
