@@ -33,13 +33,13 @@ Cypress.on('test:after:run', (test, runnable) => {
       //   item = item.parent
       // }
   
-      const fullTestName = nameParts
-              .filter(Boolean)
-              .join('--')           // this is how cypress joins the test title fragments
+      // const fullTestName = nameParts
+      //         .filter(Boolean)
+      //         .join('--')           // this is how cypress joins the test title fragments
   
-      const imageUrl = `screenshots/${
+      const imageUrl = `SH/${
         Cypress.spec.name
-      }/${fullTestName}(failed).png`
+      }/${nameParts}.png`
   
       addContext({ test }, imageUrl)
     }
