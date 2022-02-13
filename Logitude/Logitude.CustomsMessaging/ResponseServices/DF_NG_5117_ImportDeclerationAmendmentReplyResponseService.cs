@@ -666,7 +666,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     //}
 
-                    if (customResponse.AmendmentDocumentDetails != null) // Create Document 
+                    if (customResponse.AmendmentDocumentDetails != null && (_MyDeclarationPM.AmendmentStatus == "3" || _MyDeclarationPM.AmendmentStatus == "6")) // Create Document 
                     {
                         LogMessagingUtil.Instance.AppendLine("ConstraintApprovalDecision: Create Document");
 
