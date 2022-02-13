@@ -19,6 +19,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ReceivedCode).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ReceivedData).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.ReplacedDataId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ObjectTableId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ComputingPartnrCode).HasMaxLength(15).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ShipmentUnassignedFields");
@@ -29,8 +31,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ReceivedData).HasColumnName("ReceivedData");
             this.Property(t => t.FieldName).HasColumnName("FieldName");
             this.Property(t => t.ReplacedDataId).HasColumnName("ReplacedDataId");
- 
-            // Relationships
+            this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId");
+            this.Property(t => t.ComputingPartnrCode).HasColumnName("ComputingPartnrCode");
         }
     }
 }

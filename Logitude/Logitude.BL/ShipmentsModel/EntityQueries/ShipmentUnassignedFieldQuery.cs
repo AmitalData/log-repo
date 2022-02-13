@@ -33,7 +33,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        FieldName = a.FieldName,
                        ReceivedCode = a.ReceivedCode,
                        ReceivedData = a.ReceivedData,
-                       ReplacedDataId = a.ReplacedDataId
+                       ReplacedDataId = a.ReplacedDataId,
+                       ObjectTableId = a.ObjectTableId,
+                       ComputingPartnrCode = a.ComputingPartnrCode,
                    }).FirstOrDefault();
 
             return shipmentUnassignedFieldPM;
@@ -52,7 +54,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        FieldName = a.FieldName,
                        ReceivedCode = a.ReceivedCode,
                        ReceivedData = a.ReceivedData,
-                       ReplacedDataId = a.ReplacedDataId
+                       ReplacedDataId = a.ReplacedDataId,
+                       ObjectTableId = a.ObjectTableId,
+                       ComputingPartnrCode = a.ComputingPartnrCode,
                    }).ToList();
 
             return shipmentUnassignedFields;

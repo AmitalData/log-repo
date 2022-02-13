@@ -15,6 +15,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ReceivedCode { get; set; }
         public string ReceivedData { get; set; }
         public string ReplacedDataId  { get; set; }
+        public string ObjectTableId { get; set; }
+        public string ComputingPartnrCode { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
     }
 }
