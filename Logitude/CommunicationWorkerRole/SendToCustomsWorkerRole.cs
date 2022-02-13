@@ -59,7 +59,7 @@ namespace CommunicationWorkerRole
                                         {
                                             if (tenant == 2264)
                                             {
-                                                client.Url = "http://cargowise.customsforce.com/customsforcewebservice.asmx";
+                                                client.Url = "https://cargowise.customsforce.com/customsforcewebservice.asmx";
                                             }
 
                                             else
