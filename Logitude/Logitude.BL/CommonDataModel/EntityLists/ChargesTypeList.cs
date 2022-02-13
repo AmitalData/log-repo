@@ -67,6 +67,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string PayablesChargesTypeExternalCode { get; set; }
         public string PayableDebitGLAcountId { get; set; }
         public string ReceivableCreditGLAccountId { get; set; }
+        public string RecCreditGLAcountLocalName { get; set; }
+        public string PayDebitGLAcountLocalName { get; set; }
         public bool IsBackToBack { get; set; }
         public bool IsAutoDisplayInCustoms { get; set; }
         public bool IsCustoms { get; set; }

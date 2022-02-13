@@ -128,6 +128,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ReceivableCreditGLAccountId { get; set; }
+        public string RecCreditGLAcountLocalName { get; set; }
+        public string PayDebitGLAcountLocalName { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool IsExpense { get; set; }

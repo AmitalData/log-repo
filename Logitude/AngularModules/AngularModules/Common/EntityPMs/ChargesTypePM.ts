@@ -265,7 +265,15 @@ export class ChargesTypePM {
     private receivableCreditGLAccountId: string;
     public get ReceivableCreditGLAccountId() { return this.receivableCreditGLAccountId; }
     public set ReceivableCreditGLAccountId(newValue: string) { if (this.receivableCreditGLAccountId != newValue) { this.receivableCreditGLAccountId = newValue; this.MarkAsDirty("ReceivableCreditGLAccountId"); } }
+    
+    private payDebitGLAcountLocalName: string;
+    public get PayDebitGLAcountLocalName() { return this.payDebitGLAcountLocalName; }
+    public set PayDebitGLAcountLocalName(newValue: string) { if (this.payDebitGLAcountLocalName != newValue) { this.payDebitGLAcountLocalName = newValue; this.MarkAsDirty("PayDebitGLAcountLocalName"); } }
        
+
+    private recCreditGLAcountLocalName: string;
+    public get RecCreditGLAcountLocalName() { return this.recCreditGLAcountLocalName; }
+    public set RecCreditGLAcountLocalName(newValue: string) { if (this.recCreditGLAcountLocalName != newValue) { this.recCreditGLAcountLocalName = newValue; this.MarkAsDirty("RecCreditGLAcountLocalName"); } }
 	 
     private isExpense: boolean;
     public get IsExpense() { return this.isExpense; }
@@ -430,4 +438,4 @@ export class ChargesTypePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
