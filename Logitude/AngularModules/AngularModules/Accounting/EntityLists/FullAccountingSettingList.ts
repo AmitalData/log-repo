@@ -57,6 +57,7 @@ export class FullAccountingSettingList {
 	ThirdsPeriodsMonths: string;
 	IsSecurityLevelActivated: boolean;
 	CreateRevaluationJournal: boolean;
+	TaxInstitutionGLAccountId: string;
 	
 }
  

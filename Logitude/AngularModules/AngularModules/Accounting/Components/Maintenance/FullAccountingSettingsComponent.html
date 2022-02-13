@@ -501,6 +501,22 @@
                                                         </td>
                                                     </tr>
 
+                                                    <!-- TaxInstitutionGLAccountId -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'TaxInstitutionGLAccountId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td colspan="2">
+                                                            <LogLov [ObjectFieldName]="'TaxInstitutionGLAccountId'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [QueryFilterItems]="TaxInstitutionGLAccountFilterItems"
+                                                                    [LookUpTableName]="'GLAccount'">
+                                                            </LogLov>
+                                                        </td>
+                                                    </tr>
+
                                                     <!-- SoftwareVersion -->
                                                     <tr class="FormFieldRow">
                                                         <td>
@@ -554,6 +570,7 @@
                                 </div>
                             </div>
                             <!-- #endregion -->
+
                             <!-- #region ControlAccounts Tab -->
                             <div *ngSwitchCase="'ControlAccounts'" style="height: 100%;">
                                 <table *ngIf="EntityPM">
@@ -732,6 +749,7 @@
                                 </table>
                             </div>
                             <!-- #endregion -->
+
                             <!-- Logo Tab -->
                             <div *ngSwitchCase="'Logo'" style="height: 100%;">
                                 <table *ngIf="EntityPM">

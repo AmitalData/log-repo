@@ -112,6 +112,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public bool IsSecurityLevelActivated  { get; set; }
        [DataMember]
        public bool CreateRevaluationJournal  { get; set; }
+       [DataMember]
+       public string TaxInstitutionGLAccountId  { get; set; }
    }
 
 }
