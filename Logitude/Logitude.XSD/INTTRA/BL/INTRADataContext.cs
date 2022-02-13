@@ -824,8 +824,6 @@ namespace Logitude.XSD.INTTRA.BL
             this.BuildMessageHeader();
             this.BuildMessageProperties();
             this.BuildMessageDetails();
-            //this.HandelOneHouse();
-
         }
 
         // Message Header
@@ -2251,10 +2249,31 @@ namespace Logitude.XSD.INTTRA.BL
 
         private void AddHousesToGoodsDetails(INTTRA_Out.GoodsDetails itemGoodsDetails, string containerNumber)
         {
-            if (this.Shipment.ShipmentLevelCode == "C" && this.MasterData.Transshipment1FromPort?.CountryCode == "US")
+            if (IsAddingHousesToGoodsDetails())
             {
                 this.AddHouses(itemGoodsDetails, containerNumber);
             } 
+        }
+
+        private bool IsAddingHousesToGoodsDetails()
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("FOB", this.Tenant))
+            {
+                return false;
+            }
+            if (this.Shipment.ShipmentLevelCode != "C")
+            {
+                return false;
+            }
+            if (this.MasterData.Transshipment1FromPort?.CountryCode != "US" && this.MasterData.Transshipment2FromPort?.CountryCode != "US" && this.MasterData.Transshipment3FromPort?.CountryCode != "US")
+            {
+                return false;
+            }
+            if (this.MasterData.MainCarriageFromPort?.CountryCode == "US" || this.MasterData.MainCarriageFinalDestinationPort?.CountryCode == "US")
+            {
+                return false;
+            }
+            return true;
         }
 
         private void AddHouses(INTTRA_Out.GoodsDetails itemGoodsDetails, string containerNumber)
@@ -2268,11 +2287,11 @@ namespace Logitude.XSD.INTTRA.BL
                 return;
             }
 
-            this.HandelMultiHouses(houses, itemGoodsDetails, containerNumber);
+            this.HandelMasterHouses(houses, itemGoodsDetails, containerNumber);
             this.AddShipmentIndicator();
         }
 
-        private void HandelMultiHouses(IQueryable<Shipment> masterhouses, INTTRA_Out.GoodsDetails itemGoodsDetails, string containerNumber)
+        private void HandelMasterHouses(IQueryable<Shipment> masterhouses, INTTRA_Out.GoodsDetails itemGoodsDetails, string containerNumber)
         {
             List<INTTRA_Out.HousePartiesPartnerInformation> houseParties = new List<INTTRA_Out.HousePartiesPartnerInformation>();
             List<INTTRA_Out.DetailsCustomsFilerInstruction> detailsCustomsInformation = new List<INTTRA_Out.DetailsCustomsFilerInstruction>();
@@ -2624,84 +2643,5 @@ namespace Logitude.XSD.INTTRA.BL
             return ContactInformationList.ToArray<INTTRA_Out.ContactInformation>();
         }
 
-        private void HandelOneHouse()
-        {
-            if (this.Shipment.ShipmentLevelCode != "C" && this.MasterData.Transshipment1FromPort?.CountryCode != "US")
-            {
-                return;
-            }
-            var houses = (from shipment in shipmentContext.Shipments.Where(t => t.MasterShipmentDataId == this.ShipmentId && t.ShipmentLevelCode == "H" && !t.IsCancelled)
-                          where shipment.Tenant == this.Tenant
-                          select shipment);
-
-            if (houses.Count() != 1)
-            {
-                return;
-            }
-            var house = houses.FirstOrDefault();
-            this.AddHeaderCustomsInformation();
-            this.AddSingleHouseParties(house);
-        }
-        private void AddHeaderCustomsInformation()
-        {
-            this.HeaderCustomsInformation = new List<INTTRA_Out.HeaderCustomsFilerInstruction>();
-
-            this.HeaderCustomsInformation.Add(new INTTRA_Out.HeaderCustomsFilerInstruction()
-            {
-                ManifestFilerStatus = INTTRA_Out.HeaderCustomsFilerInstructionManifestFilerStatus.Carrier,
-                ManifestFilingCountryCode = new INTTRA_Out.ManifestFilingCountryCode
-                {
-                    Agency = INTTRA_Out.ManifestFilingCountryCodeAgency.UN,
-                    Value = "US",
-                },
-            });
-        }
-
-        private void AddSingleHouseParties(Shipment house)
-        {
-            this.AddShipToPartner(house);
-            this.AddSupplierManufacturerPartner(house);
-            this.AddUltimateConsignee(house);
-        }
-        private void AddSupplierManufacturerPartner(Shipment house)
-        {
-            Card myCard = (from d in CommonContext.Cards where d.Id == house.ConsigneeId select d).FirstOrDefault();
-            if (myCard == null)
-            {
-                return;
-            }
-            Contact consigneeContact = this.contactRepository.GetSingleContact(house.ConsigneeContactId, this.Tenant);
-            INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
-            {
-                PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.SupplierManufacturer,
-                PartnerName = this.iNTTRAGeneralMethods.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
-                ContactInformation = consigneeContact != null ? this.GetContactInformation(consigneeContact) : null,
-            };
-            if (this.ConsigneeAddress != null)
-            {
-                item.AddressInformation = this.GetAddressInformation(this.ConsigneeAddress);
-            }
-            this.MessagePropertiesParties.Add(item);
-        }
-        private void AddUltimateConsignee(Shipment house)
-        {
-            Card myCard = (from d in CommonContext.Cards where d.Id == house.ConsigneeId select d).FirstOrDefault();
-            if (myCard == null)
-            {
-                return;
-            }
-            Contact consigneeContact = this.contactRepository.GetSingleContact(house.ConsigneeContactId, this.Tenant);
-            INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
-            {
-                PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.UltimateConsignee,
-                PartnerName = this.iNTTRAGeneralMethods.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
-                ContactInformation = consigneeContact != null ? this.GetContactInformation(consigneeContact) : null,
-            };
-            if (this.ConsigneeAddress != null)
-            {
-                item.AddressInformation = this.GetAddressInformation(this.ConsigneeAddress);
-            }
-            this.MessagePropertiesParties.Add(item);
-        }
     }
 }

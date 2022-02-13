@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;ca96&quot;"
+  Code="&quot;feef&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -707,6 +707,11 @@
       Name="&quot;Customer Team Field&quot;"
       SearchFields="&quot;CTF,Customer Team Field&quot;"
       Description="&quot;Show Customer Team Field&quot;" />
+    <Record
+      Name="&quot;INTTRA FROB&quot;"
+      Description="&quot;INTTRA option to manage FROB &quot;"
+      SearchFields="&quot;INTTRA FROB,FOB&quot;"
+      Code="&quot;FOB&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
