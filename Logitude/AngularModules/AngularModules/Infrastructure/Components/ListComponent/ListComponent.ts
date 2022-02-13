@@ -919,7 +919,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                     cmpRef.instance.SelectedValueChanged.subscribe(($event: any) => {
                                         this.FiltersMenu = new ApiQueryFilters();
                                         this.FiltersMenu = $event.Filters;
-                                        this.MenuHeaderchangeevent.emit({ Filters: $event.Filters, RemoveFilter: $event.RemoveFilter })
+                                        this.MenuHeaderchangeevent.emit({ Filters: $event.Filters, RemoveFilter: $event.RemoveFilter });
                                     });
 
                                 });
