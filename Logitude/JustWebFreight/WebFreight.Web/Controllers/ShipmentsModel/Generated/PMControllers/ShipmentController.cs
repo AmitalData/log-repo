@@ -677,6 +677,22 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             }
         }
 
+        public HttpResponseMessage GetTenantBySecurityKeyWithoutToken(string securityKey)
+        {
+            try
+            {
+                ShipmentQuery shipmentQuery = new ShipmentQuery(0);
+                int? tenantNumber = shipmentQuery.GetTenantBySecurityKey(securityKey);
+
+                return Request.CreateResponse(HttpStatusCode.OK, tenantNumber);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         private static void AddWhatsAppMessagingPhoneNumberToResponseHeader(int tenant)
         {
             TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
