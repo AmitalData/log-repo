@@ -128,6 +128,16 @@ export class ShipmentProductItemPM {
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
        
 	 
+    private shipperId: string;
+    public get ShipperId() { return this.shipperId; }
+    public set ShipperId(newValue: string) { if (this.shipperId != newValue) { this.shipperId = newValue; this.MarkAsDirty("ShipperId"); } }
+       
+	 
+    private shipperName: string;
+    public get ShipperName() { return this.shipperName; }
+    public set ShipperName(newValue: string) { if (this.shipperName != newValue) { this.shipperName = newValue; this.MarkAsDirty("ShipperName"); } }
+       
+	 
 
     public OldEntityPM: ShipmentProductItemPM;
 	    

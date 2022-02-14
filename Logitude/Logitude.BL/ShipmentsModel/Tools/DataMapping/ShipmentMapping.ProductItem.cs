@@ -32,6 +32,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.DutiesPercentage = itemPM.DutiesPercentage;
             itemPoco.OtherDuties = itemPM.OtherDuties;
             itemPoco.Remarks = itemPM.Remarks;
+            itemPoco.ShipperId = itemPM.ShipperId;
         }
     }
 }

@@ -8,9 +8,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [Key]
         public string Id { get; set; }
         public int Tenant { get; set; }
-        public string CustomerId { get; set; }
-        [ForeignKey("CustomerId")]
-        public virtual Customer Customer { get; set; }
+        public string CustomerId { get; set; }        
         public string SKU { get; set; }
         public string Name { get; set; }
         public string Brand { get; set; }
@@ -20,8 +18,15 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string ASIN { get; set; }
         public string UPC { get; set; }
         public string OriginCountryId { get; set; }
+        public string ShipperId { get; set; }
+
+        [ForeignKey("CustomerId")]
+        public virtual Customer Customer { get; set; }
 
         [ForeignKey("OriginCountryId")]
         public virtual Country OriginCountry { get; set; }
+
+        [ForeignKey("ShipperId")]
+        public virtual Card Shipper { get; set; }
     }
 }

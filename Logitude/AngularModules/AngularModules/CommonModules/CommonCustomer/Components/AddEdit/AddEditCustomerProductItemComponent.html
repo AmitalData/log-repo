@@ -41,6 +41,23 @@
                                 </td>
                             </tr>
 
+                            <!-- Shipper -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'ShipperId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogLov [ObjectFieldName]="'ShipperId'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Card'"
+                                            [SelectedValue]="DataContext.ShipperId"
+                                            (SelectedItemChanged)="DataContext.Shipper = $event"
+                                            [DependencyFilter1Value]="'CS'">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
                             <!-- Origin Country -->
                             <tr class="FormFieldRow">
                                 <td>

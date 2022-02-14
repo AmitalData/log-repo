@@ -16,6 +16,7 @@ import { ProductItemList } from '../../../../Common/EntityLists/ProductItemList'
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { HTSCodePM } from '../../../../Common/EntityPMs/HTSCodePM';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
     templateUrl: './ProductItemsTabComponent.html',
@@ -34,6 +35,7 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
     public CustomerId: string;
     public ToCountryId: string;
     public IsResourcesReady: boolean = false;
+    public ProductItemQueryFilters: ApiQueryFilters;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -53,7 +55,7 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
                 this.CustomerId = this.EntityPM.CustomerId;
                 this.ToCountryId = this.EntityPM.ToCountryId;
 
-                this.IsResourcesReady = true;
+                this.IsResourcesReady = true;                
                 this.SetUIProperties();
                 this.BuildProductItems();
             });
@@ -108,7 +110,10 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
         this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
     }
 
+    private addedProductItemsIds: string = null;
     BuildProductItems() {
+        this.addedProductItemsIds = null;
+
         if (this.ProductItems == null) {
             this.ProductItems = new ObservableCollection([]);
         }
@@ -121,10 +126,24 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
         var itemsCollection: ProductItem[] = [];
 
         this.EntityPM.ShipmentProductItems.forEach(item => {
+            if (AppTool.IsNullOrEmpty(this.addedProductItemsIds)) {
+                this.addedProductItemsIds = item.Id;
+            }
+
+            else {
+                this.addedProductItemsIds = this.addedProductItemsIds + "," + item.Id;
+            }
+            
             itemsCollection.push(new ProductItem(item, this, false));
         });
 
         this.ProductItems.InsertCollection(itemsCollection);
+        this.BuildQueryFilters();
+    }
+
+    private BuildQueryFilters() {
+        this.ProductItemQueryFilters = new ApiQueryFilters();
+        this.ProductItemQueryFilters.addAdditionalFilter("Id", this.addedProductItemsIds, null, null, "Exclude", false, false, false, "string", false, true, true);
     }
 
     AddProductItem() {
@@ -193,6 +212,8 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
         shipmentProductItem.UPC = customerItem.UPC;
         shipmentProductItem.OriginCountryId = customerItem.OriginCountryId;
         shipmentProductItem.OriginCountryName = customerItem.OriginCountryName;
+        shipmentProductItem.ShipperId = customerItem.ShipperId;
+        shipmentProductItem.ShipperName = customerItem.ShipperName;
 
         var htsCode: HTSCodePM = customerItem.HTSCodes.filter(d => d.DestinationCountryId == this.EntityPM.ToCountryId && !d.InActive)[0];
         if (htsCode) {
@@ -293,6 +314,8 @@ export class ProductItem extends BaseComponent {
             this.UPC = value.UPC;
             this.OriginCountryId = value.OriginCountryId;
             this.OriginCountryName = value.OriginCountryName;
+            this.ShipperId = value.ShipperId;
+            this.ShipperName = value.ShipperName;
         }
 
         else {
@@ -304,6 +327,8 @@ export class ProductItem extends BaseComponent {
             this.UPC = null;
             this.OriginCountryId = null;
             this.OriginCountryName = null;
+            this.ShipperId = null;
+            this.ShipperName = null;
         }
     }
 
@@ -374,6 +399,20 @@ export class ProductItem extends BaseComponent {
     set OriginCountryName(newValue: string) {
         if (this.EntityPM.OriginCountryName != newValue) {
             this.EntityPM.OriginCountryName = newValue;
+        }
+    }
+
+    get ShipperId() { return this.EntityPM.ShipperId; }
+    set ShipperId(newValue: string) {
+        if (this.EntityPM.ShipperId != newValue) {
+            this.EntityPM.ShipperId = newValue;
+        }
+    }
+
+    get ShipperName() { return this.EntityPM.ShipperName; }
+    set ShipperName(newValue: string) {
+        if (this.EntityPM.ShipperName != newValue) {
+            this.EntityPM.ShipperName = newValue;
         }
     }
 

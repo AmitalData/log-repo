@@ -12,6 +12,7 @@ import { ShipmentTool } from '../../../../Shipment/Tools';
 import { PartnersDomainService } from '../../../../Common/Services/PartnersDomainService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { CountryListService } from '../../../../Common/Services/StandardLists/CountryListService';
+import { CardList } from '../../../../Common/EntityLists/CardList';
 
 @Component({
     templateUrl: './EditCustomerProductItemComponent.html',
@@ -153,6 +154,35 @@ export class EditCustomerProductItemComponent extends BaseComponent {
         }
         else {
             this.OriginCountryName = null;
+        }
+    }
+
+    get ShipperId() { return this.EntityPM.ShipperId; }
+    set ShipperId(newValue: string) {
+        if (this.EntityPM.ShipperId != newValue) {
+            this.EntityPM.ShipperId = newValue;
+        }
+    }
+
+    get ShipperName() { return this.EntityPM.ShipperName; }
+    set ShipperName(newValue: string) {
+        if (this.EntityPM.ShipperName != newValue) {
+            this.EntityPM.ShipperName = newValue;
+        }
+    }
+
+    shipper: CardList;
+    get Shipper() { return this.shipper; }
+    set Shipper(value: CardList) {
+        if (this.shipper != value) {
+            this.shipper = value;
+        }
+
+        if (value) {
+            this.ShipperName = value.EnglishName;
+        }
+        else {
+            this.ShipperName = null;
         }
     }
 

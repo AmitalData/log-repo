@@ -23,8 +23,10 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public decimal? DutiesPercentage { get; set; }
         public string OtherDuties { get; set; }
         public string Remarks { get; set; }
+        public string ShipperId { get; set; }
         public virtual Country OriginCountry { get; set; }
         public virtual ProductItem ProductItem { get; set; }
         public virtual Shipment Shipment { get; set; }
+        public virtual Card Shipper { get; set; }
     }
 }
