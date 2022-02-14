@@ -2481,19 +2481,31 @@ namespace WebFreight.Web.WebServices
                     myDataProvider.OnForwardingToPort = onForwardingToPort.EnglishName;
                 }
 
-                #region Vessel
+                #region Vessel  
+                string mainVesselName = "";
+                string mainVesselCode = "";
+                string mainVesselNameAndNumber = "";
+
+                if (!string.IsNullOrEmpty(shipment.MainCarriageVesselName))
+                {
+                    mainVesselNameAndNumber = shipment.MainCarriageVesselName + " \\ " + shipment.MainCarriageCarrierNumber;
+                    mainVesselName = shipment.MainCarriageVesselName;
+                }
+
                 if (shipment.MainCarriageVesselId != null)
                 {
                     Vessel maincarriagevessel = (from a in commonContext.Vessels
                                                  where a.Id == shipment.MainCarriageVesselId
                                                  select a).FirstOrDefault();
                     if (maincarriagevessel != null)
-                    {
-                        myDataProvider.MainCarriageVesselNameAndNumber = maincarriagevessel.EnglishName + " \\ " + shipment.MainCarriageCarrierNumber;
-                        myDataProvider.MainCarriageVesselName = maincarriagevessel.EnglishName;
-                        myDataProvider.MainCarriageVesselCode = maincarriagevessel.Code;
+                    {                       
+                        mainVesselCode = maincarriagevessel.Code;
                     }
                 }
+
+                myDataProvider.MainCarriageVesselNameAndNumber = mainVesselNameAndNumber;
+                myDataProvider.MainCarriageVesselName = mainVesselName;
+                myDataProvider.MainCarriageVesselCode = mainVesselCode;
 
                 //Last Vessel
                 string vesselName = "";
@@ -2502,8 +2514,48 @@ namespace WebFreight.Web.WebServices
 
                 if (!string.IsNullOrEmpty(shipment.Transshipment3FromPortId))
                 {
+                    if (!string.IsNullOrEmpty(shipment.Transshipment3VesselName))
+                    {
+                        vesselNameAndNumber = shipment.Transshipment3VesselName + " \\ " + shipment.Transshipment3CarrierNumber;
+                        vesselName = shipment.Transshipment3VesselName;
+                    }
+
                     Vessel vessel = (from a in commonContext.Vessels
                                      where a.Id == shipment.Transshipment3VesselId
+                                     select a).FirstOrDefault();
+                    if (vessel != null)
+                    {
+                        vesselCode = vessel.Code;
+                    }
+                }
+
+                else if (!string.IsNullOrEmpty(shipment.Transshipment2FromPortId))
+                {
+                    if (!string.IsNullOrEmpty(shipment.Transshipment2VesselName))
+                    {
+                        vesselNameAndNumber = shipment.Transshipment2VesselName + " \\ " + shipment.Transshipment2CarrierNumber;
+                        vesselName = shipment.Transshipment2VesselName;
+                    }
+
+                    Vessel vessel = (from a in commonContext.Vessels
+                                     where a.Id == shipment.Transshipment2VesselId
+                                     select a).FirstOrDefault();
+                    if (vessel != null)
+                    {
+                        vesselCode = vessel.Code;
+                    }
+                }
+
+                else if (!string.IsNullOrEmpty(shipment.Transshipment1FromPortId))
+                {
+                    if (!string.IsNullOrEmpty(shipment.Transshipment1VesselName))
+                    {
+                        vesselNameAndNumber = shipment.Transshipment1VesselName + " \\ " + shipment.Transshipment1CarrierNumber;
+                        vesselName = shipment.Transshipment1VesselName;
+                    }
+
+                    Vessel vessel = (from a in commonContext.Vessels
+                                     where a.Id == shipment.Transshipment1VesselId
                                      select a).FirstOrDefault();
                     if (vessel != null)
                     {
@@ -2515,46 +2567,18 @@ namespace WebFreight.Web.WebServices
 
                 else
                 {
-                    if (!string.IsNullOrEmpty(shipment.Transshipment2FromPortId))
+                    if (!string.IsNullOrEmpty(shipment.MainCarriageVesselName))
                     {
-                        Vessel vessel = (from a in commonContext.Vessels
-                                         where a.Id == shipment.Transshipment2VesselId
-                                         select a).FirstOrDefault();
-                        if (vessel != null)
-                        {
-                            vesselNameAndNumber = vessel.EnglishName + " \\ " + shipment.MainCarriageCarrierNumber;
-                            vesselName = vessel.EnglishName;
-                            vesselCode = vessel.Code;
-                        }
+                        vesselNameAndNumber = shipment.MainCarriageVesselName + " \\ " + shipment.MainCarriageCarrierNumber;
+                        vesselName = shipment.MainCarriageVesselName;
                     }
 
-                    else
+                    Vessel vessel = (from a in commonContext.Vessels
+                                     where a.Id == shipment.MainCarriageVesselId
+                                     select a).FirstOrDefault();
+                    if (vessel != null)
                     {
-                        if (!string.IsNullOrEmpty(shipment.Transshipment1FromPortId))
-                        {
-                            Vessel vessel = (from a in commonContext.Vessels
-                                             where a.Id == shipment.Transshipment1VesselId
-                                             select a).FirstOrDefault();
-                            if (vessel != null)
-                            {
-                                vesselNameAndNumber = vessel.EnglishName + " \\ " + shipment.MainCarriageCarrierNumber;
-                                vesselName = vessel.EnglishName;
-                                vesselCode = vessel.Code;
-                            }
-                        }
-
-                        else
-                        {
-                            Vessel vessel = (from a in commonContext.Vessels
-                                             where a.Id == shipment.MainCarriageVesselId
-                                             select a).FirstOrDefault();
-                            if (vessel != null)
-                            {
-                                vesselNameAndNumber = vessel.EnglishName + " \\ " + shipment.MainCarriageCarrierNumber;
-                                vesselName = vessel.EnglishName;
-                                vesselCode = vessel.Code;
-                            }
-                        }
+                        vesselCode = vessel.Code;
                     }
                 }
 

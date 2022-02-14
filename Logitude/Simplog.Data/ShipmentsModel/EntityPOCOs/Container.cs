@@ -28,6 +28,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public virtual Card CarrierCard { get; set; }
         public string MainCarriageCarrierNumber { get; set; }
         public string Master { get; set; }
+        public string VesselName { get; set; }
         public string MainCarriageVesselId { get; set; }
         [ForeignKey("MainCarriageVesselId")]
         public virtual Vessel VesselCard { get; set; }
