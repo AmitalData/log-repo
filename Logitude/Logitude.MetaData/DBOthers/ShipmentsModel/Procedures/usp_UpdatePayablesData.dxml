@@ -7,8 +7,7 @@
   <SqlScript>
     <![CDATA[
     
-    
-
+ 
 
 Create PROCEDURE [dbo].[usp_UpdatePayablesData]
 (
@@ -571,7 +570,6 @@ BEGIN
 											set @UnitPrice = @Ratio * @MasterPayableUnitPrice
 										end											
 									END
-									----------
 
 									else if ((@MasterTransportModeId = 'O' AND @MasterTypeId = 'FCLD') OR (@MasterTransportModeId = 'I' AND @MasterTypeId = 'FTL'))
 									BEGIN
@@ -786,6 +784,38 @@ BEGIN
 											end 
 										end											
 									END
+
+									-- BCNT
+									else if ((@MasterTransportModeId = 'O' AND @MasterTypeId = 'FCLD') OR (@MasterTransportModeId = 'I' AND @MasterTypeId = 'FTL'))
+									BEGIN
+										if(@HouseTransportModeId = 'A' OR (@HouseTransportModeId = 'O' AND @HouseTypeId = 'LCLD') OR (@HouseTransportModeId = 'I' AND @HouseTypeId = 'LTL'))
+										begin
+											if (@HouseNumberOfPackages <> 0)
+											begin
+												set @ProrateAmountInLocalCurrency = (@HouseNumberOfPackages / @AllHousesTotalNumberOfPackages) * @LocalForeignAmount
+												set @ProrateAmountInProfitCurrency = (@HouseNumberOfPackages / @AllHousesTotalNumberOfPackages) * @ProfitForeignAmount
+											end
+										end
+
+										else 
+										begin
+											if (@HouseNumberOfContainers <> 0)
+											begin
+												set @ProrateAmountInLocalCurrency = (@HouseNumberOfContainers / @AllHousesTotalNumberOfContainers) * @LocalForeignAmount
+												set @ProrateAmountInProfitCurrency = (@HouseNumberOfContainers / @AllHousesTotalNumberOfContainers) * @ProfitForeignAmount
+											end 
+										end											
+									END
+
+									else if ((@MasterTransportModeId = 'O' AND @MasterTypeId = 'MyGO') OR (@MasterTransportModeId = 'I' AND @MasterTypeId = 'MyGI'))
+									BEGIN
+										if (@HouseChargeableWeight <> 0)
+										begin
+											set @ProrateAmountInLocalCurrency = (@HouseChargeableWeight / @AllHousesTotalChargeableWeight) * @LocalForeignAmount
+											set @ProrateAmountInProfitCurrency = (@HouseChargeableWeight / @AllHousesTotalChargeableWeight) * @ProfitForeignAmount
+										end
+									END
+									----------------------------
 
 									SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
 									BEGIN TRAN T1;
@@ -1548,6 +1578,8 @@ BEGIN
 
 	END
 END
+
+
 
 
    	]]>
