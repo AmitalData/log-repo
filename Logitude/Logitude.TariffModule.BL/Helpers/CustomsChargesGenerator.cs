@@ -1,5 +1,7 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.Repositories;
 using Simplog.Data.CommonDataModel;
@@ -8,6 +10,8 @@ using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +25,24 @@ namespace Logitude.TariffModule.BL.Helpers
         private CustomsChargesTariffSearchArgs customsChargesTariffSearchArgs;
         private List<RatesTableList> ratesList;
         private ICommonDataContext commonContext;
+        private Shipment shipment;
         private int tenant;
+        private List<ByPckageType> BCNTGroupedList = new List<ByPckageType>();
+        private List<CustomsChargesPayable> payables;
+        private string customAgentExportId;
+        private string customAgentImportId;
+        private double? grossWeight;
+        private double? chargeableWeight;
+        private double? volume;
+        private string grossWeightUnitCode;
+        private string chargeableWeightUnitCode;
+        private string volumeUnitCode;
+        private string profitCurrencyId;
+        private double? profitRate;
+        private double? TEU;
+        private double? valueOfGoods;
+        private double? noOfPackages;
+        private List<ShipmentPackage> FCLShipmentPackages;
 
         public CustomsChargesGenerator(CustomsChargesTariffSearchArgs args, int tenant)
         {
@@ -30,6 +51,11 @@ namespace Logitude.TariffModule.BL.Helpers
             this.customsChargesTariffSearchArgs.CustomsChargesPayables = new List<CustomsChargesPayable>();
             this.ratesList = this.GetRates(tenant);
             this.commonContext = CommonDataContext.GetContext(tenant);
+            this.payables = new List<CustomsChargesPayable>();
+
+            this.GetShipment();
+            this.SetShipmentPropeaties();
+            this.FillBCNTGroupedList();            
         }
 
         public CustomsChargesTariffSearchArgs GeneratePayables()
@@ -40,12 +66,74 @@ namespace Logitude.TariffModule.BL.Helpers
             foreach (TariffLine tariffLine in tariffLines)
             {
                 Tariff tariff = tariffs.Where(d => d.Id == tariffLine.TariffId).FirstOrDefault();
-                this.customsChargesTariffSearchArgs.CustomsChargesPayables.AddRange(this.CreatePayablesFromCustomChargesLine(tariffLine, tariff));
+                this.CreatePayablesFromCustomChargesLine(tariffLine, tariff);
+                this.customsChargesTariffSearchArgs.CustomsChargesPayables.AddRange(this.payables);
             }
 
             return this.customsChargesTariffSearchArgs;
         }
+        private void GetShipment()
+        {
+            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+            shipment = shipmentRepository.GetSingleShipment(customsChargesTariffSearchArgs.ShipmentId, tenant);
+        }
+        private void SetShipmentPropeaties()
+        {
+            if (shipment != null)
+            {                
+                this.customAgentExportId = this.shipment.CustomAgentExportId;
+                this.customAgentImportId = this.shipment.CustomAgentImportId;
+                this.grossWeight = this.shipment.GrossWeight;
+                this.chargeableWeight = this.shipment.ChargeableWeight;
+                this.volume = this.shipment.Volume;
+                this.grossWeightUnitCode = this.shipment.GrossWeightUnitCode;
+                this.chargeableWeightUnitCode = this.shipment.ChargeableWeightUnitCode;
+                this.volumeUnitCode = this.shipment.VolumeUnitCode;
+                this.valueOfGoods = this.shipment.ValueOfGoods;
+                this.noOfPackages = MethodHelper.IsFCLEntity(shipment.TransportModeId, shipment.ShipmentTypeId) ? this.shipment.NumberOfContainers : this.shipment.NumberOfPackages;
+                this.TEU = this.shipment.TEU;                
+                this.profitCurrencyId = this.shipment.ProfitCurrencyId;
+                this.profitRate = this.shipment.ProfitExchangeRate;
+                this.GetShipmentPackages();
+            }
+        } 
+        private void GetShipmentPackages()
+        {
+            ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(tenant);
+            this.FCLShipmentPackages = shipmentPackageRepository.GetShipmentPackagesForShipmentTenant(customsChargesTariffSearchArgs.ShipmentId, tenant)
+                .Where(a => a.PackageType != null && a.PackageType.IsContainer).ToList();
+        }
+        private void FillBCNTGroupedList()
+        {
+            if (this.FCLShipmentPackages.Count > 0)
+            {
+                foreach (ShipmentPackage item in this.FCLShipmentPackages)
+                {
+                    var itemGrouped = BCNTGroupedList.Where(f => f.PackageTypeId == item.PackageTypeId).FirstOrDefault();
+                    if (itemGrouped == null)
+                    {
+                        itemGrouped = new ByPckageType();
+                        itemGrouped.PackageTypeId = item.PackageTypeId;
+                        itemGrouped.Quantity = item.Quantity;
 
+                        if (itemGrouped.Quantity == null)
+                        {
+                            itemGrouped.Quantity = 0;
+                        }
+
+                        BCNTGroupedList.Add(itemGrouped);
+                    }
+
+                    else
+                    {
+                        if (item.Quantity != null)
+                        {
+                            itemGrouped.Quantity += item.Quantity;
+                        }
+                    }
+                }
+            }
+        }
         private List<RatesTableList> GetRates(int tenant)
         {
             IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
@@ -65,14 +153,14 @@ namespace Logitude.TariffModule.BL.Helpers
 
             List<Tariff> myResult = new List<Tariff>();
 
-            if (!string.IsNullOrEmpty(customsChargesTariffSearchArgs.CustomAgentExportId))
+            if (!string.IsNullOrEmpty(this.customAgentExportId))
             {
-                myResult.AddRange(tariffs.Where(d => d.CustomsBrokerId == customsChargesTariffSearchArgs.CustomAgentExportId));
+                myResult.AddRange(tariffs.Where(d => d.CustomsBrokerId == this.customAgentExportId));
             }
 
-            if (!string.IsNullOrEmpty(customsChargesTariffSearchArgs.CustomAgentImportId))
+            if (!string.IsNullOrEmpty(this.customAgentImportId))
             {
-                myResult.AddRange(tariffs.Where(d => d.CustomsBrokerId == customsChargesTariffSearchArgs.CustomAgentImportId));
+                myResult.AddRange(tariffs.Where(d => d.CustomsBrokerId == this.customAgentImportId));
             }
 
             return myResult;
@@ -139,132 +227,229 @@ namespace Logitude.TariffModule.BL.Helpers
 
             return filteredLines.FirstOrDefault();
         }
-        private List<CustomsChargesPayable> CreatePayablesFromCustomChargesLine(TariffLine tariffLine, Tariff tariff)
+        private void CreatePayablesFromCustomChargesLine(TariffLine tariffLine, Tariff tariff)
         {
-            List<CustomsChargesPayable> payables = new List<CustomsChargesPayable>();
             for (int i = 1; i <= 10; i++)
             {
-                string chargeId = (string)tariff.GetType().GetProperty("Surcharge" + i + "Id").GetValue(tariff);
                 string measurementId = (string)tariff.GetType().GetProperty("Surcharge" + i + "UOM").GetValue(tariff);
-
-                Measurement measurement = this.commonContext.Measurements.Where(p => p.Tenant == tariff.Tenant && p.Id == measurementId).FirstOrDefault();
-                ChargesType chargesType = this.commonContext.ChargesTypes.Where(p => p.Tenant == tariff.Tenant && p.Id == chargeId).FirstOrDefault();
-
-                if (measurement != null && chargesType != null)
+                Measurement measurement = this.commonContext.Measurements.Where(p => p.Tenant == tenant && p.Id == measurementId).FirstOrDefault();
+                if (measurement == null)
                 {
-                    decimal? tariffChargePrice = (decimal?)tariffLine.GetType().GetProperty("Surcharge" + i + "Price").GetValue(tariffLine);
-                    decimal? tariffChargeMinPrice = (decimal?)tariffLine.GetType().GetProperty("Surcharge" + i + "MinPrice").GetValue(tariffLine);
+                    return;
+                }
 
-                    double? price = null;
-                    double? minPrice = null;
+                if (measurement.Code == "BCNT")
+                {
+                    this.HandleMeasurement_BCNT(tariff, tariffLine, i);
+                }
 
-                    if(tariffChargePrice != null)
+                else
+                {
+                    this.HandleMeasurement_NotBCNT(measurement, tariff, tariffLine, i);
+                }
+            }
+        }
+        private void HandleMeasurement_BCNT(Tariff tariff, TariffLine tariffLine, int index)
+        {
+            string chargeId = (string)tariff.GetType().GetProperty("Surcharge" + index + "Id").GetValue(tariff);
+            ChargesType chargesType = this.commonContext.ChargesTypes.Where(p => p.Tenant == tariff.Tenant && p.Id == chargeId).FirstOrDefault();
+            if (chargesType != null)
+            {
+                foreach(ByPckageType byPckageType in BCNTGroupedList)
+                {
+                    Measurement measurement = null;
+                    PackageType packageType = this.commonContext.PackageTypes.Where(p => p.Tenant == tenant && p.Id == byPckageType.PackageTypeId).FirstOrDefault();
+                    if(packageType != null)
                     {
-                        price = Convert.ToDouble(tariffChargePrice);
+                        measurement = this.commonContext.Measurements.Where(p => p.Tenant == tenant && p.Id == packageType.MeasurementId).FirstOrDefault();
                     }
-
-                    if (tariffChargeMinPrice != null)
+                    
+                    if(measurement != null)
                     {
-                        minPrice = Convert.ToDouble(tariffChargeMinPrice);
-                    }
+                        decimal? tariffChargePrice = (decimal?)tariffLine.GetType().GetProperty("Surcharge" + index + "Price").GetValue(tariffLine);
+                        decimal? tariffChargeMinPrice = (decimal?)tariffLine.GetType().GetProperty("Surcharge" + index + "MinPrice").GetValue(tariffLine);
+                        double? price = null;
+                        double? minAmount = null;
 
-                    if (price != null)
-                    {
-                        CustomsChargesPayable payable = new CustomsChargesPayable()
+                        if (tariffChargePrice != null)
                         {
-                            TariffId = tariff.Id,
-                            TariffNumber = tariff.TariffNumber,
-                            TariffLineId = tariffLine.Id,
-                            VersionId = tariffLine.Version,
-                            ChargeTypeCode = chargesType.Code,
-                            ChargeTypeName = chargesType.EnglishName,
-                            ChargeTypeId = chargesType.Id,
-                            UnitOfMesurmentCode = measurement.Code,
-                            UnitOfMesurmentId = measurement.Id,
-                            IsDifferentCurrency = tariffLine.IsDifferentCurrenciesPerCharge,
-                            Notes = tariffLine.Notes,
-                            CustomsBrokerId = tariff.CustomsBrokerId,
-                            CustomsBrokerName = tariff.CustomsBroker?.EnglishName,
-                        };
-
-                        payable.CurrencyId = tariffLine.CurrencyId != null ? tariffLine.CurrencyId : tariff.CurrencyId;
-                        if (tariffLine.IsDifferentCurrenciesPerCharge)
-                        {
-                            payable.CurrencyId = (string)tariffLine.GetType().GetProperty("Surcharge" + i + "CurrencyId").GetValue(tariffLine);
-                        }
-
-                        Currency currency = this.commonContext.Currencies.Where(p => p.Tenant == tariff.Tenant && p.Id == payable.CurrencyId).FirstOrDefault();
-                        payable.CurrencyCode = currency?.Code;
-
-                        switch (measurement.Code)
-                        {
-                            case "FIXD": { payable.Quantity = 1; break; }
-                            case "BTEU": { payable.Quantity = customsChargesTariffSearchArgs.TEU; break; }
-                            case "PRVL": { payable.Quantity = customsChargesTariffSearchArgs.ValueOfGoods; break; }
-                            case "PRFR": { payable.Quantity = customsChargesTariffSearchArgs.FriehgtAmount; break; }
-                            case "QTY": { payable.Quantity = customsChargesTariffSearchArgs.NoOfPackages; break; }
-                            case "GRWT": { payable.Quantity = customsChargesTariffSearchArgs.GrossWeight; break; }
-                            case "CHWT": { payable.Quantity = customsChargesTariffSearchArgs.ChargeableWeight; break; }
-                            case "VOLU": { payable.Quantity = customsChargesTariffSearchArgs.Volume; break; }
-                            case "PFCL": { payable.Quantity = customsChargesTariffSearchArgs.ForiegnChargesAmount; break; }
-                            case "GWTN": { payable.Quantity = this.ComputeGrossWeigh_Kg_Ton("ton"); break; }
-                            case "CWKG": { payable.Quantity = this.ComputeChargeableWeight_Kg(); break; }
-                            case "GWKG": { payable.Quantity = this.ComputeGrossWeigh_Kg_Ton("kg"); break; }
-                            case "VCBM": { payable.Quantity = this.ComputeVolumeInCBM(); break; }
-                            default: { break; }
-                        }
-
-                        payable.Rate = this.GetCurrencyRate(payable.CurrencyId);
-                        payable.Price = Round(price, 3);
-
-                        double? expectedAmount = 0;
-                        double? minAmount = 0;
-
-                        if (measurement.Code == "PRVL" || measurement.Code == "PRFR")
-                        {
-                            expectedAmount = payable.Quantity * (price / 100);
-                        }
-                        else
-                        {
-                            expectedAmount = price * payable.Quantity;
+                            price = Convert.ToDouble(tariffChargePrice);
                         }
 
                         if (tariffChargeMinPrice != null)
                         {
+                            minAmount = Convert.ToDouble(tariffChargeMinPrice);
+                        }
+
+                        if (price != null)
+                        {
+                            CustomsChargesPayable payable = new CustomsChargesPayable()
+                            {
+                                TariffId = tariff.Id,
+                                TariffNumber = tariff.TariffNumber,
+                                TariffLineId = tariffLine.Id,
+                                VersionId = tariffLine.Version,
+                                ChargeTypeCode = chargesType.Code,
+                                ChargeTypeName = chargesType.EnglishName,
+                                ChargeTypeId = chargesType.Id,
+                                UnitOfMesurmentCode = measurement.Code,
+                                UnitOfMesurmentId = measurement.Id,
+                                IsDifferentCurrency = tariffLine.IsDifferentCurrenciesPerCharge,
+                                Notes = tariffLine.Notes,
+                                CustomsBrokerId = tariff.CustomsBrokerId,
+                                CustomsBrokerName = tariff.CustomsBroker?.EnglishName,
+                                CurrencyId = tariffLine.CurrencyId != null ? tariffLine.CurrencyId : tariff.CurrencyId,
+                                Quantity = byPckageType.Quantity,
+                            };
+
+                            if (tariffLine.IsDifferentCurrenciesPerCharge)
+                            {
+                                payable.CurrencyId = (string)tariffLine.GetType().GetProperty("Surcharge" + index + "CurrencyId").GetValue(tariffLine);
+                            }
+
+                            Currency currency = this.commonContext.Currencies.Where(p => p.Tenant == tariff.Tenant && p.Id == payable.CurrencyId).FirstOrDefault();
+                            payable.CurrencyCode = currency?.Code;                            
+                            payable.Rate = this.GetCurrencyRate(payable.CurrencyId);
+                            payable.Price = Round(price, 3);
+
+                            double? expectedAmount = 0;
+
                             if (measurement.Code == "PRVL" || measurement.Code == "PRFR")
                             {
-                                minAmount = payable.Quantity * (minPrice / 100);
+                                expectedAmount = payable.Quantity * (price / 100);
                             }
                             else
                             {
-                                minAmount = minPrice * payable.Quantity;
+                                expectedAmount = price * payable.Quantity;
                             }
-                        }
 
-                        payable.ExpectedAmount = expectedAmount == null ? 0 : expectedAmount.Value;
-                        payable.LocalExpectedAmount = this.CalculateLocalAmount(expectedAmount, payable.Rate);
-                        payable.ProfitExpectedAmount = this.CalculateProfitAmount(expectedAmount, payable.LocalExpectedAmount, payable.CurrencyId);
-                        payable.MinAmount = minAmount;
-                        payables.Add(payable);
+                            if (minAmount != null)
+                            {
+                                if (minAmount > expectedAmount)
+                                {
+                                    expectedAmount = minAmount;
+                                    payable.MinAmount = minAmount;
+                                }
+                            }
+
+                            payable.ExpectedAmount = expectedAmount == null ? 0 : expectedAmount.Value;
+                            payable.LocalExpectedAmount = this.CalculateLocalAmount(expectedAmount, payable.Rate);
+                            payable.ProfitExpectedAmount = this.CalculateProfitAmount(expectedAmount, payable.LocalExpectedAmount, payable.CurrencyId);                            
+                            payables.Add(payable);
+                        }
                     }
                 }
             }
-
-            return payables;
         }
+        private void HandleMeasurement_NotBCNT(Measurement measurement, Tariff tariff, TariffLine tariffLine, int index)
+        {
+            string chargeId = (string)tariff.GetType().GetProperty("Surcharge" + index + "Id").GetValue(tariff);
+            ChargesType chargesType = this.commonContext.ChargesTypes.Where(p => p.Tenant == tariff.Tenant && p.Id == chargeId).FirstOrDefault();
+            if (chargesType != null)
+            {
+                decimal? tariffChargePrice = (decimal?)tariffLine.GetType().GetProperty("Surcharge" + index + "Price").GetValue(tariffLine);
+                decimal? tariffChargeMinPrice = (decimal?)tariffLine.GetType().GetProperty("Surcharge" + index + "MinPrice").GetValue(tariffLine);
+                double? price = null;
+                double? minAmount = null;
 
+                if (tariffChargePrice != null)
+                {
+                    price = Convert.ToDouble(tariffChargePrice);
+                }
+
+                if (tariffChargeMinPrice != null)
+                {
+                    minAmount = Convert.ToDouble(tariffChargeMinPrice);
+                }
+
+                if (price != null)
+                {
+                    CustomsChargesPayable payable = new CustomsChargesPayable()
+                    {
+                        TariffId = tariff.Id,
+                        TariffNumber = tariff.TariffNumber,
+                        TariffLineId = tariffLine.Id,
+                        VersionId = tariffLine.Version,
+                        ChargeTypeCode = chargesType.Code,
+                        ChargeTypeName = chargesType.EnglishName,
+                        ChargeTypeId = chargesType.Id,
+                        UnitOfMesurmentCode = measurement.Code,
+                        UnitOfMesurmentId = measurement.Id,
+                        IsDifferentCurrency = tariffLine.IsDifferentCurrenciesPerCharge,
+                        Notes = tariffLine.Notes,
+                        CustomsBrokerId = tariff.CustomsBrokerId,
+                        CustomsBrokerName = tariff.CustomsBroker?.EnglishName,
+                    };
+
+                    payable.CurrencyId = tariffLine.CurrencyId != null ? tariffLine.CurrencyId : tariff.CurrencyId;
+                    if (tariffLine.IsDifferentCurrenciesPerCharge)
+                    {
+                        payable.CurrencyId = (string)tariffLine.GetType().GetProperty("Surcharge" + index + "CurrencyId").GetValue(tariffLine);
+                    }
+
+                    Currency currency = this.commonContext.Currencies.Where(p => p.Tenant == tariff.Tenant && p.Id == payable.CurrencyId).FirstOrDefault();
+                    payable.CurrencyCode = currency?.Code;
+
+                    switch (measurement.Code)
+                    {
+                        case "FIXD": { payable.Quantity = 1; break; }
+                        case "BTEU": { payable.Quantity = this.TEU; break; }
+                        case "PRVL": { payable.Quantity = this.valueOfGoods; break; }
+                        case "PRFR": { payable.Quantity = customsChargesTariffSearchArgs.FriehgtAmount; break; }
+                        case "QTY": { payable.Quantity = this.noOfPackages; break; }
+                        case "GRWT": { payable.Quantity = this.grossWeight; break; }
+                        case "CHWT": { payable.Quantity = this.chargeableWeight; break; }
+                        case "VOLU": { payable.Quantity = this.volume; break; }
+                        case "PFCL": { payable.Quantity = customsChargesTariffSearchArgs.ForiegnChargesAmount; break; }
+                        case "GWTN": { payable.Quantity = this.ComputeGrossWeigh_Kg_Ton("ton"); break; }
+                        case "CWKG": { payable.Quantity = this.ComputeChargeableWeight_Kg(); break; }
+                        case "GWKG": { payable.Quantity = this.ComputeGrossWeigh_Kg_Ton("kg"); break; }
+                        case "VCBM": { payable.Quantity = this.ComputeVolumeInCBM(); break; }
+                        default: { break; }
+                    }
+
+                    payable.Rate = this.GetCurrencyRate(payable.CurrencyId);
+                    payable.Price = Round(price, 3);
+
+                    double? expectedAmount = 0;
+
+                    if (measurement.Code == "PRVL" || measurement.Code == "PRFR")
+                    {
+                        expectedAmount = payable.Quantity * (price / 100);
+                    }
+                    else
+                    {
+                        expectedAmount = price * payable.Quantity;
+                    }
+
+                    if (minAmount != null)
+                    {
+                        if (minAmount > expectedAmount)
+                        {
+                            expectedAmount = minAmount;
+                            payable.MinAmount = minAmount;
+                        }
+                    }
+
+                    payable.ExpectedAmount = expectedAmount == null ? 0 : expectedAmount.Value;
+                    payable.LocalExpectedAmount = this.CalculateLocalAmount(expectedAmount, payable.Rate);
+                    payable.ProfitExpectedAmount = this.CalculateProfitAmount(expectedAmount, payable.LocalExpectedAmount, payable.CurrencyId);
+                    payables.Add(payable);
+                }
+            }
+        }
         private double? ComputeGrossWeigh_Kg_Ton(string type)
         {
             double? weigh_Kg = null;
             double? weigh_Ton = null;
 
-            if (customsChargesTariffSearchArgs.GrossWeight != null)
+            if (this.grossWeight != null)
             {
                 double factorOfConvert = 1;
 
-                if (!string.IsNullOrEmpty(customsChargesTariffSearchArgs.GrossWeightUnitCode))
+                if (!string.IsNullOrEmpty(this.grossWeightUnitCode))
                 {
-                    switch (customsChargesTariffSearchArgs.GrossWeightUnitCode.ToUpper())
+                    switch (this.grossWeightUnitCode.ToUpper())
                     {
                         case "KG": { factorOfConvert = 1; break; }
                         case "LB": { factorOfConvert = 0.45359237; break; }
@@ -272,7 +457,7 @@ namespace Logitude.TariffModule.BL.Helpers
                     }
                 }
 
-                weigh_Kg = customsChargesTariffSearchArgs.GrossWeight * factorOfConvert;
+                weigh_Kg = this.grossWeight * factorOfConvert;
             }
 
             if (weigh_Kg != null)
@@ -295,13 +480,13 @@ namespace Logitude.TariffModule.BL.Helpers
         {
             double? weigh_Kg = null;
 
-            if (customsChargesTariffSearchArgs.ChargeableWeight != null)
+            if (this.chargeableWeight != null)
             {
                 double factorOfConvert = 1;
 
-                if (!String.IsNullOrEmpty(customsChargesTariffSearchArgs.ChargeableWeightUnitCode))
+                if (!String.IsNullOrEmpty(this.chargeableWeightUnitCode))
                 {
-                    switch (customsChargesTariffSearchArgs.ChargeableWeightUnitCode.ToUpper())
+                    switch (this.chargeableWeightUnitCode.ToUpper())
                     {
                         case "KG": { factorOfConvert = 1; break; }
                         case "LB": { factorOfConvert = 0.45359237; break; }
@@ -309,7 +494,7 @@ namespace Logitude.TariffModule.BL.Helpers
                     }
                 }
 
-                weigh_Kg = customsChargesTariffSearchArgs.ChargeableWeight * factorOfConvert;
+                weigh_Kg = this.chargeableWeight * factorOfConvert;
             }
 
             if (weigh_Kg != null)
@@ -322,20 +507,20 @@ namespace Logitude.TariffModule.BL.Helpers
         {
             double? volumeInCBM = null;
 
-            if (customsChargesTariffSearchArgs.Volume != null)
+            if (this.volume != null)
             {
                 double factorOfConvert = 1;
 
-                if (!String.IsNullOrEmpty(customsChargesTariffSearchArgs.VolumeUnitCode))
+                if (!String.IsNullOrEmpty(this.volumeUnitCode))
                 {
-                    switch (customsChargesTariffSearchArgs.VolumeUnitCode.ToUpper())
+                    switch (this.volumeUnitCode.ToUpper())
                     {
                         case "CBM": { factorOfConvert = 1; break; }
                         case "CBI": { factorOfConvert = 61024; break; }
                         case "CBF": { factorOfConvert = 35.315; break; }
                     }
                 }
-                volumeInCBM = customsChargesTariffSearchArgs.Volume * factorOfConvert;
+                volumeInCBM = this.volume * factorOfConvert;
             }
 
             if (volumeInCBM != null)
@@ -366,30 +551,24 @@ namespace Logitude.TariffModule.BL.Helpers
         }
         private double? CalculateProfitAmount(double? expectedAmount, double? localExpectedAmount, string currencyId)
         {
-            double? myResult = null;
-
-            if (currencyId == customsChargesTariffSearchArgs.ProfitCurrencyId)
+            if (currencyId == this.profitCurrencyId)
             {
-                myResult = expectedAmount;
+                return expectedAmount;
             }
 
             else
             {
-                myResult = (localExpectedAmount / customsChargesTariffSearchArgs.ProfitRate);
+                return (localExpectedAmount / this.profitRate);
             }
-
-            return myResult;
         }
         private double? CalculateLocalAmount(double? expectedAmount, double? rate)
         {
-            double? myResult = null;
-
             if (expectedAmount != null && rate != null)
             {
-                myResult = Round(expectedAmount * rate, 2);
+                return Round(expectedAmount * rate, 2);
             }
 
-            return myResult;
+            return null;
         }
         private double? Round(double? value, int digits)
         {
@@ -415,26 +594,14 @@ namespace Logitude.TariffModule.BL.Helpers
 
     public class CustomsChargesTariffSearchArgs
     {
+        public string ShipmentId { get; set; }
         public string FromCountryId { get; set; }
-        public string ToCountryId { get; set; }
-        public string LocalCurrencyId { get; set; }
-        public string ProfitCurrencyId { get; set; }
-        public double? ProfitRate { get; set; }
+        public string ToCountryId { get; set; }        
         public DateTime? MainCarriageATD { get; set; }
-        public DateTime? MainCarriageETD { get; set; }
-        public string CustomAgentExportId { get; set; }
-        public string CustomAgentImportId { get; set; }
-        public double? GrossWeight { get; set; }
-        public double? ChargeableWeight { get; set; }
-        public double? Volume { get; set; }
-        public string GrossWeightUnitCode { get; set; }
-        public string ChargeableWeightUnitCode { get; set; }
-        public string VolumeUnitCode { get; set; }
-        public double? TEU { get; set; }
-        public double? ValueOfGoods { get; set; }
+        public DateTime? MainCarriageETD { get; set; }               
         public double? FriehgtAmount { get; set; }
         public double? ForiegnChargesAmount { get; set; }
-        public double? NoOfPackages { get; set; }
+        public string LocalCurrencyId { get; set; }
         public List<CustomsChargesPayable> CustomsChargesPayables { get; set; }
     }
 

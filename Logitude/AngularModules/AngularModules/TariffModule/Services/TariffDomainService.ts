@@ -6,6 +6,7 @@ import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import { TariffSettingPM } from '../EntityPMs/TariffSettingPM';
 import { CustomFieldClass } from '../../Infrastructure/DataContracts/CustomFieldClass'
+import { ShipmentPackagePM } from '../../Shipment/EntityPMs/ShipmentPackagePM';
 
 @Injectable()
 
@@ -559,23 +560,11 @@ export class CustomsChargesTariffSearchArgs {
     FromCountryId: string;
     ToCountryId: string;
     MainCarriageATD: Date;
-    MainCarriageETD: Date;
-    CustomAgentExportId: string;
-    CustomAgentImportId: string;
-    GrossWeight: number;
-    ChargeableWeight: number;
-    Volume: number;
-    GrossWeightUnitCode: string;
-    ChargeableWeightUnitCode: string;
-    VolumeUnitCode: string;
-    TEU: number;
-    ValueOfGoods: number;
-    FriehgtAmount: number;
-    NoOfPackages: number;
+    MainCarriageETD: Date;    
+    FriehgtAmount: number;    
     ForiegnChargesAmount: number;
-    LocalCurrencyId: string;
-    ProfitCurrencyId: string;
-    ProfitRate: number;
+    LocalCurrencyId: string;    
+    ShipmentId: string;
     CustomsChargesPayables: CustomsChargesPayable[] = [];
 }
 
