@@ -1012,6 +1012,44 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
 
 
 
+        private GateWayTesterResult ButtonLoadGLAccounts_Click(int tenant, string textBoxParam)
+        {
+
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+
+
+                string fileGLAccounts = textBoxParam;
+
+
+                var myGLAccountsCSVFlatFileAnalyser = new GLAccountsCSVFlatFileAnalyser();
+                myGLAccountsCSVFlatFileAnalyser.Analyse(null, fileGLAccounts);
+
+                gateWayTesterResult.JsonOut = "GLAccounts Loaded Ok";
+
+
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+                gateWayTesterResult.Log = gateWayTesterResult.Log ?? "";
+                gateWayTesterResult.Log += LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+
+
 
         private GateWayTesterResult ButtonLoadChargeTypes_Click(int tenant, string textBoxParam)
         {
