@@ -228,10 +228,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
             if (customResponse.ResponseContentHeader != null && customResponse.ResponseContentHeader.Exception != null && customResponse.ResponseContentHeader.Exception.Count() > 0)
-            {
+            {                
+                this.MyResponseData.UserMessage = GetExceptionMsg(customResponse.ResponseContentHeader.Exception[0]);
                 this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 this.MyResponseData.Succeeded = true;
-                this.MyResponseData.UserMessage = customResponse.ResponseContentHeader.Exception[0].ExeptionDescription;
                 this.MyResponseData.HasException = false;
                 if (!string.IsNullOrWhiteSpace(requestParams.AppicationId))
                 {
@@ -2382,6 +2382,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
+
+        private string GetExceptionMsg(UnifreightIIG.Common.ExportDeclarationServiceReference.Exception ex)
+        {
+            var wco = WCO.Instance.CreateDB();
+            return ex.ExeptionDescription;
+        }
     }
 
 }
