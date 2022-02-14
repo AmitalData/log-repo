@@ -20,5 +20,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string UPC { get; set; }
         public string OriginCountryId { get; set; }
         public string OriginCountryName { get; set; }
+        public string ShipperId { get; set; }
+        public string ShipperName { get; set; }
     }
 }

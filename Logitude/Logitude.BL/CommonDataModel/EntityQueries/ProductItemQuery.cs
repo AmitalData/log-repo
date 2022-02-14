@@ -52,6 +52,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     UPC = entityPoco.UPC,
                     OriginCountryId = entityPoco.OriginCountryId,
                     OriginCountryName = entityPoco.OriginCountry == null ? null : entityPoco.OriginCountry.EnglishName,
+                    ShipperId = entityPoco.ShipperId,
+                    ShipperName = entityPoco.Shipper == null ? null : entityPoco.Shipper.EnglishName,
                 };
 
                 HTSCodeQuery hTSCodeQuery = new HTSCodeQuery(tenant);
@@ -79,13 +81,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    UPC = entity.UPC,
                                                    OriginCountryId = entity.OriginCountryId,
                                                    OriginCountryName = entity.OriginCountry == null ? null : entity.OriginCountry.EnglishName,
+                                                   ShipperId = entity.ShipperId,
+                                                   ShipperName = entity.Shipper == null ? null : entity.Shipper.EnglishName,
                                                };
             return result;
         }
 
         public List<ProductItemPM> GetProductItemPMsByCustomerId(string customerId,int tenant)
         {
-            List<ProductItemPM> productItems = (from a in repository.context.ProductItems.Include("OriginCountry")
+            List<ProductItemPM> productItems = (from a in repository.context.ProductItems.Include("OriginCountry").Include("Shipper")
                                                 where a.Tenant == tenant && a.CustomerId == customerId
                                                 select new ProductItemPM()
                                                 {
@@ -102,6 +106,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     UPC = a.UPC,
                                                     OriginCountryId = a.OriginCountryId,
                                                     OriginCountryName = a.OriginCountry == null ? null : a.OriginCountry.EnglishName,
+                                                    ShipperId = a.ShipperId,
+                                                    ShipperName = a.Shipper == null ? null : a.Shipper.EnglishName,
                                                 }).ToList();
             if (productItems != null)
             { 

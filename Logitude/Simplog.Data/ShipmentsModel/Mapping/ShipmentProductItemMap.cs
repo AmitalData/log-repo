@@ -24,6 +24,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Name).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.OtherDuties).HasMaxLength(200).IsUnicode(false);
             this.Property(t => t.Remarks).HasMaxLength(1000).IsUnicode(true);
+            this.Property(t => t.ShipperId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.OriginCountryId).HasMaxLength(15).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ShipmentProductItems");
@@ -41,16 +43,13 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.DutiesPercentage).HasColumnName("DutiesPercentage");
             this.Property(t => t.OtherDuties).HasColumnName("OtherDuties");
             this.Property(t => t.Remarks).HasColumnName("Remarks");
+            this.Property(t => t.ShipperId).HasColumnName("ShipperId");
+            this.Property(t => t.OriginCountryId).HasColumnName("OriginCountryId");
 
             // Relationships
-            this.HasRequired(t => t.ProductItem)
-                .WithMany()
-                .HasForeignKey(d => d.ProductItemId);
-
-            //this.HasRequired(t => t.Shipment)
-            //    .WithMany()
-            //    .HasForeignKey(d => d.ShipmentId);
-
+            this.HasRequired(t => t.ProductItem).WithMany().HasForeignKey(d => d.ProductItemId);
+            this.HasOptional(t => t.OriginCountry).WithMany().HasForeignKey(d => d.OriginCountryId);
+            this.HasOptional(t => t.Shipper).WithMany().HasForeignKey(d => d.ShipperId);
         }
     }
 }
