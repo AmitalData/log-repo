@@ -50,9 +50,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ExceptionDescription).HasMaxLength(500).IsUnicode(true);
             this.Property(t => t.ExceptionResolvedDescription).HasMaxLength(500).IsUnicode(true);
             this.Property(t => t.LastExceptionDescription).HasMaxLength(500).IsUnicode(true);
-
             this.Property(t => t.EmptyContainerReturnTo).HasMaxLength(200).IsUnicode(false);
             this.Property(t => t.EmptyContainerReturnFrom).HasMaxLength(200).IsUnicode(false);
+            this.Property(t => t.VesselName).HasMaxLength(40).IsUnicode(false);
 
             this.ToTable("Containers");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -249,7 +249,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.LastExceptionDescription).HasColumnName("LastExceptionDescription");
             this.Property(t => t.IsUpdateEntityException).HasColumnName("IsUpdateEntityException");
             this.Property(t => t.IsExceptionResolved).HasColumnName("IsExceptionResolved");
-
             this.Property(t => t.EmptyContainerReturnFrom).HasColumnName("EmptyContainerReturnFrom");
             this.Property(t => t.EmptyContainerReturnTo).HasColumnName("EmptyContainerReturnTo");
             this.Property(t => t.EmptyContainerReturnETA).HasColumnName("EmptyContainerReturnETA");
@@ -258,6 +257,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.EmptyContainerReturnATD).HasColumnName("EmptyContainerReturnATD");
             this.Property(t => t.OnCarriageGateOut).HasColumnName("OnCarriageGateOut");
             this.Property(t => t.PreCarriageGateIn).HasColumnName("PreCarriageGateIn");
+            this.Property(t => t.VesselName).HasColumnName("VesselName");
 
             this.HasOptional(t => t.CarrierCard).WithMany().HasForeignKey(d => d.MainCarriageCarrierId).WillCascadeOnDelete(false); 
             this.HasOptional(t => t.ShipmentPackage).WithMany().HasForeignKey(d => d.ShipmentPackagesId).WillCascadeOnDelete(false);
