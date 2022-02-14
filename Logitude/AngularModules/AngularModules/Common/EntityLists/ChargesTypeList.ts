@@ -54,6 +54,8 @@ export class ChargesTypeList {
 		PayablesChargesTypeExternalCode: string;
 		PayableDebitGLAcountId: string;
 		ReceivableCreditGLAccountId: string;
+		PayDebitGLAcountLocalName: string;
+		RecCreditGLAcountLocalName: string;
 		IsBackToBack: boolean;
 		IsAutoDisplayInCustoms: boolean;
 		IsCustoms: boolean;
@@ -74,4 +76,4 @@ export class ChargesTypeList {
 		IsActiveInDomestic: boolean;
 		IsActiveInDrop: boolean;
 	
-}
+}

@@ -1,0 +1,18 @@
+﻿<Script DBType="Main" Module="Accounting">
+  <Sql Version="1">
+    <![CDATA[
+	
+Update ChargesTypes
+set RecCreditGLAcountLocalName = glaccount.LocalName
+from ChargesTypes chargesTypes
+join GLAccounts glaccount on chargesTypes.ReceivableCreditGLAccountId = glaccount.id
+
+
+Update ChargesTypes
+set PayDebitGLAcountLocalName = glaccount.LocalName
+from ChargesTypes chargesTypes
+join GLAccounts glaccount on chargesTypes.PayableDebitGLAcountId = glaccount.id
+
+    ]]>       
+  </Sql>
+</Script>
