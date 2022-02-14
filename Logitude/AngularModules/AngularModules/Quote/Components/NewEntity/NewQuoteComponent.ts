@@ -3297,9 +3297,9 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
                 this.sourceEntityPM = myQuote;
                 this.ButtonContent = TextCodeTranslator.Translate("Quote.B.Copy");
 
-                if (!AppTool.IsNullOrEmpty(myQuote.OpportunityId)) {
-                    this.EntityPM.OpportunityId = myQuote.OpportunityId;
-                }
+                //if (!AppTool.IsNullOrEmpty(myQuote.OpportunityId)) {
+                //    this.EntityPM.OpportunityId = myQuote.OpportunityId;
+                //}
 
                 //if (myQuote.IsCustomerSet) {
                 this.QuoteCustomerTypeCode = myQuote.QuoteCustomerTypeCode;
