@@ -58,7 +58,7 @@ export class SharedLogisticMainMenuComponent {
        
             this.CustomerTenantAccessVisibility = false;
             this.CargoTrackingAccessVisibility = false;
-            
+
             this.SelectedItem = "SHLO";
       
         if (FeatureLocator.HasFeaturePermession("General", "CUSTOMERTENANTACCESSES")) {
