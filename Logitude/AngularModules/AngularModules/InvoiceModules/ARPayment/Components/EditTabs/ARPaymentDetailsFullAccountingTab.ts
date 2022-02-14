@@ -2506,7 +2506,6 @@ export class TransactionLineModel extends BaseComponent
 		this.CalculateFields();
 
         this.UIProperties.SetEnabled("AmountToReconcile", "LedgerTransaction", this.Status != TextStore.Closed && !this.parent.IsGridReadOnly );
-        this.UIProperties.SetEnabled("AmountToReconcile", "LedgerTransaction",  !this.parent.isMultipleCheques);
 	}
 
 	CalculateFields()
