@@ -232,6 +232,7 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
         this.CurrenciesListFilterd = [];
         this.currencyService.getAllFromCache().subscribe((result:any) => {
             this.CurrenciesList = result.Result;
+            this.CurrenciesList = this.CurrenciesList.filter(currency => !currency.InActive);
             this.CurrenciesList.forEach(currency => {
                 var item: CustomerCurrencies = new CustomerCurrencies();
                 item.CurrencyCode = currency.Code;
