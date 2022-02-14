@@ -214,7 +214,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             CourierMasterUpdateService courierMasterUpdateServiceUpdateService = new CourierMasterUpdateService(dbContext, new Dictionary<string, IContext>(), _CourierMasterPM.Tenant);
             var myCourierMasterQueryService = new CourierMasterQueryService(dbContext);
             _CourierMasterPM.ChangeSetOp = ChangeSetOperation.Update;
-            _CourierMasterPM.NoOfCourierHawbwWithoutHatara = myCourierMasterQueryService.CounNoOfCourierHawbwWithoutHatara(_CourierMasterPM.Id, _CourierMasterPM.Tenant).ToString();
+            _CourierMasterPM.NoOfCourierHawbwWithoutHatara = myCourierMasterQueryService.CountNoOfCourierHawbwWithoutHatara(_CourierMasterPM.Id, _CourierMasterPM.Tenant).ToString();
             courierMasterUpdateServiceUpdateService.Update(_CourierMasterPM, true);
         }
         private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
