@@ -1492,12 +1492,6 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ChargesInvoiceLineAmountLocalNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesInvoiceLineAmountLocalNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesInvoiceLineAmountLocalNewId,0,'Fact_Charges','[Invoice Line Amount (Local)]','Invoice Line Amount (Local)','Decimal','false',0,0,'false','false','true','Money','false','false','false','false','true')  
-declare @Fact_ChargesLocalProratedAmountNewId varchar(15)
-execute usp_GetNextTableIdValue @Fact_ChargesLocalProratedAmountNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection,RecordType) Values(@Fact_ChargesLocalProratedAmountNewId,0,'Fact_Charges','[Local Prorated Amount]','Local Prorated Amount','Decimal','false',0,0,'false','true','SUM','true','Charges','false','false','false','ProratedAmountInLocalCurrency','false','true','Shipment')  
-declare @Fact_ChargesProfitProratedAmountNewId varchar(15)
-execute usp_GetNextTableIdValue @Fact_ChargesProfitProratedAmountNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection,RecordType) Values(@Fact_ChargesProfitProratedAmountNewId,0,'Fact_Charges','[Profit Prorated Amount]','Profit Prorated Amount','Decimal','false',0,0,'false','true','SUM','true','Charges','false','false','false','ProratedAmountInProfitCurrency','false','true','Shipment')  
 ------------------------------------------------------------------------------------
 declare @Fact_ContainersNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ContainersNewId OUTPUT,'DWObjectTable' 
