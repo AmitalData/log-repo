@@ -41,6 +41,16 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return (from d in Context.ComputingPartnerTranslations where d.Id == id select d).FirstOrDefault();
         }
 
+        public ComputingPartnerTranslation GetSingleTranslationByOurCode(string partnerId, string tableId, string ourCode, int tenant)
+        {
+            return (from d in Context.ComputingPartnerTranslations 
+                    where d.ComputingPartnerId == partnerId 
+                    && d.ObjectTableId == tableId
+                    && d.OurCode == ourCode
+                    &&d.Tenant == tenant
+                    select d).FirstOrDefault();
+        }
+
         public List<ComputingPartnerTranslation> All()
         {
             return Context.ComputingPartnerTranslations.ToList();

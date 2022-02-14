@@ -214,6 +214,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
             shipmentUnassignedFieldPM.FieldName = cardtype;
             shipmentUnassignedFieldPM.ReceivedData = this.ConvertAddressToXML(address);
             shipmentUnassignedFieldPM.ReceivedCode = ReceivedCodes[cardtype];
+            shipmentUnassignedFieldPM.ObjectTableId = this.GetObjectTableId("Card");
+            shipmentUnassignedFieldPM.ComputingPartnrCode = computingPartnerName;
 
             return shipmentUnassignedFieldPM;
         }

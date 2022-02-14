@@ -15,5 +15,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ReceivedCode { get; set; }
         public string ReceivedData { get; set; }
         public string ReplacedDataId { get; set; }
+        public string ObjectTableId { get; set; }
+        public string ComputingPartnrCode { get; set; }
     }
 }
