@@ -1573,22 +1573,10 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         args.ToCountryId = this.EntityPM.MainCarriageFinalDestinationPortCountryId;;
         args.MainCarriageATD = this.EntityPM.MainCarriageATD;
         args.MainCarriageETD = this.EntityPM.MainCarriageETD;
-        args.CustomAgentExportId = this.EntityPM.CustomAgentExportId;
-        args.CustomAgentImportId = this.EntityPM.CustomAgentImportId;
-        args.GrossWeight = this.EntityPM.GrossWeight;
-        args.ChargeableWeight = this.EntityPM.ChargeableWeight;
-        args.Volume = this.EntityPM.Volume;
-        args.GrossWeightUnitCode = this.EntityPM.GrossWeightUnitCode;
-        args.ChargeableWeightUnitCode = this.EntityPM.ChargeableWeightUnitCode;
-        args.VolumeUnitCode = this.EntityPM.VolumeUnitCode;
-        args.ValueOfGoods = this.EntityPM.ValueOfGoods;
-        args.NoOfPackages = this.IsFCLEntity ? this.EntityPM.NumberOfContainers : this.EntityPM.NumberOfPackages;
-        args.TEU = this.EntityPM.TEU;
         args.FriehgtAmount = ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount");;
         args.ForiegnChargesAmount = ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal");
+        args.ShipmentId = this.EntityPM.Id;
         args.LocalCurrencyId = SessionLocator.LocalCurrencyId;
-        args.ProfitCurrencyId = this.EntityPM.ProfitCurrencyId;
-        args.ProfitRate = this.EntityPM.ProfitExchangeRate;
 
         var tariffService: TariffDomainService = new TariffDomainService();
         tariffService.GetAvailableCustomsChargesTariffs(args).subscribe((res: ServiceResponse) => {
@@ -1621,7 +1609,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         }
     }
     private AddNewTariffPayable(payable: CustomsChargesPayable) {
-        var alreadyAddedPayable: ShipmentPayablePM = this.EntityPM.ShipmentPayables.filter(d => d.TariffId == payable.TariffId && d.ChargesTypeId == payable.ChargeTypeId)[0];
+        var alreadyAddedPayable: ShipmentPayablePM = this.EntityPM.ShipmentPayables.filter(d => d.TariffId == payable.TariffId && d.ChargesTypeId == payable.ChargeTypeId && d.MeasurementId == payable.UnitOfMesurmentId)[0];
 
         if (alreadyAddedPayable == null) {
             this.newAddedTariffPayableCount += 1;
