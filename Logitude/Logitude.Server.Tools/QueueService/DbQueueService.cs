@@ -221,7 +221,7 @@ namespace Logitude.Server.Tools.QueueService
                             UseRabbitMQPar.Value = 0;
                         }
 
-                        string myQueueCodeRabbit = RabbitQueueCodeService.GetRabbitQueueCode(this.QueueCode, queueSendModel.QueueGroupCodeRabbit);
+                        string myQueueCodeRabbit = RabbitQueueCodeService.GetRabbitQueueCode(this.QueueCode, queueSendModel?.QueueGroupCodeRabbit);
                         QueueCodeRabbitPar.Value = myQueueCodeRabbit.ToLower();
 
                         cmd.Parameters.Add(queueCodePar);
