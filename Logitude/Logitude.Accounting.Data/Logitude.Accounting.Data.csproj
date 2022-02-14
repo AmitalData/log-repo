@@ -343,6 +343,7 @@
     <Compile Include="Enums\GLAccountTypes.cs" />
     <Compile Include="Enums\InterestEntityTypes.cs" />
     <Compile Include="Enums\InterestReportStatusCodes.cs" />
+    <Compile Include="Enums\RevaluationStatusEnum.cs" />
     <Compile Include="Repositories\AccountingEntityJournalRepository.cs" />
     <Compile Include="Repositories\ARPaymentsJournalRepository.cs" />
     <Compile Include="Repositories\CalculatedChartsLineTypeRepository.cs" />
