@@ -93,7 +93,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     _allIdAccounts = hashsetallIdAccounts;//new List<string>(hashsetallIdAccounts);
                     _allIdAccounts = _allIdAccounts.ToList().AsQueryable();
                 }
-                IQueryable<Data.EntityPOCOs.LedgerTransaction> qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId = GetQOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId(maxCreateDate, ledgerTransactionRepository);
+                IQueryable<Data.EntityPOCOs.LedgerTransaction> filteredTransactionsQuery = GetFilteredTransactionsQuery(maxCreateDate, ledgerTransactionRepository);
 
                 if (_Param.CallBack == null)
                 {
@@ -115,9 +115,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         LogIt("GetEndAccountBalance");
                         this.Response.YearTransferLedgerTransactionIds = startAccountBalanceService.YearTransferLedgerTransactionIds;
 
-                        qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId = RemoveYearTransferLedgerTrans(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId);
+                        filteredTransactionsQuery = RemoveYearTransferLedgerTrans(filteredTransactionsQuery);
 
-                        BuildCallBack(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId,
+                        BuildCallBack(filteredTransactionsQuery,
                             startAccountBalanceService, endAccountBalanceService);
                         LogIt("BuildCallBack");
                     }
@@ -125,14 +125,14 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 else // if callback
                 {
                     ReCopyCallBack();
-                    qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId = RemoveYearTransferLedgerTrans(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId);
+                    filteredTransactionsQuery = RemoveYearTransferLedgerTrans(filteredTransactionsQuery);
 
                 }
 
                 //int pageSize = 100; int curPageZeroBase = 0;
                 if (_Param.DateTypeCode != TaxReportFilterDateTypeCode)
                 {
-                     list = Translate2ListMode(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId, isFromExcelGenerater);                             
+                     list = Translate2ListMode(filteredTransactionsQuery, isFromExcelGenerater);                             
                }
                 
                 LogIt("Translate2ListMode");
@@ -160,7 +160,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         ;
                     //if (!this.Response.SuppressCumulativeDueMultiCurrencyInPeriod)
                     //{
-                    MyBlance myBlance = GetStartBalanceOfCurrPage(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId);
+                    MyBlance myBlance = GetStartBalanceOfCurrPage(filteredTransactionsQuery);
                     CumulativeLocalAmount += myBlance.SumLocalAmount;
                     CumulativeForeignAmount += myBlance.SumForeignAmount;
                     LedgerTransactionHelper ledgerTransactionHelper = new LedgerTransactionHelper();
@@ -320,7 +320,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             return myBlance;
         }
 
-        private IQueryable<Data.EntityPOCOs.LedgerTransaction> GetQOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId(DateTime? maxCreateDate, LedgerTransactionRepository ledgerTransactionRepository)
+        private IQueryable<Data.EntityPOCOs.LedgerTransaction> GetFilteredTransactionsQuery(DateTime? maxCreateDate, LedgerTransactionRepository ledgerTransactionRepository)
         {
             
             
@@ -330,9 +330,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 case GLAccountTotalDateTypeValues.DocumentDate:
                 case GLAccountTotalDateTypeValues.Accountingdate:
                     {
-                        return ledgerTransactionRepository.GetQueryByDateType(_Param.Tenant, _allIdAccounts,
-                            _Param.DateTypeCode, _Param.From, _Param.To,
-                        _Param.CurrencyId, _SearchByFilter, maxCreateDate);
+                        _Param.SearchFields = _SearchByFilter;
+                        return ledgerTransactionRepository.GetFilteredTransactions(_allIdAccounts, _Param, maxCreateDate);
                     }
             
                     break;

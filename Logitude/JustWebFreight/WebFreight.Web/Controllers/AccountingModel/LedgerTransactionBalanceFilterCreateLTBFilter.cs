@@ -57,6 +57,24 @@ public class LedgerTransactionBalanceFilterCreateLTBFilter
 
             }
 
+            string date2TypeCode = filters_list.Where(d => d.FieldName == "Date2TypeCode").FirstOrDefault().FieldValue.ToString();
+            LTBFilter.Date2TypeCode = date2TypeCode;
+
+            var date2Filter = filters_list.Where(d => d.FieldName == "Date2Filter").FirstOrDefault();
+            if (date2Filter != null)
+            {
+
+                var from = date2Filter.FieldValue.ToString();
+                string[] fromDate = from.ToString().Split(';');
+                LTBFilter.FromDate2 = new DateTime(int.Parse(fromDate[0]), int.Parse(fromDate[1]) + 1, int.Parse(fromDate[2]), 0, 0, 0);
+
+                var to = date2Filter.FieldValue2.ToString();
+                string[] toDate = to.ToString().Split(';');
+                LTBFilter.ToDate2 = new DateTime(int.Parse(toDate[0]), int.Parse(toDate[1]) + 1, int.Parse(toDate[2]), 23, 59, 59);
+
+
+            }
+
             //currency
             var currencyIdFilter = filters_list.Where(d => d.FieldName == "CurrencyId").FirstOrDefault();
             if (currencyIdFilter != null)

@@ -166,13 +166,13 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             return q;
         }
 
-        
-             public IQueryable<LedgerTransaction> GetQueryByDateType(int tenant, 
-                 IQueryable<string> listOfAccId, 
-                 string DateTypeCode ,DateTime @from, DateTime to,
-            string currencyId,
-            string searchByFilter,
-            DateTime? maxCreateDate)
+
+        public IQueryable<LedgerTransaction> GetQueryByDateType(int tenant,
+            IQueryable<string> listOfAccId,
+            string DateTypeCode, DateTime @from, DateTime to,
+           string currencyId,
+           string searchByFilter,
+           DateTime? maxCreateDate)
         {
             var q = (from rec in context.LedgerTransactions
                      where rec.Tenant == tenant
@@ -195,7 +195,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
                 q = q.Where(rec => rec.CreateDate <= maxCreateDateReal);
             }
 
-            q = QFilterByDateTruncateTimeInclusive(DateTypeCode, from, to, q);
+            q = FilterByFromAndToDate(DateTypeCode, from, to, q);
 
             return q;
 
@@ -203,7 +203,55 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
 
         }
 
-        private IQueryable<LedgerTransaction> QFilterByDateTruncateTimeInclusive(
+        public IQueryable<LedgerTransaction> GetFilteredTransactions(IQueryable<string> accountsIds, LedgerTransactionBalanceFilter filters, DateTime? maxCreateDate)
+        {
+            IQueryable<LedgerTransaction> transactionsQuery = GetTenantTransactionsFilteredByAccountsIds(accountsIds, filters);
+
+            transactionsQuery = FilterByCurrency(filters, transactionsQuery);
+            transactionsQuery = FilterBySearchFields(filters, transactionsQuery);
+            transactionsQuery = FilterMaxCreatedDate(maxCreateDate, transactionsQuery);
+            transactionsQuery = FilterByFromAndToDate(filters.DateTypeCode, filters.From, filters.To, transactionsQuery);
+
+
+            if (filters.Date2TypeCode != null && filters.FromDate2 != null && filters.ToDate2 != null)
+                transactionsQuery = FilterByFromAndToDate(filters.Date2TypeCode, filters.FromDate2.Value, filters.ToDate2.Value, transactionsQuery);
+
+            return transactionsQuery;
+        }
+
+        private IQueryable<LedgerTransaction> GetTenantTransactionsFilteredByAccountsIds(IQueryable<string> accountsIds, LedgerTransactionBalanceFilter filters)
+        {
+            return (from transaction in context.LedgerTransactions
+                    where transaction.Tenant == filters.Tenant && accountsIds.Contains(transaction.AccountId)
+                    select transaction);
+        }
+
+        private static IQueryable<LedgerTransaction> FilterMaxCreatedDate(DateTime? maxCreateDate, IQueryable<LedgerTransaction> query)
+        {
+            if (maxCreateDate != null && maxCreateDate.HasValue)
+            {
+                DateTime maxCreateDateReal = maxCreateDate.Value;
+                query = query.Where(rec => rec.CreateDate <= maxCreateDateReal);
+            }
+
+            return query;
+        }
+
+        private static IQueryable<LedgerTransaction> FilterBySearchFields(LedgerTransactionBalanceFilter filters, IQueryable<LedgerTransaction> query)
+        {
+            if (!string.IsNullOrWhiteSpace(filters.SearchFields))
+                query = query.Where(rec => rec.SearchFields.Contains(filters.SearchFields));
+            return query;
+        }
+
+        private static IQueryable<LedgerTransaction> FilterByCurrency(LedgerTransactionBalanceFilter filters, IQueryable<LedgerTransaction> query)
+        {
+            if (!string.IsNullOrWhiteSpace(filters.CurrencyId))
+                query = query.Where(rec => rec.CurrencyId == filters.CurrencyId);
+            return query;
+        }
+
+        private IQueryable<LedgerTransaction> FilterByFromAndToDate(
             string DateTypeCode, DateTime from, DateTime to, IQueryable<LedgerTransaction> q
             )
         {
@@ -306,7 +354,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             return q;
         }
 
-        private IQueryable<LedgerTransaction> QFilterByDateTruncateTimeInclusiveUntil(
+        private IQueryable<LedgerTransaction> FilterToDate(
          string DateTypeCode, DateTime to, IQueryable<LedgerTransaction> q
          )
         {
@@ -434,7 +482,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             //         select rec
             //         );
             //}
-            q = QFilterByDateTruncateTimeInclusive("1", @from, to, q);
+            q = FilterByFromAndToDate("1", @from, to, q);
 
             if (!string.IsNullOrWhiteSpace(currencyId))
             {
@@ -488,7 +536,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             //         select rec
             //         );
             //}
-            q = QFilterByDateTruncateTimeInclusive("1", @from, to, q);
+            q = FilterByFromAndToDate("1", @from, to, q);
 
             if (!string.IsNullOrWhiteSpace(currencyId))
             {
@@ -541,7 +589,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             //         select rec
             //         );
             //}
-            q = QFilterByDateTruncateTimeInclusive(dateType, @from, to, q);
+            q = FilterByFromAndToDate(dateType, @from, to, q);
 
             if (!string.IsNullOrWhiteSpace(currencyId))
             {
@@ -668,7 +716,7 @@ on record.JournalId equals j.Id
             //     select rec);
 
             //}
-            ledgerTransactionsByAccountingDate = QFilterByDateTruncateTimeInclusive(DateTypeCode, fromDateOnlyDate, DateUntillNotIncludeOnlyDate, ledgerTransactionsByAccountingDate);
+            ledgerTransactionsByAccountingDate = FilterByFromAndToDate(DateTypeCode, fromDateOnlyDate, DateUntillNotIncludeOnlyDate, ledgerTransactionsByAccountingDate);
 
 
             var lTransByAccountingDateFilterByListOfAccId = ledgerTransactionsByAccountingDate;
@@ -727,7 +775,7 @@ on record.JournalId equals j.Id
                  where !rec.IsReconciled /*== false*/
                  select rec);
             
-            ledgerTransactionsByAccountingDate = QFilterByDateTruncateTimeInclusiveUntil(DateTypeCode,  DateUntillNotIncludeOnlyDate, ledgerTransactionsByAccountingDate);
+            ledgerTransactionsByAccountingDate = FilterToDate(DateTypeCode,  DateUntillNotIncludeOnlyDate, ledgerTransactionsByAccountingDate);
 
 
             var lTransByAccountingDateFilterByListOfAccId = ledgerTransactionsByAccountingDate;
@@ -783,7 +831,7 @@ on record.JournalId equals j.Id
             //     select rec);
 
             //}
-            ledgerTransactionsByAccountingDate = QFilterByDateTruncateTimeInclusive("1", fromDateOnlyDate, accoutingDateUntillNotIncludeOnlyDate, ledgerTransactionsByAccountingDate);
+            ledgerTransactionsByAccountingDate = FilterByFromAndToDate("1", fromDateOnlyDate, accoutingDateUntillNotIncludeOnlyDate, ledgerTransactionsByAccountingDate);
 
 
             var lTransByAccountingDateFilterByListOfAccId = ledgerTransactionsByAccountingDate;
@@ -1001,7 +1049,7 @@ on record.JournalId equals j.Id
                                                       select rec);
 
 
-            ledgerTransactionsByAccountingDate = QFilterByDateTruncateTimeInclusive(DateTypeCode, fromDate, toDate, ledgerTransactionsByAccountingDate);
+            ledgerTransactionsByAccountingDate = FilterByFromAndToDate(DateTypeCode, fromDate, toDate, ledgerTransactionsByAccountingDate);
             var lTransByAccountingDateFilterByListOfAccId = ledgerTransactionsByAccountingDate;
             if (listOfAccId != null)
             {
@@ -1113,7 +1161,7 @@ on record.JournalId equals j.Id
                                                       select rec);
 
 
-            ledgerTransactionsByAccountingDate = QFilterByDateTruncateTimeInclusive(DateTypeCode, fromDate, toDate, ledgerTransactionsByAccountingDate);
+            ledgerTransactionsByAccountingDate = FilterByFromAndToDate(DateTypeCode, fromDate, toDate, ledgerTransactionsByAccountingDate);
             ledgerTransactionsByAccountingDate = ledgerTransactionsByAccountingDate
                 .Where(r =>
                 r.ControlAccountId != null && r.ControlAccountId.Trim() != string.Empty
