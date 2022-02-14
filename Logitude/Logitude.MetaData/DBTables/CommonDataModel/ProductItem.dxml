@@ -88,6 +88,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ShipperId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Customers"
@@ -96,6 +103,11 @@
   <Relation
     ForeignKeyColumn="OriginCountryId"
     ReferencedTable="Countries"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipperId"
+    ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <UniqueConstraint

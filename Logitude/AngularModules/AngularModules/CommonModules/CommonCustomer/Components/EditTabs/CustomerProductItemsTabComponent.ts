@@ -11,6 +11,7 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { HTSCodePM } from '../../../../Common/EntityPMs/HTSCodePM';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
 import { CountryList } from '../../../../Common/EntityLists/CountryList';
+import { CardList } from '../../../../Common/EntityLists/CardList';
 
 @Component({
     templateUrl: './CustomerProductItemsTabComponent.html',
@@ -283,6 +284,35 @@ export class CustomerProductItem extends BaseComponent {
         }
         else {
             this.OriginCountryName = null;
+        }
+    }
+
+    get ShipperId() { return this.EntityPM.ShipperId; }
+    set ShipperId(newValue: string) {
+        if (this.EntityPM.ShipperId != newValue) {
+            this.EntityPM.ShipperId = newValue;
+        }
+    }
+
+    get ShipperName() { return this.EntityPM.ShipperName; }
+    set ShipperName(newValue: string) {
+        if (this.EntityPM.ShipperName != newValue) {
+            this.EntityPM.ShipperName = newValue;
+        }
+    }
+
+    shipper: CardList;
+    get Shipper() { return this.shipper; }
+    set Shipper(value: CardList) {
+        if (this.shipper != value) {
+            this.shipper = value;
+        }
+
+        if (value) {
+            this.ShipperName = value.EnglishName;
+        }
+        else {
+            this.ShipperName = null;
         }
     }
 }

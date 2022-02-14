@@ -194,6 +194,7 @@
     <Compile Include="CommonDataModel\Mapping\CustomerTeamMap.cs" />
     <Compile Include="CommonDataModel\Mapping\HTSCodeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\PostalCodeMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\ProductItemMap.cs" />
     <Compile Include="CommonDataModel\Repositories\CustomerTeamRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\PostalCodeRepository.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\QuoteChargesGroup.cs" />

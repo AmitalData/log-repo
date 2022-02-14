@@ -23,6 +23,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string UPC { get; set; }
         public string OriginCountryId { get; set; }
         public string OriginCountryName { get; set; }
+        public string ShipperId { get; set; }
+        public string ShipperName { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
 
         private List<HTSCodePM> HTScodes;

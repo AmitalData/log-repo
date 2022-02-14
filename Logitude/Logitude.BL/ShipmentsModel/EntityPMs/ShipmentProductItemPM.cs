@@ -31,5 +31,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string OtherDuties { get; set; }
         public string Remarks { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
+        public string ShipperId { get; set; }
+        public string ShipperName { get; set; }
     }
 }

@@ -95,6 +95,16 @@ export class ProductItemPM {
     public set OriginCountryName(newValue: string) { if (this.originCountryName != newValue) { this.originCountryName = newValue; this.MarkAsDirty("OriginCountryName"); } }
        
 	 
+    private shipperId: string;
+    public get ShipperId() { return this.shipperId; }
+    public set ShipperId(newValue: string) { if (this.shipperId != newValue) { this.shipperId = newValue; this.MarkAsDirty("ShipperId"); } }
+       
+	 
+    private shipperName: string;
+    public get ShipperName() { return this.shipperName; }
+    public set ShipperName(newValue: string) { if (this.shipperName != newValue) { this.shipperName = newValue; this.MarkAsDirty("ShipperName"); } }
+       
+	 
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
