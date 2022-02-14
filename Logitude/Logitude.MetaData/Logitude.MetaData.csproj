@@ -205,6 +205,7 @@
     <None Include="DBScripts\CommonModel\202201101050_AddHRAdminRole.sxml" />
     <None Include="DBScripts\CommonModel\202201310232_UpdateDeliveryArrivedEventStatus.sxml" />
     <None Include="DBScripts\CommonModel\202202030232_SetAllowPartialStatuses.sxml" />
+    <None Include="DBScripts\CommonModel\202202141153_AddPartiallyStatuses.sxml" />
     <None Include="DBScripts\CommonModel\UpdateAutomaticLastUpdateDateOnCustomerTeam.sxml" />
     <None Include="DBScripts\CommonModel\UpdateDocumentKPIFields.sxml" />
     <None Include="DBScripts\CommonModel\UpdatePortsSearchFields.sxml" />

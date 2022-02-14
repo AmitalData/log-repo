@@ -1,0 +1,77 @@
+﻿<Script DBType="Main" Module="Common">
+  <Sql Version="1">
+    <![CDATA[
+    declare @Tenant as int
+    declare @Code as varchar(10)
+    declare @Name as varchar(100)
+    declare @NewId as varchar(15)
+    declare @ObjectTableId as varchar(15)
+ 
+    BEGIN
+           DECLARE DataCursor CURSOR READ_ONLY
+           FOR
+           SELECT Id
+           FROM Tenants
+           OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Tenant
+           WHILE @@FETCH_STATUS = 0
+           BEGIN
+			      set @ObjectTableId = (select Id from ObjectTables where Name = 'Shipment')
+                  set @Code = 'PSHP'
+                  set @Name = 'Partially Pick Up'
+
+			      if not exists (select * from EntityStatus where Code = @Code and Tenant = @Tenant)
+                  begin                     
+                         EXECUTE usp_GetNextTableIdValue @NewId OUTPUT,'EntityStatus'
+                         insert into EntityStatus(Id, Code, ObjectTableId, Tenant, DisplayName, Name,InActive,EntityStatusTypeCode,StatusWeight,StatusLocalWeight,SearchFields)
+                         values
+                         (
+                         @NewId,
+                         @Code,
+                         @ObjectTableId,
+                         @Tenant,
+                         @Name,
+                         @Name,
+                         0,
+					     'P',
+			             10,
+					     10,
+					     @Code +','+@Name+','+@Name
+                         )
+                  end   
+
+
+			      set @Code = 'PSDL'
+                  set @Name = 'Partially Delivered'
+			      if not exists (select * from EntityStatus where Code = @Code and Tenant = @Tenant)
+                  begin                     
+                         EXECUTE usp_GetNextTableIdValue @NewId OUTPUT,'EntityStatus'
+                         insert into EntityStatus(Id, Code, ObjectTableId, Tenant, DisplayName, Name,InActive,EntityStatusTypeCode,StatusWeight,StatusLocalWeight,SearchFields)
+                         values
+                         (
+                         @NewId,
+                         @Code,
+                         @ObjectTableId,
+                         @Tenant,
+                         @Name,
+                         @Name,
+                         0,
+					     'P',
+			             240,
+					     240,
+					     @Code +','+@Name+','+@Name
+                         )
+                  end   
+   			 
+           FETCH NEXT FROM DataCursor INTO @Tenant
+           END
+           CLOSE DataCursor
+           DEALLOCATE DataCursor
+    END
+
+    update ObjectTableLastUpdates set LastUpdateDate = GETDATE() where ObjectTableId = (select id from ObjectTables where Name = 'EntityStatus')
+
+    ]]>
+</Sql>
+</Script>
+
+

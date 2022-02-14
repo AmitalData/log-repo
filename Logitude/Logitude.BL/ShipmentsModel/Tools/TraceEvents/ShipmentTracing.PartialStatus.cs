@@ -106,7 +106,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             {
                 isPickUpDeliveryPreviousEvent = entityPM.ShipmentDeliveries.Where(a => a.ChangeSetOp != ChangeSetOperation.Delete && a.ATA != null).Any();
             }
-            if (isPickUpDeliveryPreviousEvent || currentEventEntityStatus.Code == partialPickupStatus || currentEventEntityStatus.Code == partialDeliveredStatus)
+            if (isPickUpDeliveryPreviousEvent)
             {
                 ComputePartialStatusAmount(eventType.Code);
             }
