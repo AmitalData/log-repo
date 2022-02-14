@@ -94,6 +94,13 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="VesselName"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="MainCarriageETA"
     Type="datetime">
     <Constraints
