@@ -1423,6 +1423,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private int calcCourierHawbWithoutHatara ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int CalcCourierHawbWithoutHatara  
+	   {
+	    
+	     get
+		{
+		   return calcCourierHawbWithoutHatara;
+		 }
+		 set
+		 {
+		   if(calcCourierHawbWithoutHatara != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalcCourierHawbWithoutHatara",OldValue=calcCourierHawbWithoutHatara,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   calcCourierHawbWithoutHatara=value;
+		   }
+			
+		 }
+	   }
+	  private int calcCourierHawbWithoutDelivery ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int CalcCourierHawbWithoutDelivery  
+	   {
+	    
+	     get
+		{
+		   return calcCourierHawbWithoutDelivery;
+		 }
+		 set
+		 {
+		   if(calcCourierHawbWithoutDelivery != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalcCourierHawbWithoutDelivery",OldValue=calcCourierHawbWithoutDelivery,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   calcCourierHawbWithoutDelivery=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
