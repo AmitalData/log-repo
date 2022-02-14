@@ -677,17 +677,6 @@ Line4
         this.PostOp(opr, str, () => { });
     }
 
-    ButtonLoadJournals_ISL_Click() {
-        let opr = "ButtonLoadJournals_ISL_Click";
-        let str: string =
-            `Please insert page, you can add a header  //Tenant=1071
-Headers - this line will be deleted
-Line3
-Line4
-`;
-        this.PostOp(opr, str, () => { });
-    }
-
 
 
     ButtonLoadInterestTransactions_Click() {
@@ -712,6 +701,20 @@ Line4
 `;
         this.PostOp(opr, str, () => { });
     }
+
+
+    ButtonLoadGLAccounts_Click() {
+        let opr = "ButtonLoadGLAccounts_Click";
+        let str: string =
+            `Please insert page, you can add a header  //Tenant=1071
+Headers - this line will be deleted
+Line3
+Line4
+`;
+        this.PostOp(opr, str, () => { });
+    }
+
+
 
 
 
