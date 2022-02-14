@@ -2934,10 +2934,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             {
                                 AddImporterApprovalReceivedQueue();
                             }
-                            //if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive && (!IsImporterApprovalRequiredOldValue && entityPM.IsImporterApprovalRequired))
-                            //{
-                            //    AddImporterApprovalReceivedQueueForCargoTracking();
-                            //}
+                            if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive && (!IsImporterApprovalRequiredOldValue && entityPM.IsImporterApprovalRequired))
+                            {
+                                AddImporterApprovalReceivedQueueForCargoTracking();
+                            }
                             shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
                             shipmentAdditionalCloudData.IsImporterApprovalRequried = entityPM.IsImporterApprovalRequired;
                             ClearApprovalDenialFields();
