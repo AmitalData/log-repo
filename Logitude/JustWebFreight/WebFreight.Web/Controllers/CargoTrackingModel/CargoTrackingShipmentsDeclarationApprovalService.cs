@@ -12,6 +12,7 @@ using System.Text;
 using System.IO;
 using ICSharpCode.SharpZipLib.BZip2;
 using System;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
@@ -35,16 +36,16 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         }
         private void ApproveDeclaration(DeclarationApprovalArgs declarationApprovalArgs)
         {
-            SetCloudDataAsApproved(declarationApprovalArgs);
-            SendDeclarationApproveTask(declarationApprovalArgs);
+            var cloudData = SetCloudDataAsApproved(declarationApprovalArgs);
+            SendDeclarationApproveTask(declarationApprovalArgs, cloudData);
         }
         private void DeclineDeclaration(DeclarationApprovalArgs declarationApprovalArgs)
         {
-            SetCloudDataAsDeclined(declarationApprovalArgs);
-            SendDeclarationDeclineTask(declarationApprovalArgs);
+            var cloudData = SetCloudDataAsDeclined(declarationApprovalArgs);
+            SendDeclarationDeclineTask(declarationApprovalArgs, cloudData);
         }
 
-        private void SetCloudDataAsApproved(DeclarationApprovalArgs declarationApprovalArgs)
+        private ShipmentAdditionalCloudData SetCloudDataAsApproved(DeclarationApprovalArgs declarationApprovalArgs)
         {
             ShipmentAdditionalCloudData cloudData = GetCloudDataBySecurityKey(declarationApprovalArgs);
             if (cloudData != null)
@@ -55,6 +56,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 cloudData.ApproveDateTime = TenantServerConfigration.GetCurrentDateTime(declarationApprovalArgs.Tenant);
                 SubmitCloudData(declarationApprovalArgs, cloudData);
             }
+            return cloudData;
         }
 
         private void UpdateDeclarationVersion(ShipmentAdditionalCloudData cloudData)
@@ -116,12 +118,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             return data_out;
         }
 
-        public void SendDeclarationApproveTask(DeclarationApprovalArgs declarationApprovalArgs)
+        public void SendDeclarationApproveTask(DeclarationApprovalArgs declarationApprovalArgs, ShipmentAdditionalCloudData cloudData)
         {
 
             CommunicationsParams communicationParameters = CreateCommunicationParametersForApproval(declarationApprovalArgs);
 
-            List<QueueTask> queueTasks = CreateDeclarationApproveTask(declarationApprovalArgs);
+            List<QueueTask> queueTasks = CreateDeclarationApproveTask(declarationApprovalArgs, cloudData);
 
             communicationParameters.ByteData = LogitudeXmlSerializer.SerializeObject(queueTasks);
 
@@ -130,7 +132,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         }
 
 
-        private void SetCloudDataAsDeclined(DeclarationApprovalArgs declarationApprovalArgs)
+        private ShipmentAdditionalCloudData SetCloudDataAsDeclined(DeclarationApprovalArgs declarationApprovalArgs)
         {
             ShipmentAdditionalCloudData cloudData = GetCloudDataBySecurityKey(declarationApprovalArgs);
             if (cloudData != null)
@@ -140,14 +142,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 cloudData.DenyDate = TenantServerConfigration.GetCurrentDateTime(declarationApprovalArgs.Tenant);
                 SubmitCloudData(declarationApprovalArgs, cloudData);
             }
+            return cloudData;
         }
 
-        public void SendDeclarationDeclineTask(DeclarationApprovalArgs declarationApprovalArgs)
+        public void SendDeclarationDeclineTask(DeclarationApprovalArgs declarationApprovalArgs, ShipmentAdditionalCloudData cloudData)
         {
 
             CommunicationsParams comParams = CreateCommunicationParametersForDecline(declarationApprovalArgs);
 
-            List<QueueTask> queueTasks = CreateDeclarationDeclineTask(declarationApprovalArgs);
+            List<QueueTask> queueTasks = CreateDeclarationDeclineTask(declarationApprovalArgs, cloudData);
 
             comParams.ByteData = LogitudeXmlSerializer.SerializeObject(queueTasks);
 
@@ -208,35 +211,62 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             return comParams;
         }
 
-        private List<QueueTask> CreateDeclarationApproveTask(DeclarationApprovalArgs declarationApprovalArgs)
+        private List<QueueTask> CreateDeclarationApproveTask(DeclarationApprovalArgs declarationApprovalArgs, ShipmentAdditionalCloudData cloudData)
         {
+            var remarks = GetRemarks(cloudData);
             List<QueueTask> queueTasks = new List<QueueTask>
                 {
                     new QueueTask()
                     {
                         Action = "StatusUpdate",
-                        Parameters = new List<Parameter>()
-                        {
-                            new Parameter{ Name = "Code", Order = 0, Value = "VDA" }
-                            ,new Parameter{ Name = "ShipmentNumber", Order = 1, Value = declarationApprovalArgs.ShipmentNumber }
+                        Parameters = new List<Logitude.Server.Tools.Parameter>() {
+                            new Logitude.Server.Tools.Parameter { Order = 0 , Name = "ShipmentNumber", Value = declarationApprovalArgs.ShipmentNumber},
+                            new Logitude.Server.Tools.Parameter { Order = 0 , Name = "Code", Value = "VDA"},
+                            new Logitude.Server.Tools.Parameter { Order = 0 , Name = "Date", Value = cloudData != null && cloudData.ApproveDateTime != null ? cloudData.ApproveDateTime.Value.ToShortDateString() : "" },
+                            new Logitude.Server.Tools.Parameter { Order = 0 , Name = "Time", Value = cloudData != null && cloudData.ApproveDateTime != null ? cloudData.ApproveDateTime.Value.ToShortTimeString() : ""},
+                            new Logitude.Server.Tools.Parameter { Order = 0 , Name = "Remarks", Value = remarks},
+                            new Logitude.Server.Tools.Parameter { Order = 0 , Name = "Direction", Value = cargoTrackingShipmentPM.DirectionId}
                         }
                     }
                 };
             return queueTasks;
         }
 
-        private List<QueueTask> CreateDeclarationDeclineTask(DeclarationApprovalArgs declarationApprovalArgs)
+        private string GetRemarks(ShipmentAdditionalCloudData cloudData)
+        {
+            string remark = "";
+            if (cloudData == null )
+            {
+                return remark;
+            }
+            ContactQuery myQuery = new ContactQuery(cloudData.Tenant);
+            var MyContact = myQuery.GetFirstContactByEnglishNamePM(cloudData.ApprovedByUserName, cloudData.Tenant);
+            if (MyContact != null)
+            {
+                remark = MyContact.EnglishName + ", " + MyContact.LocalName + ", " + MyContact.Email + ", " + cloudData.VersionApproved;
+            }
+            else
+            {
+                remark = "Approved By - " + cloudData.ApprovedByUserName;
+            }
+            return remark;
+        }
+
+        private List<QueueTask> CreateDeclarationDeclineTask(DeclarationApprovalArgs declarationApprovalArgs, ShipmentAdditionalCloudData cloudData)
         {
             List<QueueTask> queue1Tasks = new List<QueueTask>
                 {
                     new QueueTask()
                     {
                         Action = "StatusUpdate",
-                        Parameters = new List<Parameter>()
-                        {
-                            new Parameter{ Name = "Code", Order = 0, Value = "VDD" },
-                            new Parameter{ Name = "ShipmentNumber", Order = 1, Value = declarationApprovalArgs.ShipmentNumber }
+                        Parameters = new List<Logitude.Server.Tools.Parameter>() {
+                            new Logitude.Server.Tools.Parameter { Order = 0 , Name = "ShipmentNumber", Value = declarationApprovalArgs.ShipmentNumber},
+                            new Logitude.Server.Tools.Parameter { Order = 0 , Name = "Code", Value = "VDD"},
+                            new Logitude.Server.Tools.Parameter { Order = 0 , Name = "Remarks", Value = cloudData.DenyReason},
+                            new Logitude.Server.Tools.Parameter { Order = 0 , Name = "Direction", Value = cargoTrackingShipmentPM.DirectionId}
                         }
+
+
                     }
                 };
             return queue1Tasks;
