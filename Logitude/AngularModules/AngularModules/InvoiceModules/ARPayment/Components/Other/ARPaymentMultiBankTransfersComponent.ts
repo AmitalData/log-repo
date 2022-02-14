@@ -333,6 +333,7 @@ export class PaymentBankTransferLine extends BaseComponent {
     set BankAccount(value: BankAccountPM) {
         if (this.entityPM.BankAccount != value) {
             this.entityPM.BankAccount = value;
+            this.entityPM.BankAccount.$id = this.LineNumber;
         }
     }
 
