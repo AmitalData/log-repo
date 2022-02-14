@@ -2998,6 +2998,22 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = null,
              });
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "8285",
+                InOut = InOutEnum.I.ToString(),
+                Description = "שאילתא להוראות תשלום",
+                DefaultSendOptionsCode = Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.WI.ToString(),
+
+                DefaultPriority = CONST_DefaultPriority,
+                DcaPrefixName = "SaveDF_MSG2751_ExportDeclaration_Out.",
+
+                AllowRestore = true,
+                 Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
+             });
             //C:\LogitudeWorld\Amital\Logitude.Customs.BL\EntityPMs\InterfaceManagementPM.cs
             var pm = new Logitude.Customs.Def.EntityPMs.InterfaceManagementPM();
             var myRequestCode = pm.ResponseInterfaceCode;
