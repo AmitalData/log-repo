@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.BL.EntityQueryServices;
+﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
@@ -109,6 +110,8 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
         {
             List<ARPaymentChequePM> cheques = GetDepositCheques();
 
+            ValidateCheques(cheques);
+
             List<ARPaymentChequePM> chequesToUpdate = new List<ARPaymentChequePM>();
             foreach (BankDepositLinePM depositLine in DepositPM.BankDepositLines)
             {
@@ -117,6 +120,14 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
                 chequesToUpdate.Add(cheque);
             }
             SubmitCheques(chequesToUpdate);
+        }
+
+        private void ValidateCheques(List<ARPaymentChequePM> cheques)
+        {
+            if (cheques.Any(ch => ch.StatusCode == ARPaymentChequeStatusValues.InBankAccount))
+            {
+                throw new ApplicationException(TextCodesTranslator.TranslateText("BankDeposit.O.AlreadyDeposited", DepositPM.Tenant));
+            }
         }
 
         private List<CashBookLinePM> GetDepositCashbookLines()

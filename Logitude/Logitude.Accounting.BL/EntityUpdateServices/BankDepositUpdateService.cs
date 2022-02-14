@@ -536,5 +536,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         #endregion
 
+
     }
 }
