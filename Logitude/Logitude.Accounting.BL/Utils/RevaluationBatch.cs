@@ -22,6 +22,7 @@ using Logitude.SystemLogs;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
+using Logitude.Accounting.Data.Enums;
 //using AmitalCustomsWindowsService.Utils;
 
 namespace Logitude.Accounting.BL.Utils
@@ -179,12 +180,12 @@ namespace Logitude.Accounting.BL.Utils
             {
                 using (TransactionScope excScope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(1)))
                 {
-                    {
-                        string errorMessage = e.Message.Split(new[] { '\r', '\n' }).FirstOrDefault();
+                    IAccountingContext context = AccountingContext.GetContext(tenant);
+                    string errorMessage = e.Message.Split(new[] { '\r', '\n' }).FirstOrDefault();
                         _ResponseText = errorMessage;
                         _StatusCode = HttpStatusCode.InternalServerError;
-                        //          UpdateRevaluationStatus(id, tenant, "2", errorMessage, context);
-                    }
+                        UpdateRevaluationStatus(id, tenant, (int)RevaluationStatusEnum.Failed+"", errorMessage, context);
+                    
                     excScope.Complete();
                 }
 
