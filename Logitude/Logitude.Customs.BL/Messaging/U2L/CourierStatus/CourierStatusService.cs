@@ -113,6 +113,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CourierStatus
                 else
                 {
                     newDeclarationCourierStatusPM.Delivered = true;
+
                 }
                 if (string.IsNullOrWhiteSpace(_LogitudeCourierStatus.IsClosedForFollowUp) || (!string.IsNullOrWhiteSpace(_LogitudeCourierStatus.IsClosedForFollowUp) && _LogitudeCourierStatus.IsClosedForFollowUp.ToLower().Substring(0, 1) != "t"))
                 {
@@ -149,6 +150,18 @@ namespace Logitude.Customs.BL.Messaging.U2L.CourierStatus
             }
             AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
             
+        }
+
+        private void UpdateNoOfCourierHawbWithoutDelivery(string declarationId,int tenant)
+        {
+            var courierMasterQueryService = new CourierMasterQueryService(_context);
+            var _CourierMasterPM = courierMasterQueryService.GetByDeclarationId(declarationId, tenant);
+            ICustomContext dbContext = CustomContext.GetContext(tenant);
+            CourierMasterUpdateService courierMasterUpdateServiceUpdateService = new CourierMasterUpdateService(dbContext, new Dictionary<string, IContext>(), tenant);
+            var myCourierMasterQueryService = new CourierMasterQueryService(dbContext);
+            _CourierMasterPM.ChangeSetOp = ChangeSetOperation.Update;
+            _CourierMasterPM.NoOfCourierHawbWithoutDelivery = courierMasterQueryService.CountNoOfCourierHawbwWithoutHatara(_CourierMasterPM.Id, tenant).ToString();
+            courierMasterUpdateServiceUpdateService.Update(_CourierMasterPM, true);
         }
 
         private void GetDeclarationPMByCustomsFile(string CustomFileNo)
