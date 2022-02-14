@@ -406,16 +406,7 @@ namespace Logitude.Infrastructure.BL
 			});
 			 
             all.Add(new ToggleDetails()
-            {
-
-                Code = "ODA",
-                Name = "On Update Document Automation Tab",
-                SearchFields = "ODA,On Update Document Automation Tab",
-                Description = "On Update Document Automation Tab",
-            });
-
-            all.Add(new ToggleDetails()
-            {
+            {    
                 Code = "AEV", 
                 Name = "Automation Event Creation", 
                 SearchFields = "AEV,Automation Event Creation", 
@@ -532,6 +523,14 @@ namespace Logitude.Infrastructure.BL
                 Name = "Customer Team Field", 
                 SearchFields = "CTF,Customer Team Field", 
                 Description = "Show Customer Team Field", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "INTTRA FROB", 
+                Description = "INTTRA option to manage FROB ", 
+                SearchFields = "INTTRA FROB,FOB", 
+                Code = "FOB", 
 			});
 			
             return all;
