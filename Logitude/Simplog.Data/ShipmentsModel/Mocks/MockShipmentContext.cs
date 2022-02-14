@@ -639,6 +639,11 @@ namespace Simplog.Data.ShipmentsModel.Mocks
         {
             get { throw new NotImplementedException(); }
         }
+
+        public IDbSet<ContainersExternalData> ContainersExternalDatas
+        {
+            get { throw new NotImplementedException(); }
+        }
         public IDbSet<OceanInsightsRequest> OceanInsightsRequests
         {
             get { throw new NotImplementedException(); }

@@ -52,6 +52,7 @@ namespace Simplog.Data.ShipmentsModel
         IDbSet<ManifestStatus> ManifestStatus { get; }
         IDbSet<AWBAdditionalHandlingInfo> AWBAdditionalHandlingInfos { get; }
         IDbSet<ShipmentComputedFields> ShipmentComputedFields { get; }
+        IDbSet<ContainersExternalData> ContainersExternalDatas { get; }
         IDbSet<OceanInsightsRequest> OceanInsightsRequests { get; }
         IDbSet<LogitudeOceanInsightsRequest> LogitudeOceanInsightsRequests { get; }
         IDbSet<LogitudeOceanInsightsResponse> LogitudeOceanInsightsResponses { get; }

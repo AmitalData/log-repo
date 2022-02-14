@@ -1,4 +1,6 @@
-﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+﻿using Logitude.BL.Helpers;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.Tools.Behaviours;
 using Logitude.BL.ShipmentsModel.Tools.DataMapping;
 using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 using Logitude.Server.Tools.Counters;
@@ -48,7 +50,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             AddShipmentUpdateKafkaQueueMessage("CToolContainerCreate");
         }
 
-        public void Update(ContainerPM entityPM)
+        public void Update(ContainerPM entityPM, ContainersExternal containersExternal = null)
         {
             this.isNewEntity = false;
             this.containerPm = entityPM;
@@ -61,12 +63,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 RunAutomation("OnUpdate", entityPM);
             }
+            this.HandleContainersExternalData(entityPM, containersExternal);
             ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity);
             this.GetForeignFields_Status(entityPM, containerPoco);
             entityRepository.Update(containerPoco);
             entityRepository.SubmitChanges();
             AddShipmentUpdateKafkaQueueMessage("CToolContainerUpdate");
         }
+
+        private void HandleContainersExternalData(ContainerPM entityPM, ContainersExternal containersExternal)
+        {
+            if(containersExternal == null)
+            {
+                return;
+            }
+            if (!containersExternal.IsFromOceanInsights)
+                return;
+            ContainersExternalDataBehaviour containersExternalDataBehaviour = new ContainersExternalDataBehaviour(entityPM, shipmentsContext, containersExternal);
+            containersExternalDataBehaviour.Handle();
+        }
+
         private void GetForeignFields_Status(ContainerPM entityPM, Container entityPoco)
         {
             entityPM.StatusName = null;

@@ -699,6 +699,7 @@
     <Compile Include="QuoteModel\Repositories\QuoteSettingRepository.cs" />
     <Compile Include="QuoteModel\Repositories\QuoteComputedFieldRepository.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\Container.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\ContainersExternalData.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ContainerStatus.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ContainerStatusSource.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferHeader.cs" />
@@ -727,6 +728,7 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentSubType.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentUnassignedField.cs" />
     <Compile Include="ShipmentsModel\Mapping\ContainerMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\ContainersExternalDataMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ContainerStatusMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ContainerStatusSourceMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\CustomsTransferHeaderMap.cs" />
@@ -755,6 +757,7 @@
     <Compile Include="ShipmentsModel\Mapping\ShipmentStoragePricingMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentSubTypeMap.cs" />
     <Compile Include="ShipmentsModel\Repositories\ContainerRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\ContainersExternalDataRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ContainerStatusRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ContainerStatusSourceRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\CustomsTransferHeaderRepository.cs" />
