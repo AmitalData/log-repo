@@ -74,12 +74,13 @@ namespace WebFreight.Web.WebPages
                     string[] filestrings = headerRequest.Split('~');
                     string securityId = filestrings[0].ToString();
                     int tenant = Convert.ToInt32(filestrings[1]);
+                    string copyId = filestrings.Length > 2 ? filestrings[2].ToString() : null;
 
                     Uploader up = new Uploader();
 
-                    Document myDoc = up.GetFileExtensionBySecurityId(securityId, tenant);
+                    Document myDoc = up.GetFileExtensionBySecurityIdAndCopyId(securityId, copyId,tenant);
                     documentExtension = myDoc.Extension;
-filename = myDoc.FileName;
+                    filename = myDoc.FileName;
                     if (filestrings.Length >= 4)
                     {
                         filename = filestrings[3] != null ? filestrings[3] : myDoc.FileName;
