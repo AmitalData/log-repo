@@ -1822,7 +1822,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
     private GetSelectedPageLines(): LedgerTransactionPM[]
     {
-        return this.SelectedLines.Collection.map(x => x.LedgerTransactionPM as LedgerTransactionPM);
+        return this.SelectedLines.Collection.map((x, index) => {
+            x.LedgerTransactionPM.$id = index + 1;
+            return x.LedgerTransactionPM as LedgerTransactionPM
+        });
     }
 
     public GetInternalReconcileAPPaymentAlertMessage(){
