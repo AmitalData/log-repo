@@ -13,7 +13,7 @@ import {EntityResourceService} from '../../Infrastructure/Services/EntityResourc
 
 export class SharedLogisticMainMenuComponent {
     public CustomerTenantAccessVisibility: boolean = false;
-    public SharedCargoTrackingVisibility: boolean = false;
+    public CargoTrackingAccessVisibility: boolean = false;
 
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(private _entityResourceService: EntityResourceService) {
@@ -57,6 +57,8 @@ export class SharedLogisticMainMenuComponent {
      
        
             this.CustomerTenantAccessVisibility = false;
+            this.CargoTrackingAccessVisibility = false;
+
             this.SelectedItem = "SHLO";
       
         if (FeatureLocator.HasFeaturePermession("General", "CUSTOMERTENANTACCESSES")) {
@@ -64,18 +66,12 @@ export class SharedLogisticMainMenuComponent {
            
         }
 
-        this.SetSharedCargoTrackingVisibility();
-
-    }
-
-    private selectedItem: string;
-
-    private SetSharedCargoTrackingVisibility() {
-        if (FeatureLocator.HasFeaturePermession("General", "SHAREDCARGOTRACKING")) {
-            this.SharedCargoTrackingVisibility = true; 
+        if (FeatureLocator.HasFeaturePermession("General", "SHLOGCARGOTRACKING")) {
+            this.CargoTrackingAccessVisibility = true;
         }
     }
 
+    private selectedItem: string;
     get SelectedItem() { return this.selectedItem; }
     set SelectedItem(newValue: string) {
         if (this.selectedItem != newValue) {
