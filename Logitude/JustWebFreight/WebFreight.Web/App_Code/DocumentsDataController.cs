@@ -255,19 +255,17 @@ namespace WebFreight.Web.App_Code
                 else
                 {
                     string myDocumentId = item.DocumentId;
-                    string copyId = null;
                     string myFileName = isExternalURL ? item.FileName : item.CalculatedFileName;
                     string myFileExtension = item.FileExtension;
+                    DocumentOutCopy documentOutCopy = null;
 
                     if (item.DirectionCode == "O" && item.DocumentId == null)
                     {
                         List<DocumentOutCopy> myCopies = allcopies.Where(d => d.DocumentOutId == item.Id).ToList();
                         if (myCopies.Count > 0)
                         {
-                            var documentOutCopy = myCopies.FirstOrDefault();
+                            documentOutCopy = myCopies.FirstOrDefault();
                             myDocumentId = documentOutCopy.DocumentId;
-                            copyId = documentOutCopy.Id;
-                            myFileName = documentOutCopy.DocumentTypeCopy==null? null: documentOutCopy.DocumentTypeCopy.Name;
                             if (myDocumentId != null)
                             {
                                 Document myDocument = (from d in myContext.Documents
@@ -278,7 +276,7 @@ namespace WebFreight.Web.App_Code
                                 {
                                     if (isExternalURL)
                                     {
-                                        myFileName = myDocument.FileName ?? myFileName;
+                                        myFileName = myDocument.FileName ?? documentOutCopy.DocumentTypeCopy.Name;
                                     }
 
                                     else
@@ -300,7 +298,7 @@ namespace WebFreight.Web.App_Code
                         id = item.Id;
 
                         string encodedUrl = item.SecurityId + "~" + tenant;
-                        encodedUrl = string.IsNullOrEmpty(copyId) ? encodedUrl : encodedUrl + "~" + copyId;
+                        encodedUrl = documentOutCopy == null ? encodedUrl : encodedUrl + "~" + documentOutCopy.Id;
                         encodedUrl = HttpUtility.UrlEncode(encodedUrl);
                         url = "../WebPages/CorrespondenceDownloadpage.aspx?id=" + encodedUrl;
                     }
