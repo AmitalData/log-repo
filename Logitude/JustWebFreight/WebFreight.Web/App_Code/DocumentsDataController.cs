@@ -16,6 +16,7 @@ using WebFreight.Web.Security;
 using WebFreight.Web.WebServices;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.Helpers;
+using System.Data.Entity;
 
 namespace WebFreight.Web.App_Code
 {
@@ -233,15 +234,15 @@ namespace WebFreight.Web.App_Code
                 myDocumentFilings = myDocumentFilings.Where(d => d.IsCustomerView).ToList();
             }
 
-            List<DocumentOutCopy> allcopies = new List<DocumentOutCopy>();
+            IQueryable<DocumentOutCopy> allcopies = Enumerable.Empty<DocumentOutCopy>().AsQueryable();
             List<DocumentsFilingPM> missedDocuments = myDocumentFilings.Where(d => d.DirectionCode == "O" && d.DoucmentTypeTemplateFormatCode != "M" && d.DocumentId == null).ToList();
             if (missedDocuments.Count > 0)
             {
                 List<string> allIds = missedDocuments.Select(s => s.Id).ToList();
 
-                allcopies = (from d in myContext.DocumentOutCopies
+                allcopies = (from d in myContext.DocumentOutCopies.Include("DocumentTypeCopy")
                              where allIds.Contains(d.DocumentOutId)
-                             select d).ToList();
+                             select d);
             }
 
             foreach (DocumentsFilingPM item in myDocumentFilings)
@@ -254,6 +255,7 @@ namespace WebFreight.Web.App_Code
                 else
                 {
                     string myDocumentId = item.DocumentId;
+                    string copyId = null;
                     string myFileName = isExternalURL ? item.FileName : item.CalculatedFileName;
                     string myFileExtension = item.FileExtension;
 
@@ -262,17 +264,21 @@ namespace WebFreight.Web.App_Code
                         List<DocumentOutCopy> myCopies = allcopies.Where(d => d.DocumentOutId == item.Id).ToList();
                         if (myCopies.Count > 0)
                         {
-                            myDocumentId = myCopies.FirstOrDefault().DocumentId;
+                            var documentOutCopy = myCopies.FirstOrDefault();
+                            myDocumentId = documentOutCopy.DocumentId;
+                            copyId = documentOutCopy.Id;
+                            myFileName = documentOutCopy.DocumentTypeCopy==null? null: documentOutCopy.DocumentTypeCopy.Name;
                             if (myDocumentId != null)
                             {
                                 Document myDocument = (from d in myContext.Documents
                                                        where d.Id == myDocumentId
                                                        select d).FirstOrDefault();
+
                                 if (myDocument != null)
                                 {
                                     if (isExternalURL)
                                     {
-                                        myFileName = myDocument.FileName;
+                                        myFileName = myDocument.FileName ?? myFileName;
                                     }
 
                                     else
@@ -294,6 +300,7 @@ namespace WebFreight.Web.App_Code
                         id = item.Id;
 
                         string encodedUrl = item.SecurityId + "~" + tenant;
+                        encodedUrl = string.IsNullOrEmpty(copyId) ? encodedUrl : encodedUrl + "~" + copyId;
                         encodedUrl = HttpUtility.UrlEncode(encodedUrl);
                         url = "../WebPages/CorrespondenceDownloadpage.aspx?id=" + encodedUrl;
                     }
