@@ -257,6 +257,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 }
 
                 EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = entityPoco, EntityPM = entityPM, OldEntityPM = new QuotePM(), AutomationType = "OnUpdate", ObjectTableName = "Quote", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityAutomationMappingPMFields = new EntityAutomationQuoteMappingPMFields() });
+                entityAutomationService.RunAutomation();
                 QuoteMapping.MapEntity(entityPM, entityPoco, isNewEntity);
 
                 entityRepository.Update(entityPoco);
@@ -270,7 +271,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Quote");
                 ActivityLogger.AddAcitivityLog(entityPM.Id, objecttable.Id, entityPM.Tenant, "U", initializer.LoggedContactId);
 
-                entityAutomationService.RunAutomation();
             }
 
             else

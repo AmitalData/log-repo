@@ -14,6 +14,7 @@ import {ApiQueryFilters} from '../../../../../Infrastructure/DataContracts/ApiQu
 import {AutomationHelper} from '../../../../../Infrastructure/Helpers/AutomationHelper';
 import { TextCodeTranslationPipe } from '../../../../../Controls/Pipes/TextCodeTranslationPipe';
 import { AutomationEntityList } from './AutomationConditionViewModel';
+import { SessionLocator } from '../../../../Utilities/SessionLocator';
 export class AutomationSetValueViewModel extends BaseComponent implements OnInit {
     public CurrentEntityPM: AutomationSetValue;
 
@@ -335,8 +336,13 @@ export class AutomationSetValueViewModel extends BaseComponent implements OnInit
 
 
         window.ObjectFields.filter(f => f.DisplayInAutomationAsEnitity == true && f.ObjectTableId == this.ObjectTableId && (!f.RecordType || (f.RecordType && f.RecordType.split(',').filter(d => d == this.ObjectTableName)[0]))).forEach((objectField) => {
-            var objectFieldName = objectField.FullNameTextCodeDefaultText == "Company" ? "Customer" : objectField.FullNameTextCodeDefaultText ;
-            this.AutomationEntityLists.push(new AutomationEntityList(objectFieldName, objectField.LookUpTableId, objectField.FieldCode, objectFieldName));
+            var objectFieldName = objectField.FullNameTextCodeDefaultText == "Company" ? "Customer" : objectField.FullNameTextCodeDefaultText;
+            if (objectFieldName == "Ticket") {
+                this.AddTicketAutomationToEntityLists(objectFieldName, objectField);
+            }
+            else {
+                this.AutomationEntityLists.push(new AutomationEntityList(objectFieldName, objectField.LookUpTableId, objectField.FieldCode, objectFieldName));
+            }
         });
 
 
@@ -350,6 +356,13 @@ export class AutomationSetValueViewModel extends BaseComponent implements OnInit
     }
 
 
+
+    private AddTicketAutomationToEntityLists(objectFieldName: any, objectField: any) {
+        const TicketEntityAutomationFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TAU")[0];
+        if (TicketEntityAutomationFeatureToggle != null) {
+            this.AutomationEntityLists.push(new AutomationEntityList(objectFieldName, objectField.LookUpTableId, objectField.FieldCode, objectFieldName));
+        }
+    }
 
     AutomationEntityListValueChanged(entityField) {
         if (entityField) {
