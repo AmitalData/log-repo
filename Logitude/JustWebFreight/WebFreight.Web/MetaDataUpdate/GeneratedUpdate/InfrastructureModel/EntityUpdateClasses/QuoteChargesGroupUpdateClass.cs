@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class QuoteChargesGroupUpdateClass
    {  		
-		public const string HashString = "90e5bb7f8bb33ebce869cf5c00b97333";
+		public const string HashString = "786cb39b116c7de9d8a5e7adaae24932";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -113,7 +113,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  true,
 			      				    EnableEditFromLOV =  false,
-			      				    SortingByObjectField =  "Name",
+			      				    SortingByObjectField =  "Id",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
@@ -465,7 +465,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllQuoteChargesGroupsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteChargesGroupTextCode_0.Id, NameTextCodeCode = QuoteChargesGroupTextCode_0.Code, ObjectTableName = "QuoteChargesGroup", Code = "AllQuoteChargesGroups",  QueryGroupCode = "685c", IndexOrder = 0, Tenant = 0, ObjectTableId = QuoteChargesGroupObjectTable.Id, QuerySection = "QuoteChargesGroup", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = QuoteChargesGroupFeature_0.Id,FeatureUniqeCode= QuoteChargesGroupFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query AllQuoteChargesGroupsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteChargesGroupTextCode_0.Id, NameTextCodeCode = QuoteChargesGroupTextCode_0.Code, ObjectTableName = "QuoteChargesGroup", Code = "AllQuoteChargesGroups",  QueryGroupCode = "685c", IndexOrder = 0, Tenant = 0, ObjectTableId = QuoteChargesGroupObjectTable.Id, QuerySection = "QuoteChargesGroup", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteChargesGroupFeature_0.Id,FeatureUniqeCode= QuoteChargesGroupFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
 			 QueryColumn AllQuoteChargesGroupsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuoteChargesGroupsQuery.Id,QueryCode = AllQuoteChargesGroupsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "QuoteChargesGroup.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
