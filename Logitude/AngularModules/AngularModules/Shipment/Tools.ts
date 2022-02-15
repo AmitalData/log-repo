@@ -3606,6 +3606,7 @@ export class ShipmentGenerator {
                         newRecord.MeasurementShortName = itemGrouped.MeasurementShortName;
                         newRecord.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
                         newRecord.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
+                        newRecord.ProfitCurrencyExchangeRate = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
 
                         this.myChargesTypeListService.getSingleFromCache(item.ChargesTypeId).subscribe((myResponse: ServiceResponse) => {
                             if (!myResponse.HasError) {
