@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;feef&quot;"
+  Code="&quot;bb95&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -712,6 +712,11 @@
       Description="&quot;INTTRA option to manage FROB &quot;"
       SearchFields="&quot;INTTRA FROB,FOB&quot;"
       Code="&quot;FOB&quot;" />
+    <Record
+      Code="&quot;TAU&quot;"
+      Name="&quot;Ticket Entity In Automation&quot;"
+      SearchFields="&quot;TAU,Ticket Entity In Automation&quot;"
+      Description="&quot;Use Ticket Entity In Automation&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

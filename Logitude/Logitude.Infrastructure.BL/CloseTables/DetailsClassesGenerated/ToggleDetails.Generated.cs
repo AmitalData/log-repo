@@ -532,6 +532,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "INTTRA FROB,FOB", 
                 Code = "FOB", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "TAU", 
+                Name = "Ticket Entity In Automation", 
+                SearchFields = "TAU,Ticket Entity In Automation", 
+                Description = "Use Ticket Entity In Automation", 
+			});
 			
             return all;
        }

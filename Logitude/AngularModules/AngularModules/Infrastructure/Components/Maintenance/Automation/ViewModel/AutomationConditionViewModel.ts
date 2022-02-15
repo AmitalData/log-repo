@@ -14,6 +14,7 @@ import {ApiQueryFilters} from '../../../../../Infrastructure/DataContracts/ApiQu
 import {AutomationHelper} from '../../../../../Infrastructure/Helpers/AutomationHelper';
 import {TextCodeTranslationPipe} from '../../../../../Controls/Pipes/TextCodeTranslationPipe';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { SessionLocator } from '../../../../Utilities/SessionLocator';
 
 
 export class AutomationConditionViewModel extends BaseComponent implements OnInit {
@@ -206,7 +207,12 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
             var objectFieldName = objectField.FullNameTextCodeDefaultText;
             if (objectFieldName == "Company")//this is for now. we need a new field to get the name of the entity(objectField.FullNameAutomationEntity)
                 objectFieldName = "Customer";
-            this.AutomationEntityLists.push(new AutomationEntityList(objectFieldName, objectField.LookUpTableId, objectField.FieldCode, objectFieldName));
+            if (objectFieldName == "Ticket") {
+                this.AddTicketAutomationToEntityLists(objectFieldName, objectField);
+            }
+            else {
+                this.AutomationEntityLists.push(new AutomationEntityList(objectFieldName, objectField.LookUpTableId, objectField.FieldCode, objectFieldName));
+            }
         });
 
         this.SelectedAutomationEntity = this.AutomationEntityLists.filter(d => d.ObjectFieldCode == this.PartnerObjectFieldCode)[0];
@@ -221,6 +227,13 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
     }
 
     
+    private AddTicketAutomationToEntityLists(objectFieldName: any, objectField: any) {
+        const TicketEntityAutomationFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TAU")[0];
+        if (TicketEntityAutomationFeatureToggle != null) {
+            this.AutomationEntityLists.push(new AutomationEntityList(objectFieldName, objectField.LookUpTableId, objectField.FieldCode, objectFieldName));
+        }
+    }
+
     get IsSystemVariables() {
         var result = false;
         if (this.SelectedOperator) {
