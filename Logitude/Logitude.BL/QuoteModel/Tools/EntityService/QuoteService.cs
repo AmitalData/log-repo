@@ -58,6 +58,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         //private ContactPM loggedContact;
         //private IQuotesContext objectContext;
         private QuoteRepository entityRepository;
+        private QuoteQuery quoteQuery;
         private QuoteComputedFieldRepository quoteComputedFieldRepository;
         private FollowUpRepository followUpRepository;
         private QuoteChargeRepository quoteChargeRepository;
@@ -91,6 +92,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             this.quoteTotalVATRepository = new QuoteTotalVATRepository(objectContext);
             this.addressRepository = new AddressRepository(myCommonContext);
             this.loggedTenant = initializer.LoggedTenant; //TenantRepository.GetSingleTenant(tenant, false);
+            this.quoteQuery = new QuoteQuery(this.entityRepository);
             //this.GetLoggedContact(HttpContext.Current.User.Identity.Name);
         }
         public QuoteService(IQuotesContext objectContext, int tenant, string email)
@@ -110,6 +112,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             this.quoteTotalVATRepository = new QuoteTotalVATRepository(objectContext);
             this.addressRepository = new AddressRepository(myCommonContext);
             this.loggedTenant = initializer.LoggedTenant; //TenantRepository.GetSingleTenant(tenant, false);
+            this.quoteQuery = new QuoteQuery(this.entityRepository);
             //this.GetLoggedContact(email);
         }
 
@@ -308,7 +311,23 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             this.quoteFollowUpUpdateService = new QuoteFollowUpUpdateService(entityPM, entityPM.Tenant); 
             quoteFollowUpUpdateService.RefreshFollowUps(); 
         }
-         
+
+        public QuotePM DisconnectQuoteFromOpportunity(string quoteId)
+        {
+            if (string.IsNullOrEmpty(quoteId))
+                return null;
+
+            QuotePM entityPM = this.quoteQuery.GetSinglePM(quoteId, tenant);
+            if (entityPM == null)
+                return null;
+
+            entityPM.OpportunityId = null;
+            this.SetChangeSet(new List<QuoteChargePM>(), new List<QuoteFollowUpPM>(), new List<QuotePackagePM>(), new List<QuoteDocumentVersionPM>());
+            this.Update(entityPM);
+
+            return entityPM;
+        }
+
         private void GetQuoteSettings()
         {
             QuoteSettingRepository iQuoteSettingRepository = new QuoteSettingRepository(initializer.Context);
@@ -2071,6 +2090,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 tariffRepository.SubmitChanges();
             }
         }
+
+
     }
     public class QuoteTotalsClass
     {

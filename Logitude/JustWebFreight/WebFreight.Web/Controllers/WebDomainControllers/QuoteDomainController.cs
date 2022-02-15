@@ -584,7 +584,28 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        
+
+        public HttpResponseMessage GetDisconnectQuoteFromOpportunity(string quoteId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                IQuotesContext quotesContext = QuotesContext.GetContext(tenant);
+                QuoteService quoteService = new QuoteService(quotesContext, tenant);
+                QuotePM quotePM = quoteService.DisconnectQuoteFromOpportunity(quoteId);
+       
+                return Request.CreateResponse(HttpStatusCode.OK, quotePM);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
     }
 }
 
