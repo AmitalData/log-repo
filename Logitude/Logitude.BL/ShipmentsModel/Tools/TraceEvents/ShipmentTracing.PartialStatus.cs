@@ -102,11 +102,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             {
                 isPickUpDeliveryPreviousEvent = entityPM.ShipmentPickUps.Where(a => a.ChangeSetOp != ChangeSetOperation.Delete && a.ATD != null).Any();
             }
+
             if (eventType?.Code == deliveryArrivedEventCode)
             {
                 isPickUpDeliveryPreviousEvent = entityPM.ShipmentDeliveries.Where(a => a.ChangeSetOp != ChangeSetOperation.Delete && a.ATA != null).Any();
             }
-            if (isPickUpDeliveryPreviousEvent)
+            
+            if (isPickUpDeliveryPreviousEvent || currentEventEntityStatus.Code == partialPickupStatus || currentEventEntityStatus.Code == partialDeliveredStatus)
             {
                 ComputePartialStatusAmount(eventType.Code);
             }
@@ -132,7 +134,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             }
 
             this.ComputePartialStatusId(partialStatusAmount, eventTypeCode);
-            
         }
         private void ComputePartialStatusId(string partialStatusAmount, string eventTypeCode)
         {

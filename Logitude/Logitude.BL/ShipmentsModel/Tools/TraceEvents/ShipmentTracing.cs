@@ -1082,7 +1082,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                                 ComputeEventStatus(args);
                             }
 
-                            if (IsAllowingPartial(eventType.EntityStatusId))
+                            if (IsAllowingPartial(eventType.EntityStatusId) && IsHigherStatusWeight(args.EventTypeCode, args.OldStatusId))
                             {
                                 ComputePartialStatusAmount(args.EventTypeCode);
                             }
@@ -1125,6 +1125,24 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             }
         }
 
+        private bool IsHigherStatusWeight(string eventTypeCode, string oldStatusId)
+        {
+            if (oldStatusId == null)
+                return true;
+
+            EventType newEventType = allEventTypes.Where(d => d.Code ==eventTypeCode).FirstOrDefault();
+            EntityStatus newEntityStatus = allEntityStatuses.Where(d => d.Id == newEventType.EntityStatusId).FirstOrDefault();
+            EntityStatus oldEntityStatus = allEntityStatuses.Where(d => d.Id == oldStatusId).FirstOrDefault();
+
+            var newEntityStatusWeight = newEntityStatus.StatusLocalWeight != null ? newEntityStatus.StatusLocalWeight : newEntityStatus.StatusWeight;
+            var oldEntityStatusWeight = oldEntityStatus.StatusLocalWeight != null ? oldEntityStatus.StatusLocalWeight : oldEntityStatus.StatusWeight;
+
+            if (oldEntityStatusWeight >= newEntityStatusWeight)
+                return false;
+
+            return true;
+        }
+
         private void DeleteTraceEvent(string eventTypeCode, string pickupDeliveryIndex = null, DateTime? eventDateTime = null)
         {
             if (!string.IsNullOrEmpty(eventTypeCode))
@@ -1159,10 +1177,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                         {
                             var isCheckThePreviousEvent = this.IsCheckThePreviousEvent(entityPM, eventType);
                             EntityStatus currentEventEntityStatus = allEntityStatuses.Where(d => d.Id == entityPM.StatusId).FirstOrDefault();
+                            TraceEvent previousEvent = null;
                             if ((entityPM.StatusId == eventType.EntityStatusId && isCheckThePreviousEvent) || this.IsEventTypeConnectedToMulitStatuses(eventType, currentEventEntityStatus))
                             {
-                                TraceEvent previousEvent = null;
 
+                                previousEvent = null;
                                 List<TraceEvent> iTraceEventList = (from a in objectContext.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
                                                                     where a.Tenant == tenant
                                                                     && a.EntityId == entityPM.Id
@@ -1266,7 +1285,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                                                                     && a.Deleted == false
                                                                     select a).ToList();
 
-                                TraceEvent previousEvent = null;
+                                previousEvent = null;
 
                                 foreach (TraceEvent e in iTraceEventList)
                                 {
@@ -1310,10 +1329,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                                     entityMasterData.OperationalStatusId = entityPM.OperationalStatusId;
                                 }
                             }
-
                            
-                            if (!isCheckThePreviousEvent || currentEventEntityStatus.Code == partialPickupStatus || currentEventEntityStatus.Code == partialDeliveredStatus)
+                            if (IsHigherStatusWeight(eventTypeCode, previousEvent?.EventType?.EntityStatusId) && (!isCheckThePreviousEvent || currentEventEntityStatus.Code == partialPickupStatus || currentEventEntityStatus.Code == partialDeliveredStatus))
                             {
+
                                 HandlePickUpDeliveryPreviousEvent(eventType, currentEventEntityStatus);
                             }
                         }
@@ -1445,8 +1464,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                                     entityMasterData.StatusDate = entityPM.StatusDate;
                                     entityMasterData.StatusLocation = entityPM.StatusLocation;
                                 }
+
+                                if(IsHigherStatusWeight(args.EventTypeCode, args.OldStatusId)){
+                                    ComputePartialStatusAmount(args.EventTypeCode);
+                                }
                             }
-                            ComputePartialStatusAmount(args.EventTypeCode);
                         }
                     }
                 }                
