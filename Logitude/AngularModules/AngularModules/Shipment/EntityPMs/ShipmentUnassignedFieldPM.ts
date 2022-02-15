@@ -63,6 +63,16 @@ export class ShipmentUnassignedFieldPM {
     public set ReplacedDataId(newValue: string) { if (this.replacedDataId != newValue) { this.replacedDataId = newValue; this.MarkAsDirty("ReplacedDataId"); } }
        
 	 
+    private objectTableId: string;
+    public get ObjectTableId() { return this.objectTableId; }
+    public set ObjectTableId(newValue: string) { if (this.objectTableId != newValue) { this.objectTableId = newValue; this.MarkAsDirty("ObjectTableId"); } }
+       
+	 
+    private computingPartnrCode: string;
+    public get ComputingPartnrCode() { return this.computingPartnrCode; }
+    public set ComputingPartnrCode(newValue: string) { if (this.computingPartnrCode != newValue) { this.computingPartnrCode = newValue; this.MarkAsDirty("ComputingPartnrCode"); } }
+       
+	 
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }

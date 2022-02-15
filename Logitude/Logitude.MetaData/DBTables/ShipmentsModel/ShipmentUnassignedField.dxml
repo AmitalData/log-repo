@@ -53,6 +53,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ComputingPartnrCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ShipmentId"
     ReferencedTable="Shipments"

@@ -22,6 +22,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.ReceivedData = itemPM.ReceivedData;
             itemPoco.ReplacedDataId = itemPM.ReplacedDataId;
             itemPoco.FieldName = itemPM.FieldName;
+            itemPoco.ObjectTableId = itemPM.ObjectTableId;
+            itemPoco.ComputingPartnrCode = itemPM.ComputingPartnrCode;
         }
     }
 }

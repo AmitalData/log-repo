@@ -66,6 +66,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     select d).FirstOrDefault();
         }
 
+        public ComputingPartner GetSingleComputingPartnerByCode(string code, int tenant)
+        {
+            return (from d in Context.ComputingPartners
+                    where d.Code == code && d.Tenant == tenant
+                    select d).FirstOrDefault();
+        }
+
         public string GetSingleComputingPartnerCodeById(string id)
         {
             return (from d in Context.ComputingPartners

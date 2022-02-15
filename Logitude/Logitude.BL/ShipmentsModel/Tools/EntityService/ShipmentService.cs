@@ -92,8 +92,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private PortRepository myPortRepository;
         private ShipmentAdditionalCloudDataRepository shipmentAdditionalCloudDataRepository;
         private ShipmentAdditionalCloudData shipmentAdditionalCloudData;
-        //private DocumentsFilingRepository documentsFilingRepository;
-        //private DocumentTypeRepository DocTypeReposioty;
         private ShipmentTracing shipmentTracing;
         private Tenant loggedTenant;
         private ContactPM loggedContact;
@@ -109,6 +107,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         public ShipmentComputedFields UpdatedShipmentComputedFields;
         private ShipmentServiceInitializer initializer;
         string UpdateByEmail;
+        private ComputingPartnerRepository computingPartnerRepository;
+        private ComputingPartnerTableRepository computingPartnerTableRepository;
+        private ComputingPartnerTranslationRepository computingPartnerTranslationRepository;
         public ShipmentService(IShipmentsContext objectContext, ShipmentPM entityPM, string serviceContextUser)
         {
             UpdateByEmail = serviceContextUser;
@@ -150,6 +151,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.shipmentProductItemRepository = new ShipmentProductItemRepository(objectContext);
             this.shipmentUnassignedFieldRepository = new ShipmentUnassignedFieldRepository(objectContext);
             this.payableProratedAmountRepository = new PayableProratedAmountRepository(objectContext);
+
+            this.computingPartnerRepository = new ComputingPartnerRepository(myCommonContext);
+            this.computingPartnerTableRepository = new ComputingPartnerTableRepository(myCommonContext);
+            this.computingPartnerTranslationRepository = new ComputingPartnerTranslationRepository(myCommonContext);
             this.SetHybridPartner(this.tenant);
         }
 
@@ -6500,6 +6505,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ShipmentUnassignedField itemPoco = shipmentUnassignedFieldRepository.GetSingleShipmentUnassignedField(itemPM.Id, itemPM.Tenant);
             if (itemPoco != null)
             {
+                if (!string.IsNullOrEmpty(itemPM.ReplacedDataId))
+                {
+                    this.HandleUnassignedComputingPartnerTranslation(itemPM);
+                }
+
                 ShipmentMapping.MapShipmentUnassignedField(itemPM, itemPoco, false);
                 shipmentUnassignedFieldRepository.Update(itemPoco);
             }
@@ -6511,6 +6521,73 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 shipmentUnassignedFieldRepository.Remove(itemPoco);
             }
+        }
+        private void HandleUnassignedComputingPartnerTranslation(ShipmentUnassignedFieldPM shipmentUnassignedField)
+        {
+            Card card = cardRepository.GetSingleCard(shipmentUnassignedField.ReplacedDataId, tenant);
+            ComputingPartner partner = this.GetComputingPartner(shipmentUnassignedField.ComputingPartnrCode);   
+            
+            if (partner == null || card == null)
+            {
+                return;                              
+            }
+
+            ComputingPartnerTable computingPartnerTable = computingPartnerTableRepository.GetSingleComputingPartnerTable(tenant, shipmentUnassignedField.ObjectTableId, partner.Id);
+            if(computingPartnerTable == null)
+            {
+                return;
+            }
+
+            ComputingPartnerTranslation computingPartnerTranslation = computingPartnerTranslationRepository.GetSingleTranslationByOurCode(partner.Id, shipmentUnassignedField.ObjectTableId, card.Code, tenant);
+            if(computingPartnerTranslation == null)
+            {
+                this.CreateNewComputingPartnerTranslation(partner.Id, shipmentUnassignedField.ObjectTableId, card.Code, shipmentUnassignedField.ReceivedCode);
+            }
+
+            else
+            {
+                this.UpdateComputingPartnerTranslation(computingPartnerTranslation, shipmentUnassignedField.ReceivedCode);
+            }
+
+            computingPartnerTranslationRepository.SubmitChanges();
+        }
+        private ComputingPartner GetComputingPartner(string computingPartnrCode)
+        {
+            ComputingPartner partner = computingPartnerRepository.GetSingleComputingPartnerByCode(computingPartnrCode, tenant);
+
+            if (partner == null)
+            {
+                partner = computingPartnerRepository.GetSingleComputingPartnerByCode(computingPartnrCode, 0);
+            }
+
+            return partner;
+        }
+        private void CreateNewComputingPartnerTranslation(string partnerId, string tableId, string ourCode, string partnerCode)
+        {
+            ComputingPartnerTranslation computingPartnerTranslation = new ComputingPartnerTranslation()
+            {
+                Id = IdCounter.GetNumber("ComputingPartnerTranslation", tenant),
+                Tenant = tenant,
+                ComputingPartnerId = partnerId,
+                ObjectTableId = tableId,
+                OurCode = ourCode,
+                PartnerCode = partnerCode,
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                CreatedByUserId = loggedContact.Id,
+                UpdatedByUserId = loggedContact.Id,
+                SearchFields = ourCode + "," + partnerCode,                
+            };
+
+            computingPartnerTranslationRepository.Add(computingPartnerTranslation);
+        }
+        private void UpdateComputingPartnerTranslation(ComputingPartnerTranslation computingPartnerTranslation, string partnerCode)
+        {
+            computingPartnerTranslation.PartnerCode = partnerCode;
+            computingPartnerTranslation.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            computingPartnerTranslation.UpdatedByUserId = loggedContact.Id;
+            computingPartnerTranslation.SearchFields = computingPartnerTranslation.OurCode + "," + partnerCode;
+            computingPartnerTranslationRepository.Update(computingPartnerTranslation);
         }
 
         private void ComputeShipmentStatus()
