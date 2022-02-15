@@ -3,7 +3,7 @@
 	<Sql Version="1">
 	</Sql>
 
-	<Oracle Version="7">
+	<Oracle Version="8">
 		<![CDATA[
 declare 
  v_count number;
@@ -12,7 +12,7 @@ select count(*) into v_count from CustomsSettings where companytype='B';
 
 if v_count > 0 then
 begin
-  insert into INTERFACETENANTDEFINITIONS (id,tenant,code,TenantSendOptionsCode,TenantPriority,active,DcaRenameFileEnable,DcaRenameFilePrefix)values ('1-999',1,'8251','','2','0','1',''); 
+  insert into INTERFACETENANTDEFINITIONS (id,tenant,code,TenantSendOptionsCode,TenantPriority,active,DcaRenameFileEnable,DcaRenameFilePrefix)values ('1-999',(select tenant from CustomsSettings where companytype='B'  FETCH FIRST 1 ROWS ONLY),'8251','','2','0','1',''); 
   commit;
 exception
   when DUP_VAL_ON_INDEX
