@@ -16,6 +16,10 @@ export class InterfaceTenantDefinitionList {
 	Active: boolean;
 	DcaRenameFileEnable: boolean;
 	DcaRenameFilePrefix: string;
+	QueueType: string;
+	UseRabbitMQ: boolean;
+	QueueGroupCode: string;
+	SendTime: string;
 	
 }
  

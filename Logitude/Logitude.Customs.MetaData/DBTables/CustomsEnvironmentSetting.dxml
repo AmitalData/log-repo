@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CustomsEnvironmentSettings"
+  Schema="Customs"
+  DBType="Main"
+  Module="Customs">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="EnvironmentCode"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="UseRabbitMQ"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="RabbitHost"
+    Type="varchar"
+    Size="256">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RabbitUserName"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RabbitPassword"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+</Table>

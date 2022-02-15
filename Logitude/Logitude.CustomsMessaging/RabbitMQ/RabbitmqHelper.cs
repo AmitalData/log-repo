@@ -1,4 +1,6 @@
-﻿using RabbitMQ.Client;
+﻿using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.Def.EntityPMs;
+using RabbitMQ.Client;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -133,14 +135,27 @@ namespace Logitude.CustomsMessaging.RabbitMQ
         public static ConnectionFactory GetConnectionFactory()
         {
             //var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
-
-            string HostName = ConfigurationManager.AppSettings["RabbitmqHost"] ?? throw new Exception("HostName is null set ConfigurationManager.AppSettings RabbitmqHost"); ;
-            string UserName = ConfigurationManager.AppSettings["RabbitmqUsername"];
-            string Password = ConfigurationManager.AppSettings["RabbitmqPassword"];
+            var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
+            CustomsEnvironmentSettingPM  customsEnvironmentSettingPM= customsEnvironmentSettingQueryService.GetEnvironmentSettingPM()??
+                throw new Exception("CustomsEnvironmentSetting is null set n DB");
+            string HostName =
+                //ConfigurationManager.AppSettings["RabbitmqHost"] ?? throw new Exception("HostName is null set ConfigurationManager.AppSettings RabbitmqHost"); ;
+                customsEnvironmentSettingPM.RabbitHost ?? throw new Exception("CustomsEnvironmentSetting.RabbitHost is null set n DB");
+            string UserName = //ConfigurationManager.AppSettings["RabbitmqUsername"];
+                customsEnvironmentSettingPM.RabbitUserName ?? throw new Exception("CustomsEnvironmentSetting.RabbitUserName is null set n DB");
+            string Password = //ConfigurationManager.AppSettings["RabbitmqPassword"];
+                customsEnvironmentSettingPM.RabbitPassword ?? throw new Exception("CustomsEnvironmentSetting.RabbitPassword is null set n DB");
 
             return (new ConnectionFactory() { HostName = HostName, UserName = UserName, Password = Password }); ;
         }
 
+        public static bool RabbitInUse()
+        {
+            var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
+            var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
+            return customsEnvironmentSettingPM.UseRabbitMQ;
+
+        }
         public static string GetRabbitMQCode(int currTenant)
         {
             ////CEREATE FROM GWSFLOGITUDE > GGGFRABBITMQ

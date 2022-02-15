@@ -28,8 +28,8 @@
     <OldToolsVersion>4.0</OldToolsVersion>
     <UpgradeBackupLocation />
     <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
     <TargetFrameworkProfile />
     <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
@@ -37,7 +37,7 @@
     <RestorePackages>true</RestorePackages>
     <UseGlobalApplicationHostFile />
     <TypeScriptToolsVersion>2.0</TypeScriptToolsVersion>
-    <Use64BitIISExpress />
+    <Use64BitIISExpress>true</Use64BitIISExpress>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -1042,7 +1042,11 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomerClassificationTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomerIdentificationTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomerIndicationTypeViewsController.Generated.cs" />
+
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DeclarationCasualDetailsViewsController.Generated.cs" />
+
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsEnvironmentSettingViewsController.Generated.cs" />
+
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DeliveryTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CancelRequestRejectReasonTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ExportDeclarationClosingDataViewsController.Generated.cs" />
@@ -1059,7 +1063,11 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ReferenceStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ClientsPoaController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ContainerizationController.Generated.cs" />
+
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DeclarationCasualDetailsController.Generated.cs" />
+
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsEnvironmentSettingController.Generated.cs" />
+
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ExportDeclarationClosingDataController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ExportStorageController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\LogisticsReferenceTypeController.Generated.cs" />
@@ -3129,6 +3137,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsAirlineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsAutonomyKeywordUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsDocumentsDefinitionUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsEnvironmentSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsGeneralUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsInsuranceCompanyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsPartnerFtpUpdateClass.cs" />

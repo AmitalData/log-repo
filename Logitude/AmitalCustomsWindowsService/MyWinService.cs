@@ -127,6 +127,8 @@ namespace AmitalCustomsWindowsService
 
         public void StartMe()
         {
+            string queueDefinitionCode = null;
+            WorkerQueueType workerQueueType = WorkerQueueType.DB;
 
             //SMTP.SendItDefault(Environment.CommandLine.ToString() + " " , "AmitalCustomsWindowsService:OnStart()"); 
             Program.ThreadStartStaticIsMustB4UsingTheDB();
@@ -181,7 +183,7 @@ namespace AmitalCustomsWindowsService
                         suppresDoOnlyCheck = false;
 
                         var AddWorkerFromAppSettingGenericMethod = addWorkerFromAppSettingMethodInfo.MakeGenericMethod(new Type[] { worker.GetType() });
-                        AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck });
+                        AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck, (object)queueDefinitionCode, (object)workerQueueType });
 
                     }
                 }
@@ -232,6 +234,8 @@ namespace AmitalCustomsWindowsService
         private void LoadWorkerFromDB()
         {
 
+            string queueDefinitionCode = null;
+            WorkerQueueType workerQueueType = WorkerQueueType.DB;
             var suppresDoOnlyCheck = false;
             var addWorkerFromAppSettingMethodInfoDB = typeof(MyWinService).GetMethod("AddWorkerFromAppSettingDB");
             if (addWorkerFromAppSettingMethodInfoDB == null)
@@ -265,7 +269,7 @@ namespace AmitalCustomsWindowsService
                     for (int i = 0; i < batchServicesDefinitionPM.NumberOfThreads; i++)
                     {
                         var AddWorkerFromAppSettingGenericMethod = addWorkerFromAppSettingMethodInfoDB.MakeGenericMethod(new Type[] { worker.GetType() });
-                        AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck });
+                        AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck, (object)queueDefinitionCode, (object)workerQueueType });
                     }
                 }
                 

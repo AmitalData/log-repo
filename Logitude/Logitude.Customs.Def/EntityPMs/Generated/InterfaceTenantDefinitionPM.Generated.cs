@@ -204,6 +204,98 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string queueType ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string QueueType  
+	   {
+	    
+	     get
+		{
+		   return queueType;
+		 }
+		 set
+		 {
+		   if(queueType != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QueueType",OldValue=queueType,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   queueType=value;
+		   }
+			
+		 }
+	   }
+	  private bool useRabbitMQ ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool UseRabbitMQ  
+	   {
+	    
+	     get
+		{
+		   return useRabbitMQ;
+		 }
+		 set
+		 {
+		   if(useRabbitMQ != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UseRabbitMQ",OldValue=useRabbitMQ,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   useRabbitMQ=value;
+		   }
+			
+		 }
+	   }
+	  private string queueGroupCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string QueueGroupCode  
+	   {
+	    
+	     get
+		{
+		   return queueGroupCode;
+		 }
+		 set
+		 {
+		   if(queueGroupCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QueueGroupCode",OldValue=queueGroupCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   queueGroupCode=value;
+		   }
+			
+		 }
+	   }
+	  private string sendTime ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SendTime  
+	   {
+	    
+	     get
+		{
+		   return sendTime;
+		 }
+		 set
+		 {
+		   if(sendTime != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SendTime",OldValue=sendTime,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   sendTime=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
