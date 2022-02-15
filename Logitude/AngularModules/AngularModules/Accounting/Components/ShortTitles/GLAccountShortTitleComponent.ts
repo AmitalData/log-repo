@@ -100,7 +100,7 @@ export class GLAccountShortTitleComponent {
                 .then(cmpRef =>
                 {
                     cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: connectedCardId, ObjectTableName: partnerTypeName, SelectedTabCode: this.SelectedTabCode });
+                    cmpRef.instance.Run({ EntityId: connectedCardId, ObjectTableName: partnerTypeName == "Others" ? "Vendor" : partnerTypeName, SelectedTabCode: this.SelectedTabCode });
                     cmpRef.instance.BackCompleted.subscribe(bk =>
                     {
                     });
@@ -120,7 +120,7 @@ export class GLAccountShortTitleComponent {
         }
 
     }
-    
+
     GetConnectedCards(accountId: string)
     {
 
