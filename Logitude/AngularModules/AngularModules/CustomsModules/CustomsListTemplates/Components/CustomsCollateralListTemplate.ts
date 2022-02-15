@@ -22,13 +22,14 @@ export class CustomsCollateralListTemplate {
     TableUpdateButtonOpacity: string = "1";
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
+
+    
     constructor(private CD: ChangeDetectorRef, private _customsCollateralAnswerSharedDataService: CustomsCollateralAnswerSharedDataService) {
         //        this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
 
     }
 
     setVariables(CustomsCollateralRecord: CustomsCollateralList, fieldName: string) {
-        ///console.log(rowData);
         this._CustomsCollateralRecord = CustomsCollateralRecord;
 
 
@@ -42,52 +43,25 @@ export class CustomsCollateralListTemplate {
 
 
     BuildDeclarationsCheckBox() {
-        this.IsDeclarationChecked = 
-            !this.isDisable && (
-            this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.includes(this._CustomsCollateralRecord.Id) ||
-            this._customsCollateralAnswerSharedDataService.connectedSelectAll
-            );  
+        if(this.isDisable) return;
+
+        this.IsDeclarationChecked = this._customsCollateralAnswerSharedDataService.connectedSelectAll ||  this.IsDeclarationChecked;
+        this.handlerShareService()
     }
-
-
-    // OnCheckedWithSystemEvent(eventM, id) {
-    //     eventM.stopPropagation();
-    //     if (!this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.includes(id)) {
-    //         this._customsCollateralAnswerSharedDataService._SelectedItems.Insert(id);
-    //     }
-    //     else {
-    //         var removedIndex = null;
-    //         for (var i = 0; i < this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.length; i++) {
-    //             if (id == this._customsCollateralAnswerSharedDataService._SelectedItems.Collection[i]) {
-    //                 removedIndex = i;
-    //                 break;
-    //             }
-    //         }
-    //         if (removedIndex != null) {
-    //             this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.splice(removedIndex, 1);
-    //         }
-
-    //     }
-
-
-    //     this._customsCollateralAnswerSharedDataService.IsDisplayButtonSend = (this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.length > 1);
-
-    // }
 
 
     OnCheckedWithSystemEvent(eventM) {
         eventM.stopPropagation();
-
-      //  this._CourierWorksheetSharedDataService.connectedSelectAll = false;
-
        
         this.IsDeclarationChecked = !this.IsDeclarationChecked;
-        //if (event.IsChecked) {
-        if (this.IsDeclarationChecked) {
-            if (!this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.includes(this._CustomsCollateralRecord.DeclarationId)) {
-                this._customsCollateralAnswerSharedDataService._SelectedItems.Insert(this._CustomsCollateralRecord.DeclarationId);
-            }
+        this.handlerShareService()      
+    }
 
+
+    handlerShareService() {
+        if (this.IsDeclarationChecked) {
+            if (!this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.includes(this._CustomsCollateralRecord.DeclarationId)) 
+                this._customsCollateralAnswerSharedDataService._SelectedItems.Insert(this._CustomsCollateralRecord.DeclarationId);
 
             for (var i = 0; i < this._customsCollateralAnswerSharedDataService._UnSelectedItems.Collection.length; i++) {
                 if (this._CustomsCollateralRecord.DeclarationId == this._customsCollateralAnswerSharedDataService._UnSelectedItems.Collection[i]) {
@@ -119,8 +93,5 @@ export class CustomsCollateralListTemplate {
             }
         }
     }
-
-
-
 
 }
