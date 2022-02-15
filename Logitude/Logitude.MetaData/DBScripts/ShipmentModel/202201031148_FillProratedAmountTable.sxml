@@ -1,6 +1,7 @@
 ﻿<Script DBType="Main" Module="Shipment"  AOT="true" TargetTableName="Shipments">
-  <Sql Version="5">
+  <Sql Version="6">
     <![CDATA[
+
 
 
 declare @Tenant as int
@@ -59,7 +60,7 @@ DECLARE MastersCursor CURSOR READ_ONLY
 FOR
 SELECT Id, Tenant, ShipmentTypeId, TransportModeId
 FROM Shipments
-WHERE ShipmentLevelCode = 'C' and AccountedPayablesInLocalCurrency <> 0 and $LastCounterWhere$
+WHERE ShipmentLevelCode = 'C' and AccountedPayablesInLocalCurrency <> 0  and $LastCounterWhere$
 OPEN MastersCursor FETCH NEXT FROM MastersCursor INTO @MasterId, @Tenant, @MasterTypeId, @MasterTransportModeId
 WHILE @@FETCH_STATUS = 0
 BEGIN
@@ -353,6 +354,36 @@ BEGIN
 										end											
 									END
 
+									else if ((@MasterTransportModeId = 'O' AND @MasterTypeId = 'FCLD') OR (@MasterTransportModeId = 'I' AND @MasterTypeId = 'FTL'))
+									BEGIN
+										if(@HouseTransportModeId = 'A' OR (@HouseTransportModeId = 'O' AND @HouseTypeId = 'LCLD') OR (@HouseTransportModeId = 'I' AND @HouseTypeId = 'LTL'))
+										begin
+											if (@HouseNumberOfPackages <> 0)
+											begin
+												set @ProrateAmountInLocalCurrency = (@HouseNumberOfPackages / @AllHousesTotalNumberOfPackages) * @LocalForeignAmount
+												set @ProrateAmountInProfitCurrency = (@HouseNumberOfPackages / @AllHousesTotalNumberOfPackages) * @ProfitForeignAmount
+											end
+										end
+
+										else 
+										begin
+											if (@HouseNumberOfContainers <> 0)
+											begin
+												set @ProrateAmountInLocalCurrency = (@HouseNumberOfContainers / @AllHousesTotalNumberOfContainers) * @LocalForeignAmount
+												set @ProrateAmountInProfitCurrency = (@HouseNumberOfContainers / @AllHousesTotalNumberOfContainers) * @ProfitForeignAmount
+											end 
+										end											
+									END
+
+									else if ((@MasterTransportModeId = 'O' AND @MasterTypeId = 'MyGO') OR (@MasterTransportModeId = 'I' AND @MasterTypeId = 'MyGI'))
+									BEGIN
+										if (@HouseChargeableWeight <> 0)
+										begin
+											set @ProrateAmountInLocalCurrency = (@HouseChargeableWeight / @AllHousesTotalChargeableWeight) * @LocalForeignAmount
+											set @ProrateAmountInProfitCurrency = (@HouseChargeableWeight / @AllHousesTotalChargeableWeight) * @ProfitForeignAmount
+										end
+									END
+
 									SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
 									BEGIN TRAN T1;
 									EXECUTE usp_GetNextTableIdValue @NewProrateId OUTPUT,'PayableProratedAmount'
@@ -375,8 +406,8 @@ BEGIN
 									@HouseId,
 									@HousePayableId,
 									@ProrateInvoiceId,
-									@ProrateAmountInLocalCurrency,
-									@ProrateAmountInProfitCurrency
+									isnull(Round(@ProrateAmountInLocalCurrency,3),0),
+									isnull(Round(@ProrateAmountInProfitCurrency,3),0)
 									)                         
 								end 
 								
@@ -422,6 +453,7 @@ END
 CLOSE MastersCursor
 DEALLOCATE MastersCursor
 END
+
 
     
     ]]>
