@@ -287,7 +287,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         {
             List<XmlElement> LXmlComplementos = new List<XmlElement>();
             System.Xml.Serialization.XmlSerializerNamespaces nsPagos = new System.Xml.Serialization.XmlSerializerNamespaces();
-            nsPagos.Add("pago20", "http://www.sat.gob.mx/Pagos");
+            nsPagos.Add("pago20", "http://www.sat.gob.mx/Pagos20");
             string xmlPagos = Profact.TimbraCFDI.XMLUtilerias.SerializaObjeto(pagos, typeof(Pagos), nsPagos);
             XmlDocument docNominas = new XmlDocument();
             docNominas.LoadXml(xmlPagos);
@@ -574,7 +574,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             if (paymentCurrency.Code != SATData.MexicanInvoiceCurrencyCode)
                 return (entityPM.PaymentCurrencyExchangeRate != null ? Convert.ToDecimal(entityPM.PaymentCurrencyExchangeRate.Value) : 0);
 
-            return 0;
+            return 1;
         }
 
         private bool GetTipoCambioPSpecified(Currency paymentCurrency)
