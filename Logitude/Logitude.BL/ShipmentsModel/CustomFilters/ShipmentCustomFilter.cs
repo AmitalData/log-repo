@@ -41,6 +41,11 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         queryableData = DigitalCustomFilter.ApplyDigitalQuickSearchFilter(item, queryableData);
                     }
 
+                    if (item.FieldName == "RemoveWarehouseShipments")
+                    {
+                        queryableData = queryableData.Where(d => !(d.DirectionId == "I" && d.TransportModeId == "I"));
+                    }
+
                     if (item.FieldName == "ActualDataDateYearMonth")
                     {
                         int year = Convert.ToInt32(item.FieldValue);
