@@ -762,6 +762,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             if (traceEvent.EventType.Code == exceptionEventCode)
             {
                 containerPM.ExceptionDescription = null;
+                containerPM.LastExceptionDescription = null;
                 containerPM.ExceptionDate = null;
                 containerPM.HasException = false;
             }
@@ -770,18 +771,25 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             {
                 containerPM.ExceptionResolvedDescription = null;
                 containerPM.IsExceptionResolved = false;
-                containerPM.HasException = true;
+                containerPM.HasException = this.IsContainerHaveExceptionTraceEvent(traceEventRep);
             }
 
             container.ExceptionDescription = containerPM.ExceptionDescription;
             container.ExceptionDate = containerPM.ExceptionDate;
             container.HasException = containerPM.HasException;
+            container.LastExceptionDescription = containerPM.LastExceptionDescription;
             container.ExceptionResolvedDescription = containerPM.ExceptionResolvedDescription;
             container.IsExceptionResolved = containerPM.IsExceptionResolved;
 
 
             containerRepository.Update(container);
             containerRepository.SubmitChanges();
+        }
+
+        private bool IsContainerHaveExceptionTraceEvent(TraceEventRepository traceEventRep)
+        {
+            bool  isTraceEventExist = traceEventRep.IsTraceEventExistByEntityIdAndEventCode(containerPM.Id, "CEXC", tenant);
+            return isTraceEventExist;
         }
     }
 }

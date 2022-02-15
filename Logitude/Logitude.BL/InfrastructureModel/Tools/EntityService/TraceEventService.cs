@@ -96,7 +96,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 }
             }
 
-
+            this.UpdateContinerExceptionFields(theEntityPm);
 
 
             EventTypeRepository eventTypeRepository = new EventTypeRepository(objectContext);

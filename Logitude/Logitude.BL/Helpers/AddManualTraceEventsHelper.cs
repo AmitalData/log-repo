@@ -365,6 +365,7 @@ namespace Logitude.BL.Helpers
             entityPM.ExceptionResolvedDescription = newTraceEvent.Notes;
             entityPM.HasException = false;
             entityPM.ExceptionDescription = null;
+            entityPM.LastExceptionDescription = null;
             entityPM.ExceptionDate = null;
             entityPM.IsUpdateEntityException = true;
         }
