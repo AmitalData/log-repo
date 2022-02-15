@@ -23,6 +23,7 @@ using Logitude.Customs.BL.BL;
 using System.Diagnostics;
 using Logitude.Server.Tools.Contracts;
 using Microsoft.Practices.Unity;
+using Simplog.Data.CommonDataModel.Repositories;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -73,16 +74,95 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             if (entityPM.IsClosedForFollowUp != entityPOCO.IsClosedForFollowUp)
             {
-                DeclarationCourierStatusRepository rep = new DeclarationCourierStatusRepository(context);
                 CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(entityPM.Tenant);
-                CourierMasterUpdateService CourierMasterUpdateService = new CourierMasterUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
                 var courierMasterPM = courierMasterQueryService.GetByDeclarationId(entityPM.DeclarationId, entityPM.Tenant);
+                var repository = new CardRepository(entityPM.Tenant);
+                if (courierMasterPM != null)
+                {
+                    var myCard = repository.GetSingleCard(courierMasterPM.IntegratorCode, entityPM.Tenant);
+                    if (myCard != null && !String.IsNullOrWhiteSpace(myCard.Code))
+                    {
+                        string defValue = GetDefault("ISRAEL", "CGO_GDPR_PRIVAC", "NON", myCard.Code, entityPM.Tenant);
+                        if (defValue == "Y")
+                        {
+                            if (entityPM.IsClosedForFollowUp)
+                            {
+                                DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                                var dec = declarationQueryService.GetSingleDeclarationById(entityPM.DeclarationId, entityPM.Tenant);
+                                var casual = new DeclarationCasualDetailsPM
+                                {
+                                    CasualSupplierName = dec.CasualSupplierName,
+                                    CasualSupplierAddress = dec.CasualSupplierAddress,
+                                    CasualImporterAddress1 = dec.CasualImporterAddress1,
+                                    CasualImporterAddress2 = dec.CasualImporterAddress2,
+                                    CasualImporterCity = dec.CasualImporterCity,
+                                    CasualImporterZipCode = dec.CasualImporterZipCode,
+                                    CasualImporterFax = dec.CasualImporterFax,
+                                    CasualImporterEmail = dec.CasualImporterEmail,
+                                    CasualImporterTel = dec.CasualImporterTel,
+                                    CasualImporterContact = dec.CasualImporterContact,
+                                    DeclarationId = dec.Id,
+                                    Tenant = dec.Tenant
+                                };
+                                casual.ChangeSetOp = ChangeSetOperation.Insert;
+                                DeclarationCasualDetailsUpdateService declarationCasualDetailsUpdateService = new DeclarationCasualDetailsUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                                declarationCasualDetailsUpdateService.Update(casual, true);
+
+                                dec.CasualSupplierName = null;
+                                dec.CasualSupplierAddress = null;
+                                dec.CasualImporterAddress1 = null;
+                                dec.CasualImporterAddress2 = null;
+                                dec.CasualImporterCity = null;
+                                dec.CasualImporterZipCode = null;
+                                dec.CasualImporterFax = null;
+                                dec.CasualImporterEmail = null;
+                                dec.CasualImporterTel = null;
+                                dec.CasualImporterContact = null;
+                                dec.ChangeSetOp = ChangeSetOperation.Update;
+                                DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                                declarationUpdateService.Update(dec, true);
+                            }
+                            else
+                            {
+                                DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                                var dec = declarationQueryService.GetSingleDeclarationById(entityPM.DeclarationId, entityPM.Tenant);
+                                DeclarationCasualDetailsQueryService declarationCasualDetailsQueryService = new DeclarationCasualDetailsQueryService(entityPM.Tenant);
+                                var casual = declarationCasualDetailsQueryService.GetSingle(entityPM.DeclarationId, false, true);
+                                if (casual != null)
+                                {
+                                    dec.CasualSupplierName = casual.CasualSupplierName;
+                                    dec.CasualSupplierAddress = casual.CasualSupplierAddress;
+                                    dec.CasualImporterAddress1 = casual.CasualImporterAddress1;
+                                    dec.CasualImporterAddress2 = casual.CasualImporterAddress2;
+                                    dec.CasualImporterCity = casual.CasualImporterCity;
+                                    dec.CasualImporterZipCode = casual.CasualImporterZipCode;
+                                    dec.CasualImporterFax = casual.CasualImporterFax;
+                                    dec.CasualImporterEmail = casual.CasualImporterEmail;
+                                    dec.CasualImporterTel = casual.CasualImporterTel;
+                                    dec.CasualImporterContact = casual.CasualImporterContact;
+                                    dec.ChangeSetOp = ChangeSetOperation.Update;
+                                    DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                                    declarationUpdateService.Update(dec, true);
+
+                                    casual.ChangeSetOp = ChangeSetOperation.Delete;
+                                    DeclarationCasualDetailsUpdateService declarationCasualDetailsUpdateService = new DeclarationCasualDetailsUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                                    declarationCasualDetailsUpdateService.Update(casual, true);
+
+                                }
+                            }
+                        }
+                    }
+                }
+                DeclarationCourierStatusRepository rep = new DeclarationCourierStatusRepository(context);
+                CourierMasterUpdateService CourierMasterUpdateService = new CourierMasterUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
                 bool useCRS = true;
                 if (useCRS)
                 {
-                    IUpdateOpenDeclarationInCourierMasterService myIUpdateOpenDeclarationInCourierMasterService = ContainerAccessor.Container.Resolve(typeof(IUpdateOpenDeclarationInCourierMasterService), "UpdateOpenDeclarationInCourierMasterService", new ParameterOverride("", entityPM.Tenant)) as IUpdateOpenDeclarationInCourierMasterService;
-                    myIUpdateOpenDeclarationInCourierMasterService.UpdateOpenDeclarationInCourierMaster(entityPM.Tenant, courierMasterPM.Id, null);
-
+                    if (courierMasterPM != null)
+                    {
+                        IUpdateOpenDeclarationInCourierMasterService myIUpdateOpenDeclarationInCourierMasterService = ContainerAccessor.Container.Resolve(typeof(IUpdateOpenDeclarationInCourierMasterService), "UpdateOpenDeclarationInCourierMasterService", new ParameterOverride("", entityPM.Tenant)) as IUpdateOpenDeclarationInCourierMasterService;
+                        myIUpdateOpenDeclarationInCourierMasterService.UpdateOpenDeclarationInCourierMaster(entityPM.Tenant, courierMasterPM.Id, null);
+                    }
                 }
                 else
                 {
@@ -142,7 +222,23 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             base.OnUpdating(entityPM, entityPOCO);
         }
+        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
+        {
+            AmitalContext amitalContext = AmitalContext.GetContext(tenant);
+            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
 
+            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
+            {
+                return ("");
+            }
+
+            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
+            if (myGDFDATAPM == null)
+            {
+                return ("");
+            }
+            return (myGDFDATAPM.DEFDATA);
+        }
 
         protected override void UpdateComposition(DeclarationCourierStatusPM entityPM)
         {
