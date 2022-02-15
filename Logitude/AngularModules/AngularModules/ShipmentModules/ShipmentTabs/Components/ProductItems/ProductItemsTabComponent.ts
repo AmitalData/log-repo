@@ -42,22 +42,27 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
         this.ObjectTableName = this.entityArgs.ObjectTableName;
         this.PartnersDomainService = new PartnersDomainService();
         this.ProductItems = new ObservableCollection([]);
-
+        this.ProductItemQueryFilters = new ApiQueryFilters();
         this.Listen();
     }
 
     ngOnInit() {
         if (this.EntityPM != null) {
-            this.entityResourceService.getEntityResourceByTableName("ShipmentProductItem").subscribe((res1: any) => {
-                this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
-                this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
-                this.TransportModeId = this.EntityPM.TransportModeId;
-                this.CustomerId = this.EntityPM.CustomerId;
-                this.ToCountryId = this.EntityPM.ToCountryId;
+            this.entityResourceService.getEntityResourceByTableName("ProductItem").subscribe((res1: any) => {
+                this.entityResourceService.getEntityResourceByTableName("HTSCode").subscribe((res2: any) => {
+                    this.entityResourceService.getEntityResourceByTableName("ShipmentProductItem").subscribe((res3: any) => {
+                        this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+                        this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+                        this.TransportModeId = this.EntityPM.TransportModeId;
+                        this.CustomerId = this.EntityPM.CustomerId;
+                        this.ToCountryId = this.EntityPM.ToCountryId;
 
-                this.IsResourcesReady = true;                
-                this.SetUIProperties();
-                this.BuildProductItems();
+                        this.IsResourcesReady = true;
+                        this.SetUIProperties();
+                        this.BuildProductItems();
+                        this.BuildQueryFilters();
+                    });
+                });
             });
         }
     }
@@ -110,10 +115,7 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
         this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
     }
 
-    private addedProductItemsIds: string = null;
     BuildProductItems() {
-        this.addedProductItemsIds = null;
-
         if (this.ProductItems == null) {
             this.ProductItems = new ObservableCollection([]);
         }
@@ -125,25 +127,30 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
 
         var itemsCollection: ProductItem[] = [];
 
-        this.EntityPM.ShipmentProductItems.forEach(item => {
-            if (AppTool.IsNullOrEmpty(this.addedProductItemsIds)) {
-                this.addedProductItemsIds = item.Id;
-            }
-
-            else {
-                this.addedProductItemsIds = this.addedProductItemsIds + "," + item.Id;
-            }
-            
+        this.EntityPM.ShipmentProductItems.forEach(item => {            
             itemsCollection.push(new ProductItem(item, this, false));
         });
 
-        this.ProductItems.InsertCollection(itemsCollection);
-        this.BuildQueryFilters();
+        this.ProductItems.InsertCollection(itemsCollection);        
     }
 
-    private BuildQueryFilters() {
+    public BuildQueryFilters() {
         this.ProductItemQueryFilters = new ApiQueryFilters();
-        this.ProductItemQueryFilters.addAdditionalFilter("Id", this.addedProductItemsIds, null, null, "Exclude", false, false, false, "string", false, true, true);
+        var addedProductItemsIds: string = null;
+
+        this.ProductItems.Collection.forEach(item => {
+            if (AppTool.IsNullOrEmpty(addedProductItemsIds)) {
+                addedProductItemsIds = item.ProductItemId;
+            }
+
+            else {
+                addedProductItemsIds = addedProductItemsIds + "," + item.ProductItemId;
+            }
+        });
+
+        if (!AppTool.IsNullOrEmpty(addedProductItemsIds)) {
+            this.ProductItemQueryFilters.addAdditionalFilter("Id", addedProductItemsIds, null, null, "Exclude", false, false, false, "string", false, true, true);
+        }
     }
 
     AddProductItem() {
@@ -330,6 +337,8 @@ export class ProductItem extends BaseComponent {
             this.ShipperId = null;
             this.ShipperName = null;
         }
+
+        this.fatherComponent.BuildQueryFilters();
     }
 
     get HTSCode() {return this.EntityPM.HTSCode;}
@@ -455,6 +464,7 @@ export class ProductItem extends BaseComponent {
 
                 if (this.fatherComponent.ProductItems.Collection.indexOf(this) != -1) {
                     this.fatherComponent.ProductItems.Remove(this);
+                    this.fatherComponent.BuildQueryFilters();
                 }
             }
         });
