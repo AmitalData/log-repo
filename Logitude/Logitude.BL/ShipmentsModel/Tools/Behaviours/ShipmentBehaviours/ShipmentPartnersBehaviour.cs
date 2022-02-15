@@ -95,7 +95,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 entityPM.ConsigneeMainAddressId = null;
                 entityPM.ConsigneeAddressText = null;
                 entityPM.ConsigneeReference1 = IsShipmentFromToLogbox() ? entityPM.ConsigneeReference1 : null;
-                entityPM.ConsigneeReference2 = null;
+                entityPM.ConsigneeReference2 = IsShipmentFromToLogbox() ? entityPM.ConsigneeReference2 : null;
             }
 
             else if (entityPM.IsExternalAPI)
