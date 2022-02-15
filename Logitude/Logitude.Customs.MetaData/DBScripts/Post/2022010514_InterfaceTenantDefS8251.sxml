@@ -8,15 +8,22 @@
 declare 
  v_count number;
 begin
-select count(*) into v_count from CustomsSettings where companytype='B'
+select count(*) into v_count from CustomsSettings where companytype='B';
 
-select v_count > 0 then
-
-  insert into INTERFACETENANTDEFINITIONS values ('1-999','1','8251','','2','0','1',''); 
+if v_count > 0 then
+begin
+  insert into INTERFACETENANTDEFINITIONS (id,tenant,code,TenantSendOptionsCode,TenantPriority,active,DcaRenameFileEnable,DcaRenameFilePrefix)values ('1-999',1,'8251','','2','0','1',''); 
+  commit;
+exception
+  when DUP_VAL_ON_INDEX
+  then ROLLBACK;
+end;
 
 end if;
-end
-  
+end;
     ]]>
 	</Oracle>
 </Script>
+
+
+
