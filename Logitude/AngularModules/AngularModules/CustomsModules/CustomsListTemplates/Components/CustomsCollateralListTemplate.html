@@ -22,7 +22,7 @@
         <div class="TextTrimming" style="cursor:pointer">
             <div style="width: 16px; height:16px; margin-top:10px">
                 <input [disabled]="isDisable" class="CenterCenter" style="box-shadow:none ;width: 16px; height:16px; text-align:center"
-                       type="checkbox" (click)="OnCheckedWithSystemEvent($event , _CustomsCollateralRecord.Id)" />
+                       type="checkbox" [checked]="IsDeclarationChecked" (click)="OnCheckedWithSystemEvent($event , _CustomsCollateralRecord.Id)" />
             </div>
         </div>
 

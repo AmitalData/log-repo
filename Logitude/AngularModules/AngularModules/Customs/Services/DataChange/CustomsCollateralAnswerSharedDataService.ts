@@ -6,7 +6,11 @@ import { ObservableCollection } from '../../../Infrastructure/Utilities/Observab
 @Injectable()
 export class CustomsCollateralAnswerSharedDataService {
     public _SelectedItems: ObservableCollection = new ObservableCollection([]);
+    public _UnSelectedItems: ObservableCollection = new ObservableCollection([]);
+
+    public connectedSelectAll: boolean;
     public IsDisplayButtonSend: boolean;
+    public disconnectedSelectAll: boolean;
 
   public SupperssOnRowSelectedAction: boolean = false;
     private messageSource = new BehaviorSubject('default message');
