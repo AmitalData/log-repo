@@ -485,7 +485,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      SecondCargoID= myJoinConsignment != null ? myJoinConsignment.SecondCargoID : null,
                                                      ThirdCargoID= myJoinConsignment != null ? myJoinConsignment.ThirdCargoID : null,
                                                      ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber :null,
-                                                     TerminalReleaseDate = myJoin != null ? myJoin.TerminalReleaseDate : null
+                                                     TerminalReleaseDate = myJoin != null ? myJoin.TerminalReleaseDate : null,
+                                                     PhysicalCheck=a.PhysicalCheck,
                                                  });
 
 
