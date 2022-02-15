@@ -80,6 +80,9 @@
         font-size: 11px;
         opacity: 0.5;
     }
+    .disabled {
+        pointer-events: none;
+    }
 </style>
 
 
@@ -312,7 +315,7 @@
                                                 </td>
 
                                                 <td>
-                                                    <LogTextBox [ObjectFieldName]="'LeadDescription'" [Text]="VatNumber" [ObjectTableName]="Customer" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                    <LogTextBox [ObjectFieldName]="'LeadDescription'" [Text]="VatNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                 </td>
                                             </tr>
 
@@ -875,7 +878,7 @@
 
                                                             <td>
                                                                 <div style="margin-left: 10px; width:1px;">
-                                                                    <span class="hyperlink" *ngIf="IsMoreButtonVisible_AccountManager" (click)="MoreButtonClicked('AccountManagerUserId')">{{AccountManagerMoreLabel}}</span>
+                                                                    <span [class.disabled]="IsBlockMessageVisible" class="hyperlink" *ngIf="IsMoreButtonVisible_AccountManager" (click)="MoreButtonClicked('AccountManagerUserId')">{{AccountManagerMoreLabel}}</span>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -901,7 +904,7 @@
 
                                                             <td>
                                                                 <div style="margin-left: 10px; width:1px;">
-                                                                    <span class="hyperlink" *ngIf="IsMoreButtonVisible_Salesman" (click)="MoreButtonClicked('SalesmanUserId')">{{SalesmanMoreLabel}}</span>
+                                                                    <span class="hyperlink"  [class.disabled]="IsBlockMessageVisible"  *ngIf="IsMoreButtonVisible_Salesman" (click)="MoreButtonClicked('SalesmanUserId')">{{SalesmanMoreLabel}}</span>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -1013,7 +1016,7 @@
 
                                                             <td>
                                                                 <div style="width:1px;">
-                                                                    <span class="hyperlink" *ngIf="IsMoreButtonVisible_Forwarder" (click)="MoreButtonClicked('ForwarderId')">{{ForwarderMoreLabel}}</span>
+                                                                    <span class="hyperlink"  [class.disabled]="IsBlockMessageVisible"  *ngIf="IsMoreButtonVisible_Forwarder" (click)="MoreButtonClicked('ForwarderId')">{{ForwarderMoreLabel}}</span>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -1038,7 +1041,7 @@
 
                                                             <td>
                                                                 <div style="width:1px;">
-                                                                    <span class="hyperlink" *ngIf="IsMoreButtonVisible_CustomsAgent" (click)="MoreButtonClicked('CustomsAgentId')">{{CustomsAgentMoreLabel}}</span>
+                                                                    <span class="hyperlink"  [class.disabled]="IsBlockMessageVisible"  *ngIf="IsMoreButtonVisible_CustomsAgent" (click)="MoreButtonClicked('CustomsAgentId')">{{CustomsAgentMoreLabel}}</span>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -1063,7 +1066,7 @@
 
                                                             <td>
                                                                 <div style="width:1px;">
-                                                                    <span class="hyperlink" *ngIf="IsMoreButtonVisible_Mediator" (click)="MoreButtonClicked('MediatorId')">{{MediatorMoreLabel}}</span>
+                                                                    <span class="hyperlink"  [class.disabled]="IsBlockMessageVisible"  *ngIf="IsMoreButtonVisible_Mediator" (click)="MoreButtonClicked('MediatorId')">{{MediatorMoreLabel}}</span>
                                                                 </div>
                                                             </td>
                                                         </tr>
