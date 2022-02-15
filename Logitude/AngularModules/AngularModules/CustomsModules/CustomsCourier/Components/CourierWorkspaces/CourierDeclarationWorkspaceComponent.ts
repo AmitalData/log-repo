@@ -74,7 +74,9 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     public PendingTabCount: number;
     public _SelectedTabFilter: TabFilter;
     
-    set SelectedTabFilter(val: TabFilter) { this._SelectedTabFilter = val; }
+    set SelectedTabFilter(val: TabFilter) {
+        this._SelectedTabFilter = val; 
+    }
     public PendingObservableList: ObservableCollection;
 
     constructor(public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public _declarationCourierStatusWebService: DeclarationCourierStatusWebService) {
@@ -535,22 +537,23 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     }
 
        RefreshList() {
-           if (this.CourierWSPendingTab) {
-               this._declarationCourierStatusWebService.GetWorkSpacePendingTab(this.IntegratorCode).subscribe(
-                   (data: any) => {
-                       this.PendingObservableList.InsertCollection(data.Result);
-                       this.DeclarationCourierPendingTabRecords = data.Result;
-                       let count = 0;
-                       for (var i = 0; i < this.DeclarationCourierPendingTabRecords.length; i++) {
-                           var cur = this.DeclarationCourierPendingTabRecords[i];
-                           count += cur.Count;
-                       }
-                       this.PendingTabCount = count;
-                       this.FillPie()
-                   });
-           }
+          
         setTimeout(() => {
             this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+            if (this.CourierWSPendingTabFeature) {
+                this._declarationCourierStatusWebService.GetWorkSpacePendingTab(this.IntegratorCode).subscribe(
+                    (data: any) => {
+                        this.PendingObservableList.InsertCollection(data.Result);
+                        this.DeclarationCourierPendingTabRecords = data.Result;
+                        let count = 0;
+                        for (var i = 0; i < this.DeclarationCourierPendingTabRecords.length; i++) {
+                            var cur = this.DeclarationCourierPendingTabRecords[i];
+                            count += cur.Count;
+                        }
+                        this.PendingTabCount = count;
+                        this.FillPie()
+                    });
+            }
         }, 10);
     }
 
@@ -620,7 +623,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
 
     }
 
-    public CourierWSPendingTab: boolean = false;
+    public CourierWSPendingTabFeature: boolean = false;
     public PieData: any;
     public pieChartLabels: string[] = [];
     public pieChartData: number[] = [];
@@ -630,10 +633,10 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     private InitializePending() {
 
         var table = window.ObjectTables.filter(d => d.Name === 'Customs.CourierMaster')[0];
-        var ikeaFeature = FeatureLocator.Features.filter(f => (f.Code == "CourierWSPendingTab") && f.ObjectTableId == table.Id)[0];
+        var courierWSPendingTabFeature = FeatureLocator.Features.filter(f => (f.Code == "CourierWSPendingTab") && f.ObjectTableId == table.Id)[0];
         
-        if (!AppTool.IsNullOrEmpty( ikeaFeature)) {
-            this.CourierWSPendingTab= true;
+        if (!AppTool.IsNullOrEmpty( courierWSPendingTabFeature)) {
+            this.CourierWSPendingTabFeature= true;
         }
 
         this._TabFilterList.push(new TabFilter("OPN", "טיסות פתוחות ", null, null));
@@ -661,7 +664,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
             this.CurrentPendingPie = null;
         }
 
-        this.CurrentPendingPie = makePieChart(this.PendingPieId, fullData, false, true, this.PendingPieLegendId);
+        this.CurrentPendingPie = makePieChart(this.PendingPieId, fullData, false, false, null/*this.PendingPieLegendId*/);
     }
 
 }
