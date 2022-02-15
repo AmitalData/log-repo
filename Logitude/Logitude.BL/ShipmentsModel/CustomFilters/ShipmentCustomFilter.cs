@@ -43,7 +43,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                     if (item.FieldName == "RemoveWarehouseShipments")
                     {
-                        queryableData = queryableData.Where(d => (d.DirectionId == "I" && d.TransportModeId != "I") || (d.DirectionId != "I" && d.TransportModeId == "I"));
+                        queryableData = queryableData.Where(d => !(d.DirectionId == "I" && d.TransportModeId == "I"));
                     }
 
                     if (item.FieldName == "ActualDataDateYearMonth")
