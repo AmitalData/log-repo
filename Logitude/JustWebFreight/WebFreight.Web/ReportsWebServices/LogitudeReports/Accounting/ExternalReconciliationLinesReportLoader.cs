@@ -13,6 +13,7 @@ using Logitude.BL.Resolvers;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
@@ -272,6 +273,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private List<ExternalReconciliationPeriod> GetExternalReconcilePeriodsOfAllBankAccount(List<BankAccountPM> bankAccounts)
         {
+
+            if (CheckIfBankAccountHasSameGLAccountsWithTransfer())
+                this.IncludesTransferGlaccount = false;
+
             if (Type == "bank")
             {
                 var reconcileExternalPageLines = GetExternalPagesLines();
@@ -291,6 +296,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 
                 return BuildExternalReconciliationPeriods(reconcileExternalPageLines, ledgerTransactions, transferledgerTransactions);
             }
+        }
+
+        private bool CheckIfBankAccountHasSameGLAccountsWithTransfer()
+        {
+            if (BankAccountId != null)
+            {
+                BankAccountPM bankAccountPM = bankAccounts.FirstOrDefault();
+                if (bankAccountPM.TransferGLAcccountId == bankAccountPM.GLAccountId)
+                    return true;
+            }
+            return false;
         }
 
         private List<ExternalReconciliationPeriod> GetExternalReconcilePeriodsByReconcileNumber(List<BankAccountPM> bankAccounts)
@@ -568,7 +584,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                             on line.ReconcileExternalPageId equals page.Id
                                               where line.Tenant == tenant
                                                     && line.ReferenceDate != null
-                                                    && page.StatusCode != "3"
+                                                    && page.StatusCode == "2"
+                                                    && line.InReconcileProgress == false
+                                                    && line.InProgressExternalReconcile == false
                                                     && DbFunctions.TruncateTime(line.ReferenceDate) >= DbFunctions.TruncateTime(RefDateFrom)
                                                     && DbFunctions.TruncateTime(line.ReferenceDate) <= DbFunctions.TruncateTime(RefDateTo)
 
@@ -580,7 +598,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 }
                 if (!string.IsNullOrEmpty(BankAccountId))
                 {
-                    reconcileExternalPageLines = reconcileExternalPageLines.Where(line => line.ReconcileExternalPage.EntityId == BankAccountId);
+                    ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
+                    var bankAccountObjectTable = objectTabelRepository.GetObjectTableByName("BankAccount", tenant, true);
+
+                    reconcileExternalPageLines = reconcileExternalPageLines.Include("ReconcileExternalPage")
+                        .Where(line => line.ReconcileExternalPage.EntityId == BankAccountId && line.ReconcileExternalPage.ObjectTableId == bankAccountObjectTable.Id);
                 }
 
                 if (IsExternalReconciled == "close")
