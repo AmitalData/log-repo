@@ -21,6 +21,8 @@ import { ClientPM } from 'Customs/EntityPMs/ClientPM';
 import { ClientsAddressCommTypePM } from 'Customs/EntityPMs/ClientsAddressCommTypePM';
 import { ClientPMService } from 'Customs/Services/StandardPMs/ClientPMService';
  import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import { ClaimsRelatedEntitiesReasonPM } from 'Customs/EntityPMs/ClaimsRelatedEntitiesReasonPM';
+import { ClaimsRelatedEntsReasonsExpPM } from 'Customs/EntityPMs/ClaimsRelatedEntsReasonsExpPM';
  
 @Component({
     
@@ -641,6 +643,62 @@ export class ClaimGeneralTabComponent extends BaseComponent {
     }
 
     //#endregion
+
+    
+    CopyButtonClicked(item: ClaimsRelatedEntityLineComponent) {
+        if (!this.IsControlEnabled) return;
+
+        SessionLocator.SelectedSession.StartBusyIndicator("");
+
+        var newClaimsRelatedEntityPM = new ClaimsRelatedEntityPM(this.EntityPM);
+        newClaimsRelatedEntityPM.ClaimId = this.EntityPM.Id;
+        newClaimsRelatedEntityPM.Tenant = this.EntityPM.Tenant;
+        newClaimsRelatedEntityPM.EntityCounterKey = (ArrayTool.Max(this.EntityPM.ClaimsRelatedEntities, "EntityCounterKey") + 1);
+        newClaimsRelatedEntityPM.WarehouseTypeCode = item.entityPM.WarehouseTypeCode;
+        newClaimsRelatedEntityPM.WarehouseTypeName = item.entityPM.WarehouseTypeName;
+        //newClaimsRelatedEntityPM.ClaimEntityTypeCode = item.entityPM.ClaimEntityTypeCode;
+        //newClaimsRelatedEntityPM.ClaimEntityTypeName = item.entityPM.ClaimEntityTypeName;
+        //newClaimsRelatedEntityPM.ClaimEntityNumber = item.entityPM.ClaimEntityNumber;
+        //newClaimsRelatedEntityPM.IsFinancialRefundDemand = item.entityPM.IsFinancialRefundDemand;
+        newClaimsRelatedEntityPM.IsSendClaimsRelatedEntity = true;
+        newClaimsRelatedEntityPM.ClaimExplanation = item.entityPM.ClaimExplanation;
+        newClaimsRelatedEntityPM.ClaimsRelatedEntitiesReasons = [];
+        for (let i of item.entityPM.ClaimsRelatedEntitiesReasons) {
+            let newClaimsRelatedEntitiesReasonPM = new ClaimsRelatedEntitiesReasonPM(newClaimsRelatedEntityPM)
+            newClaimsRelatedEntitiesReasonPM.Tenant = newClaimsRelatedEntityPM.Tenant;
+            newClaimsRelatedEntitiesReasonPM.ClaimId = i.ClaimId;
+            newClaimsRelatedEntitiesReasonPM.CounterKey = newClaimsRelatedEntityPM.EntityCounterKey;
+            newClaimsRelatedEntitiesReasonPM.LineNo = (ArrayTool.Max(newClaimsRelatedEntityPM.ClaimsRelatedEntitiesReasons, "LineNo") + 1);
+            newClaimsRelatedEntitiesReasonPM.ClaimsRelatedEntsReasonsExps = [];
+            newClaimsRelatedEntitiesReasonPM.ReasonListTypeCode = i.ReasonListTypeCode;
+            newClaimsRelatedEntitiesReasonPM.ReasonListTypeName = i.ReasonListTypeName;
+            for (let j of i.ClaimsRelatedEntsReasonsExps)
+            {
+                let newClaimsRelatedEntsReasonsExpPM = new ClaimsRelatedEntsReasonsExpPM(newClaimsRelatedEntitiesReasonPM)
+                newClaimsRelatedEntsReasonsExpPM.ClaimExplanationTypeCode = j.ClaimExplanationTypeCode;
+                newClaimsRelatedEntsReasonsExpPM.ClaimExplanationTypeName = j.ClaimExplanationTypeName;
+                newClaimsRelatedEntsReasonsExpPM.ClaimId = j.ClaimId;
+                newClaimsRelatedEntsReasonsExpPM.ExplanationNote = j.ExplanationNote;
+                newClaimsRelatedEntsReasonsExpPM.Tenant = j.Tenant;
+                newClaimsRelatedEntsReasonsExpPM.LineNo = (ArrayTool.Max(newClaimsRelatedEntitiesReasonPM.ClaimsRelatedEntsReasonsExps, "LineNo") + 1);
+                newClaimsRelatedEntsReasonsExpPM.CounterKey = i.CounterKey;
+                newClaimsRelatedEntitiesReasonPM.AddClaimsRelatedEntsReasonsExp(newClaimsRelatedEntsReasonsExpPM);
+            }
+            newClaimsRelatedEntityPM.AddClaimsRelatedEntitiesReason(newClaimsRelatedEntitiesReasonPM);
+            //newClaimsRelatedEntityPM.ClaimsRelatedEntitiesReasons.push(newClaimsRelatedEntitiesReasonPM);
+        }
+
+        let newClaimsRelatedEntityLineComponent = new ClaimsRelatedEntityLineComponent(newClaimsRelatedEntityPM, this.EntityPM, false);
+        this.ClaimsRelatedEntitiesObslist.Insert(newClaimsRelatedEntityLineComponent);
+        this.EntityPM.AddClaimsRelatedEntity(newClaimsRelatedEntityPM);
+
+        SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = [];
+        //SessionLocator.SelectedSession.StartBusyIndicator("");
+
+
+        SessionLocator.SelectedSession.StopBusyIndicator();
+        this.EditClaimsRelatedEntityLine(newClaimsRelatedEntityLineComponent, true);
+    }
 }
 
 export class ClaimsRelatedEntityLineComponent extends BaseComponent {
