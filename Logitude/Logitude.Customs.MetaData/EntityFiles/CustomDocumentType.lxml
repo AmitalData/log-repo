@@ -1027,7 +1027,7 @@
     IsHeaderScreen="false"
     Code="&quot;CustomDocumentType.GeneralTabScreen&quot;"
     NumberOfColumns="1"
-    NumberOfRows="6">
+    NumberOfRows="7">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -1058,6 +1058,11 @@
         Column="0"
         Row="5"
         ObjectFieldName="&quot;IsDiamondManadatory&quot;"
+        ScreenName="GeneralTabScreen" />
+      <ScreenField
+        Column="0"
+        Row="6"
+        ObjectFieldName="&quot;CustomsDocumentUpload&quot;"
         ScreenName="GeneralTabScreen" />
     </ScreenFields>
   </Screen>
