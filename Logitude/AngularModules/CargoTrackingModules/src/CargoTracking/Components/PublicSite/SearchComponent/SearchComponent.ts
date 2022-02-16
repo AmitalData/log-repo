@@ -12,6 +12,7 @@ import { CargoTrackingSearchRequest } from 'src/CargoTracking/DataContracts/Carg
 import { CargoTrackingSearchResponse } from 'src/CargoTracking/DataContracts/CargoTrackingSearchResponse';
 
 
+const mobileScreenMaxWidth = 470;
 const invalidCaptchaMessage = "Please re-enter the characters you see in the image above";
 import { MessageWindowComponent } from '../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
 import { DateTimeFormatPipe } from '../../../../Infrastructure/Pipes/DateTimeFormatPipe';
@@ -201,6 +202,14 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         this._SearchText = v;
         if (!this.SearchText)
             this.Search("searchText");
+    }
+
+
+
+    get IsMobileView(){
+        const isPortrait = window.innerHeight > window.innerWidth;
+        return (window.innerWidth <= mobileScreenMaxWidth && isPortrait)
+        || ( window.innerHeight <= mobileScreenMaxWidth && !isPortrait);
     }
 
     Clear()
