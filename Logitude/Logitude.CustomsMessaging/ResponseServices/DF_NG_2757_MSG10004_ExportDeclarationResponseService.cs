@@ -2401,7 +2401,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     fieldNames.Add(res.FieldNameHeb);
             });
 
-            string msg = fieldNames.Count > 0 ? string.Join(",", fieldNames) : ex.ExeptionDescription;
+            string msg = fieldNames.Count > 0 ? "שגיאה בשדה: " + string.Join(",", fieldNames) : ex.ExeptionDescription;
 
             return msg;
         }
