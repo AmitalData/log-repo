@@ -267,7 +267,14 @@ namespace WebFreight.Web.DataProviders
         public string OnCarriageCarrierCode { get; set; }
         public string OnCarriageCarrierNumber { get; set; }
         public string CustomsDeclarationNumber { get; set; }
-
+        public string OnForwardingFromName { get; set; }
+        public string OnForwardingToName { get; set; }
+        public string PreForwardingFromName { get; set; }
+        public string PreForwardingToName { get; set; }
+        public string OnCarriageFromName { get; set; }
+        public string OnCarriageToName { get; set; }
+        public string PreCarriageFromName { get; set; }
+        public string PreCarriageToName { get; set; }
     }
 
     public class CommodityLine

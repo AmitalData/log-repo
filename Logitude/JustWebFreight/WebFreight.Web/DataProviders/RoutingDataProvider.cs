@@ -40,6 +40,14 @@ namespace WebFreight.Web.DataProviders
         public DateTime? OnCarriageATA { get; set; }
         public string OnCarriageCarrierCode { get; set; }
         public string OnCarriageCarrierNumber { get; set; }
+        public string OnForwardingFromName { get; set; }
+        public string OnForwardingToName { get; set; }
+        public string PreForwardingFromName { get; set; }
+        public string PreForwardingToName { get; set; }
+        public string OnCarriageFromName { get; set; }
+        public string OnCarriageToName { get; set; }
+        public string PreCarriageFromName { get; set; }
+        public string PreCarriageToName { get; set; }
 
         private ShipmentPM shipmentPM;
         public RoutingDataProvider(ShipmentPM shipment)
@@ -53,7 +61,9 @@ namespace WebFreight.Web.DataProviders
         private void GetPreForwardingData()
         {
             this.PreForwardingFrom = shipmentPM.PreForwardingFromPortCode;
+            this.PreForwardingFromName = shipmentPM.PreForwardingFromPortName;
             this.PreForwardingTo = shipmentPM.PreForwardingToPortCode;
+            this.PreForwardingToName = shipmentPM.PreForwardingToPortName;
             this.PreForwardingETD = shipmentPM.PreForwardingETD;
             this.PreForwardingETA = shipmentPM.PreForwardingETA;
             this.PreForwardingATD = shipmentPM.PreForwardingATD;
@@ -64,7 +74,9 @@ namespace WebFreight.Web.DataProviders
         private void GetOnForwardingData()
         {
             this.OnForwardingFrom = shipmentPM.OnForwardingFromPortCode;
+            this.OnForwardingFromName = shipmentPM.OnForwardingFromPortName;
             this.OnForwardingTo = shipmentPM.OnForwardingToPortCode;
+            this.OnForwardingToName = shipmentPM.OnForwardingToPortName;
             this.OnForwardingETD = shipmentPM.OnForwardingETD;
             this.OnForwardingETA = shipmentPM.OnForwardingETA;
             this.OnForwardingATD = shipmentPM.OnForwardingATD;
@@ -75,7 +87,9 @@ namespace WebFreight.Web.DataProviders
         private void GetPreCarriageData()
         {
             this.PreCarriageFrom = shipmentPM.PreCarriageFromPortCode;
+            this.PreCarriageFromName = shipmentPM.PreCarriageFromPortName;
             this.PreCarriageTo = shipmentPM.PreCarriageToPortCode;
+            this.PreCarriageToName = shipmentPM.PreCarriageToPortName;
             this.PreCarriageETD = shipmentPM.PreCarriageETD;
             this.PreCarriageETA = shipmentPM.PreCarriageETA;
             this.PreCarriageATD = shipmentPM.PreCarriageATD;
@@ -86,7 +100,9 @@ namespace WebFreight.Web.DataProviders
         private void GetOnCarriageData()
         {
             this.OnCarriageFrom = shipmentPM.OnCarriageFromPortCode;
+            this.OnCarriageFromName = shipmentPM.OnCarriageFromPortName;
             this.OnCarriageTo = shipmentPM.OnCarriageToPortCode;
+            this.OnCarriageToName = shipmentPM.OnCarriageToPortName;
             this.OnCarriageETD = shipmentPM.OnCarriageETD;
             this.OnCarriageETA = shipmentPM.OnCarriageETA;
             this.OnCarriageATD = shipmentPM.OnCarriageATD;
