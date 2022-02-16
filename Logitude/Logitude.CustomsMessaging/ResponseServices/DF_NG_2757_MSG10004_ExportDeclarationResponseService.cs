@@ -228,10 +228,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
             if (customResponse.ResponseContentHeader != null && customResponse.ResponseContentHeader.Exception != null && customResponse.ResponseContentHeader.Exception.Count() > 0)
-            {
+            {                
+                this.MyResponseData.UserMessage = GetExceptionMsg(customResponse.ResponseContentHeader.Exception[0]);
                 this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 this.MyResponseData.Succeeded = true;
-                this.MyResponseData.UserMessage = customResponse.ResponseContentHeader.Exception[0].ExeptionDescription;
                 this.MyResponseData.HasException = false;
                 if (!string.IsNullOrWhiteSpace(requestParams.AppicationId))
                 {
@@ -2382,6 +2382,29 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
+
+        private string GetExceptionMsg(UnifreightIIG.Common.ExportDeclarationServiceReference.Exception ex)
+        {
+            List<string> fieldNames = new List<string>();
+            var fieldList = WCO.Instance.CreateDB().GetCopyList();
+            WCOErrorPointerModel res;
+
+            ex.ExceptionParms.ToList().ForEach(param =>
+            {
+                param = param.Substring(param.LastIndexOf(".") + 1);
+
+                res = fieldList.Find(x => x.XmlTag.EndsWith(param) && !string.IsNullOrEmpty(x.FieldNameHeb));
+                if (res == null && param.StartsWith("Export"))
+                    res = fieldList.Find(x => x.XmlTag.EndsWith(param.Remove(0, 6)) && !string.IsNullOrEmpty(x.FieldNameHeb));
+
+                if (res != null)
+                    fieldNames.Add(res.FieldNameHeb);
+            });
+
+            string msg = fieldNames.Count > 0 ? string.Join(",", fieldNames) : ex.ExeptionDescription;
+
+            return msg;
+        }
     }
 
 }
