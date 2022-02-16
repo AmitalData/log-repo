@@ -2550,6 +2550,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ITNumber = shipment.ITNumber;
             shipmentPM.FreightRelease = shipment.FreightRelease;
             shipmentPM.TerminalAvailable = shipment.TerminalAvailable;
+            shipmentPM.Terminal2Available = shipment.Terminal2Available;
             shipmentPM.ENSNumber = shipment.ENSNumber;
             shipmentPM.ENSDate = shipment.ENSDate;
             shipmentPM.AMSClosingDate = shipment.AMSClosingDate;
@@ -11973,6 +11974,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          ITNumber = s.ITNumber,
                                                          FreightRelease = s.FreightRelease,
                                                          TerminalAvailable = s.TerminalAvailable,
+                                                         Terminal2Available = s.Terminal2Available,
                                                          OBLTypeCode = m.OBLTypeCode,
                                                          DocumentsClosingDate = m.DocumentsClosingDate,
                                                          TEU = s.TEU,
@@ -12511,6 +12513,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ITNumber = f.ITNumber,
                                FreightRelease = f.FreightRelease,
                                TerminalAvailable = f.TerminalAvailable,
+                               Terminal2Available = f.Terminal2Available,
                                OBLTypeCode = f.OBLTypeCode,
                                DocumentsClosingDate = f.DocumentsClosingDate,
                                ENSNumber = f.ENSNumber,
@@ -12918,6 +12921,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ITNumber = f.ITNumber,
                     FreightRelease = f.FreightRelease,
                     TerminalAvailable = f.TerminalAvailable,
+                    Terminal2Available = f.Terminal2Available,
                     OBLTypeCode = f.OBLTypeCode,
                     DocumentsClosingDate = f.DocumentsClosingDate,
                     ENSNumber = f.ENSNumber,
@@ -13227,6 +13231,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ITNumber = f.ITNumber,
                     FreightRelease = f.FreightRelease,
                     TerminalAvailable = f.TerminalAvailable,
+                    Terminal2Available = f.Terminal2Available,
                     OBLTypeCode = f.OBLTypeCode,
                     DocumentsClosingDate = f.DocumentsClosingDate,
                     ENSNumber = f.ENSNumber,
@@ -13814,6 +13819,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          ITNumber = s.ITNumber,
                                                          FreightRelease = s.FreightRelease,
                                                          TerminalAvailable = s.TerminalAvailable,
+                                                         Terminal2Available = s.Terminal2Available,
                                                          OBLTypeCode = m.OBLTypeCode,
                                                          DocumentsClosingDate = m.DocumentsClosingDate,
                                                          TEU = s.TEU,

@@ -433,6 +433,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
 
         public DateTime? FreightRelease { get; set; }
         public DateTime? TerminalAvailable { get; set; }
+        public DateTime? Terminal2Available { get; set; }
         public string ISFNumber { get; set; }
         public DateTime? ISFDate { get; set; }
         public string ITNumber { get; set; }

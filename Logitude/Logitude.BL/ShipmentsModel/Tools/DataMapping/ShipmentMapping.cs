@@ -402,6 +402,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.TEU = entityPM.TEU;
             entityPoco.FreightRelease = entityPM.FreightRelease;
             entityPoco.TerminalAvailable = entityPM.TerminalAvailable;
+            entityPoco.Terminal2Available = entityPM.Terminal2Available;
             entityPoco.ISFNumber = entityPM.ISFNumber;
             entityPoco.ISFDate = entityPM.ISFDate;
             entityPoco.ITNumber = entityPM.ITNumber;

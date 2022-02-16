@@ -5958,6 +5958,13 @@ export class RoutingHelper {
             var WarehouseLegAED: number = isWarehouseLegExists ? DateTool.GetDateParts(entityPM.WarehouseLegActualEntryDate).DateTicks : 0;
             var WarehouseLegARD: number = isWarehouseLegExists ? DateTool.GetDateParts(entityPM.WarehouseLegActualReleaseDate).DateTicks : 0;
 
+            var isWarehouseLeg2Exists: boolean = (entityPM.WarehouseLeg2WarehouseId != null) ? true : false;
+            var isWarehouse2DeliveriesLegExists = isWarehouseLeg2Exists == true && entityPM.DirectionId == "R" ? true : false;
+            var WarehouseLeg2EED: number = isWarehouseLeg2Exists ? DateTool.GetDateParts(entityPM.WarehouseLeg2ExpectedEntryDate).DateTicks : 0;
+            var WarehouseLeg2ERD: number = isWarehouseLeg2Exists ? DateTool.GetDateParts(entityPM.WarehouseLeg2ExpectedReleaseDate).DateTicks : 0;
+            var WarehouseLeg2AED: number = isWarehouseLeg2Exists ? DateTool.GetDateParts(entityPM.WarehouseLeg2ActualEntryDate).DateTicks : 0;
+            var WarehouseLeg2ARD: number = isWarehouseLeg2Exists ? DateTool.GetDateParts(entityPM.WarehouseLeg2ActualReleaseDate).DateTicks : 0;
+
             // Pickups
             var allPickupsETA: number = 0;
             var allPickupsATA: number = 0;
@@ -6329,7 +6336,15 @@ export class RoutingHelper {
                         OnCarriageErrors.push("On-Carriage actual arrival must be less than Warehouse actual entry");
                     }
                 }
+                else if (isWarehouse2DeliveriesLegExists) {
+                    if (this.IsDateSeriesBigger(OnCarriageETA, WarehouseLeg2EED)) {
+                        OnCarriageErrors.push("On-Carriage expected arrival must be less than Destination Warehouse expected entry");
+                    }
 
+                    if (this.IsDateSeriesBigger(OnCarriageATA, WarehouseLeg2AED)) {
+                        OnCarriageErrors.push("On-Carriage actual arrival must be less than Destination Warehouse actual entry");
+                    }
+                }
                 else if (isDeliveriesExists) {
                     if (this.IsDateSeriesBigger(OnCarriageETA, allDeliveriesETD)) {
                         OnCarriageErrors.push("On-Carriage expected arrival must be less than all deliveries expected departure");
@@ -6412,6 +6427,16 @@ export class RoutingHelper {
 
                     if (this.IsDateSeriesBigger(OnForwardingATA, WarehouseLegAED)) {
                         OnForwardingErrors.push("On-Forwarding actual arrival must be less than Warehouse actual entry");
+                    }
+                }
+
+                if (isWarehouse2DeliveriesLegExists) {
+                    if (this.IsDateSeriesBigger(OnForwardingETA, WarehouseLeg2EED)) {
+                        OnForwardingErrors.push("On-Forwarding expected arrival must be less than Destination Warehouse expected entry");
+                    }
+
+                    if (this.IsDateSeriesBigger(OnForwardingATA, WarehouseLeg2AED)) {
+                        OnForwardingErrors.push("On-Forwarding actual arrival must be less than Destination Warehouse actual entry");
                     }
                 }
 
@@ -6539,7 +6564,15 @@ export class RoutingHelper {
                         MainCarriageErrors.push("Main-Carriage actual arrival must be less than Warehouse actual entry");
                     }
                 }
+                else if (isWarehouse2DeliveriesLegExists) {
+                    if (this.IsDateSeriesBigger(MainCarriageETA, WarehouseLeg2EED)) {
+                        MainCarriageErrors.push("Main-Carriage expected arrival must be less than Destination Warehouse expected entry");
+                    }
 
+                    if (this.IsDateSeriesBigger(MainCarriageATA, WarehouseLegAED)) {
+                        MainCarriageErrors.push("Main-Carriage actual arrival must be less than Warehouse actual entry");
+                    }
+                }
                 else if (isDeliveriesExists) {
                     if (this.IsDateSeriesBigger(MainCarriageETA, allDeliveriesETD)) {
                         MainCarriageErrors.push("Main-Carriage expected arrival must be less than all deliveries expected departure");
@@ -6613,6 +6646,15 @@ export class RoutingHelper {
                         MainCarriageErrors.push("Via1 actual arrival must be less than Warehouse actual entry");
                     }
                 }
+                else if (isWarehouse2DeliveriesLegExists) {
+                    if (this.IsDateSeriesBigger(Transshipment1ETA, WarehouseLeg2EED)) {
+                        MainCarriageErrors.push("Via1 expected arrival must be less than Destination Warehouse expected entry");
+                    }
+
+                    if (this.IsDateSeriesBigger(Transshipment1ATA, WarehouseLeg2AED)) {
+                        MainCarriageErrors.push("Via1 actual arrival must be less than Destination Warehouse actual entry");
+                    }
+                }
 
                 else if (isDeliveriesExists) {
                     if (this.IsDateSeriesBigger(Transshipment1ETA, allDeliveriesETD)) {
@@ -6677,7 +6719,15 @@ export class RoutingHelper {
                         MainCarriageErrors.push("Via2 actual arrival must be less than Warehouse actual entry");
                     }
                 }
+                else if (isWarehouse2DeliveriesLegExists) {
+                    if (this.IsDateSeriesBigger(Transshipment2ETA, WarehouseLeg2EED)) {
+                        MainCarriageErrors.push("Via2 expected arrival must be less than Destination Warehouse expected entry");
+                    }
 
+                    if (this.IsDateSeriesBigger(Transshipment2ATA, WarehouseLeg2AED)) {
+                        MainCarriageErrors.push("Via2 actual arrival must be less than Destination Warehouse actual entry");
+                    }
+                }
                 else if (isDeliveriesExists) {
                     if (this.IsDateSeriesBigger(Transshipment2ETA, allDeliveriesETD)) {
                         MainCarriageErrors.push("Via2 expected arrival must be less than all deliveries expected departure");
@@ -6729,6 +6779,15 @@ export class RoutingHelper {
 
                     if (this.IsDateSeriesBigger(Transshipment3ATA, WarehouseLegAED)) {
                         MainCarriageErrors.push("Via3 actual arrival must be less than Warehouse actual entry");
+                    }
+                }
+                else if (isWarehouse2DeliveriesLegExists) {
+                    if (this.IsDateSeriesBigger(Transshipment3ETA, WarehouseLeg2EED)) {
+                        MainCarriageErrors.push("Via3 expected arrival must be less than Destination Warehouse expected entry");
+                    }
+
+                    if (this.IsDateSeriesBigger(Transshipment3ATA, WarehouseLeg2AED)) {
+                        MainCarriageErrors.push("Via3 actual arrival must be less than Destination Warehouse actual entry");
                     }
                 }
 
@@ -6878,6 +6937,135 @@ export class RoutingHelper {
                 }
             }
 
+            if (isWarehouseLeg2Exists) {
+
+                // Self
+                if (!this.IsRoutingLegDatesValid(WarehouseLeg2EED, WarehouseLeg2ERD)) {
+                    WarehouseLegErrors.push("Destination Warehouse expected entry must be less than Warehouse expected release");
+                }
+
+                if (!this.IsRoutingLegDatesValid(WarehouseLeg2AED, WarehouseLeg2ARD)) {
+                    WarehouseLegErrors.push("Destination Warehouse actual entry must be less than Warehouse actual release");
+                }
+
+                if (entityPM.DirectionId == "R") {
+
+                    // Previous
+                    if (isOnForwardingExists) {
+                        if (this.IsDateSeriesSmaller(WarehouseLeg2EED, OnForwardingETA)) {
+                            WarehouseLegErrors.push("Destination Warehouse expected entry must be bigger than On-Forwarding expected arrival");
+                        }
+
+                        if (this.IsDateSeriesSmaller(WarehouseLeg2AED, OnForwardingATA)) {
+                            WarehouseLegErrors.push("Destination Warehouse actual entry must be bigger than On-Forwarding actual arrival");
+                        }
+                    }
+
+                    else if (isOnCarriageExists) {
+                        if (this.IsDateSeriesSmaller(WarehouseLeg2EED, OnCarriageETA)) {
+                            WarehouseLegErrors.push("Destination Warehouse expected entry must be bigger than On-Carriage expected arrival");
+                        }
+
+                        if (this.IsDateSeriesSmaller(WarehouseLeg2AED, OnCarriageATA)) {
+                            WarehouseLegErrors.push("Destination Warehouse actual entry must be bigger than On-Carriage actual arrival");
+                        }
+                    }
+
+                    else if (isTransshipment3Exists) {
+                        if (this.IsDateSeriesSmaller(WarehouseLeg2EED, Transshipment3ETA)) {
+                            WarehouseLegErrors.push("Destination Warehouse expected entry must be bigger than Transshipment3 expected arrival");
+                        }
+
+                        if (this.IsDateSeriesSmaller(WarehouseLeg2AED, Transshipment3ATA)) {
+                            WarehouseLegErrors.push("Destination Warehouse actual entry must be bigger than Transshipment3 actual arrival");
+                        }
+                    }
+
+                    else if (isTransshipment2Exists) {
+                        if (this.IsDateSeriesSmaller(WarehouseLeg2EED, Transshipment2ETA)) {
+                            WarehouseLegErrors.push("Destination Warehouse expected entry must be bigger than Transshipment2 expected arrival");
+                        }
+
+                        if (this.IsDateSeriesSmaller(WarehouseLeg2AED, Transshipment2ATA)) {
+                            WarehouseLegErrors.push("Destination Warehouse actual entry must be bigger than Transshipment2 actual arrival");
+                        }
+                    }
+
+                    else if (isTransshipment1Exists) {
+                        if (this.IsDateSeriesSmaller(WarehouseLeg2EED, Transshipment1ETA)) {
+                            WarehouseLegErrors.push("Destination Warehouse expected entry must be bigger than Transshipment1 expected arrival");
+                        }
+
+                        if (this.IsDateSeriesSmaller(WarehouseLeg2AED, Transshipment1ATA)) {
+                            WarehouseLegErrors.push("Destination Warehouse actual entry must be bigger than Transshipment1 actual arrival");
+                        }
+                    }
+
+                    else {
+                        if (this.IsDateSeriesSmaller(WarehouseLeg2EED, MainCarriageETA)) {
+                            WarehouseLegErrors.push("Destination Warehouse expected entry must be bigger than Main-Carriage expected arrival");
+                        }
+
+                        if (this.IsDateSeriesSmaller(WarehouseLeg2AED, MainCarriageATA)) {
+                            WarehouseLegErrors.push("Destination Warehouse actual entry must be bigger than Main-Carriage actual arrival");
+                        }
+                    }
+                }
+
+                else {
+
+                    // Previous
+                    if (isPickupsExists) {
+
+                        var firsPickup = this.GetFirstPickup(entityPM.ShipmentPickUps);
+                        if (firsPickup) {
+
+                            var firstPickupsETA: number = DateTool.GetDateParts(firsPickup.ETA).DateTicks;
+                            var firstPickupsATA: number = DateTool.GetDateParts(firsPickup.ATA).DateTicks;
+
+                            if (this.IsDateSeriesSmallerNotEqual(WarehouseLeg2EED, firstPickupsETA)) {
+                                WarehouseLegErrors.push("Destination Warehouse expected entry must be equal or bigger than first pick up expected arrival");
+                            }
+
+                            if (this.IsDateSeriesSmallerNotEqual(WarehouseLeg2AED, firstPickupsATA)) {
+                                WarehouseLegErrors.push("Destination Warehouse actual entry must be equal or bigger than first pick up actual arrival");
+                            }
+                        }
+                    }
+
+                    // Next
+                    if (isPreForwardingExists) {
+                        if (this.IsDateSeriesBigger(WarehouseLeg2ERD, PreForwardingETD)) {
+                            WarehouseLegErrors.push("Destination Warehouse expected release must be less than pre Forwarding expected departure");
+                        }
+
+                        if (this.IsDateSeriesBigger(WarehouseLeg2ARD, PreForwardingATD)) {
+                            WarehouseLegErrors.push("Destination Warehouse actual release must be less than pre Forwarding actual departure");
+                        }
+                    }
+
+                    else if (isPreCarriageExists) {
+                        if (this.IsDateSeriesBigger(WarehouseLeg2ERD, PreCarriageETD)) {
+                            WarehouseLegErrors.push("Destination Warehouse expected release must be less than pre carriage expected departure");
+                        }
+
+                        if (this.IsDateSeriesBigger(WarehouseLeg2ARD, PreCarriageATD)) {
+                            WarehouseLegErrors.push("Destination Warehouse actual release must be less than pre carriage actual departure");
+                        }
+                    }
+
+                    else if (isMainCarriageExists) {
+                        if (this.IsDateSeriesBigger(WarehouseLeg2ERD, MainCarriageETD)) {
+                            WarehouseLegErrors.push("Destination Warehouse expected release must be less than main carriage expected departure");
+                        }
+
+                        if (this.IsDateSeriesBigger(WarehouseLeg2ARD, MainCarriageATD)) {
+                            WarehouseLegErrors.push("Destination Warehouse actual release must be less than main carriage actual departure");
+                        }
+                    }
+                }
+            }
+
             switch (legCode) {
                 case "PreCarriage": {
                     PreCarriageErrors.forEach(item => {
@@ -6914,6 +7102,7 @@ export class RoutingHelper {
                     break;
                 }
 
+                case "WarehouseLeg2":
                 case "WarehouseLeg":
                 case "WarehouseLeg_Pickups":
                     {

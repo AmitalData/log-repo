@@ -521,6 +521,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public CustomsTransmissionsStatus CustomsTransmissionsStatus { get; set; }
         public DateTime? FreightRelease { get; set; }
         public DateTime? TerminalAvailable { get; set; }
+        public DateTime? Terminal2Available { get; set; }
         public string ISFNumber { get; set; }
         public DateTime? ISFDate { get; set; }
         public string ITNumber { get; set; }

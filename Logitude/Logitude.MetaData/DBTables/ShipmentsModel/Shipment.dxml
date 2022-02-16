@@ -2271,6 +2271,12 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="Terminal2Available"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="ISFDate"
     Type="datetime">
     <Constraints

@@ -362,6 +362,7 @@ export class ShipmentList {
 		ProrateReceivables: boolean;
 		FreightRelease: Date;
 		TerminalAvailable: Date;
+		Terminal2Available: Date;
 		ISFNumber: string;
 		ISFDate: Date;
 		ITNumber: string;

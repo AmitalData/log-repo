@@ -3898,7 +3898,10 @@ export class ShipmentPM {
     public get TerminalAvailable() { return this.terminalAvailable; }
     public set TerminalAvailable(newValue: Date) { if (this.terminalAvailable != newValue) { this.terminalAvailable = newValue; this.MarkAsDirty("TerminalAvailable"); } }
        
-	 
+    private terminal2Available: Date;
+    public get Terminal2Available() { return this.terminal2Available; }
+    public set Terminal2Available(newValue: Date) { if (this.terminal2Available != newValue) { this.terminal2Available = newValue; this.MarkAsDirty("Terminal2Available"); } }
+
     private iSFNumber: string;
     public get ISFNumber() { return this.iSFNumber; }
     public set ISFNumber(newValue: string) { if (this.iSFNumber != newValue) { this.iSFNumber = newValue; this.MarkAsDirty("ISFNumber"); } }

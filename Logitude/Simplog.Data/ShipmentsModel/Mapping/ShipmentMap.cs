@@ -665,6 +665,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ShipmentContainerReturnIndex).HasColumnName("ShipmentContainerReturnIndex");
             this.Property(t => t.FreightRelease).HasColumnName("FreightRelease");
             this.Property(t => t.TerminalAvailable).HasColumnName("TerminalAvailable");
+            this.Property(t => t.Terminal2Available).HasColumnName("Terminal2Available");
             this.Property(t => t.ISFNumber).HasColumnName("ISFNumber");
             this.Property(t => t.ISFDate).HasColumnName("ISFDate");
             this.Property(t => t.ITNumber).HasColumnName("ITNumber");

@@ -3086,6 +3086,14 @@ export class RoutingItem extends BaseComponent {
         }
     }
 
+
+    get Terminal2Available() { return this.EntityPM.Terminal2Available; }
+    set Terminal2Available(value: Date) {
+        if (this.EntityPM.Terminal2Available != value) {
+            this.EntityPM.Terminal2Available = value;
+        }
+    }
+
     get WarehouseLegCutOffDate() { return this.EntityPM.WarehouseLegCutOffDate; }
     set WarehouseLegCutOffDate(value: Date) {
         if (this.EntityPM.WarehouseLegCutOffDate != value) {
