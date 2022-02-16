@@ -15,6 +15,7 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ShipmentContainersWebService } from '../../../Shipment/Services/ShipmentContainersWebService';
 import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList'; 
+import { DocumentTypePMExtendedService } from 'Common/Services/ExtendedPMs/DocumentTypePMExtendedService';
 
 @Component({
     
@@ -30,6 +31,9 @@ export class ShipmentHelperComponent implements OnDestroy {
     _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     public IsSimulatorVisible: boolean = false; 
+    ShareDocumentsViaEmailDocumentTypeCode = "SDVE"; 
+    public documentTypePMExtendedService: DocumentTypePMExtendedService = new DocumentTypePMExtendedService();
+
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {        
         this.IsFollowupsVisible = FeatureLocator.HasFeaturePermession("Shipment", "Shipment.Followups");
         this.IsSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "ContainerStatusSimulator");
@@ -246,7 +250,7 @@ export class ShipmentHelperComponent implements OnDestroy {
     public IsShipmentContainersSimulatorVisible: boolean = false;
 
     private SetShareDocumentsViaEmailVisibility() {
-        if (FeatureLocator.HasFeaturePermession("Shipment", "ShareDocumentsViaEmail") && (this.EntityPM.DirectionId == "E" && (this.EntityPM.ShipmentLevelCode == "C" || this.EntityPM.ShipmentLevelCode == "D"))) { 
+        if (FeatureLocator.HasFeaturePermession("Shipment", "ShareDocumentsViaEmail") && this.IsShareShipment) { 
                 this.IsShareDocumentsViaEmailVisible = true; 
         }
     }
@@ -510,16 +514,32 @@ export class ShipmentHelperComponent implements OnDestroy {
 
 
     ShareDocumentsViaEmailClicked() {
-
         this.ShareDocumentsViaEmailInSendControl = true;
         if (this.EntityPM.IsDirty) { 
            this.CurrentSession.CurrentEditComponent.SaveChanges();
         } 
         else
         {
-            this.ShowSharedDocument()
-            this.ShareDocumentsViaEmailInSendControl = false;
+            this.CheckShareDocumentsViaEmailDocumentTypeCodeExisting();
         }  
+    }
+
+    private CheckShareDocumentsViaEmailDocumentTypeCodeExisting() {
+        this.documentTypePMExtendedService.GetDoesDocumentTypeCodeExist(this.ShareDocumentsViaEmailDocumentTypeCode, SessionLocator.Tenant).subscribe((res: any) => {
+            var serviceResponse: ServiceResponse = res;
+            if (!serviceResponse.HasError && serviceResponse.Result == false) {
+                this.ShowValidationMessage("Contact your administrator");
+            }
+            if (!serviceResponse.HasError && serviceResponse.Result == true) {
+                this.ShowSharedDocument()
+            }
+            this.ShareDocumentsViaEmailInSendControl = false;
+        });
+    }
+
+    private ShowValidationMessage(messsage: string) {
+        var messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Show(messsage);
     }
 
     //ShareDocument
