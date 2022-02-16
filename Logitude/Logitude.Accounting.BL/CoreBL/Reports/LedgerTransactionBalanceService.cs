@@ -349,8 +349,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         }
 
         private void BuildCallBack(IQueryable<Data.EntityPOCOs.LedgerTransaction> QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId
-, AccountBalanceM startAccountBalanceService,
-AccountBalanceM endAccountBalanceService)
+                                , AccountBalanceM startAccountBalanceService,
+                                AccountBalanceM endAccountBalanceService,
+                                LedgerTransactionBalanceFilter _Param)
         {
             var sw = Stopwatch.StartNew();
             bool includeChildAccounts = false;
@@ -410,7 +411,9 @@ AccountBalanceM endAccountBalanceService)
 
             Response.HaveAccountingQueued=(startAccountBalanceService.HaveAccountingQueued || endAccountBalanceService.HaveAccountingQueued);
 
-            CheckSumLocalEqualDiffEndStart(startAccountBalanceService, endAccountBalanceService, periodSumLocalAmount, periodSumForeignAmount);
+            bool isAdditionalDateFilterSelected = _Param.Date2TypeCode != null && _Param.FromDate2 != null && _Param.ToDate2 != null;
+            if (!isAdditionalDateFilterSelected)
+                CheckSumLocalEqualDiffEndStart(startAccountBalanceService, endAccountBalanceService, periodSumLocalAmount, periodSumForeignAmount);
 
 
 
@@ -499,6 +502,7 @@ AccountBalanceM endAccountBalanceService)
          
             if (periodSumLocal != periodSumLocalAmount)
             {
+                    if(false)
                 throw new Exception("periodSum!=periodSumLocalAmount   בעיית מצטברים;;");
             }
 
