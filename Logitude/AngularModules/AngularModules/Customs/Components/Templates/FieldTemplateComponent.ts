@@ -654,6 +654,9 @@ export class FieldTemplateComponent {
     }
 
     ShowDeclaration(event) {
+        debugger;
+        var x=this.Entity.type;
+        this._ListComponentArgs.SuppressOnRowSelectedField = true;
         if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
             SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = true;
         }
@@ -672,6 +675,7 @@ export class FieldTemplateComponent {
                         SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = false;
                     }
                     this.OnBackFromEdit(this.Entity.DeclarationId, event);
+                    SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
                 });
             });
     }
@@ -703,6 +707,8 @@ export class FieldTemplateComponent {
             }
         });
     }
+
+
 
     ShowCFIUFILEFromDeclarationReferantData() {
 

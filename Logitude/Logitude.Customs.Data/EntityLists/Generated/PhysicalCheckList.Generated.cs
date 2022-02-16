@@ -19,6 +19,8 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
+       public string DeclarationId  { get; set; }
+       [DataMember]
        public string StorageSiteCode  { get; set; }
        [DataMember]
        public string StorageSiteName  { get; set; }
@@ -110,6 +112,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string IntegratorCode  { get; set; }
        [DataMember]
        public DateTime? AvailabilityDate  { get; set; }
+       [DataMember]
+       public string IntegratorName  { get; set; }
    }
 
 }

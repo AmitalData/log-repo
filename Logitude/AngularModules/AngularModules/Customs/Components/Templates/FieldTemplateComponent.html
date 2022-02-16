@@ -414,7 +414,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div *ngIf="FieldName == 'RequestedCustomsDocId'" style="position:relative;width:100%; height: 100%;">
 
                     <div *ngIf="!IsHeaderScreenTemplate">
@@ -527,7 +526,13 @@
 
             <!-- PhysicalCheck -->
             <div *ngIf="ObjectTableName == 'Customs.PhysicalCheck'">
-
+                <div *ngIf="FieldName == 'CustomFileNo'" style="position:relative;width:100%; height: 100%;">
+                    <div *ngIf="!IsHeaderScreenTemplate" style="text-align:right">
+                        <div (click)="ShowDeclaration()">
+                            <span>{{Entity[FieldName]}}</span> 
+                        </div>
+                    </div>
+                </div>
                 <!-- LimitDate -->
                 <div *ngIf="FieldName == 'LimitDate'" style="position:relative;width:100%; height: 100%;">
                     {{Entity[FieldName] | DateTimePipe:'DT'}}

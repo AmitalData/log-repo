@@ -17,6 +17,8 @@ using Logitude.Customs.Data.Repsitories;
 using System.Globalization;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Customs.Data.Utils;
+using System.Web;
+using Simplog.Data.CommonDataModel.Repositories;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
@@ -25,35 +27,67 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<PhysicalCheckList> GetIqueryableList(IQueryable<PhysicalCheck> iQueryable)
         {
-            var qjoin = (from p in context.CourierDeclarations join sts1 in context.CourierMasters on p.CourierMasterId equals sts1.Id select new { p.CourierMaster,p.DeclarationId,p.CourierMasterId });
-            var qMyJoin = (from rec in qjoin
-                           select new MyCourierMasterPhysicalCheckJoin
-                           {
-                               DeclarationId = rec.DeclarationId,
-                               IntegratorCode = rec.CourierMaster != null ? rec.CourierMaster.IntegratorCode : null,
-                           });
+            var qJoin =
+(from p in context.CourierDeclarations
+
+
+ join sts1 in context.CourierMasters.Include("Card")
+                   on p.CourierMasterId equals sts1.Id
+                   into CourierMasterJoin
+
+
+
+from myCourierMasterJoin in CourierMasterJoin
+
+ select new { p.CourierMaster,p.DeclarationId,p.CourierMaster.Card}
+);
+
+
+            var qMyJoin =
+                 (
+                 from rec in qJoin
+                 select new MyCourierMasterPhysicalCheckJoin
+                 {
+                     DeclarationId = rec.DeclarationId,
+                      IntegratorName = rec.CourierMaster.Card != null ? rec.CourierMaster.Card.LocalName: null,
+                      IntegratorCode = rec.CourierMaster != null ? rec.CourierMaster.IntegratorCode: null,
+
+                 });
             int tenant = 1;
+            try
+            {
+
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                tenant = authToken.Tenant;
+            }
+            catch (Exception)
+            {
+
+                // throw;
+            }
             bool isCourierEnv = context.CustomsSettings.FirstOrDefault(r => r.Tenant == tenant).CompanyType == "B";
             if (!isCourierEnv)
             {
                 qMyJoin = (from rec in context.CourierDeclarations.Where(r => r.DeclarationId == "-1")
                            select new MyCourierMasterPhysicalCheckJoin()
                            {
+                               DeclarationId = rec.DeclarationId,
                                IntegratorCode = "",
-
+                               IntegratorName="",
                            });
             }
 
             IQueryable<PhysicalCheckList> query = (from a in iQueryable.Include("CargoIdentifireType").Include("CheckSite").Include("StorageSite").Include("CheckQueueType").Include("Operation").Include("Declaration.CustomerCard").Include("CheckTypeLookup")
                                                    join d in context.Declarations
                                                    on a.DeclarationId equals d.Id into xy
+                                                   from s in xy.DefaultIfEmpty()
 
                                                    join recJoin in qMyJoin
-                                                   on a.Id equals recJoin.DeclarationId
-                                                   into qrecJoin
-                                                   from MyJoin in qrecJoin.DefaultIfEmpty()
+                                                                on a.DeclarationId equals recJoin.DeclarationId
+                                                                into qrecJoin
+                                                   from myJoin in qrecJoin.DefaultIfEmpty()
 
-                                                   from s in xy.DefaultIfEmpty() 
                                                    select new PhysicalCheckList()
                                                             {
                                                               
@@ -69,7 +103,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                 CheckSiteCode = a.CheckSiteCode,
                                                                 CheckSiteName = a.CheckSite.LocalName!=null?a.CheckSite.LocalName:a.CheckSite.EnglishName,
                                                                 ContainerNubmer = a.ContainerNubmer,
-                                                              //  DeclarationId = a.DeclarationId,
+                                                                DeclarationId = a.DeclarationId,
                                                                DeclarationNo = s.DeclarationNumber,
                                                                 ImporterNumber = a.ImporterNumber,
                                                                 InitiatorTypeCode = a.InitiatorTypeCode,
@@ -97,8 +131,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                 CustomerId = a.CustomerId,
                                                                 NoEscortRequired=a.NoEscortRequired,
                                                                DeclarationOfficeName = s.DeclarationOffice == null ? null : s.DeclarationOffice.LocalName,
-                                                               IntegratorCode= MyJoin != null ? MyJoin.IntegratorCode : null,
-                                                               AvailabilityDate = s.AvailabilityDate,
+                                                       IntegratorCode = myJoin != null ? myJoin.IntegratorCode : null,
+                                                       IntegratorName = myJoin != null ? myJoin.IntegratorName : null,
+                                                       AvailabilityDate = s.AvailabilityDate,
 
                                                    });
         
@@ -131,6 +166,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     public class MyCourierMasterPhysicalCheckJoin
     {
         public string IntegratorCode { get; set; }
+        public string IntegratorName { get; set; }
+
         public string DeclarationId { get; set; }
 
     }
