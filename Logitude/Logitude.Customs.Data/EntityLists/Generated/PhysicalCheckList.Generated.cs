@@ -109,7 +109,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string IntegratorCode  { get; set; }
        [DataMember]
-       public DateTime AvailabilityDate  { get; set; }
+       public DateTime? AvailabilityDate  { get; set; }
    }
 
 }

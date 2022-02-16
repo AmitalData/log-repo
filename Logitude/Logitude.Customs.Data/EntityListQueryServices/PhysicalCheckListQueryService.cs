@@ -25,9 +25,34 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<PhysicalCheckList> GetIqueryableList(IQueryable<PhysicalCheck> iQueryable)
         {
+            var qjoin = (from p in context.CourierDeclarations join sts1 in context.CourierMasters on p.CourierMasterId equals sts1.Id select new { p.CourierMaster,p.DeclarationId,p.CourierMasterId });
+            var qMyJoin = (from rec in qjoin
+                           select new MyCourierMasterPhysicalCheckJoin
+                           {
+                               DeclarationId = rec.DeclarationId,
+                               IntegratorCode = rec.CourierMaster != null ? rec.CourierMaster.IntegratorCode : null,
+                           });
+            int tenant = 1;
+            bool isCourierEnv = context.CustomsSettings.FirstOrDefault(r => r.Tenant == tenant).CompanyType == "B";
+            if (!isCourierEnv)
+            {
+                qMyJoin = (from rec in context.CourierDeclarations.Where(r => r.DeclarationId == "-1")
+                           select new MyCourierMasterPhysicalCheckJoin()
+                           {
+                               IntegratorCode = "",
+
+                           });
+            }
+
             IQueryable<PhysicalCheckList> query = (from a in iQueryable.Include("CargoIdentifireType").Include("CheckSite").Include("StorageSite").Include("CheckQueueType").Include("Operation").Include("Declaration.CustomerCard").Include("CheckTypeLookup")
                                                    join d in context.Declarations
                                                    on a.DeclarationId equals d.Id into xy
+
+                                                   join recJoin in qMyJoin
+                                                   on a.Id equals recJoin.DeclarationId
+                                                   into qrecJoin
+                                                   from MyJoin in qrecJoin.DefaultIfEmpty()
+
                                                    from s in xy.DefaultIfEmpty() 
                                                    select new PhysicalCheckList()
                                                             {
@@ -72,7 +97,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                 CustomerId = a.CustomerId,
                                                                 NoEscortRequired=a.NoEscortRequired,
                                                                DeclarationOfficeName = s.DeclarationOffice == null ? null : s.DeclarationOffice.LocalName,
-
+                                                               IntegratorCode= MyJoin != null ? MyJoin.IntegratorCode : null,
+                                                               AvailabilityDate = s.AvailabilityDate,
 
                                                    });
         
@@ -102,6 +128,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
     }
 
+    public class MyCourierMasterPhysicalCheckJoin
+    {
+        public string IntegratorCode { get; set; }
+        public string DeclarationId { get; set; }
 
+    }
 }
 	
