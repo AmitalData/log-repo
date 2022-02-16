@@ -118,7 +118,6 @@ namespace CommunicationWorkerRole.Analyzers
                 if (envelopeResponse.HasError)
                 {
                     externalTasksQueueWcfService.Close();
-                    throw new ApplicationException(envelopeResponse.ErrorMessage);
                 }
                 var oceanInsightsPushUpdate = envelopeResponse?.Tasks?.Where(a => a.Action == "OceanInsights.PushUpdate").FirstOrDefault();
                 if (oceanInsightsPushUpdate != null)
@@ -171,10 +170,7 @@ namespace CommunicationWorkerRole.Analyzers
             IGlobalContext globalContext = GlobalContext.GetContext();
             analyzeQueueReposiory = new AnalyzeQueueRepository(globalContext);
             byte[] analyzeQueueMessageBody = this.GetAnalyzeQueueByteArray();
-            if (this.IsAnalyzeQueueExsit(analyzeQueueMessageBody))
-            {
-                return;
-            }
+            
             AnalyzeQueue analyzeQueue = new AnalyzeQueue()
             {
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(0),
