@@ -2803,7 +2803,9 @@ namespace WebFreight.Web.ReportsWebServices
         private void GetPreForwardingData()
         {
             awbDp.PreForwardingFrom = routingDataProvider.PreForwardingFrom;
+            awbDp.PreForwardingFromName = routingDataProvider.PreForwardingFromName;
             awbDp.PreForwardingTo = routingDataProvider.PreForwardingTo;
+            awbDp.PreForwardingToName = routingDataProvider.PreForwardingToName;
             awbDp.PreForwardingETD = routingDataProvider.PreForwardingETD;
             awbDp.PreForwardingETA = routingDataProvider.PreForwardingETA;
             awbDp.PreForwardingATD = routingDataProvider.PreForwardingATD;
@@ -2814,7 +2816,9 @@ namespace WebFreight.Web.ReportsWebServices
         private void GetOnForwardingData()
         {
             awbDp.OnForwardingFrom = routingDataProvider.OnForwardingFrom;
+            awbDp.OnForwardingFromName = routingDataProvider.OnForwardingFromName;
             awbDp.OnForwardingTo = routingDataProvider.OnForwardingTo;
+            awbDp.OnForwardingToName = routingDataProvider.OnForwardingToName;
             awbDp.OnForwardingETD = routingDataProvider.OnForwardingETD;
             awbDp.OnForwardingETA = routingDataProvider.OnForwardingETA;
             awbDp.OnForwardingATD = routingDataProvider.OnForwardingATD;
@@ -2825,7 +2829,9 @@ namespace WebFreight.Web.ReportsWebServices
         private void GetPreCarriageData()
         {
             awbDp.PreCarriageFrom = routingDataProvider.PreCarriageFrom;
+            awbDp.PreCarriageFromName = routingDataProvider.PreCarriageFromName;
             awbDp.PreCarriageTo = routingDataProvider.PreCarriageTo;
+            awbDp.PreCarriageToName = routingDataProvider.PreCarriageToName;
             awbDp.PreCarriageETD = routingDataProvider.PreCarriageETD;
             awbDp.PreCarriageETA = routingDataProvider.PreCarriageETA;
             awbDp.PreCarriageATD = routingDataProvider.PreCarriageATD;
@@ -2836,7 +2842,9 @@ namespace WebFreight.Web.ReportsWebServices
         private void GetOnCarriageData()
         {
             awbDp.OnCarriageFrom = routingDataProvider.OnCarriageFrom;
+            awbDp.OnCarriageFromName = routingDataProvider.OnCarriageFromName;
             awbDp.OnCarriageTo = routingDataProvider.OnCarriageTo;
+            awbDp.OnCarriageToName = routingDataProvider.OnCarriageToName;
             awbDp.OnCarriageETD = routingDataProvider.OnCarriageETD;
             awbDp.OnCarriageETA = routingDataProvider.OnCarriageETA;
             awbDp.OnCarriageATD = routingDataProvider.OnCarriageATD;
