@@ -137,10 +137,15 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
 						 dbo.Shipments.ShipperName as Shipper, dbo.Shipments.ENSNumber, dbo.Shipments.ENSDate, dbo.Shipments.WarehouseLegWarehouseId, dbo.Shipments.WarehouseLegAddressId, dbo.Shipments.WarehouseLegTerminalCode, dbo.Shipments.WarehouseLegExpectedEntryDate,  
 						 dbo.Shipments.WarehouseLegLastFreeDate,dbo.Shipments.WarehouseLegExpectedReleaseDate,dbo.Shipments.WarehouseLegActualReleaseDate, dbo.Shipments.WarehouseLegRemarks, dbo.Shipments.WarehouseLegActualEntryDate,dbo.Shipments.WarehouseLegReference,dbo.Shipments.WarehouseStorageFreeDays,
 						 WarehouseLegCard.EnglishName AS WarehouseLegTerminalName,
+						 dbo.Shipments.WarehouseLeg2WarehouseId, dbo.Shipments.WarehouseLeg2AddressId, dbo.Shipments.WarehouseLeg2TerminalCode, dbo.Shipments.WarehouseLeg2ExpectedEntryDate,  
+						 dbo.Shipments.WarehouseLeg2ExpectedReleaseDate,dbo.Shipments.WarehouseLeg2ActualReleaseDate, dbo.Shipments.WarehouseLeg2Remarks, dbo.Shipments.WarehouseLeg2ActualEntryDate,dbo.Shipments.WarehouseLeg2Reference,
+						 WarehouseLeg2Card.EnglishName AS WarehouseLeg2TerminalName,
 						 dbo.Shipments.LastSharedEventId, dbo.Shipments.LastSharedEventLocation, dbo.Shipments.LastSharedEventNotes, dbo.Shipments.LastSharedEventDate,						 
                          dbo.EventTypes.EnglishName as LastSharedEventName,
 						 WarehouseLegCard.CountryCode AS WarehouseLegAddressCountryCode,
 						 WarehouseLegCard.CountryName AS WarehouseLegAddressCountryName,
+						 WarehouseLeg2Card.CountryCode AS WarehouseLeg2AddressCountryCode,
+						 WarehouseLeg2Card.CountryName AS WarehouseLeg2AddressCountryName,
              CustomerContacts.EnglishName AS CustomerContactName,
              CustomerContacts.Email AS CustomerContactEmail,
 						 --ShipperCards.EnglishName AS ShipperName,
@@ -356,6 +361,7 @@ FROM            dbo.Shipments LEFT OUTER JOIN
                          dbo.Cards AS Transshipment2CarrierCards ON dbo.ShipmentMasterDatas.Transshipment2CarrierId = Transshipment2CarrierCards.Id LEFT OUTER JOIN
                          dbo.Cards AS Transshipment3CarrierCards ON dbo.ShipmentMasterDatas.Transshipment3CarrierId = Transshipment3CarrierCards.Id LEFT OUTER JOIN
 						             dbo.Cards AS WarehouseLegCard ON dbo.Shipments.WarehouseLegWarehouseId = WarehouseLegCard.Id LEFT OUTER JOIN
+									 dbo.Cards AS WarehouseLeg2Card ON dbo.Shipments.WarehouseLeg2WarehouseId = WarehouseLeg2Card.Id LEFT OUTER JOIN
                          dbo.NextLegs ON dbo.Shipments.NextLegCode = dbo.NextLegs.Code LEFT OUTER JOIN
                          dbo.Directions ON dbo.Shipments.DirectionId = dbo.Directions.Id LEFT OUTER JOIN
                          dbo.TransportModes ON dbo.Shipments.TransportModeId = dbo.TransportModes.Id LEFT OUTER JOIN

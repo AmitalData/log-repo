@@ -599,7 +599,16 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? WarehouseLegLastFreeDate { get; set; }
         public string WarehouseLegRemarks { get; set; }
         public string WarehouseLegReference { get; set; }
-
+        public string WarehouseLeg2WarehouseId { get; set; }
+        public string WarehouseLeg2TerminalName { get; set; }
+        public string WarehouseLeg2AddressId { get; set; }
+        public string WarehouseLeg2TerminalCode { get; set; }
+        public DateTime? WarehouseLeg2ExpectedEntryDate { get; set; }
+        public DateTime? WarehouseLeg2ActualEntryDate { get; set; }
+        public DateTime? WarehouseLeg2ExpectedReleaseDate { get; set; }
+        public DateTime? WarehouseLeg2ActualReleaseDate { get; set; }
+        public string WarehouseLeg2Remarks { get; set; }
+        public string WarehouseLeg2Reference { get; set; }
         #region followup fields
 
         public string FollowUpId { get; set; }

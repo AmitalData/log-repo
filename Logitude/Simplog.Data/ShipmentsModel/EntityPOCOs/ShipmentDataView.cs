@@ -659,10 +659,21 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string WarehouseLegReference { get; set; }
         public string WarehouseLegAddressCountryCode { get; set; }
         public string WarehouseLegAddressCountryName { get; set; }
-
+        public string WarehouseLeg2WarehouseId { get; set; }
+        public string WarehouseLeg2AddressId { get; set; }
+        public string WarehouseLeg2TerminalCode { get; set; }
+        public DateTime? WarehouseLeg2ExpectedEntryDate { get; set; }
+        public DateTime? WarehouseLeg2ActualEntryDate { get; set; }
+        public DateTime? WarehouseLeg2ExpectedReleaseDate { get; set; }
+        public DateTime? WarehouseLeg2ActualReleaseDate { get; set; }
+        public string WarehouseLeg2Remarks { get; set; }
+        public string WarehouseLeg2Reference { get; set; }
+        public string WarehouseLeg2AddressCountryCode { get; set; }
+        public string WarehouseLeg2AddressCountryName { get; set; }
         #endregion
 
         public string WarehouseLegTerminalName { get; set; }
+        public string WarehouseLeg2TerminalName { get; set; }
 
         public DateTime? RegistryDate { get; set; }
         public bool IsAssembly { get; set; }

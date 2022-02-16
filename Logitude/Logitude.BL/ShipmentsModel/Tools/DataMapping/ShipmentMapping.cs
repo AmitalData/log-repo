@@ -420,6 +420,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.WarehouseLegReference = entityPM.WarehouseLegReference;
             entityPoco.WarehouseLegCutOffDate = entityPM.WarehouseLegCutOffDate;
             entityPoco.WarehouseLegVGMCutOffDate = entityPM.WarehouseLegVGMCutOffDate;
+            entityPoco.WarehouseLeg2WarehouseId = entityPM.WarehouseLeg2WarehouseId;
+            entityPoco.WarehouseLeg2AddressId = entityPM.WarehouseLeg2AddressId;
+            entityPoco.WarehouseLeg2TerminalCode = entityPM.WarehouseLeg2TerminalCode;
+            entityPoco.WarehouseLeg2ExpectedEntryDate = entityPM.WarehouseLeg2ExpectedEntryDate;
+            entityPoco.WarehouseLeg2ActualEntryDate = entityPM.WarehouseLeg2ActualEntryDate;
+            entityPoco.WarehouseLeg2ExpectedReleaseDate = entityPM.WarehouseLeg2ExpectedReleaseDate;
+            entityPoco.WarehouseLeg2ActualReleaseDate = entityPM.WarehouseLeg2ActualReleaseDate;
+            entityPoco.WarehouseLeg2Remarks = entityPM.WarehouseLeg2Remarks;
+            entityPoco.WarehouseLeg2Reference = entityPM.WarehouseLeg2Reference;
+            entityPoco.WarehouseLeg2CutOffDate = entityPM.WarehouseLeg2CutOffDate;
+            entityPoco.WarehouseLeg2VGMCutOffDate = entityPM.WarehouseLeg2VGMCutOffDate;
             entityPoco.IsAssembly = entityPM.IsAssembly;
             entityPoco.LastSharedEventId = entityPM.LastSharedEventId;
             entityPoco.LastSharedEventLocation = entityPM.LastSharedEventLocation;
@@ -2407,7 +2418,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ProjectNumber);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.AMSBL);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.WarehouseLegReference);
-
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.WarehouseLeg2Reference);
             if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
             {
                 AddressRepository addressRepository = new AddressRepository(entityPoco.Tenant);

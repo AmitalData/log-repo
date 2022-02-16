@@ -544,6 +544,19 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string WarehouseLegReference { get; set; }
         public DateTime? WarehouseLegCutOffDate { get; set; }
         public DateTime? WarehouseLegVGMCutOffDate { get; set; }
+        public string WarehouseLeg2WarehouseId { get; set; }
+        public string WarehouseLeg2AddressId { get; set; }
+        public string WarehouseLeg2TerminalCode { get; set; }
+        public DateTime? WarehouseLeg2ExpectedEntryDate { get; set; }
+        public DateTime? WarehouseLeg2ActualEntryDate { get; set; }
+        public DateTime? WarehouseLeg2ExpectedReleaseDate { get; set; }
+        public DateTime? WarehouseLeg2ActualReleaseDate { get; set; }
+        public string WarehouseLeg2Remarks { get; set; }
+        public virtual Address WarehouseLeg2Address { get; set; }
+        public virtual Card WarehouseLeg2Card { get; set; }
+        public string WarehouseLeg2Reference { get; set; }
+        public DateTime? WarehouseLeg2CutOffDate { get; set; }
+        public DateTime? WarehouseLeg2VGMCutOffDate { get; set; }
         #endregion
         public DateTime? RegistryDate { get; set; }
         public bool IsAssembly { get; set; }

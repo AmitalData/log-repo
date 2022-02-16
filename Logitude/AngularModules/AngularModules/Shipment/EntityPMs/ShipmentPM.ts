@@ -3995,6 +3995,53 @@ export class ShipmentPM {
     private warehouseLegAddressCountryCode: string;
     public get WarehouseLegAddressCountryCode() { return this.warehouseLegAddressCountryCode; }
     public set WarehouseLegAddressCountryCode(newValue: string) { this.warehouseLegAddressCountryCode = newValue; this.MarkAsDirty(); }
+    private warehouseLeg2ExpectedEntryDate: Date;
+    public get WarehouseLeg2ExpectedEntryDate() { return this.warehouseLeg2ExpectedEntryDate; }
+    public set WarehouseLeg2ExpectedEntryDate(newValue: Date) { this.warehouseLeg2ExpectedEntryDate = newValue; this.MarkAsDirty("WarehouseLeg2ExpectedEntryDate"); }
+
+    private warehouseLeg2ActualEntryDate: Date;
+    public get WarehouseLeg2ActualEntryDate() { return this.warehouseLeg2ActualEntryDate; }
+    public set WarehouseLeg2ActualEntryDate(newValue: Date) { this.warehouseLeg2ActualEntryDate = newValue; this.MarkAsDirty("WarehouseLeg2ActualEntryDate"); }
+
+    private warehouseLeg2ExpectedReleaseDate: Date;
+    public get WarehouseLeg2ExpectedReleaseDate() { return this.warehouseLeg2ExpectedReleaseDate; }
+    public set WarehouseLeg2ExpectedReleaseDate(newValue: Date) { this.warehouseLeg2ExpectedReleaseDate = newValue; this.MarkAsDirty("WarehouseLeg2ExpectedReleaseDate"); }
+
+    private warehouseLeg2ActualReleaseDate: Date;
+    public get WarehouseLeg2ActualReleaseDate() { return this.warehouseLeg2ActualReleaseDate; }
+    public set WarehouseLeg2ActualReleaseDate(newValue: Date) { this.warehouseLeg2ActualReleaseDate = newValue; this.MarkAsDirty("WarehouseLeg2ActualReleaseDate"); }
+
+    private warehouseLeg2WarehouseId: string;
+    public get WarehouseLeg2WarehouseId() { return this.warehouseLeg2WarehouseId; }
+    public set WarehouseLeg2WarehouseId(newValue: string) { this.warehouseLeg2WarehouseId = newValue; this.MarkAsDirty(); }
+
+    private isUpdateWarehouseLeg2Data: boolean;
+    public get IsUpdateWarehouseLeg2Data() { return this.isUpdateWarehouseLeg2Data; }
+    public set IsUpdateWarehouseLeg2Data(newValue: boolean) { this.isUpdateWarehouseLeg2Data = newValue; this.MarkAsDirty("IsUpdateWarehouseLeg2Data"); }
+
+    private warehouseLeg2AddressId: string;
+    public get WarehouseLeg2AddressId() { return this.warehouseLeg2AddressId; }
+    public set WarehouseLeg2AddressId(newValue: string) { this.warehouseLeg2AddressId = newValue; this.MarkAsDirty(); }
+
+    private warehouseLeg2Remarks: string;
+    public get WarehouseLeg2Remarks() { return this.warehouseLeg2Remarks; }
+    public set WarehouseLeg2Remarks(newValue: string) { this.warehouseLeg2Remarks = newValue; this.MarkAsDirty(); }
+
+    private warehouseLeg2TerminalCode: string;
+    public get WarehouseLeg2TerminalCode() { return this.warehouseLeg2TerminalCode; }
+    public set WarehouseLeg2TerminalCode(newValue: string) { this.warehouseLeg2TerminalCode = newValue; this.MarkAsDirty(); }
+
+    private warehouseLeg2Reference: string;
+    public get WarehouseLeg2Reference() { return this.warehouseLeg2Reference; }
+    public set WarehouseLeg2Reference(newValue: string) { this.warehouseLeg2Reference = newValue; this.MarkAsDirty(); }
+
+    private warehouseLeg2AddressCountryName: string;
+    public get WarehouseLeg2AddressCountryName() { return this.warehouseLeg2AddressCountryName; }
+    public set WarehouseLeg2AddressCountryName(newValue: string) { this.warehouseLeg2AddressCountryName = newValue; this.MarkAsDirty(); }
+
+    private warehouseLeg2AddressCountryCode: string;
+    public get WarehouseLeg2AddressCountryCode() { return this.warehouseLeg2AddressCountryCode; }
+    public set WarehouseLeg2AddressCountryCode(newValue: string) { this.warehouseLeg2AddressCountryCode = newValue; this.MarkAsDirty(); }
 
     private isAssembly: boolean;
     public get IsAssembly() { return this.isAssembly; }
@@ -4043,16 +4090,13 @@ export class ShipmentPM {
 
     //end
 
-
     private warehouseLegTerminalName: string;
     public get WarehouseLegTerminalName() { return this.warehouseLegTerminalName; }
     public set WarehouseLegTerminalName(newValue: string) { this.warehouseLegTerminalName = newValue; this.MarkAsDirty(); }
 
-
     private warehouseLegEntryDate: Date;
     public get WarehouseLegEntryDate() { return this.warehouseLegEntryDate; }
     public set WarehouseLegEntryDate(newValue: Date) { this.warehouseLegEntryDate = newValue; this.MarkAsDirty(); }
-
 
     private warehouseLegReleaseDate: Date;
     public get WarehouseLegReleaseDate() { return this.warehouseLegReleaseDate; }
@@ -4069,6 +4113,26 @@ export class ShipmentPM {
     private warehouseLegVGMCutOffDate: Date;
     public get WarehouseLegVGMCutOffDate() { return this.warehouseLegVGMCutOffDate; }
     public set WarehouseLegVGMCutOffDate(newValue: Date) { this.warehouseLegVGMCutOffDate = newValue; this.MarkAsDirty("WarehouseLegVGMCutOffDate"); }
+
+    private warehouseLeg2TerminalName: string;
+    public get WarehouseLeg2TerminalName() { return this.warehouseLeg2TerminalName; }
+    public set WarehouseLeg2TerminalName(newValue: string) { this.warehouseLeg2TerminalName = newValue; this.MarkAsDirty(); }
+
+    private warehouseLeg2EntryDate: Date;
+    public get WarehouseLeg2EntryDate() { return this.warehouseLeg2EntryDate; }
+    public set WarehouseLeg2EntryDate(newValue: Date) { this.warehouseLeg2EntryDate = newValue; this.MarkAsDirty(); }
+
+    private warehouseLeg2ReleaseDate: Date;
+    public get WarehouseLeg2ReleaseDate() { return this.warehouseLeg2ReleaseDate; }
+    public set WarehouseLeg2ReleaseDate(newValue: Date) { this.warehouseLeg2ReleaseDate = newValue; this.MarkAsDirty(); }
+
+    private warehouseLeg2CutOffDate: Date;
+    public get WarehouseLeg2CutOffDate() { return this.warehouseLeg2CutOffDate; }
+    public set WarehouseLeg2CutOffDate(newValue: Date) { this.warehouseLeg2CutOffDate = newValue; this.MarkAsDirty("WarehouseLeg2CutOffDate"); }
+
+    private warehouseLeg2VGMCutOffDate: Date;
+    public get WarehouseLeg2VGMCutOffDate() { return this.warehouseLeg2VGMCutOffDate; }
+    public set WarehouseLeg2VGMCutOffDate(newValue: Date) { this.warehouseLeg2VGMCutOffDate = newValue; this.MarkAsDirty("WarehouseLeg2VGMCutOffDate"); }
 
     private aMSClosingDate: Date;
     public get AMSClosingDate() { return this.aMSClosingDate; }

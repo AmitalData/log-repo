@@ -2232,6 +2232,65 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? WarehouseLegCutOffDate { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string WarehouseLeg2WarehouseId { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string WarehouseLeg2AddressId { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string WarehouseLeg2TerminalCode { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? WarehouseLeg2ExpectedEntryDate { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? WarehouseLeg2ActualEntryDate { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? WarehouseLeg2ExpectedReleaseDate { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? WarehouseLeg2ActualReleaseDate { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string WarehouseLeg2Remarks { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string WarehouseLeg2AddressName { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string WarehouseLeg2AddressAddress1 { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string WarehouseLeg2AddressAddress2 { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string WarehouseLeg2AddressCity { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string WarehouseLeg2AddressCountryName { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string WarehouseLeg2AddressCountryCode { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string WarehouseLeg2AddressPhoneNumber { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string WarehouseLeg2AddressFaxNumber { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string WarehouseLeg2Reference { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        [DataMember]
+        public string WarehouseLeg2TerminalName { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? WarehouseLeg2EntryDate { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? WarehouseLeg2ReleaseDate { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? WarehouseLeg2VGMCutOffDate { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? WarehouseLeg2CutOffDate { get; set; }
         #endregion 
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
