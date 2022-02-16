@@ -623,7 +623,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             if (!string.IsNullOrEmpty(shipmentPackage.EmptyContainerReturnId))
                 return false;
 
-           if (!shipmentPackage.IsEmptyContainerReturnFU)
+           if (!shipmentPackagePM.IsDeliveryFU)
                 return false;
 
             return true;
