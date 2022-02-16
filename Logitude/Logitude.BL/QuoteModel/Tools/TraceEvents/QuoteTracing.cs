@@ -113,7 +113,7 @@ namespace Logitude.BL.QuoteModel.Tools.TraceEvents
                         Tenant = tenant,
                         EventTypeCode = "QTOP",
                         UserId = loggedContactId,
-                        EntityId = entityPM.OpportunityId,
+                        EntityId = entityPoco.OpportunityId,
                         ObjectTableName = "Opportunity",
                         Notes = "Quote: " + entityPM.QuoteNumber + " Deleted",
                     });
