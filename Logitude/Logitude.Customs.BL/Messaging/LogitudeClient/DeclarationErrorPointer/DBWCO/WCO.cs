@@ -126,7 +126,7 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
                     Level = Level ,//Convert.ToInt32(data[2]), //Level { get; set; } //C =3
                     WCOID = data[3], //WCOID { get; set; }//D=4
                     XmlTag = data[13], //{ get; set; } // M=14
-
+                    FieldNameHeb = data[16],
                 };
                 var logitudePointer = LogitudePointerDB.Rows.FirstOrDefault(rec => rec.Key == wco.Key & rec.WCOID == wco.WCOID);
                 if (logitudePointer != null)
@@ -159,7 +159,7 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
                     Level = Convert.ToInt32(data[3]), //Level { get; set; } //D =4
                     WCOID = data[4], //WCOID { get; set; }//E=5
                     XmlTag = data[7], //{ get; set; } // H=8
-
+                    FieldNameHeb = data[9],
                 };
                 var logitudePointer = LogitudePointerDB.Rows.FirstOrDefault(rec => rec.Key == wco.Key & rec.WCOID == wco.WCOID);
                 if (logitudePointer != null)

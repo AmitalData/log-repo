@@ -2385,8 +2385,25 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private string GetExceptionMsg(UnifreightIIG.Common.ExportDeclarationServiceReference.Exception ex)
         {
-            var wco = WCO.Instance.CreateDB();
-            return ex.ExeptionDescription;
+            List<string> fieldNames = new List<string>();
+            var fieldList = WCO.Instance.CreateDB().GetCopyList();
+            WCOErrorPointerModel res;
+
+            ex.ExceptionParms.ToList().ForEach(param =>
+            {
+                param = param.Substring(param.LastIndexOf(".") + 1);
+
+                res = fieldList.Find(x => x.XmlTag.EndsWith(param) && !string.IsNullOrEmpty(x.FieldNameHeb));
+                if (res == null && param.StartsWith("Export"))
+                    res = fieldList.Find(x => x.XmlTag.EndsWith(param.Remove(0, 6)) && !string.IsNullOrEmpty(x.FieldNameHeb));
+
+                if (res != null)
+                    fieldNames.Add(res.FieldNameHeb);
+            });
+
+            string msg = fieldNames.Count > 0 ? string.Join(",", fieldNames) : ex.ExeptionDescription;
+
+            return msg;
         }
     }
 

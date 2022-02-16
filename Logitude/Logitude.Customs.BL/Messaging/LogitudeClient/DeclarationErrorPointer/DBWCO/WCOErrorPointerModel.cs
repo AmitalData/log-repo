@@ -26,6 +26,7 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
         public int Level { get; set; } //D =4
         public string  WCOID { get; set; }//E=5
         public string  XmlTag { get; set; } // H=8
+        public string  FieldNameHeb { get; set; } // H=8
 
         //public string LogitudeEntityID { get; set; }
         public LogitudeEntityEnum LogitudeEntity { get; set; }
@@ -50,6 +51,7 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
                 XmlTag = this.XmlTag,
                 LogitudeEntity = this.LogitudeEntity,
                 LogitudeFieldID = this.LogitudeFieldID ,
+                FieldNameHeb = this.FieldNameHeb,
                 
             };
         }
