@@ -441,6 +441,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         this.UIProperties.SetEnabled("ClassifierId", "Customer", enabled);
         this.UIProperties.SetEnabled("CollectorId", "Customer", enabled);
         this.UIProperties.SetEnabled("TeamId", "Customer", enabled);
+
         //Partners
         this.UIProperties.SetEnabled("ForwarderId", "Customer", enabled);
         this.UIProperties.SetEnabled("CustomsAgentId", "Customer", enabled);
