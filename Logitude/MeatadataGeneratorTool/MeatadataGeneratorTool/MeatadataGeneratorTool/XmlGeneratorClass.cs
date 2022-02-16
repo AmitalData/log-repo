@@ -1495,6 +1495,9 @@ namespace MeatadataGeneratorTool
                     }
 
                     SetAttribute("IndexOrder", q.IndexOrder.ToString(), QueryFilterElement, null);
+                    SetAttribute("CustomPredefined", GetStringValue(q.CustomPredefined), QueryFilterElement, null);
+
+
 
                 }
             }

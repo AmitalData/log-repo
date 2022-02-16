@@ -66,8 +66,8 @@
                                 <td>
                                     <div class="ScrollViewer">
                                         <div class="ScrollContent">
-
-
+                                            
+                                            
                                             <!-- Manual Journals -->
                                             <div *ngIf="isScreenLoaded" class="QueriesSection" style="color: #58B8FF;">
                                                 <div>{{'Accounting.General.O.Journals' | TextCodeTranslationPipe}}</div>
@@ -120,6 +120,20 @@
                                                             </td>
                                                         </tr>
 
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                            <!-- Ledger Transactions -->
+                                            <div *ngIf="isScreenLoaded" class="QueriesSection" style="color: #58B8FF;margin-top: 30px;">
+                                                <div>{{'Accounting.General.O.LedgerTransactions' | TextCodeTranslationPipe}}</div>
+                                                <div>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:190px;">
+                                                                <p class="QueryLink" (click)="ViewLedgerTransactionsQuery()">{{'Accounting.General.O.LedgerTransactions' | TextCodeTranslationPipe}}</p>
+                                                            </td>
+                                                        </tr>
                                                     </table>
                                                 </div>
                                             </div>

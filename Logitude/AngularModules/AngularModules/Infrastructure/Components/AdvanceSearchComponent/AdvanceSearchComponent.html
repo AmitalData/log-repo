@@ -162,7 +162,7 @@
     <div style="height:165px;overflow:auto;width:100%;"  [style.pointer-events]="IsQueryViewOnly ? 'none' : ''"  [style.opacity]="IsQueryViewOnly ? '0.7' : ''">
         <div style="width:47%;max-width:500px;" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">
             <div *ngFor="let item of SelectedObjectFields; let i = index" [hidden]="item.DataTypeCode == 'Constant'" style="margin:5px;">
-                <table class="FilterItem" *ngIf="i%2 == 0" [ngClass]="{FilterItemDisabled: item.IsPreDefined == true}">
+                <table class="FilterItem" *ngIf="i%2 == 0" [ngClass]="">
                     <tr>
                         <td style="width: 16px;">
                             <img class="DeleteButton" *ngIf="item.ObjectField.DataTypeCode != 'Constant'" src="./Images/Trash-can.png" style="cursor: pointer;" (click)="item.onDeleteFilterClick()" />
