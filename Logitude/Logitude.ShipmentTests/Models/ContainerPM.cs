@@ -37,8 +37,8 @@ namespace Logitude.ShipmentTests.Models
         public string CurrentLocation { get; set; }
         public bool HasContainerException { get; set; }
 
-        public string ShipmentFirstPickupFrom { get; set; }
-        public string ShipmentFirstPickupTo { get; set; }
+        public string ShipmentPickupFrom { get; set; }
+        public string ShipmentPickupTo { get; set; }
         public string ShipmentPreCarriageFrom { get; set; }
         public string ShipmentPreCarriageTo { get; set; }
         public string ShipmentMainCarriageFrom { get; set; }
@@ -51,8 +51,8 @@ namespace Logitude.ShipmentTests.Models
         public string ShipmentTransshipment3To { get; set; }
         public string ShipmentOnCarriageFrom { get; set; }
         public string ShipmentOnCarriageTo { get; set; }
-        public string ShipmentLastDeliveryFrom { get; set; }
-        public string ShipmentLastDeliveryTo { get; set; }
+        public string ShipmentDeliveryFrom { get; set; }
+        public string ShipmentDeliveryTo { get; set; }
         public string OriginLocation { get; set; }
         public DateTime? EstimatedOriginPickup { get; set; }
         public DateTime? ActualOriginPickup { get; set; }

@@ -46,8 +46,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.EmptyPickupLocation = containerPM.EmptyPickupLocation;
             container.DepartureLocation = containerPM.DepartureLocation;
             container.DestinationLocation = containerPM.DestinationLocation;
-            container.ShipmentFirstPickupFrom = containerPM.ShipmentFirstPickupFrom;
-            container.ShipmentFirstPickupTo = containerPM.ShipmentFirstPickupTo;
+            container.ShipmentPickupFrom = containerPM.ShipmentPickupFrom;
+            container.ShipmentPickupTo = containerPM.ShipmentPickupTo;
             container.ShipmentPreCarriageFromId = containerPM.ShipmentPreCarriageFromId;
             container.ShipmentPreCarriageToId = containerPM.ShipmentPreCarriageToId;
             container.ShipmentMainCarriageFromId = containerPM.ShipmentMainCarriageFromId;
@@ -60,8 +60,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.ShipmentTransshipment3ToId = containerPM.ShipmentTransshipment3ToId;
             container.ShipmentOnCarriageFromId = containerPM.ShipmentOnCarriageFromId;
             container.ShipmentOnCarriageToId = containerPM.ShipmentOnCarriageToId;
-            container.ShipmentLastDeliveryFrom = containerPM.ShipmentLastDeliveryFrom;
-            container.ShipmentLastDeliveryTo = containerPM.ShipmentLastDeliveryTo;
+            container.ShipmentDeliveryFrom = containerPM.ShipmentDeliveryFrom;
+            container.ShipmentDeliveryTo = containerPM.ShipmentDeliveryTo;
             container.OnCarriageLocation = containerPM.OnCarriageLocation;
             container.OnCarriageETD = containerPM.OnCarriageETD;
             container.OnCarriageATD = containerPM.OnCarriageATD;

@@ -48,8 +48,8 @@ export class ContainerList {
 		ShipmentTransshipment3ToId: string;
 		ShipmentOnCarriageFromId: string;
 		ShipmentOnCarriageToId: string;
-		ShipmentFirstPickupFrom: string;
-		ShipmentFirstPickupTo: string;
+		ShipmentPickupFrom: string;
+		ShipmentPickupTo: string;
 		ShipmentPreCarriageFrom: string;
 		ShipmentPreCarriageTo: string;
 		ShipmentMainCarriageFrom: string;
@@ -62,8 +62,8 @@ export class ContainerList {
 		ShipmentTransshipment3To: string;
 		ShipmentOnCarriageFrom: string;
 		ShipmentOnCarriageTo: string;
-		ShipmentLastDeliveryFrom: string;
-		ShipmentLastDeliveryTo: string;
+		ShipmentDeliveryFrom: string;
+		ShipmentDeliveryTo: string;
 		PreCarriageETD: Date;
 		PreCarriageATD: Date;
 		EstimatedPOLArrival: Date;
