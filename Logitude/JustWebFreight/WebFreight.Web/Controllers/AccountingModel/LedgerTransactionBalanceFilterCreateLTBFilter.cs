@@ -57,7 +57,7 @@ public class LedgerTransactionBalanceFilterCreateLTBFilter
 
             }
 
-            string date2TypeCode = filters_list.Where(d => d.FieldName == "Date2TypeCode").FirstOrDefault().FieldValue.ToString();
+            string date2TypeCode = filters_list.Where(d => d.FieldName == "Date2TypeCode").FirstOrDefault()?.FieldValue.ToString();
             LTBFilter.Date2TypeCode = date2TypeCode;
 
             var date2Filter = filters_list.Where(d => d.FieldName == "Date2Filter").FirstOrDefault();
