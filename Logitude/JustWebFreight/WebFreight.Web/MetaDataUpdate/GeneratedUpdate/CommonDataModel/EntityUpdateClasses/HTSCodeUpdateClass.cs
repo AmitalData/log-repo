@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class HTSCodeUpdateClass
    {  		
-		public const string HashString = "dd705c27e59cf44125d24d4eb75b2f07";
+		public const string HashString = "6472aadaec213d207faf2055e26c4776";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "HTSCode",
-			      				    Code =  "5bf1",
+			      				    Code =  "dd02",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -537,7 +537,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "VATPercentage",
 					  						ObjectTableName =  "HTSCode",
-					  						FieldsDataType =  "Decimal",
+					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
@@ -595,7 +595,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "DutiesPercentage",
 					  						ObjectTableName =  "HTSCode",
-					  						FieldsDataType =  "Decimal",
+					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
