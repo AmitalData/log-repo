@@ -481,7 +481,7 @@ namespace Logitude.Accounting.BL.DataContract
                                                  where a.AccountingCancelationDate >= startDate && a.AccountingCancelationDate < endDate &&
                                                  !(a.RegisterDate >= startDate && a.RegisterDate < endDate)
                                                  && a.Tenant == Tenant
-                                                 && (a.StatusCode == "VD" && a.AccountingCancelationDate.Value.Year != a.RegisterDate.Value.Year && a.DontIncludeInDeductionReport == false)
+                                                 && (a.StatusCode == "VD" && a.DontIncludeInDeductionReport == false)
                                                  select a).ToList();
             cancelledPayments = getAPPaymentsWithGLAccountsAndVendor(cancelledPayments);
             return cancelledPayments;
