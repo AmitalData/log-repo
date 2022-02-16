@@ -478,7 +478,8 @@ namespace Logitude.Accounting.BL.DataContract
         {
 
             List<APPayment> cancelledPayments = (from a in invoiceContext.APPayments.Include("VendorCard")
-                                                 where a.AccountingCancelationDate >= startDate && a.AccountingCancelationDate < endDate
+                                                 where a.AccountingCancelationDate >= startDate && a.AccountingCancelationDate < endDate &&
+                                                 !(a.RegisterDate >= startDate && a.RegisterDate < endDate)
                                                  && a.Tenant == Tenant
                                                  && (a.StatusCode == "VD" && a.AccountingCancelationDate.Value.Year != a.RegisterDate.Value.Year && a.DontIncludeInDeductionReport == false)
                                                  select a).ToList();
