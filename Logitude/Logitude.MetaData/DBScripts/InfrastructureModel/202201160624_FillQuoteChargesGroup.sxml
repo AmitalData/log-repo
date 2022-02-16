@@ -1,7 +1,8 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="2">
+  <Sql Version="3">
     <![CDATA[
 	    delete from DBIdCounters  where TableName = 'QuoteChargesGroup'
+        update ChargesTypes set QuoteChargesGroupId = null, QuoteChargesGroupCode = null
 		delete from QuoteChargesGroups
 		declare @Tenant as int
 		declare @ChargesTypeId as varchar(15)
