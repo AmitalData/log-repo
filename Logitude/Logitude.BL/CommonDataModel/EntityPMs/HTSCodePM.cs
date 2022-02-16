@@ -16,8 +16,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public ChangeSetOperation ChangeSetOp { get; set; }
 		public string CountryEnglishName { get; set; }
         public int? LineNumber { get; set; }
-        public decimal? VATPercentage { get; set; }
-        public decimal? DutiesPercentage { get; set; }
+        public double? VATPercentage { get; set; }
+        public double? DutiesPercentage { get; set; }
         public string OtherDuties { get; set; }
         public string Remarks { get; set; }
     }

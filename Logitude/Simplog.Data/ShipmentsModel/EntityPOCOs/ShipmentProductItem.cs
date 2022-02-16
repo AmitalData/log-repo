@@ -19,8 +19,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ASIN { get; set; }
         public string UPC { get; set; }
         public string OriginCountryId { get; set; }
-        public decimal? VATPercentage { get; set; }
-        public decimal? DutiesPercentage { get; set; }
+        public double? VATPercentage { get; set; }
+        public double? DutiesPercentage { get; set; }
         public string OtherDuties { get; set; }
         public string Remarks { get; set; }
         public string ShipperId { get; set; }
