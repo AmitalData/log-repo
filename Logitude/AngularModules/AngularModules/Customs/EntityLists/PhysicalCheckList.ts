@@ -56,6 +56,8 @@ export class PhysicalCheckList {
 	TransportModeId: string;
 	Direction: string;
 	DeclarationOfficeName: string;
+	IntegratorCode: string;
+	AvailabilityDate: Date;
 	
 }
  
