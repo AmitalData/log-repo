@@ -591,11 +591,19 @@ export class AddEditPartnerAddressComponent extends BaseComponent {
             if (hTSCodePM) {
                 item.HTSCode = hTSCodePM.Code;
                 item.ApprovedByCustomer = hTSCodePM.ApprovedByCustomer;
+                item.VATPercentage = hTSCodePM.VATPercentage;
+                item.DutiesPercentage = hTSCodePM.DutiesPercentage;
+                item.OtherDuties = hTSCodePM.OtherDuties;
+                item.Remarks = hTSCodePM.Remarks;
             }
 
             else {
                 item.HTSCode = null;
                 item.ApprovedByCustomer = false;
+                item.VATPercentage = null;
+                item.DutiesPercentage = null;
+                item.OtherDuties = null;
+                item.Remarks = null;
             }
         });
 
