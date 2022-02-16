@@ -1967,7 +1967,9 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
 
     ReplaceDecimalSeparatorWithADot(value: string) {
         if (this.decimalSeparator != '.') {
-            value = value.split(this.decimalSeparator).join('.');
+            if (!AppTool.IsNullOrEmpty(value)) {
+                value = value.toString().split(this.decimalSeparator).join('.');
+            }
         }
         return value;
     }
