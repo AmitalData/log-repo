@@ -141,8 +141,7 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  DepartmentName="",
                                                                  PackageTypeCode = a.PackageType.LocalName,
                                                                  LastStatusRemarks=a.LastStatusRemarks,
-                                                                
-                                                                 
+                                                                 RemoveInclusiveVisibility = "",
                                                               }) ;
                                                                 
                                               return query;
