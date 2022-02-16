@@ -197,14 +197,16 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="ShipmentFirstPickupFrom"
+    Name="ShipmentPickupFrom"
+    OldNames="ShipmentFirstPickupFrom"
     Type="varchar"
     Size="200">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="ShipmentFirstPickupTo"
+    Name="ShipmentPickupTo"
+    OldNames="ShipmentFirstPickupTo"
     Type="varchar"
     Size="200">
     <Constraints
@@ -307,14 +309,16 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ShipmentLastDeliveryFrom"
+    Name="ShipmentDeliveryFrom"
+    OldNames="ShipmentLastDeliveryFrom"
     Type="varchar"
     Size="200">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="ShipmentLastDeliveryTo"
+    Name="ShipmentDeliveryTo"
+    OldNames="ShipmentLastDeliveryTo"
     Type="varchar"
     Size="200">
     <Constraints

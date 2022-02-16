@@ -82,8 +82,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CurrentLocation).HasColumnName("CurrentLocation");
             this.Property(t => t.DestinationLocation).HasColumnName("DestinationLocation");
             this.Property(t => t.DepartureLocation).HasColumnName("DepartureLocation");
-            this.Property(t => t.ShipmentFirstPickupFrom).HasColumnName("ShipmentFirstPickupFrom");
-            this.Property(t => t.ShipmentFirstPickupTo).HasColumnName("ShipmentFirstPickupTo");
+            this.Property(t => t.ShipmentPickupFrom).HasColumnName("ShipmentPickupFrom");
+            this.Property(t => t.ShipmentPickupTo).HasColumnName("ShipmentPickupTo");
             this.Property(t => t.ShipmentPreCarriageFromId).HasColumnName("ShipmentPreCarriageFromId");
             this.Property(t => t.ShipmentPreCarriageToId).HasColumnName("ShipmentPreCarriageToId");
             this.Property(t => t.ShipmentMainCarriageFromId).HasColumnName("ShipmentMainCarriageFromId");
@@ -96,8 +96,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ShipmentTransshipment3ToId).HasColumnName("ShipmentTransshipment3ToId");
             this.Property(t => t.ShipmentOnCarriageFromId).HasColumnName("ShipmentOnCarriageFromId");
             this.Property(t => t.ShipmentOnCarriageToId).HasColumnName("ShipmentOnCarriageToId");
-            this.Property(t => t.ShipmentLastDeliveryFrom).HasColumnName("ShipmentLastDeliveryFrom");
-            this.Property(t => t.ShipmentLastDeliveryTo).HasColumnName("ShipmentLastDeliveryTo");
+            this.Property(t => t.ShipmentDeliveryFrom).HasColumnName("ShipmentDeliveryFrom");
+            this.Property(t => t.ShipmentDeliveryTo).HasColumnName("ShipmentDeliveryTo");
             this.Property(t => t.PreCarriageLocation).HasColumnName("PreCarriageLocation");
             this.Property(t => t.PreCarriageETD).HasColumnName("PreCarriageETD");
             this.Property(t => t.PreCarriageATD).HasColumnName("PreCarriageATD");
