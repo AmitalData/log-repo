@@ -284,6 +284,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         {
             if (string.IsNullOrEmpty(address))
                 return;
+
+            address = address?.Replace("---", "");
             addressLines.Add(prefix+address);
         }
 
