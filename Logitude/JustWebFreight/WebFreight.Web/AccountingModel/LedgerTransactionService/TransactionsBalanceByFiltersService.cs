@@ -102,13 +102,16 @@ namespace WebFreight.Web.AccountingModel.LedgerTransactionService
             string date2TypeCode = filters_list.Where(d => d.FieldName == "Date2TypeCode").FirstOrDefault()?.FieldValue.ToString();
             string fromDate2filter = filters_list.Where(d => d.FieldName == "Date2Filter").FirstOrDefault()?.FieldValue.ToString();
             string toDate2filter = filters_list.Where(d => d.FieldName == "Date2Filter").FirstOrDefault()?.FieldValue2.ToString();
-            LTBFilter.Date2TypeCode = date2TypeCode;
 
-            string[] fromDate2 = fromDate2filter.ToString().Split(';');
-            LTBFilter.FromDate2 = new DateTime(int.Parse(fromDate2[0]), int.Parse(fromDate2[1]) + 1, int.Parse(fromDate2[2]), 0, 0, 0);
+            string[] fromDate2 = fromDate2filter?.ToString()?.Split(';');
+            string[] toDate2 = toDate2filter?.ToString()?.Split(';');
 
-            string[] toDate2 = toDate2filter.ToString().Split(';');
-            LTBFilter.ToDate2 = new DateTime(int.Parse(toDate2[0]), int.Parse(toDate2[1]) + 1, int.Parse(toDate2[2]), 23, 59, 59);
+            if(date2TypeCode != null && fromDate2 != null && toDate2 != null)
+            {
+                LTBFilter.Date2TypeCode = date2TypeCode;
+                LTBFilter.FromDate2 = new DateTime(int.Parse(fromDate2[0]), int.Parse(fromDate2[1]) + 1, int.Parse(fromDate2[2]), 0, 0, 0);
+                LTBFilter.ToDate2 = new DateTime(int.Parse(toDate2[0]), int.Parse(toDate2[1]) + 1, int.Parse(toDate2[2]), 23, 59, 59);
+            }
         }
     }
 
