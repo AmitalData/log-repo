@@ -285,6 +285,17 @@ namespace Logitude.CustomsMessaging.RequestServices
             //ג. בדיקה האם Declaration PaymentDate <> Null - אם נכשל יש להפיל את הבקשה ללא נסיון חוזר.
             if (declarationPM.PaymentDate.HasValue)
             {
+                var context = CustomContext.GetContext(declarationPM.Tenant);
+                CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(context);
+                //List<CustomsRequestsSheetPM> customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(declarationPM.Tenant, "2750", "", "", null, null, declarationPM.CustomFileNo, true);
+               CustomsRequestsSheetPM customsRequestsSheetPM = customsRequestsSheetQueryService.GetSingle(requestParams.CustomsRequestsSheetId, false, false);
+                if (customsRequestsSheetPM != null)
+                {
+                    customsRequestsSheetPM.RequestStatusCode = "99";
+                    customsRequestsSheetPM.ChangeSetOp = ChangeSetOperation.Update;
+                    CustomsRequestsSheetUpdateService customsRequestsSheetUpdateService = new CustomsRequestsSheetUpdateService(this.dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
+                    customsRequestsSheetUpdateService.Update(customsRequestsSheetPM, true);
+                }
                 throw new System.Exception("//ג. בדיקה האם Declaration PaymentDate <> Null - אם נכשל יש להפיל את הבקשה ללא נסיון חוזר.");
             }
          //   throw new NotImplementedException();
