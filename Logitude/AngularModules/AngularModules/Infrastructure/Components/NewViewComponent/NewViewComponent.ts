@@ -1,27 +1,27 @@
 declare var window: any;
-import {Component, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
-import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import {AdvancedQueryFilterPM} from '../../../Infrastructure/EntityPMs/AdvancedQueryFilterPM';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import {AdvancedQueryFiltersPMService} from '../../../Infrastructure/Services/StandardPMs/AdvancedQueryFiltersPMService';
-import {QueriesPMService} from '../../../Infrastructure/Services/StandardPMs/QueriesPMService';
-import {TextCodePMService} from '../../../Infrastructure/Services/StandardPMs/TextCodePMService';
-import {GeneralEntitiesService} from '../../../Infrastructure/Services/StandardPMs/GeneralEntitiesService';
-import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
-import {ObjectFieldPM} from '../../../Infrastructure/EntityPMs/ObjectFieldPM';
-import {QueryPM} from '../../../Infrastructure/EntityPMs/QueryPM';
-import {FormGroup, FormBuilder} from '@angular/forms';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {QueryColumnDetails} from '../../../Infrastructure/Components/QueryColumnsComponents/QueryColumnsEditComponent';
-import {QueryColumnPM} from '../../../Infrastructure/EntityPMs/QueryColumnPM';
-import {FilterField, FilterFieldsClass, FieldsValues} from '../../../Infrastructure/Components/LogitudeComponents/QueryListComponent/FilterField';
-import {GeneralEntitiesArgs} from '../../../Infrastructure/DataContracts/GeneralEntitiesArgs';
-import {AppTool, DateTool} from '../../../Infrastructure/Tools';
-import {PubSubService} from '../../../Infrastructure/Utilities/events/ApiFiltersEvent';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {CachedDataManager} from '../../../Infrastructure/Utilities/CachedDataManager';
-import {ObjectsLocator} from '../../Locators/ObjectsLocator';
-import {ServiceLocator} from '../../Locators/ServiceLocator';
+import { Component, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { AdvancedQueryFilterPM } from '../../../Infrastructure/EntityPMs/AdvancedQueryFilterPM';
+import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { AdvancedQueryFiltersPMService } from '../../../Infrastructure/Services/StandardPMs/AdvancedQueryFiltersPMService';
+import { QueriesPMService } from '../../../Infrastructure/Services/StandardPMs/QueriesPMService';
+import { TextCodePMService } from '../../../Infrastructure/Services/StandardPMs/TextCodePMService';
+import { GeneralEntitiesService } from '../../../Infrastructure/Services/StandardPMs/GeneralEntitiesService';
+import { ServiceArgs } from '../../../Infrastructure/DataContracts/ServiceArgs';
+import { ObjectFieldPM } from '../../../Infrastructure/EntityPMs/ObjectFieldPM';
+import { QueryPM } from '../../../Infrastructure/EntityPMs/QueryPM';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { QueryColumnDetails } from '../../../Infrastructure/Components/QueryColumnsComponents/QueryColumnsEditComponent';
+import { QueryColumnPM } from '../../../Infrastructure/EntityPMs/QueryColumnPM';
+import { FilterField, FilterFieldsClass, FieldsValues } from '../../../Infrastructure/Components/LogitudeComponents/QueryListComponent/FilterField';
+import { GeneralEntitiesArgs } from '../../../Infrastructure/DataContracts/GeneralEntitiesArgs';
+import { AppTool, DateTool } from '../../../Infrastructure/Tools';
+import { PubSubService } from '../../../Infrastructure/Utilities/events/ApiFiltersEvent';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { CachedDataManager } from '../../../Infrastructure/Utilities/CachedDataManager';
+import { ObjectsLocator } from '../../Locators/ObjectsLocator';
+import { ServiceLocator } from '../../Locators/ServiceLocator';
 import { CodeNameClass } from '../../DataContracts/CodeNameClass';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
@@ -32,12 +32,12 @@ import { SharedUserQueryPM } from '../../EntityPMs/SharedUserQueryPM';
 import { ApiQueryFilters } from '../../DataContracts/ApiQueryFilters';
 import { UserList } from '../../../Common/EntityLists/UserList';
 import { UserListService } from '../../../Common/Services/StandardLists/UserListService';
-import { QueryColumnsPMService } from '../../Services/StandardPMs/QueryColumnsPMService'; 
+import { QueryColumnsPMService } from '../../Services/StandardPMs/QueryColumnsPMService';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'NewViewComponent',
-    
+
 
     templateUrl: './NewViewComponent.html',
     inputs: ['ObjectTableName', 'event', 'isWindowViewMode', 'isNewViewMode', 'QueryId', 'QueryCode', 'Filterchangeevent', 'rabaia'],
@@ -53,7 +53,7 @@ export class NewViewComponent {
     @Output() onDataSourceChangedEvent = new EventEmitter();
     @Output() onUnSelectedDataLoadedEvent = new EventEmitter();
     @Output() onSelectedDataLoadedEvent = new EventEmitter();
-    @Output() onUnSelectedDataSourceChangedEvent = new EventEmitter(); 
+    @Output() onUnSelectedDataSourceChangedEvent = new EventEmitter();
     SelectedTabCode: string;
     SearchFieldsId: string;
     FiltersSearchFieldsId: string;
@@ -75,10 +75,10 @@ export class NewViewComponent {
     IsNew: boolean = true;
     removedQueryFilters: any[];
     public myForm: FormGroup;
-   public SpotlightFeatureEnabled: boolean = false;
+    public SpotlightFeatureEnabled: boolean = false;
     GeneralEntitiesArgs: GeneralEntitiesArgs;
     pubSubAdvanceQueryFiltersService: PubSubService;
-    ValidationErrorsList: string[] = []; 
+    ValidationErrorsList: string[] = [];
     CreateBtnText: string = TextCodeTranslator.Translate("General.B.Create");
     public serviceArgs: ServiceArgs;
     public _http: HttpClient;
@@ -112,31 +112,31 @@ export class NewViewComponent {
             this.SearchFieldsId = "SearchFields_-1_-1";
             this.FiltersSearchFieldsId = "FiltersSearchFieldsId_-1_-1";
         }
-      
+
 
         else {
             this.SearchFieldsId = "NewViewSearchFields_" + this.CurrentSession.GetNewId("NewViewSearchFields");
             this.FiltersSearchFieldsId = "NewViewFiltersSearchFieldsId_" + this.CurrentSession.GetNewId("NewViewFiltersSearchFieldsId");
         }
         this.SelectedTabCode = "COL";
-        
+
         this.myForm = fb.group({
             //'ShipperName': ['', Validators.required]
 
-        }); 
+        });
     }
 
     SetWindowArgs(args: any) {
         this.IsNew = args.IsNew;
         this.pubSubAdvanceQueryFiltersService = args.pubSubAdvanceQueryFiltersService;
-        
+
         this.QueryId = args.queryId;
         this.QueryCode = args.queryCode;
         this.CurrentObjectTable = args.currentObjectTable;
         this.IsEnabled = false;
-        this.ObjectTable = window.ObjectTables.filter((d:any) => d.Name == args.currentObjectTable)[0];
+        this.ObjectTable = window.ObjectTables.filter((d: any) => d.Name == args.currentObjectTable)[0];
         this.ObjectTableId = this.ObjectTable.Id;
-        this.ObjectFields = window.ObjectFields.filter((d:any) => d.ObjectTableId === this.ObjectTableId && d.CanFilter === true);
+        this.ObjectFields = window.ObjectFields.filter((d: any) => d.ObjectTableId === this.ObjectTableId && d.CanFilter === true);
         this.filterFields = new FilterFieldsClass(true, this, this.pubSubAdvanceQueryFiltersService);
         this.NEWallFilterFieldsClass = new FilterFieldsClass(true, this, this.pubSubAdvanceQueryFiltersService);
         this.constantFilterFields = new FilterFieldsClass(true, this, this.pubSubAdvanceQueryFiltersService);
@@ -186,12 +186,12 @@ export class NewViewComponent {
         //filters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
 
         var userService: UserListService = new UserListService();
-        userService.getByFilters(filters).subscribe((res:any) => {
+        userService.getByFilters(filters).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.myUsersList = pmResponse.Result;
 
-                if (!this.IsNew) {                   
+                if (!this.IsNew) {
                     this.LoadQueryPM();
                 }
             }
@@ -203,7 +203,7 @@ export class NewViewComponent {
         var myService: QueriesPMService = new QueriesPMService();
         myService.setServiceArgs(this.serviceArgs);
 
-        myService.get(this.QueryCode).subscribe((myResult:any) => {
+        myService.get(this.QueryCode).subscribe((myResult: any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 this.EntityPM = myResponse.Result;
@@ -225,7 +225,7 @@ export class NewViewComponent {
                         this.SpotlightFeatureEnabled = true;
                     }
 
-                    if (FeatureLocator.HasFeaturePermession("ARInvoice", "SSPV") && this.EntityPM.ObjectTableName == "ARInvoice" ) {
+                    if (FeatureLocator.HasFeaturePermession("ARInvoice", "SSPV") && this.EntityPM.ObjectTableName == "ARInvoice") {
                         this.SpotlightFeatureEnabled = true;
                     }
 
@@ -258,7 +258,7 @@ export class NewViewComponent {
                 }
             }
         }
-        
+
         if (isEditEnabled) {
             if (type == "Selected") {
                 isAddEnabled = false;
@@ -318,7 +318,7 @@ export class NewViewComponent {
 
         var currentQuery = window.Queries.filter(d => d.UniqueCode == this.QueryCode)[0];
 
- 
+
         this.addedQueryColumnList = [];
         this.removedQueryColumnList = [];
 
@@ -417,10 +417,10 @@ export class NewViewComponent {
     }
 
     public IsChooseUsersVisible: boolean = false;
-    public ShareValuesList: CodeNameClass[]=[];
+    public ShareValuesList: CodeNameClass[] = [];
     private FillShareValuesList() {
         this.ShareValuesList = [];
-        
+
         var obj1: CodeNameClass = new CodeNameClass();
         obj1.Code = "ALL";
         obj1.Name = "All Users";
@@ -613,7 +613,7 @@ export class NewViewComponent {
     }
 
     onFieldSelectedItemChanged(item) {
-        this.FieldSelectedItem = item;        
+        this.FieldSelectedItem = item;
         this.onSelectedDataLoadedEvent.emit(null);
         this.CheckEditSharedViewsFeature("Available");
     }
@@ -739,7 +739,7 @@ export class NewViewComponent {
 
             this.onUnSelectedDataLoadedEvent.emit(this.SelectedItem);
         }
-        
+
         this.onSelectedDataLoadedEvent.emit(this.FieldSelectedItem);
         this.FieldSelectedItem = null;
         this.SelectedItem = null;
@@ -773,7 +773,7 @@ export class NewViewComponent {
                     column.IndexOrder--;
                 }
             });
-            
+
             this.IsbtnRemoveEnabled = false;
             this.CD.detectChanges();
             this.onUnSelectedDataLoadedEvent.emit(this.SelectedItem);
@@ -833,7 +833,7 @@ export class NewViewComponent {
         var myService: QueriesPMService = new QueriesPMService();
         myService.setServiceArgs(this.serviceArgs);
         var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
-        myService.delete(query, userId).subscribe((myResult:any) => {
+        myService.delete(query, userId).subscribe((myResult: any) => {
             this.CurrentSession.StopBusyIndicator();
             window.Queries = window.Queries.filter(a => a.UniqueCode != query.UniqueCode);
             var ObjectTable = window.ObjectTables.filter(x => x.Name === this.CurrentObjectTable)[0];
@@ -937,7 +937,7 @@ export class NewViewComponent {
             this.myAdvancedQueryFiltersPMService.setServiceArgs(this.serviceArgs);
         }
 
-        this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, QueryCode).subscribe((myResult:any) => {
+        this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, QueryCode).subscribe((myResult: any) => {
             this.GetFiltersComplete(myResult, QueryCode);
         });
     }
@@ -955,7 +955,7 @@ export class NewViewComponent {
         this.currentQuery = window.Queries.filter(q => q.UniqueCode == QueryCode)[0];
 
         if (!this.currentQuery) {
-            
+
         }
 
         else {
@@ -1040,10 +1040,10 @@ export class NewViewComponent {
     }
     SelectedObjectFields: FilterField[];
     public AddFilterField(field: ObjectFieldPM) {
-        
+
         if (this.SelectedObjectFields == undefined) {
             this.SelectedObjectFields = [];
-        } 
+        }
         var filters = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldCode == field.FieldCode);
         if (filters != null && filters[0] != null) {
             var value = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldCode == field.FieldCode)[0].PredefinedValue;
@@ -1069,7 +1069,7 @@ export class NewViewComponent {
             this.SelectedObjectFields = this.SelectedObjectFields.filter(a => a.ObjectField.Id != field.Id);
         }
     }
-    
+
     OnQueryFilterChanged(QueryCode: string) {
         this.QueryCode = QueryCode;
         this.QueryFilterChangedAction(this.QueryCode);
@@ -1142,145 +1142,110 @@ export class NewViewComponent {
     }
 
     SavePredifinedQuery(queryName: string) {
-        var DoSaving = false;
         var myService: QueriesPMService = new QueriesPMService();
         var textCodesService: TextCodePMService = new TextCodePMService();
+        this.ValidateQuery(queryName);
+        if (this.ValidationErrorsList.length != 0) return;
 
-        this.ValidationErrorsList = [];
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
-        if (!AppTool.IsNullOrEmpty(queryName)) {
-            if (queryName.length > 30) {
-                DoSaving = false;
-                this.ValidationErrorsList.push(TextCodeTranslator.Translate("General.M.QueryNameLength"));
-                return;
-            }
+        var theCurrentQuery = (window.Queries.filter(q => q.UniqueCode == this.QueryCode)[0]);
+        var temp = window.Queries.filter(q => q.ObjectTableId == theCurrentQuery.ObjectTableId && q.UserId == theCurrentQuery.UserId && q.QueryGroupCode == theCurrentQuery.QueryGroupCode).sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
+        var maxIndex = temp[temp.length - 1];
 
-            if (this.SelectedObjectFields.length == 0) {
-                DoSaving = true;
-            }
+        this.EntityPM.QuerySection = theCurrentQuery.QuerySection;
+        this.EntityPM.ObjectTableId = theCurrentQuery.ObjectTableId;
+        this.EntityPM.ObjectTableName = theCurrentQuery.ObjectTableName;
+        this.EntityPM.Tenant = SessionInfo.LoggedUserTenant;
+        this.EntityPM.UserId = SessionInfo.LoggedUserId;
+        this.EntityPM.Code = "111";
+        this.EntityPM.IndexOrder = maxIndex.IndexOrder + 1;
+        this.EntityPM.ObjectTableIsNewWizard = theCurrentQuery.ObjectTableIsNewWizard;
+        this.EntityPM.ObjectTableNewWizardControlName = theCurrentQuery.ObjectTableNewWizardControlName;
+        this.EntityPM.OriginalQueryCode = theCurrentQuery.UniqueCode;
+        this.EntityPM.QueryGroupCode = theCurrentQuery.QueryGroupCode;
+        this.EntityPM.IsAddNewEntityEnabled = theCurrentQuery.IsAddNewEntityEnabled;
+        this.EntityPM.NewViewName = queryName;
+        this.EntityPM.Perspective = theCurrentQuery.Perspective;
+        this.EntityPM.EditWizardName = theCurrentQuery.EditWizardName;
+        this.EntityPM.SpotlightModeActivated = this.ShowInSpotLight;
+        this.EntityPM.IsViewOnly = this.IsViewOnly;
 
-            else {
-                this.SelectedObjectFields.forEach((item, key) => {
-                    if (item.TextValue == null || item.TextValue == "") {
-                        if (item.ObjectField.DataTypeCode != "Boolean") {
-                            DoSaving = false;
-                            this.ValidationErrorsList.push(TextCodeTranslator.Translate("General.M.SomeFiltersHaveNoValue"));
-                            return;
-                        }
-                        else {
-                            DoSaving = true;
-                        }
-                    }
-                    else {
-                        DoSaving = true;
-                    }
-                });
-            }
+        if (this.ShareValueSelectedItem) {
+            switch (this.ShareValueSelectedItem.Code) {
+                case "ALL": {
+                    this.EntityPM.SharedWithAll = true;
+                    this.EntityPM.SharedWithSpecificUsers = false;
+                    this.EntityPM.SharedByUserId = SessionLocator.LoggedUserId;
 
-            if (DoSaving) {
-                this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-
-                var theCurrentQuery = (window.Queries.filter(q => q.UniqueCode == this.QueryCode)[0]);
-                var temp = window.Queries.filter(q => q.ObjectTableId == theCurrentQuery.ObjectTableId && q.UserId == theCurrentQuery.UserId && q.QueryGroupCode == theCurrentQuery.QueryGroupCode).sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
-                var maxIndex = temp[temp.length - 1];
-                
-                this.EntityPM.QuerySection = theCurrentQuery.QuerySection;
-                this.EntityPM.ObjectTableId = theCurrentQuery.ObjectTableId;
-                this.EntityPM.ObjectTableName = theCurrentQuery.ObjectTableName;
-                this.EntityPM.Tenant = SessionInfo.LoggedUserTenant;
-                this.EntityPM.UserId = SessionInfo.LoggedUserId;
-                this.EntityPM.Code = "111";
-                this.EntityPM.IndexOrder = maxIndex.IndexOrder + 1;
-                this.EntityPM.ObjectTableIsNewWizard = theCurrentQuery.ObjectTableIsNewWizard;
-                this.EntityPM.ObjectTableNewWizardControlName = theCurrentQuery.ObjectTableNewWizardControlName;
-                this.EntityPM.OriginalQueryCode = theCurrentQuery.UniqueCode;
-                this.EntityPM.QueryGroupCode = theCurrentQuery.QueryGroupCode;
-                this.EntityPM.IsAddNewEntityEnabled = theCurrentQuery.IsAddNewEntityEnabled;
-                this.EntityPM.NewViewName = queryName;
-                this.EntityPM.Perspective = theCurrentQuery.Perspective;
-                this.EntityPM.EditWizardName = theCurrentQuery.EditWizardName;
-                this.EntityPM.SpotlightModeActivated = this.ShowInSpotLight;
-                this.EntityPM.IsViewOnly = this.IsViewOnly;
-
-                if (this.ShareValueSelectedItem) {
-                    switch (this.ShareValueSelectedItem.Code) {
-                        case "ALL": {
-                            this.EntityPM.SharedWithAll = true;
-                            this.EntityPM.SharedWithSpecificUsers = false;
-                            this.EntityPM.SharedByUserId = SessionLocator.LoggedUserId;
-
-                            if (this.EntityPM.SharedUserQueries != null && this.EntityPM.SharedUserQueries.length > 0) {
-                                for (var i = this.EntityPM.SharedUserQueries.length - 1; i >= 0; i--) {
-                                    var item = this.EntityPM.SharedUserQueries[i];
-                                    this.EntityPM.RemoveSharedUserQueryPM(item);
-                                }
-                            }
-                            break;
-                        }
-
-                        case "SPF": {
-                            this.EntityPM.SharedWithAll = false;
-                            this.EntityPM.SharedWithSpecificUsers = true;
-                            this.EntityPM.SharedByUserId = SessionLocator.LoggedUserId;
-                            break;
-                        }
-
-                        case "NON": {
-                            this.EntityPM.SharedWithAll = false;
-                            this.EntityPM.SharedWithSpecificUsers = false;
-                            this.EntityPM.SharedByUserId = null;
-
-                            if (this.EntityPM.SharedUserQueries != null && this.EntityPM.SharedUserQueries.length > 0) {
-                                for (var i = this.EntityPM.SharedUserQueries.length - 1; i >= 0; i--) {
-                                    var item = this.EntityPM.SharedUserQueries[i];
-                                    this.EntityPM.RemoveSharedUserQueryPM(item);
-                                }
-                            }
-                            break;
+                    if (this.EntityPM.SharedUserQueries != null && this.EntityPM.SharedUserQueries.length > 0) {
+                        for (var i = this.EntityPM.SharedUserQueries.length - 1; i >= 0; i--) {
+                            var item = this.EntityPM.SharedUserQueries[i];
+                            this.EntityPM.RemoveSharedUserQueryPM(item);
                         }
                     }
+                    break;
                 }
 
-                var spotlightTemplate: string = "";
-                if (this.EntityPM.SpotlightModeActivated) {
-                    if (this.SpotlightFeatureEnabled) {
-                        switch (this.EntityPM.ObjectTableName) {
-                            case "Shipment": {
-                                spotlightTemplate = "ShipmentSpotlightDataTemplate";
-                                break;
-                            }
-                            case "Master": {
-                                spotlightTemplate = "MasterSpotlightDataTemplate";
-                                break;
-                            }
+                case "SPF": {
+                    this.EntityPM.SharedWithAll = false;
+                    this.EntityPM.SharedWithSpecificUsers = true;
+                    this.EntityPM.SharedByUserId = SessionLocator.LoggedUserId;
+                    break;
+                }
 
-                            case "ARInvoice": {
-                                spotlightTemplate = "ARInvoiceSpotlightDataTemplate";
-                                break;
-                            }
+                case "NON": {
+                    this.EntityPM.SharedWithAll = false;
+                    this.EntityPM.SharedWithSpecificUsers = false;
+                    this.EntityPM.SharedByUserId = null;
+
+                    if (this.EntityPM.SharedUserQueries != null && this.EntityPM.SharedUserQueries.length > 0) {
+                        for (var i = this.EntityPM.SharedUserQueries.length - 1; i >= 0; i--) {
+                            var item = this.EntityPM.SharedUserQueries[i];
+                            this.EntityPM.RemoveSharedUserQueryPM(item);
                         }
-                        this.EntityPM.SpotlightDataTemplate = spotlightTemplate;
                     }
+                    break;
                 }
-                else {
-                    this.EntityPM.SpotlightDataTemplate = null;
-                }
-                
-                myService.setServiceArgs(this.serviceArgs);
-                textCodesService.setServiceArgs(this.serviceArgs);
-                myService.insert(this.EntityPM).subscribe((myResult:any) => {
-                    textCodesService.getByCode(myResult.Result.NameTextCodeCode, myResult.Result.Tenant).subscribe((res:any) => {
-                        window.TextCodesTranslations.push(res);
-                        this.AddFiltersAndColumns(myResult.Result);
-                        window.Queries.push(myResult.Result);
-                    });
-                });
             }
         }
 
+        var spotlightTemplate: string = "";
+        if (this.EntityPM.SpotlightModeActivated) {
+            if (this.SpotlightFeatureEnabled) {
+                switch (this.EntityPM.ObjectTableName) {
+                    case "Shipment": {
+                        spotlightTemplate = "ShipmentSpotlightDataTemplate";
+                        break;
+                    }
+                    case "Master": {
+                        spotlightTemplate = "MasterSpotlightDataTemplate";
+                        break;
+                    }
+
+                    case "ARInvoice": {
+                        spotlightTemplate = "ARInvoiceSpotlightDataTemplate";
+                        break;
+                    }
+                }
+                this.EntityPM.SpotlightDataTemplate = spotlightTemplate;
+            }
+        }
         else {
-            this.ValidationErrorsList.push(TextCodeTranslator.Translate("General.M.QueryNamecannotBeEmpty"));
+            this.EntityPM.SpotlightDataTemplate = null;
         }
+
+        myService.setServiceArgs(this.serviceArgs);
+        textCodesService.setServiceArgs(this.serviceArgs);
+        myService.insert(this.EntityPM).subscribe((myResult: any) => {
+            textCodesService.getByCode(myResult.Result.NameTextCodeCode, myResult.Result.Tenant).subscribe((res: any) => {
+                window.TextCodesTranslations.push(res);
+                this.AddFiltersAndColumns(myResult.Result);
+                window.Queries.push(myResult.Result);
+            });
+        });
+
+
     }
 
     AddFiltersAndColumns(newQuery) {
@@ -1341,7 +1306,7 @@ export class NewViewComponent {
                 else {
                     advanceFilter.UserId = SessionInfo.LoggedUserId;
                 }
-                
+
                 if (!AppTool.IsNullOrEmpty(field.MyName)) {
                     advanceFilter.PredefinedValue = field.MyName;
                 }
@@ -1352,7 +1317,7 @@ export class NewViewComponent {
                     }
 
                 }
-                if (field.ObjectField.DataTypeCode == "DateTime" && field.Operation.Code == "Between") {                   
+                if (field.ObjectField.DataTypeCode == "DateTime" && field.Operation.Code == "Between") {
                     advanceFilter.PredefinedValue2 = field.TextValue1;
                 }
 
@@ -1368,7 +1333,7 @@ export class NewViewComponent {
         this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
         myGeneralService.setServiceArgs(this.serviceArgs);
         if (this.IsNew) {
-            myGeneralService.insert(this.GeneralEntitiesArgs).subscribe((myResult:any) => {
+            myGeneralService.insert(this.GeneralEntitiesArgs).subscribe((myResult: any) => {
                 myResult.Result.AdvancedQueryFilterPMs.forEach((filter, key) => {
                     window.PreDefinedFilters.push(filter);
                 });
@@ -1377,7 +1342,7 @@ export class NewViewComponent {
             });
         }
         else {
-            myGeneralService.update(this.GeneralEntitiesArgs).subscribe((myResult:any) => {
+            myGeneralService.update(this.GeneralEntitiesArgs).subscribe((myResult: any) => {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 this.CurrentSession.CurrentWindow.Close(newQuery.UniqueCode);
             });
@@ -1387,149 +1352,132 @@ export class NewViewComponent {
     SaveAndClose(queryName) {
         var myService: QueriesPMService = new QueriesPMService();
         var textCodesService: TextCodePMService = new TextCodePMService();
-        var DoSaving = false;
-        
-        if (!AppTool.IsNullOrEmpty(queryName)) {
-            if (queryName.length > 30) {
-                DoSaving = false;
-                if (this.ValidationErrorsList == null) {
-                    this.ValidationErrorsList = [];
-                }
-                this.ValidationErrorsList.push(TextCodeTranslator.Translate("General.M.QueryNameLength"));
-                return;
-            }
-            if (this.SelectedObjectFields.length == 0) {
-                DoSaving = true;
-            }
-            else {
-                this.SelectedObjectFields.forEach((item, key) => {
-                    if (item.TextValue == null || item.TextValue == "") {
+        this.ValidateQuery(queryName);       
+        if (this.ValidationErrorsList.length != 0) return;
 
-                        if (item.ObjectField.DataTypeCode != "Boolean") {
-                            DoSaving = false;
-                            if (this.ValidationErrorsList == null) {
-                                this.ValidationErrorsList = [];
-                            }
-                            this.ValidationErrorsList.push(TextCodeTranslator.Translate("General.M.SomeFiltersHaveNoValue"));
-                            return;
-                        }
-                        else {
-                            DoSaving = true;
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        this.EntityPM.NewViewName = queryName;
+        this.EntityPM.IsViewOnly = this.IsViewOnly;
+
+        this.EntityPM.SpotlightModeActivated = this.ShowInSpotLight;
+        var spotlightTemplate: string = "";
+        if (this.EntityPM.SpotlightModeActivated) {
+            if (this.ShowInSpotLight) {
+                switch (this.EntityPM.ObjectTableName) {
+                    case "Shipment": {
+                        spotlightTemplate = "ShipmentSpotlightDataTemplate";
+                        break;
+                    }
+                    case "Master": {
+                        spotlightTemplate = "MasterSpotlightDataTemplate";
+                        break;
+                    }
+
+                    case "ARInvoice": {
+                        spotlightTemplate = "ARInvoiceSpotlightDataTemplate";
+                        break;
+                    }
+                }
+                this.EntityPM.SpotlightDataTemplate = spotlightTemplate;
+            }
+        }
+        else {
+            this.EntityPM.SpotlightDataTemplate = null;
+        }
+
+        if (this.ShareValueSelectedItem) {
+            switch (this.ShareValueSelectedItem.Code) {
+                case "ALL": {
+                    this.EntityPM.SharedWithAll = true;
+                    this.EntityPM.SharedWithSpecificUsers = false;
+
+                    if (AppTool.IsNullOrEmpty(this.EntityPM.SharedByUserId)) {
+                        this.EntityPM.SharedByUserId = SessionInfo.LoggedUserId;
+                    }
+
+                    if (this.EntityPM.SharedUserQueries != null && this.EntityPM.SharedUserQueries.length > 0) {
+                        for (var i = this.EntityPM.SharedUserQueries.length - 1; i >= 0; i--) {
+                            var item = this.EntityPM.SharedUserQueries[i];
+                            this.EntityPM.RemoveSharedUserQueryPM(item);
                         }
                     }
-                    else {
-                        DoSaving = true;
+                    break;
+                }
+
+                case "SPF": {
+                    this.EntityPM.SharedWithAll = false;
+                    this.EntityPM.SharedWithSpecificUsers = true;
+
+                    if (AppTool.IsNullOrEmpty(this.EntityPM.SharedByUserId)) {
+                        this.EntityPM.SharedByUserId = SessionInfo.LoggedUserId;
                     }
+                    break;
+                }
+
+                case "NON": {
+                    this.EntityPM.SharedWithAll = false;
+                    this.EntityPM.SharedWithSpecificUsers = false;
+                    this.EntityPM.SharedByUserId = null;
+
+                    if (this.EntityPM.SharedUserQueries != null && this.EntityPM.SharedUserQueries.length > 0) {
+                        for (var i = this.EntityPM.SharedUserQueries.length - 1; i >= 0; i--) {
+                            var item = this.EntityPM.SharedUserQueries[i];
+                            this.EntityPM.RemoveSharedUserQueryPM(item);
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+        myService.setServiceArgs(this.serviceArgs);
+        textCodesService.setServiceArgs(this.serviceArgs);
+        myService.update(this.EntityPM).subscribe((myResult: any) => {
+            if (!SessionLocator.UseCachedData) {
+                textCodesService.getByCode(myResult.Result.NameTextCodeCode, myResult.Result.Tenant).subscribe((res: any) => {
+                    window.TextCodesTranslations = window.TextCodesTranslations.filter(a => a.TextCodeCode != myResult.Result.NameTextCodeCode);
+                    window.TranslationsCache = window.TranslationsCache.filter(d => d.Code != myResult.Result.NameTextCodeCode);
+                    window.TextCodesTranslations.push(res);
+                    window.TranslationsCache.push(res);
+                    this.UpdateColumnsAndFilters();
+                    var CurrentQuery = window.Queries.filter(x => x.UniqueCode == this.QueryCode)[0];
+                    CurrentQuery = this.EntityPM;
                 });
             }
-        }
-
-        if (DoSaving == true) {
-            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-            this.EntityPM.NewViewName = queryName;
-            this.EntityPM.IsViewOnly = this.IsViewOnly;
-
-            this.EntityPM.SpotlightModeActivated = this.ShowInSpotLight;
-            var spotlightTemplate: string = "";
-            if (this.EntityPM.SpotlightModeActivated) {
-                if (this.ShowInSpotLight) {
-                    switch (this.EntityPM.ObjectTableName) {
-                        case "Shipment": {
-                            spotlightTemplate = "ShipmentSpotlightDataTemplate";
-                            break;
-                        }
-                        case "Master": {
-                            spotlightTemplate = "MasterSpotlightDataTemplate";
-                            break;
-                        }
-
-                        case "ARInvoice": {
-                            spotlightTemplate = "ARInvoiceSpotlightDataTemplate";
-                            break;
-                        }
-                    }
-                    this.EntityPM.SpotlightDataTemplate = spotlightTemplate;
-                }
-            }
             else {
-                this.EntityPM.SpotlightDataTemplate = null;
+                CachedDataManager.RefreshTenantTextCodes().subscribe((response: any) => {
+                    this.UpdateColumnsAndFilters();
+                    var CurrentQuery = window.Queries.filter(x => x.UniqueCode == this.QueryCode)[0];
+                    CurrentQuery = this.EntityPM;
+                });
             }
 
-            if (this.ShareValueSelectedItem) {
-                switch (this.ShareValueSelectedItem.Code) {
-                    case "ALL": {
-                        this.EntityPM.SharedWithAll = true;
-                        this.EntityPM.SharedWithSpecificUsers = false;
-
-                        if (AppTool.IsNullOrEmpty(this.EntityPM.SharedByUserId)) {
-                            this.EntityPM.SharedByUserId = SessionInfo.LoggedUserId;
-                        }
-
-                        if (this.EntityPM.SharedUserQueries != null && this.EntityPM.SharedUserQueries.length > 0) {
-                            for (var i = this.EntityPM.SharedUserQueries.length - 1; i >= 0; i--) {
-                                var item = this.EntityPM.SharedUserQueries[i];
-                                this.EntityPM.RemoveSharedUserQueryPM(item);
-                            }
-                        }
-                        break;
-                    }
-
-                    case "SPF": {
-                        this.EntityPM.SharedWithAll = false;
-                        this.EntityPM.SharedWithSpecificUsers = true;
-
-                        if (AppTool.IsNullOrEmpty(this.EntityPM.SharedByUserId)) {
-                            this.EntityPM.SharedByUserId = SessionInfo.LoggedUserId;
-                        }
-                        break;
-                    }
-
-                    case "NON": {
-                        this.EntityPM.SharedWithAll = false;
-                        this.EntityPM.SharedWithSpecificUsers = false;
-                        this.EntityPM.SharedByUserId = null;
-
-                        if (this.EntityPM.SharedUserQueries != null && this.EntityPM.SharedUserQueries.length > 0) {
-                            for (var i = this.EntityPM.SharedUserQueries.length - 1; i >= 0; i--) {
-                                var item = this.EntityPM.SharedUserQueries[i];
-                                this.EntityPM.RemoveSharedUserQueryPM(item);
-                            }
-                        }
-                        break;
-                    }
-                }
+            var oldItem = window.Queries.filter(t => t.Code == this.EntityPM.Code)[0];
+            if (oldItem) {
+                var index = window.Queries.indexOf(oldItem);
+                window.Queries.splice(index, 1);
+                window.Queries.push(this.EntityPM);
             }
+        });
 
-            myService.setServiceArgs(this.serviceArgs);
-            textCodesService.setServiceArgs(this.serviceArgs);
-            myService.update(this.EntityPM).subscribe((myResult:any) => {
-                if (!SessionLocator.UseCachedData) {
-                    textCodesService.getByCode(myResult.Result.NameTextCodeCode, myResult.Result.Tenant).subscribe((res:any) => {
-                        window.TextCodesTranslations = window.TextCodesTranslations.filter(a => a.TextCodeCode != myResult.Result.NameTextCodeCode);
-                        window.TranslationsCache = window.TranslationsCache.filter(d => d.Code != myResult.Result.NameTextCodeCode);
-                        window.TextCodesTranslations.push(res);
-                        window.TranslationsCache.push(res);
-                        this.UpdateColumnsAndFilters();
-                        var CurrentQuery = window.Queries.filter(x => x.UniqueCode == this.QueryCode)[0];
-                        CurrentQuery = this.EntityPM;
-                    });
-                }
-                else {
-                    CachedDataManager.RefreshTenantTextCodes().subscribe((response:any) => {
-                        this.UpdateColumnsAndFilters();
-                        var CurrentQuery = window.Queries.filter(x => x.UniqueCode == this.QueryCode)[0];
-                        CurrentQuery = this.EntityPM;
-                    });
-                }
+    }
 
-                var oldItem = window.Queries.filter(t => t.Code == this.EntityPM.Code)[0];
-                if (oldItem) {
-                    var index = window.Queries.indexOf(oldItem);
-                    window.Queries.splice(index, 1);
-                    window.Queries.push(this.EntityPM);
-                }
-            });
+    ValidateQuery(queryName: string) {
+        this.ValidationErrorsList = [];
+        if (AppTool.IsNullOrEmpty(queryName)) {
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("General.M.QueryNamecannotBeEmpty"));
         }
+        if (!AppTool.IsNullOrEmpty(queryName) && queryName.length > 30) {
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("General.M.QueryNameLength"));
+        }
+
+        if (this.SelectedObjectFields.length == 0) return;
+        this.SelectedObjectFields.forEach((item, key) => {
+            if ((item.TextValue == null || item.TextValue == "" || item.TextValue == undefined) && item.ObjectField.DataTypeCode != "Boolean") {
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("General.M.SomeFiltersHaveNoValue"));
+                return;
+            }
+        });
     }
 
     UpdateColumnsAndFilters() {
@@ -1605,7 +1553,7 @@ export class NewViewComponent {
                 advanceFilter.PredefinedValue = item.TextValue;
                 advanceFilter.IsPredefined = true;
                 advanceFilter.ObjectFieldCode = item.ObjectField.FieldCode;
-                
+
 
                 if (!AppTool.IsNullOrEmpty(this.EntityPM.SharedByUserId)) {
                     advanceFilter.UserId = this.EntityPM.SharedByUserId;
@@ -1638,7 +1586,7 @@ export class NewViewComponent {
 
         this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
         myGeneralService.setServiceArgs(this.serviceArgs);
-        myGeneralService.update(this.GeneralEntitiesArgs).subscribe((myResult:any) => {
+        myGeneralService.update(this.GeneralEntitiesArgs).subscribe((myResult: any) => {
             myResult.Result.AdvancedQueryFilterPMs.forEach((filter, key) => {
                 if (window.PreDefinedFilters.filter(o => o.Id === filter.Id).length == 0) {
                     window.PreDefinedFilters.push(filter);
@@ -1651,8 +1599,8 @@ export class NewViewComponent {
             });
 
             this.removedQueryFilters.forEach((item, key) => {
-                if (item != null && item.AdvancedQueryFilterPM != null) { 
-                    window.PreDefinedFilters = window.PreDefinedFilters.filter(a => a.Id != item.AdvancedQueryFilterPM.Id); 
+                if (item != null && item.AdvancedQueryFilterPM != null) {
+                    window.PreDefinedFilters = window.PreDefinedFilters.filter(a => a.Id != item.AdvancedQueryFilterPM.Id);
                 }
             });
 
