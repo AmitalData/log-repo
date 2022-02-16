@@ -24,6 +24,8 @@ import { CustomEventTypeComponent } from './Components/EventType/CustomEventType
 import { FeatureToggleGeneralTabComponent } from './Components/FeatureToggle/FeatureToggleGeneralTabComponent';
 import { NewFeatureToggleComponent } from './Components/FeatureToggle/NewFeatureToggleComponent';
 import { OceanInsightsSettingsComponent } from './Components/OceanInsightsSetting/OceanInsightsSettingsComponent';
+import { NewImageLibraryComponent } from './Components/ImageLibrary/NewImageLibraryComponent';
+import { ImageLibraryGeneralTabComponent } from './Components/ImageLibrary/ImageLibraryGeneralTabComponent';
 
 export const Components =
     [
@@ -52,7 +54,9 @@ export const Components =
         CustomEventTypeComponent,
         FeatureToggleGeneralTabComponent,
         NewFeatureToggleComponent,
-        OceanInsightsSettingsComponent
+        OceanInsightsSettingsComponent,
+        NewImageLibraryComponent,
+        ImageLibraryGeneralTabComponent,
     ];
 
 export class ModuleDeclarations {
@@ -87,6 +91,8 @@ export class ModuleDeclarations {
             case "FeatureToggleGeneralTabComponent": { myResult = FeatureToggleGeneralTabComponent; break; }
             case "NewFeatureToggleComponent": { myResult = NewFeatureToggleComponent; break; }
             case "OceanInsightsSettingsComponent": { myResult = OceanInsightsSettingsComponent; break; }
+            case "NewImageLibraryComponent": { myResult = NewImageLibraryComponent; break; }
+            case "ImageLibraryGeneralTabComponent": { myResult = ImageLibraryGeneralTabComponent; break; }
         }
 
         return myResult;

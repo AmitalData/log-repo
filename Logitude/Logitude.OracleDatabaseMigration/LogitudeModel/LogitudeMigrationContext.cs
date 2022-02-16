@@ -1351,7 +1351,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         }
 
 
-        public IDbSet<ImageLibrary> ImageLibrarys
+        public IDbSet<ImageLibrary> ImageLibraries
         {
             get;
             set;

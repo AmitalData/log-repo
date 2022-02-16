@@ -9,18 +9,31 @@ using System.Threading.Tasks;
 
 namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 {
-  public  class ImageLibrary
+    public class ImageLibrary
     {
 
         [Key]
         public string Id { get; set; }
         public int Tenant { get; set; }
-        public string Description { get; set; }
+        public string Name { get; set; }
+        public string CreatedByUserId { get; set; }
+        public string UpdatedByUserId { get; set; }
+        public string ImageDetailId { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
+        public string SecurityId { get; set; }
+        public string SearchFields { get; set; }
 
-        public string DocumentId { get; set; }
 
-        [ForeignKey("DocumentId")]
-        public virtual Document Document { get; set; }
+
+        [ForeignKey("CreatedByUserId")]
+        public virtual User CreatedByUser { get; set; }
+
+        [ForeignKey("UpdatedByUserId")]
+        public virtual User UpdatedByUser { get; set; }
+
+        [ForeignKey("ImageDetailId")]
+        public virtual ImageDetail ImageDetail { get; set; }
 
     }
 }
