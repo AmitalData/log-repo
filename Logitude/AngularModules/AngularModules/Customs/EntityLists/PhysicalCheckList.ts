@@ -54,6 +54,8 @@ export class PhysicalCheckList {
 	CheckAnwserStatus: number;
 	MyCloseCheckBox: boolean;
 	DeclarationOfficeName: string;
+	IntegratorCode: string;
+	AvailabilityDate: Date;
 	
 }
  

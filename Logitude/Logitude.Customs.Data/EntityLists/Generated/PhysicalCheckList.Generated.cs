@@ -106,6 +106,10 @@ namespace Logitude.Customs.Data.EntityLists
        public bool MyCloseCheckBox  { get; set; }
        [DataMember]
        public string DeclarationOfficeName  { get; set; }
+       [DataMember]
+       public string IntegratorCode  { get; set; }
+       [DataMember]
+       public DateTime AvailabilityDate  { get; set; }
    }
 
 }
