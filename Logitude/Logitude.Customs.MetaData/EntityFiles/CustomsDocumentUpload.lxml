@@ -38,7 +38,7 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Customs Document Upload&quot;"
-  Code="&quot;3813&quot;"
+  Code="&quot;7778&quot;"
   Name="&quot;Customs.CustomsDocumentUpload Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
