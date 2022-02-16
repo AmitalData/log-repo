@@ -145,6 +145,11 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public bool VATreportEveryTwoMonths { get; set; }
         [Column("CreateRevaluationJournal")]
 	    public bool CreateRevaluationJournal { get; set; }
+        [ForeignKey("TaxInstitutionGLAccount")]
+        [Column("TaxInstitutionGLAccountId")]
+	    public string TaxInstitutionGLAccountId { get; set; }
+	      
+        public virtual GLAccount TaxInstitutionGLAccount { get; set; }
     }
 }
 	 

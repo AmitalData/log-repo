@@ -94,6 +94,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.VATreportEveryTwoMonths).HasColumnName("VATreportEveryTwoMonths");
 
             this.Property(t => t.CreateRevaluationJournal).HasColumnName("CreateRevaluationJournal");
+
+            this.Property(t => t.TaxInstitutionGLAccountId).HasColumnName("TaxInstitutionGLAccountId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }
