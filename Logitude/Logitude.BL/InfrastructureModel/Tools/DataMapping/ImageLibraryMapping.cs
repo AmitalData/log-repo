@@ -19,10 +19,10 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
                 entityPOCO.CreatedByUserId = entityPM.CreatedByUserId;
                 entityPOCO.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
                 entityPOCO.Tenant = entityPM.Tenant;
+                entityPOCO.SecurityId = entityPM.SecurityId;
             }
             entityPOCO.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             entityPOCO.UpdatedByUserId = entityPM.UpdatedByUserId;
-            entityPOCO.SecurityId = entityPM.SecurityId;
             entityPOCO.Name = entityPM.Name;
             entityPOCO.ImageDetailId = entityPM.ImageDetailId;
 

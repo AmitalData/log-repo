@@ -25,10 +25,10 @@ export class NewImageLibraryComponent extends BaseComponent {
     constructor() {
         super();
         this.ImageLibraryPMService = new ImageLibraryPMService();
-        this.SetEntityDefaultValues();
+        this.SetImageLibraryNewInstance();
     }
 
-    SetEntityDefaultValues() {
+    SetImageLibraryNewInstance() {
         this.EntityPM = new ImageLibraryPM();
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityPM.CreateDate = DateTool.GetCurrentDateAsUtc();
@@ -64,7 +64,7 @@ export class NewImageLibraryComponent extends BaseComponent {
         if (!this.IsEntityValid()) return;
         this.CurrentSession.StartBusyIndicatorSaving();
         this.ImageLibraryPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-            this.OnInsertFinish(myResponse);
+            this.HandleServiceResponse(myResponse);
         });
     }
 
@@ -76,7 +76,7 @@ export class NewImageLibraryComponent extends BaseComponent {
         return this.ValidationErrorsList.length == 0;
     }
 
-    private OnInsertFinish(myResponse: ServiceResponse) {
+    private HandleServiceResponse(myResponse: ServiceResponse) {
         this.CurrentSession.StopBusyIndicator();
         if (myResponse.HasError) {
             this.ValidationErrorsList = myResponse.ErrorsArray;

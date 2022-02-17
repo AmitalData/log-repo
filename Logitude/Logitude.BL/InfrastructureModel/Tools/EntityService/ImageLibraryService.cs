@@ -49,7 +49,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.entityPM.UpdatedByUserId = this.loggedContact.Id;
             this.entityPM.CreatedByUserId = this.loggedContact.Id;
             this.entityPM.Tenant = this.tenant;
-            this.entityPM.SecurityId = entityPM.Id + RandomString(10);
+            this.entityPM.SecurityId = entityPM.Id + GenerateRandomString(10);
 
             this.poco = new ImageLibrary();
             ImageLibraryMapping.MapEntity(entityPM, poco, isNewEntity);
@@ -66,13 +66,12 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
             this.poco = entityRepository.GetSingleImageLibrary(this.entityPM.Id, this.tenant);
             ImageLibraryMapping.MapEntity(entityPM, poco, isNewEntity);
-            if (string.IsNullOrEmpty(poco.SecurityId)) poco.SecurityId = entityPM.Id + RandomString(10);
 
             entityRepository.Update(poco);
             entityRepository.SubmitChanges();
         }
 
-        public string RandomString(int length)
+        public string GenerateRandomString(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             var random = new Random();
