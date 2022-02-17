@@ -26,6 +26,7 @@ export class SupplierConsigneeListTemplate {
         this.rowData = rowData;
         this.fieldName = fieldName;
         this.Direction = this.rowData['DirectionId'];
+        this.MyLabel = '';
 
         if (this.Direction)
              
@@ -46,15 +47,13 @@ export class SupplierConsigneeListTemplate {
             this.CD.detectChanges();
         }
     }
+
     private ShowShipperName() {
-        if (this.HasValue(this.rowData['ShipperName']))
-            this.MyLabel += this.rowData['ShipperName'];
+        this.MyLabel = this.HasValue(this.rowData['ShipperName']) ? this.rowData['ShipperName'] : '';
     }
 
     private ShowConsigneeName() {
-
-        if (this.HasValue(this.rowData['ConsigneeName']))
-            this.MyLabel += this.rowData['ConsigneeName'];
+        this.MyLabel = this.HasValue(this.rowData['ConsigneeName']) ? this.rowData['ConsigneeName'] : '';
     }
 
     HasValue(field: any) {
