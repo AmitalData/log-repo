@@ -143,11 +143,27 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
             if (eventTypeCode == pickedUpEventCode)
             {
+                var pickUpsWithATACount = entityPM.ShipmentPickUps?.Where(d => d.ATA != null && d.ChangeSetOp != ChangeSetOperation.Delete).Count();
+                if (pickUpsWithATACount == 0)
+                {
+                    pickUpsWithATACount = entityPM.ShipmentPickUps.Where(a => a.ChangeSetOp != ChangeSetOperation.Delete && a.ATD != null).Count();
+                }
+
+                if (pickUpsWithATACount == 0)
+                {
+                    return;
+                }
                 partiallyEntityStatus = string.IsNullOrEmpty(partialStatusAmount) ? allEntityStatuses.Where(d => d.Code == pickupStatus).FirstOrDefault() : allEntityStatuses.Where(d => d.Code == partialPickupStatus).FirstOrDefault();
             }
 
             if (eventTypeCode == deliveryArrivedEventCode)
             {
+                var shipmentDeliveriesCount = entityPM.ShipmentDeliveries?.Where(a => a.ChangeSetOp != ChangeSetOperation.Delete).Count();
+                var shipmentDeliveriesNotEmptyATDCount = entityPM.ShipmentDeliveries.Where(a => a.ChangeSetOp != ChangeSetOperation.Delete && a.ATA != null).Count();
+                if (shipmentDeliveriesNotEmptyATDCount == 0)
+                {
+                    return;
+                }
                 partiallyEntityStatus = string.IsNullOrEmpty(partialStatusAmount) ? allEntityStatuses.Where(d => d.Code == deliveredStatus).FirstOrDefault() : allEntityStatuses.Where(d => d.Code == partialDeliveredStatus).FirstOrDefault();
             }
 

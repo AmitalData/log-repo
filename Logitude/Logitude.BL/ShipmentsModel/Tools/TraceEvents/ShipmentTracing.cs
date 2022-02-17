@@ -1330,7 +1330,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                                 }
                             }
                            
-                            if (IsHigherStatusWeight(eventTypeCode, previousEvent?.EventType?.EntityStatusId) && (!isCheckThePreviousEvent || currentEventEntityStatus.Code == partialPickupStatus || currentEventEntityStatus.Code == partialDeliveredStatus))
+                            if (IsHigherStatusWeight(previousEvent?.EventType?.Code, previousEvent?.EventType?.EntityStatusId) && (!isCheckThePreviousEvent || currentEventEntityStatus.Code == partialPickupStatus || currentEventEntityStatus.Code == partialDeliveredStatus))
                             {
 
                                 HandlePickUpDeliveryPreviousEvent(eventType, currentEventEntityStatus);
