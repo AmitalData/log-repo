@@ -3642,7 +3642,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn DraftReportsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftReportsQuery.Id,QueryCode = DraftReportsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "InterestReport.InterestCalculationDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter DraftReportsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "InterestReport.InterestReportStatusCode", PredefinedValue = "1",PredefinedValue2 = null, QueryId = DraftReportsQuery.Id,QueryCode = DraftReportsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter DraftReportsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "InterestReport.InterestReportStatusCode", PredefinedValue = "1",PredefinedValue2 = null, CustomPredefined = false, QueryId = DraftReportsQuery.Id,QueryCode = DraftReportsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   
 	      
@@ -3669,7 +3669,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn InvoicedReportsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoicedReportsQuery.Id,QueryCode = InvoicedReportsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "InterestReport.InterestCalculationDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter InvoicedReportsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "InterestReport.InterestReportStatusCode", PredefinedValue = "2",PredefinedValue2 = null, QueryId = InvoicedReportsQuery.Id,QueryCode = InvoicedReportsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter InvoicedReportsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "InterestReport.InterestReportStatusCode", PredefinedValue = "2",PredefinedValue2 = null, CustomPredefined = false, QueryId = InvoicedReportsQuery.Id,QueryCode = InvoicedReportsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   
 	      
@@ -3696,7 +3696,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ClosedWithoutInvoiceQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedWithoutInvoiceQuery.Id,QueryCode = ClosedWithoutInvoiceQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "InterestReport.InterestCalculationDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter ClosedWithoutInvoiceQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "InterestReport.InterestReportStatusCode", PredefinedValue = "4",PredefinedValue2 = null, QueryId = ClosedWithoutInvoiceQuery.Id,QueryCode = ClosedWithoutInvoiceQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter ClosedWithoutInvoiceQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "InterestReport.InterestReportStatusCode", PredefinedValue = "4",PredefinedValue2 = null, CustomPredefined = false, QueryId = ClosedWithoutInvoiceQuery.Id,QueryCode = ClosedWithoutInvoiceQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);

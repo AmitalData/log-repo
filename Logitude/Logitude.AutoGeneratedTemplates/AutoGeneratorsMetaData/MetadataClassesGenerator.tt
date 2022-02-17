@@ -1183,12 +1183,15 @@ private void WriteAddQueryFilterMethod(XElement entity,XElement Column,int index
 	   var PredefinedValue2Attr = Column.Attributes().Where(a => a.Name == "PredefinedValue2").FirstOrDefault();
 	   string PredefinedValue2 = "null";
 	   var CustomPredefinedAttr = Column.Attributes().Where(a => a.Name == "CustomPredefined").FirstOrDefault();
-	   string CustomPredefined = "false";
-		if(CustomPredefinedAttr != null)
+	   string CustomPredefined;
+		if (CustomPredefinedAttr == null)
 		{
-			CustomPredefined = CustomPredefinedAttr.Value;
+			 CustomPredefined = "false";
 		}
-
+		else
+		{
+			  CustomPredefined =  CustomPredefinedAttr.Value.ToString().ToLower().Trim('"');  
+		}
        var OperatorAttr = Column.Attributes().Where(a => a.Name == "Operator").FirstOrDefault();
        string Operator = "";
 	   if(PredefinedValue2Attr != null)

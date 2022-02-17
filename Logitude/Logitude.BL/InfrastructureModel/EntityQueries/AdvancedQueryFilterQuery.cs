@@ -126,6 +126,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                           ObjectFieldOperator = a.ObjectField.Operator,
                                           UserId = a.UserId,
                                           ObjectFieldCode = a.ObjectFieldCode,
+                                          CustomPredefined = a.CustomPredefined
                                       };
 
  

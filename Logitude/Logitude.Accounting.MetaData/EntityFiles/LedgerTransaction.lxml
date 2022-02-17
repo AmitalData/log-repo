@@ -5402,10 +5402,11 @@
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;LedgerTransactions&quot;"
-        PredefinedValue="&quot;16/2/2021-16/2/2022&quot;"
+        PredefinedValue="&quot;16/3/2021-16/3/2022&quot;"
         ObjectFieldName="&quot;AccountingDate&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="&quot;True&quot;" />
     </QueryFilters>
   </Query>
   <Screen
@@ -5449,7 +5450,8 @@
   <DataContracts>
     <DataContract
       Name="&quot;LedgerTransaction&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="&quot;False&quot;">
       <DCField
         DCFieldName="&quot;Id&quot;"
         FieldName="&quot;Id&quot;"

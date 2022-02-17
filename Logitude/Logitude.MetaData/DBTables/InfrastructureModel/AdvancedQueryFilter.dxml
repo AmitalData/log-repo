@@ -76,7 +76,6 @@
 	Name="CustomPredefined"
 	Type="bit">
 	<Constraints
-		PrimaryKey="true"
 		Nullable="false" />
    </Column>
   <Column
