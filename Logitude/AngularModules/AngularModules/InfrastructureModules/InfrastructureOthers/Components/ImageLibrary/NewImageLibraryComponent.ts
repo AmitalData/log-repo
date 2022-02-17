@@ -25,10 +25,10 @@ export class NewImageLibraryComponent extends BaseComponent {
     constructor() {
         super();
         this.ImageLibraryPMService = new ImageLibraryPMService();
-        this.SetImageLibraryNewInstance();
+        this.GetNewInstanceFromImageLibrary();
     }
 
-    SetImageLibraryNewInstance() {
+    GetNewInstanceFromImageLibrary() {
         this.EntityPM = new ImageLibraryPM();
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityPM.CreateDate = DateTool.GetCurrentDateAsUtc();
