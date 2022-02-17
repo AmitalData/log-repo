@@ -118,7 +118,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         filteredTransactionsQuery = RemoveYearTransferLedgerTrans(filteredTransactionsQuery);
 
                         BuildCallBack(filteredTransactionsQuery,
-                            startAccountBalanceService, endAccountBalanceService);
+                            startAccountBalanceService, endAccountBalanceService,_Param);
                         LogIt("BuildCallBack");
                     }
                 }
