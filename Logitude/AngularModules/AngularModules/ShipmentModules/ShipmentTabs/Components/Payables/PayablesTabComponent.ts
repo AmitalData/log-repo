@@ -3166,7 +3166,7 @@ export class ShipmentPayableItem extends BaseComponent {
             case "GWKG": { result = this.ShipmentPM.GrossWeightInKG; break; }
             case "VCBM": { result = this.ShipmentPM.VolumeInCBM; break; }
             case "SCGW": { result = this.ShipmentPM.GrossWeightPerStorageDays; break; }
-            case "SCGW": { result = this.ShipmentPM.GrossWeightPerStorageDays; break; }
+            
             case "PFCL": { result = AppTool.Round(ArrayTool.Sum(this.ShipmentPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal"),3); break;}
             case "BCNT": {
                 break;
