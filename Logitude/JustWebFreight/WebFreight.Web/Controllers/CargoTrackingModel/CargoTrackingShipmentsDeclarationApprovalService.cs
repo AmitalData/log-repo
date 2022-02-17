@@ -262,6 +262,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         Parameters = new List<Logitude.Server.Tools.Parameter>() {
                             new Logitude.Server.Tools.Parameter { Order = 0 , Name = "ShipmentNumber", Value = declarationApprovalArgs.ShipmentNumber},
                             new Logitude.Server.Tools.Parameter { Order = 0 , Name = "Code", Value = "VDD"},
+                            new Logitude.Server.Tools.Parameter { Order = 0 , Name = "Date", Value = cloudData != null && cloudData.DenyDate != null ? cloudData.DenyDate.Value.ToShortDateString() : "" },
+                            new Logitude.Server.Tools.Parameter { Order = 0 , Name = "Time", Value = cloudData != null && cloudData.DenyDate != null ? cloudData.DenyDate.Value.ToShortTimeString() : ""},
                             new Logitude.Server.Tools.Parameter { Order = 0 , Name = "Remarks", Value = cloudData.DenyReason},
                             new Logitude.Server.Tools.Parameter { Order = 0 , Name = "Direction", Value = cargoTrackingShipmentPM.DirectionId}
                         }
