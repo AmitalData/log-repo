@@ -340,11 +340,8 @@ export class ReceivablePageComponent {
     LoadQueriesCounts() {
         this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe((myResult:GLAccountSummary) => {
             if (myResult != null) {
-                this.glAccountSummary.ActiveCustomersCount = myResult.ActiveCustomersCount > 1000 ? "1000+" : myResult.ActiveCustomersCount.toString();
-                this.glAccountSummary.InactiveCustomersCount = myResult.InactiveCustomersCount > 1000 ? "1000+" : myResult.InactiveCustomersCount.toString();
                 this.glAccountSummary.CollectorsCount = myResult.CollectorsCount > 1000 ? "1000+" : myResult.CollectorsCount.toString();
                 this.glAccountSummary.DebitorsCount = myResult.DebitorsCount > 1000 ? "1000+" : myResult.DebitorsCount.toString();
-                this.glAccountSummary.AllCustomersCount = myResult.AllCustomersCount > 1000 ? "1000+" : myResult.AllCustomersCount.toString();
             }
         });
 
