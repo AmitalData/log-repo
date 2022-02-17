@@ -57,6 +57,7 @@ h1 {
     background: RGB(242, 244, 247);
     margin-bottom: 10px;
     text-align: left;
+    display: flex;
 }
 
 .shipment-header {
@@ -420,7 +421,7 @@ h1 {
     }
 
     .panels-wrapper {
-        width: 650px;
+        width: fit-content;
     }
 
     .PanelsNavigator button {
