@@ -80,13 +80,11 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <!-- ({{glAccountSummary.ActiveGLAccountCount}}) -->
                                                                             <p class="QueryLink" *ngIf="ActiveGLAccountsVisibility" (click)="ViewAccountingQuery('ActiveGLAccounts')"> {{'GLAccounts.Q.ActiveGLAccounts' | TextCodeTranslationPipe}}  </p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <!-- ({{glAccountSummary.InactiveGLAccountCount}})  -->
                                                                             <p class="QueryLink" *ngIf="InactiveGLAccountsVisibility" (click)="ViewAccountingQuery('InactiveGLAccounts')"> {{'GLAccounts.Q.InActiveGLAccounts' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
@@ -122,13 +120,11 @@
                                                                     <table>
                                                                         <tr>
                                                                             <td style="width:190px;">
-                                                                                <!-- ({{glAccountSummary.OpenFilesCount}}) -->
                                                                                 <p class="QueryLink" *ngIf="OpenFilesVisibility" (click)="ViewAccountingQuery('OpenFiles')"> {{'GLAccounts.Q.OpenFiles' | TextCodeTranslationPipe}} </p>
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td style="width:190px;">
-                                                                                <!-- ({{glAccountSummary.OpenMastersCount}}) -->
                                                                                 <p class="QueryLink" *ngIf="OpenFilesVisibility" (click)="ViewAccountingQuery('OpenMasters')"> {{'GLAccount.Q.OpenMasters' | TextCodeTranslationPipe}} </p>
                                                                             </td>
                                                                         </tr>
