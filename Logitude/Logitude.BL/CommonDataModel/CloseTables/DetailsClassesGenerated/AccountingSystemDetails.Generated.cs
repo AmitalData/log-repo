@@ -119,30 +119,6 @@ namespace Logitude.BL.CommonDataModel
 			 
             all.Add(new AccountingSystemDetails()
             {    
-                Code = "QB", 
-                SearchFields = "QB,Quick Books", 
-                IsExternalCodesFromTable = true, 
-                IsExternalCodesSyncEnabled = true, 
-                IsSingleTaxPerInvoice = true, 
-                IsSingleCurrencyAccount = true, 
-                AllowManuallyDueDate = false, 
-                IsJournalMode = false, 
-                IsTaxItemManaged = true, 
-                AllowMinusInvoiceLines = false, 
-                ShowDownloadScreen = false, 
-                AllowARInvoicesTransfer = true, 
-                AllowAPInvoicesTransfer = true, 
-                AllowPositiveAmountsInTheCreditNote = false, 
-                InActive = false, 
-                AllowAPPaymentsTransfer = false, 
-                IsExternalCodesFromAPI = false, 
-                AllowARPaymentsTransfer = false, 
-                CanTransferToDropbox = false, 
-                Name = "Quick Books", 
-			});
-			 
-            all.Add(new AccountingSystemDetails()
-            {    
                 Code = "RH", 
                 SearchFields = "RH,Rivheet", 
                 IsExternalCodesFromTable = false, 
