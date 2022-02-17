@@ -179,6 +179,7 @@
       <LastGenOutput>ControllersGenerator.cs</LastGenOutput>
       <LastOutputs>.\ControllersGenerator.cs</LastOutputs>
     </Content>
+    <None Include="DBScripts\InfrastructureModel\202202171015_FillEventTriggerField.sxml" />
     <None Include="DBTables\CommonDataModel\HTSCode.dxml" />
     <None Include="EntityFiles\InfrastructureModel\ImageLibrary.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ContainersExternalData.lxml" />
