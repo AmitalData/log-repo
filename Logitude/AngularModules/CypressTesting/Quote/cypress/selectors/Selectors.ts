@@ -74,7 +74,7 @@ export class QuoteSelectors {
      public static readonly AddChargesButton = "#AddCharges";
      public static readonly ChargesType = "#QuoteCharge_ChargesTypeId";
      public static readonly ChargeSaleCurrency = "#QuoteCharge_SaleCurrencyId";
-     public static readonly SameAsCostCurrencyComboBox = "[data-cy='Same as Cost Currency']"
+     public static readonly SameAsCostCurrencyComboBox = "[data-cy='undefinedSame as Cost Currency']"
 
      //#endregion
 
