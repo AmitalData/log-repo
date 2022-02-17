@@ -11,7 +11,6 @@ import {JournalExtendedListService} from '../../../Services/ExtendedLists/Journa
 import {GLAccountList} from '../../../EntityLists/GLAccountList';
 import {JournalPM} from '../../../EntityPMs/JournalPM';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {GLAccountSummary, JournalSummary} from '../../../DataContracts/AccountingSummery';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
@@ -28,8 +27,6 @@ export class GLAccountsPageComponent implements AfterViewInit {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private _GLAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
     private _JournalExtendedListService: JournalExtendedListService = new JournalExtendedListService();
-    glAccountSummary: GLAccountSummary = new GLAccountSummary();
-    journalSummary: JournalSummary = new JournalSummary();
 
     // Queries Features
     public ActiveGLAccountsVisibility: boolean = false;
@@ -97,7 +94,6 @@ export class GLAccountsPageComponent implements AfterViewInit {
     }
 
     public LoadAllScreenData() {
-        this.LoadQueriesCounts();
         this.LoadRecentGLAccounts();
         this.ReloadUsersQuery();
     }
@@ -129,30 +125,6 @@ export class GLAccountsPageComponent implements AfterViewInit {
         this.LoadAllScreenData();
     }
 
-    LoadQueriesCounts() {
-        this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe((myResult:GLAccountSummary) => {
-            if (myResult != null) {
-                this.glAccountSummary.ActiveGLAccountCount = myResult.ActiveGLAccountCount > 1000 ? "1000+" : myResult.ActiveGLAccountCount.toString();
-                this.glAccountSummary.InactiveGLAccountCount = myResult.InactiveGLAccountCount > 1000 ? "1000+" : myResult.InactiveGLAccountCount.toString();
-                this.glAccountSummary.AllGLAccountCount = myResult.AllGLAccountCount > 1000 ? "1000+" : myResult.AllGLAccountCount.toString();
-                this.glAccountSummary.OpenFilesCount = myResult.OpenFilesCount > 1000 ? "1000+" : myResult.OpenFilesCount.toString();
-                this.glAccountSummary.OpenMastersCount = myResult.OpenMastersCount > 1000 ? "1000+" : myResult.OpenMastersCount.toString();
-                this.glAccountSummary.ClosedFilesGLAccountCount = myResult.ClosedFilesGLAccountCount > 1000 ? "1000+" : myResult.ClosedFilesGLAccountCount.toString();
-                this.glAccountSummary.AllFilesCount = myResult.AllFilesCount > 1000 ? "1000+" : myResult.AllFilesCount.toString();
-                this.glAccountSummary.AllJobsCount = myResult.AllJobsCount > 1000 ? "1000+" : myResult.AllJobsCount.toString();
-            }
-        });
-        this._JournalExtendedListService.GetJournalsSummary().subscribe((myResult:JournalSummary) => {
-            if (myResult != null) {
-
-                this.journalSummary.AllJournalsCount = myResult.AllJournalsCount > 1000 ? "1000+" : myResult.AllJournalsCount.toString();
-                this.journalSummary.ApprovedJournalsCount = myResult.ApprovedJournalsCount > 1000 ? "1000+" : myResult.ApprovedJournalsCount.toString();
-                this.journalSummary.DraftJournalsCount = myResult.DraftJournalsCount > 1000 ? "1000+" : myResult.DraftJournalsCount.toString();
-                this.journalSummary.VoidedJournalsCount = myResult.VoidedJournalsCount > 1000 ? "1000+" : myResult.VoidedJournalsCount.toString();
-                this.journalSummary.WaitingJournalsCount = myResult.WaitingJournalsCount > 1000 ? "1000+" : myResult.WaitingJournalsCount.toString();
-            }
-        });
-    }
 
     EditGLAccount(entity: any) {
         if (entity != null) {

@@ -294,25 +294,10 @@ export class PayablePageComponent {
     }
 
     LoadQueriesCounts() {
-        this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe((myResult:GLAccountSummary) => {
-            if (myResult != null) {
-                this.glAccountSummary.ActiveVendorsCount = myResult.ActiveVendorsCount > 1000 ? "1000+" : myResult.ActiveVendorsCount.toString();
-                this.glAccountSummary.InactiveVendorsCount = myResult.InactiveVendorsCount > 1000 ? "1000+" : myResult.InactiveVendorsCount.toString();
-                //this.glAccountSummary.CollectorsCount = myResult.CollectorsCount > 1000 ? "1000+" : myResult.CollectorsCount.toString();
-                //this.glAccountSummary.DebitorsCount = myResult.DebitorsCount > 1000 ? "1000+" : myResult.DebitorsCount.toString();
-                this.glAccountSummary.AllVendorsCount = myResult.AllVendorsCount > 1000 ? "1000+" : myResult.AllVendorsCount.toString();
-            }
-        });
-
-        // APPayments
-
         var myService = new ModulesService();
         myService.GetAccountPayablesSummary().subscribe((myResult:any) => {
             if (myResult != null) {
-                this.APPaymentsDraftsCount = myResult.APPaymentsDraftsCount > 1000 ? "1000+" : myResult.APPaymentsDraftsCount.toString();
-                this.APPaymentsOpenedCount = myResult.APPaymentsOpenedCount > 1000 ? "1000+" : myResult.APPaymentsOpenedCount.toString();
                 this.APInvoicesDraftsCount = myResult.APInvoicesDraftsCount > 1000 ? "1000+" : myResult.APInvoicesDraftsCount.toString();
-                this.APInvoicesUnpaidCount = myResult.APInvoicesUnpaidCount > 1000 ? "1000+" : myResult.APInvoicesUnpaidCount.toString();
             }
         });
     }
