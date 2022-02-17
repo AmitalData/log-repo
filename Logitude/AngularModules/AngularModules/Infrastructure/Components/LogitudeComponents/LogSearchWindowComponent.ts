@@ -101,6 +101,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     UsingLogGridV2: boolean = false;
     LanguageFilterValue: string;
     @Input() ForceShowLanguageFilter: boolean = false;
+    @Input() ForceShowLocalAndEnglishColumns: boolean = false;
 
     public get ShowLanguageFilter(): boolean
     {
@@ -179,6 +180,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         this.DisplayLocalFieldsFromList = args.DisplayLocalFieldsFromList;
         this.LanguageFilterValue = args.LanguageFilterValue;
         this.ForceShowLanguageFilter = args.ForceShowLanguageFilterOnSearchWindow;
+        this.ForceShowLocalAndEnglishColumns = args.ForceShowLocalAndEnglishColumns;
 
         if (this.IsTenantZeroSearch) {
             this.IsAllDataVisible = true;
@@ -272,6 +274,10 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
             lookupFields = window.ObjectFields.filter(d => d.DisplayInSearchWindowList && d.ObjectTableId == this.LookUpTable.Id);
         }
 
+        if(this.ForceShowLocalAndEnglishColumns){
+            this.AddLocalNameColumn(lookupFields);
+        }
+
         this.ObjectFields = lookupFields.sort((a, b) => { return a.DisplayInSearchWindowListIndex - b.DisplayInSearchWindowListIndex });
 
         this.columns1 = [];
@@ -324,6 +330,16 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
 
 
 
+    }
+
+    private AddLocalNameColumn(lookupFields: any[])
+    {
+        let localNameColumn = window.ObjectFields.filter(d => d.FieldName == 'LocalName' && d.ObjectTableId == this.LookUpTable.Id);
+
+        if(localNameColumn){
+            let englishNameColumnIndex = lookupFields.findIndex(d => d.FieldName.includes('EnglishName'));
+            AppendLocalNameBesideEnglishName(lookupFields, englishNameColumnIndex, localNameColumn);
+        }
     }
 
     IsUseCardSearchMechanism() {
@@ -898,6 +914,7 @@ export class CustomEntityArgs {
     public HideEdit: boolean;
     public ShowLanguageFilter: boolean;
     public ForceShowLanguageFilterOnSearchWindow: boolean;
+    public ForceShowLocalAndEnglishColumns: boolean;
 
 
 }
@@ -905,3 +922,8 @@ export class AddEntityArgs {
     public EntityPM: any;
     public ObjectTableName: string;
 }
+function AppendLocalNameBesideEnglishName(lookupFields: any[], englishNameColumnIndex: number, localNameColumn: any)
+{
+    lookupFields.splice(englishNameColumnIndex, 0, localNameColumn[0]);
+}
+
