@@ -2221,6 +2221,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         args.DisplayLocalFieldsFromList = this.DisplayLocalFieldsFromList;
         args.LanguageFilterValue = this.LanguageFilterValue;
         args.ForceShowLanguageFilterOnSearchWindow = this.ForceShowLanguageFilterOnSearchWindow;
+        args.ForceShowLocalAndEnglishColumns = this.ForceShowLocalAndEnglishColumns;
         var tablename = TextCodeTranslator.TranslateTablePlural(this.GetObjectTableName(this.LookUpTableName));
 
         if (tablename == "Cards") {
