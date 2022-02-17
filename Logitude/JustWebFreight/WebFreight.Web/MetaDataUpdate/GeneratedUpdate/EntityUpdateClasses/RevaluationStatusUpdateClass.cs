@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class RevaluationStatusUpdateClass
    {  		
-		public const string HashString = "5fd2495917aa76b38e6d6dd64969db0d";
+		public const string HashString = "fe6b9c7e05d6101eb2c99dbe9c28532f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -121,7 +121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Revaluation Status",
-			      				    Code =  "2c02",
+			      				    Code =  "4a6e",
 			      				    Name =  "RevaluationStatus Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
