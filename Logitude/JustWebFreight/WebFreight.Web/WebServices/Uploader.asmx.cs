@@ -682,7 +682,7 @@ namespace WebFreight.Web.WebServices
             return myDocumentFilings;
         }
 
-        private static List<DocumentsFilingPM> GetConnectedHousesDocumentsFilingPMs(string entityId, int tenant, DocumentsFilingQuery myDocumentsFilingQuery, string partnerType)
+        private List<DocumentsFilingPM> GetConnectedHousesDocumentsFilingPMs(string entityId, int tenant, DocumentsFilingQuery myDocumentsFilingQuery, string partnerType)
         {
             List<string> housesShipmentsIds = GetAllConnectedHousesShipmentByShipmentMasterId(entityId, tenant);
             List<DocumentsFilingPM> myDocumentFilings = new List<DocumentsFilingPM>();
@@ -694,7 +694,7 @@ namespace WebFreight.Web.WebServices
             return partnerType == "AG" ? GetAgentDocuments(myDocumentFilings, "H", tenant) : myDocumentFilings;
         }
 
-        private static List<DocumentsFilingPM> GetAgentDocuments(List<DocumentsFilingPM> documentsFilings, string shipmentLevelCode, int tenant)
+        public List<DocumentsFilingPM> GetAgentDocuments(List<DocumentsFilingPM> documentsFilings, string shipmentLevelCode, int tenant)
         {
             if (IsCloudEnvironment() || !FeatureToggleHelper.HasFeatureToggle("DFP", tenant))
                 return documentsFilings.Where(d => d.IsAgentView).ToList();
@@ -711,7 +711,7 @@ namespace WebFreight.Web.WebServices
             return documentsFilings.Where(d => d.IsAgentView).ToList();
         }
 
-        private static bool IsCloudEnvironment()
+        private bool IsCloudEnvironment()
         {
             return Simplog.Server.Infrastructure.LogitudeSettings.WorkEnvironment == "cloud";
         }

@@ -223,10 +223,10 @@ namespace WebFreight.Web.App_Code
             DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(myContext);
             DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
             List<DocumentsFilingPM> myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(entityId, tenant);
-
+            Uploader uploader = new Uploader();
             if (partnerType == "AG")
             {
-                myDocumentFilings = GetAgentDocuments(myDocumentFilings,shipmentLevelCode,tenant);
+                myDocumentFilings = uploader.GetAgentDocuments(myDocumentFilings,shipmentLevelCode,tenant);
             }
 
             else if (partnerType == "CS")
@@ -326,28 +326,6 @@ namespace WebFreight.Web.App_Code
             }
 
             return output;
-        }
-
-        private List<DocumentsFilingPM> GetAgentDocuments(List<DocumentsFilingPM> myDocumentFilings, string shipmentLevelCode, int tenant)
-        {
-            if (IsCloudEnvironment() || !FeatureToggleHelper.HasFeatureToggle("DFP", tenant))
-                return myDocumentFilings.Where(d => d.IsAgentView).ToList();
-
-            if (shipmentLevelCode == "C")
-                return myDocumentFilings.Where(d => d.IsAgentSharedInMaster).ToList();
-
-            if (shipmentLevelCode == "D")
-                return myDocumentFilings.Where(d => d.IsAgentSharedInDirect).ToList();
-
-            if (shipmentLevelCode == "H")
-                return myDocumentFilings.Where(d => d.IsAgentSharedInHouse).ToList();
-
-            return myDocumentFilings.Where(d => d.IsAgentView).ToList();
-        }
-
-        private bool IsCloudEnvironment()
-        {
-            return Simplog.Server.Infrastructure.LogitudeSettings.WorkEnvironment == "cloud";
         }
 
         private bool CheckSharedContactAuthenticationForShipment(string agentId, string customerId, int tenant)
