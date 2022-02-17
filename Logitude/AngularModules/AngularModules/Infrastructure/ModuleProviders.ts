@@ -101,6 +101,9 @@ import { HelpResourcePMService } from './Services/StandardPMs/HelpResourcePMServ
 import { MultiEntityUpdateLogPMService } from './Services/StandardPMs/MultiEntityUpdateLogPMService';
 import { EntityStatusTypeListService } from './Services/StandardLists/EntityStatusTypeListService';
 
+import { ImageLibraryListService } from './Services/StandardLists/ImageLibraryListService';
+import { ImageLibraryPMService } from './Services/StandardPMs/ImageLibraryPMService';
+
 export class ModuleProviders {
     
     public static GetInstance(name: string) {
@@ -206,6 +209,8 @@ export class ModuleProviders {
             case "BIReportFolderExtendedListService": { myResult = new BIReportFolderExtendedListService(); break; }
             case "MultiEntityUpdateLogPMService": { myResult = new MultiEntityUpdateLogPMService(); break; }
             case "EntityStatusTypeListService": { myResult = new EntityStatusTypeListService(); break; } 
+            case "ImageLibraryListService": { myResult = new ImageLibraryListService(); break; } 
+            case "ImageLibraryPMService": { myResult = new ImageLibraryPMService(); break; } 
         }
 
         return myResult;

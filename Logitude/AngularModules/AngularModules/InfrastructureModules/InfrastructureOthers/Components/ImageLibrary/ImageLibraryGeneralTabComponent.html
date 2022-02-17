@@ -1,0 +1,79 @@
+<div class="TabHolder">
+    <table>
+
+        <tr class="TabTitleRow">
+            <td>{{'ImageLibrary.TH.General' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <tr>
+            <td>
+                <table>
+
+                    <tr style="vertical-align:top;height:25px">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:110px;">
+                                        <table style="table-layout: fixed;">
+                                            <tr>
+                                                <td style="width:10px; vertical-align: middle;">
+                                                    <div *ngIf="!Name" style="width: 10px;">
+                                                        <div
+                                                            style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="TextTrimming" style="text-align: left; vertical-align:middle;">
+                                                    <label *ngIf="Name" class="Label" style="color:#6E7172">Name</label>
+                                                    <label *ngIf="!Name" class="Label" style="color:red">Name</label>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                
+                                    <td style="width:200px"><input type="text" style="height:22px;width:200px;" [(ngModel)]="Name"
+                                            value="" /></td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                
+                
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                
+                    <tr style="height:10px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                
+                    <tr>
+                        <td style="vertical-align:top; overflow:hidden;">
+                            <div style="width:310px;height:200px; overflow:hidden;">
+                                <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'305px'"
+                                                [HeightImage]="'195px'" [ImageId]="ImageId"
+                                                [EntityName]="ObjectTableName"
+                                                (UploadCompleted)="ImageId = $event"
+                                                style="height:72px;width:72px">
+                                </ImageComponent>
+                            </div>
+                            <a style="display: block;margin-left: 140px;" (click)="ImageId = null">remove</a>
+                        </td>
+                    </tr>
+                
+
+                    <tr>
+                        <td colspan="3">
+                            <div></div>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+
+
+    </table>
+</div>

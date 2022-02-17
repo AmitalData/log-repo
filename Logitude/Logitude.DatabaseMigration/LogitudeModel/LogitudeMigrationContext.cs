@@ -1363,7 +1363,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         }
 
 
-        public IDbSet<ImageLibrary> ImageLibrarys
+        public IDbSet<ImageLibrary> ImageLibraries
         {
             get;
             set;

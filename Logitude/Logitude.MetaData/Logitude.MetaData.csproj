@@ -180,6 +180,7 @@
       <LastOutputs>.\ControllersGenerator.cs</LastOutputs>
     </Content>
     <None Include="DBTables\CommonDataModel\HTSCode.dxml" />
+    <None Include="EntityFiles\InfrastructureModel\ImageLibrary.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ContainersExternalData.lxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\usp_UpdatePortSearchFieldsFunction.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\usp_UpdateShippingLineSearchFieldsFunction.dxml" />

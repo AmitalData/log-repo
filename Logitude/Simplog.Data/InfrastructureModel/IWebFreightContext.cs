@@ -73,7 +73,7 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<ObjectFieldModification> ObjectFieldModifications { get; }
         IDbSet<ScreenModification> ScreenModifications { get; }
         IDbSet<ImageDetail> ImageDetails { get; }
-        IDbSet<ImageLibrary> ImageLibrarys { get; }
+        IDbSet<ImageLibrary> ImageLibraries { get; }
         IDbSet<PermissionType> PermissionTypes { get; }
         IDbSet<ObjectTableType> ObjectTableTypes { get; }
         IDbSet<RuleConditionField> RuleConditionFields { get; }
