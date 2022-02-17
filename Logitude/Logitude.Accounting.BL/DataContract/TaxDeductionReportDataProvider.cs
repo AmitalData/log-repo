@@ -205,7 +205,8 @@ namespace Logitude.Accounting.BL.DataContract
             List<APPayment> payments= (from a in invoiceContext.APPayments.Include("VendorCard")
                     where a.Tenant == Tenant
                      && (a.RegisterDate >= startDate && a.RegisterDate < endDate)
-                     && (a.StatusCode == "AD" || a.StatusCode == "CL" || a.StatusCode == "PR")
+                     && !(a.AccountingCancelationDate >= startDate && a.AccountingCancelationDate < endDate)
+                     && (a.StatusCode == "VD" || a.StatusCode == "AD" || a.StatusCode == "CL" || a.StatusCode == "PR")
                     select a).ToList();
           payments=  getAPPaymentsWithGLAccountsAndVendor(payments);
             return payments;
@@ -530,7 +531,7 @@ namespace Logitude.Accounting.BL.DataContract
                         groupedbyVendor.SumOfAmountInLocalCurrency = item.AmountInLocalCurrency.Value;
                         groupedbyVendor.SumOfTaxDeductionLocalAmount = item.TaxDeductionLocalAmount.Value;
                        groupedbyVendor.TotalAmount =(decimal?)groupedbyVendor.SumOfAmountInLocalCurrency + groupedbyVendor.SumOfTaxDeductionLocalAmount;
-                    if (groupedbyVendor.SumOfAmountInLocalCurrency > 0)
+                    if (groupedbyVendor.SumOfAmountInLocalCurrency > 0 || groupedbyVendor.SumOfAmountInLocalCurrency < 0)
                     {
                         byVendorList.Add(groupedbyVendor);
                     }
