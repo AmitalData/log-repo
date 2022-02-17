@@ -131,8 +131,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             List<PagosPagoImpuestosPTrasladoP> trasladosP = GetPagosPagoImpuestosPTrasladoPs(pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs);
             List<PagosPagoImpuestosPRetencionP> retencionesP = GetPagosPagoImpuestosPRetencionPs(pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs);
 
-            pagosPagoImpuestosP.TrasladosP = trasladosP.ToArray();
-            pagosPagoImpuestosP.RetencionesP = retencionesP.ToArray();
+            if(trasladosP.Count > 0) pagosPagoImpuestosP.TrasladosP = trasladosP.ToArray();
+            if (retencionesP.Count > 0) pagosPagoImpuestosP.RetencionesP = retencionesP.ToArray();
 
             impuestosPs.Add(pagosPagoImpuestosP);
             return impuestosPs;
@@ -162,7 +162,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         private static List<PagosPagoImpuestosPTrasladoP> GetPagosPagoImpuestosPTrasladoPs(List<PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR> pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs)
         {
             List<PagosPagoImpuestosPTrasladoP> trasladosP = new List<PagosPagoImpuestosPTrasladoP>();
-            var groups = pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs.GroupBy(x => x.ImporteDR);
+            var groups = pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs.GroupBy(x => x.TasaOCuotaDR);
             foreach (var group in groups)
             {
                 trasladosP.Add(GetNewPagosPagoImpuestosPTrasladoP(group));
@@ -174,18 +174,18 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         private static PagosPagoImpuestosPTrasladoP GetNewPagosPagoImpuestosPTrasladoP(IGrouping<decimal, PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR> group)
         {
             decimal totalBaseDR = 0;
-            decimal totalTasaOCuotaDR = 0;
+            decimal totalImporteDR = 0;
             foreach (var product in group)
             {
                 totalBaseDR += product.BaseDR;
-                totalTasaOCuotaDR += product.TasaOCuotaDR;
+                totalImporteDR += product.ImporteDR;
             }
             return new PagosPagoImpuestosPTrasladoP
             {
                 BaseP = totalBaseDR,
-                ImporteP = group.Key,
+                ImporteP = totalImporteDR,
                 ImpuestoP = "002",
-                TasaOCuotaP = totalTasaOCuotaDR,
+                TasaOCuotaP = group.Key,
                 TipoFactorP = group.Key == 0 ? "Exento" : "Tasa",
             };
         }
@@ -266,8 +266,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                     });
                 });
 
-                doctoItem.ImpuestosDR.TrasladosDR = trasladoDRList.ToArray();
-                doctoItem.ImpuestosDR.RetencionesDR = retencionDRList.ToArray();
+                if(trasladoDRList.Count > 0) doctoItem.ImpuestosDR.TrasladosDR = trasladoDRList.ToArray();
+                if (retencionDRList.Count > 0) doctoItem.ImpuestosDR.RetencionesDR = retencionDRList.ToArray();
 
                 doctos.Add(doctoItem);
             });
