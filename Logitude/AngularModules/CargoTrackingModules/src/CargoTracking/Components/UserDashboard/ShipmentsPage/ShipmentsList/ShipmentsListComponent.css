@@ -972,3 +972,11 @@ h1{
         padding-right: 5px;
     }
 }
+
+
+.export-to-excell{
+    text-decoration: none;
+    display: inline-block;
+    float: right;
+    margin-right: 20px;
+}
