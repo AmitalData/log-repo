@@ -241,6 +241,7 @@ export class EditDocumentComponent implements OnInit {
                     this.froalaEditorSetting.Height = this.WindowHeight - 210;
                     this.IsEditHtml = true;
                     this.froalaEditorSetting.IsDisableEdit = false;
+                    this.froalaEditorSetting.RemovePageBreak = true;
                 }
                 else if (this.PageType == "ManageTemplate") {
                     this.froalaEditorSetting.IsDisableEdit = true;
