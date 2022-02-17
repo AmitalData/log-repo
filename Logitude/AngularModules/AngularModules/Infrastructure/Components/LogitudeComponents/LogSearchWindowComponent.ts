@@ -101,7 +101,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     UsingLogGridV2: boolean = false;
     LanguageFilterValue: string;
     @Input() ForceShowLanguageFilter: boolean = false;
-    @Input() ForceShowLocalAndEnglishColumns: boolean;
+    @Input() ForceShowLocalAndEnglishColumns: boolean = false;
 
     public get ShowLanguageFilter(): boolean
     {
