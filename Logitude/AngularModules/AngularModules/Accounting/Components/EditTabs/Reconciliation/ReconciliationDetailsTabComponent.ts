@@ -328,13 +328,18 @@ export class ReconciliationDetailsTabComponent extends BaseComponent implements 
             this.filterAgrs.AdditionalFilters.push(this.searchFieldFilter);
         }
 
-        this.filterAgrs.PageSize = 50;
-        this.filterAgrs.PageIndex = 0;
-        this.filterAgrs.GetCount = true;
+        this.filterAgrs.PageIndex = skip;
+        this.filterAgrs.PageSize = take;
+        this.filterAgrs.GetCount = getCount;
 
         this.filterAgrs.SortBy = "Line";
         this.filterAgrs.SortDirection = "Ascending";
-
+        if (sortingCol) {
+            this.filterAgrs.SortBy = sortingCol;
+        }
+        if (sortingDir) {
+            this.filterAgrs.SortDirection = sortingDir;
+        }
         this.filterAgrs.addAdditionalFilter("ReconciliationId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
 
         //#endregion
