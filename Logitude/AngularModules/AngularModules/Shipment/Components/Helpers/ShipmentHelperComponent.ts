@@ -250,13 +250,13 @@ export class ShipmentHelperComponent implements OnDestroy {
     public IsShipmentContainersSimulatorVisible: boolean = false;
 
     private SetShareDocumentsViaEmailVisibility() {
-        if (FeatureLocator.HasFeaturePermession("Shipment", "ShareDocumentsViaEmail") && this.IsShareShipment) { 
+        if (FeatureLocator.HasFeaturePermession("Shipment", "ShareDocumentsViaEmail") && this.IsShareShipment()) { 
                 this.IsShareDocumentsViaEmailVisible = true; 
         }
     }
 
     private IsShareShipment() {
-        return ((this.EntityPM.DirectionId == "E" || this.EntityPM.DirectionId == "R" ) && (this.EntityPM.ShipmentLevelCode == "C" || this.EntityPM.ShipmentLevelCode == "H"));
+        return ((this.EntityPM.DirectionId == "E" || this.EntityPM.DirectionId == "R" ) && this.EntityPM.ShipmentLevelCode == "C");
     }
 
     private ShowHideShipmentContainersSimulatorButton() {
