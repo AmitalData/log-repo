@@ -21,6 +21,7 @@ using ICSharpCode.SharpZipLib.Zip;
 using ICSharpCode.SharpZipLib.Core;
 using WebFreight.Web.Helpers;
 using Logitude.Server.Tools.Helpers;
+using System.Data.Entity;
 
 namespace WebFreight.Web.WebPages
 {
@@ -176,7 +177,7 @@ namespace WebFreight.Web.WebPages
                     switch (downloadAllDocumentsArgs.EntityType)
                     {
                         case "master":
-                            documents = up.GetMasterDocumentsAndItsConnectedHousesDocuments(downloadAllDocumentsArgs.EntityId, downloadAllDocumentsArgs.Tenant);
+                            documents = up.GetMasterDocumentsAndItsConnectedHousesDocuments(downloadAllDocumentsArgs.EntityId, downloadAllDocumentsArgs.Tenant, downloadAllDocumentsArgs.PartnerType);
                             break;
                         default:
                             documents = up.GetDocumentByEntityAndTenant(downloadAllDocumentsArgs.EntityId, downloadAllDocumentsArgs.Tenant);
@@ -184,12 +185,7 @@ namespace WebFreight.Web.WebPages
                     }
                     if (string.IsNullOrEmpty(downloadAllDocumentsArgs.Token))
                     {
-                        if (downloadAllDocumentsArgs.PartnerType == "AG")
-                        {
-                            documents = documents.Where(d => d.IsAgentView).ToList();
-                        }
-
-                        else if (downloadAllDocumentsArgs.PartnerType == "CS")
+                        if (downloadAllDocumentsArgs.PartnerType == "CS")
                         {
                             documents = documents.Where(d => d.IsCustomerView == true).ToList();
                         }
@@ -198,9 +194,12 @@ namespace WebFreight.Web.WebPages
                     Dictionary<string, byte[]> CompressedArray = new Dictionary<string, byte[]>();
                     bool DocumentsExistance = false;
                     var ItemNum = 0;
-                    documents = documents.Where(x => x.HasFile).ToList();
+                    ICommonDataContext commonDataContext = CommonDataContext.GetContext(downloadAllDocumentsArgs.Tenant);
+                    List<DocumentOutCopy> documentOutCopies = GetDocumentOutCopies(commonDataContext, documents);
+
                     foreach (DocumentsFilingPM document in documents)
                     {
+
                         if (document.DirectionCode == "O" && document.DoucmentTypeTemplateFormatCode == "M")
                         {
                             continue;
@@ -219,24 +218,28 @@ namespace WebFreight.Web.WebPages
                                     continue;
                             }
                         }
+                        DocumentsFilingPM documentsFiling = document;
+                        if (document.DirectionCode == "O" && document.DocumentId == null)
+                        {
+                            documentsFiling = GetDocumentFromCopies(commonDataContext, document, documentOutCopies) ?? documentsFiling;
+                        }
 
-
-                        if (!string.IsNullOrEmpty(document.FileExtension))
+                        if (!string.IsNullOrEmpty(documentsFiling.FileExtension))
                         {
                             DocumentsExistance = true;
-                            string fileName = !string.IsNullOrEmpty(document.CalculatedFileName) ? document.CalculatedFileName : document.FileName;
+                            string fileName = !string.IsNullOrEmpty(documentsFiling.CalculatedFileName) ? documentsFiling.CalculatedFileName : documentsFiling.FileName;
                             fileName = fileName.Replace('/', ' ');
-                            fileName += ("." + document.FileExtension);
+                            fileName += ("." + documentsFiling.FileExtension);
 
-                            while (CompressedArray.ContainsKey(document.FileExtension + "@" + fileName))
+                            while (CompressedArray.ContainsKey(documentsFiling.FileExtension + "@" + fileName))
                             {
                                 ItemNum += 1;
-                                fileName = !string.IsNullOrEmpty(document.CalculatedFileName) ? document.CalculatedFileName + " (" + ItemNum + ")" : document.FileName + " (" + ItemNum + ")";
+                                fileName = !string.IsNullOrEmpty(documentsFiling.CalculatedFileName) ? documentsFiling.CalculatedFileName + " (" + ItemNum + ")" : documentsFiling.FileName + " (" + ItemNum + ")";
                                 fileName = fileName.Replace('/', ' ');
-                                fileName += ("." + document.FileExtension);
+                                fileName += ("." + documentsFiling.FileExtension);
                             }
                             ItemNum = 0;
-                            CompressedArray.Add(document.FileExtension + "@" + fileName, up.DownloadFile(document.DocumentId, document.FileExtension, "", downloadAllDocumentsArgs.Tenant));
+                            CompressedArray.Add(documentsFiling.FileExtension + "@" + fileName, up.DownloadFile(documentsFiling.DocumentId, documentsFiling.FileExtension, "", downloadAllDocumentsArgs.Tenant));
                         }
 
                     }
@@ -273,6 +276,37 @@ namespace WebFreight.Web.WebPages
             {
                 throw e;
             }
+        }
+
+        private DocumentsFilingPM GetDocumentFromCopies(ICommonDataContext commonDataContext, DocumentsFilingPM documentsFiling, List<DocumentOutCopy> documentOutCopies)
+        {
+            DocumentOutCopy documentOutCopy = documentOutCopies.Where(d => d.DocumentOutId == documentsFiling.Id).FirstOrDefault();
+            if (documentOutCopy == null) return null;
+
+            Document document = (from d in commonDataContext.Documents
+                                   where d.Id == documentOutCopy.DocumentId
+                                   select d).FirstOrDefault();
+            if (document == null) return null;
+
+            return new DocumentsFilingPM
+            {
+                FileExtension = document.Extension,
+                FileName = documentOutCopy.DocumentTypeCopy.Name,
+                DocumentId = document.Id,
+            };
+        }
+
+        private static List<DocumentOutCopy> GetDocumentOutCopies(ICommonDataContext commonDataContext, List<DocumentsFilingPM> documents)
+        {
+            List<DocumentsFilingPM> missedDocuments = documents.Where(d => d.DirectionCode == "O" && d.DoucmentTypeTemplateFormatCode != "M" && d.DocumentId == null).ToList();
+
+            if (missedDocuments.Count == 0)
+            {
+                return new List<DocumentOutCopy>();
+            }
+            List<string> missedDocumentsKeys = missedDocuments.Select(s => s.Id).ToList();
+            return  (from d in commonDataContext.DocumentOutCopies.Include("DocumentTypeCopy")
+                     where missedDocumentsKeys.Contains(d.DocumentOutId) select d).ToList();
         }
 
         private bool ValidateDownloadLimitation()
