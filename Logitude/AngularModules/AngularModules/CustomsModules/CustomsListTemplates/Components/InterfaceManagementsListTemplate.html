@@ -24,7 +24,7 @@
     </div>
     <div class="TextTrimming RightCenter"
          *ngIf="fieldName == 'DefaultPriority'">
-        <span>{{_InterfaceManagementList.DefaultPriority}}</span>
+        <span>{{_InterfaceManagementList.TenantPriority || _InterfaceManagementList.DefaultPriority}}</span>
     </div>
     <div class="TextTrimming RightCenter"
          *ngIf="fieldName == 'HasDefinition'">
