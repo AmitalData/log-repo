@@ -33,9 +33,13 @@ namespace WebFreight.Web.AccountingModel.LedgerTransactionService
                 var glAccountId = filters_list.Where(d => d.FieldName == "GLAccountId").FirstOrDefault().FieldValue.ToString();
                 var from = filters_list.Where(d => d.FieldName == "AccountingDate").FirstOrDefault().FieldValue;
                 var to = filters_list.Where(d => d.FieldName == "AccountingDate").FirstOrDefault().FieldValue2;
+
+
                 var includeRelatedCurrenciesAccount = filters_list.Where(d => d.FieldName == "IncludeRelatedCurrenciesAccount").FirstOrDefault().FieldValue;
                 var includeChildAccounts = filters_list.Where(d => d.FieldName == "IncludeChildAccounts").FirstOrDefault().FieldValue;
                 string _dateTypeCode = filters_list.Where(d => d.FieldName == "DateTypeCode").FirstOrDefault()?.FieldValue.ToString();
+                
+                SetSecondeDateFilter(LTBFilter, filters_list);
 
                 var currencyIdFilter = filters_list.Where(d => d.FieldName == "CurrencyId").FirstOrDefault();
                 if (currencyIdFilter != null)
@@ -91,6 +95,23 @@ namespace WebFreight.Web.AccountingModel.LedgerTransactionService
             };
 
             return filtersResult;
+        }
+
+        private void SetSecondeDateFilter(LedgerTransactionBalanceFilter LTBFilter, List<QueryFilterItem> filters_list)
+        {
+            string date2TypeCode = filters_list.Where(d => d.FieldName == "Date2TypeCode").FirstOrDefault()?.FieldValue.ToString();
+            string fromDate2filter = filters_list.Where(d => d.FieldName == "Date2Filter").FirstOrDefault()?.FieldValue.ToString();
+            string toDate2filter = filters_list.Where(d => d.FieldName == "Date2Filter").FirstOrDefault()?.FieldValue2.ToString();
+
+            string[] fromDate2 = fromDate2filter?.ToString()?.Split(';');
+            string[] toDate2 = toDate2filter?.ToString()?.Split(';');
+
+            if(date2TypeCode != null && fromDate2 != null && toDate2 != null)
+            {
+                LTBFilter.Date2TypeCode = date2TypeCode;
+                LTBFilter.FromDate2 = new DateTime(int.Parse(fromDate2[0]), int.Parse(fromDate2[1]) + 1, int.Parse(fromDate2[2]), 0, 0, 0);
+                LTBFilter.ToDate2 = new DateTime(int.Parse(toDate2[0]), int.Parse(toDate2[1]) + 1, int.Parse(toDate2[2]), 23, 59, 59);
+            }
         }
     }
 

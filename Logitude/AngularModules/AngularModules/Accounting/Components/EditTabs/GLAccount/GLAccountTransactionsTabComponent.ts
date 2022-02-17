@@ -59,6 +59,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     private taxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
     // Filters
     dateFilter: FilterItem;
+    dateFilter2: FilterItem;
     currencyFilter: FilterItem;
     searchFieldFilter: FilterItem;
     CurrencyFilters: ApiQueryFilters = new ApiQueryFilters();
@@ -72,6 +73,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     ForeignSums: number[];
     isSingleCurrency: boolean = false;
     isControlAccount: boolean = false;
+    ShowSecondDateFilter: boolean = false;
     public UsingLogGridV2:boolean= false;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -86,7 +88,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         this.isControlAccount = this.EntityPM.IsControlAccount;
         this.LogitudeGridExportToExcelComponent = new LogitudeGridExportToExcelComponent();
         this.GetCurrencies();
-       
+
         this.LoadDefaultValues();
 
         this.LoadAllScreenData();
@@ -122,21 +124,21 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
         this.GetTransactionsCurrencies();
         this.GetFullAccountingSettings();
-      
+
     }
     public DateFilterWidth: number;
     SetDateFilterWidth() {
         if (this.DisplayTaxReportFilter) {
-            this.DateFilterWidth = this.isRTL ? 300 : 370;
+            this.DateFilterWidth = this.isRTL ? 330 : 400;
         }
         else {
-            this.DateFilterWidth= 270;
+            this.DateFilterWidth= 330;
         }
-       
+
     }
     DisplayTaxReportFilter: boolean;
     GetFullAccountingSettings() {
-      
+
         this._entityListService.getSingle(SessionLocator.Tenant.toString(), "FullAccountingSetting").then((res: any) => {
             this.CurrentSession.StopBusyIndicator();
             res.subscribe(myResponse => {
@@ -165,9 +167,9 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             this.CurrentSession.StopBusyIndicator();
             if (this.TenatTaxReports != null) {
                 this.TenatTaxReports.forEach(p => {
-                    this.TaxReportLists.push(new CodeNameClass(p.Id, this.FormatTaxReportDate(p.TaxReportMonth) ));                   
+                    this.TaxReportLists.push(new CodeNameClass(p.Id, this.FormatTaxReportDate(p.TaxReportMonth) ));
                 });
-             
+
             }
 
 
@@ -286,6 +288,35 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         }
     }
 
+
+    private fromDate2: Date;
+    get FromDate2() { return this.fromDate2; }
+    set FromDate2(value: Date) {
+        if (this.fromDate2 != value) {
+            this.fromDate2 = value;
+            if (!this.isValidate)
+               this.validateAdditionalDates();
+            else {
+                this.isValidate = false;
+            }
+
+        }
+    }
+
+    toDate2: Date;
+    get ToDate2() { return this.toDate2; }
+    set ToDate2(value: Date) {
+        if (this.toDate2 != value) {
+            this.toDate2 = value;
+
+            if (!this.isValidate)
+                this.validateAdditionalDates();
+            else {
+                this.isValidate = false;
+            }
+        }
+    }
+
     private currencyId: string;
     get CurrencyId() { return this.currencyId; }
     set CurrencyId(value: string) {
@@ -338,7 +369,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         if (this.notIncludedInAnyTaxReport != value) {
             this.notIncludedInAnyTaxReport = value;
             this.SelectedTaxReport = null;
-            
+
         }
         this.RefreshButtonClicked();
     }
@@ -359,7 +390,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
-        
+
         this.columns.push({
             FieldName: 'AccountingDate',
             DataTypeCode: 'DateTime',
@@ -549,7 +580,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string,filters:ApiQueryFilters=null) {
         this.filterAgrs = new ApiQueryFilters();
- 
+
         if (this.dateFilter) {
             this.filterAgrs.AdditionalFilters.push(this.dateFilter);
          } else {
@@ -557,19 +588,25 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         }
         if (this.currencyFilter) {
             this.filterAgrs.AdditionalFilters.push(this.currencyFilter);
- 
+
         }
         if (this.searchFieldFilter) {
             this.filterAgrs.AdditionalFilters.push(this.searchFieldFilter);
- 
+
         }
         if (this._dateTypeCode) {
-            var dummyFilter =  new FilterItem("DateTypeCode", this._dateTypeCode, null, null, "Equals", false, false, false, "string", false);
+            let dummyFilter =  new FilterItem("DateTypeCode", this._dateTypeCode, null, null, "Equals", false, false, false, "string", false);
             this.filterAgrs.AdditionalFilters.push(dummyFilter);
         }else{
             var msg = new MessageWindow();
             msg.Show("No filter selected!!!!");
             return;
+        }
+
+        if (this.date2TypeCode && this.FromDate2 && this.ToDate2) {
+            let dummyFilter =  new FilterItem("Date2TypeCode", this.date2TypeCode, null, null, "Equals", false, false, false, "string", false);
+            this.filterAgrs.AdditionalFilters.push(this.dateFilter2);
+            this.filterAgrs.AdditionalFilters.push(dummyFilter);
         }
 
         this.filterAgrs.PageSize = take;
@@ -584,21 +621,21 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         }
         this.filterAgrs.addAdditionalFilter("GLAccountId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
         if (this.SelectedTaxReport) {
-            
+
             this.filterAgrs.addAdditionalFilter("TaxReportId", this.SelectedTaxReport.Code, null, null, "Equals", true, false, false, "string");
 
         }
         this.filterAgrs.addAdditionalFilter("IncludeRelatedCurrenciesAccount", this.splittedByCurrencyCheckBox == null ? false : this.splittedByCurrencyCheckBox, null, null, "Equals", false, false, false, "boolean");
         this.filterAgrs.addAdditionalFilter("IncludeChildAccounts", this.attachedGLAccountCheckBox == null ? false : this.attachedGLAccountCheckBox, null, null, "Equals", false, false, false, "boolean");
         this.filterAgrs.addAdditionalFilter("NotIncludedInAnyTaxReport", this.notIncludedInAnyTaxReport == null ? false : this.notIncludedInAnyTaxReport, null, null, "Equals", false, false, false, "boolean");
-        
+
         this.filterAgrs.addAdditionalFilter("UseTaxreportFilter", this.UseTaxreportFilter , null, null, "Equals", false, false, false, "boolean");
 
         return this._entityListService.getExtendedByFilters("LedgerTransaction", this.filterAgrs);//this.ledgerTransactionListExtendedService.getByFilters(filters);
     }
 
- 
-     
+
+
     public ExportToExcelClick(){
        // this._entityResourceService.getEntityResourceByTableName("LedgerTransaction", 0).subscribe((response: any) => {
         this.LogitudeGridExportToExcelComponent.ExportToExcelExcute("GLAccountLedgerTransaction",this.filterAgrs,this.QueryColumns);
@@ -669,7 +706,12 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             filters.AdditionalFilters.push(this.searchFieldFilter);
         }
         if (this._dateTypeCode) {
-            var dummyFilter =  new FilterItem("DateTypeCode", this._dateTypeCode, null, null, "Equals", false, false, false, "string", false);
+            let dummyFilter =  new FilterItem("DateTypeCode", this._dateTypeCode, null, null, "Equals", false, false, false, "string", false);
+            filters.AdditionalFilters.push(dummyFilter);
+        }
+        if (this.date2TypeCode && this.FromDate2 && this.ToDate2) {
+            let dummyFilter =  new FilterItem("Date2TypeCode", this.date2TypeCode, null, null, "Equals", false, false, false, "string", false);
+            filters.AdditionalFilters.push(this.dateFilter2);
             filters.AdditionalFilters.push(dummyFilter);
         }
         filters.PageSize = 30;
@@ -792,7 +834,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     }
     GetOpenBalanceAmount() {
         var result = 0;
-        if (this.EntityPM && this.LTBSummery) 
+        if (this.EntityPM && this.LTBSummery)
         {
             if (this.EntityPM.IsMultiCurrency) {
                 if(this.LTBSummery.StartBalanceLocal)
@@ -851,22 +893,49 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
         }
     }
+    validateAdditionalDates() {
+        if (this.FromDate2 > this.ToDate2) {
+
+            this.timerToken = setTimeout(() =>
+            {
+                this.UIProperties.SetValidity("ToDate2", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateGreater"));
+                this.UIProperties.SetValidity("FromDate2", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
+                this.CD.detectChanges();
+            }, 200);
+
+        } else {
+            this.timerToken = setTimeout(() =>
+            {
+                this.UIProperties.SetValidity("ToDate2", this.ObjectTableName, true, "");
+                this.UIProperties.SetValidity("FromDate2", this.ObjectTableName, true, "");
+                this.CD.detectChanges();
+            }, 200);
+
+            this.LoadData();
+
+        }
+    }
 
     //load data after validate date
     LoadData() {
         if (!AppTool.IsNullOrEmpty(this.ToDate) && !AppTool.IsNullOrEmpty(this.FromDate)) {
 
-            // var _fromDate = new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0);
             var _fromDate =  [this.fromDate.getFullYear().toString(), this.FromDate.getMonth(), this.FromDate.getDate()].join(";");
-            // var _toDate = Date.UTC(this.toDate.getFullYear(), this.toDate.getMonth(), this.toDate.getDate(), 23, 59, 59);
             var _toDate =  [this.toDate.getFullYear().toString(), this.toDate.getMonth(), this.toDate.getDate()].join(";");
             this.dateFilter = new FilterItem("AccountingDate", _fromDate, _toDate, null, "Between", false, false, false, "Date", false);
-            console.log(">> Date Filter: ", _fromDate, _toDate);
 
-            // this.dateFilter = new FilterItem("AccountingDate", new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0), new Date(this.ToDate.setHours(23, 59, 59, 59)), null, "Between", false, false, false, "Date", false);
+            if(this.fromDate2 && this.toDate2){
+                let _fromDate2 =  [this.fromDate2.getFullYear().toString(), this.FromDate2.getMonth(), this.FromDate2.getDate()].join(";");
+                let _toDate2 =  [this.toDate2.getFullYear().toString(), this.toDate2.getMonth(), this.toDate2.getDate()].join(";");
+                this.dateFilter2 = new FilterItem("Date2Filter", _fromDate2, _toDate2, null, "Between", false, false, false, "Date", false);
+            }
+
+            console.log(">> Date Filter: ", _fromDate, _toDate);
             this.RefreshButtonClicked();
 
         }
+
+
     }
     //#endregion
 
@@ -1147,7 +1216,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                 this._dateTypeCode = '3';
                 break;
             case 'filter_Tax':
-                this._dateTypeCode = '4';              
+                this._dateTypeCode = '4';
                 this.UseTaxreportFilter = true;
                 this.ResetLTBFields();
                 this.NotIncludedInAnyTaxReport = true;
@@ -1155,10 +1224,11 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             default:
                 break;
         }
-        if (this._dateTypeCode != '4') {
-           this.UseTaxreportFilter = false;
-            this.RefreshButtonClicked();
-        }
+
+        if (this.date2TypeCode != '4' && this._dateTypeCode != '4') {
+            this.UseTaxreportFilter = false;
+             this.RefreshButtonClicked();
+         }
 
 
     }
@@ -1171,6 +1241,59 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             this.LTBSummery.StartBalanceForeign = 0;
             this.LTBSummery.EndBalanceForeign = 0;
         }
+    }
+    //#endregion
+
+
+    //#region Filter Methods
+    public filterSelectedValue2: string = 'filter_accounting';
+    public date2TypeCode: string = '1';
+    Date2FilterItemClicked(itemValue: string) {
+        if (this.filterSelectedValue2 != itemValue) {
+            this.filterSelectedValue2 = itemValue;
+            this.Date2FilterLines();
+        }
+    }
+    Date2FilterLines() {
+
+        //Task 46666: Transaction Tab - date filter new design
+        // <DateTypeCode>2</DateTypeCode> 1/2/3
+        // Accounting- - code 1- חשבונםי
+        // Due - code 2 - לגביה
+        // Reference -code-3-  םסמכתם
+
+        switch (this.filterSelectedValue2) {
+            case 'filter_accounting':
+                this.date2TypeCode = '1';
+                break;
+            case 'filter_due':
+                this.date2TypeCode = '2';
+                break;
+            case 'filter_reference':
+                this.date2TypeCode = '3';
+                break;
+            case 'filter_Tax':
+                this.date2TypeCode = '4';
+                this.UseTaxreportFilter = true;
+                this.ResetLTBFields();
+                this.NotIncludedInAnyTaxReport = true;
+                break;
+            default:
+                break;
+        }
+        if (this.date2TypeCode != '4' && this._dateTypeCode != '4') {
+           this.UseTaxreportFilter = false;
+            this.RefreshButtonClicked();
+        }
+
+
+    }
+    ResetAdditionalDateFilter(){
+        this.FromDate2 = null;
+        this.ToDate2 = null;
+        this.RefreshButtonClicked();
+        this.ShowSecondDateFilter = false;
+
     }
     //#endregion
 
