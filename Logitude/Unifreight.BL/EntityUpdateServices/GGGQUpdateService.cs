@@ -12,6 +12,9 @@ using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
+using System.Transactions;
+using Simplog.Server.Infrastructure.Helpers;
+using System.Configuration;
 
 namespace Unifreight.BL.EntityUpdateServices
 {
@@ -33,18 +36,32 @@ namespace Unifreight.BL.EntityUpdateServices
 
         protected override void OnCreating(GGGQPM entityPM, EntityPM entityParentPM)
         {
-            //var myGGGQQueryService = new GGGQQueryService(this.MainContext as AmitalContext);
-            //GGGQPM ExistGGGQPM = myGGGQQueryService.GetByPrimary(entityPM.PRIMARYNUM, entityPM.ENTNAME, entityPM.ORIGINQUE, entityPM.FORMID);
-            //if(ExistGGGQPM != null && !string.IsNullOrWhiteSpace(ExistGGGQPM.QUEID))
-            //{
-                //entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.None;
-                //return;
-            //}
+            if (IsGGGQExist(entityPM))
+            {
+                entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.None;
+                return;
+            }
+
             entityPM.CREATEDATE = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now;
             entityPM.QUEID = CommCounterUtil.GetUnique30(entityPM.CREATEDATE);
             
             ///entityPM.COMPUTERID = Environment.MachineName;            
         }
+
+        private bool IsGGGQExist(GGGQPM entityPM)
+        {
+            string val = "";
+            if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20220216.CheckIfGGGQExist"]))
+            {
+                val = ConfigurationManager.AppSettings["20220216.CheckIfGGGQExist"].ToString();
+            }
+            if (val != "1") return false;
+            var myGGGQQueryService = new GGGQQueryService(this.MainContext as AmitalContext);
+            GGGQPM ExistGGGQPM = myGGGQQueryService.GetByPrimary(entityPM.PRIMARYNUM, entityPM.ENTNAME, entityPM.ORIGINQUE, entityPM.FORMID, entityPM.STATUS);
+            if (ExistGGGQPM != null && !string.IsNullOrWhiteSpace(ExistGGGQPM.QUEID)) return true;
+            return false;
+        }
+
         protected override void UpdateComposition(GGGQPM entityPM)
         {
             var myGGGQCUpdateService = new GGGQCUpdateService(this.MainContext as AmitalContext);
