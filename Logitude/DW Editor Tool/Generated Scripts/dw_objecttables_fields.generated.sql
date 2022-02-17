@@ -1800,6 +1800,12 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ContainersAvailabilityLocationPortNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ContainersAvailabilityLocationPortNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ContainersAvailabilityLocationPortNewId,0,'Fact_Containers','[Availability Location Port]','Availability Location Port','Dimension','false',0,15,'DIM_Ports','false','false','true','Availability','false','false','false','Container.AvailabilityLocationPortId','false','false')  
+declare @Fact_ContainersOnCarriageGateOutNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ContainersOnCarriageGateOutNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ContainersOnCarriageGateOutNewId,0,'Fact_Containers','[On Carriage Gate Out]','On Carriage Gate Out','Dimension','false',0,0,'DIM_Dates','false','false','true','OnCarriage','false','false','false','Container.OnCarriageGateOut','false','false')  
+declare @Fact_ContainersPreCarriageGateInNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ContainersPreCarriageGateInNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ContainersPreCarriageGateInNewId,0,'Fact_Containers','[Pre Carriage Gate In]','Pre Carriage Gate In','Dimension','false',0,0,'DIM_Dates','false','false','true','Pre-Carriage','false','false','false','Container.PreCarriageGateIn','false','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_InlandDomesticShipmentsNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_InlandDomesticShipmentsNewId OUTPUT,'DWObjectTable' 
