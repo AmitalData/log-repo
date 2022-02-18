@@ -202,13 +202,15 @@ namespace Logitude.Accounting.BL.DataContract
                     select a).ToList();
 
         }
-        public List<APPayment> GetAPPayments() {
-            List<APPayment> payments= (from a in invoiceContext.APPayments.Include("VendorCard")
-                    where a.Tenant == Tenant
-                     && (a.RegisterDate >= startDate && a.RegisterDate < endDate)
-                     && (a.StatusCode == "AD" || a.StatusCode == "CL" || a.StatusCode == "PR")
-                    select a).ToList();
-          payments=  getAPPaymentsWithGLAccountsAndVendor(payments);
+        public List<APPayment> GetAPPayments()
+        {
+            List<APPayment> payments = (from a in invoiceContext.APPayments.Include("VendorCard")
+                                        where a.Tenant == Tenant
+                                         && (a.RegisterDate >= startDate && a.RegisterDate < endDate)
+                                         && !(a.AccountingCancelationDate != null && a.AccountingCancelationDate >= startDate && a.AccountingCancelationDate < endDate)
+                                         && (a.StatusCode == "VD" || a.StatusCode == "AD" || a.StatusCode == "CL" || a.StatusCode == "PR")
+                                        select a).ToList();
+            payments = getAPPaymentsWithGLAccountsAndVendor(payments);
             return payments;
         }
 
@@ -479,9 +481,10 @@ namespace Logitude.Accounting.BL.DataContract
         {
 
             List<APPayment> cancelledPayments = (from a in invoiceContext.APPayments.Include("VendorCard")
-                                                 where a.AccountingCancelationDate >= startDate && a.AccountingCancelationDate < endDate
+                                                 where a.AccountingCancelationDate >= startDate && a.AccountingCancelationDate < endDate &&
+                                                 !(a.RegisterDate >= startDate && a.RegisterDate < endDate)
                                                  && a.Tenant == Tenant
-                                                 && (a.StatusCode == "VD" && a.AccountingCancelationDate.Value.Year != a.RegisterDate.Value.Year && a.DontIncludeInDeductionReport == false)
+                                                 && (a.StatusCode == "VD" && a.DontIncludeInDeductionReport == false)
                                                  select a).ToList();
             cancelledPayments = getAPPaymentsWithGLAccountsAndVendor(cancelledPayments);
             return cancelledPayments;
@@ -530,7 +533,7 @@ namespace Logitude.Accounting.BL.DataContract
                         groupedbyVendor.SumOfAmountInLocalCurrency = item.AmountInLocalCurrency.Value;
                         groupedbyVendor.SumOfTaxDeductionLocalAmount = item.TaxDeductionLocalAmount.Value;
                        groupedbyVendor.TotalAmount =(decimal?)groupedbyVendor.SumOfAmountInLocalCurrency + groupedbyVendor.SumOfTaxDeductionLocalAmount;
-                    if (groupedbyVendor.SumOfAmountInLocalCurrency > 0)
+                    if (groupedbyVendor.SumOfAmountInLocalCurrency > 0 || groupedbyVendor.SumOfAmountInLocalCurrency < 0)
                     {
                         byVendorList.Add(groupedbyVendor);
                     }
