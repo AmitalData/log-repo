@@ -181,7 +181,7 @@ namespace WebFreight.Web.WebPages
                             break;
                         default:
                             documents = up.GetDocumentByEntityAndTenant(downloadAllDocumentsArgs.EntityId, downloadAllDocumentsArgs.Tenant);
-                            documents = up.GetAgentDocuments(documents, shipment.ShipmentLevelCode, downloadAllDocumentsArgs.Tenant);
+                            if (downloadAllDocumentsArgs.PartnerType == "AG") documents = up.GetAgentDocuments(documents, shipment.ShipmentLevelCode, downloadAllDocumentsArgs.Tenant);
                             break;
                     }
                     if (string.IsNullOrEmpty(downloadAllDocumentsArgs.Token))
