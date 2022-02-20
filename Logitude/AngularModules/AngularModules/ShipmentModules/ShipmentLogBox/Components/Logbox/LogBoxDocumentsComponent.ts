@@ -175,6 +175,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                 this.SignRequiredCount = 0;
                 this.SelectedShipment = null;
                 this.ClearPortFields();
+                this.SetReferencesLabel();
             return;
           }
           
