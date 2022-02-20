@@ -7229,11 +7229,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
                         productItem.HTSCode = hTSCodePM.Code;
                         productItem.ApprovedByCustomer = hTSCodePM.ApprovedByCustomer;
+                        productItem.VATPercentage = hTSCodePM.VATPercentage;
+                        productItem.DutiesPercentage = hTSCodePM.DutiesPercentage;
+                        productItem.OtherDuties = hTSCodePM.OtherDuties;
+                        productItem.Remarks = hTSCodePM.Remarks;
                     }
                     else
                     {
                         productItem.HTSCode = null;
                         productItem.ApprovedByCustomer = false;
+                        productItem.VATPercentage = null;
+                        productItem.DutiesPercentage = null;
+                        productItem.OtherDuties = null;
+                        productItem.Remarks = null;
                     }
                 }
 

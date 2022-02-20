@@ -62,9 +62,9 @@ namespace Logitude.Server.Tools.EntityChanges
             foreach (ObjectField externalEntityAutomationObjectField in externalEntityAutomationObjectFieldLists)
             {
                 string currentvalue = externalEntity != null ? GetValue(externalEntity, externalEntityAutomationObjectField) : "";
-                Field automationConditionField = new Field() { FieldCode = externalEntityAutomationObjectField.FieldCode, Value = currentvalue != null ? currentvalue : "", OldValue = "", PropertyName = externalEntityAutomationObjectField.FieldName, PartnerObjectFieldCode = externalEnitityObjectField.FieldCode };
+                Field automationConditionField = new Field() { FieldCode = externalEntityAutomationObjectField.FieldCode, Value = currentvalue, OldValue = "", PropertyName = externalEntityAutomationObjectField.FieldName, PartnerObjectFieldCode = externalEnitityObjectField.FieldCode };
                 automationFieldLists.Add(automationConditionField);
-
+               
             }
 
             return automationFieldLists;

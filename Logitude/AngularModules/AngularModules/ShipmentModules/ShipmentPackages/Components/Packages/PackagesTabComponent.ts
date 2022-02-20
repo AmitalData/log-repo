@@ -3754,7 +3754,7 @@ export class ShipmentPackageItem extends BaseComponent {
 
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = myWindowTitle;
-        logitudeWindow.WindowArgs = { ShipmentPM: this.ShipmentPM, EntityPM: newDeliveryPM, IsNewEntity: true, ContainerReturnDeliveryId: this.DeliveryId, IsCreatingContainerDelivery: isCreatingContainerDelivery };
+        logitudeWindow.WindowArgs = { ShipmentPM: this.ShipmentPM, EntityPM: newDeliveryPM, IsNewEntity: true, ContainerReturnDeliveryId: this.DeliveryId, IsCreatingContainerDelivery: isCreatingContainerDelivery, IsAddEditEmptyCR: true  };
         logitudeWindow.Width = 950;
         logitudeWindow.Height = 595;
 
@@ -3806,7 +3806,7 @@ export class ShipmentPackageItem extends BaseComponent {
             
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Title = windowTitle;
-            logitudeWindow.WindowArgs = { ShipmentPM: this.ShipmentPM, EntityPM: myEditedDelivery, IsNewEntity: false };
+            logitudeWindow.WindowArgs = { ShipmentPM: this.ShipmentPM, EntityPM: myEditedDelivery, IsNewEntity: false, IsAddEditEmptyCR:true };
             logitudeWindow.Width = 950;
             logitudeWindow.Height = 595;
 

@@ -104,7 +104,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
 				QuoteChargesGroupQuery quoteChargesGroupQuery = new QuoteChargesGroupQuery(quoteChargesGroupRepository);
 			    IQueryable<QuoteChargesGroupList> entityLists = quoteChargesGroupQuery.GetIQueryableEntityList(entityPocos);
-				entityLists = entityLists.OrderBy(d => d.Name);
+				entityLists = entityLists.OrderBy(d => d.Id);
 				List<QuoteChargesGroupList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 										
@@ -292,7 +292,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                             }
                         default:
                             {
-                                entityLists = entityLists.OrderBy(d => d.Name);
+                                entityLists = entityLists.OrderBy(d => d.Id);
                                 break;
                             }
                     }
@@ -301,7 +301,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
             }					  						
 	       else
             {
-                entityLists = entityLists.OrderBy(d => d.Name);
+                entityLists = entityLists.OrderBy(d => d.Id);
             } 
 
 			ServiceResponse response = new ServiceResponse();

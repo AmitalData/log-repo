@@ -386,7 +386,9 @@ ul.line-list li.tick {
     line-height: 17px;
 }
 
-@media screen and (min-width: 479px) {
+
+@media screen and (min-width: 479px) and (orientation: portrait),
+(min-height: 479px) and (orientation: landscape) {
     .steps-list li:hover:not(.dimmed),
     .steps-list li.highlighted {
         background: var(--MainColor); /*#002664;*/
@@ -395,7 +397,10 @@ ul.line-list li.tick {
     }
 }
 
-@media screen and (max-width: 479px) {
+
+@media screen and (max-width: 479px) and (orientation: portrait),
+(max-height: 479px) and (orientation: landscape)
+{
     .box-header {
         min-height: 140px;
         margin: 40px 0px;
@@ -514,7 +519,9 @@ ul.line-list li.tick {
 
 
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1000px) and (orientation: portrait),
+(max-height: 1000px) and (orientation: landscape)
+ {
     /* .panel {
         width: calc(100% - 40px) !important;
         margin-bottom: 30px;

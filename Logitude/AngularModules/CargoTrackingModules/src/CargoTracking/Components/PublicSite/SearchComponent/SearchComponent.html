@@ -1,5 +1,5 @@
 <div class="search-wrapper" [style.height]="Shipments.length>0 ? '100%' : ''">
-    <div class="vertical-center" [class.vertical-center-withdata]="Shipments.length>0">
+    <div class="vertical-center" [class.vertical-center-withdata]="Shipments.length>0 || IsMobileView">
         <h1 class="page-title">Track Shipment</h1>
 
         <router-outlet></router-outlet>
@@ -70,7 +70,7 @@
                     Please note that our public tracking site only allows you to search for shipments created within the last 6 months.
                 </p>
 
-                <p>Just start typing to start your new search.</p>
+                <p *ngIf="!IsMobileView">Just start typing to start your new search.</p>
 
             </div>
 

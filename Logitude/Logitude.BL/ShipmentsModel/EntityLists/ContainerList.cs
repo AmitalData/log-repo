@@ -51,8 +51,8 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string ShipmentTransshipment3ToId { get; set; }
         public string ShipmentOnCarriageFromId { get; set; }
         public string ShipmentOnCarriageToId { get; set; }
-        public string ShipmentFirstPickupFrom { get; set; }
-        public string ShipmentFirstPickupTo { get; set; }
+        public string ShipmentPickupFrom { get; set; }
+        public string ShipmentPickupTo { get; set; }
         public string ShipmentPreCarriageFrom { get; set; }
         public string ShipmentPreCarriageTo { get; set; }
         public string ShipmentMainCarriageFrom { get; set; }
@@ -65,8 +65,8 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string ShipmentTransshipment3To { get; set; }
         public string ShipmentOnCarriageFrom { get; set; }
         public string ShipmentOnCarriageTo { get; set; }
-        public string ShipmentLastDeliveryFrom { get; set; }
-        public string ShipmentLastDeliveryTo { get; set; }
+        public string ShipmentDeliveryFrom { get; set; }
+        public string ShipmentDeliveryTo { get; set; }
         public DateTime? PreCarriageETD { get; set; }
         public DateTime? PreCarriageATD { get; set; }
         public DateTime? EstimatedPOLArrival { get; set; }

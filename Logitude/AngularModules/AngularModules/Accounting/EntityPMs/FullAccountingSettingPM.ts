@@ -289,6 +289,11 @@ export class FullAccountingSettingPM {
     public set CreateRevaluationJournal(newValue: boolean) { if (this.createRevaluationJournal != newValue) { this.createRevaluationJournal = newValue; this.MarkAsDirty("CreateRevaluationJournal"); } }
        
 	 
+    private taxInstitutionGLAccountId: string;
+    public get TaxInstitutionGLAccountId() { return this.taxInstitutionGLAccountId; }
+    public set TaxInstitutionGLAccountId(newValue: string) { if (this.taxInstitutionGLAccountId != newValue) { this.taxInstitutionGLAccountId = newValue; this.MarkAsDirty("TaxInstitutionGLAccountId"); } }
+       
+	 
 
     public OldEntityPM: FullAccountingSettingPM;
 		

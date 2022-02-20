@@ -1239,6 +1239,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string taxInstitutionGLAccountId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TaxInstitutionGLAccountId  
+	   {
+	    
+	     get
+		{
+		   return taxInstitutionGLAccountId;
+		 }
+		 set
+		 {
+		   if(taxInstitutionGLAccountId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TaxInstitutionGLAccountId",OldValue=taxInstitutionGLAccountId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   taxInstitutionGLAccountId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

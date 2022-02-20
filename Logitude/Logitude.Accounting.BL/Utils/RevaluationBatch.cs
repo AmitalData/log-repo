@@ -19,6 +19,10 @@ using System.Transactions;
 using Logitude.Server.Tools.QueueService;
 using System.Threading;
 using Logitude.SystemLogs;
+using Logitude.Accounting.Def.EntityUpdateServicesExt;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
+using Logitude.Accounting.Data.Enums;
 //using AmitalCustomsWindowsService.Utils;
 
 namespace Logitude.Accounting.BL.Utils
@@ -176,12 +180,12 @@ namespace Logitude.Accounting.BL.Utils
             {
                 using (TransactionScope excScope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(1)))
                 {
-                    {
-                        string errorMessage = e.Message.Split(new[] { '\r', '\n' }).FirstOrDefault();
+                    IAccountingContext context = AccountingContext.GetContext(tenant);
+                    string errorMessage = e.Message.Split(new[] { '\r', '\n' }).FirstOrDefault();
                         _ResponseText = errorMessage;
                         _StatusCode = HttpStatusCode.InternalServerError;
-                        //          UpdateRevaluationStatus(id, tenant, "2", errorMessage, context);
-                    }
+                        UpdateRevaluationStatus(id, tenant, (int)RevaluationStatusEnum.Failed+"", errorMessage, context);
+                    
                     excScope.Complete();
                 }
 
@@ -341,6 +345,11 @@ namespace Logitude.Accounting.BL.Utils
             }
 
         }
+        private static void AddAccountingEntitieJournal(JournalPM entityPM, string action, string ChildEntityId = null)
+        {
+            IAccountingEntityJournalUpdateServiceExt service = ContainerAccessor.Container.Resolve(typeof(IAccountingEntityJournalUpdateServiceExt), "AccountingEntityJournalUpdateServiceExt", new ParameterOverride("", 1)) as IAccountingEntityJournalUpdateServiceExt;
+            service.AddAccountingEntitieJournal(entityPM, action, ChildEntityId);
+        }
 
         private static void WriteJournal(JournalUpdateService journalUpdateService, List<JournalLineList> lineList, RevaluationList revaluation)
         {
@@ -394,6 +403,7 @@ namespace Logitude.Accounting.BL.Utils
                 newJournal.JournalLines.Add(newJournalLine);
 
             }
+            AddAccountingEntitieJournal(newJournal, AccountingEntityJournalActions.RevaluationApprove);
             // End
             journalUpdateService.Update(newJournal, true);
 

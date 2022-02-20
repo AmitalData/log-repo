@@ -56,12 +56,11 @@ namespace Logitude.Accounting.BL.Utils
         public void RunAllPayablePostDatedARPaymentCheques(int tenant)
         {
             List<ARPaymentChequeList> aRPaymentCheques = null;
-            using (var scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(3)))
-            {
-                IAccountingContext context = AccountingContext.GetContext(tenant);
-                ARPaymentChequeListQueryService aRPaymentChequeListQueryService = new ARPaymentChequeListQueryService(context);
-                aRPaymentCheques = aRPaymentChequeListQueryService.GetPayablePostDatedARPaymentChequeList(tenant);
-            }
+
+            IAccountingContext context = AccountingContext.GetContext(tenant);
+            ARPaymentChequeListQueryService aRPaymentChequeListQueryService = new ARPaymentChequeListQueryService(context);
+            aRPaymentCheques = aRPaymentChequeListQueryService.GetPayablePostDatedARPaymentChequeList(tenant);
+            
             var uniqueCheques = aRPaymentCheques.Distinct();
 
 
@@ -256,8 +255,7 @@ namespace Logitude.Accounting.BL.Utils
             var lockPoco = repo.GetSingleGeneralLockNOWAIT(_AggregateKey, tenant);
             if (lockPoco == null)
             {
-                using (var scope = TransactionFactory.GetNewTransaction())
-                {
+
                     repo.Add(new GeneralLock()
                     {
                         Tenant = tenant,
@@ -266,8 +264,7 @@ namespace Logitude.Accounting.BL.Utils
                     });
                   //  _logger.AppendLine("add GeneralLock");
                     repo.SubmitChanges();
-                    scope.Complete();
-                }
+
                 lockPoco = repo.GetSingleGeneralLockNOWAIT(_AggregateKey, tenant);
             }
 

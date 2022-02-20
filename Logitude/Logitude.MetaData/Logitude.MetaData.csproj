@@ -179,6 +179,9 @@
       <LastGenOutput>ControllersGenerator.cs</LastGenOutput>
       <LastOutputs>.\ControllersGenerator.cs</LastOutputs>
     </Content>
+    <None Include="DBScripts\CommonModel\202202171100_RemoveQBOOptionFromDropDown.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202202171015_FillEventTriggerField.sxml" />
+    <None Include="DBTables\CommonDataModel\HTSCode.dxml" />
     <None Include="EntityFiles\ShipmentsModel\ContainersExternalData.lxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\usp_UpdatePortSearchFieldsFunction.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\usp_UpdateShippingLineSearchFieldsFunction.dxml" />
@@ -224,6 +227,7 @@
     <None Include="DBScripts\GlobalModel\RemoveEntityChangeWorkerRole.sxml" />
     <None Include="DBScripts\InfrastructureModel\202111301850_UpdateContainerEntityStatuesNames.sxml" />
     <None Include="DBScripts\InfrastructureModel\202111081530_FillEntityStatusTypes.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202201160624_FillQuoteChargesGroup.sxml" />
     <None Include="DBScripts\InfrastructureModel\UpdateEntityStatusLocalWeight.sxml" />
     <None Include="DBScripts\InvoiceModel\202201152150_UpgradeSATProf32ToProf33.sxml" />
     <None Include="DBScripts\InvoiceModel\202111041254_FillARPaymentBankTranferFromARPayment.sxml" />

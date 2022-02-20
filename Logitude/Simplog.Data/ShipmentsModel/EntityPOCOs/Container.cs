@@ -48,8 +48,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? CurrentStatusDate { get; set; }
         public string CurrentLocation { get; set; }
         public bool HasContainerException { get; set; }
-        public string ShipmentFirstPickupFrom { get; set; }
-        public string ShipmentFirstPickupTo { get; set; }
+        public string ShipmentPickupFrom { get; set; }
+        public string ShipmentPickupTo { get; set; }
         public string ShipmentPreCarriageFromId { get; set; }
         public string ShipmentPreCarriageToId { get; set; }
         public string ShipmentMainCarriageFromId { get; set; }
@@ -62,8 +62,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ShipmentTransshipment3ToId { get; set; }
         public string ShipmentOnCarriageFromId { get; set; }
         public string ShipmentOnCarriageToId { get; set; }
-        public string ShipmentLastDeliveryFrom { get; set; }
-        public string ShipmentLastDeliveryTo { get; set; }
+        public string ShipmentDeliveryFrom { get; set; }
+        public string ShipmentDeliveryTo { get; set; }
         public DateTime? PreCarriageETD { get; set; }
         public DateTime? PreCarriageATD { get; set; }
         public DateTime? EstimatedPOLArrival { get; set; }

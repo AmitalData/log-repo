@@ -536,11 +536,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         private void MapContainerFieldsFromShipmentPickup(ContainerPM entityPM)
         {
             ShipmentPickUpPM shipmentPickUpPM = GetShipmentPickUpPMByContainerEntityId(entityPM);
-            if (shipmentPickUpPM == null && (!string.IsNullOrEmpty(entityPM.ShipmentFirstPickupFrom)
-                || !string.IsNullOrEmpty(entityPM.ShipmentFirstPickupTo)))
+            if (shipmentPickUpPM == null && (!string.IsNullOrEmpty(entityPM.ShipmentPickupFrom)
+                || !string.IsNullOrEmpty(entityPM.ShipmentPickupTo)))
             {
-                entityPM.ShipmentFirstPickupTo = null;
-                entityPM.ShipmentFirstPickupFrom = null;
+                entityPM.ShipmentPickupTo = null;
+                entityPM.ShipmentPickupFrom = null;
                 entityPM.ShipmentPickupETA = null;
                 entityPM.ShipmentPickupETD = null;
                 entityPM.ShipmentPickupATA = null;
@@ -553,8 +553,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 return;
             }
 
-            entityPM.ShipmentFirstPickupFrom = this.GetFirstPickupFromAddress(shipmentPickUpPM);
-            entityPM.ShipmentFirstPickupTo = this.GetFirstPickupToAddress(shipmentPickUpPM);
+            entityPM.ShipmentPickupFrom = this.GetFirstPickupFromAddress(shipmentPickUpPM);
+            entityPM.ShipmentPickupTo = this.GetFirstPickupToAddress(shipmentPickUpPM);
             entityPM.ShipmentPickupETA = shipmentPickUpPM?.ETA;
             entityPM.ShipmentPickupETD = shipmentPickUpPM?.ETD;
             entityPM.ShipmentPickupATA = shipmentPickUpPM?.ATA;
@@ -564,11 +564,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         private void MapContainerFieldsFromShipmentDelivery(ContainerPM entityPM)
         {
             ShipmentDeliveryPM shipmentDeliveryPM = GetShipmentDeliveryPMByContainerEntityId(entityPM);
-            if (shipmentDeliveryPM == null && (!string.IsNullOrEmpty(entityPM.ShipmentLastDeliveryFrom)
-                || !string.IsNullOrEmpty(entityPM.ShipmentLastDeliveryTo)))
+            if (shipmentDeliveryPM == null && (!string.IsNullOrEmpty(entityPM.ShipmentDeliveryFrom)
+                || !string.IsNullOrEmpty(entityPM.ShipmentDeliveryTo)))
             {
-                entityPM.ShipmentLastDeliveryFrom = null;
-                entityPM.ShipmentLastDeliveryTo = null;
+                entityPM.ShipmentDeliveryFrom = null;
+                entityPM.ShipmentDeliveryTo = null;
                 entityPM.ShipmentDeliveryETA = null;
                 entityPM.ShipmentDeliveryETD = null;
                 entityPM.ShipmentDeliveryATA = null;
@@ -582,8 +582,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 return;
             }
 
-            entityPM.ShipmentLastDeliveryFrom = GetLastDeliveryFromAddress(shipmentDeliveryPM);
-            entityPM.ShipmentLastDeliveryTo = GetLastDeliveryToAddress(shipmentDeliveryPM);
+            entityPM.ShipmentDeliveryFrom = GetLastDeliveryFromAddress(shipmentDeliveryPM);
+            entityPM.ShipmentDeliveryTo = GetLastDeliveryToAddress(shipmentDeliveryPM);
             entityPM.ShipmentDeliveryETA = shipmentDeliveryPM?.ETA;
             entityPM.ShipmentDeliveryETD = shipmentDeliveryPM?.ETD;
             entityPM.ShipmentDeliveryATA = shipmentDeliveryPM?.ATA;
@@ -623,8 +623,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             if (!string.IsNullOrEmpty(shipmentPackage.EmptyContainerReturnId))
                 return false;
 
-           if (!shipmentPackage.IsEmptyContainerReturnFU)
-                return false;
+ 
 
             return true;
         }
@@ -920,8 +919,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         {
             if (!IsContainerUpdatedBefore(containerPM))
             {
-                containerPM.ShipmentFirstPickupFrom = isPackageDeleted ? null : this.GetFirstPickupFromAddress(updatedShipmentPickUp);
-                containerPM.ShipmentFirstPickupTo = isPackageDeleted ? null : this.GetFirstPickupToAddress(updatedShipmentPickUp);
+                containerPM.ShipmentPickupFrom = isPackageDeleted ? null : this.GetFirstPickupFromAddress(updatedShipmentPickUp);
+                containerPM.ShipmentPickupTo = isPackageDeleted ? null : this.GetFirstPickupToAddress(updatedShipmentPickUp);
                 containerPM.ShipmentPickupETA = isPackageDeleted ? null : updatedShipmentPickUp?.ETA;
                 containerPM.ShipmentPickupETD = isPackageDeleted ? null : updatedShipmentPickUp?.ETD;
                 containerPM.ShipmentPickupATA = isPackageDeleted ? null : updatedShipmentPickUp?.ATA;
@@ -935,8 +934,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         {
             if (!IsContainerUpdatedBefore(containerPM))
             {
-                containerPM.ShipmentLastDeliveryFrom = isPackageDeleted ? null : GetLastDeliveryFromAddress(updatedShipmentDeliveryPM);
-                containerPM.ShipmentLastDeliveryTo = isPackageDeleted ? null : GetLastDeliveryToAddress(updatedShipmentDeliveryPM);
+                containerPM.ShipmentDeliveryFrom = isPackageDeleted ? null : GetLastDeliveryFromAddress(updatedShipmentDeliveryPM);
+                containerPM.ShipmentDeliveryTo = isPackageDeleted ? null : GetLastDeliveryToAddress(updatedShipmentDeliveryPM);
                 containerPM.ShipmentDeliveryETA  = isPackageDeleted ? null : updatedShipmentDeliveryPM?.ETA;
                 containerPM.ShipmentDeliveryETD  = isPackageDeleted ? null : updatedShipmentDeliveryPM?.ETD;
                 containerPM.ShipmentDeliveryATA  = isPackageDeleted ? null : updatedShipmentDeliveryPM?.ATA;
@@ -981,8 +980,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             
             foreach(ContainerPM containerPM in containers)
             {
-                containerPM.ShipmentFirstPickupFrom = null;
-                containerPM.ShipmentFirstPickupTo = null;
+                containerPM.ShipmentPickupFrom = null;
+                containerPM.ShipmentPickupTo = null;
                 containerPM.ShipmentPickupETA = null;
                 containerPM.ShipmentPickupETD = null;
                 containerPM.ShipmentPickupATA = null;
@@ -1020,8 +1019,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
             foreach (ContainerPM containerPM in containers)
             {
-                containerPM.ShipmentLastDeliveryFrom = null;
-                containerPM.ShipmentLastDeliveryTo = null;
+                containerPM.ShipmentDeliveryFrom = null;
+                containerPM.ShipmentDeliveryTo = null;
                 containerPM.ShipmentDeliveryETA = null;
                 containerPM.ShipmentDeliveryETD = null;
                 containerPM.ShipmentDeliveryATA = null;
