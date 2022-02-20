@@ -307,6 +307,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
         }
         this.LoadScreenData();
+        this.showMobileSortMenu=false;
     }
     DeselectTransportModeFilter(code) {
         RootContext.ShipmentsScrollPosition = 0;
