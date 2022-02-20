@@ -806,7 +806,7 @@ function BuildDocumentsTabPageViewModel(documents, PathPrefix, showIsDigitallySi
     $("#DocumentsPageBusyIndicator").hide();
 }
 
-function BuildMasterDocumentsTabPageViewModel(entityId, documents, fileName, PathPrefix) {
+function BuildMasterDocumentsTabPageViewModel(entityId, documents, fileName, PathPrefix, securityKey) {
 
     var GridColumns = [];
     var GridDataSource = [];
@@ -827,7 +827,7 @@ function BuildMasterDocumentsTabPageViewModel(entityId, documents, fileName, Pat
     GridColumns.push({ title: " ", template: linkTemplate, width: 100 });
 
     var downloadAllTemplate = "";
-    downloadAllTemplate += "<a id='#= Id #' target='" + fileName + "' OnClick='OnDownloadAllDocument(target)'>";
+    downloadAllTemplate += "<a id='" + entityId + "' target='" + fileName + "&securitykey=" + securityKey + "' OnClick='OnDownloadAllDocument(target,id)'>";
     downloadAllTemplate += "<div style='cursor:pointer; font-size:13px; color:\\#27AAE1; text-align:right;'>Download All</div>";
     downloadAllTemplate += "</a>";
     GridColumns.push({ title: downloadAllTemplate });
