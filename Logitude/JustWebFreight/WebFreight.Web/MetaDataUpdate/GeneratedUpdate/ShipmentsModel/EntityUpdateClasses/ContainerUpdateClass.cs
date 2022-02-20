@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerUpdateClass
    {  		
-		public const string HashString = "22ab956e1487b92bd416aaff8e3be21f";
+		public const string HashString = "7047fbd74e21466f6946bb7d59a31c7d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -12457,9 +12457,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PODReceivedOnDate",
-					  						DefaultText =  "POD Received On Date",
+					  						DefaultText =  "POD Received Date",
 					  						ListFieldLable =  "PODReceivedOnDateListLable",
-					  						ListLableDefaultText =  "POD Received On Date",
+					  						ListLableDefaultText =  "POD Received Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
