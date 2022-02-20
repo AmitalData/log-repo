@@ -1,5 +1,5 @@
 
-@media screen and (max-width: 1250px) {
+@media screen and (max-width: 1250px)   and (orientation: portrait){
     .path-image {
         float: right;
         z-index: 99;
@@ -8,28 +8,29 @@
     }
     .vertical-center {
         padding: 0 20px;
-        width: 
+        width:
         calc(100% - 40px);
     }
 }
 
-@media screen 
-  and (min-device-width: 479px) 
-  and (max-device-width: 1250px) 
+@media screen
+  and (min-device-width: 479px)
+  and (max-device-width: 1250px)
   and (-webkit-min-device-pixel-ratio: 1)
+  and (orientation: portrait)
   {
-      
+
     .scrollable-table {
         height: 60%;
     }
-  
+
     .has-exception-checkbox-filter {
         width: 150px !important;
         margin-right: 50px;
     }
   }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1000px)   and (orientation: portrait) {
     .record-row .column {
         padding: 0px 5px !important;
     }
@@ -47,7 +48,7 @@
     }
 }
 
-@media screen and (max-width: 1470px) {
+@media screen and (max-width: 1470px) and (orientation: portrait) {
     .toolbar > div.search-bar {
         display: block;
         margin-bottom: 20px;
@@ -57,12 +58,12 @@
     }
     .filters {
         margin-left: 0;
-    } 
+    }
 }
 /* Laptops screens */
-@media screen 
-  and (min-device-width: 1200px) 
-
+@media screen
+  and (min-device-width: 1200px)
+  and (orientation: portrait)
   and (-webkit-min-device-pixel-ratio: 1) {
     .search-bar{
         width: 23%;
@@ -91,8 +92,8 @@
         height: 60%;
     }
 }
-@media screen 
-  and (min-width: 1200px){
+@media screen
+  and (min-width: 1200px)   and (orientation: portrait){
     .search-bar{
         width: 23%;
     }
@@ -105,7 +106,7 @@
 }
 
 
-@media screen and (min-width: 479px) {
+@media screen and (min-width: 479px)   and (orientation: portrait) {
     .scrollable-table {
         width: 100%;
     }

@@ -466,16 +466,14 @@
                                         </div>
                                         <div tooltip-body>
                                             <div style="text-align: right;">
-                                                {{ shipment.CurrentMilestoneExceptions?.split(',')[0] | date:'d-MMM-y,
-                                                HH:mm' | dateTimeFormat}}
+                                                {{ shipment.CurrentMilestoneExceptions?.split(',')[0] | date:'d-MMM-y, HH:mm' | dateTimeFormat}}
                                                 <br>
                                                 {{shipment.CurrentMilestoneExceptions.substring(shipment.CurrentMilestoneExceptions.indexOf(',')+1)}}
                                             </div>
                                         </div>
                                     </app-tooltip>
                                     {{ shipment.CurrentMilestoneName }}
-                                    <div class="value mobile-only">{{ shipment.CurrentMilestoneDate | date: 'd-MMM-y,
-                                        HH:mm' | dateTimeFormat }}</div>
+                                    <div class="value mobile-only">{{ shipment.CurrentMilestoneDate | date: 'd-MMM-y, HH:mm' | dateTimeFormat }}</div>
                                 </div>
 
 
@@ -647,9 +645,9 @@
                   [Buttons]="[{Code: 'asc', Name:'Ascending'}, {Code: 'desc', Name:'Descending'}]"
                   (ButtonClicked)="SortMenuClicked($event)"></details-menu> -->
 
-    <div class="mobile-sort-menu-dismiss-section" (click)="showMobileSortMenu=false"
+    <div class="mobile-only mobile-sort-menu-dismiss-section" (click)="showMobileSortMenu=false"
         [style.display]="showMobileSortMenu?'Block':'none'"></div>
-    <div class="mobile-sort-menu" [class.show-menu]="showMobileSortMenu" [style.height.px]="350"
+    <div class="mobile-only mobile-sort-menu" [class.show-menu]="showMobileSortMenu" [style.height.px]="350"
         [style.bottom.px]="-350">
         <div class="title uppercase">Sort By</div>
         <ul class="sort-by-menu">

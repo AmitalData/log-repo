@@ -243,6 +243,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
         }
         this.LoadScreenData();
+        this.showMobileSortMenu=false;
     }
     DeselectTransportModeFilter(code) {
         RootContext.ShipmentsScrollPosition = 0;
@@ -620,7 +621,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         return null;
 
     }
-    
+
 
     SetEstimationORActualDate(shipment: CargoTrackingShipmentList) {
         if (shipment.ArrivalDate != null) {

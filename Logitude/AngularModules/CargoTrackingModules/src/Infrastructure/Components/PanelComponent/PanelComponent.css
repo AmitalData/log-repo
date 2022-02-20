@@ -78,7 +78,9 @@
           background: #F2F4F7;
       }
 
-@media screen and (max-width: 479px) {
+
+@media screen and (max-width: 479px) and (orientation: portrait),
+(max-height: 479px) and (orientation: landscape) {
     .panel{
         width: 100% !important;
         background: none;

@@ -636,8 +636,13 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
 
     }
 
-    get IsMobileView(){ return window.innerWidth <= mobileScreenMaxWidth; }
-    get IsNotMobileView(){ return window.innerWidth > mobileScreenMaxWidth; }
+
+    get IsMobileView(){
+        const isPortrait = window.innerHeight > window.innerWidth;
+        return (window.innerWidth <= mobileScreenMaxWidth && isPortrait)
+        || ( window.innerHeight <= mobileScreenMaxWidth && !isPortrait);
+    }
+    get IsNotMobileView(){ return !this.IsMobileView }
 
     //#endregion
 
