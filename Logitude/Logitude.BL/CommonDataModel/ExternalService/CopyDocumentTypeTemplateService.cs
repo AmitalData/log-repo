@@ -73,7 +73,7 @@ namespace Logitude.BL.CommonDataModel.ExternalService
 
         private void SetDefaultHtmlDocumentType(DocumentType currentTenantDocumentType, DocumentTypePM tenantZeroDocumentTypePM)
         {
-            DocumentTypeTemplatePM tenantZeroDefaultDocumentTypeHtmlTemplatePM = allSystemTenantZeroDocumentTypeTemplatePMs.Where(d => d.Id == tenantZeroDocumentTypePM.DocumentTypeDefaultReportTemplateId).FirstOrDefault();
+            DocumentTypeTemplatePM tenantZeroDefaultDocumentTypeHtmlTemplatePM = allSystemTenantZeroDocumentTypeTemplatePMs.Where(d => d.Id == tenantZeroDocumentTypePM.DocumentTypeDefaultHTMLTemplateId).FirstOrDefault();
             if (tenantZeroDefaultDocumentTypeHtmlTemplatePM != null && !documentOuts.Where(d => d.DocumentTemplateId == currentTenantDocumentType.DocumentTypeDefaultHTMLTemplateId).Any())
             {
                 currentTenantDocumentType.DocumentTypeDefaultHTMLTemplateId = GetDefaultDocumentType(tenantZeroDefaultDocumentTypeHtmlTemplatePM, currentTenantDocumentType.DocumentTypeDefaultHTMLTemplateId);
