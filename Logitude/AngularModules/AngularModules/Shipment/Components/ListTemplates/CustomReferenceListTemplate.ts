@@ -31,10 +31,10 @@ export class CustomReferenceListTemplate {
         }
 
         if (AppTool.IsNullOrEmpty(this.rowData['CustomerReference1']) && !AppTool.IsNullOrEmpty(this.rowData['CustomerReference2'])) {
-            this.MyLabel = this.rowData['CustomerReference2'];
+            this.MyLabel += this.rowData['CustomerReference2'];
         }
         if (!AppTool.IsNullOrEmpty(this.rowData['CustomerReference1']) && !AppTool.IsNullOrEmpty(this.rowData['CustomerReference2'])) {
-            this.MyLabel = ' / ' + this.rowData['CustomerReference2'];
+            this.MyLabel += ' / ' + this.rowData['CustomerReference2'];
         }
         
 
