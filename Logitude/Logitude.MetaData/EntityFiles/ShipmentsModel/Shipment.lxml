@@ -109869,6 +109869,26 @@
       DefaultText="&quot;Delete On Forwarding?&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.O.Routings.OriginWarehouseLeg&quot;"
+      DefaultText="&quot;Origin Warehouse / Terminal&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.O.Routings.DestinationWarehouseLeg&quot;"
+      DefaultText="&quot;Destination Warehouse / Terminal&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.O.Routings.AddOriginWarehouseLeg&quot;"
+      DefaultText="&quot;Add Origin Warehouse / Terminal&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.O.Routings.AddDestinationWarehouseLeg&quot;"
+      DefaultText="&quot;Add Destination Warehouse / Terminal&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

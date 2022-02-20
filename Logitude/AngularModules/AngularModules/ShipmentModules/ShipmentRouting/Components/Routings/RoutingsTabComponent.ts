@@ -326,8 +326,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             }
         }
 
-        // Destination  WarehouseLeg
-
+        // Destination WarehouseLeg
         if (this.IsDestinationWarehouseLegVisible && this.EntityPM.DirectionId == "R") {
             if (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "H") {
                 this.ItemsSource.push(new RoutingItem(this.EntityPM, "WarehouseLeg2", this));
@@ -434,7 +433,9 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Width = 900;
                     logitudeWindow.Height = 500;
-                    logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddWarehouseLeg");
+                    var title = TextCodeTranslator.Translate("Shipment.O.Routings.AddWarehouseLeg");
+                    var originTitle = TextCodeTranslator.Translate("Shipment.O.Routings.AddOriginWarehouseLeg");
+                    logitudeWindow.Title = this.GetWarehouseLegTitle(title, originTitle); //TextCodeTranslator.Translate("Shipment.O.Routings.AddWarehouseLeg");
                     logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: this.myLegType, IsNewLeg: true }
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditWarehouseLegComponent');
                     break;
@@ -444,7 +445,9 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Width = 900;
                     logitudeWindow.Height = 500;
-                    logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddWarehouseLeg");
+                    var title = TextCodeTranslator.Translate("Shipment.O.Routings.AddWarehouseLeg");
+                    var originTitle = TextCodeTranslator.Translate("Shipment.O.Routings.AddDestinationWarehouseLeg");
+                    logitudeWindow.Title = this.GetWarehouseLegTitle(title, originTitle);
                     logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: this.myLegType, IsNewLeg: true }
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditWarehouseLegComponent');
                     break;
@@ -468,6 +471,25 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 break;
             }
         }
+    }
+
+    GetWarehouseLegTitle(title: string, originTitle: string): string {
+        var newTitle = title;
+        if (this.IsDestinationWarehouseLegVisible) {
+            newTitle = originTitle;
+        }
+        return newTitle;
+    }
+
+    GetAddEditWarehouseLegTitle(title: string, legType: string): string {
+        var title = title;
+        if (legType == "WarehouseLeg_Pickups") {
+            title = "Add Origin Warehouse / Terminal";
+        }
+        else if (legType == "WarehouseLeg_Pickups") {
+            title = "Add Destination Warehouse / Terminal";
+        }
+        return title;
     }
     AddLeg(myLegType: string) {
         this.myLegType = myLegType;
@@ -2002,11 +2024,6 @@ export class RoutingItem extends BaseComponent {
                 break;
             }
 
-            case "WarehouseLeg_Pickups": {
-                myTextCode = "Shipment.O.Routings.WarehouseLeg";
-                break;
-            }
-
             case "Pre Carriage": {
                 myTextCode = "Shipment.O.Routings.PreCarriage";
                 myLegTransportModeId = this.EntityPM.PreCarriageTransportModeId;
@@ -2054,11 +2071,25 @@ export class RoutingItem extends BaseComponent {
                 myLegTransportModeId = this.EntityPM.OnForwardingTransportModeId;
                 break;
             }
+            case "WarehouseLeg_Pickups":
+                {
+                    var title = "Shipment.O.Routings.WarehouseLeg";
+                    var originTitle = "Shipment.O.Routings.OriginWarehouseLeg";
+                    myTextCode = this.fatherComponent.GetWarehouseLegTitle(title, originTitle);
+                    break;
+                }
+            case "WarehouseLeg":
+                {
+                    myTextCode = "Shipment.O.Routings.WarehouseLeg";
+                    break;
+                }
             case "WarehouseLeg2":
-            case "WarehouseLeg": {
-                myTextCode = "Shipment.O.Routings.WarehouseLeg";
-                break;
-            }
+                {
+                    var title = "Shipment.O.Routings.WarehouseLeg";
+                    var destinationTitle = "Shipment.O.Routings.DestinationWarehouseLeg";
+                    myTextCode = this.fatherComponent.GetWarehouseLegTitle(title, destinationTitle);
+                    break;
+                }
 
             case "Delivery": {
                 myTextCode = "Shipment.O.Routings.Delivery";
@@ -2086,7 +2117,7 @@ export class RoutingItem extends BaseComponent {
         this.LegName = TextCodeTranslator.Translate(myTextCode) + myExtention;
         this.LegTransportModeId = myLegTransportModeId;
     }
-
+    
     public ImageSource: string;
     GetImageSource() {
 

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "d0edc65e0cd5d3bb09479fffdf6c3ee1";
+		public const string HashString = "878f4056a016093afb1e690d5faf53f1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -54699,6 +54699,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  		   TextCode ShipmentTextCode_ShipmentBRoutingsAddOnForwarding = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Routings.AddOnForwarding", DefaultText = "Add On Forwarding",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentMDeleteThisOnForwarding = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.DeleteThisOnForwarding", DefaultText = "Delete On Forwarding?",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsOriginWarehouseLeg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.OriginWarehouseLeg", DefaultText = "Origin Warehouse / Terminal",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsDestinationWarehouseLeg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.DestinationWarehouseLeg", DefaultText = "Destination Warehouse / Terminal",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsAddOriginWarehouseLeg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.AddOriginWarehouseLeg", DefaultText = "Add Origin Warehouse / Terminal",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsAddDestinationWarehouseLeg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.AddDestinationWarehouseLeg", DefaultText = "Add Destination Warehouse / Terminal",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

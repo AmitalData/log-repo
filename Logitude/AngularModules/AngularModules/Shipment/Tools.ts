@@ -5876,7 +5876,12 @@ export class RoutingHelper {
                 if (!DateTool.IsActualDateValid(entityPM.WarehouseLegActualEntryDate)) {
                     errors.push(message.replace("Field", "Warehouse Entry Date"));
                 }
-
+                if (!DateTool.IsActualDateValid(entityPM.WarehouseLeg2ActualReleaseDate)) {
+                    errors.push(message.replace("Field", "Warehouse Release Date"));
+                }
+                if (!DateTool.IsActualDateValid(entityPM.WarehouseLeg2ActualEntryDate)) {
+                    errors.push(message.replace("Field", "Warehouse Entry Date"));
+                }
                 // Deliveries
                 entityPM.ShipmentDeliveries.forEach(itemDelivery => {
                     if (!DateTool.IsActualDateValid(itemDelivery.ATD)) {

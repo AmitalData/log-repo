@@ -1467,8 +1467,36 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             switch (args.EventTypeCode)
             {
                 case "WHED":
-                case "WEDE":
+                    {
+                        myResult = entityPM.WarehouseLegTerminalName;
+                        if (entityPM.DirectionId == "R")
+                            myResult = entityPM.WarehouseLeg2TerminalName;
+
+                        if (myResult != null)
+                        {
+                            if (myResult.Length > 40)
+                            {
+                                myResult = myResult.Substring(0, 39);
+                            }
+                        }
+                        break;
+                    }
                 case "WHRD":
+                    {
+                        myResult = entityPM.WarehouseLegTerminalName;
+                        if (entityPM.DirectionId == "R" && FeatureToggleHelper.HasFeatureToggle("MDW", tenant))
+                            myResult = entityPM.WarehouseLeg2TerminalName;
+
+                        if (myResult != null)
+                        {
+                            if (myResult.Length > 40)
+                            {
+                                myResult = myResult.Substring(0, 39);
+                            }
+                        }
+                        break;
+                    }
+                case "WEDE":
                 case "WRDE":
                     {
                         myResult = entityPM.WarehouseLegTerminalName;
@@ -2059,7 +2087,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         }
         public void TraceTerminalData()
         {
-            if (this.entityPM.DirectionId == "I")
+            if (this.entityPM.DirectionId == "R" && FeatureToggleHelper.HasFeatureToggle("MDW", tenant))
+            {
+                this.TraceOriginWarehouse();
+                this.TraceDestinationWarehouse();
+            }
+            else if (this.entityPM.DirectionId == "I")
             {
 
                 if (entityPoco.WarehouseLegActualEntryDate != null && entityPM.WarehouseLegActualEntryDate == null)
@@ -2070,9 +2103,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 {
                     this.CreateTraceEvent("WHED", entityPM.WarehouseLegActualEntryDate);
                 }
-
-
-
                 if (entityPoco.WarehouseLegActualReleaseDate != null && entityPM.WarehouseLegActualReleaseDate == null)
                 {
                     this.DeleteTraceEvent("WHRD");
@@ -2084,8 +2114,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             }
             else
             {
-
-
                 if (entityPoco.WarehouseLegActualEntryDate != null && entityPM.WarehouseLegActualEntryDate == null)
                 {
                     this.DeleteTraceEvent("WEDE");
@@ -2094,21 +2122,56 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 {
                     this.CreateTraceEvent("WEDE", entityPM.WarehouseLegActualEntryDate);
                 }
-
-
-
                 if (entityPoco.WarehouseLegActualReleaseDate != null && entityPM.WarehouseLegActualReleaseDate == null)
                 {
                     this.DeleteTraceEvent("WRDE");
                 }
-
                 else if (entityPoco.WarehouseLegActualReleaseDate != entityPM.WarehouseLegActualReleaseDate)
                 {
                     this.CreateTraceEvent("WRDE", entityPM.WarehouseLegActualReleaseDate);
                 }
-
             }
         }
+
+        private void TraceOriginWarehouse()
+        {
+            if (entityPoco.WarehouseLegActualEntryDate != null && entityPM.WarehouseLegActualEntryDate == null)
+            {
+                this.DeleteTraceEvent("WEDE");
+            }
+            else if (entityPoco.WarehouseLegActualEntryDate != entityPM.WarehouseLegActualEntryDate)
+            {
+                this.CreateTraceEvent("WEDE", entityPM.WarehouseLegActualEntryDate);
+            }
+            if (entityPoco.WarehouseLegActualReleaseDate != null && entityPM.WarehouseLegActualReleaseDate == null)
+            {
+                this.DeleteTraceEvent("WRDE");
+            }
+            else if (entityPoco.WarehouseLegActualReleaseDate != entityPM.WarehouseLegActualReleaseDate)
+            {
+                this.CreateTraceEvent("WRDE", entityPM.WarehouseLegActualReleaseDate);
+            }
+        }
+        private void TraceDestinationWarehouse()
+        {
+            if (entityPoco.WarehouseLeg2ActualEntryDate != null && entityPM.WarehouseLeg2ActualEntryDate == null)
+            {
+                this.DeleteTraceEvent("WHED");
+            }
+            else if (entityPoco.WarehouseLeg2ActualEntryDate != entityPM.WarehouseLeg2ActualEntryDate)
+            {
+                this.CreateTraceEvent("WHED", entityPM.WarehouseLeg2ActualEntryDate);
+            }
+            if (entityPoco.WarehouseLeg2ActualReleaseDate != null && entityPM.WarehouseLeg2ActualReleaseDate == null)
+            {
+                this.DeleteTraceEvent("WHRD");
+            }
+            else if (entityPoco.WarehouseLeg2ActualReleaseDate != entityPM.WarehouseLeg2ActualReleaseDate)
+            {
+                this.CreateTraceEvent("WHRD", entityPM.WarehouseLeg2ActualReleaseDate);
+            }
+        }
+
         private static void ComputeLastSharedEvent(ShipmentPM entityPM)
         {
             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);

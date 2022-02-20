@@ -29,7 +29,6 @@ import { CurrencyListService } from '../../../../Common/Services/StandardLists/C
 import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
 import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
 import { WarehouseEntryListExtendedService } from '../../../../Warehouse/Services/ExtendedLists/WarehouseEntryListExtendedService';
-import { WarehouseExtendedListService } from '../../../../Common/Services/ExtendedLists/WarehouseExtendedListService';
 import { ShipmentStoragePricingPM } from '../../../../Shipment/EntityPMs/ShipmentStoragePricingPM';
 import { CardPM } from '../../../../Common/EntityPMs/CardPM';
 
@@ -73,13 +72,12 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     private cardService: CardPMService;
     private cardListService: CardListService;
     private warehouseEntryListExtendedService: WarehouseEntryListExtendedService;
-    private warehouseExtendedListService: WarehouseExtendedListService;
+
     InitServices() {
         this.myAddressListService = new AddressListService();
         this.cardService = new CardPMService();
         this.cardListService = new CardListService();
         this.warehouseEntryListExtendedService = new WarehouseEntryListExtendedService();
-        this.warehouseExtendedListService = new WarehouseExtendedListService();
     }
 
     GetShipmentDirection() {
