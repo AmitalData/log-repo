@@ -8,6 +8,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { QuoteUtilities } from '../../../../Quote/Utilities/QuoteUtilities';
 
 @Component({
     selector: 'ConnectionsTabComponent',
@@ -24,11 +25,13 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     public TicketsItemsSource: QuoteConnectedEntityItem[];
     public OpportunitiesItemsSource: QuoteConnectedEntityItem[];
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsEditingEnable: boolean = false;
+
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = this.entityArgs.EntityPM;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
         this.myDomainService = new QuoteDomainService();
-
+        this.IsEditingEnable = QuoteUtilities.IsQuoteEditEnabled(this.EntityPM);
         this.Listen();
         this.LoadData();
     }

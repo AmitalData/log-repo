@@ -54,6 +54,7 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     public IsAddingStandaloneShipmentVisible: boolean = false;
     public IsEditingEnabled: boolean = true;
+    public IsAddEditEmptyCR: boolean = true 
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public IsLCLEntity: boolean = false;
     public IsFCLEntity: boolean = false;
@@ -91,6 +92,7 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
         this.WareHouseRelaseCustomerId = args['WareHouseRelaseCustomerId'];
         this.WareHouseRelaseWareHouseId = args['WareHouseRelaseWareHouseId'];
         this.IsCreatingContainerDelivery = args["IsCreatingContainerDelivery"];
+        this.IsAddEditEmptyCR = args["IsAddEditEmptyCR"];
         var isOutSource = args['IsOutSource'];
         if (isOutSource) this.IsShipmentEditComponent = false;
         this.IsLCLEntity = AppTool.IsLCLEntity(this.ShipmentPM.TransportModeId, this.ShipmentPM.ShipmentTypeId);
@@ -514,7 +516,7 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
             this.SavedEntityNumber = this.EntityPM.PickUpDeliveryNumber;
             
             if (this.IsNewEntity) {
-                if (this.IsFCLEntity && SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0] != null) {
+                if (this.IsFCLEntity && (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0] != null) && !this.IsAddEditEmptyCR ) {
                     this.proceedToSave = false;
                     this.AddContainerAutomatically(isClosingWindow);
                 }
