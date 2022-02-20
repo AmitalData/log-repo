@@ -1243,7 +1243,7 @@ After that Remove file  from DCA  .. ");
         public Exception FailStepRaiseCRSSExeption(Exception ee, string defaultMessage, RequestSheetParam myRequestSheetParam, MemoryStream memstream = null
             , Action OnFailAction = null)
         {
-            if (_MyCustomsRequestsSheetPM.RequestStatusEnum == SheetStatusEnum.Cancelled ||
+             if (_MyCustomsRequestsSheetPM.RequestStatusEnum == SheetStatusEnum.Cancelled ||
                     GetAccurateRequestStatusEnum() == SheetStatusEnum.Cancelled
                     ) //  RequestStatusCode
             {
@@ -1262,9 +1262,9 @@ After that Remove file  from DCA  .. ");
 
             var communicationLogStep = GetCommunicationLogStep();
             bool onlyOneChanceToSend = //20180718.ConcurrentKiller
-                _CurrentCustomsRequestStepEnum == CustomsStepEnum.ReceivedCustomResponseCorrelation &&
+                (_CurrentCustomsRequestStepEnum == CustomsStepEnum.ReceivedCustomResponseCorrelation &&
                 CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList()
-                .Contains(_RequestParams.InterfaceTypeCode);
+                .Contains(_RequestParams.InterfaceTypeCode) )||( _CurrentCustomsRequestStepEnum ==CustomsStepEnum.CustomRequest && _RequestParams.InterfaceTypeCode =="2755") ;
 
             if (!onlyOneChanceToSend && !this.IsInteractive && MessageController.ToRetry(_CurrentCustomsRequestStepEnum, communicationLogStep.Retries))
             {
@@ -1420,8 +1420,7 @@ After that Remove file  from DCA  .. ");
             bool explictStopAndWrite = false;
             try
             {
-
-                var serverTime = TenantServerConfigration.GetCurrentDateTime(_Tenant);//DateTime.Now;20150909
+                    var serverTime = TenantServerConfigration.GetCurrentDateTime(_Tenant);//DateTime.Now;20150909
                 CommunicationLogStep communicationLogStep = GetCommunicationLogStep();
                 communicationLogStep.Retries++;
                 //communicationLogStep.Status = stepStatusEnum.ToString();
