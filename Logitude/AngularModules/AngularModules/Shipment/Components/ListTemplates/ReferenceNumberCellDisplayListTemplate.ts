@@ -61,6 +61,10 @@ export class ReferenceNumberCellDisplayListTemplate {
     setVariables(rowData: any, fieldName: string) {
         this.rowData = rowData;
         this.fieldName = fieldName;
+        this.TransportModSRC = '';
+        this.DirectionSRC = '';
+        this.Source = '';
+        
         if (this.rowData['TransportModeId']) {
             this.TransportModSRC = './Images/TransportModes/' + rowData['TransportModeId'] + '.png';
         }
