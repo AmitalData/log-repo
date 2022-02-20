@@ -12,15 +12,7 @@ namespace Logitude.Customs.Data.EntityKeys
 {
    public partial class SupplierInvoiceFreightAmountKeys : EntityKeyFields
    {
-   	  public string DeclarationId  { get; set; }
-	  
-				 
-	    			   
-	  public int InvoiceCounterKey  { get; set; }
-	  
-				 
-	    			   
-	  public string CurrencyTypeCode  { get; set; }
+   	  public string Id  { get; set; }
 	  
 				 
 	    			   
@@ -28,7 +20,7 @@ namespace Logitude.Customs.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-                 return DeclarationId+'_'+InvoiceCounterKey+'_'+CurrencyTypeCode ;
+                 return Id ;
                  
       }
 

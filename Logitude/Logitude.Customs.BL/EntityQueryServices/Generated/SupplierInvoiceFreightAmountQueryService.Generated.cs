@@ -48,9 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new SupplierInvoiceFreightAmountDataMapping();
         }
 		 
-		public  SupplierInvoiceFreightAmountPM GetSingle(string declarationid, int invoicecounterkey, string currencytypecode,bool getComposition, bool getFromCache)
+		public  SupplierInvoiceFreightAmountPM GetSingle(string id,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new SupplierInvoiceFreightAmountKeys(){ DeclarationId = declarationid, InvoiceCounterKey = invoicecounterkey, CurrencyTypeCode = currencytypecode };
+             EntityKeys = new SupplierInvoiceFreightAmountKeys(){ Id = id };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(SupplierInvoiceFreightAmount entityPOCO)
         {
-            SupplierInvoiceFreightAmountKeys entityKeys = new SupplierInvoiceFreightAmountKeys() { DeclarationId = entityPOCO.DeclarationId, InvoiceCounterKey = entityPOCO.InvoiceCounterKey, CurrencyTypeCode = entityPOCO.CurrencyTypeCode,  };
+            SupplierInvoiceFreightAmountKeys entityKeys = new SupplierInvoiceFreightAmountKeys() { Id = entityPOCO.Id,  };
             return entityKeys;
         }
      

@@ -21,17 +21,19 @@ namespace Logitude.Customs.Data.EntityMapping
         { 
 			  this.ToTable("SupplierInvoiceFreightAmounts", "Customs");
 		
-		    this.HasKey(t => new { t.DeclarationId, t.InvoiceCounterKey, t.CurrencyTypeCode });
+		    this.HasKey(t => new { t.Id });
 	 
             this.Property(t => t.DeclarationId).HasColumnName("DeclarationId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.InvoiceCounterKey).HasColumnName("InvoiceCounterKey").HasDatabaseGeneratedOption(null);
+            this.Property(t => t.InvoiceCounterKey).HasColumnName("InvoiceCounterKey");
 
             this.Property(t => t.Tenant).HasColumnName("Tenant");
 
             this.Property(t => t.CurrencyTypeCode).HasColumnName("CurrencyTypeCode").IsRequired().HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.Amount).HasColumnName("Amount").HasPrecision(16, 2);
+
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
         }
     }
 }
