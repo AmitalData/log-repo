@@ -382,7 +382,7 @@
                                                         </td>
 
                                                         <td [style.width.px]="DateFilterWidth">
-                                                            <button class="toggle-button" style="width: 44px;margin: 0 3px"
+                                                            <button class="toggle-button" [disabled]="this.filterSelectedValue == 'filter_Tax'" style="width: 44px;margin: 0 3px"
                                                                 (click)="ShowSecondDateFilter=!ShowSecondDateFilter" float-start>
                                                                 <img [attr.src]="FromDate2 && ToDate2 ? './Images/FilterGrayTransUsed.png' : './Images/FilterGrayTrans.png'">
                                                                 <img [class.FlipImgVert]="ShowSecondDateFilter" src="./Images/FiltersOpen.png"
@@ -533,10 +533,6 @@
                                                                 <li float-start id="filter_due" (click)="Date2FilterItemClicked('filter_due')" style="height: 22px;"
                                                                     [class.SelectedFilter]="filterSelectedValue2 === 'filter_due'">
                                                                     {{'GLAccounts.O.filter_due' | TextCodeTranslationPipe}}
-                                                                </li>
-                                                                <li *ngIf="DisplayTaxReportFilter" (click)="Date2FilterItemClicked('filter_Tax')" style="height: 22px;"
-                                                                    [class.SelectedFilter]="filterSelectedValue2 === 'filter_Tax'">
-                                                                    {{'TaxReport' | TextCodeTranslationPipe}}
                                                                 </li>
                                                             </ul>
                                                         </td>

@@ -826,7 +826,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             else {
                 if(SessionLocator.TenantPM.CurrencyId == this.EntityPM.CurrencyId)
                     result = this.TenantCurrencySign;
-                else if(this.LTBSummery.StartBalanceForeignList.length > 0)
+                else if(this.LTBSummery.StartBalanceForeignList?.length > 0)
                     result = this.EntityPM.CurrencySign;
             }
         }
@@ -844,7 +844,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                 if(SessionLocator.TenantPM.CurrencyId == this.EntityPM.CurrencyId){
                     result = Number(this.LTBSummery.StartBalanceLocal);
                 }
-                else if(this.LTBSummery.StartBalanceForeignList.length > 0)
+                else if(this.LTBSummery.StartBalanceForeignList?.length > 0)
                     result = Number(this.LTBSummery.StartBalanceForeignList[0].BalanceForeign);
             }
 
@@ -1220,6 +1220,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                 this.UseTaxreportFilter = true;
                 this.ResetLTBFields();
                 this.NotIncludedInAnyTaxReport = true;
+                this.ResetAdditionalDateFilter();
                 break;
             default:
                 break;
