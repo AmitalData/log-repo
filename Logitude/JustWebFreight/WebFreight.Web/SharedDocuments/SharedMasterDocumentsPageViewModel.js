@@ -260,7 +260,7 @@
                 let documentsTabPageControlId = "#DocumentsTabPageControl" + myEntityId;
                 if (result.length > 0) {
                     $("#DownloadAllConnectedDocuments").show();
-                    ko.applyBindings(BuildMasterDocumentsTabPageViewModel(myEntityId, result, fileName, ""), document.getElementById(documentsTabPageControlId));
+                    ko.applyBindings(BuildMasterDocumentsTabPageViewModel(myEntityId, result, fileName, "", myEntityKey), document.getElementById(documentsTabPageControlId));
                 }
 
                 else {
