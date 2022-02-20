@@ -98,7 +98,7 @@
 
             <div [style.border]="BorderStyle" valign="center" align="center" style="vertical-align:top;text-align:center;background-color:#F2F8FF;height:100%;width:100%;border-radius:5px;">
                 <div style="vertical-align:central">
-                    <input [attr.id]="ImageFileHtmlId" accept=".jpg,.jpeg,.JPG,.JPEG,.png,.PNG" type="file" [(ngModel)]="DataImage" (change)="UploadogoFile($event)" style="display:none" class="upload" />
+                    <input onclick="this.value = null" [attr.id]="ImageFileHtmlId" accept=".jpg,.jpeg,.JPG,.JPEG,.png,.PNG" type="file" [(ngModel)]="DataImage" (change)="UploadogoFile($event)" style="display:none" class="upload" />
                     <img [style.max-width]="WidthImage" [style.max-height]="HeightImage" class="CenterCenter" [style.cursor]="CursorImage" [attr.title]="Tooltip" (click)="OpenUpLoadLogo()" style="vertical-align:central;background-color:white;border:0px solid #ffffff;" src="./Images/DefultImage3.jpg" [attr.id]="ImageKey" />
                     <span [attr.id]="ProgressDownloadId" style="position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%;display:none"><img class="CenterCenter" src="Images/progressDownload.gif" /></span>
 
