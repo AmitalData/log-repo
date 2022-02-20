@@ -89,23 +89,25 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
-            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe((s: string) => {
-                if (s == "PayablesGenerated") {
-                    this.BuildItemsSource();
-                    this.ComputeShipmentFields();
-                }
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe((event: string) => {
+                if (event) {
+                    if (event == "PayablesGenerated") {
+                        this.BuildItemsSource();
+                        this.ComputeShipmentFields();
+                    }
 
-                else if (s == "OriginShipmentLoaded") {
-                    this.OriginShipment = this.entityArgs.OriginEntity;
-                }
+                    else if (event == "OriginShipmentLoaded") {
+                        this.OriginShipment = this.entityArgs.OriginEntity;
+                    }
 
-                else if (s == "UpdateCustomsCharges") {
-                    this.CheckUpdateCustomsCharges();
-                }
+                    else if (event == "UpdateCustomsCharges") {
+                        this.CheckUpdateCustomsCharges();
+                    }
 
-                else if (s.indexOf("UpdateCustomsChargesPartnerDeleted") > -1) {
-                    var args = s.split(',');
-                    this.CheckUpdateCustomsCharges(args[1]);
+                    else if (event.indexOf("UpdateCustomsChargesPartnerDeleted") > -1) {
+                        var args = event.split(',');
+                        this.CheckUpdateCustomsCharges(args[1]);
+                    }
                 }
             });
 
