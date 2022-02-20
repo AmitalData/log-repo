@@ -13,6 +13,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             advancedQueryFilter.Operator = advancedQueryFilterPM.Operator;
             advancedQueryFilter.PredefinedValue = advancedQueryFilterPM.PredefinedValue;
             advancedQueryFilter.PredefinedValue2 = advancedQueryFilterPM.PredefinedValue2;
+            advancedQueryFilter.CustomPredefined = advancedQueryFilterPM.CustomPredefined;
             advancedQueryFilter.QueryId = advancedQueryFilterPM.QueryId;
             advancedQueryFilter.QueryCode = advancedQueryFilterPM.QueryCode;
 

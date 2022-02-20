@@ -1186,6 +1186,7 @@ namespace MetaDataGenerator
                     SetAttribute("PredefinedValue", GetStringValue(qf.PredefinedValue), colXElement);
                     SetAttribute("PredefinedValue2", GetStringValue(qf.PredefinedValue2), colXElement);
                     SetAttribute("Operator", GetStringValue(qf.Operator), colXElement);
+                    SetAttribute("CustomPredefined", GetStringValue(qf.CustomPredefined), colXElement);
 
                 }
 

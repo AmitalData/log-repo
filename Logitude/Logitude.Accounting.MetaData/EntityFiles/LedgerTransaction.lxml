@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Ledger Transaction&quot;"
-  Code="&quot;87d0&quot;"
+  Code="&quot;20b2&quot;"
   Name="&quot;LedgerTransaction Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -5193,6 +5193,222 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Query
+    Code="&quot;LedgerTransactions&quot;"
+    TextCode="&quot;Ledger Transactions&quot;"
+    LocalTextCode="&quot;תנועות&quot;"
+    QueryGroupCode="&quot;20b2&quot;"
+    IndexOrder="0"
+    ObjectTableName="&quot;LedgerTransaction&quot;"
+    QuerySection="&quot;LedgerTransaction&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    DefaultSortName="&quot;CreateDate&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;JournalLineNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;CreateDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;AccountingDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;DocumentDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;DueDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;LocalAmountDebit&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;LocalAmountCredit&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;ForeignAmountDebit&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;ForeignAmountCredit&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;ExchangeRate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;Reference1&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;Reference2&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="12"
+        ObjectFieldName="&quot;Reference3&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="13"
+        ObjectFieldName="&quot;OpenAmount&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="14"
+        ObjectFieldName="&quot;JournalNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="15"
+        ObjectFieldName="&quot;CurrencyCode&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="16"
+        ObjectFieldName="&quot;Source&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="17"
+        ObjectFieldName="&quot;SourceType&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="18"
+        ObjectFieldName="&quot;Notes&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="19"
+        ObjectFieldName="&quot;CumulativeLocalAmount&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="20"
+        ObjectFieldName="&quot;CumulativeForeignAmount&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="21"
+        ObjectFieldName="&quot;AmountToReconcile&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="22"
+        ObjectFieldName="&quot;Mark&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="23"
+        ObjectFieldName="&quot;OpenAmountCurrencyCode&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="24"
+        ObjectFieldName="&quot;IsReconciled&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="25"
+        ObjectFieldName="&quot;SourceNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="26"
+        ObjectFieldName="&quot;CurrencySign&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="27"
+        ObjectFieldName="&quot;OpenAmountCurrencySign&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="28"
+        ObjectFieldName="&quot;IsExternalReconcile&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="29"
+        ObjectFieldName="&quot;InReconcileProgress&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="30"
+        ObjectFieldName="&quot;ForeignAmount&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="31"
+        ObjectFieldName="&quot;ReconcileRemarks&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="32"
+        ObjectFieldName="&quot;OppositeAccountEnglishName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="33"
+        ObjectFieldName="&quot;OppositeAccountLocalName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="34"
+        ObjectFieldName="&quot;OppositeAccountDisplayNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="35"
+        ObjectFieldName="&quot;InProgressExternalReconcile&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="36"
+        ObjectFieldName="&quot;CalculatedLocalAmount&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactions&quot;"
+        IndexOrder="37"
+        ObjectFieldName="&quot;CalculatedForeignAmount&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;LedgerTransactions&quot;"
+        PredefinedValue="&quot;16/3/2021-16/3/2022&quot;"
+        ObjectFieldName="&quot;AccountingDate&quot;"
+        IsPredefined="true"
+        IndexOrder="0"
+        CustomPredefined="&quot;True&quot;" />
+    </QueryFilters>
+  </Query>
   <Screen
     Name="&quot;LedgerTransactionHeaderScreen&quot;"
     ObjectTableName="&quot;LedgerTransaction&quot;"
@@ -5234,7 +5450,8 @@
   <DataContracts>
     <DataContract
       Name="&quot;LedgerTransaction&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="&quot;False&quot;">
       <DCField
         DCFieldName="&quot;Id&quot;"
         FieldName="&quot;Id&quot;"

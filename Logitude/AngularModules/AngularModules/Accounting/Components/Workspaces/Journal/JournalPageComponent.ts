@@ -214,6 +214,29 @@ export class JournalPageComponent implements AfterViewInit {
         }
     }
 
+    ViewLedgerTransactionsQuery(){
+
+        var displayTitle = TextCodeTranslator.Translate("Accounting.General.O.LedgerTransactions");
+        var filters = new ApiQueryFilters();
+        var queryCode = "LedgerTransactions";
+
+        var listArgs = new ListComponentArgs();
+        listArgs.QueryCode = queryCode;
+        listArgs.Filters = filters;
+        listArgs.ObjectTableName = "LedgerTransaction";
+        listArgs.DisplayTitle = displayTitle;
+        // listArgs.BackButtonTitle = "Full Accounting";
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run(listArgs);
+                    cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
+                    this.CurrentSession.AddMenuReference(cmpRef);
+                });
+        });
+    }
+
     ViewRevaluationQuery(){
 
         var displayTitle = "";
