@@ -68,11 +68,23 @@ namespace Logitude.BL.ShipmentsModel.DigitalModels
         public DateTime? PreCarriageATD { get; set; }
         public DateTime? PreCarriageETA { get; set; }
         public DateTime? PreCarriageATA { get; set; }
+        public string PreCarriageFromPortCode { get; set; }
+        public string PreCarriageFromPortName { get; set; }
+        public string PreCarriageFromPortCountryCode { get; set; }
+        public string PreCarriageToPortCode { get; set; }
+        public string PreCarriageToPortName { get; set; }
+        public string PreCarriageToPortCountryCode { get; set; }
+
         public bool HasOnCarriage { get; set; }
         public DateTime? OnCarriageETD { get; set; }
         public DateTime? OnCarriageATD { get; set; }
         public DateTime? OnCarriageETA { get; set; }
         public DateTime? OnCarriageATA { get; set; }
-
+        public string OnCarriageFromPortCode { get; set; }
+        public string OnCarriageFromPortName { get; set; }
+        public string OnCarriageFromPortCountryCode { get; set; }
+        public string OnCarriageToPortCode { get; set; }
+        public string OnCarriageToPortName { get; set; }
+        public string OnCarriageToPortCountryCode { get; set; }
     }
 }
