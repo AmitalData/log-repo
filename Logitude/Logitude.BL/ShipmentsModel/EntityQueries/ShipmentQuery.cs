@@ -14297,17 +14297,29 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                      Transshipment3ToPortStateCode = masterData.Transshipment3ToPort != null ? masterData.Transshipment3ToPort.StateCode : null,
                                                      Transshipment3ToPortCountryCode = masterData.Transshipment3ToPort != null ? masterData.Transshipment3ToPort.Country.Code : null,
 
+                                                     HasOnCarriage = masterData.OnCarriageFromPortId != null || masterData.OnCarriageToPortId != null ? true : false,
                                                      OnCarriageATA = masterData.OnCarriageATA,
                                                      OnCarriageATD = masterData.OnCarriageATD,
                                                      OnCarriageETA = masterData.OnCarriageETA,
                                                      OnCarriageETD = masterData.OnCarriageETD,
-                                                     HasOnCarriage = masterData.OnCarriageFromPortId != null || masterData.OnCarriageToPortId != null ? true : false,
+                                                     OnCarriageFromPortCode = masterData.OnCarriageFromPort != null ? masterData.OnCarriageFromPort.Code : null,
+                                                     OnCarriageFromPortName = masterData.OnCarriageFromPort != null ? masterData.OnCarriageFromPort.EnglishName : null,
+                                                     OnCarriageFromPortCountryCode = masterData.OnCarriageFromPort != null ? masterData.OnCarriageFromPort.Country.Code : null,
+                                                     OnCarriageToPortCode = masterData.OnCarriageToPort != null ? masterData.OnCarriageToPort.Code : null,
+                                                     OnCarriageToPortName = masterData.OnCarriageToPort != null ? masterData.OnCarriageToPort.EnglishName : null,
+                                                     OnCarriageToPortCountryCode = masterData.OnCarriageToPort != null ? masterData.OnCarriageToPort.Country.Code : null,
 
+                                                     HasPreCarriage = masterData.PreCarriageFromPortId != null || masterData.PreCarriageToPortId != null ? true : false,
                                                      PreCarriageATA = masterData.PreCarriageATA,
                                                      PreCarriageATD = masterData.PreCarriageATD,
                                                      PreCarriageETA = masterData.PreCarriageETA,
                                                      PreCarriageETD = masterData.PreCarriageETD,
-                                                     HasPreCarriage = masterData.PreCarriageFromPortId != null || masterData.PreCarriageToPortId != null ? true : false
+                                                     PreCarriageFromPortCode = masterData.PreCarriageFromPort != null ? masterData.PreCarriageFromPort.Code : null,
+                                                     PreCarriageFromPortName = masterData.PreCarriageFromPort    != null ? masterData.PreCarriageFromPort.EnglishName : null,
+                                                     PreCarriageFromPortCountryCode = masterData.PreCarriageFromPort != null ? masterData.PreCarriageFromPort.Country.Code : null,
+                                                     PreCarriageToPortCode = masterData.PreCarriageToPort != null ? masterData.PreCarriageToPort.Code : null,
+                                                     PreCarriageToPortName = masterData.PreCarriageToPort != null ? masterData.PreCarriageToPort.EnglishName : null,
+                                                     PreCarriageToPortCountryCode = masterData.PreCarriageToPort != null ? masterData.PreCarriageToPort.Country.Code : null
                                                  };
 
             return shipmentsMasterDataFieldsQuery.ToList();
@@ -14391,12 +14403,24 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentAdditionalFields.OnCarriageETA = shipmentMasterDataFields.OnCarriageETA;
                 shipmentAdditionalFields.OnCarriageETD = shipmentMasterDataFields.OnCarriageETD;
                 shipmentAdditionalFields.HasOnCarriage = shipmentMasterDataFields.HasOnCarriage;
+                shipmentAdditionalFields.OnCarriageFromPortCode = shipmentMasterDataFields.OnCarriageFromPortCode;
+                shipmentAdditionalFields.OnCarriageFromPortName = shipmentMasterDataFields.OnCarriageFromPortName;
+                shipmentAdditionalFields.OnCarriageFromPortCountryCode = shipmentMasterDataFields.OnCarriageFromPortCountryCode;
+                shipmentAdditionalFields.OnCarriageToPortCode = shipmentMasterDataFields.OnCarriageToPortCode;
+                shipmentAdditionalFields.OnCarriageToPortName = shipmentMasterDataFields.OnCarriageToPortName;
+                shipmentAdditionalFields.OnCarriageToPortCountryCode = shipmentMasterDataFields.OnCarriageToPortCountryCode;
 
                 shipmentAdditionalFields.PreCarriageATA = shipmentMasterDataFields.PreCarriageATA;
                 shipmentAdditionalFields.PreCarriageATD = shipmentMasterDataFields.PreCarriageATD;
                 shipmentAdditionalFields.PreCarriageETA = shipmentMasterDataFields.PreCarriageETA;
                 shipmentAdditionalFields.PreCarriageETD = shipmentMasterDataFields.PreCarriageETD;
                 shipmentAdditionalFields.HasPreCarriage = shipmentMasterDataFields.HasPreCarriage;
+                shipmentAdditionalFields.PreCarriageFromPortCode = shipmentMasterDataFields.PreCarriageFromPortCode;
+                shipmentAdditionalFields.PreCarriageFromPortName = shipmentMasterDataFields.PreCarriageFromPortName;
+                shipmentAdditionalFields.PreCarriageFromPortCountryCode = shipmentMasterDataFields.PreCarriageFromPortCountryCode;
+                shipmentAdditionalFields.PreCarriageToPortCode = shipmentMasterDataFields.PreCarriageToPortCode;
+                shipmentAdditionalFields.PreCarriageToPortName = shipmentMasterDataFields.PreCarriageToPortName;
+                shipmentAdditionalFields.PreCarriageToPortCountryCode = shipmentMasterDataFields.PreCarriageToPortCountryCode;
             }
         }
 
