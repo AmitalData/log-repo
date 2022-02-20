@@ -215,46 +215,56 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public List<ARInvoiceLinePM> GetInvoiceLinePMsByInvoiceIds(List<string> invoiceIds, int tenant)
         {
-            List<ARInvoiceLinePM> list = (from a in repository.context.ARInvoiceLines
-                                          where a.Tenant == tenant && invoiceIds.Contains(a.ARInvoiceId)
-                                          select new ARInvoiceLinePM()
-                                          {
-                                              ARInvoiceId = a.ARInvoiceId,
-                                              ForiegnCurrencyAmount = a.ForiegnCurrencyAmount,
-                                              InvoiceCurrencyAmount = a.InvoiceCurrencyAmount,
-                                              LocalCurrencyAmount = a.LocalCurrencyAmount,
-                                              ChargesTypeId = a.ChargesTypeId,
-                                              ForiegnCurrencyId = a.ForiegnCurrencyId,
-                                              Id = a.Id,
-                                              EntityId = a.EntityId,
-                                              ForiegnExchangeRate = a.ForiegnExchangeRate,
-                                              Tenant = a.Tenant,
-                                              LineNumber = a.LineNumber,
-                                              ReceivableId = a.ReceivableId,
-                                              MeasurementId = a.MeasurementId,
-                                              Quantity = a.Quantity,
-                                              UnitPrice = a.UnitPrice,
-                                              IsExchangeRateFixed = a.IsExchangeRateFixed,
-                                              ProfitCurrencyAmount = a.ProfitCurrencyAmount,
-                                              InvoiceCurrencyCode = a.ARInvoice == null ? "" : (a.ARInvoice.InvoiceCurrency == null ? "" : a.ARInvoice.InvoiceCurrency.Code),
-                                              InvoiceLocalCurrencyCode = a.ARInvoice == null ? "" : (a.ARInvoice.LocalCurrency == null ? "" : a.ARInvoice.LocalCurrency.Code),
-                                              MeasurementCode = a.Measurement == null ? "" : a.Measurement.Code,
-                                              ExchangeRateDate = a.ExchangeRateDate,
-                                              CreditAccount = a.CreditAccount,
-                                              Description = a.Description,
-                                              LocalDescription = a.LocalDescription,
-                                              Notes = a.Notes,
-                                              DateForInterest = a.DateForInterest,
-                                              ValueDate = a.ValueDate,
-                                              GLAccountId = a.GLAccountId,
-                                              LineActionCode = a.LineActionCode,
-                                              VatTypeId = a.VatTypeId,
-                                              VatPercentage = a.VatPercentage,
-                                              IsBackToBack = a.IsBackToBack,
-                                              IsExpense = a.IsExpense,
-                                              PrepaidCollectId = a.PrepaidCollectId,
-                                              IsRegionalTax = a.IsRegionalTax,
-                                          }).ToList();
+            List<ARInvoiceLinePM> list = new List<ARInvoiceLinePM>();
+            const int sqlLimit = 5000;
+
+            int iterations = invoiceIds.Count() / sqlLimit;
+
+            for (int i = 0; i <= iterations; i++)
+            {
+                var tempInvoiceIds = invoiceIds.Skip(i * sqlLimit).Take(sqlLimit).ToList();
+                List<ARInvoiceLinePM> tempList = (from a in repository.context.ARInvoiceLines
+                                              where a.Tenant == tenant && tempInvoiceIds.Contains(a.ARInvoiceId)
+                                              select new ARInvoiceLinePM()
+                                              {
+                                                  ARInvoiceId = a.ARInvoiceId,
+                                                  ForiegnCurrencyAmount = a.ForiegnCurrencyAmount,
+                                                  InvoiceCurrencyAmount = a.InvoiceCurrencyAmount,
+                                                  LocalCurrencyAmount = a.LocalCurrencyAmount,
+                                                  ChargesTypeId = a.ChargesTypeId,
+                                                  ForiegnCurrencyId = a.ForiegnCurrencyId,
+                                                  Id = a.Id,
+                                                  EntityId = a.EntityId,
+                                                  ForiegnExchangeRate = a.ForiegnExchangeRate,
+                                                  Tenant = a.Tenant,
+                                                  LineNumber = a.LineNumber,
+                                                  ReceivableId = a.ReceivableId,
+                                                  MeasurementId = a.MeasurementId,
+                                                  Quantity = a.Quantity,
+                                                  UnitPrice = a.UnitPrice,
+                                                  IsExchangeRateFixed = a.IsExchangeRateFixed,
+                                                  ProfitCurrencyAmount = a.ProfitCurrencyAmount,
+                                                  InvoiceCurrencyCode = a.ARInvoice == null ? "" : (a.ARInvoice.InvoiceCurrency == null ? "" : a.ARInvoice.InvoiceCurrency.Code),
+                                                  InvoiceLocalCurrencyCode = a.ARInvoice == null ? "" : (a.ARInvoice.LocalCurrency == null ? "" : a.ARInvoice.LocalCurrency.Code),
+                                                  MeasurementCode = a.Measurement == null ? "" : a.Measurement.Code,
+                                                  ExchangeRateDate = a.ExchangeRateDate,
+                                                  CreditAccount = a.CreditAccount,
+                                                  Description = a.Description,
+                                                  LocalDescription = a.LocalDescription,
+                                                  Notes = a.Notes,
+                                                  DateForInterest = a.DateForInterest,
+                                                  ValueDate = a.ValueDate,
+                                                  GLAccountId = a.GLAccountId,
+                                                  LineActionCode = a.LineActionCode,
+                                                  VatTypeId = a.VatTypeId,
+                                                  VatPercentage = a.VatPercentage,
+                                                  IsBackToBack = a.IsBackToBack,
+                                                  IsExpense = a.IsExpense,
+                                                  PrepaidCollectId = a.PrepaidCollectId,
+                                                  IsRegionalTax = a.IsRegionalTax,
+                                              }).ToList();
+                list.AddRange(tempList);
+            }
             return list;
         }
     }
