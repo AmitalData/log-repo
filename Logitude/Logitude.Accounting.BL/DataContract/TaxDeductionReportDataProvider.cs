@@ -565,7 +565,7 @@ namespace Logitude.Accounting.BL.DataContract
                 {
                     cardsCodes = cardsCodes + item.Code + ",";
                     Address address = addresses.Where(d => d.CardId == item.Id).FirstOrDefault();
-                    groupedbyVendor.CardAddress1 = address.Address1;
+                    groupedbyVendor.CardAddress1 = address?.Address1;
                     if (groupedbyVendor.VATNumber == null && item.VatNumber != null)
                     {
                         groupedbyVendor.VATNumber = item.VatNumber;
@@ -589,7 +589,7 @@ namespace Logitude.Accounting.BL.DataContract
                 Address address = addresses.Where(d => d.CardId == selectedVendors[0].Id).FirstOrDefault();
                 groupedbyVendor.VendorAddress = address != null ? address.Name : null;
                 groupedbyVendor.VendorCity = address != null ? address.City : null;
-                groupedbyVendor.CardAddress1 = address.Address1;
+                groupedbyVendor.CardAddress1 = address?.Address1;
             }
             if (groupedbyVendor.VATNumber == null)
             {
