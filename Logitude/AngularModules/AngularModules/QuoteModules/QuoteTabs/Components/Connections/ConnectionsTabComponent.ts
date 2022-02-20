@@ -31,7 +31,6 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
         this.EntityPM = this.entityArgs.EntityPM;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
         this.myDomainService = new QuoteDomainService();
-        this.IsEditingEnable = QuoteUtilities.IsQuoteEditEnabled(this.EntityPM);
         this.Listen();
         this.LoadData();
     }
@@ -84,6 +83,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     }
 
     LoadData() {
+        this.IsEditingEnable = QuoteUtilities.IsQuoteEditEnabled(this.EntityPM);
         this.CurrentSession.StartBusyIndicatorLoading();
 
         this.myDomainService.GetQuoteConnectedEntities(this.EntityPM.Id, this.EntityPM.OpportunityId).subscribe((myResponse: ServiceResponse) => {
