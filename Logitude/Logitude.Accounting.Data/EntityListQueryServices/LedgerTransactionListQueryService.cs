@@ -1747,6 +1747,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public bool CheckHaveAccountingQueued { get; set; }
 
 
+        public string Date2TypeCode { get; set; }
+        public DateTime? FromDate2 { get; set; }
+        public DateTime? ToDate2 { get; set; }
+
+
         public bool ClacOpenReconciledAmount_OnlyWithout_IncludeRelatedCurrenciesAccount_IncludeChildAccounts { get; set; }
     }
     public class LedgerTransactionBalanceResponse : LedgerTransactionBalanceFilterCallBack

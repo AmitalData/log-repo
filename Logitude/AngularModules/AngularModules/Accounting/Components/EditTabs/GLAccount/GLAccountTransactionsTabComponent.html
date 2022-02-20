@@ -327,8 +327,27 @@
         flex-direction: column;
         justify-content: space-between;
     }
+    .flex-container__extended{
+        height: calc(100% - 162px);
+    }
     .flex-container > div{
         width: 100%;
+    }
+
+    .FlipImgVert {
+        transform: rotate(180deg);
+    }
+
+    .toggle-button {
+        border-radius: 4px;
+        border: 1px solid #e7e7e7;
+        cursor: pointer;
+    }
+    .toggle-button:active{
+        transform: scale(0.95);
+    }
+    .toggle-button:hover{
+        opacity: 0.92;
     }
 </style>
 
@@ -338,12 +357,11 @@
     Journal <a *ngIf="ReconciliationId" href="#" (click)="OpenReconciliation(EntityPM.JournalId)">{{EntityPM.JournalNumber}}</a> was created successfully
 </div>-->
 
-<table style="height: 130px;">
+<table style="height: 130px;" [style.height.px]="ShowSecondDateFilter ? 162 : 130">
     <tr>
         <td>
             <div class="TableHolder">
-                <div *ngIf="isControlAccount" class="Warning" style="width: 300px;">{{
-                                'GLAccounts.O.GLAccountIsControl' | TextCodeTranslationPipe }}</div>
+                <div *ngIf="isControlAccount" class="Warning" style="width: 300px;">{{ 'GLAccounts.O.GLAccountIsControl' | TextCodeTranslationPipe }}</div>
                 <table>
 
 
@@ -364,6 +382,12 @@
                                                         </td>
 
                                                         <td [style.width.px]="DateFilterWidth">
+                                                            <button class="toggle-button" [disabled]="this.filterSelectedValue == 'filter_Tax'" style="width: 44px;margin: 0 3px"
+                                                                (click)="ShowSecondDateFilter=!ShowSecondDateFilter" float-start>
+                                                                <img [attr.src]="FromDate2 && ToDate2 ? './Images/FilterGrayTransUsed.png' : './Images/FilterGrayTrans.png'">
+                                                                <img [class.FlipImgVert]="ShowSecondDateFilter" src="./Images/FiltersOpen.png"
+                                                                    style="margin-top: 2px;margin-left: 4px;">
+                                                            </button>
                                                             <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
                                                                 <li float-start id="filter_accounting" (click)="FilterItemClicked('filter_accounting')" style="height: 22px;"
                                                                     [class.SelectedFilter]="filterSelectedValue === 'filter_accounting'">
@@ -478,6 +502,68 @@
 
 
 
+                                                        </td>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </table>
+                                                </td>
+
+                                            </tr>
+
+                                             <!-- Date 2 -->
+                                             <tr *ngIf="ShowSecondDateFilter" class="FormFieldRow">
+                                                <td>
+                                                    <table style="table-layout: fixed;">
+                                                        <td style="width:10px"></td>
+                                                        <td style="width: 80px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                        </td>
+
+                                                        <td [style.width.px]="DateFilterWidth">
+                                                            <div style=" width: 50px; height: 5px;" float-start></div>
+                                                            <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
+                                                                <li float-start id="filter_accounting" (click)="Date2FilterItemClicked('filter_accounting')" style="height: 22px;"
+                                                                    [class.SelectedFilter]="filterSelectedValue2 === 'filter_accounting'">
+                                                                    {{'GLAccounts.O.filter_accounting' | TextCodeTranslationPipe}}
+                                                                </li>
+                                                                <li float-start id="filter_reference" (click)="Date2FilterItemClicked('filter_reference')" style="height: 22px;"
+                                                                    [class.SelectedFilter]="filterSelectedValue2 === 'filter_reference'">
+                                                                    {{'GLAccounts.O.filter_reference' | TextCodeTranslationPipe}}
+                                                                </li>
+                                                                <li float-start id="filter_due" (click)="Date2FilterItemClicked('filter_due')" style="height: 22px;"
+                                                                    [class.SelectedFilter]="filterSelectedValue2 === 'filter_due'">
+                                                                    {{'GLAccounts.O.filter_due' | TextCodeTranslationPipe}}
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                        <td style="width:15px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="width: 90px;" >
+                                                            <LogDatePicker [ObjectFieldName]="'FromDate2'" [ObjectTableName]="ObjectTableName"
+                                                                           [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
+                                                                           [HideColumns]="true" [SelectedDateValue]="FromDate"></LogDatePicker>
+                                                        </td>
+
+
+                                                        <td style="width:15px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="width: 30px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                            {{ 'Accounting.General.O.To' | TextCodeTranslationPipe }}
+                                                        </td>
+
+                                                        <td style="width: 90px;">
+                                                            <LogDatePicker [ObjectFieldName]="'ToDate2'" [ObjectTableName]="ObjectTableName"
+                                                                           [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
+                                                                           [HideColumns]="true" [SelectedDateValue]="ToDate"></LogDatePicker>
+                                                        </td>
+                                                        <td style="width:300px" rowspan="2">
+                                                            <div style="margin: 0 10px;" *ngIf="FromDate2&&ToDate2">
+                                                                <IconButton [Name]="'Delete'" (click)="ResetAdditionalDateFilter()"></IconButton>
+                                                            </div>
                                                         </td>
                                                         <td>
                                                             <div></div>
@@ -669,7 +755,7 @@ currency.BalanceForeign
 
 </table>
 
-<div class="flex-container">
+<div class="flex-container" [class.flex-container__extended]="ShowSecondDateFilter">
 
     <!-- grid -->
     <div style="flex-grow: 1000;">

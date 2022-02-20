@@ -113,7 +113,7 @@ namespace CommunicationWorkerRole
                         if (!threads[i].IsAlive)
                         {
                             threads[i] = new Thread(workers[i].Run) { Name = threads[i].Name };
-                            threads[i].Start();
+                                                                                                                                                                                    threads[i].Start();
                         }
                     }
 
