@@ -507,6 +507,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
         d.style.display = "block";
     }
 
+    previousFirstRowAppear: number = 0;
     onFirstRowSelected(row: any) {
         let elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
         let firstRowAppear = Math.floor(elem.scrollTop / this.rowHeight);
@@ -515,8 +516,12 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
             this.onRowSelected(1, 1, row.rowData, row.rowIndex);
         else if (this.selectedRow.$id <= firstRowAppear || this.selectedRow.$id > firstRowAppear + this.viewportSize)
             this.onRowSelected(1, 1, row.rowData, row.rowIndex);
-        else if (row.rowData.$id == '0' && this.selectedRow.$id != '0')
+        else if (row.rowData.$id == '0' && this.selectedRow.$id != '0' && this.previousFirstRowAppear != 0)
             this.onRowSelected(1, 1, row.rowData, row.rowIndex);
+
+
+        this.previousFirstRowAppear = firstRowAppear;
+
         return true;
     }
 
