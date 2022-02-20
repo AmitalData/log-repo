@@ -24,7 +24,8 @@ export class CustomReferenceListTemplate {
     setVariables(rowData: any, fieldName: string) {
         this.rowData = rowData;
         this.fieldName = fieldName;
-
+        this.MyLabel = "";
+        
         if (!AppTool.IsNullOrEmpty(this.rowData['CustomerReference1'])) {
             this.MyLabel = this.rowData['CustomerReference1'];
         }
