@@ -759,7 +759,9 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Width = 900;
                     logitudeWindow.Height = 500;
-                    logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.EditWarehouseLeg");
+                    var title = TextCodeTranslator.Translate("Shipment.O.Routings.EditWarehouseLeg");
+                    var originTitle = TextCodeTranslator.Translate("Shipment.O.Routings.EditOriginWarehouseLeg");
+                    logitudeWindow.Title = this.GetWarehouseLegTitle(title, originTitle); 
                     logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditWarehouseLegComponent');
                     break;
@@ -769,7 +771,9 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Width = 900;
                     logitudeWindow.Height = 500;
-                    logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.EditWarehouseLeg");
+                    var title = TextCodeTranslator.Translate("Shipment.O.Routings.EditWarehouseLeg");
+                    var originTitle = TextCodeTranslator.Translate("Shipment.O.Routings.EditDestinationWarehouseLeg");
+                    logitudeWindow.Title = this.GetWarehouseLegTitle(title, originTitle);
                     logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditWarehouseLegComponent');
                     break;

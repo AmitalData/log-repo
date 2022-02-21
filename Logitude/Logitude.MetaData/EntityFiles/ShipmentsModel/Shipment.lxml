@@ -109889,6 +109889,16 @@
       DefaultText="&quot;Add Destination Warehouse / Terminal&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.O.Routings.EditOriginWarehouseLeg&quot;"
+      DefaultText="&quot;Edit Origin Warehouse / Terminal&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.O.Routings.EditDestinationWarehouseLeg&quot;"
+      DefaultText="&quot;Edit Destination Warehouse / Terminal&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
