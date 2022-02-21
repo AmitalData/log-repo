@@ -92,7 +92,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         {
             foreach (var partnerCard in partnerCards)
             {
-                partnerCard.Name = partnerCard.Name.Replace("---", "");
+                if(!string.IsNullOrEmpty(partnerCard.Name))
+                    partnerCard.Name = partnerCard.Name.Replace("---", "");
             }
         }
 

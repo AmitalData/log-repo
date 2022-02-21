@@ -1793,7 +1793,7 @@ namespace Simplog.Data.InfrastructureModel
             get { throw new NotImplementedException(); }
         }
 
-        public IDbSet<ImageLibrary> ImageLibrarys
+        public IDbSet<ImageLibrary> ImageLibraries
         {
             get { throw new NotImplementedException(); }
         }

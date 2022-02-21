@@ -737,7 +737,7 @@ namespace Simplog.Data.InfrastructureModel
             get;
             set;
         }
-    public IDbSet<ImageLibrary> ImageLibrarys
+    public IDbSet<ImageLibrary> ImageLibraries
         {
             get;
             set;

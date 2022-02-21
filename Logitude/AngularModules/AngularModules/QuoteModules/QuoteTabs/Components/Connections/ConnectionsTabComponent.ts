@@ -8,7 +8,6 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
-import { QuoteUtilities } from '../../../../Quote/Utilities/QuoteUtilities';
 
 @Component({
     selector: 'ConnectionsTabComponent',
@@ -25,7 +24,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     public TicketsItemsSource: QuoteConnectedEntityItem[];
     public OpportunitiesItemsSource: QuoteConnectedEntityItem[];
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsEditingEnable: boolean = false;
+    public IsCancelledQuote: boolean = false;
 
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = this.entityArgs.EntityPM;
@@ -83,7 +82,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     }
 
     LoadData() {
-        this.IsEditingEnable = QuoteUtilities.IsQuoteEditEnabled(this.EntityPM);
+        this.IsCancelledQuote = this.EntityPM.IsCancelled;
         this.CurrentSession.StartBusyIndicatorLoading();
 
         this.myDomainService.GetQuoteConnectedEntities(this.EntityPM.Id, this.EntityPM.OpportunityId).subscribe((myResponse: ServiceResponse) => {

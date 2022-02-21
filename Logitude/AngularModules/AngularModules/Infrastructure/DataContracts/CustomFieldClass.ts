@@ -134,7 +134,7 @@ export class CustomFieldClass {
         //string fmt = "000000000000.000";
         var dString: string = this.ApplyDoublePadding(d + ""); //d.ToString(fmt);
         var originalString: string = d + "";
-        dString = dString.replace("+", "").replace("-", "").replace(".", "");
+        dString = dString.replace("+", "").replace("-", "").replace(".", "").replace(",", "");
 
         if (signed) {
             dString = (originalString.indexOf("-") > -1 ? "-" + dString : "+" + dString);
@@ -153,10 +153,19 @@ export class CustomFieldClass {
 
         var myResult: string = "";
 
-        if (!AppTool.IsNullOrEmpty(str)) {
+        if (!AppTool.IsNullOrEmpty(str) && str.includes('.')) {
             var stringParts: string[] = str.split('.');
 
             myResult = AppTool.PadLeft(stringParts[0], 12, "0") + "." + AppTool.PadRight(stringParts[1], 3, "0");
+        }
+        else if (!AppTool.IsNullOrEmpty(str) && str.includes(',')) 
+        {
+            var stringParts: string[] = str.split(',');
+
+            myResult = AppTool.PadLeft(stringParts[0], 12, "0") + "," + AppTool.PadRight(stringParts[1], 3, "0");
+        }
+        else{
+            myResult = str;
         }
 
         return myResult;

@@ -63,7 +63,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                                 {
                                     ShipmentPackagePM oldPackagePM = oldShipmentPM.ShipmentPackages.Where(d => d.Id == item.Id).FirstOrDefault();
 
-                                    if(oldPackagePM != null)
+                                    if (oldPackagePM != null)
                                     {
                                         ShipmentPackagePM newPackagePM = this.CopyPackage(oldPackagePM, true);
 
@@ -125,6 +125,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
                             this.CalculateShipmentAmounts(oldShipmentPM);
                             this.CalculateShipmentAmounts(newShipmentPM);
+                            this.ComputeAWBChargeAmount(oldShipmentPM);
+                            this.ComputeAWBChargeAmount(newShipmentPM);
 
                             IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
                             ShipmentService oldShipmentService = new ShipmentService(objectContext, oldShipmentPM, loggedEmail);
@@ -719,7 +721,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                         Width = oldPickupPackage.Width,
                     };
 
-                    foreach(PickUpDeliveryPackageHarmonizePM oldHarmonize in oldPickupPackage.PickUpDeliveryPackageHarmonizes)
+                    foreach (PickUpDeliveryPackageHarmonizePM oldHarmonize in oldPickupPackage.PickUpDeliveryPackageHarmonizes)
                     {
                         newPickupPackage.PickUpDeliveryPackageHarmonizes.Add(new PickUpDeliveryPackageHarmonizePM()
                         {
@@ -835,7 +837,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                     {
                         ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                         Tenant = item.Tenant,
-                        CommodityNumber = item.CommodityNumber,                       
+                        CommodityNumber = item.CommodityNumber,
                         ContainerSize = item.ContainerSize,
                         Description = item.Description,
                         Height = item.Height,
@@ -883,7 +885,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                         Quantity = item.Quantity,
                     });
                     #endregion
-                }               
+                }
             }
 
             return entityPM;
@@ -994,7 +996,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                     TruckNumber = oldDeliveryPM.TruckNumber,
                 };
 
-                foreach(ShipmentPickUpDeliveryPackagePM itemPM in oldDeliveryPM.ShipmentPickUpDeliveryPackages)
+                foreach (ShipmentPickUpDeliveryPackagePM itemPM in oldDeliveryPM.ShipmentPickUpDeliveryPackages)
                 {
                     newDeliveryPM.ShipmentPickUpDeliveryPackages.Add(new ShipmentPickUpDeliveryPackagePM()
                     {
@@ -1381,6 +1383,99 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             }
 
             return myResult;
+        }
+        private void ComputeAWBChargeAmount(ShipmentPM entityPM)
+        {
+            if (entityPM.TransportModeId == "A")
+            {
+                double? chargeableWeight = entityPM.ChargeableWeight;
+                if (entityPM.RateClassCode == "K")
+                {
+                    chargeableWeight = entityPM.ChargeableWeightInKG;
+                }
+
+                var groupCode = this.GetRateClassGroupCode(entityPM.RateClassCode);
+                if (groupCode == "M")
+                {
+                    entityPM.AWBChargeAmount = entityPM.AWBChargeRate;
+                }
+                else if (groupCode == "R")
+                {
+                    entityPM.AWBChargeAmount = entityPM.AWBChargeRate * chargeableWeight;
+                }
+
+                this.ComputeAWBFrieghtAmount(entityPM);
+            }
+        }
+        private void ComputeAWBFrieghtAmount(ShipmentPM entityPM)
+        {
+            var totalAmount = entityPM.AWBFreightAmountPrepaid + entityPM.AWBFreightAmountCollect;
+
+            bool recompute = true;
+            bool isPrepaidHasAmount = (entityPM.AWBFreightAmountPrepaid != 0 && entityPM.AWBFreightAmountPrepaid != null);
+            bool isCollectHasAmount = (entityPM.AWBFreightAmountCollect != 0 && entityPM.AWBFreightAmountCollect != null);
+
+            if (!string.IsNullOrEmpty(entityPM.FreightPrepaidCollectId))
+            {
+                if (isPrepaidHasAmount && isCollectHasAmount && (entityPM.AWBChargeAmount == totalAmount))
+                {
+                    recompute = false;
+                }
+            }
+
+            if (recompute)
+            {
+                if (entityPM.FreightPrepaidCollectId == "P")
+                {
+                    entityPM.AWBFreightAmountCollect = 0;
+                    entityPM.AWBFreightAmountPrepaid = entityPM.AWBChargeAmount == null ? 0 : entityPM.AWBChargeAmount;
+                }
+
+                else if (entityPM.FreightPrepaidCollectId == "C")
+                {
+                    entityPM.AWBFreightAmountPrepaid = 0;
+                    entityPM.AWBFreightAmountCollect = entityPM.AWBChargeAmount == null ? 0 : entityPM.AWBChargeAmount;
+                }
+            }
+        }
+        private string GetRateClassGroupCode(string rateClassCode)
+        {
+            var code = "";
+
+            switch (rateClassCode)
+            {
+                case "M":
+                case "B":
+                    {
+                        code = "M";
+                        break;
+                    }
+
+                case "R":
+                case "X":
+                case "Y":
+                    {
+                        code = "S";
+                        break;
+                    }
+
+                case "C":
+                case "E":
+                case "K":
+                case "N":
+                case "P":
+                case "Q":
+                case "U":
+                case "S":
+                    {
+                        code = "R";
+                        break;
+                    }
+
+                default: { break; }
+            }
+
+            return code;
         }
     }
     public class SplitShipmentHelper
