@@ -18260,7 +18260,7 @@
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
-    HasDataBaseField="true"
+    HasDataBaseField="false"
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"

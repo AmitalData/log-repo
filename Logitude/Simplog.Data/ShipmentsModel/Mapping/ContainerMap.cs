@@ -247,7 +247,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ExceptionDate).HasColumnName("ExceptionDate");
             this.Property(t => t.HasException).HasColumnName("HasException");
             this.Property(t => t.LastExceptionDescription).HasColumnName("LastExceptionDescription");
-            this.Property(t => t.IsUpdateEntityException).HasColumnName("IsUpdateEntityException");
             this.Property(t => t.IsExceptionResolved).HasColumnName("IsExceptionResolved");
             this.Property(t => t.EmptyContainerReturnFrom).HasColumnName("EmptyContainerReturnFrom");
             this.Property(t => t.EmptyContainerReturnTo).HasColumnName("EmptyContainerReturnTo");
