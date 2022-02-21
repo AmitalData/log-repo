@@ -1674,7 +1674,12 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                     var customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];
                     if (customFieldClass != null && customFieldClass != undefined) {
                         var customRes = customFieldClass.GetFieldDataTypeValue(this.ObjectField, customFieldClass.Value);//customFieldClass.Value;
-                        this.TextValue = (customRes != null && customRes != undefined) ? customRes + '' : customRes;
+                        let numberValue = (customRes != null && customRes != undefined) ? customRes + '' : customRes;
+
+                        if(this.thousandsSeparator == '.'){
+                            numberValue = numberValue.replace('.', ',');
+                        }
+                        this.TextValue = numberValue;
                     }
                     else {
                         console.warn("Custom Fields are not implemented in: " + this.ObjectTableName);
@@ -1941,7 +1946,9 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     FormatTextValueNumbers(textValue: string) {//60,5 ---- 60.5   1.111-----1,111
         var formattedTxt = textValue;
         var textnumber = Number(textValue);
-        if (this.DataContext[this.ObjectFieldName] == textnumber && SessionLocator.TenantPM.NumberFormatCode == "DC") {
+
+        const datacontextValue = this.ObjectField.IsCustom ? this.DataContext[this.ObjectFieldName]?.ResolvedValue :  this.DataContext[this.ObjectFieldName];
+        if (datacontextValue == textnumber && SessionLocator.TenantPM.NumberFormatCode == "DC") {
 
             if (this.InputType != "text" && this.InputType != "ntext") {
                 if (!AppTool.IsNullOrEmpty(this.TextValue)) {
