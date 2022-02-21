@@ -540,6 +540,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "TAU,Ticket Entity In Automation", 
                 Description = "Use Ticket Entity In Automation", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Managing Destination Warehouse Leg", 
+                Description = "Managing Destination Warehouse Leg in Drop Shipments", 
+                SearchFields = "MDW,Managing Destination Warehouse Leg", 
+                Code = "MDW", 
+			});
 			
             return all;
        }

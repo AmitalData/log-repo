@@ -1731,6 +1731,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.WarehouseLegCutOffDate = shipment.WarehouseLegCutOffDate;
             shipmentPM.WarehouseLegEntryDate = shipment.WarehouseLegActualEntryDate != null ? shipment.WarehouseLegActualEntryDate : shipment.WarehouseLegExpectedEntryDate;
             shipmentPM.WarehouseLegReleaseDate = shipment.WarehouseLegActualReleaseDate != null ? shipment.WarehouseLegActualReleaseDate : shipment.WarehouseLegExpectedReleaseDate;
+            shipmentPM.WarehouseLeg2WarehouseId = shipment.WarehouseLeg2WarehouseId;
+            shipmentPM.WarehouseLeg2AddressId = shipment.WarehouseLeg2AddressId;
+            shipmentPM.WarehouseLeg2TerminalCode = shipment.WarehouseLeg2TerminalCode;
+            shipmentPM.WarehouseLeg2ExpectedEntryDate = shipment.WarehouseLeg2ExpectedEntryDate;
+            shipmentPM.WarehouseLeg2ActualEntryDate = shipment.WarehouseLeg2ActualEntryDate;
+            shipmentPM.WarehouseLeg2ExpectedReleaseDate = shipment.WarehouseLeg2ExpectedReleaseDate;
+            shipmentPM.WarehouseLeg2ActualReleaseDate = shipment.WarehouseLeg2ActualReleaseDate;
+            shipmentPM.WarehouseLeg2Remarks = shipment.WarehouseLeg2Remarks;
+            shipmentPM.WarehouseLeg2Reference = shipment.WarehouseLeg2Reference;
+            shipmentPM.WarehouseLeg2VGMCutOffDate = shipment.WarehouseLeg2VGMCutOffDate;
+            shipmentPM.WarehouseLeg2CutOffDate = shipment.WarehouseLeg2CutOffDate;
+            shipmentPM.WarehouseLeg2EntryDate = shipment.WarehouseLeg2ActualEntryDate != null ? shipment.WarehouseLeg2ActualEntryDate : shipment.WarehouseLeg2ExpectedEntryDate;
+            shipmentPM.WarehouseLeg2ReleaseDate = shipment.WarehouseLeg2ActualReleaseDate != null ? shipment.WarehouseLeg2ActualReleaseDate : shipment.WarehouseLeg2ExpectedReleaseDate;
             shipmentPM.ChargeStorage = shipment.ChargeStorage;
             shipmentPM.ChargeStorageCurrencyId = shipment.ChargeStorageCurrencyId;
             shipmentPM.WeightMeasurementCode = shipment.WeightMeasurementCode;
@@ -1748,6 +1761,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.WarehouseLegTerminalName = GetCardName(byLocalName, cardObject);
                     shipmentPM.WarehouseLegAddressCountryCode = cardObject.CountryCode;
                     shipmentPM.WarehouseLegAddressCountryName = cardObject.CountryName;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(shipment.WarehouseLeg2WarehouseId))
+            {
+                Card cardObject = CardRepository.GetSingleCard(shipment.WarehouseLeg2WarehouseId, shipment.Tenant, true);
+                if (cardObject != null)
+                {
+                    shipmentPM.WarehouseLeg2TerminalName = GetCardName(byLocalName, cardObject);
+                    shipmentPM.WarehouseLeg2AddressCountryCode = cardObject.CountryCode;
+                    shipmentPM.WarehouseLeg2AddressCountryName = cardObject.CountryName;
                 }
             }
 
@@ -2526,6 +2550,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ITNumber = shipment.ITNumber;
             shipmentPM.FreightRelease = shipment.FreightRelease;
             shipmentPM.TerminalAvailable = shipment.TerminalAvailable;
+            shipmentPM.Terminal2Available = shipment.Terminal2Available;
             shipmentPM.ENSNumber = shipment.ENSNumber;
             shipmentPM.ENSDate = shipment.ENSDate;
             shipmentPM.AMSClosingDate = shipment.AMSClosingDate;
@@ -3683,6 +3708,25 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 if (cardObject != null)
                 {
                     shipmentPM.WarehouseLegTerminalName = cardObject.EnglishName;
+                }
+            }
+            shipmentPM.WarehouseLeg2WarehouseId = shipment.WarehouseLeg2WarehouseId;
+            shipmentPM.WarehouseLeg2AddressId = shipment.WarehouseLeg2AddressId;
+            shipmentPM.WarehouseLeg2TerminalCode = shipment.WarehouseLeg2TerminalCode;
+            shipmentPM.WarehouseLeg2ExpectedEntryDate = shipment.WarehouseLeg2ExpectedEntryDate;
+            shipmentPM.WarehouseLeg2ActualEntryDate = shipment.WarehouseLeg2ActualEntryDate;
+            shipmentPM.WarehouseLeg2ExpectedReleaseDate = shipment.WarehouseLeg2ExpectedReleaseDate;
+            shipmentPM.WarehouseLeg2ActualReleaseDate = shipment.WarehouseLeg2ActualReleaseDate;
+            shipmentPM.WarehouseLeg2Remarks = shipment.WarehouseLeg2Remarks;
+            shipmentPM.WarehouseLeg2Reference = shipment.WarehouseLeg2Reference;
+            shipmentPM.WarehouseLeg2EntryDate = shipment.WarehouseLeg2ActualEntryDate != null ? shipment.WarehouseLeg2ActualEntryDate : shipment.WarehouseLeg2ExpectedEntryDate;
+            shipmentPM.WarehouseLeg2ReleaseDate = shipment.WarehouseLeg2ActualReleaseDate != null ? shipment.WarehouseLeg2ActualReleaseDate : shipment.WarehouseLeg2ExpectedReleaseDate;
+            if (!string.IsNullOrEmpty(shipment.WarehouseLeg2WarehouseId))
+            {
+                Card cardObject = CardRepository.GetSingleCard(shipment.WarehouseLeg2WarehouseId, shipment.Tenant, true);
+                if (cardObject != null)
+                {
+                    shipmentPM.WarehouseLeg2TerminalName = cardObject.EnglishName;
                 }
             }
 
@@ -11252,6 +11296,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         WarehouseLegTerminalName = view.WarehouseLegTerminalName,
                         WarehouseLegEntryDate = view.WarehouseLegActualEntryDate != null ? view.WarehouseLegActualEntryDate : view.WarehouseLegExpectedEntryDate,
                         WarehouseLegReleaseDate = view.WarehouseLegActualReleaseDate != null ? view.WarehouseLegActualReleaseDate : view.WarehouseLegExpectedReleaseDate,
+                        WarehouseLeg2WarehouseId = view.WarehouseLeg2WarehouseId,
+                        WarehouseLeg2AddressId = view.WarehouseLeg2AddressId,
+                        WarehouseLeg2TerminalCode = view.WarehouseLeg2TerminalCode,
+                        WarehouseLeg2ExpectedEntryDate = view.WarehouseLeg2ExpectedEntryDate,
+                        WarehouseLeg2ActualEntryDate = view.WarehouseLeg2ActualEntryDate,
+                        WarehouseLeg2ExpectedReleaseDate = view.WarehouseLeg2ExpectedReleaseDate,
+                        WarehouseLeg2ActualReleaseDate = view.WarehouseLeg2ActualReleaseDate,
+                        WarehouseLeg2Remarks = view.WarehouseLeg2Remarks,
+                        WarehouseLeg2Reference = view.WarehouseLeg2Reference,
+                        WarehouseLeg2TerminalName = view.WarehouseLeg2TerminalName,
+                        WarehouseLeg2EntryDate = view.WarehouseLeg2ActualEntryDate != null ? view.WarehouseLeg2ActualEntryDate : view.WarehouseLeg2ExpectedEntryDate,
+                        WarehouseLeg2ReleaseDate = view.WarehouseLeg2ActualReleaseDate != null ? view.WarehouseLeg2ActualReleaseDate : view.WarehouseLeg2ExpectedReleaseDate,
                         RegistryDate = view.RegistryDate,
                         IsAssembly = view.IsAssembly,
                         LastSharedEventId = view.LastSharedEventId,
@@ -11918,6 +11974,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          ITNumber = s.ITNumber,
                                                          FreightRelease = s.FreightRelease,
                                                          TerminalAvailable = s.TerminalAvailable,
+                                                         Terminal2Available = s.Terminal2Available,
                                                          OBLTypeCode = m.OBLTypeCode,
                                                          DocumentsClosingDate = m.DocumentsClosingDate,
                                                          TEU = s.TEU,
@@ -11933,6 +11990,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          WarehouseLegLastFreeDate = s.WarehouseLegLastFreeDate,
                                                          WarehouseLegRemarks = s.WarehouseLegRemarks,
                                                          WarehouseLegReference = s.WarehouseLegReference,
+                                                         WarehouseLeg2WarehouseId = s.WarehouseLeg2WarehouseId,
+                                                         WarehouseLeg2AddressId = s.WarehouseLeg2AddressId,
+                                                         WarehouseLeg2TerminalCode = s.WarehouseLeg2TerminalCode,
+                                                         WarehouseLeg2ExpectedEntryDate = s.WarehouseLeg2ExpectedEntryDate,
+                                                         WarehouseLeg2ActualEntryDate = s.WarehouseLeg2ActualEntryDate,
+                                                         WarehouseLeg2ExpectedReleaseDate = s.WarehouseLeg2ExpectedReleaseDate,
+                                                         WarehouseLeg2ActualReleaseDate = s.WarehouseLeg2ActualReleaseDate,
+                                                         WarehouseLeg2Remarks = s.WarehouseLeg2Remarks,
+                                                         WarehouseLeg2Reference = s.WarehouseLeg2Reference,
                                                          RegistryDate = s.RegistryDate,
                                                          IsAssembly = s.IsAssembly,
                                                          LastSharedEventId = s.LastSharedEventId,
@@ -11943,6 +12009,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          WarehouseLegTerminalName = s.WarehouseLegCard == null ? null : s.WarehouseLegCard.EnglishName,
                                                          WarehouseLegEntryDate = s.WarehouseLegActualEntryDate != null ? s.WarehouseLegActualEntryDate : s.WarehouseLegExpectedEntryDate,
                                                          WarehouseLegReleaseDate = s.WarehouseLegActualReleaseDate != null ? s.WarehouseLegActualReleaseDate : s.WarehouseLegExpectedReleaseDate,
+                                                         WarehouseLeg2TerminalName = s.WarehouseLeg2Card == null ? null : s.WarehouseLeg2Card.EnglishName,
+                                                         WarehouseLeg2EntryDate = s.WarehouseLeg2ActualEntryDate != null ? s.WarehouseLeg2ActualEntryDate : s.WarehouseLeg2ExpectedEntryDate,
+                                                         WarehouseLeg2ReleaseDate = s.WarehouseLeg2ActualReleaseDate != null ? s.WarehouseLeg2ActualReleaseDate : s.WarehouseLeg2ExpectedReleaseDate,
                                                          ManifestLastSharingDate = s.ManifestLastSharingDate,
                                                          FirstOperationalCloseDate = s.FirstOperationalCloseDate,
                                                          FirstAccountingCloseDate = s.FirstAccountingCloseDate,
@@ -12444,6 +12513,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ITNumber = f.ITNumber,
                                FreightRelease = f.FreightRelease,
                                TerminalAvailable = f.TerminalAvailable,
+                               Terminal2Available = f.Terminal2Available,
                                OBLTypeCode = f.OBLTypeCode,
                                DocumentsClosingDate = f.DocumentsClosingDate,
                                ENSNumber = f.ENSNumber,
@@ -12463,6 +12533,20 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                WarehouseLegAddressCountryName = f.WarehouseLegAddressCountryName,
                                WarehouseLegEntryDate = f.WarehouseLegActualEntryDate != null ? f.WarehouseLegActualEntryDate : f.WarehouseLegExpectedEntryDate,
                                WarehouseLegReleaseDate = f.WarehouseLegActualReleaseDate != null ? f.WarehouseLegActualReleaseDate : f.WarehouseLegExpectedReleaseDate,
+                               WarehouseLeg2WarehouseId = f.WarehouseLeg2WarehouseId,
+                               WarehouseLeg2AddressId = f.WarehouseLeg2AddressId,
+                               WarehouseLeg2TerminalCode = f.WarehouseLeg2TerminalCode,
+                               WarehouseLeg2ExpectedEntryDate = f.WarehouseLeg2ExpectedEntryDate,
+                               WarehouseLeg2ActualEntryDate = f.WarehouseLeg2ActualEntryDate,
+                               WarehouseLeg2ExpectedReleaseDate = f.WarehouseLeg2ExpectedReleaseDate,
+                               WarehouseLeg2ActualReleaseDate = f.WarehouseLeg2ActualReleaseDate,
+                               WarehouseLeg2Remarks = f.WarehouseLeg2Remarks,
+                               WarehouseLeg2Reference = f.WarehouseLeg2Reference,
+                               WarehouseLeg2TerminalName = f.WarehouseLeg2TerminalName,
+                               WarehouseLeg2AddressCountryCode = f.WarehouseLeg2AddressCountryCode,
+                               WarehouseLeg2AddressCountryName = f.WarehouseLeg2AddressCountryName,
+                               WarehouseLeg2EntryDate = f.WarehouseLeg2ActualEntryDate != null ? f.WarehouseLeg2ActualEntryDate : f.WarehouseLeg2ExpectedEntryDate,
+                               WarehouseLeg2ReleaseDate = f.WarehouseLeg2ActualReleaseDate != null ? f.WarehouseLeg2ActualReleaseDate : f.WarehouseLeg2ExpectedReleaseDate,
                                RegistryDate = f.RegistryDate,
                                TrailerNumber = f.TrailerNumber,
                                IsAssembly = f.IsAssembly,
@@ -12837,6 +12921,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ITNumber = f.ITNumber,
                     FreightRelease = f.FreightRelease,
                     TerminalAvailable = f.TerminalAvailable,
+                    Terminal2Available = f.Terminal2Available,
                     OBLTypeCode = f.OBLTypeCode,
                     DocumentsClosingDate = f.DocumentsClosingDate,
                     ENSNumber = f.ENSNumber,
@@ -13146,6 +13231,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ITNumber = f.ITNumber,
                     FreightRelease = f.FreightRelease,
                     TerminalAvailable = f.TerminalAvailable,
+                    Terminal2Available = f.Terminal2Available,
                     OBLTypeCode = f.OBLTypeCode,
                     DocumentsClosingDate = f.DocumentsClosingDate,
                     ENSNumber = f.ENSNumber,
@@ -13161,6 +13247,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     WarehouseLegLastFreeDate = f.WarehouseLegLastFreeDate,
                     WarehouseLegRemarks = f.WarehouseLegRemarks,
                     WarehouseLegReference = f.WarehouseLegReference,
+                    WarehouseLeg2WarehouseId = f.WarehouseLeg2WarehouseId,
+                    WarehouseLeg2TerminalName = f.WarehouseLeg2TerminalName,
+                    WarehouseLeg2AddressId = f.WarehouseLeg2AddressId,
+                    WarehouseLeg2TerminalCode = f.WarehouseLeg2TerminalCode,
+                    WarehouseLeg2ExpectedEntryDate = f.WarehouseLeg2ExpectedEntryDate,
+                    WarehouseLeg2ActualEntryDate = f.WarehouseLeg2ActualEntryDate,
+                    WarehouseLeg2ExpectedReleaseDate = f.WarehouseLeg2ExpectedReleaseDate,
+                    WarehouseLeg2ActualReleaseDate = f.WarehouseLeg2ActualReleaseDate,
+                    WarehouseLeg2Remarks = f.WarehouseLeg2Remarks,
+                    WarehouseLeg2Reference = f.WarehouseLeg2Reference,
                     RegistryDate = f.RegistryDate,
                     IsAssembly = f.IsAssembly,
                     LastSharedEventId = f.LastSharedEventId,
@@ -13365,6 +13461,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                              FromPortName = !string.IsNullOrEmpty(m.MainCarriageFromPort.Code) ? m.MainCarriageFromPort.Code : a.FromPort.Code,
                                              ToPortName = !string.IsNullOrEmpty(m.MainCarriageToPort.Code) ? m.MainCarriageToPort.Code : a.ToPort.Code,
                                              WarehouseLegWarehouseId = a.WarehouseLegWarehouseId,
+                                             WarehouseLeg2WarehouseId = a.WarehouseLeg2WarehouseId,
                                              LongMaster = a.TransportModeId == "A" ? (m.AirlinePrefix != null && m.Master != null ? m.AirlinePrefix + "-" + m.Master : m.Master) : m.Master,
                                              House = a.House,
                                          }).FirstOrDefault();
@@ -13722,6 +13819,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          ITNumber = s.ITNumber,
                                                          FreightRelease = s.FreightRelease,
                                                          TerminalAvailable = s.TerminalAvailable,
+                                                         Terminal2Available = s.Terminal2Available,
                                                          OBLTypeCode = m.OBLTypeCode,
                                                          DocumentsClosingDate = m.DocumentsClosingDate,
                                                          TEU = s.TEU,
