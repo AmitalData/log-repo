@@ -1,4 +1,5 @@
-﻿using Logitude.AmitalMessaging.Customs.CustomFile.CommDecFile;
+﻿#if moran_choose_classic
+using Logitude.AmitalMessaging.Customs.CustomFile.CommDecFile;
 using Logitude.AmitalMessaging.Infrastructure;
 using Logitude.AmitalMessaging.Utils;
 using Logitude.BL.CommonDataModel.EntityPMs;
@@ -2763,3 +2764,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
     }
 }
 
+
+
+#endif

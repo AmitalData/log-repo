@@ -174,7 +174,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
                 //;
                 _AnalyzeResultModel = _AnalyzeResultModel ?? new AnalyzeResultModel();
-                LogMessagingUtil.Instance.AppendLine(ProxyUtil.JsonConvertSerialize(_AnalyzeResultModel));
+                LogMessagingUtil.Instance.AppendLine(ProxyUtil.JsonConvertSerialize(_AnalyzeResultModel));//log the result !!
                
                 if( _CommunicationLog == null)
                 {
@@ -521,5 +521,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
         public string EntityID { get; set; }
         public string ObjectTableID { get; set; }
         public string EntityReference { get; set; }
+        public string MoreInfo { get; set; }
+        public string Took { get; set; }
     }
 }
