@@ -602,7 +602,7 @@
     <None Include="DBScripts\ShipmentModel\202211010335_UpdateAutomaticLastUpdateDateOnContainerStatuses.sxml" />
     <None Include="DBScripts\ShipmentModel\202117101748_UpdateAutomaticLastUpdateDateOnShipmentSubTypes.sxml" />
     <None Include="DBScripts\ShipmentModel\202122031108_UpdateFollowUpForwardingEvents.sxml" />
-    <None Include="DBScripts\ShipmentModel\202201031148_FillProratedAmountTable.sxml" />
+    <None Include="DBScripts\ShipmentModel\202201031148_FillProratedAmountTable.soxml" />
     <None Include="DBScripts\ShipmentModel\DeleteShipmentAssginedtoCustomsAgentId.sxml" />
     <None Include="DBScripts\ShipmentModel\FillAccountingClosedByUserInShipmentComputedFields.sxml" />
     <None Include="DBScripts\ShipmentModel\UpdateAutomaticLastUpdateDateOnContainer.sxml" />
