@@ -482,7 +482,7 @@
                                                                             <split-button
                                                                                 (DefaultSplitButtonClicked)="SendALLCorrectManifest('R')"
                                                                                 [ButtonText]=_ReadyMNFToBatchSendButtonText
-                                                                                [IsDisabled]="IsDisplayOnly"
+                                                                                [IsDisabled]="IsDisplayOnly || (_DecWithoutHaTra == 0)"
                                                                                 [MENUDivExtraTop]="24"
                                                                                 [MENUDivExtraLeft]="110">
 
@@ -510,7 +510,7 @@
                                                                             <split-button
                                                                                 (DefaultSplitButtonClicked)="SendALLCorrectManifest('M')"
                                                                                 [ButtonText]=SelectedMNFToBatchSendButtonText
-                                                                                [IsDisabled]="IsDisplayOnly"
+                                                                                [IsDisabled]="IsDisplayOnly || (_DecWithoutHaTra == 0)"
                                                                                 [MENUDivExtraTop]="24"
                                                                                 [MENUDivExtraLeft]="110">
 
