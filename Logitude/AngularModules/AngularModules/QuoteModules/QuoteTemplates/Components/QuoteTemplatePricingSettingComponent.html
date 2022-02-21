@@ -153,10 +153,14 @@
                                                                                 <tr style="height:22px">
                                                                                     <td style="width:8px"></td>
                                                                                     <td>
-                                                                                        <div class="CheckBox">
-                                                                                            <input [(ngModel)]="SplitChargesbyGroups" class="LeftCenter" style="text-align:center" [attr.id]="SplitChargesbyGroupsKey" type="checkbox" />
-                                                                                            <label style="color:black" class="LeftCenter" [attr.for]="SplitChargesbyGroupsKey">{{'QuoteTemplate.S.Splitbychargegroup' | TextCodeTranslationPipe}} </label>
+                                                                                        <div style="display: flex;">
+                                                                                            <div class="CheckBox" style="width: 70px;margin-top: 3px;">
+                                                                                                <input [(ngModel)]="SplitChargesbyGroups" class="LeftCenter" style="text-align:center" [attr.id]="SplitChargesbyGroupsKey" type="checkbox" />
+                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="SplitChargesbyGroupsKey">Split by</label>                                                                               
+                                                                                            </div>
+                                                                                            <ComboBox style="width:150px;margin-left: 5px;float: left" [ItemsSource]="PricingTableSplitChargeTypes" [SelectedItem]="PricingTableSplitChargeType" (SelectedItemChanged)="PricingTableSplitChargeType = $event"></ComboBox>
                                                                                         </div>
+                                                                            
                                                                                     </td>
 
                                                                                 </tr>

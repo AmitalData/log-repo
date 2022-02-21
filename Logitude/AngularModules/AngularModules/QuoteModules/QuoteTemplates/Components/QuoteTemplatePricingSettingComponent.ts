@@ -493,6 +493,30 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
         }
     }
 
+    PricingTableSplitChargeTypes =["Charge Group","Quote Charge Group"]
+    get PricingTableSplitChargeType() {
+        if (!this.QuoteTemplateSettingPM || !this.QuoteTemplateSettingPM.QuoteTemplateSettingData) return "Charge Group";
+        if(this.QuoteTemplateSectionTypeName == "Packages"){
+           return this.GetPricingPackagesSplitChargeType();
+        }
+        return this.GetPricingContinersSplitChargeType();
+    }
+
+    set PricingTableSplitChargeType(value: string) {
+        if (this.QuoteTemplateSettingPM == null) return;
+        if (this.QuoteTemplateSectionTypeName == "Packages") this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricingPackagesSplitChargeType = value;
+        else this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricingContinersSplitChargeType = value;
+    }
+
+    GetPricingPackagesSplitChargeType(): string {
+        if(AppTool.IsNullOrEmpty(this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricingPackagesSplitChargeType)) return "Charge Group";
+        return this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricingPackagesSplitChargeType;
+    }
+
+    GetPricingContinersSplitChargeType(): string {
+        if(AppTool.IsNullOrEmpty(this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricingContinersSplitChargeType)) return "Charge Group";
+        return this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricingContinersSplitChargeType;
+    }
 
     ShowChargeCodeKey: string = Guid.newGuid();
     get ShowChargeCode() {
