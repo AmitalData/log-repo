@@ -1859,92 +1859,82 @@ export class ShipmentTool {
     }
     public static OnShipmentQuantitiesChanged(entityPM: ShipmentPM) {
         if (entityPM) {
-            var isLCL = this.IsLCL(entityPM);
-            //if (isLCL) {
+            entityPM.ShipmentPayables.forEach(itemPayable => {
+                if (AppTool.IsNullOrEmpty(itemPayable.UnitPrice)) {
+                    if (AppTool.IsNullOrEmpty(itemPayable.ShipmentPayableParentId)) {
+                        if (itemPayable.ShipmentPayableAmountTypeCode != "NEXP" && itemPayable.ShipmentPayableLineStatusCode != "ACCT" && itemPayable.ShipmentPayableLineStatusCode != "PACC") {
 
-                entityPM.ShipmentPayables.forEach(itemPayable => {
-                    if (AppTool.IsNullOrEmpty(itemPayable.UnitPrice)) {
-                        if (AppTool.IsNullOrEmpty(itemPayable.ShipmentPayableParentId)) {
-                            if (itemPayable.ShipmentPayableAmountTypeCode != "NEXP" && itemPayable.ShipmentPayableLineStatusCode != "ACCT" && itemPayable.ShipmentPayableLineStatusCode != "PACC") {
-
-                                var myQuantity: number = null;
-                                switch (itemPayable.MeasurementCode) {
-                                    case "GRWT": { myQuantity = entityPM.GrossWeight; break; }
-                                    case "CHWT": { myQuantity = entityPM.ChargeableWeight; break; }
-                                    case "VOLU": { myQuantity = entityPM.Volume; break; }
-                                    case "BTEU": { myQuantity = entityPM.TEU; break; }
-                                    case "FIXD": { myQuantity = 1; break; }
-                                    case "GWTN": { myQuantity = entityPM.GrossWeightPerTon; break; }
-                                    case "PRVL": { myQuantity = entityPM.ValueOfGoods; break; }
-                                    case "PRFR": { myQuantity = ArrayTool.Sum(entityPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount"); break; }
-                                    case "CWKG": { myQuantity = entityPM.ChargeableWeightInKG; break; }
-                                    case "GWKG": { myQuantity = entityPM.GrossWeightInKG; break; }
-                                    case "QTY": { myQuantity = entityPM.NumberOfPackages; break; }
-                                    case "VCBM": { myQuantity = entityPM.VolumeInCBM; break; }
-                                    case "SCGW": { myQuantity = entityPM.GrossWeightPerStorageDays; break; }
-                                    case "PFCL": {
-                                        myQuantity = AppTool.Round(ArrayTool.Sum(entityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal"), 3);
-                                        break;
-                                    }
-                                    default: { break; }
+                            var myQuantity: number = null;
+                            switch (itemPayable.MeasurementCode) {
+                                case "GRWT": { myQuantity = entityPM.GrossWeight; break; }
+                                case "CHWT": { myQuantity = entityPM.ChargeableWeight; break; }
+                                case "VOLU": { myQuantity = entityPM.Volume; break; }
+                                case "BTEU": { myQuantity = entityPM.TEU; break; }
+                                case "FIXD": { myQuantity = 1; break; }
+                                case "GWTN": { myQuantity = entityPM.GrossWeightPerTon; break; }
+                                case "PRVL": { myQuantity = entityPM.ValueOfGoods; break; }
+                                case "PRFR": { myQuantity = ArrayTool.Sum(entityPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount"); break; }
+                                case "CWKG": { myQuantity = entityPM.ChargeableWeightInKG; break; }
+                                case "GWKG": { myQuantity = entityPM.GrossWeightInKG; break; }
+                                case "QTY": { myQuantity = entityPM.NumberOfPackages; break; }
+                                case "VCBM": { myQuantity = entityPM.VolumeInCBM; break; }
+                                case "SCGW": { myQuantity = entityPM.GrossWeightPerStorageDays; break; }
+                                case "PFCL": {
+                                    myQuantity = AppTool.Round(ArrayTool.Sum(entityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal"), 3);
+                                    break;
                                 }
+                                default: { break; }
+                            }
 
-                                if (itemPayable.Quantity != myQuantity) {
-                                    itemPayable.Quantity = AppTool.Round(myQuantity, 3);
+                            if (itemPayable.Quantity != myQuantity) {
+                                itemPayable.Quantity = AppTool.Round(myQuantity, 3);
 
-                                    if (itemPayable.IsChargeBySteps) {
-                                        //this.SetPayableUnitPriceBySteps(itemPayable, this.fatherComponent.BaseQuote);
-                                    }
+                                if (itemPayable.IsChargeBySteps) {
                                 }
                             }
                         }
                     }
-                });
+                }
+            });
 
-                entityPM.ShipmentReceivables.forEach(itemReceivable => {
-                    if (AppTool.IsNullOrEmpty(itemReceivable.UnitPrice)) {
-                        if (AppTool.IsNullOrEmpty(itemReceivable.ShipmentReceivableParentId)) {
-                            if (AppTool.IsNullOrEmpty(itemReceivable.ARInvoiceId)) {
+            entityPM.ShipmentReceivables.forEach(itemReceivable => {
+                if (AppTool.IsNullOrEmpty(itemReceivable.UnitPrice)) {
+                    if (AppTool.IsNullOrEmpty(itemReceivable.ShipmentReceivableParentId)) {
+                        if (AppTool.IsNullOrEmpty(itemReceivable.ARInvoiceId)) {
 
-                                var myQuantity: number = null;
-                                switch (itemReceivable.MeasurementCode) {
-                                    case "GRWT": { myQuantity = entityPM.GrossWeight; break; }
-                                    case "CHWT": { myQuantity = entityPM.ChargeableWeight; break; }
-                                    case "VOLU": { myQuantity = entityPM.Volume; break; }
-                                    case "BTEU": { myQuantity = entityPM.TEU; break; }
-                                    case "FIXD": { myQuantity = 1; break; }
-                                    case "GWTN": { myQuantity = entityPM.GrossWeightPerTon; break; }
-                                    case "PRVL": { myQuantity = entityPM.ValueOfGoods; break; }
-                                    case "PRFR": { myQuantity = ArrayTool.Sum(entityPM.ShipmentReceivables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentReceivableParentId)), "TotalAmount"); break; }
-                                    case "QTY": { myQuantity = entityPM.NumberOfPackages; break; }
-                                    case "CWKG": { myQuantity = entityPM.ChargeableWeightInKG; break; }
-                                    case "GWKG": { myQuantity = entityPM.GrossWeightInKG; break; }
-                                    case "VCBM": { myQuantity = entityPM.VolumeInCBM; break; }
-                                    case "SCGW": { myQuantity = entityPM.GrossWeightPerStorageDays; break; }
-                                    case "PFCL": {
-                                        myQuantity = AppTool.Round(ArrayTool.Sum(entityPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "TotalAmountLocal"), 3);
-                                        break;
-                                    }
-                                    default: { break; }
+                            var myQuantity: number = null;
+                            switch (itemReceivable.MeasurementCode) {
+                                case "GRWT": { myQuantity = entityPM.GrossWeight; break; }
+                                case "CHWT": { myQuantity = entityPM.ChargeableWeight; break; }
+                                case "VOLU": { myQuantity = entityPM.Volume; break; }
+                                case "BTEU": { myQuantity = entityPM.TEU; break; }
+                                case "FIXD": { myQuantity = 1; break; }
+                                case "GWTN": { myQuantity = entityPM.GrossWeightPerTon; break; }
+                                case "PRVL": { myQuantity = entityPM.ValueOfGoods; break; }
+                                case "PRFR": { myQuantity = ArrayTool.Sum(entityPM.ShipmentReceivables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentReceivableParentId)), "TotalAmount"); break; }
+                                case "QTY": { myQuantity = entityPM.NumberOfPackages; break; }
+                                case "CWKG": { myQuantity = entityPM.ChargeableWeightInKG; break; }
+                                case "GWKG": { myQuantity = entityPM.GrossWeightInKG; break; }
+                                case "VCBM": { myQuantity = entityPM.VolumeInCBM; break; }
+                                case "SCGW": { myQuantity = entityPM.GrossWeightPerStorageDays; break; }
+                                case "PFCL": {
+                                    myQuantity = AppTool.Round(ArrayTool.Sum(entityPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "TotalAmountLocal"), 3);
+                                    break;
                                 }
+                                default: { break; }
+                            }
 
-                                if (itemReceivable.Quantity != myQuantity) {
-                                    itemReceivable.Quantity = AppTool.Round(myQuantity, 3);
+                            if (itemReceivable.Quantity != myQuantity) {
+                                itemReceivable.Quantity = AppTool.Round(myQuantity, 3);
 
-                                    if (itemReceivable.IsChargeBySteps) {
-                                        //this.SetReceivableUnitPriceBySteps(itemReceivable, this.fatherComponent.BaseQuote);
-                                    }
+                                if (itemReceivable.IsChargeBySteps) {
+                                    //this.SetReceivableUnitPriceBySteps(itemReceivable, this.fatherComponent.BaseQuote);
                                 }
                             }
                         }
                     }
-                });
-            //}
-
-            //else {
-
-            //}
-
+                }
+            });
         }
     }
 
@@ -1981,7 +1971,6 @@ export class ShipmentTool {
                                 itemPayable.Quantity = AppTool.Round(myQuantity, 3);
 
                                 if (itemPayable.IsChargeBySteps) {
-                                    //this.SetPayableUnitPriceBySteps(itemPayable, this.fatherComponent.BaseQuote);
                                 }
                             }
                         }
@@ -2020,7 +2009,6 @@ export class ShipmentTool {
                                 itemReceivable.Quantity = AppTool.Round(myQuantity, 3);
 
                                 if (itemReceivable.IsChargeBySteps) {
-                                    //this.SetReceivableUnitPriceBySteps(itemReceivable, this.fatherComponent.BaseQuote);
                                 }
                             }
                         }

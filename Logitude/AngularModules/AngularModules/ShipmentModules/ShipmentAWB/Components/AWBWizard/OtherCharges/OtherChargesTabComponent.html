@@ -27,6 +27,19 @@
                             </td>
                         </tr>
 
+                        <tr style="height: 28px;" *ngIf="IsUpdateQuantitiesVisible">
+                            <td>
+                                <div class="MediaFill">
+                                    <div class="MediaFillAbsolute OrangeInfo">
+                                        <div style="line-height: 25px; margin-left: 5px; float: left; color:black; font-size:11px;">{{UpdateQuantitiesMessage}}</div>
+                                        <div style="line-height: 25px; margin-left: 10px; float: left; width: 50px;">
+                                            <button class="Button" style="margin-top: 1px;" [disabled]="!IsEditingEnabled" (click)="UpdateQuantitiesClicked()">Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
                         <tr style="height: 28px;">
                             <td>
                                 <table>
@@ -47,7 +60,7 @@
 
                                         <td style="width: 70px; vertical-align: middle;">
                                             <div>
-                                                <RadioButton [Name]="'PCRadio'" [IsChecked]="IsPrepaidSelected" (Checked)="SetIsPrepaidSelected(true)" [Text]="'Prepaid'" [IsEnabled]="IsEditingEnabled"></RadioButton>                                               
+                                                <RadioButton [Name]="'PCRadio'" [IsChecked]="IsPrepaidSelected" (Checked)="SetIsPrepaidSelected(true)" [Text]="'Prepaid'" [IsEnabled]="IsEditingEnabled"></RadioButton>
                                             </div>
                                         </td>
 
@@ -191,7 +204,7 @@
                                             </table>
                                         </div>
                                     </div>
-                                </div>                                
+                                </div>
 
                                 <div class="CenterCenter" style="width: 350px; height: 30px;" *ngIf="IsGeneratingVisible">
                                     <div id="{{'GenerateAutoDisplayCharge' | IdGeneratorPipe}}" class="hyperlink" style="text-align:center" [class.HyperlinkDisabled]="!IsEditingEnabled" (click)="GenerateClicked()">Generate auto display charges</div>

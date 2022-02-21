@@ -644,7 +644,6 @@ export class AWBPackagesTabComponent extends BaseComponent implements OnDestroy{
         this.EntityPM.ChargeableWeightEdited = false;
     }
     ComputeTotals() {
-
         if (this.IsMultipleCommodities) {
             if (this.ItemsSourceOfCommodities.Length == 0) {
                 this.EntityPM.NumberOfPackages = null;
@@ -736,6 +735,7 @@ export class AWBPackagesTabComponent extends BaseComponent implements OnDestroy{
         this.Validate();
         this.FireWizardEvent();
         this.ComputeAWBChargeAmount();
+        ShipmentTool.OnShipmentQuantitiesChanged(this.EntityPM);
     }
     ChooseCommodityClicked() {
         var logitudeWindow = new LogitudeWindow();

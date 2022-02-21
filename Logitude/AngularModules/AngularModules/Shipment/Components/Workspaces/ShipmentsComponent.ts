@@ -547,7 +547,7 @@ export class ShipmentsComponent {
 
                 case "CreditLimitBlockedShipments":
                     {
-                        displayTitle = TextCodeTranslator.Translate("Shipment.Q.CreditLimitBlockedShipment");
+                        displayTitle = TextCodeTranslator.Translate("Shipment.Q.CreditLimitBlockedShipments");
                         this.SetDirectionTransportFilter();
                         break;
                     }
