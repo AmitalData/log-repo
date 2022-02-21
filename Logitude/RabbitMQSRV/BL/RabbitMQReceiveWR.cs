@@ -134,7 +134,7 @@ namespace RabbitMQSRV
                 //GWSFLOGITUDE > GGGFRABBITMQ
                 string rabbitMQCode = RabbitmqHelper.GetRabbitMQCode(currTenant);
                 //var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123"  };
-                factory.RequestedHeartbeat = TimeSpan.FromSeconds(600);
+                factory.RequestedHeartbeat = TimeSpan.FromSeconds(6000);
                 using (var connection = factory.CreateConnection())
                 using (var channel = connection.CreateModel())
                 {

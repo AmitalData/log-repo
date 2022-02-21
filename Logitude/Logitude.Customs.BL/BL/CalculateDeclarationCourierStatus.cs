@@ -109,7 +109,9 @@ namespace Logitude.Customs.BL.BL
                 DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationPM.Id, true, false);
                 if (myDeclarationCourierStatusPM == null)
                 {
-                    myDeclarationCourierStatusPM = new DeclarationCourierStatusPM()
+                    myDeclarationCourierStatusPM =
+                        declarationPM.MyInsertDeclarationCourierStatusPM 
+                        ??new DeclarationCourierStatusPM()
                     {
                         DeclarationId = declarationPM.Id,
                         Tenant = declarationPM.Tenant,
@@ -118,6 +120,11 @@ namespace Logitude.Customs.BL.BL
                         CourierDeclarationStatusCode = "",
                         ChangeSetOp = ChangeSetOperation.Insert,
                     };
+                    myDeclarationCourierStatusPM.DeclarationId = declarationPM.Id;
+                    myDeclarationCourierStatusPM.IsClosedForFollowUp = false;
+                    myDeclarationCourierStatusPM.IsClosedForFollowUp = false;
+                    myDeclarationCourierStatusPM.IsCourierMissingClassification = false;
+                    myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "";
                 }
                 else
                 {
