@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvoiceFreightAmountUpdateClass
    {  		
-		public const string HashString = "1c751dd8e421f985f67a1ba57e9c0c70";
+		public const string HashString = "4fd604b6d29415817449e19b5a6a457e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    LocalDefaultText =  "סכום מטענים חשבונית ספק",
 			      				    DefaultText =  "Supplier Invoice Freight Amount",
 			      				    NewButtonDefaultText =  "",
-			      				    Code =  "92d9",
+			      				    Code =  "14dd",
 			      				    Name =  "Customs.SupplierInvoiceFreightAmount Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
