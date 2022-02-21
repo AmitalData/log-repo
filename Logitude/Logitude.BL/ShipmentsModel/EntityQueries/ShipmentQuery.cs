@@ -14258,7 +14258,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                      MainCarriageFromPortStateCode = shipment.FromPort != null ? shipment.FromPort.StateCode : null,
                                                      MainCarriageToPortStateCode = shipment.ToPort != null ? shipment.ToPort.StateCode : null,
 
-                                                     Transshipment1ATD = masterData.Transshipment1ATA,
+                                                     Transshipment1ATD = masterData.Transshipment1ATD,
                                                      Transshipment1ATA = masterData.Transshipment1ATA,
                                                      Transshipment1ETA = masterData.Transshipment1ETA,
                                                      Transshipment1ETD = masterData.Transshipment1ETD,
@@ -14271,7 +14271,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                      Transshipment1ToPortStateCode = masterData.Transshipment1ToPort != null ? masterData.Transshipment1ToPort.StateCode : null,
                                                      Transshipment1ToPortCountryCode = masterData.Transshipment1ToPort != null ? masterData.Transshipment1ToPort.Country.Code : null,
 
-                                                     Transshipment2ATD = masterData.Transshipment2ATA,
+                                                     Transshipment2ATD = masterData.Transshipment2ATD,
                                                      Transshipment2ATA = masterData.Transshipment2ATA,
                                                      Transshipment2ETA = masterData.Transshipment2ETA,
                                                      Transshipment2ETD = masterData.Transshipment2ETD,
@@ -14284,7 +14284,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                      Transshipment2ToPortStateCode = masterData.Transshipment2ToPort != null ? masterData.Transshipment2ToPort.StateCode : null,
                                                      Transshipment2ToPortCountryCode = masterData.Transshipment2ToPort != null ? masterData.Transshipment2ToPort.Country.Code : null,
 
-                                                     Transshipment3ATD = masterData.Transshipment3ATA,
+                                                     Transshipment3ATD = masterData.Transshipment3ATD,
                                                      Transshipment3ATA = masterData.Transshipment3ATA,
                                                      Transshipment3ETA = masterData.Transshipment3ETA,
                                                      Transshipment3ETD = masterData.Transshipment3ETD,
