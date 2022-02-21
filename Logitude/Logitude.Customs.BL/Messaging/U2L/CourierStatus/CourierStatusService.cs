@@ -28,7 +28,8 @@ using Unifreight.BL.EntityPMs;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityUpdateServices;
 using Unifreight.Data.AmitalModel;
-
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
 
 namespace Logitude.Customs.BL.Messaging.U2L.CourierStatus
 {
@@ -109,6 +110,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.CourierStatus
                 {
                     //newDeclarationCourierStatusPM.Delivered = false;
 
+                    //Update NoOfCourierHawbwWithoutDeliverys
+                    var myCourierMasterQueryService = new CourierMasterQueryService(_context);
+                    CourierMasterPM _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(_MyDeclarationPM.Id, _MyDeclarationPM.Tenant);
+                    IUpdateOpenDeclarationInCourierMasterService myIUpdateOpenDeclarationInCourierMasterService = ContainerAccessor.Container.Resolve(typeof(IUpdateOpenDeclarationInCourierMasterService), "UpdateOpenDeclarationInCourierMasterService", new ParameterOverride("", _MyDeclarationPM.Tenant)) as IUpdateOpenDeclarationInCourierMasterService;
+                    myIUpdateOpenDeclarationInCourierMasterService.UpdateOpenDeclarationInCourierMaster(_MyDeclarationPM.Tenant, _CourierMasterPM.Id, null);
+
                 }
                 else
                 {
@@ -152,17 +159,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.CourierStatus
             
         }
 
-        private void UpdateNoOfCourierHawbWithoutDelivery(string declarationId,int tenant)
-        {
-            var courierMasterQueryService = new CourierMasterQueryService(_context);
-            var _CourierMasterPM = courierMasterQueryService.GetByDeclarationId(declarationId, tenant);
-            ICustomContext dbContext = CustomContext.GetContext(tenant);
-            CourierMasterUpdateService courierMasterUpdateServiceUpdateService = new CourierMasterUpdateService(dbContext, new Dictionary<string, IContext>(), tenant);
-            var myCourierMasterQueryService = new CourierMasterQueryService(dbContext);
-            _CourierMasterPM.ChangeSetOp = ChangeSetOperation.Update;
-            _CourierMasterPM.NoOfCourierHawbWithoutDelivery = courierMasterQueryService.CountNoOfCourierHawbwWithoutHatara(_CourierMasterPM.Id, tenant).ToString();
-            courierMasterUpdateServiceUpdateService.Update(_CourierMasterPM, true);
-        }
 
         private void GetDeclarationPMByCustomsFile(string CustomFileNo)
         {

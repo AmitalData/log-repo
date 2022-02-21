@@ -101,6 +101,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
                     courierMasterPM.OpenDeclarations = decCouriers.Count(x => x.IsClosedForFollowUp == false);
+                    courierMasterPM.NoOfCourierHawbWithoutDelivery = courierMasterQueryService.CountNoOfCourierHawbwWithoutHatara(courierMasterPM.Id, courierMasterPM.Tenant).ToString();
+                    courierMasterPM.NoOfCourierHawbwWithoutHatara = courierMasterQueryService.CountNoOfCourierHawbwWithoutHatara(courierMasterPM.Id, courierMasterPM.Tenant).ToString();
                     courierMasterPM.ChangeSetOp = ChangeSetOperation.Update; 
                     CourierMasterUpdateService courierMasterUpdateService = new CourierMasterUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
 
