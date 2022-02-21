@@ -45,7 +45,7 @@
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
-  </Column>
+  </Column>   
   <Relation
     ForeignKeyColumn="DeclarationId,InvoiceCounterKey"
     ReferencedTable="SupplierInvoices"

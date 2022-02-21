@@ -40,7 +40,7 @@
   LocalDefaultText="&quot;סכום מטענים חשבונית ספק&quot;"
   DefaultText="&quot;Supplier Invoice Freight Amount&quot;"
   NewButtonDefaultText="&quot;&quot;"
-  Code="&quot;14dd&quot;"
+  Code="&quot;7ea7&quot;"
   Name="&quot;Customs.SupplierInvoiceFreightAmount Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
