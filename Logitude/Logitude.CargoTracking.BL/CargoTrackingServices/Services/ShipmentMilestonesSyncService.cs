@@ -249,8 +249,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 //case CargoTrackingMilestoneValues.CustomsProcess: return $"WHEN [] = 1 THEN  [] ";
                 case CargoTrackingMilestoneValues.GoodsClassification: return $"WHEN [GoodsClassificationDone] = 1 THEN [GoodsClassificationDate]  ";
                 case CargoTrackingMilestoneValues.DocumentInspection: return $"WHEN [DocumentInspectionDone] = 1 THEN [DocumentInspectionDate]  ";
-                case CargoTrackingMilestoneValues.PaymentRequested: return $"WHEN [PaymentRequiredDone] = 1 THEN [PaymentReceivedDate]  ";
-                case CargoTrackingMilestoneValues.PaymentReceived: return $"WHEN [PaymentReceivedDone] = 1 THEN [PaymentRequiredDate]  ";
+                case CargoTrackingMilestoneValues.PaymentRequested: return $"WHEN [PaymentRequiredDone] = 1 THEN [PaymentRequiredDate]  ";
+                case CargoTrackingMilestoneValues.PaymentReceived: return $"WHEN [PaymentReceivedDone] = 1 THEN [PaymentReceivedDate]  ";
                 case CargoTrackingMilestoneValues.CustomsPayment: return $"WHEN [CustomsPaymentDone] = 1 THEN [CustomsPaymentDate]  ";
                 case CargoTrackingMilestoneValues.Clearance: return $"WHEN [ClearanceDone] = 1 THEN [ClearanceDate]  ";
                 case CargoTrackingMilestoneValues.GatepassArrived: return $"WHEN [GatepassArrivedDone] = 1 THEN [GatepassArrivedDate]  ";
