@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs" Pre="true">
+	<Sql Version="1">
+	</Sql>
+	<Oracle Version="2">
+		<![CDATA[
+			EXECUTE IMMEDIATE 'CREATE TABLE SUPPLIERINVOICEFREIGHTAMOUNTS_TEMP AS SELECT * FROM SUPPLIERINVOICEFREIGHTAMOUNTS';
+
+			EXECUTE IMMEDIATE 'TRUNCATE TABLE SUPPLIERINVOICEFREIGHTAMOUNTS';
+
+			EXECUTE IMMEDIATE 'COMMIT';
+    ]]>
+	</Oracle>
+</Script>
+

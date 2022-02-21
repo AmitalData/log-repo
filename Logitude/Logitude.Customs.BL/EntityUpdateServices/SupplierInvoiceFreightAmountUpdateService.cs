@@ -7,6 +7,7 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Counters;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -18,8 +19,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             entityPM.DeclarationId = entityParentPM.DeclarationId;
             entityPM.InvoiceCounterKey = entityParentPM.InvoiceCounterKey;
-         
-       
+            entityPM.Id = IdCounter.GetNumber("Customs.SupplierInvoiceFreightAmount", entityPM.Tenant);
         }
 
         protected override void AfterUpdating(SupplierInvoiceFreightAmountPM entityPM, SupplierInvoicePM entityParentPM)
