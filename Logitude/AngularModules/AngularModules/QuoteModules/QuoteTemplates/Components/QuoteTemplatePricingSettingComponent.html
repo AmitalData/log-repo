@@ -158,7 +158,7 @@
                                                                                                 <input [(ngModel)]="SplitChargesbyGroups" class="LeftCenter" style="text-align:center" [attr.id]="SplitChargesbyGroupsKey" type="checkbox" />
                                                                                                 <label style="color:black" class="LeftCenter" [attr.for]="SplitChargesbyGroupsKey">Split by</label>                                                                               
                                                                                             </div>
-                                                                                            <ComboBox style="width:150px;margin-left: 5px;float: left" [ItemsSource]="SplitByItems" [SelectedItem]="Splitby" (SelectedItemChanged)="Splitby = $event"></ComboBox>
+                                                                                            <ComboBox style="width:150px;margin-left: 5px;float: left" [ItemsSource]="PricingTableSplitChargeTypes" [SelectedItem]="PricingTableSplitChargeType" (SelectedItemChanged)="PricingTableSplitChargeType = $event"></ComboBox>
                                                                                         </div>
                                                                             
                                                                                     </td>

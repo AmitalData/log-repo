@@ -22,17 +22,17 @@ namespace WebFreight.Web.Helpers
             this.tenant = quoteTemplateSetting.Tenant;
             this.quotePricingTableType = quotePricingTableType;
             this.quoteTemplateSetting = quoteTemplateSetting;
-            this.splitBy = GetSplitBy();
+            this.splitBy = GetPricingTableSplitChargeType();
 
             chargesGroupQuery = new ChargesGroupQuery(tenant);
             quoteChargesGroupQuery = new QuoteChargesGroupQuery(tenant);
 
         }
 
-        private string GetSplitBy()
+        private string GetPricingTableSplitChargeType()
         {
-            if (quotePricingTableType == "PP") return string.IsNullOrEmpty(quoteTemplateSetting.QuoteTemplateSettingData.PackagesSplitBy) ? "Charge Group" : quoteTemplateSetting.QuoteTemplateSettingData.PackagesSplitBy;
-            return string.IsNullOrEmpty(quoteTemplateSetting.QuoteTemplateSettingData.ContainersSplitBy) ? "Charge Group" : quoteTemplateSetting.QuoteTemplateSettingData.ContainersSplitBy;
+            if (quotePricingTableType == "PP") return string.IsNullOrEmpty(quoteTemplateSetting.QuoteTemplateSettingData.PricingPackagesSplitChargeType) ? "Charge Group" : quoteTemplateSetting.QuoteTemplateSettingData.PricingPackagesSplitChargeType;
+            return string.IsNullOrEmpty(quoteTemplateSetting.QuoteTemplateSettingData.PricingContinersSplitChargeType) ? "Charge Group" : quoteTemplateSetting.QuoteTemplateSettingData.PricingContinersSplitChargeType;
         }
 
         public List<ChargesGroupList> GetChargesGroup()

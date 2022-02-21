@@ -2,8 +2,8 @@
 export class QuoteTemplateSettingData {
     public PricesPackagesTableSettings: PricesFieldSettings[];
     public PricesContainersTableSettings: PricesFieldSettings[];
-    public PackagesSplitBy: string;
-    public ContainersSplitBy: string;
+    public PricingPackagesSplitChargeType: string;
+    public PricingContinersSplitChargeType: string;
 }
 
 export class PricesFieldSettings {

@@ -16,10 +16,10 @@ namespace Logitude.BL.QuoteModel.DataContracts
         public List<PricesFieldSettings> PricesContainersTableSettings { get; set; }
 
         [DataMember]
-        public string PackagesSplitBy { get; set; }
+        public string PricingPackagesSplitChargeType { get; set; }
 
         [DataMember]
-        public string ContainersSplitBy { get; set; }
+        public string PricingContinersSplitChargeType { get; set; }
     }
 
     public class PricesFieldSettings
