@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
-import {AppTool, DateTool, FontTool} from '../../../../../Infrastructure/Tools';
+import {AppTool, ArrayTool, DateTool, FontTool} from '../../../../../Infrastructure/Tools';
 import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
@@ -19,12 +19,11 @@ import {CurrencyListService} from '../../../../../Common/Services/StandardLists/
 import {DueTypeListService} from '../../../../../Common/Services/StandardLists/DueTypeListService';
 import {ChargesTypeListService} from '../../../../../Common/Services/StandardLists/ChargesTypeListService';
 import {MeasurementListService} from '../../../../../Common/Services/StandardLists/MeasurementListService';
-import {ShipmentTool} from '../../../../../Shipment/Tools';
+import {ShipmentTool, ByPckageType} from '../../../../../Shipment/Tools';
 import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
-@Component({
-    
+@Component({    
     selector: 'OtherChargesTabComponent',
     templateUrl: './OtherChargesTabComponent.html',
 })
@@ -35,8 +34,10 @@ export class OtherChargesTabComponent extends BaseComponent {
     public DataContext: OtherChargesTabComponent = this;
     public ObjectTableName: string;
     public ItemsSource: AWBWizardOtherChargeItem[];
+    public AllItemsSource: AWBWizardOtherChargeItem[];
     public SelectedItem: AWBWizardOtherChargeItem = null;
     public _entityResourceService: EntityResourceService = new EntityResourceService();
+    public IsLCLEntity: boolean = false;
     constructor() {
         super();
         this.ItemsSource = [];
@@ -79,17 +80,21 @@ export class OtherChargesTabComponent extends BaseComponent {
         this.Wizard = wizard;
         this.EntityPM = this.Wizard.EntityPM;
         this.ObjectTableName = this.Wizard.ObjectTableName;
+        this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
         this.SetWarningInfo()
         this.BuildItemsSource();
+        this.BuildAllItemsSource();
         this.GenerateDefaultList();
         this.SetGenerateButton();
         this.Listen();
         this.SetUIProperties();
+        this.CheckUpdateQuantities();
     }
 
     RefreshTab() {
         this.SetGenerateButton();
         this.ComputeTotals();
+        this.CheckUpdateQuantities();
     }
 
     private Listen() {
@@ -336,7 +341,6 @@ export class OtherChargesTabComponent extends BaseComponent {
         });
     }
     private BuildItemsSource() {
-
         this.ItemsSource = [];
 
         this.EntityPM.ShipmentPayables.filter(f => f.ChargesGroupCode != "FRT").forEach(item => {
@@ -353,6 +357,17 @@ export class OtherChargesTabComponent extends BaseComponent {
 
         this.ComputeTotals();
         this.SetGenerateButton();
+    }
+    BuildAllItemsSource() {
+        this.AllItemsSource = [];
+
+        this.EntityPM.ShipmentPayables.forEach(item => {
+            this.AllItemsSource.push(new AWBWizardOtherChargeItem(item, this, false));
+        });
+
+        this.EntityPM.ShipmentReceivables.forEach(item => {
+            this.AllItemsSource.push(new AWBWizardOtherChargeItem(item, this, false));
+        });
     }
     private GenerateDefaultList() {
         if (FeatureLocator.IsPackage_EAWB()) {
@@ -527,6 +542,316 @@ export class OtherChargesTabComponent extends BaseComponent {
         logWindow.DataContext = item;
         logWindow.Show("./ShipmentModules/ShipmentAWB/Components/AWBWizard/OtherCharges/AddEditOtherChargeComponent");
     }
+
+    // Update Quantities
+    public UpdateQuantitiesMessage: string;
+    public UpdateQuantitiesMessageWidth: number = 0;
+    public IsUpdateQuantitiesVisible: boolean = false;
+    CheckUpdateQuantities() {
+        var updateMessage = null;
+        var activeLines: AWBWizardOtherChargeItem[] = this.ItemsSource;
+        this.FilterPayablesLines(activeLines);
+        this.FilterReceivablesLines(activeLines);        
+        activeLines = activeLines.filter(d => d.UnitPrice != null);
+
+        if (activeLines.length > 0) {
+            var isDifferentOrders: boolean = false;
+            var isDifferentPRVL: boolean = false;
+            var isDifferentPRFR: boolean = false;
+
+            activeLines.forEach(item => {
+                switch (item.MeasurementCode) {
+                    case "PFCL": {
+                        var quantity_Payable: number = AppTool.Round(ArrayTool.Sum(this.AllItemsSource.filter(d => d.TypeName == "Payable" && d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "AmountLocal"), 3);
+                        var quantity_Receivable: number = AppTool.Round(ArrayTool.Sum(this.AllItemsSource.filter(d => d.TypeName == "Receivable" && d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "AmountLocal"), 3);
+
+                        if ((item.TypeName == "Payable" && item.Quantity != quantity_Payable)
+                            || (item.TypeName == "Receivable" && item.Quantity != quantity_Receivable)) {
+                            isDifferentPRVL = true;
+                        }
+
+                        break;
+                    }
+
+                    case "SCGW": {
+                        if (item.Quantity != this.EntityPM.GrossWeightPerStorageDays) {
+                            isDifferentOrders = true;
+                        }
+                        break;
+                    }
+
+                    case "CWKG": {
+                        if (item.Quantity != this.EntityPM.ChargeableWeightInKG) {
+                            isDifferentOrders = true;
+                        }
+                        break;
+                    }
+
+                    case "GWKG": {
+                        if (item.Quantity != this.EntityPM.GrossWeightInKG) {
+                            isDifferentOrders = true;
+                        }
+                        break;
+                    }
+
+                    case "GRWT": {
+                        if (item.Quantity != this.EntityPM.GrossWeight) {
+                            isDifferentOrders = true;
+                        }
+                        break;
+                    }
+
+                    case "GWTN": {
+                        if (item.Quantity != this.EntityPM.GrossWeightPerTon) {
+                            isDifferentOrders = true;
+                        }
+                        break;
+                    }
+
+                    case "QTY": {
+                        if (this.IsLCLEntity) {
+                            if (item.Quantity != this.EntityPM.NumberOfPackages) {
+                                isDifferentOrders = true;
+                            }
+                        }
+
+                        else {
+                            if (item.Quantity != this.EntityPM.NumberOfContainers) {
+                                isDifferentOrders = true;
+                            }
+                        }
+
+                        break;
+                    }
+
+                    case "CHWT": {
+                        if (item.Quantity != this.EntityPM.ChargeableWeight) {
+                            isDifferentOrders = true;
+                        }
+                        break;
+                    }
+
+                    case "VOLU": {
+                        if (item.Quantity != this.EntityPM.Volume) {
+                            isDifferentOrders = true;
+                        }
+                        break;
+                    }
+
+                    case "BTEU": {
+                        if (item.Quantity != this.EntityPM.TEU) {
+                            isDifferentOrders = true;
+                        }
+                        break;
+                    }
+
+                    case "PRVL": {
+                        if (item.Quantity != this.EntityPM.ValueOfGoods) {
+                            isDifferentPRVL = true;
+                        }
+                        break;
+                    }
+
+                    case "PRFR": {
+                        if (this.AllItemsSource.filter(f => f.ChargesGroupCode == "FRT").length > 0) {
+                            var FRT_Quantity_Payable = ArrayTool.Sum(this.AllItemsSource.filter(d => d.ChargesGroupCode == "FRT" && d.TypeName == "Payable" && AppTool.IsNullOrEmpty(d.EntityParentId)), "Amount");
+                            var FRT_Quantity_Receivable = ArrayTool.Sum(this.AllItemsSource.filter(d => d.ChargesGroupCode == "FRT" && d.TypeName == "Receivable" && AppTool.IsNullOrEmpty(d.EntityParentId)), "Amount");
+
+                            if ((item.TypeName == "Payable" && item.Quantity != FRT_Quantity_Payable)
+                                || (item.TypeName == "Receivable" && item.Quantity != FRT_Quantity_Receivable)) {
+                                isDifferentPRVL = true;
+                            }
+
+                            if (this.ItemsSource.filter(f => f.MeasurementCode == "PRFR"
+                                && ((f.TypeName == "Payable" && f.Quantity != FRT_Quantity_Payable)
+                                || (f.TypeName == "Receivable" && f.Quantity != FRT_Quantity_Receivable))).length > 0) {
+                                isDifferentPRFR = true;
+                            }
+                        }                        
+
+                        break;
+                    }
+
+                    case "VCBM": {
+
+                        if (item.Quantity != this.EntityPM.VolumeInCBM) {
+                            isDifferentOrders = true;
+                        }
+
+                        break;
+                    }
+                }
+            });
+
+            if (isDifferentOrders) {
+                updateMessage = "You have updated the packages details, apply the new values?";
+            }
+
+            else if (isDifferentPRVL) {
+                updateMessage = "You have updated the value of goods, apply the new values?";
+            }
+
+            else if (isDifferentPRFR) {
+                updateMessage = "You have updated the value of freight charge, apply the new values?";
+            }
+        }
+
+        this.UpdateQuantitiesMessage = updateMessage;
+        this.UpdateQuantitiesMessageWidth = AppTool.GetTextWidth(updateMessage, 11);
+        this.IsUpdateQuantitiesVisible = AppTool.IsNullOrEmpty(updateMessage) ? false : true;
+    }    
+    FilterPayablesLines(activeLines: AWBWizardOtherChargeItem[]) {
+        activeLines = activeLines.filter(d => d.TypeName == "Payable");
+        activeLines = activeLines.filter(d => d.PayablePM.ShipmentPayableParentId == null);
+        activeLines = activeLines.filter(d => d.PayablePM.ShipmentPayableAmountTypeCode != "NEXP");
+        activeLines = activeLines.filter(d => d.PayablePM.ShipmentPayableLineStatusCode != "ACCT");
+        activeLines = activeLines.filter(d => d.PayablePM.ShipmentPayableLineStatusCode != "PACC");        
+    }
+    FilterReceivablesLines(activeLines: AWBWizardOtherChargeItem[]) {
+        activeLines = activeLines.filter(d => d.TypeName == "Receivable");
+        activeLines = activeLines.filter(d => d.ReceivablePM.ShipmentReceivableParentId == null);
+        activeLines = activeLines.filter(d => d.ReceivablePM.ARInvoiceId == null);        
+    }
+    
+    UpdateQuantitiesClicked() {        
+        var activeLines: AWBWizardOtherChargeItem[] = this.ItemsSource;
+        var activeFreightLines: AWBWizardOtherChargeItem[] = this.AllItemsSource.filter(f => f.ChargesGroupCode == "FRT");
+        this.FilterPayablesLines(activeLines);
+        this.FilterReceivablesLines(activeLines);        
+        this.FilterPayablesLines(activeFreightLines);
+        this.FilterReceivablesLines(activeFreightLines);
+
+        activeFreightLines.filter(d => d.MeasurementCode != "PRFR" && d.MeasurementCode != "PFCL").forEach((item: AWBWizardOtherChargeItem) => {
+            item.SetQuantity();
+        });
+
+        activeLines.filter(d => d.MeasurementCode != "PRFR" && d.MeasurementCode != "PFCL").forEach((item: AWBWizardOtherChargeItem) => {
+            item.SetQuantity();
+        });
+
+        activeLines.filter(d => d.MeasurementCode == "PRFR").forEach((item: AWBWizardOtherChargeItem) => {
+            item.SetQuantity();
+        });
+
+        activeFreightLines.filter(d => d.MeasurementCode == "PRFR").forEach((item: AWBWizardOtherChargeItem) => {
+            item.SetQuantity();
+        });
+
+        activeLines.filter(d => d.MeasurementCode == "PFCL").forEach((item: AWBWizardOtherChargeItem) => {
+            item.SetQuantity();
+        });
+
+        activeFreightLines.filter(d => d.MeasurementCode == "PFCL").forEach((item: AWBWizardOtherChargeItem) => {
+            item.SetQuantity();
+        });
+        //////////////////////////////////
+        //this.UpdatePayablesQuantities();
+        //this.UpdateReceivablesQuantities();
+        //this.BuildItemsSource();
+        //this.BuildAllItemsSource();
+        this.CheckUpdateQuantities();
+    }
+
+    UpdatePayablesQuantities() {
+        var activeLines: ShipmentPayablePM[] = this.EntityPM.ShipmentPayables;
+        activeLines = activeLines.filter(d => d.ShipmentPayableParentId == null);
+        activeLines = activeLines.filter(d => d.ShipmentPayableAmountTypeCode != "NEXP");
+        activeLines = activeLines.filter(d => d.ShipmentPayableLineStatusCode != "ACCT");
+        activeLines = activeLines.filter(d => d.ShipmentPayableLineStatusCode != "PACC");
+
+        activeLines.forEach((item: ShipmentPayablePM) => {
+            this.SetPayableQuantity(item);
+        });        
+    }
+    SetPayableQuantity(item: ShipmentPayablePM) {
+        var result = null;
+
+        switch (item.MeasurementCode) {
+            case "GRWT": { result = this.EntityPM.GrossWeight; break; }
+            case "CHWT": { result = this.EntityPM.ChargeableWeight; break; }
+            case "VOLU": { result = this.EntityPM.Volume; break; }
+            case "BTEU": { result = this.EntityPM.TEU; break; }
+            case "FIXD": { result = 1; break; }
+            case "PRVL": { result = this.EntityPM.ValueOfGoods; break; }
+            case "GWTN": { result = this.EntityPM.GrossWeightPerTon; break; }
+            case "QTY": { result = this.IsLCLEntity ? this.EntityPM.NumberOfPackages : this.EntityPM.NumberOfContainers; break; }
+            case "CWKG": { result = this.EntityPM.ChargeableWeightInKG; break; }
+            case "GWKG": { result = this.EntityPM.GrossWeightInKG; break; }
+            case "VCBM": { result = this.EntityPM.VolumeInCBM; break; }
+            case "BCNT": { break; }
+            case "SCGW": { result = this.EntityPM.GrossWeightPerStorageDays; break; }
+            case "PRFR": { result = ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount"); break; }
+            case "PFCL": { result = AppTool.Round(ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal"), 3); break; }
+
+            default: {
+                if (!AppTool.IsNullOrEmpty(item.MeasurementId)) {
+                    var allBCNTGrouped: ByPckageType[] = ShipmentTool.GetByPckageTypeGrouped(this.EntityPM);
+
+                    var itemGrouped = allBCNTGrouped.filter(f => f.MeasurementId == item.MeasurementId)[0];
+                    if (itemGrouped != null) {
+                        result = itemGrouped.Quantity;
+                    }
+                }
+
+                break;
+            }
+        }
+
+        item.Quantity = result;
+    }
+
+    UpdateReceivablesQuantities() {
+        var activeLines: ShipmentReceivablePM[] = this.EntityPM.ShipmentReceivables;
+        activeLines = activeLines.filter(d => d.ShipmentReceivableParentId == null);
+        activeLines = activeLines.filter(d => d.ARInvoiceId == null);
+
+        activeLines.forEach((item: ShipmentReceivablePM) => {
+            this.SetReceivableQuantity(item);
+        });
+    }
+    SetReceivableQuantity(item: ShipmentReceivablePM) {
+        var result = null;
+
+        switch (item.MeasurementCode) {
+            case "GRWT": { result = this.EntityPM.GrossWeight; break; }
+            case "CHWT": { result = this.EntityPM.ChargeableWeight; break; }
+            case "VOLU": { result = this.EntityPM.Volume; break; }
+            case "BTEU": { result = this.EntityPM.TEU; break; }
+            case "FIXD": { result = 1; break; }
+            case "PRVL": { result = this.EntityPM.ValueOfGoods; break; }
+            case "PRFR": { result = ArrayTool.Sum(this.EntityPM.ShipmentReceivables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentReceivableParentId)), "TotalAmount"); break; }
+            case "GWTN": { result = this.EntityPM.GrossWeightPerTon; break; }
+            case "QTY": { result = this.IsLCLEntity ? this.EntityPM.NumberOfPackages : this.EntityPM.NumberOfContainers; break; }
+            case "CWKG": { result = this.EntityPM.ChargeableWeightInKG; break; }
+            case "GWKG": { result = this.EntityPM.GrossWeightInKG; break; }
+            case "VCBM": { result = this.EntityPM.VolumeInCBM; break; }
+            case "BCNT": {
+                break;
+            }
+            case "SCGW": {
+                result = this.EntityPM.GrossWeightPerStorageDays; break;
+            }
+
+            case "PFCL": {
+                result = AppTool.Round(ArrayTool.Sum(this.EntityPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "TotalAmountLocal"), 3); break;
+            }
+
+            default: {
+                if (!AppTool.IsNullOrEmpty(item.MeasurementId)) {
+                    var allBCNTGrouped: ByPckageType[] = ShipmentTool.GetByPckageTypeGrouped(this.EntityPM);
+
+                    var itemGrouped = allBCNTGrouped.filter(f => f.MeasurementId == item.MeasurementId)[0];
+                    if (itemGrouped != null) {
+                        result = itemGrouped.Quantity;
+                    }
+                }
+
+                break;
+            }
+        }
+
+        item.Quantity = result;
+    }
 }
 
 export class AWBWizardOtherChargeItem extends BaseComponent {
@@ -542,6 +867,7 @@ export class AWBWizardOtherChargeItem extends BaseComponent {
     public AmountFieldName: string;
     public RateFieldName: string;
     public ObjectTableName: string;
+    public EntityParentId: string;
     constructor(item: any, public fatherComponent: OtherChargesTabComponent, isnew: boolean) {
         super();
 
@@ -557,6 +883,7 @@ export class AWBWizardOtherChargeItem extends BaseComponent {
                 this.AmountFieldName = "TotalAmount";
                 this.RateFieldName = "Rate";
                 this.ObjectTableName = "ShipmentPayable";
+                this.EntityParentId = this.PayablePM.ShipmentPayableParentId;
             }
 
             else if (item instanceof ShipmentReceivablePM) {
@@ -566,6 +893,7 @@ export class AWBWizardOtherChargeItem extends BaseComponent {
                 this.AmountFieldName = "TotalAmount";
                 this.RateFieldName = "Rate";
                 this.ObjectTableName = "ShipmentReceivable";
+                this.EntityParentId = this.ReceivablePM.ShipmentReceivableParentId;
             }
 
             else if (item instanceof ShipmentAWBPrintOnlyPM) {
@@ -1632,10 +1960,6 @@ export class AWBWizardOtherChargeItem extends BaseComponent {
             myResult = this.AWBPrintOnlyPM.Amount;
         }
 
-        //if (AppTool.IsNullOrEmpty(myResult)) {
-        //    myResult = 0;
-        //}
-
         return myResult;
     }
     set Amount(newValue: number) {
@@ -1669,6 +1993,19 @@ export class AWBWizardOtherChargeItem extends BaseComponent {
 
         return myResult;
     }
+    get AmountLocal() {
+        var myResult = null;
+
+        if (this.PayablePM != null) {
+            myResult = this.PayablePM.ExpectedAmountLocal;
+        }
+
+        else if (this.ReceivablePM != null) {
+            myResult = this.ReceivablePM.TotalAmountLocal;
+        }
+
+        return myResult;
+    }
 
     private SetLineStatus() {
         if (this.PayablePM != null) {
@@ -1681,6 +2018,11 @@ export class AWBWizardOtherChargeItem extends BaseComponent {
     }
     private ComputeAmount() {
         var amount = this.Quantity * this.UnitPrice;
+        if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR" || this.MeasurementCode == "PFCL") {
+            var price = this.UnitPrice / 100;
+            amount = this.Quantity * price;
+        }
+
         var _AmountLocal = null;
         var _AmountProfit = null;
 
@@ -1708,7 +2050,6 @@ export class AWBWizardOtherChargeItem extends BaseComponent {
                     }
                 }
                
-
                 /* From Tariff */
                 if (this.PayablePM.MinAmount != null || this.PayablePM.MaxAmount != null) {
                     if (amount != null) {
@@ -1819,5 +2160,43 @@ export class AWBWizardOtherChargeItem extends BaseComponent {
             this.PayablePM.CorrectionByUserId = SessionLocator.LoggedUserId;
             this.PayablePM.CorrectionDate = DateTool.GetCurrentDateAsUtc();
         }
+    }
+
+    SetQuantity() {
+        var result = null;
+
+        switch (this.MeasurementCode) {
+            case "GRWT": { result = this.ShipmentPM.GrossWeight; break; }
+            case "CHWT": { result = this.ShipmentPM.ChargeableWeight; break; }
+            case "VOLU": { result = this.ShipmentPM.Volume; break; }
+            case "BTEU": { result = this.ShipmentPM.TEU; break; }
+            case "FIXD": { result = 1; break; }
+            case "PRVL": { result = this.ShipmentPM.ValueOfGoods; break; }           
+            case "GWTN": { result = this.ShipmentPM.GrossWeightPerTon; break; }
+            case "QTY": { result = this.fatherComponent.IsLCLEntity ? this.ShipmentPM.NumberOfPackages : this.ShipmentPM.NumberOfContainers; break; }
+            case "CWKG": { result = this.ShipmentPM.ChargeableWeightInKG; break; }
+            case "GWKG": { result = this.ShipmentPM.GrossWeightInKG; break; }
+            case "VCBM": { result = this.ShipmentPM.VolumeInCBM; break; }
+            case "BCNT": { break; }
+            case "SCGW": { result = this.ShipmentPM.GrossWeightPerStorageDays; break; }
+            case "PRFR": { result = ArrayTool.Sum(this.fatherComponent.AllItemsSource.filter(d => d.ChargesGroupCode == "FRT" && d.TypeName == this.TypeName && AppTool.IsNullOrEmpty(d.EntityParentId)), "Amount"); break; }
+            case "PFCL": { result = AppTool.Round(ArrayTool.Sum(this.fatherComponent.AllItemsSource.filter(d => d.TypeName == this.TypeName && d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "AmountLocal"), 3); break;}
+
+            default: {
+                if (!AppTool.IsNullOrEmpty(this.MeasurementId)) {
+                    var allBCNTGrouped: ByPckageType[] = ShipmentTool.GetByPckageTypeGrouped(this.ShipmentPM);
+
+                    var itemGrouped = allBCNTGrouped.filter(f => f.MeasurementId == this.MeasurementId)[0];
+                    if (itemGrouped != null) {
+                        result = itemGrouped.Quantity;
+                    }
+                }
+
+                break;
+            }
+        }
+
+        this.Quantity = result;
+        this.fatherComponent.BuildAllItemsSource();
     }
 }

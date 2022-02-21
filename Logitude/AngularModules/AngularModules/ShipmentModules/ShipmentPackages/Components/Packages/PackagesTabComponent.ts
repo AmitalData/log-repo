@@ -524,7 +524,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             this.EntityPM.GrossWeightUnitCode = newValue;
 
             this.OnMeasurmentsSettingsChanged();
-            this.ComputeGrossWeigh_Kg_Ton();
+            this.ComputeGrossWeigh_Kg_Ton();            
         }
     }
 
@@ -535,8 +535,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
             this.ComputeDimFactor();
             this.OnMeasurmentsSettingsChanged();
-            this.ComputeChargeableWeight_Kg();
-
+            this.ComputeChargeableWeight_Kg();           
         }
     }
 
@@ -557,6 +556,39 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
             this.EntityPM.Ratio = AppTool.GetRatioFromDimFactor(this.DimFactor, this.DimensionsUnitCode, this.ChargeableWeightUnitCode);
             ShipmentTool.OnShipmentRatioChanged(this.EntityPM);
+        }
+    }
+
+    private ComputeAWBChargeAmount() {
+        if (this.TransportModeId == "A") {
+            this.EntityPM.AWBChargeAmount = ShipmentTool.ComputeAWBChargeAmount(this.EntityPM);
+            this.ComputeAWBFrieghtAmount();
+        }
+    }
+    private ComputeAWBFrieghtAmount() {
+        var computedAmount = this.EntityPM.AWBChargeAmount;
+        var totaAmount = this.EntityPM.AWBFreightAmountPrepaid + this.EntityPM.AWBFreightAmountCollect;
+
+        var recompute = true;
+        var isPrepaidHasAmount = (this.EntityPM.AWBFreightAmountPrepaid != 0 && this.EntityPM.AWBFreightAmountPrepaid != null);
+        var isCollectHasAmount = (this.EntityPM.AWBFreightAmountCollect != 0 && this.EntityPM.AWBFreightAmountCollect != null);
+
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.FreightPrepaidCollectId)) {
+            if (isPrepaidHasAmount && isCollectHasAmount && (computedAmount == totaAmount)) {
+                recompute = false;
+            }
+        }
+
+        if (recompute) {
+            if (this.EntityPM.FreightPrepaidCollectId == "P") {
+                this.EntityPM.AWBFreightAmountCollect = 0;
+                this.EntityPM.AWBFreightAmountPrepaid = computedAmount == null ? 0 : computedAmount;
+            }
+
+            else if (this.EntityPM.FreightPrepaidCollectId == "C") {
+                this.EntityPM.AWBFreightAmountPrepaid = 0;
+                this.EntityPM.AWBFreightAmountCollect = computedAmount == null ? 0 : computedAmount;
+            }
         }
     }
 
@@ -775,6 +807,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             this.EntityPM.ChargeableWeight = AppTool.Round(newValue, 3);
             this.ComputeChargeableWeight_Kg();
             this.ComputeGrossWeight_PerStorageDays();
+            this.ComputeAWBChargeAmount();
         }
     }
 
@@ -789,6 +822,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     set ChargeableWeightEdited(value: boolean) {
         if (this.EntityPM.ChargeableWeightEdited != value) {
             this.EntityPM.ChargeableWeightEdited = value;
+            this.ComputeAWBChargeAmount();
         }
     }
 
