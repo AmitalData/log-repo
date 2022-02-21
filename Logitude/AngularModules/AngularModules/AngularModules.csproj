@@ -1957,6 +1957,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityLists\EntityStatusTypeList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\FeatureToggleList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\HelpResourceList.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityLists\ImageLibraryList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\LastRunDetailList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\LogitudeLeadList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\PriceStepList.ts" />
@@ -1979,6 +1980,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWQueryPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\FeatureTogglePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\HelpResourcePM.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityPMs\ImageLibraryPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LastRunDetailPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LBPTeamMemberPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LogitudeLeadPM.ts" />
@@ -2010,6 +2012,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BatchTaskExecutionStatusListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BIReportsExecutionLogListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\HelpResourceListService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardLists\ImageLibraryListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\SharedLogisticsInvitationStatusListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\SharedLogisticsSettingListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\TeamListService.ts" />
@@ -2022,6 +2025,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWQueryColumnPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWQueryFilterPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\HelpResourcePMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\ImageLibraryPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\MultiEntityUpdateLogPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\TeamPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\WebServices\PrivateLabelsBrandingDataService.ts" />
