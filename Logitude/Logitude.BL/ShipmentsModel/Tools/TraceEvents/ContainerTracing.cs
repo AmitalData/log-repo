@@ -730,9 +730,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
         private void TraceExceptionResolved()
         {
-            if (container.HasException && containerPM.IsExceptionResolved && !container.IsExceptionResolved)
+            if (container.HasException && containerPM.IsExceptionResolved && !containerPM.IsUpdateEntityException)
             {
                 this.CreateTraceEventWithNotes("CRES", containerPM.ExceptionDate, containerPM.ExceptionResolvedDescription);
+                containerPM.ExceptionDate = null;
+                containerPM.ExceptionDescription = "";
             }
         }
         public void DeleteContainerExceptionTraceEvent(string traceEventId, ContainerRepository containerRepository, int tenant)

@@ -234,7 +234,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.HasException = containerPM.HasException;
             container.LastExceptionDescription = containerPM.LastExceptionDescription;
             container.IsExceptionResolved = containerPM.IsExceptionResolved;
-            container.IsUpdateEntityException = container.IsUpdateEntityException;
             container.EmptyContainerReturnETA = containerPM.EmptyContainerReturnETA;
             container.EmptyContainerReturnATA = containerPM.EmptyContainerReturnATA;
             container.EmptyContainerReturnETD = containerPM.EmptyContainerReturnETD;

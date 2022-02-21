@@ -1434,12 +1434,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IsUpdateEntityException"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="AutomaticLastUpdateDate"
     Type="datetime">
     <Constraints
