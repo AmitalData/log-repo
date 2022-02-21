@@ -473,7 +473,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
         }
     }
 
-
+    SplitByItems =["Charge Group","Quote Charge Group"]
     SplitChargesbyGroupsKey: string = Guid.newGuid();
     get SplitChargesbyGroups() {
         var splitChargesbyGroups: boolean = false;
@@ -493,6 +493,29 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
         }
     }
 
+    get Splitby() {
+        if (!this.QuoteTemplateSettingPM || !this.QuoteTemplateSettingPM.QuoteTemplateSettingData) return "Charge Group";
+        if(this.QuoteTemplateSectionTypeName == "Packages"){
+           return this.GetPackagesSplitBy();
+        }
+        return this.GetContainersSplitBy();
+    }
+
+    set Splitby(value: string) {
+        if (this.QuoteTemplateSettingPM == null) return;
+        if (this.QuoteTemplateSectionTypeName == "Packages") this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PackagesSplitBy = value;
+        else this.QuoteTemplateSettingPM.QuoteTemplateSettingData.ContainersSplitBy = value;
+    }
+
+    GetPackagesSplitBy(): string {
+        if(AppTool.IsNullOrEmpty(this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PackagesSplitBy)) return "Charge Group";
+        return this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PackagesSplitBy;
+    }
+
+    GetContainersSplitBy(): string {
+        if(AppTool.IsNullOrEmpty(this.QuoteTemplateSettingPM.QuoteTemplateSettingData.ContainersSplitBy)) return "Charge Group";
+        return this.QuoteTemplateSettingPM.QuoteTemplateSettingData.ContainersSplitBy;
+    }
 
     ShowChargeCodeKey: string = Guid.newGuid();
     get ShowChargeCode() {

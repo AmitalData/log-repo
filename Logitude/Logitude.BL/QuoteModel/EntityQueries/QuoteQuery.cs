@@ -2733,6 +2733,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 ContainerType5MarkUpText = this.GetMarkUpText(item.ContainerType5MarkUpValue, item.ContainerType5MarkUpTypeCode),
                 IsChargeBySteps = item.IsChargeBySteps,
                 SalesWithVATAmount = item.SaleTotalAmount + item.VatAmount,
+                QuoteChargesGroupCode = item.QuoteChargesGroupCode,
             };
             return saleChargePM;
         }

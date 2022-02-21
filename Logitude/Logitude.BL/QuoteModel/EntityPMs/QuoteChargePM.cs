@@ -230,5 +230,6 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool HasDelivery { get; set; }
 
         public bool IsRegionalTax { get; set; }
+        public string QuoteChargesGroupCode { get; set; }
     }
 }
