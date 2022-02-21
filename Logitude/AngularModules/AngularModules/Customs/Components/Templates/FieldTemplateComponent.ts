@@ -21,6 +21,8 @@ import { ExceptionReasonList } from '../../EntityLists/ExceptionReasonList';
 
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { PhysicalChecksCloseSharedDataService } from '../../Services/DataChange/PhysicalChecksCloseSharedDataService';
+import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPMService';
+import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 @Component({
 
     templateUrl: './FieldTemplateComponent.html',
@@ -39,11 +41,17 @@ export class FieldTemplateComponent {
     public IsHeaderScreenTemplate: boolean = false;
     courierMasterService: CourierMasterService = new CourierMasterService();
     customsAutonomyKeywordExtendedPMService: CustomsAutonomyKeywordExtendedPMService = new CustomsAutonomyKeywordExtendedPMService();
+    declarationPMService: DeclarationPMService = new DeclarationPMService();
     exceptionReasonExtendedListService: ExceptionReasonExtendedListService = new ExceptionReasonExtendedListService();
     private _ListComponentArgs: ListComponentArgs;
     @ViewChild('SpotLight', { read: ViewContainerRef, static: false }) SpotLightViewContainerRef: ViewContainerRef;
     RowIndex: any;
-    constructor(private CD: ChangeDetectorRef, private entityResourceService: EntityResourceService, private _physicalChecksCloseSharedDataService: PhysicalChecksCloseSharedDataService) {
+    constructor(
+        private CD: ChangeDetectorRef,
+        private entityResourceService: EntityResourceService,
+        private _physicalChecksCloseSharedDataService: PhysicalChecksCloseSharedDataService,
+        private logtuideTableDataService: LogtuideTableDataService,
+    ) {
         if (SessionLocator.SelectedSession.CurrentListComponent != null) {
             this._ListComponentArgs = SessionLocator.SelectedSession.CurrentListComponent._ListComponentArgs;
         } else {
@@ -114,7 +122,7 @@ export class FieldTemplateComponent {
         return myFormats.DateString;
     }
     get ExceptionReasonText() {
-        var ToolTipValue: string = this.Entity.ExceptionReasonsList; 
+        var ToolTipValue: string = this.Entity.ExceptionReasonsList;
         var list = ToolTipValue.split(',').filter(Boolean);
         if (list.length > 1) {
             return list.toString();
@@ -172,9 +180,9 @@ export class FieldTemplateComponent {
 
     }
     EditMyCloseCheckBox(eventM) {
-        
+
         this._ListComponentArgs.SuppressOnRowSelectedField = true;
-        
+
 
         //eventM.stopPropagation();
         if (!this._physicalChecksCloseSharedDataService._SelectedItems.Collection.includes(this.Entity.Id)) {
@@ -418,7 +426,7 @@ export class FieldTemplateComponent {
 
     ShowCFIFILEMMoveToCollector() {
         this._ListComponentArgs.SuppressOnRowSelectedField = true;
-        
+
 
         let myDeclarationReferantDataList: DeclarationReferantDataList = this.Entity;
         let myViewModelName = "FieldTemplateComponent.ts-ShowCFIFILEMMoveToCollector";
@@ -791,7 +799,31 @@ export class FieldTemplateComponent {
     }
 
 
+    async onRemoveInclusiveVisibilityClick(e: MouseEvent) {
+        e.stopPropagation();
 
+        if(!(await this.confirmRemoveInclusiveVisibility())) return;
+        
+        SessionLocator.SelectedSession.StartBusyIndicator('')
+
+        const declarationPM = await this.logtuideTableDataService.getDataFromService(this.declarationPMService.get(this.Entity.DeclarationId));
+        declarationPM.RequestedCustomsDocId = 0;
+        await this.logtuideTableDataService.getDataFromService(this.declarationPMService.update(declarationPM));
+
+        SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+        
+        SessionLocator.SelectedSession.StopBusyIndicator();        
+    }
+
+    private async confirmRemoveInclusiveVisibility(): Promise<boolean> {
+        var myConfirmWindow = new ConfirmWindow();
+        myConfirmWindow.Width = 400;
+        myConfirmWindow.Show(TextCodeTranslator.Translate("Customs.DeclarationReferantData.RemoveInclusiveMessage"));
+
+        return new Promise<boolean>(resolve => 
+            myConfirmWindow.WindowClosed.subscribe(e => 
+                resolve(myConfirmWindow.Yes)));
+    }
 }
 
 //class MyClass {
