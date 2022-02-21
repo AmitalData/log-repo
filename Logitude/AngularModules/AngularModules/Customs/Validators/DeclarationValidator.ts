@@ -414,7 +414,7 @@ export class DeclarationValidator {
     private CheckConsignmentPackages() {
         var errorMessage = "";
 
-        if (this._DeclarationPM.Consignments == null  || this._DeclarationPM.ExcludeConsignment) {
+        if (this._DeclarationPM.Consignments == null  || (this._DeclarationPM.Direction === 'E' &&  this._DeclarationPM.ExcludeConsignment)) {
             return;
         }
 
