@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "878f4056a016093afb1e690d5faf53f1";
+		public const string HashString = "628636fdaa8cd0ba99c4a88270c2ba69";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -54707,6 +54707,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  		   TextCode ShipmentTextCode_ShipmentORoutingsAddOriginWarehouseLeg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.AddOriginWarehouseLeg", DefaultText = "Add Origin Warehouse / Terminal",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentORoutingsAddDestinationWarehouseLeg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.AddDestinationWarehouseLeg", DefaultText = "Add Destination Warehouse / Terminal",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsEditOriginWarehouseLeg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.EditOriginWarehouseLeg", DefaultText = "Edit Origin Warehouse / Terminal",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsEditDestinationWarehouseLeg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.EditDestinationWarehouseLeg", DefaultText = "Edit Destination Warehouse / Terminal",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
