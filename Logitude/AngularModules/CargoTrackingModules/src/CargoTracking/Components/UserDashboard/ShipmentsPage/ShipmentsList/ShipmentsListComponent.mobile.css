@@ -1,6 +1,7 @@
 
 
-@media screen and (max-width: 479px) {
+  @media screen and (max-width: 479px) and (orientation: portrait),
+  (max-height: 479px) and (orientation: landscape) {
     .shipment-cards-holder {
         height: 100%;
     }
@@ -101,7 +102,8 @@
     }
 }
 
-@media screen and (max-width: 479px) {
+@media screen and (max-width: 479px) and (orientation: portrait),
+(max-height: 479px) and (orientation: landscape) {
     .dashboard-container{
         height:90%;
     }
@@ -328,7 +330,7 @@
     .show-menu {
         bottom: 0 !important;
     }
-    
+
     .mobile-sort-menu ul, .mobile-sort-menu li{
         padding: 0;
         margin: 0;
@@ -346,21 +348,21 @@
     .mobile-sort-menu li:active{
         background: #eee;
     }
-    
+
     .mobile-sort-menu .sort-by-menu li:nth-child(3){
         border-bottom: 1px solid #cfd1d6;
     }
-    
+
     .mobile-sort-menu .sort-direction-menu li span{
         display: inline-block;
         width: 150px;
     }
-    
+
     .sort-item-selected{
         background: #e9f2ff;
     }
 
-    /*end*/    
+    /*end*/
 }
 
 @media screen and (max-height: 823px) {
@@ -378,6 +380,7 @@
 @media screen and (max-height: 640px) {
     .filters-sidebar ul {
         height: 420px;
+        max-height: calc(100% - 120px);
     }
 }
 

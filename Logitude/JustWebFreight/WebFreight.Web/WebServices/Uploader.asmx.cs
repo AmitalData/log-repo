@@ -667,19 +667,22 @@ namespace WebFreight.Web.WebServices
 
         }
 
-        public List<DocumentsFilingPM> GetMasterDocumentsAndItsConnectedHousesDocuments(string entityId, int tenant)
+        public List<DocumentsFilingPM> GetMasterDocumentsAndItsConnectedHousesDocuments(string entityId, int tenant, string partnerType)
         {
             ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
             DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(myContext);
             DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
+
             List<DocumentsFilingPM> myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(entityId, tenant);
-            List<DocumentsFilingPM> housesDocumentFilings = GetConnectedHousesDocumentsFilingPMs(entityId, tenant, myDocumentsFilingQuery);
+            if(partnerType == "AG") myDocumentFilings = GetAgentDocuments(myDocumentFilings, "C", tenant);
+
+            List<DocumentsFilingPM> housesDocumentFilings = GetConnectedHousesDocumentsFilingPMs(entityId, tenant, myDocumentsFilingQuery, partnerType);
             myDocumentFilings = myDocumentFilings.Concat(housesDocumentFilings).ToList();
 
             return myDocumentFilings;
         }
 
-        private static List<DocumentsFilingPM> GetConnectedHousesDocumentsFilingPMs(string entityId, int tenant, DocumentsFilingQuery myDocumentsFilingQuery)
+        private List<DocumentsFilingPM> GetConnectedHousesDocumentsFilingPMs(string entityId, int tenant, DocumentsFilingQuery myDocumentsFilingQuery, string partnerType)
         {
             List<string> housesShipmentsIds = GetAllConnectedHousesShipmentByShipmentMasterId(entityId, tenant);
             List<DocumentsFilingPM> myDocumentFilings = new List<DocumentsFilingPM>();
@@ -688,8 +691,29 @@ namespace WebFreight.Web.WebServices
                 List<DocumentsFilingPM> houseDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(housesShipmentsIds[i], tenant);
                 myDocumentFilings = myDocumentFilings.Concat(houseDocumentFilings).ToList();
             }
+            return partnerType == "AG" ? GetAgentDocuments(myDocumentFilings, "H", tenant) : myDocumentFilings;
+        }
 
-            return myDocumentFilings;
+        public List<DocumentsFilingPM> GetAgentDocuments(List<DocumentsFilingPM> documentsFilings, string shipmentLevelCode, int tenant)
+        {
+            if (IsCloudEnvironment() || !FeatureToggleHelper.HasFeatureToggle("DFP", tenant))
+                return documentsFilings.Where(d => d.IsAgentView).ToList();
+
+            if (shipmentLevelCode == "C")
+                return documentsFilings.Where(d => d.IsAgentSharedInMaster).ToList();
+
+            if (shipmentLevelCode == "D")
+                return documentsFilings.Where(d => d.IsAgentSharedInDirect).ToList();
+
+            if (shipmentLevelCode == "H")
+                return documentsFilings.Where(d => d.IsAgentSharedInHouse).ToList();
+
+            return documentsFilings.Where(d => d.IsAgentView).ToList();
+        }
+
+        private bool IsCloudEnvironment()
+        {
+            return Simplog.Server.Infrastructure.LogitudeSettings.WorkEnvironment == "cloud";
         }
 
         private static List<string> GetAllConnectedHousesShipmentByShipmentMasterId(string entityId, int tenant)

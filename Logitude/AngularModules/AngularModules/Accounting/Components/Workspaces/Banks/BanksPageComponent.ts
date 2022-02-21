@@ -31,7 +31,7 @@ import { CashBookSummary } from '../../../DataContracts/AccountingSummery';
 
 
 @Component({
-    
+
     templateUrl: './BanksPageComponent.html',
 })
 
@@ -119,12 +119,6 @@ export class BanksPageComponent {
         this._BankAccountExtendedListService.GetBankAccountsSummary().subscribe((myResult:BankAccountSummary) => {
             if (myResult != null) {
                 this._BankAccountSummary.AllBankAccountsCount = myResult.AllBankAccountsCount > 1000 ? "1000+" : myResult.AllBankAccountsCount.toString();
-            }
-        });
-
-        this.paymentChequeExtendedListService.GetPymentChequesSummary().subscribe((myResult:PaymentChequeSummary) => {
-            if (myResult != null) {
-                this.paymentChequeSummary.AllPaymentChequesCount = myResult.AllPaymentChequesCount > 1000 ? "1000+" : myResult.AllPaymentChequesCount.toString();
             }
         });
 

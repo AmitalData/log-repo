@@ -57,7 +57,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ThirdsPeriodsMonths, 
 	         IsSecurityLevelActivated, 
 	         VATreportEveryTwoMonths, 
-	         CreateRevaluationJournal,
+	         CreateRevaluationJournal, 
+	         TaxInstitutionGLAccountId,
 	      }
 
 
@@ -116,7 +117,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ThirdsPeriodsMonths, 
 	         IsSecurityLevelActivated, 
 	         VATreportEveryTwoMonths, 
-	         CreateRevaluationJournal,
+	         CreateRevaluationJournal, 
+	         TaxInstitutionGLAccountId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -298,6 +300,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateRevaluationJournal))
             {
 				entityPOCO.CreateRevaluationJournal = entityPM.CreateRevaluationJournal;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TaxInstitutionGLAccountId))
+            {
+				entityPOCO.TaxInstitutionGLAccountId = entityPM.TaxInstitutionGLAccountId;
 			}
 			}
 
@@ -484,6 +491,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.CreateRevaluationJournal = entityPOCO.CreateRevaluationJournal;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TaxInstitutionGLAccountId))
+            {
+					entityPM.TaxInstitutionGLAccountId = entityPOCO.TaxInstitutionGLAccountId;
+            }
+
 		}
 
 		public void PMToOldPM(FullAccountingSettingPM entityPM, FullAccountingSettingPM oldEntityPM)
@@ -663,6 +675,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateRevaluationJournal))
             {
                 oldEntityPM.CreateRevaluationJournal = entityPM.CreateRevaluationJournal;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TaxInstitutionGLAccountId))
+            {
+                oldEntityPM.TaxInstitutionGLAccountId = entityPM.TaxInstitutionGLAccountId;
             }
 			
 		}

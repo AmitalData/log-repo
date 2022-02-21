@@ -30,7 +30,8 @@
   IsMain="true"
   IsAutoComplete="true"
   EnableEditFromLOV="false"
-  SortingByObjectField="&quot;Name&quot;"
+  SortingByObjectField="&quot;Id&quot;"
+  SortingByDirection="&quot;Ascending&quot;"
   InActive="false"
   IsSaveButtonVisible="true"
   IsComposition="false"
@@ -572,10 +573,8 @@
     ObjectTableName="&quot;QuoteChargesGroup&quot;"
     QuerySection="&quot;QuoteChargesGroup&quot;"
     SystemLevel="true"
-    IsAddNewEntity="false"
+    IsAddNewEntity="true"
     IsPackagable="true"
-    DefaultSortName="&quot;Code&quot;"
-    DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn

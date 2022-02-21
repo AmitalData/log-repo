@@ -231,14 +231,14 @@ export class ContainerPM {
     public set ShipmentOnCarriageToId(newValue: string) { if (this.shipmentOnCarriageToId != newValue) { this.shipmentOnCarriageToId = newValue; this.MarkAsDirty("ShipmentOnCarriageToId"); } }
        
 	 
-    private shipmentFirstPickupFrom: string;
-    public get ShipmentFirstPickupFrom() { return this.shipmentFirstPickupFrom; }
-    public set ShipmentFirstPickupFrom(newValue: string) { if (this.shipmentFirstPickupFrom != newValue) { this.shipmentFirstPickupFrom = newValue; this.MarkAsDirty("ShipmentFirstPickupFrom"); } }
+    private shipmentPickupFrom: string;
+    public get ShipmentPickupFrom() { return this.shipmentPickupFrom; }
+    public set ShipmentPickupFrom(newValue: string) { if (this.shipmentPickupFrom != newValue) { this.shipmentPickupFrom = newValue; this.MarkAsDirty("ShipmentPickupFrom"); } }
        
 	 
-    private shipmentFirstPickupTo: string;
-    public get ShipmentFirstPickupTo() { return this.shipmentFirstPickupTo; }
-    public set ShipmentFirstPickupTo(newValue: string) { if (this.shipmentFirstPickupTo != newValue) { this.shipmentFirstPickupTo = newValue; this.MarkAsDirty("ShipmentFirstPickupTo"); } }
+    private shipmentPickupTo: string;
+    public get ShipmentPickupTo() { return this.shipmentPickupTo; }
+    public set ShipmentPickupTo(newValue: string) { if (this.shipmentPickupTo != newValue) { this.shipmentPickupTo = newValue; this.MarkAsDirty("ShipmentPickupTo"); } }
        
 	 
     private shipmentPreCarriageFrom: string;
@@ -301,14 +301,14 @@ export class ContainerPM {
     public set ShipmentOnCarriageTo(newValue: string) { if (this.shipmentOnCarriageTo != newValue) { this.shipmentOnCarriageTo = newValue; this.MarkAsDirty("ShipmentOnCarriageTo"); } }
        
 	 
-    private shipmentLastDeliveryFrom: string;
-    public get ShipmentLastDeliveryFrom() { return this.shipmentLastDeliveryFrom; }
-    public set ShipmentLastDeliveryFrom(newValue: string) { if (this.shipmentLastDeliveryFrom != newValue) { this.shipmentLastDeliveryFrom = newValue; this.MarkAsDirty("ShipmentLastDeliveryFrom"); } }
+    private shipmentDeliveryFrom: string;
+    public get ShipmentDeliveryFrom() { return this.shipmentDeliveryFrom; }
+    public set ShipmentDeliveryFrom(newValue: string) { if (this.shipmentDeliveryFrom != newValue) { this.shipmentDeliveryFrom = newValue; this.MarkAsDirty("ShipmentDeliveryFrom"); } }
        
 	 
-    private shipmentLastDeliveryTo: string;
-    public get ShipmentLastDeliveryTo() { return this.shipmentLastDeliveryTo; }
-    public set ShipmentLastDeliveryTo(newValue: string) { if (this.shipmentLastDeliveryTo != newValue) { this.shipmentLastDeliveryTo = newValue; this.MarkAsDirty("ShipmentLastDeliveryTo"); } }
+    private shipmentDeliveryTo: string;
+    public get ShipmentDeliveryTo() { return this.shipmentDeliveryTo; }
+    public set ShipmentDeliveryTo(newValue: string) { if (this.shipmentDeliveryTo != newValue) { this.shipmentDeliveryTo = newValue; this.MarkAsDirty("ShipmentDeliveryTo"); } }
        
 	 
     private preCarriageETD: Date;

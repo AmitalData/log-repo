@@ -60,17 +60,13 @@
   </Column>
   <Column
     Name="VATPercentage"
-    Type="decimal"
-    Precision="18"
-    Scale="1">
+    Type="float">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="DutiesPercentage"
-    Type="decimal"
-    Precision="18"
-    Scale="1">
+    Type="float">
     <Constraints
       Nullable="true" />
   </Column>

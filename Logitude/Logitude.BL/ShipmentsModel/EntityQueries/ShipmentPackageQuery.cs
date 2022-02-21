@@ -374,7 +374,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                           select d.Name).FirstOrDefault();
 
             }
-            else if (package.ContainerStatusSourceCode == oceanInsights && package.ContainerEntityId != null)
+            else if ( package.ContainerEntityId != null)
             {
                 var statusId = (from d in repository.context.Containers
                                 where d.Id == package.ContainerEntityId

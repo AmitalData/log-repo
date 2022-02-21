@@ -66,6 +66,7 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
             patrnerProperties.Add("CustomAgentExport", "CustomAgentExportId");
             patrnerProperties.Add("ConsigneeNotImporter", "ConsigneeNotImporterId");
             patrnerProperties.Add("Notify1", "Notify1Id");
+            patrnerProperties.Add("Customer", "CustomerId");
 
         }
 

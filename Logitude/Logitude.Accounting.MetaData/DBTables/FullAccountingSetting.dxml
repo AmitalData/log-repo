@@ -253,6 +253,14 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="TaxInstitutionGLAccountId"
+    OldNames="TaxInstitutionGLAccount"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DefaultVATTypeId"
     ReferencedTable="VatTypes"
@@ -340,6 +348,11 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="DefaultExternalDiffGLAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TaxInstitutionGLAccountId"
     ReferencedTable="GLAccounts"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />

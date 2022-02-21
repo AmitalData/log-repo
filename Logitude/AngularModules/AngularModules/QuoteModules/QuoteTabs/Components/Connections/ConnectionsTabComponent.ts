@@ -7,10 +7,12 @@ import {QuoteDomainService, QuoteConnectedEntity} from '../../../../Quote/Servic
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { QuoteUtilities } from '../../../../Quote/Utilities/QuoteUtilities';
 
 @Component({
     selector: 'ConnectionsTabComponent',
-    
+
     templateUrl: './ConnectionsTabComponent.html',
 })
 
@@ -23,11 +25,13 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     public TicketsItemsSource: QuoteConnectedEntityItem[];
     public OpportunitiesItemsSource: QuoteConnectedEntityItem[];
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsEditingEnable: boolean = false;
+
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = this.entityArgs.EntityPM;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
         this.myDomainService = new QuoteDomainService();
-
+        this.IsEditingEnable = QuoteUtilities.IsQuoteEditEnabled(this.EntityPM);
         this.Listen();
         this.LoadData();
     }
@@ -154,6 +158,19 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
                     cmpRef.instance.BackCompleted.subscribe(($event: any) => { });
                 });
         }
+    }
+
+    public DisconnectOpportunityClicked() {
+        this.CurrentSession.StartBusyIndicator("Disconnecting...");
+        this.myDomainService.DisconnectQouteFromOpportunity(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse != null) {
+                if (!myResponse.HasError) {
+                    this.entityArgs.EditComponent.ReloadEntityPM();
+                    this.LoadData();
+                }
+                this.CurrentSession.StopBusyIndicator();
+            }
+        }); 
     }
 }
 

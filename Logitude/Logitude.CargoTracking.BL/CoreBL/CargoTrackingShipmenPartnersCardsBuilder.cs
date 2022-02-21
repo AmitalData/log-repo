@@ -71,6 +71,9 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                 CreatePartnerCard(partnerCardMetaData);
             }
             BuildCustomPartners();
+
+            FixNames();
+
             return partnerCards;
         }
 
@@ -85,6 +88,13 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             BuildCollectorPartner();
         }
 
+        private void FixNames()
+        {
+            foreach (var partnerCard in partnerCards)
+            {
+                partnerCard.Name = partnerCard.Name.Replace("---", "");
+            }
+        }
 
         private void BuildCollectorPartner()
         {
@@ -274,6 +284,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         {
             if (string.IsNullOrEmpty(address))
                 return;
+
+            address = address?.Replace("---", "");
             addressLines.Add(prefix+address);
         }
 

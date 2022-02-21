@@ -27,6 +27,7 @@ using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Accounting.Data.CustomFilters;
 using Simplog.Data.CommonDataModel.Repositories;
+using Logitude.Accounting.BL;
 
 namespace WebFreight.Web.AccountingModel.DomainServices
 {
@@ -448,47 +449,28 @@ namespace WebFreight.Web.AccountingModel.DomainServices
 
         public GLAccountSummary GetGLAccountSummary(int tenant)
         {
+            GLAccountSummary summary = new GLAccountSummary();
+
             SecurityUtility.AuthenticationOnTenant(tenant);
-
-
-            GLAccountSummary result = new GLAccountSummary();
-
             if (SecurityUtility.CheckTableContactFeature("GLAccount", "READ", tenant))
             {
+                IQueryable<GLAccountAndMoreDTO> glaccountsQuery = GetGLAccountQuery(tenant);
 
-                GLAccountRepository glAccountRepository = new GLAccountRepository(tenant);
-                var iQueryable_Data =
-                    glAccountRepository.GetAllAsGLAccountAndMore(tenant);
 
-                // Main GLAccounts
-                result.ActiveGLAccountCount = iQueryable_Data.Where(d => d.AccountTypeCode == "1" && d.Inactive == false).Count();
-                result.InactiveGLAccountCount = iQueryable_Data.Where(d => d.AccountTypeCode == "1" && d.Inactive == true).Count();
-                result.AllGLAccountCount = iQueryable_Data.Where(d => d.AccountTypeCode == "1").Count();
-                result.OpenFilesCount = iQueryable_Data.Where(d => d.AccountTypeCode == "5" && d.BalanceInLocalCurrency != 0).Count();
-                result.OpenMastersCount = iQueryable_Data.Where(d => d.AccountTypeCode == "4" && d.BalanceInLocalCurrency != 0).Count();
-                result.ClosedFilesGLAccountCount = iQueryable_Data.Where(d => d.AccountTypeCode == "5" && d.BalanceInLocalCurrency == 0).Count();
-                result.AllFilesCount = iQueryable_Data.Where(d => d.AccountTypeCode == "5").Count();
-                result.AllJobsCount = iQueryable_Data.Where(d => d.AccountTypeCode == "4").Count();
-
-                // Customers GLAccounts
-                result.ActiveCustomersCount = iQueryable_Data.Where(d => d.AccountTypeCode == "2" && d.Inactive == false).Count();
-                result.InactiveCustomersCount = iQueryable_Data.Where(d => d.AccountTypeCode == "2" && d.Inactive == true).Count();
-                var allCustomers = iQueryable_Data.Where(d => d.AccountTypeCode == "2");
-                result.CollectorsCount = GetGlaccountsThatConnectedCardCollectorAsLoggedUser(tenant, allCustomers);
-
-                result.DebitorsCount = iQueryable_Data.Where(d => d.AccountTypeCode == "2" && d.LocalBalanceInDue > 0).Count();
-                result.AllCustomersCount = iQueryable_Data.Where(d => d.AccountTypeCode == "2").Count();
-
-                // Vendors GLAccounts
-                result.ActiveVendorsCount = iQueryable_Data.Where(d => d.AccountTypeCode == "3" && d.Inactive == false).Count();
-                result.InactiveVendorsCount = iQueryable_Data.Where(d => d.AccountTypeCode == "3" && d.Inactive == true).Count();
-                //result.CollectorsCount = iQueryable_Data.Where(d => d.AccountTypeCode == "3").Count();
-                //result.DebitorsCount = iQueryable_Data.Where(d => d.AccountTypeCode == "3" && d.BalanceInLocalCurrency > 0).Count();
-                result.AllVendorsCount = iQueryable_Data.Where(d => d.AccountTypeCode == "3").Count();
-
+                IQueryable<GLAccountAndMoreDTO> allCustomers = glaccountsQuery.Where(d => d.AccountTypeCode == "2");
+                
+                summary.CollectorsCount = GetGlaccountsThatConnectedCardCollectorAsLoggedUser(tenant, allCustomers);
+                summary.DebitorsCount = glaccountsQuery.Where(d => d.AccountTypeCode == "2" && d.LocalBalanceInDue > 0).Count();
             }
 
-            return result;
+            return summary;
+        }
+
+        private static IQueryable<GLAccountAndMoreDTO> GetGLAccountQuery(int tenant)
+        {
+            GLAccountRepository glAccountRepository = new GLAccountRepository(tenant);
+            var glaccountsQuery = glAccountRepository.GetAllAsGLAccountAndMore(tenant);
+            return glaccountsQuery;
         }
 
         private int GetGlaccountsThatConnectedCardCollectorAsLoggedUser(int tenant, IQueryable<GLAccountAndMoreDTO> allCustomers)

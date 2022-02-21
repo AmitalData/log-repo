@@ -5048,6 +5048,37 @@ User/Pass",
             thread.IsBackground = true;
             thread.Start();
         }
+
+        private void StartPostdatedBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+
+                var tenantsAccountingActivated = new List<int>();
+
+                var tenantRepo = new TenantRepository(0);
+                tenantsAccountingActivated = tenantRepo.All().Where(r => r.AccountingActivated).Select(r => r.Id).ToList();
+                
+                foreach (var tenant in tenantsAccountingActivated)
+                {
+                    try
+                    {
+                        var myPostDatedChequesRedemptionBatch = new PostDatedChequesRedemptionBatch();
+                        myPostDatedChequesRedemptionBatch.RunAllPayablePostDatedARPaymentCheques(tenant);
+                        string responseText = myPostDatedChequesRedemptionBatch.ResponseText();
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+
+                }
+
+            }
+            finally
+            {
+            }
+        }
     }
     public class TimeZoneExcelItem
     {
