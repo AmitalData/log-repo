@@ -207,7 +207,7 @@ namespace Logitude.Accounting.BL.DataContract
             List<APPayment> payments = (from a in invoiceContext.APPayments.Include("VendorCard")
                                         where a.Tenant == Tenant
                                          && (a.RegisterDate >= startDate && a.RegisterDate < endDate)
-                                         && !(a.AccountingCancelationDate != null && a.AccountingCancelationDate >= startDate && a.AccountingCancelationDate < endDate)
+                                         && !(a.AccountingCancelationDate != null && a.DontIncludeInDeductionReport == false && a.AccountingCancelationDate >= startDate && a.AccountingCancelationDate < endDate)
                                          && (a.StatusCode == "VD" || a.StatusCode == "AD" || a.StatusCode == "CL" || a.StatusCode == "PR")
                                         select a).ToList();
             payments = getAPPaymentsWithGLAccountsAndVendor(payments);
@@ -567,7 +567,7 @@ namespace Logitude.Accounting.BL.DataContract
                 {
                     cardsCodes = cardsCodes + item.Code + ",";
                     Address address = addresses.Where(d => d.CardId == item.Id).FirstOrDefault();
-                    groupedbyVendor.CardAddress1 = address.Address1;
+                    groupedbyVendor.CardAddress1 = address?.Address1;
                     if (groupedbyVendor.VATNumber == null && item.VatNumber != null)
                     {
                         groupedbyVendor.VATNumber = item.VatNumber;
@@ -591,7 +591,7 @@ namespace Logitude.Accounting.BL.DataContract
                 Address address = addresses.Where(d => d.CardId == selectedVendors[0].Id).FirstOrDefault();
                 groupedbyVendor.VendorAddress = address != null ? address.Name : null;
                 groupedbyVendor.VendorCity = address != null ? address.City : null;
-                groupedbyVendor.CardAddress1 = address.Address1;
+                groupedbyVendor.CardAddress1 = address?.Address1;
             }
             if (groupedbyVendor.VATNumber == null)
             {
