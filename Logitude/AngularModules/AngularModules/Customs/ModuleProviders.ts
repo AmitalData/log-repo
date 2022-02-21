@@ -208,6 +208,7 @@ import { DeclarationCargoSplitListService } from './Services/StandardLists/Decla
 import { ActionCodeListService } from './Services/StandardLists/ActionCodeListService';
 import { SplitOrMergeReasonListService } from './Services/StandardLists/SplitOrMergeReasonListService';
 import { CargoSplitRequestStatusListService } from './Services/StandardLists/CargoSplitRequestStatusListService';
+import { CargoStatusListService } from './Services/StandardLists/CargoStatusListService';
 import { TreatmentWayListService } from './Services/StandardLists/TreatmentWayListService';
 import { TPGFileTypeListService } from './Services/StandardLists/TPGFileTypeListService';
 import { CustomsAirlineListService } from './Services/StandardLists/CustomsAirlineListService';
@@ -648,6 +649,7 @@ export class ModuleProviders {
             case "ActionCodeListService": { myResult = new ActionCodeListService(); break; }
             case "SplitOrMergeReasonListService": { myResult = new SplitOrMergeReasonListService(); break; }
             case "CargoSplitRequestStatusListService": { myResult = new CargoSplitRequestStatusListService(); break; }
+            case "CargoStatusListService": { myResult = new CargoStatusListService(); break; }
             case "TreatmentWayListService": { myResult = new TreatmentWayListService(); break; }
             case "TPGFileTypeListService": { myResult = new TPGFileTypeListService(); break; }  
             case "CustomsAirlineListService": { myResult = new CustomsAirlineListService(); break; }
