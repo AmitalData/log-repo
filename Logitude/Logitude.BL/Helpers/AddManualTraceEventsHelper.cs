@@ -351,6 +351,7 @@ namespace Logitude.BL.Helpers
             entityPM.HasException = true;
             entityPM.ExceptionResolvedDescription = null;
             entityPM.IsUpdateEntityException = true;
+            entityPM.IsExceptionResolved = false;
         }
         private void MapExceptionResolvedContainerFields(ContainerPM entityPM, EventType eventType, TraceEvent newTraceEvent)
         {
@@ -364,8 +365,8 @@ namespace Logitude.BL.Helpers
                 return;
             entityPM.ExceptionResolvedDescription = newTraceEvent.Notes;
             entityPM.HasException = false;
+            entityPM.IsExceptionResolved = true;
             entityPM.ExceptionDescription = null;
-            entityPM.LastExceptionDescription = null;
             entityPM.ExceptionDate = null;
             entityPM.IsUpdateEntityException = true;
         }
