@@ -103,7 +103,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             var dic = UnifreightListsUtil.Deserialize(requestParams.UnifreightListOnServerOnly);
             var bankId = UnifreightListsUtil.GetValue(ref dic, "InternalBankId");
             var DeclarationQueryService = new DeclarationQueryService(this.dbContext);
-            var declarationPM = DeclarationQueryService.GetSingle(requestParams.AppicationId, true, false);
+            var declarationPM = DeclarationQueryService.GetSingle(requestParams.LoggingEntityId, true, false);
 
 
 
