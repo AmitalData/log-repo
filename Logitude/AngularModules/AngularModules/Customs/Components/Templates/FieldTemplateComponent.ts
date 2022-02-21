@@ -23,10 +23,11 @@ import { EntityResourceService } from '../../../Infrastructure/Services/EntityRe
 import { PhysicalChecksCloseSharedDataService } from '../../Services/DataChange/PhysicalChecksCloseSharedDataService';
 import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPMService';
 import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
+import { PendingByKeywordWebService } from 'Customs/Services/ExtendedPMs/PendingByKeywordWebService';
 @Component({
 
     templateUrl: './FieldTemplateComponent.html',
-    providers: [ListComponentArgs],
+    providers: [ListComponentArgs, PendingByKeywordWebService],
 })
 
 export class FieldTemplateComponent {
@@ -51,7 +52,8 @@ export class FieldTemplateComponent {
         private entityResourceService: EntityResourceService,
         private _physicalChecksCloseSharedDataService: PhysicalChecksCloseSharedDataService,
         private logtuideTableDataService: LogtuideTableDataService,
-    ) {
+        private pendingByKeywordWebService: PendingByKeywordWebService,
+        ) {
         if (SessionLocator.SelectedSession.CurrentListComponent != null) {
             this._ListComponentArgs = SessionLocator.SelectedSession.CurrentListComponent._ListComponentArgs;
         } else {
@@ -799,26 +801,26 @@ export class FieldTemplateComponent {
     }
 
 
-    async onRemoveInclusiveVisibilityClick(e: MouseEvent) {
+    async onRemovePendingByKeywordClick(e: MouseEvent) {
         e.stopPropagation();
 
-        if(!(await this.confirmRemoveInclusiveVisibility())) return;
+        if(!(await this.confirmMsg(TextCodeTranslator.Translate('Accounting.General.O.Areyousuredeleteline')))) return;
+
+        SessionLocator.SelectedSession.StartBusyIndicator("");
         
-        SessionLocator.SelectedSession.StartBusyIndicator('')
-
-        const declarationPM = await this.logtuideTableDataService.getDataFromService(this.declarationPMService.get(this.Entity.DeclarationId));
-        declarationPM.RequestedCustomsDocId = 0;
-        await this.logtuideTableDataService.getDataFromService(this.declarationPMService.update(declarationPM));
-
+        await this.pendingByKeywordWebService.delete(this.Entity.Id)
+        
         SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
-        
-        SessionLocator.SelectedSession.StopBusyIndicator();        
+
+        SessionLocator.SelectedSession.StopBusyIndicator();
     }
 
-    private async confirmRemoveInclusiveVisibility(): Promise<boolean> {
+
+
+    private async confirmMsg(msg: string): Promise<boolean> {
         var myConfirmWindow = new ConfirmWindow();
         myConfirmWindow.Width = 400;
-        myConfirmWindow.Show(TextCodeTranslator.Translate("Customs.DeclarationReferantData.RemoveInclusiveMessage"));
+        myConfirmWindow.Show(msg);
 
         return new Promise<boolean>(resolve => 
             myConfirmWindow.WindowClosed.subscribe(e => 

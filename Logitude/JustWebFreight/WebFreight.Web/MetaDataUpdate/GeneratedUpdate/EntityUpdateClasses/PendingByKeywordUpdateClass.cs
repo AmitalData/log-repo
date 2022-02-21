@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PendingByKeywordUpdateClass
    {  		
-		public const string HashString = "bfe313d74dd81eb297e7cc062fcef8a8";
+		public const string HashString = "8d0e6c7ae7b1aedba411cffdd2f87754";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -643,6 +643,67 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Remove",
+					  						ObjectTableName =  "Customs.PendingByKeyword",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  2,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  2,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Remove",
+					  						ListPropertyPath =  "Remove",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.PendingByKeyword",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Remove",
+					  						DefaultText =  "Remove",
+					  						FullLocalDefaultText =  "מחיקה",
+					  						ListFieldLable =  "RemoveListLable",
+					  						ListLableDefaultText =  "Remove",
+					  						ListLocalDefaultText =  "מחיקה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  true,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -679,9 +740,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn AllPendingByKeywordsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPendingByKeywordsQuery.Id,QueryCode = AllPendingByKeywordsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.PendingByKeyword.KeywordsList" , ColumnWidth = 350 }, addedQueryColumns);
 
-			 QueryColumn AllPendingByKeywordsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPendingByKeywordsQuery.Id,QueryCode = AllPendingByKeywordsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.PendingByKeyword.SearchByFieldName" , ColumnWidth = 300 }, addedQueryColumns);
+			 QueryColumn AllPendingByKeywordsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPendingByKeywordsQuery.Id,QueryCode = AllPendingByKeywordsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.PendingByKeyword.Remove" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllPendingByKeywordsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPendingByKeywordsQuery.Id,QueryCode = AllPendingByKeywordsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.PendingByKeyword.CourierPendingReasonCode" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn AllPendingByKeywordsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPendingByKeywordsQuery.Id,QueryCode = AllPendingByKeywordsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.PendingByKeyword.SearchByFieldName" , ColumnWidth = 300 }, addedQueryColumns);
+
+			 QueryColumn AllPendingByKeywordsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPendingByKeywordsQuery.Id,QueryCode = AllPendingByKeywordsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.PendingByKeyword.CourierPendingReasonCode" , ColumnWidth = 200 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
