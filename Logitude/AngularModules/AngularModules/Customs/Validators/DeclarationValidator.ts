@@ -414,17 +414,17 @@ export class DeclarationValidator {
     private CheckConsignmentPackages() {
         var errorMessage = "";
 
-        if (this._DeclarationPM.Consignments == null) {
+        if (this._DeclarationPM.Consignments == null  || this._DeclarationPM.ExcludeConsignment) {
             return;
         }
 
         for (var i = 0; i < this._DeclarationPM.Consignments.length; i++) {
             if (this._DeclarationPM.Consignments[i].ConsignmentPackages == null) {
-                errorMessage = "Customs.General.O.NoConsignmentPackages";
+                errorMessage = TextCodeTranslator.Translate("Customs.General.O.NoConsignmentPackages");
             }
             else {
                 if (this._DeclarationPM.Consignments[i].ConsignmentPackages.length == 0) {
-                    errorMessage = "Customs.General.O.NoConsignmentPackages";
+                    errorMessage = TextCodeTranslator.Translate("Customs.General.O.NoConsignmentPackages");
                 }
             }
 
