@@ -8,6 +8,20 @@
         -moz-border-radius: 2px;
         border-radius: 2px;
     }
+
+    .CWSTabHeader {
+        width: 150px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        height:20px;
+    }
+
+        .CWSTabHeader:hover {
+            background-color: #B3E2FF;
+            /*border-top:0.1px solid #00BCD4;*/
+        }
+
 </style>
 
 <table>
@@ -97,7 +111,7 @@
                                             <p class="QueryLink" *ngIf="PendingPaymentVisibility" (click)="ViewCourierMasterQuery('PendingPayment')"> {{'Customs.CourierMaster.O.PendingPayment' | TextCodeTranslationPipe}} ({{counters.PendingPaymentCount}}) </p>
                                             <p class="QueryLink" *ngIf="PendingCustomsVisibility" (click)="ViewCourierMasterQuery('PendingCustoms')"> {{'Customs.CourierMaster.O.PendingCustoms' | TextCodeTranslationPipe}} ({{counters.PendingCustomsCount}}) </p>
                                             <p class="QueryLink" *ngIf="PendingVisibility" (click)="ViewCourierMasterQuery('Pending')"> {{'Customs.CourierMaster.O.Pending' | TextCodeTranslationPipe}} ({{counters.PendingCount}})</p>
-                                            <p class="QueryLink" *ngIf="AllCourierDeclarationVisibility" (click)="ViewCourierMasterQuery('AllCourierDeclarations')"> {{'Customs.Declaration.O.AllCourierDeclarations' | TextCodeTranslationPipe}} ({{counters.AllCourierDeclarationsCount}})</p>
+                                            <p class="QueryLink" *ngIf="AllCourierDeclarationVisibility" (click)="ViewCourierMasterQuery('AllCourierDeclarations')"> {{'Customs.Declaration.O.AllCourierDeclarations' | TextCodeTranslationPipe}} </p>
 
                                         </div>
 
@@ -136,80 +150,175 @@
                     <td>
                         <table>
 
-                            <tr style="">
+                            <!--Tabs filter open/pending -->
+                            <tr style="height:30px" *ngIf="CourierWSPendingTabFeature">
                                 <td>
                                     <table>
-                                        <tr class="SectionHeader">
+                                        <tr>
+                                            <td class="CWSTabHeader" [style.opacity]="0.7"
+                                                (click)="TabFilterClick(item)" *ngFor="let item of _TabFilterList; ">
+                                                <table>
+                                                    <tr style="height:2px">
+                                                        <td colspan="2"></td>
+                                                    </tr>
+                                                    <tr style="height: 20px;">
+
+                                                        <td [style.color]="item==_SelectedTabFilter ? '#4db6ea' : 'gray'"
+                                                            [style.opacity]="item==_SelectedTabFilter ? '1.0' : '0.7'">
+                                                            <div style="text-align:center">
+
+                                                                <span style="font-size:13px; font-weight:bold;">
+                                                                    {{item.Header}}
+                                                                    ({{item.Code == 'OPN' ? DataSource.rowCount : PendingTabCount }})
+                                                                </span>
+
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr style="height:2px">
+                                                        <td colspan="2"></td>
+                                                    </tr>
+                                                    <tr style="height:5px">
+                                                        <td colspan="2">
+
+                                                            <div style="opacity: 0.7">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div [style.border-bottom]="item==_SelectedTabFilter ? '4px solid #008ee6' : '4px solid gray'">
+                                                                            </div>
+                                                                        </td>
+
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td style="opacity: 0.7">
+                                                <table>
+                                                    <tr style="height:2px">
+                                                        <td colspan="2"></td>
+                                                    </tr>
+                                                    <tr style="height: 20px;">
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr style="height:2px">
+                                                        <td colspan="2"></td>
+                                                    </tr>
+                                                    <tr style="height:5px">
+                                                        <td colspan="2">
+                                                            <!--<div style="border-bottom:4px solid gray;"></div>-->
+                                                            <div style="opacity: 0.7">
+                                                                <table>
+                                                                    <tr>
+                                                                        <!--#008ee6 == > #00BCD4-->
+                                                                        <td style="width:15px;">
+                                                                            <div style="border-bottom:4px solid gray">
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div style="border-bottom:4px solid gray">
+                                                                            </div>
+                                                                        </td>
+                                                                        <td style="width:15px;">
+                                                                            <div style="border-bottom:4px solid gray">
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+
+
+
+
+
+                            <!--OPENCOURIERMASTERS-->
+                            <tr [style.height.%]="this._SelectedTabFilter.Code  !='PEN' ? 100 : 0">
+                                <td >
+                                    <table>
+                                        <tr class="SectionHeader"  *ngIf="!CourierWSPendingTabFeature || (CourierWSPendingTabFeature && this._SelectedTabFilter.Code  !='PEN' ) " >
                                             <td>
                                                 <label float-start style="margin-right: 10px;">{{ DataSource.rowCount }} {{'CourierMaster.Q.OPENCOURIERMASTERS' | TextCodeTranslationPipe}}</label>
                                             </td>
                                         </tr>
 
-                                        <tr style="height:5px;">
+                                        <tr style="height:5px;" *ngIf="!CourierWSPendingTabFeature || (CourierWSPendingTabFeature && this._SelectedTabFilter.Code  !='PEN' ) " >
                                             <td>
                                                 <div></div>
                                             </td>
                                         </tr>
 
                                         <!--<tr>
-                            <td>
-                                <div class="ScrollViewer">
-                                    <div class="ScrollContent">
-                                        <ul>
-                                            <li class="RecentEntityItem" *ngFor="let item of RecentGLAccountsList" (click)="EditCourierMaster(item)">
-                                                <table>
-                                                    <tr>
-                                                        <td style="width: 5px;">
-                                                            <div></div>
-                                                        </td>
+            <td>
+                <div class="ScrollViewer">
+                    <div class="ScrollContent">
+                        <ul>
+                            <li class="RecentEntityItem" *ngFor="let item of RecentGLAccountsList" (click)="EditCourierMaster(item)">
+                                <table>
+                                    <tr>
+                                        <td style="width: 5px;">
+                                            <div></div>
+                                        </td>
 
-                                                        <td style="width:110px; position: relative;" rowspan="2">
-                                                            <div [style.left]="isRTL ? 'initial' : '3px'" [style.right]="isRTL ? '3px' : 'initial'"  style="position: absolute; top: 3px; width: 20px; height: 20px;" title="{{item.LastActivityTypeName}}">
-                                                                <div *ngIf="item.LastActivityTypeName == 'New'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Added.png') center center no-repeat; background-size: contain;"></div>
-                                                                <div *ngIf="item.LastActivityTypeName == 'View'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Viewed.png') center center no-repeat; background-size: contain;"></div>
-                                                                <div *ngIf="item.LastActivityTypeName == 'Update'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Edited.png') center center no-repeat; background-size: contain;"></div>
-                                                            </div>
+                                        <td style="width:110px; position: relative;" rowspan="2">
+                                            <div [style.left]="isRTL ? 'initial' : '3px'" [style.right]="isRTL ? '3px' : 'initial'"  style="position: absolute; top: 3px; width: 20px; height: 20px;" title="{{item.LastActivityTypeName}}">
+                                                <div *ngIf="item.LastActivityTypeName == 'New'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Added.png') center center no-repeat; background-size: contain;"></div>
+                                                <div *ngIf="item.LastActivityTypeName == 'View'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Viewed.png') center center no-repeat; background-size: contain;"></div>
+                                                <div *ngIf="item.LastActivityTypeName == 'Update'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Edited.png') center center no-repeat; background-size: contain;"></div>
+                                            </div>
 
-                                                            <div [style.left]="isRTL ? 'initial' : '3px'" [style.right]="isRTL ? '3px' : 'initial'" style="position: absolute; bottom: 1px; color: #282E30;">{{item.LastActivityDate | DateTimeToDatePipe}}</div>
-                                                        </td>
+                                            <div [style.left]="isRTL ? 'initial' : '3px'" [style.right]="isRTL ? '3px' : 'initial'" style="position: absolute; bottom: 1px; color: #282E30;">{{item.LastActivityDate | DateTimeToDatePipe}}</div>
+                                        </td>
 
-                                                        <td rowspan="1" style="width:300px; font-size: 14px;color: #1B90CB;">{{item.GLAccountLocalName}}</td>
+                                        <td rowspan="1" style="width:300px; font-size: 14px;color: #1B90CB;">{{item.GLAccountLocalName}}</td>
 
-                                                        <td style="width: 120px;">
-                                                            <div style="color: #6b6b6b;">{{'Accounting.General.O.User' | TextCodeTranslationPipe}}: </div>
-                                                        </td>
+                                        <td style="width: 120px;">
+                                            <div style="color: #6b6b6b;">{{'Accounting.General.O.User' | TextCodeTranslationPipe}}: </div>
+                                        </td>
 
-                                                        <td style="color: black;">{{item.LastActivityByUserName}}</td>
+                                        <td style="color: black;">{{item.LastActivityByUserName}}</td>
 
-                                                        <td style="width: 3px;">
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
+                                        <td style="width: 3px;">
+                                            <div></div>
+                                        </td>
+                                    </tr>
 
-                                                    <tr>
-                                                        <td style="width: 5px;">
-                                                            <div></div>
-                                                        </td>
+                                    <tr>
+                                        <td style="width: 5px;">
+                                            <div></div>
+                                        </td>
 
-                                                        <td rowspan="1" style="width:300px;">{{item.DisplayNumber}}</td>
+                                        <td rowspan="1" style="width:300px;">{{item.DisplayNumber}}</td>
 
-                                                        <td style="width: 120px;">
-                                                            <div style="color: #6b6b6b;">{{'Accounting.General.O.AccountManager' | TextCodeTranslationPipe}}: </div>
-                                                        </td>
+                                        <td style="width: 120px;">
+                                            <div style="color: #6b6b6b;">{{'Accounting.General.O.AccountManager' | TextCodeTranslationPipe}}: </div>
+                                        </td>
 
-                                                        <td></td>
+                                        <td></td>
 
-                                                        <td style="width: 3px;">
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>-->
+                                        <td style="width: 3px;">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </td>
+        </tr>-->
 
                                         <tr style="height:100%;">
                                             <td style="height: 100%;width:100%; ">
@@ -228,14 +337,112 @@
                                             </td>
                                         </tr>
 
-                                        <tr style="height:5px;">
+                                        <!--<tr style="height:5px;">
                                             <td>
                                                 <div></div>
                                             </td>
-                                        </tr>
+                                        </tr>-->
                                     </table>
                                 </td>
                             </tr>
+
+
+                            <!--Pending-->
+                            <tr [style.height.%]="this._SelectedTabFilter.Code  =='PEN' ? 100 : 0">
+                                <td>
+                                    <table>
+
+                                       
+
+
+                                        <tr style="height:100%;">
+                                            <td style="height: 100%;width:25%;background-color: white; ">
+
+                                                <div class="GeneratedGridContainer" style="padding:5px;vertical-align:top;top:0;position:absolute">
+
+
+
+                                                    
+                                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="PendingObservableList">
+
+                                                        <!-- Code -->
+                                                        <log-column [header]="'קוד '"
+                                                                    [binding]="'Code'"
+                                                                    [width]="'100'" [Alignment]="'Right'">
+                                                            <ng-template let-item>
+                                                                <log-cell-template #logcelltemplate (CellClicked)="onCellPendingClick($event,item)">
+                                                                    <div class="RightCenter" (Click)="PendingClick(item)">
+                                                                        <span>{{item.Code}}</span>
+                                                                    </div>
+                                                                </log-cell-template>
+                                                            </ng-template>
+                                                        </log-column>
+
+                                                        <!-- Name -->
+                                                        <log-column [header]="'תאור '"
+                                                                    [width]="'100'" [Alignment]="'Right'"
+                                                                    [binding]="'Name'">
+                                                            <ng-template let-item>
+                                                                <log-cell-template #logcelltemplate (CellClicked)="onCellPendingClick($event,item)">
+                                                                    <div class="RightCenter" (Click)="PendingClick(item)">
+                                                                        <span>{{item.Name}}</span>
+                                                                    </div>
+                                                                </log-cell-template>
+                                                            </ng-template>
+                                                        </log-column>
+
+                                                        <!-- Count -->
+                                                        <log-column [header]="'כמות'"
+                                                                    [binding]="'Count'"
+                                                                    [width]="'100'" [Alignment]="'Right'">
+                                                            <ng-template let-item>
+                                                                <log-cell-template #logcelltemplate (CellClicked)="onCellPendingClick($event,item)">
+                                                                    <div class="RightCenter" (Click)="PendingClick(item)">
+                                                                        <span>{{item.Count}}</span>
+                                                                    </div>
+                                                                </log-cell-template>
+                                                            </ng-template>
+                                                        </log-column>
+
+
+
+                                                    </logitude-edit-grid>
+
+
+                                                </div>
+                                            </td>
+
+                                            <td style="height: 100%; width: 75%; background-color: white; ">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <div [attr.id]="PendingPieId" class="MediaFill" (click)="PindingClicking()"></div>
+                                                        </td>
+                                                        
+
+                                                    </tr>
+
+                                                    <tr *ngIf="DeclarationCourierPendingTabRecords.length==0">
+                                                        <td colspan="2">
+                                                            <div style="text-align:center;vertical-align:central;width:100%;overflow-y:hidden">
+                                                                <label style="font-size:large;text-align:center;vertical-align:central;width:100%;height:100%">No Pending</label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+
+                                        </tr>
+
+                                        <!--<tr style="height:5px;">
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>-->
+                                    </table>
+                                </td>
+                            </tr>
+
 
                         </table>
                     </td>
