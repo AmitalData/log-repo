@@ -40,7 +40,7 @@ export class BatchPrintComponent extends BaseComponent implements AfterViewInit,
     public bteList: BatchTaskExecutionList;
     public timer: any;
     public timerInterval: number = 1000;
-    public ObjectTableName: string = "ARInvocie";
+    public ObjectTableName: string = "ARInvoice";
     public PrintButtonText: string = TextCodeTranslator.Translate("ARInvoice.B.Print");
     public BatchPrintServiceHelper:BatchPrintServiceHelper;
     public searchText: string = "";
