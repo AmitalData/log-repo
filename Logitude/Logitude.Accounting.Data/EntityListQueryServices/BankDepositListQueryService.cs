@@ -89,6 +89,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public List<BankDepositList> GetLastActivityBankDeposits(int tenant, string userId, string objectTableId)
         {
             List<BankDepositList> entityList = new List<BankDepositList>();
+            if (string.IsNullOrEmpty(userId))
+            {
+                return entityList;
+            }
 
             EntityLastActivityRepository entityLastActivityRepository = new EntityLastActivityRepository(tenant);
             List<EntityLastActivity> lastActivities = entityLastActivityRepository.GetTopEntityLastActivities(tenant, userId, objectTableId).ToList();
