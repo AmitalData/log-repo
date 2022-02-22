@@ -12033,13 +12033,14 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -19661,6 +19662,13 @@
         ObjectFieldName="&quot;IsCancelled&quot;"
         IsPredefined="true"
         Operator="&quot;NotEqual&quot;"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;Pending&quot;"
+        PredefinedValue="&quot;false&quot;"
+        ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>
