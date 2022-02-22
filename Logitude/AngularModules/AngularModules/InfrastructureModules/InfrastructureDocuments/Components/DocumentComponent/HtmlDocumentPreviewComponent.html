@@ -160,8 +160,8 @@
                         </td>
                         <td><div></div></td>
 
-                        <td *ngIf="IsShowDefultAttachment" style="width:100px"><a style="margin-left:5px;color:#0094ff;font-size:11px;" (click)="SelectDefultAttachments()">Select Default Attachments</a></td>
-                        <td style="width:100px"><a style="margin-left:5px;color:#0094ff;font-size:11px;" (click)="AddDefultExternalAttachments()">Add Default External Attachments</a></td>
+                        <td *ngIf="IsShowAttachmentLinks" style="width:100px"><a style="margin-left:5px;color:#0094ff;font-size:11px;" (click)="SelectDefultAttachments()">Select Default Attachments</a></td>
+                        <td   *ngIf="IsShowAttachmentLinks" style="width:100px"><a style="margin-left:5px;color:#0094ff;font-size:11px;" (click)="AddDefultExternalAttachments()">Add Default External Attachments</a></td>
 
 
                     </tr>
