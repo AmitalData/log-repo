@@ -504,7 +504,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
     SetRoutingPortNames(shipment: CargoTrackingShipmentList) {
-        this.RoutingPortNames = shipment.FromPortName + " to " + shipment.ToPortName; 
+        this.RoutingPortNames = shipment.FromPortName + " to " + shipment.ToPortName;
     }
 
     private InitComponent() {
@@ -993,8 +993,27 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.setMaxNumberOfCarachter(event.srcElement.innerWidth);
         this.setViews();
     }
-    private setViews() {
-        this.isMobileView = window.innerWidth <= 479;
+
+    private setViews()
+    {
+        if(this.IsWebView) {
+            this.isMobileView = window.innerWidth <= 479;
+        }else{
+            const isLandscapeView = window.innerWidth > window.innerHeight;
+            if(isLandscapeView){
+                this.isMobileView = window.innerHeight <= 479;
+            }else{
+
+                this.isMobileView = window.innerWidth <= 479;
+            }
+        }
+    }
+
+    get IsWebView(){
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
+            return false;
+        else
+            return true;
     }
     setMaxNumberOfCarachter(width) {
         if (width <= 1024 && width > 768) {

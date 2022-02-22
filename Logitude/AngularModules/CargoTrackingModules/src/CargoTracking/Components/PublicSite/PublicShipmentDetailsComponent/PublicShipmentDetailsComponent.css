@@ -520,7 +520,7 @@ ul.line-list li.tick {
 
 
 @media screen and (max-width: 1000px) and (orientation: portrait),
-(max-height: 1000px) and (orientation: landscape)
+(max-device-height: 1000px) and (orientation: landscape)
  {
     /* .panel {
         width: calc(100% - 40px) !important;

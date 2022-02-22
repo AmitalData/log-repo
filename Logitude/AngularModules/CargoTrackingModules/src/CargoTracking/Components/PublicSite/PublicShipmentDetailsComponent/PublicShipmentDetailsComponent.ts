@@ -103,9 +103,30 @@ export class PublicShipmentDetailsComponent implements OnInit
 
     private setViews()
     {
-        this.innerWidth = window.innerWidth;
-        this.isMobileView = this.innerWidth <= 479;
-        this.isTabletView = this.innerWidth <= 1000;
+        if(this.IsWebView) {
+            this.innerWidth = window.innerWidth;
+            this.isMobileView = window.innerWidth <= 479;
+            this.isTabletView = window.innerWidth <= 1000;
+        }else{
+            const isLandscapeView = window.innerWidth > window.innerHeight;
+            if(isLandscapeView){
+                this.innerWidth = window.innerWidth;
+                this.isMobileView = window.innerHeight <= 479;
+                this.isTabletView = window.innerHeight <= 1000;
+            }else{
+
+                this.innerWidth = window.innerWidth;
+                this.isMobileView = window.innerWidth <= 479;
+                this.isTabletView = window.innerWidth <= 1000;
+            }
+        }
+    }
+
+    get IsWebView(){
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
+            return false;
+        else
+            return true;
     }
 
     // private GetShipmentFromDB()
