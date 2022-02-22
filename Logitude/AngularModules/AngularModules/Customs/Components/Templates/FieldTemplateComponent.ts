@@ -808,20 +808,47 @@ export class FieldTemplateComponent {
     }
 
 
-    async onRemovePendingByKeywordClick(e: MouseEvent) {
+    async onRemoveInclusiveVisibilityClick(e: MouseEvent) {
         e.stopPropagation();
 
-        if(!(await this.confirmMsg(TextCodeTranslator.Translate('Accounting.General.O.Areyousuredeleteline')))) return;
+        if (!(await this.confirmRemoveInclusiveVisibility())) return;
 
-        SessionLocator.SelectedSession.StartBusyIndicator("");
-        
-        await this.pendingByKeywordWebService.delete(this.Entity.Id)
-        
+        SessionLocator.SelectedSession.StartBusyIndicator('')
+
+        const declarationPM = await this.logtuideTableDataService.getDataFromService(this.declarationPMService.get(this.Entity.DeclarationId));
+        declarationPM.RequestedCustomsDocId = 0;
+        await this.logtuideTableDataService.getDataFromService(this.declarationPMService.update(declarationPM));
+
         SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
 
         SessionLocator.SelectedSession.StopBusyIndicator();
     }
 
+
+    async onRemovePendingByKeywordClick(e: MouseEvent) {
+        e.stopPropagation();
+
+        if (!(await this.confirmMsg(TextCodeTranslator.Translate('Accounting.General.O.Areyousuredeleteline')))) return;
+
+        SessionLocator.SelectedSession.StartBusyIndicator("");
+
+        await this.pendingByKeywordWebService.delete(this.Entity.Id)
+
+        SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+
+        SessionLocator.SelectedSession.StopBusyIndicator();
+    }
+
+
+    private async confirmRemoveInclusiveVisibility(): Promise<boolean> {
+        var myConfirmWindow = new ConfirmWindow();
+        myConfirmWindow.Width = 400;
+        myConfirmWindow.Show(TextCodeTranslator.Translate("Customs.DeclarationReferantData.RemoveInclusiveMessage"));
+
+        return new Promise<boolean>(resolve =>
+            myConfirmWindow.WindowClosed.subscribe(e =>
+                resolve(myConfirmWindow.Yes)));
+    }
 
 
     private async confirmMsg(msg: string): Promise<boolean> {
@@ -829,8 +856,8 @@ export class FieldTemplateComponent {
         myConfirmWindow.Width = 400;
         myConfirmWindow.Show(msg);
 
-        return new Promise<boolean>(resolve => 
-            myConfirmWindow.WindowClosed.subscribe(e => 
+        return new Promise<boolean>(resolve =>
+            myConfirmWindow.WindowClosed.subscribe(e =>
                 resolve(myConfirmWindow.Yes)));
     }
 }
