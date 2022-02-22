@@ -499,11 +499,11 @@ namespace WebFreight.Web.AccountingModel.DomainServices
                 JournalRepository journalRepository = new JournalRepository(tenant);
                 IQueryable<Journal> iQueryable_Data = journalRepository.GetAll(tenant);
 
-                result.AllJournalsCount = iQueryable_Data.Count();
-                result.ApprovedJournalsCount = iQueryable_Data.Where(d => d.StatusCode == "2" && d.AccountingEntityCode == "1").Count();
-                result.WaitingJournalsCount = iQueryable_Data.Where(d => d.StatusCode == "1" && d.AccountingEntityCode == "1").Count();
-                result.VoidedJournalsCount = iQueryable_Data.Where(d => d.StatusCode == "3" && d.AccountingEntityCode == "1").Count();
                 result.DraftJournalsCount = iQueryable_Data.Where(d => d.StatusCode == "0" && d.AccountingEntityCode == "1").Count();
+                result.WaitingJournalsCount = iQueryable_Data.Where(d => d.StatusCode == "1" && d.AccountingEntityCode == "1").Count();
+                //result.AllJournalsCount = iQueryable_Data.Count();
+                //result.ApprovedJournalsCount = iQueryable_Data.Where(d => d.StatusCode == "2" && d.AccountingEntityCode == "1").Count();
+                //result.VoidedJournalsCount = iQueryable_Data.Where(d => d.StatusCode == "3" && d.AccountingEntityCode == "1").Count();
 
             }
 

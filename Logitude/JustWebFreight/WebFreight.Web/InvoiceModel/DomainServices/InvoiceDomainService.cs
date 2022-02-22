@@ -95,6 +95,7 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
 
             AccountReceivablesSummary result = new AccountReceivablesSummary();
 
+            
             if (SecurityUtility.CheckTableContactFeature("ARInvoice", "READ", tenant))
             {
                 aRInvoiceRepository = new ARInvoiceRepository(tenant);
@@ -132,27 +133,41 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
             return result;
         }
 
+        private static bool CheckFullAccountingEnabled(int tenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            var tenantPoco = tenantRepository.GetSingleTenant(tenant);
+            var isFullAccounting = tenantPoco?.AccountingActivated == true;
+            return isFullAccounting;
+        }
+
         public AccountPayablesSummary GetAccountingPayablesSummary(int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
 
             AccountPayablesSummary result = new AccountPayablesSummary();
 
+            bool isFullAccounting = CheckFullAccountingEnabled(tenant);
+
+
             if (SecurityUtility.CheckTableContactFeature("APInvoice", "READ", tenant))
             {
                 aPInvoiceRepository = new APInvoiceRepository(tenant);
                 IQueryable<APInvoice> apDraftResult = BranchPermitionsFilter.AddUserBranchRestrictionFilters<APInvoice>(new QueryOperations(), aPInvoiceRepository.GetDraftsAPInvoices(tenant), tenant);
                 result.APInvoicesDraftsCount = apDraftResult.Count();
-                
-                IQueryable<APInvoice> apUnpaidResult = BranchPermitionsFilter.AddUserBranchRestrictionFilters<APInvoice>(new QueryOperations(), aPInvoiceRepository.GetUnpaidAPInvoices(tenant), tenant);
-                result.APInvoicesUnpaidCount = apUnpaidResult.Count();
+
+                if (isFullAccounting == false)
+                {
+                    IQueryable<APInvoice> apUnpaidResult = BranchPermitionsFilter.AddUserBranchRestrictionFilters<APInvoice>(new QueryOperations(), aPInvoiceRepository.GetUnpaidAPInvoices(tenant), tenant);
+                    result.APInvoicesUnpaidCount = apUnpaidResult.Count();
 
 
-                IQueryable<APInvoice> APErrorInTransfer = BranchPermitionsFilter.AddUserBranchRestrictionFilters<APInvoice>(new QueryOperations(), aPInvoiceRepository.GetErrorInTransferAPInvoices(tenant), tenant);
-                result.APInvoicesFailedCount = APErrorInTransfer.Count();
+                    IQueryable<APInvoice> APErrorInTransfer = BranchPermitionsFilter.AddUserBranchRestrictionFilters<APInvoice>(new QueryOperations(), aPInvoiceRepository.GetErrorInTransferAPInvoices(tenant), tenant);
+                    result.APInvoicesFailedCount = APErrorInTransfer.Count();
+                }
             }
 
-            if (SecurityUtility.CheckTableContactFeature("APPayment", "READ", tenant))
+            if (SecurityUtility.CheckTableContactFeature("APPayment", "READ", tenant) && isFullAccounting == false)
             {
                 aPPaymentRepository = new APPaymentRepository(tenant);
 
