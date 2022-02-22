@@ -214,13 +214,20 @@ export class HomeComponent implements OnDestroy{
     }
 
     CustomizationSettingPermession(): boolean {
-        if (!SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CUS")[0]) {
-            return false;
-        }
         if (SessionLocator.Tenant == 261) {
             return true;
         }
-        if (FeatureLocator.HasFeaturePermession("General", "General.Features.CustomizationSettings")) {
+        if (FeatureLocator.HasFeaturePermession("General", "General.Features.CustomizationSettings") && this.UserHasCustomizationSettingAccess()) {
+            return true;
+        }
+        if (FeatureLocator.HasFeaturePermession("General", "General.Features.CustomizationSettings") && SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CUS")[0]) {
+            return true;
+        }
+        return false;
+    }
+
+    UserHasCustomizationSettingAccess(): boolean {
+        if (SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev" || SessionLocator.LoggedUserPM.IsDistributor) {
             return true;
         }
         return false;
