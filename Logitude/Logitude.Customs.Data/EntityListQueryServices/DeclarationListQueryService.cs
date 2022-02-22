@@ -275,6 +275,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                MAWB = "",
                                IsCourierMissingClassification = true,
                                IsPendingNotNull = true,
+                               IntegratorCode= "",
                            });
                 //qMyJoin = Enumerable.Empty<MyDecJoin>().AsQueryable();
                 q1stConsignments = context.Consignments.Where(r => r.DeclarationId == "-1");
