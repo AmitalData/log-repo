@@ -138,6 +138,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
                .IsMaxLength()
                .IsUnicode(true);
 
+            this.Property(t => t.UniqueNumber)
+              .HasMaxLength(20)
+              .IsUnicode(false);
+
             // Table & Column Mappings
             this.ToTable("CommunicationLogs");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -162,6 +166,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.EmailDeliveryError).HasColumnName("EmailDeliveryError");
             this.Property(t => t.ResponseDocumentId).HasColumnName("ResponseDocumentId");
             this.Property(t => t.AdditionalFields).HasColumnName("AdditionalFields");
+            this.Property(t => t.UniqueNumber).HasColumnName("UniqueNumber");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
