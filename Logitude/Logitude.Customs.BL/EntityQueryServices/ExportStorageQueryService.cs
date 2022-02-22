@@ -28,20 +28,22 @@ namespace Logitude.Customs.BL.EntityQueryServices
             ExportStoragePM exportStoragePM = null;
             if (exportStorage != null)
             {
-                exportStoragePM = new ExportStoragePM()
-                {
-                    Id = exportStorage.Id,
-                    DeclarationId = exportStorage.DeclarationId,
-                    Tenant = exportStorage.Tenant,
-                    CargoType = exportStorage.CargoType,
-                    CargoTypeCode = exportStorage.CargoTypeCode,
-                    ThirdCargoID = exportStorage.ThirdCargoID,
-                    SecondCargoID = exportStorage.SecondCargoID,
-                    FirstCargoID = exportStorage.FirstCargoID,
-                    CustomsStatus = exportStorage.CustomsStatus,
-                    ExporterID = exportStorage.ExporterID,
-                    ExportFileNo = exportStorage.ExportFileNo
-                };
+
+                exportStoragePM = this.GetEntityPM(exportStorage, false, null);
+                //exportStoragePM = new ExportStoragePM()
+                //{
+                //    Id = exportStorage.Id,
+                //    DeclarationId = exportStorage.DeclarationId,
+                //    Tenant = exportStorage.Tenant,
+                //    CargoType = exportStorage.CargoType,
+                //    CargoTypeCode = exportStorage.CargoTypeCode,
+                //    ThirdCargoID = exportStorage.ThirdCargoID,
+                //    SecondCargoID = exportStorage.SecondCargoID,
+                //    FirstCargoID = exportStorage.FirstCargoID,
+                //    CustomsStatus = exportStorage.CustomsStatus,
+                //    ExporterID = exportStorage.ExporterID,
+                //    ExportFileNo = exportStorage.ExportFileNo
+                //};
             }
             return exportStoragePM;
         }
