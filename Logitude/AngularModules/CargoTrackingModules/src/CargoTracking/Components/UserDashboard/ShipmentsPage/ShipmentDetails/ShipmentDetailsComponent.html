@@ -939,7 +939,7 @@
                                         </div>
                                         <div class="routing-card">
                                             <div class="route-card-body">
-                                                <div *ngIf="step.FromPortLabel != null || step.ToPortLabel != null" 
+                                                <div *ngIf="step.FromPortLabel != null || step.ToPortLabel != null"
                                                      class="route-label">
                                                     <div class="mobile-font-12">
                                                         <span [attr.title]="step.ToolTipFromPortLabel != null ? step.ToolTipFromPortLabel : step.FromPortLabel?.length > 5 ? step.FromPortLabel : ''">
@@ -1122,14 +1122,14 @@
 
     </panel>
 
-    
+
 
 
     <panel [Title]="'SHO List'" style="order: 6;" [Name]="'ConnectedOrdersPanel'" [ShowWhitePanelOnMobile]="true">
 
         <div body style="padding: 0px 8px 13px 0px;">
             <div  class="no-data-available" *ngIf="!cargoTrackingShipmentPM.ConnectedOrders || cargoTrackingShipmentPM.ConnectedOrders.length == 0 " style="margin-top:10px">The Shipment is not connected to any Order</div>
-            
+
             <div *ngIf="cargoTrackingShipmentPM.ConnectedOrders?.length > 0 ">
 
                 <table class="row-hover connected-orders-table">

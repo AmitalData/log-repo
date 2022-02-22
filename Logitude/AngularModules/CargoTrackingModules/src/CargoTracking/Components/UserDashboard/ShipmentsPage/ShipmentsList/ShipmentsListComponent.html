@@ -189,12 +189,12 @@
     <!-- Row Count -->
     <div class="row-count" *ngIf="ShipmentsCount != 0">
         <span>{{ShipmentsCount | number}} {{!CheckFiltersExists() ? 'Results' : 'Filtered search results'}}</span>
-        
+
         <a title="Export to excell" href="javascript:void(0)" (click)="ExportToExcelClick()" class="export-to-excell">
             <svg width="24px" height="24px" version="1.1" id="Livello_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 2289.75 2130"
                     enable-background="new 0 0 2289.75 2130" xml:space="preserve">
-               
+
                 <path fill="#185C37" d="M1437.75,1011.75L532.5,852v1180.393c0,53.907,43.7,97.607,97.607,97.607l0,0h1562.036
                     c53.907,0,97.607-43.7,97.607-97.607l0,0V1597.5L1437.75,1011.75z"/>
                 <path fill="#21A366" d="M1437.75,0H630.107C576.2,0,532.5,43.7,532.5,97.607c0,0,0,0,0,0V532.5l905.25,532.5L1917,1224.75
@@ -371,7 +371,7 @@
                                         [ngClass]="{'hide-mobile': i >= 0}" *ngIf="i < 3">
                                         {{GetSlice(item,maxNumberOfCarachter)}}
                                     </span>
-                                    <span class="more-mobile" *ngIf="i == 0">
+                                    <span class="more-mobile mobile-only" *ngIf="i == 0">
                                         <a
                                             (click)="OpenReferencesMessageWindow(shipment.CustomerReference?.split(','), true); $event.stopPropagation()"><u>+
                                                 {{references?.length}} More</u></a>
