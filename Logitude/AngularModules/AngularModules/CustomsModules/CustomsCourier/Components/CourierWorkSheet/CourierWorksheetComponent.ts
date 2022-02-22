@@ -659,6 +659,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     _PAY_C_Total = 0;
     _PAY_R_Total = 0;
     _PAY_I_Total = 0;
+    _DecWithoutHaTra = 0;
+
     _PendingCodes: KeyValuePair[] = [];
 
     private _SelectedDECToBatchSendButtonText: string = "";
@@ -827,6 +829,10 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                         }
                         case "ACC_WS": {
                             this._ACC_WS_Total = item.Value;
+                            break;
+                        }
+                        case "DecWithoutHaTra": {
+                            this._DecWithoutHaTra = item.Value;
                             break;
                         }
                         /*
