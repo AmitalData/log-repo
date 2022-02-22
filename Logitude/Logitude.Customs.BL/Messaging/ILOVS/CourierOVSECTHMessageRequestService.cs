@@ -156,6 +156,10 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
             DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
             DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(myDeclarationPM.Id, true, false) ?? myDeclarationPM.MyInsertDeclarationCourierStatusPM;
             if(currentDeclarationCourierStatusPM != null && !String.IsNullOrWhiteSpace(currentDeclarationCourierStatusPM.CrateNumber))crateNumber = currentDeclarationCourierStatusPM.CrateNumber;
+            if (string.IsNullOrWhiteSpace(crateNumber))
+            {
+                crateNumber = myDeclarationPM?.MyInsertDeclarationCourierStatusPM?.CrateNumber;
+            }
             string distributionCompanyVat = "";
             if (!string.IsNullOrWhiteSpace(currentDeclarationCourierStatusPM.TruckerId))
             {

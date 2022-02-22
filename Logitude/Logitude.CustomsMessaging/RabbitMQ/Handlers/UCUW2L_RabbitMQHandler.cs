@@ -1,10 +1,12 @@
 ﻿using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue;
 //using Logitude.Customs.BL.Messaging.U2L.CommDec;
 using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.CustomsMessaging.U2L.CommDec;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Models;
+using Logitude.Server.Tools.Utils;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Diagnostics;
@@ -70,6 +72,16 @@ namespace Logitude.CustomsMessaging.RabbitMQ.Handlers
                 string decId = UCUW2LResponseService.MyResponseData.ApplicationID;
                 string customFileNo = UCUW2LResponseService?.MyRequestSheetParam.CustomFileNo;
                 res.EntityID = UCUW2LResponseService?.MyRequestSheetParam.EntityId1;
+
+                bool checkUpsertDiff = false;
+                if (checkUpsertDiff)
+                {
+                    var myQueryService = new DeclarationQueryService(tenant);
+                    var pm = myQueryService.GetSingle(res.EntityID, true, false);
+                    var json=ProxyUtil.JsonConvertSerialize(pm);//log the result !!
+                    Debug.WriteLine(json);
+
+                }
                 res.EntityReference = customFileNo;
                 res.MoreInfo = UCUW2LResponseService?.MyRequestSheetParam?.RequestDescription;
                 res.Took = sw.Elapsed.ToString();
