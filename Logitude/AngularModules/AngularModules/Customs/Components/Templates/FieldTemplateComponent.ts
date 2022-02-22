@@ -656,8 +656,6 @@ export class FieldTemplateComponent {
     }
 
     ShowDeclaration(event) {
-        debugger;
-        var x=this.Entity.type;
         this._ListComponentArgs.SuppressOnRowSelectedField = true;
         if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
             SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = true;
@@ -676,8 +674,11 @@ export class FieldTemplateComponent {
                     if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
                         SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = false;
                     }
-                    this.OnBackFromEdit(this.Entity.DeclarationId, event);
-                    SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                    if(this.ObjectTableName =="Customs.PhysicalCheck"){
+                        this.OnBackFromEdit(this.Entity.Id, event);
+                    }else{
+                        this.OnBackFromEdit(this.Entity.DeclarationId, event);
+                    }
                 });
             });
     }
@@ -685,7 +686,7 @@ export class FieldTemplateComponent {
 
     OnBackFromEdit(selectedEntityId, $event) {
         if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentListComponent != null) {
-            SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });
+            SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(selectedEntityId, { rowIndex: this.RowIndex });
         }
     }
 
