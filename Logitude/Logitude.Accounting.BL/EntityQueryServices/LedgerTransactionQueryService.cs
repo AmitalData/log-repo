@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.CloseTables;
+using System.Data.Entity;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -592,42 +593,83 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public List<B100Data> GetTransactionsByDate( DateTime fromDate, DateTime toDate, int tenant)
         {
             List<B100Data> transactions = null;
-
-                transactions = (from a in context.LedgerTransactions
-                                               join g in context.GLAccounts on a.AccountId equals g.Id
-                                                        join j in context.Journals on a.JournalId equals j.Id
-                                                     
-                                                        where ((a.DocumentDate >= fromDate && a.DocumentDate <= toDate) || (a.AccountingDate >= fromDate && a.AccountingDate <= toDate)) 
-                                                            && a.Tenant == tenant
-                                                            && j.AccountingEntityCode != AccountingEntityValues.YearTransfer
-                                                        select  new B100Data()
-                                                        {
-                                                            AccountingDate = a.AccountingDate,
-                                                            DocumentDate = a.DocumentDate,
-                                                            AccountingEntityCode = j.AccountingEntityCode,
-                                                            AccountingEntityReference = j.AccountingEntityReference,
-                                                            ForeignAmountCredit = a.ForeignAmountCredit,
-                                                            ForeignAmountDebit = a.ForeignAmountDebit,
-                                                            GLAccountDisplayNumber = g.DisplayNumber,
-                                                            LocalAmountCredit = a.LocalAmountCredit,
-                                                            LocalAmountDebit = a.LocalAmountDebit,
-                                                            CreateDate = a.CreateDate,
-                                                            CurrencyId= a.CurrencyId,
-                                                            CreatedByUser = j.CreatedByUserId,
-                                                            JournalLineNumber = a.JournalLineNumber,
-                                                            JournalNumber = j.JournalNumber,
-                                                            Notes = a.Notes,
-                                                            Reference2 = a.Reference2,
-                                                            LedgerTransactionId = a.Id,
-                                                            OppositGLAccount = a.OppositeAccount != null ? a.OppositeAccount.DisplayNumber:null,
-                                                        }).ToList();
-
-                
-           
-
-
+            var firstDayOfFromDate = new DateTime(fromDate.Year, 1, 1);
+            IQueryable<B100Data> transactionsQuery;
+            if (firstDayOfFromDate == fromDate.Date)
+            {
+                transactionsQuery = GettransactionsQueryWithValidateFirsDate(firstDayOfFromDate, fromDate, toDate, tenant);
+            }
+            else
+            {
+                transactionsQuery = GettransactionsQuery(fromDate, toDate, tenant);
+            }
+            transactions = transactionsQuery.ToList();
+            
             return transactions;
         }
+
+        private IQueryable<B100Data> GettransactionsQuery(DateTime fromDate, DateTime toDate, int tenant)
+        {
+            return (from a in context.LedgerTransactions
+                    join g in context.GLAccounts on a.AccountId equals g.Id
+                    join j in context.Journals on a.JournalId equals j.Id
+
+                    where ((a.DocumentDate >= fromDate && a.DocumentDate <= toDate) || (a.AccountingDate >= fromDate && a.AccountingDate <= toDate)) && a.Tenant == tenant
+                    select new B100Data()
+                    {
+                        AccountingDate = a.AccountingDate,
+                        DocumentDate = a.DocumentDate,
+                        AccountingEntityCode = j.AccountingEntityCode,
+                        AccountingEntityReference = j.AccountingEntityReference,
+                        ForeignAmountCredit = a.ForeignAmountCredit,
+                        ForeignAmountDebit = a.ForeignAmountDebit,
+                        GLAccountDisplayNumber = g.DisplayNumber,
+                        LocalAmountCredit = a.LocalAmountCredit,
+                        LocalAmountDebit = a.LocalAmountDebit,
+                        CreateDate = a.CreateDate,
+                        CurrencyId = a.CurrencyId,
+                        CreatedByUser = j.CreatedByUserId,
+                        JournalLineNumber = a.JournalLineNumber,
+                        JournalNumber = j.JournalNumber,
+                        Notes = a.Notes,
+                        Reference2 = a.Reference2,
+                        LedgerTransactionId = a.Id,
+                        OppositGLAccount = a.OppositeAccount != null ? a.OppositeAccount.DisplayNumber : null,
+                    });
+        }
+
+        private IQueryable<B100Data> GettransactionsQueryWithValidateFirsDate(DateTime firstDayOfFromDate, DateTime fromDate, DateTime toDate, int tenant)
+        {
+            return (from a in context.LedgerTransactions
+                    join g in context.GLAccounts on a.AccountId equals g.Id
+                    join j in context.Journals on a.JournalId equals j.Id
+
+                    where ((a.DocumentDate >= fromDate && a.DocumentDate <= toDate) || (a.AccountingDate >= fromDate && a.AccountingDate <= toDate))
+                        && a.Tenant == tenant
+                        && (DbFunctions.TruncateTime(a.AccountingDate) != firstDayOfFromDate || (DbFunctions.TruncateTime(a.AccountingDate) == firstDayOfFromDate && j.AccountingEntityCode != AccountingEntityValues.YearTransfer))
+                    select new B100Data()
+                    {
+                        AccountingDate = a.AccountingDate,
+                        DocumentDate = a.DocumentDate,
+                        AccountingEntityCode = j.AccountingEntityCode,
+                        AccountingEntityReference = j.AccountingEntityReference,
+                        ForeignAmountCredit = a.ForeignAmountCredit,
+                        ForeignAmountDebit = a.ForeignAmountDebit,
+                        GLAccountDisplayNumber = g.DisplayNumber,
+                        LocalAmountCredit = a.LocalAmountCredit,
+                        LocalAmountDebit = a.LocalAmountDebit,
+                        CreateDate = a.CreateDate,
+                        CurrencyId = a.CurrencyId,
+                        CreatedByUser = j.CreatedByUserId,
+                        JournalLineNumber = a.JournalLineNumber,
+                        JournalNumber = j.JournalNumber,
+                        Notes = a.Notes,
+                        Reference2 = a.Reference2,
+                        LedgerTransactionId = a.Id,
+                        OppositGLAccount = a.OppositeAccount != null ? a.OppositeAccount.DisplayNumber : null,
+                    });
+        }
+
         public List<LedgerTransactionPM> GetTransactionBySourceEntity(string entityId,string sourceTypeCode, int tenant)
         {
             List<LedgerTransaction> transactions = repository.GetTransactionsBySourceId(entityId, sourceTypeCode, tenant);
