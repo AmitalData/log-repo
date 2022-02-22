@@ -528,7 +528,7 @@
             <div *ngIf="ObjectTableName == 'Customs.PhysicalCheck'">
                 <div *ngIf="FieldName == 'CustomFileNo'" style="position:relative;width:100%; height: 100%;">
                     <div *ngIf="!IsHeaderScreenTemplate" style="text-align:right">
-                        <div (click)="ShowDeclaration()">
+                        <div (click)="ShowDeclaration($event)">
                             <span>{{Entity[FieldName]}}</span> 
                         </div>
                     </div>
