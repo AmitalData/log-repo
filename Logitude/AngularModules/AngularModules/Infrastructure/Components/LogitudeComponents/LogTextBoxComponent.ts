@@ -1947,7 +1947,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         var formattedTxt = textValue;
         var textnumber = Number(textValue);
 
-        const datacontextValue = this.ObjectField.IsCustom ? this.DataContext[this.ObjectFieldName]?.ResolvedValue :  this.DataContext[this.ObjectFieldName];
+        const datacontextValue = this.ObjectField?.IsCustom ? this.DataContext[this.ObjectFieldName]?.ResolvedValue :  this.DataContext[this.ObjectFieldName];
         if (datacontextValue == textnumber && SessionLocator.TenantPM.NumberFormatCode == "DC") {
 
             if (this.InputType != "text" && this.InputType != "ntext") {
