@@ -345,19 +345,6 @@ export class ReceivablePageComponent {
             }
         });
 
-        // ARPayments
-
-        var myService = new ModulesService();
-        myService.GetAccountingReceivablesSummary().subscribe((myResult:any) => {
-            if (myResult != null) {
-                this.ARInvoicesDraftsCount = myResult.ARInvoicesDraftsCount > 1000 ? "1000+" : myResult.ARInvoicesDraftsCount.toString();
-                this.ARInvoicesUnpaidCount = myResult.ARInvoicesUnpaidCount > 1000 ? "1000+" : myResult.ARInvoicesUnpaidCount.toString();
-                this.ARInvoicesOpenConstituentCount = myResult.ARInvoicesOpenConstituentCount > 1000 ? "1000+" : myResult.ARInvoicesOpenConstituentCount.toString();
-                this.ARPaymentsDraftsCount = myResult.ARPaymentsDraftsCount > 1000 ? "1000+" : myResult.ARPaymentsDraftsCount.toString();
-                this.ARPaymentsOpenedCount = myResult.ARPaymentsOpenedCount > 1000 ? "1000+" : myResult.ARPaymentsOpenedCount.toString();
-                this.ARGeneralInvoiceDraftCount = myResult.ARGeneralInvoiceDraftCount > 1000 ? "1000+" : myResult.ARGeneralInvoiceDraftCount.toString();
-            }
-        });
     }
 
     EditGLAccount(entity: any) {
