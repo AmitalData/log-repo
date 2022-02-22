@@ -114,6 +114,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
             //myCourierMasterQueryService.GetNotConnectedDeclaratins
 
             var myCourierMasterPM = courierMasterPM ?? myCourierMasterQueryService.GetByDeclarationId(declarationId, tenant);
+            myCourierMasterPM = myCourierMasterPM ?? declarationPM.MyCourierMasterPM;
             if (myCourierMasterPM == null)
             {
                 //throw new Exception("Declaration is null:" + _CustomFileCreditModel.AppicationId);
@@ -153,8 +154,12 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
             string crateNumber = "";
             var context = CustomContext.GetContext(myDeclarationPM.Tenant);
             DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(myDeclarationPM.Id, true, false);
+            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(myDeclarationPM.Id, true, false) ?? myDeclarationPM.MyInsertDeclarationCourierStatusPM;
             if(currentDeclarationCourierStatusPM != null && !String.IsNullOrWhiteSpace(currentDeclarationCourierStatusPM.CrateNumber))crateNumber = currentDeclarationCourierStatusPM.CrateNumber;
+            if (string.IsNullOrWhiteSpace(crateNumber))
+            {
+                crateNumber = myDeclarationPM?.MyInsertDeclarationCourierStatusPM?.CrateNumber;
+            }
             string distributionCompanyVat = "";
             if (!string.IsNullOrWhiteSpace(currentDeclarationCourierStatusPM.TruckerId))
             {

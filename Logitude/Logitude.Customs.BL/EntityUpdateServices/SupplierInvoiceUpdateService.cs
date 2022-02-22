@@ -48,7 +48,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         private bool openTaskForUnifreight;
         private CourierMasterPM _CourierMasterPM;
         private DeclarationCourierStatusPM currentDeclarationCourierStatusPM;
-
+        private DeclarationPM _DeclarationPMAncestor;
 
         public bool IsProcedureCurrentCodeChanged { get; set; }
 
@@ -57,8 +57,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void OnCreating(SupplierInvoicePM entityPM, EntityPM entityParentPM)
         {
 
-
-
+            _DeclarationPMAncestor = (entityParentPM as DeclarationPM);
+            entityPM.DeclarationId = entityPM.DeclarationId ?? _DeclarationPMAncestor.Id;
             var a = 44;
             a = 444;
             Debug.WriteLine("323");
@@ -179,8 +179,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void OnUpdating(SupplierInvoicePM entityPM, SupplierInvoice entityPOCO)
         {
             var sIModificationByCustomerCommissionService = new SIModificationByCustomerCommissionService();
-            sIModificationByCustomerCommissionService.EnsureReductionByVendorCommission(_DeclarationPM, entityPM,false);
-            if (_DeclarationPM != null && _DeclarationPM.IsCourierDeclaration)
+            var curDeclarationPm = _DeclarationPM ?? _DeclarationPMAncestor;
+            sIModificationByCustomerCommissionService.EnsureReductionByVendorCommission(curDeclarationPm/*_DeclarationPM*/, entityPM,false);
+            if (/*_DeclarationPM*/curDeclarationPm != null && /*_DeclarationPM*/curDeclarationPm.IsCourierDeclaration)
             {
                 bool pHaveChange = entityPM.InvoiceAmountInUSD != entityPOCO.InvoiceAmountInUSD;
                 if (pHaveChange)
@@ -204,9 +205,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     {
                         _DeclarationPM = myDBDeclarationPM;
                     }
+                    if ( _DeclarationPMAncestor?.ChangeSetOp!=  ChangeSetOperation.Insert)// AVOID - DUE INSERT ALREADY SENT IN dECLARATIONuPDATE.oNuPDATE
+                    {
+                        var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
+                        mySend2MasofIfNeededService.Send2Masof(_DeclarationPM ?? curDeclarationPm, pHaveChange, _DeclarationPM);
 
-                    var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
-                    mySend2MasofIfNeededService.Send2Masof(_DeclarationPM, pHaveChange, _DeclarationPM);
+                    }
                     this.openTaskForUnifreight = true;
                 }
             }
@@ -286,7 +290,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //}
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
             _DeclarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
-
+                      
             if (_DeclarationPM != null && _DeclarationPM.IsConnectedToUnifreight)
             {
                 base.OnUpdating(entityPM);
@@ -343,20 +347,23 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
-            //calculate frieghts total
-            //this.CalculateFrieghtTotals(entityPM, declarationPM);
-            InsuranceFreightUtil util = new Utils.InsuranceFreightUtil();
-            util.CalculateFreightForInvoice(entityPM, _DeclarationPM.TaxationDateTime);
-            entityPM.InvoiceAmountInUSD = InsuranceFreightUtil.CalcInvoiceAmountInUSD(_DeclarationPM.TaxationDateTime, entityPM.InvoiceCurrencyTypeCode, entityPM.InvoiceAmount.GetValueOrDefault(), entityPM.Tenant);
-
             object entityPOCO; object entityPM1; object entityParentPM;
             this.GetAncestor(out entityPOCO, out entityPM1, out entityParentPM);
-            var myDec = (entityPM1 as DeclarationPM);
-            if (myDec != null)
+            _DeclarationPMAncestor = (entityPM1 as DeclarationPM);
+            if (_DeclarationPMAncestor != null)
             {
                 this._FromDec = true;
 
             }
+
+            DateTime? myTaxationDateTime = _DeclarationPM != null ? _DeclarationPM.TaxationDateTime : _DeclarationPMAncestor?.TaxationDateTime;
+            //calculate frieghts total
+            //this.CalculateFrieghtTotals(entityPM, declarationPM);
+            InsuranceFreightUtil util = new Utils.InsuranceFreightUtil();
+            util.CalculateFreightForInvoice(entityPM, myTaxationDateTime/* _DeclarationPM.TaxationDateTime*/);
+            entityPM.InvoiceAmountInUSD = InsuranceFreightUtil.CalcInvoiceAmountInUSD(myTaxationDateTime/*_DeclarationPM.TaxationDateTime*/, entityPM.InvoiceCurrencyTypeCode, entityPM.InvoiceAmount.GetValueOrDefault(), entityPM.Tenant);
+
+            
 
             this.SetDeclarationChanged(entityPM);
             this.UpdateDeclarationPlatformFeeAndPrimaryInvoice(entityPM);
@@ -642,7 +649,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             bool dirty = false;
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
-            DeclarationPM declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
+            DeclarationPM declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false)?? _DeclarationPMAncestor;
             DeclarationPM defaultDeclarationPM = (DeclarationPM)entityParentPM;
             if (defaultDeclarationPM == null) defaultDeclarationPM = declarationPM;
             declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
@@ -666,7 +673,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             if (_CourierMasterPM == null)
                             {
                                 var myCourierMasterQueryService = new CourierMasterQueryService(context);
-                                _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationPM.Id, entityPM.Tenant);
+                                _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationPM.Id, entityPM.Tenant)?? _DeclarationPMAncestor?.MyCourierMasterPM;
                             }
 
                             if (_CourierMasterPM != null)
