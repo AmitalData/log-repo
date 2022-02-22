@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PhysicalCheckUpdateClass
    {  		
-		public const string HashString = "4a271f3204213884d298d709c8ac3569";
+		public const string HashString = "8bd1ed948ba5029931eb39d984d8da2e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3348,7 +3348,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
@@ -3378,7 +3378,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "אינטגרטור",
 					  						ListFieldLable =  "IntegratorCodeListLable",
 					  						ListLableDefaultText =  "Integrator",
-					  						ListLocalDefaultText =  "אינטגרטור",
+					  						ListLocalDefaultText =  "קוד אינטגרטור",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3500,7 +3500,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Integrator",
 					  						ListFieldLable =  "IntegratorNameListLable",
 					  						ListLableDefaultText =  "Integrator",
-					  						ListLocalDefaultText =  "אינטגרטור",
+					  						ListLocalDefaultText =  "שם אינטגרטור",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
