@@ -61,7 +61,7 @@ namespace Logitude.Accounting.BL.Utils
             ARPaymentChequeListQueryService aRPaymentChequeListQueryService = new ARPaymentChequeListQueryService(context);
             aRPaymentCheques = aRPaymentChequeListQueryService.GetPayablePostDatedARPaymentChequeList(tenant);
             
-            var uniqueCheques = aRPaymentCheques.Distinct();
+            var uniqueCheques = aRPaymentCheques.GroupBy(d=>d.ChequeNumber).Select(d=>d.First()).ToList();
 
 
             if (aRPaymentCheques != null)
