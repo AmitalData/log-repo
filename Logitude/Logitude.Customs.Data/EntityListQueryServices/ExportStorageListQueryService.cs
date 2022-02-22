@@ -42,17 +42,22 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                    into ssj
                                                    from cargoStatus in ssj.DefaultIfEmpty()
 
-                                                   join c in context.Cards.Select( r=> new {r.Id, r.LocalName, r.VatNumber})
-                                                   on en.ExporterID equals c.Id
+                                                   //join c in context.Cards.Select( r=> new {r.Id, r.LocalName, r.VatNumber})
+                                                   //on en.ExporterID equals c.Id
+                                                   //into cj
+                                                   //from card in cj.DefaultIfEmpty()
+
+                                                   join c in context.Clients.Select(r => new { r.Code, r.FullName })
+                                                   on en.ExporterID equals c.Code
                                                    into cj
-                                                   from card in cj.DefaultIfEmpty()
+                                                   from client in cj.DefaultIfEmpty()
 
                                                    join cs in context.CustomsShips.Select( r=> new {r.Code, r.LocalName})
                                                    on en.ShipCode equals cs.Code
                                                    into csj
                                                    from customsShip in csj.DefaultIfEmpty()
 
-                                                   join ci in context.CargoIdentifireTypes.Select(r=> new{ r.Code, r.LocalName})
+                                                   join ci in context.CargoIdentifireTypes.Select(r => new { r.Code, r.LocalName })
                                                    on en.CargoTypeCode equals ci.Code
                                                    into cij
                                                    from cargoIdentifireType in cij.DefaultIfEmpty()
@@ -101,7 +106,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                        CustomStatusName = cargoStatus.LocalName,
 
-                                                       ExporterName = card.LocalName,
+                                                       //ExporterName = card.LocalName,
+                                                       ExporterName = client.FullName,
 
                                                        ShipName = customsShip.LocalName,
 
@@ -121,7 +127,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                        DeclarationNumber = declaration.DeclarationNumber,
 
-                                                       ExporterCode = card.VatNumber
+                                                       //ExporterCode = card.VatNumber
+                                                       ExporterCode = client.Code
                                                    });
             return query;
         }
