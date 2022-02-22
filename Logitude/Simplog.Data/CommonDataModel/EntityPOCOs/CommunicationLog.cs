@@ -94,8 +94,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         [ForeignKey("ResponseDocumentId")]
         public virtual Document ResponseDocument { get; set; }
-        
 
+        public string UniqueNumber { get; set; }
 
     }
 }

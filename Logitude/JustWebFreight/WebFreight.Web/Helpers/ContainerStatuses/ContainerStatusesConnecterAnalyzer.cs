@@ -212,6 +212,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         string POLShipmentUpdateIndicator = null;
         string PODShipmentUpdateIndicator = null;
         string computingPartnerCode;
+        string xmlId = null;
         private bool IsUpdatingPackages = false;
         private ContainersExternalData containersExternalData_DB;
         private ContainersExternalData containersExternalData_New;
@@ -335,6 +336,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (node.ChildNodes != null && node.Name == "event")
             {
+                xmlId = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "id").FirstOrDefault()?.InnerText;
                 createdDate = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "created").FirstOrDefault()?.InnerText;
                 eventCode = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "code").FirstOrDefault()?.InnerText;
 
@@ -864,6 +866,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         }
         private void BuildCommunicationLog(LogitudeOceanInsightsRequest oceanInsight)
         {
+            if (IsCommunicationLogsExsit())
+            {
+                return;
+            }
+               
             CommunicationsParams logParams = new CommunicationsParams()
             {
                 Tenant = logitudeTenant.Value,
@@ -880,10 +887,20 @@ namespace WebFreight.Web.Helpers.Analyzers
                 Subject = communicationLogSubject,
                 FolderName = communicationLogTo.ToLower(),
                 ByteData = GetXMLByteDataFromText(),
+                UniqueNumber = xmlId
             };
 
             Communications.AddCommunicationLog(logParams);
         }
+
+        private bool IsCommunicationLogsExsit()
+        {
+            int tenant = this.logitudeTenant.Value;
+            this.communicationLogRepository = new CommunicationLogRepository(tenant);
+            var isCommunicationLogsExsit = this.communicationLogRepository.IsCommunicationLogExsit(xmlId, tenant);
+            return isCommunicationLogsExsit;
+        }
+
         private byte[] GetXMLByteDataFromText()
         {
             var doc = new XmlDocument();
@@ -975,6 +992,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             shipmentContainerStatusRepository.Add(containerStatus);
             shipmentContainerStatusRepository.SubmitChanges();
         }
+
         private string GetStatusDetails()
         {
             string statusDetails = null;

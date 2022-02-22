@@ -191,5 +191,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public bool IsCommunicationLogExsit(string xmlId, int tenant)
+        {
+            var communicationLog = (from a in context.CommunicationLogs
+                     where a.UniqueNumber == xmlId
+                     && a.Tenant == tenant select a);
+           
+            return communicationLog.Any();
+        }
     }
 }

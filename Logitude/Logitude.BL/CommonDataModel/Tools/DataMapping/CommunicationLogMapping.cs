@@ -54,6 +54,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.IsSecured = entityPM.IsBodySecured;
             poco.EmailDeliveryError = entityPM.EmailDeliveryError;
             poco.ResponseDocumentId = entityPM.ResponseDocumentId;
+            poco.UniqueNumber = entityPM.UniqueNumber;
         }
     }
 }
