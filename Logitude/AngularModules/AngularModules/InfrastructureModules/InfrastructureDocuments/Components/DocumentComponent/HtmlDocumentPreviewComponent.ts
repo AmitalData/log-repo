@@ -171,7 +171,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
 
 
-    IsShowDefultAttachment: boolean = false;
+    IsShowAttachmentLinks: boolean = false;
 
 
     Run(args: any) {
@@ -397,7 +397,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
             if (this.template.TemplateType == "M") {
                 if (this.PageType == "Send" || this.PageType == "ManageTemplate" || this.PageType =="Maintenance") {
-                    this.IsShowDefultAttachment = true;
+                    this.IsShowAttachmentLinks = true;
                 }
             }
 
