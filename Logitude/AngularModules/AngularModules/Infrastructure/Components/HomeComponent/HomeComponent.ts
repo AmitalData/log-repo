@@ -217,7 +217,7 @@ export class HomeComponent implements OnDestroy{
         if (SessionLocator.Tenant == 261) {
             return true;
         }
-        if (FeatureLocator.HasFeaturePermession("General", "General.Features.CustomizationSettings") && this.IsCustomerCareUser()) {
+        if (FeatureLocator.HasFeaturePermession("General", "General.Features.CustomizationSettings") && this.UserHasustomizationSettingAccess()) {
             return true;
         }
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.CustomizationSettings") && SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CUS")[0]) {
@@ -226,7 +226,7 @@ export class HomeComponent implements OnDestroy{
         return false;
     }
 
-    IsCustomerCareUser(): boolean {
+    UserHasustomizationSettingAccess(): boolean {
         if (SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev" || SessionLocator.LoggedUserPM.IsDistributor) {
             return true;
         }
