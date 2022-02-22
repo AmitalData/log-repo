@@ -337,7 +337,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     this._MyDeclarationPM.EntitleImporterId = TranslateClient(_LogitudeCommDecFile.TransferImporterId);
                     this._MyDeclarationPM.EntitleImporterCode = _LogitudeCommDecFile.TransferImporterId;
                 }
-#if false
+#if true // with moran 
                 if (!string.IsNullOrWhiteSpace(this._LogitudeCommDecFile.ImporterEntitlementTypeCode))
                 {
                     EntitlementTypeQueryService entitlementTypeQueryService = new EntitlementTypeQueryService(this._MyDeclarationPM.Tenant);
@@ -444,10 +444,11 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                     if (_CourierMasterPM != null)
 
+
                     {
 
                         CustomsAirlineQueryService customsAirlineQueryService = new CustomsAirlineQueryService(_CourierMasterPM.Tenant);
-
+                        
                         CustomsAirlinePM customsAirline = customsAirlineQueryService.GetSingle(_CourierMasterPM.AirlineId, false, true);
 
                         if (customsAirline != null)
@@ -458,19 +459,41 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                         }
 
+
                     }
 
 
 #endif
 
+#if true // MORAN - UnloadPortCode  IS MUST 
+
+                    var airlineId = TranslateAirline(_LogitudeCommDecFile.CarrierPrefix);
+                    if (!string.IsNullOrWhiteSpace(airlineId))
+                    {
+
+
+                        CustomsAirlineQueryService customsAirlineQueryService = new CustomsAirlineQueryService(_tenant);
+                        CustomsAirlinePM customsAirline = customsAirlineQueryService.GetSingle(airlineId, false, true);
+
+                        if (customsAirline != null)
+
+                        {
+
+                            if (!String.IsNullOrWhiteSpace(customsAirline.UnloadPortCode)) this._MyDeclarationPM.Consignments[0].UnloadPortCode = customsAirline.UnloadPortCode;
+
+                        }
+                    }
+#endif
+
+
                 }
-#if HappenInDECUPSERT
+
                 if (this._LogitudeCommDecFile.PACKAGES != null && this._LogitudeCommDecFile.PACKAGES.Count() > 0)
                 {
-
+#if HappenInDECUPSERT
                     var myConsignmentPackageUpdateService = new ConsignmentPackageUpdateService(_context, new Dictionary<string, IContext>(), _tenant);
                     DeleteConsignmentPackages(myConsignmentPackageUpdateService);
-
+#endif
 
 
                     this._MyDeclarationPM.Consignments[0].ConsignmentPackages = GetConsignmentPackages(this._LogitudeCommDecFile.PACKAGES);
@@ -484,10 +507,10 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 MyGenericResponseObj.Message = "Declaration has multiple Consignments(" + this._MyDeclarationPM.Consignments.Count.ToString() + ") and Consignment details didn't update";
                 AppendLogLine("Declaration has multiple Consignments(" + this._MyDeclarationPM.Consignments.Count.ToString() + ") and Consignment details didn't update");
             }
-#endif
-            }
 
-            if (_CourierMasterPM != null)
+                }
+
+                if (_CourierMasterPM != null)
             {
                 courierMasterID = _CourierMasterPM.Id;
             }
@@ -519,6 +542,9 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     if (this._MyDeclarationPM.SupplierInvoices != null && this._MyDeclarationPM.SupplierInvoices.Count() > 0) // moran 8.10.15 - Task 16452
                     {
                         this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().IsPrimarySupplierInvoice = true;
+                        this._MyDeclarationPM.SupplierInvoices.FirstOrDefault().InvoiceCounterKey = 1;
+                        this._MyDeclarationPM.PrimaryInvoiceCounterKey = "1";
+
                     }
                     AppendLogLine("Update:InvoiceInsert:All:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                 }
@@ -570,7 +596,18 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             declarationUpdateService.Update(this._MyDeclarationPM, true);
 
             UpdateCustomDocument();
-            InsertCourierDeclarationPM();
+            if (_CourierMasterPM == null)
+            {
+                AppendLogLine("_CourierMasterPM == null");
+
+
+            }
+            else
+            {
+                InsertCourierDeclarationPM();
+            }
+
+            
             string defValueB = GetDefault("ISRAEL", "CGG_OPN_DEC_MET", "NON", "NON", _MyDeclarationPM.Tenant);
 
             // if (!string.IsNullOrEmpty(defValueB) && defValueB == "B")
@@ -1052,7 +1089,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
                 currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
             }
-#endif            
+#endif
 
             if (this.IsAutonomy == true)
             {
@@ -1461,13 +1498,13 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 #endif
             }
 
-
+            
 
         }
         void InsertCourierDeclarationPM()
         {
             var myCourierDeclarationUpdateService = new CourierDeclarationUpdateService(_context, new Dictionary<string, IContext>(), _tenant);
-            AppendLogLine("try to update CourierDeclaration for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
+            AppendLogLine("try to update CourierDeclaration for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM?.Id);
             try
             {
                 _CourierDeclarationPM.DeclarationId = _MyDeclarationPM.Id;

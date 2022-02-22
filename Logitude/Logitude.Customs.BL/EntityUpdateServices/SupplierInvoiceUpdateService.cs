@@ -205,9 +205,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     {
                         _DeclarationPM = myDBDeclarationPM;
                     }
+                    if ( _DeclarationPMAncestor?.ChangeSetOp!=  ChangeSetOperation.Insert)// AVOID - DUE INSERT ALREADY SENT IN dECLARATIONuPDATE.oNuPDATE
+                    {
+                        var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
+                        mySend2MasofIfNeededService.Send2Masof(_DeclarationPM ?? curDeclarationPm, pHaveChange, _DeclarationPM);
 
-                    var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
-                    mySend2MasofIfNeededService.Send2Masof(_DeclarationPM?? curDeclarationPm, pHaveChange, _DeclarationPM);
+                    }
                     this.openTaskForUnifreight = true;
                 }
             }

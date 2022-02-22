@@ -146,7 +146,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.Clear();
             DeserilazeObject(xmlLOGICOMMDEC);
             AppendLogLine("DeserilazeObject:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-
+            bool SuppressECommDecInsertService = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20220221.SuppressECommDecInsertService"]);
             //CheckIntegrity();
             AppendLogLine("CheckIntegrity:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
             MyGenericResponseObj.Stage = "GetContext";
@@ -184,13 +184,18 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                         }
                         else
                         {
-                            /// INSERT !!!
-                            MyGenericResponseObj.EnglishDescription = "Insert Declaration Integrator";
-                            var eCommDecInsertService = new ECommDecInsertService();
-                            eCommDecInsertService.ProccessGenericRequestReal(xmlLOGICOMMDEC, tenant, Curruser, PBId,
-              ref MoreParams,
-              out MessageOut, out customFileNo, out decId, out courierMasterID);
-                            return;
+                            if (!SuppressECommDecInsertService)
+                            {
+
+
+                                /// INSERT !!!
+                                MyGenericResponseObj.EnglishDescription = "Insert Declaration Integrator";
+                                var eCommDecInsertService = new ECommDecInsertService();
+                                eCommDecInsertService.ProccessGenericRequestReal(xmlLOGICOMMDEC, tenant, Curruser, PBId,
+                  ref MoreParams,
+                  out MessageOut, out customFileNo, out decId, out courierMasterID);
+                                return;
+                            }
 
                         }
                     }
@@ -224,13 +229,16 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 }
                 else
                 {
-                    //INSERT !!!
-                    MyGenericResponseObj.EnglishDescription = "Insert Declaration Integrator";
-                    var eCommDecInsertService = new ECommDecInsertService();
-                    eCommDecInsertService.ProccessGenericRequestReal(xmlLOGICOMMDEC, tenant, Curruser, PBId,
-      ref MoreParams,
-      out MessageOut, out customFileNo, out decId, out courierMasterID);
-                    return;
+                    if (!SuppressECommDecInsertService)
+                    {
+                        //INSERT !!!
+                        MyGenericResponseObj.EnglishDescription = "Insert Declaration Integrator";
+                        var eCommDecInsertService = new ECommDecInsertService();
+                        eCommDecInsertService.ProccessGenericRequestReal(xmlLOGICOMMDEC, tenant, Curruser, PBId,
+          ref MoreParams,
+          out MessageOut, out customFileNo, out decId, out courierMasterID);
+                        return;
+                    }
                 }
             }
             if (this._MyDeclarationPM == null) _IsNewDeclaration = true;
