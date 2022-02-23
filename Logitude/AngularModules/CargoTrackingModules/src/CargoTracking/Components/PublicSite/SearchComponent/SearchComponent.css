@@ -611,3 +611,8 @@ li a {
     }
 
 }
+
+.more-mobile {
+    display: inline;
+    margin-left: 10px
+}
