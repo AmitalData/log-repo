@@ -645,7 +645,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
     BuildShipmentReferences(shipment: CargoTrackingShipmentList) {
-        this.references = shipment.CustomerReference != null ? shipment.CustomerReference.split(',') : [];
+        this.references = shipment.CustomerReference != null ? shipment.CustomerReference.split(',').filter(d=>d) : [];
     }
 
 
@@ -727,8 +727,11 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         });
     }
 
-    OpenReferencesMessageWindow(references, isMobile: boolean) {
-        references = references.map(x => x.trim());
+    OpenReferencesMessageWindow(references: any[], isMobile: boolean) {
+        if(!references)
+            return;
+
+        references = references.filter(d=>d).map(x => x.trim());
         this.dialog.open(MessageWindowComponent, {
             data: {
                 title: 'References',
@@ -1026,6 +1029,11 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         }
     }
 
+
+    GetCustomerReferencesItems(shipment){
+        return shipment.CustomerReference?.split(',').filter(d=>d);
+    }
+
 }
 
 export class ToggleFilter {
@@ -1063,6 +1071,8 @@ export class ToggleFilter {
     public set Code(v: string) {
         this.code = v;
     }
+
+
 
 
 

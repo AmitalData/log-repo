@@ -410,7 +410,7 @@ h1 {
     }
 
     .PanelsNavigator {
-        width: 100%;
+        width: calc(100% - 25px);
         margin: 0;
         padding-top: 15px;
         overflow: auto;
@@ -421,7 +421,7 @@ h1 {
     }
 
     .panels-wrapper {
-        width: 750px;
+        display: flex;
     }
 
     .PanelsNavigator button {

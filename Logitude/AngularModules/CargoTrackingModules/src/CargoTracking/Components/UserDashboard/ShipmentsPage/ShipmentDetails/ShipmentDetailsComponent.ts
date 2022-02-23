@@ -256,7 +256,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     }
 
     private BuildShipmentReferences() {
-        this.ShipmentReferences = this.cargoTrackingShipmentPM.CustomerReference ? this.cargoTrackingShipmentPM.CustomerReference.split(',') : [];
+        this.ShipmentReferences = this.cargoTrackingShipmentPM.CustomerReference ? this.cargoTrackingShipmentPM.CustomerReference.split(',').filter(d=>d) : [];
         if (this.cargoTrackingShipmentPM.EntityType == 'O') {
             this.AddShipmentReferencesForOrderShipment();
         }
@@ -792,7 +792,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     }
 
     OpenReferencesWindow(references) {
-        references = references.map(x => x.trim());
+        references = references.map(x => x.trim()).filter(d=>d);
         this.dialog.open(MessageWindowComponent, {
             data: {
                 title: 'References',
