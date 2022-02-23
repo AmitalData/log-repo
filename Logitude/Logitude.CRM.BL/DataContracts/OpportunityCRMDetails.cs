@@ -31,5 +31,6 @@ namespace Logitude.CRM.BL.DataContracts
         public DateTime CreateDate { get; set; }
         public bool InActive { get; set; }
         public DateTime ActualClosingDate { get; set; }
+        public string PaymentChannelCode { get; set; }
     }
 }

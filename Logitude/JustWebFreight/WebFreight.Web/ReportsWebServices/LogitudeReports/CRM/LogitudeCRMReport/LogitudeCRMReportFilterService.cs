@@ -28,6 +28,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
         {
             QueryOperations iQueryOperations = BuildQueryOperation(xmlFilters);
             SetOppotunityFilter(iQueryOperations);
+            SetPaymentChannelFilter(iQueryOperations);
             SetCustomerStatusFilter(iQueryOperations);
             SetResellerFilter(iQueryOperations);
             SetShowNetFilter(iQueryOperations);
@@ -53,6 +54,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
                 opportunityTypes = queryFilterItem.FieldValue.ToString();
             }
             logitudeCRMReportFilter.OpportunityTypes = (string.IsNullOrEmpty(opportunityTypes) || opportunityTypes.ToLower() == "all") ? GetOpportunityTypes() : opportunityTypes.Trim(',').Split(',').ToList();
+        }
+
+        private void SetPaymentChannelFilter(QueryOperations iQueryOperations)
+        {
+            QueryFilterItem queryFilterItem = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "PaymentChannels").FirstOrDefault();
+            string opportunityTypes = null;
+            if (queryFilterItem != null && queryFilterItem.FieldValue != null)
+            {
+                opportunityTypes = queryFilterItem.FieldValue.ToString();
+            }
+            logitudeCRMReportFilter.PaymentChannels = (string.IsNullOrEmpty(opportunityTypes) || opportunityTypes.ToLower() == "all") ? null : opportunityTypes.Trim(',').Split(',').ToList();
         }
 
         private List<string> GetOpportunityTypes()

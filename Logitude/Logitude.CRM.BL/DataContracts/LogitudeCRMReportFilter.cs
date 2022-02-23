@@ -9,6 +9,7 @@ namespace Logitude.CRM.BL.DataContracts
     public class LogitudeCRMReportFilter
     {
         public List<string> OpportunityTypes;
+        public List<string> PaymentChannels;
         public string CustomerStatus;
         public string ResellerId;
         public bool ShowNet;

@@ -1416,6 +1416,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     IsMultiPackage = a.IsMultiPackage,
                     NumberOfUsers = a.NumberOfUsers,
                     TenantManagementLicenses = tenantManagementLicenses.Where(b => b.Tenant == a.Id).ToList(),
+                    PaymentChannelCode = a.PaymentChannelCode
                 }).ToList();
 
             return tenantManagements;
