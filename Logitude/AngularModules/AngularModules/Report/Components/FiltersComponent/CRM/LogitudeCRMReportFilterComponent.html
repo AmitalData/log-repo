@@ -78,7 +78,7 @@
                                                 <ComboBoxWithInCheckBox (EditedItemSource)="EditedItemSource($event)"
                                                     [ItemsSource]="FilterdOpportunityTypeList"
                                                     (SelectedItemChanged)="SelectedOpportunityTypeListChanged($event)"
-                                                    [SelectedItem]="SelectedItem">
+                                                    [SelectedItem]="SelectedItem" [SelectionType]="' Types'">
                                                 </ComboBoxWithInCheckBox>
                                             </td>
 
@@ -144,7 +144,19 @@
                                                 </LogTextBox>
                                             </td>
 
+                                            <td style="width:25px;">
+                                                <div></div>
+                                            </td>
 
+                                            <!-- Opportunities Type -->
+                                            <td style="width:120px;">Payment Channel:</td>
+                                            <td style="width:170px;">
+                                                <ComboBoxWithInCheckBox (EditedItemSource)="PaymentChannels = $event"
+                                                    [ItemsSource]="PaymentChannels"
+                                                    (SelectedItemChanged)="SelectedPaymentChannel = $event"
+                                                    [SelectedItem]="SelectedItem" [SelectionType]="' Channels'">
+                                                </ComboBoxWithInCheckBox>
+                                            </td>
 
 
                                             <td>

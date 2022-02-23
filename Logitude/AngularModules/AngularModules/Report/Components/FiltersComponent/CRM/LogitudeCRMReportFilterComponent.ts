@@ -11,6 +11,8 @@ import { ReportsDomainService } from 'Report/Services/ReportsDomainService';
 import { OpportunityTypePMService } from 'CRM/Services/StandardPMs/OpportunityTypePMService';
 import { OpportunityTypeListService } from 'CRM/Services/StandardLists/OpportunityTypeListService';
 import { OpportunityTypeList } from 'CRM/EntityLists/OpportunityTypeList';
+import { PaymentChannelListService } from 'Infrastructure/Services/StandardLists/PaymentChannelListService';
+import { PaymentChannelList } from 'Infrastructure/EntityLists/PaymentChannelList';
 
 @Component({
 
@@ -27,9 +29,13 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
     public TenantPM: TenantPM;
     public FilterdOpportunityTypeList: any;
     private opportunityTypeListService: OpportunityTypeListService = new OpportunityTypeListService();
+    private paymentChannelListService: PaymentChannelListService = new PaymentChannelListService();
 
     queryFilterItems: QueryFilterItem[];
     queryFilterItem: QueryFilterItem;
+
+    public PaymentChannels: any[];
+    public SelectedPaymentChannel: string = "All";
 
     constructor() {
         super();
@@ -40,15 +46,30 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
         this.TenantPM = SessionLocator.TenantPM;
         this.BuildCustomerStatusFilters();
         this.BuildYearsFilters();
+        this.GetPaymentChannels();
 
         this.opportunityTypeListService.getAllFromCache().subscribe((result: any) => {
             var list: OpportunityTypeList[] = result.Result;
             this.fillOpportunityTypecombo(list);
-
         });
 
     }
 
+    GetPaymentChannels() {
+        this.paymentChannelListService.getAllFromCache().subscribe((result: any) => {
+            var list: PaymentChannelList[] = result.Result;
+            this.FillPaymentChannels(list);
+        });
+    }
+
+    FillPaymentChannels(paymentChannels: PaymentChannelList[]) {
+        this.PaymentChannels = [];
+        paymentChannels.forEach((paymentChannel: any) => {
+            paymentChannel.Checked = false;
+            this.PaymentChannels.push(paymentChannel);
+        });
+        this.PaymentChannels.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });
+    }
 
 
     fillOpportunityTypecombo(arr: any) {
@@ -171,6 +192,13 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
 
         this.queryFilterItem = new QueryFilterItem();
         this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "PaymentChannels";
+        this.queryFilterItem.FieldValue = this.GetSelectedPaymentChannels();
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
+
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
         this.queryFilterItem.FieldName = "CustomerStatus";
         this.queryFilterItem.FieldValue = this.SelectedCustomerStatus.Code;
         this.queryFilterItems.push(this.queryFilterItem);
@@ -209,6 +237,15 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
 
         this.ReportsPreview.GenerateReport(reportFliter, isloading);
 
+    }
+
+    GetSelectedPaymentChannels(): any {
+        if (this.SelectedPaymentChannel == "All") return "All";
+        var selectedPaymentChannels: string = "";
+        this.PaymentChannels.forEach((paymentChannel: any) => {
+            if (paymentChannel.Checked) selectedPaymentChannels += paymentChannel.Code + ",";
+        });
+        return selectedPaymentChannels;
     }
 
 

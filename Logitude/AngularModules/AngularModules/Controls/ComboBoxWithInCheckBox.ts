@@ -18,7 +18,7 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
     public ControlId: string = null;
     public DropdownId: string = null;
     public ListControlId: string = null;
-    public MinHeight: number = 30;
+    public MinHeight: number = 45;
     public MaxHeight: number = 250;
     public IsBlueBox: boolean = false;
     public IsDisabled: boolean = false;
@@ -29,8 +29,6 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
     public IsSelected: boolean = false;
     public RadioFocus: boolean = false;
     public IsMouseOverInput: boolean = false;
-    public SelectionType: string = " Products"
-    public ProductsSelectionType: string = " Selected " + this.SelectionType;
     public TotalPickedItems: string ;
     public CheckBoxOnly: boolean = false;
     @Output() SelectedItemChanged: EventEmitter<any> = new EventEmitter();
@@ -40,6 +38,17 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
     public IsAreasMenu: boolean = false;
     public SearchAreasId: string = "SearchAreasId";
     public InitialItemsSource: any[];
+
+    public selectionType: string = " Products";
+    get SelectionType(): string {
+        return this.selectionType;
+    }
+    set SelectionType(value: string) {
+        this.selectionType = value;
+        this.ProductsSelectionType = " Selected " + this.SelectionType;
+    }
+    public ProductsSelectionType: string = " Selected " + this.SelectionType;
+    
     constructor() {
         this.ItemsSource = [];
        
@@ -90,7 +99,7 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
                 document.getElementById(this.DropdownId).style.height = this.MinHeight + "px";
             }
             else {
-                var itemsHeight = ((this.ItemsSource.length * 23) + 3);
+                var itemsHeight = ((this.ItemsSource.length * 23) + this.MinHeight);
                 if (itemsHeight > this.MaxHeight) {
                     document.getElementById(this.DropdownId).style.height = this.MaxHeight + "px";
                  //   document.getElementById(this.ListControlId).style.height = itemsHeight + "px";
