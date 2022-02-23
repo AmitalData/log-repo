@@ -431,103 +431,109 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                 throw new BusinessErrorException("Declaration ID is missing");
             }
 
-            this.CheckLock(_MyDeclarationPM);
-
-          //  DeclarationQueryService declarationQueryService = new DeclarationQueryService(tenant);
-
-            // DeclarationPM _MyDeclarationPM = declarationQueryService.GetSingle(decId, false, false);
-
-            ICustomContext dbContext = CustomContext.GetContext(_MyDeclarationPM.Tenant);
-
-            CustomBankQueryService customBankQueryService = new CustomBankQueryService(_MyDeclarationPM.Tenant);
-
-            var banks = customBankQueryService.GetCustomBanksByCard(_MyDeclarationPM.CustomerId, _MyDeclarationPM.Tenant);
-
-            if (banks != null && banks.Count() > 0)
+            if (this.CheckLock(_MyDeclarationPM))
             {
-
-
-                if (!_MyDeclarationPM.AvailabilityDate.HasValue && !(new string[] { "4070001", "4070005", "7070001", "7070005" }.Contains(_MyDeclarationPM.ProcedureCurrentCode)))
-                {
-                    DelSertPayment(_MyDeclarationPM, banks[0].Id);
-
-                }
-                else
-                {
-
-                    if (!CheckFileCredit(_MyDeclarationPM, user))
-                    {
-
-                        var MyUnifreightEventParam = new UnifreightEventParam()
-                        {
-                            Code = "APAYF",
-                            Mode = UnifreightEventMode.@new,
-                            EventDateTime = DateTime.Now,
-                            Entname = "CFIFILEM",
-                            PrimaryNum = _MyDeclarationPM.CustomFileNo,
-                            EventRemarks = "לא אושר בבקרת אשראי",
-                        };
-                        LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
-                        var myOpenUnifreighTask = new UnifreightEventTaskService();
-                        myOpenUnifreighTask.UpsertEventLE2U(
-                            _MyDeclarationPM.Tenant,
-                           user,
-                            MyUnifreightEventParam);
-                    }
-
-                    else
-                    {
-
-
-                        var MyUnifreightEventParam = new UnifreightEventParam()
-                        {
-                            Code = "APAYA",
-                            Mode = UnifreightEventMode.@new,
-                            EventDateTime = DateTime.Now,
-                            Entname = "CFIFILEM",
-                            PrimaryNum = _MyDeclarationPM.CustomFileNo,
-                            EventRemarks = "תשלום הצהרה אוטומטי"
-                        };
-
-
-                        LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
-                        var myOpenUnifreighTask = new UnifreightEventTaskService();
-                        myOpenUnifreighTask.UpsertEventLE2U(
-                            _MyDeclarationPM.Tenant,
-                          user,
-                            MyUnifreightEventParam);
-
-
-                        var requestParams = new GenericRequestParams()
-                        {
-                            LoggingEnabled = true,
-                            IsFakeResponse = true,
-                            InterfaceTypeCode = "2755",
-                            Tenant = _MyDeclarationPM.Tenant,
-                            RequestName = "Payment Request",
-                            ResponseName = "Payment Response",
-                            LoggingEntityId = _MyDeclarationPM.Id,
-                            RequestVIA = SendRequestVIA.WebServiceBatch,
-                            SuppressSplitWR = true,
-                            LoggingEntityReference = "AutoPayment",
-                            UnifreightListOnServerOnly = SetBankIdInUnifreightListOnServerOnly(banks[0].BankCode)
-                        };
-
-                        //    MyGenericResponseObj.ApplicationId =
-                        SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams, false);
-                    }
-                }
+                this.SendFailedEventAPAYF("התיק נעול", _MyDeclarationPM);
             }
             else
             {
-                // event
-                this.SendFailedEventAPAYF("לא נמצא בנק ללקוח.", _MyDeclarationPM);
-            }
 
+                //  DeclarationQueryService declarationQueryService = new DeclarationQueryService(tenant);
+
+                // DeclarationPM _MyDeclarationPM = declarationQueryService.GetSingle(decId, false, false);
+
+                ICustomContext dbContext = CustomContext.GetContext(_MyDeclarationPM.Tenant);
+
+                CustomBankQueryService customBankQueryService = new CustomBankQueryService(_MyDeclarationPM.Tenant);
+
+                var banks = customBankQueryService.GetCustomBanksByCard(_MyDeclarationPM.CustomerId, _MyDeclarationPM.Tenant);
+
+                if (banks != null && banks.Count() > 0)
+                {
+
+
+                    if (!_MyDeclarationPM.AvailabilityDate.HasValue && !(new string[] { "4070001", "4070005", "7070001", "7070005" }.Contains(_MyDeclarationPM.ProcedureCurrentCode)))
+                    {
+                        DelSertPayment(_MyDeclarationPM, banks[0].Id);
+
+                    }
+                    else
+                    {
+
+                        if (!CheckFileCredit(_MyDeclarationPM, user))
+                        {
+
+                            var MyUnifreightEventParam = new UnifreightEventParam()
+                            {
+                                Code = "APAYF",
+                                Mode = UnifreightEventMode.@new,
+                                EventDateTime = DateTime.Now,
+                                Entname = "CFIFILEM",
+                                PrimaryNum = _MyDeclarationPM.CustomFileNo,
+                                EventRemarks = "לא אושר בבקרת אשראי",
+                            };
+                            LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                            var myOpenUnifreighTask = new UnifreightEventTaskService();
+                            myOpenUnifreighTask.UpsertEventLE2U(
+                                _MyDeclarationPM.Tenant,
+                               user,
+                                MyUnifreightEventParam);
+                        }
+
+                        else
+                        {
+
+
+                            var MyUnifreightEventParam = new UnifreightEventParam()
+                            {
+                                Code = "APAYA",
+                                Mode = UnifreightEventMode.@new,
+                                EventDateTime = DateTime.Now,
+                                Entname = "CFIFILEM",
+                                PrimaryNum = _MyDeclarationPM.CustomFileNo,
+                                EventRemarks = "תשלום הצהרה אוטומטי"
+                            };
+
+
+                            LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                            var myOpenUnifreighTask = new UnifreightEventTaskService();
+                            myOpenUnifreighTask.UpsertEventLE2U(
+                                _MyDeclarationPM.Tenant,
+                              user,
+                                MyUnifreightEventParam);
+
+
+                            var requestParams = new GenericRequestParams()
+                            {
+                                LoggingEnabled = true,
+                                IsFakeResponse = true,
+                                InterfaceTypeCode = "2755",
+                                Tenant = _MyDeclarationPM.Tenant,
+                                RequestName = "Payment Request",
+                                ResponseName = "Payment Response",
+                                LoggingEntityId = _MyDeclarationPM.Id,
+                                RequestVIA = SendRequestVIA.WebServiceBatch,
+                                SuppressSplitWR = true,
+                                LoggingEntityReference = "AutoPayment",
+                                UnifreightListOnServerOnly = SetBankIdInUnifreightListOnServerOnly(banks[0].BankCode)
+                            };
+
+                            //    MyGenericResponseObj.ApplicationId =
+                            SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams, false);
+                        }
+                    }
+                }
+                else
+                {
+                    // event
+                    this.SendFailedEventAPAYF("לא נמצא בנק ללקוח.", _MyDeclarationPM);
+                }
+            }
             MyGenericResponseObj.ApplicationId = _LogitudeScheduler.Param1;
 
+
         }
-        private void CheckLock(DeclarationPM declarationPM)
+        private bool CheckLock(DeclarationPM declarationPM)
         {
             LogMessagingUtil.Instance.AppendLine("CourierMaster Send Batch===> CheckLock");
 
@@ -544,12 +550,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
             try
             {
                 var cculock = myCCUQUELOCKRepository.GetSingleGeneralLockNOWAIT("CCUFILEM", ccufilem.ToString());
+                return false;
 
             }
             catch (System.Exception)
             {
-                this.SendFailedEventAPAYF("התיק נעול", _MyDeclarationPM);
-                throw;
+                return false;
             }
         }
 
