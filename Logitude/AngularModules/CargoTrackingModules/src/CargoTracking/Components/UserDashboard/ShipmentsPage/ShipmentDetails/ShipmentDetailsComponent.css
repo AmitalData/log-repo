@@ -432,6 +432,8 @@ h1 {
         margin-right: 10px;
         color: black;
         height: 35px;
+        width: fit-content;
+        white-space: nowrap;
     }
 
         .PanelsNavigator button.active {
