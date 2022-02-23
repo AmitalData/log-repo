@@ -32,7 +32,6 @@ namespace WebFreight.Web.DataProviders
         public string ShipperNotExporter { get; set; }
         public string Consignee { get; set; }
         public string ConsigneeNotImporter { get; set; }
-
         public string InvoiceNumber { get; set; }
         public DateTime? InvoiceDate { get; set; }
         public string InvoiceCurrencyCode { get; set; }
@@ -50,7 +49,6 @@ namespace WebFreight.Web.DataProviders
         public string ChargeTypeName { get; set; }
         public string ChargeTypeLocalName { get; set; }
         public string Salesman { get; set; }
-
         public string VendorName { get; set; }
         public string BillToName { get; set; }
         public double? OpenPayables { get; set; }
@@ -61,15 +59,12 @@ namespace WebFreight.Web.DataProviders
         public double? AccountedReceivables { get; set; }
         public string AccountedReceivablesCurrencyCode { get; set; }
         public double? AccountedReceivablesCurrencyRate { get; set; }
-
         public string Direction { get; set; }
         public string ShipperConsigneeExternalID { get; set; }
-
         public DateTime? OperationalDate { get; set; }
         public string Origin { get; set; }
         public string Destination { get; set; }
         public double? ChargeableWeight { get; set; }
-
         public string ShipmentField1 { get; set; }
         public string ShipmentField2 { get; set; }
         public string ShipmentField3 { get; set; }
@@ -110,7 +105,6 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField38 { get; set; }
         public string ShipmentField39 { get; set; }
         public string ShipmentField40 { get; set; }
-
         public string ARInvoiceField1 { get; set; }
         public string ARInvoiceField2 { get; set; }
         public string ARInvoiceField3 { get; set; }
@@ -121,16 +115,13 @@ namespace WebFreight.Web.DataProviders
         public string ARInvoiceField8 { get; set; }
         public string ARInvoiceField9 { get; set; }
         public string ARInvoiceField10 { get; set; }
-
         public double? ExpectedPayables { get; set; }
         public double? Profit { get; set; }
         public DateTime? ETD { get; set; }
         public string CustomerRef1 { get; set; }
         public string CustomerRef2 { get; set; }
-
         public string OriginCode { get; set; }
         public string DestinationCode { get; set; }
-
         public string CountryOfOrigin { get; set; }
         public string CountryOfDestination { get; set; }
         public string IncotermCode { get; set; }
@@ -140,6 +131,12 @@ namespace WebFreight.Web.DataProviders
         public string AccountManagerName { get; set; }
         public string ShipmentStatus { get; set; }
         public bool AccountingClosed { get; set; }
-
+        public DateTime? ShipmentCreateDate { get; set; }
+        public string ShipmentNotes { get; set; }
+        public string ShipmentOpenedBy { get; set; }
+        public double? InvoiceAmountDueInLocalCurrency { get; set; }
+        public double? InvoiceAmountDueInInvoiceCurrency { get; set; }        
+        public double? AccountedReceivablesInInvoiceCurrency { get; set; }
+        public double? AccountedPayablesInInvoiceCurrency { get; set; }
     }
 }
