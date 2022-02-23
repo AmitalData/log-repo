@@ -35,6 +35,7 @@ using Logitude.Customs.Def.Messaging.Customs;
 using Logitude.Customs.BL.Messaging.L2U.CustomFile;
 using Logitude.AmitalMessaging.Customs.CustomFile;
 using Logitude.Customs.BL.TraceEvents;
+using Unifreight.Data.AmitalModel.Repsitories;
 
 namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 {
@@ -430,6 +431,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                 throw new BusinessErrorException("Declaration ID is missing");
             }
 
+            this.CheckLock(_MyDeclarationPM);
+
           //  DeclarationQueryService declarationQueryService = new DeclarationQueryService(tenant);
 
             // DeclarationPM _MyDeclarationPM = declarationQueryService.GetSingle(decId, false, false);
@@ -517,46 +520,73 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
             }
             else
             {
-
                 // event
-
-                var MyUnifreightEventParam = new UnifreightEventParam()
-                {
-                    Code = "APAYF",
-                    Mode = UnifreightEventMode.@new,
-                    EventDateTime = DateTime.Now,
-                    Entname = "CFIFILEM",
-                    PrimaryNum = _MyDeclarationPM.CustomFileNo,
-                    EventRemarks = "לא נמצא בנק ללקוח."
-                };
-
-                LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
-                var myOpenUnifreighTask = new UnifreightEventTaskService();
-                myOpenUnifreighTask.UpsertEventLE2U(
-                    _MyDeclarationPM.Tenant,
-                  user,
-                    MyUnifreightEventParam);
-
-
-                DeclarationReferantDataQueryService declarationReferantDataQueryService = new DeclarationReferantDataQueryService(_MyDeclarationPM.Tenant);
-                DeclarationReferantDataUpdateService updateService = new DeclarationReferantDataUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _MyDeclarationPM.Tenant);
-
-                var decRef = declarationReferantDataQueryService.GetSingle(_MyDeclarationPM.Id, false, false);
-
-                if (decRef != null)
-                {
-                     decRef.IsManualPayment = true;
-                    decRef.ChangeSetOp = ChangeSetOperation.Update;
-                    updateService.Update(decRef, true);
-                }
+                this.SendFailedEventAPAYF("לא נמצא בנק ללקוח.", _MyDeclarationPM);
             }
 
             MyGenericResponseObj.ApplicationId = _LogitudeScheduler.Param1;
 
         }
+        private void CheckLock(DeclarationPM declarationPM)
+        {
+            LogMessagingUtil.Instance.AppendLine("CourierMaster Send Batch===> CheckLock");
+
+            long lCUSTOMFILENO;
+            if (!long.TryParse(declarationPM.CustomFileNo, out lCUSTOMFILENO))
+            {
+                throw new BusinessErrorException("_DirtyDeclarationPaymentPM.DeclarationId could not convert to long ");
+            }
+            var myCCUFILEMRepository = new CCUFILEMRepository(declarationPM.Tenant);
+            var ccufilem = myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
 
 
- 
+            var myCCUQUELOCKRepository = new CCUQUELOCKRepository(declarationPM.Tenant);
+            try
+            {
+                var cculock = myCCUQUELOCKRepository.GetSingleGeneralLockNOWAIT("CCUFILEM", ccufilem.ToString());
+
+            }
+            catch (System.Exception)
+            {
+                this.SendFailedEventAPAYF("התיק נעול", _MyDeclarationPM);
+                throw;
+            }
+        }
+
+        private void SendFailedEventAPAYF(string eventRemarks, DeclarationPM _MyDeclarationPM)
+        {
+            string user = this.MyCommunicationsParams.LoggingUserId;
+            ICustomContext dbContext = CustomContext.GetContext(_MyDeclarationPM.Tenant);
+            var MyUnifreightEventParam = new UnifreightEventParam()
+            {
+                Code = "APAYF",
+                Mode = UnifreightEventMode.@new,
+                EventDateTime = DateTime.Now,
+                Entname = "CFIFILEM",
+                PrimaryNum = _MyDeclarationPM.CustomFileNo,
+                EventRemarks = eventRemarks,
+            };
+
+            LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+            var myOpenUnifreighTask = new UnifreightEventTaskService();
+            myOpenUnifreighTask.UpsertEventLE2U(
+                _MyDeclarationPM.Tenant,
+              user,
+                MyUnifreightEventParam);
+
+
+            DeclarationReferantDataQueryService declarationReferantDataQueryService = new DeclarationReferantDataQueryService(_MyDeclarationPM.Tenant);
+            DeclarationReferantDataUpdateService updateService = new DeclarationReferantDataUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _MyDeclarationPM.Tenant);
+
+            var decRef = declarationReferantDataQueryService.GetSingle(_MyDeclarationPM.Id, false, false);
+
+            if (decRef != null)
+            {
+                decRef.IsManualPayment = true;
+                decRef.ChangeSetOp = ChangeSetOperation.Update;
+                updateService.Update(decRef, true);
+            }
+        }
 
         private void SendDeclarationStatusRequest()
         {
