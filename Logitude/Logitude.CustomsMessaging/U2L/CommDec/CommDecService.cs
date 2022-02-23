@@ -146,7 +146,8 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.Clear();
             DeserilazeObject(xmlLOGICOMMDEC);
             AppendLogLine("DeserilazeObject:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-            bool SuppressECommDecInsertService = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20220221.SuppressECommDecInsertService"]);
+            //bool SuppressECommDecInsertService = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20220221.SuppressECommDecInsertService"]);
+            bool useECommDecInsertService = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20220221.UseECommDecInsertService"]);
             //CheckIntegrity();
             AppendLogLine("CheckIntegrity:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
             MyGenericResponseObj.Stage = "GetContext";
@@ -184,7 +185,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                         }
                         else
                         {
-                            if (!SuppressECommDecInsertService)
+                            if (useECommDecInsertService)
                             {
 
 
@@ -229,7 +230,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 }
                 else
                 {
-                    if (!SuppressECommDecInsertService)
+                    if (useECommDecInsertService)
                     {
                         //INSERT !!!
                         MyGenericResponseObj.EnglishDescription = "Insert Declaration Integrator";
