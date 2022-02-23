@@ -360,7 +360,7 @@ export class StatementFilterComponent extends BaseComponent implements OnInit {
 
     ValidateDates(): boolean {
         var advancedDatePickerResolverComponent: AdvancedDatePickerResolverComponent = new AdvancedDatePickerResolverComponent();
-        if (!advancedDatePickerResolverComponent.SetValidityBetweenTwoDateOptions(this.FromDate, this.DueDate)) {
+        if (this.FromDate != null && this.DueDate != null && !advancedDatePickerResolverComponent.SetValidityBetweenTwoDateOptions(this.FromDate, this.DueDate)) {
             this.ValidationErrorsList.push("From date field must be less than To date field");
             return false
         }
