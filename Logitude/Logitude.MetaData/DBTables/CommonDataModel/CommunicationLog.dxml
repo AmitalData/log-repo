@@ -373,5 +373,5 @@
   <Index
     Columns="CreateDate" />
   <Index
-    Columns="UniqueNumber" />
+    Columns="UniqueNumber,Tenant" />
 </Table>
