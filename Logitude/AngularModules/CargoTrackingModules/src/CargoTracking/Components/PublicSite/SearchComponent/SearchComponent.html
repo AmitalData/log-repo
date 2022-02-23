@@ -258,16 +258,42 @@
                         </div>
 
                         <!-- References -->
-                        <div class="column col-md-2 reference" style="width: 14%;">
-                            <div>
-                                <div [attr.src]="SplitReference(shipment.CustomerReference)" class="subtitle">Reference NO.</div>
-                                <div *ngIf="shipment.House != null">{{shipment.House}}</div>
-                                <div class="truncateText" *ngFor="let item of references; let i = index">
-                                    <span [ngClass]="{'hide-mobile': i > 1}">
-                                        <div [ngClass]="{'hide-tablet': shipment.House != null && i >= 3 ||  i>= 4 && shipment.House == null}"
-                                             *ngIf="shipment.House != null && 4 > i ||  5 > i && shipment.House == null ">{{item}}</div>
-                                        <div *ngIf="shipment.House != null && i == 4 || i == 5 && shipment.House == null">...</div>
+                        <div class="column col-md-2 reference" style="width: 14%;" [attr.src]="SplitReference(shipment)">
+                            <div class="hide-mobile">
+                                <div  class="subtitle">Reference NO.</div>
+                                <div class="truncateText" >
+                                    <span *ngFor="let item of references; let i = index">
+                                        <div *ngIf="i < 4">{{item}}</div>
                                     </span>
+                                    
+                                    <span 
+                                    (click)="showReference($event,shipment,false)"
+                                    *ngIf="references && references.length  > 4">
+                                    <img src="./assets/images/icons/info.png" alt=" "
+                                        style="margin-right: 6px; margin-top: 6px" />
+                                    <u>+ {{references.length - 4}} More</u>
+                                </span>
+                                </div>
+                            </div>
+
+                            <div class="mobile-only">
+                                <div  class="subtitle">Reference NO. </div>
+                                <div class="truncateText" >
+                                    <span *ngFor="let item of references; let i = index">
+                                        <div *ngIf="i < 1" >
+                                            <span class="truncateText mobile-inline-block">
+                                                {{item}}
+                                                <span class="more-mobile "
+                                                    (click)="showReference($event,shipment,true)"
+                                                    *ngIf="i == 0 && references && references.length  > 1">
+                                                    <u>+ {{references.length - 1}} More</u>
+                                                </span>
+                                            </span>
+
+                                            
+                                        </div>
+                                    </span>
+                                   
                                 </div>
                             </div>
                         </div>
