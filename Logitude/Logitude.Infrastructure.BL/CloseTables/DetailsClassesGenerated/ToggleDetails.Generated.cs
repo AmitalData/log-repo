@@ -548,6 +548,13 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "MDW,Managing Destination Warehouse Leg", 
                 Code = "MDW", 
 			});
+            all.Add(new ToggleDetails()
+            {    
+                Code = "RFF", 
+                Name = "Regimen Fiscal Field", 
+                SearchFields = "RFF,Regimen Fiscal Field", 
+                Description = "Show Regimen Fiscal Field", 
+			});
 			
             return all;
        }

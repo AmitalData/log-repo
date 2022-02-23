@@ -791,7 +791,7 @@
                                                                     <table (click)="DocumentClicked(item)">
                                                                         <tr style="max-width:162px;">
                                                                             <td style="height:40px;max-width:162px;">
-                                                                                <div style="margin:2px;margin-top:-10px;border: 1px solid #5AACE5;border-radius:30px;width:98%;background-color:#5AACE5;text-align:center;height:18px;">
+                                                                                <div [ngStyle]="hasDocumentTypeHighlightColor ? privateLabelClass : ''" style="margin:2px;margin-top:-10px;border-radius:30px;width:98%;background-color:#5AACE5;text-align:center;height:18px;">
                                                                                     <div style="color:white;float:left;width:80%;padding-left:3px;" class="TextTrimming" [title]="item.DocumentTypeName">
                                                                                         <span style="text-align:center;color: white;">{{item.DocumentTypeName}}</span>
                                                                                     </div>
