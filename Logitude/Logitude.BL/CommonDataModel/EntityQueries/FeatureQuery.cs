@@ -14,6 +14,7 @@ using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel;
 using Logitude.BL.Security;
+using System.Diagnostics;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -303,6 +304,28 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 
         public LoggedUserFeatures GetAllowedFeaturesForLoggedUser(string loggedUserId, int tenant)
+        {
+
+            string key = $"GetAllowedFeaturesForLoggedUser,{loggedUserId},{tenant}" ;
+            var loggedUserFeatures = CacheManager.GetOrInsertNewObject<LoggedUserFeatures>(key, () =>
+            {
+                return GetAllowedFeaturesForLoggedUserBL(loggedUserId, tenant);
+            });
+
+            bool usecache = true;
+            if (!usecache)
+            {
+                var sw = Stopwatch.StartNew();
+                loggedUserFeatures = GetAllowedFeaturesForLoggedUserBL(loggedUserId, tenant);
+                Debug.WriteLine($"GetAllowedFeaturesForLoggedUserBL({sw.Elapsed})");
+            }
+
+
+            return loggedUserFeatures;
+
+
+        }
+        LoggedUserFeatures GetAllowedFeaturesForLoggedUserBL(string loggedUserId, int tenant)
         {
             LoggedUserFeatures myResult = new LoggedUserFeatures();
 
