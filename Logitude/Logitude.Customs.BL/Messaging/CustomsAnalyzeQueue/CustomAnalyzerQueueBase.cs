@@ -12,6 +12,7 @@ using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -151,7 +152,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
                  }
                 log = "_CommunicationLog != null";
-
+                var sw = Stopwatch.StartNew();
                 var communicationsData = message;  
 
                 try
@@ -175,8 +176,9 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 //;
                 _AnalyzeResultModel = _AnalyzeResultModel ?? new AnalyzeResultModel();
                 LogMessagingUtil.Instance.AppendLine(ProxyUtil.JsonConvertSerialize(_AnalyzeResultModel));//log the result !!
-               
-                if( _CommunicationLog == null)
+                LogMessagingUtil.Instance.AppendLine($"CustomAnalyzer:{queue?.Name}took:{sw?.Elapsed}  ");
+
+                if ( _CommunicationLog == null)
                 {
                     _CommunicationLog = Communications.GetCommunicationLog(tenant, candidateCommunicationLogId);
 
