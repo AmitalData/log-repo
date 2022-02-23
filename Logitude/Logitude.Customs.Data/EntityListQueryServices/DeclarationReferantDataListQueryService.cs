@@ -139,11 +139,11 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                   IsManualPayment = a.IsManualPayment,
                                                                  Commodity=a.Commodity,
                                                                  ReferantUserName="",
-                                                                 DepartmentName="",
+                                                                 DepartmentName="",                                                                
                                                                  PackageTypeCode = a.PackageType.LocalName,
                                                                  LastStatusRemarks=a.LastStatusRemarks,
                                                                  RemoveInclusiveVisibility = "",                                                                 
-                                                              }) ;                                                                
+                                                              }) ;                                                                                                                              
                                               return query;
 
         }

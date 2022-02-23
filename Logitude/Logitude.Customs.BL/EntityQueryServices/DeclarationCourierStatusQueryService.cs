@@ -14,7 +14,6 @@ using Simplog.Server.Infrastructure;
 using Logitude.Customs.Data.DataContracts;
 using System.Data.Entity;
 using System.Diagnostics;
-
 namespace Logitude.Customs.BL.EntityQueryServices
 {
 
