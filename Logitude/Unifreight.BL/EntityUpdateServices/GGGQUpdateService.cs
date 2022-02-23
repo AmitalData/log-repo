@@ -15,6 +15,7 @@ using Unifreight.Data.AmitalModel.EntityPOCOs;
 using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Configuration;
+using Simplog.Server.Infrastructure;
 
 namespace Unifreight.BL.EntityUpdateServices
 {
@@ -55,10 +56,19 @@ namespace Unifreight.BL.EntityUpdateServices
             {
                 val = ConfigurationManager.AppSettings["20220216.CheckIfGGGQExist"].ToString();
             }
+            DateTime stopLogAt = new DateTime(2022, 06, 01);
+            string logData = "";
+            logData = $"entityPM.PRIMARYNUM={entityPM.PRIMARYNUM}, ConfigurationManager.AppSettings[20220216.CheckIfGGGQExist]={val}, before check";
+            LogitudeSettings.HandleLogMe("Check IsGGGQExist " + logData, false, "IsGGGQExist", stopLogAt);
             if (val != "1") return false;
             var myGGGQQueryService = new GGGQQueryService(this.MainContext as AmitalContext);
             GGGQPM ExistGGGQPM = myGGGQQueryService.GetByPrimary(entityPM.PRIMARYNUM, entityPM.ENTNAME, entityPM.ORIGINQUE, entityPM.FORMID, entityPM.STATUS);
-            if (ExistGGGQPM != null && !string.IsNullOrWhiteSpace(ExistGGGQPM.QUEID)) return true;
+            if (ExistGGGQPM != null && !string.IsNullOrWhiteSpace(ExistGGGQPM.QUEID))
+            {
+                logData = $"entityPM.PRIMARYNUM={entityPM.PRIMARYNUM}, ExistGGGQPM.QUEID={ExistGGGQPM.QUEID}, queue found ";
+                LogitudeSettings.HandleLogMe("Check IsGGGQExist " + logData, false, "IsGGGQExist", stopLogAt);
+                return true;
+            }
             return false;
         }
 
