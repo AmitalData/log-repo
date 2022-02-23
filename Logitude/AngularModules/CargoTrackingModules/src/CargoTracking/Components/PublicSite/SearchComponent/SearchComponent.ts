@@ -390,8 +390,26 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     }
 
     references: string[];
-    SplitReference(reference: string){
-        this.references = reference != null ? reference.split(',').slice(0, 6) : null;
+    SplitReference(shipment: CargoTrackingShipmentList){
+        this.references = shipment.CustomerReference != null ? shipment.CustomerReference.split(',') : null;
+        this.references = this.references.filter(e=>e.length > 0);
+        if(shipment.House)
+        this.references = [shipment.House,...this.references]
+
+    }
+    showReference(event,shipment: CargoTrackingShipmentList,isMobile){
+        event.stopPropagation();
+        var references = shipment.CustomerReference.split(',');
+        if(shipment.House)
+            references = [shipment.House,...references];
+        references = references.filter(e=>e.length > 0);
+        references = references.slice(isMobile? 1 : 4 )
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: 'References',
+                description:  references.join("\n") ,
+            }
+        });
     }
     public transform: string;
     GetModeIcon(mode: string)
