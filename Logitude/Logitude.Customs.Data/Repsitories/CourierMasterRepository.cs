@@ -130,6 +130,11 @@ namespace Logitude.Customs.Data.Repsitories
             query.OrderBy(x => x.IntegratorCode).ThenBy(x => x.TruckerId).ThenBy(x => x.LastMileServiceType);
             return query.ToList<dynamic>();
         }
+        public int CounNoOfCourierHawbwWithoutHatara(string couriermasterid, int tenant)
+        {
+            var courierDecs = context.CourierDeclarations.Where(y => y.CourierMasterId == couriermasterid).Select(y => y.DeclarationId);
+            return (context.Declarations.Count(x => x.HatraDate == null && courierDecs.Contains(x.Id)));
+        }
     }
 
 }

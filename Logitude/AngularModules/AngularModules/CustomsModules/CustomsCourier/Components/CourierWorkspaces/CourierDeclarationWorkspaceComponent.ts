@@ -478,6 +478,24 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
             HtmlListComponentName: 'CourierDeclarationWorkspaceListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierDeclarationWorkspaceListTemplate',
         });
+        this.columns.push({
+            FieldName: 'CalcCourierHawbWithoutHatara',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.CalcCourierHawbWithoutHatara"),
+            Styles: { width: '150px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CourierDeclarationWorkspaceListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierDeclarationWorkspaceListTemplate',
+        });
+        this.columns.push({
+            FieldName: 'CalcCourierHawbWithoutDelivery',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.CalcCourierHawbWithoutDelivery"),
+            Styles: { width: '150px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CourierDeclarationWorkspaceListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierDeclarationWorkspaceListTemplate',
+        });
     }
 
     DataSource = {
