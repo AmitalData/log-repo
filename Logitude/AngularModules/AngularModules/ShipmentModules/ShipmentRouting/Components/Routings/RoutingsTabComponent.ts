@@ -475,7 +475,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
 
     GetWarehouseLegTitle(title: string, originTitle: string): string {
         var newTitle = title;
-        if (this.IsDestinationWarehouseLegVisible) {
+        if (this.IsDestinationWarehouseLegVisible && this.EntityPM.DirectionId == "R") {
             newTitle = originTitle;
         }
         return newTitle;
