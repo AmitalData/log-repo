@@ -1916,6 +1916,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
 
                 if (!this.IsMasterFieldValid) {
                     this.ValidationErrorsList.push(this.MasterFieldValidityMessage);
+                    this.CurrentSession.StopBusyIndicator();
                 }
 
                 else {
@@ -1943,7 +1944,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
         this.SetPartnersOnFinish();
         this.SetCountryECOnFinish();
         this.SetOrderPackagesOnFinish();
-        this.SetPickupDeliveryOnFinish();
         this.SetInlandDomesticOnFinish();
     }
     SetPartnersOnFinish() {
@@ -2077,50 +2077,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
             }
         }
     }
-    SetPickupDeliveryOnFinish() {
-        //this.EntityPM.ShipmentPickUps = [];
-        //this.EntityPM.ShipmentDeliveries = [];
-
-        //if (this.IncludePickUp) {
-        //    var typeCode = "PART";
-        //    if (AppTool.IsNullOrEmpty(this.PickUpAddressId)) {
-        //        typeCode = "CASL";
-        //    }
-
-        //    var newPickUp = new ShipmentPickUpPM(this.EntityPM);
-        //    newPickUp.Tenant = SessionLocator.Tenant;
-        //    newPickUp.PickUpDeliveryTypeCode = "PICK";
-        //    newPickUp.PickUpDeliveryFromTypeCode = typeCode;
-        //    newPickUp.FromAddressCity = this.FromAddressCity;
-        //    newPickUp.FromAddressCountryId = this.FromAddressCountryId;
-        //    newPickUp.FromAddressZipCode = this.FromAddressZipCode;
-        //    newPickUp.FromPartnerCardId = this.ShipperId;
-        //    newPickUp.FromAddressId = this.PickUpAddressId;
-        //    newPickUp.PickUpDeliveryToTypeCode = "PORT";
-        //    newPickUp.ToPortId = this.MainCarriageFromPortId;
-        //    this.EntityPM.AddPickUp(newPickUp);
-        //}
-
-        //if (this.IncludeDelivery) {
-        //    var typeCode = "PART";
-        //    if (AppTool.IsNullOrEmpty(this.DeliveryAddressId)) {
-        //        typeCode = "CASL";
-        //    }
-
-        //    var newDelivery = new ShipmentDeliveryPM(this.EntityPM);
-        //    newDelivery.Tenant = SessionLocator.Tenant;
-        //    newDelivery.PickUpDeliveryTypeCode = "DELV";
-        //    newDelivery.PickUpDeliveryFromTypeCode = "PORT";
-        //    newDelivery.FromPortId = this.MainCarriageToPortId;
-        //    newDelivery.PickUpDeliveryToTypeCode = typeCode;
-        //    newDelivery.ToAddressCity = this.ToAddressCity;
-        //    newDelivery.ToAddressCountryId = this.ToAddressCountryId;
-        //    newDelivery.ToAddressZipCode = this.ToAddressZipCode;
-        //    newDelivery.ToPartnerCardId = this.ConsigneeId;
-        //    newDelivery.ToAddressId = this.DeliveryAddressId;
-        //    this.EntityPM.AddDelivery(newDelivery);
-        //}
-    }
 
     SetInlandDomesticOnFinish() {
         if (this.IsInlandDomestic) {
@@ -2181,6 +2137,8 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
                                     }
 
                                     else {
+                                        this.CurrentSession.StopBusyIndicator();
+
                                         var confirmWindow = new ConfirmWindow();
                                         confirmWindow.Title = "AWB exists in the stock";
                                         confirmWindow.Show("Do you want to get this awb from stock?");
@@ -2295,6 +2253,8 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
     }
 
     CompleteSubmitCreatingShipment() {
+        this.CurrentSession.StartBusyIndicator("Creating...");
+
         this.myShipmentPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
             this.CurrentSession.StopBusyIndicator();
