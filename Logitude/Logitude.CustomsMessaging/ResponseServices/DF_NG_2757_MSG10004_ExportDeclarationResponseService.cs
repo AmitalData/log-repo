@@ -2389,17 +2389,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var fieldList = WCO.Instance.CreateDB().GetCopyList();
             WCOErrorPointerModel res;
 
-            ex.ExceptionParms.ToList().ForEach(param =>
+            if(ex.ExceptionParms != null)
             {
-                param = param.Substring(param.LastIndexOf(".") + 1);
+                ex.ExceptionParms.ToList().ForEach(param =>
+                {
+                    param = param.Substring(param.LastIndexOf(".") + 1);
 
-                res = fieldList.Find(x => x.XmlTag.EndsWith(param) && !string.IsNullOrEmpty(x.FieldNameHeb));
-                if (res == null && param.StartsWith("Export"))
-                    res = fieldList.Find(x => x.XmlTag.EndsWith(param.Remove(0, 6)) && !string.IsNullOrEmpty(x.FieldNameHeb));
+                    res = fieldList.Find(x => x.XmlTag.EndsWith(param) && !string.IsNullOrEmpty(x.FieldNameHeb));
+                    if (res == null && param.StartsWith("Export"))
+                        res = fieldList.Find(x => x.XmlTag.EndsWith(param.Remove(0, 6)) && !string.IsNullOrEmpty(x.FieldNameHeb));
 
-                if (res != null)
-                    fieldNames.Add(res.FieldNameHeb);
-            });
+                    if (res != null)
+                        fieldNames.Add(res.FieldNameHeb);
+                });
+
+            }
 
             string msg = fieldNames.Count > 0 ? "שגיאה בשדה: " + string.Join(",", fieldNames) : ex.ExeptionDescription;
 
