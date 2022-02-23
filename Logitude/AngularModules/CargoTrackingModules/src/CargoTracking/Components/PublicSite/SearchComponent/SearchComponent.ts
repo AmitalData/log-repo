@@ -391,7 +391,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
 
     references: string[];
     SplitReference(shipment: CargoTrackingShipmentList){
-        this.references = shipment.CustomerReference != null ? shipment.CustomerReference.split(',') : null;
+        this.references = shipment.CustomerReference != null ? shipment.CustomerReference.split(',') : [];
         this.references = this.references.filter(e=>e.length > 0);
         if(shipment.House)
         this.references = [shipment.House,...this.references]
@@ -399,7 +399,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     }
     showReference(event,shipment: CargoTrackingShipmentList,isMobile){
         event.stopPropagation();
-        var references = shipment.CustomerReference.split(',');
+        var references = shipment.CustomerReference? shipment.CustomerReference.split(',') : [];
         if(shipment.House)
             references = [shipment.House,...references];
         references = references.filter(e=>e.length > 0);
