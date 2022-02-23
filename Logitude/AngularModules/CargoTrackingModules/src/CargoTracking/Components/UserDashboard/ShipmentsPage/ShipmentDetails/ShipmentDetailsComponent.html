@@ -389,11 +389,11 @@
                                 <div *ngFor="let item of ShipmentReferences, let i = index">
                                     <custom-label *ngIf="i == 0">{{item}} </custom-label>
                                 </div>
-                                <custom-label
+                                <!-- <custom-label
                                     *ngIf="cargoTrackingShipmentPM.EntityType == 'O' && cargoTrackingShipmentPM.PoNumber">
                                     {{cargoTrackingShipmentPM.PoNumber}}
-                                </custom-label>
-                                <a *ngIf="this.ShipmentReferences && this.ShipmentReferences?.length > 2"
+                                </custom-label> -->
+                                <a *ngIf="this.ShipmentReferences && this.ShipmentReferences?.length > 1"
                                     (click)="OpenReferencesWindow(ShipmentReferences)"
                                     style="cursor: pointer;text-decoration: underline;">See all</a>
                             </div>
