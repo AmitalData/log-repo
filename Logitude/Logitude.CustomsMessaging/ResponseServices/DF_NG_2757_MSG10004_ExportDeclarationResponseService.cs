@@ -1199,7 +1199,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     SendDeclarationPrint(_MyDeclarationPM, SendRequestVIA.WebServiceBatch, requestParams);
                 }
             }
-            if (requestParams.InterfaceTypeCode == "8373")
+            if (requestParams.InterfaceTypeCode == "9079")
             {
                 myDeclarationUpdateService.SendDelayedDeclarationStatusRequest(_MyDeclarationPM);
             }

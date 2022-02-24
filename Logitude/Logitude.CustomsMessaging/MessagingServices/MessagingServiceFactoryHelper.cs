@@ -216,6 +216,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                           ((new DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                          DF_NG_9079_Web05_RetrieveExportOrTransshipmentDeclarationMessagingService>
+                          ((new DF_NG_9079_Web05_RetrieveExportOrTransshipmentDeclarationMessagingService()).MainInterfaceCode);
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
               DF_NG_Web8332_FaultProceduralParamMessagingService>
               ((new DF_NG_Web8332_FaultProceduralParamMessagingService()).MainInterfaceCode);
 
