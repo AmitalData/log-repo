@@ -146,10 +146,10 @@
       <HintPath>..\Unifreight.Data\obj\Debug\Unifreight.Data.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.50\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.3.1803.51\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.50\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.3.1803.51\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -272,6 +272,7 @@
     <Compile Include="MessagingServices\DF_MSG2892_ImportDeclarationAmendmentMessagingService.cs" />
     <Compile Include="FakeMessagingServices\Fake_TSH_MSG6_AgentPaymentMessageService.cs" />
     <Compile Include="MessagingServices\DF_NG_2755_MSG12001_SubmitExportDeclarationMessagingService.cs" />
+    <Compile Include="MessagingServices\DF_NG_9079_Web05_RetrieveExportOrTransshipmentDeclarationMessagingService.cs" />
     <Compile Include="MessagingServices\NG_9100_MSG_OutgoingMessageRequestMessagingService.cs" />
     <Compile Include="MessagingServices\SaveCC_MSG2450_ContainerizationMessageMessagingService.cs" />
     <Compile Include="MessagingServices\GP_1030_GatepassRequestMessageMessagingService.cs" />
@@ -350,6 +351,7 @@
     <Compile Include="RequestServices\DF_NG_2751_MSG10000_ExportDeclarationRequestService.cs" />
     <Compile Include="RequestServices\DF_MSG2892_ImportDeclarationAmendmentRequestService.cs" />
     <Compile Include="RequestServices\DF_NG_2755_MSG12001_SubmitExportDeclarationRequestService .cs" />
+    <Compile Include="RequestServices\DF_NG_9079_Web05_RetrieveExportOrTransshipmentDeclarationRequestService.cs" />
     <Compile Include="RequestServices\NG_9100_MSG_OutgoingMessageRequest_RequestService.cs" />
     <Compile Include="RequestServices\SaveCC_MSG2450_ContainerizationMessageRequestService.cs" />
     <Compile Include="RequestServices\GP_1030_GatepassRequestMessageRequestService.cs" />
@@ -393,6 +395,7 @@
     <Compile Include="ResponseServices\CL_MSG100_AddClientResponseService.cs" />
     <Compile Include="ResponseServices\CL_NG_8344_ClientSearchByIDResponseService.cs" />
     <Compile Include="ResponseServices\DCAInUCUDO_UpdateOpenDeclarationsResponseService.cs" />
+    <Compile Include="ResponseServices\DF_NG_2757_MSG10004_RetrieveExportDeclarationResponseService.cs" />
     <Compile Include="ResponseServices\MN_MSG2791_ExportDeliveryAnswerMessageResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_2757_MSG10004_ExportAmendmentDeclarationResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_2754_MSG10004_SubmitExportDeclarationResponseService.cs" />
