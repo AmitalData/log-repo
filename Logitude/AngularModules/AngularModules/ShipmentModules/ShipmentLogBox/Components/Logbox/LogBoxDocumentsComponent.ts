@@ -258,14 +258,28 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
             this.ReferencesLabel = (this.SelectedShipment.CustomerReference3 ? this.SelectedShipment.CustomerReference3 : '') + (this.SelectedShipment.PrivateLabelInvoiceNumber ? '/' + this.SelectedShipment.PrivateLabelInvoiceNumber : '');
         }
         if (this.SelectedShipment.ForwarderShipmentNumber || this.SelectedShipment.DirectionId !='E') {
-            this.ReferencesLabel = (this.SelectedShipment.CustomerReference3 ? this.SelectedShipment.CustomerReference3 : '');
+            this.ReferencesLabel = this.GetCustomerReference1And2();
         } 
     }
 
     private SetLogboxReferencesLabel() {
         if (this.IsPrivateLabel) return; 
-         this.ReferencesLabel = this.SelectedShipment ? ((this.SelectedShipment.CustomerReference1 ? this.SelectedShipment.CustomerReference1 : '') + (this.SelectedShipment.CustomerReference2 ? '/' + this.SelectedShipment.CustomerReference2 : '')) : '';
+        this.ReferencesLabel = this.GetCustomerReference1And2();
          
+    }
+
+    private GetCustomerReference1And2() {
+        if (!this.SelectedShipment) return '';
+
+        if (this.SelectedShipment.CustomerReference1 && this.SelectedShipment.CustomerReference2)
+            return this.SelectedShipment.CustomerReference1 + '/' + this.SelectedShipment.CustomerReference2;
+
+        if (this.SelectedShipment.CustomerReference1)
+            return this.SelectedShipment.CustomerReference1;
+
+        if (this.SelectedShipment.CustomerReference2)
+            return this.SelectedShipment.CustomerReference2;
+        return '';
     }
 
     SetShipmentPackageLabel() {

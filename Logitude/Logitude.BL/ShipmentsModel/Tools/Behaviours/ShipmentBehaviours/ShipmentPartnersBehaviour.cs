@@ -50,8 +50,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 entityPM.ShipperAddressId = null;
                 entityPM.ShipperMainAddressId = null;
                 entityPM.ShipperAddressText = null;
-                entityPM.ShipperReference1 = null;
-                entityPM.ShipperReference2 = null;
+                entityPM.ShipperReference1 = IsShipmentFromToLogbox() ? entityPM.ShipperReference1 : null;
+                entityPM.ShipperReference2 = IsShipmentFromToLogbox() ? entityPM.ShipperReference2 : null;
             }
 
             else if (entityPM.IsExternalAPI || entityPM.IsHybrid)
