@@ -528,6 +528,12 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new LoadingSiteTypeMap());
 	
+            modelBuilder.Configurations.Add(new LogisticActionRequestMap());
+	
+            modelBuilder.Configurations.Add(new LogisticActionRequestTypeMap());
+	
+            modelBuilder.Configurations.Add(new LogisticActionResponseRequestStatusMap());
+	
             modelBuilder.Configurations.Add(new LogisticsReferenceTypeMap());
 	
             modelBuilder.Configurations.Add(new MamanSpecialActionMap());
@@ -910,6 +916,8 @@ namespace Logitude.Customs.Data
 			modelBuilder.Entity<DepositCondition>().Property(x => x.DepositAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<GuaranteeCondition>().Property(x => x.GuaranteeAmount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<LogisticActionRequest>().Property(x => x.Quantity).HasPrecision(10, 2);
 				
 			modelBuilder.Entity<PaymentOrder>().Property(x => x.TotalSumToPay).HasPrecision(18, 2);
 				
@@ -2688,6 +2696,24 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<LoadingSiteType> LoadingSiteTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<LogisticActionRequest> LogisticActionRequests 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<LogisticActionRequestType> LogisticActionRequestTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<LogisticActionResponseRequestStatus> LogisticActionResponseRequestStatuss 
 	 {
 	      get; set;
 	 

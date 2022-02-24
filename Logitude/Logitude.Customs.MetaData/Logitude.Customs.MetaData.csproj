@@ -391,6 +391,7 @@
     <None Include="DBTables\LeadDocumentExceptionType.dxml" />
     <None Include="DBTables\LeadDocumentType.dxml" />
     <None Include="DBTables\LoadingSiteType.dxml" />
+    <None Include="DBTables\LogisticActionRequest.dxml" />
     <None Include="DBTables\LogisticsReferenceType.dxml" />
     <None Include="DBTables\MamanSpecialAction.dxml" />
     <None Include="DBTables\MamanSpecialActionStatus.dxml" />
@@ -530,6 +531,8 @@
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
     <None Include="EntityFiles\CustomsDocumentUpload.lxml" />
     <None Include="EntityFiles\ExportStorage.lxml" />
+    <None Include="EntityFiles\LogisticActionRequest.lxml" />
+    <None Include="EntityFiles\LogisticActionRequestType.lxml" />
     <None Include="EntityFiles\PhysicalCheckSearchResultType.lxml" />
     <None Include="EntityFiles\AmendRequestRejectReasonType.lxml" />
     <None Include="EntityFiles\AmendmentStatus.lxml" />
@@ -936,6 +939,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\UnloadingSiteType.lxml" />
+    <None Include="EntityFiles\LogisticActionResponseRequestStatus.lxml" />
     <None Include="EntityFiles\UpdateCode.lxml" />
     <None Include="EntityFiles\ValidCustomsItem.lxml" />
     <None Include="EntityFiles\Vehicle.lxml" />

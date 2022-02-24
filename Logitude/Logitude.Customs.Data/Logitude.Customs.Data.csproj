@@ -192,6 +192,9 @@
     <Compile Include="EntityKeys\HazardousSubstanceKeys.cs" />
     <Compile Include="EntityKeys\IncotemrsFileValidationKeys.cs" />
     <Compile Include="EntityKeys\LoadingSiteTypeKeys.cs" />
+    <Compile Include="EntityKeys\LogisticActionRequestKeys.cs" />
+    <Compile Include="EntityKeys\LogisticActionRequestTypeKeys.cs" />
+    <Compile Include="EntityKeys\LogisticActionResponseRequestStatusKeys.cs" />
     <Compile Include="EntityKeys\LogisticsReferenceTypeKeys.cs" />
     <Compile Include="EntityKeys\MamanSpecialActionKeys.cs" />
     <Compile Include="EntityKeys\MamanSpecialActionStatusKeys.cs" />
@@ -410,6 +413,9 @@
     <Compile Include="EntityListQueryServices\Generated\HazardousSubstanceListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\IncotemrsFileValidationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\LoadingSiteTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\LogisticActionRequestListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\LogisticActionRequestTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\LogisticActionResponseRequestStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\LogisticsReferenceTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\MamanSpecialActionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\MamanSpecialActionStatusListQueryService.Generated.cs" />
@@ -458,6 +464,9 @@
     <Compile Include="EntityListQueryServices\HazardousSubstanceListQueryService.cs" />
     <Compile Include="EntityListQueryServices\IncotemrsFileValidationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\LoadingSiteTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\LogisticActionRequestListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\LogisticActionRequestTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\LogisticActionResponseRequestStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\LogisticsReferenceTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\MamanSpecialActionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\MamanSpecialActionStatusListQueryService.cs" />
@@ -592,6 +601,9 @@
     <Compile Include="EntityLists\Generated\HazardousSubstanceList.Generated.cs" />
     <Compile Include="EntityLists\Generated\IncotemrsFileValidationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\LoadingSiteTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\LogisticActionRequestList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\LogisticActionRequestTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\LogisticActionResponseRequestStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\LogisticsReferenceTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\MamanSpecialActionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\MamanSpecialActionStatusList.Generated.cs" />
@@ -726,6 +738,9 @@
     <Compile Include="EntityMapping\HazardousSubstanceMap.cs" />
     <Compile Include="EntityMapping\IncotemrsFileValidationMap.cs" />
     <Compile Include="EntityMapping\LoadingSiteTypeMap.cs" />
+    <Compile Include="EntityMapping\LogisticActionRequestMap.cs" />
+    <Compile Include="EntityMapping\LogisticActionRequestTypeMap.cs" />
+    <Compile Include="EntityMapping\LogisticActionResponseRequestStatusMap.cs" />
     <Compile Include="EntityMapping\LogisticsReferenceTypeMap.cs" />
     <Compile Include="EntityMapping\MamanSpecialActionMap.cs" />
     <Compile Include="EntityMapping\MamanSpecialActionStatusMap.cs" />
@@ -859,6 +874,9 @@
     <Compile Include="EntityPOCOs\HazardousSubstance.cs" />
     <Compile Include="EntityPOCOs\IncotemrsFileValidation.cs" />
     <Compile Include="EntityPOCOs\LoadingSiteType.cs" />
+    <Compile Include="EntityPOCOs\LogisticActionRequest.cs" />
+    <Compile Include="EntityPOCOs\LogisticActionRequestType.cs" />
+    <Compile Include="EntityPOCOs\LogisticActionResponseRequestStatus.cs" />
     <Compile Include="EntityPOCOs\LogisticsReferenceType.cs" />
     <Compile Include="EntityPOCOs\MamanSpecialAction.cs" />
     <Compile Include="EntityPOCOs\MamanSpecialActionStatus.cs" />
@@ -1078,6 +1096,9 @@
     <Compile Include="Repsitories\Generated\HazardousSubstanceRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\IncotemrsFileValidationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\LoadingSiteTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\LogisticActionRequestRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\LogisticActionRequestTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\LogisticActionResponseRequestStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\LogisticsReferenceTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\MamanSpecialActionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\MamanSpecialActionStatusRepository.Generated.cs" />
@@ -1126,6 +1147,9 @@
     <Compile Include="Repsitories\HazardousSubstanceRepository.cs" />
     <Compile Include="Repsitories\IncotemrsFileValidationRepository.cs" />
     <Compile Include="Repsitories\LoadingSiteTypeRepository.cs" />
+    <Compile Include="Repsitories\LogisticActionRequestRepository.cs" />
+    <Compile Include="Repsitories\LogisticActionRequestTypeRepository.cs" />
+    <Compile Include="Repsitories\LogisticActionResponseRequestStatusRepository.cs" />
     <Compile Include="Repsitories\LogisticsReferenceTypeRepository.cs" />
     <Compile Include="Repsitories\MamanSpecialActionRepository.cs" />
     <Compile Include="Repsitories\MamanSpecialActionStatusRepository.cs" />

@@ -519,6 +519,16 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(CustomerIndicationTypeTable, CustomerIndicationTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(CustomerIndicationTypeTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData LogisticActionRequestTypeTable = closedSystemTables.Where(d => d.id == "23747").FirstOrDefault();
+            ObjectTable LogisticActionRequestTypeTableObjectTable = objectTableRepository.GetObjectTableByName("Customs.LogisticActionRequestType", 0, false);
+            InsertClosedTableRecord(LogisticActionRequestTypeTable, LogisticActionRequestTypeTableObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(LogisticActionRequestTypeTable);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData LogisticActionResponseRequestStatusTable = closedSystemTables.Where(d => d.id == "23748").FirstOrDefault();
+            ObjectTable LogisticActionResponseRequestStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.LogisticActionResponseRequestStatus", 0, false);
+            InsertClosedTableRecord(LogisticActionResponseRequestStatusTable, LogisticActionResponseRequestStatusObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(LogisticActionResponseRequestStatusTable);
+
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData DeliveryTypeTable = closedSystemTables.Where(d => d.id == "23675").FirstOrDefault();
             ObjectTable DeliveryTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.DeliveryType", 0, false);
             InsertClosedTableRecord(DeliveryTypeTable, DeliveryTypeObjectTable, customsClosedTables, customsClosedTableRepository);

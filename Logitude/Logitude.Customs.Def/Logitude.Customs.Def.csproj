@@ -108,6 +108,9 @@
     <Compile Include="EntityPMs\Generated\HandingCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\IncotemrsFileValidationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LoadingSiteTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\LogisticActionRequestPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\LogisticActionRequestTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\LogisticActionResponseRequestStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LogisticsReferenceTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\NbcDeclarationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\NDMessageActionCodePM.Generated.cs" />

@@ -247,6 +247,9 @@ namespace Logitude.Customs.Data
 		 IDbSet<LeadDocumentExceptionType> LeadDocumentExceptionTypes { get; }
 		 IDbSet<LeadDocumentType> LeadDocumentTypes { get; }
 		 IDbSet<LoadingSiteType> LoadingSiteTypes { get; }
+		 IDbSet<LogisticActionRequest> LogisticActionRequests { get; }
+		 IDbSet<LogisticActionRequestType> LogisticActionRequestTypes { get; }
+		 IDbSet<LogisticActionResponseRequestStatus> LogisticActionResponseRequestStatuss { get; }
 		 IDbSet<LogisticsReferenceType> LogisticsReferenceTypes { get; }
 		 IDbSet<MamanSpecialAction> MamanSpecialActions { get; }
 		 IDbSet<MamanSpecialActionStatus> MamanSpecialActionStatuses { get; }

@@ -28,7 +28,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public int InvoiceCounterKey { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
-     [Key]
         [Column("CurrencyTypeCode" ,Order = 3)]
 	    public string CurrencyTypeCode { get; set; }
         [Column("Amount")]
