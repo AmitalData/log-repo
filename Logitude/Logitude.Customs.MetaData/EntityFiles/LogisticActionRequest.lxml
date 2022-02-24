@@ -5,9 +5,9 @@
   IsNew="true"
   DBTableName="&quot;Customs.LogisticActionRequests&quot;"
   DBTableOldNames="Customs.LogisticActionRequests"
-  ObjectTableSingular="&quot;Customs.LogisticActionRequest&quot;"
-  ObjectTablePlural="&quot;Customs.LogisticActionRequests&quot;"
-  HasCustomFilter="false"
+  ObjectTableSingular="&quot;LogisticActionRequest&quot;"
+  ObjectTablePlural="&quot;LogisticActionRequests&quot;"
+  HasCustomFilter="true"
   HasCustomFields="false"
   HasHelper="false"
   HasShortTitle="true"
@@ -22,7 +22,7 @@
   IsClosed="false"
   CacheOnClient="false"
   EditableFromAutoCompleteWindow="false"
-  HasCounter="false"
+  HasCounter="true"
   EnableAddFromLOV="false"
   IsRestrictable="false"
   IsMain="true"
@@ -31,7 +31,7 @@
   SortingByObjectField="&quot;Id&quot;"
   SortingByDirection="&quot;Ascending&quot;"
   InActive="false"
-  IsSaveButtonVisible="false"
+  IsSaveButtonVisible="true"
   IsComposition="false"
   EnableSecurity="true"
   AllowCustomFields="false"
@@ -39,11 +39,12 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Logistic Action Request&quot;"
-  Code="&quot;4864&quot;"
+  Code="&quot;45f7&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
   ServerModuleName="&quot;Customs&quot;"
+  NewWizardComponentPath="&quot;./CustomsModules/CustomsDeclarationCargoSplit/Components/EditTabs/General/LogisticActionRequestGeneralTabComponent&quot;"
   NoViewController="false"
   NoPMController="false"
   NoTS="false"
@@ -2122,6 +2123,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;DeclarationNumber&quot;"
     ListPropertyPath="&quot;DeclarationNumber&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -2196,6 +2198,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;RequestCancelStatus&quot;"
     ListPropertyPath="&quot;RequestCancelStatus&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -2242,6 +2245,417 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Query
+    Code="&quot;OpenImportCancelRequest&quot;"
+    TextCode="&quot;Open Import Cancel Request&quot;"
+    LocalTextCode="&quot;בקשות ביטול יצוא פתוחות&quot;"
+    QueryGroupCode="&quot;45f7&quot;"
+    IndexOrder="0"
+    ObjectTableName="&quot;Customs.LogisticActionRequest&quot;"
+    QuerySection="&quot;Customs.LogisticActionRequest&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="false"
+    DefaultSortName="&quot;RequestDate&quot;"
+    DefaultSortDirection="&quot;Ascending&quot;"
+    EditWizardName="&quot;Logitude.Customs.Views.LogisticActionRequest.LogisticActionRequestControl&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;ExportFileNo&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;RequestDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;CargoIdentifierKey1&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;CargoIdentifierKey2&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;CargoIdentifierKey3&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;RequestReason&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;DeclarationNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;TransportmodeId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;RequestCancelStatus&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;DecisionRmarks&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;RequestNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        PredefinedValue="&quot;0&quot;"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
+    </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;ClosedImportCancelRequest&quot;"
+    TextCode="&quot;Closed Import Cancel Request&quot;"
+    LocalTextCode="&quot;בקשות ביטול יצוא סגורות&quot;"
+    QueryGroupCode="&quot;45f7&quot;"
+    IndexOrder="1"
+    ObjectTableName="&quot;Customs.LogisticActionRequest&quot;"
+    QuerySection="&quot;Customs.LogisticActionRequest&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="false"
+    DefaultSortName="&quot;RequestDate&quot;"
+    DefaultSortDirection="&quot;Ascending&quot;"
+    EditWizardName="&quot;Logitude.Customs.Views.LogisticActionRequest.LogisticActionRequestControl&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;ExportFileNo&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;RequestDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;CargoIdentifierKey1&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;CargoIdentifierKey2&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;CargoIdentifierKey3&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;RequestReason&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;DeclarationNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;TransportmodeId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;RequestCancelStatus&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;DecisionRmarks&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;RequestNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        PredefinedValue="&quot;1&quot;"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
+    </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;AllImportCancelRequest&quot;"
+    TextCode="&quot;All Import Cancel Request&quot;"
+    LocalTextCode="&quot;כל בקשות ביטול יצוא&quot;"
+    QueryGroupCode="&quot;45f7&quot;"
+    IndexOrder="2"
+    ObjectTableName="&quot;Customs.LogisticActionRequest&quot;"
+    QuerySection="&quot;Customs.LogisticActionRequest&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="false"
+    DefaultSortName="&quot;RequestDate&quot;"
+    DefaultSortDirection="&quot;Ascending&quot;"
+    EditWizardName="&quot;Logitude.Customs.Views.LogisticActionRequest.LogisticActionRequestControl&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;AllImportCancelRequest&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;ExportFileNo&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllImportCancelRequest&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;RequestDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllImportCancelRequest&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;CargoIdentifierKey1&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllImportCancelRequest&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;CargoIdentifierKey2&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllImportCancelRequest&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;CargoIdentifierKey3&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllImportCancelRequest&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;RequestReason&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllImportCancelRequest&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;DeclarationNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllImportCancelRequest&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;TransportmodeId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllImportCancelRequest&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;RequestCancelStatus&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllImportCancelRequest&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;DecisionRmarks&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllImportCancelRequest&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;RequestNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllImportCancelRequest&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
+  <Query
+    Code="&quot;DeclartionsConnctedRequest&quot;"
+    TextCode="&quot;Declartions Conncted Request&quot;"
+    LocalTextCode="&quot;בקשות מקושרות להצהרה&quot;"
+    QueryGroupCode="&quot;45f7&quot;"
+    IndexOrder="3"
+    ObjectTableName="&quot;Customs.LogisticActionRequest&quot;"
+    QuerySection="&quot;Customs.LogisticActionRequest&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="false"
+    DefaultSortName="&quot;RequestDate&quot;"
+    DefaultSortDirection="&quot;Ascending&quot;"
+    EditWizardName="&quot;Logitude.Customs.Views.LogisticActionRequest.LogisticActionRequestControl&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;DeclartionsConnctedRequest&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;ExportFileNo&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsConnctedRequest&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;RequestDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsConnctedRequest&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;CargoIdentifierKey1&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsConnctedRequest&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;CargoIdentifierKey2&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsConnctedRequest&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;CargoIdentifierKey3&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsConnctedRequest&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;RequestReason&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsConnctedRequest&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;DeclarationNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsConnctedRequest&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;TransportmodeId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsConnctedRequest&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;RequestCancelStatus&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsConnctedRequest&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;DecisionRmarks&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsConnctedRequest&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;RequestNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsConnctedRequest&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
+  <Query
+    Code="&quot;DeclartionsNotConnctedRequest&quot;"
+    TextCode="&quot;Declartions Not Conncted Request&quot;"
+    LocalTextCode="&quot;בקשות לא מקושרות להצהרה&quot;"
+    QueryGroupCode="&quot;45f7&quot;"
+    IndexOrder="4"
+    ObjectTableName="&quot;Customs.LogisticActionRequest&quot;"
+    QuerySection="&quot;Customs.LogisticActionRequest&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="false"
+    DefaultSortName="&quot;RequestDate&quot;"
+    DefaultSortDirection="&quot;Ascending&quot;"
+    EditWizardName="&quot;Logitude.Customs.Views.LogisticActionRequest.LogisticActionRequestControl&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;ExportFileNo&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;RequestDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;CargoIdentifierKey1&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;CargoIdentifierKey2&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;CargoIdentifierKey3&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;RequestReason&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;DeclarationNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;TransportmodeId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;RequestCancelStatus&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;DecisionRmarks&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;RequestNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <Screen
     Name="&quot;Customs.LogisticActionRequestHeaderScreen&quot;"
     ObjectTableName="&quot;Customs.LogisticActionRequest&quot;"
