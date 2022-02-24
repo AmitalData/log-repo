@@ -215,7 +215,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             dec.CancelRequestRejectionReason = null;
             req.GeneralData.FunctionalReferenceID = Convert.ToInt32(dec.CancelRequestNumber);
             req.GeneralData.DeclarationID = dec.DeclarationNumber;
-            req.GeneralData.DeclarationType = 1;
+            req.GeneralData.DeclarationType = (dec.Direction == "E") ? 2 : 1; // 2=export 1= import
             req.GeneralData.CancellationReasonTypeId = Convert.ToInt32(dec.CancelRequestReasonCode);
             req.GeneralData.AgentCancellationRemarks = dec.CancelRequestReasonExplanation;
             req.Attachment = GetAttachments(dec);
