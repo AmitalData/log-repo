@@ -337,10 +337,11 @@
                         (click)="PanelsNavigatorClicked('DocumentsPanel')">
                         Documents
                     </button>
-            <button *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" [class.active]="selectedNavButton=='ConnectedOrdersPanel'"
-                    (click)="PanelsNavigatorClicked('ConnectedOrdersPanel')">
-                    Connected SHO's
-            </button>
+                    
+                    <button *ngIf="cargoTrackingShipmentPM.EntityType != 'O' && !ShowShipmentAsDeclaration" [class.active]="selectedNavButton=='ConnectedOrdersPanel'"
+                            (click)="PanelsNavigatorClicked('ConnectedOrdersPanel')">
+                            Connected SHO's
+                    </button>
 
                     <!-- PartnersPanel -->
                     <button *ngIf="!ShowShipmentAsDeclaration" [class.active]="selectedNavButton=='PartnersPanel'"
