@@ -433,7 +433,8 @@ import { IncotemrsFileValidationListService } from './Services/StandardLists/Inc
 import { ClientPMService } from './Services/StandardPMs/ClientPMService';
 import { LogisticActionRequestListService } from './Services/StandardLists/LogisticActionRequestListService';
 import { LogisticActionRequestTypeListService } from './Services/StandardLists/LogisticActionRequestTypeListService';
-import { LogisticActionResponseRequestStatusListService } from './Services/StandardLists/LogisticActionResponseRequestStatusListService';
+import { LogisticActionResponseRequestSListService } from './Services/StandardLists/LogisticActionResponseRequestSListService';
+
 
 
 export class ModuleProviders {
@@ -688,7 +689,7 @@ export class ModuleProviders {
             case "PoaStatusTypeLookUpListService": { myResult = new PoaStatusTypeLookUpListService(); break; }
             case "LogisticActionRequestListService": { myResult = new LogisticActionRequestListService(); break; }
             case "LogisticActionRequestTypeListService": { myResult = new LogisticActionRequestTypeListService(); break; }
-            case "LogisticActionResponseRequestStatusListService": { myResult = new LogisticActionResponseRequestStatusListService(); break; }
+            case "LogisticActionResponseRequestSListService": { myResult = new LogisticActionResponseRequestSListService(); break; }
 
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
