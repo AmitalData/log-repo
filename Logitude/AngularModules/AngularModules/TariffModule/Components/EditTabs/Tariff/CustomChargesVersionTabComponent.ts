@@ -744,13 +744,14 @@ export class CustomsChargesTariffLineData extends BaseComponent {
     public IsEditEnabled: boolean = false;
     public ComparedEntity: TariffLinePM;
     private initialIndex: number;
-
+    private lineCurrencyId: string;
     constructor(entity: TariffLinePM, public FatherComponent: CustomChargesVersionTabComponent, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
         this.IsNewEntity = isNew;
         this.initialIndex = entity.Index;
         this.IsEditEnabled = FatherComponent.IsDraftVersion;
+        this.lineCurrencyId = this.EntityPM.CurrencyId;
         this.SetUIProperties();
         this.SetCellColorsForPriceCheck();
     }
@@ -1187,6 +1188,7 @@ export class CustomsChargesTariffLineData extends BaseComponent {
         if (this.EntityPM.CurrencyId != value) {
             this.EntityPM.CurrencyId = value;
             this.EntityPM.LineEdited = true;
+            this.lineCurrencyId = this.EntityPM.CurrencyId;
 
             this.SetUIProperties_Currency();
         }
@@ -1229,9 +1231,10 @@ export class CustomsChargesTariffLineData extends BaseComponent {
             this.SurchargesCurrencies(this.CurrencyId);
 
             if (value) {
-                this.CurrencyId = null;
+                this.EntityPM.CurrencyId = null;
             }
             else {
+                this.CurrencyId = this.lineCurrencyId;
                 for (var i = 1; i <= 10; i++) {
                     this["Surcharge" + i + "CurrencyId"] = null;
                 }
