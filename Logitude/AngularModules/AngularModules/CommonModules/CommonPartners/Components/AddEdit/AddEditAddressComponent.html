@@ -145,10 +145,10 @@
                                                 <div></div>
                                             </td>
 
-                                            <td *ngIf="DataContext.CountryCode == 'MX'">
+                                            <td *ngIf="false">
                                                 <span class="hyperlink" [class.HyperlinkDisabled]="!DataContext.IsEditingEnabled" (click)="DataContext.SelectZipCode()">Select</span>
                                             </td>
-                                            <td *ngIf="DataContext.CountryCode != 'MX'"></td>
+                                            <td *ngIf="true"></td>
                                         </tr>
                                     </table>
                                 </td>

@@ -540,6 +540,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "TAU,Ticket Entity In Automation", 
                 Description = "Use Ticket Entity In Automation", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "RFF", 
+                Name = "Regimen Fiscal Field", 
+                SearchFields = "RFF,Regimen Fiscal Field", 
+                Description = "Show Regimen Fiscal Field", 
+			});
 			
             return all;
        }
