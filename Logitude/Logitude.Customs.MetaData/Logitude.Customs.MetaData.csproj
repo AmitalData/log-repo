@@ -392,7 +392,7 @@
     <None Include="DBTables\LeadDocumentType.dxml" />
     <None Include="DBTables\LoadingSiteType.dxml" />
     <None Include="DBTables\LogisticActionRequest.dxml" />
-    <None Include="DBTables\LogisticActionResponseRequestStatus.dxml" />
+    <None Include="DBTables\LogisticActionResponseRequestS.dxml" />
     <None Include="DBTables\LogisticsReferenceType.dxml" />
     <None Include="DBTables\MamanSpecialAction.dxml" />
     <None Include="DBTables\MamanSpecialActionStatus.dxml" />
@@ -940,7 +940,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\UnloadingSiteType.lxml" />
-    <None Include="EntityFiles\LogisticActionResponseRequestStatus.lxml" />
+    <None Include="EntityFiles\LogisticActionResponseRequestS.lxml" />
     <None Include="EntityFiles\UpdateCode.lxml" />
     <None Include="EntityFiles\ValidCustomsItem.lxml" />
     <None Include="EntityFiles\Vehicle.lxml" />

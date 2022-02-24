@@ -16,19 +16,19 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL
 {
-   public class LogisticActionResponseRequestStatusDetails : LogisticActionResponseRequestStatus, ICloseTable<LogisticActionResponseRequestStatus, LogisticActionResponseRequestStatusDetails>
+   public class LogisticActionResponseRequestSDetails : LogisticActionResponseRequestS, ICloseTable<LogisticActionResponseRequestS, LogisticActionResponseRequestSDetails>
    {
-       public List<LogisticActionResponseRequestStatusDetails> GetAll()
+       public List<LogisticActionResponseRequestSDetails> GetAll()
        {
-		    var all = new List<LogisticActionResponseRequestStatusDetails>(); 
+		    var all = new List<LogisticActionResponseRequestSDetails>(); 
             return all;
        }
 
-	    public void MapPoco(LogisticActionResponseRequestStatus newPoco)
+	    public void MapPoco(LogisticActionResponseRequestS newPoco)
         {    
         }
 
-		public string GetSearchFields(LogisticActionResponseRequestStatus rec)
+		public string GetSearchFields(LogisticActionResponseRequestS rec)
         {   
            return string.Empty;
         }

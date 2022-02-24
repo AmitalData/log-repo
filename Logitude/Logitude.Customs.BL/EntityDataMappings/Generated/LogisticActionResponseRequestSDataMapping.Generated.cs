@@ -17,7 +17,7 @@ using Logitude.Customs.Data;
 namespace Logitude.Customs.BL.EntityDataMappings
 {
    
-   public partial class LogisticActionResponseRequestStatusDataMapping: IMapping<LogisticActionResponseRequestStatusPM, LogisticActionResponseRequestStatus>,IMappingEncodeBase64NVARCHARFields<LogisticActionResponseRequestStatusPM>
+   public partial class LogisticActionResponseRequestSDataMapping: IMapping<LogisticActionResponseRequestSPM, LogisticActionResponseRequestS>,IMappingEncodeBase64NVARCHARFields<LogisticActionResponseRequestSPM>
    {
           public enum POCOPropertyNames
           { 
@@ -43,7 +43,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
     
-	    public void PMToPOCO(LogisticActionResponseRequestStatusPM entityPM, LogisticActionResponseRequestStatus entityPOCO)
+	    public void PMToPOCO(LogisticActionResponseRequestSPM entityPM, LogisticActionResponseRequestS entityPOCO)
         {
 			 
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalName))
@@ -69,7 +69,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
-		public void POCOToPM(LogisticActionResponseRequestStatusPM entityPM, LogisticActionResponseRequestStatus entityPOCO)
+		public void POCOToPM(LogisticActionResponseRequestSPM entityPM, LogisticActionResponseRequestS entityPOCO)
         {
 			 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Code))
@@ -99,7 +99,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
 		}
 
-		public void PMToOldPM(LogisticActionResponseRequestStatusPM entityPM, LogisticActionResponseRequestStatusPM oldEntityPM)
+		public void PMToOldPM(LogisticActionResponseRequestSPM entityPM, LogisticActionResponseRequestSPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
@@ -125,7 +125,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			
 		}
 
-	    public void EncodeBase64NVARCHARFields(LogisticActionResponseRequestStatusPM entityPM)
+	    public void EncodeBase64NVARCHARFields(LogisticActionResponseRequestSPM entityPM)
         {
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {
@@ -154,7 +154,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             CustomMappedPMProperties.Add(pocoPropertyName);
         }
 		
-		private void BuildSearchFieldsGenerated(LogisticActionResponseRequestStatusPM entityPM, LogisticActionResponseRequestStatus entityPOCO, bool isNewEntity)
+		private void BuildSearchFieldsGenerated(LogisticActionResponseRequestSPM entityPM, LogisticActionResponseRequestS entityPOCO, bool isNewEntity)
         {
             string mySearchFields = "";
 			

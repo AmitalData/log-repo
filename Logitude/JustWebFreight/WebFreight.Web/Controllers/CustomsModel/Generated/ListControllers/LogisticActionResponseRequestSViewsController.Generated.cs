@@ -47,7 +47,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
-    public partial class LogisticActionResponseRequestStatusViewsController : ApiController
+    public partial class LogisticActionResponseRequestSViewsController : ApiController
     {
 	  
        
@@ -60,11 +60,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-                LogisticActionResponseRequestStatusListQueryService logisticActionResponseRequestStatusQuery = new LogisticActionResponseRequestStatusListQueryService(MyContext);
-                LogisticActionResponseRequestStatusList logisticActionResponseRequestStatusList = logisticActionResponseRequestStatusQuery.GetSingle(code);
+                LogisticActionResponseRequestSListQueryService logisticActionResponseRequestSQuery = new LogisticActionResponseRequestSListQueryService(MyContext);
+                LogisticActionResponseRequestSList logisticActionResponseRequestSList = logisticActionResponseRequestSQuery.GetSingle(code);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
-                return Request.CreateResponse(HttpStatusCode.OK,  logisticActionResponseRequestStatusList);
+                return Request.CreateResponse(HttpStatusCode.OK,  logisticActionResponseRequestSList);
             }
             catch (Exception ex)
             {
@@ -82,8 +82,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-                LogisticActionResponseRequestStatusListQueryService logisticActionResponseRequestStatusQuery = new LogisticActionResponseRequestStatusListQueryService(MyContext);
-                List<LogisticActionResponseRequestStatusList> result = logisticActionResponseRequestStatusQuery.GetList(authToken.Tenant);
+                LogisticActionResponseRequestSListQueryService logisticActionResponseRequestSQuery = new LogisticActionResponseRequestSListQueryService(MyContext);
+                List<LogisticActionResponseRequestSList> result = logisticActionResponseRequestSQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -108,17 +108,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "Customs.LogisticActionResponseRequestStatus",
+                    ObjectTableName = "Customs.LogisticActionResponseRequestS",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "Customs.LogisticActionResponseRequestStatuss",
+                    QuerySection = "Customs.LogisticActionResponseRequestSs",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
 				
-				List<ObjectField> LogisticActionResponseRequestStatusObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.LogisticActionResponseRequestStatus",tenant);
+				List<ObjectField> LogisticActionResponseRequestSObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.LogisticActionResponseRequestS",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -141,7 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             //}
 						//}
                         //ToDo: Get object field by name and set the remained filter properties
-						ObjectField field = LogisticActionResponseRequestStatusObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = LogisticActionResponseRequestSObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                        if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -169,7 +169,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = LogisticActionResponseRequestStatusObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = LogisticActionResponseRequestSObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -192,14 +192,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
 
                 ICustomContext MyContext = CustomContext.GetContext(tenant);
-				LogisticActionResponseRequestStatusListQueryService logisticActionResponseRequestStatusQuery = new LogisticActionResponseRequestStatusListQueryService(MyContext);
+				LogisticActionResponseRequestSListQueryService logisticActionResponseRequestSQuery = new LogisticActionResponseRequestSListQueryService(MyContext);
 
-                List<LogisticActionResponseRequestStatusList> entityLists = logisticActionResponseRequestStatusQuery.GetList(queryOperations, tenant);
+                List<LogisticActionResponseRequestSList> entityLists = logisticActionResponseRequestSQuery.GetList(queryOperations, tenant);
 				
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = logisticActionResponseRequestStatusQuery.GetListCount(queryOperations);
+                    int count = logisticActionResponseRequestSQuery.GetListCount(queryOperations);
                     response.Count = count;
                 }
 

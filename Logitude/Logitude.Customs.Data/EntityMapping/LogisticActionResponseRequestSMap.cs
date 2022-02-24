@@ -14,10 +14,10 @@ using Logitude.Customs.Data;
 namespace Logitude.Customs.Data.EntityMapping
 {
  
-    public class LogisticActionResponseRequestStatusMap : EntityTypeConfiguration<LogisticActionResponseRequestStatus>
+    public class LogisticActionResponseRequestSMap : EntityTypeConfiguration<LogisticActionResponseRequestS>
     {
 	    string dbms;
-        public LogisticActionResponseRequestStatusMap()
+        public LogisticActionResponseRequestSMap()
         { 
 		
      dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -27,7 +27,7 @@ namespace Logitude.Customs.Data.EntityMapping
 	}
     else
     {
-	  this.ToTable("LogisticActionResponseRequestStatuses", "Customs");
+	  this.ToTable("LogisticActionResponseRequestSes", "Customs");
 	}
 
 		
