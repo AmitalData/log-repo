@@ -133,8 +133,8 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
         //פתיחת הצהרה בלדרות ראשונית - מסר שמגיעה מה יוניפרייט
         public void ProccessGenericRequestReal(
               string xmlLOGICOMMDEC, //MEAASGE BODY FROM UNIFREIGHT 
-              int tenant, 
-              string Curruser, 
+              int tenant,
+              string Curruser,
               string PBId,
               ref string MoreParams,
               out string MessageOut, out string customFileNo, out string decId, out string courierMasterID)
@@ -500,17 +500,17 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                 }
 
-      
+
 
                 else
-            {
-                MyGenericResponseObj.Message = "Declaration has multiple Consignments(" + this._MyDeclarationPM.Consignments.Count.ToString() + ") and Consignment details didn't update";
-                AppendLogLine("Declaration has multiple Consignments(" + this._MyDeclarationPM.Consignments.Count.ToString() + ") and Consignment details didn't update");
-            }
-
+                {
+                    MyGenericResponseObj.Message = "Declaration has multiple Consignments(" + this._MyDeclarationPM.Consignments.Count.ToString() + ") and Consignment details didn't update";
+                    AppendLogLine("Declaration has multiple Consignments(" + this._MyDeclarationPM.Consignments.Count.ToString() + ") and Consignment details didn't update");
                 }
 
-                if (_CourierMasterPM != null)
+            }
+
+            if (_CourierMasterPM != null)
             {
                 courierMasterID = _CourierMasterPM.Id;
             }
@@ -554,7 +554,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
             //UpdateCustomDocument();
 
-            
+
 
             this._LOGICUSTFILE = XmlGenericUtil<LOGICUSTFILE>.DeSerializeObject(xmlLOGICUSTFILE);
 #if false
@@ -589,8 +589,13 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             {
                 this._MyDeclarationPM.ExcludeConsignment = true;
             }
-            this._MyDeclarationPM.MyCourierMasterPM = _CourierMasterPM;
-            this._MyDeclarationPM.MyInsertDeclarationCourierStatusPM = _NewDeclarationCourierStatusPM;
+            //this._MyDeclarationPM.MyCourierMasterPM = _CourierMasterPM;
+            //this._MyDeclarationPM.MyInsertDeclarationCourierStatusPM = _NewDeclarationCourierStatusPM;
+            this._MyDeclarationPM.MyEcomInsert = new EcomInsert()
+            {
+                MyCourierMasterPM = _CourierMasterPM,
+                MyDeclarationCourierStatusPM = _NewDeclarationCourierStatusPM
+            };
             declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), _tenant);
             if (this.IsProcedureCurrentCodeChanged) declarationUpdateService.IsProcedureCurrentCodeChanged = true;
             declarationUpdateService.Update(this._MyDeclarationPM, true);
