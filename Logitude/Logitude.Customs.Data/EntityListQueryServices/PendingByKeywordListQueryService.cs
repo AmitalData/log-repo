@@ -42,7 +42,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                             "מילה" 
                                                             :
                                                             "חלק ממילה"
-                                                            ) : null
+                                                            ) : null,
+                                                          Remove = "",
 
                                                       });
             return query;

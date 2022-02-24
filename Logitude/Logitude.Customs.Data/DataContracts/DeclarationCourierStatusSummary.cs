@@ -14,15 +14,25 @@ namespace Logitude.Customs.Data.DataContracts
         [Key]
         public Guid Id { get; set; }
         public int OpenCourierMasterCount { get; set; }
+        public long TookOpenCourierMasterCount { get; set; }
         public int UnReleasedFastProcessCount { get; set; }
+        public long TookUnReleasedFastProcessCount { get; set; }
         public int WithoutIdCount { get; set; }
+        public long TookWithoutIdCount { get; set; }
         public int WithoutClassificationCount { get; set; }
+        public long TookWithoutClassificationCount { get; set; }
         public int PendingPaymentCount { get; set; }
+        public long TookPendingPaymentCount { get; set; }
         public int PendingCustomsCount { get; set; }
+        public long TookPendingCustomsCount { get; set; }
         public int PendingCount { get; set; }
+        public long TookPendingCount { get; set; }
         public int CourierMasterOpenIndividualCount { get; set; }
+        public long TookCourierMasterOpenIndividualCount { get; set; }
         public int UnReleasedIndividualCount { get; set; }
+        public long TookUnReleasedIndividualCount { get; set; }
         public int AllCourierDeclarationsCount { get; set; }
+        public long TookAllCourierDeclarationsCount { get; set; }
 
     }
 }

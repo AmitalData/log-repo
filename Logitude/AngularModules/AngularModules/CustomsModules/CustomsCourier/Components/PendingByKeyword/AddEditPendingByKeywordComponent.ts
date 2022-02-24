@@ -53,8 +53,9 @@ export class AddEditPendingByKeywordComponent
         this.SearchTypes.push(new KeyValuePair("2", "חלק ממילה"));
 
         SessionLocator.SelectedSession.StartBusyIndicator("");
+        
         this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
-
+            
             SessionLocator.SelectedSession.StopBusyIndicator();
             if (AppTool.IsNullOrEmpty(entityArgs.EntityPM)) {
                 this.EntityPM = new PendingByKeywordPM();
@@ -63,7 +64,7 @@ export class AddEditPendingByKeywordComponent
                 this.isNewRecord = true;
                 this.UIProperties.SetRequired("SearchByFieldCode", this.ObjectTableName, true);
                 this.UIProperties.SetRequired("SearchType", this.ObjectTableName, true);
-
+                
             } else {
                 this.EntityPM = this.entityArgs.EntityPM;
                 this.SelectedItemSearchByField = this.SearchByFieldCodes.filter(r => r.Key == this.EntityPM.SearchByFieldCode)[0];
@@ -71,6 +72,9 @@ export class AddEditPendingByKeywordComponent
                 this.SelectedItemSearchType = this.SearchTypes.filter(r => r.Key == this.EntityPM.SearchType)[0];
                 this.UIProperties.SetRequired("SearchType", this.ObjectTableName, false);
             }
+            
+            this.UIProperties.SetRequired("KeywordsList", this.ObjectTableName, !this.EntityPM.KeywordsList);
+
             this.WarningMessage = "יש להזין רשימת מילות מפתח מופרדות בפסיק, ואת קוד העיכוב שיש להרים עבורן. (למשל: medicine, drug, תרופה) ניתן להזין את אותו קוד עיכוב מספר פעמים.";
         });
     }
@@ -129,6 +133,8 @@ export class AddEditPendingByKeywordComponent
 
     public get KeywordsList() { return this.EntityPM.KeywordsList; }
     public set KeywordsList(newValue: string) {
+        this.UIProperties.SetRequired("KeywordsList", this.ObjectTableName, !newValue);
+        
         this.EntityPM.KeywordsList = newValue;
     }
 

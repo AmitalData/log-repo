@@ -146,7 +146,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (declarationPM != null)
                 {
                     bool isUpdateDeclaration = true;
-                    long lCUSTOMFILENO;
+                    /*long lCUSTOMFILENO;
                     if (!long.TryParse(declarationPM.CustomFileNo, out lCUSTOMFILENO))
                     {
                         throw new BusinessErrorException("_DirtyDeclarationPaymentPM.DeclarationId could not convert to long ");
@@ -169,7 +169,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         LogMessagingUtil.Instance.AppendLine($"CheckIfUpdatingAllowed({declarationPM.CustomFileNo}) ");
                         isUpdateDeclaration = false;
                     }
-
+                    */
                     if (isUpdateDeclaration)
                     {
                         CourierPendingReasonRepository courierPendingReasonRepository = new CourierPendingReasonRepository(declarationPM.Tenant);

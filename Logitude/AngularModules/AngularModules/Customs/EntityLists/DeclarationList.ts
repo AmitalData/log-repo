@@ -212,6 +212,7 @@ export class DeclarationList {
 	AmendmentTypeName: string;
 	IsHatraDateNull: boolean;
 	TerminalReleaseDate: Date;
+	IntegratorCode: string;
 	
 }
  
