@@ -52,9 +52,16 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public void ReturnChequeToCustomer()
         {
+            ReturnChequeValidation();
             UpdateChequeStatusAsReturnedToCustomer(cheque);
             UpdateCashbookTotal(cheque);
             CreateJournal();
+        }
+
+        private void ReturnChequeValidation()
+        {
+            if(cheque.StatusCode != ARPaymentChequeStatusValues.InCashbook)
+                throw new ApplicationException("You cannot return the check if it status is not in the cash book");
         }
 
         private void AddAccountingEntitieJournal(JournalPM entityPM, string action, string ChildEntityId = null)
