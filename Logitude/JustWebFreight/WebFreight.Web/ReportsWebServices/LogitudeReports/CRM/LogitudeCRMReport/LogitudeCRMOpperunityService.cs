@@ -33,6 +33,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
                 FillCustomFields(resellers, opportunityCRMDetails);
                 FillTenantManagementsFileds(opportunityCRMDetails);
             }
+            opportunities = FilterForPaymentChannels(opportunities);
             return opportunities;
         }
 
@@ -69,15 +70,20 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
         private void FillTenantManagementsFileds(OpportunityCRMDetails opportunityCRMDetails)
         {
             TenantManagementPM tenantManagement = logitudeCRMReportTenantManagementService.GetByTenantNumber(opportunityCRMDetails.TenantNumber);
-            if (tenantManagement != null)
-            {
-                opportunityCRMDetails.CurrencyCode = tenantManagement.PaymentCurrencyCode;
-                opportunityCRMDetails.ResellerCommission = tenantManagement.ResellerCommission;
-                opportunityCRMDetails.TenantManagementNumberOfUsers = opportunityCRMDetails.InActive ? 0 : logitudeCRMReportTenantManagementService.GetNumberOfUsers(tenantManagement);
-                opportunityCRMDetails.TenantManagementTotalPrice = opportunityCRMDetails.InActive ? 0 : (decimal?)logitudeCRMReportTenantManagementService.GetTotalPrice(tenantManagement);
-                opportunityCRMDetails.TenantManagementAveragePrice = opportunityCRMDetails.InActive ? 0 : CalculateAveragePrice(opportunityCRMDetails);
-                opportunityCRMDetails.TotalNet = CalculateTotalNet(opportunityCRMDetails, tenantManagement);
-            }
+            if (tenantManagement == null) return;
+            opportunityCRMDetails.PaymentChannelCode = tenantManagement.PaymentChannelCode;
+            opportunityCRMDetails.CurrencyCode = tenantManagement.PaymentCurrencyCode;
+            opportunityCRMDetails.ResellerCommission = tenantManagement.ResellerCommission;
+            opportunityCRMDetails.TenantManagementNumberOfUsers = opportunityCRMDetails.InActive ? 0 : logitudeCRMReportTenantManagementService.GetNumberOfUsers(tenantManagement);
+            opportunityCRMDetails.TenantManagementTotalPrice = opportunityCRMDetails.InActive ? 0 : (decimal?)logitudeCRMReportTenantManagementService.GetTotalPrice(tenantManagement);
+            opportunityCRMDetails.TenantManagementAveragePrice = opportunityCRMDetails.InActive ? 0 : CalculateAveragePrice(opportunityCRMDetails);
+            opportunityCRMDetails.TotalNet = CalculateTotalNet(opportunityCRMDetails, tenantManagement);
+        }
+
+        private List<OpportunityCRMDetails> FilterForPaymentChannels(List<OpportunityCRMDetails> opportunities)
+        {
+            if (logitudeCRMReportFilter.PaymentChannels == null || logitudeCRMReportFilter.PaymentChannels.Count == 0) return opportunities;
+            return opportunities.Where(d => logitudeCRMReportFilter.PaymentChannels.Contains(d.PaymentChannelCode)).ToList();
         }
 
         private decimal? CalculateAveragePrice(OpportunityCRMDetails opportunityCRMDetails)
