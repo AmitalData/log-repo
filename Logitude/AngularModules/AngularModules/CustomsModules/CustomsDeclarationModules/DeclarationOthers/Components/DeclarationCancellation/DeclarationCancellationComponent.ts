@@ -276,9 +276,8 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
             var msg = "קוד סיבת ביטול שדה חובה.";//TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierTypeCode");
             this.ValidationErrorsList.push(msg);
         }
-
         if (this.EntityPM.Direction == "E") {
-            if (this.EntityPM.isSubmitDeclaration) {
+            if (!this.EntityPM.isSubmitDeclaration) {
                 var msg = "לא ניתן לבטל ביטול הצהרה להצהרה שלא נמצאת בסטטוס הגשה.";//TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierTypeCode");
                 this.ValidationErrorsList.push(msg);
             }
