@@ -155,12 +155,12 @@ namespace Logitude.TariffModule.BL.Helpers
 
             if (!string.IsNullOrEmpty(this.customAgentExportId))
             {
-                myResult.AddRange(tariffs.Where(d => d.CustomsBrokerId == this.customAgentExportId));
+                myResult.AddRange(tariffs.Where(d => d.CustomsBrokerId == this.customAgentExportId && d.TypeCode == "ECC"));
             }
 
             if (!string.IsNullOrEmpty(this.customAgentImportId))
             {
-                myResult.AddRange(tariffs.Where(d => d.CustomsBrokerId == this.customAgentImportId));
+                myResult.AddRange(tariffs.Where(d => d.CustomsBrokerId == this.customAgentImportId && d.TypeCode == "ICC"));
             }
 
             return myResult;
