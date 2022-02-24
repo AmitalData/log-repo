@@ -110,7 +110,7 @@ namespace Logitude.Customs.BL.BL
                 if (myDeclarationCourierStatusPM == null)
                 {
                     myDeclarationCourierStatusPM =
-                        declarationPM.MyInsertDeclarationCourierStatusPM 
+                        declarationPM?.MyEcomInsert?.MyDeclarationCourierStatusPM 
                         ??new DeclarationCourierStatusPM()
                     {
                         DeclarationId = declarationPM.Id,

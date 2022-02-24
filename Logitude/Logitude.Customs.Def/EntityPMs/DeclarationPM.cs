@@ -110,8 +110,15 @@ namespace Logitude.Customs.Def.EntityPMs
         }
 
 
-        public DeclarationCourierStatusPM MyInsertDeclarationCourierStatusPM { get; set; }
+        //public DeclarationCourierStatusPM MyInsertDeclarationCourierStatusPM { get; set; }
+        //public CourierMasterPM MyCourierMasterPM { get; set; }
+
+        public EcomInsert MyEcomInsert { get; set; }
+    }
+    public class EcomInsert
+    {
+        public DeclarationCourierStatusPM MyDeclarationCourierStatusPM { get; set; }
         public CourierMasterPM MyCourierMasterPM { get; set; }
-        
+
     }
 }

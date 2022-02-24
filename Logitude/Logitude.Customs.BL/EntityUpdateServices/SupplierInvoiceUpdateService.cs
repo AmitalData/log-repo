@@ -673,7 +673,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             if (_CourierMasterPM == null)
                             {
                                 var myCourierMasterQueryService = new CourierMasterQueryService(context);
-                                _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationPM.Id, entityPM.Tenant)?? _DeclarationPMAncestor?.MyCourierMasterPM;
+                                _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationPM.Id, entityPM.Tenant)?? _DeclarationPMAncestor?.MyEcomInsert?.MyCourierMasterPM;
                             }
 
                             if (_CourierMasterPM != null)

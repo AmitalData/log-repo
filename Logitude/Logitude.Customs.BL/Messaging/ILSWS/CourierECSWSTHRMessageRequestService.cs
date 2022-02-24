@@ -151,7 +151,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
             if(currentDeclarationCourierStatusPM != null && !String.IsNullOrWhiteSpace(currentDeclarationCourierStatusPM.CrateNumber))crateNumber = currentDeclarationCourierStatusPM.CrateNumber;
             if (string.IsNullOrWhiteSpace(crateNumber))
             {
-                crateNumber = myDeclarationPM?.MyInsertDeclarationCourierStatusPM?.CrateNumber;
+                crateNumber = myDeclarationPM?.MyEcomInsert?.MyDeclarationCourierStatusPM?.CrateNumber;
             }
 
             string importerVat = "";
