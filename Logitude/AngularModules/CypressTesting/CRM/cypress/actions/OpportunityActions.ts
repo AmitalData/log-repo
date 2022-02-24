@@ -92,7 +92,9 @@ export function AssertCompleteActivity() {
 export function AddCompetitor() {
     DefinePutOpportunityRequest()
     cy.Click(OpportunitySelectors.CompetitorsToggleButton, null)
-    cy.get(OpportunitySelectors.CompetitorsCheckBox).eq(0).next("label").click({ force: true })
+    cy.get(OpportunitySelectors.CompetitorsCheckBox).eq(0).within(() => {
+        cy.get(BaseSelectors.CheckboxInput).check({ force: true })
+    })
 }
 
 export function RemoveCompetitor() {
@@ -104,7 +106,9 @@ export function RemoveCompetitor() {
 export function AddAdditionalService() {
     DefinePutOpportunityRequest()
     cy.Click(OpportunitySelectors.AdditionalServicesToggleButton, null)
-    cy.get(OpportunitySelectors.AdditionalServicesCheckBox).eq(0).next("label").click()
+    cy.get(OpportunitySelectors.AdditionalServicesCheckBox).eq(0).within(() => {
+        cy.get(BaseSelectors.CheckboxInput).check({ force: true })
+    })
 }
 
 export function RemoveAdditionalService() {

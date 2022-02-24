@@ -106,12 +106,12 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentCustomer = '#Shipment_CustomerId';
   public static readonly ShipmentIncludePickUp = '#Shipment_IncludePickUp';
   public static readonly ShipmentIncludeDelivery = '#Shipment_IncludeDelivery';
-  public static readonly ShipmentIncludePickUpCheckBox = "input[data-cy='Shipment_IncludePickUp_CheckBox']";
-  public static readonly ShipmentIncludeDeliveryCheckBox = "input[data-cy='Shipment_IncludeDelivery_CheckBox']";
-  public static readonly ShipmentIncludeFlightsCheckBox = "input[data-cy='Shipment_IncludeFlights_CheckBox']";
-  public static readonly ShipmentPreCarriageCheckBox = "input[data-cy='Shipment_PreCarriage_CheckBox']";
-  public static readonly ShipmentOnCarriageCheckBox = "input[data-cy='Shipment_OnCarriage_CheckBox']";
-  public static readonly ShipmentIncludePackagesCheckBox = "input[data-cy='Shipment_IncludePackages_CheckBox']";
+  public static readonly ShipmentIncludePickUpCheckBox = "div[data-cy='Shipment_IncludePickUp_CheckBox']";
+  public static readonly ShipmentIncludeDeliveryCheckBox = "div[data-cy='Shipment_IncludeDelivery_CheckBox']";
+  public static readonly ShipmentIncludeFlightsCheckBox = "div[data-cy='Shipment_IncludeFlights_CheckBox']";
+  public static readonly ShipmentPreCarriageCheckBox = "div[data-cy='Shipment_PreCarriage_CheckBox']";
+  public static readonly ShipmentOnCarriageCheckBox = "div[data-cy='Shipment_OnCarriage_CheckBox']";
+  public static readonly ShipmentIncludePackagesCheckBox = "div[data-cy='Shipment_IncludePackages_CheckBox']";
   public static readonly ShipmentPickupDelivaryMain = '#ShipmentPickUpDeliveryTHMain';
   
   //#endregion
