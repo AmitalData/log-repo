@@ -169,6 +169,11 @@ export class TaxReportLinePM {
     public set PreviousReference(newValue: string) { if (this.previousReference != newValue) { this.previousReference = newValue; this.MarkAsDirty("PreviousReference"); } }
        
 	 
+    private vatAmountRound: number;
+    public get VatAmountRound() { return this.vatAmountRound; }
+    public set VatAmountRound(newValue: number) { if (this.vatAmountRound != newValue) { this.vatAmountRound = newValue; this.MarkAsDirty("VatAmountRound"); } }
+       
+	 
 
     public OldEntityPM: TaxReportLinePM;
 		

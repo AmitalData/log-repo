@@ -143,6 +143,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             JournalId = a.Id,
                             OutputOrInput = "O",
                             VatAmount = Math.Round(VatAmount.Value, MidpointRounding.AwayFromZero),
+                            VatAmountRound = VatAmount.Value - Math.Round(VatAmount.Value, MidpointRounding.AwayFromZero),
                             VatableInvoiceAmount = Math.Round(InvoiceAmount.Value, MidpointRounding.AwayFromZero),
                             TotalInvoiceAmount = invoice.TotalAmountForTaxReport != null ? Math.Round(invoice.TotalAmountForTaxReport.Value, MidpointRounding.AwayFromZero) : 0,
                             IsManuallyChanged = false,
