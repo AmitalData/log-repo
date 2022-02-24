@@ -258,7 +258,8 @@ export class PerVendorReportFilterComponent extends BaseComponent {
     }
 
     GetGLAccount(id: string)
-    {
+    {   
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
         return new Promise(resolve =>
         {
 
@@ -274,6 +275,7 @@ export class PerVendorReportFilterComponent extends BaseComponent {
                     console.error(result.ErrorsArray);
                     reject();
                 }
+                this.CurrentSession.StopBusyIndicator();
             });
 
 
