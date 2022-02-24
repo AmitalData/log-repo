@@ -1844,6 +1844,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.StatusId = shipment.StatusId;
             shipmentPM.StatusLocation = shipment.StatusLocation;
             shipmentPM.PartialStatusAmount = shipment.PartialStatusAmount;
+            shipmentPM.FirstPickupFullAddress = shipment.FirstPickupFullAddress;
+            shipmentPM.LastDeliveryFullAddress = shipment.LastDeliveryFullAddress;
             shipmentPM.StatusDate = shipment.StatusDate;
             shipmentPM.LastSentByUserId = shipment.LastSentByUserId;
             shipmentPM.ProfitCurrencyId = shipment.ProfitCurrencyId;
@@ -11279,6 +11281,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         HasUnassignedData = view.HasUnassignedData,
                         DestinationWarehouseId = view.DestinationWarehouseId,
                         DestinationWarehouseName = view.DestinationWarehouseName,
+                        FirstPickupFullAddress = view.FirstPickupFullAddress,
+                        LastDeliveryFullAddress = view.LastDeliveryFullAddress,
                     };
 
                     list.LongMaster = EntityFieldsHelper.GetLongMasterField(view);
@@ -12551,6 +12555,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                OperationalStatusName = f.OperationalStatusName,
                                PrivateLabelAgentName = f.PrivateLabelAgentName,
                                StatusWeight = f.StatusWeight,
+                               FirstPickupFullAddress = f.FirstPickupFullAddress,
+                               LastDeliveryFullAddress = f.LastDeliveryFullAddress,
                            };
             return myResult;
         }
@@ -12932,6 +12938,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CustomerContactName = f.CustomerContactName,
                     HasUnassignedData = f.HasUnassignedData,
                     OperationalStatusName = f.OperationalStatusName,
+                    FirstPickupFullAddress = f.FirstPickupFullAddress,
+                    LastDeliveryFullAddress = f.LastDeliveryFullAddress,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

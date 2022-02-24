@@ -728,6 +728,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public string PrivateLabelAgentName { get; set; }
         public string PartialStatusAmount { get; set; }
-
+        public string FirstPickupFullAddress { get; set; }
+        public string LastDeliveryFullAddress { get; set; }
     }
 }

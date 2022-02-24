@@ -2810,7 +2810,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public List<TraceEventPM> AddManualEvents { get; set; }
         public string ShippingAgent { get; set; }
         public string PrivateLabelAgentName { get; set; }
-
+        public string FirstPickupFullAddress { get; set; }
+        public string LastDeliveryFullAddress { get; set; }
     }
 
     public class TransshipmentLeg
@@ -2834,6 +2835,5 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? ATD { get; set; }
         public DateTime? ATA { get; set; }
         public string CarrierTypeName { get; set; }
-
     }
 }

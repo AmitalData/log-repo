@@ -769,5 +769,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string DestinationWarehouseId { get; set; }
         public string DestinationWarehouseName { get; set; }
         public string PrivateLabelAgentName { get; set; }
+        public string FirstPickupFullAddress { get; set; }
+        public string LastDeliveryFullAddress { get; set; }
     }
 }

@@ -3349,6 +3349,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="FirstPickupFullAddress"
+    Type="varchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastDeliveryFullAddress"
+    Type="varchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"

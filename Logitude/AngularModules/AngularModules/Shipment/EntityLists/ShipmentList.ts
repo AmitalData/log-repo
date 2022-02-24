@@ -494,5 +494,7 @@ export class ShipmentList {
 		ShippingAgent: string;
 		PrivateLabelAgentName: string;
 		StatusWeight: number;
+		FirstPickupFullAddress: string;
+		LastDeliveryFullAddress: string;
 	
 }

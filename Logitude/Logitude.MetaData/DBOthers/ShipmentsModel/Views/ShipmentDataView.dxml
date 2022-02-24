@@ -46,7 +46,7 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
 						 dbo.ShipmentMasterDatas.MainCarriageATA, dbo.ShipmentMasterDatas.MainCarriageATD, dbo.Shipments.ShipperReference2,                          
 						 dbo.ShipmentMasterDatas.InterlineId, dbo.ShipmentMasterDatas.ManifestReason, dbo.ShipmentMasterDatas.ManifestStatusCode, dbo.ShipmentMasterDatas.AirlinePrefix,
              dbo.ShipmentMasterDatas.ImportManifest, dbo.Shipments.FreightLocationId,
-             dbo.Shipments.IsAccrualsApproved, dbo.Shipments.AccrualsApprovalDate,
+             dbo.Shipments.IsAccrualsApproved, dbo.Shipments.AccrualsApprovalDate,  dbo.Shipments.FirstPickupFullAddress, dbo.Shipments.LastDeliveryFullAddress,
 						 dbo.Shipments.MasterShipmentDataId, dbo.Shipments.ShipmentLevelCode, dbo.Shipments.NextETA, dbo.Shipments.NextETD,
 						 dbo.Shipments.NumberOfInsidePackages, dbo.Shipments.NumberOfInsidePackagesDetails, dbo.Shipments.RegistryDate, dbo.Shipments.IsAssembly, dbo.Shipments.FirstOperationalCloseDate,
                          dbo.Shipments.NextLegCode, dbo.Shipments.AccountedReceivablesInProfitCurrency, dbo.Shipments.OpenReceivablesInProfitCurrency, dbo.Shipments.FirstAccountingCloseDate,
