@@ -83,7 +83,7 @@ namespace Logitude.Accounting.BL.CoreBL
             TenantQuery tenantQuery = new TenantQuery(tenant);
             TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
 
-            List<TaxReportData> TaxReportJournalData = journalRepository.GetARInvoiceJournals(taxReport.TaxReportMonth, tenant);
+            List<CustomTaxReportData> TaxReportJournalData = journalRepository.GetARInvoiceJournals(taxReport.TaxReportMonth, tenant);
 
 
 
@@ -104,15 +104,15 @@ namespace Logitude.Accounting.BL.CoreBL
             decimal? VatAmount = 0;
             decimal? InvoiceAmount = 0;
             string transmitStatus;
-            foreach (TaxReportData a in TaxReportJournalData)
+            foreach (CustomTaxReportData taxData in TaxReportJournalData)
             {
                 string vatNumber = null;
                 transmitStatus = "1";
-                var exist = reportLinesList.Where(d => d.JournalId == a.Id).Any();
+                var exist = reportLinesList.Where(d => d.JournalId == taxData.Id).Any();
                 if (!exist)
                 {
                     string outputreference = null;
-                    ARInvoice invoice = invoices.Where(d => d.Id == a.AccountingEntityId).FirstOrDefault();
+                    ARInvoice invoice = invoices.Where(d => d.Id == taxData.AccountingEntityId).FirstOrDefault();
                     if (invoice != null)
                     {
                         transmitStatus = SetTransmitStaus(invoice.InvoiceDate.Value, taxReport.TaxReportMonth, setting);
@@ -140,7 +140,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             OriginalReference = invoice.InvoiceNumber,
                             ReferecneGroup = null,
                             ReferenceDate = invoice.InvoiceDate,
-                            JournalId = a.Id,
+                            JournalId = taxData.Id,
                             OutputOrInput = "O",
                             VatAmount = Math.Round(VatAmount.Value, MidpointRounding.AwayFromZero),
                             VatableInvoiceAmount = Math.Round(InvoiceAmount.Value, MidpointRounding.AwayFromZero),
@@ -153,7 +153,8 @@ namespace Logitude.Accounting.BL.CoreBL
                             UpdatedByUserId = taxReport.UpdatedByUserId,
                             UpdatedBUserName = taxReport.UpdatedByUserName,
                             Tenant = tenant,
-                            TaxReportDate = taxReport.TaxReportMonth
+                            TaxReportDate = taxReport.TaxReportMonth,
+                            IsReconciled = taxData.IsLedgerReconciled
 
                         };
                         Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cards.Where(d => d.Id == invoice.BillToId).FirstOrDefault();
@@ -267,6 +268,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     TransmitStatusCode = transmitStatusCode,
                     TaxReportDate = taxReport.TaxReportMonth,                   
                     JournalLineNumber = transaction.JournalLineNumber,
+                    IsReconciled = transaction.IsLedgerReconciled
                 };
 
                 JournalPM journal = journalPMs.Where(d => d.Id == transaction.JournalId && d.TaxReportJournalLineNumber == transaction.JournalLineNumber).FirstOrDefault();

@@ -4,7 +4,7 @@
   ObjectTableName="&quot;AccountingEntity&quot;"
   IsNew="false"
   DBTableName="&quot;AccountingEntities&quot;"
-  OldDBTableName="&quot;AccountingEntities&quot;"
+  DBTableOldNames="AccountingEntities"
   ObjectTableSingular="&quot;AccountingEntity&quot;"
   ObjectTablePlural="&quot;AccountingEntities&quot;"
   HasCustomFilter="false"
@@ -38,7 +38,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Accounting Entity&quot;"
-  Code="&quot;3c06&quot;"
+  Code="&quot;c3c1&quot;"
   Name="&quot;AccountingEntity Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;EnglishName&quot;"
@@ -54,6 +54,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="true"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;65d8&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -66,7 +67,7 @@
   <field
     Id="&quot;a69b4fcb-066f-4ac6-956d-7075b659c880&quot;"
     FieldName="&quot;Code&quot;"
-    OldFieldName="&quot;Code&quot;"
+    OldNames="Code"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -116,6 +117,7 @@
     ListLocalDefaultText="&quot;קוד&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -129,6 +131,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -139,7 +142,7 @@
   <field
     Id="&quot;5a4a153a-211c-416c-9e33-a1fef7df508f&quot;"
     FieldName="&quot;LocalName&quot;"
-    OldFieldName="&quot;LocalName&quot;"
+    OldNames="LocalName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -189,6 +192,7 @@
     ListLocalDefaultText="&quot;שם מקומי&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -202,6 +206,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -212,7 +217,7 @@
   <field
     Id="&quot;a3bd18c5-c4b5-47cd-9505-a334afcd119f&quot;"
     FieldName="&quot;EnglishName&quot;"
-    OldFieldName="&quot;EnglishName&quot;"
+    OldNames="EnglishName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -262,6 +267,7 @@
     ListLocalDefaultText="&quot;שם באנגלית&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -275,6 +281,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -282,6 +289,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;AccountingEntityHeaderScreen&quot;"
+    ObjectTableName="&quot;AccountingEntity&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -361,6 +377,10 @@
       Code="&quot;12&quot;"
       LocalName="&quot;התאמת בנק&quot;"
       EnglishName="&quot;Bank Adjustment&quot;" />
+    <Record
+      Code="&quot;13&quot;"
+      LocalName="&quot;דוח מע''מ&quot;"
+      EnglishName="&quot;Tax Report&quot;" />
   </Records>
   <DataContracts>
     <DataContract
@@ -379,7 +399,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;LocalName&quot;"
         FieldName="&quot;LocalName&quot;"
@@ -393,7 +414,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;EnglishName&quot;"
         FieldName="&quot;EnglishName&quot;"
@@ -407,7 +429,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes />

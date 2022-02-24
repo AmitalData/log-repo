@@ -176,6 +176,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsReconciled"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="UpdatedByUserId"
     ReferencedTable="Users"

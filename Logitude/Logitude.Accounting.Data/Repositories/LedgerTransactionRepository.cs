@@ -1444,7 +1444,8 @@ on record.JournalId equals j.Id
                         IsVoided = j.IsVoided,
                         TaxReportId = m.TaxReportId,
                         OriginalJournalId = j.OriginalJournalId,
-                        Tenant = a.Tenant
+                        Tenant = a.Tenant,
+                        IsLedgerReconciled = a.IsReconciled
                     }
                     
                     ).ToList();

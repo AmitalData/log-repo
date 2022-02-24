@@ -169,6 +169,11 @@ export class TaxReportLinePM {
     public set PreviousReference(newValue: string) { if (this.previousReference != newValue) { this.previousReference = newValue; this.MarkAsDirty("PreviousReference"); } }
        
 	 
+    private isReconciled: boolean;
+    public get IsReconciled() { return this.isReconciled; }
+    public set IsReconciled(newValue: boolean) { if (this.isReconciled != newValue) { this.isReconciled = newValue; this.MarkAsDirty("IsReconciled"); } }
+       
+	 
 
     public OldEntityPM: TaxReportLinePM;
 		
