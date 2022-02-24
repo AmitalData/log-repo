@@ -805,17 +805,23 @@ export function AssertPayablesFieldsEnable() {
 export function CopyShipment(shipmentLevel: string) {
     cy.Click(ShipmentSelectors.ShipmentMoreList, null, true)
     cy.Click(ShipmentSelectors.CopyShipmentButton, null)
-    CheckBoxesInCopyShipmentWizerd()
+    CheckAllBoxesInCopyShipmentWizerd()
     CreateShipment(shipmentLevel);
 }
 
-export function CheckBoxesInCopyShipmentWizerd() {
-    cy.ClickCheckBox(ShipmentSelectors.ShipmentIncludePickUpCheckBox)
-    cy.ClickCheckBox(ShipmentSelectors.ShipmentIncludeDeliveryCheckBox)
-    cy.ClickCheckBox(ShipmentSelectors.ShipmentIncludeFlightsCheckBox)
-    cy.ClickCheckBox(ShipmentSelectors.ShipmentPreCarriageCheckBox)
-    cy.ClickCheckBox(ShipmentSelectors.ShipmentOnCarriageCheckBox)
-    cy.ClickCheckBox(ShipmentSelectors.ShipmentIncludePackagesCheckBox)
+export function CheckAllBoxesInCopyShipmentWizerd() {
+    CheckBoxInCopyShipmentWizerd(ShipmentSelectors.ShipmentIncludePickUpCheckBox);
+    CheckBoxInCopyShipmentWizerd(ShipmentSelectors.ShipmentIncludeDeliveryCheckBox);
+    CheckBoxInCopyShipmentWizerd(ShipmentSelectors.ShipmentIncludeFlightsCheckBox);
+    CheckBoxInCopyShipmentWizerd(ShipmentSelectors.ShipmentPreCarriageCheckBox);
+    CheckBoxInCopyShipmentWizerd(ShipmentSelectors.ShipmentOnCarriageCheckBox);
+    CheckBoxInCopyShipmentWizerd(ShipmentSelectors.ShipmentIncludePackagesCheckBox);
+}
+
+function CheckBoxInCopyShipmentWizerd(selector) {
+    cy.get(selector).within(() => {
+        cy.ClickCheckBox(BaseSelectors.CheckboxInput)
+    })
 }
 
 export function AssertShipmentRoutingPickUpToPortValue(value) {
