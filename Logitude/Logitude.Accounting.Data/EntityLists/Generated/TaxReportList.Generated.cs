@@ -76,6 +76,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public bool NeedsRebulid  { get; set; }
        [DataMember]
        public string UpdatedByUserName  { get; set; }
+       [DataMember]
+       public decimal? OutputTaxAmountRound  { get; set; }
+       [DataMember]
+       public decimal? InputsTaxAmountRound  { get; set; }
    }
 
 }

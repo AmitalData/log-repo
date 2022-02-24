@@ -825,6 +825,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private decimal? outputTaxAmountRound ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? OutputTaxAmountRound  
+	   {
+	    
+	     get
+		{
+		   return outputTaxAmountRound;
+		 }
+		 set
+		 {
+		   if(outputTaxAmountRound != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OutputTaxAmountRound",OldValue=outputTaxAmountRound,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   outputTaxAmountRound=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? inputsTaxAmountRound ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? InputsTaxAmountRound  
+	   {
+	    
+	     get
+		{
+		   return inputsTaxAmountRound;
+		 }
+		 set
+		 {
+		   if(inputsTaxAmountRound != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InputsTaxAmountRound",OldValue=inputsTaxAmountRound,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   inputsTaxAmountRound=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -199,6 +199,16 @@ export class TaxReportPM {
     public set CreatedInTwoMonthsLogic(newValue: boolean) { if (this.createdInTwoMonthsLogic != newValue) { this.createdInTwoMonthsLogic = newValue; this.MarkAsDirty("CreatedInTwoMonthsLogic"); } }
        
 	 
+    private outputTaxAmountRound: number;
+    public get OutputTaxAmountRound() { return this.outputTaxAmountRound; }
+    public set OutputTaxAmountRound(newValue: number) { if (this.outputTaxAmountRound != newValue) { this.outputTaxAmountRound = newValue; this.MarkAsDirty("OutputTaxAmountRound"); } }
+       
+	 
+    private inputsTaxAmountRound: number;
+    public get InputsTaxAmountRound() { return this.inputsTaxAmountRound; }
+    public set InputsTaxAmountRound(newValue: number) { if (this.inputsTaxAmountRound != newValue) { this.inputsTaxAmountRound = newValue; this.MarkAsDirty("InputsTaxAmountRound"); } }
+       
+	 
 
     public OldEntityPM: TaxReportPM;
 		

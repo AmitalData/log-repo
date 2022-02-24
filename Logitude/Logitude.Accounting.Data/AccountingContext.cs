@@ -431,6 +431,10 @@ namespace Logitude.Accounting.Data
 				
 			modelBuilder.Entity<TaxReport>().Property(x => x.AmountForPayRefund).HasPrecision(16, 2);
 				
+			modelBuilder.Entity<TaxReport>().Property(x => x.OutputTaxAmountRound).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<TaxReport>().Property(x => x.InputsTaxAmountRound).HasPrecision(16, 2);
+				
 			modelBuilder.Entity<TaxReportLine>().Property(x => x.VatAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<TaxReportLine>().Property(x => x.VatableInvoiceAmount).HasPrecision(16, 2);
