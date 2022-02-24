@@ -30,21 +30,21 @@ namespace Logitude.Customs.Data.Repsitories
 		
 		public  LogisticActionResponseRequestStatus GetSingle(string code)
         {
-            return (from a in context.LogisticActionResponseRequestStatuss
+            return (from a in context.LogisticActionResponseRequestStatuses
                     where a.Code == code 
                     select a).FirstOrDefault();
         }
 
         public IQueryable<LogisticActionResponseRequestStatus> GetAll()
         {
-            return from a in context.LogisticActionResponseRequestStatuss  
+            return from a in context.LogisticActionResponseRequestStatuses  
                    select a;
         }
 				 
         public LogisticActionResponseRequestStatus GetSingle(EntityKeyFields entityKeys)
         {
             LogisticActionResponseRequestStatusKeys keys = entityKeys as LogisticActionResponseRequestStatusKeys;
-            return (from a in context.LogisticActionResponseRequestStatuss
+            return (from a in context.LogisticActionResponseRequestStatuses
                     where a.Code == keys.Code
                     select a).FirstOrDefault();
         }
@@ -53,26 +53,26 @@ namespace Logitude.Customs.Data.Repsitories
         public void Add(LogisticActionResponseRequestStatus entity)
         {
             onAdd();
-            context.LogisticActionResponseRequestStatuss.Add(entity);
+            context.LogisticActionResponseRequestStatuses.Add(entity);
         }
 
         public void Remove(LogisticActionResponseRequestStatus entity)
         {
-            context.LogisticActionResponseRequestStatuss.Attach(entity);
-            context.LogisticActionResponseRequestStatuss.Remove(entity);
+            context.LogisticActionResponseRequestStatuses.Attach(entity);
+            context.LogisticActionResponseRequestStatuses.Remove(entity);
         }
 
         partial void onUpdate();//Partial Methods Definition in Generated
         public void Update(LogisticActionResponseRequestStatus entity)
         {
             onUpdate();
-            context.LogisticActionResponseRequestStatuss.Attach(entity);
+            context.LogisticActionResponseRequestStatuses.Attach(entity);
             context.SetAsModified(entity);
         }
 
         public List<LogisticActionResponseRequestStatus> All()
         {
-            return context.LogisticActionResponseRequestStatuss.ToList();
+            return context.LogisticActionResponseRequestStatuses.ToList();
         }
 
         private ICustomContext context

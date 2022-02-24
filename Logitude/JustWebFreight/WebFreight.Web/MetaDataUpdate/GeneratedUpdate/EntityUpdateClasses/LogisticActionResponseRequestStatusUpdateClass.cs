@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LogisticActionResponseRequestStatusUpdateClass
    {  		
-		public const string HashString = "51e69e6d512a29cf2677dae28f42ded5";
+		public const string HashString = "bd635748622c9ffaf23949464cde9568";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -94,9 +94,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			
 	             				    ObjectTableName =  "Customs.LogisticActionResponseRequestStatus",
 			      				    IsNew =  true,
-			      				    DBTableName =  "Customs.LogisticActionResponseRequestStatuss",
+			      				    DBTableName =  "Customs.LogisticActionResponseRequestStatuses",
 			      				    ObjectTableSingular =  "LogisticActionResponseRequestStatus",
-			      				    ObjectTablePlural =  "LogisticActionResponseRequestStatuss",
+			      				    ObjectTablePlural =  "LogisticActionResponseRequestStatuses",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -109,7 +109,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    KeyPropertyPath =  "Code",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  true,
-			      				    CacheOnClient =  false,
+			      				    CacheOnClient =  true,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
@@ -124,7 +124,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
-			      				    ObjectTableTypeCode =  "BR",
+			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "סטטוס משוב לבקשה לפעולה לוגיסטית",
 			      				    DefaultText =  "Update Code",
@@ -482,7 +482,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode LogisticActionResponseRequestStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogisticActionResponseRequestStatus.Q.LogisticActionResponseRequestStatus", DefaultText = @"LogisticActionResponseRequestStatusQuery",LocalDefaultText = "סטטוס משוב לבקשה לפעולה לוגיסטית", ObjectTableId = LogisticActionResponseRequestStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode LogisticActionResponseRequestStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogisticActionResponseRequestStatus.Q.LogisticActionResponseRequestStatus", DefaultText = @"Logistic Action Response RS",LocalDefaultText = "סטטוס משוב לבקשה לפעולה לוגיסטית", ObjectTableId = LogisticActionResponseRequestStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature LogisticActionResponseRequestStatusFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LogisticActionResponseRequestStatus.Q.LogisticActionResponseRequestStatus", ObjectTableId = LogisticActionResponseRequestStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogisticActionResponseRequestStatus.Features.LogisticActionResponseRequestStatus", NameTextCodeDefaultText = "LogisticActionResponseRequestStatus", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,LogisticActionResponseRequestStatusObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();

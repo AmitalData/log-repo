@@ -81,7 +81,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         DecisionRmarks, 
 	         CustomsUserName, 
 	         IsClosed, 
-	         DeclarationId,
+	         DeclarationId, 
+	         DeclarationNumber, 
+	         RequestCancelStatus,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

@@ -2713,7 +2713,7 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
-	 public IDbSet<LogisticActionResponseRequestStatus> LogisticActionResponseRequestStatuss 
+	 public IDbSet<LogisticActionResponseRequestStatus> LogisticActionResponseRequestStatuses 
 	 {
 	      get; set;
 	 

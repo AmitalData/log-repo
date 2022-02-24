@@ -249,7 +249,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<LoadingSiteType> LoadingSiteTypes { get; }
 		 IDbSet<LogisticActionRequest> LogisticActionRequests { get; }
 		 IDbSet<LogisticActionRequestType> LogisticActionRequestTypes { get; }
-		 IDbSet<LogisticActionResponseRequestStatus> LogisticActionResponseRequestStatuss { get; }
+		 IDbSet<LogisticActionResponseRequestStatus> LogisticActionResponseRequestStatuses { get; }
 		 IDbSet<LogisticsReferenceType> LogisticsReferenceTypes { get; }
 		 IDbSet<MamanSpecialAction> MamanSpecialActions { get; }
 		 IDbSet<MamanSpecialActionStatus> MamanSpecialActionStatuses { get; }

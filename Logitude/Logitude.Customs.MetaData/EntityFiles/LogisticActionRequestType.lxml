@@ -4,7 +4,7 @@
   ObjectTableName="&quot;Customs.LogisticActionRequestType&quot;"
   IsNew="true"
   DBTableName="&quot;Customs.LogisticActionRequestTypes&quot;"
-  OldDBTableName="&quot;Customs.LogisticActionRequestTypes&quot;"
+  DBTableOldNames="Customs.LogisticActionRequestTypes"
   ObjectTableSingular="&quot;LogisticActionRequestType&quot;"
   ObjectTablePlural="&quot;LogisticActionRequestTypes&quot;"
   HasCustomFilter="false"
@@ -20,7 +20,7 @@
   KeyPropertyPath="&quot;Code&quot;"
   AutoCompleteSearchWindow="false"
   IsClosed="true"
-  CacheOnClient="false"
+  CacheOnClient="true"
   EditableFromAutoCompleteWindow="false"
   HasCounter="false"
   EnableAddFromLOV="false"
@@ -36,7 +36,7 @@
   EnableSecurity="false"
   AllowCustomFields="false"
   HasDynamicHeader="false"
-  ObjectTableTypeCode="&quot;BR&quot;"
+  ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;סוג בקשה לפעולה לוגיסטית&quot;"
   DefaultText="&quot;Update Code&quot;"
@@ -50,24 +50,27 @@
   NoViewController="false"
   NoPMController="false"
   NoTS="false"
+  NoDefaultFeatures="false"
   HasCompactSearch="false"
   ApplyDefaultValues="false"
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;3e16&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
+  IsTabsHidden="false"
   DxmlDatabaseTypeCode="Main"
   DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;47afe946-9104-4e79-98a8-eb3897b3b3f6&quot;"
     FieldName="&quot;Code&quot;"
-    OldFieldName="&quot;Code&quot;"
+    OldNames="Code"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -76,7 +79,9 @@
     MinLength="0"
     MaxLength="2"
     IsRequired="true"
+    CopyToDW="false"
     DisplayOnLookUp="true"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -115,6 +120,7 @@
     ListLocalDefaultText="&quot;קוד&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -128,16 +134,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;57071d26-3651-4fce-b679-f399262cfad1&quot;"
     FieldName="&quot;LocalName&quot;"
-    OldFieldName="&quot;LocalName&quot;"
+    OldNames="LocalName"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -146,7 +154,9 @@
     MinLength="0"
     MaxLength="40"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="true"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -185,6 +195,7 @@
     ListLocalDefaultText="&quot;שם מקומי&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -198,16 +209,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;f02a2066-7805-4b95-a2db-95582ef4da3d&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -216,7 +229,9 @@
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -252,6 +267,7 @@
     ListLableDefaultText="&quot;Search Fields&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -265,16 +281,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;d40c7674-1d04-4726-ba3c-95b14b20fa67&quot;"
     FieldName="&quot;EnglishName&quot;"
-    OldFieldName="&quot;EnglishName&quot;"
+    OldNames="EnglishName"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -283,7 +301,9 @@
     MinLength="0"
     MaxLength="40"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -322,6 +342,7 @@
     ListLocalDefaultText="&quot;שם אנגלית&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -335,16 +356,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;25e508c3-0cbe-4aa9-bae3-609d4b1654b4&quot;"
     FieldName="&quot;Inactive&quot;"
-    OldFieldName="&quot;Inactive&quot;"
+    OldNames="Inactive"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -353,7 +376,9 @@
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -392,6 +417,7 @@
     ListLocalDefaultText="&quot;לא פּעיל&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -405,67 +431,74 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
-  <Records />
-  <DataContracts />
-  <AdditionalTextCodes />
-  <AdditionalFeatures></AdditionalFeatures>
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;LogisticActionRequestType&quot;"
-    ObjectTableName="&quot;Customs.LogisticActionRequestType&quot;"
-    DefaultSortDirection="&quot;Desending&quot;"
-    DefaultSortName="&quot;Code&quot;"
-    IsAddNewEntity="false"
-    SystemLevel="true"
-    QuerySection="&quot;Customs.LogisticActionRequestType&quot;"
-    IndexOrder="0"
-    QueryGroupCode="&quot;c8e2&quot;"
-    QueryGroupName="&quot; Query Group&quot;"
-    LocalTextCode="&quot;סוג בקשה לפעולה לוגיסטית&quot;"
     TextCode="&quot;LogisticActionRequestTypeQuery&quot;"
-    TextCodeCode="&quot;LogisticActionRequestType.Q.LogisticActionRequestType&quot;"
-    IsSpellChecked="false"
-    FeatureCode="&quot;LogisticActionRequestType.Q.LogisticActionRequestType&quot;"
+    LocalTextCode="&quot;סוג בקשה לפעולה לוגיסטית&quot;"
+    QueryGroupCode="&quot;c8e2&quot;"
+    IndexOrder="0"
+    ObjectTableName="&quot;Customs.LogisticActionRequestType&quot;"
+    QuerySection="&quot;Customs.LogisticActionRequestType&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
     IsPackagable="true"
+    DefaultSortName="&quot;Code&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    QueryGroupName="&quot; Query Group&quot;"
+    TextCodeCode="&quot;LogisticActionRequestType.Q.LogisticActionRequestType&quot;"
+    FeatureCode="&quot;LogisticActionRequestType.Q.LogisticActionRequestType&quot;"
     FeatureTextCodeCode="&quot;LogisticActionRequestType.Features.LogisticActionRequestType&quot;"
-    FeatureDefaultText="&quot;LogisticActionRequestType&quot;">
+    FeatureDefaultText="&quot;LogisticActionRequestType&quot;"
+    IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
+        QueryCode="&quot;LogisticActionRequestType&quot;"
         IndexOrder="0"
-        ColumnWidth="50"
         ObjectFieldName="&quot;Code&quot;"
-        QueryCode="&quot;LogisticActionRequestType&quot;" />
+        ColumnWidth="50" />
       <QueryColumn
+        QueryCode="&quot;LogisticActionRequestType&quot;"
         IndexOrder="1"
-        ColumnWidth="100"
         ObjectFieldName="&quot;LocalName&quot;"
-        QueryCode="&quot;LogisticActionRequestType&quot;" />
+        ColumnWidth="100" />
       <QueryColumn
+        QueryCode="&quot;LogisticActionRequestType&quot;"
         IndexOrder="2"
-        ColumnWidth="100"
         ObjectFieldName="&quot;EnglishName&quot;"
-        QueryCode="&quot;LogisticActionRequestType&quot;" />
+        ColumnWidth="100" />
       <QueryColumn
+        QueryCode="&quot;LogisticActionRequestType&quot;"
         IndexOrder="3"
-        ColumnWidth="50"
         ObjectFieldName="&quot;Inactive&quot;"
-        QueryCode="&quot;LogisticActionRequestType&quot;" />
+        ColumnWidth="50" />
     </QueryColumns>
     <QueryFilters />
   </Query>
+  <Screen
+    Name="&quot;Customs.LogisticActionRequestTypeHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.LogisticActionRequestType&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.LogisticActionRequestType&quot;"
-      ShortView="true"
-      IsManualEntry="false"
-      LocalName="&quot;Created&quot;"
       EnglishName="&quot;Created&quot;"
+      LocalName="&quot;Created&quot;"
+      IsManualEntry="false"
+      ShortView="true"
       EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
@@ -476,10 +509,10 @@
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.LogisticActionRequestType&quot;"
-      ShortView="false"
-      IsManualEntry="false"
-      LocalName="&quot;Updated&quot;"
       EnglishName="&quot;Updated&quot;"
+      LocalName="&quot;Updated&quot;"
+      IsManualEntry="false"
+      ShortView="false"
       EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
@@ -488,4 +521,8 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
 </entity>

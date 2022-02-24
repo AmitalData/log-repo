@@ -68,6 +68,10 @@ namespace Logitude.Customs.Data.EntityLists
        public double IsClosed  { get; set; }
        [DataMember]
        public string DeclarationId  { get; set; }
+       [DataMember]
+       public string DeclarationNumber  { get; set; }
+       [DataMember]
+       public string RequestCancelStatus  { get; set; }
    }
 
 }

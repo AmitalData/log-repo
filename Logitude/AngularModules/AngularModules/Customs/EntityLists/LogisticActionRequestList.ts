@@ -35,6 +35,8 @@ export class LogisticActionRequestList {
 	CustomsUserName: string;
 	IsClosed: number;
 	DeclarationId: string;
+	DeclarationNumber: string;
+	RequestCancelStatus: string;
 	
 }
  

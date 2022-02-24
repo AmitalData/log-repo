@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LogisticActionRequestTypeUpdateClass
    {  		
-		public const string HashString = "8ec2224794ba3239adadf1520823db3e";
+		public const string HashString = "da7b54c25b94827b096cd16393ee0ff4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -95,7 +95,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "Customs.LogisticActionRequestType",
 			      				    IsNew =  true,
 			      				    DBTableName =  "Customs.LogisticActionRequestTypes",
-			      				    OldDBTableName =  "Customs.LogisticActionRequestTypes",
 			      				    ObjectTableSingular =  "LogisticActionRequestType",
 			      				    ObjectTablePlural =  "LogisticActionRequestTypes",
 			      				    HasCustomFilter =  false,
@@ -110,7 +109,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    KeyPropertyPath =  "Code",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  true,
-			      				    CacheOnClient =  false,
+			      				    CacheOnClient =  true,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
@@ -125,7 +124,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
-			      				    ObjectTableTypeCode =  "BR",
+			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "סוג בקשה לפעולה לוגיסטית",
 			      				    DefaultText =  "Update Code",
@@ -143,6 +142,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    HashString =  LogisticActionRequestTypeUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -155,13 +155,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "Customs.LogisticActionRequestType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  2,
 					  						IsRequired =  true,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -204,8 +205,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -214,13 +217,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LocalName",
-					  						OldFieldName =  "LocalName",
 					  						ObjectTableName =  "Customs.LogisticActionRequestType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  40,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -263,8 +267,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -273,13 +279,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "Customs.LogisticActionRequestType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -319,8 +326,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -329,13 +338,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EnglishName",
-					  						OldFieldName =  "EnglishName",
 					  						ObjectTableName =  "Customs.LogisticActionRequestType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  40,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -378,8 +388,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -388,13 +400,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Inactive",
-					  						OldFieldName =  "Inactive",
 					  						ObjectTableName =  "Customs.LogisticActionRequestType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
+					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -437,8 +450,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -492,7 +507,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable LogisticActionRequestTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.LogisticActionRequestType" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> LogisticActionRequestTypeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.LogisticActionRequestType").ToList();
+		       
+	      
+
+	         Screen LogisticActionRequestTypeCustomsLogisticActionRequestTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "LogisticActionRequestType.HeaderScreen", Name = "Customs.LogisticActionRequestTypeHeaderScreen", ObjectTableId = LogisticActionRequestTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    LogisticActionRequestTypeObjectTable.HeaderScreenId = LogisticActionRequestTypeCustomsLogisticActionRequestTypeHeaderScreenScreen0.Id;
+		    LogisticActionRequestTypeObjectTable.HeaderScreenCode = LogisticActionRequestTypeCustomsLogisticActionRequestTypeHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
@@ -511,10 +538,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
-                ShortView =  true,
-                IsManualEntry =  false,
-                LocalName =  "Created",
                 EnglishName =  "Created",
+                LocalName =  "Created",
+                IsManualEntry =  false,
+                ShortView =  true,
                 EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,
@@ -530,10 +557,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "UPEV",
-                ShortView =  false,
-                IsManualEntry =  false,
-                LocalName =  "Updated",
                 EnglishName =  "Updated",
+                LocalName =  "Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
                 EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,

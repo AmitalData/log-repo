@@ -431,6 +431,9 @@ import { TradeAgreementProtocolListService } from './Services/StandardLists/Trad
 import { ExportStoragePMService } from './Services/StandardPMs/ExportStoragePMService';
 import { IncotemrsFileValidationListService } from './Services/StandardLists/IncotemrsFileValidationListService';
 import { ClientPMService } from './Services/StandardPMs/ClientPMService';
+import { LogisticActionRequestListService } from './Services/StandardLists/LogisticActionRequestListService';
+import { LogisticActionRequestTypeListService } from './Services/StandardLists/LogisticActionRequestTypeListService';
+import { LogisticActionResponseRequestStatusListService } from './Services/StandardLists/LogisticActionResponseRequestStatusListService';
 
 
 export class ModuleProviders {
@@ -683,6 +686,9 @@ export class ModuleProviders {
             case "CustomerClassificationTypeListService": { myResult = new CustomerClassificationTypeListService(); break; }
             case "LogisticsReferenceTypeListService": { myResult = new LogisticsReferenceTypeListService(); break; }
             case "PoaStatusTypeLookUpListService": { myResult = new PoaStatusTypeLookUpListService(); break; }
+            case "LogisticActionRequestListService": { myResult = new LogisticActionRequestListService(); break; }
+            case "LogisticActionRequestTypeListService": { myResult = new LogisticActionRequestTypeListService(); break; }
+            case "LogisticActionResponseRequestStatusListService": { myResult = new LogisticActionResponseRequestStatusListService(); break; }
 
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }

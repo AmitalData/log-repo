@@ -392,6 +392,7 @@
     <None Include="DBTables\LeadDocumentType.dxml" />
     <None Include="DBTables\LoadingSiteType.dxml" />
     <None Include="DBTables\LogisticActionRequest.dxml" />
+    <None Include="DBTables\LogisticActionResponseRequestStatus.dxml" />
     <None Include="DBTables\LogisticsReferenceType.dxml" />
     <None Include="DBTables\MamanSpecialAction.dxml" />
     <None Include="DBTables\MamanSpecialActionStatus.dxml" />

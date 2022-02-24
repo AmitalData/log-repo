@@ -27,7 +27,7 @@ namespace Logitude.Customs.Data.EntityMapping
 	}
     else
     {
-	  this.ToTable("LogisticActionResponseRequestStatuss", "Customs");
+	  this.ToTable("LogisticActionResponseRequestStatuses", "Customs");
 	}
 
 		

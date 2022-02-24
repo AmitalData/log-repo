@@ -85,7 +85,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<LogisticActionRequest> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<LogisticActionRequest> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
 			}
 

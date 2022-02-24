@@ -159,6 +159,16 @@ export class LogisticActionRequestPM {
     public set DeclarationId(newValue: string) { if (this.declarationId != newValue) { this.declarationId = newValue; this.MarkAsDirty("DeclarationId"); } }
        
 	 
+    private declarationNumber: string;
+    public get DeclarationNumber() { return this.declarationNumber; }
+    public set DeclarationNumber(newValue: string) { if (this.declarationNumber != newValue) { this.declarationNumber = newValue; this.MarkAsDirty("DeclarationNumber"); } }
+       
+	 
+    private requestCancelStatus: string;
+    public get RequestCancelStatus() { return this.requestCancelStatus; }
+    public set RequestCancelStatus(newValue: string) { if (this.requestCancelStatus != newValue) { this.requestCancelStatus = newValue; this.MarkAsDirty("RequestCancelStatus"); } }
+       
+	 
 
     public OldEntityPM: LogisticActionRequestPM;
 		

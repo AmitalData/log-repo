@@ -30,7 +30,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<LogisticActionResponseRequestStatus> iQueryable = (from a in context.LogisticActionResponseRequestStatuss
+            IQueryable<LogisticActionResponseRequestStatus> iQueryable = (from a in context.LogisticActionResponseRequestStatuses
                                                select a);
             			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
@@ -131,7 +131,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         public LogisticActionResponseRequestStatusList GetSingle(string code)
         {
-            IQueryable<LogisticActionResponseRequestStatus> LogisticActionResponseRequestStatusQuery = (from a in context.LogisticActionResponseRequestStatuss
+            IQueryable<LogisticActionResponseRequestStatus> LogisticActionResponseRequestStatusQuery = (from a in context.LogisticActionResponseRequestStatuses
                                                        where a.Code == code
                                                        select a);
 
@@ -147,7 +147,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<LogisticActionResponseRequestStatus> iQueryable = (from a in context.LogisticActionResponseRequestStatuss  select a);
+            IQueryable<LogisticActionResponseRequestStatus> iQueryable = (from a in context.LogisticActionResponseRequestStatuses  select a);
 
 			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
