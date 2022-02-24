@@ -748,7 +748,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             var loggedUser = GetLoggedUser(tenant);
 
             bool hasSecurityAccess =
-                (settings.IsSecurityLevelActivated && chartOfAccountSecurityLevel  <= (loggedUser.SecurityLevel ?? 0))
+                (settings.IsSecurityLevelActivated && chartOfAccountSecurityLevel  <= (loggedUser?.SecurityLevel ?? 0))
                 || (settings.IsSecurityLevelActivated && chartOfAccountSecurityLevel == null)
                 || !settings.IsSecurityLevelActivated;
             return hasSecurityAccess;
