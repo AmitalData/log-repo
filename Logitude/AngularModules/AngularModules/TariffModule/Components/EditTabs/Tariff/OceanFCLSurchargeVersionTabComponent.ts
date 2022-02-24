@@ -863,6 +863,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
     public ContainerPricesItemsSource: ContainerPricesItem[] = [];
     public ContainersItemsSourceView: ContainerPricesItem[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
+    private lineCurrencyId: string;
     constructor(isDeleted: boolean, entity: TariffLinePM, public FatherComponent: OceanFCLSurchargeVersionTabComponent, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
@@ -870,6 +871,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         this.IsNewEntity = isNew;
         this.initialIndex = entity.Index;
         this.IsEditEnabled = FatherComponent.IsDraftVersion;
+        this.lineCurrencyId = this.EntityPM.CurrencyId;
 
         this.SetUIProperties();
         this.SetCellColorsForPriceCheck();
@@ -1359,6 +1361,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         if (this.EntityPM.CurrencyId != value) {
             this.EntityPM.CurrencyId = value;
             this.EntityPM.LineEdited = true;
+            this.lineCurrencyId = this.EntityPM.CurrencyId;
 
             this.SetUIProperties_Currency();
         }
@@ -1642,10 +1645,11 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
             this.SurchargesCurrencies(this.CurrencyId);
 
             if (value) {
-                this.CurrencyId = null;
+                this.EntityPM.CurrencyId = null;
             }
 
             else {
+                this.CurrencyId = this.lineCurrencyId;
                 this.ContainerPricesItemsSource.forEach(item => {
                     item.CurrencyId = null;
                 });
