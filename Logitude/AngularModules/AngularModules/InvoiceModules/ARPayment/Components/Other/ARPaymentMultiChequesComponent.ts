@@ -42,6 +42,7 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
     public isLTR: boolean;
     arPaymentChequeOperationsService:ARPaymentChequeOperationsService = new ARPaymentChequeOperationsService();
     arPaymentPMService:ARPaymentPMService = new ARPaymentPMService();
+    inCashbookChequeStatus = '1';
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
