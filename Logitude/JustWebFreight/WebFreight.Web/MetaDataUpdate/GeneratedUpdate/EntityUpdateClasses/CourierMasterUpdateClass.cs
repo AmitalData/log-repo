@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CourierMasterUpdateClass
    {  		
-		public const string HashString = "913fb7b3d4e48953fda4e3f13f5539b2";
+		public const string HashString = "b800ac24106987e5593eac9b77957250";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3922,6 +3922,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CalcCourierHawbWithoutHatara",
 					  						ListPropertyPath =  "CalcCourierHawbWithoutHatara",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3940,6 +3941,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalcCourierHawbWithoutHatara",
 					  						DefaultText =  "CalcCourierHawbWithoutHatara",
+					  						FullLocalDefaultText =  "הצהרות ללא התרה",
 					  						ListFieldLable =  "CalcCourierHawbWithoutHataraListLable",
 					  						ListLableDefaultText =  "CalcCourierHawbWithoutHatara",
 					  						ListLocalDefaultText =  "הצהרות ללא התרה",
@@ -3981,6 +3983,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CalcCourierHawbWithoutDelivery",
 					  						ListPropertyPath =  "CalcCourierHawbWithoutDelivery",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3999,6 +4002,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalcCourierHawbWithoutDelivery",
 					  						DefaultText =  "CalcCourierHawbWithoutDelivery",
+					  						FullLocalDefaultText =  "הצהרות ללא הפצה",
 					  						ListFieldLable =  "CalcCourierHawbWithoutDeliveryListLable",
 					  						ListLableDefaultText =  "CalcCourierHawbWithoutDelivery",
 					  						ListLocalDefaultText =  "הצהרות ללא הפצה",
