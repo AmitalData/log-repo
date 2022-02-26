@@ -120,7 +120,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 dec.CasualImporterContact = null;
                                 dec.ChangeSetOp = ChangeSetOperation.Update;
                                 DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
-                                declarationUpdateService.Update(dec, true);
+                                //declarationUpdateService.Update(dec, true);
+                                declarationUpdateService.UpdatePOCO(dec);
                             }
                             else
                             {
@@ -142,7 +143,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                     dec.CasualImporterContact = casual.CasualImporterContact;
                                     dec.ChangeSetOp = ChangeSetOperation.Update;
                                     DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
-                                    declarationUpdateService.Update(dec, true);
+                                    //declarationUpdateService.Update(dec, true);
+                                    declarationUpdateService.UpdatePOCO(dec);
 
                                     casual.ChangeSetOp = ChangeSetOperation.Delete;
                                     DeclarationCasualDetailsUpdateService declarationCasualDetailsUpdateService = new DeclarationCasualDetailsUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
