@@ -52,4 +52,7 @@
     <Constraints
       Nullable="true" />
   </Column>
+	
+  <UniqueConstraint
+		Columns="Tenant,Code" />
 </Table>

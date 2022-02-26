@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
@@ -27,21 +28,12 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         }
 
-
-
-
-
         public QuoteChargesGroup GetSingleQuoteChargesGroupByCode(string code, int tenant)
         {
             return (from a in context.QuoteChargesGroups
                     where a.Code == code && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
-
-
-
-
-
 
         public QuoteChargesGroup GetSingleQuoteChargesGroup(string id, int tenant)
         {
@@ -51,14 +43,14 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         }
 
 
-
         public IQueryable<QuoteChargesGroup> GetQuoteChargesGroups(int tenant)
         {
+            IQueryable<QuoteChargesGroup> quoteChargesGroups = (from a in context.QuoteChargesGroups
+                                                               where a.Tenant == tenant
+                                                               select a);
 
-            return context.QuoteChargesGroups.Where(d => d.Tenant == tenant);
+            return quoteChargesGroups;
         }
-
-
 
 
         public void Add(QuoteChargesGroup entity)
