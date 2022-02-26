@@ -17,7 +17,7 @@ namespace WebFreight.Web.WebServices
         private int tenant;
         private PortRepository portRepository;
         private AddressRepository addressRepository;
-
+        private CountryRepository countryRepository;
         public WebServiceHelper(int tenant)
         {
             this.tenant = tenant;
@@ -25,6 +25,7 @@ namespace WebFreight.Web.WebServices
             ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
             this.portRepository = new PortRepository(myCommonContext);
             this.addressRepository = new AddressRepository(myCommonContext);
+            this.countryRepository = new CountryRepository(myCommonContext);
         }
 
         public string GetPickUpDeliveryFromCityOrPortName(ShipmentPickUpDelivery entity, bool isCityZipCountry = false)
@@ -42,9 +43,9 @@ namespace WebFreight.Web.WebServices
                                 Address myPartnerAddress = addressRepository.GetMainAddressByCardId(entity.FromPartnerCardId, tenant);
                                 if (myPartnerAddress != null)
                                 {
-                                    if(isCityZipCountry== true)
+                                    if (isCityZipCountry == true)
                                     {
-                                        myResult = myPartnerAddress.City + "," +myPartnerAddress.ZipCode + "," + (myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName);
+                                        myResult = myPartnerAddress.City + "," + myPartnerAddress.ZipCode + "," + (myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName);
                                     }
                                     else
                                     {
@@ -89,7 +90,7 @@ namespace WebFreight.Web.WebServices
                             {
                                 myResult = entity.FromAddressCity;
                             }
-                          
+
                             break;
                         }
                 }
@@ -649,9 +650,10 @@ namespace WebFreight.Web.WebServices
                                 {
                                     if (isCityZipCountry == true)
                                     {
-                                        myResult = myPartner.CityName + "," + myPartner.ZipCode + "," + myPartner.CountryName ;
-                                    } 
-                                    else {
+                                        myResult = myPartner.CityName + "," + myPartner.ZipCode + "," + myPartner.CountryName;
+                                    }
+                                    else
+                                    {
                                         myResult = myPartner.EnglishName;
                                     }
                                 }
@@ -679,7 +681,7 @@ namespace WebFreight.Web.WebServices
 
                             if (isCityZipCountry == true)
                             {
-                                var countryName = ""; 
+                                var countryName = "";
                                 if (!string.IsNullOrEmpty(myDelivery.ToAddressCountryId))
                                 {
                                     Country toAddressCountry = CountryRepository.GetSingleCountry(myDelivery.ToAddressCountryId, tenant, false);
@@ -912,11 +914,11 @@ namespace WebFreight.Web.WebServices
                             if (!string.IsNullOrEmpty(entity.FromPartnerCardId))
                             {
                                 Card myPartner = CardRepository.GetSingleCard(entity.FromPartnerCardId, tenant, true);
-                                if(myPartner != null)
+                                if (myPartner != null)
                                 {
                                     line.FullAddress = myPartner.EnglishName;
                                 }
-                            }                            
+                            }
 
                             if (!string.IsNullOrEmpty(entity.FromAddressId))
                             {
@@ -946,17 +948,17 @@ namespace WebFreight.Web.WebServices
                                 {
                                     line.Address = myPort.EnglishName;
                                     line.FullAddress = myPort.EnglishName + ", " + myPort.CountryName;
-                                        
-                                    if(!string.IsNullOrEmpty(myPort.StateId))
+
+                                    if (!string.IsNullOrEmpty(myPort.StateId))
                                     {
                                         StateRepository stateRepository = new StateRepository(tenant);
                                         State myState = stateRepository.GetSingleState(myPort.StateId, tenant);
 
-                                        if(myState != null)
+                                        if (myState != null)
                                         {
-                                            line.FullAddress  = line.FullAddress  + ", State: " + myState.EnglishName;
+                                            line.FullAddress = line.FullAddress + ", State: " + myState.EnglishName;
                                         }
-                                    }                                        
+                                    }
                                 }
                             }
 
@@ -1432,14 +1434,15 @@ namespace WebFreight.Web.WebServices
 
                     case "CASL":
                         {
-                            if (!string.IsNullOrEmpty(arguments.AddressCountryId)) {
+                            if (!string.IsNullOrEmpty(arguments.AddressCountryId))
+                            {
                                 Country country = CountryRepository.GetSingleCountry(arguments.AddressCountryId, tenant, true);
-                                if(!string.IsNullOrEmpty(country.EnglishName))
+                                if (!string.IsNullOrEmpty(country.EnglishName))
                                 {
                                     address = country.EnglishName;
                                 }
                             }
-                            
+
                             address = address + ", " + arguments.AddressCity;
 
                             if (!string.IsNullOrEmpty(arguments.AddressZipCode))
@@ -1523,8 +1526,104 @@ namespace WebFreight.Web.WebServices
 
             return myResult;
         }
+
+        public string GetInlandDomesticToLocation(InlandDomesticArgs args)
+        {
+            string toLocation = null;
+            switch (args.InlandDomesticToTypeCode)
+            {
+                case "PART":
+                    {
+                        toLocation = this.SetLocationFromInlanDomesticPartner(args.MainCarriageToAddressId);
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        toLocation = args.MainCarriageToPortName;
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        toLocation = this.SetLocationFromInlanDomesticCasual(args.InlandDomesticToCity, args.InlandDomesticToCountryId);
+                        break;
+                    }
+            }
+            return toLocation;
+        }
+        public string GetInlandDomesticFromLocation(InlandDomesticArgs args)
+        {
+            string fromLocation = null;
+            switch (args.InlandDomesticFromTypeCode)
+            {
+                case "PART":
+                    {
+                        fromLocation = this.SetLocationFromInlanDomesticPartner(args.MainCarriageFromAddressId);
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        fromLocation = args.MainCarriageFromPortName;
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        fromLocation = this.SetLocationFromInlanDomesticCasual(args.InlandDomesticFromCity, args.InlandDomesticFromCountryId);
+                        break;
+                    }
+            }
+            return fromLocation;
+        }
+        private string SetLocationFromInlanDomesticPartner(string addressId)
+        {
+            string toLocation = "";
+            if (string.IsNullOrEmpty(addressId))
+            {
+                return null;
+            }
+            Address toAddress = addressRepository.GetSingleAddress(addressId, tenant);
+            if (toAddress != null)
+            {
+                toLocation = toAddress.City + " " + (toAddress.Country != null ? toAddress.Country.Code : "");
+            }
+            return toLocation;
+        }
+
+        private string SetLocationFromInlanDomesticCasual(string city, string countryId)
+        {
+            string toLocation = city;
+            if (string.IsNullOrEmpty(countryId))
+            {
+                return null;
+            }
+
+            Country country = countryRepository.GetSingleCountry(countryId, tenant);
+            if (country != null)
+            {
+                toLocation += " " + country.Code;
+            }
+            return toLocation;
+        }
     }
 
+    public  class InlandDomesticArgs
+    {
+        public string InlandDomesticFromTypeCode { get; set; }
+        public string MainCarriageFromAddressId { get; set; }
+        public string MainCarriageFromPortName { get; set; }
+        public string InlandDomesticFromCity { get; set; }
+        public string InlandDomesticFromCountryId { get; set; }
+
+        public string InlandDomesticToTypeCode { get; set; }
+        public string MainCarriageToAddressId { get; set; }
+        public string InlandDomesticToCity { get; set; }
+        public string InlandDomesticToCountryId { get; set; }
+        public string MainCarriageToPortName { get; set; }
+
+    }
     public class PlaceOfReceiptData
     {
         public string City { get; set; }

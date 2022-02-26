@@ -44,7 +44,7 @@ namespace WebFreight.Web.WebServices
         private IShipmentsContext shipmentsContext;
         private ICommonDataContext commonContext;
         private AddressRepository addressRepository;
-        private ContactRepository contactRepository; 
+        private ContactRepository contactRepository;
 
         [WebMethod]
         public byte[] GetFBLData(string shipmentId, int tenant, string documentTypeCopyId)
@@ -2116,26 +2116,21 @@ namespace WebFreight.Web.WebServices
 
             if (shipment.DirectionId == "I" && shipment.TransportModeId == "D")
             {
-                Address fromAddress = addressRepository.GetSingleAddress(shipment.MainCarriageFromAddressId, tenant);
-                Address toAddress = addressRepository.GetSingleAddress(shipment.MainCarriageToAddressId, tenant);
-
-                if (fromAddress != null)
+                InlandDomesticArgs args = new InlandDomesticArgs()
                 {
-                    Country fromCountry = countryRepository.GetSingleCountry(fromAddress.CountryId, tenant);
-                    if (fromCountry != null)
-                    {
-                        myDataProvider.FromLocationCountryCode = fromCountry.Code;
-                    }
-                }
-
-                if (toAddress != null)
-                {
-                    Country toCountry = countryRepository.GetSingleCountry(toAddress.CountryId, tenant);
-                    if (toCountry != null)
-                    {
-                        myDataProvider.ToLocationCountryCode = toCountry.Code;
-                    }
-                }
+                    InlandDomesticFromTypeCode = shipment.InlandDomesticFromTypeCode,
+                    MainCarriageFromAddressId = shipment.MainCarriageFromAddressId,
+                    MainCarriageFromPortName = shipment.MainCarriageFromPortName,
+                    InlandDomesticFromCity = shipment.InlandDomesticFromCity,
+                    InlandDomesticFromCountryId = shipment.InlandDomesticFromCountryId,
+                    InlandDomesticToTypeCode = shipment.InlandDomesticToTypeCode,
+                    MainCarriageToAddressId = shipment.MainCarriageToAddressId,
+                    InlandDomesticToCity = shipment.InlandDomesticToCity,
+                    InlandDomesticToCountryId = shipment.InlandDomesticToCountryId,
+                    MainCarriageToPortName = shipment.MainCarriageToPortName,
+                };
+                myDataProvider.FromLocationCountryCode = this.myServicHelper.GetInlandDomesticFromLocation(args);
+                myDataProvider.ToLocationCountryCode = this.myServicHelper.GetInlandDomesticToLocation(args);
             }
 
             else

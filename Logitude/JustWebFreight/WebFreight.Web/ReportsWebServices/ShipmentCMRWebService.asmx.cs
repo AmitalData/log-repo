@@ -19,6 +19,7 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Server.Tools.Helpers;
+using WebFreight.Web.WebServices;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -33,9 +34,11 @@ namespace WebFreight.Web.ReportsWebServices
     public class ShipmentCMRWebService : System.Web.Services.WebService
     {
         private ICommonDataContext commonContext;
+        private WebServiceHelper servicHelper;
         [WebMethod]
         public byte[] GetDeliveryData(string entityId, int tenant, string userId, string documentTypeCopyId)
         {
+            servicHelper = new WebServiceHelper(tenant);
             CMRDataProvider cmrDataProvider = GetDeliveryDataProvider(entityId, tenant, userId, documentTypeCopyId);
             XmlSerializer serializer = new XmlSerializer(typeof(CMRDataProvider));
             MemoryStream memstream = new MemoryStream();
@@ -180,19 +183,21 @@ namespace WebFreight.Web.ReportsWebServices
                 // Inland + Domestic
                 if (shipment.DirectionId == "D" && shipment.TransportModeId == "I")
                 {
-                    Address fromAddress = addressRepository.GetSingleAddress(shipment.MainCarriageFromAddressId, tenant);
-                    Address toAddress = addressRepository.GetSingleAddress(shipment.MainCarriageToAddressId, tenant);
-
-
-                    if (fromAddress != null)
+                    InlandDomesticArgs args = new InlandDomesticArgs()
                     {
-                        cmrDataProvider.FromLocation = fromAddress.City + " " + (fromAddress.Country != null ? fromAddress.Country.Code : "");
-                    }
-
-                    if (toAddress != null)
-                    {
-                        cmrDataProvider.ToLocation = toAddress.City + " " + (toAddress.Country != null ? toAddress.Country.Code : "");
-                    }
+                        InlandDomesticFromTypeCode = shipment.InlandDomesticFromTypeCode,
+                        MainCarriageFromAddressId = shipment.MainCarriageFromAddressId,
+                        MainCarriageFromPortName = shipment.MainCarriageFromPortName,
+                        InlandDomesticFromCity = shipment.InlandDomesticFromCity,
+                        InlandDomesticFromCountryId = shipment.InlandDomesticFromCountryId,
+                        InlandDomesticToTypeCode = shipment.InlandDomesticToTypeCode,
+                        MainCarriageToAddressId = shipment.MainCarriageToAddressId,
+                        InlandDomesticToCity = shipment.InlandDomesticToCity,
+                        InlandDomesticToCountryId = shipment.InlandDomesticToCountryId,
+                        MainCarriageToPortName = shipment.MainCarriageToPortName,
+                    };
+                    cmrDataProvider.FromLocation = servicHelper.GetInlandDomesticFromLocation(args);
+                    cmrDataProvider.ToLocation = servicHelper.GetInlandDomesticToLocation(args);
                 }
                 else
                 {
