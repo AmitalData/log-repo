@@ -352,6 +352,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string ConcurrencyGUID { get; set; }
         public string NewConcurrencyGUID { get; set; }
         public bool IsEquipment { get; set; }
-
+        public string ConnectedPaymentsNumbers { get; set; }
     }
 }

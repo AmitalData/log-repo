@@ -99,6 +99,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string HouseNumbers { get; set; }
         public string GlobalTaxCalculation { get; set; }
         public bool IsEquipment { get; set; }
-
+        public string ConnectedPaymentsNumbers { get; set; }
     }
 }

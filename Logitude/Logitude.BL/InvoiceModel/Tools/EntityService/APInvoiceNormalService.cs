@@ -161,7 +161,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             APInvoiceHelper helper = new APInvoiceHelper();
             helper.APInvoiceQuickbooksValidating(entityPM, setApproved, initializer.IsNewEntity, initializer.Context, initializer.CommonContext);
             APInvoiceMapping.MapEntity(entityPM, invoice, initializer.IsNewEntity);
-           initializer.Repository.Add(invoice);
+            initializer.Repository.Add(invoice);
             initializer.Repository.SubmitChanges();
 
             if (!entityPM.IsGeneralInvoice)
@@ -185,10 +185,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (!entityPM.IsGeneralInvoice)
             {
-                //if (!entityPM.CreatedFromAPI)
-                //{
-                this.RunStoredProcedures();
-                // }
+                this.RunStoredProcedures();                
             }
         }
 
@@ -481,6 +478,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         this.UpdateInvoiceAmountDue();
                         this.UpdatePaidDate();
                     }
+
+                    this.BuildPaymentsNumbers();                    
                 }
             }
             
@@ -678,9 +677,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 entityPM.StatusCode = "WA";
             }
 
-            //this.InitializeVATs();
             this.InitializeTransferComponents();
-            //this.InitializeAmountDueFields();
         }
 
         private void InitializeGLAccountFields()
@@ -1648,27 +1645,25 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 APInvoiceId = entityPM.Id,
             };
 
-            APInvoiceMapping.MapInvoicePayment(itemPM, invoicePayment, true);
-            invoicePaymentRepository.Add(invoicePayment);
-
-            string myPaymentNumber = itemPM.PaymentNumber;
-            if (string.IsNullOrEmpty(myPaymentNumber))
+            if (string.IsNullOrEmpty(itemPM.PaymentNumber))
             {
                 if (!string.IsNullOrEmpty(itemPM.APPaymentId))
                 {
                     APPayment myPayment = paymentRepository.GetSingleAPPayment(itemPM.APPaymentId);
                     if (myPayment != null)
                     {
-                        myPaymentNumber = myPayment.PaymentNo;
+                        itemPM.PaymentNumber = myPayment.PaymentNo;
                     }
                 }
             }
+
+            APInvoiceMapping.MapInvoicePayment(itemPM, invoicePayment, true);
+            invoicePaymentRepository.Add(invoicePayment);
 
             if (this.entityPM.TransferStatusCode == "TR")
             {
                 QBOAPPaymentId = itemPM.APPaymentId;
             }
-
 
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {
@@ -1677,7 +1672,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 UserId = initializer.LoggedContactId,
                 EntityId = itemPM.APInvoiceId,
                 ObjectTableName = "APInvoice",
-                Notes = "Connected with Payment: " + myPaymentNumber + " with Amount Due equals to: " + invoice.AmountDue,
+                Notes = "Connected with Payment: " + itemPM.PaymentNumber + " with Amount Due equals to: " + invoice.AmountDue,
             });
         }
 
@@ -2231,6 +2226,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             APInvoiceShipmentsDataBehaviour invoiceShipmentsNumbersBehaviour = new APInvoiceShipmentsDataBehaviour(entityPM);
             invoiceShipmentsNumbersBehaviour.CopmuteShipmentsData();
+        }
+
+        private void BuildPaymentsNumbers()
+        {
+            InvoicePaymentNumbersBehaviour invoicePaymentNumbersBehaviour = new InvoicePaymentNumbersBehaviour(entityPM);
+            entityPM.ConnectedPaymentsNumbers = invoicePaymentNumbersBehaviour.CopmuteAPInvoicePaymentsNumbers();
+            invoice.ConnectedPaymentsNumbers = entityPM.ConnectedPaymentsNumbers;
         }
     }
 }

@@ -507,6 +507,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="ConnectedPaymentsNumbers"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="VendorId"
     ReferencedTable="Cards"

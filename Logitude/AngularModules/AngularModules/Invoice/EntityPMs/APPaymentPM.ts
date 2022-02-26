@@ -535,6 +535,11 @@ export class APPaymentPM {
     public set VendorCode(newValue: string) { if (this.vendorCode != newValue) { this.vendorCode = newValue; this.MarkAsDirty("VendorCode"); } }
        
 	 
+    private connectedInvoicesNumbers: string;
+    public get ConnectedInvoicesNumbers() { return this.connectedInvoicesNumbers; }
+    public set ConnectedInvoicesNumbers(newValue: string) { if (this.connectedInvoicesNumbers != newValue) { this.connectedInvoicesNumbers = newValue; this.MarkAsDirty("ConnectedInvoicesNumbers"); } }
+       
+	 
 
     public OldEntityPM: APPaymentPM;
 		

@@ -100,5 +100,6 @@ export class APInvoiceList {
 		HouseNumbers: string;
 		GlobalTaxCalculation: string;
 		IsEquipment: boolean;
+		ConnectedPaymentsNumbers: string;
 	
 }

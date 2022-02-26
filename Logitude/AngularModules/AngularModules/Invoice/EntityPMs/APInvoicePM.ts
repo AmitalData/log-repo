@@ -854,6 +854,11 @@ export class APInvoicePM {
     public set IsEquipment(newValue: boolean) { if (this.isEquipment != newValue) { this.isEquipment = newValue; this.MarkAsDirty("IsEquipment"); } }
        
 	 
+    private connectedPaymentsNumbers: string;
+    public get ConnectedPaymentsNumbers() { return this.connectedPaymentsNumbers; }
+    public set ConnectedPaymentsNumbers(newValue: string) { if (this.connectedPaymentsNumbers != newValue) { this.connectedPaymentsNumbers = newValue; this.MarkAsDirty("ConnectedPaymentsNumbers"); } }
+       
+	 
 
     public OldEntityPM: APInvoicePM;
 		
