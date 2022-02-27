@@ -86,6 +86,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (entityPM.AccountTypeCode == "4") // Job
             {
                 // first get application
+                if (entityPM.Application == "F" || entityPM.Application == "J") entityPM.Application = "";
                 string application = entityPM.Application;
                 if (String.IsNullOrWhiteSpace(application))
                 {
