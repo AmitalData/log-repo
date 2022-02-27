@@ -63,6 +63,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
             }
 
+            ValidateControlGLAccountsForParents(entityPM);
+
             TenantRepository tenantRepository = new TenantRepository(entityPM.Tenant);
             Tenant tenant = tenantRepository.GetSingleTenant(entityPM.Tenant);
             tenant.PaymentTermId = entityPM.TenantPaymentTermId;
@@ -75,7 +77,59 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             CacheManager.CacheWrapper.Invalidate(key);
         }
 
-        
+        private void ValidateControlGLAccountsForParents(FullAccountingSettingPM fullAccountingSettingPM) {
+            List<string> glAccountsLocalNames = new List<string>();
+            GLAccountRepository glAccountRepo = new GLAccountRepository(fullAccountingSettingPM.Tenant);
+
+            GLAccount customerControlAccount = glAccountRepo.GetSingle(fullAccountingSettingPM.CustomerControlAccountId, fullAccountingSettingPM.Tenant);
+            if (customerControlAccount != null && !string.IsNullOrWhiteSpace(customerControlAccount.ParentAccountId))
+            {
+                glAccountsLocalNames.Add(customerControlAccount.LocalName);
+            }
+
+            GLAccount vendorControlAccount = glAccountRepo.GetSingle(fullAccountingSettingPM.VendorControlAccountId, fullAccountingSettingPM.Tenant);
+            if (vendorControlAccount != null && !string.IsNullOrWhiteSpace(vendorControlAccount.ParentAccountId))
+            {
+                glAccountsLocalNames.Add(vendorControlAccount.LocalName);
+            }
+
+            GLAccount fileControlAccount = glAccountRepo.GetSingle(fullAccountingSettingPM.FileControlAccountId, fullAccountingSettingPM.Tenant);
+            if (fileControlAccount != null && !string.IsNullOrWhiteSpace(fileControlAccount.ParentAccountId))
+            {
+                glAccountsLocalNames.Add(fileControlAccount.LocalName);
+            }
+
+            GLAccount oceanExportJobControlAccount = glAccountRepo.GetSingle(fullAccountingSettingPM.OceanExportJobControlAccountId, fullAccountingSettingPM.Tenant);
+            if (oceanExportJobControlAccount != null && !string.IsNullOrWhiteSpace(oceanExportJobControlAccount.ParentAccountId))
+            {
+                glAccountsLocalNames.Add(oceanExportJobControlAccount.LocalName);
+            }
+
+            GLAccount oceanImportJobControlAccount = glAccountRepo.GetSingle(fullAccountingSettingPM.OceanImportJobControlAccountId, fullAccountingSettingPM.Tenant);
+            if (oceanImportJobControlAccount != null && !string.IsNullOrWhiteSpace(oceanImportJobControlAccount.ParentAccountId))
+            {
+                glAccountsLocalNames.Add(oceanImportJobControlAccount.LocalName);
+            }
+
+            GLAccount airExportJobControlAccount = glAccountRepo.GetSingle(fullAccountingSettingPM.AirExportJobControlAccountId, fullAccountingSettingPM.Tenant);
+            if (airExportJobControlAccount != null && !string.IsNullOrWhiteSpace(airExportJobControlAccount.ParentAccountId))
+            {
+                glAccountsLocalNames.Add(airExportJobControlAccount.LocalName);
+            }
+
+            GLAccount airImportJobControlAccount = glAccountRepo.GetSingle(fullAccountingSettingPM.AirImportJobControlAccountId, fullAccountingSettingPM.Tenant);
+            if (airImportJobControlAccount != null && !string.IsNullOrWhiteSpace(airImportJobControlAccount.ParentAccountId))
+            {
+                glAccountsLocalNames.Add(airImportJobControlAccount.LocalName);
+            }
+
+            if (glAccountsLocalNames.Count > 0) {
+                glAccountsLocalNames = glAccountsLocalNames.Distinct().ToList();
+                string msg = glAccountsLocalNames.Count == 1 ? "the control account " + String.Join(",", glAccountsLocalNames) + " shouldn't have a parent account" :
+                    "the control accounts " + String.Join(",", glAccountsLocalNames) + " shouldn't have a parent account";
+                throw new ApplicationException(msg);
+            }
+        }
 
         protected override void Validate(FullAccountingSettingPM entityPM)
         {

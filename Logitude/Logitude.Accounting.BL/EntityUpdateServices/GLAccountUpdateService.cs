@@ -429,7 +429,23 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
             }
         }
- 
+
+        private void CheckIfGLAccountIsControlGLAccount(GLAccountPM entityPM) {
+            FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(entityPM.Tenant);
+            FullAccountingSettingPM fullAccountingSetting = fullAccountingSettingQueryService.GetSingleFullAccountingSetting(entityPM.Tenant);
+            if (!string.IsNullOrWhiteSpace(entityPM.ParentAccountId) && 
+                (fullAccountingSetting.CustomerControlAccountId == entityPM.Id ||
+                fullAccountingSetting.VendorControlAccountId == entityPM.Id ||
+                fullAccountingSetting.FileControlAccountId == entityPM.Id ||
+                fullAccountingSetting.OceanExportJobControlAccountId == entityPM.Id ||
+                fullAccountingSetting.OceanImportJobControlAccountId == entityPM.Id ||
+                fullAccountingSetting.AirExportJobControlAccountId == entityPM.Id ||
+                fullAccountingSetting.AirImportJobControlAccountId == entityPM.Id
+                )) {
+                throw new Exception("Can't set parent account for control accounts");
+            }
+
+        }
         protected override void OnUpdating(GLAccountPM entityPM, GLAccount entityPOCO)
         {
 
@@ -437,8 +453,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 this.setAccountingTypeCodeByChartofAccountTypeCode(entityPM);
             }
-            
 
+            CheckIfGLAccountIsControlGLAccount(entityPM);
             ContactPM contact = GetLoggedContact(entityPM.Tenant);
             bool showLocals = !contact.DontShowLocal;
             if (entityPM.GLAccountInterestPeriods.Where(s => s.ChangeSetOp != ChangeSetOperation.Delete && s.PeriodStartDate !=null).GroupBy(x => x.PeriodStartDate).Any(g => g.Count() > 1))
