@@ -43,6 +43,7 @@ using Logitude.BL.Security;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.Def.EntityPMs;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -475,12 +476,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     extDocPM.DocumentsFilingMetaDataValues.Any(r => r.DocumentsMetaDataTypeId == ENDOC.Id))
                 {
                     this.HaveENDOC_DocumentsFilingMetaDataValues = true;
-                    ISendBondedCustomDocumentService myISendBondedCustomDocumentService = ContainerAccessor.Container.Resolve(typeof(ISendBondedCustomDocumentService), "SendBondedCustomDocumentService", new ParameterOverride("", tenant)) as ISendBondedCustomDocumentService;
-                    myISendBondedCustomDocumentService.JustDoIt(extDocPM);
                 }
             }
-
+            ISendBondedCustomDocumentService myISendBondedCustomDocumentService = ContainerAccessor.Container.Resolve(typeof(ISendBondedCustomDocumentService), "SendBondedCustomDocumentService", new ParameterOverride("", tenant)) as ISendBondedCustomDocumentService;
+            myISendBondedCustomDocumentService.JustDoIt(extDocPM);
         }
+
+        
         private void AddDocumentBackupLog()
         {
             var OTName = ObjectTableRepository.GetSingleObjectTable(entityPM.ObjectTableId, tenant, false);

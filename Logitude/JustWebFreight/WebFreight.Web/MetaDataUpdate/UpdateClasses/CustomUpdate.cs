@@ -17998,7 +17998,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
         {
             PendingErrorPlaceRepository pendingErrorPlaceRepository = new PendingErrorPlaceRepository(0);
             AddClosedTables.AddPendingErrorPlace(new PendingErrorPlace() { Code = "U", EnglishName = "Customs Document Upload", LocalName = "העלאת מסמך למכס" }, pendingErrorPlaceRepository);
-            AddClosedTables.AddPendingErrorPlace(new PendingErrorPlace() { Code = "C", EnglishName = "Cnnect to Ticket and Upload", LocalName = "קישור לטיקט והעלאת מסמך" }, pendingErrorPlaceRepository);
+            AddClosedTables.AddPendingErrorPlace(new PendingErrorPlace() { Code = "C", EnglishName = "Connect to Ticket and Upload", LocalName = "קישור לטיקט והעלאת מסמך" }, pendingErrorPlaceRepository);
             AddClosedTables.AddPendingErrorPlace(new PendingErrorPlace() { Code = "W", EnglishName = "Without Ticket", LocalName = "ללא טיקט" }, pendingErrorPlaceRepository);
             pendingErrorPlaceRepository.SubmitChanges();
         }
