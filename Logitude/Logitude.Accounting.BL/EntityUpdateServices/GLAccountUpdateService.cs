@@ -135,6 +135,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             case "R":
                             case "IO":
                             case "IL":
+                            case "II":
                                 jobControlAccountId = fullAccountingSetting.OceanImportJobControlAccountId;
                                 break;
                             default:
