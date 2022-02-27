@@ -1309,4 +1309,8 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         logitudeWindow.Title = Title;
       logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/LogBoxPackagesComponent');
     }
+
+    public IsSHOVisible(selectedShipment: any) : boolean {
+        return selectedShipment && selectedShipment.DirectionId != 'I' && selectedShipment.TransportModeId == 'O' && (!AppTool.IsNullOrEmpty(selectedShipment.ForwarderShipmentNumber) || (selectedShipment.StatusName == 'Created' && AppTool.IsNullOrEmpty(selectedShipment.ForwarderShipmentNumber)));
+    }
 }

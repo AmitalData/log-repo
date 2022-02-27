@@ -321,7 +321,7 @@
                             <img *ngIf="SelectedShipment && SelectedShipment.TransportModeId == 'A'" src="./Images/Airline.png" style="width:23px;height:18px;vertical-align:middle;" />
                             <img *ngIf="SelectedShipment && SelectedShipment.TransportModeId == 'I'" src="./Images/Trucker.png" style="width:23px;height:18px;vertical-align:middle;" />
                             <span style="vertical-align:middle;font-size:18px;color:#6E7172;margin-left: 10px;" [title]="SelectedShipment ? SelectedShipment.ShipmentNumber : ''">{{SelectedShipment ? (SelectedShipment.ForwarderShipmentNumber ? SelectedShipment.ForwarderShipmentNumber : SelectedShipment.CustomerReference1) : ''}}  </span>
-                            <div *ngIf="SelectedShipment  && (SelectedShipment.StatusName == 'Created' ) && SelectedShipment.TransportModeId == 'O'" class="SHO">SHO</div>
+                            <div *ngIf="IsSHOVisible(SelectedShipment)" class="SHO">SHO</div>
 
                             <span *ngIf="SelectedShipment && IsExportActivated">
                                 <span class="Date" [class.ActualDate]="MainCarriageTDLabel == 'ATD:'" [class.ExpectedDate]="MainCarriageTDLabel == 'ETD:'">
