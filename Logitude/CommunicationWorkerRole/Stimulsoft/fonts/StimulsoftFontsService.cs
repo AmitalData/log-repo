@@ -17,7 +17,7 @@ namespace CommunicationWorkerRole.Stimulsoft.fonts
         public static void AddFonts()
         {
             path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fontsPath);
-            File.WriteAllText("pathxxxxx.json", JsonConvert.SerializeObject(path));
+            //File.WriteAllText("pathxxxxx.json", JsonConvert.SerializeObject(path));
             defaultFonts = StiFontCollection.GetFontFamilies();
 
             AddCenturyGothicFont();
