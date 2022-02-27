@@ -114,6 +114,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
             //myCourierMasterQueryService.GetNotConnectedDeclaratins
 
             var myCourierMasterPM = courierMasterPM ?? myCourierMasterQueryService.GetByDeclarationId(declarationId, tenant);
+            myCourierMasterPM = myCourierMasterPM ?? declarationPM?.MyEcomInsert?.MyCourierMasterPM;
             if (myCourierMasterPM == null)
             {
                 //throw new Exception("Declaration is null:" + _CustomFileCreditModel.AppicationId);
@@ -153,8 +154,12 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
             string crateNumber = "";
             var context = CustomContext.GetContext(myDeclarationPM.Tenant);
             DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(myDeclarationPM.Id, true, false);
+            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(myDeclarationPM.Id, true, false) ?? myDeclarationPM?.MyEcomInsert?.MyDeclarationCourierStatusPM;
             if(currentDeclarationCourierStatusPM != null && !String.IsNullOrWhiteSpace(currentDeclarationCourierStatusPM.CrateNumber))crateNumber = currentDeclarationCourierStatusPM.CrateNumber;
+            if (string.IsNullOrWhiteSpace(crateNumber))
+            {
+                crateNumber = myDeclarationPM?.MyEcomInsert?.MyDeclarationCourierStatusPM?.CrateNumber;
+            }
             string distributionCompanyVat = "";
             if (!string.IsNullOrWhiteSpace(currentDeclarationCourierStatusPM.TruckerId))
             {
@@ -216,7 +221,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
 
                 ImporterVat = importerVat,
                 BoxBarcode = crateNumber,
-                StorageSite = myDeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().StorageSiteCode ?? ""
+                //StorageSite = myDeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().StorageSiteCode ?? ""
 
 
             };
@@ -394,7 +399,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
         public string ImporterVat { get; set; }
 
         public string BoxBarcode { get; set; }
-        public string StorageSite { get; set; }
+        //public string StorageSite { get; set; }
 
     }
 

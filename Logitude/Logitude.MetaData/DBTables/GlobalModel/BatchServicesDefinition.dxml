@@ -40,4 +40,10 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="UseRabbitMQ"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
 </Table>

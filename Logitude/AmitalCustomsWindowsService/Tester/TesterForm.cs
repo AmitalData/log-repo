@@ -269,6 +269,28 @@ namespace AmitalCustomsWindowsService.Tester
                 default:
                     return;
             }
+
+            //d.WorkerQueueType = checkBoxMQ.Checked ? Logitude.Server.Tools.WorkerQueueType.RabbitMQ : Logitude.Server.Tools.WorkerQueueType.DB;
+            if (!String.IsNullOrWhiteSpace(textBoxOverrideRMQ.Text))
+            {
+                d.OverrideRMQ = textBoxOverrideRMQ.Text;
+            }
+            Logitude.Server.Tools.WorkerRoleServiceLocator.PleaseShutDown = false;
+            if (checkBoxDebugMode.Checked)
+            {
+                Task.Run(async () => {
+
+                    var sw = Stopwatch.StartNew();
+                    while (sw.Elapsed<TimeSpan.FromSeconds(120))
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(2));
+                        Application.DoEvents();
+                    }    
+                    
+                    Logitude.Server.Tools.WorkerRoleServiceLocator.PleaseShutDown = true;
+
+                });
+            }
             d.ExecuteTask(); 
 
         }
@@ -288,8 +310,17 @@ namespace AmitalCustomsWindowsService.Tester
             
         }
 
+        bool _MultiThreard = false;
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var sw = Stopwatch.StartNew();
+            int tenant =GetTenant();
+            _MultiThreard = !_MultiThreard;
+            var res=clsTester.CheckWSCourierStatistic(tenant, _MultiThreard);
+            Debug.WriteLine(res);
+            Debug.WriteLine(sw.ElapsedMilliseconds);
+            
+            return;
             var rabbitMQReceiveWR = new RabbitMQReceiveWR();
             var customRabbitMQQueue = new CustomRabbitMQQueue();
             var allQueueDetails = customRabbitMQQueue.GetAllQueueDetails()
@@ -1109,6 +1140,11 @@ namespace AmitalCustomsWindowsService.Tester
                 // Console.WriteLine(" Press [enter] to exit.");
                 // Console.ReadLine();
             }
+        }
+
+        private void checkBoxMQ_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

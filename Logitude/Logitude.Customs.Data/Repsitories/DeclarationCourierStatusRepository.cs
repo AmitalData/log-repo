@@ -79,7 +79,7 @@ namespace Logitude.Customs.Data.Repsitories
             var repoDeclaration = new DeclarationRepository(this.context);
             var q = (from dec in repoCourierDeclaration.GetByCourierMasterId(tenant, CourierMasterId)
                      join rDec in repoDeclaration.GetAll(tenant) on dec.DeclarationId equals rDec.Id
-                     join status in GetAll(tenant).Where(r => r.CourierManifestStatusCode == CourierManifestStatusCode)
+                     join status in GetAll(tenant).Where(r => r.CourierManifestStatusCode == CourierManifestStatusCode && r.Declaration.HatraDate == null)
                      on dec.DeclarationId equals status.DeclarationId
                      orderby rDec.CourierHAWB ascending
                      select status);
@@ -254,6 +254,17 @@ namespace Logitude.Customs.Data.Repsitories
             List<DeclarationCourierStatus> declarations = (from a in context.DeclarationCourierStatuses
                                                            where declarationIds.Contains(a.DeclarationId)
                                                            where a.Tenant == tenant
+                                                           select a).ToList();
+
+            return declarations;
+
+        }
+        public List<DeclarationCourierStatus> GetDeclarationsByIdsExpectDecWithHatraDate(List<string> declarationIds, int tenant)
+        {
+
+            List<DeclarationCourierStatus> declarations = (from a in context.DeclarationCourierStatuses
+                                                           where declarationIds.Contains(a.DeclarationId)
+                                                           where a.Tenant == tenant && a.Declaration.HatraDate == null
                                                            select a).ToList();
 
             return declarations;

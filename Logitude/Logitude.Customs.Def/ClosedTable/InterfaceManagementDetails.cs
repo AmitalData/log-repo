@@ -2757,6 +2757,21 @@ namespace Logitude.Customs.Def.ClosedTable
             });
             all.Add(new InterfaceManagementDetails()
             {
+                Code = "UCBSEDF",
+                InOut = InOutEnum.I.ToString(),
+                Description = "שידור תעודות עיכוב",
+                DcaPrefixName = "UnifreightCourier_UCBSendDelayForm_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                InterfaceType = "B",
+                //  NeedSignature = false
+            });
+            all.Add(new InterfaceManagementDetails()
+            {
                 Code = "UCB2715SendNow",
 
                 ///DCAInUniCourierBatchSend_MsgMessagingService
@@ -2867,7 +2882,7 @@ namespace Logitude.Customs.Def.ClosedTable
             {
                 Code = "UCADPE",
                 InOut = InOutEnum.I.ToString(),
-                Description = "נה גורפת PENDING",
+                Description = "הזנה גורפת PENDING",
                 DcaPrefixName = "UCADPE_OUT",
                 DefaultSendOptionsCode = null,
                 DefaultPriority = 5,
@@ -2875,7 +2890,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Active = true,
                 SendAsDual = false,
                 ResponseInterfaceCode = "",
-                InterfaceType = "C",
+                InterfaceType = "B",
             });
             //CLAIM_5005_ContinuousRequestOnClaimFileMessagingService
             all.Add(new InterfaceManagementDetails()

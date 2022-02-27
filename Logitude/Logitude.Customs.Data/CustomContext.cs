@@ -328,6 +328,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CustomsDocumentsTicketMap());
 	
+            modelBuilder.Configurations.Add(new CustomsEnvironmentSettingMap());
+	
             modelBuilder.Configurations.Add(new CustomsDocumentUploadMap());
 	
             modelBuilder.Configurations.Add(new CustomsEnvoirmentTypeMap());
@@ -391,6 +393,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new DeclarationMap());
 	
             modelBuilder.Configurations.Add(new DeclarationCargoSplitMap());
+	
+            modelBuilder.Configurations.Add(new DeclarationCasualDetailsMap());
 	
             modelBuilder.Configurations.Add(new DeclarationConsAcceptanceMap());
 	
@@ -2089,6 +2093,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<CustomsEnvironmentSetting> CustomsEnvironmentSettings 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CustomsDocumentUpload> CustomsDocumentUploads 
 	 {
 	      get; set;
@@ -2276,6 +2286,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<DeclarationCargoSplit> DeclarationCargoSplits 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DeclarationCasualDetails> DeclarationCasualDetailses 
 	 {
 	      get; set;
 	 

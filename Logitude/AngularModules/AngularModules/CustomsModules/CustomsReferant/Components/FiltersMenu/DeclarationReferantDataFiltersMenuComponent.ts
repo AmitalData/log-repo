@@ -71,7 +71,7 @@ export class DeclarationReferantDataFiltersMenuComponent
     public DepartmentNameFilters: ApiQueryFilters = new ApiQueryFilters();
     public TransportFilters: ApiQueryFilters = new ApiQueryFilters();
     public QueryId: string = "";
-    public QueryCode:string="Customs.DeclarationReferantData.AllCases";
+    public QueryCode: string = "Customs.DeclarationReferantData.AllCases";
 
     SetFiltersMenu(args: any) {
         this.OpenQueryThruWorkSpace = true;
@@ -97,19 +97,19 @@ export class DeclarationReferantDataFiltersMenuComponent
             this.UserNameFilters.AdditionalFilters = args.Filters.filter(a => a.FieldName == "ReferantUserName");
             this.DepartmentFilters.AdditionalFilters = args.Filters.filter(a => a.FieldName == "DepartmentId");
             this.DepartmentNameFilters.AdditionalFilters = args.Filters.filter(a => a.FieldName == "DepartmentName");
-            //this.apiQueryFilters.addAdditionalFilter("RetrievData", true, null, null, "Equal", true, false, false, "string", this._LOVListUsers.length == 0);
             this.QueryId = args.QuerySection;
             if (!this.QueryId) {
                 var objectFieldPMExtendedService: ObjectFieldPMExtendedService = new ObjectFieldPMExtendedService();
                 objectFieldPMExtendedService.getSingleFromQueries(this.QueryCode).subscribe((result: any) => {
-                    if(result){
-                        this.QueryId=result.Id;
+                    if (result) {
+                        this.QueryId = result.Id;
                     }
                 });
                 this.applyBasicFiltes();
             }
         }
 
+        this.apiQueryFilters.addAdditionalFilter("RetrievData", true, null, null, "Equal", true, false, false, "string");
         var myService: UserListService = new UserListService();
         var UserListFromFilters = this.UserFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue);
         var UserNameListFromFilters = this.UserNameFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue);
@@ -127,7 +127,7 @@ export class DeclarationReferantDataFiltersMenuComponent
 
         var i = 0;
         var myService: UserListService = new UserListService();
-        if (UserListFromFilters[0] != "HowCare" && UserListFromFilters.length != 0) {
+        if (UserListFromFilters[0] != "HowCare" && UserListFromFilters.length != 0 && UserListFromFilters[0] != null ) {
             UserListFromFilters[0].split("%2C").forEach(function (value) {
                 let ul = new UserList();
                 ul.Id = value;
@@ -136,13 +136,14 @@ export class DeclarationReferantDataFiltersMenuComponent
                     this.LOVListUsers.push(ul)
                 }
                 i++;
+                this._CD.detectChanges();
             }, this);
         } else {
 
 
         }
         i = 0;
-        if (DepartmentFromFilters[0] != "HowCare" && DepartmentFromFilters.length != 0) {
+        if (DepartmentFromFilters[0] != "HowCare" && DepartmentFromFilters.length != 0 && DepartmentFromFilters[0] != null) {
             DepartmentFromFilters[0].split("%2C").forEach(function (value) {
                 let ul = new DepartmentList();
                 ul.Id = value;
@@ -152,30 +153,35 @@ export class DeclarationReferantDataFiltersMenuComponent
                 }
                 i++;
                 this._CD.detectChanges();
-                this.apiQueryFilters.addAdditionalFilter("DepartmentName", this.DepartmentNamesListString, null, null, "Equal", true, false, false, "string", true);
-                this.apiQueryFilters.addAdditionalFilter("DepartmentId", this.DepartmentListString, null, null, "InListExact", false, false, false, "string", this.LOVListDepartment.length == 0);
+               // this.apiQueryFilters.addAdditionalFilter("DepartmentName", this.DepartmentNamesListString, null, null, "Equal", true, false, false, "string", true);
+               // this.apiQueryFilters.addAdditionalFilter("DepartmentId", this.DepartmentListString, null, null, "InListExact", false, false, false, "string", this.LOVListDepartment.length == 0);
 
             }, this);
         } else {
         }
 
         if (this.TransportFilters.AdditionalFilters.length > 0) {
-            this.SetTransport(this.TransportFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue).toString());
-            this.apiQueryFilters.AdditionalFilters.push(this.TransportFilters.AdditionalFilters[0]);
+            if (this.TransportFilters.AdditionalFilters[0].FieldValue == null) {
+                this.SetTransport("All");
+            } else {
+                this.SetTransport(this.TransportFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue).toString());
+                this.apiQueryFilters.AdditionalFilters.push(this.TransportFilters.AdditionalFilters[0]);
+            }
 
         } else {
             this.SetTransport("All");
         }
-        this.SelectedValueChangedEmitUser();
-        this.SelectedValueChangedEmitDepartment();
+        //this.SelectedValueChangedEmitUser();
+        //this.SelectedValueChangedEmitDepartment();
 
-        this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: false });
-        this.ApplyTransportSelectedStyle();
-        this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
-        this.myViewChildrenMultiSelectLOVComponent.last.Invalidate();
-
+        //this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: false });
+        this.ApplyTransportSelectedStyle();     
+        if (this.myViewChildrenMultiSelectLOVComponent != null) {
+            this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
+            this.myViewChildrenMultiSelectLOVComponent.last.Invalidate();
+        }
         this._CD.detectChanges();
-        this.apiQueryFiltersChanged=false;
+        this.apiQueryFiltersChanged = false;
     }
     OnChosenListItemsChanged() {
         this.SelectedValueChangedEmitUser();
@@ -229,53 +235,57 @@ export class DeclarationReferantDataFiltersMenuComponent
 
     TransportAdvancedQueryFilterPM: AdvancedQueryFilterPM;
     SaveFilters() {
-        if (this.SelectedValue != "All") { // TransportFilter
-            this.updateOrInsertAdvanceFilter(this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName == "TransportModeId"));
-        }
-        this.updateOrInsertAdvanceFilter(this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName == "ReferantUserName"));
-        this.updateOrInsertAdvanceFilter(this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName == "ReferentUserId"));
-        this.updateOrInsertAdvanceFilter(this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName == "DepartmentId"));
-        this.updateOrInsertAdvanceFilter(this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName == "DepartmentName"));
-        this.apiQueryFiltersChanged=false;
+         this.updateOrInsertAdvanceFilter(this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName == "TransportModeId"),"TransportModeId");
+        this.updateOrInsertAdvanceFilter(this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName == "ReferantUserName"),"ReferantUserName");
+        this.updateOrInsertAdvanceFilter(this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName == "ReferentUserId"),"ReferentUserId");
+        this.updateOrInsertAdvanceFilter(this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName == "DepartmentId"),"DepartmentId");
+        this.updateOrInsertAdvanceFilter(this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName == "DepartmentName"),"DepartmentName");
+        this.apiQueryFiltersChanged = false;
     }
 
-    private updateOrInsertAdvanceFilter(AdditionalFilters: FilterItem[]) {
+    private updateOrInsertAdvanceFilter(AdditionalFilters: FilterItem[], FieldName:string) {
         var objectFieldPMExtendedService: ObjectFieldPMExtendedService = new ObjectFieldPMExtendedService();
-        objectFieldPMExtendedService.GetObjectFieldByName(AdditionalFilters[0].FieldName, this.ObjectTableName).subscribe((objectField: any) => {
-            if (objectField) {
-                var myService: DeclarationReferantDataWebService = new DeclarationReferantDataWebService();
-                myService.GetSingleByObjectFieldCodeAndTenant(objectField[0].Id, SessionInfo.LoggedUserTenant, this.QueryCode, SessionInfo.LoggedUserId).subscribe((advanceFilterFromDb: any) => {
-                    if (advanceFilterFromDb) { // update if exist in db 
-                        advanceFilterFromDb.PredefinedValue = AdditionalFilters[0].FieldValue;
-                        myService.update(advanceFilterFromDb).subscribe((myResult: any) => {
-                        });
-                    } else { // insert if doesnt exist in db
-                        this.TransportAdvancedQueryFilterPM = this.GetAdvanceFilterPMFromFilterItem(AdditionalFilters[0], objectField[0]);
-                        myService.insertDeclarationReferantFilters(this.TransportAdvancedQueryFilterPM).subscribe((myResult: any) => {
-                        });
-                    }
-                });
-            }
-        });
+            objectFieldPMExtendedService.GetObjectFieldByName(FieldName, this.ObjectTableName).subscribe((objectField: any) => {
+                if (objectField) {
+                    var myService: DeclarationReferantDataWebService = new DeclarationReferantDataWebService();
+                    myService.GetSingleByObjectFieldCodeAndTenant(objectField[0].Id, SessionInfo.LoggedUserTenant, this.QueryCode, SessionInfo.LoggedUserId).subscribe((advanceFilterFromDb: any) => {
+                        if (advanceFilterFromDb) { // update if exist in db
+                            advanceFilterFromDb.PredefinedValue = this.getPredefinedValue(AdditionalFilters[0]?.FieldValue);
+                            myService.update(advanceFilterFromDb).subscribe((myResult: any) => {
+                            });
+                        } else { // insert if doesnt exist in db
+                            this.TransportAdvancedQueryFilterPM = this.GetAdvanceFilterPMFromFilterItem(AdditionalFilters[0], objectField[0]);
+                            myService.insertDeclarationReferantFilters(this.TransportAdvancedQueryFilterPM).subscribe((myResult: any) => {
+                            });
+                        }
+                    });
+                }
+            });
+    }
+
+    getPredefinedValue(value: string) {
+        if (value != "All") {
+            return value;
+        }
+        return null;
     }
 
     applyBasicFiltes() {
-        let ul = new UserList();
-        ul.Id = (SessionLocator.LoggedUserPM.Id == null || SessionLocator.LoggedUserPM.Id == "0") ? "9999999" : SessionLocator.LoggedUserPM.Id;
-        ul.LocalName = SessionLocator.LoggedUserPM.LocalName;
-        if (AppTool.IsNullOrEmpty(ul.LocalName)) {
-            ul.LocalName = SessionLocator.LoggedUserPM.EnglishName;
-        }
-        this.LOVListUsers.push(ul);
-        this.SelectedValueChangedEmitUser();
-        this.ApplyTransportSelectedStyle();
+         let ul = new UserList();
+         ul.Id = (SessionLocator.LoggedUserPM.Id == null || SessionLocator.LoggedUserPM.Id == "0") ? "9999999" : SessionLocator.LoggedUserPM.Id;
+         ul.LocalName = SessionLocator.LoggedUserPM.LocalName;
+         if (AppTool.IsNullOrEmpty(ul.LocalName)) {
+             ul.LocalName = SessionLocator.LoggedUserPM.EnglishName;
+         }
+         this.LOVListUsers.push(ul);
+         this.SelectedValueChangedEmitUser();
+         this.ApplyTransportSelectedStyle();
     }
     ngAfterViewInit() {
         if (this.OpenQueryThruWorkSpace) {
-            this.apiQueryFilters.addAdditionalFilter("RetrievData", true, null, null, "Equal", true, false, false, "string");
 
         } else {
-            this.applyBasicFiltes();
+            //this.applyBasicFiltes();
             // this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
 
             //  this.SelectedValueChangedEmitUser();
@@ -378,7 +388,7 @@ export class DeclarationReferantDataFiltersMenuComponent
                 }
             }
         }
-        this.apiQueryFiltersChanged=true;
+        this.apiQueryFiltersChanged = true;
     }
 
     itemMouseOver(itemValue: string) {
@@ -447,18 +457,17 @@ export class DeclarationReferantDataFiltersMenuComponent
 
             this._LOVListUsers.forEach(item => { this.UserNamesListString += item["LocalName"] + ","; });//Id: "1-3697"
             this.UserNamesListString = this.UserNamesListString.slice(0, -1); // trim last comma
-
+            this.apiQueryFilters.addAdditionalFilter("ReferantUserName", this.UserNamesListString, null, null, "Equal", true, false, false, "string", true);
+            this.apiQueryFilters.addAdditionalFilter("ReferentUserId", this.UsersListString, null, null, "InListExact", false, false, false, "string", this._LOVListUsers.length == 0);
 
         } else {
             this.UsersListString = "HowCare"
             //  UserNamesListString = "HowCare"LOVListUsers
             //RemoveFilter = true;
         }
-        this.apiQueryFilters.addAdditionalFilter("ReferantUserName", this.UserNamesListString, null, null, "Equal", true, false, false, "string", true);
-        this.apiQueryFilters.addAdditionalFilter("ReferentUserId", this.UsersListString, null, null, "InListExact", false, false, false, "string", this._LOVListUsers.length == 0);
-        this.apiQueryFilters.addAdditionalFilter("RetrievData", true, null, null, "Equal", true, false, false, "string", this._LOVListUsers.length == 0);
+        
         this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
-        this.apiQueryFiltersChanged=true;
+        this.apiQueryFiltersChanged = true;
     }
 
     SelectedValueChangedEmitDepartment() {
@@ -474,17 +483,16 @@ export class DeclarationReferantDataFiltersMenuComponent
             this.DepartmentListString = this.DepartmentListString.slice(0, -1); // trim last comma
             this.LOVListDepartment.forEach(item => { this.DepartmentNamesListString += item["LocalName"] + ","; });//Id: "1-3697"
             this.DepartmentNamesListString = this.DepartmentNamesListString.slice(0, -1); // trim last comma
-
+            this.apiQueryFilters.addAdditionalFilter("DepartmentName", this.DepartmentNamesListString, null, null, "Equal", true, false, false, "string", true);
+            this.apiQueryFilters.addAdditionalFilter("DepartmentId", this.DepartmentListString, null, null, "InListExact", false, false, false, "string", this.LOVListDepartment.length == 0);
         } else {
             this.DepartmentListString = "HowCare";
             //  DepartmentNamesListString =  "HowCare";
-            RemoveFilter = true;
+           //RemoveFilter = true;
         }
-
-        this.apiQueryFilters.addAdditionalFilter("DepartmentName", this.DepartmentNamesListString, null, null, "Equal", true, false, false, "string", true);
-        this.apiQueryFilters.addAdditionalFilter("DepartmentId", this.DepartmentListString, null, null, "InListExact", false, false, false, "string", this.LOVListDepartment.length == 0);
+        
         this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
-        this.apiQueryFiltersChanged=true;
+        this.apiQueryFiltersChanged = true;
 
     }
 

@@ -621,7 +621,7 @@
                                                         </log-column>
 
                                                         <!-- Delete Button-->
-                                                        <log-column [width]="'70'" [Alignment]="'right'">
+                                                        <log-column [width]="'95'" [Alignment]="'right'">
                                                             <ng-template let-item>
                                                                 <log-cell-template [TabIndex]="-1" [IgnoreMods]="true">
                                                                     <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditButtonClicked(item)"
@@ -632,6 +632,9 @@
                                                                                 style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
 
                                                                     <IconButton [Name]="'connect'" [IsSmall]="true" (click)="CancelOrObjectionButtonClicked(item)"
+                                                                                [IsEnabled]="!IsDisplayOnly"
+                                                                                style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+                                                                    <IconButton [Name]="'copy'" [IsSmall]="true" (click)="CopyButtonClicked(item)"
                                                                                 [IsEnabled]="!IsDisplayOnly"
                                                                                 style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                                                 </log-cell-template>
@@ -651,6 +654,7 @@
                                                                 </log-cell-template>
                                                             </ng-template>
                                                         </log-column>
+                                                        
 
                                                     </logitude-edit-grid>
                                                 </div>

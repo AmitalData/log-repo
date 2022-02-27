@@ -38,6 +38,14 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.DcaRenameFileEnable).HasColumnName("DcaRenameFileEnable");
 
             this.Property(t => t.DcaRenameFilePrefix).HasColumnName("DcaRenameFilePrefix").HasMaxLength(256).IsUnicode(false);
+
+            this.Property(t => t.QueueType).HasColumnName("QueueType").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.UseRabbitMQ).HasColumnName("UseRabbitMQ");
+
+            this.Property(t => t.QueueGroupCode).HasColumnName("QueueGroupCode").HasMaxLength(24).IsUnicode(false);
+
+            this.Property(t => t.SendTime).HasColumnName("SendTime").HasMaxLength(100).IsUnicode(false);
         }
     }
 }

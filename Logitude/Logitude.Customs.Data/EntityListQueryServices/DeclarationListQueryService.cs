@@ -190,6 +190,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 select new MyDecJoin
                 {
                     DeclarationId = rec.myDeclarationCourierStatuses.DeclarationId/*myDeclarations.Id*/,
+                    TerminalReleaseDate = rec.myDeclarationCourierStatuses.TerminalReleaseDate != null ? rec.myDeclarationCourierStatuses.TerminalReleaseDate : null,
                     //CourierMasterId = rec.CourierMasterId,
                     IsClosedForFollowUp = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.IsClosedForFollowUp : false,
                     //FastIndividualProcessName = "",
@@ -199,6 +200,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                     IsPending900 = rec.myDeclarationCourierStatuses != null ? (rec.myDeclarationCourierStatuses.CourierPendingReasonList.Contains("900") ? true : false) : false,
                     CourierPendingReasonList = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.CourierPendingReasonList : null,
                     MAWB = rec.CourierMaster != null ? rec.CourierMaster.MAWB : null,
+                    IntegratorCode = rec.CourierMaster != null ? rec.CourierMaster.IntegratorCode : null,
                     IsCourierMissingClassification = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.IsCourierMissingClassification : false,
                     IsPendingNotNull = rec.myDeclarationCourierStatuses != null ? (rec.myDeclarationCourierStatuses.CourierPendingReasonList != null && rec.myDeclarationCourierStatuses.CourierPendingReasonList.Length > 0 ? true : false) : false,
                 }
@@ -263,6 +265,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                            select new MyDecJoin()
                            {
                                DeclarationId = rec.DeclarationId,
+                               TerminalReleaseDate = null,
                                //CourierMasterId = rec.CourierMasterId,
                                IsClosedForFollowUp = false,
                                //FastIndividualProcessName = "",
@@ -274,6 +277,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                MAWB = "",
                                IsCourierMissingClassification = true,
                                IsPendingNotNull = true,
+                               IntegratorCode = "",
                            });
                 //qMyJoin = Enumerable.Empty<MyDecJoin>().AsQueryable();
                 q1stConsignments = context.Consignments.Where(r => r.DeclarationId == "-1");
@@ -365,9 +369,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      StorageSiteCode = a.StorageSiteCode,
                                                      DeclarationStatusTypeCode = a.DeclarationStatusTypeCode,
                                                      DeclarationOfficeCode = a.DeclarationOfficeCode,
-                                                     DeclarationOfficeNameForExport= a.DeclarationOffice == null ? null : a.DeclarationOffice.LocalName,
-                                                     ExportDeclarationOfficeCode =a.ExportDeclarationOfficeCode,
-                                                     ExportAutonomyRegionTypeCode=a.ExportAutonomyRegionTypeCode,
+                                                     DeclarationOfficeNameForExport = a.DeclarationOffice == null ? null : a.DeclarationOffice.LocalName,
+                                                     ExportDeclarationOfficeCode = a.ExportDeclarationOfficeCode,
+                                                     ExportAutonomyRegionTypeCode = a.ExportAutonomyRegionTypeCode,
                                                      DepartmentId = a.DepartmentId,
                                                      DepartmentName = a.Department.LocalName,
                                                      //   EntitleImporterName = a.en
@@ -376,7 +380,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      EntitleImporterCode = a.EntitleImporterCode,
                                                      CreatedByUserName =
                                                      //a.CreatedByUser != null ? (a.CreatedByUser.Contact.LocalName != null ? a.CreatedByUser.Contact.LocalName : a.CreatedByUser.Contact.EnglishName) : null,
-                                                    
+
                                                      a.CreatedByUser.Code,
                                                      IsHatraDateNull = a.HatraDate == null,
                                                      ImporterAddress = a.ImporterAddress,
@@ -397,8 +401,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      CorrectionsXml = a.CorrectionsXml,
                                                      SignedByUserId = a.SignedByUserId,
                                                      ImporterCode = a.ImporterCode,
-                                                     ExporterImporterCode=a.ImporterCode,
-                                                     ImporterNameForExport= a.Importer != null ? a.Importer.FullName : a.ImporterName,
+                                                     ExporterImporterCode = a.ImporterCode,
+                                                     ImporterNameForExport = a.Importer != null ? a.Importer.FullName : a.ImporterName,
                                                      StorageStatusCode = a.StorageStatusCode,
                                                      StorageStatusName = a.StorageStatus == null ? null : a.StorageStatus.LocalName,
                                                      WeightValue = a.WeightValue,
@@ -447,6 +451,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      CourierPendingReasonList = myJoin != null ? myJoin.CourierPendingReasonList : null,
                                                      /*CourierPendingReasonList = mypr != null ? mypr.CourierPendingReasonName : null,*/
                                                      //CourierPendingReasonName = a.CourierPendingReasonName,
+                                                     IntegratorCode = myJoin != null ? myJoin.IntegratorCode : null,
 
                                                      MAWB = myJoin != null ? myJoin.MAWB : null,
                                                      IsCourierMissingClassification = myJoin != null ? myJoin.IsCourierMissingClassification : false,
@@ -479,10 +484,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      CreateDateForExport = a.CreateDateTime,
                                                      TransportModeForExport = a.TransportModeId,
                                                      CustomFileForExport = a.CustomFileNo,
-                                                     CargoTypeName = myJoinConsignment != null && myJoinConsignment.CargoType  != null ? myJoinConsignment.CargoType.LocalName : null,
-                                                     SecondCargoID= myJoinConsignment != null ? myJoinConsignment.SecondCargoID : null,
-                                                     ThirdCargoID= myJoinConsignment != null ? myJoinConsignment.ThirdCargoID : null,
-                                                     ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber :null
+                                                     CargoTypeName = myJoinConsignment != null && myJoinConsignment.CargoType != null ? myJoinConsignment.CargoType.LocalName : null,
+                                                     SecondCargoID = myJoinConsignment != null ? myJoinConsignment.SecondCargoID : null,
+                                                     ThirdCargoID = myJoinConsignment != null ? myJoinConsignment.ThirdCargoID : null,
+                                                     ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber : null,
+                                                      TerminalReleaseDate = myJoin != null ? myJoin.TerminalReleaseDate : null,
+                                                     PhysicalCheck = a.PhysicalCheck,
                                                  });
 
 
@@ -501,7 +508,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             iQueryable = filters.GetFreelancerDeclarations(queryOperations, iQueryable, tenant);
 
-            if(queryOperations.QueryFilterItems.FirstOrDefault(x=>x.FieldName== "IsAmendment") == null)
+            if (queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "IsAmendment") == null)
             {
                 iQueryable = iQueryable.Where(x => x.AmendmentDontDisplayInList != true);
 
@@ -552,7 +559,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         }
         private IQueryable<DeclarationList> GetIqueryableListForContainerization(IQueryable<Declaration> iQueryable)
         {
-           
+
             var qConsignmentNumber = (from a in context.Consignments
                                       group a by a.DeclarationId into gConsignments
                                       select
@@ -583,7 +590,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                 // throw;
             }
-          //  q1stConsignments = context.Consignments.Where(r => r.DeclarationId == "-1");
+            //  q1stConsignments = context.Consignments.Where(r => r.DeclarationId == "-1");
 
 
             IQueryable<DeclarationList> query = (from a in iQueryable.Include("ProcedureCurrent").Include("Importer")
@@ -760,7 +767,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         public bool IsPending900 { get; set; }
         public string CourierPendingReasonList { get; set; }
         public string MAWB { get; set; }
+        public DateTime? TerminalReleaseDate { get; set; }
         public bool IsCourierMissingClassification { get; set; }
         public bool IsPendingNotNull { get; set; }
+
+        public string IntegratorCode { get; set; }
     }
 }

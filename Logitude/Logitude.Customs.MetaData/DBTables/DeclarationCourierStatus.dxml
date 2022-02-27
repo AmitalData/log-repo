@@ -241,4 +241,6 @@
     Columns="IsCourierMissingClassification" />
   <Index
     Columns="IsClosedForFollowUp" />
+  <Index
+    Columns="FastIndividualProcessCode" />
 </Table>

@@ -29,5 +29,40 @@ END
 end
 ]]></SqlScript>
   <OracleScript>
-</OracleScript>
+    <![CDATA[
+create or replace PROCEDURE Queue_DelayMessage(
+    v_MessageId    IN NUMBER,
+    v_DelaySeconds IN NUMBER )
+AS
+  v_temp NUMBER(1, 0) := 0;
+  --20220213 set haverabbitmq =0
+BEGIN
+  BEGIN
+    SELECT 1
+    INTO v_temp
+    FROM DUAL
+    WHERE EXISTS
+      ( SELECT Id FROM QueueMessages WHERE ID = v_MessageId
+      );
+  EXCEPTION
+  WHEN OTHERS THEN
+    NULL;
+  END;
+  IF v_temp = 1 THEN
+    BEGIN
+      UPDATE QueueMessages
+      SET NextRunDateTime =  (SYSDATE + v_DelaySeconds/86400)--utils.dateadd('SECOND', v_DelaySeconds, SYSDATE)
+      , RetryNumber          = (RetryNumber + 1)
+      ,haverabbitmq =0
+      WHERE Id            = v_MessageId;
+
+       UPDATE QueueMessageMoreDetails
+      SET NextRunDateTime =  (SYSDATE + v_DelaySeconds/86400)--utils.dateadd('SECOND', v_DelaySeconds, SYSDATE)
+      , RetryNumber          = (RetryNumber + 1)
+      WHERE Id            = v_MessageId;
+    END;
+  END IF;
+END;
+]]>
+  </OracleScript>
 </Procedure>

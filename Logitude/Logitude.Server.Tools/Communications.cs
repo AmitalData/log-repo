@@ -355,7 +355,7 @@ namespace Logitude.Server.Tools
                     var messageProperties = new Dictionary<string, string>();
                     messageProperties["CommunicationLogId"] = communicationLogId;
                     messageProperties["Tenant"] = tenant.ToString();
-                    var queueId = queueService.Send(messageProperties, tenant, delayTime,7);
+                    var queueId = queueService.Send(messageProperties, tenant, delayTime, new QueueSendModel() { TenantPriority = 7 });
 
                     LogMessagingUtil.Instance.AppendLine($"SendCommunicationLogMessageToQueue({queueName}, {communicationLogId})=>QID={queueId} ");
                     ///throw new Exception("Queue is DbMode "); 

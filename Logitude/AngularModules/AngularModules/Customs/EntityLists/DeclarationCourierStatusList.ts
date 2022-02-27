@@ -91,6 +91,10 @@ export class DeclarationCourierStatusList {
 	CargoDescription: string;
 	FinalRelease: boolean;
 	HatraDate: Date;
+	CasualSupplierAddress: string;
+	CasualImporterCity: string;
+	GrossMassMeasure: number;
+	IncoTermCode: string;
 	
 }
  

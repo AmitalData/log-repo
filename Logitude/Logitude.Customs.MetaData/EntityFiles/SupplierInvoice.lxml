@@ -37,7 +37,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;חשבון&quot;"
   DefaultText="&quot;Supplier Invoice&quot;"
-  Code="&quot;ea26&quot;"
+  Code="&quot;6099&quot;"
   Name="&quot;Customs.SupplierInvoice Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"

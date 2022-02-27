@@ -3,26 +3,27 @@
 	<Sql Version="1">
 	</Sql>
 
-	<Oracle Version="2">
+	<Oracle Version="7">
 		<![CDATA[
-		            declare
- n int := 0;
+declare 
+ v_count number;
 begin
-  select count(*) into n
-  from INTERFACETENANTDEFINITIONS
- where code='8251';
-  if n = 0 then
-  insert into INTERFACETENANTDEFINITIONS values ('1-999','1','8251','','2','0','1',''); 
-  else
-  update INTERFACETENANTDEFINITIONS set active=
- case 
- when ((select companytype from CustomsSettingS where companytype='B')  in ('B')) then 0
- ELSE 1
- END
- where code ='8251';
- end if;
+select count(*) into v_count from CustomsSettings where companytype='B';
+
+if v_count > 0 then
+begin
+  insert into INTERFACETENANTDEFINITIONS (id,tenant,code,TenantSendOptionsCode,TenantPriority,active,DcaRenameFileEnable,DcaRenameFilePrefix)values ('1-999',1,'8251','','2','0','1',''); 
+  commit;
+exception
+  when DUP_VAL_ON_INDEX
+  then ROLLBACK;
 end;
-  
+
+end if;
+end;
     ]]>
 	</Oracle>
 </Script>
+
+
+

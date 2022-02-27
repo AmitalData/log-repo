@@ -102,6 +102,7 @@
     <Compile Include="DataContracts\CustomsRequestsSheetSummary.cs" />
     <Compile Include="DataContracts\DeclarationCourierStatusSummary.cs" />
     <Compile Include="DataContracts\DeclarationReferantDataSummary.cs" />
+    <Compile Include="DataContracts\DeclarationCourierPendingTabRecord.cs" />
     <Compile Include="EntityKeys\AcceptanceStatusKeys.cs" />
     <Compile Include="EntityKeys\ActionCodeKeys.cs" />
     <Compile Include="EntityKeys\AgentTalkBackTypeKeys.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="EntityKeys\CustomsAirlineKeys.cs" />
     <Compile Include="EntityKeys\CustomsAutonomyKeywordKeys.cs" />
     <Compile Include="EntityKeys\CustomsDocumentsDefinitionKeys.cs" />
+    <Compile Include="EntityKeys\CustomsEnvironmentSettingKeys.cs" />
     <Compile Include="EntityKeys\CustomsDocumentUploadKeys.cs" />
     <Compile Include="EntityKeys\CustomsGeneralKeys.cs" />
     <Compile Include="EntityKeys\CustomsPartnerFtpKeys.cs" />
@@ -165,6 +167,7 @@
     <Compile Include="EntityKeys\DecDangersContactsKeys.cs" />
     <Compile Include="EntityKeys\DecisionTypeKeys.cs" />
     <Compile Include="EntityKeys\DeclarationCargoSplitKeys.cs" />
+    <Compile Include="EntityKeys\DeclarationCasualDetailsKeys.cs" />
     <Compile Include="EntityKeys\DeclarationConsAcceptanceKeys.cs" />
     <Compile Include="EntityKeys\DeclarationCourierStatusKeys.cs" />
     <Compile Include="EntityKeys\DeclarationExportRecipientKeys.cs" />
@@ -282,6 +285,7 @@
     <Compile Include="EntityListQueryServices\CustomsAirlineListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsAutonomyKeywordListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsDocumentsDefinitionListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CustomsEnvironmentSettingListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsDocumentUploadListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsGeneralListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsPartnerFtpListQueryService.cs" />
@@ -295,6 +299,7 @@
     <Compile Include="EntityListQueryServices\DecDangersContactsListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DecisionTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationCargoSplitListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DeclarationCasualDetailsListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationConsAcceptanceListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationCourierStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationExportRecipientListQueryService.cs" />
@@ -366,6 +371,7 @@
     <Compile Include="EntityListQueryServices\Generated\CustomsAirlineListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsAutonomyKeywordListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsDocumentsDefinitionListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CustomsEnvironmentSettingListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsDocumentUploadListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsGeneralListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsPartnerFtpListQueryService.Generated.cs" />
@@ -379,6 +385,7 @@
     <Compile Include="EntityListQueryServices\Generated\DecDangersContactsListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DecisionTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationCargoSplitListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DeclarationCasualDetailsListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationConsAcceptanceListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationCourierStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationExportRecipientListQueryService.Generated.cs" />
@@ -543,6 +550,7 @@
     <Compile Include="EntityLists\Generated\CustomsAirlineList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsAutonomyKeywordList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsDocumentsDefinitionList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CustomsEnvironmentSettingList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsDocumentUploadList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsGeneralList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsPartnerFtpList.Generated.cs" />
@@ -556,6 +564,7 @@
     <Compile Include="EntityLists\Generated\DecDangersContactsList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DecisionTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationCargoSplitList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DeclarationCasualDetailsList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationConsAcceptanceList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationCourierStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationExportRecipientList.Generated.cs" />
@@ -674,6 +683,7 @@
     <Compile Include="EntityMapping\CustomsAirlineMap.cs" />
     <Compile Include="EntityMapping\CustomsAutonomyKeywordMap.cs" />
     <Compile Include="EntityMapping\CustomsDocumentsDefinitionMap.cs" />
+    <Compile Include="EntityMapping\CustomsEnvironmentSettingMap.cs" />
     <Compile Include="EntityMapping\CustomsDocumentUploadMap.cs" />
     <Compile Include="EntityMapping\CustomsGeneralMap.cs" />
     <Compile Include="EntityMapping\CustomsPartnerFtpMap.cs" />
@@ -687,6 +697,7 @@
     <Compile Include="EntityMapping\DecDangersContactsMap.cs" />
     <Compile Include="EntityMapping\DecisionTypeMap.cs" />
     <Compile Include="EntityMapping\DeclarationCargoSplitMap.cs" />
+    <Compile Include="EntityMapping\DeclarationCasualDetailsMap.cs" />
     <Compile Include="EntityMapping\DeclarationConsAcceptanceMap.cs" />
     <Compile Include="EntityMapping\DeclarationCourierStatusMap.cs" />
     <Compile Include="EntityMapping\DeclarationExportRecipientMap.cs" />
@@ -804,6 +815,7 @@
     <Compile Include="EntityPOCOs\CustomsAirline.cs" />
     <Compile Include="EntityPOCOs\CustomsAutonomyKeyword.cs" />
     <Compile Include="EntityPOCOs\CustomsDocumentsDefinition.cs" />
+    <Compile Include="EntityPOCOs\CustomsEnvironmentSetting.cs" />
     <Compile Include="EntityPOCOs\CustomsDocumentUpload.cs" />
     <Compile Include="EntityPOCOs\CustomsGeneral.cs" />
     <Compile Include="EntityPOCOs\CustomsPartnerFtp.cs" />
@@ -817,6 +829,7 @@
     <Compile Include="EntityPOCOs\DecDangersContacts.cs" />
     <Compile Include="EntityPOCOs\DecisionType.cs" />
     <Compile Include="EntityPOCOs\DeclarationCargoSplit.cs" />
+    <Compile Include="EntityPOCOs\DeclarationCasualDetails.cs" />
     <Compile Include="EntityPOCOs\DeclarationConsAcceptance.cs" />
     <Compile Include="EntityPOCOs\DeclarationCourierStatus.cs" />
     <Compile Include="EntityPOCOs\DeclarationExportRecipient.cs" />
@@ -935,6 +948,7 @@
     <Compile Include="Repsitories\CustomsAirlineRepository.cs" />
     <Compile Include="Repsitories\CustomsAutonomyKeywordRepository.cs" />
     <Compile Include="Repsitories\CustomsDocumentsDefinitionRepository.cs" />
+    <Compile Include="Repsitories\CustomsEnvironmentSettingRepository.cs" />
     <Compile Include="Repsitories\CustomsDocumentUploadRepository.cs" />
     <Compile Include="Repsitories\CustomsGeneralRepository.cs" />
     <Compile Include="Repsitories\CustomsPartnerFtpRepository.cs" />
@@ -948,6 +962,7 @@
     <Compile Include="Repsitories\DecDangersContactsRepository.cs" />
     <Compile Include="Repsitories\DecisionTypeRepository.cs" />
     <Compile Include="Repsitories\DeclarationCargoSplitRepository.cs" />
+    <Compile Include="Repsitories\DeclarationCasualDetailsRepository.cs" />
     <Compile Include="Repsitories\DeclarationConsAcceptanceRepository.cs" />
     <Compile Include="Repsitories\DeclarationCourierStatusRepository.cs" />
     <Compile Include="Repsitories\DeclarationExportRecipientRepository.cs" />
@@ -1019,6 +1034,7 @@
     <Compile Include="Repsitories\Generated\CustomsAirlineRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsAutonomyKeywordRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsDocumentsDefinitionRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CustomsEnvironmentSettingRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsDocumentUploadRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsGeneralRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsPartnerFtpRepository.Generated.cs" />
@@ -1032,6 +1048,7 @@
     <Compile Include="Repsitories\Generated\DecDangersContactsRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DecisionTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationCargoSplitRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\DeclarationCasualDetailsRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationConsAcceptanceRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationCourierStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationExportRecipientRepository.Generated.cs" />

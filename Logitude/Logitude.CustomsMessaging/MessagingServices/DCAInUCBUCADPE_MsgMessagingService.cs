@@ -8,6 +8,7 @@ using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.CustomsMessaging.Testers.Messages;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -42,31 +43,30 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DCAInUCBUCADPEResponseContentHeader customsResponse)
         {
-            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
             var genericRequestParams = new GenericRequestParams()
             {
                 Tenant = customsResponse.tenant,
-                AppicationId = customsResponse.declarationIdsList[0],
+                AppicationId = customsResponse.requestParamsData.courierMasterId,
                 LoggingEnabled = true,
                 InterfaceTypeCode = this.MainInterfaceCode,
                 MainInterfaceCode = this.MainInterfaceCode,
                 LoggingObjectTableId = objectTableId,
-                LoggingEntityId = customsResponse.declarationIdsList[0],
+                LoggingEntityId = customsResponse.requestParamsData.courierMasterId,
                 //LoggingUserId = customsResponse.LoggingUserId,
 
             };
 
-            genericRequestParams.RequestName = "עידכון פנדינג גורף";
+            genericRequestParams.RequestName = "הזנה גורפת PENDING";
 
             return genericRequestParams;
         }
 
-        public string CreateCRS(int tenant, string[] listPending, string[] listPendingRemark, string[] declarationIdsList)
+        public string CreateCRS(int tenant, AddMultiPendingsRequestParams requestParamsData, QueryOperations queryOperations)
         {
-            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.DeclarationPending");
-            var objectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.CourierPendingReason");
+            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
-            var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, null, objectTableId2, null, null, true);
+            var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, requestParamsData.courierMasterId, null, null, null, true);
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
             {
                 return "קיים מסר זהה בתהליך";
@@ -80,10 +80,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var myDCAInUCBUCADPEResponseContentHeader = new DCAInUCBUCADPEResponseContentHeader()
             {
                 tenant = tenant,
-                listPending = listPending,
-                listPendingRemark = listPendingRemark,
-                declarationIdsList = declarationIdsList,
-                
+                requestParamsData = requestParamsData,
+                queryOperations = queryOperations,
                 ResponseContentHeader = new DefaultResponseContentHeader()
                 {
                     TransmitionDateTime = transmitionDateTime
@@ -149,10 +147,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public Logitude.CustomsMessaging.Testers.Messages.DefaultResponseContentHeader ResponseContentHeader { get; set; }
 
         public int tenant { get; set; }
-        public string[] listPending { get; set; }
-        public string[] listPendingRemark { get; set; }
-        public string[] declarationIdsList { get; set; }
-
+        public AddMultiPendingsRequestParams requestParamsData { get; set; }
+        public QueryOperations queryOperations { get; set; }
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     }
 }

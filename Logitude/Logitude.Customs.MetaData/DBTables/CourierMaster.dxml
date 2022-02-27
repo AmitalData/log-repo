@@ -232,6 +232,20 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="NoOfCourierHawbwWithoutHatara"
+    Type="nvarchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NoOfCourierHawbWithoutDelivery"
+    Type="nvarchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

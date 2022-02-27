@@ -1,0 +1,154 @@
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+using WebFreight.Web.Security;
+using WebFreight.Web.Helpers;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Interfaces;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
+using System.Web;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using WebFreight.Web.Helpers;
+using WebFreight.Web.Security;
+using System.Web.Script.Serialization;
+using WebFreight.Web.DataContracts;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.Helpers;
+using Logitude.Customs.Data;
+using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.Data.EntityListQueryServices;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityLists;
+using Logitude.Customs.Def.EntityPMs;
+using System.Transactions;
+using Logitude.Customs.BL.EntityUpdateServices;
+
+namespace WebFreight.Web.Controllers.CustomsModel.Extended
+{
+    public partial class CourierDeclarationPendingListExtendedController : ApiController
+    {
+        public HttpResponseMessage GetByFilters([FromUri] ApiQueryFilters filters)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Customs.Declaration", "READ", authToken.Tenant);
+                int tenant = authToken.Tenant;
+                if (filters.Tenant != null)
+                    tenant = tenant;
+
+                QueryOperations queryOperations = CreateQueryOperationsPendingBulk(filters, tenant);
+                ICustomContext MyContext = CustomContext.GetContext(tenant);
+                DeclarationCourierStatusListQueryService declarationListQueryService = new DeclarationCourierStatusListQueryService(MyContext);
+                List<DeclarationCourierStatusList> entityLists = declarationListQueryService.GetDeclarationCourierStatusListPendingBulk(queryOperations, tenant);
+
+                ServiceResponse response = new ServiceResponse();
+                if (filters.GetCount)
+                {
+                    int count = declarationListQueryService.GetDeclarationCourierStatusforPendingBulkFeedListCount(queryOperations, tenant);
+                    response.Count = count;
+                }
+
+                response.Result = entityLists;
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+                return reponseMessage;
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public static QueryOperations CreateQueryOperationsPendingBulk(ApiQueryFilters filters, int tenant)
+        {
+            QueryOperations queryOperations = new QueryOperations()
+            {
+                ObjectTableName = "Customs.DeclarationCourierStatus",
+                PageIndex = filters.PageIndex,
+                PageSize = filters.PageSize,
+                QuerySection = "Customs.DeclarationCourierStatus",
+                SortByColumnName = filters.SortBy,
+                SortDirectin = filters.SortDirection,
+                GetAll = filters.GetAll,
+            };
+
+            List<ObjectField> DeclarationCourierStatusObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.DeclarationCourierStatus", tenant);
+            List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
+
+            for (int i = 1; i <= 10; i++)
+            {
+                object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);
+                object filterValue1 = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Value")).GetValue(filters);
+                object filterOperatorProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Operator")).GetValue(filters);
+                object filterValue2 = null;
+
+                if (filterNameProp != null)
+                {
+                    string filterName = filterNameProp.ToString();
+                    string filterOperator = filterOperatorProp != null ? filterOperatorProp.ToString() : "Equals";
+
+                    ObjectField field = DeclarationCourierStatusObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+                    if (field != null)
+                    {
+                        string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
+                        object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+
+                        string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
+                        object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+
+                        queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
+                    }
+                    else
+                        queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
+                }
+            }
+            if (!string.IsNullOrEmpty(filters.AdditionalFilters))
+            {
+                JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
+                var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
+
+                foreach (QueryFilterItem filter in filters_list)
+                {
+                    ObjectField field = DeclarationCourierStatusObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                    if (field != null)
+                    {
+                        string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
+                        object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+
+                        string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
+                        object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+
+                        bool isCustom = filter.FieldName == "CargoDescription" || filter.FieldName == "CourierMasterId" ? filter.IsCustom : field.IsCustomFilter;
+
+                        queryOperations.SetFilter(filter.FieldName, value1, isCustom, filter.Operator, value2, field.DisplayInList);
+                    }
+                    else
+                    {
+                        queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                    }
+                }
+            }
+
+            return queryOperations;
+        }
+    }
+}

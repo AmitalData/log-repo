@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CourierMasterUpdateClass
    {  		
-		public const string HashString = "25ea9678453ede5b4ee012f38ee231b6";
+		public const string HashString = "5bc83d91ea6933f011a10016f745b5bb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2770,10 +2770,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalcClosedForFollowUp",
 					  						DefaultText =  "Calc All Closed For Follow Up",
-					  						FullLocalDefaultText =  "כמות הצהרות פתוחות",
+					  						FullLocalDefaultText =  "הצהרות פתוחות",
 					  						ListFieldLable =  "CalcClosedForFollowUpListLable",
 					  						ListLableDefaultText =  "Calc All Closed For Follow Up",
-					  						ListLocalDefaultText =  "כמות הצהרות פתוחות",
+					  						ListLocalDefaultText =  "הצהרות פתוחות",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2831,10 +2831,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalcMissingClassification",
 					  						DefaultText =  "Calc Courier Missing Classification",
-					  						FullLocalDefaultText =  "כמות הצהרות ללא סיווג",
+					  						FullLocalDefaultText =  "הצהרות ללא סיווג",
 					  						ListFieldLable =  "CalcMissingClassificationListLable",
 					  						ListLableDefaultText =  "Calc Courier Missing Classification",
-					  						ListLocalDefaultText =  "כמות הצהרות ללא סיווג",
+					  						ListLocalDefaultText =  "הצהרות ללא סיווג",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2892,10 +2892,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalcMissingImporterId",
 					  						DefaultText =  "Calc Missing ImporterId",
-					  						FullLocalDefaultText =  "כמות הצהרות ללא תז",
+					  						FullLocalDefaultText =  "הצהרות ללא תז",
 					  						ListFieldLable =  "CalcMissingImporterIdListLable",
 					  						ListLableDefaultText =  "Calc Missing ImporterId",
-					  						ListLocalDefaultText =  "כמות הצהרות ללא תז",
+					  						ListLocalDefaultText =  "הצהרות ללא תז",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3014,10 +3014,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalcPending900",
 					  						DefaultText =  "Calc Pending900",
-					  						FullLocalDefaultText =  "כמות הצהרות בתהליך גביה",
+					  						FullLocalDefaultText =  "הצהרות בתהליך גביה",
 					  						ListFieldLable =  "CalcPending900ListLable",
 					  						ListLableDefaultText =  "Calc Pending900",
-					  						ListLocalDefaultText =  "כמות הצהרות בתהליך גביה",
+					  						ListLocalDefaultText =  "הצהרות בתהליך גביה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3076,10 +3076,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalcSuspendedDeclarations",
 					  						DefaultText =  "Calc Suspended Declarations",
-					  						FullLocalDefaultText =  "כמות הצהרות מעוכב מכס",
+					  						FullLocalDefaultText =  "הצהרות מעוכב מכס",
 					  						ListFieldLable =  "CalcSuspendedDeclarationsListLable",
 					  						ListLableDefaultText =  "Calc Suspended Declarations",
-					  						ListLocalDefaultText =  "כמות הצהרות מעוכב מכס",
+					  						ListLocalDefaultText =  "הצהרות מעוכב מכס",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3774,6 +3774,130 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "NoOfCourierHawbwWithoutHatara",
+					  						ObjectTableName =  "Customs.CourierMaster",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  5,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  5,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Contains",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "NoOfCourierHawbwWithoutHatara",
+					  						ListPropertyPath =  "NoOfCourierHawbwWithoutHatara",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.CourierMaster",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "NoOfCourierHawbwWithoutHatara",
+					  						DefaultText =  "NoOfCourierHawbwWithoutHatara",
+					  						FullLocalDefaultText =  "הצהרות ללא התרה",
+					  						ListFieldLable =  "NoOfCourierHawbwWithoutHataraListLable",
+					  						ListLableDefaultText =  "NoOfCourierHawbwWithoutHatara",
+					  						ListLocalDefaultText =  "ש.מ.ב ללא התרה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "NoOfCourierHawbWithoutDelivery",
+					  						ObjectTableName =  "Customs.CourierMaster",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  5,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  5,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Contains",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "NoOfCourierHawbWithoutDelivery",
+					  						ListPropertyPath =  "NoOfCourierHawbWithoutDelivery",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.CourierMaster",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "NoOfCourierHawbWithoutDelivery",
+					  						DefaultText =  "NoOfCourierHawbwWithoutDelivery",
+					  						FullLocalDefaultText =  "הצהרות ללא הפצה",
+					  						ListFieldLable =  "NoOfCourierHawbWithoutDeliveryListLable",
+					  						ListLableDefaultText =  "NoOfCourierHawbwWithoutDelivery",
+					  						ListLocalDefaultText =  "ש.מ.ב ללא הפצה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -3990,6 +4114,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature CourierMasterFeature_StatusDeclarationOldVersion = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "StatusDeclarationOldVersion", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.StatusDeclarationOldVersion", NameTextCodeDefaultText = @"Status Declaration Old Version" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
 
 		   Feature CourierMasterFeature_ExportMasterExtended = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportMasterExtended", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.ExportCourierMasterExtended", NameTextCodeDefaultText = @"יצא לאקסל מורכב" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
+
+		   Feature CourierMasterFeature_AllowBulkPendind = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AllowBulkPendind", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.AllowBulkPendind", NameTextCodeDefaultText = @"AllowBulkPendind" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
+
+		   Feature CourierMasterFeature_CourierWSPendingTab = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierWSPendingTab", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.CourierWSPendingTab", NameTextCodeDefaultText = @"Courier Declaration Workspace Pending Tab" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
 
    
 	    

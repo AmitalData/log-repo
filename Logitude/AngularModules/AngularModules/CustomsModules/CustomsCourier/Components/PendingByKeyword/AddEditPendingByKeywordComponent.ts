@@ -27,7 +27,10 @@ export class AddEditPendingByKeywordComponent
     extends BaseComponent
     implements OnInit{
     SearchByFieldCodes: KeyValuePair[] = [];
+    SearchTypes: KeyValuePair[] = [];
     SelectedItemSearchByField: KeyValuePair;
+    SelectedItemSearchType: KeyValuePair;
+
 
     public DataContext: any = this;
     public ObjectTableName: string = "Customs.PendingByKeyword";
@@ -46,9 +49,13 @@ export class AddEditPendingByKeywordComponent
         this.SearchByFieldCodes.push(new KeyValuePair("1", "תאור טובין"));
         this.SearchByFieldCodes.push(new KeyValuePair("2", "שם יבואן"));
 
-        SessionLocator.SelectedSession.StartBusyIndicator("");
-        this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+        this.SearchTypes.push(new KeyValuePair("1", "מילה"));
+        this.SearchTypes.push(new KeyValuePair("2", "חלק ממילה"));
 
+        SessionLocator.SelectedSession.StartBusyIndicator("");
+        
+        this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+            
             SessionLocator.SelectedSession.StopBusyIndicator();
             if (AppTool.IsNullOrEmpty(entityArgs.EntityPM)) {
                 this.EntityPM = new PendingByKeywordPM();
@@ -56,13 +63,18 @@ export class AddEditPendingByKeywordComponent
                 this.isWindowMode = true;
                 this.isNewRecord = true;
                 this.UIProperties.SetRequired("SearchByFieldCode", this.ObjectTableName, true);
-
+                this.UIProperties.SetRequired("SearchType", this.ObjectTableName, true);
+                
             } else {
                 this.EntityPM = this.entityArgs.EntityPM;
                 this.SelectedItemSearchByField = this.SearchByFieldCodes.filter(r => r.Key == this.EntityPM.SearchByFieldCode)[0];
                 this.UIProperties.SetRequired("SearchByFieldCode", this.ObjectTableName, false);
-
+                this.SelectedItemSearchType = this.SearchTypes.filter(r => r.Key == this.EntityPM.SearchType)[0];
+                this.UIProperties.SetRequired("SearchType", this.ObjectTableName, false);
             }
+            
+            this.UIProperties.SetRequired("KeywordsList", this.ObjectTableName, !this.EntityPM.KeywordsList);
+
             this.WarningMessage = "יש להזין רשימת מילות מפתח מופרדות בפסיק, ואת קוד העיכוב שיש להרים עבורן. (למשל: medicine, drug, תרופה) ניתן להזין את אותו קוד עיכוב מספר פעמים.";
         });
     }
@@ -71,6 +83,14 @@ export class AddEditPendingByKeywordComponent
         this._SearchByFieldCode = evKey;
         this.EntityPM.SearchByFieldCode = this._SearchByFieldCode;
         this.UIProperties.SetRequired("SearchByFieldCode", this.ObjectTableName, false);
+        
+    }
+
+    public _SearchType: string; 
+    SearchTypeClicked(evKey) {
+        this._SearchType = evKey;
+        this.EntityPM.SearchType = this._SearchType;
+        this.UIProperties.SetRequired("SearchType", this.ObjectTableName, false);
         
     }
 
@@ -113,13 +133,15 @@ export class AddEditPendingByKeywordComponent
 
     public get KeywordsList() { return this.EntityPM.KeywordsList; }
     public set KeywordsList(newValue: string) {
+        this.UIProperties.SetRequired("KeywordsList", this.ObjectTableName, !newValue);
+        
         this.EntityPM.KeywordsList = newValue;
     }
 
     //#endregion\
 
     OkButtonClicked() {
-
+        debugger;
         var errors = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 

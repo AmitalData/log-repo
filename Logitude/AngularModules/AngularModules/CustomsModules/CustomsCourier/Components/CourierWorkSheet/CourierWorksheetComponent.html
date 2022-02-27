@@ -203,10 +203,10 @@
                                                             | TextCodeTranslationPipe }}</button>
                                                         <button style="text-align:right"
                                                             (click)="ChangeStorageSiteMethod()"
-                                                            [disabled]="IsDisplayOnly">{{'שינוי אתר אחסון' }}</button>
+                                                            [disabled]="IsDisplayOnly">{{'שינוי םתר םחסון' }}</button>
                                                         <button style="text-align:right"
                                                             (click)="ChangeUnloadPortSiteMethod()"
-                                                            [disabled]="IsDisplayOnly">{{'שינוי אתר פריקה' }}</button>
+                                                            [disabled]="IsDisplayOnly">{{'שינוי םתר פריקה' }}</button>
 
                                                         <button *ngIf="isAllowAccounting" style="text-align:right"
                                                             (click)="IsReadyForInvoiceClick()"
@@ -226,7 +226,7 @@
                                                         <button style="text-align:right" (click)="SendALLSVG(true)">בקרת
                                                             סיווגים</button>
                                                         <button style="text-align:right" (click)="Export2Excel()"
-                                                            [disabled]="IsDisplayOnly">{{'יצוא לאקסל' }}<img
+                                                            [disabled]="IsDisplayOnly">{{'יצום לםקסל' }}<img
                                                                 class="CenterCenter" title="Export To Excel"
                                                                 class="certOkImg"
                                                                 style="position: relative; width: 10px; margin-bottom: 8px; opacity: 0.8;"
@@ -245,7 +245,7 @@
                                                                 class="certOkImg"
                                                                 style="position: relative; margin-bottom: 8px; width: 10px; opacity: 0.8; "
                                                                 src="./Images/Buttons/excelicon.png" /></button>
-                                                        <button style="text-align:right" (click)="openBulkFeedPending()">הזנה גורפת PENDING</button>
+                                                        <button *ngIf='isAllowBulkPendind' style="text-align:right" (click)="openBulkFeedPending()">הזנה גורפת PENDING</button>
                                                     </div>
 
                                                 </div>
@@ -260,7 +260,7 @@
                                                         <td colspan="2" style="font-weight:bold; font-size:16px; ">
                                                             {{'סהכ ש.מ.ב '}} {{ DataSource.rowCount }}</td>
                                                         <td *ngIf="IsFiltered || SearchFilter != null"
-                                                            style="font-weight:bold; font-size:16px; ">&nbsp;{{'מתאימים
+                                                            style="font-weight:bold; font-size:16px; ">&nbsp;{{'מתםימים
                                                             לחיתוך'}}</td>
                                                         <td></td>
                                                     </tr>
@@ -479,25 +479,25 @@
                                                                             && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)"
                                                                             style="width:170px">
 
-                                                                            <split-button
-                                                                                (DefaultSplitButtonClicked)="SendALLCorrectManifest('R')"
-                                                                                [ButtonText]=_ReadyMNFToBatchSendButtonText
-                                                                                [IsDisabled]="IsDisplayOnly"
-                                                                                [MENUDivExtraTop]="24"
-                                                                                [MENUDivExtraLeft]="110">
+                                                                            <split-button (DefaultSplitButtonClicked)="SendALLCorrectManifest('R')"
+                                                                                          [ButtonText]=_ReadyMNFToBatchSendButtonText
+                                                                                [IsDisabled]="IsDisplayOnly || (_DecWithoutHaTra == 0)"
+                                                                                          [MENUDivExtraTop]="24"
+                                                                                          [MENUDivExtraLeft]="110">
 
-                                                                                <div
-                                                                                    class="class-MENUSplitButton-content">
+                                                                                <div class="class-MENUSplitButton-content">
                                                                                     <div>
                                                                                         <ul class="x-button-drop-menu"
                                                                                             style="width:150px;">
                                                                                             <li>
-                                                                                                <span
-                                                                                                    (click)="SendALLCorrectManifest('RV')">{{'Customs.CourierMaster.O.ReadyMNFToSendRV'
+                                                                                                <span (click)="SendALLCorrectManifest('RV')">
+                                                                                                    {{
+'Customs.CourierMaster.O.ReadyMNFToSendRV'
                                                                                                     |
                                                                                                     TextCodeTranslationPipe
                                                                                                     }}
-                                                                                                    ({{_CorrectMNFToBatchSend}})</span>
+                                                                                                    ({{_CorrectMNFToBatchSend}})
+                                                                                                </span>
                                                                                             </li>
                                                                                         </ul>
                                                                                     </div>
@@ -507,25 +507,26 @@
                                                                         </td>
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
                                                                             style="width:170px">
-                                                                            <split-button
-                                                                                (DefaultSplitButtonClicked)="SendALLCorrectManifest('M')"
-                                                                                [ButtonText]=SelectedMNFToBatchSendButtonText
-                                                                                [IsDisabled]="IsDisplayOnly"
-                                                                                [MENUDivExtraTop]="24"
-                                                                                [MENUDivExtraLeft]="110">
+                                                                            <split-button (DefaultSplitButtonClicked)="SendALLCorrectManifest('M')"
+                                                                                          [ButtonText]=SelectedMNFToBatchSendButtonText
 
-                                                                                <div
-                                                                                    class="class-MENUSplitButton-content">
+                                                                                [IsDisabled]="IsDisplayOnly || (_DecWithoutHaTra == 0)"
+                                                                                          [MENUDivExtraTop]="24"
+                                                                                          [MENUDivExtraLeft]="110">
+
+                                                                                <div class="class-MENUSplitButton-content">
                                                                                     <div>
                                                                                         <ul class="x-button-drop-menu"
                                                                                             style="width:150px;">
                                                                                             <li>
-                                                                                                <span
-                                                                                                    (click)="SendALLCorrectManifest('RV')">{{'Customs.CourierMaster.O.ReadyMNFToSendRV'
+                                                                                                <span (click)="SendALLCorrectManifest('RV')">
+                                                                                                    {{
+'Customs.CourierMaster.O.ReadyMNFToSendRV'
                                                                                                     |
                                                                                                     TextCodeTranslationPipe
                                                                                                     }}
-                                                                                                    ({{_CorrectMNFToBatchSend}})</span>
+                                                                                                    ({{_CorrectMNFToBatchSend}})
+                                                                                                </span>
                                                                                             </li>
                                                                                         </ul>
                                                                                     </div>
@@ -539,31 +540,34 @@
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
                                                                             && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)"
                                                                             style="width:170px">
-                                                                            <split-button
-                                                                                (DefaultSplitButtonClicked)="SendALLCorrectDec('R')"
-                                                                                [ButtonText]=_ReadyDECToBatchSendButtonText
-                                                                                [IsDisabled]="IsDisplayOnly"
-                                                                                [MENUDivExtraTop]="24"
-                                                                                [MENUDivExtraLeft]="115">
+                                                                            <split-button (DefaultSplitButtonClicked)="SendALLCorrectDec('R')"
+                                                                                          [ButtonText]=_ReadyDECToBatchSendButtonText
+                                                                                          [IsDisabled]="IsDisplayOnly"
+                                                                                          [MENUDivExtraTop]="24"
+                                                                                          [MENUDivExtraLeft]="115">
 
-                                                                                <div
-                                                                                    class="class-MENUSplitButton-content">
+                                                                                <div class="class-MENUSplitButton-content">
                                                                                     <div>
                                                                                         <ul class="x-button-drop-menu"
                                                                                             style="width:150px;">
                                                                                             <li>
-                                                                                                <span
-                                                                                                    (click)="SendALLCorrectDec('RV')">{{'Customs.CourierMaster.O.ReadyDECToSendRV'
+                                                                                                <span (click)="SendALLCorrectDec('RV')">
+                                                                                                    {{
+'Customs.CourierMaster.O.ReadyDECToSendRV'
                                                                                                     |
                                                                                                     TextCodeTranslationPipe
                                                                                                     }}
-                                                                                                    ({{_CorrectDECToBatchSend}})</span>
+                                                                                                    ({{_CorrectDECToBatchSend}})
+                                                                                                </span>
                                                                                             </li>
                                                                                             <li>
-                                                                                                <span
-                                                                                                    (click)="SendALLCorrectDec('X')">{{'שדר
-                                                                                                    הצהרה שגויים' }}
-                                                                                                    ({{_InCorrectDECToBatchSend}})</span>
+                                                                                                <span (click)="SendALLCorrectDec('X')">
+                                                                                                    {{
+'שדר
+                                                                                                    הצהרה שגויים'
+                                                                                                    }}
+                                                                                                    ({{_InCorrectDECToBatchSend}})
+                                                                                                </span>
                                                                                             </li>
                                                                                         </ul>
                                                                                     </div>
@@ -573,25 +577,25 @@
                                                                         </td>
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
                                                                             style="width:170px">
-                                                                            <split-button
-                                                                                (DefaultSplitButtonClicked)="SendALLCorrectDec('M')"
-                                                                                [ButtonText]=SelectedDECToBatchSendButtonText
-                                                                                [IsDisabled]="IsDisplayOnly"
-                                                                                [MENUDivExtraTop]="24"
-                                                                                [MENUDivExtraLeft]="110">
+                                                                            <split-button (DefaultSplitButtonClicked)="SendALLCorrectDec('M')"
+                                                                                          [ButtonText]=SelectedDECToBatchSendButtonText
+                                                                                          [IsDisabled]="IsDisplayOnly"
+                                                                                          [MENUDivExtraTop]="24"
+                                                                                          [MENUDivExtraLeft]="110">
 
-                                                                                <div
-                                                                                    class="class-MENUSplitButton-content">
+                                                                                <div class="class-MENUSplitButton-content">
                                                                                     <div>
                                                                                         <ul class="x-button-drop-menu"
                                                                                             style="width:150px;">
                                                                                             <li>
-                                                                                                <span
-                                                                                                    (click)="SendALLCorrectDec('RV')">{{'Customs.CourierMaster.O.ReadyDECToSendRV'
+                                                                                                <span (click)="SendALLCorrectDec('RV')">
+                                                                                                    {{
+'Customs.CourierMaster.O.ReadyDECToSendRV'
                                                                                                     |
                                                                                                     TextCodeTranslationPipe
                                                                                                     }}
-                                                                                                    ({{_CorrectDECToBatchSend}})</span>
+                                                                                                    ({{_CorrectDECToBatchSend}})
+                                                                                                </span>
                                                                                             </li>
                                                                                         </ul>
                                                                                     </div>
@@ -600,23 +604,37 @@
                                                                             </split-button>
                                                                         </td>
                                                                         <td style="width:1px"></td>
-                                                                        <td style="width:200px">
+                                                                        <td style="width:145px">
                                                                             <!--<button class="Button" [disabled]="!(IsILOVLEnabled || IsMamanEnabled)" (click)="SendALLTerminal()">שדר מסר ש.מ.ב למסוף</button>-->
-                                                                            <split-button
-                                                                                (DefaultSplitButtonClicked)="SendALLTerminal()"
-                                                                                [IsDisabled]="(!(IsILOVLEnabled || IsMamanEnabled || IsILSWSEnabled )) || IsDisplayOnly"
-                                                                                [ButtonText]="'שדר מסר ש.מ.ב למסוף'"
-                                                                                [AsRegularButton]="'true'"
-                                                                                [MENUDivExtraTop]="24"
-                                                                                [MENUDivExtraLeft]="110">
+                                                                            <split-button (DefaultSplitButtonClicked)="SendALLTerminal()"
+                                                                                          [IsDisabled]="(!(IsILOVLEnabled || IsMamanEnabled || IsILSWSEnabled )) || IsDisplayOnly"
+                                                                                          [ButtonText]="'שדר מסר ש.מ.ב למסוף'"
+                                                                                          [AsRegularButton]="'true'"
+                                                                                          [MENUDivExtraTop]="24"
+                                                                                          [MENUDivExtraLeft]="110">
 
-                                                                                <div
-                                                                                    class="class-MENUSplitButton-content">
+                                                                                <div class="class-MENUSplitButton-content">
+                                                                                    <div></div>
+                                                                                </div>
+                                                                            </split-button>
+                                                                        </td>
+                                                                        <td style="width:1px"></td>
+                                                                        <td style="width:200px">
+                                                                            <split-button (DefaultSplitButtonClicked)="SendDelayForm()"
+                                                                                          [IsDisabled]="IsDisplayOnly || (_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
+                                                                            && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0))"
+                                                                                          [ButtonText]=SelectedDECToDelayFormButtonText
+                                                                                          [AsRegularButton]="'true'"
+                                                                                          [MENUDivExtraTop]="24"
+                                                                                          [MENUDivExtraLeft]="110">
+
+                                                                                <div class="class-MENUSplitButton-content">
                                                                                     <div></div>
                                                                                 </div>
                                                                             </split-button>
                                                                         </td>
                                                                         <td></td>
+
                                                                     </tr>
                                                                 </table>
                                                                 <!--SVG-->

@@ -149,6 +149,10 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
             DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
             DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(myDeclarationPM.Id, true, false);
             if(currentDeclarationCourierStatusPM != null && !String.IsNullOrWhiteSpace(currentDeclarationCourierStatusPM.CrateNumber))crateNumber = currentDeclarationCourierStatusPM.CrateNumber;
+            if (string.IsNullOrWhiteSpace(crateNumber))
+            {
+                crateNumber = myDeclarationPM?.MyEcomInsert?.MyDeclarationCourierStatusPM?.CrateNumber;
+            }
 
             string importerVat = "";
             if (!String.IsNullOrWhiteSpace(myDeclarationPM.ImporterId))
@@ -201,7 +205,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
 
                 ImporterVat = importerVat,
                 BoxBarcode = crateNumber,
-                StorageSite = myDeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().StorageSiteCode ?? ""
+                //StorageSite = myDeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().StorageSiteCode ?? ""
 
 
             };
@@ -308,7 +312,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
         public string ImporterVat { get; set; }
 
         public string BoxBarcode { get; set; }
-        public string StorageSite { get; set; }
+        //public string StorageSite { get; set; }
     }
 
     public class CourierSWSHAWBResponse

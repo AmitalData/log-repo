@@ -57,6 +57,33 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="QueueType"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="UseRabbitMQ"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="QueueGroupCode"
+    Type="varchar"
+    Size="24">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SendTime"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Code"
     ReferencedTable="InterfaceManagements"

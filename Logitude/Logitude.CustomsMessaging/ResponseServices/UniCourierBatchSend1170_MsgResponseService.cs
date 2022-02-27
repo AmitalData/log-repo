@@ -68,7 +68,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     mess.AppendLine($"סומנו בצד הלקוח ");
 
-                    listPoco = repo.GetDeclarationsByIds(customResponse.ClientFilterDeclarationsList, requestParams.Tenant);
+                    listPoco = repo.GetDeclarationsByIdsExpectDecWithHatraDate(customResponse.ClientFilterDeclarationsList, requestParams.Tenant);
                 }
                 else
                 {

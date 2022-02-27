@@ -33,6 +33,7 @@ import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { SendClosePendingRequestParams } from 'Customs/DataContract/RequestParams/SendClosePendingRequestParams';
+import { SendALLDelayFormParams } from '../../../../Customs/DataContract/RequestParams/SendALLDelayFormParams';
 
 @Component({
 
@@ -110,6 +111,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     IsFiltered: boolean = false;
     IsMamanEnabled: boolean = false;
     isAllowAccounting: boolean = false;
+    isAllowBulkPendind: boolean = false;
     IsILOVLEnabled: boolean = false;
     IsILSWSEnabled: boolean = false;
 
@@ -148,6 +150,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         this.GetMamanPUR();
         this.GetIsSendDocumentsFromQueueButton();
         this.isAllowAccounting = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowAccounting")
+        this.isAllowBulkPendind = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowBulkPendind")
     }
     //PseventRowSelectEventSubscribe: any;
     ngOnDestroy() {
@@ -657,6 +660,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     _PAY_C_Total = 0;
     _PAY_R_Total = 0;
     _PAY_I_Total = 0;
+    _DecWithoutHaTra = 0;
+
     _PendingCodes: KeyValuePair[] = [];
 
     private _SelectedDECToBatchSendButtonText: string = "";
@@ -666,6 +671,15 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             this._SelectedDECToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyDECToSend") + ' (' + this._CourierWorksheetSharedDataService._SelectedItems.Collection.length + ')';
         }
         return this._SelectedDECToBatchSendButtonText;
+    }
+
+    private _SelectedDECToDelayFormButtonText: string = "";
+    public get SelectedDECToDelayFormButtonText(): string {
+        this._SelectedDECToDelayFormButtonText = "הפקת תעודות עיכוב";
+        if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
+            this._SelectedDECToDelayFormButtonText = "הפקת תעודות עיכוב" + ' (' + this._CourierWorksheetSharedDataService._SelectedItems.Collection.length + ')';
+        }
+        return this._SelectedDECToDelayFormButtonText;
     }
 
     private _SelectedMNFToBatchSendButtonText: string = "";
@@ -825,6 +839,10 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                         }
                         case "ACC_WS": {
                             this._ACC_WS_Total = item.Value;
+                            break;
+                        }
+                        case "DecWithoutHaTra": {
+                            this._DecWithoutHaTra = item.Value;
                             break;
                         }
                         /*
@@ -1653,6 +1671,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 filters.addAdditionalFilter("CourierCustomStatusCode", "2", "1", null, "NotEqual", false, false, false, "string");
 
 
+
                 break;
             }
         }
@@ -2125,6 +2144,46 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
     }
 
+    SendDelayForm() {
+
+        var titleText = "הפקת תעודת עיכוב";
+        var questionText = "אשר שליחת מסר פעולה מיוחדת של תעודת עיכוב למסוף";
+        var confirm = new ConfirmWindow();
+        confirm.Width = 350;
+        confirm.Height = 200;
+        confirm.Title = titleText;
+        confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
+        confirm.ShowNoButton = true;
+        confirm.Show(questionText);
+        confirm.WindowClosed.subscribe((event: any) => {
+            if (confirm.Yes)
+            {
+                SessionLocator.SelectedSession.StartBusyIndicator("");
+                var currRequestParams = new SendALLDelayFormParams();
+                currRequestParams.LoggingEnabled = true;
+                currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+                currRequestParams.Tenant = SessionLocator.Tenant;
+                currRequestParams.CourierMasterId = this.entityPM.Id;
+                currRequestParams.HAWB = this.entityPM.HAWB;
+                if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
+                    currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
+                }
+
+                this._CourierMasterService.PostSendDelayFormForDeclarations(currRequestParams)
+                    .subscribe((res: any) => {
+                        this.currentSession.StopBusyIndicator();
+                        var myMessageWindow = new MessageWindow();
+                        myMessageWindow.Show(res.Result);
+                        myMessageWindow.WindowClosed.subscribe(s => {
+                            this.RefreshButtonClicked();
+                        });
+                    });
+            }
+            confirm.Close();
+        });
+        
+    }
+
     private GetIsSendDocumentsFromQueueButton() {
         var myInterfaceManagementPMService = new InterfaceManagementPMService();
         myInterfaceManagementPMService.get("2715")
@@ -2465,8 +2524,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
     openBulkFeedPending() {
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 800;
-        logitudeWindow.Height = 735;
+        logitudeWindow.Width = 1500;
+        logitudeWindow.Height = 800;
         logitudeWindow.IsShowCloseButton = true;
         logitudeWindow.Title = "הזנה גורפת PENDING";
         logitudeWindow.WindowArgs = { CourierMasterPM: this.entityPM };        

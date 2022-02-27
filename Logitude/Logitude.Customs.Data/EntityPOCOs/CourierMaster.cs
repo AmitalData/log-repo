@@ -114,6 +114,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CourierMasterRemarks { get; set; }
         [Column("OpenDeclarations")]
 	    public int OpenDeclarations { get; set; }
+        [Column("NoOfCourierHawbwWithoutHatara")]
+	    public string NoOfCourierHawbwWithoutHatara { get; set; }
+        [Column("NoOfCourierHawbWithoutDelivery")]
+	    public string NoOfCourierHawbWithoutDelivery { get; set; }
     }
 }
 	 
