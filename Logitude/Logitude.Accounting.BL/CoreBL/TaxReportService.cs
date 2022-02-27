@@ -884,13 +884,15 @@ namespace Logitude.Accounting.BL.CoreBL
                 taxReportPM.TaxableOutputAmount = outputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit).Sum(d => d.VatableInvoiceAmount);
                 taxReportPM.OutputTaxAmount = outputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit &&
                                                                      d.VatAmount != 0).Sum(d => d.VatAmount);
-                taxReportPM.OutputTaxAmountRound = outputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit &&
+                if(taxReportPM.OutputTaxAmountRound == 0)
+                    taxReportPM.OutputTaxAmountRound = outputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit &&
                                                                      d.VatAmount != 0).Sum(d => d.VatAmountRound);
                 taxReportPM.ExemptTaxableOutput = outputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit).Sum(d => d.TotalInvoiceAmount - d.VatableInvoiceAmount);
                 taxReportPM.OutputLinesCount = outputLines.Where(d=>d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit).Count();
 
                 // INPUTS
-                taxReportPM.InputsTaxAmountRound = inputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit 
+                if (taxReportPM.InputsTaxAmountRound == 0)
+                    taxReportPM.InputsTaxAmountRound = inputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit 
                                                                          ).Sum(d => d.VatAmountRound);
                 taxReportPM.OtherInputsTaxAmount = inputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit && 
                                                                          d.IsEquipment == false).Sum(d => d.VatAmount);
