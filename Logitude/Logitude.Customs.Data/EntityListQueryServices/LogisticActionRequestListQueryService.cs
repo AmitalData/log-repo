@@ -86,9 +86,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                                HaveDeclarationId = a.DeclarationId != null,
 
-                                                               DeclarationNumber = declaration != null ? declaration.DeclarationNumber : null
+                                                               DeclarationNumber = declaration != null ? declaration.DeclarationNumber : null,
 
-                                                               //RequestCancelStatus = a.
+                                                               RequestCancelStatus = a.LogisticActionRequestType.LocalName
 
                                                            });
             return query;
