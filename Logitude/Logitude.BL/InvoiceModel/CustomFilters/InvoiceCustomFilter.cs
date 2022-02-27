@@ -52,7 +52,7 @@ namespace Logitude.BL.InvoiceModel.CustomFilters
                             queryableData =
                                 (from r in queryableData
                                  where
-                                 !string.IsNullOrEmpty(r.InvoiceNumber) && r.InvoiceNumber.ToUpper().StartsWith(searchText.ToUpper())
+                                 !string.IsNullOrEmpty(r.InvoiceNumber) && r.InvoiceNumber.ToUpper().Contains(searchText.ToUpper())
                                  ||
                                  r.BillTo != null && r.BillTo.EnglishName.ToUpper().Contains(searchText.ToUpper())
                                  select r);
