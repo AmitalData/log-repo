@@ -667,6 +667,16 @@ namespace WebFreight.Web.Helpers
             }
         }
 
+        public string FixPageBreakInlineStyle(string htmlString)
+        {
+            htmlString = htmlString.Replace("[PageBreak]", "<p style='page-break-after:always;'> <span style=visibility:collapse>Page Break</span></p>");
+            if (htmlString.IndexOf("<p fr-original-style='page-break-after:always;' style='break-after: page; overflow-wrap: break-word;'>") > -1)
+            {
+                return htmlString.Replace("<p fr-original-style='page-break-after:always;' style='break-after: page; overflow-wrap: break-word;'>", "<p style='page-break-after:always;'>");
+            }
+
+            return htmlString;
+        }
 
         public HtmlEditorResolveResult GetEditorHtmlData(HtmlEditorResolveArgs htmlEditorResolveArgs)
         {
