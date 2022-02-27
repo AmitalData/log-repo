@@ -143,6 +143,8 @@ namespace Logitude.Server.Tools
         public string QueueGroupCodeRabbit { get; set; }
         public WorkerQueueType WorkerQueueType { get; set; }
 
+        public string OverrideRMQ { get; set; }
+        
         public virtual bool OnStart()
         {
             //StartMe();
