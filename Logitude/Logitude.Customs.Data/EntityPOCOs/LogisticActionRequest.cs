@@ -40,8 +40,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string PassportCountry { get; set; }
         [Column("PassportNumber")]
 	    public string PassportNumber { get; set; }
+        [ForeignKey("LogisticActionRequestType")]
         [Column("RequestType")]
 	    public string RequestType { get; set; }
+	      
+        public virtual LogisticActionRequestType LogisticActionRequestType { get; set; }
         [Column("RequestReason")]
 	    public string RequestReason { get; set; }
         [ForeignKey("SiteLookup")]
@@ -69,8 +72,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public decimal Quantity { get; set; }
         [Column("RequestNumber")]
 	    public string RequestNumber { get; set; }
+        [ForeignKey("LogisticActionResponseRequestS")]
         [Column("ResponseStatusCode")]
 	    public string ResponseStatusCode { get; set; }
+	      
+        public virtual LogisticActionResponseRequestS LogisticActionResponseRequestS { get; set; }
         [Column("OperationalStatus")]
 	    public string OperationalStatus { get; set; }
         [Column("Direction")]

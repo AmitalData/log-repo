@@ -1085,11 +1085,14 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                                     "DeclarationNumber": this.EntityPM.DeclarationNumber,
                                     "CustomsFile": this.EntityPM.CustomFileNo,
                                     "DeclarationId": this.EntityPM.Id,
+                                    "LoggingEntityReference": this.EntityPM.Direction,
                                 };
                                 customsRequestMenuService.WindowClosed.subscribe(
                                     (myarg) => { this.CurrentSession.CurrentEditComponent.ReloadEntityPM() }
                                 );
+                                
                                 customsRequestMenuService.ShowModalAsEditMenuAction('8373', my);
+                               
                             }
                         });
                 }
