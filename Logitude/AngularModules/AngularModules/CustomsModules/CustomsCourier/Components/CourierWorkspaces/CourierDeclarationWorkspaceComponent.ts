@@ -412,18 +412,18 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierDeclarationWorkspaceListTemplate',
         });
         this.columns.push({
-            FieldName: 'CalcCourierHawbWithoutHatara',
+            FieldName: 'NoOfCourierHawbWithoutDelivery',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.CalcCourierHawbWithoutHatara"),
+            Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.NoOfCourierHawbWithoutDelivery"),
             Styles: { width: '150px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierDeclarationWorkspaceListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierDeclarationWorkspaceListTemplate',
         });
         this.columns.push({
-            FieldName: 'CalcCourierHawbWithoutDelivery',
+            FieldName: 'NoOfCourierHawbwWithoutHatara',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.CalcCourierHawbWithoutDelivery"),
+            Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.NoOfCourierHawbwWithoutHatara"),
             Styles: { width: '150px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierDeclarationWorkspaceListTemplate',
