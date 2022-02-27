@@ -339,7 +339,7 @@ export class DeclarationRestoreComponent
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
         currRequestParams.Tenant = SessionLocator.Tenant;
-
+        currRequestParams.LoggingEntityReference = this.RequestParams.LoggingEntityReference;
         currRequestParams.AppicationId = this.RequestParams.DeclarationId;
         currRequestParams.DeclarationId = this.RequestParams.DeclarationId;
         currRequestParams.DeclarationNumber = this.RequestParams.DeclarationNumber;
