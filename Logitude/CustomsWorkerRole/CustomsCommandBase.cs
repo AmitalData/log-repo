@@ -386,7 +386,7 @@ namespace CustomsWorkerRole
                                         catch (Exception eee)
                                         {
 
-
+                                            Logger.LogMe(eee.ToString(), true, "rabbitmq");
                                             ExceptionHandler.HandleException(eee, DateTime.Now, 0, "", "WorkerRoleRabbitMQ", $"WorkUntilPrcossesStop_RabbitMQ{messageId}", null);
                                             Thread.Sleep(1000);
                                         }
