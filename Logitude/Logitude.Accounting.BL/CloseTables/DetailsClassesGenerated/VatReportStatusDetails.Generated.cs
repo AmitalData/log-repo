@@ -86,6 +86,15 @@ namespace Logitude.Accounting.BL
                 LocalName = "הביטול נכשל", 
                 Inactive = false, 
 			});
+			 
+            all.Add(new VatReportStatusDetails()
+            {    
+                Code = "J", 
+                EnglishName = "Transmitted and a closing journal was created", 
+                LocalName = "שודר ונוצרה פקודת סגירה", 
+                SearchFields = ", Transmitted and a closing journal was created, Jשודר ונוצרה פקודת סגירה", 
+                Inactive = false, 
+			});
 			
             return all;
        }

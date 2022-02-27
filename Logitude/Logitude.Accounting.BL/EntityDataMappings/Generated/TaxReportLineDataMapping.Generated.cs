@@ -46,7 +46,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         TotalInvoiceAmount, 
 	         OriginalReference, 
 	         JournalLineNumber, 
-	         PreviousReference,
+	         PreviousReference, 
+	         IsReconciled,
 	      }
 
 
@@ -81,7 +82,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         OriginalReference, 
 	         UpdatedBUserName, 
 	         JournalLineNumber, 
-	         PreviousReference,
+	         PreviousReference, 
+	         IsReconciled,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -203,6 +205,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PreviousReference))
             {
 				entityPOCO.PreviousReference = entityPM.PreviousReference;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsReconciled))
+            {
+				entityPOCO.IsReconciled = entityPM.IsReconciled;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -336,6 +343,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.PreviousReference = entityPOCO.PreviousReference;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsReconciled))
+            {
+					entityPM.IsReconciled = entityPOCO.IsReconciled;
+            }
+
 		}
 
 		public void PMToOldPM(TaxReportLinePM entityPM, TaxReportLinePM oldEntityPM)
@@ -455,6 +467,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PreviousReference))
             {
                 oldEntityPM.PreviousReference = entityPM.PreviousReference;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsReconciled))
+            {
+                oldEntityPM.IsReconciled = entityPM.IsReconciled;
             }
 			
 		}

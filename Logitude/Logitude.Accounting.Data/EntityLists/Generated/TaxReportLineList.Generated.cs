@@ -72,6 +72,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string UpdatedBUserName  { get; set; }
        [DataMember]
        public string PreviousReference  { get; set; }
+       [DataMember]
+       public bool IsReconciled  { get; set; }
    }
 
 }

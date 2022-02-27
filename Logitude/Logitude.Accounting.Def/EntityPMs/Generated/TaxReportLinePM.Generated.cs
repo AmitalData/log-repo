@@ -689,6 +689,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isReconciled ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsReconciled  
+	   {
+	    
+	     get
+		{
+		   return isReconciled;
+		 }
+		 set
+		 {
+		   if(isReconciled != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsReconciled",OldValue=isReconciled,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isReconciled=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

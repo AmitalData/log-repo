@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Vat Report Status&quot;"
-  Code="&quot;b9b4&quot;"
+  Code="&quot;c967&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;EnglishName&quot;"
@@ -500,6 +500,12 @@
       Code="&quot;CF&quot;"
       SearchFields="&quot;CF,Cancelation failed,הביטול נכשל&quot;"
       LocalName="&quot;הביטול נכשל&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;J&quot;"
+      EnglishName="&quot;Transmitted and a closing journal was created&quot;"
+      LocalName="&quot;שודר ונוצרה פקודת סגירה&quot;"
+      SearchFields="&quot;, Transmitted and a closing journal was created, Jשודר ונוצרה פקודת סגירה&quot;"
       Inactive="false" />
   </Records>
   <DataContracts />
