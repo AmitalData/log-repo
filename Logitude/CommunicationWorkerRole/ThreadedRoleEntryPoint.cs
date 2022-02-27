@@ -49,6 +49,7 @@ using Logitude.Customs.BL.Messaging.Amital;
 using Simplog.Server.Infrastructure.Interfaces;
 using Logitude.Server.Tools.Interfaces;
 using CommunicationWorkerRole.Stimulsoft.fonts;
+using Newtonsoft.Json;
 
 namespace CommunicationWorkerRole
 {
@@ -354,7 +355,9 @@ namespace CommunicationWorkerRole
             {
                 StimulsoftFontsService.AddFonts();
             }
-            catch (Exception) { }
+            catch (Exception e) {
+                File.WriteAllText("logex.json", JsonConvert.SerializeObject(e));
+            }
         }
         private void TestBatch()
         {
