@@ -1326,6 +1326,6 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     }
 
     public IsSHOVisible(selectedShipment: any) : boolean {
-        return selectedShipment && selectedShipment.DirectionId != 'I' && selectedShipment.TransportModeId == 'O' && (AppTool.IsNullOrEmpty(selectedShipment.ForwarderShipmentNumber) || (selectedShipment.StatusName == 'Created' && !AppTool.IsNullOrEmpty(selectedShipment.ForwarderShipmentNumber)));
+        return selectedShipment && selectedShipment.DirectionId != 'C' && selectedShipment.TransportModeId == 'O' && (AppTool.IsNullOrEmpty(selectedShipment.ForwarderShipmentNumber) || (selectedShipment.StatusName == 'Created' && !AppTool.IsNullOrEmpty(selectedShipment.ForwarderShipmentNumber)));
     }
 }
