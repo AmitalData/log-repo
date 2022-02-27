@@ -255,6 +255,10 @@ namespace CustomsWorkerRole
         void WorkUntilPrcossesStop_RabbitMQ()
         {
             this._RabbitQueueCode = RabbitQueueCodeService.GetRabbitQueueCode(this.GetType().Name, base.QueueGroupCodeRabbit);
+            if (!string.IsNullOrWhiteSpace(base.OverrideRMQ))
+            {
+                this._RabbitQueueCode = base.OverrideRMQ;
+            }
             EventHandler<BasicDeliverEventArgs> consumerEventArgs = null;
             try
             {
@@ -348,6 +352,7 @@ namespace CustomsWorkerRole
 
                                         queue_TransactionScope.Dispose();
                                         successProcessMessage = false;
+                                        Logger.LogMe(e1.ToString(), true, "rabbitmq");
                                         ExceptionHandler.HandleException(e1, DateTime.Now, 0, "", "WorkerRoleRabbitMQ", $"WorkUntilPrcossesStop_RabbitMQ{messageId}", null);
                                         Thread.Sleep(1000);
 
@@ -381,7 +386,7 @@ namespace CustomsWorkerRole
                                         catch (Exception eee)
                                         {
 
-
+                                            Logger.LogMe(eee.ToString(), true, "rabbitmq");
                                             ExceptionHandler.HandleException(eee, DateTime.Now, 0, "", "WorkerRoleRabbitMQ", $"WorkUntilPrcossesStop_RabbitMQ{messageId}", null);
                                             Thread.Sleep(1000);
                                         }
@@ -593,6 +598,7 @@ namespace CustomsWorkerRole
 
                 if (String.IsNullOrWhiteSpace(analyzeClass))
                 {
+                    Logger.LogMe("analyzeClass is null", true, "rabbitmq");
                     //_CustomDbQueueService.SafeAbandon();
                     ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage() Method :analyzeClass ==null", null);
                     //message.DeadLetter();
@@ -610,6 +616,7 @@ namespace CustomsWorkerRole
                 int.TryParse(msgResponse.Properties["Tenant"].ToString(), out tenant);
                 if (tenant == -1)
                 {
+                    Logger.LogMe("Tenant is null", true, "rabbitmq");
                     ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage() Method :tenant==-1", null);
                     return false;
                 }
