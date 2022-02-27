@@ -734,6 +734,7 @@ namespace WebFreight.Web.ReportsWebServices
                     profitrecord.ShipmentCreateDate = a.CreateDateTime;
                     profitrecord.ChargeableWeight = a.ChargeableWeight;
                     profitrecord.ShipmentNo = a.ShipmentNumber;
+                    profitrecord.NumberOfContainers = MethodHelper.IsLCLEntity(a.TransportModeId, a.ShipmentTypeId) ? a.NumberOfPackages : a.NumberOfContainers;
                     profitrecord.TEU = a.TEU;
                     profitrecord.Agent = a.AgentName;
                     profitrecord.Weight = a.GrossWeightInKG;
