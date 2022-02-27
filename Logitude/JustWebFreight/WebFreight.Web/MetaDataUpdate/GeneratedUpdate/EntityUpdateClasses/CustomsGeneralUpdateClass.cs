@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "f207293ef8486b2533c2b68745528ea9";
+		public const string HashString = "1e9edb08d3709df1c87d4c776397eae9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "8b62",
+			      				    Code =  "f15c",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2059,6 +2059,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOSelectAll = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.SelectAll", DefaultText = "Select All",LocalDefaultText = @"בחר הכל", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOCancelSelect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CancelSelect", DefaultText = "Cancel Select",LocalDefaultText = @"בטל בחירה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_GeneralMHLogisticActionRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.LogisticActionRequest", DefaultText = "Logistic Action Request",LocalDefaultText = @"בקשות ביטול יצוא", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

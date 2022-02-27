@@ -37,6 +37,7 @@ export class LogisticActionRequestList {
 	DeclarationId: string;
 	DeclarationNumber: string;
 	RequestCancelStatus: string;
+	HaveDeclarationId: boolean;
 	
 }
  

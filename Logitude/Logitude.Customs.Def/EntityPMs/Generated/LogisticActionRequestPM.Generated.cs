@@ -687,6 +687,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool? haveDeclarationId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? HaveDeclarationId  
+	   {
+	    
+	     get
+		{
+		   return haveDeclarationId;
+		 }
+		 set
+		 {
+		   if(haveDeclarationId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HaveDeclarationId",OldValue=haveDeclarationId,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   haveDeclarationId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

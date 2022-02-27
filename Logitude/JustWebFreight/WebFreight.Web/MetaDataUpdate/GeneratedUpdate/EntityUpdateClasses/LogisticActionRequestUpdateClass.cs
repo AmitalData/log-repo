@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LogisticActionRequestUpdateClass
    {  		
-		public const string HashString = "cad07218517b01db5e66cc021c6ed869";
+		public const string HashString = "092a74448db7fb40d97b66003d2c692e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -101,9 +101,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  true,
-			      				    HasFiltersMenu =  false,
+			      				    HasFiltersMenu =  true,
 			      				    IsEditable =  false,
-			      				    IsNewWizard =  false,
+			      				    IsNewWizard =  true,
 			      				    LookUp1 =  "Id",
 			      				    LookUp2 =  "Id",
 			      				    KeyPropertyPath =  "Id",
@@ -126,7 +126,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
+			      				    NewWizardControlName =  "Logitude.Customs.Views.NewLogisticActionRequestControlCommand",
+			      				    LocalDefaultText =  " בקשות ביטול יצוא",
 			      				    DefaultText =  "Logistic Action Request",
+			      				    NewButtonLocalDefaultText =  " בקשות ביטול יצוא",
+			      				    NewButtonDefaultText =  " בקשות ביטול יצוא",
 			      				    Code =  "45f7",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
@@ -1821,6 +1825,66 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "HaveDeclarationId",
+					  						ObjectTableName =  "Customs.LogisticActionRequest",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "HaveDeclarationId",
+					  						ListPropertyPath =  "HaveDeclarationId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.PassportCountry",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "HaveDeclarationId",
+					  						DefaultText =  "Have Declaration Id",
+					  						ListFieldLable =  "HaveDeclarationIdListLable",
+					  						ListLableDefaultText =  "Have Declaration Id",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -1988,6 +2052,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 QueryColumn DeclartionsConnctedRequestQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsConnctedRequestQuery.Id,QueryCode = DeclartionsConnctedRequestQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.LogisticActionRequest.RequestNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn DeclartionsConnctedRequestQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsConnctedRequestQuery.Id,QueryCode = DeclartionsConnctedRequestQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Customs.LogisticActionRequest.IsClosed" , ColumnWidth = 100 }, addedQueryColumns);
+
+             AdvancedQueryFilter DeclartionsConnctedRequestQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.LogisticActionRequest.HaveDeclarationId", PredefinedValue = "true",PredefinedValue2 = null, QueryId = DeclartionsConnctedRequestQuery.Id,QueryCode = DeclartionsConnctedRequestQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
   
 	      
 
@@ -2017,6 +2084,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 QueryColumn DeclartionsNotConnctedRequestQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsNotConnctedRequestQuery.Id,QueryCode = DeclartionsNotConnctedRequestQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.LogisticActionRequest.RequestNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn DeclartionsNotConnctedRequestQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclartionsNotConnctedRequestQuery.Id,QueryCode = DeclartionsNotConnctedRequestQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Customs.LogisticActionRequest.IsClosed" , ColumnWidth = 100 }, addedQueryColumns);
+
+             AdvancedQueryFilter DeclartionsNotConnctedRequestQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.LogisticActionRequest.HaveDeclarationId", PredefinedValue = "false",PredefinedValue2 = null, QueryId = DeclartionsNotConnctedRequestQuery.Id,QueryCode = DeclartionsNotConnctedRequestQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

@@ -169,6 +169,11 @@ export class LogisticActionRequestPM {
     public set RequestCancelStatus(newValue: string) { if (this.requestCancelStatus != newValue) { this.requestCancelStatus = newValue; this.MarkAsDirty("RequestCancelStatus"); } }
        
 	 
+    private haveDeclarationId: boolean;
+    public get HaveDeclarationId() { return this.haveDeclarationId; }
+    public set HaveDeclarationId(newValue: boolean) { if (this.haveDeclarationId != newValue) { this.haveDeclarationId = newValue; this.MarkAsDirty("HaveDeclarationId"); } }
+       
+	 
 
     public OldEntityPM: LogisticActionRequestPM;
 		

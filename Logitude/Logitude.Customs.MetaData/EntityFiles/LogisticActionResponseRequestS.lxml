@@ -4,7 +4,7 @@
   ObjectTableName="&quot;Customs.LogisticActionResponseRequestS&quot;"
   IsNew="true"
   DBTableName="&quot;Customs.LogisticActionResponseRequestSes&quot;"
-  DBTableOldNames="Customs.LogisticActionResponseRequestStatuss,Customs.LogisticActionResponseRequestStatuses,Customs.LogisticActionResponseRequestSes"
+  DBTableOldNames=""
   ObjectTableSingular="&quot;LogisticActionResponseRequestS&quot;"
   ObjectTablePlural="&quot;LogisticActionResponseRequestSes&quot;"
   HasCustomFilter="false"

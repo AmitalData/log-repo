@@ -21,6 +21,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {LogisticActionRequestPM} from '../../EntityPMs/LogisticActionRequestPM';
 
+import {LogisticActionRequestValidator} from '../../Validators/LogisticActionRequestValidator';
 
 @Injectable()
 
@@ -71,6 +72,12 @@ export class LogisticActionRequestPMService {
 			var validator: ClassLevelValidator = new ClassLevelValidator();                
 			var errorsArray = validator.Validate("Customs.LogisticActionRequest", entityPM);
 
+			var customValidator :LogisticActionRequestValidator = new LogisticActionRequestValidator();
+			var validationErrorsArr = customValidator.Validate(entityPM);
+			if(validationErrorsArr)
+			{
+				errorsArray = errorsArray.concat(validationErrorsArr);
+			}
 
 			if (errorsArray.length == 0) {
 
@@ -113,6 +120,12 @@ export class LogisticActionRequestPMService {
 			var validator: ClassLevelValidator = new ClassLevelValidator();               
 			var errorsArray = validator.Validate("Customs.LogisticActionRequest", entityPM);
 
+			var customValidator :LogisticActionRequestValidator = new LogisticActionRequestValidator();
+			var validationErrorsArr = customValidator.Validate(entityPM);
+			if(validationErrorsArr)
+			{
+				errorsArray = errorsArray.concat(validationErrorsArr);
+			}
 
 			if (errorsArray.length == 0) {
 
