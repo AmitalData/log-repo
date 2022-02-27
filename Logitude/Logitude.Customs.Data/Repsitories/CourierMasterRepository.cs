@@ -132,8 +132,15 @@ namespace Logitude.Customs.Data.Repsitories
         }
         public int CounNoOfCourierHawbwWithoutHatara(string couriermasterid, int tenant)
         {
-            var courierDecs = context.CourierDeclarations.Where(y => y.CourierMasterId == couriermasterid).Select(y => y.DeclarationId);
-            return (context.Declarations.Count(x => x.HatraDate == null && courierDecs.Contains(x.Id)));
+            var courierDecs = (from a in context.CourierDeclarations
+             where a.Tenant == tenant && a.CourierMasterId == couriermasterid
+             select a.DeclarationId);
+            return (from a in context.Declarations
+                    where a.HatraDate == null && courierDecs.Contains(a.Id)
+                    select a).Count();
+
+            //var courierDecs = context.CourierDeclarations.Where(y => y.CourierMasterId == couriermasterid).Select(y => y.DeclarationId);
+            //return (context.Declarations.Count(x => x.HatraDate == null && courierDecs.Contains(x.Id)));
         }
     }
 

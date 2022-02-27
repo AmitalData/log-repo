@@ -68,8 +68,6 @@ export class CourierMasterList {
 	OpenDeclarations: number;
 	NoOfCourierHawbwWithoutHatara: string;
 	NoOfCourierHawbWithoutDelivery: string;
-	CalcCourierHawbWithoutHatara: number;
-	CalcCourierHawbWithoutDelivery: number;
 	
 }
  
