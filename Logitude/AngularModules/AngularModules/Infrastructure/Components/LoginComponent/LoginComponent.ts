@@ -43,6 +43,7 @@ import { ObjectsUpdater } from '../../Locators/ObjectsUpdater';
 //import { DWObjectFieldExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/DWObjectFieldExtendedPMService';
 import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 import { GeneralDomainService } from '../../../Infrastructure/Services/GeneralDomainService';
+import { AuthenticateService } from "collaboration-tool-core";
 
 @Component({
     
@@ -168,7 +169,6 @@ export class LoginComponent implements OnInit {
         } else {
             this.StartLoginProcess();
         }
-        
     }
     IsShowLoginForm: boolean = false;
 
@@ -312,8 +312,24 @@ export class LoginComponent implements OnInit {
                     });
                 });
             }
+
+            this.WarmupCToolLogitudeAuthenticate(userData);
         }
         window.sessionStorage.setItem("userdata", "");
+    }
+
+    WarmupCToolLogitudeAuthenticate(userData: any) {
+        this.myInfrastructureDomainService.GetFeatureToggles().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var hasCToolToggleFeature = myResponse.Result.filter(f => f.ToggleCode === "CTL")[0];
+                if(hasCToolToggleFeature){
+                    const authenticateService = new AuthenticateService();
+                    if(authenticateService){
+                        authenticateService.logitudeAuthenticate({ Tenant: Number(userData.CurrentTenant + ""), Token: userData.Token });
+                    }
+                }
+            }
+        });
     }
 
     FillProtractorEmails() {
