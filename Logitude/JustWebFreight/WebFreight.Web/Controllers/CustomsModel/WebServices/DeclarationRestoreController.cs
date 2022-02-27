@@ -51,10 +51,17 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 else
                 {
 
-                    // use messageing service
-                    var messagingService = new DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService();
-                    responseData = messagingService.Send(requestParams);
-
+                    if (requestParams.LoggingEntityReference == "E")
+                    {
+                        var messagingService = new DF_NG_9079_Web05_RetrieveExportOrTransshipmentDeclarationMessagingService();
+                        responseData = messagingService.Send(requestParams);
+                    }
+                    else
+                    {
+                        // use messageing service
+                        var messagingService = new DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService();
+                        responseData = messagingService.Send(requestParams);
+                    }
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, responseData);

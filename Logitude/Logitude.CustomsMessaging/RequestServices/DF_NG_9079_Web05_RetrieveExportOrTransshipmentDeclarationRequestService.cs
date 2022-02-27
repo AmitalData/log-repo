@@ -29,7 +29,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             this.MyRequestSheetParam.EntityId1 = requestParams.DeclarationId;
             this.MyRequestSheetParam.CustomFileNo = requestParams.CustomsFile;
-            this.MyRequestSheetParam.RequestDescription = "שאילתא לשחזור נתוני הצהרה";
+            this.MyRequestSheetParam.RequestDescription = "שאילתא לשחזור נתוני הצהרת יצוא";
 
             return myDF_NG_8373_Web05_RetrieveImportDeclaration_Request;
 
