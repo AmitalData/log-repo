@@ -249,7 +249,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             StatusLocalName = d.StatusLocalName,
                             StatusEnglishName = d.StatusEnglishName,
                             JournalNumber = d.JournalNumber,
-                            TotalInvoiceAmount = d.TotalInvoiceAmount
+                            TotalInvoiceAmount = d.TotalInvoiceAmount,
+                            //VatAmountRound = d.VatAmountRound
                         };
                         linesPM.Add(item);
                     });
