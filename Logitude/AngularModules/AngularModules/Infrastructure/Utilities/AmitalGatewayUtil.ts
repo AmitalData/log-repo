@@ -656,6 +656,10 @@ export class AmitalGatewayUtil {
                      //this.SelectionChanged(myDeclarationEditTab);
                     cmpRef.instance.ComponentRef = cmpRef;
                     let myEditComponent: EditComponent = cmpRef.instance;
+                    if (myEditComponent.EntityPM.Direction == "E")
+                    {
+                        BackButtonLabel = "תיק יצוא"
+                    }
                     let myDeclarationEditComponentController: DeclarationEditComponentController = myEditComponent.EditComponentController as DeclarationEditComponentController;
                     this.getEntity(unifreightMessage.LogitudeEntityNumber).subscribe((data:any) => {
                         cmpRef.instance.Run({
