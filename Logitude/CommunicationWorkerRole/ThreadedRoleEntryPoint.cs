@@ -356,7 +356,7 @@ namespace CommunicationWorkerRole
                 StimulsoftFontsService.AddFonts();
             }
             catch (Exception e) {
-                File.WriteAllText("exxxxxx.json", JsonConvert.SerializeObject(e));
+                File.WriteAllText("logex.json", JsonConvert.SerializeObject(e));
             }
         }
         private void TestBatch()
