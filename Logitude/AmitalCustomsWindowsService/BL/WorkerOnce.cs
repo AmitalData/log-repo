@@ -164,7 +164,14 @@ namespace AmitalCustomsWindowsService.BL
 
         }
 
-       
+        public string OverrideRMQ
+        {
+            get { return _TWorker.OverrideRMQ; }
+            set { _TWorker.OverrideRMQ = value; }
+
+        }
+
+
         int _ManagedThreadId;
         
     }

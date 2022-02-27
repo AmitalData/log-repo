@@ -95,6 +95,8 @@
             this.recivedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBoxLogger = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.textBoxOverrideRMQ = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBoxDebugMode = new System.Windows.Forms.CheckBox();
             this._TBID = new System.Windows.Forms.TextBox();
@@ -105,7 +107,6 @@
             this.Interface = new System.Windows.Forms.Label();
             this._TBTenant = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.checkBoxMQ = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -638,7 +639,7 @@
             this.textBoxLogger.Location = new System.Drawing.Point(0, 0);
             this.textBoxLogger.Multiline = true;
             this.textBoxLogger.Name = "textBoxLogger";
-            this.textBoxLogger.Size = new System.Drawing.Size(638, 305);
+            this.textBoxLogger.Size = new System.Drawing.Size(638, 306);
             this.textBoxLogger.TabIndex = 1;
             this.textBoxLogger.TextChanged += new System.EventHandler(this.textBoxLogger_TextChanged);
             // 
@@ -651,7 +652,8 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.checkBoxMQ);
+            this.splitContainer1.Panel1.Controls.Add(this.textBoxOverrideRMQ);
+            this.splitContainer1.Panel1.Controls.Add(this.label4);
             this.splitContainer1.Panel1.Controls.Add(this.checkBox1);
             this.splitContainer1.Panel1.Controls.Add(this.checkBoxDebugMode);
             this.splitContainer1.Panel1.Controls.Add(this._TBID);
@@ -667,13 +669,29 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.textBoxLogger);
             this.splitContainer1.Size = new System.Drawing.Size(638, 372);
-            this.splitContainer1.SplitterDistance = 63;
+            this.splitContainer1.SplitterDistance = 62;
             this.splitContainer1.TabIndex = 2;
+            // 
+            // textBoxOverrideRMQ
+            // 
+            this.textBoxOverrideRMQ.Location = new System.Drawing.Point(362, 32);
+            this.textBoxOverrideRMQ.Name = "textBoxOverrideRMQ";
+            this.textBoxOverrideRMQ.Size = new System.Drawing.Size(120, 20);
+            this.textBoxOverrideRMQ.TabIndex = 10;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(287, 36);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(78, 13);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "OvverrideRMQ";
             // 
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(555, 32);
+            this.checkBox1.Location = new System.Drawing.Point(570, 32);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(65, 17);
             this.checkBox1.TabIndex = 7;
@@ -686,7 +704,7 @@
             this.checkBoxDebugMode.AutoSize = true;
             this.checkBoxDebugMode.Checked = true;
             this.checkBoxDebugMode.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxDebugMode.Location = new System.Drawing.Point(464, 32);
+            this.checkBoxDebugMode.Location = new System.Drawing.Point(488, 33);
             this.checkBoxDebugMode.Name = "checkBoxDebugMode";
             this.checkBoxDebugMode.Size = new System.Drawing.Size(85, 17);
             this.checkBoxDebugMode.TabIndex = 3;
@@ -714,7 +732,7 @@
             this._CBWorkerRole.FormattingEnabled = true;
             this._CBWorkerRole.Location = new System.Drawing.Point(72, 30);
             this._CBWorkerRole.Name = "_CBWorkerRole";
-            this._CBWorkerRole.Size = new System.Drawing.Size(386, 21);
+            this._CBWorkerRole.Size = new System.Drawing.Size(209, 21);
             this._CBWorkerRole.TabIndex = 4;
             this._CBWorkerRole.SelectedIndexChanged += new System.EventHandler(this._CBWorkerRole_SelectedIndexChanged);
             // 
@@ -734,15 +752,15 @@
             "280",
             "2715",
             "3050"});
-            this._CBInterfaceID.Location = new System.Drawing.Point(205, 7);
+            this._CBInterfaceID.Location = new System.Drawing.Point(156, 7);
             this._CBInterfaceID.Name = "_CBInterfaceID";
-            this._CBInterfaceID.Size = new System.Drawing.Size(76, 21);
+            this._CBInterfaceID.Size = new System.Drawing.Size(125, 21);
             this._CBInterfaceID.TabIndex = 3;
             // 
             // Interface
             // 
             this.Interface.AutoSize = true;
-            this.Interface.Location = new System.Drawing.Point(150, 7);
+            this.Interface.Location = new System.Drawing.Point(101, 10);
             this.Interface.Name = "Interface";
             this.Interface.Size = new System.Drawing.Size(49, 13);
             this.Interface.TabIndex = 2;
@@ -764,17 +782,6 @@
             this.label1.Size = new System.Drawing.Size(41, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Tenant";
-            // 
-            // checkBoxMQ
-            // 
-            this.checkBoxMQ.AutoSize = true;
-            this.checkBoxMQ.Location = new System.Drawing.Point(101, 7);
-            this.checkBoxMQ.Name = "checkBoxMQ";
-            this.checkBoxMQ.Size = new System.Drawing.Size(43, 17);
-            this.checkBoxMQ.TabIndex = 8;
-            this.checkBoxMQ.Text = "MQ";
-            this.checkBoxMQ.UseVisualStyleBackColor = true;
-            this.checkBoxMQ.CheckedChanged += new System.EventHandler(this.checkBoxMQ_CheckedChanged);
             // 
             // TesterForm
             // 
@@ -881,6 +888,7 @@
         private System.Windows.Forms.ToolStripMenuItem recivedToolStripMenuItem;
 
         private System.Windows.Forms.ToolStripMenuItem singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem;
-        private System.Windows.Forms.CheckBox checkBoxMQ;
+        private System.Windows.Forms.TextBox textBoxOverrideRMQ;
+        private System.Windows.Forms.Label label4;
     }
 }
