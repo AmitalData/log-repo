@@ -4,6 +4,9 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
+using Logitude.Server.Tools.Helpers;
+using System;
+using System.Linq;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -11,7 +14,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
     {
         bool isNewEntity;
         private int tenant;
-        public QuoteChargesGroup Poco { get; set; }
+        public QuoteChargesGroup entityPoco { get; set; }
 
         public IWebFreightContext ObjectContext
         {
@@ -33,23 +36,64 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         {
             this.isNewEntity = true;
             this.entityPM = theEntityPm;
-            this.entityPM.Id = IdCounter.GetNumber("QuoteChargesGroup", tenant).ToString();
-            this.Poco = new QuoteChargesGroup();
-            this.Poco.Id = this.entityPM.Id;
 
-            QuoteChargesGroupMapping.MapEntity(theEntityPm, Poco, isNewEntity);
-            entityRepository.Add(Poco);
+            bool exist = this.IsQuoteChargesGroupExists();
+            if (exist)
+            {
+                ThrowQuoteChargesGroupExistsExcption();
+            }
+
+            this.entityPM.Id = IdCounter.GetNumber("QuoteChargesGroup", tenant).ToString();
+            this.entityPoco = new QuoteChargesGroup();
+            this.entityPoco.Id = this.entityPM.Id;
+
+            QuoteChargesGroupMapping.MapEntity(theEntityPm, entityPoco, isNewEntity);
+            entityRepository.Add(entityPoco);
             entityRepository.SubmitChanges();
         }
 
-        public void Update(QuoteChargesGroupPM theEntityPm)
+        public void Update(QuoteChargesGroupPM quoteChargesGroupPM)
         {
             this.isNewEntity = false;
-            this.entityPM = theEntityPm;
-            this.Poco = entityRepository.GetSingleQuoteChargesGroup(theEntityPm.Id, theEntityPm.Tenant);
-            QuoteChargesGroupMapping.MapEntity(theEntityPm, Poco, isNewEntity);
-            entityRepository.Update(Poco);
+            this.entityPM = quoteChargesGroupPM;
+            bool exist = this.IsQuoteChargesGroupExists();
+            if (exist)
+            {
+                ThrowQuoteChargesGroupExistsExcption();
+            }
+
+            this.entityPoco = entityRepository.GetSingleQuoteChargesGroup(quoteChargesGroupPM.Id, quoteChargesGroupPM.Tenant);
+            QuoteChargesGroupMapping.MapEntity(quoteChargesGroupPM, entityPoco, isNewEntity);
+            entityRepository.Update(entityPoco);
             entityRepository.SubmitChanges();
+
+        }
+
+        private bool IsQuoteChargesGroupExists()
+        {
+            bool myResult = false;
+
+            if (isNewEntity)
+            {
+                myResult = (from a in entityRepository.GetQuoteChargesGroups(entityPM.Tenant)
+                            where a.Code == entityPM.Code && a.Tenant == entityPM.Tenant
+                            select a).Any();
+            }
+
+            else
+            {
+                myResult = (from a in entityRepository.GetQuoteChargesGroups(entityPM.Tenant)
+                            where a.Code == entityPM.Code && a.Tenant == entityPM.Tenant && a.Id != entityPM.Id
+                            select a).Any();
+            }
+
+            return myResult;
+        }
+        private void ThrowQuoteChargesGroupExistsExcption()
+        {
+            string msg = TranslateTextsClass.Translate("General.M.EntityAlreadyexists", tenant);
+            msg = msg.Replace("%Entity", "Quote Charges Group");
+            throw new ApplicationException(msg);
         }
     }
 }
