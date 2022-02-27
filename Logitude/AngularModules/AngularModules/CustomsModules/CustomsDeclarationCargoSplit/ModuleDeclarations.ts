@@ -6,6 +6,7 @@ import { DecCargoSplitConsPackDetComponent } from './Components/EditTabs/DecCarg
 
 import { CargoSplitGeneralTabComponent } from './Components/EditTabs/General/CargoSplitGeneralTabComponent';
 import { DeclarationCargoSplitFiltersMenuComponent } from './Components/FiltersMenu/DeclarationCargoSplitFiltersMenuComponent';
+import { LogisticActionRequestFiltersMenuComponent } from 'CustomsModules/CustomsLogisticActionRequest/FiltersMenu/LogisticActionRequestFiltersMenuComponent';
 
 
 
@@ -18,6 +19,7 @@ export const Components =
     DecCargoSplitConsPackDetComponent,
     CargoSplitGeneralTabComponent,
     DeclarationCargoSplitFiltersMenuComponent,
+    LogisticActionRequestFiltersMenuComponent,
     ];
 
 export class ModuleDeclarations {
@@ -33,6 +35,7 @@ export class ModuleDeclarations {
         case "DecCargoSplitConComponent": { myResult = DecCargoSplitConComponent; break; }
         case "DecCargoSplitConsPackDetComponent": { myResult = DecCargoSplitConsPackDetComponent; break; }      
         case "DeclarationCargoSplitFiltersMenuComponent": { myResult = DeclarationCargoSplitFiltersMenuComponent; break; }      
+        case "LogisticActionRequestFiltersMenuComponent": { myResult = LogisticActionRequestFiltersMenuComponent; break; }      
 
         }
 

@@ -41,6 +41,7 @@ export const LazyWidgets: { path: string, loadChildren: () => Promise<NgModuleFa
   { loadChildren: () => import('../../CustomsModules/CustomsDeclarationModules/DeclarationOthers/ModuleDeclarationOthers').then(m => m.ModuleDeclarationOthers), path: 'DeclarationOthers' },
   { loadChildren: () => import('../../CustomsModules/CustomsCourier/ModuleCustomsCourier').then(m => m.ModuleCustomsCourier), path: 'CustomsCourier' },
   { loadChildren: () => import('../../CustomsModules/CustomsDeclarationCargoSplit/ModuleCustomsDeclarationCargoSplit').then(m => m.ModuleCustomsDeclarationCargoSplit), path: 'CustomsDeclarationCargoSplit' },
+  { loadChildren: () => import('../../CustomsModules/CustomsLogisticActionRequest/ModuleCustomsLogisticActionRequest').then(m => m.ModuleCustomsLogisticActionRequest), path: 'CustomsLogisticActionRequest' },
   { loadChildren: () => import('../../CustomsModules/CustomsMaintenance/ModuleCustomsMaintenance').then(m => m.ModuleCustomsMaintenance), path: 'CustomsMaintenance' },
   { loadChildren: () => import('../../CustomsModules/CustomsReferant/ModuleCustomsReferant').then(m => m.ModuleCustomsReferant), path: 'CustomsReferant' },
   { loadChildren: () => import('../../CustomsModules/CustomsCollateral/ModuleCustomsCollateral').then(m => m.ModuleCustomsCollateral), path: 'CustomsCollateral' },

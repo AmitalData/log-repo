@@ -667,7 +667,7 @@ export class ListComponent implements OnInit, AfterViewInit {
           }
          if (this.ObjectTableName == "Customs.PhysicalCheck") {
              this.IsPhysicalCheckObjectTable = true; }
-        if (this.ObjectTableName == "Customs.DeclarationReferantData" || this.ObjectTableName == "Customs.DeclarationCargoSplit") {
+        if (["Customs.DeclarationReferantData", "Customs.DeclarationCargoSplit", "Customs.LogisticActionRequest"].includes(this.ObjectTableName)) {
             this.HasCustomsFilterMenu = true;
         }
         if (this.ObjectTableName == "Customs.ExportStorge" || this.ObjectTableName == "QuoteOP") {
@@ -906,6 +906,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 myComponentPath = "./CustomsModules";
                                 myComponentPath=(myObjectTableName == "DeclarationReferantData")?myComponentPath+="/CustomsReferant":myComponentPath;
                                 myComponentPath=(myObjectTableName == "DeclarationCargoSplit")?myComponentPath+="/CustomsDeclarationCargoSplit":myComponentPath;
+                                myComponentPath=(myObjectTableName == "LogisticActionRequest")?myComponentPath+="/CustomsLogisticActionRequest":myComponentPath;
                                 myComponentPath=(myObjectTableName == "PhysicalCheck")?myComponentPath+="/CustomsPhysicalCheck":myComponentPath;
                                 myComponentPath+="/Components/FiltersMenu/" + /*this.ObjectTable.Name*/myObjectTableName + "FiltersMenuComponent";
                             }
