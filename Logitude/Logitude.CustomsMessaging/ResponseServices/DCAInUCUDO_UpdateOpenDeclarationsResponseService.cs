@@ -83,6 +83,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                    List< DeclarationCourierStatus> decCouriers = rep.GetByMasterIDDeclarationCourierStatus(requestParams.Tenant, customResponse.EntityId);
                 CourierMasterRepository courierMasterRepository = new CourierMasterRepository(context);
                 CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(courierMasterRepository);
+                var CourierDeclarationQueryService = new CourierDeclarationQueryService(context);
                 CourierMasterPM courierMasterPM = courierMasterQueryService.GetSingle(customResponse.EntityId, false, false);
 
                 if (decCouriers != null )
@@ -101,8 +102,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
                     courierMasterPM.OpenDeclarations = decCouriers.Count(x => x.IsClosedForFollowUp == false);
-                    courierMasterPM.NoOfCourierHawbWithoutDelivery = courierMasterQueryService.CountNoOfCourierHawbwWithoutHatara(courierMasterPM.Id, courierMasterPM.Tenant).ToString();
-                    courierMasterPM.NoOfCourierHawbwWithoutHatara = courierMasterQueryService.CountNoOfCourierHawbwWithoutHatara(courierMasterPM.Id, courierMasterPM.Tenant).ToString();
+                    courierMasterPM.NoOfCourierHawbWithoutDelivery = CourierDeclarationQueryService.CountNoOfCourierHawbWithoutDelivery(courierMasterPM.Id, courierMasterPM.Tenant).ToString();
+                    courierMasterPM.NoOfCourierHawbwWithoutHatara = CourierDeclarationQueryService.CountNoOfCourierHawbwWithoutHatara(courierMasterPM.Id, courierMasterPM.Tenant).ToString();
                     courierMasterPM.ChangeSetOp = ChangeSetOperation.Update; 
                     CourierMasterUpdateService courierMasterUpdateService = new CourierMasterUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
 

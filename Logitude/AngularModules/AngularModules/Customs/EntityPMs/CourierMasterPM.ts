@@ -329,16 +329,6 @@ export class CourierMasterPM {
     public set NoOfCourierHawbWithoutDelivery(newValue: string) { if (this.noOfCourierHawbWithoutDelivery != newValue) { this.noOfCourierHawbWithoutDelivery = newValue; this.MarkAsDirty("NoOfCourierHawbWithoutDelivery"); } }
        
 	 
-    private calcCourierHawbWithoutHatara: number;
-    public get CalcCourierHawbWithoutHatara() { return this.calcCourierHawbWithoutHatara; }
-    public set CalcCourierHawbWithoutHatara(newValue: number) { if (this.calcCourierHawbWithoutHatara != newValue) { this.calcCourierHawbWithoutHatara = newValue; this.MarkAsDirty("CalcCourierHawbWithoutHatara"); } }
-       
-	 
-    private calcCourierHawbWithoutDelivery: number;
-    public get CalcCourierHawbWithoutDelivery() { return this.calcCourierHawbWithoutDelivery; }
-    public set CalcCourierHawbWithoutDelivery(newValue: number) { if (this.calcCourierHawbWithoutDelivery != newValue) { this.calcCourierHawbWithoutDelivery = newValue; this.MarkAsDirty("CalcCourierHawbWithoutDelivery"); } }
-       
-	 
 
     public OldEntityPM: CourierMasterPM;
 		
