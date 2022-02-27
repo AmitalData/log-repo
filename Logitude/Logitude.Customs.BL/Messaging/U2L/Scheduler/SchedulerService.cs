@@ -555,7 +555,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
             }
             catch (System.Exception)
             {
-                return false;
+                return true;
             }
         }
 
