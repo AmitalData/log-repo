@@ -405,7 +405,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         }
 
-        public void UpdatePOCO(DeclarationPM dec)
+        public static void DeclarationRepositoryUpdatePOCO(DeclarationPM dec)
         {
             if (dec == null) return;
             if (dec.ChangeSetOp == ChangeSetOperation.Update || dec.ChangeSetOp == ChangeSetOperation.Insert)

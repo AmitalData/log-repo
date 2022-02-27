@@ -119,9 +119,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 dec.CasualImporterTel = null;
                                 dec.CasualImporterContact = null;
                                 dec.ChangeSetOp = ChangeSetOperation.Update;
-                                DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                                //DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
                                 //declarationUpdateService.Update(dec, true);
-                                declarationUpdateService.UpdatePOCO(dec);
+                                DeclarationUpdateService.DeclarationRepositoryUpdatePOCO(dec);
                             }
                             else
                             {
@@ -142,9 +142,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                     dec.CasualImporterTel = casual.CasualImporterTel;
                                     dec.CasualImporterContact = casual.CasualImporterContact;
                                     dec.ChangeSetOp = ChangeSetOperation.Update;
-                                    DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                                    //DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
                                     //declarationUpdateService.Update(dec, true);
-                                    declarationUpdateService.UpdatePOCO(dec);
+                                    DeclarationUpdateService.DeclarationRepositoryUpdatePOCO(dec);
 
                                     casual.ChangeSetOp = ChangeSetOperation.Delete;
                                     DeclarationCasualDetailsUpdateService declarationCasualDetailsUpdateService = new DeclarationCasualDetailsUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
