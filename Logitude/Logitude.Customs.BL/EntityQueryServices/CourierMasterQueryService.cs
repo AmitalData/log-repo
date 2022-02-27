@@ -466,16 +466,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var LastmileReportData = courierMasterRepository.GetAllCourierMasterForLastmileReport(hatraFromDate, hatraToDate, lastMileFromDate, LastMileToDate, airline, trucker, courierHawb,tenant);
             return LastmileReportData;
         }
-        public int CountNoOfCourierHawbwWithoutHatara(string couriermasterid, int tenant)
-        {
-            CourierMasterRepository courierMasterRepository = new CourierMasterRepository(context);
-            return courierMasterRepository.CounNoOfCourierHawbwWithoutHatara(couriermasterid,tenant);
-        }
-        public int CountNoOfCourierHawbWithoutDelivery(string couriermasterid, int tenant)
-        {
-            CourierMasterRepository courierMasterRepository = new CourierMasterRepository(context);
-            return courierMasterRepository.CounNoOfCourierHawbwWithoutHatara(couriermasterid, tenant);
-        }
 
 
 
