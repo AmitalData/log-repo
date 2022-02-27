@@ -217,9 +217,4 @@
     ReferencedTable="PackingTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
-  <Relation
-    ForeignKeyColumn="ResponseStatusCode"
-    ReferencedTable="LogisticActionResponseRequestSes"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
 </Table>

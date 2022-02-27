@@ -1561,7 +1561,7 @@
     ListFieldLable="&quot;ResponseStatusCodeListLable&quot;"
     ListLableDefaultText="&quot;Response Status Code&quot;"
     IsNullable="true"
-    IsForeignKey="true"
+    IsForeignKey="false"
     ForeignEntity="LogisticActionResponseRequestS"
     DontBuildRelationOnDB="false"
     NavigationPropertyName="LogisticActionResponseRequestS"
