@@ -35,6 +35,7 @@ namespace WebFreight.Web.DataProviders
 
         public class ProfitByShipmentReport
         {
+            public int? NumberOfContainers { get; set; }
             public string ShipmentNo { get; set; }
             public string Customer { get; set; }
             public string Agent { get; set; }
