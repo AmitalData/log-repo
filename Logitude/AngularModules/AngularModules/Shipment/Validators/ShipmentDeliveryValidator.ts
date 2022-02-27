@@ -121,13 +121,11 @@ export class ShipmentDeliveryValidator {
         var OnForwardingETA: number = isOnForwardingExists ? DateTool.GetDateParts(this.ShipmentPM.OnForwardingETA).DateTicks : 0;
         var OnForwardingATA: number = isOnForwardingExists ? DateTool.GetDateParts(this.ShipmentPM.OnForwardingATA).DateTicks : 0;
 
-        var isWarehouseLegExists: boolean = (this.ShipmentPM.WarehouseLegWarehouseId != null && this.ShipmentPM.DirectionId == "I") ? true : false;
-        var WarehouseLegEED: number = isWarehouseLegExists ? DateTool.GetDateParts(this.ShipmentPM.WarehouseLegExpectedEntryDate).DateTicks : 0;
-        var WarehouseLegERD: number = isWarehouseLegExists ? DateTool.GetDateParts(this.ShipmentPM.WarehouseLegExpectedReleaseDate).DateTicks : 0;
-        var WarehouseLegAED: number = isWarehouseLegExists ? DateTool.GetDateParts(this.ShipmentPM.WarehouseLegActualEntryDate).DateTicks : 0;
-        var WarehouseLegARD: number = isWarehouseLegExists ? DateTool.GetDateParts(this.ShipmentPM.WarehouseLegActualReleaseDate).DateTicks : 0;
+        var isWarehouseLeg2Exists: boolean = (this.ShipmentPM.WarehouseLeg2WarehouseId != null) ? true : false;
+        var WarehouseLeg2EED: number = isWarehouseLeg2Exists ? DateTool.GetDateParts(this.ShipmentPM.WarehouseLeg2ExpectedEntryDate).DateTicks : 0;
+        var WarehouseLeg2AED: number = isWarehouseLeg2Exists ? DateTool.GetDateParts(this.ShipmentPM.WarehouseLeg2ActualEntryDate).DateTicks : 0;
 
-        // Self
+       // Self
         if (!RoutingHelper.IsRoutingLegDatesValid(ETD, ETA)) {
             this.errors.push("Expected departure must be less than Expected arrival");
         }
@@ -136,10 +134,15 @@ export class ShipmentDeliveryValidator {
             this.errors.push("Actual departure must be less than Actual arrival");
         }
 
-
         // Previous
-        if (isWarehouseLegExists) {
-           
+        if (isWarehouseLeg2Exists) {
+            if (RoutingHelper.IsDateSeriesSmaller(ETD, WarehouseLeg2EED)) {
+                this.errors.push("Expected departure must be bigger than Destination Warehouse expected entry");
+            }
+
+            if (RoutingHelper.IsDateSeriesSmaller(ATD, WarehouseLeg2AED)) {
+                this.errors.push("Actual departure must be bigger than Destination Warehouse actual entry");
+            }
         }
 
         else if (isOnForwardingExists) {

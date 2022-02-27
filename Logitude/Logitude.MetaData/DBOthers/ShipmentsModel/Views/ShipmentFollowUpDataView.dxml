@@ -102,11 +102,13 @@ SELECT         dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNum
                          dbo.Shipments.ConsigneeReference2, dbo.Shipments.ConsigneeReference1, MainCarriageFromPorts.Code AS MainCarriageFromPortCode, 
                          dbo.Shipments.ConsolidatorId,dbo.Shipments.ConsolidatorAddressId,dbo.Shipments.ConsolidatorContactId,dbo.Shipments.ConsolidatorReference,						 
 						             dbo.Shipments.CustomsDeclarationNumber,dbo.Shipments.FBLIsFromStock,
-						             dbo.Shipments.FreightRelease, dbo.Shipments.TerminalAvailable, dbo.Shipments.ISFDate, dbo.Shipments.ISFNumber, dbo.Shipments.ITDate, dbo.Shipments.ITNumber,
+						             dbo.Shipments.FreightRelease, dbo.Shipments.TerminalAvailable,dbo.Shipments.Terminal2Available, dbo.Shipments.ISFDate, dbo.Shipments.ISFNumber, dbo.Shipments.ITDate, dbo.Shipments.ITNumber,
 						             dbo.ShipmentMasterDatas.OBLTypeCode, dbo.ShipmentMasterDatas.DocumentsClosingDate, dbo.Shipments.ENSNumber, dbo.Shipments.ENSDate,
 						             dbo.Shipments.WarehouseLegWarehouseId, dbo.Shipments.WarehouseLegAddressId, dbo.Shipments.WarehouseLegTerminalCode, dbo.Shipments.WarehouseLegExpectedEntryDate,  
 						             dbo.Shipments.WarehouseLegLastFreeDate,dbo.Shipments.WarehouseLegExpectedReleaseDate,dbo.Shipments.WarehouseLegActualReleaseDate, dbo.Shipments.WarehouseLegRemarks, dbo.Shipments.WarehouseLegActualEntryDate,dbo.Shipments.WarehouseLegReference,
-						             dbo.Shipments.LastSharedEventId, dbo.Shipments.LastSharedEventLocation, dbo.Shipments.LastSharedEventNotes, dbo.Shipments.LastSharedEventDate,	
+						             dbo.Shipments.WarehouseLeg2WarehouseId, dbo.Shipments.WarehouseLeg2AddressId, dbo.Shipments.WarehouseLeg2TerminalCode, dbo.Shipments.WarehouseLeg2ExpectedEntryDate,  
+						             dbo.Shipments.WarehouseLeg2ExpectedReleaseDate,dbo.Shipments.WarehouseLeg2ActualReleaseDate, dbo.Shipments.WarehouseLeg2Remarks, dbo.Shipments.WarehouseLeg2ActualEntryDate,dbo.Shipments.WarehouseLeg2Reference,
+									 dbo.Shipments.LastSharedEventId, dbo.Shipments.LastSharedEventLocation, dbo.Shipments.LastSharedEventNotes, dbo.Shipments.LastSharedEventDate,	
 						             dbo.EventTypes.EnglishName as LastSharedEventName,
 						             MainCarriageToPorts.Code AS MainCarriageToPortCode, Transshipment1FromPorts.Code AS Transshipment1FromPortCode, 
                          Transshipment1ToPorts.Code AS Transshipment1ToPortCode, Transshipment2FromPorts.Code AS Transshipment2FromPortCode, 
@@ -125,7 +127,7 @@ SELECT         dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNum
                          AgentCards.Notes AS AgentNote, CustomAgentExportCards.EnglishName AS CustomAgentExportName, CustomAgentExportCards.Notes AS CustomAgentExportNote, 
                          CustomAgentImportCards.EnglishName AS CustomAgentImportName, CustomAgentImportCards.Notes AS CustomAgentImportNote, 
                          Notify1Cards.EnglishName AS Notify1Name, Notify1Cards.Notes AS Notify1Note, Notify2Cards.EnglishName AS Notify2Name, Notify2Cards.Notes AS Notify2Note, 
-                         WarehouseLegCard.EnglishName as WarehouseLegTerminalName,ShipperNotExporterCards.EnglishName AS ShipperNotExporterName, ShipperNotExporterCards.Notes AS ShipperNotExporterNote, 
+                         WarehouseLegCard.EnglishName as WarehouseLegTerminalName,WarehouseLeg2Card.EnglishName as WarehouseLeg2TerminalName,ShipperNotExporterCards.EnglishName AS ShipperNotExporterName, ShipperNotExporterCards.Notes AS ShipperNotExporterNote, 
                          ConsigneeNotImporterCards.EnglishName AS ConsigneeNotImporterName, ConsigneeNotImporterCards.Notes AS ConsigneeNotImporterNote, 
                          ToPorts.Code AS ToPortCode, ToPorts.EnglishName AS ToPortName, FromPorts.Code AS FromPortCode, FromPorts.EnglishName AS FromPortName, 
                          MainCarriageFromCountries.Code AS MainCarriageFromPortCountryCode, MainCarriageFromCountries.EnglishName AS MainCarriageFromPortCountryName, 
@@ -240,6 +242,7 @@ FROM            dbo.Shipments LEFT OUTER JOIN
                          dbo.Cards AS CustomAgentImportCards ON dbo.Shipments.CustomAgentImportId = CustomAgentImportCards.Id LEFT OUTER JOIN
                          dbo.Cards AS Notify1Cards ON dbo.Shipments.Notify1Id = Notify1Cards.Id LEFT OUTER JOIN
                          dbo.Cards AS WarehouseLegCard ON dbo.Shipments.WarehouseLegWarehouseId = WarehouseLegCard.Id LEFT OUTER JOIN
+						  dbo.Cards AS WarehouseLeg2Card ON dbo.Shipments.WarehouseLeg2WarehouseId = WarehouseLeg2Card.Id LEFT OUTER JOIN
                          dbo.Cards AS Notify2Cards ON dbo.Shipments.Notify2Id = Notify2Cards.Id LEFT OUTER JOIN
                          dbo.Cards AS ShipperNotExporterCards ON dbo.Shipments.ShipperNotExporterId = ShipperNotExporterCards.Id LEFT OUTER JOIN
                          dbo.Cards AS ConsigneeNotImporterCards ON dbo.Shipments.ConsigneeNotImporterId = ConsigneeNotImporterCards.Id LEFT OUTER JOIN

@@ -541,6 +541,7 @@ namespace Logitude.Infrastructure.BL
                 Description = "Use Ticket Entity In Automation", 
 			});
 			 
+
             all.Add(new ToggleDetails()
             {    
                 Code = "RFF", 
@@ -548,6 +549,15 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "RFF,Regimen Fiscal Field", 
                 Description = "Show Regimen Fiscal Field", 
 			});
+
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Managing Destination Warehouse Leg", 
+                Description = "Managing Destination Warehouse Leg in Drop Shipments", 
+                SearchFields = "MDW,Managing Destination Warehouse Leg", 
+                Code = "MDW", 
+			});
+
 			
             return all;
        }

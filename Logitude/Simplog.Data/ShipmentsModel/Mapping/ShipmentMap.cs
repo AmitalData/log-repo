@@ -284,7 +284,11 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.WarehouseLegReference).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.LastSharedEventId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.LastSharedEventLocation).HasMaxLength(40).IsUnicode(true);
-
+            this.Property(t => t.WarehouseLeg2WarehouseId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.WarehouseLeg2AddressId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.WarehouseLeg2Remarks).HasMaxLength(500).IsUnicode(true);
+            this.Property(t => t.WarehouseLeg2TerminalCode).HasMaxLength(25).IsUnicode(false);
+            this.Property(t => t.WarehouseLeg2Reference).HasMaxLength(50).IsUnicode(false);
             if (dbms == "oracle")
             {
                 this.Property(t => t.LastSharedEventNotes).HasMaxLength(2000).IsUnicode(true);
@@ -661,6 +665,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ShipmentContainerReturnIndex).HasColumnName("ShipmentContainerReturnIndex");
             this.Property(t => t.FreightRelease).HasColumnName("FreightRelease");
             this.Property(t => t.TerminalAvailable).HasColumnName("TerminalAvailable");
+            this.Property(t => t.Terminal2Available).HasColumnName("Terminal2Available");
             this.Property(t => t.ISFNumber).HasColumnName("ISFNumber");
             this.Property(t => t.ISFDate).HasColumnName("ISFDate");
             this.Property(t => t.ITNumber).HasColumnName("ITNumber");
@@ -680,6 +685,16 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.WarehouseLegReference).HasColumnName("WarehouseLegReference");
             this.Property(t => t.WarehouseLegVGMCutOffDate).HasColumnName("WarehouseLegVGMCutOffDate");
             this.Property(t => t.WarehouseLegCutOffDate).HasColumnName("WarehouseLegCutOffDate");
+            this.Property(t => t.WarehouseLeg2WarehouseId).HasColumnName("WarehouseLeg2WarehouseId");
+            this.Property(t => t.WarehouseLeg2AddressId).HasColumnName("WarehouseLeg2AddressId");
+            this.Property(t => t.WarehouseLeg2TerminalCode).HasColumnName("WarehouseLeg2TerminalCode");
+            this.Property(t => t.WarehouseLeg2ExpectedEntryDate).HasColumnName("WarehouseLeg2ExpectedEntryDate");
+            this.Property(t => t.WarehouseLeg2ActualEntryDate).HasColumnName("WarehouseLeg2ActualEntryDate");
+            this.Property(t => t.WarehouseLeg2ActualReleaseDate).HasColumnName("WarehouseLeg2ActualReleaseDate");
+            this.Property(t => t.WarehouseLeg2Remarks).HasColumnName("WarehouseLeg2Remarks");
+            this.Property(t => t.WarehouseLeg2Reference).HasColumnName("WarehouseLeg2Reference");
+            this.Property(t => t.WarehouseLeg2VGMCutOffDate).HasColumnName("WarehouseLeg2VGMCutOffDate");
+            this.Property(t => t.WarehouseLeg2CutOffDate).HasColumnName("WarehouseLeg2CutOffDate");
             this.Property(t => t.LastSharedEventId).HasColumnName("LastSharedEventId");
             this.Property(t => t.LastSharedEventLocation).HasColumnName("LastSharedEventLocation");
             this.Property(t => t.LastSharedEventNotes).HasColumnName("LastSharedEventNotes");
@@ -852,6 +867,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
                 this.Property(t => t.SupplementaryShipmentInformation1).HasColumnName("SupplementaryShipmentInfo1");
                 this.Property(t => t.SupplementaryShipmentInformation2).HasColumnName("SupplementaryShipmentInfo2");
                 this.Property(t => t.WarehouseLegExpectedReleaseDate).HasColumnName("WarehouseExpectedReleaseDate");
+                this.Property(t => t.WarehouseLeg2ExpectedReleaseDate).HasColumnName("Warehouse2ExpectedReleaseDate");
                 this.Property(t => t.LocalCustomsTransmissionsStatusCode).HasColumnName("LocalCustomsTransStatusCode");
                 this.Property(t => t.LocalCustomsTransmissionsStatusError).HasColumnName("LocalCustomsTransStatusError");
                 this.Property(t => t.LocalCustomsTransmissionsStatusDate).HasColumnName("LocalCustomsTransStatusDate");
@@ -889,6 +905,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
                 this.Property(t => t.SupplementaryShipmentInformation1).HasColumnName("SupplementaryShipmentInformation1");
                 this.Property(t => t.SupplementaryShipmentInformation2).HasColumnName("SupplementaryShipmentInformation2");
                 this.Property(t => t.WarehouseLegExpectedReleaseDate).HasColumnName("WarehouseLegExpectedReleaseDate");
+                this.Property(t => t.WarehouseLeg2ExpectedReleaseDate).HasColumnName("WarehouseLeg2ExpectedReleaseDate");
                 this.Property(t => t.LocalCustomsTransmissionsStatusCode).HasColumnName("LocalCustomsTransmissionsStatusCode");
                 this.Property(t => t.LocalCustomsTransmissionsStatusError).HasColumnName("LocalCustomsTransmissionsStatusError");
                 this.Property(t => t.LocalCustomsTransmissionsStatusDate).HasColumnName("LocalCustomsTransmissionsStatusDate");
@@ -1003,6 +1020,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.CustomsTransmissionsStatus).WithMany().HasForeignKey(d => d.LocalCustomsTransmissionsStatusCode);
             this.HasOptional(t => t.WarehouseLegCard).WithMany().HasForeignKey(d => d.WarehouseLegWarehouseId);
             this.HasOptional(t => t.WarehouseLegAddress).WithMany().HasForeignKey(d => d.WarehouseLegAddressId);
+            this.HasOptional(t => t.WarehouseLeg2Card).WithMany().HasForeignKey(d => d.WarehouseLeg2WarehouseId);
+            this.HasOptional(t => t.WarehouseLeg2Address).WithMany().HasForeignKey(d => d.WarehouseLeg2AddressId);
             this.HasOptional(t => t.LastSharedEvent).WithMany().HasForeignKey(d => d.LastSharedEventId);
             this.HasOptional(t => t.LocalCustomsSentByUser).WithMany().HasForeignKey(d => d.LocalCustomsSentByUserId);
             this.HasOptional(t => t.OperationalClosedByUser).WithMany().HasForeignKey(d => d.OperationalClosedByUserId);

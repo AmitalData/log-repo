@@ -41,7 +41,7 @@
             <td>{{'Shipment.TH.Routings' | TextCodeTranslationPipe}}</td>
 
             <td style="width: 85px;">
-                <div tabindex="0"  id="{{ 'RoutingToggle' | IdGeneratorPipe}}" class="ToggleButton" [class.ToggleButtonDisabled]="!IsEditingEnabled">
+                <div tabindex="0" id="{{ 'RoutingToggle' | IdGeneratorPipe}}" class="ToggleButton" [class.ToggleButtonDisabled]="!IsEditingEnabled">
                     <label>{{'Shipment.B.Routings.AddRoute' | TextCodeTranslationPipe}}</label>
                     <img src="./Images/ToggleIcon.png" />
                     <div class="ToggleButtonMenu" style="width: 100px">
@@ -61,7 +61,7 @@
                 <div class="MediaFill">
                     <ScrollViewer>
                         <ul>
-                            <li class="BoxItem" *ngFor="let item of ItemsSource"  attr.data-cy="{{'Routing_' + item.LegName | IdGeneratorPipe}}">
+                            <li class="BoxItem" *ngFor="let item of ItemsSource" attr.data-cy="{{'Routing_' + item.LegName | IdGeneratorPipe}}">
                                 <table [style.height.px]="item.LegHeight">
                                     <tr style="height: 5px;">
                                         <td colspan="3">
@@ -91,6 +91,7 @@
                                                                     <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.LegType == 'Delivery'" (click)="AddLeg('Delivery')"></IconButton>
                                                                     <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.LegType == 'WarehouseLeg_Pickups'" (click)="AddLeg('WarehouseLeg_Pickups')"></IconButton>
                                                                     <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.LegType == 'WarehouseLeg'" (click)="AddLeg('WarehouseLeg')"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.LegType == 'WarehouseLeg2'" (click)="AddLeg('WarehouseLeg2')"></IconButton>
                                                                 </td>
 
                                                                 <td style="width:18px; vertical-align:middle;" *ngIf="item.IsEditButtonVisible && IsChildFeatureExists">
@@ -111,6 +112,7 @@
                                                                     <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'On Carriage'" (click)="EditLeg(item)"></IconButton>
                                                                     <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'On Forwarding'" (click)="EditLeg(item)"></IconButton>
                                                                     <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'WarehouseLeg'" (click)="EditLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'WarehouseLeg2'" (click)="EditLeg(item)"></IconButton>
                                                                     <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'Delivery'" (click)="EditLeg(item)"></IconButton>
                                                                     <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'EmptyCR'" (click)="EditLeg(item)"></IconButton>
                                                                 </td>
@@ -134,7 +136,7 @@
                                                         <table *ngIf="item.IsLegExists">
                                                             <tr>
                                                                 <td>
-                                                                    <div class="MediaFill" *ngIf="!item.IsWarehouseLeg">
+                                                                    <div class="MediaFill" *ngIf="!item.IsWarehouseLeg && !item.IsWarehouseLeg2">
                                                                         <table>
                                                                             <tr style="height: 5px;">
                                                                                 <td>
@@ -271,7 +273,7 @@
                                                                                                     <tr style="height:22px;">
                                                                                                         <td style="width: 40px;" class="Label">Terminal:</td>
                                                                                                         <td style="width: 180px;">
-                                                                                                            <div  style="float: left;width: 180px; margin-left: 3px;" class="Value TextTrimming"> {{WarehouseLegTerminalName}}</div>
+                                                                                                            <div style="float: left;width: 180px; margin-left: 3px;" class="Value TextTrimming"> {{WarehouseLegTerminalName}}</div>
                                                                                                         </td>
                                                                                                         <td>
                                                                                                             <div></div>
@@ -333,6 +335,137 @@
                                                                                                         <td class="Label">{{'Shipment.F.WarehouseLegVGMCutOffDate' |TextCodeTranslationPipe}}:</td>
                                                                                                         <td>
                                                                                                             <div style="float: left;" class="Value">{{item.WarehouseLegVGMCutOffDate | DateTimePipe:'SHWH'}}</div>
+                                                                                                        </td>
+                                                                                                    </tr>
+
+                                                                                                    <tr>
+                                                                                                        <td colspan="2">
+                                                                                                            <div></div>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </td>
+
+                                                                                            <td style="width: 268px;">
+                                                                                                <table style="table-layout: fixed;">
+                                                                                                    <tr>
+                                                                                                        <td>
+                                                                                                            <table>
+                                                                                                                <tr style="height:22px;">
+                                                                                                                    <td style="width: 75px;">
+                                                                                                                        <button (click)="item.SetActualDepartureClicked()" class="Button DateButton" [disabled]="!IsEditingEnabled" *ngIf="item.IsSetActualDepartureVisible" style="height: 18px; font-size: 10px;">Set as Actual</button>
+                                                                                                                    </td>
+
+                                                                                                                    <td style="width: 15px;">
+                                                                                                                        <div></div>
+                                                                                                                    </td>
+
+                                                                                                                    <td style="width: 65px;" class="Label">{{'Shipment.O.Routings.Entry' | TextCodeTranslationPipe}}:</td>
+                                                                                                                    <td style="width: 65px; font-size: 10px;" [ngStyle]="{color: item.DepartureColor}">{{item.DepartureDate | DateTimeToDatePipe}}</td>
+                                                                                                                    <td style="width: 30px; font-size: 10px; text-align: right;" [ngStyle]="{color: item.DepartureColor}">{{item.DepartureDate | DateTimeToTimePipe}}</td>
+
+                                                                                                                    <td style="width: 18px;">
+                                                                                                                        <FollowupButton [IsEnabled]="IsEditingEnabled" [ShipmentPM]="EntityPM" [PickUpPM]="item.Pickup" [DeliveryPM]="item.Delivery" [LegType]="item.FollowupLegTypeDeparture"></FollowupButton>
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                                <tr style="height:22px;">
+                                                                                                                    <td style="width: 75px;">
+                                                                                                                        <button (click)="item.SetActualArrivalClicked()" class="Button DateButton" [disabled]="!IsEditingEnabled" *ngIf="item.IsSetActualArrivalVisible" style="height: 18px; font-size: 10px;">Set as Actual</button>
+                                                                                                                    </td>
+
+                                                                                                                    <td style="width: 15px;">
+                                                                                                                        <div></div>
+                                                                                                                    </td>
+                                                                                                                    <td style="width: 65px;" class="Label">{{'Shipment.O.Routings.Release' | TextCodeTranslationPipe}}:</td>
+                                                                                                                    <td style="width: 65px; font-size: 10px;" [ngStyle]="{color: item.ArrivalColor}">{{item.ArrivalDate | DateTimeToDatePipe}}</td>
+                                                                                                                    <td style="width: 30px; font-size: 10px; text-align: right;" [ngStyle]="{color: item.ArrivalColor}">{{item.ArrivalDate | DateTimeToTimePipe}}</td>
+
+                                                                                                                    <td style="width: 18px;">
+                                                                                                                        <FollowupButton [IsEnabled]="IsEditingEnabled" [ShipmentPM]="EntityPM" [PickUpPM]="item.Pickup" [DeliveryPM]="item.Delivery" [LegType]="item.FollowupLegTypeArrival"></FollowupButton>
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                                <tr>
+                                                                                                                    <td colspan="2">
+                                                                                                                        <div></div>
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                            </table>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </td>
+
+                                                                                            <td style="width: 5px;">
+                                                                                                <div></div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr style="height: 5px;">
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </div>
+
+                                                                    <div class="MediaFill" *ngIf="item.IsWarehouseLeg2">
+                                                                        <table>
+                                                                            <tr style="height: 5px;">
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td style="width: 220px;">
+                                                                                                <table>
+                                                                                                    <tr style="height:22px;">
+                                                                                                        <td style="width: 40px;" class="Label">Terminal:</td>
+                                                                                                        <td style="width: 180px;">
+                                                                                                            <div style="float: left;width: 180px; margin-left: 3px;" class="Value TextTrimming"> {{WarehouseLeg2TerminalName}}</div>
+                                                                                                        </td>
+                                                                                                        <td>
+                                                                                                            <div></div>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                    <tr>
+                                                                                                        <td colspan="3">
+                                                                                                            <AddressTemplate [Border]="'0px'" [Address]="Warehouse2AddressList" [Right]="36"></AddressTemplate>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </td>
+
+                                                                                            <td style="width: 5px;">
+                                                                                                <div></div>
+                                                                                            </td>
+
+                                                                                            <td style="float:left;">
+                                                                                                <table style="table-layout: fixed;">
+                                                                                                    <tr class="FieldRow">
+                                                                                                        <td style="width: 130px;" class="Label">{{'Shipment.O.Routings.WarehouseLegReference' | TextCodeTranslationPipe}}:</td>
+                                                                                                        <td>
+                                                                                                            <div style="float: left;" class="Value"> {{item.WarehouseLeg2Reference}}</div>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                    <tr class="FieldRow">
+                                                                                                        <td class="Label">{{'Shipment.O.Routings.WarehouseLegTerminalCode' | TextCodeTranslationPipe}}:</td>
+                                                                                                        <td>
+                                                                                                            <div style="float: left;" class="Value TextTrimming">{{item.WarehouseLeg2TerminalCode}}</div>
+                                                                                                        </td>
+                                                                                                    </tr>
+
+                                                                                                    <!-- TerminalAvailable -->
+                                                                                                    <tr class="FieldRow" *ngIf="item.LegType == 'WarehouseLeg2'">
+                                                                                                        <td class="Label">{{'Shipment.O.Routings.TerminalAvailable' |TextCodeTranslationPipe}}:</td>
+                                                                                                        <td>
+                                                                                                            <div style="float: left;" class="Value">{{item.Terminal2Available | DateTimePipe:'SHWH'}}</div>
                                                                                                         </td>
                                                                                                     </tr>
 

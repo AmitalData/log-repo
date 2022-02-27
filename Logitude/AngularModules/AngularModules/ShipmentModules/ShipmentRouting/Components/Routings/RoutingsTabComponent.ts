@@ -51,6 +51,8 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
     public CardLOVDependencyProperty1IsList: boolean = true;
     public IsAddingStandaloneShipmentVisible: boolean = false;
     private oldCountryId: string = null;
+    public IsDestinationWarehouseLegVisible: boolean = false;
+
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -70,7 +72,17 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             this.IsAddingStandaloneShipmentVisible = true;
         }
 
-        this.CheckPreOnCarriageVisibility();       
+        this.CheckPreOnCarriageVisibility();
+        this.CheckDestinationWarehouseLegVisibility();
+    }
+
+
+    private CheckDestinationWarehouseLegVisibility() {
+        this.IsDestinationWarehouseLegVisible = false;
+        var destinationWarehouseLegFeatureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "MDW")[0];
+        if (destinationWarehouseLegFeatureToggle) {
+            this.IsDestinationWarehouseLegVisible = true;
+        }
     }
 
     private SessionEvent: any = null;
@@ -156,7 +168,8 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             }
 
             this.UpdateScreen(); 
-            this.GetWarehouseAddress();           
+            this.GetWarehouseAddress();
+            this.GetWarehouse2Address();
         }
     }
 
@@ -313,6 +326,13 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             }
         }
 
+        // Destination WarehouseLeg
+        if (this.IsDestinationWarehouseLegVisible && this.EntityPM.DirectionId == "R") {
+            if (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "H") {
+                this.ItemsSource.push(new RoutingItem(this.EntityPM, "WarehouseLeg2", this));
+            }
+        }
+
         var allDeliveries = this.EntityPM.ShipmentDeliveries.filter(f => f.PickUpDeliveryTypeCode == "DELV").sort(
                 function (a, b) {
                 if (a.PickUpDeliveryIndex === b.PickUpDeliveryIndex) {
@@ -413,12 +433,25 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Width = 900;
                     logitudeWindow.Height = 500;
-                    logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddWarehouseLeg");
+                    var title = TextCodeTranslator.Translate("Shipment.O.Routings.AddWarehouseLeg");
+                    var originTitle = TextCodeTranslator.Translate("Shipment.O.Routings.AddOriginWarehouseLeg");
+                    logitudeWindow.Title = this.GetWarehouseLegTitle(title, originTitle); //TextCodeTranslator.Translate("Shipment.O.Routings.AddWarehouseLeg");
                     logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: this.myLegType, IsNewLeg: true }
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditWarehouseLegComponent');
                     break;
                 }
-
+            case "WarehouseLeg2":
+                {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Width = 900;
+                    logitudeWindow.Height = 500;
+                    var title = TextCodeTranslator.Translate("Shipment.O.Routings.AddWarehouseLeg");
+                    var originTitle = TextCodeTranslator.Translate("Shipment.O.Routings.AddDestinationWarehouseLeg");
+                    logitudeWindow.Title = this.GetWarehouseLegTitle(title, originTitle);
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: this.myLegType, IsNewLeg: true }
+                    logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditWarehouseLegComponent');
+                    break;
+                }
             default: {
                 if (this.EntityPM.ShipmentLevelCode == "H" && AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId)) {
                     var logitudeWindow = new LogitudeWindow();
@@ -438,6 +471,25 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 break;
             }
         }
+    }
+
+    GetWarehouseLegTitle(title: string, originTitle: string): string {
+        var newTitle = title;
+        if (this.IsDestinationWarehouseLegVisible && this.EntityPM.DirectionId == "R") {
+            newTitle = originTitle;
+        }
+        return newTitle;
+    }
+
+    GetAddEditWarehouseLegTitle(title: string, legType: string): string {
+        var title = title;
+        if (legType == "WarehouseLeg_Pickups") {
+            title = "Add Origin Warehouse / Terminal";
+        }
+        else if (legType == "WarehouseLeg_Pickups") {
+            title = "Add Destination Warehouse / Terminal";
+        }
+        return title;
     }
     AddLeg(myLegType: string) {
         this.myLegType = myLegType;
@@ -707,7 +759,21 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Width = 900;
                     logitudeWindow.Height = 500;
-                    logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.EditWarehouseLeg");
+                    var title = TextCodeTranslator.Translate("Shipment.O.Routings.EditWarehouseLeg");
+                    var originTitle = TextCodeTranslator.Translate("Shipment.O.Routings.EditOriginWarehouseLeg");
+                    logitudeWindow.Title = this.GetWarehouseLegTitle(title, originTitle); 
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
+                    logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditWarehouseLegComponent');
+                    break;
+                }
+            case "WarehouseLeg2":
+                {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Width = 900;
+                    logitudeWindow.Height = 500;
+                    var title = TextCodeTranslator.Translate("Shipment.O.Routings.EditWarehouseLeg");
+                    var originTitle = TextCodeTranslator.Translate("Shipment.O.Routings.EditDestinationWarehouseLeg");
+                    logitudeWindow.Title = this.GetWarehouseLegTitle(title, originTitle);
                     logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditWarehouseLegComponent');
                     break;
@@ -799,6 +865,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             }
 
             case "WarehouseLeg":
+            case "WarehouseLeg2":
             case "WarehouseLeg_Pickups": {
                 message = "Delete Warehouse \ Terminal?";
                 break;
@@ -912,6 +979,37 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
 
                         break;
                     }
+
+                    case "WarehouseLeg2":
+                        {
+                            this.EntityPM.WarehouseLeg2WarehouseId = null;
+                            this.EntityPM.WarehouseLeg2AddressId = null;
+                            this.EntityPM.WarehouseLeg2Reference = null;
+                            this.EntityPM.WarehouseLeg2TerminalCode = null;
+                            this.EntityPM.TerminalAvailable = null;
+                            this.EntityPM.WarehouseLeg2CutOffDate = null;
+                            this.EntityPM.WarehouseLeg2Remarks = null;
+                            this.EntityPM.WarehouseLeg2ExpectedEntryDate = null;
+                            this.EntityPM.WarehouseLeg2ExpectedReleaseDate = null;
+                            this.EntityPM.WarehouseLeg2ActualEntryDate = null;
+                            this.EntityPM.WarehouseLeg2ActualReleaseDate = null;
+                            this.EntityPM.WarehouseLeg2VGMCutOffDate = null;
+                            this.EntityPM.WarehouseStorageFreeDays = null;
+                            this.EntityPM.GrossWeightPerStorageDays = null;
+                            this.EntityPM.IsCFSWarehouse = false;
+                            this.EntityPM.IsCFSWarehouseChanged = false
+
+                            var followups = this.EntityPM.FollowUps.filter(f => f.LegType != null);
+                            followups = followups.filter(f => f.LegType.indexOf("WarehouseLeg2") > -1);
+                            if (followups.length > 0) {
+                                followups.forEach(item => {
+                                    this.EntityPM.RemoveShipmentFollowUp(item);
+                                });
+
+                                this.CurrentSession.FireEvent("FollowupsChanged");
+                            }
+                            break;
+                        }
                 }
 
                 this.BuildItemsCollection();
@@ -1672,6 +1770,26 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             });
         }
     }
+
+    public WarehouseLeg2TerminalName: string = "";
+    private myWarehouse2AddressList: AddressList;
+    get Warehouse2AddressList() { return this.myWarehouse2AddressList; }
+    set Warehouse2AddressList(newValue: AddressList) {
+        this.myWarehouse2AddressList = newValue;
+    }
+    GetWarehouse2Address() {
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.WarehouseLeg2AddressId)) {
+            this.WarehouseLeg2TerminalName = this.EntityPM.WarehouseLeg2TerminalName;
+            var myService = new AddressListService();
+            myService.getSingle(this.EntityPM.WarehouseLeg2AddressId).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse != null) {
+                    if (!myResponse.HasError) {
+                        this.Warehouse2AddressList = myResponse.Result;
+                    }
+                }
+            });
+        }
+    }
 }
 export class RoutingItem extends BaseComponent {
     public EntityPM: ShipmentPM;
@@ -1683,6 +1801,7 @@ export class RoutingItem extends BaseComponent {
     public FollowupLegTypeDeparture: string;
     public FollowupLegTypeArrival: string;
     public IsWarehouseLeg: boolean = false;
+    public IsWarehouseLeg2: boolean = false;
     public IsDeleteButtonEnabled: boolean = true;
     constructor(entity: any, type: string, private fatherComponent: RoutingsTabComponent) {
         super();
@@ -1726,6 +1845,12 @@ export class RoutingItem extends BaseComponent {
                 this.IsWarehouseLeg = true;
                 this.FollowupLegTypeDeparture = 'WarehouseLegEntry'
                 this.FollowupLegTypeArrival = 'WarehouseLegRelease'
+            }
+
+            if (type == "WarehouseLeg2") {
+                this.IsWarehouseLeg2 = true;
+                this.FollowupLegTypeDeparture = 'WarehouseLeg2Entry'
+                this.FollowupLegTypeArrival = 'WarehouseLeg2Release'
             }
 
             else {
@@ -1806,7 +1931,20 @@ export class RoutingItem extends BaseComponent {
 
                 break;
             }
+            case "WarehouseLeg2": {
+                if (AppTool.IsNullOrEmpty(this.EntityPM.WarehouseLeg2WarehouseId)) {
+                    this.LegHeight = 50;
+                    this.IsLegExists = false;
+                    this.IsAddButtonVisible = true;
+                    this.NoLegTextCode = "Shipment.O.Routings.NoWarehouseTerminal";
+                }
 
+                else {
+                    this.LegHeight = 130;
+                }
+
+                break;
+            }
             case "Delivery": {
                 if (this.Delivery == null || this.EntityPM.ShipmentDeliveries.indexOf(this.Delivery) == -1) {
                     this.LegHeight = 50;
@@ -1867,6 +2005,7 @@ export class RoutingItem extends BaseComponent {
                 case "On Forwarding":
                 case "Pre Forwarding":
                 case "WarehouseLeg":
+                case "WarehouseLeg2":
                 case "WarehouseLeg_Pickups":
                     {
                         this.IsDeleteButtonVisible = true;
@@ -1894,11 +2033,6 @@ export class RoutingItem extends BaseComponent {
                     myExtention = ":" + this.Pickup.PickUpDeliveryNumber;
                 }
 
-                break;
-            }
-
-            case "WarehouseLeg_Pickups": {
-                myTextCode = "Shipment.O.Routings.WarehouseLeg";
                 break;
             }
 
@@ -1949,11 +2083,25 @@ export class RoutingItem extends BaseComponent {
                 myLegTransportModeId = this.EntityPM.OnForwardingTransportModeId;
                 break;
             }
-
-            case "WarehouseLeg": {
-                myTextCode = "Shipment.O.Routings.WarehouseLeg";
-                break;
-            }
+            case "WarehouseLeg_Pickups":
+                {
+                    var title = "Shipment.O.Routings.WarehouseLeg";
+                    var originTitle = "Shipment.O.Routings.OriginWarehouseLeg";
+                    myTextCode = this.fatherComponent.GetWarehouseLegTitle(title, originTitle);
+                    break;
+                }
+            case "WarehouseLeg":
+                {
+                    myTextCode = "Shipment.O.Routings.WarehouseLeg";
+                    break;
+                }
+            case "WarehouseLeg2":
+                {
+                    var title = "Shipment.O.Routings.WarehouseLeg";
+                    var destinationTitle = "Shipment.O.Routings.DestinationWarehouseLeg";
+                    myTextCode = this.fatherComponent.GetWarehouseLegTitle(title, destinationTitle);
+                    break;
+                }
 
             case "Delivery": {
                 myTextCode = "Shipment.O.Routings.Delivery";
@@ -1981,7 +2129,7 @@ export class RoutingItem extends BaseComponent {
         this.LegName = TextCodeTranslator.Translate(myTextCode) + myExtention;
         this.LegTransportModeId = myLegTransportModeId;
     }
-
+    
     public ImageSource: string;
     GetImageSource() {
 
@@ -2712,7 +2860,14 @@ export class RoutingItem extends BaseComponent {
                 myATA = this.EntityPM.WarehouseLegActualReleaseDate;
                 break;
             }
-
+            case "WarehouseLeg2":
+                {
+                myETD = this.EntityPM.WarehouseLeg2ExpectedEntryDate;
+                myATD = this.EntityPM.WarehouseLeg2ActualEntryDate;
+                myETA = this.EntityPM.WarehouseLeg2ExpectedReleaseDate;
+                myATA = this.EntityPM.WarehouseLeg2ActualReleaseDate;
+                break;
+            }
             case "Delivery":
             case "EmptyCR": {
                 if (this.Delivery != null) {
@@ -2853,6 +3008,12 @@ export class RoutingItem extends BaseComponent {
                     break;
                 }
 
+            case "WarehouseLeg2":
+                {
+                    this.EntityPM.WarehouseLeg2ActualEntryDate = this.EntityPM.WarehouseLeg2ExpectedEntryDate;
+                    break;
+                }
+
             case "EmptyCR":
             case "Delivery": {
                 this.Delivery.ATD = this.Delivery.ETD;
@@ -2916,6 +3077,12 @@ export class RoutingItem extends BaseComponent {
                     break;
                 }
 
+            case "WarehouseLeg2":
+                {
+                    this.EntityPM.WarehouseLeg2ActualReleaseDate = this.EntityPM.WarehouseLeg2ExpectedReleaseDate;
+                    break;
+                }
+
             case "EmptyCR":
             case "Delivery": {
                 this.Delivery.ATA = this.Delivery.ETA;
@@ -2962,6 +3129,14 @@ export class RoutingItem extends BaseComponent {
         }
     }
 
+
+    get Terminal2Available() { return this.EntityPM.Terminal2Available; }
+    set Terminal2Available(value: Date) {
+        if (this.EntityPM.Terminal2Available != value) {
+            this.EntityPM.Terminal2Available = value;
+        }
+    }
+
     get WarehouseLegCutOffDate() { return this.EntityPM.WarehouseLegCutOffDate; }
     set WarehouseLegCutOffDate(value: Date) {
         if (this.EntityPM.WarehouseLegCutOffDate != value) {
@@ -2973,6 +3148,40 @@ export class RoutingItem extends BaseComponent {
     set WarehouseLegVGMCutOffDate(value: Date) {
         if (this.EntityPM.WarehouseLegVGMCutOffDate != value) {
             this.EntityPM.WarehouseLegVGMCutOffDate = value;
+        }
+    }
+    get WarehouseLeg2WarehouseId() { return this.EntityPM.WarehouseLeg2WarehouseId; }
+    set WarehouseLeg2WarehouseId(value: string) {
+        if (this.EntityPM.WarehouseLeg2WarehouseId != value) {
+            this.EntityPM.WarehouseLeg2WarehouseId = value;
+        }
+    }
+
+    get WarehouseLeg2Reference() { return this.EntityPM.WarehouseLeg2Reference; }
+    set WarehouseLeg2Reference(value: string) {
+        if (this.EntityPM.WarehouseLeg2Reference != value) {
+            this.EntityPM.WarehouseLeg2Reference = value;
+        }
+    }
+
+    get WarehouseLeg2TerminalCode() { return this.EntityPM.WarehouseLeg2TerminalCode; }
+    set WarehouseLeg2TerminalCode(value: string) {
+        if (this.EntityPM.WarehouseLeg2TerminalCode != value) {
+            this.EntityPM.WarehouseLeg2TerminalCode = value;
+        }
+    }
+
+    get WarehouseLeg2CutOffDate() { return this.EntityPM.WarehouseLeg2CutOffDate; }
+    set WarehouseLeg2CutOffDate(value: Date) {
+        if (this.EntityPM.WarehouseLeg2CutOffDate != value) {
+            this.EntityPM.WarehouseLeg2CutOffDate = value;
+        }
+    }
+
+    get WarehouseLeg2VGMCutOffDate() { return this.EntityPM.WarehouseLeg2VGMCutOffDate; }
+    set WarehouseLeg2VGMCutOffDate(value: Date) {
+        if (this.EntityPM.WarehouseLeg2VGMCutOffDate != value) {
+            this.EntityPM.WarehouseLeg2VGMCutOffDate = value;
         }
     }
 
