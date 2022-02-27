@@ -614,7 +614,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     join g in context.GLAccounts on a.AccountId equals g.Id
                     join j in context.Journals on a.JournalId equals j.Id
 
-                    where ((a.DocumentDate >= fromDate && a.DocumentDate <= toDate) || (a.AccountingDate >= fromDate && a.AccountingDate <= toDate)) && a.Tenant == tenant
+                    where ((a.AccountingDate >= fromDate && a.AccountingDate <= toDate)) && a.Tenant == tenant
                     select new B100Data()
                     {
                         AccountingDate = a.AccountingDate,
@@ -644,7 +644,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     join g in context.GLAccounts on a.AccountId equals g.Id
                     join j in context.Journals on a.JournalId equals j.Id
 
-                    where ((a.DocumentDate >= fromDate && a.DocumentDate <= toDate) || (a.AccountingDate >= fromDate && a.AccountingDate <= toDate))
+                    where ((a.AccountingDate >= fromDate && a.AccountingDate <= toDate))
                         && a.Tenant == tenant
                         && (DbFunctions.TruncateTime(a.AccountingDate) != firstDayOfFromDate || (DbFunctions.TruncateTime(a.AccountingDate) == firstDayOfFromDate && j.AccountingEntityCode != AccountingEntityValues.YearTransfer))
                     select new B100Data()
