@@ -307,8 +307,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "2892",
 "2450",
 
-"UCUDO", 
-"UCBNDCD",///  Send bonded filing
+ "UCBNDCD",///  Send bonded filing
 ///"8302", //בקשה לטופס הצהרה
 
 "2751"//הצהרת יצוא- מסר יוצא
@@ -331,7 +330,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             };
 
             string[] intrefaceTypeListDisplayOnly = GetintrefaceTypeListDisplayOnly();
-            if (!requestInProgressParams.DisplayOnlyMode && !intrefaceTypeList.Contains(requestInProgressParams.InterfaceTypeCode))
+            if (!requestInProgressParams.DisplayOnlyMode && !intrefaceTypeList.Contains(requestInProgressParams.InterfaceTypeCode) &&  !(requestInProgressParams.InterfaceTypeCode== "UCUDO"))
             {
                 return new List<CustomsRequestsSheetPM>();
             }
