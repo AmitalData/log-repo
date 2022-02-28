@@ -439,8 +439,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "1171", // - מסר תשובה מצהר
 "1172", // - מסר תשובה מצהר - נדחף
 "8373",//"שאילתא לשחזור נתוני הצהרה"
-"UCUDO", 
- "UCB8212"
+  "UCB8212"
  ,"2892" ,
  "ClosePending",//סגירה גורפת ל-Pending
 "UCB9999",
