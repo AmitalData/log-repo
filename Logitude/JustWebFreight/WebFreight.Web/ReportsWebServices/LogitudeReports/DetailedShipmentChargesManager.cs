@@ -19,6 +19,7 @@ using Logitude.BL.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using WebFreight.Web.WebServices;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 {
@@ -41,10 +42,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         private CustomFieldResolver customFieldResolver;
         private AddressRepository addressRepository;
         private ShipmentPackageRepository shipmentPackageRepository;
+        private WebServiceHelper servicHelper;
+
         public DetailedShipmentChargesManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
-
+            servicHelper = new WebServiceHelper(this.tenant);
             myInvoiceContext = InvoiceContext.GetContext(tenant);
             myCommonContext = CommonDataContext.GetContext(tenant);
             myShipmentsContext = ShipmentsContext.GetContext(tenant);
@@ -1326,14 +1329,22 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
             if (myShipment.DirectionId == "D" && myShipment.TransportModeId == "I")
             {
-                if (!string.IsNullOrEmpty(myShipment.MainCarriageToAddressId))
+                InlandDomesticArgs args = new InlandDomesticArgs()
                 {
-                    Address myPartnerAddress = addressRepository.GetSingleAddress(myShipment.MainCarriageToAddressId, tenant);
-                    if (myPartnerAddress != null)
-                    {
-                        countryName = myPartnerAddress.Country != null ? myPartnerAddress.Country.EnglishName : null;
-                    }
-                }
+                    InlandDomesticFromTypeCode = myShipment.InlandDomesticFromTypeCode,
+                    MainCarriageFromAddressId = myShipment.MainCarriageFromAddressId,
+                    MainCarriageFromPortId = myShipment.MainCarriageFromPortId,
+                    InlandDomesticFromCity = myShipment.InlandDomesticFromCity,
+                    InlandDomesticFromCountryId = myShipment.InlandDomesticFromCountryId,
+                    InlandDomesticToTypeCode = myShipment.InlandDomesticToTypeCode,
+                    MainCarriageToAddressId = myShipment.MainCarriageToAddressId,
+                    InlandDomesticToCity = myShipment.InlandDomesticToCity,
+                    InlandDomesticToCountryId = myShipment.InlandDomesticToCountryId,
+                    MainCarriageToPortId = myShipment.MainCarriageToPortId,
+                    MainCarriageFromPortCountryCode = myShipment.MainCarriageFromPortCountryCode,
+                    MainCarriageToPortCountryCode = myShipment.MainCarriageToPortCountryCode
+                };
+                countryName = servicHelper.GetInlandDomesticToCountryName(args);
             }
 
             else

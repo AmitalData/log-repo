@@ -2235,7 +2235,7 @@ namespace WebFreight.Web.WebServices
                             Country fromCountry = commonContext.Countries.Where(a => a.Id == fromAddress.CountryId).FirstOrDefault();
                             if (fromCountry != null)
                             {
-                                myDataProvider.FromLocationCountryCode = fromCountry.Code;
+                                myDataProvider.FromLocationCountryCode = this.FillInlandDomecticCountryCode(shipment);
                             }
                         }
                     }
@@ -3855,6 +3855,28 @@ namespace WebFreight.Web.WebServices
             }
 
             return myDataProvider;
+        }
+
+        private string FillInlandDomecticCountryCode(ShipmentPM shipment)
+        {
+            var fromLocationCountryCode = "";
+            InlandDomesticArgs args = new InlandDomesticArgs()
+            {
+                InlandDomesticFromTypeCode = shipment.InlandDomesticFromTypeCode,
+                MainCarriageFromAddressId = shipment.MainCarriageFromAddressId,
+                MainCarriageFromPortId = shipment.MainCarriageFromPortId,
+                InlandDomesticFromCity = shipment.InlandDomesticFromCity,
+                InlandDomesticFromCountryId = shipment.InlandDomesticFromCountryId,
+                InlandDomesticToTypeCode = shipment.InlandDomesticToTypeCode,
+                MainCarriageToAddressId = shipment.MainCarriageToAddressId,
+                InlandDomesticToCity = shipment.InlandDomesticToCity,
+                InlandDomesticToCountryId = shipment.InlandDomesticToCountryId,
+                MainCarriageToPortId = shipment.MainCarriageToPortId,
+                MainCarriageFromPortCountryCode = shipment.MainCarriageFromPortCountryCode,
+                MainCarriageToPortCountryCode = shipment.MainCarriageToPortCountryCode
+            };
+            fromLocationCountryCode = this.myServicHelper.GetInlandDomesticFromCountryCode(args);
+            return fromLocationCountryCode;
         }
 
         private void FillINTTRADocumentProperties(ShippingDeclarationDataProvider myDataProvider)

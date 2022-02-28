@@ -316,14 +316,14 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             InlandDomesticFromTypeCode = shipment.InlandDomesticFromTypeCode,
                             MainCarriageFromAddressId = shipment.MainCarriageFromAddressId,
-                            MainCarriageFromPortName = shipment.MainCarriageFromPortName,
+                            MainCarriageFromPortId = shipment.MainCarriageFromPortId,
                             InlandDomesticFromCity = shipment.InlandDomesticFromCity,
                             InlandDomesticFromCountryId = shipment.InlandDomesticFromCountryId,
                             InlandDomesticToTypeCode = shipment.InlandDomesticToTypeCode,
                             MainCarriageToAddressId = shipment.MainCarriageToAddressId,
                             InlandDomesticToCity = shipment.InlandDomesticToCity,
                             InlandDomesticToCountryId = shipment.InlandDomesticToCountryId,
-                            MainCarriageToPortName = shipment.MainCarriageToPortName,
+                            MainCarriageToPortId = shipment.MainCarriageToPortId,
                         };
                         invoiceDataProvider.FromLocation = servicHelper.GetInlandDomesticFromLocation(args);
                         invoiceDataProvider.ToLocation = servicHelper.GetInlandDomesticToLocation(args);

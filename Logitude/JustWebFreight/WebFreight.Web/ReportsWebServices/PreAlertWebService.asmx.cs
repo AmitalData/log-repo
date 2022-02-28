@@ -553,14 +553,14 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         InlandDomesticFromTypeCode = shipmentpm.InlandDomesticFromTypeCode,
                         MainCarriageFromAddressId = shipmentpm.MainCarriageFromAddressId,
-                        MainCarriageFromPortName = shipmentpm.MainCarriageFromPortName,
+                        MainCarriageFromPortId = shipmentpm.MainCarriageFromPortId,
                         InlandDomesticFromCity = shipmentpm.InlandDomesticFromCity,
                         InlandDomesticFromCountryId = shipmentpm.InlandDomesticFromCountryId,
                         InlandDomesticToTypeCode = shipmentpm.InlandDomesticToTypeCode,
                         MainCarriageToAddressId = shipmentpm.MainCarriageToAddressId,
                         InlandDomesticToCity = shipmentpm.InlandDomesticToCity,
                         InlandDomesticToCountryId = shipmentpm.InlandDomesticToCountryId,
-                        MainCarriageToPortName = shipmentpm.MainCarriageToPortName,
+                        MainCarriageToPortId = shipmentpm.MainCarriageToPortId,
                     };
                     prealertDataProvider.FromLocation = servicHelper.GetInlandDomesticFromLocation(args);
                     prealertDataProvider.ToLocation = servicHelper.GetInlandDomesticToLocation(args);

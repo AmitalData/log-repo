@@ -2120,17 +2120,19 @@ namespace WebFreight.Web.WebServices
                 {
                     InlandDomesticFromTypeCode = shipment.InlandDomesticFromTypeCode,
                     MainCarriageFromAddressId = shipment.MainCarriageFromAddressId,
-                    MainCarriageFromPortName = shipment.MainCarriageFromPortName,
+                    MainCarriageFromPortId = shipment.MainCarriageFromPortId,
                     InlandDomesticFromCity = shipment.InlandDomesticFromCity,
                     InlandDomesticFromCountryId = shipment.InlandDomesticFromCountryId,
                     InlandDomesticToTypeCode = shipment.InlandDomesticToTypeCode,
                     MainCarriageToAddressId = shipment.MainCarriageToAddressId,
                     InlandDomesticToCity = shipment.InlandDomesticToCity,
                     InlandDomesticToCountryId = shipment.InlandDomesticToCountryId,
-                    MainCarriageToPortName = shipment.MainCarriageToPortName,
+                    MainCarriageToPortId = shipment.MainCarriageToPortId,
+                    MainCarriageFromPortCountryCode = shipment.MainCarriageFromPortCountryCode,
+                    MainCarriageToPortCountryCode = shipment.MainCarriageToPortCountryCode
                 };
-                myDataProvider.FromLocationCountryCode = this.myServicHelper.GetInlandDomesticFromLocation(args);
-                myDataProvider.ToLocationCountryCode = this.myServicHelper.GetInlandDomesticToLocation(args);
+                myDataProvider.FromLocationCountryCode = this.myServicHelper.GetInlandDomesticFromCountryCode(args);
+                myDataProvider.ToLocationCountryCode = this.myServicHelper.GetInlandDomesticToCountryCode(args);
             }
 
             else

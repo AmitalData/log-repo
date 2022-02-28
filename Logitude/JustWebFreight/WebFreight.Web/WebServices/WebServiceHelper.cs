@@ -1527,6 +1527,207 @@ namespace WebFreight.Web.WebServices
             return myResult;
         }
 
+        public string GetInlandDomesticRouting(InlandDomesticArgs args)
+        {
+            string routing = "";
+            string fromCityCode = this.GetRoutingFromCity(args);
+            string toCityCode = this.GetRoutingToCity(args);
+            routing = string.IsNullOrEmpty(toCityCode) ? fromCityCode : fromCityCode + " , " + toCityCode;
+            return routing;
+        }
+        public string GetRoutingFromCity(InlandDomesticArgs args)
+        {
+            string fromCityCode = "";
+            switch (args.InlandDomesticFromTypeCode)
+            {
+                case "PART":
+                    {
+                        fromCityCode = this.GetInlanDomesticCity(args.MainCarriageFromAddressId);
+                        break;
+                    }
+                case "PORT":
+                    {
+                        fromCityCode = this.GetPortName(args.MainCarriageFromPortId);
+                        break;
+                    }
+                case "CASL":
+                    {
+                        fromCityCode = args.InlandDomesticFromCity;
+                        break;
+                    }
+            }
+            return fromCityCode;
+        }
+        public string GetRoutingToCity(InlandDomesticArgs args)
+        {
+            string toCityCode = "";
+            switch (args.InlandDomesticToTypeCode)
+            {
+                case "PART":
+                    {
+                        toCityCode = this.GetInlanDomesticCity(args.MainCarriageToAddressId);
+                        break;
+                    }
+                case "PORT":
+                    {
+                        toCityCode = this.GetPortName(args.MainCarriageToPortId); 
+                        break;
+                    }
+                case "CASL":
+                    {
+                        toCityCode = args.InlandDomesticToCity;
+                        break;
+                    }
+            }
+            return toCityCode;
+        }
+        private string GetInlanDomesticCity(string addressId)
+        {
+            string toLocation = "";
+            if (string.IsNullOrEmpty(addressId))
+            {
+                return null;
+            }
+            Address toAddress = addressRepository.GetSingleAddress(addressId, tenant);
+            if (toAddress != null)
+            {
+                toLocation = toAddress.City;
+            }
+            return toLocation;
+        }
+        public string GetInlandDomesticToCountryName(InlandDomesticArgs args)
+        {
+            string countryName = "";
+            switch (args.InlandDomesticToTypeCode)
+            {
+                case "PART":
+                    {
+                        countryName = this.GetInlanDomesticPartnerCoutntryName(args.MainCarriageToAddressId);
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        countryName = args.MainCarriageToPortCountryCode;
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        countryName = this.GetInlanDomesticCasualCoutntryName(args.InlandDomesticToCountryId);
+                        break;
+                    }
+            }
+            return countryName;
+        }
+        private string GetInlanDomesticPartnerCoutntryName(string addressId)
+        {
+            string coutntryName = "";
+            if (string.IsNullOrEmpty(addressId))
+            {
+                return null;
+            }
+            Address toAddress = addressRepository.GetSingleAddress(addressId, tenant);
+            if (toAddress != null)
+            {
+                coutntryName = toAddress.Country?.EnglishName;
+            }
+            return coutntryName;
+        }
+        private string GetInlanDomesticCasualCoutntryName(string countryId)
+        {
+            string coutntryName = "";
+            if (string.IsNullOrEmpty(countryId))
+            {
+                return null;
+            }
+
+            Country country = countryRepository.GetSingleCountry(countryId, tenant);
+            if (country != null)
+            {
+                coutntryName = country.EnglishName;
+            }
+            return coutntryName;
+        }
+        public string GetInlandDomesticFromCountryCode(InlandDomesticArgs args)
+        {
+            string countryCode = null;
+            switch (args.InlandDomesticFromTypeCode)
+            {
+                case "PART":
+                    {
+                        countryCode = this.GetInlanDomesticPartnerCoutntryCode(args.MainCarriageFromAddressId);
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        countryCode = args.MainCarriageFromPortCountryCode;
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        countryCode = this.GetInlanDomesticCasualCoutntryCode(args.InlandDomesticFromCountryId);
+                        break;
+                    }
+            }
+            return countryCode;
+        }
+        public string GetInlandDomesticToCountryCode(InlandDomesticArgs args)
+        {
+            string countryCode = null;
+            switch (args.InlandDomesticToTypeCode)
+            {
+                case "PART":
+                    {
+                        countryCode = this.GetInlanDomesticPartnerCoutntryCode(args.MainCarriageToAddressId);
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        countryCode = args.MainCarriageToPortCountryCode;
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        countryCode = this.GetInlanDomesticCasualCoutntryCode(args.InlandDomesticToCountryId);
+                        break;
+                    }
+            }
+            return countryCode;
+        }
+        private string GetInlanDomesticPartnerCoutntryCode(string addressId)
+        {
+            string coutntryCode = "";
+            if (string.IsNullOrEmpty(addressId))
+            {
+                return null;
+            }
+            Address toAddress = addressRepository.GetSingleAddress(addressId, tenant);
+            if (toAddress != null)
+            {
+                coutntryCode = toAddress.Country?.Code;
+            }
+            return coutntryCode;
+        }
+        private string GetInlanDomesticCasualCoutntryCode(string countryId)
+        {
+            string coutntryCode = "";
+            if (string.IsNullOrEmpty(countryId))
+            {
+                return null;
+            }
+
+            Country country = countryRepository.GetSingleCountry(countryId, tenant);
+            if (country != null)
+            {
+                coutntryCode = country.Code;
+            }
+            return coutntryCode;
+        }
         public string GetInlandDomesticToLocation(InlandDomesticArgs args)
         {
             string toLocation = null;
@@ -1540,7 +1741,7 @@ namespace WebFreight.Web.WebServices
 
                 case "PORT":
                     {
-                        toLocation = args.MainCarriageToPortName;
+                        toLocation = this.GetPortName(args.MainCarriageToPortId);
                         break;
                     }
 
@@ -1552,6 +1753,7 @@ namespace WebFreight.Web.WebServices
             }
             return toLocation;
         }
+
         public string GetInlandDomesticFromLocation(InlandDomesticArgs args)
         {
             string fromLocation = null;
@@ -1565,7 +1767,7 @@ namespace WebFreight.Web.WebServices
 
                 case "PORT":
                     {
-                        fromLocation = args.MainCarriageFromPortName;
+                        fromLocation = this.GetPortName(args.MainCarriageFromPortId);
                         break;
                     }
 
@@ -1577,6 +1779,18 @@ namespace WebFreight.Web.WebServices
             }
             return fromLocation;
         }
+
+        private string GetPortName(string portId)
+        {
+            string portName = "";
+            PortPM myPort = PortQuery.GetSinglePort(tenant, portId, true);
+            if (myPort != null)
+            {
+                portName = myPort.EnglishName;
+            }
+            return portName;
+        }
+
         private string SetLocationFromInlanDomesticPartner(string addressId)
         {
             string toLocation = "";
@@ -1591,7 +1805,6 @@ namespace WebFreight.Web.WebServices
             }
             return toLocation;
         }
-
         private string SetLocationFromInlanDomesticCasual(string city, string countryId)
         {
             string toLocation = city;
@@ -1599,7 +1812,6 @@ namespace WebFreight.Web.WebServices
             {
                 return null;
             }
-
             Country country = countryRepository.GetSingleCountry(countryId, tenant);
             if (country != null)
             {
@@ -1613,7 +1825,7 @@ namespace WebFreight.Web.WebServices
     {
         public string InlandDomesticFromTypeCode { get; set; }
         public string MainCarriageFromAddressId { get; set; }
-        public string MainCarriageFromPortName { get; set; }
+        public string MainCarriageFromPortId { get; set; }
         public string InlandDomesticFromCity { get; set; }
         public string InlandDomesticFromCountryId { get; set; }
 
@@ -1621,9 +1833,13 @@ namespace WebFreight.Web.WebServices
         public string MainCarriageToAddressId { get; set; }
         public string InlandDomesticToCity { get; set; }
         public string InlandDomesticToCountryId { get; set; }
-        public string MainCarriageToPortName { get; set; }
-
+        public string MainCarriageToPortId { get; set; }
+        public string MainCarriageFromPortCountryCode { get; set; }
+        public string MainCarriageToPortCountryCode { get; set; }
+        public string MainCarriageToPortCode { get; set; }
+        public string MainCarriageFromPortCode { get; set; }
     }
+
     public class PlaceOfReceiptData
     {
         public string City { get; set; }
