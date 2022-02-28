@@ -1539,200 +1539,90 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
                 this.OnlySendPayment(params);
             }
             else {
-                this.CheckCustomFileCreditThenSendPayment(params);
+         this.CheckCustomFileCreditThenSendPayment(params);
             }
             return;
         }
 
-        //var myCustomMessageProgressHelper = new CustomMessageProgressHelper();
-        //myCustomMessageProgressHelper.BasicResponse = true;
-        //myCustomMessageProgressHelper.StartProgress(params.PBId, 5, true);
-
-
-        //this.declarationMessagesService.PostSendPaymentWithCheckCustomFileCredit(params)
-        //    .subscribe((myServiceResponse: ServiceResponse) => {
-        //        myCustomMessageProgressHelper.MessageArrived = true;
-        //        SessionLocator.SelectedSession.StopBusyIndicator();
-        //        var result: CustomFileCreditResponseData = myServiceResponse.Result;
-        //        if (!AppTool.IsNullOrEmpty(result)) {
-        //            var mess :string = this.AnalyzeResponseMessageSendPaymentWithCheckCustomFileCredit(result);
-
-        //            SessionLocator.SelectedSession.StopBusyIndicator();
-        //            if (!AppTool.IsNullOrEmpty(mess)) {
-        //                let messWindow = new MessageWindow();
-
-        //                SessionLocator.SelectedSession.StopBusyIndicator();
-        //                messWindow.Show(mess);
-        //                messWindow.WindowClosed.subscribe((event: any) => {
-
-
-        //                    if (mess.toLowerCase().includes("succeeded") || mess.toLowerCase().includes("בהצלחה") ||
-        //                        this._IsCloseScreen == true) // Mirit 20/07/15 Task-14344 - add successfully (Hebrew) // Mirit 24/11/15 Task 18440- add IsCloseScreen
-        //                    {
-        //                        this.RefreshDeclaration();
-        //                        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
-        //                        if (SessionLocator.SelectedSession.CurrentWindow != null) SessionLocator.SelectedSession.CloseCurrentWindow()
-        //                    }
-        //                });
-
-        //            }
-
-        //        }
-        //    });
-
     }
-    //CheckCustomFileCreditThenSendPayment(params: CustomFileCreditRequestParams) {
-    //    var myCustomMessageProgressHelper = new CustomMessageProgressHelper();
-    //    myCustomMessageProgressHelper.BasicResponse = true;
-    //    myCustomMessageProgressHelper.StartProgress(params.PBId, 5, true);
-
-    //    this.declarationMessagesService.PostCheckCustomFileCreditOnly(params)
-    //        .subscribe((myServiceResponse: ServiceResponse) => {
-    //            myCustomMessageProgressHelper.MessageArrived = true;
-    //            SessionLocator.SelectedSession.StopBusyIndicator();
-    //            let customFileCreditResponseData: CustomFileCreditResponseData = myServiceResponse.Result;
-
-    //            if (!AppTool.IsNullOrEmpty(customFileCreditResponseData)) {
-    //                if (customFileCreditResponseData.IsTRansGove) {
-    //                    var confirmWindow = new ConfirmWindow();
-    //                    confirmWindow.Show(customFileCreditResponseData.UserMessage);
-    //                    SessionLocator.SelectedSession.StopBusyIndicator();
-    //                    confirmWindow.WindowClosed.subscribe((event: any) => {
-    //                        if (confirmWindow.Yes) {
-    //                            this.ActualSendToTransfer();
-    //                        }
-    //                    });
-
-    //                    return;
-    //                    //////////////////////////////////////////////////////////////////////////
-    //                }
-    //                CustomMessageProgressComponent.ShowProgressBar
-    //                    //(PBId: string, Title: string, OnSuccessCloseWin: boolean
-    //                    //    , OnSuccessCloseWinMethod?: (response: any) => boolean)
-
-    //                    (params.PBId, "תחילת שליחה למכס- הגשת תשלום", false)
-    //                    .then(res => {
-
-    //                        SessionLocator.SelectedSession.StopBusyIndicator();//// let it be ...
-    //                        let myPaymentResponseData: CustomFileCreditResponseData = res;
-
-    //                        this.RefreshDeclaration();
-    //                        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
-
-    //                        if (myPaymentResponseData.HasException || !myPaymentResponseData.Succeeded) {
-    //                            //let mess = myPaymentResponseData.UserMessage || "Server return Error (Witout message????!!?!)";
-    //                            //if (!AppTool.IsNullOrEmpty(mess)) {
-    //                            //    let messWindow = new MessageWindow();
-    //                            //    messWindow.Show(mess);
-    //                            //    messWindow.WindowClosed.subscribe((event: any) => {
-
-    //                            //        this.RefreshDeclaration();
-    //                            //        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
-    //                            //        //if (SessionLocator.SelectedSession.CurrentWindow != null) SessionLocator.SelectedSession.CloseCurrentWindow()
-
-    //                            //    });
-
-    //                            //}
-
-    //                        } else {
-
-    //                            if (SessionLocator.SelectedSession.CurrentWindow != null) SessionLocator.SelectedSession.CloseCurrentWindow()
-    //                        }
-    //                    })
-    //                    .catch(err => {
-    //                        err = err || "PostSendPaymentOnly return Error (Without message????!!?!)";
-    //                        let messWindow = new MessageWindow();
-    //                        messWindow.Show(err);
-
-    //                    });
-
-
-    //                this.declarationMessagesService.PostSendPaymentOnly(params)
-    //                    .subscribe(res1 => {
-    //                    });
-
-
-
-    //            }
-    //        });
-
-    //}
     CheckCustomFileCreditThenSendPayment(params: CustomFileCreditRequestParams) {
         var myCustomMessageProgressHelper = new CustomMessageProgressHelper(this.CurrentSession);
         myCustomMessageProgressHelper.BasicResponse = true;
         myCustomMessageProgressHelper.StartProgress(params.PBId, 5, true);
 
-        this.declarationMessagesService.PostCheckCustomFileCreditOnly(params)
-            .subscribe((myServiceResponse: ServiceResponse) => {
-                myCustomMessageProgressHelper.MessageArrived = true;
-                SessionLocator.SelectedSession.StopBusyIndicator();
-                let customFileCreditResponseData: CustomFileCreditResponseData = myServiceResponse.Result;
+        //this.declarationMessagesService.PostCheckCustomFileCreditOnly(params)
+        //    .subscribe((myServiceResponse: ServiceResponse) => {
+        //        myCustomMessageProgressHelper.MessageArrived = true;
+        //        SessionLocator.SelectedSession.StopBusyIndicator();
+        //        let customFileCreditResponseData: CustomFileCreditResponseData = myServiceResponse.Result;
 
-                if (!AppTool.IsNullOrEmpty(customFileCreditResponseData)) {
-                    if (customFileCreditResponseData.IsTRansGove) {
-                        var confirmWindow = new ConfirmWindow();
-                        confirmWindow.Show(customFileCreditResponseData.UserMessage);
-                        SessionLocator.SelectedSession.StopBusyIndicator();
-                        confirmWindow.WindowClosed.subscribe((event: any) => {
-                            if (confirmWindow.Yes) {
-                                //this.ActualSendToTransfer();
-                                this.InstructionActualSendToTransfer()
-                            }
-                        });
-                        return;
-                    }
-                    if (customFileCreditResponseData.IsReTRansGove) {
-                        var confirmWindow = new ConfirmWindow();
-                        //confirmWindow.Width = 400;
-                        confirmWindow.Show(customFileCreditResponseData.UserMessage);
-                        SessionLocator.SelectedSession.StopBusyIndicator();
-                        confirmWindow.WindowClosed.subscribe((event: any) => {
-                            if (confirmWindow.Yes) {
-                                this.ActualSendToReTransfer();
-                            }
-                        });
-                        return;
-                    }
-                    if (customFileCreditResponseData.HasException) {
-                        var messageWindow = new MessageWindow();
-                        messageWindow.Title = TextCodeTranslator.Translate("Customs.General.O.Warning");
-                        messageWindow.Width = 250;
-                        messageWindow.Height = 150;
-                        messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                        messageWindow.Show(customFileCreditResponseData.UserMessage);
-                        return;
-                        //////////////////////////////////////////////////////////////////////////
-                    }
-
-
-                    if (AmitalGatewayUtil.Instance.IsDeclarationInUse(this.DeclarationPM.CustomFileNo, this.DeclarationPM.IsConvertedDeclaration, this.DeclarationPM.IsConnectedToUnifreight)) {
-                        SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.UnifreightInstSentMehes"));
-
-                        var myStoreViewUnifreightInstructionController = new UnifreightController(
-                            this.DeclarationPM,
-                            "Logitude.Customs.ViewModels.DeclarationPayment.DeclarationPaymentTabViewModel.MyStoreViewUnifreightInstructionController");
-                        myStoreViewUnifreightInstructionController.GetPromise()
-                            //myStoreViewUnifreightInstructionController.UnifreightCallbackCompleted += (sender, e) => {
-                            .then((e) => {
-                                if (e.UnifreightResponseStatus) {
-                                    this.Send2755(params);
-                                }
-                                else {
-                                    SessionLocator.SelectedSession.StopBusyIndicator();
-
-                                }
-                            });
-                        SessionLocator.SelectedSession.StartBusyIndicator("");
-                        myStoreViewUnifreightInstructionController.SendRequestInstructionToUnifreightAsync("PAYHAND_SEND");
+        //        if (!AppTool.IsNullOrEmpty(customFileCreditResponseData)) {
+        //            if (customFileCreditResponseData.IsTRansGove) {
+        //                var confirmWindow = new ConfirmWindow();
+        //                confirmWindow.Show(customFileCreditResponseData.UserMessage);
+        //                SessionLocator.SelectedSession.StopBusyIndicator();
+        //                confirmWindow.WindowClosed.subscribe((event: any) => {
+        //                    if (confirmWindow.Yes) {
+        //                        //this.ActualSendToTransfer();
+        //                        this.InstructionActualSendToTransfer()
+        //                    }
+        //                });
+        //                return;
+        //            }
+        //            if (customFileCreditResponseData.IsReTRansGove) {
+        //                var confirmWindow = new ConfirmWindow();
+        //                //confirmWindow.Width = 400;
+        //                confirmWindow.Show(customFileCreditResponseData.UserMessage);
+        //                SessionLocator.SelectedSession.StopBusyIndicator();
+        //                confirmWindow.WindowClosed.subscribe((event: any) => {
+        //                    if (confirmWindow.Yes) {
+        //                        this.ActualSendToReTransfer();
+        //                    }
+        //                });
+        //                return;
+        //            }
+        //            if (customFileCreditResponseData.HasException) {
+        //                var messageWindow = new MessageWindow();
+        //                messageWindow.Title = TextCodeTranslator.Translate("Customs.General.O.Warning");
+        //                messageWindow.Width = 250;
+        //                messageWindow.Height = 150;
+        //                messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+        //                messageWindow.Show(customFileCreditResponseData.UserMessage);
+        //                return;
+        //                //////////////////////////////////////////////////////////////////////////
+        //            }
 
 
-                    } else {
+               
+
+        //        }
+        //    });
+
+
+        if (AmitalGatewayUtil.Instance.IsDeclarationInUse(this.DeclarationPM.CustomFileNo, this.DeclarationPM.IsConvertedDeclaration, this.DeclarationPM.IsConnectedToUnifreight)) {
+            SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.UnifreightInstSentMehes"));
+
+            var myStoreViewUnifreightInstructionController = new UnifreightController(
+                this.DeclarationPM,
+                "Logitude.Customs.ViewModels.DeclarationPayment.DeclarationPaymentTabViewModel.MyStoreViewUnifreightInstructionController");
+            myStoreViewUnifreightInstructionController.GetPromise()
+                //myStoreViewUnifreightInstructionController.UnifreightCallbackCompleted += (sender, e) => {
+                .then((e) => {
+                    if (e.UnifreightResponseStatus) {
                         this.Send2755(params);
                     }
+                    else {
+                        SessionLocator.SelectedSession.StopBusyIndicator();
 
-                }
-            });
+                    }
+                });
+            SessionLocator.SelectedSession.StartBusyIndicator("");
+            myStoreViewUnifreightInstructionController.SendRequestInstructionToUnifreightAsync("PAYHAND_SEND");
 
+
+        } else {
+            this.Send2755(params);
+        }
     }
 
     OnlySendPayment(params: CustomFileCreditRequestParams) {
