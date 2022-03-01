@@ -194,7 +194,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         }
         private CommunicationsParams CreateCommunicationParametersForDecline(DeclarationApprovalArgs declarationApprovalArgs)
         {
-            ObjectTablePM table = ObjectTableQuery.GetObjectTableByCode("CargoTrackingShipment", 0);
+            ObjectTablePM table = ObjectTableQuery.GetObjectTableByCode("Shipment", 0);
 
             CommunicationsParams comParams = new CommunicationsParams()
             {
@@ -208,6 +208,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 LoggingObjectTableId = table?.Id,
                 Subject = "Status Update",
                 FolderName = "ExternalTasksQueue",
+                LoggingEntityReference = cargoTrackingShipmentPM.ShipmentNumber,
+
             };
             return comParams;
         }
