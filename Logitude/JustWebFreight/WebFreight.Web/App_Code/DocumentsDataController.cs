@@ -262,7 +262,7 @@ namespace WebFreight.Web.App_Code
                 else
                 {
                     bool addDocument = true;
-                    if (item.DocumentTypeCode == "999S" && !string.IsNullOrEmpty(item.ChildEntityId))
+                    if ((item.DocumentTypeCode == "999S" || item.DocumentTypeCode == "999CI") && !string.IsNullOrEmpty(item.ChildEntityId))
                     {
                         if (!invoices.Where(d => d.Id == item.ChildEntityId).Any())
                         {
