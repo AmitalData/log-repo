@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   NewWizardControlName="&quot;Logitude.Customs.NewDeclarationControlCommand&quot;"
-  LocalDefaultText="&quot;הצהרות יבוא&quot;"
+  LocalDefaultText="&quot;הצהרות&quot;"
   DefaultText="&quot;Declaration&quot;"
   Code="&quot;DECL&quot;"
   Name="&quot;Customs.CourierMaster&quot;"
