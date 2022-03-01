@@ -34,8 +34,8 @@ Then("shipment module will appears successfully",() =>{
 Given("the user click on Add button to add Text field", () => {
     cy.wait(1000)
     cy.Click(CustomizationSelectors.AddCustomField,null,true);
-    cy.get('.EditableGrid').find('.LogCellTemplate').then((matching) => {
-        currentlyCreated = matching.length / 4;
+   // cy.get('.EditableGrid').find('.LogCellTemplate').then((matching) => {
+      //  currentlyCreated = matching.length / 4;
     });
 });
 

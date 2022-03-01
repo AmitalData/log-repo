@@ -19,13 +19,13 @@ export function NavigatesToSCustomizationWorkspace() {
 
 export const SearchModule = () => {
     cy.wait(2000)
-    cy.FillLogTextBox(CustomizationSelectors.SearchModule,"Queues",true);
-   cy.get(CustomizationSelectors.GridViewCell).contains('Queues').click()
+    cy.FillLogTextBox(CustomizationSelectors.SearchModule,"ChashBook",true);
+   cy.get(CustomizationSelectors.GridViewCell).contains('ChashBook').click()
    cy.Click(CustomizationSelectors.CustomeFields,null,true);
 }
 
 export function AssertSearchModule() {
-    BaseAssertion.AssertStatusCode(RequestAliases.EntityResource, 200);
+  //  BaseAssertion.AssertStatusCode(RequestAliases.EntityResource, 200);
 }
 
 export const DefineSearchAssert = () => {
