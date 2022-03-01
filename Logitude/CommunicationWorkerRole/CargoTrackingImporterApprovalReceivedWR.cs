@@ -89,7 +89,7 @@ namespace CommunicationWorkerRole
                 {
                     if (!General.IsUpdating())
                     {
-                        DoCargoTrackingImporterApprovalReceived();
+                        ReceiveQueueMessage();
                     }
                     else
                     {
@@ -105,7 +105,7 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private void DoCargoTrackingImporterApprovalReceived()
+        private void ReceiveQueueMessage()
         {
             ConnectClient();
             var response = queue.Receive();
