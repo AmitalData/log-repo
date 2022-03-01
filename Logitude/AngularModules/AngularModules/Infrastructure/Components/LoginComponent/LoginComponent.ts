@@ -325,7 +325,10 @@ export class LoginComponent implements OnInit {
                 if(hasCToolToggleFeature){
                     const authenticateService = new AuthenticateService();
                     if(authenticateService){
-                        authenticateService.logitudeAuthenticate({ Tenant: Number(userData.CurrentTenant + ""), Token: userData.Token });
+                        var logitudeAuthenticate = "logitudeAuthenticate";
+                        if(authenticateService.hasOwnProperty(logitudeAuthenticate)){
+                            authenticateService[logitudeAuthenticate]({ Tenant: Number(userData.CurrentTenant + ""), Token: userData.Token });
+                        }
                     }
                 }
             }
