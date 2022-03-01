@@ -50,8 +50,7 @@ namespace Logitude.TariffModule.BL.Helpers
             this.customsChargesTariffSearchArgs = args;
             this.customsChargesTariffSearchArgs.CustomsChargesPayables = new List<CustomsChargesPayable>();
             this.ratesList = this.GetRates(tenant);
-            this.commonContext = CommonDataContext.GetContext(tenant);
-            this.payables = new List<CustomsChargesPayable>();
+            this.commonContext = CommonDataContext.GetContext(tenant);            
 
             this.GetShipment();
             this.SetShipmentPropeaties();
@@ -150,17 +149,24 @@ namespace Logitude.TariffModule.BL.Helpers
         {
             TariffRepository tariffRepository = new TariffRepository(tenant);
             IQueryable<Tariff> tariffs = tariffRepository.GetActiveCustomsChargesTariffs(tenant);
-
             List<Tariff> myResult = new List<Tariff>();
 
             if (!string.IsNullOrEmpty(this.customAgentExportId))
             {
-                myResult.AddRange(tariffs.Where(d => d.CustomsBrokerId == this.customAgentExportId && d.TypeCode == "ECC"));
+                Tariff exportTariff = tariffs.Where(d => d.CustomsBrokerId == this.customAgentExportId && d.TypeCode == "ECC").FirstOrDefault();
+                if (exportTariff != null)
+                {
+                    myResult.Add(exportTariff);
+                }
             }
 
             if (!string.IsNullOrEmpty(this.customAgentImportId))
             {
-                myResult.AddRange(tariffs.Where(d => d.CustomsBrokerId == this.customAgentImportId && d.TypeCode == "ICC"));
+                Tariff importTariff = tariffs.Where(d => d.CustomsBrokerId == this.customAgentImportId && d.TypeCode == "ICC").FirstOrDefault();
+                if (importTariff != null)
+                {
+                    myResult.Add(importTariff);
+                }
             }
 
             return myResult;
@@ -229,6 +235,8 @@ namespace Logitude.TariffModule.BL.Helpers
         }
         private void CreatePayablesFromCustomChargesLine(TariffLine tariffLine, Tariff tariff)
         {
+            this.payables = new List<CustomsChargesPayable>();
+
             for (int i = 1; i <= 10; i++)
             {
                 string measurementId = (string)tariff.GetType().GetProperty("Surcharge" + i + "UOM").GetValue(tariff);
