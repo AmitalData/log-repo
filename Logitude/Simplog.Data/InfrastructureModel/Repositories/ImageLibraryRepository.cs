@@ -3,6 +3,7 @@ using System.Linq;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
+using System.Data.Entity;
 
 namespace Simplog.Data.InfrastructureModel.Repositories
 {
@@ -88,6 +89,13 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         public ImageLibrary GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
+        }
+
+        public ImageLibrary GetSingleBySecurityIdAndTenant(string securityId, int tenant)
+        {
+            return (from a in context.ImageLibraries.Include("ImageDetail")
+                    where a.SecurityId == securityId && a.Tenant == tenant
+                    select a).FirstOrDefault();
         }
 
         public IQueryable<ImageLibrary> GetImageLibraries(int tenant)

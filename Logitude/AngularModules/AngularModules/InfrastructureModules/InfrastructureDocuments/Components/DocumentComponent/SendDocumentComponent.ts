@@ -143,7 +143,6 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
     From: string = "";
     ReplyTo: string = "";
     IsShowLinkDocsSharedWithAgents: boolean = false;
-    ShowImagesLibraryComponent: boolean = false;
     IsResendEmail: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     IsEnableEditTemplate: boolean = false;
@@ -170,10 +169,6 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         this.AttachmentListId = Guid.newGuid();
         this.AttachmentsLists = new Array<AttachmentsList>();
         this.DocumentTypeTemplatePMLists = [];
-        if (ObjectsLocator.GlobalSetting.DeploymentStage == "Dev" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2") {
-            this.ShowImagesLibraryComponent = true;
-        }
-
     }
 
     ngOnInit() {
@@ -1200,27 +1195,6 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
 
         this.CurrentSession.CloseCurrentWindow();
-    }
-
-
-    ShowImageLibrary() {
-        var windowArgs: any = {};
-        //windowArgs.DocumentsFilingList = this.documentInPMs;
-        //windowArgs.OnCloseAttachmentDocsInEvent = this.OnCloseAttachmentDocsInEvent;
-
-        var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 800;
-        logitudeWindow.Height = 500;
-        logitudeWindow.Title = "Insert Image";
-        logitudeWindow.WindowArgs = windowArgs;
-        logitudeWindow.ShowCloseButton = true;
-        logitudeWindow.Show("./Infrastructure/Components/LogitudeComponents/ImageLibraryComponent");
-        logitudeWindow.WindowClosed.subscribe(($event: any) => {
-            if ($event)
-                this.froalaEditorSetting.froalaEditorComponent.InSertHtml(' <img  src=' + $event + ' class="rounded mb-3">');
-            //viewModel.InSertHtml("[PageBreak]");
-            //this.froalaEditorSetting.froalaEditorComponent.InSertHtml('');
-        });
     }
     
 
