@@ -1415,8 +1415,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
         private void BuildPaymentsNumbers()
         {
-            InvoicePaymentNumbersBehaviour invoicePaymentNumbersBehaviour = new InvoicePaymentNumbersBehaviour(entityPM);
-            entityPM.ConnectedPaymentsNumbers = invoicePaymentNumbersBehaviour.CopmuteAPInvoicePaymentsNumbers();
+            InvoicePaymentNumbersBehaviour invoicePaymentNumbersBehaviour = new InvoicePaymentNumbersBehaviour(tenant);
+            entityPM.ConnectedPaymentsNumbers = invoicePaymentNumbersBehaviour.CopmuteAPInvoicePaymentsNumbers(entityPM);
             invoice.ConnectedPaymentsNumbers = entityPM.ConnectedPaymentsNumbers;
         }
     }

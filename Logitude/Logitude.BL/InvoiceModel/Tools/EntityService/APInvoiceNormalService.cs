@@ -64,7 +64,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private PayableProratedAmountRepository payableProratedAmountRepository;
         private string QBOAPPaymentId;
         private APInvoiceServiceInitializer initializer;
-
+        private InvoicePaymentNumbersBehaviour invoicePaymentNumbersBehaviour;
+        private APPaymentQuery paymentQuery;
         public APInvoiceNormalService(IInvoiceContext objectContext, APInvoicePM entityPM)
         {
             this.initializer = new APInvoiceServiceInitializer(objectContext, entityPM);
@@ -77,12 +78,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.invoiceEntityRepository = new APInvoiceEntityRepository(objectContext);
             this.invoicePaymentRepository = new APInvoicePaymentRepository(objectContext);
             this.paymentRepository = new APPaymentRepository(objectContext);
+            paymentQuery = new APPaymentQuery(paymentRepository);
 
             allShipments = new List<Shipment>();
             allPayables = new List<ShipmentPayable>();
             shipmentRepository = new ShipmentRepository(tenant);
             shipmentPayableRepository = new ShipmentPayableRepository(tenant);
             payableProratedAmountRepository = new PayableProratedAmountRepository(tenant);
+            invoicePaymentNumbersBehaviour = new InvoicePaymentNumbersBehaviour(tenant);
         }
         public APInvoiceNormalService(MockInvoiceContext objectContext, APInvoicePM entityPM)
         {
@@ -95,29 +98,28 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.invoiceEntityRepository = new APInvoiceEntityRepository(objectContext);
             this.invoicePaymentRepository = new APInvoicePaymentRepository(objectContext);
             this.paymentRepository = new APPaymentRepository(objectContext);
+            paymentQuery = new APPaymentQuery(paymentRepository);
 
             allShipments = new List<Shipment>();
             allPayables = new List<ShipmentPayable>();
             shipmentRepository = new ShipmentRepository(shipmentMockContext);
             shipmentPayableRepository = new ShipmentPayableRepository(shipmentMockContext);
             payableProratedAmountRepository = new PayableProratedAmountRepository(shipmentMockContext);
+            invoicePaymentNumbersBehaviour = new InvoicePaymentNumbersBehaviour(tenant);
         }
 
         private List<APInvoiceLinePM> invoiceLinesChangeSet = new List<APInvoiceLinePM>();
         private List<APInvoicePaymentPM> invoicePaymentsChangeSet = new List<APInvoicePaymentPM>();
 
         public void SetChangeSets(List<APInvoiceLinePM> invoiceLinesChangeSet, List<APInvoicePaymentPM> invoicePaymentsChangeSet)
-        {
-            
+        {            
             
         }
 
         public void Create()
         {
             this.invoice = initializer.EntityPOCO;
-
             this.initializer.HandleBehaviours();
-
             this.InitializeComponent();
 
             APInvoiceValidator.Validate(entityPM, invoice, initializer.IsNewEntity, initializer.Context, initializer.CommonContext, this.MainShipmentConcurrencyGUID);
@@ -128,8 +130,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (entityPM.CreatedFromAPI)
                 {
                     this.GeneratePayablesFromInvoiceLines_FromAPI();
-
                 }
+
                 else
                 {
                     List<APInvoiceLinePM> lines = new List<APInvoiceLinePM>();
@@ -167,7 +169,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (!entityPM.IsGeneralInvoice)
             {
                 this.UpdateAllPayablesAccountedAmountAndStatus();
-
                 PayablesLinesVatAmounts payablesLinesVatAmounts = new PayablesLinesVatAmounts(allPayables, initializer.Tenant, shipmentPayableRepository);
                 payablesLinesVatAmounts.UpdateAllPayablesVatAmount();
             }
@@ -180,7 +181,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             // DropBox
             this.CreateAPInvoiceMessage(setApproved);
-
             this.GetForeignFields();
 
             if (!entityPM.IsGeneralInvoice)
@@ -223,6 +223,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 this.BuildUnexpectedPayables(this.UnexpectedPayablesInvoiceLines_ForAPI);
             }
+
             this.GetShipmentsData(invoiceLines);
         }
 
@@ -247,21 +248,17 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             aPInvoiceLine.ForiegnCurrencyAmount = Math.Round(CalculateLocalAmount(lineAmount, shipmentPayableLine.CurrencyId, aPInvoiceLine.ForiegnCurrencyId, tenant), 2);
                             aPInvoiceLine.ForiegnCurrencyId = shipmentPayableLine.CurrencyId;
                         }
+
                         aPInvoiceLine.EntityPayableId = shipmentPayableLine.Id;
                         this.ComputeOpenAmount(aPInvoiceLine, shipmentPayableLine);
                     }
                     else
                     {
-                        //aPInvoiceLine.AmountTypeCode = "EXPT";
-                        //this.UnexpectedPayablesInvoiceLines_ForAPI.Add(aPInvoiceLine);
-
                         throw new ApplicationException("The Invoice line Foriegn Currency should be the same as Invoice Currency");
                     }
                 }
                 else
                 {
-                    // aPInvoiceLine.AmountTypeCode = "EXPT";
-                    // this.UnexpectedPayablesInvoiceLines_ForAPI.Add(aPInvoiceLine);
                     throw new ApplicationException("The Invoice line Foriegn Currency should be the same as Invoice Currency");
                 }
             }
@@ -283,19 +280,21 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     shipmentPayableLine.UnitPrice = Round(aPInvoiceLine.InvoiceCurrencyAmount / aPInvoiceLine.Quantity, 2);
                 }
             }
+
             else
             {
                 shipmentPayableLine = shipmentPayables_SameVendor.FirstOrDefault();
             }
+
             return shipmentPayableLine;
         }
-
         private void ComputeOpenAmount(APInvoiceLinePM invoiceLine, ShipmentPayable shipmentPayableLine)
         {
             if (invoiceLine.AmountTypeCode == "NEXP")
             {
                 invoiceLine.OpenAmount = null;
             }
+
             else
             {
                 var expect = shipmentPayableLine.ExpectedAmount == null ? 0 : shipmentPayableLine.ExpectedAmount;
@@ -489,9 +488,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (!String.IsNullOrEmpty(QBOAPPaymentId))
             {
-                APPaymentHelper service = new APPaymentHelper();
-                APPaymentQuery PaymentQuery = new APPaymentQuery(paymentRepository);
-                APPaymentPM paymentPM = PaymentQuery.GetSinglePM(QBOAPPaymentId, tenant);
+                APPaymentHelper service = new APPaymentHelper();                
+                APPaymentPM paymentPM = paymentQuery.GetSinglePM(QBOAPPaymentId, tenant);
                 if (paymentPM.TransferStatusCode == "TR")
                 {
                     APPaymentRepository repository = new APPaymentRepository(tenant);
@@ -1780,7 +1778,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     UpdatePaymentAmounts(paymentInvoice, false);
                 }
 
-
                 entityPM.AmountDueInLocalCurrency = MethodHelper.Round((entityPM.AmountDue * entityPM.InvoiceCurrencyExchangeRate), 2);
                 entityPM.AmountDueInProfitCurrency = MethodHelper.Round((entityPM.AmountDueInLocalCurrency / entityPM.ProfitCurrencyExchangeRate), 2);
 
@@ -1860,9 +1857,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             }
                         }
 
+                        this.UpdatePaymentInvoicesNumbers(payment);
                         paymentRepository.Update(payment);
                     }
-                }
+                }                
             }
         }
         #endregion
@@ -2230,9 +2228,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void BuildPaymentsNumbers()
         {
-            InvoicePaymentNumbersBehaviour invoicePaymentNumbersBehaviour = new InvoicePaymentNumbersBehaviour(entityPM);
-            entityPM.ConnectedPaymentsNumbers = invoicePaymentNumbersBehaviour.CopmuteAPInvoicePaymentsNumbers();
+            entityPM.ConnectedPaymentsNumbers = invoicePaymentNumbersBehaviour.CopmuteAPInvoicePaymentsNumbers(entityPM);
             invoice.ConnectedPaymentsNumbers = entityPM.ConnectedPaymentsNumbers;
+        }
+        private void UpdatePaymentInvoicesNumbers(APPayment aPPayment)
+        {
+            APPaymentPM aPPaymentPM = paymentQuery.GetSingleAPPaymentPM(aPPayment.Id, tenant);
+            if(aPPaymentPM != null)
+            {
+                aPPayment.ConnectedInvoicesNumbers = invoicePaymentNumbersBehaviour.CopmuteAPPaymentInvoicesNumbers(aPPaymentPM);
+            }
         }
     }
 }

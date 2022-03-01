@@ -10,22 +10,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours
     public class InvoicePaymentNumbersBehaviour
     {
         private int tenant;
-        private APInvoicePM aPInvoice;
-        private APPaymentPM aPPayment;
-
-
-        public InvoicePaymentNumbersBehaviour(APInvoicePM aPInvoice)
+        public InvoicePaymentNumbersBehaviour(int tenant)
         {
-            this.aPInvoice = aPInvoice;
-            this.tenant = aPInvoice.Tenant;
-        }
-        public InvoicePaymentNumbersBehaviour(APPaymentPM aPPayment)
-        {
-            this.aPPayment = aPPayment;
-            this.tenant = aPPayment.Tenant;
+            this.tenant = tenant;
         }
 
-        public string CopmuteAPInvoicePaymentsNumbers()
+        public string CopmuteAPInvoicePaymentsNumbers(APInvoicePM aPInvoice)
         {
             string numbersField = "";
             foreach (APInvoicePaymentPM invoicePayment in aPInvoice.InvoicePayments.Where(d=> d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete))
@@ -37,7 +27,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours
             return numbersField;
         }
 
-        public string CopmuteAPPaymentInvoicesNumbers()
+        public string CopmuteAPPaymentInvoicesNumbers(APPaymentPM aPPayment)
         {
             string numbersField = "";
             foreach (APPaymentInvoicePM paymentInvoice in aPPayment.PaymentInvoices.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete))

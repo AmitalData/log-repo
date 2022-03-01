@@ -1015,8 +1015,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         invoice.IsUpdateFromPaymentService = true;
                         this.UpdateInvoicePaidDate(invoice);
-                        APInvoiceService aRInvoiceService = new APInvoiceService(this.objectContext, this.tenant);
-                        aRInvoiceService.Update(invoice);
+                        APInvoiceService aPInvoiceService = new APInvoiceService(this.objectContext, this.tenant);
+                        aPInvoiceService.Update(invoice);
                         //invoiceRepository.Update(invoice);
                         #endregion
                     }
@@ -1542,8 +1542,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void BuildInvoicesNumbers()
         {
-            InvoicePaymentNumbersBehaviour invoicePaymentNumbersBehaviour = new InvoicePaymentNumbersBehaviour(entityPM);
-            entityPM.ConnectedInvoicesNumbers = invoicePaymentNumbersBehaviour.CopmuteAPPaymentInvoicesNumbers();
+            InvoicePaymentNumbersBehaviour invoicePaymentNumbersBehaviour = new InvoicePaymentNumbersBehaviour(tenant);
+            entityPM.ConnectedInvoicesNumbers = invoicePaymentNumbersBehaviour.CopmuteAPPaymentInvoicesNumbers(entityPM);
             payment.ConnectedInvoicesNumbers = entityPM.ConnectedInvoicesNumbers;
         }
     }
