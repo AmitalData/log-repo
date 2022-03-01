@@ -262,6 +262,11 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 billToAddressZipCode = GetBillToAddressZipCode(billToAddress);
             }
 
+            if (string.IsNullOrEmpty(arInvoicePM.RegimenFiscalCode) && !string.IsNullOrEmpty(billToCard.RegimenFiscalCode))
+            {
+                arInvoicePM.RegimenFiscalCode = billToCard.RegimenFiscalCode;
+            }
+
             return new ComprobanteReceptor
             {
                 Nombre = billToCard.EnglishName,
