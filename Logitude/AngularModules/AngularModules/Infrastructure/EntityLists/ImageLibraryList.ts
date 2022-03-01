@@ -17,5 +17,6 @@ export class ImageLibraryList {
 		SecurityId: string;
 		Name: string;
 		SearchFields: string;
+		URL: string;
 	
 }
