@@ -25,7 +25,7 @@ import { MilestoneCodes } from 'src/CargoTracking/Constants/MilestoneCodes';
 
 const mobileScreenMaxWidth = 470;
 
-const approvalResponseMessage = 'לקוח יקר, הצהרה זו םושרה בתםריך';
+const approvalResponseMessage = 'הצהרה זו אושרה בתאריך';
 const declineResponseMessage = 'לקוח יקר, הצהרה זו נדחתה';
 
 const orderShipmentTypeCode = 'O';
