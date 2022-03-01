@@ -68,7 +68,7 @@
                                     <LogLabel Text="Code" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td style="width:250px">
-                                    <input type="text" [(ngModel)]="DataContext.RuleCode" [disabled]="!IsNewEntity" />
+                                    <input [attr.data-cy]="'Code'" type="text" [(ngModel)]="DataContext.RuleCode" [disabled]="!IsNewEntity" />
                                 </td>
 
 
@@ -78,7 +78,7 @@
                                     <LogLabel Text="Name" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td style="width:250px">
-                                    <input type="text" [(ngModel)]="DataContext.Name" />
+                                    <input [attr.data-cy]="'Name'" type="text" [(ngModel)]="DataContext.Name" />
                                     <!--<LogTextBox [NoObjectField]="true" [ObjectFieldName]="'Name'" [Text]="Name" [DataContext]="DataContext" [HideColumns] ="true"></LogTextBox>-->
 
                                 </td>
@@ -90,7 +90,7 @@
                                     <LogLabel Text="Rule Type" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td style="width:250px">   
-                                     <ComboBox [ItemsSource]="RuleTypes" [Binding]="'Name'" [SelectedItem]="SelectedRuleType" (SelectedItemChanged)="SelectedRuleType = $event" [IsDisabled]="!IsNewEntity"></ComboBox>
+                                     <ComboBox [CyData]="'Rule Type'" [ListType]="'Rule Type '" [ItemsSource]="RuleTypes" [Binding]="'Name'" [SelectedItem]="SelectedRuleType" (SelectedItemChanged)="SelectedRuleType = $event" [IsDisabled]="!IsNewEntity"></ComboBox>
                                   </td>
 
                             </tr>
@@ -100,7 +100,7 @@
                                     <LogLabel Text="Trigger Type" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td style="width:250px">
-                                    <ComboBox [ItemsSource]="TriggerTypes" [Binding]="'Name'" [SelectedItem]="SelectedTriggerType" (SelectedItemChanged)="SelectedTriggerType = $event"></ComboBox>
+                                    <ComboBox [CyData]="'Trigger Type'" [ListType]="'Trigger Type '" [ItemsSource]="TriggerTypes" [Binding]="'Name'" [SelectedItem]="SelectedTriggerType" (SelectedItemChanged)="SelectedTriggerType = $event"></ComboBox>
                                 </td>
 
                             </tr>
@@ -111,7 +111,7 @@
                                 </td>
                                 <td style="width:250px">
                                     <!--<ComboBox [ItemsSource]="ObjectFields" [Binding]="'FieldName'" [SelectedValue]="DataContext.TriggerFieldId"  [SelectedValuePath]="'Id'" ></ComboBox>-->
-                                    <LogLov 
+                                    <LogLov  [DataCy]="'Trigger Field'"
                                             [ObjectFieldName]="'TriggerFieldCode'"
                                             [QueryFilterItems]="FieldsLovQueryFilters"
                                             [ObjectTableName]="'ObjectField'"
@@ -133,7 +133,7 @@
                                     <LogLabel Text="Notification Type" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td style="width:250px">
-                                    <ComboBox [ItemsSource]="RuleNotificationTypes" [Binding]="'Name'" [SelectedItem]="SelectedRuleNotificationTypeCode" (SelectedItemChanged)="SelectedRuleNotificationTypeCode = $event"></ComboBox>
+                                    <ComboBox [CyData]="'Notification Type'" [ListType]="'Notification Type '" [ItemsSource]="RuleNotificationTypes" [Binding]="'Name'" [SelectedItem]="SelectedRuleNotificationTypeCode" (SelectedItemChanged)="SelectedRuleNotificationTypeCode = $event"></ComboBox>
                                 </td>
 
                             </tr>
@@ -149,7 +149,7 @@
                                                 <table>
                                                     <tr>
                                                         <td style="width:18px;">
-                                                            <LogCheckBox [ObjectFieldName]="'ActiveForNew'" [Checked]="DataContext.ActiveForNew" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                            <LogCheckBox [DataCy]="'ActiveForNew'" [ObjectFieldName]="'ActiveForNew'" [Checked]="DataContext.ActiveForNew" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                         </td>
 
                                                         <td style="width:100px;">
@@ -162,7 +162,7 @@
                                                 <table>
                                                     <tr>
                                                         <td style="width:18px;">
-                                                            <LogCheckBox [ObjectFieldName]="'ActiveForUpdate'" [Checked]="DataContext.ActiveForUpdate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                            <LogCheckBox [DataCy]="'ActiveForUpdate'" [ObjectFieldName]="'ActiveForUpdate'" [Checked]="DataContext.ActiveForUpdate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                         </td>
 
                                                         <td style="width:100px;">
@@ -189,7 +189,7 @@
                                                 <table>
                                                     <tr>
                                                         <td style="width:18px;">
-                                                            <LogCheckBox [ObjectFieldName]="'InActive'" [Checked]="DataContext.InActive" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                            <LogCheckBox [DataCy]="'InActive'" [ObjectFieldName]="'InActive'" [Checked]="DataContext.InActive" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                         </td>
 
                                                         <td style="width:100px;">
@@ -222,7 +222,7 @@
                                                <textarea [attr.id]="ConditionTXTAreaId" type="text" [(ngModel)]="DataContext.Condition"  style="height: 100%; max-height:unset;vertical-align:top;margin-right:10px;"></textarea>
                                            </td>
                                            <td style="width:90px;vertical-align:top;">
-                                               <button class="Button" style="width:70px;margin-left:5px;" (click)="onAddFieldTagClicked()">Add Field</button>
+                                               <button [attr.data-cy]="'Add Field'"  class="Button" style="width:70px;margin-left:5px;" (click)="onAddFieldTagClicked()">Add Field</button>
                                            </td>
                                        </tr>
                                    </table>
@@ -277,7 +277,7 @@
                                                 </div>
                                                 <div style="float:left;margin-left:10px;">
                                                     <div style="width:100%;height:100%;">
-                                                        <input type="text" [id]="FiltersSearchFieldsId" placeholder="Search" (focus)="ClearFiltersPlaceHolder();" (blur)="FillFiltersPlaceHolder();" [(ngModel)]="FilterssearchText" style="background-color:white;background: url(Images/Search.png) no-repeat scroll;background-position: right center;padding-right:30px;width:100%;height:100%;"><br>
+                                                        <input [attr.data-cy]="'NewRuleFiltersSearchFields'" type="text" [id]="FiltersSearchFieldsId" placeholder="Search" (focus)="ClearFiltersPlaceHolder();" (blur)="FillFiltersPlaceHolder();" [(ngModel)]="FilterssearchText" style="background-color:white;background: url(Images/Search.png) no-repeat scroll;background-position: right center;padding-right:30px;width:100%;height:100%;"><br>
                                                     </div>
                                                 </div>
                                             </td>
@@ -291,7 +291,7 @@
                                                                 <div style="float:left;width: 50%;">
                                                                     <div *ngFor="let item of NEWallFilterFieldsClass.FilterFields" [hidden]="!NEWallFilterFieldsClass">
                                                                         <div *ngIf="item" class="CheckBox" style="margin: 10px;">
-                                                                            <LogCheckBox [ObjectFieldName]="'Exists'" [DataContext]="item" [Text]="item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe" [Value]="item.Exists"></LogCheckBox>
+                                                                            <LogCheckBox [DataCy]="item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe"  [ObjectFieldName]="'Exists'" [DataContext]="item" [Text]="item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe" [Value]="item.Exists"></LogCheckBox>
 
                                                                         <!--<input id="{{item.ControlId}}" type="checkbox" [(ngModel)]="item.Exists" />
                                 <label [attr.for]="item.FieldName">{{item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe}}</label>-->
@@ -371,6 +371,7 @@
                                                 (ValueChanged)="item.onTextChange($event)">
                                         </LogLov>-->
                                                                                     <LogLov *ngIf="item.ObjectField"
+                                                                                            [DataCy]="item.ObjectField.ObjectTable_LookUpTableName"
                                                                                             [SelectedValue]="item.TextValue"
                                                                                             [ObjectFieldName]="'TextValue'"
                                                                                             [DataContext]="item"
@@ -536,7 +537,7 @@
                         </div>
                     </td>
                     <td style="width:90px;vertical-align:top;">
-                        <button class="Button" style="width:70px;margin-left:5px;" (click)="onAddRuleFieldClicked()">Add Field</button>
+                        <button [attr.data-cy]="'Add Field'" class="Button" style="width:70px;margin-left:5px;" (click)="onAddRuleFieldClicked()">Add Field</button>
                     </td>
                     <!--<td>
                         <div></div>
@@ -580,7 +581,7 @@
 
                     <td style="width: 75px;">
                         <!--<button class="RedButton" (click)="NextPageClicked()">Next</button>-->
-                        <button (click)="NextPageClicked()" class="Button"  style="text-align:right" [disabled]="PageNumber === 1">
+                        <button [attr.data-cy]="'Next'" (click)="NextPageClicked()" class="Button"  style="text-align:right" [disabled]="PageNumber === 1">
                             Next
                             <img src="./Images/PagerIcons/next.png"  style="margin-bottom:3px;text-align:right;"/>
                         </button>
@@ -589,7 +590,7 @@
                     <td style="width:5px;"><div></div></td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="SaveClicked()">Save</button>
+                        <button [attr.data-cy]="'Save'" class="RedButton" (click)="SaveClicked()">Save</button>
                     </td>
                 </tr>
             </table>
