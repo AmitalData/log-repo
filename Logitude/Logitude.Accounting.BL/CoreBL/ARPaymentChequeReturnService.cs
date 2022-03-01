@@ -60,8 +60,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private void ReturnChequeValidation()
         {
-            if(cheque.StatusCode != ARPaymentChequeStatusValues.InCashbook || cheque.StatusCode != ARPaymentChequeStatusValues.ReturnedFromBank)
-                throw new ApplicationException("You cannot return the check if it status is not in the cash book");
+            if(cheque.StatusCode != ARPaymentChequeStatusValues.InCashbook && cheque.StatusCode != ARPaymentChequeStatusValues.ReturnedFromBank)
+                throw new ApplicationException("You cannot return the check if it status is not InCashbook or ReturnedFromBank");
         }
 
         private void AddAccountingEntitieJournal(JournalPM entityPM, string action, string ChildEntityId = null)
