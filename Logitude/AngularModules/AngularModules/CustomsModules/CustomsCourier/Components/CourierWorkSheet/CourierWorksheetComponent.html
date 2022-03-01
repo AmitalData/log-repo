@@ -505,12 +505,13 @@
 
                                                                             </split-button>
                                                                         </td>
+                                                                         <!--|| (_DecWithoutHaTra == 0)-->
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
                                                                             style="width:170px">
                                                                             <split-button
                                                                                 (DefaultSplitButtonClicked)="SendALLCorrectManifest('M')"
                                                                                 [ButtonText]=SelectedMNFToBatchSendButtonText
-                                                                                [IsDisabled]="IsDisplayOnly || (_DecWithoutHaTra == 0)"
+                                                                                [IsDisabled]="IsDisplayOnly"
                                                                                 [MENUDivExtraTop]="24"
                                                                                 [MENUDivExtraLeft]="110">
 
