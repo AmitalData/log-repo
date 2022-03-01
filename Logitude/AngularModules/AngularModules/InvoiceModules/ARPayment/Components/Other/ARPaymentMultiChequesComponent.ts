@@ -43,6 +43,8 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
     arPaymentChequeOperationsService:ARPaymentChequeOperationsService = new ARPaymentChequeOperationsService();
     arPaymentPMService:ARPaymentPMService = new ARPaymentPMService();
     inCashbookChequeStatus = '1';
+    returnedFromBankChequeStatus = "4";  
+    Status = '1';
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
