@@ -32,6 +32,13 @@ export class DeclarationEditComponentController implements IEditComponentControl
             }
 
         }
+        
+        var indexOfTab = allTabs.findIndex(t => t.Code == "CloD");
+        if (AppTool.IsNullOrEmpty(currentEntity.ExportClosedErrorXML)) {
+            if (indexOfTab > -1) {
+                allTabs.splice(indexOfTab, 1);
+            }
+        }
 
         if (currentEntity.IsAmendment || !FeatureLocator.HasFeaturePermession("Customs.Declaration", "DECLARATIONAMENDMENT") || currentEntity.Direction == "E") {
             var indexOfTab = allTabs.findIndex(t => t.Code == "DCCO");
@@ -60,6 +67,7 @@ export class DeclarationEditComponentController implements IEditComponentControl
 
               }
          }
+
 
     }
     public MustRefresh: boolean = null;

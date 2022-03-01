@@ -15,7 +15,6 @@ import { DeclarationEditComponentController } from '../../../../../Customs/Contr
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { DeclarationWebService } from '../../../../../Customs/Services/WebServices/DeclarationWebService';
 import { AmendmentRequestParams } from '../../../../../Customs/DataContract/RequestParams/AmendmentRequestParams';
-import { debug } from 'console';
 import { AppTool } from '../../../../../Infrastructure/Tools';
 
 @Component({
@@ -27,8 +26,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     public DataContext: any = this;
     public EntityPM: ExportDeclarationClosingDataPM;
     public DecPM: DeclarationPM;
+    public DeclarationIsClosed:boolean=false;
     public ConPM: ConsignmentPM;
-    public SendButtonEnabled: boolean = true;
     public ObjectTableName: string = "Customs.ExportDeclarationClosingData";
     public IsReady: boolean = false;
     ValidationErrors: string[];
@@ -54,8 +53,22 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             this.DecPM = args.EntityPM;
             this.GetExportDeclarationClosingData(this.DecPM.Id);
             this.SetUIProperty();
-
+            if(this.DecPM.IsExportClosed){
+                this.DeclarationIsClosed=true
+                this.setInputsReadOnly();
+            }
         });
+    }
+
+    setInputsReadOnly(){
+        this.UIProperties.SetEnabled("FinalCargoTypeCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("FinalSecondCargoId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("FinalThirdCargoId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("LoadingDateTime", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("FinalManifestNumber", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("FinalShipCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("FinalLoadingSite", this.ObjectTableName, false);
+
     }
 
     GetExportDeclarationClosingData(id: string) {
@@ -151,7 +164,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         else {
             this.SendAmendmentCloseDeclaration(event);
         }
-        
+    
     }
     
    
@@ -189,20 +202,20 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 this.ValidationErrors.push(response.Result.UserMessage);
                 this.FillValidationErrors("Errors");
             }
-
+            debugger;
             //DOTO
 
             //if success
             if (response.Result) {
 
 
-                this.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "DCCR";
+                this.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "DEGC";
                 this.CurrentSession.CurrentEditComponent.SetSelectedTab();
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             }
             //if reject
             else {
-                this.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "DEGC";
+                this.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "CloD";
                 this.CurrentSession.CurrentEditComponent.SetSelectedTab();
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             }

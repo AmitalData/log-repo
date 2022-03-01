@@ -269,12 +269,12 @@
                            <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
                        </td>
                        <td style="width: 67px; padding-right: 10px;">
-                           <button class="RedButton" (click)="OkButtonClicked()" [disabled]="false">{{'General.B.Save' |TextCodeTranslationPipe}}</button>
+                           <button class="RedButton" (click)="OkButtonClicked()" [disabled]="DeclarationIsClosed">{{'General.B.Save' |TextCodeTranslationPipe}}</button>
                        </td>
 
                        <td style="padding-right: 10px;">
                            <div style="display: inline-block; width: 110px; vertical-align: bottom;">
-                               <custom-send-options [IsDisabled]="!SendButtonEnabled"
+                               <custom-send-options [IsDisabled]="DeclarationIsClosed"
                                                     [AvoidDoubleClick]="true"
                                                     [HaveTestCase]="'true'"
                                                     #MyCustomSendOptionsComponent
