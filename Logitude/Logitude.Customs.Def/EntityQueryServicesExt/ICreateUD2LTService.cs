@@ -18,4 +18,8 @@ namespace Logitude.Customs.Def.EntityQueryServicesExt
         void JustDoIt(object documentsFilingPM);
 
     }
+    public interface IDICustomsSettingQueryService
+    {
+        bool IsCourierTenant(int tenant);
+    }
 }
