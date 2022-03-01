@@ -598,7 +598,8 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
 
     }
     FirstPageWork() {
-        this.ClearConnectToFilter();
+        var isClear = false;
+        this.ClearConnectToFilter(isClear);
         this.PageIndex = 1;
         this.QueryPageIndex = 0;
         this.SetPagerButtonsStates();
@@ -645,7 +646,8 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
         }
     }
     PreviosButtonWork() {
-        this.ClearConnectToFilter();
+        var isClear = false;
+        this.ClearConnectToFilter(isClear);
         this.PageIndex = this.PageIndex - 1;
         this.QueryPageIndex = this.QueryPageIndex - 50;
         this.SetPagerButtonsStates();
@@ -692,7 +694,8 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
         }
     }
     NextPageWork() {
-        this.ClearConnectToFilter();
+        var isClear = false;
+        this.ClearConnectToFilter(isClear);
         this.PageIndex = this.PageIndex + 1;
         this.QueryPageIndex = this.QueryPageIndex + 50;
         this.SetPagerButtonsStates();
@@ -739,7 +742,8 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
         }
     }
     LastPageWork() {
-        this.ClearConnectToFilter();
+        var isClear = false;
+        this.ClearConnectToFilter(isClear);
         this.PageIndex = this.TotalPagesCount;
         this.QueryPageIndex = (this.TotalPagesCount - 1) * this.pageSize;
         this.SetPagerButtonsStates();
@@ -804,7 +808,8 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
     get SelectedConnectToFilter() { return this.mySelectedConnectToFilter; }
     set SelectedConnectToFilter(value: string) {
         if (this.mySelectedConnectToFilter != value) {
-            this.ClearConnectToFilter();
+            var isClear = true;
+            this.ClearConnectToFilter(isClear);
             this.mySelectedConnectToFilter = value;
             this.GetConnectToFilterLabel();
             if (this.SelectedAttachment != null) {
@@ -1019,12 +1024,15 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
         });
     }
 
-    ClearConnectToFilter() {
+    ClearConnectToFilter(isClear: boolean) {
         this.QuickSearchItems = [];
-        this.EntityNumber = null
-        this.Route = null;
-        this.Customer = null;
-        this.EntityId = null;
+        if (isClear) {
+            this.EntityNumber = null;
+            this.EntityId = null;
+            this.Route = null;
+            this.Customer = null;
+        }
+
         this.IsDSVConnectEnable = false;
         if (this.SelectedFilingInbox != null) {
             this.SelectedFilingInbox.FilingInboxAttachments.forEach(item => {
@@ -1138,7 +1146,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                             this.FileButtonClicked();
                         }
                         else if (confirmWindow.No) {
-                            this.SetSelectedFilingInbox(value);
+                            this.SetSelectedFilingInbox(value, true);
                         }
                         else if (confirmWindow.Cancel) {
                             // nth
@@ -1146,16 +1154,16 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                     });
                 }
                 else {
-                    this.SetSelectedFilingInbox(value);
+                    this.SetSelectedFilingInbox(value, false);
                 }
             }
             else {
-                this.SetSelectedFilingInbox(value);
+                this.SetSelectedFilingInbox(value, true);
             }
         }
     }
-    SetSelectedFilingInbox(value: FilingInboxData) {
-        this.ClearConnectToFilter();
+    SetSelectedFilingInbox(value: FilingInboxData, isClear: boolean) {
+        this.ClearConnectToFilter(isClear);
         this.selectedFilingInbox = value;
         this.EmailBody = value != null ? value.FilingInboxPM.EmailBody : "";
         this.FilingInboxAttachments = value != null ? value.FilingInboxAttachments : [];
@@ -1416,7 +1424,8 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
         summary.FilingId = this.SelectedFilingInbox.FilingInboxPM.Id;
         this.myCommonDomainService.PutFilingInboxLogs(summary).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
-                this.ClearConnectToFilter();
+                var isClear = false;
+                this.ClearConnectToFilter(isClear);
                 this.IsVisible = false;
                 this.LoadAllData();
             }
