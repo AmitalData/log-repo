@@ -127,7 +127,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             throw new NotImplementedException();
         }
 
-        private void Upsert(bool suppressNewTrans = false)
+        private void Upsert(bool suppressNewTrans = false, string moreParams = null)
         {
             //CheckExist();
             using (TransactionScope scope =
@@ -705,7 +705,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 _MyDeclarationPM.IsConnectedToUnifreight = true; //Yuval Chalup 19.10.2016 TASK-22516
                 //_MyDeclarationPM.ProcedureCurrentCode = ResolveProcedureCurrentCode();//remarked by eitan h 24/9/15 16527
                 if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.ProcedureCurrentCode)) _MyDeclarationPM.ProcedureCurrentCode = _AmitalCustomsFile.ProcedureCurrentCode;
+                
+
                 MyGenericResponseObj.Stage = "Updating ";
+                
                 _MyDeclarationPM.CurrentContextTag = UpsertActionConst;
 
                 if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsDiamondsDeclaration) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsDiamondsDeclaration) && _AmitalCustomsFile.IsDiamondsDeclaration.ToLower() != "true"))
@@ -792,6 +795,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                         {
                             this._MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
                         }
+                    }
+                    if ("ECommDecInsertService" == moreParams)
+                    {
+                        scope.Complete();
+                        return;
                     }
                     myDeclarationUpdateService.Update(_MyDeclarationPM, true);
 
@@ -1588,7 +1596,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 }
 
                 MyGenericResponseObj.Stage = "Upsert";
-                Upsert(suppressNewTrans);
+                Upsert(suppressNewTrans, MoreParams);
                 MyGenericResponseObj.Stage = "Done";
 
 
@@ -1721,24 +1729,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
             if (currentDeclarationCourierStatusPM != null)
             {
-                string truckerId = null;
-                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.TruckerId))
-                {
-                    CardRepository cardRep = new CardRepository(this._MyDeclarationPM.Tenant);
-                    Card card = cardRep.GetSingleCard(_AmitalCustomsFile.TruckerId, this._MyDeclarationPM.Tenant);
-                    if (card != null)
-                    {
-                        truckerId = _AmitalCustomsFile.TruckerId;
-                    }
-                    else
-                    {
-                        card = cardRep.GetSingleCardByCode(_AmitalCustomsFile.TruckerId, this._MyDeclarationPM.Tenant, true);
-                        if (card != null)
-                        {
-                            truckerId = card.Id;
-                        }
-                    }
-                }
+                string truckerId = GetTruckerId(this._MyDeclarationPM.Tenant, _AmitalCustomsFile.TruckerId);
 
                 if (truckerId != currentDeclarationCourierStatusPM.TruckerId || _AmitalCustomsFile.DistributionArea != currentDeclarationCourierStatusPM.DistributionArea)
                 {
@@ -1763,9 +1754,33 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                         return;
                     }
                 }
-                
+
             }
 
+        }
+
+        public static string GetTruckerId(int tenant, string amitalCustomsFileTruckerId)
+        {
+            string truckerId = null;
+            if (!String.IsNullOrWhiteSpace(amitalCustomsFileTruckerId))
+            {
+                CardRepository cardRep = new CardRepository(tenant);
+                Card card = cardRep.GetSingleCard(amitalCustomsFileTruckerId, tenant);
+                if (card != null)
+                {
+                    truckerId = amitalCustomsFileTruckerId;
+                }
+                else
+                {
+                    card = cardRep.GetSingleCardByCode(amitalCustomsFileTruckerId, tenant, true);
+                    if (card != null)
+                    {
+                        truckerId = card.Id;
+                    }
+                }
+            }
+
+            return truckerId;
         }
 
     }

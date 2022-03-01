@@ -446,11 +446,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
             DeclarationPaymentPM declarationPaymentPM = declarationPaymentQueryService.GetSingle(entityPOCO.Id, false, false);
          if(declarationPaymentPM!=null)   entityPM.AutomaticPayment = declarationPaymentPM.AutomaticPayment;
 
-            if (entityPOCO.WeightValue != null)
+            if (!String.IsNullOrWhiteSpace( entityPOCO.WeightValue))
             {
                 FreightPaymentMethodQueryService freightPaymentMethodQueryService = new FreightPaymentMethodQueryService(entityPOCO.Tenant);
                 FreightPaymentMethodPM freightPaymentMethodPM = freightPaymentMethodQueryService.GetSingle(entityPOCO.WeightValue, false, true);
-                entityPM.WeightValueName = freightPaymentMethodPM.LocalName;
+                entityPM.WeightValueName = freightPaymentMethodPM?.LocalName;
             }
 
             if (entityPOCO.CourierCustomStatusCode != null)

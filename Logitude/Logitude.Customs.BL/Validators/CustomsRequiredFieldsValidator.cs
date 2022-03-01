@@ -36,7 +36,7 @@ namespace Logitude.Customs.BL.Validators
             IncotemrsFileValidationQueryService incotemrsFileValidationQuery = new IncotemrsFileValidationQueryService(context);
             List<IncotemrsFileValidationPM> incotemrsFileValidationPMs = incotemrsFileValidationQuery.GetAllFromCache();
 
-            List<SupplierInvoicePM> invoicePMs = invoiceQuery.GetSupplierInvoicesForDeclaration(declarationId, tenant);//mohammad fix wi 20751
+            // no one use it  !!  --List<SupplierInvoicePM> invoicePMs = invoiceQuery.GetSupplierInvoicesForDeclaration(declarationId, tenant);//mohammad fix wi 20751
             ///List<SupplierInvoiceItemPM> invoiceItemPMs = invoiceItemQuery.GetSupplierInvoiceItemsForDeclaration(declarationId, tenant);//mohammad fix wi 20751
             var fromCache = true;
             if (fromCache)
@@ -95,7 +95,15 @@ namespace Logitude.Customs.BL.Validators
 
             #region SupplierInvoice
 
-            List<SupplierInvoicePM> supplierInvoices = invoiceQuery.GetSupplierInvoicesForDeclaration(declarationId, tenant, true); //declaration.SupplierInvoices;//mohammad fix wi 20751
+            List<SupplierInvoicePM> supplierInvoices = null;
+            if (declarationPM?.IsCourierDeclaration == true && declarationPM.ChangeSetOp == ChangeSetOperation.Insert && declarationPM.SupplierInvoices.Any())
+            {
+                supplierInvoices = declarationPM.SupplierInvoices;
+            }
+            else 
+            {
+                supplierInvoices =invoiceQuery.GetSupplierInvoicesForDeclaration(declarationId, tenant, true); //declaration.SupplierInvoices;//mohammad fix wi 20751
+            }
             List<SupplierInvoiceItemPM> allInvoiceItems = invoiceItemQuery.GetSupplierInvoiceItemsForDeclaration(declarationId, tenant);
             List<SupplierInvoiceItemPM> supplierInvoiceItems = new List<SupplierInvoiceItemPM>();
             List<SupplierInvoiceModificationPM> supplierInvoiceModifications = new List<SupplierInvoiceModificationPM>();

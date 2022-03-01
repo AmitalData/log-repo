@@ -145,7 +145,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         public const string SetCustomsRequestSheetStatus = "SetCustomsRequestSheetStatus";
         private void AddHybridTaskDocumentFilingChange(DocumentsFilingPM documentsFilingPM)//Bug 36694: Disconnecting document from the ticket  does not create trigger to UNF
         {
+
+            
             var tenant = documentsFilingPM.Tenant;
+            var customsSettingQueryService = new CustomsSettingQueryService(tenant);
+            if (customsSettingQueryService.IsCourierTenant(tenant))
+            {
+                return;
+            }
+
+
             var loggedUserId = AuthenticationUtil.ResolveUserId(tenant,true);
             var table = ObjectTableQuery.GetObjectTableByCode("DocumentsFiling", 0);
 
