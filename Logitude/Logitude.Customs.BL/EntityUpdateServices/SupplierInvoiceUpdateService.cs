@@ -351,17 +351,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     entityPM.ChangeInSupplierInvoice = "1";
                 }
             }
+            //CONFLICT HELL !!!
+            //if (_DeclarationPM != null)
+            //{
 
-            if (_DeclarationPM != null)
-            {
-
-                //calculate frieghts total
-                //this.CalculateFrieghtTotals(entityPM, declarationPM);
-                InsuranceFreightUtil util = new Utils.InsuranceFreightUtil();
-                util.CalculateFreightForInvoice(entityPM, _DeclarationPM.TaxationDateTime);
-                entityPM.InvoiceAmountInUSD = InsuranceFreightUtil.CalcInvoiceAmountInUSD(_DeclarationPM.TaxationDateTime, entityPM.InvoiceCurrencyTypeCode, entityPM.InvoiceAmount.GetValueOrDefault(), entityPM.Tenant);
-            }
-            object entityPOCO; object entityPM1; object entityParentPM;
+            //    //calculate frieghts total
+            //    //this.CalculateFrieghtTotals(entityPM, declarationPM);
+            //    InsuranceFreightUtil util = new Utils.InsuranceFreightUtil();
+            //    util.CalculateFreightForInvoice(entityPM, _DeclarationPM.TaxationDateTime);
+            //    entityPM.InvoiceAmountInUSD = InsuranceFreightUtil.CalcInvoiceAmountInUSD(_DeclarationPM.TaxationDateTime, entityPM.InvoiceCurrencyTypeCode, entityPM.InvoiceAmount.GetValueOrDefault(), entityPM.Tenant);
+            //}
+            
 
 
             object entityPOCO; object entityPM1; object entityParentPM;
