@@ -44,6 +44,7 @@ using Microsoft.Practices.Unity;
 using Logitude.Server.Tools.StorageService;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.GlobalModel.EntityPMs;
 
 namespace CommunicationWorkerRole
 {
@@ -88,7 +89,7 @@ namespace CommunicationWorkerRole
                 {
                     if (!General.IsUpdating())
                     {
-                        DoCargoTrackingImporterApprovalReceived();
+                        ReceiveQueueMessage();
                     }
                     else
                     {
@@ -104,7 +105,7 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private void DoCargoTrackingImporterApprovalReceived()
+        private void ReceiveQueueMessage()
         {
             ConnectClient();
             var response = queue.Receive();
@@ -135,33 +136,41 @@ namespace CommunicationWorkerRole
         private void AddApprovalReceivedTask(QueueResponse response, int tenant)
         {
             if (!CheckIfShipmentIdExist(response))
-            {
                 return;
-            }
+
             string ShipmentId = response.MessageValues["ShipmentId"].ToString();
             int.TryParse(response.MessageValues["Tenant"], out tenant);
             if (!IsCargoTrackingApprovalActive(tenant))
                 return;
             var shipmentAdditionalCloudData = GetShipmentAdditionalCloudData(ShipmentId, tenant);
             if (shipmentAdditionalCloudData == null)
-            {
                 return;
-            }
+
             var shipment = GetShipmentPM(ShipmentId, tenant);
-            var document = AddDocumentTasks(tenant, shipment);
-            var commLog = AddCommunicationLog(shipment, tenant, document);
-            SendCommunicationLogMessage(commLog, tenant);
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            {
+                var document = AddDocumentTasks(tenant, shipment);
+                var commLog = AddCommunicationLog(shipment, tenant, document);
+                SendCommunicationLogMessage(commLog, tenant);
+                scope.Complete();
+            }
         }
 
         private bool IsCargoTrackingApprovalActive(int tenant)
         {
             if (tenant == 0)
                 return false;
-            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
-            var tenantManagement = tenantManagementQuery.GetSinglePM(tenant);
+            var tenantManagement = GetTenantManagement(tenant);
             if (tenantManagement == null)
                 return false;
             return tenantManagement.ActivatedforDeclarationApprove;
+        }
+
+        private TenantManagementPM GetTenantManagement(int tenant)
+        {
+            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
+            var tenantManagement = tenantManagementQuery.GetSinglePM(tenant);
+            return tenantManagement;
         }
 
         private bool CheckIfShipmentIdExist(QueueResponse response)
