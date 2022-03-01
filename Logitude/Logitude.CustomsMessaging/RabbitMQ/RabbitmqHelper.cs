@@ -151,7 +151,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
             UnifreightEnvironmentID = UnifreightEnvironmentID.ToLower();
             if (UnifreightEnvironmentID== "aminet_prod_3")
             {
-                UnifreightEnvironmentID = "aminet_courier_3";
+                //UnifreightEnvironmentID = "aminet_courier_3";
             }
             return UnifreightEnvironmentID.ToLower();
         }
