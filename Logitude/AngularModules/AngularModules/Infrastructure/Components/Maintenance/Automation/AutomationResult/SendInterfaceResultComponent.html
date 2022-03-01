@@ -59,11 +59,11 @@
 
                                                         <td style="width:220px;">
                                                             <div style="text-align:left;width:202px;">
-                                                                <ComboBox style="width:200px;" (SelectedItemChanged)="SendFormatSelected = $event" [ItemsSource]="SendFormatLists" [SelectedItem]="SendFormatSelected" [Binding]="'Name'"> </ComboBox>
+                                                                <ComboBox [IsDisabled]="!IsCustomerCare" style="width:200px;" (SelectedItemChanged)="SendFormatSelected = $event" [ItemsSource]="SendFormatLists" [SelectedItem]="SendFormatSelected" [Binding]="'Name'"> </ComboBox>
                                                             </div>
                                                         </td>
                                                         <td style="width:70px">
-                                                            <a *ngIf="SendInterfaceSelected.Code == 'ShipmentAPI'" class="Link" style="font-size:13px;" (click)="ShowAdvancedDetails()"> Advanced Details</a>
+                                                            <a *ngIf="SendInterfaceSelected.Code == 'ShipmentAPI'" class="Link" [class.HyperlinkDisabled]="!IsCustomerCare" style="font-size:13px;" (click)="ShowAdvancedDetails()"> Advanced Details</a>
                                                         </td>
                                                         <td colspan="3"> </td>
                                                     </tr>
@@ -96,7 +96,7 @@
 
                         <td style="width:200px">
                             <div style="text-align:left;width:200px;">
-                                <ComboBox style="width:200px;" (SelectedItemChanged)="SendViaSelected = $event" [ItemsSource]="SendViaClassLists" [SelectedItem]="SendViaSelected" [Binding]="'Name'"> </ComboBox>
+                                <ComboBox [IsDisabled]="!IsCustomerCare" style="width:200px;" (SelectedItemChanged)="SendViaSelected = $event" [ItemsSource]="SendViaClassLists" [SelectedItem]="SendViaSelected" [Binding]="'Name'"> </ComboBox>
 
                             </div>
                         </td>
@@ -130,7 +130,7 @@
     </td >
     <td style="width:10px" > </td >-->
 
-                                                        <td *ngIf="SendViaSelected && SendViaSelected.Code == 'FTP'" style="width:70px">
+                                                        <td *ngIf="IsCustomerCare && SendViaSelected && SendViaSelected.Code == 'FTP'" style="width:70px">
                                                             <a [class.HyperlinkDisabled]="!IsCustomerCare" class="Link" style="font-size:13px;" (click)="ShowFTPDetails()"> FTP Details</a>
                                                         </td>
                                                         <td *ngIf="IsCustomerCare && SendViaSelected && SendViaSelected.Code == 'WEBHOOK'" style="width:70px">
