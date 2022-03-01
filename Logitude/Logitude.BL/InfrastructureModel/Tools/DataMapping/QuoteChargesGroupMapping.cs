@@ -17,6 +17,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.Name = entityPM.Name;
             entityPOCO.Code = entityPM.Code;
             entityPOCO.ViewOrder = entityPM.ViewOrder;
+            entityPOCO.SearchFields = entityPM.Code + "," + entityPM.Name + "," + entityPM.LocalName;
         }
     }
 }
