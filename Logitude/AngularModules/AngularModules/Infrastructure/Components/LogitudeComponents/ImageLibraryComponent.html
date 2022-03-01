@@ -43,6 +43,6 @@
 
 <div class="gallery">
     <div *ngFor="let image of Images;" class="gallery-item" (click)="OnImageClick(image.URL)">
-        <div class="content"><img [src]="image.URL" (error)="HandleMissingImage($event)"></div>
+        <div class="content"><img [src]="image.URL"></div>
     </div>
 </div>
