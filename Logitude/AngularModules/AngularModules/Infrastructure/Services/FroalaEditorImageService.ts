@@ -3,12 +3,12 @@ import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 
 @Injectable()
 export class FroalaEditorImageService {
-    ImageSelect: EventEmitter<string> = new EventEmitter();
+    OnImageSelect: EventEmitter<string> = new EventEmitter();
     constructor() {
 
     }
 
-   public ShowImageLibraryDialog() {
+   public ShowImageLibraryWindow() {
         var windowArgs: any = {};
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 800;
@@ -17,14 +17,14 @@ export class FroalaEditorImageService {
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.ShowCloseButton = true;
         logitudeWindow.Show("./Infrastructure/Components/LogitudeComponents/ImageLibraryComponent");
-        this.DialigListnear(logitudeWindow);
+        this.ImageLibraryWindowSubscriber(logitudeWindow);
     }
 
 
-    private DialigListnear(logitudeWindow: LogitudeWindow) {
+    private ImageLibraryWindowSubscriber(logitudeWindow: LogitudeWindow) {
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
             if (!$event) return;
-            this.ImageSelect.emit(' <img  src=' + $event + ' class="rounded mb-3" style="width:150px;height:100px;">');         
+            this.OnImageSelect.emit(' <img  src=' + $event + ' class="rounded mb-3" style="width:150px;height:100px;">');         
         });
     }
 }

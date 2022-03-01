@@ -31,12 +31,12 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
     @Output() FroalaReady: EventEmitter<boolean> = new EventEmitter<boolean>();
     constructor(elementRef: ElementRef, private cd: ChangeDetectorRef) {
         this.elementRef = elementRef;
-        this.SetFroalaEditorImageServiceInstance();
+        this.InitializeFroalaEditorImageService();
     }
 
-    private SetFroalaEditorImageServiceInstance() {
+    private InitializeFroalaEditorImageService() {
         this.FroalaEditorImageService = new FroalaEditorImageService();
-        this.FroalaEditorImageService.ImageSelect.subscribe((image: string) =>{
+        this.FroalaEditorImageService.OnImageSelect.subscribe((image: string) =>{
             this.InSertHtml(image);
         });
     }
@@ -256,7 +256,7 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
 
     public InsertImageClick() {
         if (this.IsDisableMode || !this.EditorfroalaSetting.FroalaEditorIsReady) return;
-        this.FroalaEditorImageService.ShowImageLibraryDialog();
+        this.FroalaEditorImageService.ShowImageLibraryWindow();
     }
 
     public DestroyfroalaEditor() {

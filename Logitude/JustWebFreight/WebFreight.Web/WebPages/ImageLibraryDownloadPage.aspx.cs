@@ -13,14 +13,13 @@ namespace WebFreight.Web.WebPages
         private static readonly string authenticationError = "Sorry you’re not authenticated to view this document.";
         private string securityId;
         private int tenant;
-        private ImageDetail imageDetail;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
-                PageValidation();
-                GetParameters();
+                ValidateRequest();
+                SetParameters();
                 DownloadImage();
             }
             catch (ExceptionInErrorLog ExceptionInErrorLog)
@@ -38,7 +37,7 @@ namespace WebFreight.Web.WebPages
             }
         }
 
-        private void PageValidation()
+        private void ValidateRequest()
         {
             if (string.IsNullOrEmpty(Request["securityId"]) || string.IsNullOrEmpty(Request["tenant"]))
             {
@@ -52,7 +51,7 @@ namespace WebFreight.Web.WebPages
             throw new ApplicationException(authenticationError);
         }
 
-        private void GetParameters()
+        private void SetParameters()
         {
             securityId = Request["securityId"] ?? "";
             tenant = int.Parse(Request["tenant"]);
@@ -60,28 +59,19 @@ namespace WebFreight.Web.WebPages
 
         private void DownloadImage()
         {
-            GetImageDetail();
+            ImageLibrary imageLibrary = GetImageDetail();
             Uploader uploader = new Uploader();
-            byte[] imageBytes = uploader.DownloadFile(imageDetail.Id, imageDetail.Extension, "images", tenant, tenant == 0);
+            byte[] imageBytes = uploader.DownloadFile(imageLibrary.ImageDetail.Id, imageLibrary.ImageDetail.Extension, "images", tenant, tenant == 0);
             if (imageBytes == null) ThrowAuthenticationError();
-            ShowImage(imageBytes);
+            BuildHttpResponse(imageBytes, imageLibrary);
         }
 
-        private void ShowImage(byte[] imageBytes)
+        private void BuildHttpResponse(byte[] imageBytes, ImageLibrary imageLibrary)
         {
-            string fileName = imageDetail.Id + "." + imageDetail.Extension;
-            HttpContext.Current.Response.ContentType = "image/" + imageDetail.Extension;
-            var browser = HttpContext.Current.Request.Browser;
-            if (browser != null && browser.Browser.Equals("ie", StringComparison.OrdinalIgnoreCase))
-            {
-                HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename*=UTF-8''" + HttpUtility.UrlPathEncode(fileName) + "\"");
-            }
-            else
-            {
-                HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=\"" + HttpUtility.UrlPathEncode(fileName) + "\"");
-            }
+            var contentHeader = GetHttpResponseContentHeader(imageLibrary);
 
-
+            HttpContext.Current.Response.AppendHeader("Content-Disposition", contentHeader);
+            HttpContext.Current.Response.ContentType = "image/" + imageLibrary.ImageDetail.Extension;
             HttpContext.Current.Response.BinaryWrite(imageBytes);
             if (HttpContext.Current.Response.IsClientConnected)
             {
@@ -91,11 +81,22 @@ namespace WebFreight.Web.WebPages
             }
         }
 
-        private void GetImageDetail()
+        private string GetHttpResponseContentHeader(ImageLibrary imageLibrary)
+        {
+            string fileName = imageLibrary.Name + "." + imageLibrary.ImageDetail.Extension;
+            var browser = HttpContext.Current.Request.Browser;
+            if (browser != null && browser.Browser.Equals("ie", StringComparison.OrdinalIgnoreCase))
+            {
+                return "attachment; filename*=UTF-8''" + HttpUtility.UrlPathEncode(fileName) + "\"";
+            }
+            return "attachment; filename=\"" + HttpUtility.UrlPathEncode(fileName) + "\"";
+        }
+
+        private ImageLibrary GetImageDetail()
         {
             ImageLibrary imageLibrary = new ImageLibraryRepository(tenant).GetSingleBySecurityIdAndTenant(securityId, tenant);
             if (imageLibrary == null || imageLibrary.ImageDetail == null) ThrowAuthenticationError();
-            imageDetail = imageLibrary.ImageDetail;
+            return imageLibrary;
         }
 
 
