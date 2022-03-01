@@ -180,6 +180,7 @@
     <Compile Include="DCA\DCATester.cs" />
     <Compile Include="DCA\LastAccessFileInDCADirM.cs" />
     <Compile Include="DownloadDcaMessageSheetWR.cs" />
+    <Compile Include="RabbitMQConsumerService.cs" />
     <Compile Include="RabbitMQReceiveWR.cs" />
     <Compile Include="FTPToAnalyzeQueueWR.cs" />
     <Compile Include="General.cs" />

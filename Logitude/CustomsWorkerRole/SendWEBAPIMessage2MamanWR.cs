@@ -39,6 +39,8 @@ using Logitude.Customs.BL.Messaging.ILOVS;
 using Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue;
 using System.Web;
 using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityQueryServices;
 
 namespace CustomsWorkerRole
 {
@@ -92,6 +94,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
         private string _CommunicationLogId;
         private CommunicationLog _WaitingCommLog;
         private QueueResponse _ReceivedBrokeredMessage;
+        private string myClass;
 
         public override bool OnStart()
         {
@@ -102,7 +105,19 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 DoneItemsInRange = new Dictionary<DateTime, int>();
 
 
-                var myClass = this.GetType().Name;
+                this.myClass = this.GetType().Name;
+
+                var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
+                var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
+                
+                if (CustomDbQueueService.IsFeatureOnRABBITMQ_Communication() && customsEnvironmentSettingPM.UseRabbitMQ)
+                {
+                    base.WorkerQueueType = WorkerQueueType.RabbitMQ;
+                }
+                else
+                {
+                    base.WorkerQueueType = WorkerQueueType.DB;
+                }
 
 
 
@@ -133,7 +148,22 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             {
                 OnStart();
 
-                WorkUntilQEmpty_Db();
+                
+
+                switch (base.WorkerQueueType)
+                {
+
+                    case WorkerQueueType.RabbitMQ:
+                        WorkUntilPrcossesStop_RabbitMQ();
+                        break;
+                    case WorkerQueueType.DB:
+                    default:
+                        {
+                            WorkUntilQEmpty_Db();
+                        }
+                        break;
+                }
+                
 
 
             }
@@ -145,6 +175,31 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             }
 
 
+        }
+
+        private void WorkUntilPrcossesStop_RabbitMQ()
+        {
+            var rabbitMQConsumerService = new RabbitMQConsumerService(myClass, SBQueueNames.SendWEBAPIMessage2MamanQ.ToString());
+            rabbitMQConsumerService.WorkUntilPrcossesStop_RabbitMQ(
+                (CustomDBQueueMessage customDBQueueMessage) =>
+                {
+                    LogMessagingUtil.Instance.Clear();
+
+                    _CommunicationLogId = customDBQueueMessage.Properties["CommunicationLogId"].ToString();
+                    int.TryParse(customDBQueueMessage.Properties["Tenant"].ToString(), out _Tenant);
+
+                    LogMessagingUtil.Instance
+                        .AppendLine("ProccessReceivedMessage()")
+                        .AppendLine("QUEUEMessageId:" + customDBQueueMessage.MessageId)
+                        //.AppendLine("RetryNumber:" + customDBQueueMessage.RetryNumber)
+                        .AppendLine("CommunicationLogId:" + _CommunicationLogId)
+                        .AppendLine(",Tenant" + _Tenant);
+                    ProccessReceivedMessage();
+
+                    return true;
+                },
+                base.LogDoneItemInMemory
+                );
         }
 
         private void WorkUntilQEmpty_Db()
@@ -171,6 +226,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                         {
                             _IQueueService.CompleteAsFailed();
                         }
+                        InitParams();
 
                         ProccessReceivedMessage();
                         scope.Complete();
@@ -188,18 +244,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
         public void ProccessReceivedMessage()
         {
-
-            LogMessagingUtil.Instance.Clear();
-
-            _CommunicationLogId = _ReceivedBrokeredMessage.MessageValues["CommunicationLogId"].ToString();
-            int.TryParse(_ReceivedBrokeredMessage.MessageValues["Tenant"].ToString(), out _Tenant);
-
-            LogMessagingUtil.Instance
-                .AppendLine("ProccessReceivedMessage()")
-                .AppendLine("QUEUEMessageId:" + _ReceivedBrokeredMessage.MessageId)
-                .AppendLine("RetryNumber:" + _ReceivedBrokeredMessage.RetryNumber)
-                .AppendLine("CommunicationLogId:" + _CommunicationLogId)
-                .AppendLine(",Tenant" + _Tenant);
+            //InitParams();
 
             _Context = CommonDataContext.GetContext(_Tenant);
             _CommunicationLogRep = new CommunicationLogRepository(_Context);
@@ -226,7 +271,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             {
                 //ExceptionHandler.HandleException(exc, DateTime.Now, _Tenant, "", "WorkerRole", "", null);
                 _WaitingCommLog.Retries++;
-                if (_WaitingCommLog.Retries>5)
+                if (_WaitingCommLog.Retries > 5)
                 {
                     _WaitingCommLog.CommunicationStatusTypeCode = "F";
                 }
@@ -241,6 +286,21 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 //throw;
 
             }
+        }
+
+        private void InitParams()
+        {
+            LogMessagingUtil.Instance.Clear();
+
+            _CommunicationLogId = _ReceivedBrokeredMessage.MessageValues["CommunicationLogId"].ToString();
+            int.TryParse(_ReceivedBrokeredMessage.MessageValues["Tenant"].ToString(), out _Tenant);
+
+            LogMessagingUtil.Instance
+                .AppendLine("ProccessReceivedMessage()")
+                .AppendLine("QUEUEMessageId:" + _ReceivedBrokeredMessage.MessageId)
+                .AppendLine("RetryNumber:" + _ReceivedBrokeredMessage.RetryNumber)
+                .AppendLine("CommunicationLogId:" + _CommunicationLogId)
+                .AppendLine(",Tenant" + _Tenant);
         }
 
         private void SentWAPIComm(bool forceRetryFromTester=false)
