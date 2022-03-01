@@ -51,7 +51,7 @@ export class LogCheckboxComponent implements OnInit, OnDestroy {
     public uiProperty: UIProperty;
     CopyValueSubs: any;
     private show: boolean;
-
+    public DataCy: string;
     private isDisabled: boolean;
     @Input()  public get IsDisabled() {
         return this.isDisabled;
