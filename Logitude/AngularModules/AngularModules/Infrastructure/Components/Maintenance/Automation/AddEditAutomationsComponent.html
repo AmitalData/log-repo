@@ -223,7 +223,7 @@
                                                                                             </td>
                                                                                             <td [style.width]="(ResultCodeSelected.Code =='FOLLOWUP' ||ResultCodeSelected.Code =='DOCOUTFOLLOWUP'|| ResultCodeSelected.Code =='DOCINFOLLOWUP') ?'270px':'200px'">
                                                                                                 <div [style.width]="(ResultCodeSelected.Code =='FOLLOWUP' ||ResultCodeSelected.Code =='DOCOUTFOLLOWUP'|| ResultCodeSelected.Code =='DOCINFOLLOWUP') ?'270px':'200px'" style="text-align:left;">
-                                                                                                    <ComboBox [CyData]="'AutomationResultList'" [ListType]="''" [style.width]="(ResultCodeSelected.Code =='FOLLOWUP' ||ResultCodeSelected.Code =='DOCOUTFOLLOWUP'|| ResultCodeSelected.Code =='DOCINFOLLOWUP') ?'270px':'200px'" (SelectedItemChanged)="ResultCodeListValueChanged($event)" [ItemsSource]="ResultCodeList" [SelectedItem]="ResultCodeSelected" [Binding]="'Name'"></ComboBox>
+                                                                                                    <ComboBox [IsDisabled]="!IsCustomerCareUser && ResultCodeSelected.Code =='SENDINTERFACE'" [CyData]="'AutomationResultList'" [ListType]="''" [style.width]="(ResultCodeSelected.Code =='FOLLOWUP' ||ResultCodeSelected.Code =='DOCOUTFOLLOWUP'|| ResultCodeSelected.Code =='DOCINFOLLOWUP') ?'270px':'200px'" (SelectedItemChanged)="ResultCodeListValueChanged($event)" [ItemsSource]="ResultCodeList" [SelectedItem]="ResultCodeSelected" [Binding]="'Name'"></ComboBox>
                                                                                                 </div>
                                                                                             </td>
                                                                                             <td>
@@ -256,7 +256,7 @@
                                                                                                 <table  style="vertical-align:top;height:25px">
                                                                                                     <tr style="vertical-align:top;height:25px">
                                                                                                         <td style="vertical-align:central;width:100px;">
-                                                                                                            <RadioButton [Name]="'DateRadio'" [Text]="'Immediately'" [IsChecked]="IsSelectedImmediatly" (Checked)="SelectedDelayedImmediatlRadioClcik('Immeduiatly')"></RadioButton>
+                                                                                                            <RadioButton [IsEnabled]="!DisableTimeTypeSelector" [Name]="'DateRadio'" [Text]="'Immediately'" [IsChecked]="IsSelectedImmediatly" (Checked)="SelectedDelayedImmediatlRadioClcik('Immeduiatly')"></RadioButton>
                                                                                                             <!--<div class="RadioButton" style="width:100px;display:inline">
                             <input [attr.id]="ImmediatlyHtmlinputId" type="radio" (click)="SelectedDelayedImmediatlRadioClcik('Immeduiatly')" name="DateRadio" [checked]="IsSelectedImmediatly" />
                             <label [attr.for]="ImmediatlyHtmlinputId" style="font-size: 12px">
@@ -265,7 +265,7 @@
                         </div>-->
                                                                                                         </td>
                                                                                                         <td style="vertical-align:central;width:100px;">
-                                                                                                            <RadioButton [Name]="'DateRadio'" [Text]="'Delayed'" [IsChecked]="IsSelectedDelayed" (Checked)="SelectedDelayedImmediatlRadioClcik('Delayed')"></RadioButton>
+                                                                                                            <RadioButton [IsEnabled]="!DisableTimeTypeSelector" [Name]="'DateRadio'" [Text]="'Delayed'" [IsChecked]="IsSelectedDelayed" (Checked)="SelectedDelayedImmediatlRadioClcik('Delayed')"></RadioButton>
                                                                                                             <!--<div class="Delayed" style="width:100px;display:inline">
                             <input [attr.id]="DelayedHtmlinputId" type="radio" (click)="SelectedDelayedImmediatlRadioClcik('Delayed')" name="DateRadio" [checked]="IsSelectedDelayed" />
                             <label [attr.for]="DelayedHtmlinputId" style="font-size: 12px">

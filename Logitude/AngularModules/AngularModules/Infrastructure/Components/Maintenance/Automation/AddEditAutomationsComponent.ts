@@ -178,6 +178,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     IsShowEventCreationResult: boolean = false;
     IsShowCreateTaskResult: boolean = false;
     IsTenantZero: boolean = false;
+    IsCustomerCareUser: boolean = false;
+    DisableTimeTypeSelector: boolean = false;
     private quoteTemplateListService: QuoteTemplateListService;
     public cyData: string;
     public cyData2: string;
@@ -195,8 +197,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
         this._documentTypeListService = new DocumentTypeListService();
 
-
-        if (FeatureLocator.HasFeaturePermession("Automation", "SENDINTERFACERESULT") && SessionLocator.LoggedUserPM.IsCustomerCare) {
+        this.IsCustomerCareUser = SessionLocator.LoggedUserPM.IsCustomerCare;
+        if (FeatureLocator.HasFeaturePermession("Automation", "SENDINTERFACERESULT") && this.IsCustomerCareUser) {
             this.IsShowSendInterfaceResult = true;
         }
 
@@ -1024,6 +1026,10 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
                 if (this.IsShowSendInterfaceResult) {
                     this.ResultCodeList.push(new ResultCode("Send Interface", "SENDINTERFACE"));
+                }
+                else if (this.AutomatedBackupClass.ResultCode == "SENDINTERFACE") {
+                    this.ResultCodeList.push(new ResultCode("Send Interface", "SENDINTERFACE"));
+                    this.DisableTimeTypeSelector = true;
                 }
 
                 if (this.IsShowCreateTaskResult) {

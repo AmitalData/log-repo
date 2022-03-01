@@ -65,7 +65,7 @@ export class AutomationsSettingsComponent implements OnInit {
         this.objectFieldPMExtendedService = new ObjectFieldPMExtendedService();
 
 
-        if (FeatureLocator.HasFeaturePermession("Automation", "SENDINTERFACERESULT") && SessionLocator.LoggedUserPM.IsCustomerCare) {
+        if (FeatureLocator.HasFeaturePermession("Automation", "SENDINTERFACERESULT")) {
             this.IsShowSendInterfaceResult = true;
         }
 
