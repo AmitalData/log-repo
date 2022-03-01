@@ -17,8 +17,8 @@ import {CustomFieldClass} from '../../DataContracts/CustomFieldClass';
     <table *ngIf="uiProperty.IsVisible">
         <tr>
             <td style="width: 16px;">
-                <div class="CheckBox">
-                    <input [attr.id]="ControlId" type="checkbox" [disabled]="IsDisabled" [(ngModel)]="BoolValue" (focus)="onFocus()" (blur)="onBlur()" />
+                <div [attr.data-cy]="DataCy" class="CheckBox">
+                    <input  [attr.id]="ControlId" type="checkbox" [disabled]="IsDisabled" [(ngModel)]="BoolValue" (focus)="onFocus()" (blur)="onBlur()" />
                     <label [attr.for]="ControlId">{{Text}}</label>
                 </div>
             </td>
@@ -34,7 +34,7 @@ import {CustomFieldClass} from '../../DataContracts/CustomFieldClass';
     </table>
     `,
 
-    inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', 'HideColumns', 'IsDisabled','Text'],
+    inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', 'HideColumns', 'IsDisabled', 'Text','DataCy'],
 })
 
 export class LogCheckboxComponent implements OnInit, OnDestroy {

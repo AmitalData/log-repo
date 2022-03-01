@@ -24,7 +24,7 @@ export class CustomizationMainComponent {
     public ItemsSource2Hidden: boolean = false;
     public IsButtonEnabled: boolean = false;
     public IsCustomFieldsMenue: boolean = false;
-
+    public IsReady: boolean = false;
     private myService: GeneralDomainService;
     private entityResourceService: EntityResourceService
     private CurrentSession = SessionLocator.SelectedSession;
@@ -67,6 +67,7 @@ export class CustomizationMainComponent {
 
     private allTablesItems: FieldsTranslations[];
     private LoadTableTranslations() {
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.myService.GetTranslationsByParam("T", "", SessionLocator.TenantPM.Language).subscribe((myResult: ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
@@ -76,6 +77,7 @@ export class CustomizationMainComponent {
                     this.BuildItemsSources();
                 }
             }
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -108,6 +110,7 @@ export class CustomizationMainComponent {
         if ((!myData || myData.length == 0) && this.IsObjectTableFilterEnabled && !fromSearch) {
             this.ShowPackageMessage();
         }
+        this.IsReady = true;
     }
 
     ShowPackageMessage() {
