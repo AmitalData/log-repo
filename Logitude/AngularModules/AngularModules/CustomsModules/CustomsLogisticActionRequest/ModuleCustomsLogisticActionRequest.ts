@@ -3,10 +3,16 @@ import { InfrastructureModule } from '../../Infrastructure/Module_INFR';
 //import {CustomsModule} from '../../Customs/Module_CUST';
 import { Components, ModuleDeclarations } from './ModuleDeclarations';
 import { ModuleCustomsControls } from '../CustomsControls/ModuleCustomsControls';
+import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
+import { LogisticActionRequestPMService } from 'Customs/Services/StandardPMs/LogisticActionRequestPMService';
 @NgModule({
   imports: [InfrastructureModule, ModuleCustomsControls],
   exports: [...Components, ModuleCustomsControls],
   declarations: [...Components],
+  providers: [
+    LogtuideTableDataService,
+    LogisticActionRequestPMService,
+  ],
   entryComponents: [...Components],
 })
 

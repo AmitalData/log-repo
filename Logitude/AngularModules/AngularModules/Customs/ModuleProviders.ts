@@ -434,6 +434,7 @@ import { ClientPMService } from './Services/StandardPMs/ClientPMService';
 import { LogisticActionRequestListService } from './Services/StandardLists/LogisticActionRequestListService';
 import { LogisticActionRequestTypeListService } from './Services/StandardLists/LogisticActionRequestTypeListService';
 import { LogisticActionResponseRequestSListService } from './Services/StandardLists/LogisticActionResponseRequestSListService';
+import { LogisticActionRequestPMService } from './Services/StandardPMs/LogisticActionRequestPMService';
 
 
 
@@ -794,6 +795,7 @@ export class ModuleProviders {
             case "ExportStorgePMService": { myResult = new ExportStorgePMService(); break; }
             case "ContainerizationPMService": { myResult = new ContainerizationPMService(); break; }
             case "TradeAgreementProtocolListService": { myResult = new TradeAgreementProtocolListService(); break; }
+            case "LogisticActionRequestPMService": { myResult = new LogisticActionRequestPMService(); break; }
 
             //#endregion
 

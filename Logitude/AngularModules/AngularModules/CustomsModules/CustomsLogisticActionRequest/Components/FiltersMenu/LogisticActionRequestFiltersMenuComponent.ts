@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Output } from "@angular/core";
-import { AnyKindOfDictionary } from "cypress/types/lodash";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 

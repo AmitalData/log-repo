@@ -14,6 +14,7 @@ declare const window: any;
 
 @Injectable()
 export class LogtuideTableDataService {
+  
 
   constructor(
     private entityListService: EntityListService,

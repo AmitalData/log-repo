@@ -5,7 +5,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import { defer, Observable, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -33,6 +33,11 @@ import {CustomsCollateralsAnswerPM} from '../../EntityPMs/CustomsCollateralsAnsw
 import {CustomsCollateralsConditionPM} from '../../EntityPMs/CustomsCollateralsConditionPM';
 import { AppTool } from '../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
+import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
+import { EntityListService } from 'Infrastructure/Services/EntityListService';
+import { ConsignmentPM } from 'Customs/EntityPMs/ConsignmentPM';
+import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
 
 @Injectable()
 
@@ -42,6 +47,8 @@ export class DeclarationWebService {
 
     _SupplierInvoicePMService: SupplierInvoicePMService = new SupplierInvoicePMService();
     _DeclarationPaymentPMService: DeclarationPaymentPMService = new DeclarationPaymentPMService();
+    private logtuideTableDataService: LogtuideTableDataService = new LogtuideTableDataService(new EntityListService(), new EntityResourceService());
+    
     constructor() {
         this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DeclarationWebService';
@@ -1885,8 +1892,25 @@ export class DeclarationWebService {
     }
 
 
+    public getDeclarationConsignment(exportfile: string) : Promise<ConsignmentDeclartion>{
+        const ajax: Observable<any> = this._http.get(
+            this._apiUrl + "/DeclarationConsignment",
+            {
+                headers: ServiceHelper.GetHttpHeaders().headers,
+                params: { exportfile: exportfile }
+            }
+        );
 
-
-
-
+        // return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
+        return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
+    }
 }
+
+
+export interface  ConsignmentDeclartion {
+    Consignment: ConsignmentDeclartion2
+} 
+
+interface ConsignmentDeclartion2 extends ConsignmentPM {
+    Declaration: DeclarationPM
+} 
