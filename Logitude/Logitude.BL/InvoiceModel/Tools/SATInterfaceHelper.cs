@@ -1334,11 +1334,6 @@ namespace Logitude.BL.InvoiceModel.Tools
                                   select a).FirstOrDefault();
             }
 
-            if (relatedInvoice != null && relatedInvoice.SATTransferStatusCode == "TD" && relatedInvoice.StatusCode == "VD")
-            {
-                return;
-            }
-
             if (relatedInvoice != null && !string.IsNullOrEmpty(relatedInvoice.SATXML))
             {
                 Profact.TimbraCFDI33.Comprobante oldComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(relatedInvoice.SATXML);
@@ -1359,7 +1354,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             {
                 tipoRelacion = "01";
             }
-            else if (relatedInvoice !=null && relatedInvoice.StatusCode == "VD" && relatedInvoice.SATTransferStatusCode == "CS") tipoRelacion = "04";
+            else if (relatedInvoice !=null && relatedInvoice.StatusCode == SATData.VoidedInvoiceStatusCode && (relatedInvoice.SATTransferStatusCode == SATData.CanceledSATTransferStatusCode || relatedInvoice.SATTransferStatusCode == SATData.TransferedSATTransferStatusCode)) tipoRelacion = "04";
             else
             {
                 List<ARInvoice> shipmentInvoices = (from a in invoiceCotnext.ARInvoiceEntities
