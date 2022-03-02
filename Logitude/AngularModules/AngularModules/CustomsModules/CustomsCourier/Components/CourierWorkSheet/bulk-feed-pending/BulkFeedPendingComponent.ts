@@ -183,7 +183,31 @@ export class BulkFeedPendingComponent extends BaseComponent {
       filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter.toLowerCase(), null, null, "Contains", false, false, false, "string");
 
     return filters;
-  }
+    }
+
+    OpenMultiUpdateWindow() {
+        var windowArgs: any = {
+           // Declaration: this.EntityPM,
+        };
+        windowArgs.courierMasterId = this.CourierMasterPM.Id;
+        windowArgs.declarationIdsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
+        windowArgs.allWithoutdeclarationIdsList = this._CourierWorksheetSharedDataService._UnSelectedItems.Collection;
+        windowArgs.checkboxAll = this._CourierWorksheetSharedDataService.connectedSelectAll;
+        windowArgs.notUpdateSelf = true;
+        windowArgs.filter = this.getFilter();
+        windowArgs.filter.GetAll = this._CourierWorksheetSharedDataService.connectedSelectAll;
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 500;
+        logWindow.Height = 320;
+        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.MultiUpdate");
+        logWindow.WindowArgs = windowArgs;
+        logWindow.ShowCloseButton = true;
+        logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/MultiUpdateDecComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        });
+    }
+
 
   AddPendings() {
     if (!this._CourierWorksheetSharedDataService._SelectedItems?.Collection?.length && !this._CourierWorksheetSharedDataService.connectedSelectAll)

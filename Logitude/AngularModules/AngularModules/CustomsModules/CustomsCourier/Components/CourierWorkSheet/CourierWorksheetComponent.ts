@@ -2527,7 +2527,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         logitudeWindow.Width = 1500;
         logitudeWindow.Height = 800;
         logitudeWindow.IsShowCloseButton = true;
-        logitudeWindow.Title = "הזנה גורפת PENDING";
+        logitudeWindow.Title = "עדכון גורף";
         logitudeWindow.WindowArgs = { CourierMasterPM: this.entityPM };        
         logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/bulk-feed-pending/BulkFeedPendingComponent');
         this.ChangedUnloadPortSite = true;
