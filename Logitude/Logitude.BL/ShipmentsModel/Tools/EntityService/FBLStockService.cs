@@ -153,7 +153,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void ValidateStockNumbers(int startNumber, int endNumber)
         {
-            List<int> existStocks = new FBLStockRepository(tenant)
+            List<int> existStocks = entityRepository
                 .GetExistStocksInRange(tenant, startNumber, endNumber).Select(a => a.Number).ToList();
 
             if (!existStocks.Any()) return;
