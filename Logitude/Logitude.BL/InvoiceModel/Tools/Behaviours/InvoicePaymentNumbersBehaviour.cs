@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.InvoiceModel.EntityPMs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,14 +40,23 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours
             return numbersField;
         }
 
+        public string CopmuteAPPaymentInvoicesNumbersFromInvoicePayments(IQueryable<APInvoicePayment> payments)
+        {
+            string numbersField = "";
+            foreach (APInvoicePayment payment in payments)
+            {
+                this.AddNumberToNumbersField(ref numbersField, payment.APInvoice?.InvoiceNumber);
+                this.TrimLengthTo1000(ref numbersField);
+            }
+
+            return numbersField;
+        }
+
         private void AddNumberToNumbersField(ref string allNumbersField, string connectedNumber)
         {
             if (!string.IsNullOrEmpty(connectedNumber))
             {
-                if (!allNumbersField.Contains(connectedNumber))
-                {
-                    allNumbersField = string.IsNullOrEmpty(allNumbersField) ? connectedNumber : allNumbersField + ", " + connectedNumber;
-                }
+                allNumbersField = string.IsNullOrEmpty(allNumbersField) ? connectedNumber : allNumbersField + ", " + connectedNumber;
             }
         }
         private void TrimLengthTo1000(ref string allNumbersField)
