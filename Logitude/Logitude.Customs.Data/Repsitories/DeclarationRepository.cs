@@ -908,100 +908,6 @@ namespace Logitude.Customs.Data.Repsitories
             var res2 = q2.ToList();
 
             return res2;
-
-            //var declarationsQ = (from d in context.Declarations
-            //                     join dcs in context.DeclarationCourierStatuses on d.Id equals dcs.DeclarationId
-            //                     select new
-            //                     {
-            //                         Id = dcs.DeclarationId,
-            //                         Importername = d.ImporterName,
-            //                         Cargodescription = d.CargoDescription,
-            //                         Casualimporteraddress1 = d.CasualImporterAddress1,
-            //                         Casualimporteraddress2 = d.CasualImporterAddress2,
-            //                         Casualimportercity = d.CasualImporterCity,
-            //                         Importerid = d.ImporterId,
-            //                         Importercode = d.ImporterCode,
-            //                         Totalinvoiceamountinus = dcs.TotalInvoiceAmountInUSD
-            //                     });
-
-            //if (skip.HasValue)
-            //    declarationsQ = declarationsQ.OrderBy(x=> x.Id).Skip(skip.Value);
-
-            //if (take.HasValue)
-            //    declarationsQ = declarationsQ.Take(take.Value);
-
-
-            //var q = (from d in declarationsQ
-            //         join cp in context.ConsignmentPackages on d.Id equals cp.DeclarationId into cpjoin
-            //         from cpj in cpjoin.Where(cp => cp.PackageMeasureQualifierCode == "2").DefaultIfEmpty()
-
-            //         join c in context.Clients on d.Importerid equals c.Id into cjoin
-            //         from cj in cjoin.DefaultIfEmpty()
-
-            //         join s in context.SupplierInvoices on d.Id equals s.DeclarationId into sjoin
-            //         from sj in sjoin.Where(s => string.IsNullOrEmpty(incotermCode) || s.IncotermCode == incotermCode).DefaultIfEmpty()
-
-            //         group cpj by new
-            //         {
-            //             d.Id,
-            //             d.Importername,
-            //             d.Cargodescription,
-            //             d.Casualimporteraddress1,
-            //             d.Casualimporteraddress2,
-            //             d.Casualimportercity,
-            //             //d.Importerid,
-            //             d.Importercode,
-            //             d.Totalinvoiceamountinus,
-            //             cj.Code,
-            //             sj.IncotermCode,
-            //         } into t
-            //         select new DeclarationPendingBulkFeed()
-            //         {
-            //             Id = t.Key.Id,
-            //             Importername = t.Key.Importername,
-            //             Cargodescription = t.Key.Cargodescription,
-            //             Casualimporteraddress1 = t.Key.Casualimporteraddress1,
-            //             Casualimporteraddress2 = t.Key.Casualimporteraddress2,
-            //             Casualimportercity = t.Key.Casualimportercity,
-            //             Totalinvoiceamountinus = t.Key.Totalinvoiceamountinus,
-            //             PackageMeasureQualifierCode1 = 0,// t.Sum(cpj => Convert.ToInt32(cpj != null ? cpj.PackageMeasureQualifierCode : "0")),
-            //             Code = t.Key.Code ?? t.Key.Importercode,
-            //             IncotermCode = t.Key.IncotermCode
-            //         });
-
-
-
-            //select new TempBulkFeedPending(
-            //    d.Id,
-            //    d.Importername,
-            //    d.Cargodescription,
-            //    d.Casualimporteraddress1,
-            //    d.Casualimporteraddress2,
-            //    d.Casualimportercity,
-            //    d.Totalinvoiceamountinus,
-            //    cpj.PackageMeasureQualifierCode,// t.AsEnumerable().Sum(cpj => int.Parse(cpj.PackageMeasureQualifierCode)),
-            //    cj != null ? cj.Code : d.Importercode,
-            //    sj != null ? sj.IncotermCode : ""
-            //));
-
-
-            //select new TempBulkFeedPending()
-            //{
-            //    Id = d.Id,
-            //    Importername = d.Importername,
-            //    Cargodescription = d.Cargodescription,
-            //    Casualimporteraddress1 = d.Casualimporteraddress1,
-            //    Casualimporteraddress2 = d.Casualimporteraddress2,
-            //    Casualimportercity = d.Casualimportercity,
-            //    Totalinvoiceamountinus = d.Totalinvoiceamountinus,
-            //    PackageMeasureQualifierCode1 = cpj.PackageMeasureQualifierCode,// t.AsEnumerable().Sum(cpj => int.Parse(cpj.PackageMeasureQualifierCode)),
-            //    Code = cj != null ? cj.Code : d.Importercode,
-            //    IncotermCode = sj != null ? sj.IncotermCode : ""
-            //});
-
-            //var z = declarationsQ.ToList();
-            //var res = q.ToList();
-            //return res;
         }
 
         public string GetHatraDateForDecId(string decId, int tenant)
@@ -1011,7 +917,47 @@ namespace Logitude.Customs.Data.Repsitories
                                   select a.HatraDate);
             return HatraDateQuery.FirstOrDefault().ToString();
         }
+
+
+        public object GetDeclarationConsignment(string exportFile)
+        {
+            var myQ = (from d in context.Declarations
+                       join c in context.Consignments on d.Id equals c.DeclarationId into cjoin
+                       from cj in cjoin.DefaultIfEmpty()
+
+                       where d.ExportFile == exportFile
+                       select new { Consignment = cj , d}
+                       );
+            var res = myQ.Take(1).ToList().FirstOrDefault();
+            return res;
+        }
+
+        public DeclarationId GetDeclarationId(string exportFileNo, string exporterNumber, string transportmodeId, string cargoIdentifierType, string cargoIdentifierKey1, string cargoIdentifierKey2, string cargoIdentifierKey3)
+        {
+            var myQ = (from d in context.Declarations
+                       join c in context.Consignments on d.Id equals c.DeclarationId into cjoin
+                       from cj in cjoin.DefaultIfEmpty()
+
+                       where d.ExportFile == exportFileNo
+                       && d.ImporterCode == exporterNumber
+                       && d.TransportModeId == transportmodeId
+                       && cj.CargoTypeCode== cargoIdentifierType
+                       && cj.ManifestNumber == cargoIdentifierKey1
+                       && cj.SecondCargoID == cargoIdentifierKey2
+                       && cj.ThirdCargoID == cargoIdentifierKey3
+                       select new DeclarationId { Id = d.Id }
+                       );
+            DeclarationId res = myQ.Take(1).ToList().FirstOrDefault();
+            return res;
+        }
     }
+
+
+    public class DeclarationId
+    {
+        public string Id { get; set; }
+    }
+
 
     public class DeclarationPendingBulkFeed
     {

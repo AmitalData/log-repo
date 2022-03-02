@@ -667,7 +667,7 @@ export class ListComponent implements OnInit, AfterViewInit {
           }
          if (this.ObjectTableName == "Customs.PhysicalCheck") {
              this.IsPhysicalCheckObjectTable = true; }
-        if (this.ObjectTableName == "Customs.DeclarationReferantData" || this.ObjectTableName == "Customs.DeclarationCargoSplit") {
+        if (["Customs.DeclarationReferantData", "Customs.DeclarationCargoSplit", "Customs.LogisticActionRequest"].includes(this.ObjectTableName)) {
             this.HasCustomsFilterMenu = true;
         }
         if (this.ObjectTableName == "Customs.ExportStorge" || this.ObjectTableName == "QuoteOP") {
@@ -906,6 +906,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 myComponentPath = "./CustomsModules";
                                 myComponentPath=(myObjectTableName == "DeclarationReferantData")?myComponentPath+="/CustomsReferant":myComponentPath;
                                 myComponentPath=(myObjectTableName == "DeclarationCargoSplit")?myComponentPath+="/CustomsDeclarationCargoSplit":myComponentPath;
+                                myComponentPath=(myObjectTableName == "LogisticActionRequest")?myComponentPath+="/CustomsLogisticActionRequest":myComponentPath;
                                 myComponentPath=(myObjectTableName == "PhysicalCheck")?myComponentPath+="/CustomsPhysicalCheck":myComponentPath;
                                 myComponentPath+="/Components/FiltersMenu/" + /*this.ObjectTable.Name*/myObjectTableName + "FiltersMenuComponent";
                             }
@@ -2273,6 +2274,45 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                         });
 
                                     });
+
+                                    break;
+                                }
+                                case 'Customs.LogisticActionRequest': {
+
+                                    var windowArgs: any = {};
+
+                                    // this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe((response:any) => {
+                                    //     this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+                                            this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
+                                                res.subscribe((myResponse: any) => {
+
+                                                    if (myResponse.HasError) {
+                                                        console.log("Error while getting EntityPM", myResponse);
+                                                    }
+                                                    else {
+                                                        windowArgs.CurrentEntity = myResponse.Result;
+                                                        var logWindow = new LogitudeWindow();
+
+                                                        logWindow.Width = 770;
+                                                        logWindow.Height = 750;
+                                                        //logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditDeclarationCargoSplit");
+                                                        logWindow.Title = 'בקשת ביטול יצוא - ' + (myResponse.Result?.ResponseStatusCode || myResponse.Result?.OperationalStatus ) //TextCodeTranslator.Translate('General.MH.LogisticActionRequest'); //"בקשת פיצול מטען ";// + myResponse.Result != null ? ((!AppTool.IsNullOrEmpty(myResponse.Result.RequestNumber) ? myResponse.Result.RequestNumber : null) + ((!AppTool.IsNullOrEmpty(myResponse.Result.ResponseStatusName) ? " - " + myResponse.Result.ResponseStatusName : null))) : null;
+                                                        logWindow.WindowArgs = windowArgs;
+                                                        logWindow.ShowCloseButton = true;
+                                                        //logWindow.IsHideHeader = true;
+                                                        logWindow.Show('./CustomsModules/CustomsLogisticActionRequest/Components/EditTabs/General/LogisticActionRequestGeneralTabComponent');
+
+                                                        logWindow.WindowClosed.subscribe(($event1: any) => {
+                                                            this.isEditControlOpened = false;
+                                                            this.OnBackFromEdit(selectedEntityId, $event);
+                                                        });
+                                                    }
+                                                });
+
+                                            });
+                                    //     });
+
+                                    // });
 
                                     break;
                                 }
