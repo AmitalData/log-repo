@@ -123,8 +123,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             List<PagosPagoDoctoRelacionadoImpuestosDRRetencionDR> pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs = new List<PagosPagoDoctoRelacionadoImpuestosDRRetencionDR>();
             doctos.ForEach(d =>
             {
-                pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs = pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs.Concat(d.ImpuestosDR.TrasladosDR.ToArray()).ToList();
-                pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs = pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs.Concat(d.ImpuestosDR.RetencionesDR.ToArray()).ToList();
+                pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs = d.ImpuestosDR.TrasladosDR != null ? pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs.Concat(d.ImpuestosDR.TrasladosDR.ToArray()).ToList() : pagosPagoDoctoRelacionadoImpuestosDRTrasladoDRs;
+                pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs = d.ImpuestosDR.RetencionesDR != null ? pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs.Concat(d.ImpuestosDR.RetencionesDR.ToArray()).ToList() : pagosPagoDoctoRelacionadoImpuestosDRRetencionDRs;
             });
 
             PagosPagoImpuestosP pagosPagoImpuestosP = new PagosPagoImpuestosP();
