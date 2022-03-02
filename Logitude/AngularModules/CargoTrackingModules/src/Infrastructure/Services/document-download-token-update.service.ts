@@ -7,16 +7,16 @@ import { LoginExtendedService } from './Extended/LoginExtendedService';
 })
 export class DocumentDownloadTokenUpdateService {
     public tryEvry = 1000 * 60 * 1 ;
-    public downloadTokenTimer;
+    public downloadTokenInterval;
     constructor(
         private loginExtendedService: LoginExtendedService,
     ) {
     }
     startUpdateDocumentDownloadToken() {
         this.updateDocumentDownloadToken();
-        if (this.downloadTokenTimer)
-            clearInterval(this.downloadTokenTimer);
-        this.downloadTokenTimer = setInterval(() => this.updateDocumentDownloadToken(), this.tryEvry);
+        if (this.downloadTokenInterval)
+            clearInterval(this.downloadTokenInterval);
+        this.downloadTokenInterval = setInterval(() => this.updateDocumentDownloadToken(), this.tryEvry);
 
     }
     updateDocumentDownloadToken() {
