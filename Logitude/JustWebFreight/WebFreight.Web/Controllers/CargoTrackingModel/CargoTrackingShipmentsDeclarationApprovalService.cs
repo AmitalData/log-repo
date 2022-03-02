@@ -54,6 +54,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 cloudData.IsImporterApprovalRequried = false;
                 cloudData.ApproveDateTime = TenantServerConfigration.GetCurrentDateTime(declarationApprovalArgs.Tenant);
+                cloudData.ApprovedByUserName = declarationApprovalArgs.ApprovedBy;
                 SubmitCloudData(declarationApprovalArgs, cloudData);
             }
             return cloudData;
@@ -225,6 +226,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         Parameters = new List<Logitude.Server.Tools.Parameter>() {
                             new Logitude.Server.Tools.Parameter { Order = 0 , Name = "ShipmentNumber", Value = declarationApprovalArgs.ShipmentNumber},
                             new Logitude.Server.Tools.Parameter { Order = 0 , Name = "Code", Value = "VDA"},
+                            new Logitude.Server.Tools.Parameter { Order = 0 , Name = "ApprovedByUserName", Value = declarationApprovalArgs.ApprovedBy},
                             new Logitude.Server.Tools.Parameter { Order = 0 , Name = "Date", Value = cloudData != null && cloudData.ApproveDateTime != null ? cloudData.ApproveDateTime.Value.ToShortDateString() : "" },
                             new Logitude.Server.Tools.Parameter { Order = 0 , Name = "Time", Value = cloudData != null && cloudData.ApproveDateTime != null ? cloudData.ApproveDateTime.Value.ToShortTimeString() : ""},
                             new Logitude.Server.Tools.Parameter { Order = 0 , Name = "Remarks", Value = remarks},
@@ -284,6 +286,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         public int Tenant { get; set; }
         public string ShipmentNumber { get; set; }
         public string ShipmentSecurityKey { get; set; }
+        public string ApprovedBy { get; set; }
         public bool? Approved { get; set; }
         public bool? Denied { get; set; }
         public string DenyReason { get; set; }

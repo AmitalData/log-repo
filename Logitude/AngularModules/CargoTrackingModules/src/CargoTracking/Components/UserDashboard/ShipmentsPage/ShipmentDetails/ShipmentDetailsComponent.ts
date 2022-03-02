@@ -29,6 +29,11 @@ const approvalResponseMessage = 'הצהרה זו אושרה בתאריך';
 const declineResponseMessage = 'לקוח יקר, הצהרה זו נדחתה';
 
 const orderShipmentTypeCode = 'O';
+const declineText = 'דחיה';
+const declineMessageText = 'אנא רשם/י סיבת הדחיה ואת שמך';
+const confirmText = 'אישור';
+const approvedByLabelText = 'שם המאשר/ת';
+const cancelText = 'ביטול';
 @Component({
     selector: 'ShipmentDetailsComponent',
     templateUrl: './ShipmentDetailsComponent.html',
@@ -817,20 +822,31 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
 
     ApproveDeclaration()
     {
+        const confirmMessage = this.ShowDeclarationApproveConfirmMessage();
+        confirmMessage.afterClosed().subscribe(windowArgs => {
+            const button = windowArgs?.button;
+            if(button == 'ok'){
+                this.SendDeclarationApproveRequest(windowArgs.textValue);
+            }
+        });
+    }
+
+    private SendDeclarationApproveRequest(approvedBy: string)
+    {
         RootContext.StartBusyIndicatorLoading();
 
-        const args = this.BuildDeclarationApprovalArguments();
+        const args = this.BuildDeclarationApprovalArguments(approvedBy);
         this.cargoTrackingShipmentExtendedService.PostDeclarationApprovalResponse(args)
             .subscribe(
 
-                res => {
+                res =>
+                {
                     this.ShowDeclarationApprovedMessage();
                     this.GetMainShipmentByShipmentSecurityKey();
-                     RootContext.StopBusyIndicator();
-                    },
-                err => { this.ShowFailureMessage(err); RootContext.StopBusyIndicator();}
+                    RootContext.StopBusyIndicator();
+                },
+                err => { this.ShowFailureMessage(err); RootContext.StopBusyIndicator(); }
             );
-
     }
 
     DenyDeclaration(){
@@ -848,11 +864,31 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     {
         return this.dialog.open(MessageWindowComponent, {
             data: {
-                title: 'Decline',
-                description: 'Please write down the decline reason',
+                title: declineText,
+                description: declineMessageText,
                 showOkButton: true,
+                okButtonText: confirmText,
                 showCancelButton: true,
+                cancelButtonText: cancelText,
                 showMultilineTextBox: true,
+                inputRequired: true
+            }
+        });
+    }
+
+    private ShowDeclarationApproveConfirmMessage()
+    {
+        return this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: confirmText,
+                description: approvedByLabelText,
+                showOkButton: true,
+                okButtonText: confirmText,
+                showCancelButton: true,
+                cancelButtonText: cancelText,
+                showTextBox: true,
+                inputRequired: true
+
             }
         });
     }
@@ -892,11 +928,12 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         return args;
     }
 
-    private BuildDeclarationApprovalArguments()
+    private BuildDeclarationApprovalArguments(approvedBy: string)
     {
         let args = new DeclarationApprovalArgs();
         args.Tenant = Number(this.tenant);
         args.Approved = true;
+        args.ApprovedBy = approvedBy;
         args.ShipmentSecurityKey = this.SecurityKey;
         return args;
     }

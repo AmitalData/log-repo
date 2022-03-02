@@ -36,9 +36,7 @@
                     </div>
                 </div>
                 <div style="width:auto;">
-                    <div class="DisbleBox">
-                        Beta Version
-                    </div>
+
                 </div>
 
                 <div class="nav">
@@ -337,7 +335,7 @@
                         (click)="PanelsNavigatorClicked('DocumentsPanel')">
                         Documents
                     </button>
-                    
+
                     <button *ngIf="cargoTrackingShipmentPM.EntityType != 'O' && !ShowShipmentAsDeclaration" [class.active]="selectedNavButton=='ConnectedOrdersPanel'"
                             (click)="PanelsNavigatorClicked('ConnectedOrdersPanel')">
                             Connected SHO's
