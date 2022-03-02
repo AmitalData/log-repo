@@ -317,7 +317,7 @@ namespace WebFreight.Web.App_Code
 
                             string encodedUrl = item.SecurityId + "~" + tenant;
                             encodedUrl = documentOutCopy == null ? encodedUrl : encodedUrl + "~" + documentOutCopy.Id;
-                            encodedUrl = HttpUtility.UrlEncode(encodedUrl);
+                            encodedUrl = WebUtility.UrlEncode(encodedUrl);
                             url = "../WebPages/CorrespondenceDownloadpage.aspx?id=" + encodedUrl;
                         }
 
