@@ -109,7 +109,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             return context.FBLStocks.GroupBy(a => a.Number)
                .Select(x => x.FirstOrDefault()).OrderBy(a => a.Number)
-               .Where(a => a.Number >= startNumber && a.Number <= endNumber);
+               .Where(a => a.Tenant == tenant && a.Number >= startNumber && a.Number <= endNumber);
         }
     }
 }
