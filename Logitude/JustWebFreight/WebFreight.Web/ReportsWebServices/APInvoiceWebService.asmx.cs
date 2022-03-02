@@ -28,6 +28,7 @@ using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using WebFreight.Web.WebServices;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -55,12 +56,13 @@ namespace WebFreight.Web.ReportsWebServices
         APInvoiceQuery invoiceQuery;
         CountryRepository countryRepository;
         int currentTenant;
+        private WebServiceHelper servicHelper;
 
         [WebMethod]
         public byte[] GetAPInvoiceData(string invoiceId, int tenant)
         {
+            servicHelper = new WebServiceHelper(tenant);
             APInvoiceDataProvider invoicedataprovider = GetAPInvoiceDataProvider(invoiceId, tenant);
-
             XmlSerializer serializer = new XmlSerializer(typeof(APInvoiceDataProvider));
             MemoryStream memstream = new MemoryStream();
             serializer.Serialize(memstream, invoicedataprovider);
@@ -310,19 +312,22 @@ namespace WebFreight.Web.ReportsWebServices
 
                     if (shipment.DirectionId == "D" && shipment.TransportModeId == "I")
                     {
-                        Address fromAddress = addressRepository.GetSingleAddress(shipment.MainCarriageFromAddressId, currentTenant);
-                        Address toAddress = addressRepository.GetSingleAddress(shipment.MainCarriageToAddressId, currentTenant);
-
-                        if (fromAddress != null)
+                        InlandDomesticArgs args = new InlandDomesticArgs()
                         {
-                            invoiceDataProvider.FromLocation = fromAddress.City + " " + (fromAddress.Country != null ? fromAddress.Country.Code : "");
-                        }
-
-                        if (toAddress != null)
-                        {
-                            invoiceDataProvider.ToLocation = toAddress.City + " " + (toAddress.Country != null ? toAddress.Country.Code : "");
-                            invoiceDataProvider.FinalLocation = toAddress.City + " " + (toAddress.Country != null ? toAddress.Country.Code : "");
-                        }
+                            InlandDomesticFromTypeCode = shipment.InlandDomesticFromTypeCode,
+                            MainCarriageFromAddressId = shipment.MainCarriageFromAddressId,
+                            MainCarriageFromPortId = shipment.MainCarriageFromPortId,
+                            InlandDomesticFromCity = shipment.InlandDomesticFromCity,
+                            InlandDomesticFromCountryId = shipment.InlandDomesticFromCountryId,
+                            InlandDomesticToTypeCode = shipment.InlandDomesticToTypeCode,
+                            MainCarriageToAddressId = shipment.MainCarriageToAddressId,
+                            InlandDomesticToCity = shipment.InlandDomesticToCity,
+                            InlandDomesticToCountryId = shipment.InlandDomesticToCountryId,
+                            MainCarriageToPortId = shipment.MainCarriageToPortId,
+                        };
+                        invoiceDataProvider.FromLocation = servicHelper.GetInlandDomesticFromLocation(args);
+                        invoiceDataProvider.ToLocation = servicHelper.GetInlandDomesticToLocation(args);
+                        invoiceDataProvider.FinalLocation = invoiceDataProvider.ToLocation;
                     }
                     else
                     {
