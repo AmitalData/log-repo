@@ -95,7 +95,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 LogMessagingUtil.Instance.AppendLine("declarationPM found");
                 var invoiceitems = new List<SupplierInvoiceItemPM>();
-                if (customResponse.ClassificationCode != null) // Update Classification no - will update only the recored with the same classification
+                if (customResponse.ClassificationCode != null && customResponse.Declarationid != null) // Update Classification no - will update only the recored with the same classification
                 {
                     invoiceitems = mySupplierInvoiceItemQueryService.GetSupplierInvoiceItemByClassificationCode(declarationPM.Id, declarationPM.Tenant, customResponse.ClassificationCode);
                 }
@@ -134,7 +134,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         invoice.TaxExemptCode = customResponse.TaxExemptCode;
                         invoice.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                    if(customResponse.ClassificationCode != null && customResponse.Declarationid == null)
+                    {
+                        LogMessagingUtil.Instance.AppendLine("set ClassificationCode");
 
+                        invoice.ClassificationCode = customResponse.ClassificationCode;
+                        
+                        CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(customResponse.tenant);
+                        LogMessagingUtil.Instance.AppendLine("prev InvoiceQuantityType = " + invoice.InvoiceQuantityType);
+
+                        invoice.InvoiceQuantityType = customsItemQueryService.GetQuantityTypeByClassificationCode(customResponse.ClassificationCode, customResponse.tenant);
+                        LogMessagingUtil.Instance.AppendLine("set InvoiceQuantityType = " + invoice.InvoiceQuantityType);
+
+                        invoice.ChangeSetOp = ChangeSetOperation.Update;
                     }
                     LogMessagingUtil.Instance.AppendLine("updating invoice (CounterKey,LineNumber):" + invoice.CounterKey + "," + invoice.LineNumber);
                     updateService.Update(invoice, true);

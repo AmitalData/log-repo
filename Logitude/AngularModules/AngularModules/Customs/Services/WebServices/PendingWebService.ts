@@ -3,7 +3,10 @@ import { Injectable } from "@angular/core";
 import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { ServiceHelper } from "Infrastructure/Utilities/ServiceHelper";
 import { LogtuideTableDataService } from "QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service";
-import { Observable } from "rxjs";
+import { defer, Observable } from "rxjs";
+import { catchError, map } from "rxjs/operators";
+import { ServiceResponse } from "../../../Infrastructure/DataContracts/ServiceResponse";
+import { SessionInfo } from "../../../Infrastructure/Utilities/SessionInfo";
 import { SendMultiUpdateRequestParams } from "../../DataContract/RequestParams/SendMultiUpdateRequestParams";
 
 @Injectable()
@@ -77,17 +80,39 @@ export class PendingWebService {
         requestParams: SendMultiUpdateRequestParams,
         customFilter: ApiQueryFilters) {
 
-        const ajax: Observable<any> = this._http.post(
-            this._apiUrl + "/BulkFeeding?" + this.logtuideTableDataService.apiQueryFilterToQueryString(customFilter),
-            {
-                requestParamsData: requestParams
-            },
-            {
-                headers: ServiceHelper.GetHttpHeaders().headers,
-            }
-        );
+        //const ajax: Observable<any> = this._http.post(
+        //    this._apiUrl + "/PostSendMultiUpdate?" + this.logtuideTableDataService.apiQueryFilterToQueryString(customFilter),
+        //    {
+        //        requestParamsData: requestParams
+        //    },
+        //    {
+        //        headers: ServiceHelper.GetHttpHeaders().headers,
+        //    }
+        //);
 
-        return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax) as Promise<any>;
+        //return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax) as Promise<any>;
+
+        return defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.post(
+                this._apiUrl + "/PostSendMultiUpdate?" + this.logtuideTableDataService.apiQueryFilterToQueryString(customFilter),
+                JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    var messString = res;
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = messString;
+
+                    return serviceResponse;
+                }), catchError(ServiceHelper.HandleServiceError));
+            ;
+
+        });
     }
 }
 

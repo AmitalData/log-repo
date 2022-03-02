@@ -48,7 +48,7 @@ export class MultiUpdateDecComponent extends BaseComponent {
         this.SetUIProperties();
     }
     SetUIProperties() {
-        this.UIProperties.SetEnabled("ClassificationCode", "Customs.SupplierInvoiceItem", false);
+        //this.UIProperties.SetEnabled("ClassificationCode", "Customs.SupplierInvoiceItem", false);
     }
 
     SetWindowArgs(args: any) {
@@ -93,33 +93,6 @@ export class MultiUpdateDecComponent extends BaseComponent {
         this.CustomsItem = this.CustomsItemTextValue;
     }
 
-    updateAll: boolean;
-    get UpdateAll() { return this.updateAll }
-    set UpdateAll(value: boolean) {
-        this.updateAll = value;
-        if (value) {
-            this.UpdateSelected = false;
-            this.UIProperties.SetEnabled("ClassificationCode", "Customs.SupplierInvoiceItem", false);
-        }
-    }
-
-    updateSelected: boolean;
-    get UpdateSelected() { return this.updateSelected }
-    set UpdateSelected(value: boolean) {
-        this.updateSelected = value;
-        if (value) {
-            this.UpdateAll = false;
-            this.UIProperties.SetEnabled("ClassificationCode", "Customs.SupplierInvoiceItem", true);
-        }
-    }
-
-    UpdateAllRadio(newValue: boolean) {
-        this.UpdateAll = newValue;
-    }
-
-    UpdateSelectedRadio(newValue: boolean) {
-        this.UpdateSelected = newValue;
-    }
 
     hasDash: boolean = false;
     digit: string = null;
@@ -295,9 +268,7 @@ export class MultiUpdateDecComponent extends BaseComponent {
         if (this.ProcessTypeCode == null && this.TaxExemptCode == null ) {
             errors.push("חובה להזין שדה קוד");
         }
-        if (!this.UpdateAll && !this.UpdateSelected) {
-            errors.push("בחר פריטים לעדכון");
-        }
+       
         this.ValidationErrorsList = errors;
         if (errors.length == 0) {
             var confirm = new ConfirmWindow();
@@ -307,7 +278,7 @@ export class MultiUpdateDecComponent extends BaseComponent {
             confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
             confirm.ShowNoButton = true;
             confirm.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
-            confirm.Show(" שינוי יבצע עדכון קוד התהליך/הנחה פטור באופן גורף לכל שורות פרטי המכס או לחלקן");
+            confirm.Show("שינוי יבצע עדכון קוד התהליך/הנחה פטור באופן גורף לכל שורות פרטי המכס");
             confirm.WindowClosed.subscribe((event: any) => {
                 if (confirm.Yes) {
                     this.SendMultiUpdate();
@@ -341,13 +312,24 @@ export class MultiUpdateDecComponent extends BaseComponent {
         //        });
         //    });
 
-        const msg: string = await this.pendingWebService.PostSendMultiUpdate(currRequestParams,this.filter)
-        SessionLocator.SelectedSession.StopBusyIndicator();
-        var myMessageWindow = new MessageWindow();
-        myMessageWindow.Show(msg);
-        myMessageWindow.WindowClosed.subscribe(s => {
-            this.CancelButtonClicked();
-        });
+        this.pendingWebService.PostSendMultiUpdate(currRequestParams, this.filter)
+            .subscribe((res: any) => {
+                SessionLocator.SelectedSession.StopBusyIndicator();
+                var myMessageWindow = new MessageWindow();
+                myMessageWindow.Show(res.Result);
+                myMessageWindow.WindowClosed.subscribe(s => {
+                    //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.CancelButtonClicked();
+                });
+            });
+
+        //const msg: string = await this.pendingWebService.PostSendMultiUpdate(currRequestParams,this.filter)
+        //SessionLocator.SelectedSession.StopBusyIndicator();
+        //var myMessageWindow = new MessageWindow();
+        //myMessageWindow.Show(msg);
+        //myMessageWindow.WindowClosed.subscribe(s => {
+        //    this.CancelButtonClicked();
+        //});
     }
 
     CancelButtonClicked() {

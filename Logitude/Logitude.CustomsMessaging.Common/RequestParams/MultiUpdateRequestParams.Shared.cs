@@ -16,5 +16,7 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
 
         public string[] DeclarationIds { get; set; }
         public string CourierMasterId { get; set; }
+        public List<string> allWithoutdeclarationIdsList { get; set; }
+        public bool checkboxAll { get; set; }
     }
 }
