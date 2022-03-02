@@ -142,68 +142,37 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         public void CreateFBLStocks(int startNumber, int endNumber, string loggedUserId)
         {
-            FBLStockQuery FBLStockQuery = new FBLStockQuery(entityRepository);
-
-            List<FBLStockPM> stacksList = FBLStockQuery.GetFBLStockPMsByTenant(tenant).ToList();
-        
+            ValidateStockNumbers(startNumber, endNumber);
             DateTime insertionDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-
-            int start = startNumber;
-            while (start <= endNumber)
+            for (int i = startNumber; i <= endNumber; i++)
             {
-                // int chk = start % 7;
-                string newNumberStr = start.ToString();// + chk;
-                int newNumber = int.Parse(newNumberStr);
-
-                FBLStockPM stackPm = new FBLStockPM()
-                {
-                   
-                    Tenant = tenant,
-                    Number = newNumber,
-                    InsertionDate = insertionDate,
-                   
-                };
-
-                if (stacksList.Where(n => n.Number == newNumber).FirstOrDefault() == null)
-                {
-                    FBLStock newEntity = new FBLStock()
-                    {
-                        Id = IdCounter.GetNumber("FBLStock", tenant).ToString(),
-                        Tenant = tenant,
-                    };
-
-                    stackPm.Id = newEntity.Id;
-                    stackPm.Tenant = newEntity.Tenant;
-                    FBLStockMapping.MapEntity(stackPm, newEntity, true);
-
-                    entityRepository.Add(newEntity);
-                }
-
-                else
-                {
-                    string msg = TranslateTextsClass.Translate("General.M.EntityAlreadyExists", tenant);
-                    msg = msg.Replace("%Entity", "Stock Number");
-                    msg += "[" + newNumber + "]";
-                    throw new Exception(msg);
-                }
-
-                start++;
+                CreateFBLStock(insertionDate, i);
             }
-
-            if (loggedUserId != null)
-            {
-                //EventTracer.CreateTraceEvent(new EventTracerArgs()
-                //{
-                //    Tenant = tenant,
-                //    EventTypeCode = "AWBA",
-                //    UserId = loggedUserId,
-                //    EntityId = airlineId,
-                //    ObjectTableName = "Tenant",
-                //    Notes = "AWB stack from [" + startNumber + "] to [" + endNumber + "] added",
-                //});
-            }
-
             entityRepository.SubmitChanges();
+        }
+
+        private void ValidateStockNumbers(int startNumber, int endNumber)
+        {
+            List<int> existStocks = entityRepository
+                .GetExistStocksInRange(tenant, startNumber, endNumber).Select(a => a.Number).ToList();
+
+            if (!existStocks.Any()) return;
+
+            string message = TranslateTextsClass.Translate("General.M.EntityAlreadyExists", tenant).Replace("%Entity", "Stock Number") + " ";
+            message += "[" + string.Join(",", existStocks) + "]";
+            throw new Exception(message);
+        }
+
+        private void CreateFBLStock(DateTime insertionDate, int number)
+        {
+            FBLStock fBLStock = new FBLStock()
+            {
+                Id = IdCounter.GetNumber("FBLStock", tenant).ToString(),
+                Tenant = tenant,
+                Number = number,
+                InsertionDate = insertionDate,
+            };
+            entityRepository.Add(fBLStock);
         }
     }
 }
