@@ -3427,6 +3427,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsShipmentOrder"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"

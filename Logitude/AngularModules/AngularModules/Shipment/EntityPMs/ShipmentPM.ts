@@ -5196,6 +5196,9 @@ export class ShipmentPM {
     public get BillingStatusName() { return this.billingStatusName; }
     public set BillingStatusName(newValue: string) { if (this.billingStatusName != newValue) { this.billingStatusName = newValue; this.MarkAsDirty("BillingStatusName"); } }
 
+    private isShipmentOrder: boolean;
+    public get IsShipmentOrder() { return this.isShipmentOrder; }
+    public set IsShipmentOrder(newValue: boolean) { if (this.isShipmentOrder != newValue) { this.isShipmentOrder = newValue; this.MarkAsDirty("IsShipmentOrder"); } }
 
     public OldEntityPM: ShipmentPM;
 

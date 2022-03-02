@@ -2871,6 +2871,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public List<TraceEventPM> AddManualEvents { get; set; }
         public string ShippingAgent { get; set; }
         public string PrivateLabelAgentName { get; set; }
+        public bool IsShipmentOrder { get; set; }
 
     }
 

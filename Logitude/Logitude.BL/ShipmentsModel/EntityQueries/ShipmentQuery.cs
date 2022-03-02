@@ -2030,6 +2030,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.WarehouseLegLastFreeDate = shipment.WarehouseLegLastFreeDate;
             shipmentPM.IsPODReceived = shipment.IsPODReceived;
             shipmentPM.PODReceivedDate = shipment.PODReceivedDate;
+            shipmentPM.IsShipmentOrder = shipment.IsShipmentOrder;
 
             if (shipment.MoveTypeId != null)
             {
@@ -3765,6 +3766,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.Origin = shipment.Origin;
             shipmentPM.IsPODReceived = shipment.IsPODReceived;
             shipmentPM.PODReceivedDate = shipment.PODReceivedDate;
+            shipmentPM.IsShipmentOrder = shipment.IsShipmentOrder;
 
             if (!string.IsNullOrEmpty(shipment.LastSharedEventId))
             {
@@ -3876,6 +3878,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             shipmentPM.PODReceivedDate = shipment.PODReceivedDate;
             shipmentPM.IsPODReceived = shipment.IsPODReceived;
+            shipmentPM.IsShipmentOrder = shipment.IsShipmentOrder;
             shipmentPM.IsHTSMissing = shipment.IsHTSMissing;
             shipmentPM.HasUnassignedData = shipment.HasUnassignedData;
             shipmentPM.DestinationWarehouseId = shipment.DestinationWarehouseId;
@@ -12033,6 +12036,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          ParentShipmentType = s.ParentShipmentType,
                                                          IsHTSMissing = s.IsHTSMissing,
                                                          HasUnassignedData = s.HasUnassignedData,
+                                                         IsShipmentOrder = s.IsShipmentOrder,
                                                      };
 
             return shipmentsList;
