@@ -180,7 +180,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             {
                 Tenant = declarationApprovalArgs.Tenant,
                 CommunicationLogTypeCode = "Q",
-                QueueName = "VDA",
+                QueueName = "externaltasksqueue" + declarationApprovalArgs.Tenant + 1,
                 Priority = 1,
                 LoggingEntityId = cargoTrackingShipmentPM.EntityId,
                 InOut = "O",
@@ -200,7 +200,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             {
                 Tenant = declarationApprovalArgs.Tenant,
                 CommunicationLogTypeCode = "Q",
-                QueueName = "VDD",
+                QueueName = "externaltasksqueue" + declarationApprovalArgs.Tenant + 1,
                 Priority = 1,
                 InOut = "O",
                 LoggingEntityId = cargoTrackingShipmentPM.EntityId,
