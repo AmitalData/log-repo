@@ -670,10 +670,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         {
             ARInvoice relatedInvoice = GetRelatedInvoice();
 
-            if (relatedInvoice != null && relatedInvoice.SATTransferStatusCode == "TD" && relatedInvoice.StatusCode == "VD") return null;
-
             string relatedInvoiceUUID = GetRelatedInvoiceUUID(relatedInvoice);
-            return GetCfdiRelacionados(relatedInvoiceUUID);
+            return GetCfdiRelacionados(relatedInvoice, relatedInvoiceUUID);
         }
 
         private ARInvoice GetRelatedInvoice()
@@ -723,11 +721,11 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             }
         }
 
-        private ComprobanteCfdiRelacionados[] GetCfdiRelacionados(string relatedInvoiceUUID)
+        private ComprobanteCfdiRelacionados[] GetCfdiRelacionados(ARInvoice relatedInvoice, string relatedInvoiceUUID)
         {
             if (string.IsNullOrEmpty(relatedInvoiceUUID)) return null;
 
-            string tipoRelacion = BuildTipoRelacion();
+            string tipoRelacion = GetTipoRelacion(relatedInvoice);
             ComprobanteCfdiRelacionados[] comprobanteCfdiRelacionados = new ComprobanteCfdiRelacionados[1];
             comprobanteCfdiRelacionados[0] = new ComprobanteCfdiRelacionados
             {
@@ -738,9 +736,11 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             return comprobanteCfdiRelacionados;
         }
 
-        private string BuildTipoRelacion()
+        private string GetTipoRelacion(ARInvoice relatedInvoice)
         {
             if (arInvoicePM.ARInvoiceTypeCode == "CD") return "01";
+            else if (IsCanceledInvoiceFromSAT(relatedInvoice)) return "04";
+
             List<ARInvoice> shipmentInvoices = GetShipmentInvoicesByEntityIdAndARInvoiceId();
 
             if (shipmentInvoices == null) return "";
@@ -748,6 +748,11 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             else if (shipmentInvoices.Count >= 1) return "02";
 
             return "";
+        }
+
+        private static bool IsCanceledInvoiceFromSAT(ARInvoice relatedInvoice)
+        {
+            return relatedInvoice != null && relatedInvoice.StatusCode == SATData.VoidedInvoiceStatusCode && (relatedInvoice.SATTransferStatusCode == SATData.CanceledSATTransferStatusCode || relatedInvoice.SATTransferStatusCode == SATData.TransferedSATTransferStatusCode);
         }
 
         private List<ARInvoice> GetShipmentInvoicesByEntityIdAndARInvoiceId()
