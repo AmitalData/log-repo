@@ -36,6 +36,7 @@ namespace WebFreight.Web.Helpers.ImporterShipmentOrders
             shipment.StatusDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             shipment.LastStatusLogDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             shipment.IsStatusChange = true;
+            shipment.IsShipmentOrder = true;
 
             GetShipperId(shipmentOrder, shipment);
             if (!string.IsNullOrEmpty(shipmentOrder.ShipperName))

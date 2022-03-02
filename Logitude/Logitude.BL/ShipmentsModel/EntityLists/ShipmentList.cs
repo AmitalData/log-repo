@@ -603,6 +603,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string ShippingAgent { get; set; }
         public string PrivateLabelAgentName { get; set; }
         public int? StatusWeight { get; set; }
-       
+        public bool IsShipmentOrder { get; set; }
     }
 }

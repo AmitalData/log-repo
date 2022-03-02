@@ -753,6 +753,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.EntityPM.FreightPrepaidCollectId = "C";
         this.EntityPM.ShipmentLevelCode = "A";
         this.EntityPM.FromPortId = this.FromPort;
+        this.EntityPM.IsShipmentOrder = this.TransportModeId == 'O';
         this.SetOrderPackagesOnFinish();
         this._EntityStatusListService.getAll().subscribe((myResult: any) => {
             if (!myResult.HasError) {

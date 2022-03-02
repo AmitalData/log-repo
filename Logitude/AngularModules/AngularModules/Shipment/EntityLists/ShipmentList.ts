@@ -511,5 +511,6 @@ export class ShipmentList {
 		ShippingAgent: string;
 		PrivateLabelAgentName: string;
 		StatusWeight: number;
+		IsShipmentOrder: boolean;
 	
 }

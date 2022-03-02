@@ -686,7 +686,7 @@ namespace WebFreight.Web.WcfApi
                     #endregion
 
                     MapDatesFields(entityPM, shipmentAdditionalCloudDataRepository, shipmentRepository);
-
+                    entityPM.IsShipmentOrder = false;
 
                     if (response.HasError)
                     {
