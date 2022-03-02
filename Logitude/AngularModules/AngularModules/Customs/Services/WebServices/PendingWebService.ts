@@ -4,6 +4,7 @@ import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { ServiceHelper } from "Infrastructure/Utilities/ServiceHelper";
 import { LogtuideTableDataService } from "QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service";
 import { Observable } from "rxjs";
+import { SendMultiUpdateRequestParams } from "../../DataContract/RequestParams/SendMultiUpdateRequestParams";
 
 @Injectable()
 export class PendingWebService {
@@ -63,6 +64,23 @@ export class PendingWebService {
                 allWithoutdeclarationIdsList: allWithoutdeclarationIdsList,
                 courierMasterId: courierMasterId,
                 checkboxAll: !!checkboxAll,
+            },
+            {
+                headers: ServiceHelper.GetHttpHeaders().headers,
+            }
+        );
+
+        return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax) as Promise<any>;
+    }
+
+    PostSendMultiUpdate(
+        requestParams: SendMultiUpdateRequestParams,
+        customFilter: ApiQueryFilters) {
+
+        const ajax: Observable<any> = this._http.post(
+            this._apiUrl + "/BulkFeeding?" + this.logtuideTableDataService.apiQueryFilterToQueryString(customFilter),
+            {
+                requestParamsData: requestParams
             },
             {
                 headers: ServiceHelper.GetHttpHeaders().headers,
