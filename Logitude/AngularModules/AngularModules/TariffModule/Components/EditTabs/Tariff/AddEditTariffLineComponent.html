@@ -241,7 +241,7 @@
                                 <table>
                                     <tr>
                                         <td [style.width.px]="TariffType == 'ICC' || TariffType == 'ECC' ? 160 : 140">
-                                            <LogLabel [ObjectFieldName]="'IsDifferentCurrenciesPerCharge'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Different Per Charge'"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'IsDifferentCurrenciesPerCharge'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Different per Charge'"></LogLabel>
                                         </td>
 
                                         <td style="width:25px;">
@@ -467,7 +467,7 @@
                                             <label *ngIf="DataContext.FatherComponent.Surcharge1PricePercentageVisibility" class="FormFieldRow" style="margin-left:2px;">%</label>
                                         </td>
                                         <td style="width:40px;">
-                                            <LogLabel [ObjectFieldName]="'Surcharge1MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'Surcharge1MinPrice'" [Text]="'Min. Amount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td style="width:72px;">
@@ -507,7 +507,7 @@
                                             <label *ngIf="DataContext.FatherComponent.Surcharge2PricePercentageVisibility" class="FormFieldRow" style="margin-left:2px;">%</label>
                                         </td>
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge2MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'Surcharge2MinPrice'" [Text]="'Min. Amount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
@@ -547,7 +547,7 @@
                                             <label *ngIf="DataContext.FatherComponent.Surcharge3PricePercentageVisibility" class="FormFieldRow" style="margin-left:2px;">%</label>
                                         </td>
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge3MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'Surcharge3MinPrice'" [Text]="'Min. Amount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
@@ -587,7 +587,7 @@
                                             <label *ngIf="DataContext.FatherComponent.Surcharge4PricePercentageVisibility" class="FormFieldRow" style="margin-left:2px;">%</label>
                                         </td>
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge4MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'Surcharge4MinPrice'" [Text]="'Min. Amount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
@@ -627,7 +627,7 @@
                                             <label *ngIf="DataContext.FatherComponent.Surcharge5PricePercentageVisibility" class="FormFieldRow" style="margin-left:2px;">%</label>
                                         </td>
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge5MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'Surcharge5MinPrice'" [Text]="'Min. Amount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
@@ -667,7 +667,7 @@
                                             <label *ngIf="DataContext.FatherComponent.Surcharge6PricePercentageVisibility" class="FormFieldRow" style="margin-left:2px;">%</label>
                                         </td>
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge6MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'Surcharge6MinPrice'" [Text]="'Min. Amount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
@@ -707,7 +707,7 @@
                                             <label *ngIf="DataContext.FatherComponent.Surcharge7PricePercentageVisibility" class="FormFieldRow" style="margin-left:2px;">%</label>
                                         </td>
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge7MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'Surcharge7MinPrice'" [Text]="'Min. Amount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
@@ -747,7 +747,7 @@
                                             <label *ngIf="DataContext.FatherComponent.Surcharge8PricePercentageVisibility" class="FormFieldRow" style="margin-left:2px;">%</label>
                                         </td>
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge8MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'Surcharge8MinPrice'" [Text]="'Min. Amount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
@@ -787,7 +787,7 @@
                                             <label *ngIf="DataContext.FatherComponent.Surcharge9PricePercentageVisibility" class="FormFieldRow" style="margin-left:2px;">%</label>
                                         </td>
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge9MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'Surcharge9MinPrice'" [Text]="'Min. Amount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
@@ -827,7 +827,7 @@
                                             <label *ngIf="DataContext.FatherComponent.Surcharge10PricePercentageVisibility" class="FormFieldRow" style="margin-left:2px;">%</label>
                                         </td>
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge10MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'Surcharge10MinPrice'" [Text]="'Min. Amount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
@@ -990,58 +990,110 @@
                                     <tr>
                                         <td>
                                             <div class="MediaFill">
-                                                <div class="SimpleGridView">
-                                                    <div class="SimpleGridViewHeader">
-                                                        <table>
-                                                            <tr>
-                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;"></td>
-                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container1Visibility">{{DataContext.FatherComponent.Container1Label}}</td>
-                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container2Visibility">{{DataContext.FatherComponent.Container2Label}}</td>
-                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container3Visibility">{{DataContext.FatherComponent.Container3Label}}</td>
-                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container4Visibility">{{DataContext.FatherComponent.Container4Label}}</td>
-                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container5Visibility">{{DataContext.FatherComponent.Container5Label}}</td>
-                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;">{{'TariffLinesContainersPrice.F.CostPrice' | TextCodeTranslationPipe}}</td>
-                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;">{{'TariffLinesContainersPrice.F.CurrencyId' | TextCodeTranslationPipe}}</td>
-                                                                <td class="LastChild">
-                                                                    <div></div>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
+                                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="DataContext.ContainerPricesItemsSource">
 
-                                                    <div class="SimpleGridViewBody">
-                                                        <table>
-                                                            <tr class="SimpleGridViewRow" *ngFor="let item of DataContext.ContainerPricesItemsSource">
-                                                                <td class="GridViewCell" [title]="item.ChargeLabel" style="width: 100px; min-width: 100px; max-width: 100px; color:#6E7172">
+                                                    <!-- Charge -->
+                                                    <log-column [width]="'150'" [header]="''">
+                                                        <ng-template let-item>
+                                                            <log-cell-template #logcelltemplate [IsEnabled]="false">
+                                                                <div [title]="item.ChargeLabel">
                                                                     {{item.ChargeLabel}}
-                                                                </td>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+                                                    </log-column>
 
-                                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;" *ngIf="DataContext.FatherComponent.Container1Visibility">
-                                                                    <LogTextBox [ObjectFieldName]="'Price1'" [Text]="item.Price1" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
-                                                                </td>
+                                                    <!-- Container1 -->
+                                                    <log-column *ngIf="DataContext.FatherComponent.Container1Visibility" [header]="DataContext.FatherComponent.Container1Label" [width]="'100'" [Alignment]="'center'">
+                                                        <ng-template let-item>
+                                                            <log-cell-template #logcelltemplate>
+                                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                                    <span>{{item.Price1}}</span>
+                                                                </div>
+                                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Price1'" [Text]="item.Price1" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+                                                    </log-column>
 
-                                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;" *ngIf="DataContext.FatherComponent.Container2Visibility">
-                                                                    <LogTextBox [ObjectFieldName]="'Price2'" [Text]="item.Price2" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
-                                                                </td>
+                                                    <!-- Container2 -->
+                                                    <log-column *ngIf="DataContext.FatherComponent.Container2Visibility" [header]="DataContext.FatherComponent.Container2Label" [width]="'100'" [Alignment]="'center'">
+                                                        <ng-template let-item>
+                                                            <log-cell-template #logcelltemplate>
+                                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                                    <span>{{item.Price2}}</span>
+                                                                </div>
+                                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Price2'" [Text]="item.Price2" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+                                                    </log-column>
 
-                                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;" *ngIf="DataContext.FatherComponent.Container3Visibility">
-                                                                    <LogTextBox [ObjectFieldName]="'Price3'" [Text]="item.Price3" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
-                                                                </td>
+                                                    <!-- Container3 -->
+                                                    <log-column *ngIf="DataContext.FatherComponent.Container3Visibility" [header]="DataContext.FatherComponent.Container3Label" [width]="'100'" [Alignment]="'center'">
+                                                        <ng-template let-item>
+                                                            <log-cell-template #logcelltemplate>
+                                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                                    <span>{{item.Price3}}</span>
+                                                                </div>
+                                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Price3'" [Text]="item.Price3" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+                                                    </log-column>
 
-                                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;" *ngIf="DataContext.FatherComponent.Container4Visibility">
-                                                                    <LogTextBox [ObjectFieldName]="'Price4'" [Text]="item.Price4" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
-                                                                </td>
+                                                    <!-- Container4 -->
+                                                    <log-column *ngIf="DataContext.FatherComponent.Container4Visibility" [header]="DataContext.FatherComponent.Container4Label" [width]="'100'" [Alignment]="'center'">
+                                                        <ng-template let-item>
+                                                            <log-cell-template #logcelltemplate>
+                                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                                    <span>{{item.Price4}}</span>
+                                                                </div>
+                                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Price4'" [Text]="item.Price4" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+                                                    </log-column>
 
-                                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;" *ngIf="DataContext.FatherComponent.Container5Visibility">
-                                                                    <LogTextBox [ObjectFieldName]="'Price5'" [Text]="item.Price5" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
-                                                                </td>
+                                                    <!-- Container5 -->
+                                                    <log-column *ngIf="DataContext.FatherComponent.Container5Visibility" [header]="DataContext.FatherComponent.Container5Label" [width]="'100'" [Alignment]="'center'">
+                                                        <ng-template let-item>
+                                                            <log-cell-template #logcelltemplate>
+                                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                                    <span>{{item.Price5}}</span>
+                                                                </div>
+                                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Price5'" [Text]="item.Price5" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+                                                    </log-column>
 
-                                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                                    <!-- CostPrice -->
+                                                    <log-column [header]="'TariffLinesContainersPrice.F.CostPrice' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'center'">
+                                                        <ng-template let-item>
+                                                            <log-cell-template #logcelltemplate>
+                                                                <div  style="text-align:right;">
                                                                     <LogTextBox [ObjectFieldName]="'CostPrice'" [Text]="item.CostPrice" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
-                                                                </td>
+                                                                </div>
+                                                             
+                                                            </log-cell-template>
+                                                        </ng-template>
+                                                    </log-column>
 
-                                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;">
-                                                                    <LogLov [ObjectFieldName]="'CurrencyId'"
+                                                    <!-- CurrencyId -->
+                                                    <log-column *ngIf="DataContext.IsDifferentCurrenciesPerCharge" [header]="'TariffLinesContainersPrice.F.CurrencyId' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'center'">
+                                                        <ng-template let-item>
+                                                            <log-cell-template #logcelltemplate>
+                                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                                    <span>{{item.CurrencyName}}</span>
+                                                                </div>
+                                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <LogLov [FocusOnMe]="true" [ObjectFieldName]="'CurrencyId'"
                                                                             [ObjectTableName]="item.ObjectTableName"
                                                                             [SelectedValue]="item.CurrencyId"
                                                                             [DataContext]="item"
@@ -1050,21 +1102,11 @@
                                                                             [LookUpTableName]="'Currency'"
                                                                             [HideColumns]="true">
                                                                     </LogLov>
-                                                                </td>
-
-                                                                <td class="CellStretched">
-                                                                    <div></div>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <td colspan="7">
-                                                                    <div></div>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                </div>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+                                                    </log-column>
+                                                </logitude-edit-grid>
                                             </div>
                                         </td>
                                     </tr>

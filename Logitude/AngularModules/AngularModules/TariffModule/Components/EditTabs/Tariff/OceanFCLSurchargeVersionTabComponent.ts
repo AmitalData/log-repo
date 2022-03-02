@@ -313,7 +313,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
                 
                 var iMeasurement: MeasurementList = this.AllMeasurements.filter(f => f.Id == iMeasurementId)[0];
                 if (iMeasurement) {
-                    item.DisplyText = iChargeType.EnglishName + " (" + iMeasurement.Code + ")";
+                    item.DisplyText = iChargeType.EnglishName;//+ " (" + iMeasurement.Code + ")";
                     item.AdditionalField = iMeasurement.Code;                    
                 }
 
@@ -585,6 +585,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
         var itemComponent = new OceanFCLSurchargeTariffLineData(false, itemPM, this, true);
         logWindow.WindowArgs = { DataContext: itemComponent, EntityPM: itemPM, TariffType: this.EntityPM.TypeCode };
         logWindow.Title = "New Tariff Line";
+        logWindow.Width = 900;
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
     }
 
@@ -595,6 +596,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = { DataContext: item, EntityPM: item.EntityPM, TariffType: this.EntityPM.TypeCode };
         logWindow.Title = "Edit Tariff Line";
+        logWindow.Width = 900;
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
     }
 
@@ -860,12 +862,13 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
     private initialIndex: number;
     public IsRowHover: boolean = false;
     public Row: any;
-    public ContainerPricesItemsSource: ContainerPricesItem[] = [];
+    public ContainerPricesItemsSource: ObservableCollection;
     public ContainersItemsSourceView: ContainerPricesItem[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     private lineCurrencyId: string;
     constructor(isDeleted: boolean, entity: TariffLinePM, public FatherComponent: OceanFCLSurchargeVersionTabComponent, isNew: boolean = false) {
         super();
+        this.ContainerPricesItemsSource = new ObservableCollection([]);
         this.EntityPM = entity;
         this.TariffPM = FatherComponent.EntityPM;
         this.IsNewEntity = isNew;
@@ -1128,7 +1131,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, isDefaultCurrencyRequired);
         this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, isDefaultCurrencyEnabled);
 
-        this.ContainerPricesItemsSource.forEach(item => {
+        this.ContainerPricesItemsSource.Collection.forEach(item => {
             item.SetUIProperties();
         });
     }
@@ -1582,7 +1585,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
     
     public RowDetailsHeights: number = 0;
     BuildContainerPricesItemsSource() {
-        this.ContainerPricesItemsSource = [];
+        var containerPricesItemsSource = [];
         this.ContainersItemsSourceView = [];
 
         var list: TariffLinesContainersPricePM[] = [];
@@ -1613,8 +1616,10 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
 
         list.forEach(item => {
             var isNew: boolean = AppTool.IsNullOrEmpty(item.Id);
-            this.ContainerPricesItemsSource.push(new ContainerPricesItem(item, this, isNew));
+            containerPricesItemsSource.push(new ContainerPricesItem(item, this, isNew));
         });
+
+        this.ContainerPricesItemsSource.InsertCollection(containerPricesItemsSource);
 
         this.EntityPM.ContainersPrices.forEach(item => {
             this.ContainersItemsSourceView.push(new ContainerPricesItem(item, this, false));
@@ -1650,7 +1655,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
 
             else {
                 this.CurrencyId = this.lineCurrencyId;
-                this.ContainerPricesItemsSource.forEach(item => {
+                this.ContainerPricesItemsSource.Collection.forEach(item => {
                     item.CurrencyId = null;
                 });
             }
@@ -1658,7 +1663,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
     }
 
     private SurchargesCurrencies(defaultCurrencyId: string) {
-        this.ContainerPricesItemsSource.forEach(item => {
+        this.ContainerPricesItemsSource.Collection.forEach(item => {
             item.CurrencyId = defaultCurrencyId;
         });
     }
@@ -1862,6 +1867,10 @@ export class ContainerPricesItem extends BaseComponent {
         if (this.EntityPM.CurrencyCode != value) {
             this.EntityPM.CurrencyCode = value;
         }
+    }
+
+    get CurrencyName() {
+        return this.Currency?.EnglishName;
     }
 
     currency: CurrencyList;
