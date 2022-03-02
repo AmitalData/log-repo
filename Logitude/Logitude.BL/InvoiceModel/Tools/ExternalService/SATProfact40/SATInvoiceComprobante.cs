@@ -720,7 +720,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         {
             if (string.IsNullOrEmpty(relatedInvoiceUUID)) return null;
 
-            string tipoRelacion = BuildTipoRelacion(relatedInvoice);
+            string tipoRelacion = GetTipoRelacion(relatedInvoice);
             ComprobanteCfdiRelacionados[] comprobanteCfdiRelacionados = new ComprobanteCfdiRelacionados[1];
             comprobanteCfdiRelacionados[0] = new ComprobanteCfdiRelacionados
             {
@@ -731,7 +731,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             return comprobanteCfdiRelacionados;
         }
 
-        private string BuildTipoRelacion(ARInvoice relatedInvoice)
+        private string GetTipoRelacion(ARInvoice relatedInvoice)
         {
             if (arInvoicePM.ARInvoiceTypeCode == "CD") return "01";
             else if (IsCanceledInvoiceFromSAT(relatedInvoice)) return "04";
