@@ -165,23 +165,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void CreateFBLStock(DateTime insertionDate, int number)
         {
-            FBLStockPM stackPm = new FBLStockPM()
+            FBLStock fBLStock = new FBLStock()
             {
+                Id = IdCounter.GetNumber("FBLStock", tenant).ToString(),
                 Tenant = tenant,
                 Number = number,
                 InsertionDate = insertionDate,
             };
-
-            FBLStock newEntity = new FBLStock()
-            {
-                Id = IdCounter.GetNumber("FBLStock", tenant).ToString(),
-                Tenant = tenant,
-            };
-
-            stackPm.Id = newEntity.Id;
-            stackPm.Tenant = newEntity.Tenant;
-            FBLStockMapping.MapEntity(stackPm, newEntity, true);
-            entityRepository.Add(newEntity);
+            entityRepository.Add(fBLStock);
         }
     }
 }
