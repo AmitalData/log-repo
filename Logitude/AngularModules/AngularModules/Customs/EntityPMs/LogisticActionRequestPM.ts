@@ -149,9 +149,9 @@ export class LogisticActionRequestPM {
     public set CustomsUserName(newValue: string) { if (this.customsUserName != newValue) { this.customsUserName = newValue; this.MarkAsDirty("CustomsUserName"); } }
        
 	 
-    private isClosed: number;
+    private isClosed: boolean;
     public get IsClosed() { return this.isClosed; }
-    public set IsClosed(newValue: number) { if (this.isClosed != newValue) { this.isClosed = newValue; this.MarkAsDirty("IsClosed"); } }
+    public set IsClosed(newValue: boolean) { if (this.isClosed != newValue) { this.isClosed = newValue; this.MarkAsDirty("IsClosed"); } }
        
 	 
     private declarationId: string;

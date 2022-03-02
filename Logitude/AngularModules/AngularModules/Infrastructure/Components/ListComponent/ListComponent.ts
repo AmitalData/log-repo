@@ -2296,7 +2296,9 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                                         logWindow.Width = 770;
                                                         logWindow.Height = 750;
                                                         //logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditDeclarationCargoSplit");
-                                                        logWindow.Title = 'בקשת ביטול יצוא - ' + (myResponse.Result?.ResponseStatusCode || myResponse.Result?.OperationalStatus ) //TextCodeTranslator.Translate('General.MH.LogisticActionRequest'); //"בקשת פיצול מטען ";// + myResponse.Result != null ? ((!AppTool.IsNullOrEmpty(myResponse.Result.RequestNumber) ? myResponse.Result.RequestNumber : null) + ((!AppTool.IsNullOrEmpty(myResponse.Result.ResponseStatusName) ? " - " + myResponse.Result.ResponseStatusName : null))) : null;
+                                                        let title: string = (myResponse.Result?.ResponseStatusCode || myResponse.Result?.OperationalStatus );
+                                                        title =  title ? ' - ' + title : '';
+                                                        logWindow.Title = 'בקשת ביטול יצוא' + title //TextCodeTranslator.Translate('General.MH.LogisticActionRequest'); //"בקשת פיצול מטען ";// + myResponse.Result != null ? ((!AppTool.IsNullOrEmpty(myResponse.Result.RequestNumber) ? myResponse.Result.RequestNumber : null) + ((!AppTool.IsNullOrEmpty(myResponse.Result.ResponseStatusName) ? " - " + myResponse.Result.ResponseStatusName : null))) : null;
                                                         logWindow.WindowArgs = windowArgs;
                                                         logWindow.ShowCloseButton = true;
                                                         //logWindow.IsHideHeader = true;
@@ -2888,7 +2890,11 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             if (this.SelectedQuery.ObjectTableNewWizardControlName == "Logitude.Customs.NewDeclarationControlCommand" &&
                                 this.HaveFeatureNewExportDeclararion) {
                                 this.RunNewExportDeclaration();
-                            } else {
+                            
+                            } else if (this.ObjectTableName == "Customs.LogisticActionRequest")
+                                    this.RunNewLogisticActionRequest(); 
+                                
+                            else {
                                 if (this.SelectedQuery.ObjectTableNewWizardControlName == "Logitude.Customs.NewContainerizationControlCommand") {
                                     this.RunNewContainerization();
                                 }
@@ -2914,7 +2920,6 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         else if (this.ObjectTableName == "Customs.DeclarationReferantData") {
                             this.RunNewCustomsFileWizard(); 
                         }
-
                         
                         else {
 
@@ -3278,6 +3283,16 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             messageWindow.Height = 190;
             messageWindow.Show("Fill NewWizard Component Path and Name in ObjectTable !!");
         }
+    }
+
+    RunNewLogisticActionRequest() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 770;
+        logWindow.Height = 750;
+        logWindow.Title = ("המכלה חדשה");
+        logWindow.ShowCloseButton = true;
+        logWindow.Show('./CustomsModules/CustomsLogisticActionRequest/Components/EditTabs/General/LogisticActionRequestGeneralTabComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnNewEntityWindowClosed($event));
     }
  
     private RunNewGenaricEntity() {

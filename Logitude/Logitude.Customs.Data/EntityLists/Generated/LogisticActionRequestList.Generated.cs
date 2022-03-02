@@ -65,7 +65,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string CustomsUserName  { get; set; }
        [DataMember]
-       public double IsClosed  { get; set; }
+       public bool IsClosed  { get; set; }
        [DataMember]
        public string DeclarationId  { get; set; }
        [DataMember]

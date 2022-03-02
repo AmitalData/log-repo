@@ -595,12 +595,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private double isClosed ;
+	  private bool isClosed ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public double IsClosed  
+       public bool IsClosed  
 	   {
 	    
 	     get
@@ -611,7 +611,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(isClosed != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsClosed",OldValue=isClosed,NewValue=value,PropertyType="double"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsClosed",OldValue=isClosed,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   isClosed=value;
 		   }
