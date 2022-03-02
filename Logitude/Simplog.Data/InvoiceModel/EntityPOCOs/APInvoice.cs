@@ -127,6 +127,6 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public virtual QBOGlobalTaxCalculation QBOGlobalTaxCalculation { get; set; }
         public string ConcurrencyGUID { get; set; }
         public bool IsEquipment { get; set; }
-
+        public string ConnectedPaymentsNumbers { get; set; }
     }
 }

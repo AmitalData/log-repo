@@ -80,5 +80,6 @@ export class APPaymentList {
 		ExternalPaymentDate: Date;
 		ExternalPaymentNotes: string;
 		VendorCode: string;
+		ConnectedInvoicesNumbers: string;
 	
 }

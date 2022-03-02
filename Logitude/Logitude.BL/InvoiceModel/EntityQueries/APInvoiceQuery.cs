@@ -139,14 +139,12 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              MasterNumber = a.MasterNumber,
                              HouseNumber = a.HouseNumber,
                              Description = a.Description,
-
                              VendorName = a.VendorCard == null ? "" : a.VendorCard.EnglishName,
                              VendorContactId = a.VendorCard == null ? "" : a.VendorCard.PrimaryContactId,
                              VendorVatNumber = a.VendorCard == null ? "" : a.VendorCard.VatNumber,
                              VendorCity = a.VendorCard == null ? "" : a.VendorCard.CityName,
                              VendorCountry = a.VendorCard == null ? "" : a.VendorCard.CountryName,
                              VendorLocalName = a.VendorCard == null ? "" : a.VendorCard.LocalName,
-
                              VendorCode = a.VendorCard == null ? "" : a.VendorCard.Code,
                              VendorPartnerTypeId = a.VendorCard == null ? "" : a.VendorCard.PartnerTypeId,
                              PaymentTermName = a.PaymentTerm == null ? "" : a.PaymentTerm.EnglishName,
@@ -181,6 +179,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              GlobalTaxCalculation = a.GlobalTaxCalculation,
                              ConcurrencyGUID = a.ConcurrencyGUID,
                              IsEquipment = a.IsEquipment,
+                             ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
                          });          
 
             return query;
@@ -588,10 +587,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                         MasterShipmentNumbers = a.MasterShipmentNumbers, 
                                         HouseNumbers = a.HouseNumbers,
                                         GlobalTaxCalculation = a.GlobalTaxCalculation,
-
+                                        ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
                                     }).FirstOrDefault();
-
-
             return entityPM;
         }
 
@@ -683,7 +680,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                         MasterShipmentNumbers = a.MasterShipmentNumbers,
                                         HouseNumbers = a.HouseNumbers,
                                         GlobalTaxCalculation = a.GlobalTaxCalculation,
-
+                                        ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
                                     }).FirstOrDefault();
 
             if(entityPM != null)
@@ -1099,7 +1096,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              HouseNumbers = a.HouseNumbers,
                              GlobalTaxCalculation = a.GlobalTaxCalculation,
                              IsEquipment = a.IsEquipment,
-
+                             ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
                          };
 
             return result;
@@ -1177,6 +1174,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             CreatedByPartner = a.CreatedByPartner,
                             TotalVATOnly = a.TotalVATOnly,
                             PaidDate = a.PaidDate,
+                            ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
                         };
 
             return query;
@@ -1302,6 +1300,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              Field10 = a.Field10,
                              TotalVATOnly = a.TotalVATOnly,
                              PaidDate = a.PaidDate,
+                             ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
                          };
 
             return result;
@@ -1407,9 +1406,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                 CreatedByPartner = a.CreatedByPartner,
                                                 TotalVATOnly = a.TotalVATOnly,
                                                 PaidDate = a.PaidDate,
+                                                ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
                                             }).ToList();
-
-
             return invoicePMs;
         }
     }

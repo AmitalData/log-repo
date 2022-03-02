@@ -115,6 +115,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        ExternalPaymentAmount = a.ExternalPaymentAmount,
                                        ExternalPaymentDate = a.ExternalPaymentDate,
                                        ExternalPaymentNotes = a.ExternalPaymentNotes,
+                                       ConnectedInvoicesNumbers = a.ConnectedInvoicesNumbers,
                                    }).FirstOrDefault();
 
             payment.PaymentInvoices = apInvoicePaymentQuery.GetAPPaymentInvoicePMsForPayment(payment.Id, tenant);
@@ -279,6 +280,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        ExternalPaymentAmount = a.ExternalPaymentAmount,
                                        ExternalPaymentDate = a.ExternalPaymentDate,
                                        ExternalPaymentNotes = a.ExternalPaymentNotes,
+                                       ConnectedInvoicesNumbers = a.ConnectedInvoicesNumbers,
                                    }).FirstOrDefault();
             if (payment != null)
             {
@@ -428,7 +430,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        ExternalPaymentAmount = a.ExternalPaymentAmount,
                                        ExternalPaymentDate = a.ExternalPaymentDate,
                                        ExternalPaymentNotes = a.ExternalPaymentNotes,
+                                       ConnectedInvoicesNumbers = a.ConnectedInvoicesNumbers,
                                    }).FirstOrDefault();
+
             payment.PaymentInvoices = apInvoicePaymentQuery.GetAPPaymentInvoicePMsForPayment(payment.Id, tenant).ToList();
 
             AccountingPaymentMethod method = apPaymentMethodRep.GetSingleAccountingPaymentMethod(payment.AccountingPaymentMethodId, tenant);
@@ -516,9 +520,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    ExternalPaymentAmount = a.ExternalPaymentAmount,
                                                    ExternalPaymentDate = a.ExternalPaymentDate,
                                                    ExternalPaymentNotes = a.ExternalPaymentNotes,
+                                                   ConnectedInvoicesNumbers = a.ConnectedInvoicesNumbers,
                                                };
-
-
             return result;
         }
 
@@ -600,11 +603,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             ExternalPaymentAmount = a.ExternalPaymentAmount,
                             ExternalPaymentDate = a.ExternalPaymentDate,
                             ExternalPaymentNotes = a.ExternalPaymentNotes,
+                            ConnectedInvoicesNumbers = a.ConnectedInvoicesNumbers,
                         };
 
             return query;
-        }
-
-      
+        }      
     }
 }

@@ -161,6 +161,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.HouseNumbers = entityPM.HouseNumbers;
             entity.GlobalTaxCalculation = entityPM.GlobalTaxCalculation == "None" ? null : entityPM.GlobalTaxCalculation;
             entity.IsEquipment = entityPM.IsEquipment;
+            entity.ConnectedPaymentsNumbers = entityPM.ConnectedPaymentsNumbers;
 
             if (entityPM.SetApproved)
             {
@@ -201,7 +202,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             }
 
             entity.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
-            entityPM.ConcurrencyGUID = entity.ConcurrencyGUID;
+            entityPM.ConcurrencyGUID = entity.ConcurrencyGUID;            
         }
 
         public static void MapInvoiceLine(APInvoiceLinePM entityPM, APInvoiceLine entity, bool isNewState)

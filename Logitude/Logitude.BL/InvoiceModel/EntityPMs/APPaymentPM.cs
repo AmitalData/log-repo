@@ -202,6 +202,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
 
         public string VendorCode { get; set; }
-
+        public string ConnectedInvoicesNumbers { get; set; }
     }
 }

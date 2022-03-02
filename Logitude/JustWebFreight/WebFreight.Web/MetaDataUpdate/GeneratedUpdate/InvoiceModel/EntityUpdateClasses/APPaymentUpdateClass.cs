@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APPaymentUpdateClass
    {  		
-		public const string HashString = "8d161bca404ee342531e84f10dbaf97f";
+		public const string HashString = "b7870d6da16116109c20d243181312ce";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4778,6 +4778,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "VendorCode",
 					  						ListPropertyPath =  "VendorCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -4799,6 +4800,64 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						ListFieldLable =  "VendorCodeListLable",
 					  						ListLableDefaultText =  "Vendor Code",
 					  						ListLocalDefaultText =  "קוד ספק",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ConnectedInvoicesNumbers",
+					  						ObjectTableName =  "APPayment",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1000,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ConnectedInvoicesNumbers",
+					  						ListPropertyPath =  "ConnectedInvoicesNumbers",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "APPayment",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ConnectedInvoicesNumbers",
+					  						DefaultText =  "Invoices Numbers",
+					  						ListFieldLable =  "ConnectedInvoicesNumbersListLable",
+					  						ListLableDefaultText =  "Invoices Numbers",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4915,7 +4974,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn OpenPaymentsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentsQuery.Id,QueryCode = OpenPaymentsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "APPayment.InternalNotes" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter OpenPaymentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APPayment.OpenPayments", PredefinedValue = "true",PredefinedValue2 = null, QueryId = OpenPaymentsQuery.Id,QueryCode = OpenPaymentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter OpenPaymentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APPayment.OpenPayments", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = OpenPaymentsQuery.Id,QueryCode = OpenPaymentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -4944,7 +5003,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn DraftPaymentsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftPaymentsQuery.Id,QueryCode = DraftPaymentsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "APPayment.InternalNotes" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter DraftPaymentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APPayment.DraftPayments", PredefinedValue = "true",PredefinedValue2 = null, QueryId = DraftPaymentsQuery.Id,QueryCode = DraftPaymentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter DraftPaymentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APPayment.DraftPayments", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = DraftPaymentsQuery.Id,QueryCode = DraftPaymentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -4966,7 +5025,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn NotReadyPaymentsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotReadyPaymentsQuery.Id,QueryCode = NotReadyPaymentsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "APPayment.TransferError" , ColumnWidth = 500 }, addedQueryColumns);
 
-             AdvancedQueryFilter NotReadyPaymentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APPayment.NotReadyPayments", PredefinedValue = "true",PredefinedValue2 = null, QueryId = NotReadyPaymentsQuery.Id,QueryCode = NotReadyPaymentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter NotReadyPaymentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APPayment.NotReadyPayments", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = NotReadyPaymentsQuery.Id,QueryCode = NotReadyPaymentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -4988,7 +5047,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn MarkedasblockedfortransferQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MarkedasblockedfortransferQuery.Id,QueryCode = MarkedasblockedfortransferQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "APPayment.TransferError" , ColumnWidth = 500 }, addedQueryColumns);
 
-             AdvancedQueryFilter MarkedasblockedfortransferQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APPayment.MarkedAsBlockedForTransfer", PredefinedValue = "true",PredefinedValue2 = null, QueryId = MarkedasblockedfortransferQuery.Id,QueryCode = MarkedasblockedfortransferQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter MarkedasblockedfortransferQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APPayment.MarkedAsBlockedForTransfer", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = MarkedasblockedfortransferQuery.Id,QueryCode = MarkedasblockedfortransferQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -5019,7 +5078,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn ErrorInTransferQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ErrorInTransferQuery.Id,QueryCode = ErrorInTransferQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "APPayment.InternalNotes" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter ErrorInTransferQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APPayment.TransferStatusCode", PredefinedValue = "ET",PredefinedValue2 = null, QueryId = ErrorInTransferQuery.Id,QueryCode = ErrorInTransferQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter ErrorInTransferQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APPayment.TransferStatusCode", PredefinedValue = "ET",PredefinedValue2 = null, CustomPredefined = false, QueryId = ErrorInTransferQuery.Id,QueryCode = ErrorInTransferQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);

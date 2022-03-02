@@ -1,0 +1,71 @@
+﻿<Script DBType="Main" Module="Invoice" AOT="true" TargetTableName="APInvoices">
+  <Sql Version="1">
+    <![CDATA[
+    
+
+declare @InvoiceId as varchar(15)
+declare @Tenant as int
+declare @ConnectedPaymentsNumbers as varchar(1000)
+declare @SavedPaymentsNumbers as varchar(1000)
+declare @PaymentsCount as int
+
+BEGIN 
+		DECLARE InvoicesCursor CURSOR READ_ONLY
+		FOR
+		SELECT Id, Tenant
+		FROM APInvoices
+		where (StatusCode = 'PP' or StatusCode = 'PD')  and $LastCounterWhere$
+		OPEN InvoicesCursor FETCH NEXT FROM InvoicesCursor INTO @InvoiceId, @Tenant
+		WHILE @@FETCH_STATUS = 0
+			BEGIN
+
+				set @ConnectedPaymentsNumbers = ''
+				set @SavedPaymentsNumbers = ''
+				set @PaymentsCount = (select COUNT(*) from APInvoicePayments where APInvoiceId = @InvoiceId and Tenant = @Tenant)
+				
+				if (@PaymentsCount > 0)
+				begin
+					
+					declare @PaymentId as varchar(15)
+					declare @PaymentNumber as varchar(20)
+
+					BEGIN 
+							DECLARE APInvoicePaymentsCursor CURSOR READ_ONLY
+							FOR
+							SELECT APPaymentId
+							FROM APInvoicePayments
+							where Tenant = @Tenant and APInvoiceId = @InvoiceId
+							OPEN APInvoicePaymentsCursor FETCH NEXT FROM APInvoicePaymentsCursor INTO @PaymentId 
+							WHILE @@FETCH_STATUS = 0
+								BEGIN
+
+									set @PaymentNumber = (select PaymentNo from APPayments where Id = @PaymentId and Tenant = @Tenant)									
+									
+									if (@ConnectedPaymentsNumbers = '') set @ConnectedPaymentsNumbers = @PaymentNumber
+									else set @ConnectedPaymentsNumbers = @ConnectedPaymentsNumbers + ', ' + @PaymentNumber											
+
+									
+								FETCH NEXT FROM APInvoicePaymentsCursor INTO @PaymentId
+								END
+							CLOSE APInvoicePaymentsCursor
+							DEALLOCATE APInvoicePaymentsCursor
+					END
+				end
+
+				if(LEN(@ConnectedPaymentsNumbers) > 1000)				
+					set @SavedPaymentsNumbers = SUBSTRING(@ConnectedPaymentsNumbers, 1, 1000)				
+
+				else 
+					set @SavedPaymentsNumbers = @ConnectedPaymentsNumbers
+
+				update APInvoices set ConnectedPaymentsNumbers = @SavedPaymentsNumbers where Id = @InvoiceId and Tenant = @Tenant
+
+			FETCH NEXT FROM InvoicesCursor INTO @InvoiceId, @Tenant
+			END
+		CLOSE InvoicesCursor
+		DEALLOCATE InvoicesCursor
+END
+		  
+    ]]>
+  </Sql>
+</Script>

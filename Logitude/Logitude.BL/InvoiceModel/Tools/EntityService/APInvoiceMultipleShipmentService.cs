@@ -57,6 +57,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private bool CanTransferToFTP;
         private bool TransferToFTPActivated;
         private bool setApproved;
+        private InvoicePaymentNumbersBehaviour invoicePaymentNumbersBehaviour;
         public APInvoiceMultipleShipmentService(IInvoiceContext objectContext, APInvoicePM entityPM)
         {
             this.tenant = entityPM.Tenant;
@@ -71,6 +72,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.paymentRepository = new APPaymentRepository(objectContext);
             this.shipmentPayableRepository = new ShipmentPayableRepository(tenant);
             this.payableProratedAmountRepository = new PayableProratedAmountRepository(tenant);
+            invoicePaymentNumbersBehaviour = new InvoicePaymentNumbersBehaviour(tenant);
 
             this.GetLoggedContact();
             this.GetAccountingSystemData();
@@ -208,9 +210,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         this.UpdateInvoiceAmountDue();
                         this.UpdatePaidDate();
                     }
+
+                    this.BuildPaymentsNumbers();                    
                 }
             }
-
 
             this.BuildSearchFields();
             invoiceRepository.Update(invoice);
@@ -1020,6 +1023,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             invoicePaymentRepository.SubmitChanges();
+            this.UpdatePaymentInvoicesNumbers();
         }
 
         private void CreateInvoicePayment(APInvoicePaymentPM itemPM)
@@ -1035,21 +1039,20 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 APInvoiceId = entityPM.Id,
             };
 
-            APInvoiceMapping.MapInvoicePayment(itemPM, invoicePayment, true);
-            invoicePaymentRepository.Add(invoicePayment);
-
-            string myPaymentNumber = itemPM.PaymentNumber;
-            if (string.IsNullOrEmpty(myPaymentNumber))
+            if (string.IsNullOrEmpty(itemPM.PaymentNumber))
             {
                 if (!string.IsNullOrEmpty(itemPM.APPaymentId))
                 {
                     APPayment myPayment = paymentRepository.GetSingleAPPayment(itemPM.APPaymentId);
                     if (myPayment != null)
                     {
-                        myPaymentNumber = myPayment.PaymentNo;
+                        itemPM.PaymentNumber = myPayment.PaymentNo;
                     }
                 }
             }
+
+            APInvoiceMapping.MapInvoicePayment(itemPM, invoicePayment, true);
+            invoicePaymentRepository.Add(invoicePayment);
 
             if (this.entityPM.TransferStatusCode == "TR")
             {
@@ -1063,17 +1066,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 UserId = loggedContactId,
                 EntityId = itemPM.APInvoiceId,
                 ObjectTableName = "APInvoice",
-                Notes = "Connected with Payment: " + myPaymentNumber + " with Amount Due equals to: " + invoice.AmountDue,
+                Notes = "Connected with Payment: " + itemPM.PaymentNumber + " with Amount Due equals to: " + invoice.AmountDue,
             });
         }
-
         private void UpdateInvoicePayment(APInvoicePaymentPM itemPM)
         {
             APInvoicePayment invoicePayment = invoicePaymentRepository.GetSingleAPInvoicePayment(itemPM.Id, tenant);
             APInvoiceMapping.MapInvoicePayment(itemPM, invoicePayment, false);
             invoicePaymentRepository.Update(invoicePayment);
         }
-
         private void DeleteInvoicePayment(APInvoicePaymentPM itemPM)
         {
             APInvoicePayment invoicePayment = invoicePaymentRepository.GetSingleAPInvoicePayment(itemPM.Id, tenant);
@@ -1174,7 +1175,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 invoice.IsClosed = entityPM.IsClosed;
             }
         }
-
         private void UpdatePaymentAmounts(APInvoicePaymentPM itemPM, bool isDelete)
         {
             APPayment payment = paymentRepository.GetSingleAPPayment(itemPM.APPaymentId);
@@ -1247,7 +1247,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
         }
-
         private void UpdatePaidDate()
         {
             if (entityPM.AmountDue != 0)
@@ -1265,7 +1264,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             invoice.PaidDate = entityPM.PaidDate;
         }
-
         private void ValidateIfSameRecordAdded(APInvoicePaymentPM item)
         {
             IQueryable<APInvoicePayment> invoicePayments = invoicePaymentRepository.GetAPInvoicePayments(item.APPaymentId, item.APInvoiceId, entityPM.Tenant);
@@ -1382,7 +1380,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
         }
-
         private void CreateAPInvoiceMessage()
         {
             if (setApproved && IsTransferEnabled)
@@ -1407,11 +1404,30 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
         }
-
         private void BuildShipmentsNumbers()
         {
             APInvoiceShipmentsDataBehaviour invoiceShipmentsNumbersBehaviour = new APInvoiceShipmentsDataBehaviour(entityPM);
             invoiceShipmentsNumbersBehaviour.CopmuteShipmentsData();
+        }
+        private void BuildPaymentsNumbers()
+        {
+            entityPM.ConnectedPaymentsNumbers = invoicePaymentNumbersBehaviour.CopmuteAPInvoicePaymentsNumbers(entityPM);
+            invoice.ConnectedPaymentsNumbers = entityPM.ConnectedPaymentsNumbers;
+        }
+        private void UpdatePaymentInvoicesNumbers()
+        {
+            foreach (APInvoicePaymentPM item in invoicePaymentsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert || d.ChangeSetOp == ChangeSetOperation.Delete))
+            {
+                APPayment aPPayment = paymentRepository.GetSingleAPPayment(item.APPaymentId, tenant);
+                if (aPPayment == null)
+                {
+                    return;
+                }
+
+                IQueryable<APInvoicePayment> payments = invoicePaymentRepository.GetAPInvoicePaymentByPaymentId(item.APPaymentId, tenant);
+                aPPayment.ConnectedInvoicesNumbers = invoicePaymentNumbersBehaviour.CopmuteAPPaymentInvoicesNumbersFromInvoicePayments(payments);
+                paymentRepository.Update(aPPayment);
+            }
         }
     }
 }

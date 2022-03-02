@@ -520,6 +520,7 @@ if (response != null) {
             messageWindow.Height = 190;
             messageWindow.Title = "Logitude Message";
             messageWindow.Show(messageText);
+            this.StopFlags();
         }
 
         else {
@@ -564,10 +565,6 @@ if (response != null) {
             }
         }
     }
-
-
-
-
 
     CancelApprovalClickedProccess() {
         this.EntityPM.SetVoided = false;
