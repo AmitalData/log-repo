@@ -12,14 +12,14 @@ export class DocumentDownloadTokenUpdateService {
         private loginExtendedService: LoginExtendedService,
     ) {
     }
-    startUpdateDocumentDownloadToken() {
-        this.updateDocumentDownloadToken();
+    startIntervalUpdate() {
+        this.updateToken();
         if (this.downloadTokenInterval)
             clearInterval(this.downloadTokenInterval);
-        this.downloadTokenInterval = setInterval(() => this.updateDocumentDownloadToken(), this.tryEvry);
+        this.downloadTokenInterval = setInterval(() => this.updateToken(), this.tryEvry);
 
     }
-    updateDocumentDownloadToken() {
+    updateToken() {
         var token = sessionStorage.getItem("Token")
         if (token && token.length > 0)
             this.loginExtendedService.GetDocumentDownloadToken().subscribe((myResult: any) => {

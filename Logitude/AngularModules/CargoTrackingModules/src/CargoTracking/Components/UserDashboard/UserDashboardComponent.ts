@@ -79,7 +79,7 @@ export class UserDashboardComponent implements AfterViewInit, OnInit,OnDestroy
         //this.Authenticate();
         this.LoggedUserData();
         this.sessionTimeoutServiceService.RunSessionTimeOut();
-        this.documentDownloadTokenUpdateService.startUpdateDocumentDownloadToken();
+        this.documentDownloadTokenUpdateService.startIntervalUpdate();
 
     }
     LoggedUserData() {
