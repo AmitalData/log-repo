@@ -181,7 +181,7 @@
   </Column>
   <Column
     Name="IsClosed"
-    Type="float">
+    Type="bit">
     <Constraints
       Nullable="false" />
   </Column>

@@ -33,7 +33,7 @@ export class LogisticActionRequestList {
 	TransportmodeId: string;
 	DecisionRmarks: string;
 	CustomsUserName: string;
-	IsClosed: number;
+	IsClosed: boolean;
 	DeclarationId: string;
 	DeclarationNumber: string;
 	RequestCancelStatus: string;

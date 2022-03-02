@@ -88,7 +88,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("CustomsUserName")]
 	    public string CustomsUserName { get; set; }
         [Column("IsClosed")]
-	    public double IsClosed { get; set; }
+	    public bool IsClosed { get; set; }
         [Column("DeclarationId")]
 	    public string DeclarationId { get; set; }
     }
