@@ -65,46 +65,38 @@
                 </table>
             </td>
         </tr>
-        <tr style="height:32px;">
-            <td><div></div></td>
+        <tr style="height:15px">
+            <td>
+                <div></div>
+            </td>
         </tr>
-        <tr style="height:32px">
+        <tr>
             <td>
                 <table>
                     <tr>
-                        <td style="width:20px">
-                            <RadioButton [Name]="'UpdateAll'" [IsChecked]="UpdateAll" (Checked)="UpdateAllRadio(true)"></RadioButton>
+                        <td style="width:140px">
+                            <LogLabel [ObjectFieldName]="'ClassificationCode'" [ObjectTableName]="'Customs.SupplierInvoiceItem'"
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td style="width:60px; color:#6E7172">
+                        <td style="width:160px">
+                            <LogTextBoxV2 #ClassificationTextBox [ObjectFieldName]="'ClassificationCode'" [Text]="ClassificationCode"
+                                          [InputType]="'integertext'" [HideColumns]="true" [DataContext]="DataContext" [FocusOnMe]="true" [ObjectTableName]="'Customs.SupplierInvoiceItem'"
+                                          (LostFocus)="OnClassificationLostFocus(ClassificationTextBox)" [DebounceTime]="1" (KeyUp)="ClassificationKeyUp($event,ClassificationTextBox)"></LogTextBoxV2>
 
-                            {{'Customs.Declaration.O.UpdateAll' |TextCodeTranslationPipe }}
                         </td>
-                        <td><div></div></td>
-                        <td><div></div></td>
                         <td><div></div></td>
                     </tr>
                 </table>
             </td>
         </tr>
+        <tr style="height:32px;">
+            <td><div></div></td>
+        </tr>
+
+        
         <tr style="height:32px">
             <td>
-                <table>
-                    <tr>
-                        <td style="width:20px">
-                            <RadioButton [Name]="'UpdateSelected'" [IsChecked]="UpdateSelected" (Checked)="UpdateSelectedRadio(true)"></RadioButton>
-                        </td>
-                        <td style="width:60px;color:#6E7172">
-                            {{'Customs.Declaration.O.UpdateOneItem' |TextCodeTranslationPipe }}
-                        </td>
-                        <td style="width:50px"><div></div></td>
-                        <td>
-                            <LogTextBoxV2 #ClassificationTextBox [ObjectFieldName]="'ClassificationCode'" [Text]="ClassificationCode"
-                                          [InputType]="'integertext'" [HideColumns]="true" [DataContext]="DataContext" [FocusOnMe]="true" [ObjectTableName]="'Customs.SupplierInvoiceItem'"
-                                          (LostFocus)="OnClassificationLostFocus(ClassificationTextBox)" [DebounceTime]="1" (KeyUp)="ClassificationKeyUp($event,ClassificationTextBox)"></LogTextBoxV2>
-                        </td>
-                        <td style="width:175px"><div></div></td>
-                    </tr>
-                </table>
+               
             </td>
         </tr>
         <tr style="height:50px;">

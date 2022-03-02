@@ -2862,7 +2862,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = "",
                 //  NeedSignature = false
-                InterfaceType = "C",
+                //InterfaceType = "C",
             });
             all.Add(new InterfaceManagementDetails()
             {

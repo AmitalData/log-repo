@@ -133,6 +133,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 Declarationid = multiUpdateRequestParams.Declarationid,
                 DeclarationIds = multiUpdateRequestParams.DeclarationIds?.ToList(),
                 CourierMasterId = multiUpdateRequestParams.CourierMasterId,
+                allWithoutdeclarationIdsList = multiUpdateRequestParams.allWithoutdeclarationIdsList,
+                checkboxAll = multiUpdateRequestParams.checkboxAll,
                 queryOperations = queryOperations,
                 LoggingUserId = LoggingUserId,
                 ProcessTypeCode = multiUpdateRequestParams.ProcessTypeCode,
@@ -215,7 +217,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string ClassificationCode { get; set; }
         public List<string> DeclarationIds { get; set; }
         public string CourierMasterId { get; set; }
-        public string[] allWithoutdeclarationIdsList { get; set; }
+        public List<string> allWithoutdeclarationIdsList { get; set; }
         public bool checkboxAll { get; set; }
         public string MyMoreParams { get; set; }
         public QueryOperations queryOperations { get; set; }

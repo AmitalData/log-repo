@@ -186,6 +186,9 @@ export class BulkFeedPendingComponent extends BaseComponent {
     }
 
     OpenMultiUpdateWindow() {
+        if (!this._CourierWorksheetSharedDataService._SelectedItems?.Collection?.length && !this._CourierWorksheetSharedDataService.connectedSelectAll)
+            return new MessageWindow().Show(TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.O.NotCheckDeclarations"));
+
         var windowArgs: any = {
            // Declaration: this.EntityPM,
         };
@@ -199,7 +202,9 @@ export class BulkFeedPendingComponent extends BaseComponent {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 500;
         logWindow.Height = 320;
-        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.MultiUpdate");
+        logWindow.Title = "עדכון הצהרות";
+
+        //logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.MultiUpdate");
         logWindow.WindowArgs = windowArgs;
         logWindow.ShowCloseButton = true;
         logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/MultiUpdateDecComponent');

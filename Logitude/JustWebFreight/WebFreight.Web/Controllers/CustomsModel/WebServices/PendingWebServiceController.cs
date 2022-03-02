@@ -1,5 +1,4 @@
-﻿using Logitude.BL.Security;
-using Logitude.Customs.BL.EntityQueryServices;
+﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
@@ -10,6 +9,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
+using WebFreight.Web.Security;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
