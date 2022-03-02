@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SessionExpirationComponent } from './session-expiration/session-expiration.component';
 import { SessionTimeoutServiceService } from 'src/Infrastructure/Services/session-timeout-service.service';
 import { Subscription } from 'rxjs';
+import { DocumentDownloadTokenUpdateService } from 'src/Infrastructure/Services/document-download-token-update.service';
 
 
 
@@ -52,6 +53,7 @@ export class UserDashboardComponent implements AfterViewInit, OnInit,OnDestroy
         private loginService: LoginExtendedService,
         private location: Location,
         public sessionTimeoutServiceService:SessionTimeoutServiceService,
+        public documentDownloadTokenUpdateService:DocumentDownloadTokenUpdateService,
         private router: Router,
         public dialog: MatDialog,
         @Inject('BASE_URL') baseUrl: string,
@@ -77,6 +79,7 @@ export class UserDashboardComponent implements AfterViewInit, OnInit,OnDestroy
         //this.Authenticate();
         this.LoggedUserData();
         this.sessionTimeoutServiceService.RunSessionTimeOut();
+        this.documentDownloadTokenUpdateService.startIntervalUpdate();
 
     }
     LoggedUserData() {

@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouteReuseStrategy } from '@angular/router';
+import { Session } from 'protractor';
 import { AuthService } from 'src/app/auth.service';
 import { CustomRouteReuseStrategy } from 'src/app/custom-route-reuse-strategy.service';
 import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
@@ -38,6 +39,7 @@ export class LoginComponent implements OnInit {
     public MainColor: string = null;
     public SecondaryColor: string = null;
     public BackGroundImg: string;
+
 
     constructor(private router: Router,
         public routeReuseStrategy:RouteReuseStrategy,
@@ -209,7 +211,7 @@ export class LoginComponent implements OnInit {
             this.GetLoggedUserPM(LoginParams.Email, LogInToTenant.Tenant);
         }
     }
-
+    
     private GetLoggedUserPM(email: any, tenant: any)
     {
         this.loginExtendedService.GetLoggedUser(email, tenant).subscribe((loggedUserPM: any) =>
