@@ -1354,7 +1354,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             {
                 tipoRelacion = "01";
             }
-            else if (relatedInvoice !=null && relatedInvoice.StatusCode == "VD" && (relatedInvoice.SATTransferStatusCode == "CS" || relatedInvoice.SATTransferStatusCode == "TD")) tipoRelacion = "04";
+            else if (relatedInvoice !=null && relatedInvoice.StatusCode == SATData.VoidedInvoiceStatusCode && (relatedInvoice.SATTransferStatusCode == SATData.CanceledSATTransferStatusCode || relatedInvoice.SATTransferStatusCode == SATData.TransferedSATTransferStatusCode)) tipoRelacion = "04";
             else
             {
                 List<ARInvoice> shipmentInvoices = (from a in invoiceCotnext.ARInvoiceEntities
