@@ -935,7 +935,7 @@ namespace Logitude.BL.InvoiceModel.Tools
         {
             if (FeatureToggleHelper.HasFeatureToggle("TTS", tenant))
             {
-                return GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0)));
+                return traslado.Importe + GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0)));
             }
             return  GetDecimalWith2DigitsAfterPoint(TotalImpuestosTrasladados);
         }
