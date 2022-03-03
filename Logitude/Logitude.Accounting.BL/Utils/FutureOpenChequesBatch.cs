@@ -100,29 +100,33 @@ namespace Logitude.Accounting.BL.Utils
                                         else
                                         {
                                             glAccountIds.Add(item.GLAccountId);
-                                            List<string> paymentIds = data.Where(d => d.GLAccountId == item.GLAccountId).Select(d => d.PaymentId).ToList();
-
-                                            List<ARPaymentChequePM> aRPaymentChequePMs = (from a in aRPaymentCheques
-                                                                                          where paymentIds.Contains(a.PaymentId)
-                                                                                          select a).ToList();
                                             GLAccountMoreDataPM moreDataPM = moreDataQueryService.GetSingle(item.GLAccountId, false, false);
                                             if (moreDataPM != null)
                                             {
                                                 moreDataPM.TotFutureOpenChequesInLocalCur = 0;
-                                                moreDataPM.TotalOpenChequesInLocalCur = 0;
-                                                foreach (ARPaymentChequePM paymentCheque in aRPaymentChequePMs)
-                                                {
-                                                    if (moreDataPM.TotalOpenChequesInLocalCur == null) moreDataPM.TotalOpenChequesInLocalCur = 0;
-                                                    if (moreDataPM.TotFutureOpenChequesInLocalCur == null) moreDataPM.TotFutureOpenChequesInLocalCur = 0;
-                                                    if (paymentCheque.StatusCode != ARPaymentChequeStatusValues.Redeemed && paymentCheque.StatusCode != ARPaymentChequeStatusValues.ReturnedToCustomer)
+                                                if (item.PaymentId != null) {
+                                                    moreDataPM.TotalOpenChequesInLocalCur = 0;
+                                                    List<string> paymentIds = data.Where(d => d.GLAccountId == item.GLAccountId).Select(d => d.PaymentId).ToList();
+
+                                                    List<ARPaymentChequePM> aRPaymentChequePMs = (from a in aRPaymentCheques
+                                                                                                  where paymentIds.Contains(a.PaymentId)
+                                                                                                  select a).ToList();
+
+
+                                                    foreach (ARPaymentChequePM paymentCheque in aRPaymentChequePMs)
                                                     {
-                                                        if (paymentCheque.ValueDate > TenantServerConfigration.GetCurrentDateTime(tenant.Id))
+                                                        if (moreDataPM.TotalOpenChequesInLocalCur == null) moreDataPM.TotalOpenChequesInLocalCur = 0;
+                                                        if (moreDataPM.TotFutureOpenChequesInLocalCur == null) moreDataPM.TotFutureOpenChequesInLocalCur = 0;
+                                                        if (paymentCheque.StatusCode != ARPaymentChequeStatusValues.Redeemed && paymentCheque.StatusCode != ARPaymentChequeStatusValues.ReturnedToCustomer)
                                                         {
-                                                            moreDataPM.TotFutureOpenChequesInLocalCur += paymentCheque.LocalAmount;
-                                                        }
-                                                        else
-                                                        {
-                                                            moreDataPM.TotalOpenChequesInLocalCur += paymentCheque.LocalAmount;
+                                                            if (paymentCheque.ValueDate > TenantServerConfigration.GetCurrentDateTime(tenant.Id))
+                                                            {
+                                                                moreDataPM.TotFutureOpenChequesInLocalCur += paymentCheque.LocalAmount;
+                                                            }
+                                                            else
+                                                            {
+                                                                moreDataPM.TotalOpenChequesInLocalCur += paymentCheque.LocalAmount;
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -136,9 +140,6 @@ namespace Logitude.Accounting.BL.Utils
 
 
                                     }
-
-
-
 
 
                                 }

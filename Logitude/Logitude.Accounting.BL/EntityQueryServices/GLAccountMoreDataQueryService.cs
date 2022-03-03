@@ -1,5 +1,6 @@
 ﻿using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.Data.EntityKeys;
+using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools;
@@ -73,8 +74,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                         GLAccountId = c.GLAccountId,
                                                         PaymentId = p.Id
                                                     }).ToList();
-
-        
+            LedgerTransactionListQueryService ledgerQuery = new LedgerTransactionListQueryService(context);
+            var glAccountsForFutureExternalTransactions = ledgerQuery.GetGlAccountsForFutureExternalTransactions(tenant).ToList();
+            foreach (var item in glAccountsForFutureExternalTransactions) {
+                if (!data.Any(x => x.GLAccountId == item)) {
+                    data.Add(new ARPaymentChequeFutureData { GLAccountId = item, PaymentId = null });
+                }
+            }
             return data;
 
 
