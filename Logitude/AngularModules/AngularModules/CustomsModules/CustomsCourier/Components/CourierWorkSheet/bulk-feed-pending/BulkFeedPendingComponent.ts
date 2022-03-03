@@ -32,6 +32,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
   CourierMasterPM: CourierMasterPM = null as any;
   _SelectedTotalInvoiceValue: string = 'A';
   _SelectedFastIndividualProcessValue: string = 'A';
+  _SelectedMissedDocsValue: string = 'A';
   IsFiltered: boolean = false;
   SearchFilter: string = '';
   declartionList: DeclarationsforBulkFeed[] = [];
@@ -163,6 +164,20 @@ export class BulkFeedPendingComponent extends BaseComponent {
       }
     }
 
+      switch (this._SelectedMissedDocsValue) {
+          case "T": {
+              filters.addAdditionalFilter("FastIndividualProcessCode", "F", null, null, "Equals", false, false, false, "string");
+              break;
+          }
+          case "I": {
+              filters.addAdditionalFilter("FastIndividualProcessCode", "I", null, null, "Equals", false, false, false, "string");
+              break;
+          }
+          case "C": {
+              filters.addAdditionalFilter("FastIndividualProcessCode", "I", null, null, "Equals", false, false, false, "string");
+              break;
+          }
+      }
 
     switch (this._SelectedTotalInvoiceValue) {
       case "75": {
@@ -269,12 +284,16 @@ export class BulkFeedPendingComponent extends BaseComponent {
     this._SelectedFastIndividualProcessValue = value;
     this.onFilteSelect()
   }
-
+    SelectedMissedDocsValueClick(value: string) {
+        this._SelectedMissedDocsValue = value;
+        this.onFilteSelect()
+    }
 
   onFilteSelect() {
     this.IsFiltered = [
       this._SelectedTotalInvoiceValue,
-      this._SelectedFastIndividualProcessValue
+      this._SelectedFastIndividualProcessValue,
+      this._SelectedMissedDocsValue
     ].some(selected => selected !== 'A');
 
     this.RefreshList();
@@ -284,6 +303,8 @@ export class BulkFeedPendingComponent extends BaseComponent {
   FilterCleanButtonClicked() {
     this._SelectedTotalInvoiceValue = 'A';
     this._SelectedFastIndividualProcessValue = 'A';
+    this._SelectedMissedDocsValue = 'A';
+
     this.RefreshList();
   }
 

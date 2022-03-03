@@ -227,7 +227,35 @@
                                 </ul>
                             </td>
                         </tr>
-
+                        <tr class="FormFieldRow" style="height:22px">
+                        <td style="width: 240px">
+                            <LogLabel  [Text]="'חוסר במסמכים'"
+                                       [NoObjectField]="true" [DataContext]="DataContext">
+                            </LogLabel>
+                        </td>
+                        </tr>
+                        <tr class="FormFieldRow" style="height:22px">
+                            <td style="width: 240px; ">
+                                <ul class="FiltersMenu" style="float:right; padding-right: 10px;">
+                                    <li (click)="SelectedMissedDocsValueClick('T')" style="width:55px;"
+                                        [class.SelectedFilter]="_SelectedMissedDocsValue === 'T'">
+                                        שניהם
+                                    </li>
+                                    <li (click)="SelectedMissedDocsValueClick('I')" style="width:55px;"
+                                        [class.SelectedFilter]="_SelectedMissedDocsValue === 'I'">
+                                        חשבון ספק
+                                    </li>
+                                    <li (click)="SelectedMissedDocsValueClick('C')" style="width:55px;"
+                                        [class.SelectedFilter]="_SelectedMissedDocsValue === 'C'">
+                                        ש.ט.מ
+                                    </li>
+                                    <li (click)="SelectedMissedDocsValueClick('A')" style="width:55px;"
+                                        [class.SelectedFilter]="_SelectedMissedDocsValue === 'A'">
+                                        {{'Customs.General.O.All' | TextCodeTranslationPipe }}
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
                         <tr class="FormFieldRow" style="height:15px">
                             <td style="width: 240px"></td>
                         </tr>
