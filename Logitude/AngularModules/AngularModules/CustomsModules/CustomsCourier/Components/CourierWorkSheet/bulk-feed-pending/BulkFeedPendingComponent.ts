@@ -444,6 +444,17 @@ export class BulkFeedPendingComponent extends BaseComponent {
       ServerSideSortable: true,
       SortByName: 'CasualImporterCity'
     });
+    this.columns.push({
+        FieldName: 'CourierPendingReasonName',
+        DataTypeCode: 'String',
+        Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierPendingReasonList"),
+        Styles: { width: '105px' },
+        IsCustomTemplate: true,
+        HtmlListComponentName: 'CourierWorksheetListTemplate',
+        HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+        ServerSideSortable: true,
+        SortByName: 'CourierPendingReasonName'
+    });
   }
 
 

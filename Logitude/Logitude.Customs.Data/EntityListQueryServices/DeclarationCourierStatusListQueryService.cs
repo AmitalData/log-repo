@@ -269,11 +269,23 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         public IQueryable<DeclarationCourierStatusList> GetDeclarationCourierStatusforPendingBulkFeed(QueryOperations queryOperations)
         {
             string courierMasterId = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CourierMasterId").FirstOrDefault().FieldValue.ToString();
+            var qDeclarationPaymentPendingHold =
+           (from p in context.DeclarationPendings
+            where p.Status == "A"
+            group p by p.DeclarationID into g
+            select new MyJoin
+            {
+                DeclarationId = g.Key,
+                ErrorPlace = g.Any(r => r.CourierPendingReason.ErrorPlace == "1"),
+                CourierPendingReason1stName = g.Any() ? g.FirstOrDefault().CourierPendingReason.LocalName : null,
+             });
 
             var q1 = (
                     from cd in context.CourierDeclarations.Include("Declarations").Include("Importer").Where(cd => cd.CourierMasterId == courierMasterId)
 
                     join dcs in context.DeclarationCourierStatuses on cd.Declaration.Id equals dcs.DeclarationId
+                    join errorPlace in qDeclarationPaymentPendingHold on dcs.DeclarationId equals errorPlace.DeclarationId into errorPlaceOuterJoin
+                    from errorPlaceOuterJoinNullable in errorPlaceOuterJoin.DefaultIfEmpty()
 
                     join cp in context.ConsignmentPackages on cd.Declaration.Id equals cp.DeclarationId into cpjoin
                     from cj in cpjoin.Where(t => t.PackageMeasureQualifierCode == "2" && t.GrossMassMeasure.HasValue).DefaultIfEmpty()
@@ -295,6 +307,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                         IncoTermCode = sj != null ? sj.IncotermCode : "",
                         CourierSearchFields = cd.Declaration.CourierSearchFields,
                         FastIndividualProcessCode = dcs.FastIndividualProcessCode,
+                        CourierPendingReasonList = dcs.CourierPendingReasonList,
+                        CourierPendingReasonName = errorPlaceOuterJoinNullable != null ? errorPlaceOuterJoinNullable.CourierPendingReason1stName : null,
 
                     } into t2
                     select new DeclarationCourierStatusList
@@ -312,6 +326,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                         IncoTermCode = t2.Key.IncoTermCode,
                         CourierSearchFields = t2.Key.CourierSearchFields,
                         FastIndividualProcessCode = t2.Key.FastIndividualProcessCode,
+                        CourierPendingReasonList = t2.Key.CourierPendingReasonList,
+                        CourierPendingReasonName = t2.Key.CourierPendingReasonName,
                     });
 
 
