@@ -44,9 +44,11 @@ namespace Logitude.BL.InvoiceModel.Tools
     public class SATInterfaceHelper
     {
         ARInvoicePM EntityPM;
+        private int tenant { get; set; }
         public void SendSATRequestFile(ARInvoicePM entityPM, ARInvoice entityPoco)
         {
             this.EntityPM = entityPM;
+            this.tenant = entityPM.Tenant;
             SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(entityPM.Tenant);
             SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(entityPM.Tenant);
             if (satSetting != null)
@@ -740,8 +742,8 @@ namespace Logitude.BL.InvoiceModel.Tools
                 comprobante.Total = Math.Abs((decimal)total);
                 //comprobante.Total = Math.Abs((decimal)total);
             }
-
-
+          
+            
             foreach (ARInvoiceTotalVATPM totalVat in arTotalVats)
             {
                 if (totalVat.VATPercent >= 0)
@@ -752,16 +754,8 @@ namespace Logitude.BL.InvoiceModel.Tools
                     string _totaltipoFactor = (totalVat.VATPercent == 0 && totalVatVatType.Code == "EXMPT" ? "Exento" : "Tasa");
                     string total_tasaOCuota = totalVat.VATPercent != 0 ? (totalVat.VATPercent != null ? StringHelper.StringPadRight((Math.Abs(totalVat.VATPercent.Value / 100).ToString()), '0', 8) : "") : "0.000000";
 
-                    Profact.TimbraCFDI33.ComprobanteImpuestosTraslado traslado;
-                    if (FeatureToggleHelper.HasFeatureToggle("TTS", entityPM.Tenant))
-                    {
-                        traslado = trasladoList.FirstOrDefault(t => t.TasaOCuota == total_tasaOCuota);
-                    }
-                    else
-                    {
-                        traslado = trasladoList.FirstOrDefault(t => t.TipoFactor == _totaltipoFactor);
-                    }
-                     
+                    Profact.TimbraCFDI33.ComprobanteImpuestosTraslado traslado = GetComprobanteImpuestosTraslado(trasladoList, _totaltipoFactor, total_tasaOCuota);
+
                     if (traslado == null
                         || (traslado != null && (totalVat.VATPercent != 0 && traslado.TasaOCuota == "0.000000")
                         || (totalVat.VATPercent == 0 && traslado.TasaOCuota != "0.000000")))
@@ -790,21 +784,11 @@ namespace Logitude.BL.InvoiceModel.Tools
                         }
                         //}
                     }
-                    else
+                    else if (traslado.TipoFactor == "Tasa")
                     {
-                        if (traslado.TipoFactor == "Tasa")
-                        {
-                            if (FeatureToggleHelper.HasFeatureToggle("TTS", entityPM.Tenant))
-                            {
-                                traslado.Importe += GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0)));
-                            }
-                            else
-                            {
-                                traslado.Importe = GetDecimalWith2DigitsAfterPoint(TotalImpuestosTrasladados);
-                            }
-                        }
-                    }
+                        traslado.Importe =  GetComprobanteImpuestosTrasladoImporte(TotalImpuestosTrasladados, totalVat, traslado);
 
+                    }
 
                 }
                 else
@@ -945,6 +929,30 @@ namespace Logitude.BL.InvoiceModel.Tools
 
             entityPoco.SATTransferStatusCode = entityPM.SATTransferStatusCode = "TG";
 
+        }
+
+        private decimal GetComprobanteImpuestosTrasladoImporte( decimal TotalImpuestosTrasladados, ARInvoiceTotalVATPM totalVat, Profact.TimbraCFDI33.ComprobanteImpuestosTraslado traslado)
+        {
+            if (FeatureToggleHelper.HasFeatureToggle("TTS", tenant))
+            {
+                return GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0)));
+            }
+            return  GetDecimalWith2DigitsAfterPoint(TotalImpuestosTrasladados);
+        }
+
+        private  Profact.TimbraCFDI33.ComprobanteImpuestosTraslado GetComprobanteImpuestosTraslado( List<Profact.TimbraCFDI33.ComprobanteImpuestosTraslado> trasladoList, string _totaltipoFactor, string total_tasaOCuota)
+        {
+            Profact.TimbraCFDI33.ComprobanteImpuestosTraslado traslado;
+            if (FeatureToggleHelper.HasFeatureToggle("TTS", tenant))
+            {
+                traslado = trasladoList.FirstOrDefault(t => t.TasaOCuota == total_tasaOCuota);
+            }
+            else
+            {
+                traslado = trasladoList.FirstOrDefault(t => t.TipoFactor == _totaltipoFactor);
+            }
+
+            return traslado;
         }
 
         private void CalucalteLineTotals(ARInvoiceLinePM line, Profact.TimbraCFDI33.ComprobanteConcepto concepto,
