@@ -23,7 +23,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers
 
         public static void AddFilters(QueryOperations queryOperations, int tenant)
         {
-            BranchPermitionsFilter.AddUserBranchRestrictionFilters(queryOperations, tenant);
+            //BranchPermitionsFilter.AddUserBranchRestrictionFilters(queryOperations, tenant);
         }
     }
 }
