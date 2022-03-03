@@ -1,93 +1,75 @@
-﻿declare var System: any;
-declare var window: any;
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Component, OnInit}  from '@angular/core';
-import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {DocumentTypePM} from '../../../../../Common/EntityPMs/DocumentTypePM';
-import {DocumentTypeCopyPM} from '../../../../../Common/EntityPMs/DocumentTypeCopyPM';
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import {DocumentCopiesViewModel} from '../../DocumentComponent/DocsOut/ViewModel/DocumentCopiesViewModel';
-import {UIProperty, UIProperties}  from '../../../../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
+import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
+import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
-    
     selector: 'DocumentTypeCopiesTab',
     templateUrl: './DocumentTypeCopiesComponent.html',
 })
 
 export class DocumentTypeCopiesComponent extends BaseComponent implements OnInit {
     public EntityPM: DocumentTypePM;
-
     SelectedDocumentCopiesViewModel: DocumentCopiesViewModel;
     public DocumentTypeCopiesLists: DocumentCopiesViewModel[];
     public IsVisibile: boolean = false;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor(public entityArgs: EntityArgs) {
         super();
-
-
     }
 
     ngOnInit() {
         this._entityResourceService.getEntityResourceByTableName("DocumentTypeCopy", 0).subscribe((response:any) => {
             this.IsVisibile = true;
             this.EntityPM = this.entityArgs.EntityPM;
-            if (this.EntityPM) {
-                this.Run();
-
-            }
+            if (this.EntityPM) { this.Run(); }
         });
-
-
-
     }
-
-
 
     Run() {
+        if (!this.EntityPM.DocumentTypeCopies) return;
 
-        if (this.EntityPM.DocumentTypeCopies) {
-            this.DocumentTypeCopiesLists = [];
-            this.EntityPM.DocumentTypeCopies.forEach((copy) => {
-
-                this.DocumentTypeCopiesLists.push(new DocumentCopiesViewModel(copy, null, null, null, null, null, null, null));
-            });
-
-       
-        }
-
-
-
-
+        this.DocumentTypeCopiesLists = [];
+        this.EntityPM.DocumentTypeCopies.forEach((copy) => {
+            this.DocumentTypeCopiesLists.push(new DocumentCopiesViewModel(copy, null, null, null, null, null, null, null));
+        });
     }
 
+    CheckboxIsSelectedByDefaultClick(selectedItem: DocumentCopiesViewModel, value: any) {
+        if (selectedItem == null) return;
 
-    CheckboxIsSelectedByDefaultClick(selectedItem: DocumentCopiesViewModel, value:any) {
+        selectedItem.IsSelectedByDefault = value;
+        if (selectedItem.CurrentDocumentTypeCopy) {
+            selectedItem.CurrentDocumentTypeCopy.IsSelectedByDefault = value;
+        }
+    }
 
-        if (selectedItem != null) {
-            selectedItem.IsSelectedByDefault = value;
-            if (selectedItem.CurrentDocumentTypeCopy) {
-                selectedItem.CurrentDocumentTypeCopy.IsSelectedByDefault = value;
+    EditClicked(selectedItem: DocumentCopiesViewModel) {
+        if (selectedItem == null) return;
+        if (!selectedItem.CurrentDocumentTypeCopy) return;
+
+        let logWindow = new LogitudeWindow();
+        logWindow.Width = 320;
+        logWindow.Height = 150;
+        logWindow.Title = "Document Type Copy";
+        logWindow.WindowArgs = { Item: selectedItem };
+        logWindow.Show('./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/Tab/DocumentTypeCopyDetailsComponent');
+        logWindow.WindowClosed.subscribe((message: any) => {
+            if (message != null) {
+                this.SaveChanges(selectedItem, message);
             }
-        }
-        
-
-        //selectedItem.IsSelectedByDefault = this.EntityPM.DocumentTypeCopies.filter(d=> d.Id == selectedItem.Id)[0].IsSelectedByDefault = !selectedItem.IsSelectedByDefault;
+        });
     }
 
-
-
-
-
-
-
-
-
+    SaveChanges(selectedItem: DocumentCopiesViewModel, message: any) {
+        selectedItem.Name = message;
+        selectedItem.CurrentDocumentTypeCopy.Name = message;
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
+    }
 }
-
-
-
-
-
-

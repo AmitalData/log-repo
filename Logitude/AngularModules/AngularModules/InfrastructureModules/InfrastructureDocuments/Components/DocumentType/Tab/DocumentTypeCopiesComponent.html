@@ -1,14 +1,10 @@
-﻿
-
 <style>
     .iwanttohover:hover {
         background: #DDE6F0;
     }
-
     GridView th, .GridView td, .GridView td div {
         text-align: left;
         text-indent: 5px;
-        /*height: 24px;*/
         line-height: 17px;
         vertical-align: middle;
         overflow: hidden;
@@ -16,50 +12,27 @@
         text-overflow: ellipsis;
     }
 </style>
-
-
 <table *ngIf="IsVisibile">
-
     <tr>
-
         <td style="width:10px;"></td>
-      
-        
-          <td>
+        <td>
             <table>
-
-
                 <tr style="height:15px"> <td><div></div></td>  </tr>
-
-
                 <tr style="height:15px"> <td><span style="font-size:15px;color:#1B90CB;margin-left:5px">Copies</span>    </td>  </tr>
                 <tr style="height:5px"> <td><div></div></td>  </tr>
-    
-
                 <tr style="height:100%">
-
-
-
-
                     <td class="CellStretch">
                         <div class="SimpleGridView">
                             <div class="SimpleGridViewHeader">
                                 <table>
                                     <tr>
-
-
                                         <td style="width: 150px;min-width:150px;max-width: 150px;">{{'DocumentTypeCopy.O.IsSelectedByDefault' | TextCodeTranslationPipe}} </td>
                                         <td style="width:50px;min-width:50px;max-width: 50px;"> {{'DocumentTypeCopy.O.Code' | TextCodeTranslationPipe}} </td>
                                         <td style="width:200px;min-width:200px;max-width: 200px;"> {{'DocumentTypeCopy.O.Name' | TextCodeTranslationPipe}} </td>
-                               
-                                        <td style="width:100%;">
-                                            <div></div>
-                                        </td>
-
+                                        <td style="width:100%;"> <div></div> </td>
                                     </tr>
                                 </table>
                             </div>
-
                             <div class="SimpleGridViewBody">
                                 <table>
                                     <tr style="height: 1px;">
@@ -69,53 +42,33 @@
                                                     <td>
                                                         <table>
                                                             <tr style="height:25px;" (click)="SelectedDocumentCopiesViewModel=item" [class.RowSelected]="item === SelectedDocumentCopiesViewModel">
-
-
-
                                                                 <td class="GridViewCell" style="width:150px;min-width:150px;border-bottom:1px solid #E4E3E1;">
-
                                                                     <div class="MediaFill">
                                                                         <div class="MediaFillRelative">
                                                                             <div class="CenterCenter" style="width: 16px;">
-                                                                                <CheckBox [IsChecked]="item.IsSelectedByDefault" (Checked)="CheckboxIsSelectedByDefaultClick(item, $event)" ></CheckBox>
+                                                                                <CheckBox [IsChecked]="item.IsSelectedByDefault" (Checked)="CheckboxIsSelectedByDefaultClick(item, $event)"></CheckBox>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </td>
-
-
-
-
                                                                 <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px; position: relative;">
-                                                                    
-                                                                        {{item.Code}}
-                                                             
-
+                                                                    {{item.Code}}
                                                                 </td>
-
-
                                                                 <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px; position: relative;">
-                                                              {{item.Name}}
+                                                                    {{item.Name}}
                                                                 </td>
-
-
-
-                                                                <td>
-                                                                    <div> </div>
+                                                                <td class="GridViewCell" style="width: 45px; min-width: 45px; max-width: 45px; position: relative;">
+                                                                    <div><IconButton [IsSmall]="true" [Name]="'Edit'" (click)="EditClicked(item)"></IconButton></div>
                                                                 </td>
-
-
+                                                                <td> <div> </div> </td>
                                                             </tr>
                                                             <tr><td colspan="4"></td></tr>
                                                         </table>
-
-
                                                     </td>
                                                 </tr>
                                             </table>
                                         </td>
                                     </tr>
-
                                     <tr>
                                         <td>
                                             <div></div>
@@ -124,17 +77,10 @@
                                 </table>
                             </div>
                         </div>
-
                     </td>
-
-
                 </tr>
-
-
             </table>
         </td>
-
         <td style="width:10px;"></td>
     </tr>
 </table>
-
