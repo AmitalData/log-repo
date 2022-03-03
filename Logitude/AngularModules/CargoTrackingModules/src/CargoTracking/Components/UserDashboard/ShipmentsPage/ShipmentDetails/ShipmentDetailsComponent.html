@@ -1119,12 +1119,12 @@
             </div>
         </div>
 
-    </panel>
+         </panel>
 
 
 
 
-    <panel *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" [Title]="'SHO List'" style="order: 6;" [Name]="'ConnectedOrdersPanel'" [ShowWhitePanelOnMobile]="true">
+            <panel *ngIf="cargoTrackingShipmentPM.EntityType != 'O' && !ShowShipmentAsDeclaration" [Title]="'SHO List'" style="order: 6;" [Name]="'ConnectedOrdersPanel'" [ShowWhitePanelOnMobile]="true">
 
         <div body style="padding: 0px 8px 13px 0px;">
             <div  class="no-data-available" *ngIf="!cargoTrackingShipmentPM.ConnectedOrders || cargoTrackingShipmentPM.ConnectedOrders.length == 0 " style="margin-top:10px">The Shipment is not connected to any Order</div>

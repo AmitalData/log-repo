@@ -29,10 +29,11 @@
         <div class="rect4"></div>
         <div class="rect5"></div>
     </div>
+
     <div mat-dialog-actions *ngIf="showOkButton||showCancelButton" class="toolbar">
-        <button class="animate" *ngIf="showOkButton" mat-button (click)="OkButtonClicked()">{{OkButtonText}}</button>
         <button class="animate" *ngIf="showCancelButton" mat-button (click)="CancelButtonClicked()"
             mat-dialog-close>{{CancelButtonText}}</button>
+        <button class="animate" *ngIf="showOkButton" mat-button (click)="OkButtonClicked()">{{OkButtonText}}</button>
     </div>
 
     <div mat-dialog-actions *ngIf="link" class="toolbar">

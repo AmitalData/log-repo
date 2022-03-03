@@ -1,6 +1,7 @@
 import { Component, Inject, Input } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+const requiredFieldValidationMessage = "זהו שדה נדרש שאינו יכול להיות ריק";
 @Component({
     selector: 'message-window',
     templateUrl: './MessageWindowComponent.html',
@@ -52,7 +53,7 @@ export class MessageWindowComponent {
 
     OkButtonClicked(){
         if(this.inputRequired && !this.TextBoxValue){
-            this.error = "Please fill the field";
+            this.error = requiredFieldValidationMessage;
         }else{
             this.dialogRef.close({button: 'ok', textValue: this.TextBoxValue});
         }
