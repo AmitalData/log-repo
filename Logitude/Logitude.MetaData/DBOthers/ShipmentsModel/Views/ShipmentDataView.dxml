@@ -200,6 +200,7 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
 						 dbo.Shipments.StatusDate as ShipmentStatusDate,
 						 dbo.Shipments.StatusLocation as ShipmentStatusLocation,
 						 dbo.Shipments.PrivateLabelAgentName AS PrivateLabelAgentName,
+						 dbo.Shipments.IsShipmentOrder AS IsShipmentOrder,
 	
 						 ShipmentMasterDataEntityStatus.Id AS ShipmentMasterDataStatusId,
                          ShipmentMasterDataEntityStatus.Name AS ShipmentMasterDataStatusName,

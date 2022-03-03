@@ -12639,6 +12639,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                OperationalStatusName = f.OperationalStatusName,
                                PrivateLabelAgentName = f.PrivateLabelAgentName,
                                StatusWeight = f.StatusWeight,
+                               IsShipmentOrder = f.IsShipmentOrder
                            };
             return myResult;
         }
