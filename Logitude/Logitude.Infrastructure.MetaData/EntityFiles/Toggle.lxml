@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;7068&quot;"
+  Code="&quot;7c3b&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -717,16 +717,22 @@
       Name="&quot;Ticket Entity In Automation&quot;"
       SearchFields="&quot;TAU,Ticket Entity In Automation&quot;"
       Description="&quot;Use Ticket Entity In Automation&quot;" />
+
+    <Record
+      Code="&quot;RFF&quot;"
+      Name="&quot;Regimen Fiscal Field&quot;"
+      SearchFields="&quot;RFF,Regimen Fiscal Field&quot;"
+      Description="&quot;Show Regimen Fiscal Field&quot;" />
     <Record
       Name="&quot;Managing Destination Warehouse Leg&quot;"
       Description="&quot;Managing Destination Warehouse Leg in Drop Shipments&quot;"
       SearchFields="&quot;MDW,Managing Destination Warehouse Leg&quot;"
       Code="&quot;MDW&quot;" />
     <Record
-      Code="&quot;RFF&quot;"
-      Name="&quot;Regimen Fiscal Field&quot;"
-      SearchFields="&quot;RFF,Regimen Fiscal Field&quot;"
-      Description="&quot;Show Regimen Fiscal Field&quot;" />
+      Code="&quot;ARCR&quot;"
+      Name="&quot;Aging Report With Calculated Rate&quot;"
+      SearchFields="&quot;Aging Report With Calculated Rate&quot;"
+      Description="&quot;Aging Report With Calculated Rate columns&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
