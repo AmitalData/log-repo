@@ -309,6 +309,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                         FastIndividualProcessCode = dcs.FastIndividualProcessCode,
                         CourierPendingReasonList = dcs.CourierPendingReasonList,
                         CourierPendingReasonName = errorPlaceOuterJoinNullable != null ? errorPlaceOuterJoinNullable.CourierPendingReason1stName : null,
+                        MissedDocumentStatusCode = dcs.MissedDocumentStatusCode,
 
                     } into t2
                     select new DeclarationCourierStatusList
@@ -328,6 +329,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                         FastIndividualProcessCode = t2.Key.FastIndividualProcessCode,
                         CourierPendingReasonList = t2.Key.CourierPendingReasonList,
                         CourierPendingReasonName = t2.Key.CourierPendingReasonName,
+                        MissedDocumentStatusCode = t2.Key.MissedDocumentStatusCode,
                     });
 
 

@@ -210,6 +210,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="MissedDocumentStatusCode"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DeclarationId"
     ReferencedTable="Declarations"
@@ -241,9 +248,6 @@
     Columns="IsCourierMissingClassification" />
   <Index
     Columns="IsClosedForFollowUp" />
-
-	<Index
-		Columns="FastIndividualProcessCode" />
-
-	
+  <Index
+    Columns="FastIndividualProcessCode" />
 </Table>
