@@ -656,5 +656,25 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage GetObjectTableIdByName(string objectTableName)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                GeneralDomainService service = new GeneralDomainService();
+                var objectTable = service.GetObjectTableIDByName(objectTableName, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, objectTable.Id);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
     }
 }
