@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
-		public const string HashString = "3286f80f45b3621a3586f927f56b363e";
+		public const string HashString = "ab386d71934432e38bb7b64b2043196a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5752,6 +5752,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 
              AdvancedQueryFilter FilesToPayQueryFilter_6 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.DeclarationReferantData.IsExceptionReasonsListNull", PredefinedValue = "true",PredefinedValue2 = null, QueryId = FilesToPayQuery.Id,QueryCode = FilesToPayQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter FilesToPayQueryFilter_7 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.DeclarationReferantData.IsPaymentDateNull", PredefinedValue = "true",PredefinedValue2 = null, QueryId = FilesToPayQuery.Id,QueryCode = FilesToPayQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   
 	      
