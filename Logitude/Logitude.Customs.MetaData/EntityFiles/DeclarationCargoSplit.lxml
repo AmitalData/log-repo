@@ -1947,7 +1947,6 @@
       <QueryColumn
         QueryCode="&quot;OpenCargoSplits&quot;"
         IndexOrder="10"
-
         ObjectFieldName="&quot;ResponseStatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
@@ -2037,7 +2036,6 @@
       <QueryColumn
         QueryCode="&quot;ClosedCargoSplits&quot;"
         IndexOrder="10"
-
         ObjectFieldName="&quot;ResponseStatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
@@ -2127,7 +2125,6 @@
       <QueryColumn
         QueryCode="&quot;AllCargoSplits&quot;"
         IndexOrder="10"
-
         ObjectFieldName="&quot;ResponseStatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
