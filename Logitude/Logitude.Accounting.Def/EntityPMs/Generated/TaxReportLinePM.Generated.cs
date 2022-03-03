@@ -712,6 +712,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private decimal? vatAmountRound ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? VatAmountRound  
+	   {
+	    
+	     get
+		{
+		   return vatAmountRound;
+		 }
+		 set
+		 {
+		   if(vatAmountRound != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VatAmountRound",OldValue=vatAmountRound,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   vatAmountRound=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -197,6 +197,22 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="OutputTaxAmountRound"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InputsTaxAmountRound"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

@@ -172,6 +172,9 @@ export class TaxReportLinePM {
     private isReconciled: boolean;
     public get IsReconciled() { return this.isReconciled; }
     public set IsReconciled(newValue: boolean) { if (this.isReconciled != newValue) { this.isReconciled = newValue; this.MarkAsDirty("IsReconciled"); } }
+    private vatAmountRound: number;
+    public get VatAmountRound() { return this.vatAmountRound; }
+    public set VatAmountRound(newValue: number) { if (this.vatAmountRound != newValue) { this.vatAmountRound = newValue; this.MarkAsDirty("VatAmountRound"); } }
        
 	 
 
@@ -202,4 +205,4 @@ export class TaxReportLinePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

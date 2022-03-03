@@ -84,6 +84,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         JournalLineNumber, 
 	         PreviousReference, 
 	         IsReconciled,
+	         VatAmountRound,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

@@ -78,6 +78,10 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.NeedsRebulid).HasColumnName("NeedsRebulid");
 
             this.Property(t => t.CreatedInTwoMonthsLogic).HasColumnName("CreatedInTwoMonthsLogic");
+
+            this.Property(t => t.OutputTaxAmountRound).HasColumnName("OutputTaxAmountRound").HasPrecision(16, 2);
+
+            this.Property(t => t.InputsTaxAmountRound).HasColumnName("InputsTaxAmountRound").HasPrecision(16, 2);
         }
     }
 }
