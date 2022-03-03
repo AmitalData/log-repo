@@ -564,6 +564,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "Aging Report With Calculated Rate", 
                 Description = "Aging Report With Calculated Rate columns", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "TTS", 
+                Name = "Total Traslado SAT Issue", 
+                SearchFields = "TTS,Total Traslado SAT Issue", 
+                Description = "Build a new XML to solve total traslado SAT issue", 
+			});
 			
             return all;
        }
