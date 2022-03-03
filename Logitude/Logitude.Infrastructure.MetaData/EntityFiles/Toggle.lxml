@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;4a95&quot;"
+  Code="&quot;5313&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -728,7 +728,7 @@
       SearchFields="&quot;MDW,Managing Destination Warehouse Leg&quot;"
       Code="&quot;MDW&quot;" />
     <Record
-      Code="&quot;ARCR&quot;"
+      Code="&quot;ARR&quot;"
       Name="&quot;Aging Report With Calculated Rate&quot;"
       SearchFields="&quot;Aging Report With Calculated Rate&quot;"
       Description="&quot;Aging Report With Calculated Rate columns&quot;" />

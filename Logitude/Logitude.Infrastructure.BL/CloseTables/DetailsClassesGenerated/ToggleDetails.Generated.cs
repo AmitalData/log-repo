@@ -559,7 +559,7 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Code = "ARCR", 
+                Code = "ARR", 
                 Name = "Aging Report With Calculated Rate", 
                 SearchFields = "Aging Report With Calculated Rate", 
                 Description = "Aging Report With Calculated Rate columns", 
