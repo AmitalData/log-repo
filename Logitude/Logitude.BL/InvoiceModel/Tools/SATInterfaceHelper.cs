@@ -794,7 +794,14 @@ namespace Logitude.BL.InvoiceModel.Tools
                     {
                         if (traslado.TipoFactor == "Tasa")
                         {
-                            traslado.Importe = GetDecimalWith2DigitsAfterPoint(TotalImpuestosTrasladados);
+                            if (FeatureToggleHelper.HasFeatureToggle("TTS", entityPM.Tenant))
+                            {
+                                traslado.Importe += GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0)));
+                            }
+                            else
+                            {
+                                traslado.Importe = GetDecimalWith2DigitsAfterPoint(TotalImpuestosTrasladados);
+                            }
                         }
                     }
 
