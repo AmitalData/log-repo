@@ -1,6 +1,7 @@
 import { Component, Inject, Input } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+const requiredFieldValidationMessage = "זהו שדה נדרש שאינו יכול להיות ריק";
 @Component({
     selector: 'message-window',
     templateUrl: './MessageWindowComponent.html',
@@ -17,7 +18,11 @@ export class MessageWindowComponent {
     showCancelButton: boolean = false;
     showTextBox: boolean = false;
     showMultilineTextBox: boolean = false;
+    inputRequired: boolean = false;
     isLoading: boolean = false;
+    OkButtonText: string = 'Ok';
+    CancelButtonText: string = 'Cancel';
+    error: string;
 
     private _TextBoxValue : string;
     public get TextBoxValue() : string {
@@ -35,7 +40,10 @@ export class MessageWindowComponent {
         this.description = data?.description;
         this.showOkButton = data?.showOkButton;
         this.showCancelButton = data?.showCancelButton;
+        this.OkButtonText = data?.okButtonText || 'Ok';
+        this.CancelButtonText = data?.cancelButtonText || 'Cancel';
         this.showTextBox = data?.showTextBox;
+        this.inputRequired = data?.inputRequired;
         this.showMultilineTextBox = data?.showMultilineTextBox;
         this.title = data?.title != null ? data?.title : this.title;
         this.link = data?.link;
@@ -44,7 +52,11 @@ export class MessageWindowComponent {
 
 
     OkButtonClicked(){
-        this.dialogRef.close({button: 'ok', textValue: this.TextBoxValue});
+        if(this.inputRequired && !this.TextBoxValue){
+            this.error = requiredFieldValidationMessage;
+        }else{
+            this.dialogRef.close({button: 'ok', textValue: this.TextBoxValue});
+        }
     }
 
     CancelButtonClicked(){

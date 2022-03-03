@@ -28,3 +28,11 @@
 .spinner{
     margin: 18px auto;
 }
+.input-text.error {
+    border-bottom: 2px solid #df5050;
+}
+.error-text{
+    color: #df5050;
+    font-size: 12px;
+    padding-top: 5px;
+}
