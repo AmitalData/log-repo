@@ -93,7 +93,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             base.ManipulateRequestParams(requestParams);
         }
 
-        private void AutoPaymentFromUni(GenericRequestParams requestParams)
+        private void AutoPaymentFromUni(ref GenericRequestParams requestParams)
         {
              if (requestParams.LoggingEntityReference != "AutoPayment")
             {
@@ -105,6 +105,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             var DeclarationQueryService = new DeclarationQueryService(this.dbContext);
             var declarationPM = DeclarationQueryService.GetSingle(requestParams.LoggingEntityId, true, false);
 
+            if (string.IsNullOrEmpty(requestParams.AppicationId)) requestParams.AppicationId = requestParams.LoggingEntityId;
 
 
             CheckLock(requestParams, declarationPM);
@@ -326,9 +327,9 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             this.dbContext = CustomContext.GetContext(requestParams.Tenant);
             this.UCB2755Batch(requestParams);
-            this.AutoPaymentFromUni(requestParams);
+            this.AutoPaymentFromUni(ref requestParams);
 
-            var DeclarationPaymentQueryService = new DeclarationPaymentQueryService(this.dbContext);
+           var DeclarationPaymentQueryService = new DeclarationPaymentQueryService(this.dbContext);
             var declarationPaymentsPM = DeclarationPaymentQueryService.GetSingle(requestParams.AppicationId, true, false);
 
             myDF_NG_2755_MSG12001_SubmitDeclaration.GeneralData = GetSubmitDeclarationGeneralData(declarationPaymentsPM);
