@@ -59,7 +59,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             AddTotalBalancePeriods(filteredPeriods, dataProvider);
             AddTotalLocalBalancePeriods(filteredPeriods, dataProvider);
 
-            var showAgingReportWithCalculatedRates = FeatureToggleHelper.HasFeatureToggle("ARCR", tenant);
+            var showAgingReportWithCalculatedRates = FeatureToggleHelper.HasFeatureToggle("ARR", tenant);
             if(showAgingReportWithCalculatedRates == true)
                 AddCalculatedRatePeriods(filteredPeriods, dataProvider);
 
