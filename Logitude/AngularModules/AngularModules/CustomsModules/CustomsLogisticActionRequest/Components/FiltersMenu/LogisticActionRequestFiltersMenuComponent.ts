@@ -12,7 +12,7 @@ export class LogisticActionRequestFiltersMenuComponent
     extends BaseComponent {
     apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
     @Output() SelectedValueChanged = new EventEmitter();
-    _SelectedValue: string = 'A';
+    _SelectedValue: string = 'Q';
     constructor() {
         super();
     }
@@ -23,7 +23,7 @@ export class LogisticActionRequestFiltersMenuComponent
             this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "TransportmodeId");
         }
 
-        if (filter == "A") {
+        if (filter == "Q") {
             this.apiQueryFilters.addAdditionalFilter("TransportmodeId", filter, null, null, "NotEqual", false, false, false, "string");
         } else {
             this.apiQueryFilters.addAdditionalFilter("TransportmodeId", filter, null, null, "Equals", false, false, false, "string");

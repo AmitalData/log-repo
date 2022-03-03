@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, isDevMode, ChangeDetectorRef } from '@angular/core';
+import { Component, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
@@ -7,15 +7,7 @@ import { ClientList } from 'Customs/EntityLists/ClientList';
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { CargoIdentifireTypeList } from 'Customs/EntityLists/CargoIdentifireTypeList';
-import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
-import { DeclarationList } from 'Customs/EntityLists/DeclarationList';
-import { MessageWindow } from 'Controls/Windows/MessageWindow';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
-import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
-import { ConsignmentPM } from 'Customs/EntityPMs/ConsignmentPM';
-import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPMService';
-import { DeclarationListService } from 'Customs/Services/StandardLists/DeclarationListService';
-import { EntityListService } from 'Infrastructure/Services/EntityListService';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { ConsignmentDeclartion, DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
@@ -34,7 +26,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
     public DataContext: LogisticActionRequestGeneralTabComponent = this;
     entityPM: LogisticActionRequestPM;
-    public ObjectTableName: string = "Customs.LogisticActionRequestGeneralTabComponent";
+    public ObjectTableName: string = "Customs.LogisticActionRequest";
     public IsNewEntity: boolean = false;
     public IsDisplayOnly: boolean = false;
     SendButtonEnabled: boolean = true;
@@ -42,6 +34,19 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     exporterName: string = ''
     syncDeclaration$ = new Subject();
     subscriber: Subscription;
+    ValidationErrorsList: any[] = [];
+    FIELD_IS_REQUIERD: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+    requierdFieldsList = [
+        'ExportFileNo',
+        'ExporterNumber',
+        'RequestDate',
+        'RequestType',
+        'CargoIdentifierType',
+        'CargoIdentifierKey1',
+        'PackagingTypeCode',
+        'Quantity',
+        'DeliverySiteID',
+    ]
 
     // public TabsItemsSource: TabItem[] = [];
     // public Tabs: LogTab[] = [];
@@ -60,6 +65,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     get ExportFileNo() { return this.entityPM?.ExportFileNo }
     set ExportFileNo(value: string) {
         this.entityPM.ExportFileNo = value;
+        this.UIProperties.SetRequired('ExportFileNo', this.ObjectTableName, !value)
 
         if (value)
             this.syncDeclaration$.next()
@@ -68,12 +74,6 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     get ExporterNumber() { return this.entityPM?.ExporterNumber }
     set ExporterNumber(value: string) {
         this.entityPM.ExporterNumber = value;
-
-        // if(value) {
-        //     const clientTable: ClientList[] = await this.logtuideTableDataService.getTable("Customs.Client")
-        //     const client: ClientList = clientTable.find(x=> x.Code == this.entityPM.ExporterNumber);
-        //     this.entityPM.ExporterIdentifierType = client.PassportTypeCode
-        // }        
     }
 
     get RequestDate() { return this.entityPM?.RequestDate }
@@ -90,25 +90,40 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     }
 
     get CargoIdentifierKey1() { return this.entityPM?.CargoIdentifierKey1 }
-    set CargoIdentifierKey1(value: string) { this.entityPM.CargoIdentifierKey1 = value; }
+    set CargoIdentifierKey1(value: string) {
+        this.entityPM.CargoIdentifierKey1 = value;
+        this.UIProperties.SetRequired('CargoIdentifierKey1', this.ObjectTableName, !value)
+    }
 
     get CargoIdentifierKey2() { return this.entityPM?.CargoIdentifierKey2 }
-    set CargoIdentifierKey2(value: string) { this.entityPM.CargoIdentifierKey2 = value; }
+    set CargoIdentifierKey2(value: string) {
+        this.entityPM.CargoIdentifierKey2 = value;
+        this.setRequiredCargoKey();
+    }
 
     get CargoIdentifierKey3() { return this.entityPM?.CargoIdentifierKey3 }
-    set CargoIdentifierKey3(value: string) { this.entityPM.CargoIdentifierKey3 = value; }
+    set CargoIdentifierKey3(value: string) {
+        this.entityPM.CargoIdentifierKey3 = value;
+        this.setRequiredCargoKey();
+    }
 
     get PackagingTypeCode() { return this.entityPM?.PackagingTypeCode }
     set PackagingTypeCode(value: string) { this.entityPM.PackagingTypeCode = value; }
 
     get Quantity() { return this.entityPM?.Quantity }
-    set Quantity(value: number) { this.entityPM.Quantity = value; }
+    set Quantity(value: number) {
+        this.entityPM.Quantity = value;
+        this.UIProperties.SetRequired('Quantity', this.ObjectTableName, !value)
+    }
 
     get DeliverySiteID() { return this.entityPM?.DeliverySiteID }
     set DeliverySiteID(value: string) { this.entityPM.DeliverySiteID = value; }
 
     get RequestReason() { return this.entityPM?.RequestReason }
-    set RequestReason(value: string) { this.entityPM.RequestReason = value; }
+    set RequestReason(value: string) {
+        this.entityPM.RequestReason = value;
+        this.UIProperties.SetRequired('RequestReason', this.ObjectTableName, !value)
+    }
 
     get RequestCancelStatus() { return this.entityPM?.RequestCancelStatus }
     set RequestCancelStatus(value: string) { this.entityPM.RequestCancelStatus = value; }
@@ -138,35 +153,35 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         this.entityPM = winArg.CurrentEntity;
 
         this.setTransportModeId();
-        this.UIProperties.SetEnabled("RequestCancelStatus", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("RequestNumber", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("DecisionRmarks", this.ObjectTableName, false);
-
-        this.setRequiredFields();
+        this.setRequiredCargoKey();
     }
 
 
     private setRequiredFields() {
-        [
-            'RequestDate',
-            'ExportFileNo',
-            'RequestType',
-            'RequestReason',
-            'DeliverySiteID',
-            'CargoIdentifierType',
-            'CargoIdentifierKey1',
-            'PackagingTypeCode',
-            'Quantity',
-            'DecisionRmarks',
-        ].forEach(fieldName => this.UIProperties.SetRequired(fieldName, this.ObjectTableName, true));
+        this.requierdFieldsList.forEach(fieldName => this.UIProperties.SetRequired(fieldName, this.ObjectTableName, !this[fieldName]));
     }
 
 
     async setRequiredCargoKey() {
         const cargoIdentifireTypeTable: CargoIdentifireTypeList[] = await this.logtuideTableDataService.getTable("Customs.CargoIdentifireType")
         const cargoIdentifireType: CargoIdentifireTypeList = cargoIdentifireTypeTable.find(x => x.Code == this.entityPM.CargoIdentifierType);
-        this.UIProperties.SetRequired('CargoIdentifierKey2', this.ObjectTableName, cargoIdentifireType.IsKey2Mandatory)
-        this.UIProperties.SetRequired('CargoIdentifierKey3', this.ObjectTableName, cargoIdentifireType.IsKey3Mandatory)
+        this.UIProperties.SetRequired('CargoIdentifierKey2', this.ObjectTableName, !this.entityPM.CargoIdentifierKey2 && cargoIdentifireType.IsKey2Mandatory)
+        this.UIProperties.SetRequired('CargoIdentifierKey3', this.ObjectTableName, !this.entityPM.CargoIdentifierKey3 && cargoIdentifireType.IsKey3Mandatory)
+
+        this.removeFromArray(this.requierdFieldsList, 'CargoIdentifierKey2')
+        if (!this.entityPM.CargoIdentifierKey2 && cargoIdentifireType.IsKey2Mandatory)
+            this.requierdFieldsList.push('CargoIdentifierKey2')
+
+        this.removeFromArray(this.requierdFieldsList, 'CargoIdentifierKey3')
+        if (!this.entityPM.CargoIdentifierKey3 && cargoIdentifireType.IsKey2Mandatory)
+            this.requierdFieldsList.push('CargoIdentifierKey3')
+    }
+
+
+    private removeFromArray(arr: string[], val: string) {
+        const index = arr.indexOf(val);
+        if (index !== -1)
+            arr.splice(index, 1);
     }
 
 
@@ -237,50 +252,14 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     }
 
 
-    // private async getConsignmentByDeclarationId(declarationId: string) {
-    //     const filters: ApiQueryFilters = new ApiQueryFilters()
-    //     filters.PageIndex = 0
-    //     filters.PageSize = 1
-    //     filters.addAdditionalFilter('DeclarationId', declarationId, null, null, 'Equals', false, false, false, 'String');
-    //     let consignments: ConsignmentPM[] = await this.logtuideTableDataService.getTable('Customs.Consignment');
-    //     consignments = consignments.filter(x=> x.DeclarationId == declarationId)
-
-    //     return consignments.length > 0 ? consignments[0] : null;
-    // }
-
-
     private async getDeclarationsandConsignment(): Promise<ConsignmentDeclartion> {
-        // const filters: ApiQueryFilters = new ApiQueryFilters()
-        // filters.PageIndex = 0
-        // filters.PageSize = 10
-        // // filters.addAdditionalFilter('CustomFileNo', this.entityPM.ExportFileNo, null, null, 'Equals', false, false, false, 'String');
-        // const declarations: DeclarationList[] = await this.logtuideTableDataService.getDataFromService(new DeclarationListService().getByFilters(filters));
-
-
-        // filters.addAdditionalFilter("exportfile", this.entityPM.ExportFileNo, null, null, "NotEqual", false, false, false, "string");
-
-        // var a =   await new EntityListService().getByFilters("Customs.Declaration",filters) as any;
-        // a.subscribe(x=> {
-        //     console.log(x)
-        //     debugger;
-        // })
         const res: ConsignmentDeclartion = await new DeclarationWebService().getDeclarationConsignment(this.entityPM.ExportFileNo)
         return res;
     }
 
 
     private Listen() {
-        // SessionLocator.SelectedSession.StopBusyIndicator();
         if (SessionLocator.SelectedSession.CurrentEditComponent != null) {
-            // SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
-            //     SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-            //         if (isSaveSuccess) {
-            //             if (SessionLocator.SelectedSession.CurrentEditComponent.entityPM instanceof DeclarationCargoSplitPM)this.entityPM = SessionLocator.SelectedSession.CurrentEditComponent.entityPM;
-            //             //this.RefreshEntity();
-
-            //         }
-            //     })
-            // );
         }
     }
 
@@ -290,6 +269,12 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
             this.initDefaultValue();
 
         this.subscribesyncDeclaration()
+
+        this.UIProperties.SetEnabled("RequestCancelStatus", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("RequestNumber", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("DecisionRmarks", this.ObjectTableName, false);
+
+        this.setRequiredFields();
     }
 
 
@@ -301,6 +286,9 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     initDefaultValue() {
         this.entityPM.RequestDate = new Date();
         this.entityPM.RequestType = '2';
+        this.entityPM.Tenant = SessionLocator.Tenant;
+        this.entityPM.Direction = 'E'
+        this.entityPM.ExporterIdentifierType = '1'
     }
 
 
@@ -321,36 +309,44 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
 
     SendButtonClicked() {
-        //this.SaveEntityChanges(null);
-        //if (this.ValidationErrorsList.length == 0) return;
-        var errors = [];
-        this.FillValidationErrorList.emit(errors); // clear validation msgs
+        if (this.invalidate()) return;
         SessionLocator.SelectedSession.StartBusyIndicator("");
     }
 
 
-    // OnSendCompleted() {
-    //     SessionLocator.SelectedSession.CloseCurrentWindow();
-    // }
     SaveEntityChanges() {
         const isInsert: boolean = !this.entityPM.Id;
 
         SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-       
-        (isInsert ? this.logisticActionRequestPMService.insert(this.entityPM) : this.logisticActionRequestPMService.update(this.entityPM))        
-        .subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");
-            SessionLocator.SelectedSession.StopBusyIndicator();
-        });
+
+        (isInsert ? this.logisticActionRequestPMService.insert(this.entityPM) : this.logisticActionRequestPMService.update(this.entityPM))
+            .subscribe((myResponse: ServiceResponse) => {
+                SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");
+                SessionLocator.SelectedSession.StopBusyIndicator();
+            });
     }
 
 
-    OnCustomSendOptionsButtonClick(customSendOptionsArgs) {        
-        this.SaveEntityChanges();        
+    invalidate(): boolean {
+        this.ValidationErrorsList = []
+        this.requierdFieldsList
+            .filter(filed => !this[filed])
+            .forEach(filed =>
+                this.ValidationErrorsList.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Customs.LogisticActionRequest.F." + filed))));
+
+        // Validator.TryValidateObject(this.entityPM, this.ObjectTableName,  this.ValidationErrorsList);
+        return !!this.ValidationErrorsList.length;
+    }
+
+
+    OnCustomSendOptionsButtonClick(customSendOptionsArgs) {
+        this.SaveEntityChanges();
     }
 
 
     OkButtonClicked() {
+        if (this.invalidate()) return;
+
         this.SaveEntityChanges();
     }
 
