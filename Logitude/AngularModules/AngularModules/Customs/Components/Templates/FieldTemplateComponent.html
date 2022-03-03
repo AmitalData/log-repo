@@ -345,7 +345,7 @@
 
                     </div>
                 </div>
-                <div *ngIf="FieldName == 'Favorite'" style="position:relative;width:100%; height: 100%;" (click)="EditFavorite()">
+                <div *ngIf="FieldName == 'Favorite'" style="position:relative;width:100%; height: 100%;" (click)="EditFavorite($event)">
                     <div *ngIf="!IsHeaderScreenTemplate" style="display: inline; position: absolute;right: 50%;">
                         <div *ngIf="Entity['Favorite']==true">
                             <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Referant/Active_Favorite.png" />

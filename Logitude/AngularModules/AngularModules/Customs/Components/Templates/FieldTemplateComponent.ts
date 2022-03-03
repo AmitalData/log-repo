@@ -44,6 +44,7 @@ export class FieldTemplateComponent {
     customsAutonomyKeywordExtendedPMService: CustomsAutonomyKeywordExtendedPMService = new CustomsAutonomyKeywordExtendedPMService();
     declarationPMService: DeclarationPMService = new DeclarationPMService();
     exceptionReasonExtendedListService: ExceptionReasonExtendedListService = new ExceptionReasonExtendedListService();
+    _declarationReferantDataPMService: DeclarationReferantDataPMService = new DeclarationReferantDataPMService();
     private _ListComponentArgs: ListComponentArgs;
     @ViewChild('SpotLight', { read: ViewContainerRef, static: false }) SpotLightViewContainerRef: ViewContainerRef;
     RowIndex: any;
@@ -53,7 +54,7 @@ export class FieldTemplateComponent {
         private _physicalChecksCloseSharedDataService: PhysicalChecksCloseSharedDataService,
         private logtuideTableDataService: LogtuideTableDataService,
         private pendingByKeywordWebService: PendingByKeywordWebService,
-        ) {
+    ) {
         if (SessionLocator.SelectedSession.CurrentListComponent != null) {
             this._ListComponentArgs = SessionLocator.SelectedSession.CurrentListComponent._ListComponentArgs;
         } else {
@@ -171,16 +172,21 @@ export class FieldTemplateComponent {
         //});
 
     }
-    private _declarationReferantDataPMService: DeclarationReferantDataPMService = new DeclarationReferantDataPMService();
-    EditFavorite() {
-        this._ListComponentArgs.SuppressOnRowSelectedField = true;
-        var x = this.Entity.SortedColumns;
-        this.Entity.Favorite = !this.Entity.Favorite;
-        this._declarationReferantDataPMService.update(this.Entity).subscribe((response: any) => {
-            SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });
-        });
 
+    EditFavorite(e: MouseEvent) {
+        this.Entity.Favorite = !this.Entity.Favorite;
+        this._ListComponentArgs.SuppressOnRowSelectedField = true;
+        this._declarationReferantDataPMService.get(this.Entity?.DeclarationId).subscribe((getResponse: any) => {
+            if (getResponse?.Result) {
+                const declarationReferantDataPM=getResponse.Result;
+                declarationReferantDataPM.Favorite = this.Entity.Favorite;
+                this._declarationReferantDataPMService.update(declarationReferantDataPM).subscribe((UpdateResponse: any) => {
+                    SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });
+                });
+            }
+        });
     }
+
     EditMyCloseCheckBox(eventM) {
 
         this._ListComponentArgs.SuppressOnRowSelectedField = true;
@@ -674,9 +680,9 @@ export class FieldTemplateComponent {
                     if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
                         SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = false;
                     }
-                    if(this.ObjectTableName =="Customs.PhysicalCheck"){
+                    if (this.ObjectTableName == "Customs.PhysicalCheck") {
                         this.OnBackFromEdit(this.Entity.Id, event);
-                    }else{
+                    } else {
                         this.OnBackFromEdit(this.Entity.DeclarationId, event);
                     }
                 });
