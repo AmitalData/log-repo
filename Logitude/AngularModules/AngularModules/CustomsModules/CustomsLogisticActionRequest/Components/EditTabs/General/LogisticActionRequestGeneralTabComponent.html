@@ -100,6 +100,7 @@
                                             [ObjectTableName]="ObjectTableName"
                                             [DataContext]="DataContext" 
                                             [HideColumns]="true"
+                                            [Text]="ExportFileNo"
                                         ></LogTextBox>
                                     </div>
                                 </td>
@@ -212,6 +213,7 @@
                                             [DataContext]="DataContext" 
                                             [ObjectTableName]="ObjectTableName"
                                             [HideColumns]="true"
+                                            [Text]="CargoIdentifierKey2"
                                         ></LogTextBox>
                                     </div>
                                 </td>
@@ -222,13 +224,13 @@
                                     </label>
                                 </td>
                                 <td style="width:130px">
-                                    {{this.entityPM?.CargoIdentifierKey3}}
                                     <div style="width:135px">
                                         <LogTextBox 
                                             [ObjectFieldName]="'CargoIdentifierKey3'" 
                                             [DataContext]="DataContext" 
                                             [ObjectTableName]="ObjectTableName"
                                             [HideColumns]="true"
+                                            [Text]="CargoIdentifierKey3"
                                         ></LogTextBox>
                                     </div>
                                 </td>
@@ -265,6 +267,7 @@
                                             [DataContext]="DataContext" 
                                             [ObjectTableName]="ObjectTableName"
                                             [HideColumns]="true"
+                                            [Text]="Quantity"
                                         ></LogTextBox>
                                     </div>
                                 </td>
@@ -307,6 +310,7 @@
                                         [ObjectTableName]="ObjectTableName"
                                         [HideColumns]="true"
                                         [IsMultiline]="true" 
+                                        [Text]="RequestReason"
                                     ></LogTextBox>                                    
                                 </td>
                             </tr>

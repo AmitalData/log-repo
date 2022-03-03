@@ -31,11 +31,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ExportFileNo { get; set; }
         [Column("ExporterIdentifierType")]
 	    public string ExporterIdentifierType { get; set; }
-        [ForeignKey("Client")]
         [Column("ExporterNumber")]
 	    public string ExporterNumber { get; set; }
-	      
-        public virtual Client Client { get; set; }
         [Column("PassportCountry")]
 	    public string PassportCountry { get; set; }
         [Column("PassportNumber")]
