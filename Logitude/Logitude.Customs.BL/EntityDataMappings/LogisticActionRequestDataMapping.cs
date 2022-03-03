@@ -19,11 +19,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
    {
         public void CustomPMToPOCO(LogisticActionRequestPM entityPM, LogisticActionRequest entityPOCO)
         {
-        }
-
-
-        public void CustomPOCOToPM(LogisticActionRequestPM entityPM, LogisticActionRequest entityPOCO)
-        {
             CustomMappedPOCOProperties.Add(POCOPropertyNames.Id);
             CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
 
@@ -34,7 +29,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
             }
 
             BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
-            entityPOCO.SearchFields = entityPM.SearchFields;
+        }
+
+
+        public void CustomPOCOToPM(LogisticActionRequestPM entityPM, LogisticActionRequest entityPOCO)
+        {
         }
 
 
@@ -48,8 +47,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.RequestNumber);
 
             mySearchFields = mySearchFields.ToLower();
-            entityPM.SearchFields += mySearchFields;
-            entityPOCO.SearchFields += mySearchFields;
+            entityPM.SearchFields = mySearchFields;
+            entityPOCO.SearchFields = mySearchFields;
         }
     }
 }

@@ -77,14 +77,14 @@
                 </tr>
             </table>
         </td>
-        <td [class.disabled]="!entityPM?.TransportmodeId">
+        <td >
             <table style="width: 90%;">
-                <!-- <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+                <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
                     <td colspan="2">
-                        <ValidationSummary [ItemsSource]="ErrorsList" [SingleLine]="false"></ValidationSummary>
+                        <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
                     </td>
-                </tr> -->
-                <tr>
+                </tr>
+                <tr [class.disabled]="!entityPM?.TransportmodeId">
                     <td colspan="2" style="vertical-align: top;">
                         <table style="height: 500px;padding-top: 10px;float:right;">
                             <tr class="FormFieldRow" style="width:200px;text-align: right;">
@@ -194,8 +194,8 @@
                                             [ObjectTableName]="ObjectTableName"
                                             [HideColumns]="true"
                                             [Text]="CargoIdentifierKey1"
-                                        ></LogTextBox>
-                                    </div>
+                                            ></LogTextBox>
+                                        </div>
                                 </td>
                             </tr>
                             <tr class="FormFieldRow" style="width:200px;text-align: right;">
@@ -212,23 +212,24 @@
                                             [DataContext]="DataContext" 
                                             [ObjectTableName]="ObjectTableName"
                                             [HideColumns]="true"
-                                        ></LogTextBox>
-                                    </div>
-                                </td>
-
-                                <td style="text-align: right;">
+                                            [Text]="CargoIdentifierKey2"
+                                            ></LogTextBox>
+                                        </div>
+                                    </td>
+                                    
+                                    <td style="text-align: right;">
                                     <label style="font-size:12px; padding-right:20px;text-align: right;">
                                         מזהה מטען שלישי:
                                     </label>
                                 </td>
                                 <td style="width:130px">
-                                    {{this.entityPM?.CargoIdentifierKey3}}
                                     <div style="width:135px">
                                         <LogTextBox 
-                                            [ObjectFieldName]="'CargoIdentifierKey3'" 
-                                            [DataContext]="DataContext" 
-                                            [ObjectTableName]="ObjectTableName"
-                                            [HideColumns]="true"
+                                        [ObjectFieldName]="'CargoIdentifierKey3'" 
+                                        [DataContext]="DataContext" 
+                                        [ObjectTableName]="ObjectTableName"
+                                        [HideColumns]="true"
+                                        [Text]="CargoIdentifierKey3"
                                         ></LogTextBox>
                                     </div>
                                 </td>
@@ -307,6 +308,7 @@
                                         [ObjectTableName]="ObjectTableName"
                                         [HideColumns]="true"
                                         [IsMultiline]="true" 
+                                        [Text]="RequestReason"
                                     ></LogTextBox>                                    
                                 </td>
                             </tr>
