@@ -1548,7 +1548,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
     CheckCustomFileCreditThenSendPayment(params: CustomFileCreditRequestParams) {
         var myCustomMessageProgressHelper = new CustomMessageProgressHelper(this.CurrentSession);
         myCustomMessageProgressHelper.BasicResponse = true;
-        myCustomMessageProgressHelper.StartProgress(params.PBId, 5, true);
+       // myCustomMessageProgressHelper.StartProgress(params.PBId, 5, true);
 
         //this.declarationMessagesService.PostCheckCustomFileCreditOnly(params)
         //    .subscribe((myServiceResponse: ServiceResponse) => {
