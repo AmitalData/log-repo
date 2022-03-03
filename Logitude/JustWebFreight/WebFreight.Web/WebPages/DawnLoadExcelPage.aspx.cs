@@ -95,7 +95,7 @@ namespace WebFreight.Web.WebPages
             if (isValid)
             {
                 isValid = false;
-                if ((IsUser(email, (int)tenant) || requestArea == "SharedLogistic") && CheckAvailablityTenantsForEmail(email, (int)tenant) || tenant == 0) isValid = true;
+                if (IsUser(email, (int)tenant)  || CheckAvailablityTenantsForEmail(email, (int)tenant) || tenant == 0) isValid = true;
             }
 
             if (isValid)
