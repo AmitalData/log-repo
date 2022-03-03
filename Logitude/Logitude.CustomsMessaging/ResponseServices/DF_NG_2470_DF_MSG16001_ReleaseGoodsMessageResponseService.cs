@@ -108,12 +108,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             myEventContextTagModel.StatusDateTime = statusDateTime;
                             declarationPM.DeclarationStatusTypeCode = "7";
 
-                            // update NoOfCourierHawbwWithoutHatara
-                            IUpdateOpenDeclarationInCourierMasterService myIUpdateOpenDeclarationInCourierMasterService = ContainerAccessor.Container.Resolve(typeof(IUpdateOpenDeclarationInCourierMasterService), "UpdateOpenDeclarationInCourierMasterService", new ParameterOverride("", declarationPM.Tenant)) as IUpdateOpenDeclarationInCourierMasterService;
-                            myIUpdateOpenDeclarationInCourierMasterService.UpdateOpenDeclarationInCourierMaster(declarationPM.Tenant, _CourierMasterPM.Id, null);
-
                             if (declarationPM.IsCourierDeclaration)
                             {
+                                // update NoOfCourierHawbwWithoutHatara
+                                IUpdateOpenDeclarationInCourierMasterService myIUpdateOpenDeclarationInCourierMasterService = ContainerAccessor.Container.Resolve(typeof(IUpdateOpenDeclarationInCourierMasterService), "UpdateOpenDeclarationInCourierMasterService", new ParameterOverride("", declarationPM.Tenant)) as IUpdateOpenDeclarationInCourierMasterService;
+                            myIUpdateOpenDeclarationInCourierMasterService.UpdateOpenDeclarationInCourierMaster(declarationPM.Tenant, _CourierMasterPM.Id, null);
+
+                        
                                 declarationPM.CourierCustomStatusCode = "1";
 
                                 string defValue = "";
