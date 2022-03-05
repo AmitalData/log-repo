@@ -312,7 +312,7 @@
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                    <span *ngIf="Surcharge1MinPriceVisibility && item.Surcharge1MinPriceValue != ''">
+                                                    <span *ngIf="Surcharge1MinPriceVisibility && item.Surcharge1MinPrice != null">
                                                         <img style="margin-right: 5px; " src="./Images/Icons/M-icon.png" width="16" height="16" [title]="item.Surcharge1MinPrice | NumbersPipe:'N3'" />
                                                     </span>
                                                     <span>{{item.Surcharge1Price | NumbersPipe:'N3'}}</span>
@@ -326,7 +326,7 @@
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                    <span *ngIf="Surcharge2MinPriceVisibility && item.Surcharge2MinPriceValue != ''">
+                                                    <span *ngIf="Surcharge2MinPriceVisibility && item.Surcharge2MinPrice != null">
                                                         <img style="margin-right: 5px; " src="./Images/Icons/M-icon.png" width="16" height="16" [title]="item.Surcharge2MinPrice | NumbersPipe:'N3'" />
                                                     </span>
                                                     <span>{{item.Surcharge2Price | NumbersPipe:'N3'}}</span>
@@ -341,7 +341,7 @@
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                    <span *ngIf="Surcharge3MinPriceVisibility && item.Surcharge3MinPriceValue != ''">
+                                                    <span *ngIf="Surcharge3MinPriceVisibility && item.Surcharge3MinPriceValue != null">
                                                         <img style="margin-right: 5px; " src="./Images/Icons/M-icon.png" width="16" height="16" [title]="item.Surcharge3MinPrice | NumbersPipe:'N3'" />
                                                     </span>
                                                     <span>{{item.Surcharge3Price | NumbersPipe:'N3'}}</span>
@@ -357,7 +357,7 @@
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                    <span *ngIf="Surcharge4MinPriceVisibility && item.Surcharge4MinPriceValue != ''">
+                                                    <span *ngIf="Surcharge4MinPriceVisibility && item.Surcharge4MinPriceValue != null">
                                                         <img style="margin-right: 5px; " src="./Images/Icons/M-icon.png" width="16" height="16" [title]="item.Surcharge4MinPrice | NumbersPipe:'N3'" />
                                                     </span>
                                                     <span>{{item.Surcharge4Price | NumbersPipe:'N3'}}</span>
@@ -371,7 +371,7 @@
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                    <span *ngIf="Surcharge5MinPriceVisibility && item.Surcharge5MinPriceValue != ''">
+                                                    <span *ngIf="Surcharge5MinPriceVisibility && item.Surcharge5MinPriceValue != nulkl">
                                                         <img style="margin-right: 5px; " src="./Images/Icons/M-icon.png" width="16" height="16" [title]="item.Surcharge5MinPrice | NumbersPipe:'N3'" />
                                                     </span>
                                                     <span>{{item.Surcharge5Price | NumbersPipe:'N3'}}</span>
@@ -385,7 +385,7 @@
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                    <span *ngIf="Surcharge6MinPriceVisibility && item.Surcharge6MinPriceValue != ''">
+                                                    <span *ngIf="Surcharge6MinPriceVisibility && item.Surcharge6MinPriceValue != null">
                                                         <img style="margin-right: 5px; " src="./Images/Icons/M-icon.png" width="16" height="16" [title]="item.Surcharge6MinPrice | NumbersPipe:'N3'" />
                                                     </span>
                                                     <span>{{item.Surcharge6Price | NumbersPipe:'N3'}}</span>
@@ -399,7 +399,7 @@
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                    <span *ngIf="Surcharge7MinPriceVisibility && item.Surcharge7MinPriceValue != ''">
+                                                    <span *ngIf="Surcharge7MinPriceVisibility && item.Surcharge7MinPriceValue != null">
                                                         <img style="margin-right: 5px; " src="./Images/Icons/M-icon.png" width="16" height="16" [title]="item.Surcharge7MinPrice | NumbersPipe:'N3'" />
                                                     </span>
                                                     <span>{{item.Surcharge7Price | NumbersPipe:'N3'}}</span>
@@ -413,7 +413,7 @@
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                    <span *ngIf="Surcharge8MinPriceVisibility && item.Surcharge8MinPriceValue != ''">
+                                                    <span *ngIf="Surcharge8MinPriceVisibility && item.Surcharge8MinPriceValue != null">
                                                         <img style="margin-right: 5px; " src="./Images/Icons/M-icon.png" width="16" height="16" [title]="item.Surcharge8MinPrice | NumbersPipe:'N3'" />
                                                     </span>
                                                     <span>{{item.Surcharge8Price | NumbersPipe:'N3'}}</span>
@@ -427,7 +427,7 @@
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                    <span *ngIf="Surcharge9MinPriceVisibility && item.Surcharge9MinPriceValue != ''">
+                                                    <span *ngIf="Surcharge9MinPriceVisibility && item.Surcharge9MinPriceValue != null">
                                                         <img style="margin-right: 5px; " src="./Images/Icons/M-icon.png" width="16" height="16" [title]="item.Surcharge9MinPrice | NumbersPipe:'N3'" />
                                                     </span>
                                                     <span>{{item.Surcharge9Price | NumbersPipe:'N3'}}</span>
@@ -441,7 +441,7 @@
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                    <span *ngIf="Surcharge10MinPriceVisibility && item.Surcharge10MinPriceValue != ''">
+                                                    <span *ngIf="Surcharge10MinPriceVisibility && item.Surcharge10MinPriceValue != null">
                                                         <img style="margin-right: 5px; " src="./Images/Icons/M-icon.png" width="16" height="16" [title]="item.Surcharge10MinPrice | NumbersPipe:'N3'" />
                                                     </span>
                                                     <span>{{item.Surcharge10Price | NumbersPipe:'N3'}}</span>
