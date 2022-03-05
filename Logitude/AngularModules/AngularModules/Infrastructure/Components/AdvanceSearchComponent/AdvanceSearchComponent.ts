@@ -355,13 +355,15 @@ export class AdvanceSearchComponent implements OnInit {
             this.SelectedObjectFields = [];
         }
         var filters = this.AdvancedQueryFilterPMs.filter(d => d.ObjectFieldCode == field.FieldCode);
-        // if (filters != null && filters[0] != null && filters[0].IsPredefined == true) {
-        //     var value = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldCode == field.FieldCode)[0].PredefinedValue;
-        //     alert(value)
-        //     value = null;
-        //     if (value == "#logged-user") filters[0].PredefinedValue = SessionLocator.LoggedUserPM.DontShowLocal ? SessionInfo.LoggedUserPM.EnglishName : SessionLocator.LoggedUserPM.LocalName;
-        //     this.FieldsValues.SetFieldValue(field.Id, value);
-        // }
+        if (filters != null && filters[0] != null && filters[0].IsPredefined == true) {
+            var value = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldCode == field.FieldCode)[0].PredefinedValue;
+            //alert(value)
+            var xxx = new Date();
+            xxx.setFullYear(2013, 11)
+            value = null;
+            if (value == "#logged-user") filters[0].PredefinedValue = SessionLocator.LoggedUserPM.DontShowLocal ? SessionInfo.LoggedUserPM.EnglishName : SessionLocator.LoggedUserPM.LocalName;
+            this.FieldsValues.SetFieldValue(field.Id, xxx);
+        }
         if (this.SelectedObjectFields.filter(a => a.FieldName == field.FieldName).length == 0) {
             if (field.DataTypeCode != "Constant") {
                 this.SelectedObjectFields.push(new FilterField(field, this.QueryCode, false, filters, this, this.pubSubService));
@@ -561,6 +563,7 @@ export class AdvanceSearchComponent implements OnInit {
             advanceFilter.Operator = field.Operation.Code;
             advanceFilter.PredefinedValue = predefinedValue;
             advanceFilter.IsPredefined = isPredifined;
+            advanceFilter.CustomPredefined = field.ObjectField.CustomPredefined;
             advanceFilter.UserId = SessionInfo.LoggedUserId;
             advanceFilter.ObjectFieldCode = field.ObjectField.FieldCode;
 

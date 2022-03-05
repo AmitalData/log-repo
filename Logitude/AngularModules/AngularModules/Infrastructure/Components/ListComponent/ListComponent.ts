@@ -661,6 +661,9 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.IsDemoTenant = true;
         }
 
+        if (this.ObjectTableName == "LedgerTransaction") {
+            this.IsAdvancedSearchOpened = true;
+        }
         this.NewButtonId = "NewButton_" + this.ObjectTableName;
 
         if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "NEW", false)) {
@@ -1756,6 +1759,15 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     onRowSelected($event) {
         if (this.listArgs.SuppressOnRowSelected == true) {
             console.log("SuppressOnRowSelected");
+            return;
+        }
+
+        if(this.SelectedQuery.Code == "LedgerTransactions") {
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        cmpRef.instance.ComponentRef = cmpRef;
+                        cmpRef.instance.Run({ EntityId: $event.rowData.JournalId, ObjectTableName: 'Journal' });
+                    });
             return;
         }
 

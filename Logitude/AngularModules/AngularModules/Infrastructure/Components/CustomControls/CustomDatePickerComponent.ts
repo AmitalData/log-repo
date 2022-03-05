@@ -148,6 +148,10 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
                 this.SelectedItem = stringDate + " - " + endingDate;
                 this.Text = stringDate + " - " + endingDate;
             }
+
+            if (predefinedFilter.PredefinedValue2 == "LastYear") {
+                this.SelectedItem = "Last Year";
+            }
             //Between
         }
         if (this.SelectedItem != null) {
@@ -430,9 +434,16 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
         this.GreaterTextValue = null;
         this.LesstextValue = null;
         var logitudeWindow = new LogitudeWindow();
+
+        var windowArgs: any = {};
+        windowArgs.QueryCode = this.QueryCode;
+
+
         logitudeWindow.Width = 408;
         logitudeWindow.Height = 330;
         logitudeWindow.Title = "Choose Dates";
+        logitudeWindow.WindowArgs = windowArgs;
+        
         logitudeWindow.Show('./Infrastructure/Components/CustomControls/ChooseDatesComponent');
         this.mouseOver = false;
         logitudeWindow.ComponentLoaded.subscribe((cmp) => {

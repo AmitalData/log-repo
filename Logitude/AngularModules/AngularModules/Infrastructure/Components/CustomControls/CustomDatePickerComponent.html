@@ -138,7 +138,7 @@
     <div class="ComboBoxDropdown" style="top:214px;border-top:solid 1px #aaaaaa" [attr.id]="DropdownId">
         <div class="ScrollViewer">
             <ul class="ScrollContent" [attr.id]="ListControlId">
-                <li class="TextTrimming" style="border:none;height: 22px;margin-top: 1px;min-height: 22px;padding-left: 5px;padding-right: 5px;text-align: left;width: 100%;">
+                <li [ngStyle]="QueryCode == 'LedgerTransaction.LedgerTransactions' && {'display': 'none'}" class="TextTrimming" style="border:none;height: 22px;margin-top: 1px;min-height: 22px;padding-left: 5px;padding-right: 5px;text-align: left;width: 100%;">
                     <table>
                         <tr>
                             <td style="width:90px;cursor:default;">Greater Than</td>
@@ -148,7 +148,7 @@
                         </tr>
                     </table>
                 </li>
-                <li class="TextTrimming" style="border:none;height: 22px;margin-top: 1px;min-height: 22px;padding-left: 5px;padding-right: 5px;text-align: left;width: 100%;">
+                <li [ngStyle]="QueryCode == 'LedgerTransaction.LedgerTransactions' && {'display': 'none'}" class="TextTrimming" style="border:none;height: 22px;margin-top: 1px;min-height: 22px;padding-left: 5px;padding-right: 5px;text-align: left;width: 100%;">
                     <table>
                         <tr>
                             <td style="width:90px;cursor:default;">Less Than</td>
