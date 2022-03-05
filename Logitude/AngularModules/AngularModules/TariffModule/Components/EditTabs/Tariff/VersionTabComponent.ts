@@ -510,6 +510,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
         var itemComponent = new AirCostTariffLineData(itemPM, this, true);
         logWindow.WindowArgs = { DataContext: itemComponent, EntityPM: itemPM, TariffType: this.EntityPM.TypeCode ,UnitOfMeasurementCode: this.EntityPM.UnitOfMeasurementCode };
         logWindow.Title = "New Tariff Line";
+        logWindow.Width = 800;
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
     }
 
@@ -517,6 +518,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = { DataContext: item, EntityPM: item.EntityPM, TariffType: this.EntityPM.TypeCode, UnitOfMeasurementCode:this.EntityPM.UnitOfMeasurementCode};
         logWindow.Title = "Edit Tariff Line";
+        logWindow.Width = 800;
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
     }
 

@@ -460,6 +460,7 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
         var itemComponent = new OceanFCLFreightTariffLineData(itemPM, this, true);
         logWindow.WindowArgs = { DataContext: itemComponent, EntityPM: itemPM, TariffType: this.EntityPM.TypeCode };
         logWindow.Title = "New Tariff Line";
+        logWindow.Width = 800;
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
     }
 
@@ -467,6 +468,7 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = { DataContext: item, EntityPM: item.EntityPM, TariffType: this.EntityPM.TypeCode };
         logWindow.Title = "Edit Tariff Line";
+        logWindow.Width = 800;
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
     }
 

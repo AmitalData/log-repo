@@ -137,7 +137,7 @@ export class AddEditTariffLineComponent  {
 
                 if (this.DataContext.IsDifferentCurrenciesPerCharge) {
                     if (this.TariffType == "OFS") {
-                        if (this.DataContext.ContainerPricesItemsSource.Collection.filter(d => AppTool.IsNullOrEmpty(d.CurrencyId)).length > 0) {
+                        if (this.DataContext.ContainerPricesItemsSource.filter(d => AppTool.IsNullOrEmpty(d.CurrencyId)).length > 0) {
                             errors.push("Some Containers Prices missing Currency");
                         }
                     }
@@ -200,7 +200,7 @@ export class AddEditTariffLineComponent  {
             
             if (this.TariffType == "OFS") {
                 if (this.DataContext.ContainerPricesItemsSource) {
-                    this.DataContext.ContainerPricesItemsSource.Collection.forEach((item) => {
+                    this.DataContext.ContainerPricesItemsSource.forEach((item) => {
                         if (item.IsNewEntity && (!AppTool.IsNullOrZero(item.Price1) || !AppTool.IsNullOrZero(item.Price2) || !AppTool.IsNullOrZero(item.Price3)
                             || !AppTool.IsNullOrZero(item.Price4) || !AppTool.IsNullOrZero(item.Price5)) || !AppTool.IsNullOrZero(item.CostPrice)
                             || !AppTool.IsNullOrEmpty(item.CurrencyId)) {
@@ -304,7 +304,7 @@ export class AddEditTariffLineComponent  {
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.FatherComponent.CurrentVersion);
         this.myCloner.AddEntity(this.DataContext.FatherComponent.EntityPM);
-        this.myCloner.AddEntity(this.DataContext.ContainerPricesItemsSource.Collection);
+        this.myCloner.AddEntity(this.DataContext.ContainerPricesItemsSource);
     }
 
     private RejectChanges() {
