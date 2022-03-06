@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
@@ -46,11 +47,9 @@ namespace Simplog.Data.CommonDataModel.Repositories
        
         public ContactTenant GetSingleContactTenant(string id, int tenant)
         {
-            return (from record in context.ContactTenants where record.Id == id && record.TenantId == tenant select record).FirstOrDefault();
+            return (from record in context.ContactTenants.Include("Contact") 
+                    where record.Id == id && record.TenantId == tenant select record).FirstOrDefault();
         }
-
-      
-
 
         public void Add(ContactTenant entity)
         {

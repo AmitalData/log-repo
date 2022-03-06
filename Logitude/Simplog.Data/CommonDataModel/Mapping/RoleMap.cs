@@ -29,6 +29,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ParentRoleId).HasColumnName("ParentRoleId");
             this.Property(t => t.IsCustomRole).HasColumnName("IsCustomRole");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
+            this.Property(t => t.Inactive).HasColumnName("Inactive");
 
             this.HasRequired(t => t.RoleType).WithMany().HasForeignKey(d => d.RoleTypeCode);
         }
