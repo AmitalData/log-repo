@@ -15,6 +15,7 @@ export class ChooseDatesComponent {
     public ValidationErrorsList: string[] = [];
     public DateSelected: EventEmitter<any> = new EventEmitter();
     private selectedToDate: any;
+    private lastYearDays: number = 366;
     public get SelectedToDate() { return this.selectedToDate; }
     public set SelectedToDate(newValue: any) {
         this.selectedToDate = newValue; 
@@ -62,7 +63,7 @@ export class ChooseDatesComponent {
 
         if(this.QueryCode == "LedgerTransaction.LedgerTransactions" && ValidationErrors.length == 0) {
             var dateDifference = this.calculateDiff(this.SelectedFromDate, this.SelectedToDate)
-            if(dateDifference > 366) {
+            if(dateDifference > this.lastYearDays) {
                 ValidationErrors.push("The difference between date from and date to should not be more than one year");
             }
         }
