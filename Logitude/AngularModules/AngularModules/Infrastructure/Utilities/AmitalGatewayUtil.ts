@@ -999,7 +999,7 @@ export class AmitalGatewayUtil {
         public static get RaisePrintStimulReturnCanIContinueMessage() { return "RaisePrintStimulReturnCanIContinueMessage"; }  //Yuval Chalup 26.07.2015 TASK-14849
         public static get ResponseInstructionCancel() { return "Response.InstructionCancel"; } //Yuval Chalup 11.10.2015 AMI-54798
         public static get OpenNewBrowser() { return "OpenNewBrowser"; }
-        public static get UnifreightEntity() { return "CFIFILEM"; }
+        //public static get UnifreightEntity() { return "CFIFILEM"; }
 
 
 
@@ -1058,9 +1058,9 @@ export class AmitalGatewayUtil {
 
         public static RaiseCFIFILMLockReturnCFIFILMAlreadyLock
             (UnifreightEntityNumber: string,
-            LogitudeEntityNumber: string, ViewModelName: string) {
+                LogitudeEntityNumber: string, ViewModelName: string, UnifreightEntity: string) {
 
-            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName, UnifreightEntity);
             unifreightMessageM.LogitudeCommandId
             unifreightMessageM.Requset.push(["ExpectedCallBack", AmitalGatewayUtil.Instance.DeclarationMessaging.ResponseCFIFILMAlreadyLockKey]);
 
@@ -1121,9 +1121,12 @@ export class AmitalGatewayUtil {
 
         
         static GetMessage(UnifreightEntityNumber: string,
-            LogitudeEntityNumber: string, LogitudeViewModel: string): UnifreightMessageM {
+            LogitudeEntityNumber: string, LogitudeViewModel: string,
+            UnifreightEntity: string='CFIFILEM'
+
+        ): UnifreightMessageM {
             var unifreightMessageM = new UnifreightMessageM();
-            unifreightMessageM.UnifreightEntity = AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity;
+            unifreightMessageM.UnifreightEntity = UnifreightEntity;//AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity;
             unifreightMessageM.UnifreightEntityNumber = UnifreightEntityNumber;
             unifreightMessageM.LogitudeEntity = AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration;
             unifreightMessageM.LogitudeEntityNumber = LogitudeEntityNumber;
