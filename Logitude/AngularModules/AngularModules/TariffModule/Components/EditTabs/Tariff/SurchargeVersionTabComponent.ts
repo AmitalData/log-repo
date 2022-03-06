@@ -25,6 +25,8 @@ import { TariffVersionExtendedPMService } from '../../../Services/ExtendedPMs/Ta
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 import { UpdateTariffArgs } from '../../../Args';
 import { AirSurchargeTariffLineData } from '../../../../TariffModule/Components/EditTabs/Tariff/TariffLineData';
+import { CurrencyListService } from '../../../../Common/Services/StandardLists/CurrencyListService';
+import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
 
 @Component({    
     templateUrl: './SurchargeVersionTabComponent.html',
@@ -80,6 +82,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
     public AllChargesTypes: ChargesTypeList[];
     public AllMeasurements: MeasurementList[];
+    public AllCurrencies: CurrencyList[];
     public LineIdFromPriceCheck: string;
     Intialize(args: any) {
         this.TariffsLinesSource = new ObservableCollection([]);
@@ -99,9 +102,9 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
         this.GetTariffSettings();
 
-
         var iChargesTypeListService = new ChargesTypeListService();
         var iMeasurementListService = new MeasurementListService();
+        var currencyListService = new CurrencyListService();
 
         iChargesTypeListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
@@ -111,22 +114,24 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                     if (!myResponse2.HasError) {
                         this.AllMeasurements = myResponse2.Result;
 
-                        this.LoadCompareToVersions();
+                        currencyListService.getAllFromCache().subscribe((myResponse3: ServiceResponse) => {
+                            this.AllCurrencies = myResponse3.Result;
 
-                        this.SetUIProperties();
-                        this.SetSurchargesLabelsAndVisibility();
-
-                        if (this.CurrentVersion.IsDraft) {
-                            this.FillTariffLines(this.CurrentVersion.TariffLines);
-                        }
-
-                        else {
-                            this.LoadTariffLines("currentVersion");
-                        }
+                            this.LoadCompareToVersions();
+                            this.SetUIProperties();
+                            this.SetSurchargesLabelsAndVisibility();
+                            if (this.CurrentVersion.IsDraft) {
+                                this.FillTariffLines(this.CurrentVersion.TariffLines);
+                            }
+                            else {
+                                this.LoadTariffLines("currentVersion");
+                            }
+                        });
                     }
                 });
             }
         });
+       
         this.SetOriginDependencyFilterValue();
     }
 
@@ -332,7 +337,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                 var isMeasurmentFixed: boolean = false;
                 var iMeasurement: MeasurementList = this.AllMeasurements.filter(f => f.Id == iMeasurementId)[0];
                 if (iMeasurement) {
-                    item.DisplyText = iChargeType.EnglishName + " (" + iMeasurement.Code + ")";
+                    item.DisplyText = iChargeType.EnglishName; //+ " (" + iMeasurement.Code + ")";
                     item.AdditionalField = iMeasurement.Code;
 
                     if (iMeasurement.Code == "FIXD") {
@@ -590,7 +595,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         var itemComponent = new AirSurchargeTariffLineData(itemPM, this, true);
         logWindow.WindowArgs = { DataContext: itemComponent, EntityPM: itemPM, TariffType: this.EntityPM.TypeCode };
         logWindow.Title = "New Tariff Line";
-        logWindow.Width = 700;
+        logWindow.Width = 800;
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
     }
 
@@ -598,6 +603,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = { DataContext: item, EntityPM: item.EntityPM, TariffType: this.EntityPM.TypeCode };
         logWindow.Title = "Edit Tariff Line";
+        logWindow.Width = 800;
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
     }
         

@@ -930,6 +930,17 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     public ComparedEntity: TariffLinePM;
     private initialIndex: number;
     private lineCurrencyId: string;
+    public Surcharge1CurrencyMeasurementLabel: string;
+    public Surcharge2CurrencyMeasurementLabel: string;
+    public Surcharge3CurrencyMeasurementLabel: string;
+    public Surcharge4CurrencyMeasurementLabel: string;
+    public Surcharge5CurrencyMeasurementLabel: string;
+    public Surcharge6CurrencyMeasurementLabel: string;
+    public Surcharge7CurrencyMeasurementLabel: string;
+    public Surcharge8CurrencyMeasurementLabel: string;
+    public Surcharge9CurrencyMeasurementLabel: string;
+    public Surcharge10CurrencyMeasurementLabel: string;
+
     constructor(entity: TariffLinePM, public FatherComponent: SurchargeVersionTabComponent, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
@@ -939,6 +950,36 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         this.SetUIProperties();
         this.SetCellColorsForPriceCheck();
         this.lineCurrencyId = this.EntityPM.CurrencyId;
+        this.FillAllSurchargesCurrencyMeasurementLabel();
+    }
+
+    private FillAllSurchargesCurrencyMeasurementLabel() {
+        for (var index = 1; index <= 10; index++) {
+            this.FillCurrencyMeasurementLabel(index);
+        }
+    }
+
+    private FillCurrencyMeasurementLabel(index) {
+        var currencyMeasurementLabel = "";
+        if (this.FatherComponent.AllMeasurements) {
+            var iMeasurement = this.FatherComponent.AllMeasurements.filter(f => f.Id == this.FatherComponent.EntityPM['Surcharge' + index + 'UOM'])[0];
+            var currency = this.FatherComponent.AllCurrencies.filter(f => f.Id == this["Surcharge" + index + "CurrencyId"])[0];
+            var currencyCode = currency != null ? currency.Code : "";
+            if (iMeasurement) {
+                if (iMeasurement.Code == "FIXD") {
+                    currencyMeasurementLabel = currencyCode;
+                }
+                else if (iMeasurement.Code == "PRFR" || iMeasurement.Code == "PRVL" || iMeasurement.Code == "PFCL") {
+
+                    currencyMeasurementLabel = "% " + iMeasurement.Code;
+                }
+                else {
+                    currencyMeasurementLabel = !AppTool.IsNullOrEmpty(currencyCode) ? currencyCode + "/" + iMeasurement.Code : iMeasurement.Code ;
+                }
+
+                this['Surcharge' + index + 'CurrencyMeasurementLabel'] = currencyMeasurementLabel;
+            }
+        }
     }
 
     public CellColor: string = "transparent";
@@ -1794,6 +1835,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge1CurrencyId != value) {
             this.EntityPM.Surcharge1CurrencyId = value;
             this.EntityPM.LineEdited = true;
+            this.FillAllSurchargesCurrencyMeasurementLabel();
         }
     }
 
@@ -1804,6 +1846,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge2CurrencyId != value) {
             this.EntityPM.Surcharge2CurrencyId = value;
             this.EntityPM.LineEdited = true;
+            this.FillAllSurchargesCurrencyMeasurementLabel();
         }
     }
 
@@ -1814,6 +1857,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge3CurrencyId != value) {
             this.EntityPM.Surcharge3CurrencyId = value;
             this.EntityPM.LineEdited = true;
+            this.FillAllSurchargesCurrencyMeasurementLabel();
         }
     }
 
@@ -1824,6 +1868,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge4CurrencyId != value) {
             this.EntityPM.Surcharge4CurrencyId = value;
             this.EntityPM.LineEdited = true;
+            this.FillAllSurchargesCurrencyMeasurementLabel();
         }
     }
 
@@ -1834,6 +1879,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge5CurrencyId != value) {
             this.EntityPM.Surcharge5CurrencyId = value;
             this.EntityPM.LineEdited = true;
+            this.FillAllSurchargesCurrencyMeasurementLabel();
         }
     }
 
@@ -1844,6 +1890,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge6CurrencyId != value) {
             this.EntityPM.Surcharge6CurrencyId = value;
             this.EntityPM.LineEdited = true;
+            this.FillAllSurchargesCurrencyMeasurementLabel();
         }
     }
 
@@ -1854,6 +1901,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge7CurrencyId != value) {
             this.EntityPM.Surcharge7CurrencyId = value;
             this.EntityPM.LineEdited = true;
+            this.FillAllSurchargesCurrencyMeasurementLabel();
         }
     }
 
@@ -1864,6 +1912,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge8CurrencyId != value) {
             this.EntityPM.Surcharge8CurrencyId = value;
             this.EntityPM.LineEdited = true;
+            this.FillAllSurchargesCurrencyMeasurementLabel();
         }
     }
 
@@ -1874,6 +1923,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge9CurrencyId != value) {
             this.EntityPM.Surcharge9CurrencyId = value;
             this.EntityPM.LineEdited = true;
+            this.FillAllSurchargesCurrencyMeasurementLabel();
         }
     }
 
@@ -1884,6 +1934,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge10CurrencyId != value) {
             this.EntityPM.Surcharge10CurrencyId = value;
             this.EntityPM.LineEdited = true;
+            this.FillAllSurchargesCurrencyMeasurementLabel();
         }
     }
 

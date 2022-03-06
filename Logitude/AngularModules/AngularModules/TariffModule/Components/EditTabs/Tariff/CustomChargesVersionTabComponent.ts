@@ -23,10 +23,11 @@ import { DatePipe } from '@angular/common';
 import { TariffVersionExtendedPMService } from '../../../Services/ExtendedPMs/TariffVersionExtendedPMService';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 import { CountryList } from '../../../../Common/EntityLists/CountryList';
-import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
 import { AddressList } from '../../../../Common/EntityLists/AddressList';
 import { AddressListService } from '../../../../Common/Services/StandardLists/AddressListService';
 import { PartnersDomainService } from '../../../../Common/Services/PartnersDomainService';
+import { CurrencyListService } from '../../../../Common/Services/StandardLists/CurrencyListService';
+import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
 
 @Component({
     templateUrl: './CustomChargesVersionTabComponent.html',
@@ -58,6 +59,7 @@ export class CustomChargesVersionTabComponent extends BaseComponent implements O
 
     public AllChargesTypes: ChargesTypeList[];
     public AllMeasurements: MeasurementList[];
+    public AllCurrencies: CurrencyList[];
     public LineIdFromPriceCheck: string;
     Intialize(args: any) {
         this.TariffsLinesSource = new ObservableCollection([]);
@@ -79,6 +81,7 @@ export class CustomChargesVersionTabComponent extends BaseComponent implements O
 
         var iChargesTypeListService = new ChargesTypeListService();
         var iMeasurementListService = new MeasurementListService();
+        var currencyListService = new CurrencyListService();
 
         iChargesTypeListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
@@ -88,17 +91,21 @@ export class CustomChargesVersionTabComponent extends BaseComponent implements O
                     if (!myResponse2.HasError) {
                         this.AllMeasurements = myResponse2.Result;
 
-                        this.LoadCompareToVersions();
-                        this.SetUIProperties();
-                        this.SetSurchargesLabelsAndVisibility();
+                        currencyListService.getAllFromCache().subscribe((myResponse3: ServiceResponse) => {
+                            this.AllCurrencies = myResponse3.Result;
 
-                        if (this.CurrentVersion.IsDraft) {
-                            this.FillTariffLines(this.CurrentVersion.TariffLines);
-                        }
+                            this.LoadCompareToVersions();
+                            this.SetUIProperties();
+                            this.SetSurchargesLabelsAndVisibility();
 
-                        else {
-                            this.LoadTariffLines("currentVersion");
-                        }
+                            if (this.CurrentVersion.IsDraft) {
+                                this.FillTariffLines(this.CurrentVersion.TariffLines);
+                            }
+
+                            else {
+                                this.LoadTariffLines("currentVersion");
+                            }
+                        });
                     }
                 });
             }
@@ -294,7 +301,7 @@ export class CustomChargesVersionTabComponent extends BaseComponent implements O
                 var isMeasurmentFixed: boolean = false;
                 var iMeasurement: MeasurementList = this.AllMeasurements.filter(f => f.Id == iMeasurementId)[0];
                 if (iMeasurement) {
-                    item.DisplyText = iChargeType.EnglishName + " (" + iMeasurement.Code + ")";
+                    item.DisplyText = iChargeType.EnglishName; // + " (" + iMeasurement.Code + ")";
                     item.AdditionalField = iMeasurement.Code;
 
                     if (iMeasurement.Code == "FIXD") {
@@ -554,7 +561,7 @@ export class CustomChargesVersionTabComponent extends BaseComponent implements O
                 var itemComponent = new CustomsChargesTariffLineData(itemPM, this, true);
                 logWindow.WindowArgs = { DataContext: itemComponent, EntityPM: itemPM, TariffType: this.EntityPM.TypeCode };
                 logWindow.Title = "New Tariff Line";
-                logWindow.Width = 700;
+                logWindow.Width = 800;
                 logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
             }
         });
@@ -564,6 +571,7 @@ export class CustomChargesVersionTabComponent extends BaseComponent implements O
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = { DataContext: item, EntityPM: item.EntityPM, TariffType: this.EntityPM.TypeCode };
         logWindow.Title = "Edit Tariff Line";
+        logWindow.Width = 800;
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
     }
 
@@ -745,6 +753,16 @@ export class CustomsChargesTariffLineData extends BaseComponent {
     public ComparedEntity: TariffLinePM;
     private initialIndex: number;
     private lineCurrencyId: string;
+    public Surcharge1CurrencyMeasurementLabel: string;
+    public Surcharge2CurrencyMeasurementLabel: string;
+    public Surcharge3CurrencyMeasurementLabel: string;
+    public Surcharge4CurrencyMeasurementLabel: string;
+    public Surcharge5CurrencyMeasurementLabel: string;
+    public Surcharge6CurrencyMeasurementLabel: string;
+    public Surcharge7CurrencyMeasurementLabel: string;
+    public Surcharge8CurrencyMeasurementLabel: string;
+    public Surcharge9CurrencyMeasurementLabel: string;
+    public Surcharge10CurrencyMeasurementLabel: string;
     constructor(entity: TariffLinePM, public FatherComponent: CustomChargesVersionTabComponent, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
@@ -754,6 +772,36 @@ export class CustomsChargesTariffLineData extends BaseComponent {
         this.lineCurrencyId = this.EntityPM.CurrencyId;
         this.SetUIProperties();
         this.SetCellColorsForPriceCheck();
+        this.FillAllSurchargesCurrencyMeasurementLabel();
+    }
+
+    private FillAllSurchargesCurrencyMeasurementLabel() {
+        for (var index = 1; index <= 10; index++) {
+            this.FillCurrencyMeasurementLabel(index);
+        }
+    }
+
+    private FillCurrencyMeasurementLabel(index) {
+        var currencyMeasurementLabel = "";
+        if (this.FatherComponent.AllMeasurements) {
+            var iMeasurement = this.FatherComponent.AllMeasurements.filter(f => f.Id == this.FatherComponent.EntityPM['Surcharge' + index + 'UOM'])[0];
+            var currency = this.FatherComponent.AllCurrencies.filter(f => f.Id == this["Surcharge" + index + "CurrencyId"])[0];
+            var currencyCode = currency != null ? currency.Code : "";
+            if (iMeasurement) {
+                if (iMeasurement.Code == "FIXD") {
+                    currencyMeasurementLabel = currencyCode;
+                }
+                else if (iMeasurement.Code == "PRFR" || iMeasurement.Code == "PRVL" || iMeasurement.Code == "PFCL") {
+
+                    currencyMeasurementLabel = "% " + iMeasurement.Code;
+                }
+                else {
+                    currencyMeasurementLabel = !AppTool.IsNullOrEmpty(currencyCode) ? currencyCode + "/" + iMeasurement.Code : iMeasurement.Code;
+                }
+
+                this['Surcharge' + index + 'CurrencyMeasurementLabel'] = currencyMeasurementLabel;
+            }
+        }
     }
 
     public CellColor: string = "transparent";
@@ -1249,6 +1297,7 @@ export class CustomsChargesTariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge1CurrencyId != value) {
             this.EntityPM.Surcharge1CurrencyId = value;
             this.EntityPM.LineEdited = true;
+            this.FillAllSurchargesCurrencyMeasurementLabel();
         }
     }
 
@@ -1259,6 +1308,7 @@ export class CustomsChargesTariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge2CurrencyId != value) {
             this.EntityPM.Surcharge2CurrencyId = value;
             this.EntityPM.LineEdited = true;
+            this.FillAllSurchargesCurrencyMeasurementLabel();
         }
     }
 
@@ -1269,6 +1319,7 @@ export class CustomsChargesTariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge3CurrencyId != value) {
             this.EntityPM.Surcharge3CurrencyId = value;
             this.EntityPM.LineEdited = true;
+            this.FillAllSurchargesCurrencyMeasurementLabel();
         }
     }
 
@@ -1279,6 +1330,7 @@ export class CustomsChargesTariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge4CurrencyId != value) {
             this.EntityPM.Surcharge4CurrencyId = value;
             this.EntityPM.LineEdited = true;
+            this.FillAllSurchargesCurrencyMeasurementLabel();
         }
     }
 
@@ -1289,6 +1341,7 @@ export class CustomsChargesTariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge5CurrencyId != value) {
             this.EntityPM.Surcharge5CurrencyId = value;
             this.EntityPM.LineEdited = true;
+            this.FillAllSurchargesCurrencyMeasurementLabel();
         }
     }
 
@@ -1299,6 +1352,7 @@ export class CustomsChargesTariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge6CurrencyId != value) {
             this.EntityPM.Surcharge6CurrencyId = value;
             this.EntityPM.LineEdited = true;
+            this.FillAllSurchargesCurrencyMeasurementLabel();
         }
     }
 
@@ -1309,6 +1363,7 @@ export class CustomsChargesTariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge7CurrencyId != value) {
             this.EntityPM.Surcharge7CurrencyId = value;
             this.EntityPM.LineEdited = true;
+            this.FillAllSurchargesCurrencyMeasurementLabel();
         }
     }
 
@@ -1319,6 +1374,7 @@ export class CustomsChargesTariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge8CurrencyId != value) {
             this.EntityPM.Surcharge8CurrencyId = value;
             this.EntityPM.LineEdited = true;
+            this.FillAllSurchargesCurrencyMeasurementLabel();
         }
     }
 
@@ -1329,6 +1385,7 @@ export class CustomsChargesTariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge9CurrencyId != value) {
             this.EntityPM.Surcharge9CurrencyId = value;
             this.EntityPM.LineEdited = true;
+            this.FillAllSurchargesCurrencyMeasurementLabel();
         }
     }
 
@@ -1339,6 +1396,7 @@ export class CustomsChargesTariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge10CurrencyId != value) {
             this.EntityPM.Surcharge10CurrencyId = value;
             this.EntityPM.LineEdited = true;
+            this.FillAllSurchargesCurrencyMeasurementLabel();
         }
     }
 
