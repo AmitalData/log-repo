@@ -668,6 +668,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             entityPM.VolumeUnitCode = entityAM.VolumeUnitCode;
             entityPM.OrderIsDangerouseGoods = entityAM.IsDangerouseOfGoods;
             entityPM.PrivateLabelAgentName = entityAM.AgentName;
+            entityPM.IsShipmentOrder = entityAM.IsShipmentOrder;
 
             if (!string.IsNullOrEmpty(entityAM.DeclarationXMLData))
             {

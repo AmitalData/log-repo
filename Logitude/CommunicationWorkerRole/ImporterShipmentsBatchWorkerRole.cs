@@ -399,6 +399,7 @@ namespace CommunicationWorkerRole
                                                         ForwardingPartnerTenant = Shipment.ForwardingPartnerId,
                                                         IsDangerouseOfGoods = Shipment.OrderIsDangerouseGoods,
                                                         AgentName = Shipment.PrivateLabelAgentName,
+                                                        IsShipmentOrder = Shipment.IsShipmentOrder,
                                                         Customer = new CodeProperties()
                                                         {
                                                             Code = CustomerCode
@@ -637,6 +638,7 @@ namespace CommunicationWorkerRole
                                                         ForwardingPartnerTenant = Shipment.ForwardingPartnerId,
                                                         IsDangerouseOfGoods = Shipment.OrderIsDangerouseGoods,
                                                         AgentName = Shipment.PrivateLabelAgentName,
+                                                        IsShipmentOrder = Shipment.IsShipmentOrder,
                                                         Customer = new CodeProperties()
                                                         {
                                                             Code = CustomerCode

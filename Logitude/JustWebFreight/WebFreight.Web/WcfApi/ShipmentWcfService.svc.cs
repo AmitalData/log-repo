@@ -686,7 +686,6 @@ namespace WebFreight.Web.WcfApi
                     #endregion
 
                     MapDatesFields(entityPM, shipmentAdditionalCloudDataRepository, shipmentRepository);
-                    entityPM.IsShipmentOrder = false;
 
                     if (response.HasError)
                     {
@@ -746,6 +745,7 @@ namespace WebFreight.Web.WcfApi
                         entityPM.StatusId = entity.StatusId;
                         entityPM.StatusDate = entity.StatusDate;
                         entityPM.LastStatusLogDate = entity.LastStatusLogDate;
+                        entityPM.IsShipmentOrder = false;
 
                         if (entity.ShipmentLevelCode == "H" && entityPM.ShipmentLevelCode == "D")
                         {
