@@ -1699,7 +1699,7 @@ namespace WebFreight.Web.WebServices
 
                 case "PORT":
                     {
-                        countryCode = args.MainCarriageToPortCountryCode;
+                        countryCode = this.GetInlanDomesticPortCountryCode(args.MainCarriageToPortId);
                         break;
                     }
 
@@ -1713,13 +1713,13 @@ namespace WebFreight.Web.WebServices
         }
         private string GetInlanDomesticPortCountryCode(string portId)
         {
-            string countryName = "";
+            string countryCode = "";
             PortPM myPort = PortQuery.GetSinglePort(tenant, portId, true);
             if (myPort != null)
             {
-                countryName = myPort.CountryCode;
+                countryCode = myPort.CountryCode;
             }
-            return countryName;
+            return countryCode;
         }
         private string GetInlanDomesticPartnerCoutntryCode(string addressId)
         {
