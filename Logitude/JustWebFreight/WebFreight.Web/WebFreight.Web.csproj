@@ -1064,6 +1064,7 @@
     <Compile Include="Controllers\CargoTrackingModel\Generated\ListControllers\CargoTrackingShipmentSearchViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\HelpResourceController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\InterestReportController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\ImageLibraryExtendedListController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\WorkerRoleNameExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\BIReportFolderExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\EntityStatusTypeViewsController.Generated.cs" />
@@ -5089,6 +5090,7 @@
     <Content Include="WebPages\DownLoadImage.aspx" />
     <Content Include="WebPages\DownloadingPage.aspx" />
     <Content Include="WebPages\DownloadTemplateDocumentPage.aspx" />
+    <Content Include="WebPages\ImageLibraryDownloadPage.aspx" />
     <Content Include="WebPages\ReportPdfDownLoad.aspx" />
     <Content Include="WebPages\TermsOfUseDownloadPage.aspx" />
     <Content Include="WebPages\xml2HTML.xsl" />
@@ -7068,6 +7070,13 @@
     </Compile>
     <Compile Include="WebPages\HowToDownloadPage.aspx.designer.cs">
       <DependentUpon>HowToDownloadPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebPages\ImageLibraryDownloadPage.aspx.cs">
+      <DependentUpon>ImageLibraryDownloadPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPages\ImageLibraryDownloadPage.aspx.designer.cs">
+      <DependentUpon>ImageLibraryDownloadPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebPages\MergeAllPage.aspx.cs">
       <DependentUpon>MergeAllPage.aspx</DependentUpon>
