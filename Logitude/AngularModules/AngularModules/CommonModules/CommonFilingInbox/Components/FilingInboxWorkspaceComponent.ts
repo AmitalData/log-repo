@@ -1233,6 +1233,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
         this.IsVisible = false;
         this.LoadAllData();
     }
+
     FileButtonClicked() {
         if (this.SelectedFilingInbox != null) {
             this.CurrentSession.StartBusyIndicator("Filing ...");
@@ -1430,7 +1431,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
         this.myCommonDomainService.PutFilingInboxLogs(summary).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 this.IsClear = false;
-                this.IsFromCompleteFiling = true;
+                this.IsFromCompleteFiling = !summary.IsDeleted;
                 this.ClearConnectToFilter();
                 this.IsVisible = false;
                 this.LoadAllData();
