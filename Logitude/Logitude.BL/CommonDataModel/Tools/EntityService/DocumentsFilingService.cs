@@ -1277,9 +1277,20 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             else
                             {
 
-                                IDICustomsSettingQueryService customsSettingQueryService= ContainerAccessor.Container.Resolve(typeof(IDICustomsSettingQueryService), "DICustomsSettingQueryService", new ParameterOverride("", tenant)) as IDICustomsSettingQueryService;
+                                //INSERT INTO "TOGGLES" (CODE, NAME, SEARCHFIELDS) VALUES ('HCD', 'Hybrid Courier document-Prevent feedback', 'Hybrid document-Prevent feedback')
+                                //INSERT INTO "FEATURETOGGLES"(ID, TENANT, CREATEDATE, CREATEDBYUSERID, UPDATEDATE, UPDATEDBYUSERID, SEARCHFIELDS, TENANTNUMBER, INACTIVE, TOGGLECODE) VALUES('HCD', '1', TO_TIMESTAMP('2022-03-06 14:19:28.729000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', TO_TIMESTAMP('2022-03-06 14:19:46.456000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', 'HCD', '1', '0', 'HCD')
+
+                                IDICustomsSettingQueryService customsSettingQueryService = ContainerAccessor.Container.Resolve(typeof(IDICustomsSettingQueryService), "DICustomsSettingQueryService", new ParameterOverride("", tenant)) as IDICustomsSettingQueryService;
                                 var IsCourierTenant=customsSettingQueryService.IsCourierTenant(tenant);
-                                if (!IsCourierTenant)
+                                bool sendHybridM = true;
+                                if (IsCourierTenant)
+                                {
+                                    if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("HCD", tenant))
+                                    {
+                                        sendHybridM = false;
+                                    }
+                                }
+                                if (sendHybridM)
                                 {
                                     List<QueueTask> queue1Tasks = new List<QueueTask>();
 
