@@ -17,8 +17,7 @@ import { ShipmentContainersWebService } from '../../../Shipment/Services/Shipmen
 import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList'; 
 import { DocumentTypePMExtendedService } from 'Common/Services/ExtendedPMs/DocumentTypePMExtendedService';
 
-@Component({
-    
+@Component({    
     templateUrl: './ShipmentHelperComponent.html',
 })
 
@@ -226,8 +225,10 @@ export class ShipmentHelperComponent implements OnDestroy {
             this.CheckABMVisibility();
             this.CheckAESVisibility();
 
-            if (this.IsABMVisible || this.IsAESVisible || this.IsATMSVisible_BOL || this.IsATMSVisible_VOG) {
-                this.IsSendToCustomVisible = true;
+            if (ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagementInShipments) {
+                if (this.IsABMVisible || this.IsAESVisible || this.IsATMSVisible_BOL || this.IsATMSVisible_VOG) {
+                    this.IsSendToCustomVisible = true;
+                }
             }
         }
     }
