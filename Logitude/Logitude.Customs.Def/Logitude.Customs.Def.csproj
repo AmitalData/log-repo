@@ -90,6 +90,7 @@
     <Compile Include="EntityPMs\Generated\CustomerIdentificationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomerIndicationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsEnvironmentSettingPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsDocumentUploadPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsShipPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationCasualDetailsPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationExportRecipientPM.Generated.cs" />
