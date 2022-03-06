@@ -166,7 +166,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
 
       switch (this._SelectedMissedDocsValue) {
           case "T": {
-              filters.addAdditionalFilter("MissedDocumentStatusCode", "T", null, null, "Equals", false, false, false, "string");
+              filters.addAdditionalFilter("MissedDocumentStatusCode", null, null, null, "Equals", false, false, false, "string");
               break;
           }
           case "I": {

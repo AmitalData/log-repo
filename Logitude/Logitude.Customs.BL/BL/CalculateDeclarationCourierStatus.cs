@@ -193,12 +193,17 @@ namespace Logitude.Customs.BL.BL
 
             if (existCustomsDocumentTypes == null || existCustomsDocumentTypes.Count == 0)
             {
-                myDeclarationCourierStatusPM.MissedDocumentStatusCode = "T";
+                myDeclarationCourierStatusPM.MissedDocumentStatusCode = null;//חסר שניהם
             }
             else
             {
                 if (existCustomsDocumentTypes.Count == 1)
                     myDeclarationCourierStatusPM.MissedDocumentStatusCode = existCustomsDocumentTypes.Contains("380") ? "C" : "I";
+                else
+                {
+                    myDeclarationCourierStatusPM.MissedDocumentStatusCode = "V";
+
+                }
             }
         }
 

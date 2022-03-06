@@ -455,7 +455,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                 //LogMessagingUtil.Instance.AppendLine("currentDeclarationCourierStatusPM.DocumentStatusCode: " + currentDeclarationCourierStatusPM.DocumentStatusCode);
                 currentDeclarationCourierStatusPM.DocumentStatusCode = "V";
                 calculateDeclarationCourierStatus.CalcDocumentStatusCode(currentDeclarationCourierStatusPM);//// will change if wrong !!!
-                calculateDeclarationCourierStatus.CalcMissingDocumentStatusCode(currentDeclarationCourierStatusPM);
                 if (currentDeclarationCourierStatusPM.DocumentStatusCode == "V")
                 {
                     LogMessagingUtil.Instance.AppendLine($"currentDeclarationCourierStatusPM.DocumentStatusCode: {currentDeclarationCourierStatusPM.DocumentStatusCode}  change 2 V");
