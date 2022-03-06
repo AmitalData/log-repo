@@ -141,7 +141,8 @@ export class DeclarationShortTitleComponent {
 
         var unifreightMessageM =
             AmitalGatewayUtil.Instance.
-                DeclarationMessaging.GetMessage(this.EntityPM.CustomFileNo, this.EntityPM.Id, myViewModelName);
+                DeclarationMessaging.GetMessage(this.EntityPM.CustomFileNo, this.EntityPM.Id, myViewModelName
+                    , AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity(this.EntityPM.Direction));
 
 
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(

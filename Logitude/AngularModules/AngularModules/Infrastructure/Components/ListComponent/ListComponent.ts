@@ -2397,7 +2397,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             var unifreightMessageM =
                                 AmitalGatewayUtil.Instance.
                                     DeclarationMessaging.GetMessage(customFile, selectedEntityId,
-                                        myViewModelName);
+                                        myViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
 
 
                             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
@@ -2467,7 +2467,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             var unifreightMessageM =
                                 AmitalGatewayUtil.Instance.
                                     DeclarationMessaging.GetMessage(customFile, selectedEntityId,
-                                        myViewModelName);
+                                        myViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
 
 
                             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(

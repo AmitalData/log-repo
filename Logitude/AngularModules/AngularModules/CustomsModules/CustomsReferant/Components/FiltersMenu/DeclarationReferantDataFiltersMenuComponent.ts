@@ -536,7 +536,8 @@ export class DeclarationReferantDataFiltersMenuComponent
             var unifreightMessageM =
                 AmitalGatewayUtil.Instance.
                     DeclarationMessaging.GetMessage("", "",
-                        myViewModelName);
+                        myViewModelName
+                        , AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
 
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
                 "ScriptableGatewayUtil.ShowQueueManagmentAQ1",
@@ -575,7 +576,7 @@ export class DeclarationReferantDataFiltersMenuComponent
             var unifreightMessageM =
                 AmitalGatewayUtil.Instance.
                     DeclarationMessaging.GetMessage("", "",
-                        myViewModelName);
+                        myViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
 
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
                 "ScriptableGatewayUtil.ShowOCRQuery",
