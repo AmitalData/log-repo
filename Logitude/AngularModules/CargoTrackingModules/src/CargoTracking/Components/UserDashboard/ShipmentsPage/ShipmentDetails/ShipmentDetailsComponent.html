@@ -36,9 +36,7 @@
                     </div>
                 </div>
                 <div style="width:auto;">
-                    <div class="DisbleBox">
-                        Beta Version
-                    </div>
+
                 </div>
 
                 <div class="nav">
@@ -337,7 +335,7 @@
                         (click)="PanelsNavigatorClicked('DocumentsPanel')">
                         Documents
                     </button>
-                    
+
                     <button *ngIf="cargoTrackingShipmentPM.EntityType != 'O' && !ShowShipmentAsDeclaration" [class.active]="selectedNavButton=='ConnectedOrdersPanel'"
                             (click)="PanelsNavigatorClicked('ConnectedOrdersPanel')">
                             Connected SHO's
@@ -1121,12 +1119,12 @@
             </div>
         </div>
 
-    </panel>
+         </panel>
 
 
 
 
-    <panel *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" [Title]="'SHO List'" style="order: 6;" [Name]="'ConnectedOrdersPanel'" [ShowWhitePanelOnMobile]="true">
+            <panel *ngIf="cargoTrackingShipmentPM.EntityType != 'O' && !ShowShipmentAsDeclaration" [Title]="'SHO List'" style="order: 6;" [Name]="'ConnectedOrdersPanel'" [ShowWhitePanelOnMobile]="true">
 
         <div body style="padding: 0px 8px 13px 0px;">
             <div  class="no-data-available" *ngIf="!cargoTrackingShipmentPM.ConnectedOrders || cargoTrackingShipmentPM.ConnectedOrders.length == 0 " style="margin-top:10px">The Shipment is not connected to any Order</div>
