@@ -261,6 +261,7 @@ namespace WebFreight.Web.App_Code
                 string htmlString = filter.HtmlString;
                 if (string.IsNullOrEmpty(htmlString)) htmlString = "";
                 htmlString = htmlString.Replace("\"", "'");
+                htmlString = htmlEditorHelper.FixPageBreakInlineStyle(htmlString);
 
                 byte[] htmlDataFile = GetBytes(htmlString);
                 byte[] pdfDataFile = htmlEditorHelper.BuildPdfDocumentHtml(htmlString);
