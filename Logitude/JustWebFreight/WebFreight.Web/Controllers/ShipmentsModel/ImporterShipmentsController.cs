@@ -577,6 +577,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             entityPM.Notes = entityAM.Notes;
             entityPM.OrderIsDangerouseGoods = entityAM.IsDangerouseOfGoods;
             entityPM.PrivateLabelAgentName = entityAM.AgentName;
+            entityPM.IsShipmentOrder = entityAM.IsShipmentOrder;
             if (!string.IsNullOrEmpty(entityAM.ForwardingPartnerTenant))
             {
                 int ForwardingPartnerTenant = int.Parse(entityAM.ForwardingPartnerTenant);

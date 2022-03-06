@@ -86,6 +86,7 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
         public string CustomerReference3 { get; set; }
         public bool IsDangerouseOfGoods { get; set; }
         public string AgentName { get; set; }
+        public bool IsShipmentOrder { get; set; }
 
 
         /*
