@@ -17993,11 +17993,11 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
         public void FillCustomsDocumentUploadTable()
         {
-            PendingErrorPlaceRepository pendingErrorPlaceRepository = new PendingErrorPlaceRepository(0);
-            AddClosedTables.AddPendingErrorPlace(new PendingErrorPlace() { Code = "U", EnglishName = "Customs Document Upload", LocalName = "העלאת מסמך למכס" }, pendingErrorPlaceRepository);
-            AddClosedTables.AddPendingErrorPlace(new PendingErrorPlace() { Code = "C", EnglishName = "Connect to Ticket and Upload", LocalName = "קישור לטיקט והעלאת מסמך" }, pendingErrorPlaceRepository);
-            AddClosedTables.AddPendingErrorPlace(new PendingErrorPlace() { Code = "W", EnglishName = "Without Ticket", LocalName = "ללא טיקט" }, pendingErrorPlaceRepository);
-            pendingErrorPlaceRepository.SubmitChanges();
+            CustomsDocumentUploadRepository customsDocumentUploadRepository = new CustomsDocumentUploadRepository(0);
+            AddClosedTables.AddCustomsDocumentUpload(new CustomsDocumentUpload() { Code = "U", EnglishName = "Customs Document Upload", LocalName = "העלאת מסמך למכס" }, customsDocumentUploadRepository);
+            AddClosedTables.AddCustomsDocumentUpload(new CustomsDocumentUpload() { Code = "C", EnglishName = "Connect to Ticket and Upload", LocalName = "קישור לטיקט והעלאת מסמך" }, customsDocumentUploadRepository);
+            AddClosedTables.AddCustomsDocumentUpload(new CustomsDocumentUpload() { Code = "W", EnglishName = "Without Ticket", LocalName = "ללא טיקט" }, customsDocumentUploadRepository);
+            customsDocumentUploadRepository.SubmitChanges();
         }
 
         public void FillPendingErrorPlaceTable()
