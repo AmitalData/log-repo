@@ -10,24 +10,28 @@ using Logitude.Server.Tools;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs; 
 using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
-   
-   public partial class LogisticActionResponseRequestSDataMapping: IMapping<LogisticActionResponseRequestSPM, LogisticActionResponseRequestS>
-   {
+
+    public partial class LogisticActionResponseRequestSDataMapping : IMapping<LogisticActionResponseRequestSPM, LogisticActionResponseRequestS>
+    {
 
         public void CustomPMToPOCO(LogisticActionResponseRequestSPM entityPM, LogisticActionResponseRequestS entityPOCO)
         {
-            //throw new NotImplementedException();
+            CustomMappedPOCOProperties.Add(POCOPropertyNames.Code);
+
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                entityPOCO.Code = entityPM.Code;
+            }
         }
 
         public void CustomPOCOToPM(LogisticActionResponseRequestSPM entityPM, LogisticActionResponseRequestS entityPOCO)
         {
             //throw new NotImplementedException();
         }
-   }
-
-
+    }
 }
    

@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
   Name="LogisticActionResponseRequestSes"
-  OldNames="LogisticActionResponseRequestSes,LogisticActionResponseRequestSes"
   Schema="Customs"
   DBType="Main"
   Module="Customs">
@@ -29,7 +28,7 @@
   </Column>
   <Column
     Name="EnglishName"
-    Type="varchar"
+    Type="varchar" 
     Size="40">
     <Constraints
       Nullable="true" />
