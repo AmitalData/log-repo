@@ -13,21 +13,23 @@ namespace CommunicationWorkerRole.Services
     {
         private EmailParameters emailParameters;
         private List<LinkedResource> linkedResources;
+        private string emailBody;
         public FroalaEditorImageLibraryService(EmailParameters emailParameters)
         {
             this.emailParameters = emailParameters;
+            this.emailBody = emailParameters.Body;
             this.linkedResources = new List<LinkedResource>();
         }
 
         public string BuildMailBody()
         {
-            if (string.IsNullOrEmpty(emailParameters.EmailView) || emailParameters.Body == null || !emailParameters.IsBodyHtml) return emailParameters.Body;
+            if (string.IsNullOrEmpty(emailParameters.EmailView) || emailBody == null || !emailParameters.IsBodyHtml) return emailBody;
 
-            List<string> images = emailParameters.Body.Split('<').Where(s => s.StartsWith("img") && s.Contains("href='imagelibrary-")).ToList();
-            if (!images.Any()) return emailParameters.Body;
+            List<string> images = emailBody.Split('<').Where(s => s.StartsWith("img") && s.Contains("href='imagelibrary-")).ToList();
+            if (!images.Any()) return emailBody;
 
             foreach (var image in images) BuildImageLibrary(image);
-            return emailParameters.Body;
+            return emailBody;
         }
 
         public List<LinkedResource> GetLinkedResources()
@@ -38,17 +40,17 @@ namespace CommunicationWorkerRole.Services
         private void BuildImageLibrary(string imageTag)
         {
             string imageName = GetBetween(imageTag, "securityId=", "&");
-            BuildImageLinkedResource(imageTag, imageName);
-            UpdateMainMessageBodyImageTag(imageTag, imageName);
+            AddImageLinkedResource(imageTag, imageName);
+            UpdateBodyImageTag(imageTag, imageName);
         }
 
-        private void BuildImageLinkedResource(string imageTag, string imageName)
+        private void AddImageLinkedResource(string imageTag, string imageName)
         {
-            LinkedResource linkedResource = GetImageLinkedResource(imageName, imageTag);
+            LinkedResource linkedResource = BuildImageLinkedResource(imageName, imageTag);
             this.linkedResources.Add(linkedResource);
         }
 
-        private LinkedResource GetImageLinkedResource(string imageName, string imageTag)
+        private LinkedResource BuildImageLinkedResource(string imageName, string imageTag)
         {
             string extension = GetBetween(imageTag, "imagelibrary-", "'");
             string imageSrc = GetBetween(imageTag, "src='", "'");
@@ -63,7 +65,7 @@ namespace CommunicationWorkerRole.Services
             return logo;
         }
 
-        private void UpdateMainMessageBodyImageTag(string imageTag, string imageName)
+        private void UpdateBodyImageTag(string imageTag, string imageName)
         {
             string imageSrc = GetBetween(imageTag, "src='", "'");
             string imageHref = GetBetween(imageTag, "href='", "'");
@@ -71,7 +73,7 @@ namespace CommunicationWorkerRole.Services
             string newImageTag = imageTag.Replace("href='" + imageHref + "'", "");
             newImageTag = newImageTag.Replace(imageSrc, "cid:" + imageName);
             newImageTag = AddWidthHeightToImageTag(newImageTag);
-            emailParameters.Body = emailParameters.Body.Replace(imageTag, newImageTag);
+            emailBody = emailBody.Replace(imageTag, newImageTag);
         }
 
         private string AddWidthHeightToImageTag(string imageTag)
@@ -87,9 +89,9 @@ namespace CommunicationWorkerRole.Services
         {
             if (!strSource.Contains(strStart) || !strSource.Contains(strEnd)) return null;
 
-            int Start = strSource.IndexOf(strStart, 0) + strStart.Length;
-            int End = strSource.IndexOf(strEnd, Start);
-            string output = strSource.Substring(Start, End - Start);
+            int start = strSource.IndexOf(strStart, 0) + strStart.Length;
+            int end = strSource.IndexOf(strEnd, start);
+            string output = strSource.Substring(start, end - start);
             return string.IsNullOrEmpty(output) ? null : output;
         }
 
