@@ -17,11 +17,13 @@ export class DocumentTypeCopiesComponent extends BaseComponent implements OnInit
     SelectedDocumentCopiesViewModel: DocumentCopiesViewModel;
     public DocumentTypeCopiesLists: DocumentCopiesViewModel[];
     public IsVisibile: boolean = false;
+    public IsCustomerCare: boolean = false;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
 
     constructor(public entityArgs: EntityArgs) {
         super();
+        this.IsCustomerCare = SessionLocator.LoggedUserPM.IsCustomerCare;
     }
 
     ngOnInit() {
