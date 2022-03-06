@@ -36,9 +36,8 @@ export class ImageLibraryComponent implements OnInit {
         this.Images = images;
     }
 
-    OnImageClick($imageUrl) {
-        this.CurrentSession.CurrentWindow.Close($imageUrl);
+    OnImageClick(image: ImageLibraryList) {
+        this.CurrentSession.CurrentWindow.Close(JSON.stringify(image));
     }
-
 
 }

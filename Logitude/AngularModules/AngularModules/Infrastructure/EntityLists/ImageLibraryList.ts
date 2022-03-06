@@ -18,5 +18,6 @@ export class ImageLibraryList {
 		Name: string;
 		SearchFields: string;
 		URL: string;
+		Extension: string;
 	
 }

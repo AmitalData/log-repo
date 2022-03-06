@@ -81,8 +81,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public List<ImageLibraryList> GetAllForTenant(int tenant)
         {
             var domain = LogitudeSettings.LogitudeURL;
-            List<ImageLibraryList> result = repository.context.ImageLibraries.Where(a => a.Tenant == tenant)
-                .Select(entity => new ImageLibraryList
+            List<ImageLibraryList> result = repository.context.ImageLibraries.Include(a => a.ImageDetail)
+                .Where(a => a.Tenant == tenant).Select(entity => new ImageLibraryList
                 {
                     Id = entity.Id,
                     ImageDetailId = entity.ImageDetailId,
@@ -94,7 +94,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     UpdatedByUserId = entity.UpdatedByUserId,
                     SecurityId = entity.SecurityId,
                     Tenant = entity.Tenant,
-                    URL = domain + "/WebPages/ImageLibraryDownloadPage.aspx?securityId=" + entity.SecurityId + "&tenant=" + tenant
+                    URL = domain + "/WebPages/ImageLibraryDownloadPage.aspx?securityId=" + entity.SecurityId + "&tenant=" + tenant,
+                    Extension = entity.ImageDetail.Extension
 
                 }).ToList();
 
