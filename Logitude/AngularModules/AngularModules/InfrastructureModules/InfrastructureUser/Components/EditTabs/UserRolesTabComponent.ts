@@ -60,8 +60,13 @@ export class UserRolesTabComponent extends BaseComponent implements OnDestroy {
                                 this.EditRole(this.editedRole);
                             }
                         }
+
+                        if (this.isEditingCustomRoleRequested) {
+                            this.EditCustomRole();
+                        }
                     }
 
+                    this.isEditingCustomRoleRequested = false;
                     this.isEditingRoleRequested = false;
                 });
             }
@@ -211,31 +216,39 @@ export class UserRolesTabComponent extends BaseComponent implements OnDestroy {
         }
     }
 
+    private allRoles: RolePM[] = [];
     LoadUserRoles(StartBusyIndicator: boolean = true) {
-
         if (StartBusyIndicator) {
             this.CurrentSession.StartBusyIndicatorLoading();
         }
 
-        this.roleExtendedPMService.GetRolesForUser(this.EntityPM.Id, SessionLocator.Tenant).subscribe((myResponse: ServiceResponse) => {
-            this.ObsList = [];
+        this.roleExtendedPMService.GetRolesForUser(this.EntityPM.Id, SessionLocator.Tenant).subscribe((myResponse: ServiceResponse) => {            
             this.CurrentSession.StopBusyIndicator();
 
             if (!myResponse.HasError) {
-                var allRoles: RolePM[] = myResponse.Result;
-
-                if (allRoles) {
-                    allRoles.filter(f => f.Exists == true).forEach(item => {
-                        this.AddRoleItem(item);
-                    });
-
-                    allRoles.filter(f => f.Exists == false).forEach(item => {
-                        this.AddRoleItem(item);
-                    });
-                }
+                this.allRoles = myResponse.Result;
+                this.BuildItemsSource();
             }
         });
     }
+    private BuildItemsSource() {
+        this.ObsList = [];
+
+        if (this.allRoles != null) {
+            this.allRoles.filter(f => f.Exists == true).forEach(item => {
+                this.AddRoleItem(item);
+            });
+
+            this.allRoles.filter(f => f.Exists == false).forEach(item => {
+                this.AddRoleItem(item);
+            });
+
+            if (!this.ShowInactiveRoles) {
+                this.ObsList = this.ObsList.filter(f => !f.Inactive);
+            }
+        }
+    }
+
     AddRoleItem(item: RolePM) {
         switch (item.Code) {
             case "DIST":
@@ -251,9 +264,7 @@ export class UserRolesTabComponent extends BaseComponent implements OnDestroy {
             case "HRAD":
                 {
                     if (SessionLocator.Tenant == 0 || SessionLocator.Tenant == 1489 || FeatureLocator.IsPackage_DVMT()) {
-                        //if (SessionLocator.LoggedUserPM.IsCustomerCare) {
-                            this.ObsList.push(new UserRolesItemClass(item, this.EntityPM, this));
-                        //}
+                        this.ObsList.push(new UserRolesItemClass(item, this.EntityPM, this));                       
                     }
 
                     break;
@@ -276,8 +287,19 @@ export class UserRolesTabComponent extends BaseComponent implements OnDestroy {
         }
     }
 
+    private showInactiveRoles: boolean = false;
+    public get ShowInactiveRoles() { return this.showInactiveRoles; }
+    public set ShowInactiveRoles(value: boolean) {
+        if (this.showInactiveRoles != value) {
+            this.showInactiveRoles = value;
+            this.BuildItemsSource();
+        }
+    }
+
     private editedRole: RolePM;
+    private editedCustomRole: UserRolesItemClass;
     private isEditingRoleRequested: boolean = false;
+    private isEditingCustomRoleRequested: boolean = false;
     NewRoleButtonClicked() {
         var myCustomRolePM = new RolePM();
         myCustomRolePM.Added = true;
@@ -302,9 +324,14 @@ export class UserRolesTabComponent extends BaseComponent implements OnDestroy {
         });
     }
     EditRolePropertiesClicked(item: UserRolesItemClass) {
+        this.isEditingCustomRoleRequested = true;
+        this.editedCustomRole = item;
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
+    }
+    private EditCustomRole() {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Edit Custom Role";
-        logWindow.WindowArgs = { RolePM: item.EntityPM, IsNew: false };
+        logWindow.WindowArgs = { RolePM: this.editedCustomRole.EntityPM, IsNew: false };
         logWindow.Show('./InfrastructureModules/InfrastructureUser/Components/Roles/NewRoleComponent');
 
         logWindow.ComponentLoaded.subscribe(comp => {
@@ -315,6 +342,7 @@ export class UserRolesTabComponent extends BaseComponent implements OnDestroy {
             });
         });
     }
+
     EditRoleButtonClicked(item: UserRolesItemClass) {
         this.editedRole = item.EntityPM;
         this.isEditingRoleRequested = true;
@@ -360,6 +388,7 @@ export class UserRolesItemClass {
         }
     }
 
+    public get Inactive() { return this.EntityPM.Inactive; }
     public get Name() { return this.EntityPM.Name; }
     public get Description() { return this.EntityPM.Description; }
 

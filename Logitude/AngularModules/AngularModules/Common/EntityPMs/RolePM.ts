@@ -70,6 +70,11 @@ export class RolePM {
     public set IsCustomRole(newValue: boolean) { if (this.isCustomRole != newValue) { this.isCustomRole = newValue; this.MarkAsDirty("IsCustomRole"); } }
        
 	 
+    private inactive: boolean;
+    public get Inactive() { return this.inactive; }
+    public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
+       
+	 
     private exists: boolean;
     public get Exists() { return this.exists; }
     public set Exists(newValue: boolean) { if (this.exists != newValue) { this.exists = newValue; this.MarkAsDirty("Exists"); } }

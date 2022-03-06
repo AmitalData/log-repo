@@ -2961,7 +2961,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn ActiveUsersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveUsersQuery.Id,QueryCode = ActiveUsersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "User.LastLoginDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter ActiveUsersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "User.ActiveUsers", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ActiveUsersQuery.Id,QueryCode = ActiveUsersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter ActiveUsersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "User.ActiveUsers", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = ActiveUsersQuery.Id,QueryCode = ActiveUsersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -2980,7 +2980,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn ActiveNotLicensedQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveNotLicensedQuery.Id,QueryCode = ActiveNotLicensedQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "User.LastLoginDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter ActiveNotLicensedQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "User.ActiveNotLicensed", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ActiveNotLicensedQuery.Id,QueryCode = ActiveNotLicensedQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter ActiveNotLicensedQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "User.ActiveNotLicensed", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = ActiveNotLicensedQuery.Id,QueryCode = ActiveNotLicensedQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -2999,7 +2999,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn InactiveUsersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveUsersQuery.Id,QueryCode = InactiveUsersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "User.LastLoginDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter InactiveUsersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "User.InactiveUsers", PredefinedValue = "true",PredefinedValue2 = null, QueryId = InactiveUsersQuery.Id,QueryCode = InactiveUsersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter InactiveUsersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "User.InactiveUsers", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = InactiveUsersQuery.Id,QueryCode = InactiveUsersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      

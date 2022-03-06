@@ -48,6 +48,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return (from a in context.ContactTenantRoles where a.RoleId != roleId && a.ContactTenantId == contactTenantId && a.Tenant == tenant select a).Any();
         }
 
+        public IQueryable<ContactTenantRole> GetContactTenantRolesByRoleId(string roleId, int tenant)
+        {
+            return (from a in context.ContactTenantRoles where a.RoleId == roleId && a.Tenant == tenant select a);
+        }
+
         public IQueryable<ContactTenantRole> GetContactTenantRoles(int tenant)
         {
             return (from record in context.ContactTenantRoles where record.Tenant == tenant select record);
