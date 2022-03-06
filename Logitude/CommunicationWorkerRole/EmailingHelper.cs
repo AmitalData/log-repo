@@ -16,6 +16,7 @@ using Microsoft.Practices.Unity;
 using System.Collections.Specialized;
 using SendGrid.SmtpApi;
 using System.Diagnostics;
+using CommunicationWorkerRole.Services;
 
 namespace CommunicationWorkerRole
 {
@@ -157,7 +158,6 @@ namespace CommunicationWorkerRole
             }
 
 
-
             //=======================================================================================================================
             if (!string.IsNullOrEmpty(parameters.EmailView) && parameters.Body != null)
             {
@@ -165,16 +165,16 @@ namespace CommunicationWorkerRole
                 //myMessage.AlternateViews.Add(alternateview);
                 if (parameters.IsBodyHtml)
                 {
-                    List<LinkedResource> resourceList = new List<LinkedResource>();
+                    FroalaEditorImageLibraryService froalaEditorImageLibraryService = new FroalaEditorImageLibraryService(parameters);
+                    parameters.Body = froalaEditorImageLibraryService.BuildMailBody();
+                    List<LinkedResource> resourceList = froalaEditorImageLibraryService.GetLinkedResources();
 
                     string[] htmlStringArray = parameters.Body.Split('<');
 
-                    List<string> imagesList = htmlStringArray.Where(s => s.StartsWith("img")).ToList();
+                    List<string> imagesList = htmlStringArray.Where(s => s.StartsWith("img") && s.IndexOf("cid:") != -1).ToList();
 
                     foreach (string imageString in imagesList)
                     {
-                        if (imageString.IndexOf("cid:") != -1)
-                        {
                             //int startIndex = imageString.IndexOf("cid:") + 4;
                             //int endIndex = imageString.IndexOf("/>") - startIndex;
                             //string imageName = imageString.Substring(startIndex, endIndex).Trim();
@@ -251,12 +251,9 @@ namespace CommunicationWorkerRole
                                 resourceList.Add(logo);
                             }
                             //    }
-                            //}
-                        }
-
+                            //}                       
 
                     }
-
                     AlternateView alternateview = AlternateView.CreateAlternateViewFromString(parameters.Body, null, parameters.EmailView);
                     myMessage.AlternateViews.Add(alternateview);
 
@@ -280,7 +277,7 @@ namespace CommunicationWorkerRole
                 }
             }
 
-
+          
             if (myMessage.To.Count != 0 || myMessage.CC.Count != 0 || myMessage.Bcc.Count != 0) // Add CC & Bcc -Maheera 
             {
                 try

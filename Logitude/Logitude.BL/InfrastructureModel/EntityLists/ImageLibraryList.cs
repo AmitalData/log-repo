@@ -17,5 +17,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string Name { get; set; }
         public string SearchFields { get; set; }
         public string URL { get; set; }
+        public string Extension { get; set; }
     }
 }

@@ -400,6 +400,7 @@
     <Compile Include="PODImageConverterWorkerRole.cs" />
     <Compile Include="MultiEntityUpdateWorkerRole.cs" />
     <Compile Include="Services\ContainerSchedulerTaskService.cs" />
+    <Compile Include="Services\FroalaEditorImageLibraryService.cs" />
     <Compile Include="Services\ImporterShipmentOrdersService.cs" />
     <Compile Include="Services\MultiEntityUpdateService.cs" />
     <Compile Include="Services\SAT\SATInvoiceProfact40CancellationService.cs" />
