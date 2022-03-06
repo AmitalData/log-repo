@@ -102,9 +102,10 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             catch (Exception e)
             {
-                string text = TranslateTextsClassTranslate("System1000.O.FailedWhilePerforming", 0, useLocal);
+                //   string text = TranslateTextsClassTranslate("System1000.O.FailedWhilePerforming", 0, useLocal);
 
-                throw new ApplicationException($"{text} ", e);
+                //   throw new ApplicationException($"{text} ", e);
+                throw;
             }
 
 
@@ -436,36 +437,35 @@ namespace Logitude.Accounting.BL.CoreBL
 
         }
 
-        private void InsertVendorLine(int tenant, VendorLineDTO newVendorLine, GLAccountWithholdingTaxPM entityPM)
-        {
-            try
-            {
-                var MyContext = AccountingContext.GetContext(entityPM.Tenant);
-                GLAccountWithholdingTaxUpdateService service = new GLAccountWithholdingTaxUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
-                entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-                service.Update(entityPM, true);
+        //private void InsertVendorLine(int tenant, VendorLineDTO newVendorLine, GLAccountWithholdingTaxPM entityPM)
+        //{
+        //    try
+        //    {
+        //        var MyContext = AccountingContext.GetContext(entityPM.Tenant);
+        //        GLAccountWithholdingTaxUpdateService service = new GLAccountWithholdingTaxUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+        //        entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+        //        service.Update(entityPM, true);
 
-   //             //scope.Complete();
-   //             this.AddSuccessInsertVendorLine(entityPM, newVendorLine);
 
-            }
 
-         catch (Exception ex)
-            {
-                this.AddExceptionInsertVendorLine(entityPM, newVendorLine, ex);
-           }
-        }
+        //    }
 
-        private void AddExceptionInsertVendorLine(GLAccountWithholdingTaxPM entityPM, VendorLineDTO newLineOfVendorAccount, Exception ex)
-        {
+        // catch (Exception ex)
+        //    {
+        //        this.AddExceptionInsertVendorLine(entityPM, newVendorLine, ex);
+        //   }
+        //}
 
-            var dataXml = ProxyUtil.JsonConvertSerialize(newLineOfVendorAccount);
+        //private void AddExceptionInsertVendorLine(GLAccountWithholdingTaxPM entityPM, VendorLineDTO newLineOfVendorAccount, Exception ex)
+        //{
 
-            this.MyResultLoadFlatFile.ExceptionVendorList.Add($"Exception insert Vendor Number:{newLineOfVendorAccount.VendorCode}/AccountNumber{newLineOfVendorAccount.StartDate}/{newLineOfVendorAccount.EndDate} >{ex.ToString()} " +
-                Environment.NewLine +
-                dataXml);
+        //    var dataXml = ProxyUtil.JsonConvertSerialize(newLineOfVendorAccount);
 
-        }
+        //    this.MyResultLoadFlatFile.ExceptionVendorList.Add($"Exception insert Vendor Number:{newLineOfVendorAccount.VendorCode}/AccountNumber{newLineOfVendorAccount.StartDate}/{newLineOfVendorAccount.EndDate} >{ex.ToString()} " +
+        //        Environment.NewLine +
+        //        dataXml);
+
+        //}
 
         private void AddErrorRow(String errorLine)
         {
