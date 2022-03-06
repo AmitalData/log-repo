@@ -202,7 +202,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var documentsFilingPMList = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(_MyDeclarationPM.Id, null, objectTableId, "I", requestParams.Tenant);
             foreach (var documentItem in documentsFilingPMList)
             {
-                if (documentItem.DocumentTypeId == documentType.Id)
+                if (documentItem.DocumentTypeId == documentType?.Id)
                 {
                     
                     var gdmfiling = uniGDMFILINGQueryService.GetSingle(documentItem.Id, true);
