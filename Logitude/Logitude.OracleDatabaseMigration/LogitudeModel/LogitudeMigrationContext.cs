@@ -4916,7 +4916,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new MetodoPagoMap());
 
             modelBuilder.Configurations.Add(new HarmonizeCodeMap());
-
+            modelBuilder.Configurations.Add(new CustomsDocumentUploadMap());
             #region Infrastructure Generated
             modelBuilder.Configurations.Add(new ToggleMap());
             modelBuilder.Configurations.Add(new FeatureToggleMap());
