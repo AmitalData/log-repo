@@ -688,6 +688,10 @@ namespace WebFreight.Web.Helpers.Analyzers
                             this.Initialize();                            
                             this.GetShipmentById(item);
                             this.GetContainerDataByContainerNumber(item);
+                            if (IsCommunicationLogsExsit())
+                            {
+                                continue;
+                            }
                             this.AddContainerStatusCommunicationLog(item);
                             this.CreateLogitudeOceanInsightsResponse();
                             if (IsUpdatingShipmentAndContainer())
@@ -866,11 +870,6 @@ namespace WebFreight.Web.Helpers.Analyzers
         }
         private void BuildCommunicationLog(LogitudeOceanInsightsRequest oceanInsight)
         {
-            if (IsCommunicationLogsExsit())
-            {
-                return;
-            }
-               
             CommunicationsParams logParams = new CommunicationsParams()
             {
                 Tenant = logitudeTenant.Value,
