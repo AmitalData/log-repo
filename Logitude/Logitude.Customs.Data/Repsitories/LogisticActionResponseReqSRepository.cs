@@ -12,10 +12,10 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.Data.Repsitories
 {
-   public partial class LogisticActionResponseRequestSRepository:IRepository<LogisticActionResponseRequestS>
+   public partial class LogisticActionResponseReqSRepository:IRepository<LogisticActionResponseReqS>
    {
         
-		public List<LogisticActionResponseRequestS> GetMulti(EntityKeyFields entityKeys)
+		public List<LogisticActionResponseReqS> GetMulti(EntityKeyFields entityKeys)
         {
             
 			throw new NotImplementedException();

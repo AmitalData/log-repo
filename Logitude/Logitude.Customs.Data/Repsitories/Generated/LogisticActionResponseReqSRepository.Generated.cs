@@ -12,67 +12,67 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.Data.Repsitories
 {
-   public partial class LogisticActionResponseRequestSRepository:IRepository<LogisticActionResponseRequestS>
+   public partial class LogisticActionResponseReqSRepository:IRepository<LogisticActionResponseReqS>
    {
    
         private ICustomContext currentContext;
-        public LogisticActionResponseRequestSRepository(int tenant)
+        public LogisticActionResponseReqSRepository(int tenant)
         {
             currentContext = CustomContext.GetContext(tenant);
         }
 
-        public LogisticActionResponseRequestSRepository(ICustomContext context)
+        public LogisticActionResponseReqSRepository(ICustomContext context)
         {
             currentContext = context;
         }
 
 		 
 		
-		public  LogisticActionResponseRequestS GetSingle(string code)
+		public  LogisticActionResponseReqS GetSingle(string code)
         {
-            return (from a in context.LogisticActionResponseRequestSes
+            return (from a in context.LogisticActionResponseReqSes
                     where a.Code == code 
                     select a).FirstOrDefault();
         }
 
-        public IQueryable<LogisticActionResponseRequestS> GetAll()
+        public IQueryable<LogisticActionResponseReqS> GetAll()
         {
-            return from a in context.LogisticActionResponseRequestSes  
+            return from a in context.LogisticActionResponseReqSes  
                    select a;
         }
 				 
-        public LogisticActionResponseRequestS GetSingle(EntityKeyFields entityKeys)
+        public LogisticActionResponseReqS GetSingle(EntityKeyFields entityKeys)
         {
-            LogisticActionResponseRequestSKeys keys = entityKeys as LogisticActionResponseRequestSKeys;
-            return (from a in context.LogisticActionResponseRequestSes
+            LogisticActionResponseReqSKeys keys = entityKeys as LogisticActionResponseReqSKeys;
+            return (from a in context.LogisticActionResponseReqSes
                     where a.Code == keys.Code
                     select a).FirstOrDefault();
         }
 		         
         partial void onAdd();//Partial Methods Definition in Generated
-        public void Add(LogisticActionResponseRequestS entity)
+        public void Add(LogisticActionResponseReqS entity)
         {
             onAdd();
-            context.LogisticActionResponseRequestSes.Add(entity);
+            context.LogisticActionResponseReqSes.Add(entity);
         }
 
-        public void Remove(LogisticActionResponseRequestS entity)
+        public void Remove(LogisticActionResponseReqS entity)
         {
-            context.LogisticActionResponseRequestSes.Attach(entity);
-            context.LogisticActionResponseRequestSes.Remove(entity);
+            context.LogisticActionResponseReqSes.Attach(entity);
+            context.LogisticActionResponseReqSes.Remove(entity);
         }
 
         partial void onUpdate();//Partial Methods Definition in Generated
-        public void Update(LogisticActionResponseRequestS entity)
+        public void Update(LogisticActionResponseReqS entity)
         {
             onUpdate();
-            context.LogisticActionResponseRequestSes.Attach(entity);
+            context.LogisticActionResponseReqSes.Attach(entity);
             context.SetAsModified(entity);
         }
 
-        public List<LogisticActionResponseRequestS> All()
+        public List<LogisticActionResponseReqS> All()
         {
-            return context.LogisticActionResponseRequestSes.ToList();
+            return context.LogisticActionResponseReqSes.ToList();
         }
 
         private ICustomContext context

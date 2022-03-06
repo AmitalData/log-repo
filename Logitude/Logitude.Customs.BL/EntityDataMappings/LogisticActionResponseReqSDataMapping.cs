@@ -14,11 +14,11 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
+   
+   public partial class LogisticActionResponseReqSDataMapping: IMapping<LogisticActionResponseReqSPM, LogisticActionResponseReqS>
+   {
 
-    public partial class LogisticActionResponseRequestSDataMapping : IMapping<LogisticActionResponseRequestSPM, LogisticActionResponseRequestS>
-    {
-
-        public void CustomPMToPOCO(LogisticActionResponseRequestSPM entityPM, LogisticActionResponseRequestS entityPOCO)
+        public void CustomPMToPOCO(LogisticActionResponseReqSPM entityPM, LogisticActionResponseReqS entityPOCO)
         {
             CustomMappedPOCOProperties.Add(POCOPropertyNames.Code);
 
@@ -28,10 +28,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
             }
         }
 
-        public void CustomPOCOToPM(LogisticActionResponseRequestSPM entityPM, LogisticActionResponseRequestS entityPOCO)
+        public void CustomPOCOToPM(LogisticActionResponseReqSPM entityPM, LogisticActionResponseReqS entityPOCO)
         {
             //throw new NotImplementedException();
         }
-    }
+   }
+
+
 }
    

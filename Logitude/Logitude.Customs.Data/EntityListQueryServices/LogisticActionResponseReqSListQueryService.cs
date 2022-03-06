@@ -17,12 +17,12 @@ using Logitude.Customs.Data.EntityLists;
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
 
-    public partial class LogisticActionResponseRequestSListQueryService
+    public partial class LogisticActionResponseReqSListQueryService
     {
-	    private IQueryable<LogisticActionResponseRequestSList> GetIqueryableList(IQueryable<LogisticActionResponseRequestS> iQueryable)
+	    private IQueryable<LogisticActionResponseReqSList> GetIqueryableList(IQueryable<LogisticActionResponseReqS> iQueryable)
         {
-		IQueryable<LogisticActionResponseRequestSList> query = (from a in iQueryable
-                                            select new LogisticActionResponseRequestSList()
+		IQueryable<LogisticActionResponseReqSList> query = (from a in iQueryable
+                                            select new LogisticActionResponseReqSList()
 											{
                      
 					                          Code = a.Code,
@@ -39,9 +39,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return query;
 		}
 
-		private IQueryable<LogisticActionResponseRequestS> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<LogisticActionResponseRequestS> iQueryable)
+		private IQueryable<LogisticActionResponseReqS> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<LogisticActionResponseReqS> iQueryable)
         {
 			return iQueryable;
+
 		}
 			}
 

@@ -16,7 +16,7 @@ namespace Logitude.Customs.Def.EntityPMs
 {
    [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
    [DataContract]
-   public partial class LogisticActionResponseRequestSPM : EntityPM
+   public partial class LogisticActionResponseReqSPM : EntityPM
    {
    	  private string code ;
 	  

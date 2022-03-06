@@ -110,7 +110,7 @@
     <Compile Include="EntityPMs\Generated\LoadingSiteTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LogisticActionRequestPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LogisticActionRequestTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\LogisticActionResponseRequestSPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\LogisticActionResponseReqSPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LogisticsReferenceTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\NbcDeclarationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\NDMessageActionCodePM.Generated.cs" />

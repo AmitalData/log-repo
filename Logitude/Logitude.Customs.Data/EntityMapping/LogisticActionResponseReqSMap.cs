@@ -14,22 +14,12 @@ using Logitude.Customs.Data;
 namespace Logitude.Customs.Data.EntityMapping
 {
  
-    public class LogisticActionResponseRequestSMap : EntityTypeConfiguration<LogisticActionResponseRequestS>
+    public class LogisticActionResponseReqSMap : EntityTypeConfiguration<LogisticActionResponseReqS>
     {
 	    string dbms;
-        public LogisticActionResponseRequestSMap()
+        public LogisticActionResponseReqSMap()
         { 
-		
-     dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-    if (dbms == "oracle")
-    {
-	  this.ToTable("LogisticActionResponseRequestS", "Customs");
-	}
-    else
-    {
-	  this.ToTable("LogisticActionResponseRequestSes", "Customs");
-	}
-
+			  this.ToTable("LogisticActionResponseReqSes", "Customs");
 		
 		    this.HasKey(t => new { t.Code });
 	 
