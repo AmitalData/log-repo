@@ -1,19 +1,27 @@
 ﻿using Logitude.BL.CommonDataModel.CodePropertiesMapping;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.ShipmentOrderModule.Def.EntityAMs;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure;
 using System;
+using System.Collections.Generic;
 
 namespace WebFreight.Web.Helpers.ImporterShipmentOrders
 {
     public class ShipmentOrderAmToShipmentMapping
     {
         private readonly int tenant;
+        private readonly PackageTypeRepository packageTypeRepository;
 
         public ShipmentOrderAmToShipmentMapping(int tenant)
         {
             this.tenant = tenant;
+            ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
+            packageTypeRepository = new PackageTypeRepository(commoncontext);
         }
 
         public ShipmentPM Map(ShipmentOrderAM shipmentOrder, ShipmentPM shipment)
@@ -45,8 +53,45 @@ namespace WebFreight.Web.Helpers.ImporterShipmentOrders
             }
 
             GetIncotermId(shipmentOrder, shipment);
-
+            shipment.ShipmentPackages = GetShipmentPackages(shipmentOrder, shipment);
+            shipment.NumberOfContainers = shipmentOrder.Quantity;
+            shipment.NumberOfPackages = shipmentOrder.Quantity;
+            shipment.PackagesQuantity = shipmentOrder.Quantity;
+            shipment.GrossWeight = shipmentOrder.Weight;
             return shipment;
+        }
+
+        private List<ShipmentPackagePM> GetShipmentPackages(ShipmentOrderAM shipmentOrder, ShipmentPM shipment)
+        {
+            ShipmentPackagePM package = BuildShipmentPackage(shipmentOrder);
+            if (package == null) return shipment.ShipmentPackages;
+
+            var shipmentPackages = shipment.ShipmentPackages ?? new List<ShipmentPackagePM>();
+            shipmentPackages.Add(package);
+            return shipmentPackages;
+        }
+
+        private ShipmentPackagePM BuildShipmentPackage(ShipmentOrderAM shipmentOrder)
+        {
+            var packageType = GetPackageTypeByCode(shipmentOrder.PackageTypeCode);
+            if (packageType == null) return null;
+            return new ShipmentPackagePM
+            {
+                PackageTypeId = packageType.Id,
+                Quantity = shipmentOrder.Quantity,
+                IsContainer = packageType.IsContainer,
+                Volume = shipmentOrder.Volume,
+                Weight = shipmentOrder.Weight,
+                ChangeSetOp = ChangeSetOperation.Insert
+            };
+        }
+
+        private PackageType GetPackageTypeByCode(string packageTypeCode)
+        {
+            if (packageTypeCode == null) return null;
+            var package = packageTypeRepository.GetSinglePackageTypeByCode(packageTypeCode, tenant, true);
+            if (package == null) throw new Exception("package type doesn't exist in the database, insert this entity before using it.");
+            return package;
         }
 
         private string GetCreatedEntityStatusId()

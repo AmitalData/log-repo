@@ -27,5 +27,6 @@ namespace Logitude.ShipmentOrderModule.Def.EntityAMs
         public int? Quantity { get; set; }
         public double? Weight { get; set; }
         public CodeProperties Incoterm { get; set; }
+        public string PackageTypeCode { get; set; }
     }
 }
