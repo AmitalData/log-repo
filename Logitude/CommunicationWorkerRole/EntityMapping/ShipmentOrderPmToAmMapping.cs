@@ -12,6 +12,7 @@ namespace CommunicationWorkerRole.EntityMapping
     {
         private readonly CardRepository cardsReporistory;
         private readonly IncotermRepository incotermRepository;
+        private readonly PackageTypeRepository packageTypeRepository;
         private readonly int tenant;
 
         public ShipmentOrderPmToAmMapping(int tenant)
@@ -19,6 +20,7 @@ namespace CommunicationWorkerRole.EntityMapping
             ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
             cardsReporistory = new CardRepository(commoncontext);
             incotermRepository = new IncotermRepository(commoncontext);
+            packageTypeRepository = new PackageTypeRepository(commoncontext);
             this.tenant = tenant;
         }
 
@@ -34,7 +36,7 @@ namespace CommunicationWorkerRole.EntityMapping
             shipmentOrderAM.Volume = shipmentOrder.Volume;
             shipmentOrderAM.TransportModeId = shipmentOrder.TransportModeId;
             shipmentOrderAM.OrderNumber = shipmentOrder.OrderNumber;
-            shipmentOrderAM.CustomerReferences = shipmentOrder.CustomerReferences; 
+            shipmentOrderAM.CustomerReferences = shipmentOrder.CustomerReferences;
             shipmentOrderAM.AgentName = agent?.EnglishName;
             shipmentOrderAM.MainCarriageATA = shipmentOrder.ATA;
             shipmentOrderAM.MainCarriageATD = shipmentOrder.ATD;
@@ -42,6 +44,7 @@ namespace CommunicationWorkerRole.EntityMapping
             shipmentOrderAM.MainCarriageETD = shipmentOrder.ETD;
             shipmentOrderAM.Quantity = shipmentOrder.Quantity;
             shipmentOrderAM.Weight = shipmentOrder.GrossWeight;
+            shipmentOrderAM.PackageTypeCode = GetPackageTypeCode(shipmentOrder.PackageTypeId);
 
             shipmentOrderAM.Shipper = GetShipper(shipper);
             shipmentOrderAM.ShipperName = shipper?.EnglishName;
@@ -50,8 +53,14 @@ namespace CommunicationWorkerRole.EntityMapping
             return shipmentOrderAM;
         }
 
+        private string GetPackageTypeCode(string packageTypeId)
+        {
+            if (packageTypeId == null) return null;
+            return packageTypeRepository.GetSinglePackageType(packageTypeId, tenant)?.Code;
+        }
+
         private CodeProperties GetShipper(Card card)
-        {           
+        {
             if (card == null) return null;
             return new CodeProperties()
             {
