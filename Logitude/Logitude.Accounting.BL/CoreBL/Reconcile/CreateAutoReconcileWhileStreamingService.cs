@@ -291,10 +291,12 @@ namespace Logitude.Accounting.BL.CoreBL
         }
         private static void AddRecoLines_FromNewTransaction_FromRecoStackAmount(ref decimal totReconciliationAmountUseAsStack, List<LedgerTransactionPM> newLTranListOfAccountID, ReconciliationPM myReconciliationPM, ref int lineCounter, bool isPartialReconciliation)
         {
-            foreach (var newLTran in newLTranListOfAccountID)
+            var orderedLedgerTransactions = newLTranListOfAccountID.OrderBy(e => e.ForeignAmountCredit);
+            foreach (var newLTran in orderedLedgerTransactions)
             {
                 ReconciliationLinePM myReconciliationLinePM = GetRecoLineFromNewLTRansSetReconciliationAmountFromStack(ref totReconciliationAmountUseAsStack, myReconciliationPM, ref lineCounter, newLTran, isPartialReconciliation);
-                myReconciliationPM.ReconciliationLines.Add(myReconciliationLinePM);
+                if(myReconciliationLinePM.ReconciliationAmount != 0)
+                    myReconciliationPM.ReconciliationLines.Add(myReconciliationLinePM);
 
             }
         }

@@ -225,7 +225,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public void CreateLedger_MapByJournalActionType()
         {
-            _JournalPM.JournalLines = _JournalPM.JournalLines.OrderBy(e => e.ForeignAmount).ToList();
             foreach (JournalLinePM item in _JournalPM.JournalLines)
             {
                 switch (item.EnsureSettingActionTypeCodeEnum())
