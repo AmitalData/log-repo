@@ -604,5 +604,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string PrivateLabelAgentName { get; set; }
         public int? StatusWeight { get; set; }
         public bool IsShipmentOrder { get; set; }
+        public string FirstPickupFullAddress { get; set; }
+        public string LastDeliveryFullAddress { get; set; }
     }
 }

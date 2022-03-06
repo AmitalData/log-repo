@@ -512,5 +512,7 @@ export class ShipmentList {
 		PrivateLabelAgentName: string;
 		StatusWeight: number;
 		IsShipmentOrder: boolean;
+		FirstPickupFullAddress: string;
+		LastDeliveryFullAddress: string;
 	
-}
+}

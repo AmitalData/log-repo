@@ -744,5 +744,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string PartialStatusAmount { get; set; }
         public bool IsShipmentOrder { get; set; }
 
+        public string FirstPickupFullAddress { get; set; }
+        public string LastDeliveryFullAddress { get; set; }
     }
 }

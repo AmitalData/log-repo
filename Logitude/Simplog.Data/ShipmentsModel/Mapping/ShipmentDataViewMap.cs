@@ -163,6 +163,8 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.HandlerUserName).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.DestinationWarehouseId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.DestinationWarehouseName).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.LastDeliveryFullAddress).HasMaxLength(200).IsUnicode(false);      
+            this.Property(t => t.FirstPickupFullAddress).HasMaxLength(200).IsUnicode(false);
             this.Property(t => t.IncotermId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.BranchId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.House).HasMaxLength(20).IsUnicode(false);
@@ -871,6 +873,8 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.HandlerUserName).HasColumnName("HandlerUserName");
             this.Property(t => t.DestinationWarehouseId).HasColumnName("DestinationWarehouseId");
             this.Property(t => t.DestinationWarehouseName).HasColumnName("DestinationWarehouseName");
+            this.Property(t => t.LastDeliveryFullAddress).HasColumnName("LastDeliveryFullAddress");
+            this.Property(t => t.FirstPickupFullAddress).HasColumnName("FirstPickupFullAddress");
             this.Property(t => t.CustomerContactName).HasColumnName("CustomerContactName");
             this.Property(t => t.CustomerContactEmail).HasColumnName("CustomerContactEmail");
         }

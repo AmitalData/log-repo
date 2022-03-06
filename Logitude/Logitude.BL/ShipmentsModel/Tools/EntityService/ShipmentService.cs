@@ -6693,6 +6693,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             this.CountryForStatisticsId(myLastDelivery);
             this.ComputeOrigin(myFirstPickup);
+            this.ComputeFirstPickupFullAddress(myFirstPickup);
+            this.ComputeLastDeliveryFullAddress(myLastDelivery);
 
             if (myFirstPickup != null)
             {
@@ -7113,7 +7115,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                     {
                                         this.entityPM.Origin = myPartnerAddress.City;
                                         this.entityPM.FirstPickupLocation = myPartnerAddress.City;
-
                                     }
                                 }
 
@@ -7187,6 +7188,92 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
             }
+        }
+
+        private void ComputeFirstPickupFullAddress(ShipmentPickUpPM firstShipmentPickup)
+        {
+            if (firstShipmentPickup != null)
+            {
+                this.GetFirstPickupFullAddressFromPickUp(firstShipmentPickup);
+            }
+            else
+            {
+                this.entityPM.FirstPickupFullAddress = GetLegFullAddressByPortId(entityPM.MainCarriageFromPortId);
+            }
+        }
+        private void ComputeLastDeliveryFullAddress(ShipmentDeliveryPM lastShipmentDelivery)
+        {
+
+            if (lastShipmentDelivery != null)
+            {
+                GeteLastDeliveryFullAddressFromDelivery(lastShipmentDelivery);
+            }
+            else
+            {
+                this.entityPM.LastDeliveryFullAddress = GetLegFullAddressByPortId(entityPM.MainCarriageToPortId);
+            }
+        }
+
+        private void GetFirstPickupFullAddressFromPickUp(ShipmentPickUpPM firstShipmentPickup)
+        {
+            if (firstShipmentPickup.PickUpDeliveryFromTypeCode == "PART")
+            {
+                this.entityPM.FirstPickupFullAddress = GetLegFullAddressByPartnerId(firstShipmentPickup.FromAddressId);
+            }
+            else if (firstShipmentPickup.PickUpDeliveryFromTypeCode == "PORT")
+            {
+                this.entityPM.FirstPickupFullAddress = GetLegFullAddressByPortId(firstShipmentPickup.FromPortId);
+            }
+            else if (firstShipmentPickup.PickUpDeliveryFromTypeCode == "CASL")
+            {
+                this.entityPM.FirstPickupFullAddress = firstShipmentPickup.FromAddressCity + "," + firstShipmentPickup.FromAddressZipCode;
+            }
+        }
+
+
+        private void GeteLastDeliveryFullAddressFromDelivery(ShipmentDeliveryPM lastShipmentDelivery)
+        {
+            if (lastShipmentDelivery.PickUpDeliveryToTypeCode == "PART")
+            {
+                this.entityPM.LastDeliveryFullAddress = GetLegFullAddressByPartnerId(lastShipmentDelivery.ToAddressId);
+            }
+            else if (lastShipmentDelivery.PickUpDeliveryToTypeCode == "PORT")
+            {
+                this.entityPM.LastDeliveryFullAddress = GetLegFullAddressByPortId(lastShipmentDelivery.ToPortId);
+            }
+            else if (lastShipmentDelivery.PickUpDeliveryToTypeCode == "CASL")
+            {
+                this.entityPM.LastDeliveryFullAddress = lastShipmentDelivery.ToAddressCity + "," + lastShipmentDelivery.ToAddressZipCode;
+            }
+        }
+
+        private string GetLegFullAddressByPartnerId(string addressId)
+        {
+            if (string.IsNullOrEmpty(addressId))
+                return "";
+
+            Address partnerAddress = myAddressRepository.GetSingleAddress(addressId, tenant);
+            if (partnerAddress == null)
+                return "";
+            List<string> strPartnerAddressArray = new List<string> { partnerAddress.Country?.EnglishName, partnerAddress.State?.EnglishName, partnerAddress.City};
+
+            string fullPartnerAddress = string.Join(" ,", strPartnerAddressArray.Where(m => !string.IsNullOrEmpty(m)).ToList());
+
+            return fullPartnerAddress;
+        }
+
+        private string GetLegFullAddressByPortId(string portId)
+        {
+            if (string.IsNullOrEmpty(portId))
+                return "";
+
+            Port port = myPortRepository.GetSinglePort(tenant, portId);
+            if (portId == null)
+                return "";
+
+            string fullPortAddress = port.Code + " ," + port.EnglishName;
+
+            return fullPortAddress;
         }
 
         private void UpdateTariffUsedDate(string tariffId)
