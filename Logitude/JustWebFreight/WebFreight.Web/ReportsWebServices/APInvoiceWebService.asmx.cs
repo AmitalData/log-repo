@@ -61,7 +61,6 @@ namespace WebFreight.Web.ReportsWebServices
         [WebMethod]
         public byte[] GetAPInvoiceData(string invoiceId, int tenant)
         {
-            servicHelper = new WebServiceHelper(tenant);
             APInvoiceDataProvider invoicedataprovider = GetAPInvoiceDataProvider(invoiceId, tenant);
             XmlSerializer serializer = new XmlSerializer(typeof(APInvoiceDataProvider));
             MemoryStream memstream = new MemoryStream();
@@ -75,6 +74,7 @@ namespace WebFreight.Web.ReportsWebServices
 
         public APInvoiceDataProvider GetAPInvoiceDataProvider(string invoiceId, int tenant)
         {
+            servicHelper = new WebServiceHelper(tenant);
             CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             APInvoiceDataProvider invoiceDataProvider = new APInvoiceDataProvider();
 

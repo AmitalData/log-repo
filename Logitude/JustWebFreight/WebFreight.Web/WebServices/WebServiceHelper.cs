@@ -1608,7 +1608,7 @@ namespace WebFreight.Web.WebServices
 
                 case "PORT":
                     {
-                        countryName = args.MainCarriageToPortCountryCode;
+                        countryName = this.GetInlanDomesticPortCountryName(args.MainCarriageToPortId);
                         break;
                     }
 
@@ -1620,6 +1620,18 @@ namespace WebFreight.Web.WebServices
             }
             return countryName;
         }
+
+        private string GetInlanDomesticPortCountryName(string portId)
+        {
+            string countryName = "";
+            PortPM myPort = PortQuery.GetSinglePort(tenant, portId, true);
+            if (myPort != null)
+            {
+                countryName = myPort.CountryName;
+            }
+            return countryName;
+        }
+
         private string GetInlanDomesticPartnerCoutntryName(string addressId)
         {
             string coutntryName = "";
@@ -1662,7 +1674,7 @@ namespace WebFreight.Web.WebServices
 
                 case "PORT":
                     {
-                        countryCode = args.MainCarriageFromPortCountryCode;
+                        countryCode = this.GetInlanDomesticPortCountryCode(args.MainCarriageFromPortId); 
                         break;
                     }
 
@@ -1698,6 +1710,16 @@ namespace WebFreight.Web.WebServices
                     }
             }
             return countryCode;
+        }
+        private string GetInlanDomesticPortCountryCode(string portId)
+        {
+            string countryName = "";
+            PortPM myPort = PortQuery.GetSinglePort(tenant, portId, true);
+            if (myPort != null)
+            {
+                countryName = myPort.CountryCode;
+            }
+            return countryName;
         }
         private string GetInlanDomesticPartnerCoutntryCode(string addressId)
         {

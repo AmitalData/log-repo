@@ -2114,7 +2114,7 @@ namespace WebFreight.Web.WebServices
 
             CountryRepository countryRepository = new CountryRepository(tenant);
 
-            if (shipment.DirectionId == "I" && shipment.TransportModeId == "D")
+            if (shipment.DirectionId == "D" && shipment.TransportModeId == "I")
             {
                 InlandDomesticArgs args = new InlandDomesticArgs()
                 {

@@ -2211,6 +2211,7 @@ namespace WebFreight.Web.WebServices
                     myDataProvider.DeliveryTruckNumber = shipment.TruckNumber;
                     myDataProvider.DeliveryTrailerNumber = shipment.TrailerNumber;
                     myDataProvider.InlandDriver = shipment.Driver;
+                    myDataProvider.FromLocationCountryCode = this.FillInlandDomecticCountryCode(shipment);
 
                     #region
                     Address fromAddress = null;
@@ -2230,12 +2231,6 @@ namespace WebFreight.Web.WebServices
                             else
                             {
                                 myDataProvider.FromLocation_Label = "";
-                            }
-
-                            Country fromCountry = commonContext.Countries.Where(a => a.Id == fromAddress.CountryId).FirstOrDefault();
-                            if (fromCountry != null)
-                            {
-                                myDataProvider.FromLocationCountryCode = this.FillInlandDomecticCountryCode(shipment);
                             }
                         }
                     }
