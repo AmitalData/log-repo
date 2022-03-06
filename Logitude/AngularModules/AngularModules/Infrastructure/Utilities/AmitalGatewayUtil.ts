@@ -81,7 +81,7 @@ export class AmitalGatewayUtil {
         //var unifreightMessageM = GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
         var unifreightMessageM =
             AmitalGatewayUtil.Instance.
-                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
         
 
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
@@ -101,7 +101,7 @@ export class AmitalGatewayUtil {
         //var unifreightMessageM = GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
         var unifreightMessageM =
             AmitalGatewayUtil.Instance.
-            DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
         unifreightMessageM.Requset.push(["CustomerId", CustomerId]);
 
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
@@ -119,7 +119,7 @@ export class AmitalGatewayUtil {
         CustomerId: string) {
         var unifreightMessageM =
             AmitalGatewayUtil.Instance.
-                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
         unifreightMessageM.Requset.push(["CustomerId", CustomerId]);
 
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
@@ -137,7 +137,7 @@ export class AmitalGatewayUtil {
         CustomerId: string) {
         var unifreightMessageM =
             AmitalGatewayUtil.Instance.
-                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
         unifreightMessageM.Requset.push(["CustomerId", CustomerId]);
 
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
@@ -155,7 +155,7 @@ export class AmitalGatewayUtil {
     ) {
         var unifreightMessageM =
             AmitalGatewayUtil.Instance.
-                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
 
 
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
@@ -173,7 +173,7 @@ export class AmitalGatewayUtil {
     ) {
         var unifreightMessageM =
             AmitalGatewayUtil.Instance.
-                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
 
 
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
@@ -192,7 +192,7 @@ export class AmitalGatewayUtil {
     ) {
         var unifreightMessageM =
             AmitalGatewayUtil.Instance.
-                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
 
 
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
@@ -211,7 +211,7 @@ export class AmitalGatewayUtil {
     ) {
         var unifreightMessageM =
             AmitalGatewayUtil.Instance.
-                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
 
 
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
@@ -228,7 +228,7 @@ export class AmitalGatewayUtil {
     ) {
         var unifreightMessageM =
             AmitalGatewayUtil.Instance.
-                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
 
 
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
@@ -244,7 +244,7 @@ export class AmitalGatewayUtil {
     ) {
         var unifreightMessageM =
             AmitalGatewayUtil.Instance.
-                DeclarationMessaging.GetMessage("", "", ViewModelName);
+                DeclarationMessaging.GetMessage("", "", ViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
 
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
             "AmitalGatewayUtil.NewCustomsFileScreen",
@@ -967,7 +967,7 @@ export class AmitalGatewayUtil {
             LogitudeEntityNumber: string,
             ViewModelName: string) {
 
-            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage("", LogitudeEntityNumber, ViewModelName);
+            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage("", LogitudeEntityNumber, ViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
             unifreightMessageM.LogitudeEntity = LogitudeEntityName;
 
             unifreightMessageM.Requset.push(["ExpectedCallBack", AmitalGatewayUtil.Instance.GeneralMessaging.ResponseEntityAlreadyLockKey]);
@@ -984,7 +984,7 @@ export class AmitalGatewayUtil {
             HaveSaved: boolean) {
 
 
-            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage("", LogitudeEntityNumber, "");
+            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage("", LogitudeEntityNumber, "", AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
             unifreightMessageM.LogitudeEntity = LogitudeEntity;
             unifreightMessageM.Requset.push(["HaveSaved", HaveSaved.toString()]);
 
@@ -1011,18 +1011,21 @@ export class AmitalGatewayUtil {
         public static get RaisePrintStimulReturnCanIContinueMessage() { return "RaisePrintStimulReturnCanIContinueMessage"; }  //Yuval Chalup 26.07.2015 TASK-14849
         public static get ResponseInstructionCancel() { return "Response.InstructionCancel"; } //Yuval Chalup 11.10.2015 AMI-54798
         public static get OpenNewBrowser() { return "OpenNewBrowser"; }
-        //public static get UnifreightEntity() { return "CFIFILEM"; }
+        public static UnifreightEntity(Direction:string="I") {
+            let unifreightEntity: string = Direction == "E" ? "BFIFILE" : "CFIFILEM";
+            return unifreightEntity;//"CFIFILEM";
+        }
 
 
 
         public static RaiseInstructionReturnCanIContinue(
             UnifreightEntityNumber: string,
             LogitudeEntityNumber: string, ViewModelName: string,
-            ViewPlace: string) {
+            ViewPlace: string, Direction: string) {
 
 
 
-            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity(Direction));
             unifreightMessageM.Requset.push(["ViewPlace", ViewPlace]);
             unifreightMessageM.Requset.push(["ExpectedCallBack", "Response.InstructionReturnCanIContinue"]);
 
@@ -1041,7 +1044,7 @@ export class AmitalGatewayUtil {
             LogitudeEntityNumber: string, ViewModelName: string, action: string) {
 
 
-            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
 
             unifreightMessageM.Requset.push(["ExpectedCallBack", "Response.Action,Response.InsuranseIsNeeded,Response.InsuranseIsSucceeded,Response.InsuranceHasOpen,Response.InsuranceMessage,Response.InsuranseAmount,Response.InsuranseCurrency,Response.ExpensesAmount,Response.ExpensesAmountCurr,Response.FreightAmount,Response.FreightAmountCurr,Response.FreightAmount2,Response.FreightAmountCurr2,Response.TotalFreightInFreightCurr"]);
             if (!AppTool.IsNullOrEmpty(action)) {
@@ -1072,7 +1075,8 @@ export class AmitalGatewayUtil {
             (UnifreightEntityNumber: string,
                 LogitudeEntityNumber: string, ViewModelName: string, UnifreightEntity: string) {
 
-            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName, UnifreightEntity);
+            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName
+                , UnifreightEntity);
             unifreightMessageM.LogitudeCommandId
             unifreightMessageM.Requset.push(["ExpectedCallBack", AmitalGatewayUtil.Instance.DeclarationMessaging.ResponseCFIFILMAlreadyLockKey]);
 
@@ -1089,7 +1093,7 @@ export class AmitalGatewayUtil {
             HaveSaved: boolean) {
 
 
-            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, "");
+            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, "", AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
             unifreightMessageM.Requset.push(["HaveSaved", HaveSaved.toString()]);
 
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
@@ -1105,7 +1109,7 @@ export class AmitalGatewayUtil {
             UnifreightEntityNumber: string,
             LogitudeEntityNumber: string, ViewModelName: string,
             ViewPlace: string) {
-            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
             unifreightMessageM.Requset.push(["ExpectedCallBack", "Response.PrintStimulReturnCanIContinue"]);
             if (ViewPlace == "RELEASE") // moran 29.2.16 - Task 19807 -->
             {
@@ -1134,11 +1138,12 @@ export class AmitalGatewayUtil {
         
         static GetMessage(UnifreightEntityNumber: string,
             LogitudeEntityNumber: string, LogitudeViewModel: string,
-            UnifreightEntity: string='CFIFILEM'
+            UnifreightEntity: string
 
         ): UnifreightMessageM {
             var unifreightMessageM = new UnifreightMessageM();
-            unifreightMessageM.UnifreightEntity = UnifreightEntity;//AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity;
+            unifreightMessageM.UnifreightEntity = UnifreightEntity;//
+            
             unifreightMessageM.UnifreightEntityNumber = UnifreightEntityNumber;
             unifreightMessageM.LogitudeEntity = AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration;
             unifreightMessageM.LogitudeEntityNumber = LogitudeEntityNumber;
@@ -1149,7 +1154,7 @@ export class AmitalGatewayUtil {
 
         public ShowDeclarationCertificatesByGroupsUnifreightCallBack(
             UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName, CustomerId) {
-            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
             unifreightMessageM.Requset.push(["CustomerId", CustomerId]);
 
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
@@ -1162,7 +1167,7 @@ export class AmitalGatewayUtil {
 
         public ShowDocumentsSharingUnifreightCallBack(
             UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName, CustomerId) {
-            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
             unifreightMessageM.Requset.push(["CustomerId", CustomerId]);
 
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(

@@ -337,7 +337,7 @@ export class FieldTemplateComponent {
             var unifreightMessageM =
                 AmitalGatewayUtil.Instance.
                     DeclarationMessaging.GetMessage(myDeclarationReferantDataList.CustomFileNo, myDeclarationReferantDataList.DeclarationId,
-                        myViewModelName);
+                        myViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity(""));
 
 
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
@@ -399,7 +399,8 @@ export class FieldTemplateComponent {
             var unifreightMessageM =
                 AmitalGatewayUtil.Instance.
                     DeclarationMessaging.GetMessage(myDeclarationReferantDataList.CustomFileNo, myDeclarationReferantDataList.DeclarationId,
-                        myViewModelName);
+                        myViewModelName
+                        , AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity(""));
 
 
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
@@ -445,7 +446,7 @@ export class FieldTemplateComponent {
             var unifreightMessageM =
                 AmitalGatewayUtil.Instance.
                     DeclarationMessaging.GetMessage(myDeclarationReferantDataList.CustomFileNo, myDeclarationReferantDataList.DeclarationId,
-                        myViewModelName);
+                        myViewModelName,AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
 
 
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
@@ -500,7 +501,7 @@ export class FieldTemplateComponent {
             var unifreightMessageM =
                 AmitalGatewayUtil.Instance.
                     DeclarationMessaging.GetMessage(myDeclarationReferantDataList.CustomFileNo, myDeclarationReferantDataList.DeclarationId,
-                        myViewModelName);
+                        myViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
 
 
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
@@ -543,7 +544,7 @@ export class FieldTemplateComponent {
                 var unifreightMessageM =
                     AmitalGatewayUtil.Instance.
                         DeclarationMessaging.GetMessage(myDeclarationReferantDataList.CustomFileNo, myDeclarationReferantDataList.DeclarationId,
-                            myViewModelName);
+                            myViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
 
 
                 AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
@@ -585,7 +586,7 @@ export class FieldTemplateComponent {
             var unifreightMessageM =
                 AmitalGatewayUtil.Instance.
                     DeclarationMessaging.GetMessage(myDeclarationReferantDataList.CustomFileNo, myDeclarationReferantDataList.DeclarationId,
-                        myViewModelName);
+                        myViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
 
 
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
@@ -627,7 +628,7 @@ export class FieldTemplateComponent {
             var unifreightMessageM =
                 AmitalGatewayUtil.Instance.
                     DeclarationMessaging.GetMessage(myDeclarationReferantDataList.CustomFileNo, myDeclarationReferantDataList.DeclarationId,
-                        myViewModelName);
+                        myViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
 
 
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
@@ -726,7 +727,7 @@ export class FieldTemplateComponent {
             var unifreightMessageM =
                 AmitalGatewayUtil.Instance.
                     DeclarationMessaging.GetMessage(myDeclarationReferantDataList.CustomFileNo, myDeclarationReferantDataList.DeclarationId,
-                        myViewModelName);
+                        myViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
 
 
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
@@ -773,7 +774,7 @@ export class FieldTemplateComponent {
             var unifreightMessageM =
                 AmitalGatewayUtil.Instance.
                     DeclarationMessaging.GetMessage(myDeclarationReferantDataList.CustomFileNo, myDeclarationReferantDataList.DeclarationId,
-                        myViewModelName);
+                        myViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
 
 
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(

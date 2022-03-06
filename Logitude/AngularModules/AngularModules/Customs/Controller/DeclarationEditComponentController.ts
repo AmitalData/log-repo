@@ -158,13 +158,13 @@ export class DeclarationEditComponentController implements IEditComponentControl
                 }
             }
             );
-        let unifreightEntity: string = this._CurrentEntity.Direction == "E" ? "BFIFILE" : "CFIFILEM";
+        //let unifreightEntity: string = this._CurrentEntity.Direction == "E" ? "BFIFILE" : "CFIFILEM";
         AmitalGatewayUtil.Instance.DeclarationMessaging
             .RaiseCFIFILMLockReturnCFIFILMAlreadyLock(
             this._CurrentEntity.CustomFileNo, this._CurrentEntity.Id,
             //this.GetType().Name
                 "DeclarationEditComponentController",
-                unifreightEntity
+                AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity(this._CurrentEntity.Direction)
 
             );
     }
