@@ -2,7 +2,7 @@ declare var window: any;
 import { Component, AfterViewInit, ViewChildren, QueryList, Output, EventEmitter} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {AppTool, DateTool, FormatTool} from '../../../../Infrastructure/Tools';
+import {AppTool, ArrayTool, DateTool, FormatTool} from '../../../../Infrastructure/Tools';
 import {ShipmentTool, AWBHelper, AWBCCSValidator} from '../../../../Shipment/Tools';
 import {AWBWizardArgs, SendAWBArgs} from '../../../../Shipment/Args';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -49,9 +49,10 @@ import { MeasurementListService } from '../../../../Common/Services/StandardList
 import { ShipmentAWBPrintOnlyPM } from '../../../../Shipment/EntityPMs/ShipmentAWBPrintOnlyPM';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
+import { ShipmentPayablePM } from '../../../../Shipment/EntityPMs/ShipmentPayablePM';
+import { ShipmentReceivablePM } from '../../../../Shipment/EntityPMs/ShipmentReceivablePM';
 
-@Component({
-    
+@Component({    
     selector: 'AWBWizardComponent',
     templateUrl: './AWBWizardComponent.html',
     providers: [EntityArgs, DocumentTypeListExtendedService, DocumentOutPMService, DocumentTypePMExtendedService]
@@ -76,6 +77,7 @@ export class AWBWizardComponent implements AfterViewInit{
     public IsImportWizard: boolean = false;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsUpdateQuantitiesVisible: boolean = false;
     constructor(public entityArgs: EntityArgs, public _documentTypeListExtendedService: DocumentTypeListExtendedService, public _documentOutPMService: DocumentOutPMService, public _documentTypePMService: DocumentTypePMExtendedService) {
         this.TenantPM = SessionLocator.TenantPM;
         this.myPartnersDomainService = new PartnersDomainService();
@@ -1794,6 +1796,11 @@ export class AWBWizardComponent implements AfterViewInit{
 
         this.TabErrors_OTC = screenErrors;
         this.TabWarnings_OTC = screenWarnings;
+
+        if (this.IsUpdateQuantitiesVisible) {
+            screenWarnings.push("Packages details updated");
+        }
+
         this.ApplyStyle(screenErrors.length > 0, screenWarnings.length > 0, "OTC");
     }
     public ValidateScreen_RAD() {
@@ -2153,6 +2160,266 @@ export class AWBWizardComponent implements AfterViewInit{
             this.ValidateAirlineRule("OtherParticipantIdCode2", this.EntityPM.OtherParticipantIdCode2, screenWarnings);
             this.ValidateAirlineRule("OtherParticipantIdCode3", this.EntityPM.OtherParticipantIdCode3, screenWarnings);
         }
+    }
+
+    public ValidateScreen_OTC_Quantities() {
+        var validateReceivables: boolean = this.ValidateReceivablesQuantites();
+        var validatePayables: boolean = this.ValidatePayablesQuantites();
+
+        if (validateReceivables || validatePayables) {
+            this.IsUpdateQuantitiesVisible = true;
+            this.ValidateScreen_OTC();
+        }
+    }
+    private ValidateReceivablesQuantites(): boolean {
+        var activeLines: ShipmentReceivablePM[] = this.EntityPM.ShipmentReceivables;
+        activeLines = activeLines.filter(d => d.ShipmentReceivableParentId == null);
+        activeLines = activeLines.filter(d => d.ARInvoiceId == null);
+        activeLines = activeLines.filter(d => d.UnitPrice != null);
+
+        if (activeLines.length > 0) {
+            var isDifferent: boolean = false;
+
+            activeLines.forEach(item => {
+                switch (item.MeasurementCode) {
+                    case "PFCL": {
+                        var quantity = ArrayTool.Sum(this.EntityPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "TotalAmountLocal");
+                        if (item.Quantity != quantity) {
+                            isDifferent = true;
+                        }
+                        break;
+                    }
+
+                    case "SCGW": {
+                        if (item.Quantity != this.EntityPM.GrossWeightPerStorageDays) {
+                            isDifferent = true;
+                        }
+                        break;
+                    }
+
+                    case "CWKG": {
+                        if (item.Quantity != this.EntityPM.ChargeableWeightInKG) {
+                            isDifferent = true;
+                        }
+                        break;
+                    }
+                    case "GWKG": {
+                        if (item.Quantity != this.EntityPM.GrossWeightInKG) {
+                            isDifferent = true;
+                        }
+                        break;
+                    }
+
+                    case "VCBM": {
+                        if (item.Quantity != this.EntityPM.VolumeInCBM) {
+                            isDifferent = true;
+                        }
+
+                        break;
+                    }
+
+                    case "GRWT": {
+                        if (item.Quantity != this.EntityPM.GrossWeight) {
+                            isDifferent = true;
+                        }
+
+                        break;
+                    }
+
+                    case "GWTN": {
+                        if (item.Quantity != this.EntityPM.GrossWeightPerTon) {
+                            isDifferent = true;
+                        }
+
+                        break;
+                    }
+
+                    case "QTY": {
+                        if (item.Quantity != this.EntityPM.NumberOfPackages) {
+                            isDifferent = true;
+                        }
+
+                        break;
+                    }
+
+                    case "CHWT": {
+                        if (item.Quantity != this.EntityPM.ChargeableWeight) {
+                            isDifferent = true;
+                        }
+
+                        break;
+                    }
+
+                    case "VOLU": {
+                        if (item.Quantity != this.EntityPM.Volume) {
+                            isDifferent = true;
+                        }
+
+                        break;
+                    }
+
+                    case "BTEU": {
+                        if (item.Quantity != this.EntityPM.TEU) {
+                            isDifferent = true;
+                        }
+
+                        break;
+                    }
+
+                    case "PRVL": {
+                        if (item.Quantity != this.EntityPM.ValueOfGoods) {
+                            isDifferent = true;
+                        }
+
+                        break;
+                    }
+
+                    case "PRFR": {
+                        if (this.EntityPM.ShipmentReceivables.filter(f => f.ChargesGroupCode == "FRT").length > 0) {
+                            var FRT_Quantity = ArrayTool.Sum(this.EntityPM.ShipmentReceivables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentReceivableParentId)), "TotalAmount");
+
+                            if (item.Quantity != FRT_Quantity) {
+                                isDifferent = true;
+                            }
+
+                            if (this.EntityPM.ShipmentReceivables.filter(f => f.MeasurementCode == "PRFR" && f.Quantity != FRT_Quantity).length > 0) {
+                                isDifferent = true;
+                            }
+                        }
+
+                        break;
+                    }
+                }
+            });
+        }
+
+        return isDifferent;
+    }
+    private ValidatePayablesQuantites(): boolean {
+        var activeLines: ShipmentPayablePM[] = this.EntityPM.ShipmentPayables;
+        activeLines = activeLines.filter(d => d.ShipmentPayableParentId == null);
+        activeLines = activeLines.filter(d => d.ShipmentPayableAmountTypeCode != "NEXP");
+        activeLines = activeLines.filter(d => d.ShipmentPayableLineStatusCode != "ACCT");
+        activeLines = activeLines.filter(d => d.ShipmentPayableLineStatusCode != "PACC");
+        activeLines = activeLines.filter(d => d.UnitPrice != null);
+
+        if (activeLines.length > 0) {
+            var isDifferent: boolean = false;
+
+            activeLines.forEach(item => {
+                switch (item.MeasurementCode) {
+                    case "PFCL": {
+                        var quantity = AppTool.Round(ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal"), 3);
+                        if (item.Quantity != quantity) {
+                            isDifferent = true;
+                        }
+                        break;
+                    }
+
+                    case "SCGW": {
+                        if (item.Quantity != this.EntityPM.GrossWeightPerStorageDays) {
+                            isDifferent = true;
+                        }
+                        break;
+                    }
+                    case "CWKG": {
+                        if (item.Quantity != this.EntityPM.ChargeableWeightInKG) {
+                            isDifferent = true;
+                        }
+                        break;
+                    }
+                    case "GWKG": {
+                        if (item.Quantity != this.EntityPM.GrossWeightInKG) {
+                            isDifferent = true;
+                        }
+                        break;
+                    }
+
+                    case "GRWT": {
+                        if (item.Quantity != this.EntityPM.GrossWeight) {
+                            isDifferent = true;
+                        }
+
+                        break;
+                    }
+
+                    case "GWTN": {
+                        if (item.Quantity != this.EntityPM.GrossWeightPerTon) {
+                            isDifferent = true;
+                        }
+
+                        break;
+                    }
+
+                    case "QTY": {
+                        if (item.Quantity != this.EntityPM.NumberOfPackages) {
+                            isDifferent = true;
+                        }
+
+                        break;
+                    }
+
+                    case "CHWT": {
+                        if (item.Quantity != this.EntityPM.ChargeableWeight) {
+                            isDifferent = true;
+                        }
+
+                        break;
+                    }
+
+                    case "VOLU": {
+                        if (item.Quantity != this.EntityPM.Volume) {
+                            isDifferent = true;
+                        }
+
+                        break;
+                    }
+
+                    case "BTEU": {
+
+                        if (item.Quantity != this.EntityPM.TEU) {
+                            isDifferent = true;
+                        }
+
+                        break;
+                    }
+
+                    case "PRVL": {
+                        if (item.Quantity != this.EntityPM.ValueOfGoods) {
+                            isDifferent = true;
+                        }
+
+                        break;
+                    }
+
+                    case "PRFR": {
+                        if (this.EntityPM.ShipmentPayables.filter(f => f.ChargesGroupCode == "FRT").length > 0) {
+                            var FRT_Quantity = ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount");
+
+                            if (item.Quantity != FRT_Quantity) {
+                                isDifferent = true;
+                            }
+
+                            if (this.EntityPM.ShipmentPayables.filter(f => f.MeasurementCode == "PRFR" && f.Quantity != FRT_Quantity).length > 0) {
+                                isDifferent = true;
+                            }
+                        }
+
+                        break;
+                    }
+
+                    case "VCBM": {
+                        if (item.Quantity != this.EntityPM.VolumeInCBM) {
+                            isDifferent = true;
+                        }
+
+                        break;
+                    }
+                }
+            });
+        }
+
+        return isDifferent;
     }
 
     ValidateAirlineRule(myFieldName: string, myFieldValue: any, validationList: string[]) {
