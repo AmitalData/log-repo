@@ -99,7 +99,11 @@ namespace WebFreight.Web.Helpers.ExcelReport
                     {
                         return typeof(AirlineStatisticsDataProvider);
                     }
-
+                case "DSCA":
+                case "AREX":
+                    {
+                        return typeof(ArchivoExportadoDataProvider);
+                    }
                 default:
                     return null;
             }
