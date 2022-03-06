@@ -516,22 +516,15 @@ namespace Logitude.Accounting.Data.Repositories
             List<string> invoiceIds = (from a in invoicecontext.ARInvoices
                                         where a.InvoiceDate <= date && (a.TotalAmountForTaxReport != null && a.TotalAmountForTaxReport != 0)   && a.Tenant == tenant 
                                         select a.Id).ToList();
-           
-
-            List< Journal> journals=(from j in context.Journals
-                    join jl in context.JournalLines on j.Id equals jl.JournalId
-                    join adt in context.JournalAdditionalDatas on j.Id equals adt.JournalId
-                    where j.AccountingEntityCode == "2" && (adt.TaxReportId == null ||adt.TaxReportTransmitStatusCode == "2" || adt.TaxReportTransmitStatusCode == null) && j.Tenant== tenant
-                    && jl.DocumentDate <= date  && adt.Tenant==tenant
-
-                    select j ).ToList();
 
 
-            List<CustomTaxReportData> data = (from j in journals
+            List<CustomTaxReportData> data = (from j in context.Journals
                                               join jl in context.JournalLines on j.Id equals jl.JournalId
-                                              let ledger = context.LedgerTransactions.Where(t => t.JournalId == j.Id && t.JournalLineNumber == jl.Line).FirstOrDefault()
-
-                                              where invoiceIds.Contains(j.AccountingEntityId)
+                                              join ledger in context.LedgerTransactions on new { JournalId = j.Id, JournalLineNumber = jl.Line } equals new { ledger.JournalId, ledger.JournalLineNumber }
+                                              join adt in context.JournalAdditionalDatas on j.Id equals adt.JournalId
+                                              where j.AccountingEntityCode == "2" && (adt.TaxReportId == null || adt.TaxReportTransmitStatusCode == "2" || adt.TaxReportTransmitStatusCode == null) && j.Tenant == tenant
+                                                    && jl.DocumentDate <= date && adt.Tenant == tenant
+                                                    && invoiceIds.Contains(j.AccountingEntityId)
                                               select new CustomTaxReportData()
                                               {
                                                   Id = j.Id,
@@ -539,6 +532,20 @@ namespace Logitude.Accounting.Data.Repositories
                                                   IsLedgerReconciled = (ledger == null ? false : ledger.IsReconciled)
 
                                               }).ToList();
+
+
+            //List<CustomTaxReportData> data = (from j in journals
+            //                                  join jl in context.JournalLines on j.Id equals jl.JournalId
+
+            //                                  where invoiceIds.Contains(j.AccountingEntityId)
+            //                                  select new CustomTaxReportData()
+            //                                  {
+            //                                      Id = j.Id,
+            //                                      AccountingEntityId = j.AccountingEntityId,
+            //                                      IsLedgerReconciled = (ledger == null ? false : ledger.IsReconciled)
+
+            //                                  }).ToList();
+                                              
 
             return data;
 
