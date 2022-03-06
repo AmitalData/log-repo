@@ -1719,6 +1719,10 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 filter.Operator = "Contains";
             MyFilters.AdditionalFilters.push(filter);
         });
+        
+        if(filters.AdditionalFilters?.filter( x => x.FieldDataType == "DateTime" && x.FieldValue == "").length > 0){
+            return;
+        }
         //console.log(searchfields);
         if (searchfields && !this.IsUseCardSearchMechanism()) {
             //filters.addAdditionalFilter("SearchFields", searchfields, null, null, "Contains", null, null, null, "Text");
@@ -1743,7 +1747,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         MyFilters.SortBy = sortingCol;
         MyFilters.SortDirection = sortingDir;
         this.CurrentQueryFilters = MyFilters;
-
+        
         return this._entityListService.getByFilters(this.ObjectTableName, MyFilters, this.MethodName == undefined ? null : this.MethodName);
     }
 

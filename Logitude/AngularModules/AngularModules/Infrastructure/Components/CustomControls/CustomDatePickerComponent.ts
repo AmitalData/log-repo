@@ -149,7 +149,7 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
                 this.Text = stringDate + " - " + endingDate;
             }
 
-            if (predefinedFilter.PredefinedValue2 == "LastYear") {
+            if (this.QueryCode == 'LedgerTransaction.LedgerTransactions') {
                 this.SelectedItem = "Last Year";
             }
             //Between

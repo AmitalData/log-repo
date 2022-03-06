@@ -5400,7 +5400,6 @@
         PredefinedValue="&quot;&quot;"
         ObjectFieldName="&quot;AccountingDate&quot;"
         IsPredefined="true"
-        PredefinedValue2="&quot;LastYear&quot;"
         IndexOrder="0"
         CustomPredefined="true" />
     </QueryFilters>
