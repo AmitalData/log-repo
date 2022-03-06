@@ -10,7 +10,7 @@ using System.Runtime.Serialization;
 namespace Logitude.Customs.Data.EntityLists
 {
    [DataContract]
-   public partial class LogisticActionResponseRequestSList
+   public partial class LogisticActionResponseReqSList
    {
    
        [Key]

@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="LogisticActionResponseRequestSes"
-  OldNames="LogisticActionResponseRequestSes,LogisticActionResponseRequestSes"
+  Name="LogisticActionResponseReqSes"
   Schema="Customs"
   DBType="Main"
   Module="Customs">

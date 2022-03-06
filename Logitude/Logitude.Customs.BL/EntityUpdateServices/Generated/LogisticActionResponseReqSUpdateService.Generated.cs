@@ -22,44 +22,44 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 { 
-   public partial class LogisticActionResponseRequestSUpdateService:EntityUpdateService<LogisticActionResponseRequestS,LogisticActionResponseRequestSPM,EntityPM>
+   public partial class LogisticActionResponseReqSUpdateService:EntityUpdateService<LogisticActionResponseReqS,LogisticActionResponseReqSPM,EntityPM>
    {
    
-        LogisticActionResponseRequestSRepository entityRepository;
-        public LogisticActionResponseRequestSUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+        LogisticActionResponseReqSRepository entityRepository;
+        public LogisticActionResponseReqSUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
             : base(mainContext,additionalContexts, tenant)
         {
             ICustomContext  context = mainContext as CustomContext;
             context = context ??mainContext as ICustomContext ; //Up line is A BUG -and i need it 4 Fakes
-            Mapping = new LogisticActionResponseRequestSDataMapping();
-            Repository = new LogisticActionResponseRequestSRepository(context);
+            Mapping = new LogisticActionResponseReqSDataMapping();
+            Repository = new LogisticActionResponseReqSRepository(context);
         }
 
        
         private ICustomContext currentContext;
-        public LogisticActionResponseRequestSUpdateService(int tenant)
+        public LogisticActionResponseReqSUpdateService(int tenant)
         {
             currentContext = CustomContext.GetContext(tenant);
         }
 
-        public LogisticActionResponseRequestSUpdateService(ICustomContext context)
+        public LogisticActionResponseReqSUpdateService(ICustomContext context)
         {
             currentContext = context;
         }
 
 		
-		protected override EntityKeyFields GetKeys(LogisticActionResponseRequestSPM entityPM)
+		protected override EntityKeyFields GetKeys(LogisticActionResponseReqSPM entityPM)
         {
-            LogisticActionResponseRequestSKeys entityKeys = new LogisticActionResponseRequestSKeys() { Code = entityPM.Code };
+            LogisticActionResponseReqSKeys entityKeys = new LogisticActionResponseReqSKeys() { Code = entityPM.Code };
             return entityKeys;
         }
 
 		
-	    protected override void FillDefaultValuesOnCreate(LogisticActionResponseRequestSPM entityPM)
+	    protected override void FillDefaultValuesOnCreate(LogisticActionResponseReqSPM entityPM)
         {
  
 		}
-		protected override void FillDefaultValuesOnUpdate(LogisticActionResponseRequestSPM entityPM)
+		protected override void FillDefaultValuesOnUpdate(LogisticActionResponseReqSPM entityPM)
 		{
  
 		}

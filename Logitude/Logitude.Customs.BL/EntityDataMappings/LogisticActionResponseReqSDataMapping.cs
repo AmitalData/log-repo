@@ -14,15 +14,15 @@ using Logitude.Customs.Data;
 namespace Logitude.Customs.BL.EntityDataMappings
 {
    
-   public partial class LogisticActionResponseRequestSDataMapping: IMapping<LogisticActionResponseRequestSPM, LogisticActionResponseRequestS>
+   public partial class LogisticActionResponseReqSDataMapping: IMapping<LogisticActionResponseReqSPM, LogisticActionResponseReqS>
    {
 
-        public void CustomPMToPOCO(LogisticActionResponseRequestSPM entityPM, LogisticActionResponseRequestS entityPOCO)
+        public void CustomPMToPOCO(LogisticActionResponseReqSPM entityPM, LogisticActionResponseReqS entityPOCO)
         {
             //throw new NotImplementedException();
         }
 
-        public void CustomPOCOToPM(LogisticActionResponseRequestSPM entityPM, LogisticActionResponseRequestS entityPOCO)
+        public void CustomPOCOToPM(LogisticActionResponseReqSPM entityPM, LogisticActionResponseReqS entityPOCO)
         {
             //throw new NotImplementedException();
         }

@@ -532,7 +532,7 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new LogisticActionRequestTypeMap());
 	
-            modelBuilder.Configurations.Add(new LogisticActionResponseRequestSMap());
+            modelBuilder.Configurations.Add(new LogisticActionResponseReqSMap());
 	
             modelBuilder.Configurations.Add(new LogisticsReferenceTypeMap());
 	
@@ -2713,7 +2713,7 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
-	 public IDbSet<LogisticActionResponseRequestS> LogisticActionResponseRequestSes 
+	 public IDbSet<LogisticActionResponseReqS> LogisticActionResponseReqSes 
 	 {
 	      get; set;
 	 

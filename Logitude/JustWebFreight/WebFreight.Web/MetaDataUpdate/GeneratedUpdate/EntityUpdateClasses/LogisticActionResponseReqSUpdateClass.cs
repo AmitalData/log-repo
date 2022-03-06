@@ -83,20 +83,20 @@ using Amital.QuoteOPM.BL;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
-   public class LogisticActionResponseRequestSUpdateClass
+   public class LogisticActionResponseReqSUpdateClass
    {  		
-		public const string HashString = "a1b842aa49f8e321ade48896244bcda4";
+		public const string HashString = "b2fdd837c600d373096eb29713470907";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "Customs.LogisticActionResponseRequestS",
+	             				    ObjectTableName =  "Customs.LogisticActionResponseReqS",
 			      				    IsNew =  true,
-			      				    DBTableName =  "Customs.LogisticActionResponseRequestSes",
-			      				    ObjectTableSingular =  "LogisticActionResponseRequestS",
-			      				    ObjectTablePlural =  "LogisticActionResponseRequestSes",
+			      				    DBTableName =  "Customs.LogisticActionResponseReqSes",
+			      				    ObjectTableSingular =  "LogisticActionResponseReqS",
+			      				    ObjectTablePlural =  "LogisticActionResponseReqSes",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -143,7 +143,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
-			      				    HashString =  LogisticActionResponseRequestSUpdateClass.HashString,
+			      				    HashString =  LogisticActionResponseReqSUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -155,7 +155,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Code",
-					  						ObjectTableName =  "Customs.LogisticActionResponseRequestS",
+					  						ObjectTableName =  "Customs.LogisticActionResponseReqS",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  2,
@@ -183,7 +183,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.LogisticActionResponseRequestStatus",
+					  						ValidForQuerySection1 =  "Customs.LogisticActionResponseReqS",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -217,7 +217,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LocalName",
-					  						ObjectTableName =  "Customs.LogisticActionResponseRequestS",
+					  						ObjectTableName =  "Customs.LogisticActionResponseReqS",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  40,
@@ -245,7 +245,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.LogisticActionResponseRequestStatus",
+					  						ValidForQuerySection1 =  "Customs.LogisticActionResponseReqS",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -279,7 +279,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						ObjectTableName =  "Customs.LogisticActionResponseRequestS",
+					  						ObjectTableName =  "Customs.LogisticActionResponseReqS",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
@@ -306,7 +306,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.LogisticActionResponseRequestStatus",
+					  						ValidForQuerySection1 =  "Customs.LogisticActionResponseReqS",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -338,7 +338,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EnglishName",
-					  						ObjectTableName =  "Customs.LogisticActionResponseRequestS",
+					  						ObjectTableName =  "Customs.LogisticActionResponseReqS",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  40,
@@ -366,7 +366,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.LogisticActionResponseRequestStatus",
+					  						ValidForQuerySection1 =  "Customs.LogisticActionResponseReqS",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -400,7 +400,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Inactive",
-					  						ObjectTableName =  "Customs.LogisticActionResponseRequestS",
+					  						ObjectTableName =  "Customs.LogisticActionResponseReqS",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -428,7 +428,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.LogisticActionResponseRequestStatus",
+					  						ValidForQuerySection1 =  "Customs.LogisticActionResponseReqS",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -463,15 +463,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-	        QueryGroup LogisticActionResponseRequestSQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "c8e2", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
-						QueryGroup LogisticActionResponseRequestSQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "3e16", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+	        QueryGroup LogisticActionResponseReqSQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "c8e2", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup LogisticActionResponseReqSQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "3e16", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
-	        ObjectTable LogisticActionResponseRequestSObjectTable = objectTables.ContainsKey("Customs.LogisticActionResponseRequestS") ? objectTables["Customs.LogisticActionResponseRequestS"] : null;
-            if (LogisticActionResponseRequestSObjectTable == null)
+	        ObjectTable LogisticActionResponseReqSObjectTable = objectTables.ContainsKey("Customs.LogisticActionResponseReqS") ? objectTables["Customs.LogisticActionResponseReqS"] : null;
+            if (LogisticActionResponseReqSObjectTable == null)
             {
                 IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-                LogisticActionResponseRequestSObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.LogisticActionResponseRequestS" && d.Tenant == 0).FirstOrDefault();
+                LogisticActionResponseReqSObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.LogisticActionResponseReqS" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
@@ -482,22 +482,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode LogisticActionResponseRequestSTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogisticActionResponseRequestStatus.Q.LogisticActionResponseRequestStatus", DefaultText = @"Logistic Action Response RS",LocalDefaultText = "סטטוס משוב לבקשה לפעולה לוגיסטית", ObjectTableId = LogisticActionResponseRequestSObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature LogisticActionResponseRequestSFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LogisticActionResponseRequestStatus.Q.LogisticActionResponseRequestStatus", ObjectTableId = LogisticActionResponseRequestSObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogisticActionResponseRequestStatus.Features.LogisticActionResponseRequestStatus", NameTextCodeDefaultText = "LogisticActionResponseRequestStatus", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,LogisticActionResponseRequestSObjectTable, addedFeatures, addedTextCodes);
+			   TextCode LogisticActionResponseReqSTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogisticActionResponseRequestStatus.Q.LogisticActionResponseRequestStatus", DefaultText = @"Logistic Action Response RS",LocalDefaultText = "סטטוס משוב לבקשה לפעולה לוגיסטית", ObjectTableId = LogisticActionResponseReqSObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature LogisticActionResponseReqSFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LogisticActionResponseRequestStatus.Q.LogisticActionResponseRequestStatus", ObjectTableId = LogisticActionResponseReqSObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogisticActionResponseRequestStatus.Features.LogisticActionResponseRequestStatus", NameTextCodeDefaultText = "LogisticActionResponseRequestStatus", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,LogisticActionResponseReqSObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query LogisticActionResponseRequestSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LogisticActionResponseRequestSTextCode_0.Id, NameTextCodeCode = LogisticActionResponseRequestSTextCode_0.Code, ObjectTableName = "Customs.LogisticActionResponseRequestS", Code = "LogisticActionResponseRequestS",  QueryGroupCode = "c8e2", IndexOrder = 0, Tenant = 0, ObjectTableId = LogisticActionResponseRequestSObjectTable.Id, QuerySection = "Customs.LogisticActionResponseRequestS", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = LogisticActionResponseRequestSFeature_0.Id,FeatureUniqeCode= LogisticActionResponseRequestSFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query LogisticActionResponseReqSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LogisticActionResponseReqSTextCode_0.Id, NameTextCodeCode = LogisticActionResponseReqSTextCode_0.Code, ObjectTableName = "Customs.LogisticActionResponseReqS", Code = "LogisticActionResponseReqS",  QueryGroupCode = "c8e2", IndexOrder = 0, Tenant = 0, ObjectTableId = LogisticActionResponseReqSObjectTable.Id, QuerySection = "Customs.LogisticActionResponseReqS", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = LogisticActionResponseReqSFeature_0.Id,FeatureUniqeCode= LogisticActionResponseReqSFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn LogisticActionResponseRequestSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LogisticActionResponseRequestSQuery.Id,QueryCode = LogisticActionResponseRequestSQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.LogisticActionResponseRequestS.Code" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn LogisticActionResponseReqSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LogisticActionResponseReqSQuery.Id,QueryCode = LogisticActionResponseReqSQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.LogisticActionResponseReqS.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn LogisticActionResponseRequestSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LogisticActionResponseRequestSQuery.Id,QueryCode = LogisticActionResponseRequestSQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.LogisticActionResponseRequestS.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LogisticActionResponseReqSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LogisticActionResponseReqSQuery.Id,QueryCode = LogisticActionResponseReqSQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.LogisticActionResponseReqS.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LogisticActionResponseRequestSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LogisticActionResponseRequestSQuery.Id,QueryCode = LogisticActionResponseRequestSQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.LogisticActionResponseRequestS.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LogisticActionResponseReqSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LogisticActionResponseReqSQuery.Id,QueryCode = LogisticActionResponseReqSQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.LogisticActionResponseReqS.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LogisticActionResponseRequestSQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LogisticActionResponseRequestSQuery.Id,QueryCode = LogisticActionResponseRequestSQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.LogisticActionResponseRequestS.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn LogisticActionResponseReqSQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LogisticActionResponseReqSQuery.Id,QueryCode = LogisticActionResponseReqSQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.LogisticActionResponseReqS.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -509,15 +509,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
-		   ObjectTable LogisticActionResponseRequestSObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.LogisticActionResponseRequestS" && d.Tenant == 0).FirstOrDefault();
-		   //List<ObjectField> LogisticActionResponseRequestSObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.LogisticActionResponseRequestS").ToList();
+		   ObjectTable LogisticActionResponseReqSObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.LogisticActionResponseReqS" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> LogisticActionResponseReqSObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.LogisticActionResponseReqS").ToList();
 		       
 	      
 
-	         Screen LogisticActionResponseRequestSCustomsLogisticActionResponseRequestStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "LogisticActionResponseRequestS.HeaderScreen", Name = "Customs.LogisticActionResponseRequestStatusHeaderScreen", ObjectTableId = LogisticActionResponseRequestSObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen LogisticActionResponseReqSCustomsLogisticActionResponseReqSHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "LogisticActionResponseReqS.HeaderScreen", Name = "Customs.LogisticActionResponseReqSHeaderScreen", ObjectTableId = LogisticActionResponseReqSObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
-		    LogisticActionResponseRequestSObjectTable.HeaderScreenId = LogisticActionResponseRequestSCustomsLogisticActionResponseRequestStatusHeaderScreenScreen0.Id;
-		    LogisticActionResponseRequestSObjectTable.HeaderScreenCode = LogisticActionResponseRequestSCustomsLogisticActionResponseRequestStatusHeaderScreenScreen0.Code;
+		    LogisticActionResponseReqSObjectTable.HeaderScreenId = LogisticActionResponseReqSCustomsLogisticActionResponseReqSHeaderScreenScreen0.Id;
+		    LogisticActionResponseReqSObjectTable.HeaderScreenCode = LogisticActionResponseReqSCustomsLogisticActionResponseReqSHeaderScreenScreen0.Code;
 
 	   		  
 
@@ -534,7 +534,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable LogisticActionResponseRequestSObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.LogisticActionResponseRequestS" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable LogisticActionResponseReqSObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.LogisticActionResponseReqS" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -549,7 +549,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = LogisticActionResponseRequestSObjectTable.Id,
+                ObjectTableId = LogisticActionResponseReqSObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -568,7 +568,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = LogisticActionResponseRequestSObjectTable.Id,
+                ObjectTableId = LogisticActionResponseReqSObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 

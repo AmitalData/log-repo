@@ -525,7 +525,7 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             addedClosedTables.Add(LogisticActionRequestTypeTable);
 
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData LogisticActionResponseRequestSTable = closedSystemTables.Where(d => d.id == "23748").FirstOrDefault();
-            ObjectTable LogisticActionResponseRequestSObjectTable = objectTableRepository.GetObjectTableByName("Customs.LogisticActionResponseRequestS", 0, false);
+            ObjectTable LogisticActionResponseRequestSObjectTable = objectTableRepository.GetObjectTableByName("Customs.LogisticActionResponseReqS", 0, false);
             InsertClosedTableRecord(LogisticActionResponseRequestSTable, LogisticActionResponseRequestSObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(LogisticActionResponseRequestSTable);
 
