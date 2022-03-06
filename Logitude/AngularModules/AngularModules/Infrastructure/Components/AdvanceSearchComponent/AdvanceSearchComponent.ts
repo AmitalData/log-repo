@@ -357,12 +357,8 @@ export class AdvanceSearchComponent implements OnInit {
         var filters = this.AdvancedQueryFilterPMs.filter(d => d.ObjectFieldCode == field.FieldCode);
         if (filters != null && filters[0] != null && filters[0].IsPredefined == true) {
             var value = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldCode == field.FieldCode)[0].PredefinedValue;
-            //alert(value)
-            var xxx = new Date();
-            xxx.setFullYear(2013, 11)
-            value = null;
             if (value == "#logged-user") filters[0].PredefinedValue = SessionLocator.LoggedUserPM.DontShowLocal ? SessionInfo.LoggedUserPM.EnglishName : SessionLocator.LoggedUserPM.LocalName;
-            this.FieldsValues.SetFieldValue(field.Id, xxx);
+            this.FieldsValues.SetFieldValue(field.Id, value);
         }
         if (this.SelectedObjectFields.filter(a => a.FieldName == field.FieldName).length == 0) {
             if (field.DataTypeCode != "Constant") {
