@@ -178,6 +178,34 @@ namespace Logitude.Customs.BL.BL
             }
 
         }
+        public void CalcMissingDocumentStatusCode(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
+        {
+            if (myDeclarationCourierStatusPM == null) return;
+            
+            var customContext = CustomContext.GetContext(myDeclarationCourierStatusPM.Tenant);
+            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
+            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", myDeclarationCourierStatusPM.Tenant, "Declaration");
+            CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(customContext);
+               
+            var existCustomsDocumentTypes = customsDocumentsTicketPMList.Where(d => 
+            (d.DocumentTypeCode == "380" || d.DocumentTypeCode == "ILD") && d.DocumentsFilingId != null && d.CustomsDocId != null)
+                .Select(x=>x.DocumentTypeCode).Distinct().ToList();
+
+            if (existCustomsDocumentTypes == null || existCustomsDocumentTypes.Count == 0)
+            {
+                myDeclarationCourierStatusPM.MissedDocumentStatusCode = null;//חסר שניהם
+            }
+            else
+            {
+                if (existCustomsDocumentTypes.Count == 1)
+                    myDeclarationCourierStatusPM.MissedDocumentStatusCode = existCustomsDocumentTypes.Contains("380") ? "C" : "I";
+                else
+                {
+                    myDeclarationCourierStatusPM.MissedDocumentStatusCode = "V";
+
+                }
+            }
+        }
 
         public void CalcSpecialActionStatus(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
         {
