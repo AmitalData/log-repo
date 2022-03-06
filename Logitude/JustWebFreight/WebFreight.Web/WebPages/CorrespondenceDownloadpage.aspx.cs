@@ -79,6 +79,10 @@ namespace WebFreight.Web.WebPages
                     Uploader up = new Uploader();
 
                     Document myDoc = up.GetFileExtensionBySecurityIdAndCopyId(securityId, copyId,tenant);
+                    if ((string.IsNullOrEmpty(copyId) || copyId == "null")  && myDoc == null)
+                    {
+                        myDoc = up.GetFileExtensionBySecurityId(securityId, tenant);
+                    }
                     documentExtension = myDoc.Extension;
                     filename = myDoc.FileName;
                     if (filestrings.Length >= 4)
