@@ -371,7 +371,7 @@
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                    <span *ngIf="Surcharge5MinPriceVisibility && item.Surcharge5MinPriceValue != nulkl">
+                                                    <span *ngIf="Surcharge5MinPriceVisibility && item.Surcharge5MinPriceValue != null">
                                                         <img style="margin-right: 5px; " src="./Images/Icons/M-icon.png" width="16" height="16" [title]="item.Surcharge5MinPrice | NumbersPipe:'N3'" />
                                                     </span>
                                                     <span>{{item.Surcharge5Price | NumbersPipe:'N3'}}</span>
