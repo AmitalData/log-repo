@@ -165,8 +165,7 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
             }
 
             // 4- sort
-            list.sort((a, b) => { return (a.GroupHash === b.GroupHash) ? 0 : (a.GroupHash < b.GroupHash) ? -1 : 1 });
-
+            pageLines.sort((a, b) => { return (a.PageLinePM.GroupHash === b.PageLinePM.GroupHash) ? 0 : (a.PageLinePM.GroupHash < b.PageLinePM.GroupHash) ? -1 : 1 });
             this.BankPageLines.InsertCollection(pageLines);
 
             this.GetLedgerLines(transactionsLinesIds);
@@ -198,7 +197,6 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
 
                 // 4- sort
                 transactionsItems.sort((a, b) => { return (a.GroupHash === b.GroupHash) ? 0 : (a.GroupHash < b.GroupHash) ? -1 : 1 });
-
                 this.TransactionsLines.InsertCollection(transactionsItems);
 
                 this.FillGroupHash();

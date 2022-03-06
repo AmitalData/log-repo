@@ -52,12 +52,6 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
                 if (!isValid || isZeros)
                     throw new ApplicationException(TranslateTextsClass.Translate("General.O.WrongVatNumber", entityPM.Tenant));
             }
-            else if (isAccountingActivated && string.IsNullOrEmpty(entityPM.VatNumber))
-            {
-                var message = TranslateTextsClass.Translate("General.M.FieldIsRequired", entityPM.Tenant);
-                message = message.Replace("%FieldName", TranslateTextsClass.Translate("ARInvoice.F.VatNumber", entityPM.Tenant));
-                throw new ApplicationException(message);
-            }
         }
 
         private static bool CheckFullAccountingActivated(int tenantNumber)

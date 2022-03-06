@@ -30,5 +30,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         public static string MexicoCountryCode = "MX";
         public static string LogitudeSATPaymentBankTransferMethod = "03";
         public static string SATPaymentBankTransferTypeCode = "01";
+        public static string TransferedSATTransferStatusCode = "TD";
+        public static string CanceledSATTransferStatusCode = "CS";
+        public static string VoidedInvoiceStatusCode = "VD";
     }
 }

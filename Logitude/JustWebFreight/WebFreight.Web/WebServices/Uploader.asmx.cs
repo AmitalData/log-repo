@@ -1411,7 +1411,7 @@ namespace WebFreight.Web.WebServices
         {
 
 
-            if (!string.IsNullOrEmpty(securityId))
+            if (!string.IsNullOrEmpty(securityId) && !securityId.Contains("+"))
             {
                 securityId = System.Net.WebUtility.UrlEncode(securityId);
             }

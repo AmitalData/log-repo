@@ -1512,26 +1512,27 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     public UpdateCustomsChargesMessageWidth: number = 0;
     public IsUpdateCustomsChargesVisible: boolean = false;
     public IsUpdatingCustomsCharges: boolean = false;
-    private deletedPartnerId: string;
-    CheckUpdateCustomsCharges(deletedId: string = null) {
+    private deletedPartnerIds: string[];
+    CheckUpdateCustomsCharges(deletedIds: string = null) {
         var updateMessage: string = null;
 
         if (this.EntityPM.ShipmentPayables.filter(d => d.IsCustomsChargesTariff).length > 0) {
             updateMessage = "Shipment details have been updated, update the generated customs charges?";
         }
 
+        this.deletedPartnerIds = deletedIds.split('+');        
         this.UpdateCustomsChargesMessage = updateMessage;
         this.UpdateCustomsChargesMessageWidth = AppTool.GetTextWidth(updateMessage, 11);
         this.IsUpdateCustomsChargesVisible = AppTool.IsNullOrEmpty(updateMessage) ? false : true;
-        this.deletedPartnerId = deletedId;
     }
     UpdateCustomsChargesClicked() {
         var deletedCustomsPayables: ShipmentPayablePM[] = this.EntityPM.ShipmentPayables.filter(d => d.IsCustomsChargesTariff
             && !(d.ShipmentPayableLineStatusCode == 'PACC' || d.ShipmentPayableLineStatusCode == 'ACCT'));
 
-        if (!AppTool.IsNullOrEmpty(this.deletedPartnerId)) {
-            deletedCustomsPayables = deletedCustomsPayables.filter(d => d.VendorId == this.deletedPartnerId);
-        }
+        deletedCustomsPayables = deletedCustomsPayables.filter(d => this.deletedPartnerIds.indexOf(d.VendorId) > -1);
+        //this.deletedPartnerIds.forEach((deletedId: string) => {
+        //    deletedCustomsPayables = deletedCustomsPayables.filter(d => d.VendorId == deletedId);
+        //});
 
         if (deletedCustomsPayables.length > 0) {
             deletedCustomsPayables.forEach((item: ShipmentPayablePM) => {
@@ -1541,7 +1542,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
             this.UpdateCustomsChargesMessage = null;
             this.UpdateCustomsChargesMessageWidth = 0;
             this.IsUpdateCustomsChargesVisible = false;
-            this.deletedPartnerId = null;
+            this.deletedPartnerIds = null;
             this.AddCustomsChargesClicked(false);
         }
     }
@@ -1584,6 +1585,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         tariffService.GetAvailableCustomsChargesTariffs(args).subscribe((res: ServiceResponse) => {
             if (!res.HasError) {
                 if (res.Result) {
+                    this.EntityPM.ShipmentPayables.filter
                     args = res.Result;
                     this.CreateCustomChargesPayables(args.CustomsChargesPayables);
                 }

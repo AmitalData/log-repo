@@ -541,7 +541,6 @@ namespace Logitude.Infrastructure.BL
                 Description = "Use Ticket Entity In Automation", 
 			});
 			 
-
             all.Add(new ToggleDetails()
             {    
                 Code = "RFF", 
@@ -549,7 +548,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "RFF,Regimen Fiscal Field", 
                 Description = "Show Regimen Fiscal Field", 
 			});
-
+			 
             all.Add(new ToggleDetails()
             {    
                 Name = "Managing Destination Warehouse Leg", 
@@ -557,7 +556,22 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "MDW,Managing Destination Warehouse Leg", 
                 Code = "MDW", 
 			});
-
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "ARR", 
+                Name = "Aging Report With Calculated Rate", 
+                SearchFields = "Aging Report With Calculated Rate", 
+                Description = "Aging Report With Calculated Rate columns", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "TTS", 
+                Name = "Total Traslado SAT Issue", 
+                SearchFields = "TTS,Total Traslado SAT Issue", 
+                Description = "Build a new XML to solve total traslado SAT issue", 
+			});
 			
             return all;
        }

@@ -44,6 +44,7 @@ using Microsoft.Practices.Unity;
 using Logitude.Server.Tools.StorageService;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.GlobalModel.EntityPMs;
 
 namespace CommunicationWorkerRole
 {
@@ -88,7 +89,7 @@ namespace CommunicationWorkerRole
                 {
                     if (!General.IsUpdating())
                     {
-                        Do();
+                        ReceiveQueueMessage();
                     }
                     else
                     {
@@ -104,7 +105,7 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private void Do()
+        private void ReceiveQueueMessage()
         {
             ConnectClient();
             var response = queue.Receive();
@@ -117,8 +118,9 @@ namespace CommunicationWorkerRole
             }
             try
             {
-                Initial(tenant);
+                InitializeContext(tenant);
                 AddApprovalReceivedTask(response, tenant);
+                queue.Complete();
                 LogDoneItemInMemory();
             }
             catch (Exception ex)
@@ -126,7 +128,7 @@ namespace CommunicationWorkerRole
                 HandelException(ex, tenant, response);
             }
         }
-        private void Initial(int tenant)
+        private void InitializeContext(int tenant)
         {
             commonContext = CommonDataContext.GetContext(tenant);
         }
@@ -134,22 +136,43 @@ namespace CommunicationWorkerRole
         private void AddApprovalReceivedTask(QueueResponse response, int tenant)
         {
             if (!CheckIfShipmentIdExist(response))
-            {
                 return;
-            }
+
             string ShipmentId = response.MessageValues["ShipmentId"].ToString();
             int.TryParse(response.MessageValues["Tenant"], out tenant);
+            if (!IsCargoTrackingApprovalActive(tenant))
+                return;
             var shipmentAdditionalCloudData = GetShipmentAdditionalCloudData(ShipmentId, tenant);
             if (shipmentAdditionalCloudData == null)
-            {
                 return;
-            }
+
             var shipment = GetShipmentPM(ShipmentId, tenant);
-            var document = AddDocumentTasks(tenant, shipment);
-            var commLog = AddCommunicationLog(shipment, tenant, document);
-            SendCommunicationLogMessage(commLog, tenant);
-            queue.Complete();
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            {
+                var document = AddDocumentTasks(tenant, shipment);
+                var commLog = AddCommunicationLog(shipment, tenant, document);
+                SendCommunicationLogMessage(commLog, tenant);
+                scope.Complete();
+            }
         }
+
+        private bool IsCargoTrackingApprovalActive(int tenant)
+        {
+            if (tenant == 0)
+                return false;
+            var tenantManagement = GetTenantManagement(tenant);
+            if (tenantManagement == null)
+                return false;
+            return tenantManagement.ActivatedforDeclarationApprove;
+        }
+
+        private TenantManagementPM GetTenantManagement(int tenant)
+        {
+            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
+            var tenantManagement = tenantManagementQuery.GetSinglePM(tenant);
+            return tenantManagement;
+        }
+
         private bool CheckIfShipmentIdExist(QueueResponse response)
         {
             if (!response.MessageValues.Keys.Contains("ShipmentId"))
@@ -182,7 +205,7 @@ namespace CommunicationWorkerRole
             return document;
         }
 
-        
+
 
         private List<QueueTask> GetTasks(int tenant, ShipmentPM shipment)
         {
@@ -231,7 +254,7 @@ namespace CommunicationWorkerRole
             CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);
             ObjectTableRepository objecttableRep = new ObjectTableRepository(tenant);
             ObjectTable objectTable = objecttableRep.GetObjectTableByName("Shipment", 0, true);
-            var commLog = CreateCommunicationLog(objectTable,tenant, shipment, document);
+            var commLog = CreateCommunicationLog(objectTable, tenant, shipment, document);
             communicationLogRepository.Add(commLog);
             communicationLogRepository.SubmitChanges();
             return commLog;

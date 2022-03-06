@@ -58,7 +58,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             SetLocalCurrency(dataProvider);
             AddTotalBalancePeriods(filteredPeriods, dataProvider);
             AddTotalLocalBalancePeriods(filteredPeriods, dataProvider);
-            AddCalculatedRatePeriods(filteredPeriods, dataProvider);
+
+            var showAgingReportWithCalculatedRates = FeatureToggleHelper.HasFeatureToggle("ARR", tenant);
+            if(showAgingReportWithCalculatedRates == true)
+                AddCalculatedRatePeriods(filteredPeriods, dataProvider);
+
             CalculateReportLocalBalanceTotal(dataProvider);
 
             //FilterCustomerPeriodsOnBalance(dataProvider);
@@ -71,6 +75,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             
             return dataProvider;
         }
+
+
 
         private void EnsureSalesmanIdIfSalesmanRestricted(AgingReportParam args)
         {

@@ -314,10 +314,22 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
             });
         }
     }
+
+    private deletedCustomsPartnersIds: string;
     private DeleteCustomAgentPartners(code: string, partnerId) {
         if (code == "CSAEX" || code == "CSAIM") {
+            if (AppTool.IsNullOrEmpty(this.deletedCustomsPartnersIds)) {
+                this.deletedCustomsPartnersIds = partnerId;
+            }
+
+            else {
+                if (this.deletedCustomsPartnersIds.indexOf(partnerId) == -1) {
+                    this.deletedCustomsPartnersIds = this.deletedCustomsPartnersIds + "+" + partnerId;
+                }
+            }
+
             if (this.EntityPM.ShipmentPayables.filter(d => d.IsCustomsChargesTariff && d.VendorId == partnerId).length > 0) {
-                this.CurrentSession.FireEvent("UpdateCustomsChargesPartnerDeleted," + partnerId);
+                this.CurrentSession.FireEvent("UpdateCustomsChargesPartnerDeleted," + this.deletedCustomsPartnersIds);
             }
         }
     }

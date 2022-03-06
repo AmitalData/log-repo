@@ -114,6 +114,16 @@ export class LoginExtendedService {
 					})));
 		});
 	}
+    GetDocumentDownloadToken() {
+        var url = this._apiUrl +'Authentication/GetDocumentDownloadToken?documentToken=' + SessionInfo.DocumentDownloadToken;
+        var authHeaders = ServiceHelper.GetHeadersWithToken();
+
+        return this._http.get(url, authHeaders ).pipe(map(response => {
+            return response;
+        }), catchError(error=>{
+            return error;
+        }));
+    }
 }
 
 

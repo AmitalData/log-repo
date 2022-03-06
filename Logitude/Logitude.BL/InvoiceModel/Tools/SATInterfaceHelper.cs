@@ -44,9 +44,11 @@ namespace Logitude.BL.InvoiceModel.Tools
     public class SATInterfaceHelper
     {
         ARInvoicePM EntityPM;
+        private int tenant { get; set; }
         public void SendSATRequestFile(ARInvoicePM entityPM, ARInvoice entityPoco)
         {
             this.EntityPM = entityPM;
+            this.tenant = entityPM.Tenant;
             SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(entityPM.Tenant);
             SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(entityPM.Tenant);
             if (satSetting != null)
@@ -740,8 +742,8 @@ namespace Logitude.BL.InvoiceModel.Tools
                 comprobante.Total = Math.Abs((decimal)total);
                 //comprobante.Total = Math.Abs((decimal)total);
             }
-
-
+          
+            
             foreach (ARInvoiceTotalVATPM totalVat in arTotalVats)
             {
                 if (totalVat.VATPercent >= 0)
@@ -751,7 +753,9 @@ namespace Logitude.BL.InvoiceModel.Tools
                     TotalImpuestosTrasladados += Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0));
                     string _totaltipoFactor = (totalVat.VATPercent == 0 && totalVatVatType.Code == "EXMPT" ? "Exento" : "Tasa");
                     string total_tasaOCuota = totalVat.VATPercent != 0 ? (totalVat.VATPercent != null ? StringHelper.StringPadRight((Math.Abs(totalVat.VATPercent.Value / 100).ToString()), '0', 8) : "") : "0.000000";
-                    Profact.TimbraCFDI33.ComprobanteImpuestosTraslado traslado = trasladoList.FirstOrDefault(t => t.TipoFactor == _totaltipoFactor);//&& (totalVat.VATPercent != 0)
+
+                    Profact.TimbraCFDI33.ComprobanteImpuestosTraslado traslado = GetComprobanteImpuestosTraslado(trasladoList, _totaltipoFactor, total_tasaOCuota);
+
                     if (traslado == null
                         || (traslado != null && (totalVat.VATPercent != 0 && traslado.TasaOCuota == "0.000000")
                         || (totalVat.VATPercent == 0 && traslado.TasaOCuota != "0.000000")))
@@ -780,14 +784,11 @@ namespace Logitude.BL.InvoiceModel.Tools
                         }
                         //}
                     }
-                    else
+                    else if (traslado.TipoFactor == "Tasa")
                     {
-                        if (traslado.TipoFactor == "Tasa")
-                        {
-                            traslado.Importe = GetDecimalWith2DigitsAfterPoint(TotalImpuestosTrasladados);
-                        }
-                    }
+                        traslado.Importe =  GetComprobanteImpuestosTrasladoImporte(TotalImpuestosTrasladados, totalVat, traslado);
 
+                    }
 
                 }
                 else
@@ -854,20 +855,32 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                     if (comprobante.Impuestos.Traslados.Where(t => t.TipoFactor == "Tasa").Any())
                     {
-                        Profact.TimbraCFDI33.ComprobanteImpuestosTraslado traslado = comprobante.Impuestos.Traslados.Where(t => t.TipoFactor == "Tasa").FirstOrDefault();
-                        if (comprobante.Impuestos.Traslados.Count() > 1)
+                        if (FeatureToggleHelper.HasFeatureToggle("TTS", entityPM.Tenant))
                         {
-                            traslado = comprobante.Impuestos.Traslados.Where(t => t.TipoFactor == "Tasa" && t.TasaOCuota != "0.000000").FirstOrDefault();
+                            if (comprobante.Impuestos.Traslados.Sum(x => x.Importe) != GetDecimalWith2DigitsAfterPoint(totalTraslados))
+                            {
+                                decimal precentage = (decimal.Parse(comprobante.Impuestos.Traslados.First().TasaOCuota.TrimEnd('0')) * 100);
+                                throw new Exception("Due to the SAT Invoice Transmission we calculate the VAT amount per line. There is a difference between the lines VAT sum and the total VAT (" + totalTraslados + ") at the invoice level. You are not allowed to approve the invoice unless you adjust the lines with the following VAT : " + precentage.ToString().TrimEnd('0').TrimEnd('.') + "%");
+                            }
                         }
-
-                        if (traslado.Importe != GetDecimalWith2DigitsAfterPoint(totalTraslados))
+                        else
                         {
-                            decimal precentage = (decimal.Parse(traslado.TasaOCuota.TrimEnd('0')) * 100);
-                            throw new Exception("Due to the SAT Invoice Transmission we calculate the VAT amount per line. There is a difference between the lines VAT sum and the total VAT (" + totalTraslados + ") at the invoice level. You are not allowed to approve the invoice unless you adjust the lines with the following VAT : " + precentage.ToString().TrimEnd('0').TrimEnd('.') + "%");
-                        }
 
-                        //comprobante.Impuestos.Traslados.Where(t => t.TipoFactor == "Tasa").FirstOrDefault().Importe = GetDecimalWith2DigitsAfterPoint(totalTraslados);
-                        traslado.Importe = GetDecimalWith2DigitsAfterPoint(totalTraslados);
+                            Profact.TimbraCFDI33.ComprobanteImpuestosTraslado traslado = comprobante.Impuestos.Traslados.Where(t => t.TipoFactor == "Tasa").FirstOrDefault();
+                            if (comprobante.Impuestos.Traslados.Count() > 1)
+                            {
+                                traslado = comprobante.Impuestos.Traslados.Where(t => t.TipoFactor == "Tasa" && t.TasaOCuota != "0.000000").FirstOrDefault();
+                            }
+
+                            if (traslado.Importe != GetDecimalWith2DigitsAfterPoint(totalTraslados))
+                            {
+                                decimal precentage = (decimal.Parse(traslado.TasaOCuota.TrimEnd('0')) * 100);
+                                throw new Exception("Due to the SAT Invoice Transmission we calculate the VAT amount per line. There is a difference between the lines VAT sum and the total VAT (" + totalTraslados + ") at the invoice level. You are not allowed to approve the invoice unless you adjust the lines with the following VAT : " + precentage.ToString().TrimEnd('0').TrimEnd('.') + "%");
+                            }
+
+                            //comprobante.Impuestos.Traslados.Where(t => t.TipoFactor == "Tasa").FirstOrDefault().Importe = GetDecimalWith2DigitsAfterPoint(totalTraslados);
+                            traslado.Importe = GetDecimalWith2DigitsAfterPoint(totalTraslados);
+                        }
                     }
 
                     if (comprobante.Impuestos.Traslados.Where(t => t.TipoFactor == "Exento").Any())
@@ -916,6 +929,30 @@ namespace Logitude.BL.InvoiceModel.Tools
 
             entityPoco.SATTransferStatusCode = entityPM.SATTransferStatusCode = "TG";
 
+        }
+
+        private decimal GetComprobanteImpuestosTrasladoImporte( decimal TotalImpuestosTrasladados, ARInvoiceTotalVATPM totalVat, Profact.TimbraCFDI33.ComprobanteImpuestosTraslado traslado)
+        {
+            if (FeatureToggleHelper.HasFeatureToggle("TTS", tenant))
+            {
+                return traslado.Importe + GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0)));
+            }
+            return  GetDecimalWith2DigitsAfterPoint(TotalImpuestosTrasladados);
+        }
+
+        private  Profact.TimbraCFDI33.ComprobanteImpuestosTraslado GetComprobanteImpuestosTraslado( List<Profact.TimbraCFDI33.ComprobanteImpuestosTraslado> trasladoList, string _totaltipoFactor, string total_tasaOCuota)
+        {
+            Profact.TimbraCFDI33.ComprobanteImpuestosTraslado traslado;
+            if (FeatureToggleHelper.HasFeatureToggle("TTS", tenant))
+            {
+                traslado = trasladoList.FirstOrDefault(t => t.TasaOCuota == total_tasaOCuota);
+            }
+            else
+            {
+                traslado = trasladoList.FirstOrDefault(t => t.TipoFactor == _totaltipoFactor);
+            }
+
+            return traslado;
         }
 
         private void CalucalteLineTotals(ARInvoiceLinePM line, Profact.TimbraCFDI33.ComprobanteConcepto concepto,
@@ -1334,11 +1371,6 @@ namespace Logitude.BL.InvoiceModel.Tools
                                   select a).FirstOrDefault();
             }
 
-            if (relatedInvoice != null && relatedInvoice.SATTransferStatusCode == "TD" && relatedInvoice.StatusCode == "VD")
-            {
-                return;
-            }
-
             if (relatedInvoice != null && !string.IsNullOrEmpty(relatedInvoice.SATXML))
             {
                 Profact.TimbraCFDI33.Comprobante oldComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(relatedInvoice.SATXML);
@@ -1359,7 +1391,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             {
                 tipoRelacion = "01";
             }
-            else if (relatedInvoice !=null && relatedInvoice.StatusCode == "VD" && relatedInvoice.SATTransferStatusCode == "CS") tipoRelacion = "04";
+            else if (relatedInvoice !=null && relatedInvoice.StatusCode == SATData.VoidedInvoiceStatusCode && (relatedInvoice.SATTransferStatusCode == SATData.CanceledSATTransferStatusCode || relatedInvoice.SATTransferStatusCode == SATData.TransferedSATTransferStatusCode)) tipoRelacion = "04";
             else
             {
                 List<ARInvoice> shipmentInvoices = (from a in invoiceCotnext.ARInvoiceEntities
