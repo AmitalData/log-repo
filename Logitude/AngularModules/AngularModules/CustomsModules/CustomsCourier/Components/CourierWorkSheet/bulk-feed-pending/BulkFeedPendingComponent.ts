@@ -32,6 +32,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
   CourierMasterPM: CourierMasterPM = null as any;
   _SelectedTotalInvoiceValue: string = 'A';
   _SelectedFastIndividualProcessValue: string = 'A';
+  _SelectedMissedDocsValue: string = 'A';
   IsFiltered: boolean = false;
   SearchFilter: string = '';
   declartionList: DeclarationsforBulkFeed[] = [];
@@ -163,6 +164,20 @@ export class BulkFeedPendingComponent extends BaseComponent {
       }
     }
 
+      switch (this._SelectedMissedDocsValue) {
+          case "T": {
+              filters.addAdditionalFilter("MissedDocumentStatusCode", "T", null, null, "Equals", false, false, false, "string");
+              break;
+          }
+          case "I": {
+              filters.addAdditionalFilter("MissedDocumentStatusCode", "I", null, null, "Equals", false, false, false, "string");
+              break;
+          }
+          case "C": {
+              filters.addAdditionalFilter("MissedDocumentStatusCode", "C", null, null, "Equals", false, false, false, "string");
+              break;
+          }
+      }
 
     switch (this._SelectedTotalInvoiceValue) {
       case "75": {
@@ -183,7 +198,36 @@ export class BulkFeedPendingComponent extends BaseComponent {
       filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter.toLowerCase(), null, null, "Contains", false, false, false, "string");
 
     return filters;
-  }
+    }
+
+    OpenMultiUpdateWindow() {
+        if (!this._CourierWorksheetSharedDataService._SelectedItems?.Collection?.length && !this._CourierWorksheetSharedDataService.connectedSelectAll)
+            return new MessageWindow().Show(TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.O.NotCheckDeclarations"));
+
+        var windowArgs: any = {
+           // Declaration: this.EntityPM,
+        };
+        windowArgs.courierMasterId = this.CourierMasterPM.Id;
+        windowArgs.declarationIdsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
+        windowArgs.allWithoutdeclarationIdsList = this._CourierWorksheetSharedDataService._UnSelectedItems.Collection;
+        windowArgs.checkboxAll = this._CourierWorksheetSharedDataService.connectedSelectAll;
+        windowArgs.notUpdateSelf = true;
+        windowArgs.filter = this.getFilter();
+        windowArgs.filter.GetAll = this._CourierWorksheetSharedDataService.connectedSelectAll;
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 500;
+        logWindow.Height = 320;
+        logWindow.Title = "עדכון הצהרות";
+
+        //logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.MultiUpdate");
+        logWindow.WindowArgs = windowArgs;
+        logWindow.ShowCloseButton = true;
+        logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/MultiUpdateDecComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        });
+    }
+
 
   AddPendings() {
     if (!this._CourierWorksheetSharedDataService._SelectedItems?.Collection?.length && !this._CourierWorksheetSharedDataService.connectedSelectAll)
@@ -240,12 +284,16 @@ export class BulkFeedPendingComponent extends BaseComponent {
     this._SelectedFastIndividualProcessValue = value;
     this.onFilteSelect()
   }
-
+    SelectedMissedDocsValueClick(value: string) {
+        this._SelectedMissedDocsValue = value;
+        this.onFilteSelect()
+    }
 
   onFilteSelect() {
     this.IsFiltered = [
       this._SelectedTotalInvoiceValue,
-      this._SelectedFastIndividualProcessValue
+      this._SelectedFastIndividualProcessValue,
+      this._SelectedMissedDocsValue
     ].some(selected => selected !== 'A');
 
     this.RefreshList();
@@ -255,6 +303,8 @@ export class BulkFeedPendingComponent extends BaseComponent {
   FilterCleanButtonClicked() {
     this._SelectedTotalInvoiceValue = 'A';
     this._SelectedFastIndividualProcessValue = 'A';
+    this._SelectedMissedDocsValue = 'A';
+
     this.RefreshList();
   }
 
@@ -414,6 +464,17 @@ export class BulkFeedPendingComponent extends BaseComponent {
       IsCustomTemplate: true,
       ServerSideSortable: true,
       SortByName: 'CasualImporterCity'
+    });
+    this.columns.push({
+        FieldName: 'CourierPendingReasonName',
+        DataTypeCode: 'String',
+        Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierPendingReasonList"),
+        Styles: { width: '105px' },
+        IsCustomTemplate: true,
+        HtmlListComponentName: 'CourierWorksheetListTemplate',
+        HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+        ServerSideSortable: true,
+        SortByName: 'CourierPendingReasonName'
     });
   }
 

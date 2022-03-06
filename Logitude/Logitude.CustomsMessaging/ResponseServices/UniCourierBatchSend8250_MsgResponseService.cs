@@ -110,48 +110,56 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private static void CreateCRS8250(GenericRequestParams requestParams, StringBuilder mess, DeclarationQueryService myDeclarationQueryService, string objectTableId, string objectTableIdCourierMaster, DCAInUCB8250WithResponseContentHeader customResponse)
         {
             var declarations =string.Join(",", customResponse.ServerSplitDeclarationsList);
-            
-                try
+
+            try
+            {
+                var declarationPMs = myDeclarationQueryService.GetDeclarationsByIds(customResponse.ServerSplitDeclarationsList, requestParams.Tenant);
+                string[] list = { "12", "7", "8" };
+                var newServerSplitDeclarationsList = declarationPMs.Where(d => !list.Contains(d.DeclarationStatusTypeCode)).Select(d => d.Id).ToList();
+                LogMessagingUtil.Instance.AppendLine($"ignore status: 12, 7, 8");
+
+                if (newServerSplitDeclarationsList != null && newServerSplitDeclarationsList.Count > 0)
                 {
-                    //DeclarationPM declarationPM = myDeclarationQueryService.GetSingle(itemPoco.DeclarationId, false, false);
-                    //if (declarationPM != null && !string.IsNullOrEmpty(declarationPM.DeclarationNumber))
+                    declarations = string.Join(",", newServerSplitDeclarationsList);
+
+                    //if (declarationPM != null && !string.IsNullOrEmpty(declarationPM.DeclarationNumber) && !list.Contains(declarationPM.DeclarationStatusTypeCode))
                     //{
 
-                        using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
+                    using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
+                    {
+                        var requestParams8250 = new DeclarationStatusRequestParams()
                         {
-                            var requestParams8250 = new DeclarationStatusRequestParams()
-                            {
-                                Tenant = requestParams.Tenant,
-                                LoggingEnabled = true,
-                                LoggingObjectTableId = objectTableIdCourierMaster,
-                                LoggingEntityId =  requestParams.LoggingEntityId,
-                                LoggingObjectTableId2 = objectTableId,
-                                LoggingEntityId2 = "_" + customResponse.ServerSplitDeclarationsList.FirstOrDefault(),
-                                DeclarationList = declarations,
-                                InterfaceTypeCode = "8250",
-                                //LoggingEntityReference = declarationPM.DeclarationNumber,
-                                LoggingUserId = requestParams.LoggingUserId,
-                                RequestVIA = SendRequestVIA.WebServiceBatch,
-                                //DeclarationNumber = declarationPM.DeclarationNumber,
-                                DeclarationRadio = true,
-                                TesterSendOption= customResponse.TesterSendOption,
-                                CourierMaster = customResponse.MyMoreParams
-                            };
+                            Tenant = requestParams.Tenant,
+                            LoggingEnabled = true,
+                            LoggingObjectTableId = objectTableIdCourierMaster,
+                            LoggingEntityId = requestParams.LoggingEntityId,
+                            LoggingObjectTableId2 = objectTableId,
+                            LoggingEntityId2 = "_" + newServerSplitDeclarationsList.FirstOrDefault(),
+                            DeclarationList = declarations,
+                            InterfaceTypeCode = "8250",
+                            //LoggingEntityReference = declarationPM.DeclarationNumber,
+                            LoggingUserId = requestParams.LoggingUserId,
+                            RequestVIA = SendRequestVIA.WebServiceBatch,
+                            //DeclarationNumber = declarationPM.DeclarationNumber,
+                            DeclarationRadio = true,
+                            TesterSendOption = customResponse.TesterSendOption,
+                            CourierMaster = customResponse.MyMoreParams
+                        };
 
-                            SBQMessageService.CreateSheetSBQMessage<DeclarationStatusRequestParams>(requestParams8250, false);
-                            LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({declarations})");
-                            mess.AppendLine($" CreateSheetSBQMessage({declarations})");
+                        SBQMessageService.CreateSheetSBQMessage<DeclarationStatusRequestParams>(requestParams8250, false);
+                        LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({declarations})");
+                        mess.AppendLine($" CreateSheetSBQMessage({declarations})");
 
-                            scopeNewCRS.Complete();
-                        }
+                        scopeNewCRS.Complete();
+                    }
                     //}
-
                 }
-                catch (System.Exception ee1)
-                {
-                    LogMessagingUtil.Instance.AppendLine($"Exception!!!CreateSheetSBQMessage({declarations}) : {ee1.Message}");
-                    mess.AppendLine($"Exception!!!CreateSheetSBQMessage({declarations}) : {ee1.Message}");
-                }
+            }
+            catch (System.Exception ee1)
+            {
+                LogMessagingUtil.Instance.AppendLine($"Exception!!!CreateSheetSBQMessage({declarations}) : {ee1.Message}");
+                mess.AppendLine($"Exception!!!CreateSheetSBQMessage({declarations}) : {ee1.Message}");
+            }
             
         }
 
@@ -216,7 +224,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 try
                 {
                     DeclarationPM declarationPM = myDeclarationQueryService.GetSingle(itemPoco.DeclarationId, false, false);
-                    if (declarationPM != null && !string.IsNullOrEmpty(declarationPM.DeclarationNumber))
+                    string[] list = { "12", "7", "8" };
+                    if (declarationPM != null && !string.IsNullOrEmpty(declarationPM.DeclarationNumber) && !list.Contains(declarationPM.DeclarationStatusTypeCode))
                     {
 
                         using (var scopeNewCRS = TransactionFactory.GetNewTransaction())

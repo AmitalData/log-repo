@@ -8,6 +8,7 @@ using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.CustomsMessaging.Testers.Messages;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -41,28 +42,48 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DCAInUCBMultiUpdateWithResponseContentHeader customsResponse)
         {
-            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             var genericRequestParams = new GenericRequestParams()
             {
                 Tenant = customsResponse.tenant,
-                AppicationId = customsResponse.Declarationid,
                 LoggingEnabled = true,
                 InterfaceTypeCode = this.MainInterfaceCode,
                 MainInterfaceCode = this.MainInterfaceCode,
-                LoggingObjectTableId = objectTableId,
-                LoggingEntityId = customsResponse.Declarationid,
                 LoggingUserId = customsResponse.LoggingUserId,
-
             };
-            if (customsResponse.ProcessTypeCode != null)
-            {
-                genericRequestParams.RequestName = $" {customsResponse.Declarationid} עדכון קוד התהליך";
-            }
-            if (customsResponse.TaxExemptCode != null)
-            {
-                genericRequestParams.RequestName = $" {customsResponse.Declarationid} עדכון קוד הנחה/פטור ";
 
+            if (customsResponse.Declarationid != null)
+            {
+                var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                genericRequestParams.AppicationId = customsResponse.Declarationid;
+                genericRequestParams.LoggingObjectTableId = objectTableId;
+                genericRequestParams.LoggingEntityId = customsResponse.Declarationid;
+
+                if (customsResponse.ProcessTypeCode != null)
+                {
+                    genericRequestParams.RequestName = $" {customsResponse.Declarationid} עדכון קוד התהליך";
+                }
+                if (customsResponse.TaxExemptCode != null)
+                {
+                    genericRequestParams.RequestName = $" {customsResponse.Declarationid} עדכון קוד הנחה/פטור ";
+                }
             }
+            else
+            {
+                var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
+                genericRequestParams.AppicationId = customsResponse.CourierMasterId;
+                genericRequestParams.LoggingObjectTableId = objectTableId;
+                genericRequestParams.LoggingEntityId = customsResponse.CourierMasterId;
+
+                if (customsResponse.ProcessTypeCode != null)
+                {
+                    genericRequestParams.RequestName = $" {customsResponse.CourierMasterId} עדכון קוד התהליך";
+                }
+                if (customsResponse.TaxExemptCode != null)
+                {
+                    genericRequestParams.RequestName = $" {customsResponse.CourierMasterId} עדכון קוד הנחה/פטור ";
+                }
+            }
+
             if (customsResponse.ServerSplitDeclarationsList == null || (customsResponse.ServerSplitDeclarationsList != null && customsResponse.ServerSplitDeclarationsList.Count == 0))
 
             {
@@ -79,15 +100,27 @@ namespace Logitude.CustomsMessaging.MessagingServices
             return genericRequestParams;
         }
 
-        public string CreateCRS(int tenant, string LoggingUserId, MultiUpdateRequestParams multiUpdateRequestParams)
+        public string CreateCRS(int tenant, string LoggingUserId, MultiUpdateRequestParams multiUpdateRequestParams, QueryOperations queryOperations = null)
         {
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
-            var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, multiUpdateRequestParams.Declarationid, null, null, null, true);
-            if (RequestInProgressList != null && RequestInProgressList.Count > 0)
+            if (multiUpdateRequestParams.Declarationid != null)
             {
-                return "קיים מסר זהה בתהליך";
+                var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, multiUpdateRequestParams.Declarationid, null, null, null, true);
+                if (RequestInProgressList != null && RequestInProgressList.Count > 0)
+                {
+                    return "קיים מסר זהה בתהליך";
+                }
+            }
+            else
+            {
+                objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
+                var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, multiUpdateRequestParams.CourierMasterId, null, null, null, true);
+                if (RequestInProgressList != null && RequestInProgressList.Count > 0)
+                {
+                    return "קיים מסר זהה בתהליך";
+                }
             }
             LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = DCAMU  !!!");
 
@@ -98,6 +131,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var myDCAInUCBMultiUpdateWithResponseContentHeader = new DCAInUCBMultiUpdateWithResponseContentHeader()
             {
                 Declarationid = multiUpdateRequestParams.Declarationid,
+                DeclarationIds = multiUpdateRequestParams.DeclarationIds?.ToList(),
+                CourierMasterId = multiUpdateRequestParams.CourierMasterId,
+                allWithoutdeclarationIdsList = multiUpdateRequestParams.allWithoutdeclarationIdsList,
+                checkboxAll = multiUpdateRequestParams.checkboxAll,
+                queryOperations = queryOperations,
                 LoggingUserId = LoggingUserId,
                 ProcessTypeCode = multiUpdateRequestParams.ProcessTypeCode,
                 TaxExemptCode = multiUpdateRequestParams.TaxExemptCode,
@@ -177,8 +215,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string ProcessTypeCode { get; set; }
         public string TaxExemptCode { get; set; }
         public string ClassificationCode { get; set; }
-
+        public List<string> DeclarationIds { get; set; }
+        public string CourierMasterId { get; set; }
+        public List<string> allWithoutdeclarationIdsList { get; set; }
+        public bool checkboxAll { get; set; }
         public string MyMoreParams { get; set; }
+        public QueryOperations queryOperations { get; set; }
+
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         public List<string> ServerSplitDeclarationsList { get; set; }
     }

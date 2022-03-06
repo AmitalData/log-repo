@@ -660,7 +660,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     _PAY_C_Total = 0;
     _PAY_R_Total = 0;
     _PAY_I_Total = 0;
-    _DecWithoutHaTra = 0;
+   // _DecWithoutHaTra = 0;
 
     _PendingCodes: KeyValuePair[] = [];
 
@@ -841,10 +841,10 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                             this._ACC_WS_Total = item.Value;
                             break;
                         }
-                        case "DecWithoutHaTra": {
-                            this._DecWithoutHaTra = item.Value;
-                            break;
-                        }
+                        //case "DecWithoutHaTra": {
+                        //    this._DecWithoutHaTra = item.Value;
+                        //    break;
+                        //}
                         /*
                     case "PAY": {
                         this._PAY_Total = item.Value;
@@ -2527,7 +2527,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         logitudeWindow.Width = 1500;
         logitudeWindow.Height = 800;
         logitudeWindow.IsShowCloseButton = true;
-        logitudeWindow.Title = "הזנה גורפת PENDING";
+        logitudeWindow.Title = "עדכון גורף";
         logitudeWindow.WindowArgs = { CourierMasterPM: this.entityPM };        
         logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/bulk-feed-pending/BulkFeedPendingComponent');
         this.ChangedUnloadPortSite = true;

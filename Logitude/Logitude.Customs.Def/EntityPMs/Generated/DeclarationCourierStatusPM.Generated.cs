@@ -1665,6 +1665,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string missedDocumentStatusCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MissedDocumentStatusCode  
+	   {
+	    
+	     get
+		{
+		   return missedDocumentStatusCode;
+		 }
+		 set
+		 {
+		   if(missedDocumentStatusCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MissedDocumentStatusCode",OldValue=missedDocumentStatusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   missedDocumentStatusCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

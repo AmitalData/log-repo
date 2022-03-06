@@ -409,6 +409,11 @@ export class DeclarationCourierStatusPM {
     public set HatraDate(newValue: Date) { if (this.hatraDate != newValue) { this.hatraDate = newValue; this.MarkAsDirty("HatraDate"); } }
        
 	 
+    private missedDocumentStatusCode: string;
+    public get MissedDocumentStatusCode() { return this.missedDocumentStatusCode; }
+    public set MissedDocumentStatusCode(newValue: string) { if (this.missedDocumentStatusCode != newValue) { this.missedDocumentStatusCode = newValue; this.MarkAsDirty("MissedDocumentStatusCode"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		

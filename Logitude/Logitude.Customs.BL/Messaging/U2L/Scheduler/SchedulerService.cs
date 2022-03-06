@@ -515,7 +515,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                                 RequestVIA = SendRequestVIA.WebServiceBatch,
                                 SuppressSplitWR = true,
                                 LoggingEntityReference = "AutoPayment",
-                                UnifreightListOnServerOnly = SetBankIdInUnifreightListOnServerOnly(banks[0].BankCode)
+                                UnifreightListOnServerOnly = SetBankIdInUnifreightListOnServerOnly(banks[0].Id)
                             };
 
                             //    MyGenericResponseObj.ApplicationId =

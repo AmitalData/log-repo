@@ -13,5 +13,10 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public string TaxExemptCode { get; set; }
 
         public string ClassificationCode { get; set; }
+
+        public string[] DeclarationIds { get; set; }
+        public string CourierMasterId { get; set; }
+        public List<string> allWithoutdeclarationIdsList { get; set; }
+        public bool checkboxAll { get; set; }
     }
 }

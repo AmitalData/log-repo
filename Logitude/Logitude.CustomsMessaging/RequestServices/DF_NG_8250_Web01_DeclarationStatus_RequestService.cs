@@ -30,6 +30,9 @@ namespace Logitude.CustomsMessaging.RequestServices
                 foreach (var item in pms)
                 {
                     if (string.IsNullOrWhiteSpace(item.DeclarationNumber)) continue;
+                    string[] list = { "12", "7", "8" };
+                    if (list.Contains(item.DeclarationStatusTypeCode)) continue;
+
                     requestParams.DeclarationNumber = item.DeclarationNumber;
                     queryDetails.AddRange(QueryDetails(requestParams, item));
                 }
