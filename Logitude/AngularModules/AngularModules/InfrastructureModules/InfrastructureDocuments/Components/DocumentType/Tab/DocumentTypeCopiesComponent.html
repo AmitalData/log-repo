@@ -57,7 +57,7 @@
                                                                 <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px; position: relative;">
                                                                     {{item.Name}}
                                                                 </td>
-                                                                <td class="GridViewCell" style="width: 45px; min-width: 45px; max-width: 45px; position: relative;">
+                                                                <td *ngIf="IsCustomerCare" class="GridViewCell" style="width: 45px; min-width: 45px; max-width: 45px; position: relative;">
                                                                     <div><IconButton [IsSmall]="true" [Name]="'Edit'" (click)="EditClicked(item)"></IconButton></div>
                                                                 </td>
                                                                 <td> <div> </div> </td>
