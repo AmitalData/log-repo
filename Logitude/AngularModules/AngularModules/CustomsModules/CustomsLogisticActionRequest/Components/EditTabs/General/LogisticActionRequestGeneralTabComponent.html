@@ -4,7 +4,7 @@
             <table style="height:250px">
                 <tr style="height:30px">
                     <td>
-                        <LogLabel [NoObjectField]="true" [Text]="'×™×‘×•×�/×™×¦×•×�'" [ObjectFieldName]="'Direction'"
+                        <LogLabel [NoObjectField]="true" [Text]="'יבוא/יצוא'" [ObjectFieldName]="'Direction'"
                             [DataContext]="DataContext"></LogLabel>
                     </td>
                 </tr>
@@ -15,7 +15,9 @@
                                 <div class="RadioButton">
                                     <input [id]="'TariffRadio'" type="radio" name="TariffRadio" [disabled]="true"
                                         checked />
-                                    <label style="font-size:12px;"> ×™×¦×•×� </label>
+                                    <label style="font-size:12px;"> 
+                                        {{'Customs.General.O.Export' | TextCodeTranslationPipe}}
+                                     </label>
                                     <img style="left:-15px" class="CenterCenter" src="./Images/Directions/E.png" />
                                 </div>
                             </div>
@@ -35,7 +37,9 @@
                                 <div class="RadioButton">
                                     <input type="radio" id="air" value="air" name="TransportMode"
                                         (click)="TransportModeClicked('A')" />
-                                    <label for="air" style="font-size:12px;"> ×�×•×™×¨ </label>
+                                    <label for="air" style="font-size:12px;">
+                                        {{'Customs.General.O.Air' | TextCodeTranslationPipe}}
+                                    </label>
                                     <img style="left:-25px" class="CenterCenter" src="./Images/TransportModes/A.png" />
                                 </div>
                             </div>
@@ -49,7 +53,9 @@
                                 <div class="RadioButton">
                                     <input id="ocean" type="radio" value="ocean" (click)="TransportModeClicked('O')"
                                         name="TransportMode" />
-                                    <label for="ocean" style="font-size:12px;"> ×™×� </label>
+                                    <label for="ocean" style="font-size:12px;">
+                                        {{'Customs.General.O.Ocean' | TextCodeTranslationPipe}}
+                                    </label>
                                     <img style="left:-25px" class="CenterCenter" src="./Images/TransportModes/O.png" />
                                 </div>
                             </div>
@@ -63,7 +69,9 @@
                                 <div class="RadioButton">
                                     <input type="radio" id="land" value="land" (click)="TransportModeClicked('L')"
                                         name="TransportMode" />
-                                    <label for="land" style="font-size:12px;"> ×™×‘×©×” </label>
+                                    <label for="land" style="font-size:12px;">
+                                        {{'Customs.General.O.Land' | TextCodeTranslationPipe}}
+                                     </label>
                                     <img style="left:-25px" class="CenterCenter" src="./Images/TransportModes/I.png" />
                                 </div>
                             </div>
@@ -90,7 +98,7 @@
                             <tr class="FormFieldRow" style="width:200px;text-align: right;">
                                 <td style="text-align: right;">
                                     <label style="font-size:12px; padding-right:20px;text-align: right;">
-                                        ×ª×™×§ ×™×¦×•×�:
+                                        {{'Customs.LogisticActionRequest.F.ExportFileNo' | TextCodeTranslationPipe}}:
                                     </label>
                                 </td>
                                 <td style="width:130px">
@@ -107,7 +115,7 @@
 
                                 <td style="text-align: right;">
                                     <label style="font-size:12px; padding-right:20px;text-align: right;">
-                                        ×ž×¡×¤×¨ ×™×¦×•×�×Ÿ:
+                                        {{'Customs.LogisticActionRequest.F.ExporterNumber' | TextCodeTranslationPipe}}:
                                     </label>
                                 </td>
                                 <td style="width:130px">
@@ -130,7 +138,7 @@
                             <tr class="FormFieldRow" style="width:200px;text-align: right;">
                                 <td style="text-align: right;">
                                     <label style="font-size:12px; padding-right:20px;text-align: right;">
-                                        ×ª×�×¨×™×š ×‘×§×©×”:
+                                    {{'Customs.LogisticActionRequest.F.RequestDate' | TextCodeTranslationPipe}}:
                                     </label>
                                 </td>
                                 <td style="width:130px">
@@ -145,7 +153,7 @@
                                 </td>
                                 <td style="text-align: right;">
                                     <label style="font-size:12px; padding-right:20px;text-align: right;">
-                                        ×¡×•×’ ×‘×§×©×”:
+                                        {{'Customs.LogisticActionRequest.F.RequestType' | TextCodeTranslationPipe}}:
                                     </label>
                                 </td>
                                 <td style="width:130px">
@@ -165,7 +173,7 @@
                                 
                                 <td style="text-align: right;">
                                     <label style="font-size:12px; padding-right:20px;text-align: right;">
-                                        ×¡×•×’ ×ž×–×”×” ×ž×˜×¢×Ÿ:
+                                        {{'Customs.LogisticActionRequest.F.CargoIdentifierType' | TextCodeTranslationPipe}}:
                                     </label>
                                 </td>
                                 <td style="width:130px">
@@ -183,7 +191,7 @@
 
                                 <td style="text-align: right;">
                                     <label style="font-size:12px; padding-right:20px;text-align: right;">
-                                        ×ž×–×”×” ×ž×˜×¢×Ÿ ×¨×�×©×•×Ÿ:
+                                        {{'Customs.LogisticActionRequest.F.CargoIdentifierKey1' | TextCodeTranslationPipe}}:
                                     </label>
                                 </td>
                                 <td style="width:130px">
@@ -202,7 +210,7 @@
                             <tr class="FormFieldRow" style="width:200px;text-align: right;">
                                 <td style="text-align: right;">
                                     <label style="font-size:12px; padding-right:20px;text-align: right;">
-                                        ×ž×–×”×” ×ž×˜×¢×Ÿ ×©× ×™:
+                                        {{'Customs.LogisticActionRequest.F.CargoIdentifierKey2' | TextCodeTranslationPipe}}:
                                     </label>
                                 </td>
                                 <td style="width:130px">
@@ -220,7 +228,7 @@
                                     
                                     <td style="text-align: right;">
                                     <label style="font-size:12px; padding-right:20px;text-align: right;">
-                                        ×ž×–×”×” ×ž×˜×¢×Ÿ ×©×œ×™×©×™:
+                                        {{'Customs.LogisticActionRequest.F.CargoIdentifierKey3' | TextCodeTranslationPipe}}:
                                     </label>
                                 </td>
                                 <td style="width:130px">
@@ -238,7 +246,7 @@
                             <tr class="FormFieldRow" style="width:200px;text-align: right;">
                                 <td style="text-align: right;">
                                     <label style="font-size:12px; padding-right:20px;text-align: right;">
-                                        ×¡×•×’ ×�×¨×™×–×”:
+                                        {{'Customs.LogisticActionRequest.F.PackagingTypeCode' | TextCodeTranslationPipe}}:
                                     </label>
                                 </td>
                                 <td style="width:130px">
@@ -256,7 +264,7 @@
 
                                 <td style="text-align: right;">
                                     <label style="font-size:12px; padding-right:20px;text-align: right;">
-                                        ×›×ž×•×ª ×�×¨×™×–×•×ª:
+                                        {{'Customs.LogisticActionRequest.F.Quantity' | TextCodeTranslationPipe}}:
                                     </label>
                                 </td>
                                 <td style="width:130px">
@@ -275,7 +283,7 @@
                             <tr class="FormFieldRow" style="width:200px;text-align: right;">
                                 <td style="text-align: right;">
                                     <label style="font-size:12px; padding-right:20px;text-align: right;">
-                                        ×�×ª×¨ ×ž×¡×™×¨×”:
+                                        {{'Customs.LogisticActionRequest.F.DeliverySiteID' | TextCodeTranslationPipe}}:
                                     </label>
                                 </td>
                                 <td style="width:130px">
@@ -300,7 +308,7 @@
                             <tr class="FormFieldRow" style="width:200px;text-align: right;">
                                 <td style="text-align: right;">
                                     <label style="font-size:12px; padding-right:20px;text-align: right;">
-                                        ×”×¡×‘×¨ ×œ×‘×§×©×”:
+                                        {{'Customs.LogisticActionRequest.F.RequestReason' | TextCodeTranslationPipe}}:
                                     </label>
                                 </td>
                                 <td  rowspan="1" colspan="3" style="top: 7px;">                                    
@@ -331,7 +339,7 @@
                             <tr class="FormFieldRow" style="width:200px;text-align: right;">
                                 <td style="text-align: right;">
                                     <label style="font-size:12px; padding-right:20px;text-align: right;">
-                                        ×¡×˜×�×˜×•×¡ ×‘×§×©×”:
+                                        {{'Customs.LogisticActionRequest.F.RequestCancelStatus' | TextCodeTranslationPipe}}:
                                     </label>
                                 </td>
                                 <td style="width:130px">
@@ -346,7 +354,7 @@
                                 </td>
                                 <td style="text-align: right;">
                                     <label style="font-size:12px; padding-right:20px;text-align: right;">
-                                        ×ž×¡×¤×¨ ×‘×§×©×”:
+                                        {{'Customs.LogisticActionRequest.F.RequestNumber' | TextCodeTranslationPipe}}:
                                     </label>
                                 </td>
                                 <td style="width:130px">
@@ -364,7 +372,7 @@
                             <tr class="FormFieldRow" style="width:200px;text-align: right;">
                                 <td style="text-align: right;vertical-align: top;top: 8px;">
                                     <label style="font-size:12px; padding-right:20px;text-align: right;">
-                                        ×”×¢×¨×•×ª ×œ×”×—×œ×˜×”:
+                                        {{'Customs.LogisticActionRequest.F.DecisionRmarks' | TextCodeTranslationPipe}}:
                                     </label>
                                 </td>
                                 <td  rowspan="1" colspan="3" style="">                                    
