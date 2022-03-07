@@ -210,8 +210,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                                               && allShipmentsIds.Contains(d.EntityId)
                                                               select d.ARInvoice);
 
-                iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.StatusCode != "VD" && d.StatusCode != "WA");
-                iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.StatusCode != "VD" && d.StatusCode != "LL");
+                iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.StatusCode != "VD" && d.StatusCode != "WA").Include("Status");
+                iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.StatusCode != "VD" && d.StatusCode != "LL").Include("Status");
 
                 if (!this.IncludeDraftInvoices)
                 {
@@ -329,6 +329,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.InvoiceAmountDueInInvoiceCurrency = invoice.AmountDue;
                         myRecord.AccountedReceivablesInInvoiceCurrency = this.ComputeAccountedReceivablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
                         myRecord.AccountedPayablesInInvoiceCurrency = this.ComputeAccountedPayablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
+                        myRecord.InvoiceStatusName = invoice.Status?.Name;
 
                         Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
                         if (myCurrency != null)
@@ -419,6 +420,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.InvoiceAmountDueInInvoiceCurrency = invoice.AmountDue;
                         myRecord.AccountedReceivablesInInvoiceCurrency = this.ComputeAccountedReceivablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
                         myRecord.AccountedPayablesInInvoiceCurrency = this.ComputeAccountedPayablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
+                        myRecord.InvoiceStatusName = invoice.Status?.Name;
 
                         Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
                         if (myCurrency != null)
@@ -569,8 +571,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                            }).ToList();
                 }
 
-                iQueryable_APInvoices = iQueryable_APInvoices.Where(d => d.StatusCode != "VD" && d.StatusCode != "WA");
-                iQueryable_ARInvoices = iQueryable_ARInvoices.Where(d => d.StatusCode != "VD" && d.StatusCode != "LL");
+                iQueryable_APInvoices = iQueryable_APInvoices.Where(d => d.StatusCode != "VD" && d.StatusCode != "WA").Include("Status");
+                iQueryable_ARInvoices = iQueryable_ARInvoices.Where(d => d.StatusCode != "VD" && d.StatusCode != "LL").Include("Status");
 
                 if (!this.IncludeDraftInvoices)
                 {
@@ -870,6 +872,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.InvoiceAmountDueInInvoiceCurrency = invoice.AmountDue;
                                 myRecord.AccountedReceivablesInInvoiceCurrency = this.ComputeAccountedReceivablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
                                 myRecord.AccountedPayablesInInvoiceCurrency = this.ComputeAccountedPayablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
+                                myRecord.InvoiceStatusName = invoice.Status?.Name;
 
                                 if (myCurrency != null)
                                 {
@@ -1013,6 +1016,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.InvoiceAmountDueInInvoiceCurrency = invoice.AmountDue;
                                     myRecord.AccountedReceivablesInInvoiceCurrency = this.ComputeAccountedReceivablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
                                     myRecord.AccountedPayablesInInvoiceCurrency = this.ComputeAccountedPayablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
+                                    myRecord.InvoiceStatusName = invoice.Status?.Name;
 
                                     if (myCurrency != null)
                                     {
