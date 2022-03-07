@@ -404,7 +404,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportContainerizationID, 
 	         IsSubmitDeclaration, 
 	         AmedmentType, 
-	         AmendmentTypeName,
+	         AmendmentTypeName, 
+	         VendorNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
