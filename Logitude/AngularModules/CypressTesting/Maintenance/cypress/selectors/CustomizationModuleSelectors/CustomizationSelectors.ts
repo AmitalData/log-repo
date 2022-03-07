@@ -4,7 +4,7 @@ export class CustomizationSelectors extends RegexSelectors {
     
     public static readonly Settings= "img[src='./Images/Icons/Settings.png']"
     public static readonly Customization="[data-cy='CustomizationId']"
-    public static readonly Search="[id='null_Search']"
+    public static readonly Search="[data-cy='CustomizationSearch']"
     public static readonly Rules="[data-cy='Rules']"
     public static readonly AddRule="[id='Add']"
     public static readonly RuleCode="[data-cy='Code']"
@@ -38,4 +38,11 @@ export class CustomizationSelectors extends RegexSelectors {
     public static readonly Close="[data-cy='Close']"
     public static readonly ValidationSummary="[class='ValidationSummary']"
     public static readonly ShipmentCancel="[id='ShipmentCancelbtn']"
+    public static readonly CustomFields="[data-cy='CustomFieldtId']"
+    public static readonly ScreenLayout="[data-cy='ScreenLayoutId']"
+    public static readonly CustomFieldsClose ="[data-cy='CustomFieldsClose']"
+    public static readonly GeneralTabScreen= "[data-cy='General Tab Screen']"
+    public static readonly FieldsSearch= "[data-cy='Available Screen Fields Search']"
+    public static readonly CloseX= "img[src='./Images/RedX2.png']"
+    public static readonly RedX="img[src='Images/RedX.png']"
 }

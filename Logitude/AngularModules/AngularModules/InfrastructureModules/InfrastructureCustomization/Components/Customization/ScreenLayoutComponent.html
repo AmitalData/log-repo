@@ -74,7 +74,7 @@
                             <div class="SimpleGridViewBody">
                                 <table>
                                     <tr class="SimpleGridViewRow" *ngFor="let item of TableScreensCollection" (click)="SelectionChanged(item)" [class.Selected]="item == SelectedItem">
-                                        <td class="GridViewCell" style="width: 198px; min-width: 198px; max-width: 198px;">
+                                        <td [attr.data-cy]="item.Name" class="GridViewCell" style="width: 198px; min-width: 198px; max-width: 198px;">
                                             {{item.Name}}
                                         </td>
                                         <td>
@@ -102,7 +102,7 @@
                                 <td  attr.data-cy="{{'Column_' +column}}" style="width:216px;border-right:dashed 1px silver;vertical-align: top;" *ngFor="let item of ScreenRows; let column = index" >
                                     <div (drop)="onMyDrop($event,item,column)" dropzone="true" (dragover)="onMyDragEnter($event)" style="position:absolute;top:0;bottom:0;left:0;right:0;overflow:auto;">
                                         <div name="listItem" class="MyObjectField PreventSelect" *ngFor="let item1 of item.ObjectFieldPMs; let row = index" draggable="true" (dragstart)="OnScreenFieldDragStart($event,item1)" [attr.row]="row" [attr.column]="column">
-                                            <table>
+                                            <table attr.data-cy="{{item1.FullNameTextCodeDefaultText}}"> 
                                                 <tr>
                                                     <td>
                                                         <table>
@@ -143,7 +143,7 @@
                                     </tr>
                                     <tr>
                                         <td style="width:200px;padding-right: 4px;">
-                                            <SearchBox [UseTimer]="true" [Watermark]="'Search'" (TextChanged)="SearchTextChanged($event)"></SearchBox>
+                                            <SearchBox [attr.data-cy]="'Available Screen Fields Search'" [UseTimer]="true" [Watermark]="'Search'" (TextChanged)="SearchTextChanged($event)"></SearchBox>
                                         </td>
                                     </tr>
                                 </table>
@@ -155,7 +155,7 @@
                                     <table>
                                         <tr>
                                             <td>
-                                                <div attr.data-cy="{{'Column_' + item.FieldName}}">
+                                                <div attr.data-cy="{{'Column_ ' + item.FieldName}}">
                                                     <table>
                                                         <tr style="height:1px;">
                                                             <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px;">

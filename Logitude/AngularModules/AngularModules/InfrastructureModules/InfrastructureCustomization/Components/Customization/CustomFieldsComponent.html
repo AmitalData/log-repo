@@ -69,7 +69,7 @@
                                 <log-column [width]="'30'" [Alignment]="'left'">
                                     <ng-template let-item>
                                         <log-cell-template [IgnoreMods]="true">
-                                            <IconButton [Name]="'edit'" [IsSmall]="true"
+                                            <IconButton [DataCy]="item.FullNameTextCodeCode" [Name]="'edit'" [IsSmall]="true"
                                                         style="display: block; float: left; margin-left:3px; margin-top:4px;" (click)="EditLine(item)"></IconButton>
                                         </log-cell-template>
                                     </ng-template>
@@ -92,7 +92,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CancelClicked()">Close</button>
+                        <button [attr.data-cy]="'CustomFieldsClose'"  class="Button" (click)="CancelClicked()">Close</button>
                     </td>
                 </tr>
             </table>

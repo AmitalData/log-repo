@@ -96,3 +96,4 @@ When ("inactivate the rule and save", () => {
 Then ("the rule should saved successfully", () => {
     CustomizationActions.AssertSaveRule()
 });
+
