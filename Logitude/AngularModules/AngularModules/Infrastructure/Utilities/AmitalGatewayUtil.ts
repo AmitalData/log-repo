@@ -640,7 +640,9 @@ export class AmitalGatewayUtil {
                      //this.SelectionChanged(myDeclarationEditTab);
                     cmpRef.instance.ComponentRef = cmpRef;
                     let myEditComponent: EditComponent = cmpRef.instance;
-                    if (myEditComponent.EntityPM.Direction == "E")
+                    
+                    
+                    if (unifreightMessage.UnifreightEntity == "BFIFILE" /*|| myEditComponent.EntityPM?.Direction == "E"*/)
                     {
                         BackButtonLabel = "תיק יצוא"
                     }
