@@ -29,9 +29,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					
 					                          Tenant = a.Tenant,
 					
-					                          CasualSupplierName = a.CasualSupplierName,
+					                          //CasualSupplierName = a.CasualSupplierName,
 					
-					                          CasualSupplierAddress = a.CasualSupplierAddress,
+					                          //CasualSupplierAddress = a.CasualSupplierAddress,
 					
 					                          CasualImporterAddress1 = a.CasualImporterAddress1,
 					
@@ -48,6 +48,17 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                          CasualImporterTel = a.CasualImporterTel,
 					
 					                          CasualImporterContact = a.CasualImporterContact,
+											  ImporterCode = a.ImporterCode,
+											  ImporterAddress = a.ImporterAddress,
+											  ImporterName = a.ImporterName,
+											  EntitleImporterAddress = a.EntitleImporterAddress,
+											  EntitleImporterCode = a.EntitleImporterCode,
+											  EntitleImporterName = a.EntitleImporterName,
+											  EntitlePassportNumber = a.EntitlePassportNumber,
+											  ImporterPassportNumber = a.ImporterPassportNumber,
+											  TransferImporterAddress = a.TransferImporterAddress,
+											  TransferImporterName = a.TransferImporterName,
+											  TransferPassportNumber = a.TransferPassportNumber
 					
 		                    	            });
             return query;

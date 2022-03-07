@@ -265,8 +265,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     var casual = declarationCasualDetailsQueryService.GetSingle(declarationOrg.Id, false, true);
                                     if (casual != null)
                                     {
-                                        declarationPM.CasualSupplierName = casual.CasualSupplierName;
-                                        declarationPM.CasualSupplierAddress = casual.CasualSupplierAddress;
+                                        //declarationPM.CasualSupplierName = casual.CasualSupplierName;
+                                        //declarationPM.CasualSupplierAddress = casual.CasualSupplierAddress;
+                                        declarationPM.ImporterCode = casual.ImporterCode;
+                                        declarationPM.TransferImporterCode = casual.TransferImporterCode;
+                                        declarationPM.EntitleImporterCode = casual.EntitleImporterCode;
+                                        declarationPM.ImporterName = casual.ImporterName;
+                                        declarationPM.ImporterAddress = casual.ImporterAddress;
+                                        declarationPM.TransferImporterName = casual.TransferImporterName;
+                                        declarationPM.TransferImporterAddress = casual.TransferImporterAddress;
+                                        declarationPM.EntitleImporterName = casual.EntitleImporterName;
+                                        declarationPM.EntitleImporterAddress = casual.EntitleImporterAddress;
+                                        declarationPM.ImporterPassportNumber = casual.ImporterPassportNumber;
+                                        declarationPM.EntitlePassportNumber = casual.EntitlePassportNumber;
+                                        declarationPM.TransferPassportNumber = casual.TransferPassportNumber;
                                         declarationPM.CasualImporterAddress1 = casual.CasualImporterAddress1;
                                         declarationPM.CasualImporterAddress2 = casual.CasualImporterAddress2;
                                         declarationPM.CasualImporterCity = casual.CasualImporterCity;

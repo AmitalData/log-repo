@@ -19,20 +19,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="CasualSupplierName"
-    Type="nvarchar"
-    Size="100">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CasualSupplierAddress"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="CasualImporterAddress1"
     Type="nvarchar"
     Size="35">
@@ -85,6 +71,90 @@
     Name="CasualImporterContact"
     Type="nvarchar"
     Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ImporterCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TransferImporterCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EntitleImporterCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ImporterName"
+    Type="nvarchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ImporterAddress"
+    Type="nvarchar"
+    Size="236">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TransferImporterAddress"
+    Type="nvarchar"
+    Size="236">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EntitleImporterAddress"
+    Type="nvarchar"
+    Size="236">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TransferImporterName"
+    Type="nvarchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EntitleImporterName"
+    Type="nvarchar"
+    Size="55">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ImporterPassportNumber"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TransferPassportNumber"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EntitlePassportNumber"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>

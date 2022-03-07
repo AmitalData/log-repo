@@ -34,16 +34,6 @@ export class DeclarationCasualDetailsPM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
-    private casualSupplierName: string;
-    public get CasualSupplierName() { return this.casualSupplierName; }
-    public set CasualSupplierName(newValue: string) { if (this.casualSupplierName != newValue) { this.casualSupplierName = newValue; this.MarkAsDirty("CasualSupplierName"); } }
-       
-	 
-    private casualSupplierAddress: string;
-    public get CasualSupplierAddress() { return this.casualSupplierAddress; }
-    public set CasualSupplierAddress(newValue: string) { if (this.casualSupplierAddress != newValue) { this.casualSupplierAddress = newValue; this.MarkAsDirty("CasualSupplierAddress"); } }
-       
-	 
     private casualImporterAddress1: string;
     public get CasualImporterAddress1() { return this.casualImporterAddress1; }
     public set CasualImporterAddress1(newValue: string) { if (this.casualImporterAddress1 != newValue) { this.casualImporterAddress1 = newValue; this.MarkAsDirty("CasualImporterAddress1"); } }
@@ -82,6 +72,66 @@ export class DeclarationCasualDetailsPM {
     private casualImporterContact: string;
     public get CasualImporterContact() { return this.casualImporterContact; }
     public set CasualImporterContact(newValue: string) { if (this.casualImporterContact != newValue) { this.casualImporterContact = newValue; this.MarkAsDirty("CasualImporterContact"); } }
+       
+	 
+    private importerCode: string;
+    public get ImporterCode() { return this.importerCode; }
+    public set ImporterCode(newValue: string) { if (this.importerCode != newValue) { this.importerCode = newValue; this.MarkAsDirty("ImporterCode"); } }
+       
+	 
+    private transferImporterCode: string;
+    public get TransferImporterCode() { return this.transferImporterCode; }
+    public set TransferImporterCode(newValue: string) { if (this.transferImporterCode != newValue) { this.transferImporterCode = newValue; this.MarkAsDirty("TransferImporterCode"); } }
+       
+	 
+    private entitleImporterCode: string;
+    public get EntitleImporterCode() { return this.entitleImporterCode; }
+    public set EntitleImporterCode(newValue: string) { if (this.entitleImporterCode != newValue) { this.entitleImporterCode = newValue; this.MarkAsDirty("EntitleImporterCode"); } }
+       
+	 
+    private importerName: string;
+    public get ImporterName() { return this.importerName; }
+    public set ImporterName(newValue: string) { if (this.importerName != newValue) { this.importerName = newValue; this.MarkAsDirty("ImporterName"); } }
+       
+	 
+    private importerAddress: string;
+    public get ImporterAddress() { return this.importerAddress; }
+    public set ImporterAddress(newValue: string) { if (this.importerAddress != newValue) { this.importerAddress = newValue; this.MarkAsDirty("ImporterAddress"); } }
+       
+	 
+    private transferImporterAddress: string;
+    public get TransferImporterAddress() { return this.transferImporterAddress; }
+    public set TransferImporterAddress(newValue: string) { if (this.transferImporterAddress != newValue) { this.transferImporterAddress = newValue; this.MarkAsDirty("TransferImporterAddress"); } }
+       
+	 
+    private entitleImporterAddress: string;
+    public get EntitleImporterAddress() { return this.entitleImporterAddress; }
+    public set EntitleImporterAddress(newValue: string) { if (this.entitleImporterAddress != newValue) { this.entitleImporterAddress = newValue; this.MarkAsDirty("EntitleImporterAddress"); } }
+       
+	 
+    private transferImporterName: string;
+    public get TransferImporterName() { return this.transferImporterName; }
+    public set TransferImporterName(newValue: string) { if (this.transferImporterName != newValue) { this.transferImporterName = newValue; this.MarkAsDirty("TransferImporterName"); } }
+       
+	 
+    private entitleImporterName: string;
+    public get EntitleImporterName() { return this.entitleImporterName; }
+    public set EntitleImporterName(newValue: string) { if (this.entitleImporterName != newValue) { this.entitleImporterName = newValue; this.MarkAsDirty("EntitleImporterName"); } }
+       
+	 
+    private importerPassportNumber: string;
+    public get ImporterPassportNumber() { return this.importerPassportNumber; }
+    public set ImporterPassportNumber(newValue: string) { if (this.importerPassportNumber != newValue) { this.importerPassportNumber = newValue; this.MarkAsDirty("ImporterPassportNumber"); } }
+       
+	 
+    private transferPassportNumber: string;
+    public get TransferPassportNumber() { return this.transferPassportNumber; }
+    public set TransferPassportNumber(newValue: string) { if (this.transferPassportNumber != newValue) { this.transferPassportNumber = newValue; this.MarkAsDirty("TransferPassportNumber"); } }
+       
+	 
+    private entitlePassportNumber: string;
+    public get EntitlePassportNumber() { return this.entitlePassportNumber; }
+    public set EntitlePassportNumber(newValue: string) { if (this.entitlePassportNumber != newValue) { this.entitlePassportNumber = newValue; this.MarkAsDirty("EntitlePassportNumber"); } }
        
 	 
 

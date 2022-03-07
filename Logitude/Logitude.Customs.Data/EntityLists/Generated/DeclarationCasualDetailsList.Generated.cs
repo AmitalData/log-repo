@@ -19,10 +19,6 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
-       public string CasualSupplierName  { get; set; }
-       [DataMember]
-       public string CasualSupplierAddress  { get; set; }
-       [DataMember]
        public string CasualImporterAddress1  { get; set; }
        [DataMember]
        public string CasualImporterAddress2  { get; set; }
@@ -38,6 +34,28 @@ namespace Logitude.Customs.Data.EntityLists
        public string CasualImporterTel  { get; set; }
        [DataMember]
        public string CasualImporterContact  { get; set; }
+       [DataMember]
+       public string ImporterCode  { get; set; }
+       [DataMember]
+       public string EntitleImporterCode  { get; set; }
+       [DataMember]
+       public string ImporterName  { get; set; }
+       [DataMember]
+       public string ImporterAddress  { get; set; }
+       [DataMember]
+       public string TransferImporterAddress  { get; set; }
+       [DataMember]
+       public string EntitleImporterAddress  { get; set; }
+       [DataMember]
+       public string TransferImporterName  { get; set; }
+       [DataMember]
+       public string EntitleImporterName  { get; set; }
+       [DataMember]
+       public string ImporterPassportNumber  { get; set; }
+       [DataMember]
+       public string TransferPassportNumber  { get; set; }
+       [DataMember]
+       public string EntitlePassportNumber  { get; set; }
    }
 
 }

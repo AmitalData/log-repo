@@ -26,10 +26,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual Declaration Declaration { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
-        [Column("CasualSupplierName")]
-	    public string CasualSupplierName { get; set; }
-        [Column("CasualSupplierAddress")]
-	    public string CasualSupplierAddress { get; set; }
         [Column("CasualImporterAddress1")]
 	    public string CasualImporterAddress1 { get; set; }
         [Column("CasualImporterAddress2")]
@@ -46,6 +42,30 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CasualImporterTel { get; set; }
         [Column("CasualImporterContact")]
 	    public string CasualImporterContact { get; set; }
+        [Column("ImporterCode")]
+	    public string ImporterCode { get; set; }
+        [Column("TransferImporterCode")]
+	    public string TransferImporterCode { get; set; }
+        [Column("EntitleImporterCode")]
+	    public string EntitleImporterCode { get; set; }
+        [Column("ImporterName")]
+	    public string ImporterName { get; set; }
+        [Column("ImporterAddress")]
+	    public string ImporterAddress { get; set; }
+        [Column("TransferImporterAddress")]
+	    public string TransferImporterAddress { get; set; }
+        [Column("EntitleImporterAddress")]
+	    public string EntitleImporterAddress { get; set; }
+        [Column("TransferImporterName")]
+	    public string TransferImporterName { get; set; }
+        [Column("EntitleImporterName")]
+	    public string EntitleImporterName { get; set; }
+        [Column("ImporterPassportNumber")]
+	    public string ImporterPassportNumber { get; set; }
+        [Column("TransferPassportNumber")]
+	    public string TransferPassportNumber { get; set; }
+        [Column("EntitlePassportNumber")]
+	    public string EntitlePassportNumber { get; set; }
     }
 }
 	 
