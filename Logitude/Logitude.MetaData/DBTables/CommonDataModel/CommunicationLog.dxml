@@ -303,7 +303,14 @@
     <Constraints
       Nullable="true" />
   </Column>
-   <Column
+  <Column
+    Name="UniqueNumber"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="AdditionalFields"
     Type="nvarchar"
     Size="-1">
@@ -365,4 +372,6 @@
     Columns="CreateDate,CommunicationStatusTypeCode" />
   <Index
     Columns="CreateDate" />
+  <Index
+    Columns="UniqueNumber,Tenant" />
 </Table>

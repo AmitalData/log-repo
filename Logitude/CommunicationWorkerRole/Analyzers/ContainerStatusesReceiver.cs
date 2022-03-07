@@ -200,10 +200,5 @@ namespace CommunicationWorkerRole.Analyzers
             return bytearray;
         }
 
-        private bool IsAnalyzeQueueExsit(byte[] analyzeQueueMessageBody)
-        {
-            var isAnalyzeQueueExsit = analyzeQueueReposiory.IsAnalyzeQueueExsit(analyzeQueueMessageBody);
-            return isAnalyzeQueueExsit;
-        }
     }
 }
