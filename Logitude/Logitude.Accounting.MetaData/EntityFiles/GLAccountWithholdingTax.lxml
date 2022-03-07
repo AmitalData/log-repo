@@ -255,7 +255,7 @@
     NoMetaDataField="false"
     GenerateInList="true"
     IsFixedLength="false"
-    EnableAutoFill="true"
+    EnableAutoFill="false"
     IncludeInSearchField="false"
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
