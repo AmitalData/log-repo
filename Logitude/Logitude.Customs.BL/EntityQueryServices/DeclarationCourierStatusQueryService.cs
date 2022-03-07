@@ -229,6 +229,24 @@ namespace Logitude.Customs.BL.EntityQueryServices
             IQueryable<DeclarationCourierStatus> q = GetBy(tenant, CourierMasterId);
             return q.Select(r => r.DeclarationId).ToList();
         }
+        public List<DeclarationDataForSlaReport> GetDeclarationDataForSlaReportByMasterId(int tenant, string CourierMasterId)
+        {
+            var repoCourierDeclaration = new CourierDeclarationRepository(this.context);
+            var repoDeclaration = new DeclarationRepository(this.context);
+
+            return  (from dec in repoCourierDeclaration.GetByCourierMasterId(tenant, CourierMasterId)
+                     join rDec in repoDeclaration.GetAll(tenant) on dec.DeclarationId equals rDec.Id
+                     join status in repository.GetAll(tenant)
+                     on dec.DeclarationId equals status.DeclarationId
+                     select new DeclarationDataForSlaReport
+                     {
+                         CourierHawb=rDec.CourierHAWB,
+                         Delivered=status.Delivered,
+                         HatraDate=rDec.HatraDate,
+                         LastMileStatusDate=status.LastMileStatusDate,
+                         TerminalReleaseDate=status.TerminalReleaseDate,
+                     }).ToList(); 
+        }
 
         public List<DeclarationCourierStatusPM> GetByDeclarationIdList(int tenant, List<string> declarationIdList)
         {
@@ -569,5 +587,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
         public string DeclarationCourierCustomStatusCode { get; internal set; }
 
         //public string CourierPendingReasonList { get; set; }
+    }
+
+    public class DeclarationDataForSlaReport
+    {
+        public DateTime? TerminalReleaseDate { get; set; }
+        public bool Delivered { get; set; }
+        public DateTime? LastMileStatusDate { get; set; }
+        public string CourierHawb { get; set; }
+        public DateTime? HatraDate { get; set; }
     }
 }
