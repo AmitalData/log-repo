@@ -324,12 +324,14 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
 
             else {
                 if (this.deletedCustomsPartnersIds.indexOf(partnerId) == -1) {
-                    this.deletedCustomsPartnersIds = this.deletedCustomsPartnersIds + "+" + partnerId;
+                    this.deletedCustomsPartnersIds = this.deletedCustomsPartnersIds + "," + partnerId;
                 }
             }
 
+            SessionLocator.ChangedShipmentPartnersIds = this.deletedCustomsPartnersIds;
+
             if (this.EntityPM.ShipmentPayables.filter(d => d.IsCustomsChargesTariff && d.VendorId == partnerId).length > 0) {
-                this.CurrentSession.FireEvent("UpdateCustomsChargesPartnerDeleted," + this.deletedCustomsPartnersIds);
+                this.CurrentSession.FireEvent("UpdateCustomsCharges");
             }
         }
     }

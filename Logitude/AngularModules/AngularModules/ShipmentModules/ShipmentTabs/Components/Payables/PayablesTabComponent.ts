@@ -88,7 +88,6 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     private LoadCompletedEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent) {
-
             this.SessionEvent = this.CurrentSession.SessionEvent.subscribe((event: string) => {
                 if (event) {
                     if (event == "PayablesGenerated") {
@@ -104,10 +103,10 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                         this.CheckUpdateCustomsCharges();
                     }
 
-                    else if (event.indexOf("UpdateCustomsChargesPartnerDeleted") > -1) {
-                        var args = event.split(',');
-                        this.CheckUpdateCustomsCharges(args[1]);
-                    }
+                    //else if (event.includes("UpdateCustomsChargesPartnerDeleted", 0)) {
+                    //    var args = event.split(',');
+                    //    this.CheckUpdateCustomsCharges(args[1]);
+                    //}
                 }
             });
 
@@ -1512,15 +1511,13 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     public UpdateCustomsChargesMessageWidth: number = 0;
     public IsUpdateCustomsChargesVisible: boolean = false;
     public IsUpdatingCustomsCharges: boolean = false;
-    private deletedPartnerIds: string[];
-    CheckUpdateCustomsCharges(deletedIds: string = null) {
+    CheckUpdateCustomsCharges() {        
         var updateMessage: string = null;
 
         if (this.EntityPM.ShipmentPayables.filter(d => d.IsCustomsChargesTariff).length > 0) {
             updateMessage = "Shipment details have been updated, update the generated customs charges?";
         }
-
-        this.deletedPartnerIds = deletedIds.split('+');        
+        
         this.UpdateCustomsChargesMessage = updateMessage;
         this.UpdateCustomsChargesMessageWidth = AppTool.GetTextWidth(updateMessage, 11);
         this.IsUpdateCustomsChargesVisible = AppTool.IsNullOrEmpty(updateMessage) ? false : true;
@@ -1529,10 +1526,9 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         var deletedCustomsPayables: ShipmentPayablePM[] = this.EntityPM.ShipmentPayables.filter(d => d.IsCustomsChargesTariff
             && !(d.ShipmentPayableLineStatusCode == 'PACC' || d.ShipmentPayableLineStatusCode == 'ACCT'));
 
-        deletedCustomsPayables = deletedCustomsPayables.filter(d => this.deletedPartnerIds.indexOf(d.VendorId) > -1);
-        //this.deletedPartnerIds.forEach((deletedId: string) => {
-        //    deletedCustomsPayables = deletedCustomsPayables.filter(d => d.VendorId == deletedId);
-        //});
+        var deletedPartnerIds: string[] = SessionLocator.ChangedShipmentPartnersIds.split(',');
+
+        deletedCustomsPayables = deletedCustomsPayables.filter(d => deletedPartnerIds.indexOf(d.VendorId) > -1);      
 
         if (deletedCustomsPayables.length > 0) {
             deletedCustomsPayables.forEach((item: ShipmentPayablePM) => {
@@ -1542,9 +1538,11 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
             this.UpdateCustomsChargesMessage = null;
             this.UpdateCustomsChargesMessageWidth = 0;
             this.IsUpdateCustomsChargesVisible = false;
-            this.deletedPartnerIds = null;
+            deletedPartnerIds = null;
             this.AddCustomsChargesClicked(false);
         }
+
+        SessionLocator.ChangedShipmentPartnersIds = "";
     }
 
     AddCustomsChargesClicked(isAddingNewCharges: boolean) {
