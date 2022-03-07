@@ -521,7 +521,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var mycontext = CustomContext.GetContext(tenant);
             IQueryable<DeclarationCourierStatus> qDeclarationCourierStatuses = GetQueryableDeclarationCourierStatuses(tenant, IntegratorId, mycontext);
             IQueryable<DeclarationCourierStatusCountDTO> declarationCourierStatuses =
-                (from dc in mycontext.DeclarationCourierStatuses//.Include("Declaration")
+                (from dc in qDeclarationCourierStatuses //mycontext.DeclarationCourierStatuses//.Include("Declaration")
 
                  join d in mycontext.Declarations on dc.DeclarationId equals d.Id
                  //  join dm in context.CourierMasters
