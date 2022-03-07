@@ -478,26 +478,26 @@
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
                                                                             && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)"
                                                                             style="width:170px">
+                                                                            <!--|| (_DecWithoutHaTra == 0)-->
+                                                                            <split-button (DefaultSplitButtonClicked)="SendALLCorrectManifest('R')"
+                                                                                          [ButtonText]=_ReadyMNFToBatchSendButtonText
+                                                                                          [IsDisabled]="IsDisplayOnly"
+                                                                                          [MENUDivExtraTop]="24"
+                                                                                          [MENUDivExtraLeft]="110">
 
-                                                                            <split-button
-                                                                                (DefaultSplitButtonClicked)="SendALLCorrectManifest('R')"
-                                                                                [ButtonText]=_ReadyMNFToBatchSendButtonText
-                                                                                [IsDisabled]="IsDisplayOnly"
-                                                                                [MENUDivExtraTop]="24"
-                                                                                [MENUDivExtraLeft]="110">
-
-                                                                                <div
-                                                                                    class="class-MENUSplitButton-content">
+                                                                                <div class="class-MENUSplitButton-content">
                                                                                     <div>
                                                                                         <ul class="x-button-drop-menu"
                                                                                             style="width:150px;">
                                                                                             <li>
-                                                                                                <span
-                                                                                                    (click)="SendALLCorrectManifest('RV')">{{'Customs.CourierMaster.O.ReadyMNFToSendRV'
+                                                                                                <span (click)="SendALLCorrectManifest('RV')">
+                                                                                                    {{
+                                                                                                    'Customs.CourierMaster.O.ReadyMNFToSendRV'
                                                                                                     |
                                                                                                     TextCodeTranslationPipe
                                                                                                     }}
-                                                                                                    ({{_CorrectMNFToBatchSend}})</span>
+                                                                                                    ({{_CorrectMNFToBatchSend}})
+                                                                                                </span>
                                                                                             </li>
                                                                                         </ul>
                                                                                     </div>
@@ -505,6 +505,7 @@
 
                                                                             </split-button>
                                                                         </td>
+                                                                         <!--|| (_DecWithoutHaTra == 0)-->
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
                                                                             style="width:170px">
                                                                             <split-button

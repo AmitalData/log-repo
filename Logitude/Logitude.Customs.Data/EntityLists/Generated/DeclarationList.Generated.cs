@@ -422,6 +422,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool? IsHatraDateNull  { get; set; }
        [DataMember]
        public DateTime? TerminalReleaseDate  { get; set; }
+       [DataMember]
+       public string IntegratorCode  { get; set; }
    }
 
 }

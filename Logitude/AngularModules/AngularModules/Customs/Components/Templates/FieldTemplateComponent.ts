@@ -23,10 +23,11 @@ import { EntityResourceService } from '../../../Infrastructure/Services/EntityRe
 import { PhysicalChecksCloseSharedDataService } from '../../Services/DataChange/PhysicalChecksCloseSharedDataService';
 import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPMService';
 import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
+import { PendingByKeywordWebService } from 'Customs/Services/ExtendedPMs/PendingByKeywordWebService';
 @Component({
 
     templateUrl: './FieldTemplateComponent.html',
-    providers: [ListComponentArgs],
+    providers: [ListComponentArgs, PendingByKeywordWebService],
 })
 
 export class FieldTemplateComponent {
@@ -51,7 +52,8 @@ export class FieldTemplateComponent {
         private entityResourceService: EntityResourceService,
         private _physicalChecksCloseSharedDataService: PhysicalChecksCloseSharedDataService,
         private logtuideTableDataService: LogtuideTableDataService,
-    ) {
+        private pendingByKeywordWebService: PendingByKeywordWebService,
+        ) {
         if (SessionLocator.SelectedSession.CurrentListComponent != null) {
             this._ListComponentArgs = SessionLocator.SelectedSession.CurrentListComponent._ListComponentArgs;
         } else {
@@ -654,6 +656,7 @@ export class FieldTemplateComponent {
     }
 
     ShowDeclaration(event) {
+        this._ListComponentArgs.SuppressOnRowSelectedField = true;
         if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
             SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = true;
         }
@@ -671,7 +674,11 @@ export class FieldTemplateComponent {
                     if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
                         SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = false;
                     }
-                    this.OnBackFromEdit(this.Entity.DeclarationId, event);
+                    if(this.ObjectTableName =="Customs.PhysicalCheck"){
+                        this.OnBackFromEdit(this.Entity.Id, event);
+                    }else{
+                        this.OnBackFromEdit(this.Entity.DeclarationId, event);
+                    }
                 });
             });
     }
@@ -679,7 +686,7 @@ export class FieldTemplateComponent {
 
     OnBackFromEdit(selectedEntityId, $event) {
         if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentListComponent != null) {
-            SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });
+            SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(selectedEntityId, { rowIndex: this.RowIndex });
         }
     }
 
@@ -703,6 +710,8 @@ export class FieldTemplateComponent {
             }
         });
     }
+
+
 
     ShowCFIUFILEFromDeclarationReferantData() {
 
@@ -802,8 +811,8 @@ export class FieldTemplateComponent {
     async onRemoveInclusiveVisibilityClick(e: MouseEvent) {
         e.stopPropagation();
 
-        if(!(await this.confirmRemoveInclusiveVisibility())) return;
-        
+        if (!(await this.confirmRemoveInclusiveVisibility())) return;
+
         SessionLocator.SelectedSession.StartBusyIndicator('')
 
         const declarationPM = await this.logtuideTableDataService.getDataFromService(this.declarationPMService.get(this.Entity.DeclarationId));
@@ -811,17 +820,44 @@ export class FieldTemplateComponent {
         await this.logtuideTableDataService.getDataFromService(this.declarationPMService.update(declarationPM));
 
         SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
-        
-        SessionLocator.SelectedSession.StopBusyIndicator();        
+
+        SessionLocator.SelectedSession.StopBusyIndicator();
     }
+
+
+    async onRemovePendingByKeywordClick(e: MouseEvent) {
+        e.stopPropagation();
+
+        if (!(await this.confirmMsg(TextCodeTranslator.Translate('Accounting.General.O.Areyousuredeleteline')))) return;
+
+        SessionLocator.SelectedSession.StartBusyIndicator("");
+
+        await this.pendingByKeywordWebService.delete(this.Entity.Id)
+
+        SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+
+        SessionLocator.SelectedSession.StopBusyIndicator();
+    }
+
 
     private async confirmRemoveInclusiveVisibility(): Promise<boolean> {
         var myConfirmWindow = new ConfirmWindow();
         myConfirmWindow.Width = 400;
         myConfirmWindow.Show(TextCodeTranslator.Translate("Customs.DeclarationReferantData.RemoveInclusiveMessage"));
 
-        return new Promise<boolean>(resolve => 
-            myConfirmWindow.WindowClosed.subscribe(e => 
+        return new Promise<boolean>(resolve =>
+            myConfirmWindow.WindowClosed.subscribe(e =>
+                resolve(myConfirmWindow.Yes)));
+    }
+
+
+    private async confirmMsg(msg: string): Promise<boolean> {
+        var myConfirmWindow = new ConfirmWindow();
+        myConfirmWindow.Width = 400;
+        myConfirmWindow.Show(msg);
+
+        return new Promise<boolean>(resolve =>
+            myConfirmWindow.WindowClosed.subscribe(e =>
                 resolve(myConfirmWindow.Yes)));
     }
 }

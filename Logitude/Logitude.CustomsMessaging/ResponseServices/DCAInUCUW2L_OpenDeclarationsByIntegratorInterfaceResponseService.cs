@@ -33,7 +33,7 @@ using Logitude.CustomsMessaging.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.Customs.BL.Messaging.U2L.CommDec;
+///using Logitude.Customs.BL.Messaging.U2L.CommDec;
 using Logitude.Server.Tools.Contracts;
 using System.Diagnostics;
 
@@ -58,7 +58,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             // {
             string customFileNo = "";
 
-            Do_CommDecService CommDecService = new Do_CommDecService();
+            //Do_CommDecService CommDecService = new Do_CommDecService();
+            CommDecService CommDecService = new CommDecService();
             try
             {
                 string error = "";
@@ -66,9 +67,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 string courierMasterID = "";
                 string moreParams = customResponse.MoreParams;
                 CommDecService.ProccessGenericRequestReal(customResponse.LOGICOMMDEC, requestParams.Tenant, requestParams.LoggingUserId, requestParams.PBId, ref moreParams, out error, out customFileNo, out decId, out courierMasterID);
-
+                
                 if (error != "")
                 {
+                    
                     this.MyResponseData.ApplicationID = customFileNo;
                     this.MyResponseData.HasException = true;
                     this.MyResponseData.Succeeded = false;
@@ -99,6 +101,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyRequestSheetParam.CustomFileNo = customFileNo;
                 this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 this.MyRequestSheetParam.EntityId1 = decId;
+                this.MyRequestSheetParam.RequestDescription = CommDecService.MyGenericResponseObj.EnglishDescription;
+
                 //   this.MyRequestSheetParam.RequestDescription = "הצהרה נפתחה בהצלחה :" + customFileNo + "_" + decId;
 
 

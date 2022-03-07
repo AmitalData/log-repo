@@ -149,6 +149,10 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
             DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
             DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(myDeclarationPM.Id, true, false);
             if(currentDeclarationCourierStatusPM != null && !String.IsNullOrWhiteSpace(currentDeclarationCourierStatusPM.CrateNumber))crateNumber = currentDeclarationCourierStatusPM.CrateNumber;
+            if (string.IsNullOrWhiteSpace(crateNumber))
+            {
+                crateNumber = myDeclarationPM?.MyEcomInsert?.MyDeclarationCourierStatusPM?.CrateNumber;
+            }
 
             string importerVat = "";
             if (!String.IsNullOrWhiteSpace(myDeclarationPM.ImporterId))
