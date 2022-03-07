@@ -65,16 +65,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 							
 		    entityPM.CreateDate =  myDate;
 					 
-			string email = HttpContext.Current.User.Identity.Name;
-            ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
-            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
-							 
-
-			if (loggedContact != null)
-            {
-		        entityPM.CreatedByUserId = loggedContact.Id;
-		    }
-					
 	    }
         
 		protected override void FillDefaultValuesOnUpdate(GLAccountWithholdingTaxPM entityPM)
