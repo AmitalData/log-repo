@@ -24,8 +24,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 		     None,  
 	         DeclarationId, 
 	         Tenant, 
-	         CasualSupplierName, 
-	         CasualSupplierAddress, 
 	         CasualImporterAddress1, 
 	         CasualImporterAddress2, 
 	         CasualImporterCity, 
@@ -33,7 +31,19 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CasualImporterFax, 
 	         CasualImporterEmail, 
 	         CasualImporterTel, 
-	         CasualImporterContact,
+	         CasualImporterContact, 
+	         ImporterCode, 
+	         TransferImporterCode, 
+	         EntitleImporterCode, 
+	         ImporterName, 
+	         ImporterAddress, 
+	         TransferImporterAddress, 
+	         EntitleImporterAddress, 
+	         TransferImporterName, 
+	         EntitleImporterName, 
+	         ImporterPassportNumber, 
+	         TransferPassportNumber, 
+	         EntitlePassportNumber,
 	      }
 
 
@@ -42,8 +52,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 		     None,  
 	         DeclarationId, 
 	         Tenant, 
-	         CasualSupplierName, 
-	         CasualSupplierAddress, 
 	         CasualImporterAddress1, 
 	         CasualImporterAddress2, 
 	         CasualImporterCity, 
@@ -51,7 +59,19 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CasualImporterFax, 
 	         CasualImporterEmail, 
 	         CasualImporterTel, 
-	         CasualImporterContact,
+	         CasualImporterContact, 
+	         ImporterCode, 
+	         TransferImporterCode, 
+	         EntitleImporterCode, 
+	         ImporterName, 
+	         ImporterAddress, 
+	         TransferImporterAddress, 
+	         EntitleImporterAddress, 
+	         TransferImporterName, 
+	         EntitleImporterName, 
+	         ImporterPassportNumber, 
+	         TransferPassportNumber, 
+	         EntitlePassportNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -63,16 +83,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
 				entityPOCO.Tenant = entityPM.Tenant;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CasualSupplierName))
-            {
-				entityPOCO.CasualSupplierName = entityPM.CasualSupplierName;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CasualSupplierAddress))
-            {
-				entityPOCO.CasualSupplierAddress = entityPM.CasualSupplierAddress;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CasualImporterAddress1))
@@ -114,6 +124,66 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
 				entityPOCO.CasualImporterContact = entityPM.CasualImporterContact;
 			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImporterCode))
+            {
+				entityPOCO.ImporterCode = entityPM.ImporterCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransferImporterCode))
+            {
+				entityPOCO.TransferImporterCode = entityPM.TransferImporterCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntitleImporterCode))
+            {
+				entityPOCO.EntitleImporterCode = entityPM.EntitleImporterCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImporterName))
+            {
+				entityPOCO.ImporterName = entityPM.ImporterName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImporterAddress))
+            {
+				entityPOCO.ImporterAddress = entityPM.ImporterAddress;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransferImporterAddress))
+            {
+				entityPOCO.TransferImporterAddress = entityPM.TransferImporterAddress;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntitleImporterAddress))
+            {
+				entityPOCO.EntitleImporterAddress = entityPM.EntitleImporterAddress;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransferImporterName))
+            {
+				entityPOCO.TransferImporterName = entityPM.TransferImporterName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntitleImporterName))
+            {
+				entityPOCO.EntitleImporterName = entityPM.EntitleImporterName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImporterPassportNumber))
+            {
+				entityPOCO.ImporterPassportNumber = entityPM.ImporterPassportNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransferPassportNumber))
+            {
+				entityPOCO.TransferPassportNumber = entityPM.TransferPassportNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntitlePassportNumber))
+            {
+				entityPOCO.EntitlePassportNumber = entityPM.EntitlePassportNumber;
+			}
 			}
 
 		public void POCOToPM(DeclarationCasualDetailsPM entityPM, DeclarationCasualDetails entityPOCO)
@@ -127,16 +197,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
             {
 					entityPM.Tenant = entityPOCO.Tenant;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CasualSupplierName))
-            {
-					entityPM.CasualSupplierName = entityPOCO.CasualSupplierName;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CasualSupplierAddress))
-            {
-					entityPM.CasualSupplierAddress = entityPOCO.CasualSupplierAddress;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CasualImporterAddress1))
@@ -179,6 +239,66 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CasualImporterContact = entityPOCO.CasualImporterContact;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ImporterCode))
+            {
+					entityPM.ImporterCode = entityPOCO.ImporterCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TransferImporterCode))
+            {
+					entityPM.TransferImporterCode = entityPOCO.TransferImporterCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EntitleImporterCode))
+            {
+					entityPM.EntitleImporterCode = entityPOCO.EntitleImporterCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ImporterName))
+            {
+					entityPM.ImporterName = entityPOCO.ImporterName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ImporterAddress))
+            {
+					entityPM.ImporterAddress = entityPOCO.ImporterAddress;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TransferImporterAddress))
+            {
+					entityPM.TransferImporterAddress = entityPOCO.TransferImporterAddress;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EntitleImporterAddress))
+            {
+					entityPM.EntitleImporterAddress = entityPOCO.EntitleImporterAddress;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TransferImporterName))
+            {
+					entityPM.TransferImporterName = entityPOCO.TransferImporterName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EntitleImporterName))
+            {
+					entityPM.EntitleImporterName = entityPOCO.EntitleImporterName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ImporterPassportNumber))
+            {
+					entityPM.ImporterPassportNumber = entityPOCO.ImporterPassportNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TransferPassportNumber))
+            {
+					entityPM.TransferPassportNumber = entityPOCO.TransferPassportNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EntitlePassportNumber))
+            {
+					entityPM.EntitlePassportNumber = entityPOCO.EntitlePassportNumber;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationCasualDetailsPM entityPM, DeclarationCasualDetailsPM oldEntityPM)
@@ -188,16 +308,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
                 oldEntityPM.Tenant = entityPM.Tenant;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CasualSupplierName))
-            {
-                oldEntityPM.CasualSupplierName = entityPM.CasualSupplierName;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CasualSupplierAddress))
-            {
-                oldEntityPM.CasualSupplierAddress = entityPM.CasualSupplierAddress;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CasualImporterAddress1))
@@ -240,6 +350,66 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.CasualImporterContact = entityPM.CasualImporterContact;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImporterCode))
+            {
+                oldEntityPM.ImporterCode = entityPM.ImporterCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransferImporterCode))
+            {
+                oldEntityPM.TransferImporterCode = entityPM.TransferImporterCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntitleImporterCode))
+            {
+                oldEntityPM.EntitleImporterCode = entityPM.EntitleImporterCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImporterName))
+            {
+                oldEntityPM.ImporterName = entityPM.ImporterName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImporterAddress))
+            {
+                oldEntityPM.ImporterAddress = entityPM.ImporterAddress;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransferImporterAddress))
+            {
+                oldEntityPM.TransferImporterAddress = entityPM.TransferImporterAddress;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntitleImporterAddress))
+            {
+                oldEntityPM.EntitleImporterAddress = entityPM.EntitleImporterAddress;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransferImporterName))
+            {
+                oldEntityPM.TransferImporterName = entityPM.TransferImporterName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntitleImporterName))
+            {
+                oldEntityPM.EntitleImporterName = entityPM.EntitleImporterName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImporterPassportNumber))
+            {
+                oldEntityPM.ImporterPassportNumber = entityPM.ImporterPassportNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransferPassportNumber))
+            {
+                oldEntityPM.TransferPassportNumber = entityPM.TransferPassportNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntitlePassportNumber))
+            {
+                oldEntityPM.EntitlePassportNumber = entityPM.EntitlePassportNumber;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(DeclarationCasualDetailsPM entityPM)
@@ -248,14 +418,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 return;
 
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.CasualSupplierName)) //T4 find type == nText 
-            {
-                entityPM.CasualSupplierName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CasualSupplierName));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.CasualSupplierAddress)) //T4 find type == nText 
-            {
-                entityPM.CasualSupplierAddress = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CasualSupplierAddress));
             }
             if (!String.IsNullOrWhiteSpace(entityPM.CasualImporterAddress1)) //T4 find type == nText 
             {
@@ -272,6 +434,30 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.CasualImporterContact)) //T4 find type == nText 
             {
                 entityPM.CasualImporterContact = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CasualImporterContact));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ImporterName)) //T4 find type == nText 
+            {
+                entityPM.ImporterName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ImporterName));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ImporterAddress)) //T4 find type == nText 
+            {
+                entityPM.ImporterAddress = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ImporterAddress));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.TransferImporterAddress)) //T4 find type == nText 
+            {
+                entityPM.TransferImporterAddress = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.TransferImporterAddress));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.EntitleImporterAddress)) //T4 find type == nText 
+            {
+                entityPM.EntitleImporterAddress = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.EntitleImporterAddress));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.TransferImporterName)) //T4 find type == nText 
+            {
+                entityPM.TransferImporterName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.TransferImporterName));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.EntitleImporterName)) //T4 find type == nText 
+            {
+                entityPM.EntitleImporterName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.EntitleImporterName));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

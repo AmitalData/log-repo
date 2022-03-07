@@ -987,20 +987,34 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 _CFIDATA = new CFIDATA();
                 List<CFIDATA_DATA> myCFIDATA_DATAList = new List<CFIDATA_DATA>();
                 CFIDATA_DATA myCFIDATA_DATA = new CFIDATA_DATA();
-                myCFIDATA_DATA.ImporterName = _DirtyDeclarationPM.ImporterName;
-                myCFIDATA_DATA.ImporterAddress = _DirtyDeclarationPM.ImporterAddress;
-                myCFIDATA_DATA.ImporterId = _DirtyDeclarationPM.ImporterCode;
-                myCFIDATA_DATA.CasualSupplierName = _DirtyDeclarationPM.CasualSupplierName;
-                myCFIDATA_DATA.CasualSupplierAddress = _DirtyDeclarationPM.CasualSupplierAddress;
-                myCFIDATA_DATA.COUWTVAL = _DirtyDeclarationPM.WeightValue;
-                myCFIDATA_DATA.CasualImporterAddress1 = _DirtyDeclarationPM.CasualImporterAddress1;
-                myCFIDATA_DATA.CasualImporterAddress2 = _DirtyDeclarationPM.CasualImporterAddress2;
-                myCFIDATA_DATA.CasualImporterCity = _DirtyDeclarationPM.CasualImporterCity;
-                myCFIDATA_DATA.CasualImporterZipCode = _DirtyDeclarationPM.CasualImporterZipCode;
-                myCFIDATA_DATA.CasualImporterFax = _DirtyDeclarationPM.CasualImporterFax;
-                myCFIDATA_DATA.CasualImporterEmail = _DirtyDeclarationPM.CasualImporterEmail;
-                myCFIDATA_DATA.CasualImportelTel = _DirtyDeclarationPM.CasualImporterTel;
-                myCFIDATA_DATA.CasualImporterContact = _DirtyDeclarationPM.CasualImporterContact;
+
+                DeclarationCasualDetailsQueryService declarationCasualDetailsQueryService = new DeclarationCasualDetailsQueryService(_DirtyDeclarationPM.Tenant);
+                var casual = declarationCasualDetailsQueryService.GetSingle(_DirtyDeclarationPM.Id, false, true);
+                if (casual != null)
+                {
+                    myCFIDATA_DATA.CasualSupplierName = "CAP";
+                    myCFIDATA_DATA.ImporterName = _DirtyDeclarationPM.ImporterName;
+                    myCFIDATA_DATA.ImporterAddress = _DirtyDeclarationPM.ImporterAddress;
+                    myCFIDATA_DATA.ImporterId = _DirtyDeclarationPM.ImporterCode;
+                    myCFIDATA_DATA.COUWTVAL = _DirtyDeclarationPM.WeightValue;
+                }
+                else
+                {
+                    myCFIDATA_DATA.ImporterName = _DirtyDeclarationPM.ImporterName;
+                    myCFIDATA_DATA.ImporterAddress = _DirtyDeclarationPM.ImporterAddress;
+                    myCFIDATA_DATA.ImporterId = _DirtyDeclarationPM.ImporterCode;
+                    myCFIDATA_DATA.CasualSupplierName = _DirtyDeclarationPM.CasualSupplierName;
+                    myCFIDATA_DATA.CasualSupplierAddress = _DirtyDeclarationPM.CasualSupplierAddress;
+                    myCFIDATA_DATA.COUWTVAL = _DirtyDeclarationPM.WeightValue;
+                    myCFIDATA_DATA.CasualImporterAddress1 = _DirtyDeclarationPM.CasualImporterAddress1;
+                    myCFIDATA_DATA.CasualImporterAddress2 = _DirtyDeclarationPM.CasualImporterAddress2;
+                    myCFIDATA_DATA.CasualImporterCity = _DirtyDeclarationPM.CasualImporterCity;
+                    myCFIDATA_DATA.CasualImporterZipCode = _DirtyDeclarationPM.CasualImporterZipCode;
+                    myCFIDATA_DATA.CasualImporterFax = _DirtyDeclarationPM.CasualImporterFax;
+                    myCFIDATA_DATA.CasualImporterEmail = _DirtyDeclarationPM.CasualImporterEmail;
+                    myCFIDATA_DATA.CasualImportelTel = _DirtyDeclarationPM.CasualImporterTel;
+                    myCFIDATA_DATA.CasualImporterContact = _DirtyDeclarationPM.CasualImporterContact;
+                }
                 if(_DirtyDeclarationPM.TotalInvoiceAmountInUSD != null)
                 {
                     myCFIDATA_DATA.VALUE_IN_USD = _DirtyDeclarationPM.TotalInvoiceAmountInUSD.ToString();

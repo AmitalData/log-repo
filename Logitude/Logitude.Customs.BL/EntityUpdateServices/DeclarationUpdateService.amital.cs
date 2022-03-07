@@ -40,6 +40,10 @@ using System.Xml.Linq;
 using Logitude.Customs.BL.Validators;
 using System.Configuration;
 using System.Globalization;
+using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityPOCOs;
+using System.Data.Entity.Validation;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -401,6 +405,36 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         }
 
+        public static void DeclarationRepositoryUpdatePOCO(DeclarationPM dec)
+        {
+            if (dec == null) return;
+            if (dec.ChangeSetOp == ChangeSetOperation.Update || dec.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                try
+                {
+                    ICustomContext context = CustomContext.GetContext(dec.Tenant);
+                    DeclarationRepository repository = new DeclarationRepository(context);
+                    DeclarationDataMapping mapping = new DeclarationDataMapping();
+                    Declaration declaration = new Declaration();
+                    mapping.CustomPMToPOCO(dec, declaration);
+                    mapping.PMToPOCO(dec, declaration);
+                    repository.Update(declaration);
+
+                    repository.SubmitChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    var FormatedException = ExceptionFormatUtil.GetFormated(ex);
+                    LogMessagingUtil.Instance.AppendLine("UpdatePOCO():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                    return;
+                }
+                catch (Exception e)
+                {
+                    LogMessagingUtil.Instance.AppendLine("UpdatePOCO():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                    return;
+                }
+            }
+        }
 
         private void OpenLogBoxUnifreighTask(DeclarationPM dirtyDeclarationPM, string taskType, string status, bool raiseStatus, string xmlStatus)
         {

@@ -66,52 +66,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string casualSupplierName ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CasualSupplierName  
-	   {
-	    
-	     get
-		{
-		   return casualSupplierName;
-		 }
-		 set
-		 {
-		   if(casualSupplierName != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CasualSupplierName",OldValue=casualSupplierName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   casualSupplierName=value;
-		   }
-			
-		 }
-	   }
-	  private string casualSupplierAddress ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CasualSupplierAddress  
-	   {
-	    
-	     get
-		{
-		   return casualSupplierAddress;
-		 }
-		 set
-		 {
-		   if(casualSupplierAddress != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CasualSupplierAddress",OldValue=casualSupplierAddress,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   casualSupplierAddress=value;
-		   }
-			
-		 }
-	   }
 	  private string casualImporterAddress1 ;
 	  	  
        
@@ -292,6 +246,282 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CasualImporterContact",OldValue=casualImporterContact,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   casualImporterContact=value;
+		   }
+			
+		 }
+	   }
+	  private string importerCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ImporterCode  
+	   {
+	    
+	     get
+		{
+		   return importerCode;
+		 }
+		 set
+		 {
+		   if(importerCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ImporterCode",OldValue=importerCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   importerCode=value;
+		   }
+			
+		 }
+	   }
+	  private string transferImporterCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TransferImporterCode  
+	   {
+	    
+	     get
+		{
+		   return transferImporterCode;
+		 }
+		 set
+		 {
+		   if(transferImporterCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransferImporterCode",OldValue=transferImporterCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   transferImporterCode=value;
+		   }
+			
+		 }
+	   }
+	  private string entitleImporterCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EntitleImporterCode  
+	   {
+	    
+	     get
+		{
+		   return entitleImporterCode;
+		 }
+		 set
+		 {
+		   if(entitleImporterCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EntitleImporterCode",OldValue=entitleImporterCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   entitleImporterCode=value;
+		   }
+			
+		 }
+	   }
+	  private string importerName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ImporterName  
+	   {
+	    
+	     get
+		{
+		   return importerName;
+		 }
+		 set
+		 {
+		   if(importerName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ImporterName",OldValue=importerName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   importerName=value;
+		   }
+			
+		 }
+	   }
+	  private string importerAddress ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ImporterAddress  
+	   {
+	    
+	     get
+		{
+		   return importerAddress;
+		 }
+		 set
+		 {
+		   if(importerAddress != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ImporterAddress",OldValue=importerAddress,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   importerAddress=value;
+		   }
+			
+		 }
+	   }
+	  private string transferImporterAddress ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TransferImporterAddress  
+	   {
+	    
+	     get
+		{
+		   return transferImporterAddress;
+		 }
+		 set
+		 {
+		   if(transferImporterAddress != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransferImporterAddress",OldValue=transferImporterAddress,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   transferImporterAddress=value;
+		   }
+			
+		 }
+	   }
+	  private string entitleImporterAddress ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EntitleImporterAddress  
+	   {
+	    
+	     get
+		{
+		   return entitleImporterAddress;
+		 }
+		 set
+		 {
+		   if(entitleImporterAddress != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EntitleImporterAddress",OldValue=entitleImporterAddress,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   entitleImporterAddress=value;
+		   }
+			
+		 }
+	   }
+	  private string transferImporterName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TransferImporterName  
+	   {
+	    
+	     get
+		{
+		   return transferImporterName;
+		 }
+		 set
+		 {
+		   if(transferImporterName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransferImporterName",OldValue=transferImporterName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   transferImporterName=value;
+		   }
+			
+		 }
+	   }
+	  private string entitleImporterName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EntitleImporterName  
+	   {
+	    
+	     get
+		{
+		   return entitleImporterName;
+		 }
+		 set
+		 {
+		   if(entitleImporterName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EntitleImporterName",OldValue=entitleImporterName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   entitleImporterName=value;
+		   }
+			
+		 }
+	   }
+	  private string importerPassportNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ImporterPassportNumber  
+	   {
+	    
+	     get
+		{
+		   return importerPassportNumber;
+		 }
+		 set
+		 {
+		   if(importerPassportNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ImporterPassportNumber",OldValue=importerPassportNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   importerPassportNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string transferPassportNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TransferPassportNumber  
+	   {
+	    
+	     get
+		{
+		   return transferPassportNumber;
+		 }
+		 set
+		 {
+		   if(transferPassportNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransferPassportNumber",OldValue=transferPassportNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   transferPassportNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string entitlePassportNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EntitlePassportNumber  
+	   {
+	    
+	     get
+		{
+		   return entitlePassportNumber;
+		 }
+		 set
+		 {
+		   if(entitlePassportNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EntitlePassportNumber",OldValue=entitlePassportNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   entitlePassportNumber=value;
 		   }
 			
 		 }

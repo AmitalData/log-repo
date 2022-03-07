@@ -519,8 +519,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     {
                                         var casual = new DeclarationCasualDetailsPM
                                         {
-                                            CasualSupplierName = _MyDeclarationPM.CasualSupplierName,
-                                            CasualSupplierAddress = _MyDeclarationPM.CasualSupplierAddress,
+                                            //CasualSupplierName = _MyDeclarationPM.CasualSupplierName,
+                                            //CasualSupplierAddress = _MyDeclarationPM.CasualSupplierAddress,
+                                            ImporterCode = _MyDeclarationPM.ImporterCode,
+                                            TransferImporterCode = _MyDeclarationPM.TransferImporterCode,
+                                            EntitleImporterCode = _MyDeclarationPM.EntitleImporterCode,
+                                            ImporterName = _MyDeclarationPM.ImporterName,
+                                            ImporterAddress = _MyDeclarationPM.ImporterAddress,
+                                            TransferImporterName = _MyDeclarationPM.TransferImporterName,
+                                            TransferImporterAddress = _MyDeclarationPM.TransferImporterAddress,
+                                            EntitleImporterName = _MyDeclarationPM.EntitleImporterName,
+                                            EntitleImporterAddress = _MyDeclarationPM.EntitleImporterAddress,
+                                            ImporterPassportNumber = _MyDeclarationPM.ImporterPassportNumber,
+                                            EntitlePassportNumber = _MyDeclarationPM.EntitlePassportNumber,
+                                            TransferPassportNumber = _MyDeclarationPM.TransferPassportNumber,
                                             CasualImporterAddress1 = _MyDeclarationPM.CasualImporterAddress1,
                                             CasualImporterAddress2 = _MyDeclarationPM.CasualImporterAddress2,
                                             CasualImporterCity = _MyDeclarationPM.CasualImporterCity,
@@ -536,8 +548,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                         DeclarationCasualDetailsUpdateService declarationCasualDetailsUpdateService = new DeclarationCasualDetailsUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                                         declarationCasualDetailsUpdateService.Update(casual, true);
 
-                                        _MyDeclarationPM.CasualSupplierName = null;
-                                        _MyDeclarationPM.CasualSupplierAddress = null;
+                                        //_MyDeclarationPM.CasualSupplierName = null;
+                                        //_MyDeclarationPM.CasualSupplierAddress = null;
+                                        _MyDeclarationPM.ImporterCode = null;
+                                        _MyDeclarationPM.TransferImporterCode = null;
+                                        _MyDeclarationPM.EntitleImporterCode = null;
+                                        _MyDeclarationPM.ImporterName = null;
+                                        _MyDeclarationPM.ImporterAddress = null;
+                                        _MyDeclarationPM.TransferImporterName = null;
+                                        _MyDeclarationPM.TransferImporterAddress = null;
+                                        _MyDeclarationPM.EntitleImporterName = null;
+                                        _MyDeclarationPM.EntitleImporterAddress = null;
+                                        _MyDeclarationPM.ImporterPassportNumber = null;
+                                        _MyDeclarationPM.EntitlePassportNumber = null;
+                                        _MyDeclarationPM.TransferPassportNumber = null;
                                         _MyDeclarationPM.CasualImporterAddress1 = null;
                                         _MyDeclarationPM.CasualImporterAddress2 = null;
                                         _MyDeclarationPM.CasualImporterCity = null;

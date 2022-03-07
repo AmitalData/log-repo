@@ -27,10 +27,6 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.Tenant).HasColumnName("Tenant");
 
-            this.Property(t => t.CasualSupplierName).HasColumnName("CasualSupplierName").HasMaxLength(100).IsUnicode(true);
-
-            this.Property(t => t.CasualSupplierAddress).HasColumnName("CasualSupplierAddress").HasMaxLength(250).IsUnicode(true);
-
             this.Property(t => t.CasualImporterAddress1).HasColumnName("CasualImporterAddress1").HasMaxLength(35).IsUnicode(true);
 
             this.Property(t => t.CasualImporterAddress2).HasColumnName("CasualImporterAddress2").HasMaxLength(35).IsUnicode(true);
@@ -46,6 +42,30 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.CasualImporterTel).HasColumnName("CasualImporterTel").HasMaxLength(30).IsUnicode(false);
 
             this.Property(t => t.CasualImporterContact).HasColumnName("CasualImporterContact").HasMaxLength(50).IsUnicode(true);
+
+            this.Property(t => t.ImporterCode).HasColumnName("ImporterCode").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.TransferImporterCode).HasColumnName("TransferImporterCode").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.EntitleImporterCode).HasColumnName("EntitleImporterCode").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ImporterName).HasColumnName("ImporterName").HasMaxLength(100).IsUnicode(true);
+
+            this.Property(t => t.ImporterAddress).HasColumnName("ImporterAddress").HasMaxLength(236).IsUnicode(true);
+
+            this.Property(t => t.TransferImporterAddress).HasColumnName("TransferImporterAddress").HasMaxLength(236).IsUnicode(true);
+
+            this.Property(t => t.EntitleImporterAddress).HasColumnName("EntitleImporterAddress").HasMaxLength(236).IsUnicode(true);
+
+            this.Property(t => t.TransferImporterName).HasColumnName("TransferImporterName").HasMaxLength(100).IsUnicode(true);
+
+            this.Property(t => t.EntitleImporterName).HasColumnName("EntitleImporterName").HasMaxLength(55).IsUnicode(true);
+
+            this.Property(t => t.ImporterPassportNumber).HasColumnName("ImporterPassportNumber").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.TransferPassportNumber).HasColumnName("TransferPassportNumber").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.EntitlePassportNumber).HasColumnName("EntitlePassportNumber").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

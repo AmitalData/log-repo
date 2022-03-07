@@ -91,8 +91,18 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 var dec = declarationQueryService.GetSingleDeclarationById(entityPM.DeclarationId, entityPM.Tenant);
                                 var casual = new DeclarationCasualDetailsPM
                                 {
-                                    CasualSupplierName = dec.CasualSupplierName,
-                                    CasualSupplierAddress = dec.CasualSupplierAddress,
+                                    ImporterCode = dec.ImporterCode,
+                                    TransferImporterCode = dec.TransferImporterCode,
+                                    EntitleImporterCode = dec.EntitleImporterCode,
+                                    ImporterName = dec.ImporterName,
+                                    ImporterAddress = dec.ImporterAddress,
+                                    TransferImporterName = dec.TransferImporterName,
+                                    TransferImporterAddress = dec.TransferImporterAddress,
+                                    EntitleImporterName = dec.EntitleImporterName,
+                                    EntitleImporterAddress = dec.EntitleImporterAddress,
+                                    ImporterPassportNumber = dec.ImporterPassportNumber,
+                                    EntitlePassportNumber = dec.EntitlePassportNumber,
+                                    TransferPassportNumber = dec.TransferPassportNumber,
                                     CasualImporterAddress1 = dec.CasualImporterAddress1,
                                     CasualImporterAddress2 = dec.CasualImporterAddress2,
                                     CasualImporterCity = dec.CasualImporterCity,
@@ -102,14 +112,28 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                     CasualImporterTel = dec.CasualImporterTel,
                                     CasualImporterContact = dec.CasualImporterContact,
                                     DeclarationId = dec.Id,
-                                    Tenant = dec.Tenant
+                                    Tenant = dec.Tenant,
+                                    //CasualSupplierName = dec.CasualSupplierName,
+                                    //CasualSupplierAddress = dec.CasualSupplierAddress,
                                 };
                                 casual.ChangeSetOp = ChangeSetOperation.Insert;
                                 DeclarationCasualDetailsUpdateService declarationCasualDetailsUpdateService = new DeclarationCasualDetailsUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
                                 declarationCasualDetailsUpdateService.Update(casual, true);
 
-                                dec.CasualSupplierName = null;
-                                dec.CasualSupplierAddress = null;
+                                //dec.CasualSupplierName = null;
+                                // dec.CasualSupplierAddress = null;
+                                dec.ImporterCode = null;
+                                dec.TransferImporterCode = null;
+                                dec.EntitleImporterCode = null;
+                                dec.ImporterName = null;
+                                dec.ImporterAddress = null;
+                                dec.TransferImporterName = null;
+                                dec.TransferImporterAddress = null;
+                                dec.EntitleImporterName = null;
+                                dec.EntitleImporterAddress = null;
+                                dec.ImporterPassportNumber = null;
+                                dec.EntitlePassportNumber = null;
+                                dec.TransferPassportNumber = null;
                                 dec.CasualImporterAddress1 = null;
                                 dec.CasualImporterAddress2 = null;
                                 dec.CasualImporterCity = null;
@@ -119,8 +143,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 dec.CasualImporterTel = null;
                                 dec.CasualImporterContact = null;
                                 dec.ChangeSetOp = ChangeSetOperation.Update;
-                                DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
-                                declarationUpdateService.Update(dec, true);
+                                //DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                                //declarationUpdateService.Update(dec, true);
+                                DeclarationUpdateService.DeclarationRepositoryUpdatePOCO(dec);
                             }
                             else
                             {
@@ -130,8 +155,20 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 var casual = declarationCasualDetailsQueryService.GetSingle(entityPM.DeclarationId, false, true);
                                 if (casual != null)
                                 {
-                                    dec.CasualSupplierName = casual.CasualSupplierName;
-                                    dec.CasualSupplierAddress = casual.CasualSupplierAddress;
+                                    //dec.CasualSupplierName = casual.CasualSupplierName;
+                                    //dec.CasualSupplierAddress = casual.CasualSupplierAddress;
+                                    dec.ImporterCode = casual.ImporterCode;
+                                    dec.TransferImporterCode = casual.TransferImporterCode;
+                                    dec.EntitleImporterCode = casual.EntitleImporterCode;
+                                    dec.ImporterName = casual.ImporterName;
+                                    dec.ImporterAddress = casual.ImporterAddress;
+                                    dec.TransferImporterName = casual.TransferImporterName;
+                                    dec.TransferImporterAddress = casual.TransferImporterAddress;
+                                    dec.EntitleImporterName = casual.EntitleImporterName;
+                                    dec.EntitleImporterAddress = casual.EntitleImporterAddress;
+                                    dec.ImporterPassportNumber = casual.ImporterPassportNumber;
+                                    dec.EntitlePassportNumber = casual.EntitlePassportNumber;
+                                    dec.TransferPassportNumber = casual.TransferPassportNumber;
                                     dec.CasualImporterAddress1 = casual.CasualImporterAddress1;
                                     dec.CasualImporterAddress2 = casual.CasualImporterAddress2;
                                     dec.CasualImporterCity = casual.CasualImporterCity;
@@ -141,8 +178,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                     dec.CasualImporterTel = casual.CasualImporterTel;
                                     dec.CasualImporterContact = casual.CasualImporterContact;
                                     dec.ChangeSetOp = ChangeSetOperation.Update;
-                                    DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
-                                    declarationUpdateService.Update(dec, true);
+                                    //DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                                    //declarationUpdateService.Update(dec, true);
+                                    DeclarationUpdateService.DeclarationRepositoryUpdatePOCO(dec);
 
                                     casual.ChangeSetOp = ChangeSetOperation.Delete;
                                     DeclarationCasualDetailsUpdateService declarationCasualDetailsUpdateService = new DeclarationCasualDetailsUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);

@@ -10,8 +10,6 @@ export class DeclarationCasualDetailsList {
    
 	DeclarationId: string;
 	Tenant: number;
-	CasualSupplierName: string;
-	CasualSupplierAddress: string;
 	CasualImporterAddress1: string;
 	CasualImporterAddress2: string;
 	CasualImporterCity: string;
@@ -20,6 +18,17 @@ export class DeclarationCasualDetailsList {
 	CasualImporterEmail: string;
 	CasualImporterTel: string;
 	CasualImporterContact: string;
+	ImporterCode: string;
+	EntitleImporterCode: string;
+	ImporterName: string;
+	ImporterAddress: string;
+	TransferImporterAddress: string;
+	EntitleImporterAddress: string;
+	TransferImporterName: string;
+	EntitleImporterName: string;
+	ImporterPassportNumber: string;
+	TransferPassportNumber: string;
+	EntitlePassportNumber: string;
 	
 }
  
