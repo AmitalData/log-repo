@@ -1204,6 +1204,7 @@ export class AWBWizardComponent implements AfterViewInit{
         this.ValidateScreen_GEN();
         this.ValidateScreen_OCI();
         this.ValidateScreen_OTP();
+        this.ValidateScreen_OTC_Quantities();
     }
     public ValidateScreen_PAR() {
         var screenErrors: string[] = [];
@@ -1797,11 +1798,12 @@ export class AWBWizardComponent implements AfterViewInit{
         this.TabErrors_OTC = screenErrors;
         this.TabWarnings_OTC = screenWarnings;
 
+        var warningLength: number = screenWarnings.length;
         if (this.IsUpdateQuantitiesVisible) {
-            screenWarnings.push("Packages details updated");
+            warningLength += 1;
         }
 
-        this.ApplyStyle(screenErrors.length > 0, screenWarnings.length > 0, "OTC");
+        this.ApplyStyle(screenErrors.length > 0, warningLength > 0, "OTC");
     }
     public ValidateScreen_RAD() {
         var screenErrors: string[] = [];
