@@ -67,7 +67,7 @@ When("create shipment", () => {
 });
 //#region Update general tab given step
 Given("the user open the shipment and go to the general tab", (field1, field2) => {
-    ShipmentActions.OpenShipment("7545"/*shipmentDetails.ShipmentNumber*/);
+    ShipmentActions.OpenShipment(shipmentDetails.ShipmentNumber);
     cy.Click(ShipmentSelectors.GeneralTab, null)
 });
 //#endregion
