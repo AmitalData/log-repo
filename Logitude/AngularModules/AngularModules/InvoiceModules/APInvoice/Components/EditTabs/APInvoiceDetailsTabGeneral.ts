@@ -56,6 +56,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     DisplayFieldsFromList:string;
     DisplayLocalFieldsFromList:string;
     VendorLovSizeForFullAccounting: number;
+    forceShowLocalAndEnglishColumns = false;
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -87,6 +88,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
             this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
             this.VendorLovSizeForFullAccounting = 550;
+            this.forceShowLocalAndEnglishColumns = true;
         }
     }
 
