@@ -10346,8 +10346,8 @@ namespace WebFreight.Web.ReportsWebServices
                     myRecord.Vessel = a.MainCarriageVesselName;
                     myRecord.Voyage = a.MainCarriageCarrierNumber;
                     myRecord.FullStatus = a.StatusName;
-                    myRecord.FirstPickupFullAddress = a.FirstPickupFullAddress;
-                    myRecord.LastDeliveryFullAddress = a.LastDeliveryFullAddress;
+                    myRecord.FistPickupFromAddress = a.FirstPickupFullAddress;
+                    myRecord.LastDeliveryToAddress = a.LastDeliveryFullAddress;
 
                     if (!string.IsNullOrEmpty(a.StatusLocation))
                     {
