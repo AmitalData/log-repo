@@ -36,7 +36,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             return this.MyResponseData;
         }
-
+        
         public override void Update(MN_MSG2791_ExportDeliveryAnswerMessage customResponse, GenericRequestParams requestParams)
         {
             if (customResponse.ResponseContentHeader.Exception != null)
@@ -65,9 +65,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (customResponse.Exception != null)
                 {
                     LogMessagingUtil.Instance.AppendLine("customResponse.Exception");
-
-                    entity.StorErrorXML = 
-                        XmlGenericUtil<UnifreightIIG.Common.MessageLib.ExportStorage.MN2791.Exception[]>.SerializeObject(customResponse.Exception);
+                    string xml = "";
+                    foreach (var item in customResponse.Exception)
+                    {
+                        xml += XmlGenericUtil<UnifreightIIG.Common.MessageLib.ExportStorage.MN2791.Exception>.MySerializeObject(item);
+                    }
+                    entity.StorErrorXML = xml;
                 }
                 entity.CustomsStatus = customResponse.CargoDetails?.CargoStatusID?.ToString();
                 entity.ChangeSetOp = ChangeSetOperation.Update;
