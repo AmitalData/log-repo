@@ -26,9 +26,14 @@ namespace Logitude.ShipmentOrderModule.BL.EntityQueryServices
             return context.ShipmentOrders.Where(a => a.Tenant == tenant && a.OrderNumber == orderNumber).Select(a => a.Id).FirstOrDefault();
         }
 
-        public List<ShipmentOrderPM> GetConnectedShipmentOrders(string shipmentNumber, int tenant)
+        public List<ShipmentOrderPM> GetConnectedShipmentOrdersByShipmentNumber(string shipmentNumber, int tenant)
         {
             return context.ShipmentOrders.Where(a => a.Tenant == tenant && a.ShipmentNumber == shipmentNumber).ToList().Select(a => MapPocoToPM(a)).ToList();
+        }
+
+        public List<ShipmentOrderPM> GetConnectedShipmentOrdersByShipmentId(string shipmentId, int tenant)
+        {
+            return context.ShipmentOrders.Where(a => a.Tenant == tenant && a.ShipmentId == shipmentId).ToList().Select(a => MapPocoToPM(a)).ToList();
         }
 
         public ShipmentOrderPM GetSinglePMForCargo(string id, int tenant)
