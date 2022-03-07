@@ -1384,11 +1384,6 @@ export class DeclarationPM {
     public set AmendmentTypeName(newValue: string) { if (this.amendmentTypeName != newValue) { this.amendmentTypeName = newValue; this.MarkAsDirty("AmendmentTypeName"); } }
        
 	 
-    private vendorNumber: string;
-    public get VendorNumber() { return this.vendorNumber; }
-    public set VendorNumber(newValue: string) { if (this.vendorNumber != newValue) { this.vendorNumber = newValue; this.MarkAsDirty("VendorNumber"); } }
-       
-	 
 
     public OldEntityPM: DeclarationPM;
 		
