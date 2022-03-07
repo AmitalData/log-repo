@@ -1429,7 +1429,7 @@ namespace WebFreight.Web.ReportsWebServices
                         invoicedataprovider.IssuedByUserEmail = contact.Email;
                     }
 
-                    this.SaveInvoice(currentInvoice, invoiceRepository);                   
+                    this.SaveInvoice(currentInvoice);                   
                 }
                 #endregion
 
@@ -2469,10 +2469,11 @@ namespace WebFreight.Web.ReportsWebServices
             return toLocation;
         }
 
-        private void SaveInvoice(ARInvoice currentInvoice, ARInvoiceRepository invoiceRepository)
+        private void SaveInvoice(ARInvoice currentInvoice)
         {
-            ARInvoice savedInvoice = invoiceRepository.GetSingleInvoice(currentInvoice.Id);
-            if(savedInvoice != null)
+            ARInvoiceRepository arInvoiceRepositoryWithNewContext = new ARInvoiceRepository(currentInvoice.Tenant);
+            ARInvoice savedInvoice = arInvoiceRepositoryWithNewContext.GetSingleInvoice(currentInvoice.Id);
+            if (savedInvoice != null)
             {
                 savedInvoice.PrintByUserId = currentInvoice.IssuedByUserId;
                 savedInvoice.PrintDate = TenantServerConfigration.GetCurrentDateTime(currentInvoice.Tenant);
@@ -2494,9 +2495,9 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                 }
 
-                invoiceRepository.Update(savedInvoice);
-                invoiceRepository.SubmitChanges();
-            }            
+                arInvoiceRepositoryWithNewContext.Update(savedInvoice);
+                arInvoiceRepositoryWithNewContext.SubmitChanges();
+            }
         }
 
         private void FillARStockVariables(InvoiceDataProvider invoicedataprovider, ARInvoice invoice)
@@ -3141,7 +3142,7 @@ namespace WebFreight.Web.ReportsWebServices
                             invoiceDataProvider.IssuedByUserEmail = contact.Email;
                         }
 
-                        this.SaveInvoice(entityPOCO, invoiceRepository);
+                        this.SaveInvoice(entityPOCO);
                     }
                 }
                 #endregion
