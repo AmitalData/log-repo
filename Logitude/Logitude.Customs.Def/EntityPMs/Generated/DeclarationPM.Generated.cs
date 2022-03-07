@@ -5538,29 +5538,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string vendorNumber ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string VendorNumber  
-	   {
-	    
-	     get
-		{
-		   return vendorNumber;
-		 }
-		 set
-		 {
-		   if(vendorNumber != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VendorNumber",OldValue=vendorNumber,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   vendorNumber=value;
-		   }
-			
-		 }
-	   }
    }
    
 }

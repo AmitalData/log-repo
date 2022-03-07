@@ -484,6 +484,11 @@ export class SupplierInvoicePM {
     public set ExportInsuranceAmount(newValue: string) { if (this.exportInsuranceAmount != newValue) { this.exportInsuranceAmount = newValue; this.MarkAsDirty("ExportInsuranceAmount"); } }
        
 	 
+    private vendorNumber: string;
+    public get VendorNumber() { return this.vendorNumber; }
+    public set VendorNumber(newValue: string) { if (this.vendorNumber != newValue) { this.vendorNumber = newValue; this.MarkAsDirty("VendorNumber"); } }
+       
+	 
 
     public OldEntityPM: SupplierInvoicePM;
 		

@@ -98,7 +98,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.AutomaticPayment);
             this.CustomMappedPMProperties.Add(PMPropertyNames.CancelRequestStatusName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.AmendmentRejectionReasonName);
-            this.CustomMappedPMProperties.Add(PMPropertyNames.VendorNumber);
 
             var amendmentStatusRepository = new AmendmentStatusQueryService(entityPOCO.Tenant);
             var amendmentStatus = amendmentStatusRepository.GetSingle(entityPOCO.AmendmentStatus,false,true);
@@ -519,9 +518,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPM.FinalLoadingSiteName = entityPOCO.LoadingSiteType.LocalName;
             }
 
-            CustomsVendorQueryService customsVendorQueryService = new CustomsVendorQueryService(entityPOCO.Tenant);
-            CustomsVendorPM customsVendorPM = customsVendorQueryService.GetSingle(entityPOCO.Id, false, false);
-            if (customsVendorPM != null) entityPM.VendorNumber = customsVendorPM.VendorNumber;
         }
 
         public static void UpdateCourierDeclarationFields(DeclarationPM entityPM, Declaration entityPOCO)
