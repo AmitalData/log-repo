@@ -70,7 +70,7 @@ namespace WebFreight.Web.DataProviders
         public string ShippingLine { get; set; }
         public string Voyage { get; set; }
         public string Vessel { get; set; }
-        public string LastDeliveryFullAddress { get; set; }
-        public string FirstPickupFullAddress { get; set; }
+        public string LastDeliveryToAddress { get; set; }
+        public string FistPickupFromAddress { get; set; }
     }
 }

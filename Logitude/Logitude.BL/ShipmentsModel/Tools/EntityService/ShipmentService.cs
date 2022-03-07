@@ -6693,8 +6693,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             this.CountryForStatisticsId(myLastDelivery);
             this.ComputeOrigin(myFirstPickup);
-            this.ComputeFirstPickupFullAddress(myFirstPickup);
-            this.ComputeLastDeliveryFullAddress(myLastDelivery);
 
             if (myFirstPickup != null)
             {
@@ -6835,6 +6833,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
             }
+
+            this.ComputeFirstPickupFullAddress(myFirstPickup);
+            this.ComputeLastDeliveryFullAddress(myLastDelivery);
         }
 
         private void CountryForStatisticsId(ShipmentDeliveryPM myLastDelivery)
@@ -7210,7 +7211,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
             else
             {
-                this.entityPM.LastDeliveryFullAddress = GetLegFullAddressByPortId(entityPM.MainCarriageToPortId);
+                this.entityPM.LastDeliveryFullAddress = this.entityPM.LastFinalDestination;
             }
         }
 
@@ -7226,7 +7227,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
             else if (firstShipmentPickup.PickUpDeliveryFromTypeCode == "CASL")
             {
-                this.entityPM.FirstPickupFullAddress = firstShipmentPickup.FromAddressCity + "," + firstShipmentPickup.FromAddressZipCode;
+                this.entityPM.FirstPickupFullAddress = this.GetLegFullAddressByCASLAddress(firstShipmentPickup.ToAddressCountryName, firstShipmentPickup.ToAddressCity, firstShipmentPickup.ToAddressZipCode);
             }
         }
 
@@ -7243,9 +7244,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
             else if (lastShipmentDelivery.PickUpDeliveryToTypeCode == "CASL")
             {
-                this.entityPM.LastDeliveryFullAddress = lastShipmentDelivery.ToAddressCity + "," + lastShipmentDelivery.ToAddressZipCode;
+                this.entityPM.LastDeliveryFullAddress = this.GetLegFullAddressByCASLAddress(lastShipmentDelivery.ToAddressCountryName ,lastShipmentDelivery.ToAddressCity ,lastShipmentDelivery.ToAddressZipCode);
             }
         }
+
+
 
         private string GetLegFullAddressByPartnerId(string addressId)
         {
@@ -7274,6 +7277,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             string fullPortAddress = port.Code + " ," + port.EnglishName;
 
             return fullPortAddress;
+        }
+
+        private string GetLegFullAddressByCASLAddress(string ToAddressCountryName,string ToAddressCity , string ToAddressZipCode)
+        {
+
+            List<string> strCASLAddressArray = new List<string> { ToAddressCountryName, ToAddressCity, ToAddressZipCode };
+
+            string fullPartnerAddress = string.Join(", ", strCASLAddressArray.Where(m => !string.IsNullOrEmpty(m)).ToList());
+
+            return fullPartnerAddress;
         }
 
         private void UpdateTariffUsedDate(string tariffId)

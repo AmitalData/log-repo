@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "aece446c35f20f762ef74166149ff844";
+		public const string HashString = "6fef9a3192909a4ca77d55119e49bd6a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -49296,6 +49296,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "FirstPickupFullAddress",
 					  						ListPropertyPath =  "FirstPickupFullAddress",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -49313,9 +49314,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FirstPickupFullAddress",
-					  						DefaultText =  "First Pickup Full Address",
+					  						DefaultText =  "Fist Pickup From Address",
 					  						ListFieldLable =  "FirstPickupFullAddressListLable",
-					  						ListLableDefaultText =  "First Pickup Full Address",
+					  						ListLableDefaultText =  "Fist Pickup From Address",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -49354,6 +49355,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LastDeliveryFullAddress",
 					  						ListPropertyPath =  "LastDeliveryFullAddress",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -49371,9 +49373,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastDeliveryFullAddress",
-					  						DefaultText =  "LastDeliveryFullAddress",
+					  						DefaultText =  "Last Delivery To Address",
 					  						ListFieldLable =  "LastDeliveryFullAddressListLable",
-					  						ListLableDefaultText =  "Last Delivery Full Address",
+					  						ListLableDefaultText =  "Last Delivery To Address",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
