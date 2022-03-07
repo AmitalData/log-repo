@@ -160,6 +160,8 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.Transhipment2Vessel = shipment.Transshipment2VesselName;
                 myDataProvider.Transhipment3Vessel = shipment.Transshipment3VesselName;
                 myDataProvider.ShipmentSubTypeName = shipment.ShipmentSubTypeName;
+                myDataProvider.ShipmentRouting = shipment.Routing;
+                myDataProvider.IncotermCode = shipment.IncotermCode;
 
                 this.FillINTTRADocumentProperties(myDataProvider);                
                 
@@ -1627,6 +1629,7 @@ namespace WebFreight.Web.WebServices
                         {
                             myDataProvider.PickupTruckerName = pickupTrucker.EnglishName;
                             myDataProvider.PickupTruckerInfo = pickupTrucker.EnglishName;
+                            myDataProvider.FirstPickupTruckerCode = pickupTrucker.Code;
 
                             Address pickupTruckerAddress = addressRepository.GetMainAddressByCardId(pickupTrucker.Id, tenant);
                             if (pickupTruckerAddress != null)
@@ -1635,8 +1638,8 @@ namespace WebFreight.Web.WebServices
                             }
                         }
                     }
-                    myDataProvider.PickupTruckerNumber = myFirstPickup.CarrierNumber;
 
+                    myDataProvider.PickupTruckerNumber = myFirstPickup.CarrierNumber;
                 }
 
                 else
@@ -2025,6 +2028,15 @@ namespace WebFreight.Web.WebServices
                     #endregion
 
                     myDataProvider.DeliveryInstructions = myLastDelivery.Notes != null ? myLastDelivery.Notes : "";
+
+                    if (!string.IsNullOrEmpty(myLastDelivery.CarrierId))
+                    {
+                        Card deliveryTrucker = commonContext.Cards.Where(d => d.Id == myLastDelivery.CarrierId).FirstOrDefault();
+                        if (deliveryTrucker != null)
+                        {
+                            myDataProvider.LastDeliveryTruckerCode = deliveryTrucker.Code;
+                        }
+                    }
                 }
 
                 if (myDelivery != null)
