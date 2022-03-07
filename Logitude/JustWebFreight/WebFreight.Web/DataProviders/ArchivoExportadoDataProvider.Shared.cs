@@ -135,8 +135,9 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentNotes { get; set; }
         public string ShipmentOpenedBy { get; set; }
         public double? InvoiceAmountDueInLocalCurrency { get; set; }
-        public double? InvoiceAmountDueInInvoiceCurrency { get; set; }        
+        public double? InvoiceAmountDueInInvoiceCurrency { get; set; }
         public double? AccountedReceivablesInInvoiceCurrency { get; set; }
         public double? AccountedPayablesInInvoiceCurrency { get; set; }
+        public string InvoiceStatusName { get; set; }
     }
 }
