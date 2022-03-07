@@ -265,6 +265,11 @@ export class CommunicationLogPM {
     public set ResponseDocumentId(newValue: string) { if (this.responseDocumentId != newValue) { this.responseDocumentId = newValue; this.MarkAsDirty("ResponseDocumentId"); } }
        
 	 
+    private uniqueNumber: string;
+    public get UniqueNumber() { return this.uniqueNumber; }
+    public set UniqueNumber(newValue: string) { if (this.uniqueNumber != newValue) { this.uniqueNumber = newValue; this.MarkAsDirty("UniqueNumber"); } }
+       
+	 
 
     public OldEntityPM: CommunicationLogPM;
 		

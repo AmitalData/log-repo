@@ -67,6 +67,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
 
                 AgentRepository agentRepository = new AgentRepository(tenant);
                 Agent agent = agentRepository.GetSingleAgent(tenant, agentId);
+                if (agent == null) throw new Exception("Please select the accurate Agent that you want to share with from the Partners tab");
 
                 AgentSharedLogisticsKeyRepository agentSharedLogisticsKeyRepository = new AgentSharedLogisticsKeyRepository();
                 AgentSharedLogisticsKey agentSharedLogisticsKey = null;

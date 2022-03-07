@@ -54,10 +54,11 @@ namespace WebFreight.Web.ReportsWebServices
         CardQuery cardQuery;
         private ShipmentPM shipmentpm;
         private ShipmentRepository shipmentRepository;
-
+        private WebServiceHelper servicHelper;
         [WebMethod]
         public byte[] GetPreAlertData(string shipmentid, int tenant, string documentTypeId)
         {
+            servicHelper = new WebServiceHelper(tenant);
             PreAlertDataProvider prealertDataProvider = GetPreAlertDataProvider(shipmentid, tenant, documentTypeId);
 
             #region Serialize and remove null region
@@ -548,20 +549,22 @@ namespace WebFreight.Web.ReportsWebServices
                 // Inland + Domestic
                 if (shipmentpm.DirectionId == "D" && shipmentpm.TransportModeId == "I")
                 {
-                    Address fromAddress = addressRepository.GetSingleAddress(shipmentpm.MainCarriageFromAddressId, tenant);
-                    Address toAddress = addressRepository.GetSingleAddress(shipmentpm.MainCarriageToAddressId, tenant);
-
-
-                    if (fromAddress != null)
+                    InlandDomesticArgs args = new InlandDomesticArgs()
                     {
-                        prealertDataProvider.FromLocation = fromAddress.City + " " + (fromAddress.Country != null ? fromAddress.Country.Code : "");
-                    }
-
-                    if (toAddress != null)
-                    {
-                        prealertDataProvider.ToLocation = toAddress.City + " " + (toAddress.Country != null ? toAddress.Country.Code : "");
-                        prealertDataProvider.FinalLocation = toAddress.City + " " + (toAddress.Country != null ? toAddress.Country.Code : "");
-                    }
+                        InlandDomesticFromTypeCode = shipmentpm.InlandDomesticFromTypeCode,
+                        MainCarriageFromAddressId = shipmentpm.MainCarriageFromAddressId,
+                        MainCarriageFromPortId = shipmentpm.MainCarriageFromPortId,
+                        InlandDomesticFromCity = shipmentpm.InlandDomesticFromCity,
+                        InlandDomesticFromCountryId = shipmentpm.InlandDomesticFromCountryId,
+                        InlandDomesticToTypeCode = shipmentpm.InlandDomesticToTypeCode,
+                        MainCarriageToAddressId = shipmentpm.MainCarriageToAddressId,
+                        InlandDomesticToCity = shipmentpm.InlandDomesticToCity,
+                        InlandDomesticToCountryId = shipmentpm.InlandDomesticToCountryId,
+                        MainCarriageToPortId = shipmentpm.MainCarriageToPortId,
+                    };
+                    prealertDataProvider.FromLocation = servicHelper.GetInlandDomesticFromLocation(args);
+                    prealertDataProvider.ToLocation = servicHelper.GetInlandDomesticToLocation(args);
+                    prealertDataProvider.FinalLocation = prealertDataProvider.ToLocation;
                 }
                 else
                 {

@@ -72,6 +72,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         public string EmailDeliveryError { get; set; }
         public string ResponseDocumentId { get; set; }
-        
+        public string UniqueNumber { get; set; }
     }
 }

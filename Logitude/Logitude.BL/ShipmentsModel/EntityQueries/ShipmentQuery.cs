@@ -2620,10 +2620,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 this.MapMainCarriageLegsForAPI(shipmentPM);
             }
 
-            ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
-            returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
+            //ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
+            //returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
 
-            return returnShipment;
+            return shipmentPM;
         }
 
         private string GetCardName(bool byLocalName, Card cardObject)

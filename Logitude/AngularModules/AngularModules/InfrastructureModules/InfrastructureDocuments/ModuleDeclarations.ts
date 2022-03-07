@@ -18,6 +18,7 @@ import { DocumentFilingBackupBatchesComponent} from './Components/DocumentsBacku
 import { AddDocumentFilingBackupBatchComponent} from './Components/DocumentsBackup/AddDocumentFilingBackupBatchComponent';
 import { DocumentFilingBackupSettingComponent} from './Components/DocumentsBackup/DocumentFilingBackupSettingComponent';
 import {DocumentTypeCopiesComponent} from './Components/DocumentType/Tab/DocumentTypeCopiesComponent';
+import {DocumentTypeCopyDetailsComponent} from './Components/DocumentType/Tab/DocumentTypeCopyDetailsComponent';
 import {AddEditDocumentTypeCustomFieldComponent} from './Components/DocumentType/Tab/AddEditDocumentTypeCustomFieldComponent';
 import {DocumentTypeCustomFieldsComponent} from './Components/DocumentType/Tab/DocumentTypeCustomFieldsComponent';
 import {PrintingOptionsComponent} from './Components/DocumentType/Tab/PrintingOptionsComponent';
@@ -46,6 +47,7 @@ import { DocumentDefaultExternalAttachmentsComponent } from './Components/Docume
 export const Components =
     [
         DocumentTypeCopiesComponent,
+        DocumentTypeCopyDetailsComponent,
         AddEditDocumentTypeCustomFieldComponent,
         DocumentTypeCustomFieldsComponent,
         PrintingOptionsComponent,
@@ -91,6 +93,7 @@ export class ModuleDeclarations {
 
         switch (name) {
             case "DocumentTypeCopiesComponent": { myResult = DocumentTypeCopiesComponent; break; }
+            case "DocumentTypeCopyDetailsComponent": { myResult = DocumentTypeCopyDetailsComponent; break; }
             case "AddEditDocumentTypeCustomFieldComponent": { myResult = AddEditDocumentTypeCustomFieldComponent; break; }
             case "DocumentTypeCustomFieldsComponent": { myResult = DocumentTypeCustomFieldsComponent; break; }
             case "PrintingOptionsComponent": { myResult = PrintingOptionsComponent; break; }

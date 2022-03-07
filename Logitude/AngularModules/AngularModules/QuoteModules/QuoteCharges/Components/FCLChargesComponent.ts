@@ -1232,7 +1232,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
             var itemFrieght: QuoteChargePM = this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT")[0];
 
             if (itemFrieght) {
-                if (this.SaleMeasurementId == itemFrieght.SaleMeasurementId && this.SaleCurrencyId == itemFrieght.SaleCurrencyId) {
+                if (this.SaleMeasurementCode == "BCNT" && this.SaleMeasurementId == itemFrieght.SaleMeasurementId && this.SaleCurrencyId == itemFrieght.SaleCurrencyId) {
                     isAllInCheckBoxVisible = true;
                 }
 

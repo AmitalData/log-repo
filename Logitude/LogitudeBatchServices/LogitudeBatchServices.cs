@@ -168,7 +168,14 @@ namespace LogitudeBatchServices
 
         private void StopProcess(Process currentProcess)
         {
-            EventLog.WriteEntry("Process WIth PID : " + currentProcess.Id + " Stopped");
+            try
+            {
+                EventLog.WriteEntry("Process WIth PID : " + currentProcess.Id + " Stopped, the Process Argumants are : " + currentProcess.StartInfo.Arguments);
+            }
+            catch (Exception)
+            {
+                 
+            } 
             currentProcess.WaitForExit((int)new TimeSpan(0, 1, 0).TotalMilliseconds);
             currentProcess.Kill();
         }

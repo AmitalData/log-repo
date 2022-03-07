@@ -508,8 +508,6 @@ namespace WebFreight.Web.DataProviders
         public string LastDeliveryLoadNumber { get; set; }
         public string MainCarriageLoadNumber { get; set; }
         public string SCI { get; set; }
-
-
         public string CustomerAddress1 { get; set; }
         public string CustomerAddress2 { get; set; }
         public string CustomerCity { get; set; }
@@ -520,16 +518,13 @@ namespace WebFreight.Web.DataProviders
         public string CustomerContactEmail { get; set; }
         public string CustomerContactMobile { get; set; }
         public string CustomerContactPhone { get; set; }
-
         public DateTime? MasterDate { get; set; }
         public string UserDepartment { get; set; }
-
         public DateTime? PlannedCargoReadyDate { get; set; }
         public DateTime? ApprovedCargoReadyDate { get; set; }
         public string Handler { get; set; }
         public string INTTRADocumentTypeName { get; set; }
         public int? INTTRADocumentQTY { get; set; }
-
         public DateTime? PreForwardingATD { get; set; }
         public DateTime? PreForwardingATA { get; set; }
         public string OnForwardingFrom { get; set; }
@@ -544,6 +539,9 @@ namespace WebFreight.Web.DataProviders
         public DateTime? OnCarriageETD { get; set; }
         public DateTime? OnCarriageATD { get; set; }
         public DateTime? OnCarriageATA { get; set; }
-
+        public string ShipmentRouting { get; set; }
+        public string IncotermCode { get; set; }
+        public string FirstPickupTruckerCode { get; set; }
+        public string LastDeliveryTruckerCode { get; set; }
     }
 }
