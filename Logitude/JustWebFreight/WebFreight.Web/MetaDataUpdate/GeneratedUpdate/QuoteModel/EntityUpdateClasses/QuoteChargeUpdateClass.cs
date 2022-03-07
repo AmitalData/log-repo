@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuoteChargeUpdateClass
    {  		
-		public const string HashString = "9c1f04ce3cc409c1b74b8ac9b92484ad";
+		public const string HashString = "e6d129f56772a348b20e14cc5bfbd6ed";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Quote Charge",
-			      				    Code =  "02ca",
+			      				    Code =  "258d",
 			      				    Name =  "QuoteCharge",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Quote",
@@ -742,7 +742,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						ListFieldLable =  "IsAllINListLable",
 					  						ListLableDefaultText =  "All In",
 					  						HelpTextCode =  "IsAllIN",
-					  						HelpTextDefaultText =  "How it works: select check box. Amount will be added to the freight amount and this charge type will not be invoiced.",
+					  						HelpTextDefaultText =  "How it works: Select check box. The amount will be added to the freight amount and this charge type will not be invoiced. Only for charges with a UOM of BCNT",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
