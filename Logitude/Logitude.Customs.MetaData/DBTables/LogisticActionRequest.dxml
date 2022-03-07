@@ -193,11 +193,6 @@
       Nullable="true" />
   </Column>
   <Relation
-    ForeignKeyColumn="ExporterNumber"
-    ReferencedTable="Clients"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="Customs" />
-  <Relation
     ForeignKeyColumn="RequestType"
     ReferencedTable="LogisticActionRequestTypes"
     ReferencedColumn="Code"
