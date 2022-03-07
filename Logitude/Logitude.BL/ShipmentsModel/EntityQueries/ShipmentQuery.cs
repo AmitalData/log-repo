@@ -14258,9 +14258,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 var shipmentsMasterDataFields = GetShipmentMasterDataFields(targetedShipmentsQuery);
 
                 var shipmentsAdditionalFields = new List<ShipmentAdditionalFields>();
-                shipmentIdsList.ForEach(shipmentId =>
+                Parallel.ForEach(shipmentIdsList, shipmentId =>
                 {
                     var shipmentAdditionalFields = new ShipmentAdditionalFields() { ShipmentId = shipmentId };
+
                     var shipmentPickUpDeliveryFields = shipmentsPickUpDeliveryFields.Where(s => s.ShipmentId == shipmentId).FirstOrDefault();
                     MapShipmentPickUpDeliveryFields(shipmentAdditionalFields, shipmentPickUpDeliveryFields);
 
@@ -14281,170 +14282,119 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private List<ShipmentAdditionalFields> GetShipmentsPickUpDeliveryFields(IQueryable<Shipment> targetedShipmentsQuery)
         {
-            var shipmentsPickUpDeliveryFieldsQuery = from shipment in targetedShipmentsQuery
-                                                     join shipmentPickUpDelivery in repository.context.ShipmentPickUpDeliveries
-                                                     on shipment.Id equals shipmentPickUpDelivery.ShipmentId
-                                                     into shipmentPickUpDeliveries
-                                                     select new ShipmentAdditionalFields
-                                                     {
-                                                         ShipmentId = shipment.Id,
-
-                                                         ShipperCity = shipment.ShipperAddress != null ? shipment.ShipperAddress.City : null,
-
-                                                         ShipperCountryCode = shipment.ShipperAddress != null ?
-                                                         (shipment.ShipperAddress.Country != null ? shipment.ShipperAddress.Country.Code : null) : null,
-
-                                                         ConsigneeCity = shipment.ConsigneeAddress != null ? shipment.ConsigneeAddress.City : null,
-
-                                                         ConsigneeCountryCode = shipment.ConsigneeAddress != null ?
-                                                         (shipment.ConsigneeAddress.Country != null ? shipment.ConsigneeAddress.Country.Code : null) : null,
-
-                                                         FirstPickupATD = shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "PICK").Any() ?
-                                                         shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "PICK")
-                                                         .OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault().ATD : null,
-
-                                                         FirstPickupATA = shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "PICK").Any() ?
-                                                         shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "PICK")
-                                                         .OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault().ATA : null,
-
-                                                         FirstPickupETD = shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "PICK").Any() ?
-                                                         shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "PICK")
-                                                         .OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault().ETD : null,
-
-                                                         FirstPickupETA = shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "PICK").Any() ?
-                                                         shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "PICK")
-                                                         .OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault().ETA : null,
-
-                                                         LastDeliveryATD = shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "DELV").Any() ?
-                                                         shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "DELV")
-                                                         .OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault().ATD : null,
-
-                                                         LastDeliveryATA = shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "DELV").Any() ?
-                                                         shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "DELV")
-                                                         .OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault().ATA : null,
-
-                                                         LastDeliveryETD = shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "DELV").Any() ?
-                                                         shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "DELV")
-                                                         .OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault().ETD : null,
-
-                                                         LastDeliveryETA = shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "DELV").Any() ?
-                                                         shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "DELV")
-                                                         .OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault().ETA : null
-                                                     };
+            var shipmentsPickUpDeliveryFieldsQuery = (from shipment in targetedShipmentsQuery
+                                                      join shipmentPickUpDelivery in repository.context.ShipmentPickUpDeliveries
+                                                      on shipment.Id equals shipmentPickUpDelivery.ShipmentId
+                                                      into shipmentPickUpDeliveries
+                                                      select new ShipmentAdditionalFields
+                                                      {
+                                                          ShipmentId = shipment.Id,
+                                                          ShipmentPickUpDeliveries = (from shipmentPickUpDelivery in shipmentPickUpDeliveries
+                                                                                      select new ShipmentPickUpDeliveryPM
+                                                                                      {
+                                                                                          Id = shipmentPickUpDelivery.Id,
+                                                                                          Tenant = shipmentPickUpDelivery.Tenant,
+                                                                                          ShipmentId = shipment.Id,
+                                                                                          PickUpDeliveryTypeCode = shipmentPickUpDelivery.PickUpDeliveryTypeCode,
+                                                                                          PickUpDeliveryNumber = shipmentPickUpDelivery.PickUpDeliveryNumber,
+                                                                                          ETD = shipmentPickUpDelivery.ETD,
+                                                                                          ATD = shipmentPickUpDelivery.ATD,
+                                                                                          ETA = shipmentPickUpDelivery.ETA,
+                                                                                          ATA = shipmentPickUpDelivery.ATA
+                                                                                      }).ToList()
+                                                      }).AsQueryable();
 
             return shipmentsPickUpDeliveryFieldsQuery.ToList();
         }
 
         private List<ShipmentAdditionalFields> GetShipmentsOrderPackageFields(IQueryable<Shipment> targetedShipmentsQuery)
         {
-            var shipmentsOrderPackageFieldsQuery = from shipment in targetedShipmentsQuery
-                                                   join shipmentPackage in repository.context.ShipmentPackages
-                                                   on shipment.Id equals shipmentPackage.ShipmentId
-                                                   into shipmentPackages
-                                                   join shipmentOrderPackage in repository.context.ShipmentOrderPackages
-                                                   on shipment.Id equals shipmentOrderPackage.ShipmentId
-                                                   into shipmentOrderPackages
-                                                   select new ShipmentAdditionalFields
-                                                   {
-                                                       ShipmentId = shipment.Id,
+            var shipmentsOrderPackageFieldsQuery = (from shipment in targetedShipmentsQuery
+                                                    join shipmentPackage in repository.context.ShipmentPackages
+                                                    on shipment.Id equals shipmentPackage.ShipmentId
+                                                    into shipmentPackages
+                                                    join shipmentOrderPackage in repository.context.ShipmentOrderPackages
+                                                    on shipment.Id equals shipmentOrderPackage.ShipmentId
+                                                    into shipmentOrderPackages
+                                                    select new ShipmentAdditionalFields
+                                                    {
+                                                        ShipmentId = shipment.Id,
 
-                                                       PackagesNumberLabel =
-                                                       shipmentPackages.Count() > 0 ?
-                                                       shipmentPackages.Sum(p => p.Quantity).ToString() + " " + (shipmentPackages.Select(x => x.PackageTypeId).Distinct().Count() == 1 ?
-                                                       (shipmentPackages.Select(x => x.PackageType).FirstOrDefault() != null ?
-                                                       shipmentPackages.Select(x => x.PackageType).FirstOrDefault().EnglishName :
-                                                       (shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? "Containers" : "Packages")) :
-                                                       (shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? "Containers" : "Packages"))
-                                                       :
-                                                       (shipmentOrderPackages.Count() > 0 ?
-                                                       shipmentOrderPackages.Sum(p => p.Quantity).ToString() + " " + (shipmentOrderPackages.Select(x => x.PackageTypeId).Distinct().Count() == 1 ?
-                                                       (shipmentOrderPackages.Select(x => x.PackageType).FirstOrDefault() != null ?
-                                                       shipmentOrderPackages.Select(x => x.PackageType).FirstOrDefault().EnglishName :
-                                                       (shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? "Containers" : "Packages")) :
-                                                       (shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? "Containers" : "Packages"))
-                                                       :
-                                                       shipment.BookingNumberOfPackages == null ? null :
-                                                       shipment.BookingNumberOfPackages.ToString() + " Packages")
-                                                   };
+                                                        ShipmentPackages = (from shipmentPackage in shipmentPackages
+                                                                            select new ShipmentPackagePM
+                                                                            {
+                                                                                Id = shipmentPackage.Id,
+                                                                                Quantity = shipmentPackage.Quantity,
+                                                                                PackageTypeId = shipmentPackage.PackageTypeId,
+                                                                                PackageTypeCode = shipmentPackage.PackageType == null ? null : shipmentPackage.PackageType.Code,
+                                                                                PackageTypeName = shipmentPackage.PackageType == null ? null : shipmentPackage.PackageType.EnglishName
+                                                                            }).ToList(),
+
+                                                        ShipmentOrderPackages = (from shipmentOrderPackage in shipmentOrderPackages
+                                                                                 select new ShipmentOrderPackagePM
+                                                                                 {
+                                                                                     Id = shipmentOrderPackage.Id,
+                                                                                     Quantity = shipmentOrderPackage.Quantity,
+                                                                                     PackageTypeId = shipmentOrderPackage.PackageTypeId,
+                                                                                     PackageTypeCode = shipmentOrderPackage.PackageType == null ? null : shipmentOrderPackage.PackageType.Code,
+                                                                                     PackageTypeName = shipmentOrderPackage.PackageType == null ? null : shipmentOrderPackage.PackageType.EnglishName
+                                                                                 }).ToList()
+                                                    }).AsQueryable();
 
             return shipmentsOrderPackageFieldsQuery.ToList();
         }
 
         private List<ShipmentAdditionalFields> GetShipmentMasterDataFields(IQueryable<Shipment> targetedShipmentsQuery)
         {
-            var shipmentsMasterDataFieldsQuery = from shipment in targetedShipmentsQuery.Include("Port")
-                                                 join shipmentMasterData in repository.context.ShipmentMasterDatas.Include("Port").Include("Port.Country")
+            var shipmentsMasterDataFieldsQuery = from shipment in targetedShipmentsQuery
+                                                 join shipmentMasterData in repository.context.ShipmentMasterDatas
                                                  on shipment.MasterShipmentDataId equals shipmentMasterData.Id into shipmentMasterData
                                                  from masterData in shipmentMasterData.DefaultIfEmpty()
                                                  select new ShipmentAdditionalFields
                                                  {
                                                      ShipmentId = shipment.Id,
+                                                     Tenant = shipment.Tenant,
 
-                                                     MainCarriageFromPortStateCode = shipment.FromPort != null ? shipment.FromPort.StateCode : null,
-                                                     MainCarriageToPortStateCode = shipment.ToPort != null ? shipment.ToPort.StateCode : null,
+                                                     ShipperAddressId = shipment.ShipperAddressId,
+                                                     ConsigneeAddressId = shipment.ConsigneeAddressId,
+
+                                                     FromPortId = shipment.FromPortId,
+                                                     ToPortId = shipment.ToPortId,
 
                                                      Transshipment1ATD = masterData.Transshipment1ATD,
                                                      Transshipment1ATA = masterData.Transshipment1ATA,
                                                      Transshipment1ETA = masterData.Transshipment1ETA,
                                                      Transshipment1ETD = masterData.Transshipment1ETD,
-                                                     Transshipment1FromPortName = masterData.Transshipment1FromPort != null ? masterData.Transshipment1FromPort.EnglishName : null,
-                                                     Transshipment1FromPortCode = masterData.Transshipment1FromPort != null ? masterData.Transshipment1FromPort.Code : null,
-                                                     Transshipment1FromPortStateCode = masterData.Transshipment1FromPort != null ? masterData.Transshipment1FromPort.StateCode : null,
-                                                     Transshipment1FromPortCountryCode = masterData.Transshipment1FromPort != null ? masterData.Transshipment1FromPort.Country.Code : null,
-                                                     Transshipment1ToPortName = masterData.Transshipment1ToPort != null ? masterData.Transshipment1ToPort.EnglishName : null,
-                                                     Transshipment1ToPortCode = masterData.Transshipment1ToPort != null ? masterData.Transshipment1ToPort.Code : null,
-                                                     Transshipment1ToPortStateCode = masterData.Transshipment1ToPort != null ? masterData.Transshipment1ToPort.StateCode : null,
-                                                     Transshipment1ToPortCountryCode = masterData.Transshipment1ToPort != null ? masterData.Transshipment1ToPort.Country.Code : null,
+                                                     Transshipment1FromPortId = masterData.Transshipment1FromPortId,
+                                                     Transshipment1ToPortId = masterData.Transshipment1ToPortId,
 
                                                      Transshipment2ATD = masterData.Transshipment2ATD,
                                                      Transshipment2ATA = masterData.Transshipment2ATA,
                                                      Transshipment2ETA = masterData.Transshipment2ETA,
                                                      Transshipment2ETD = masterData.Transshipment2ETD,
-                                                     Transshipment2FromPortName = masterData.Transshipment2FromPort != null ? masterData.Transshipment2FromPort.EnglishName : null,
-                                                     Transshipment2FromPortCode = masterData.Transshipment2FromPort != null ? masterData.Transshipment2FromPort.Code : null,
-                                                     Transshipment2FromPortStateCode = masterData.Transshipment2FromPort != null ? masterData.Transshipment2FromPort.StateCode : null,
-                                                     Transshipment2FromPortCountryCode = masterData.Transshipment2FromPort != null ? masterData.Transshipment2FromPort.Country.Code : null,
-                                                     Transshipment2ToPortName = masterData.Transshipment2ToPort != null ? masterData.Transshipment2ToPort.EnglishName : null,
-                                                     Transshipment2ToPortCode = masterData.Transshipment2ToPort != null ? masterData.Transshipment2ToPort.Code : null,
-                                                     Transshipment2ToPortStateCode = masterData.Transshipment2ToPort != null ? masterData.Transshipment2ToPort.StateCode : null,
-                                                     Transshipment2ToPortCountryCode = masterData.Transshipment2ToPort != null ? masterData.Transshipment2ToPort.Country.Code : null,
+                                                     Transshipment2FromPortId = masterData.Transshipment2FromPortId,
+                                                     Transshipment2ToPortId = masterData.Transshipment2ToPortId,
 
                                                      Transshipment3ATD = masterData.Transshipment3ATD,
                                                      Transshipment3ATA = masterData.Transshipment3ATA,
                                                      Transshipment3ETA = masterData.Transshipment3ETA,
                                                      Transshipment3ETD = masterData.Transshipment3ETD,
-                                                     Transshipment3FromPortName = masterData.Transshipment3FromPort != null ? masterData.Transshipment3FromPort.EnglishName : null,
-                                                     Transshipment3FromPortCode = masterData.Transshipment3FromPort != null ? masterData.Transshipment3FromPort.Code : null,
-                                                     Transshipment3FromPortStateCode = masterData.Transshipment3FromPort != null ? masterData.Transshipment3FromPort.StateCode : null,
-                                                     Transshipment3FromPortCountryCode = masterData.Transshipment3FromPort != null ? masterData.Transshipment3FromPort.Country.Code : null,
-                                                     Transshipment3ToPortName = masterData.Transshipment3ToPort != null ? masterData.Transshipment3ToPort.EnglishName : null,
-                                                     Transshipment3ToPortCode = masterData.Transshipment3ToPort != null ? masterData.Transshipment3ToPort.Code : null,
-                                                     Transshipment3ToPortStateCode = masterData.Transshipment3ToPort != null ? masterData.Transshipment3ToPort.StateCode : null,
-                                                     Transshipment3ToPortCountryCode = masterData.Transshipment3ToPort != null ? masterData.Transshipment3ToPort.Country.Code : null,
+                                                     Transshipment3FromPortId = masterData.Transshipment3FromPortId,
+                                                     Transshipment3ToPortId = masterData.Transshipment3ToPortId,
 
-                                                     HasOnCarriage = masterData.OnCarriageFromPortId != null || masterData.OnCarriageToPortId != null ? true : false,
                                                      OnCarriageATA = masterData.OnCarriageATA,
                                                      OnCarriageATD = masterData.OnCarriageATD,
                                                      OnCarriageETA = masterData.OnCarriageETA,
                                                      OnCarriageETD = masterData.OnCarriageETD,
-                                                     OnCarriageFromPortCode = masterData.OnCarriageFromPort != null ? masterData.OnCarriageFromPort.Code : null,
-                                                     OnCarriageFromPortName = masterData.OnCarriageFromPort != null ? masterData.OnCarriageFromPort.EnglishName : null,
-                                                     OnCarriageFromPortCountryCode = masterData.OnCarriageFromPort != null ? masterData.OnCarriageFromPort.Country.Code : null,
-                                                     OnCarriageToPortCode = masterData.OnCarriageToPort != null ? masterData.OnCarriageToPort.Code : null,
-                                                     OnCarriageToPortName = masterData.OnCarriageToPort != null ? masterData.OnCarriageToPort.EnglishName : null,
-                                                     OnCarriageToPortCountryCode = masterData.OnCarriageToPort != null ? masterData.OnCarriageToPort.Country.Code : null,
+                                                     OnCarriageFromPortId = masterData.OnCarriageFromPortId,
+                                                     OnCarriageToPortId = masterData.OnCarriageToPortId,
 
-                                                     HasPreCarriage = masterData.PreCarriageFromPortId != null || masterData.PreCarriageToPortId != null ? true : false,
                                                      PreCarriageATA = masterData.PreCarriageATA,
                                                      PreCarriageATD = masterData.PreCarriageATD,
                                                      PreCarriageETA = masterData.PreCarriageETA,
                                                      PreCarriageETD = masterData.PreCarriageETD,
-                                                     PreCarriageFromPortCode = masterData.PreCarriageFromPort != null ? masterData.PreCarriageFromPort.Code : null,
-                                                     PreCarriageFromPortName = masterData.PreCarriageFromPort    != null ? masterData.PreCarriageFromPort.EnglishName : null,
-                                                     PreCarriageFromPortCountryCode = masterData.PreCarriageFromPort != null ? masterData.PreCarriageFromPort.Country.Code : null,
-                                                     PreCarriageToPortCode = masterData.PreCarriageToPort != null ? masterData.PreCarriageToPort.Code : null,
-                                                     PreCarriageToPortName = masterData.PreCarriageToPort != null ? masterData.PreCarriageToPort.EnglishName : null,
-                                                     PreCarriageToPortCountryCode = masterData.PreCarriageToPort != null ? masterData.PreCarriageToPort.Country.Code : null
+                                                     PreCarriageFromPortId = masterData.PreCarriageFromPortId,
+                                                     PreCarriageToPortId = masterData.PreCarriageToPortId
                                                  };
 
             return shipmentsMasterDataFieldsQuery.ToList();
@@ -14454,18 +14404,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             if (shipmentPickUpDeliveryFields != null)
             {
-                shipmentAdditionalFields.ShipperCity = shipmentPickUpDeliveryFields.ShipperCity;
-                shipmentAdditionalFields.ShipperCountryCode = shipmentPickUpDeliveryFields.ShipperCountryCode;
-                shipmentAdditionalFields.ConsigneeCity = shipmentPickUpDeliveryFields.ConsigneeCity;
-                shipmentAdditionalFields.ConsigneeCountryCode = shipmentPickUpDeliveryFields.ConsigneeCountryCode;
-                shipmentAdditionalFields.FirstPickupATD = shipmentPickUpDeliveryFields.FirstPickupATD;
-                shipmentAdditionalFields.FirstPickupATA = shipmentPickUpDeliveryFields.FirstPickupATA;
-                shipmentAdditionalFields.FirstPickupETD = shipmentPickUpDeliveryFields.FirstPickupETD;
-                shipmentAdditionalFields.FirstPickupETA = shipmentPickUpDeliveryFields.FirstPickupETA;
-                shipmentAdditionalFields.LastDeliveryATD = shipmentPickUpDeliveryFields.LastDeliveryATD;
-                shipmentAdditionalFields.LastDeliveryATA = shipmentPickUpDeliveryFields.LastDeliveryATA;
-                shipmentAdditionalFields.LastDeliveryETD = shipmentPickUpDeliveryFields.LastDeliveryETD;
-                shipmentAdditionalFields.LastDeliveryETA = shipmentPickUpDeliveryFields.LastDeliveryETA;
+                shipmentAdditionalFields.ShipmentPickUpDeliveries = shipmentPickUpDeliveryFields.ShipmentPickUpDeliveries;
             }
         }
 
@@ -14473,79 +14412,214 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             if (shipmentsOrderPackageFields != null)
             {
-                shipmentAdditionalFields.PackagesNumberLabel = shipmentsOrderPackageFields.PackagesNumberLabel;
+                shipmentAdditionalFields.ShipmentPackages = shipmentsOrderPackageFields.ShipmentPackages;
+                shipmentAdditionalFields.ShipmentOrderPackages = shipmentsOrderPackageFields.ShipmentOrderPackages;
             }
         }
 
         private void MapShipmentMasterDataFields(ShipmentAdditionalFields shipmentAdditionalFields, ShipmentAdditionalFields shipmentMasterDataFields)
         {
-            if (shipmentMasterDataFields != null)
+            ICommonDataContext commonContext = CommonDataContext.GetContext(shipmentMasterDataFields.Tenant);
+            PortRepository portsRep = new PortRepository(commonContext);
+            AddressRepository addressRepository = new AddressRepository(commonContext);
+            PortQuery portQuery = new PortQuery(portsRep);
+
+            if (!string.IsNullOrEmpty(shipmentMasterDataFields.ShipperAddressId))
             {
-                shipmentAdditionalFields.MainCarriageFromPortStateCode = shipmentMasterDataFields.MainCarriageFromPortStateCode;
-                shipmentAdditionalFields.MainCarriageToPortStateCode = shipmentMasterDataFields.MainCarriageToPortStateCode;
+                Address shipperAddress = addressRepository.GetSingleAddress(shipmentMasterDataFields.ShipperAddressId, shipmentMasterDataFields.Tenant);
+                if (shipperAddress != null)
+                {
+                    shipmentAdditionalFields.ShipperAddressId = shipmentMasterDataFields.ShipperAddressId;
+                    shipmentAdditionalFields.ShipperCity = shipperAddress.City;
+                    shipmentAdditionalFields.ShipperCountryCode = shipperAddress.Country == null ? "" : shipperAddress.Country.Code;
+                }
+            }
 
-                shipmentAdditionalFields.Transshipment1ATA = shipmentMasterDataFields.Transshipment1ATA;
-                shipmentAdditionalFields.Transshipment1ATD = shipmentMasterDataFields.Transshipment1ATD;
-                shipmentAdditionalFields.Transshipment1ETA = shipmentMasterDataFields.Transshipment1ETA;
-                shipmentAdditionalFields.Transshipment1ETD = shipmentMasterDataFields.Transshipment1ETD;
-                shipmentAdditionalFields.Transshipment1FromPortName = shipmentMasterDataFields.Transshipment1FromPortName;
-                shipmentAdditionalFields.Transshipment1FromPortCode = shipmentMasterDataFields.Transshipment1FromPortCode;
-                shipmentAdditionalFields.Transshipment1FromPortStateCode = shipmentMasterDataFields.Transshipment1FromPortStateCode;
-                shipmentAdditionalFields.Transshipment1FromPortCountryCode = shipmentMasterDataFields.Transshipment1FromPortCountryCode;
-                shipmentAdditionalFields.Transshipment1ToPortName = shipmentMasterDataFields.Transshipment1ToPortName;
-                shipmentAdditionalFields.Transshipment1ToPortCode = shipmentMasterDataFields.Transshipment1ToPortCode;
-                shipmentAdditionalFields.Transshipment1ToPortStateCode = shipmentMasterDataFields.Transshipment1ToPortStateCode;
-                shipmentAdditionalFields.Transshipment1ToPortCountryCode = shipmentMasterDataFields.Transshipment1ToPortCountryCode;
+            if (!string.IsNullOrEmpty(shipmentMasterDataFields.ConsigneeAddressId))
+            {
+                Address shipperAddress = addressRepository.GetSingleAddress(shipmentMasterDataFields.ConsigneeAddressId, shipmentMasterDataFields.Tenant);
+                if (shipperAddress != null)
+                {
+                    shipmentAdditionalFields.ConsigneeAddressId = shipmentMasterDataFields.ConsigneeAddressId;
+                    shipmentAdditionalFields.ConsigneeCity = shipperAddress.City;
+                    shipmentAdditionalFields.ConsigneeCountryCode = shipperAddress.Country == null ? "" : shipperAddress.Country.Code;
+                }
+            }
 
-                shipmentAdditionalFields.Transshipment2ATA = shipmentMasterDataFields.Transshipment2ATA;
-                shipmentAdditionalFields.Transshipment2ATD = shipmentMasterDataFields.Transshipment2ATD;
-                shipmentAdditionalFields.Transshipment2ETA = shipmentMasterDataFields.Transshipment2ETA;
-                shipmentAdditionalFields.Transshipment2ETD = shipmentMasterDataFields.Transshipment2ETD;
-                shipmentAdditionalFields.Transshipment2FromPortName = shipmentMasterDataFields.Transshipment2FromPortName;
-                shipmentAdditionalFields.Transshipment2FromPortCode = shipmentMasterDataFields.Transshipment2FromPortCode;
-                shipmentAdditionalFields.Transshipment2FromPortStateCode = shipmentMasterDataFields.Transshipment2FromPortStateCode;
-                shipmentAdditionalFields.Transshipment2FromPortCountryCode = shipmentMasterDataFields.Transshipment2FromPortCountryCode;
-                shipmentAdditionalFields.Transshipment2ToPortName = shipmentMasterDataFields.Transshipment2ToPortName;
-                shipmentAdditionalFields.Transshipment2ToPortCode = shipmentMasterDataFields.Transshipment2ToPortCode;
-                shipmentAdditionalFields.Transshipment2ToPortStateCode = shipmentMasterDataFields.Transshipment2ToPortStateCode;
-                shipmentAdditionalFields.Transshipment2ToPortCountryCode = shipmentMasterDataFields.Transshipment2ToPortCountryCode;
+            if (!string.IsNullOrEmpty(shipmentMasterDataFields.FromPortId))
+            {
+                PortPM port = portQuery.GetSinglePM(shipmentMasterDataFields.FromPortId, shipmentMasterDataFields.Tenant);
+                if (port != null)
+                {
+                    shipmentAdditionalFields.FromPortId = shipmentMasterDataFields.FromPortId;
+                    shipmentAdditionalFields.MainCarriageFromPortStateCode = port.StateCode;
+                }
+            }
 
-                shipmentAdditionalFields.Transshipment3ATA = shipmentMasterDataFields.Transshipment3ATA;
-                shipmentAdditionalFields.Transshipment3ATD = shipmentMasterDataFields.Transshipment3ATD;
-                shipmentAdditionalFields.Transshipment3ETA = shipmentMasterDataFields.Transshipment3ETA;
-                shipmentAdditionalFields.Transshipment3ETD = shipmentMasterDataFields.Transshipment3ETD;
-                shipmentAdditionalFields.Transshipment3FromPortName = shipmentMasterDataFields.Transshipment3FromPortName;
-                shipmentAdditionalFields.Transshipment3FromPortCode = shipmentMasterDataFields.Transshipment3FromPortCode;
-                shipmentAdditionalFields.Transshipment3FromPortStateCode = shipmentMasterDataFields.Transshipment3FromPortStateCode;
-                shipmentAdditionalFields.Transshipment3FromPortCountryCode = shipmentMasterDataFields.Transshipment3FromPortCountryCode;
-                shipmentAdditionalFields.Transshipment3ToPortName = shipmentMasterDataFields.Transshipment3ToPortName;
-                shipmentAdditionalFields.Transshipment3ToPortCode = shipmentMasterDataFields.Transshipment3ToPortCode;
-                shipmentAdditionalFields.Transshipment3ToPortStateCode = shipmentMasterDataFields.Transshipment3ToPortStateCode;
-                shipmentAdditionalFields.Transshipment3ToPortCountryCode = shipmentMasterDataFields.Transshipment3ToPortCountryCode;
+            if (!string.IsNullOrEmpty(shipmentMasterDataFields.ToPortId))
+            {
+                PortPM port = portQuery.GetSinglePM(shipmentMasterDataFields.Transshipment1FromPortId, shipmentMasterDataFields.Tenant);
+                if (port != null)
+                {
+                    shipmentAdditionalFields.ToPortId = shipmentMasterDataFields.ToPortId;
+                    shipmentAdditionalFields.MainCarriageToPortStateCode = port.StateCode;
+                }
+            }
 
-                shipmentAdditionalFields.OnCarriageATA = shipmentMasterDataFields.OnCarriageATA;
-                shipmentAdditionalFields.OnCarriageATD = shipmentMasterDataFields.OnCarriageATD;
-                shipmentAdditionalFields.OnCarriageETA = shipmentMasterDataFields.OnCarriageETA;
-                shipmentAdditionalFields.OnCarriageETD = shipmentMasterDataFields.OnCarriageETD;
-                shipmentAdditionalFields.HasOnCarriage = shipmentMasterDataFields.HasOnCarriage;
-                shipmentAdditionalFields.OnCarriageFromPortCode = shipmentMasterDataFields.OnCarriageFromPortCode;
-                shipmentAdditionalFields.OnCarriageFromPortName = shipmentMasterDataFields.OnCarriageFromPortName;
-                shipmentAdditionalFields.OnCarriageFromPortCountryCode = shipmentMasterDataFields.OnCarriageFromPortCountryCode;
-                shipmentAdditionalFields.OnCarriageToPortCode = shipmentMasterDataFields.OnCarriageToPortCode;
-                shipmentAdditionalFields.OnCarriageToPortName = shipmentMasterDataFields.OnCarriageToPortName;
-                shipmentAdditionalFields.OnCarriageToPortCountryCode = shipmentMasterDataFields.OnCarriageToPortCountryCode;
+            shipmentAdditionalFields.Transshipment1ATA = shipmentMasterDataFields.Transshipment1ATA;
+            shipmentAdditionalFields.Transshipment1ATD = shipmentMasterDataFields.Transshipment1ATD;
+            shipmentAdditionalFields.Transshipment1ETA = shipmentMasterDataFields.Transshipment1ETA;
+            shipmentAdditionalFields.Transshipment1ETD = shipmentMasterDataFields.Transshipment1ETD;
+            if (!string.IsNullOrEmpty(shipmentMasterDataFields.Transshipment1FromPortId))
+            {
+                PortPM port = portQuery.GetSinglePM(shipmentMasterDataFields.Transshipment1FromPortId, shipmentMasterDataFields.Tenant);
+                if (port != null)
+                {
+                    shipmentAdditionalFields.Transshipment1FromPortId = shipmentMasterDataFields.Transshipment1FromPortId;
+                    shipmentAdditionalFields.Transshipment1FromPortCode = port.Code;
+                    shipmentAdditionalFields.Transshipment1FromPortName = port.EnglishName;
+                    shipmentAdditionalFields.Transshipment1FromPortStateCode = port.StateCode;
+                    shipmentAdditionalFields.Transshipment1FromPortCountryCode = port.CountryCode;
 
-                shipmentAdditionalFields.PreCarriageATA = shipmentMasterDataFields.PreCarriageATA;
-                shipmentAdditionalFields.PreCarriageATD = shipmentMasterDataFields.PreCarriageATD;
-                shipmentAdditionalFields.PreCarriageETA = shipmentMasterDataFields.PreCarriageETA;
-                shipmentAdditionalFields.PreCarriageETD = shipmentMasterDataFields.PreCarriageETD;
-                shipmentAdditionalFields.HasPreCarriage = shipmentMasterDataFields.HasPreCarriage;
-                shipmentAdditionalFields.PreCarriageFromPortCode = shipmentMasterDataFields.PreCarriageFromPortCode;
-                shipmentAdditionalFields.PreCarriageFromPortName = shipmentMasterDataFields.PreCarriageFromPortName;
-                shipmentAdditionalFields.PreCarriageFromPortCountryCode = shipmentMasterDataFields.PreCarriageFromPortCountryCode;
-                shipmentAdditionalFields.PreCarriageToPortCode = shipmentMasterDataFields.PreCarriageToPortCode;
-                shipmentAdditionalFields.PreCarriageToPortName = shipmentMasterDataFields.PreCarriageToPortName;
-                shipmentAdditionalFields.PreCarriageToPortCountryCode = shipmentMasterDataFields.PreCarriageToPortCountryCode;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(shipmentMasterDataFields.Transshipment1ToPortId))
+            {
+                PortPM port = portQuery.GetSinglePM(shipmentMasterDataFields.Transshipment1ToPortId, shipmentMasterDataFields.Tenant);
+                if (port != null)
+                {
+                    shipmentAdditionalFields.Transshipment1ToPortId = shipmentMasterDataFields.Transshipment1ToPortId;
+                    shipmentAdditionalFields.Transshipment1ToPortCode = port.Code;
+                    shipmentAdditionalFields.Transshipment1ToPortName = port.EnglishName;
+                    shipmentAdditionalFields.Transshipment1ToPortStateCode = port.StateCode;
+                    shipmentAdditionalFields.Transshipment1ToPortCountryCode = port.CountryCode;
+
+                }
+            }
+
+            shipmentAdditionalFields.Transshipment2ATA = shipmentMasterDataFields.Transshipment2ATA;
+            shipmentAdditionalFields.Transshipment2ATD = shipmentMasterDataFields.Transshipment2ATD;
+            shipmentAdditionalFields.Transshipment2ETA = shipmentMasterDataFields.Transshipment2ETA;
+            shipmentAdditionalFields.Transshipment2ETD = shipmentMasterDataFields.Transshipment2ETD;
+            if (!string.IsNullOrEmpty(shipmentMasterDataFields.Transshipment2FromPortId))
+            {
+                PortPM port = portQuery.GetSinglePM(shipmentMasterDataFields.Transshipment2FromPortId, shipmentMasterDataFields.Tenant);
+                if (port != null)
+                {
+                    shipmentAdditionalFields.Transshipment2FromPortId = shipmentMasterDataFields.Transshipment2FromPortId;
+                    shipmentAdditionalFields.Transshipment2FromPortCode = port.Code;
+                    shipmentAdditionalFields.Transshipment2FromPortName = port.EnglishName;
+                    shipmentAdditionalFields.Transshipment2FromPortStateCode = port.StateCode;
+                    shipmentAdditionalFields.Transshipment2FromPortCountryCode = port.CountryCode;
+
+                }
+            }
+
+            if (!string.IsNullOrEmpty(shipmentMasterDataFields.Transshipment2ToPortId))
+            {
+                PortPM port = portQuery.GetSinglePM(shipmentMasterDataFields.Transshipment2ToPortId, shipmentMasterDataFields.Tenant);
+                if (port != null)
+                {
+                    shipmentAdditionalFields.Transshipment2ToPortId = shipmentMasterDataFields.Transshipment2ToPortId;
+                    shipmentAdditionalFields.Transshipment2ToPortCode = port.Code;
+                    shipmentAdditionalFields.Transshipment2ToPortName = port.EnglishName;
+                    shipmentAdditionalFields.Transshipment2ToPortStateCode = port.StateCode;
+                    shipmentAdditionalFields.Transshipment2ToPortCountryCode = port.CountryCode;
+
+                }
+            }
+
+            shipmentAdditionalFields.Transshipment3ATA = shipmentMasterDataFields.Transshipment3ATA;
+            shipmentAdditionalFields.Transshipment3ATD = shipmentMasterDataFields.Transshipment3ATD;
+            shipmentAdditionalFields.Transshipment3ETA = shipmentMasterDataFields.Transshipment3ETA;
+            shipmentAdditionalFields.Transshipment3ETD = shipmentMasterDataFields.Transshipment3ETD;
+            if (!string.IsNullOrEmpty(shipmentMasterDataFields.Transshipment3FromPortId))
+            {
+                PortPM port = portQuery.GetSinglePM(shipmentMasterDataFields.Transshipment3FromPortId, shipmentMasterDataFields.Tenant);
+                if (port != null)
+                {
+                    shipmentAdditionalFields.Transshipment3FromPortId = shipmentMasterDataFields.Transshipment3FromPortId;
+                    shipmentAdditionalFields.Transshipment3FromPortCode = port.Code;
+                    shipmentAdditionalFields.Transshipment3FromPortName = port.EnglishName;
+                    shipmentAdditionalFields.Transshipment3FromPortStateCode = port.StateCode;
+                    shipmentAdditionalFields.Transshipment3FromPortCountryCode = port.CountryCode;
+
+                }
+            }
+
+            if (!string.IsNullOrEmpty(shipmentMasterDataFields.Transshipment3ToPortId))
+            {
+                PortPM port = portQuery.GetSinglePM(shipmentMasterDataFields.Transshipment3ToPortId, shipmentMasterDataFields.Tenant);
+                if (port != null)
+                {
+                    shipmentAdditionalFields.Transshipment3ToPortId = shipmentMasterDataFields.Transshipment3ToPortId;
+                    shipmentAdditionalFields.Transshipment3ToPortCode = port.Code;
+                    shipmentAdditionalFields.Transshipment3ToPortName = port.EnglishName;
+                    shipmentAdditionalFields.Transshipment3ToPortStateCode = port.StateCode;
+                    shipmentAdditionalFields.Transshipment3ToPortCountryCode = port.CountryCode;
+
+                }
+            }
+
+            shipmentAdditionalFields.OnCarriageATA = shipmentMasterDataFields.OnCarriageATA;
+            shipmentAdditionalFields.OnCarriageATD = shipmentMasterDataFields.OnCarriageATD;
+            shipmentAdditionalFields.OnCarriageETA = shipmentMasterDataFields.OnCarriageETA;
+            shipmentAdditionalFields.OnCarriageETD = shipmentMasterDataFields.OnCarriageETD;
+            if (!string.IsNullOrEmpty(shipmentMasterDataFields.OnCarriageFromPortId))
+            {
+                PortPM port = portQuery.GetSinglePM(shipmentMasterDataFields.OnCarriageFromPortId, shipmentMasterDataFields.Tenant);
+                if (port != null)
+                {
+                    shipmentAdditionalFields.OnCarriageFromPortId = shipmentMasterDataFields.OnCarriageFromPortId;
+                    shipmentAdditionalFields.HasOnCarriage = true;
+                    shipmentAdditionalFields.OnCarriageFromPortCode = port.Code;
+                    shipmentAdditionalFields.OnCarriageFromPortName = port.EnglishName;
+                    shipmentAdditionalFields.OnCarriageFromPortCountryCode = port.CountryCode;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(shipmentMasterDataFields.OnCarriageToPortId))
+            {
+                PortPM port = portQuery.GetSinglePM(shipmentMasterDataFields.OnCarriageToPortId, shipmentMasterDataFields.Tenant);
+                if (port != null)
+                {
+                    shipmentAdditionalFields.OnCarriageToPortId = shipmentMasterDataFields.OnCarriageToPortId;
+                    shipmentAdditionalFields.HasOnCarriage = true;
+                    shipmentAdditionalFields.OnCarriageToPortCode = port.Code;
+                    shipmentAdditionalFields.OnCarriageToPortName = port.EnglishName;
+                    shipmentAdditionalFields.OnCarriageToPortCountryCode = port.CountryCode;
+                }
+            }
+
+            shipmentAdditionalFields.PreCarriageATA = shipmentMasterDataFields.PreCarriageATA;
+            shipmentAdditionalFields.PreCarriageATD = shipmentMasterDataFields.PreCarriageATD;
+            shipmentAdditionalFields.PreCarriageETA = shipmentMasterDataFields.PreCarriageETA;
+            shipmentAdditionalFields.PreCarriageETD = shipmentMasterDataFields.PreCarriageETD;
+            if (!string.IsNullOrEmpty(shipmentMasterDataFields.PreCarriageFromPortId))
+            {
+                PortPM port = portQuery.GetSinglePM(shipmentMasterDataFields.PreCarriageFromPortId, shipmentMasterDataFields.Tenant);
+                if (port != null)
+                {
+                    shipmentAdditionalFields.PreCarriageFromPortId = shipmentMasterDataFields.PreCarriageFromPortId;
+                    shipmentAdditionalFields.HasPreCarriage = true;
+                    shipmentAdditionalFields.PreCarriageFromPortCode = port.Code;
+                    shipmentAdditionalFields.PreCarriageFromPortName = port.EnglishName;
+                    shipmentAdditionalFields.PreCarriageFromPortCountryCode = port.CountryCode;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(shipmentMasterDataFields.PreCarriageToPortId))
+            {
+                PortPM port = portQuery.GetSinglePM(shipmentMasterDataFields.PreCarriageToPortId, shipmentMasterDataFields.Tenant);
+                if (port != null)
+                {
+                    shipmentAdditionalFields.PreCarriageToPortId = shipmentMasterDataFields.PreCarriageToPortId;
+                    shipmentAdditionalFields.HasPreCarriage = true;
+                    shipmentAdditionalFields.PreCarriageToPortCode = port.Code;
+                    shipmentAdditionalFields.PreCarriageToPortName = port.EnglishName;
+                    shipmentAdditionalFields.PreCarriageToPortCountryCode = port.CountryCode;
+                }
             }
         }
 
