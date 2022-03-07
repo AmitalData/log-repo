@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportUpdateClass
    {  		
-		public const string HashString = "88369a964d302e49c404e1ea2b8979e1";
+		public const string HashString = "e24bafe75620b8ae00af28f4e671a8bc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2496,6 +2496,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
              			   Feature TaxReportFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRCN", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.Cancel", NameTextCodeDefaultText = "Cancel", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TaxReportObjectTable);
              			   Feature TaxReportFeature_MB02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPLD", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.UploadRows", NameTextCodeDefaultText = "Upload Rows", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TaxReportObjectTable);
              			   Feature TaxReportFeature_MB03 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RTDR", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.ReturntoDraft", NameTextCodeDefaultText = "Return to Draft", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TaxReportObjectTable);
+             			   Feature TaxReportFeature_MB04 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRCJ", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.Createclosingjournal", NameTextCodeDefaultText = "Create closing journal", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TaxReportObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -2605,6 +2606,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  TaxReportFeature_MB03.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton TaxReportMenuButton04 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "TRCJ",
+						Index = 4, 
+						IsActive = true,
+						LabelTextCodeCode = "TaxReport.B.Createclosingjournal",
+						LabelTextCodeDefaultText = "Create closing journal",
+						Tenant = 0,
+						MenuButtonGroupId = TaxReportMenuButtonGroup.Id,
+						ParentMenuButtonId = TaxReportMenuButton0.Id,
+						ObjectTableId = TaxReportObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  TaxReportFeature_MB04.Id,
+						Style = null,
+						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
+						FeatureUniqeCode=  TaxReportFeature_MB04.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

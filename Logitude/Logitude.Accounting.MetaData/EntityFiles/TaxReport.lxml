@@ -2996,6 +2996,12 @@
         IndexOrder="3"
         LocalDefaultText="&quot;החזר לטיוטה&quot;"
         IsPackagable="false" />
+      <MenuItem
+        EventCode="&quot;TRCJ&quot;"
+        DefaultText="&quot;Create closing journal&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="4"
+        IsPackagable="false" />
     </MenuButton>
   </MenuButtons>
   <DataContracts />

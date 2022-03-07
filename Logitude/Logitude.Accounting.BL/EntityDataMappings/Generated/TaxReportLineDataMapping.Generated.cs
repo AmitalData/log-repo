@@ -83,7 +83,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         UpdatedBUserName, 
 	         JournalLineNumber, 
 	         PreviousReference, 
-	         IsReconciled,
+	         IsReconciled, 
 	         VatAmountRound,
 	      }
 
