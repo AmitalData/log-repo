@@ -3,7 +3,7 @@ import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeCo
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
 import {ShipmentPackagePM} from '../../../../../Shipment/EntityPMs/ShipmentPackagePM';
 import {AWBWizardComponent} from '../AWBWizardComponent';
-import {AppTool, ArrayTool, FormatTool} from '../../../../../Infrastructure/Tools';
+import {AppTool, ArrayTool, DateTool, FormatTool} from '../../../../../Infrastructure/Tools';
 import {ShipmentTool} from '../../../../../Shipment/Tools';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
@@ -16,6 +16,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 import { ShipmentCommodityPM } from '../../../../../Shipment/EntityPMs/ShipmentCommodityPM';
 import { CommodityPackagePM } from '../../../../../Shipment/EntityPMs/CommodityPackagePM';
 import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
+import { ShipmentReceivablePM } from '../../../../../Shipment/EntityPMs/ShipmentReceivablePM';
 
 @Component({    
     selector: 'AWBPackagesTabComponent',
@@ -181,6 +182,7 @@ export class AWBPackagesTabComponent extends BaseComponent implements OnDestroy{
         this.Wizard.ValidateScreen_PAC();
         this.Wizard.ValidateScreen_FRE();
         this.Wizard.ValidateScreen_GEN();
+        this.Wizard.ValidateScreen_OTC_Quantities();
     }
     private Validate() {
         if (!this.Wizard.IsImportWizard) {
@@ -502,6 +504,7 @@ export class AWBPackagesTabComponent extends BaseComponent implements OnDestroy{
     set Volume(newValue: number) {
         if (this.EntityPM.Volume != newValue) {
             this.EntityPM.Volume = AppTool.Round(newValue, 3);
+            this.ComputeVolume_CBM();
         }
     }
 
@@ -522,7 +525,9 @@ export class AWBPackagesTabComponent extends BaseComponent implements OnDestroy{
     get GrossWeight() { return AppTool.IsNullOrEmpty(this.EntityPM.GrossWeight) ? 0 : this.EntityPM.GrossWeight; }
     set GrossWeight(newValue: number) {
         if (this.EntityPM.GrossWeight != newValue) {
-            this.EntityPM.GrossWeight = AppTool.Round(newValue, 3);            
+            this.EntityPM.GrossWeight = AppTool.Round(newValue, 3);
+            this.ComputeGrossWeight_Kg_Ton();
+            this.ComputeGrossWeight_PerStorageDays();
             this.Validate();
             this.FireWizardEvent();
         }
@@ -534,14 +539,76 @@ export class AWBPackagesTabComponent extends BaseComponent implements OnDestroy{
             this.EntityPM.ChargeableWeight = AppTool.Round(newValue, 3);
             this.Validate();
             this.ChargeableWeight_Kg();
-            this.FireWizardEvent();
+            this.ComputeGrossWeight_PerStorageDays();
             this.ComputeAWBChargeAmount();
+            this.FireWizardEvent();            
         }
     }
 
-    ChargeableWeight_Kg() {
+    get AWBChargeAmount() { return this.EntityPM.AWBChargeAmount; }
+    set AWBChargeAmount(newValue: number) {
+        if (this.EntityPM.AWBChargeAmount != newValue) {
+            this.EntityPM.AWBChargeAmount = AppTool.Round(newValue, 3);
+            this.ComputeAWBFrieghtAmount();
+        }
+    }
+
+    private ComputeVolume_CBM() {
+        var volume_CBM: number = null;
+
+        if (this.Volume != null) {
+            var factorOfConvert: number = 1;
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.VolumeUnitCode)) {
+                switch (this.EntityPM.VolumeUnitCode.toUpperCase()) {
+                    case "CBM": { factorOfConvert = 1; break; }
+                    case "CBI": { factorOfConvert = 61024; break; }
+                    case "CBF": { factorOfConvert = 35.315; break; }
+                }
+            }
+
+            volume_CBM = this.Volume / factorOfConvert;
+        }
+
+        if (volume_CBM != null) {
+            volume_CBM = AppTool.Round(volume_CBM, 3);
+        }
+        this.EntityPM.VolumeInCBM = volume_CBM;
+    }
+    private ComputeGrossWeight_Kg_Ton() {
         var weigh_Kg: number = null;
- 
+        var weigh_Ton: number = null;
+
+        if (this.GrossWeight != null) {
+            var factorOfConvert: number = 1;
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.GrossWeightUnitCode)) {
+                switch (this.EntityPM.GrossWeightUnitCode.toUpperCase()) {
+                    case "KG": { factorOfConvert = 1; break; }
+                    case "LB": { factorOfConvert = 0.45359237; break; }
+                    case "MT": { factorOfConvert = 1000; break; }
+                }
+            }
+
+            weigh_Kg = this.GrossWeight * factorOfConvert;
+        }
+
+        if (weigh_Kg != null) {
+            weigh_Kg = AppTool.Round(weigh_Kg, 3);
+
+            weigh_Ton = weigh_Kg / 1000;
+        }
+
+        if (weigh_Ton != null) {
+            weigh_Ton = AppTool.Round(weigh_Ton, 3);
+        }
+
+        this.EntityPM.GrossWeightInKG = weigh_Kg;
+        this.EntityPM.GrossWeightPerTon = weigh_Ton;
+    }
+    private ChargeableWeight_Kg() {
+        var weigh_Kg: number = null;
+
         if (this.ChargeableWeight != null) {
             var factorOfConvert: number = 1;
             if (!AppTool.IsNullOrEmpty(this.EntityPM.ChargeableWeightUnitCode)) {
@@ -560,15 +627,6 @@ export class AWBPackagesTabComponent extends BaseComponent implements OnDestroy{
         }
         this.EntityPM.ChargeableWeightInKG = weigh_Kg;
     }
-
-    get AWBChargeAmount() { return this.EntityPM.AWBChargeAmount; }
-    set AWBChargeAmount(newValue: number) {
-        if (this.EntityPM.AWBChargeAmount != newValue) {
-            this.EntityPM.AWBChargeAmount = AppTool.Round(newValue, 3);
-            this.ComputeAWBFrieghtAmount();
-        }
-    }
-
     private ComputeAWBChargeAmount() {
         this.AWBChargeAmount = ShipmentTool.ComputeAWBChargeAmount(this.EntityPM);
     }
@@ -599,6 +657,21 @@ export class AWBPackagesTabComponent extends BaseComponent implements OnDestroy{
         }
 
         //this.FireAWBErrorsEvent();
+    }
+    private ComputeGrossWeight_PerStorageDays() {
+        var StorageDays = DateTool.GetDaysBetweenDates(this.EntityPM.WarehouseLegActualReleaseDate, this.EntityPM.WarehouseLegActualEntryDate);
+        var freeDays = this.EntityPM.WarehouseStorageFreeDays;
+        if (freeDays == null) freeDays = 0;
+
+        var weightPerStorageDays;
+        if (this.EntityPM.TransportModeId != "A") {
+            weightPerStorageDays = Math.ceil(this.EntityPM.GrossWeightPerTon) * (StorageDays - freeDays);
+        }
+        else {
+            weightPerStorageDays = this.EntityPM.ChargeableWeight * (StorageDays - freeDays);
+        }
+
+        this.EntityPM.GrossWeightPerStorageDays = weightPerStorageDays < 0 ? 0 : weightPerStorageDays;
     }
 
     GrossWeightLostFocus(input: any) {
