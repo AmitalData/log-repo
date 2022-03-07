@@ -15,15 +15,21 @@ export class ChooseDatesComponent {
     public ValidationErrorsList: string[] = [];
     public DateSelected: EventEmitter<any> = new EventEmitter();
     private selectedToDate: any;
+    private lastYearDays: number = 366;
     public get SelectedToDate() { return this.selectedToDate; }
     public set SelectedToDate(newValue: any) {
         this.selectedToDate = newValue; 
     }
+    private QueryCode : string;
     private selectedFromDate: any;
     public get SelectedFromDate() { return this.selectedFromDate; }
     public set SelectedFromDate(newValue: any) {
         this.selectedFromDate = newValue; 
     }
+    SetWindowArgs(args: any) {
+        this.QueryCode = args.QueryCode;
+    }
+
     OnSelectedFromDateChanged(value) {
         this.SelectedFromDate = value.SelectedDate;
     }
@@ -54,6 +60,18 @@ export class ChooseDatesComponent {
         else {
             ValidationErrors.push("From date and to date are required !");
         }
+
+        if(this.QueryCode == "LedgerTransaction.LedgerTransactions" && ValidationErrors.length == 0) {
+            var dateDifference = this.calculateDiff(this.SelectedFromDate, this.SelectedToDate)
+            if(dateDifference > this.lastYearDays) {
+                ValidationErrors.push("The difference between date from and date to should not be more than one year");
+            }
+        }
+
         return ValidationErrors;
+    }
+
+    calculateDiff(dateFrom, dateTo){
+        return Math.floor((Date.UTC(dateTo.getFullYear(), dateTo.getMonth(), dateTo.getDate()) - Date.UTC(dateFrom.getFullYear(), dateFrom.getMonth(), dateFrom.getDate()) ) /(1000 * 60 * 60 * 24));
     }
 }

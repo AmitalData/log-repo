@@ -1495,7 +1495,7 @@ namespace MeatadataGeneratorTool
                     }
 
                     SetAttribute("IndexOrder", q.IndexOrder.ToString(), QueryFilterElement, null);
-                    SetAttribute("CustomPredefined", GetStringValue(q.CustomPredefined), QueryFilterElement, null);
+                    SetAttribute("CustomPredefined", q.CustomPredefined.ToString().ToLower(), QueryFilterElement, null);
 
 
 
@@ -1881,7 +1881,7 @@ namespace MeatadataGeneratorTool
 
                     SetAttribute("Name", GetStringValue(f.DCName), DataContractElement, null);
                     SetAttribute("Version", GetStringValue(f.DCVersion), DataContractElement, null);
-                    SetAttribute("IncludeTenant0Data", GetStringValue(f.IncludeTenant0Data), DataContractElement, null);
+                    SetAttribute("IncludeTenant0Data", f.IncludeTenant0Data.ToString().ToLower(), DataContractElement, null);
                     SetAttribute("ComputingPartnerName", GetStringValue(f.ComputingPartnerName), DataContractElement, null);
                     if (f.DCFieldsObsList != null)
                     {

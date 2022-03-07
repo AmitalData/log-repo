@@ -661,6 +661,9 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.IsDemoTenant = true;
         }
 
+        if (this.ObjectTableName == "LedgerTransaction") {
+            this.IsAdvancedSearchOpened = true;
+        }
         this.NewButtonId = "NewButton_" + this.ObjectTableName;
 
         if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "NEW", false)) {
@@ -1716,6 +1719,10 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 filter.Operator = "Contains";
             MyFilters.AdditionalFilters.push(filter);
         });
+        
+        if(filters.AdditionalFilters?.filter( x => x.FieldDataType == "DateTime" && x.FieldValue == "").length > 0){
+            return;
+        }
         //console.log(searchfields);
         if (searchfields && !this.IsUseCardSearchMechanism()) {
             //filters.addAdditionalFilter("SearchFields", searchfields, null, null, "Contains", null, null, null, "Text");
@@ -1740,7 +1747,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         MyFilters.SortBy = sortingCol;
         MyFilters.SortDirection = sortingDir;
         this.CurrentQueryFilters = MyFilters;
-
+        
         return this._entityListService.getByFilters(this.ObjectTableName, MyFilters, this.MethodName == undefined ? null : this.MethodName);
     }
 
@@ -1756,6 +1763,15 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     onRowSelected($event) {
         if (this.listArgs.SuppressOnRowSelected == true) {
             console.log("SuppressOnRowSelected");
+            return;
+        }
+
+        if(this.SelectedQuery.Code == "LedgerTransactions") {
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        cmpRef.instance.ComponentRef = cmpRef;
+                        cmpRef.instance.Run({ EntityId: $event.rowData.JournalId, ObjectTableName: 'Journal' });
+                    });
             return;
         }
 
