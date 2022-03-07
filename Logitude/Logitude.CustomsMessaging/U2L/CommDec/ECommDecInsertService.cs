@@ -1428,6 +1428,10 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                                     calculateDeclarationCourierStatus.CalcCourierManifestStatusCode(_NewDeclarationCourierStatusPM);
                                     currvVal = _NewDeclarationCourierStatusPM.CourierManifestStatusCode;
                                 }
+
+                                if (_MyDeclarationPM.PaymentDate.HasValue)
+                                    currvVal = _NewDeclarationCourierStatusPM.CourierManifestStatusCode = "R";
+
                                 if (prevVal != currvVal)
                                 {
                                     DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
@@ -1486,7 +1490,8 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 AppendLogLine("try to update CourierDeclaration for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
                 try
                 {
-                    myCourierDeclarationUpdateService.Update(_CourierDeclarationPM, true);
+                    if (_MyDeclarationPM.HatraDate.HasValue)
+                        myCourierDeclarationUpdateService.Update(_CourierDeclarationPM, true);
                 }
                 catch (DbEntityValidationException ex)
                 {
@@ -1503,7 +1508,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 #endif
             }
 
-            
+
 
         }
         void InsertCourierDeclarationPM()
