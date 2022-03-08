@@ -144,7 +144,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             {
                 LastUpdate = cargoTrackingDataBaseArgs.ShipmentsWaterMark;
 
-                string lastUpdateCondition = $" (C.AutomaticLastUpdateDate > '{LastUpdate}')";
+                string lastUpdateCondition = $" C.CreateDateTime >= DATEADD(M, -6, GETDATE()) AND (C.AutomaticLastUpdateDate > '{LastUpdate}')";
                 whereConditions.Add(lastUpdateCondition);
             }
             else
@@ -351,7 +351,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             {
                 LastUpdate = cargoTrackingDataBaseArgs.ShipmentsWaterMark;
 
-                string lastUpdateCondition = $" (P.AutomaticLastUpdateDate > '{LastUpdate}')";
+                string lastUpdateCondition = $" P.CreateDateTime >= DATEADD(M, -6, GETDATE()) AND (P.AutomaticLastUpdateDate > '{LastUpdate}')";
                 whereConditions.Add(lastUpdateCondition);
             }
             else
@@ -507,7 +507,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             if (cargoTrackingDataBaseArgs.CargoTrackingArguments == null)
             {
                 LastUpdate = cargoTrackingDataBaseArgs.ShipmentsWaterMark;
-                string lastUpdateCondition = $" (SHO.AutomaticLastUpdateDate > '{LastUpdate}')";
+                string lastUpdateCondition = $" SHO.CreateDate >= DATEADD(M, -6, GETDATE()) AND (SHO.AutomaticLastUpdateDate > '{LastUpdate}')";
                 whereConditions.Add(lastUpdateCondition);
             }
             else
