@@ -55,7 +55,7 @@ export class FeedbackToStorageTabComponent extends BaseComponent implements OnIn
 
     const exceptions: Exception[] = this.parseXmlString(xmlString);
     this.updateExcptionLevel(exceptions);
-    this.updateExcptionType(exceptions);
+    // this.updateExcptionType(exceptions);
     this.insertData(exceptions);
   }
 
