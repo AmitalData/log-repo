@@ -278,7 +278,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         InvoicedDate, 
 	         InvoicedDone, 
 	         InvoicedNotes, 
-	         InvoicedExceptionReason,
+	         InvoicedExceptionReason, 
+	         ApprovedByUserName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

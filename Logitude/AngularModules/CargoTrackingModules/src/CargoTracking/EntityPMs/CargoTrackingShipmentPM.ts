@@ -694,6 +694,11 @@ export class CargoTrackingShipmentPM {
     public set InvoicedExceptionReason(newValue: string) { if (this.invoicedExceptionReason != newValue) { this.invoicedExceptionReason = newValue; this.MarkAsDirty("InvoicedExceptionReason"); } }
        
 	 
+    private approvedByUserName: string;
+    public get ApprovedByUserName() { return this.approvedByUserName; }
+    public set ApprovedByUserName(newValue: string) { if (this.approvedByUserName != newValue) { this.approvedByUserName = newValue; this.MarkAsDirty("ApprovedByUserName"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		
