@@ -48,6 +48,13 @@ namespace Logitude.BL.GlobalModel
                 SearchFields = "PP,Pay Pal", 
                 Name = "Pay Pal", 
 			});
+			 
+            all.Add(new PaymentMethodDetails()
+            {    
+                Name = "Reseller", 
+                Code = "RS", 
+                SearchFields = "RS,Reseller", 
+			});
 			
             return all;
        }
