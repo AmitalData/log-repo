@@ -929,6 +929,7 @@ h1 {
     white-space: pre-line;
     text-align: right;
     font-weight: 600;
+    direction: rtl;
 }
 .declaration-approval-toolbar{
     padding: 20px 0px 15px 0;
