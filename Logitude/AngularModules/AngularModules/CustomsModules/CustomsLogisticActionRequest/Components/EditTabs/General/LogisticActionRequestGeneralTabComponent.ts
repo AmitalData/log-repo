@@ -14,6 +14,7 @@ import { ConsignmentDeclartion, DeclarationWebService } from 'Customs/Services/W
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { LogisticActionRequestPMService } from 'Customs/Services/StandardPMs/LogisticActionRequestPMService';
+import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
 
 @Component({
     templateUrl: './LogisticActionRequestGeneralTabComponent.html',
@@ -140,6 +141,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         private EntityResourceService: EntityResourceService,
         private logtuideTableDataService: LogtuideTableDataService,
         private cdr: ChangeDetectorRef,
+        public entityArgs: EntityArgs,
     ) {
         super();
         this.entityPM = new LogisticActionRequestPM();
@@ -380,12 +382,9 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     ViewDocumentsComponent() {
         var windowArgs: any = {};
         windowArgs.EntityPM = this.entityPM;
-        //windowArgs.ObjectTableName = "Customs.DeclarationCancellation";
-        windowArgs.ObjectTableName = "Customs.LogisticActionRequest";// this.ObjectTableName;
-        windowArgs.EntityParentPM = "LogisticActionRequest";
-        //    windowArgs.SkipCtor = this.SkipCtor;
-        windowArgs.IsFromStandAloneScreen = true;
-        var windowTitle = "General.MH.Documents";
+        windowArgs.ObjectTableName = this.ObjectTableName;
+
+        var windowTitle = "Customs.Declaration.TH.Documents";
 
         var logWindow = new LogitudeWindow();
         logWindow.IsHideHeader = true;
@@ -394,7 +393,13 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         logWindow.Title = windowTitle;
         logWindow.ShowCloseButton = false;
         logWindow.WindowArgs = windowArgs;
-        // logWindow.WindowClosed.subscribe(($event: any) => this.SkipCtor = true);
-        logWindow.Show('./CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent');
+      logWindow.WindowClosed.subscribe(($event: any) => this.OnDocumentsWindowClosed($event));
+      this.entityArgs.SkipCtor = true;
+      logWindow.Show('./CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent');
     }
+
+    OnDocumentsWindowClosed(event) {
+        this.entityArgs.SkipCtor = false;
+      }
+  
 }

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LogisticActionRequestUpdateClass
    {  		
-		public const string HashString = "3969d294604ff80d15d6f635ae600cf7";
+		public const string HashString = "59fb68a90e4d3278a3dd15276fa0262b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2176,7 +2176,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable LogisticActionRequestObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.LogisticActionRequest" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode LogisticActionRequestTextCode_CustomsLogisticActionRequestOCustomsResponse = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.LogisticActionRequest.O.CustomsResponse", DefaultText = "Customs Response",LocalDefaultText = @"תשובת המכס", ObjectTableId = LogisticActionRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 
