@@ -57,6 +57,7 @@ export class SupplierInvoiceList {
 	ItemFOBAmountForeign: number;
 	ItemFOBAmountNIS: number;
 	DutyRegimeProtocolCode: string;
+	VendorNumber: string;
 	
 }
  
