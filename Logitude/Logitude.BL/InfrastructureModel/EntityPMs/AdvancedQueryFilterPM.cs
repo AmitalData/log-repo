@@ -15,6 +15,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string PredefinedValue2 { get; set; }
         public string Operator { get; set; }
         public int IndexOrder { get; set; }
+        public bool CustomPredefined { get; set; }
         public string ObjectFieldName { get; set; }
         public bool IsCustomFilter { get; set; }
         public string QueryUserId { get; set; }

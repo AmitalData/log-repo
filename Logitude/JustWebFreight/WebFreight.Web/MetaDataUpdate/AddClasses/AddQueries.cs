@@ -196,6 +196,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 advancedQueryFilter.Operator = advancedQueryFilterDetails.Operator;
                 advancedQueryFilter.PredefinedValue = advancedQueryFilterDetails.PredefinedValue;
                 advancedQueryFilter.PredefinedValue2 = advancedQueryFilterDetails.PredefinedValue2;
+                advancedQueryFilter.CustomPredefined = advancedQueryFilterDetails.CustomPredefined;
                 advancedQueryFilter.Tenant = advancedQueryFilterDetails.Tenant;
                 advancedQueryFilter.ObjectFieldCode = advancedQueryFilterDetails.ObjectFieldCode;
                 advancedQueryFilterRepository.Update(advancedQueryFilter);
@@ -212,6 +213,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     Operator = advancedQueryFilterDetails.Operator,
                     PredefinedValue = advancedQueryFilterDetails.PredefinedValue,
                     PredefinedValue2 = advancedQueryFilterDetails.PredefinedValue2,
+                    CustomPredefined =advancedQueryFilterDetails.CustomPredefined,
                     Id = IdCounter.GetNumber("AdvancedQueryFilter",advancedQueryFilterDetails.Tenant).ToString(),
                     QueryId = advancedQueryFilterDetails.QueryId,
                     QueryCode = advancedQueryFilterDetails.QueryCode,
@@ -233,6 +235,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 Operator = advancedQueryFilterDetails.Operator,
                 PredefinedValue = advancedQueryFilterDetails.PredefinedValue,
                 PredefinedValue2 = advancedQueryFilterDetails.PredefinedValue2,
+                CustomPredefined = advancedQueryFilterDetails.CustomPredefined,
                 Id = IdCounter.GetIdWithIdsRange("AdvancedQueryFilter",50, advancedQueryFilterDetails.Tenant).ToString(),//IdCounter.GetNumber("AdvancedQueryFilter", advancedQueryFilterDetails.Tenant).ToString(),
                 QueryId = advancedQueryFilterDetails.QueryId,
                 QueryCode = advancedQueryFilterDetails.QueryCode,

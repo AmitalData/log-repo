@@ -45,6 +45,9 @@ export class AdvancedQueryFilterPM {
     public get IndexOrder() { return this.indexOrder; }
     public set IndexOrder(newValue: string) { this.indexOrder = newValue; }
        
+    private customPredefined: boolean;
+    public get CustomPredefined() { return this.customPredefined; }
+    public set CustomPredefined(newValue: boolean) { this.customPredefined = newValue; }
 	 
     private objectFieldName: string;
     public get ObjectFieldName() { return this.objectFieldName; }
@@ -94,4 +97,4 @@ export class AdvancedQueryFilterPM {
     private objectFieldCode: string;
     public get ObjectFieldCode() { return this.objectFieldCode; }
     public set ObjectFieldCode(newValue: string) { this.objectFieldCode = newValue; }
-}
+}

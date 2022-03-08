@@ -73,6 +73,12 @@
       Nullable="false" />
   </Column>
   <Column
+	Name="CustomPredefined"
+	Type="bit">
+	<Constraints
+		Nullable="false" />
+   </Column>
+  <Column
     Name="UserId"
     Type="varchar"
     Size="15">

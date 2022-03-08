@@ -560,6 +560,8 @@ namespace MeatadataGeneratorTool.Helpers
             {
                 QueryFilter.IndexOrder = GetAttributeIntegerValue(fieldNode.Attributes["IndexOrder"]);
             }
+            QueryFilter.CustomPredefined = GetAttributeBoolValue(fieldNode.Attributes["CustomPredefined"]);
+
             return QueryFilter;
         }
 

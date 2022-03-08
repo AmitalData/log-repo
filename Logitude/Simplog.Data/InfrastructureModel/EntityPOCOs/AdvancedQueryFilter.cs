@@ -18,6 +18,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string PredefinedValue2 { get; set; }
         public string Operator { get; set; }
         public int IndexOrder { get; set; }
+        public bool CustomPredefined { get; set; }
         public string UserId { get; set; }
         public string ObjectFieldCode { get; set; }
         

@@ -1746,7 +1746,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn CashbookCashQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookCashQuery.Id,QueryCode = CashbookCashQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "CashBook.TotalAmount" , ColumnWidth = 156 }, addedQueryColumns);
 
-             AdvancedQueryFilter CashbookCashQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "CashBook.CashBookTypeCode", PredefinedValue = "1",PredefinedValue2 = null, QueryId = CashbookCashQuery.Id,QueryCode = CashbookCashQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter CashbookCashQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "CashBook.CashBookTypeCode", PredefinedValue = "1",PredefinedValue2 = null, CustomPredefined = false, QueryId = CashbookCashQuery.Id,QueryCode = CashbookCashQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -1765,7 +1765,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn CashbookChequeQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookChequeQuery.Id,QueryCode = CashbookChequeQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "CashBook.TotalAmount" , ColumnWidth = 134 }, addedQueryColumns);
 
-             AdvancedQueryFilter CashbookChequeQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "CashBook.CashBookTypeCode", PredefinedValue = "2",PredefinedValue2 = null, QueryId = CashbookChequeQuery.Id,QueryCode = CashbookChequeQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter CashbookChequeQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "CashBook.CashBookTypeCode", PredefinedValue = "2",PredefinedValue2 = null, CustomPredefined = false, QueryId = CashbookChequeQuery.Id,QueryCode = CashbookChequeQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);

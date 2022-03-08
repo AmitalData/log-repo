@@ -50,6 +50,7 @@ export class FilterField extends BaseComponent {
                 if (preDefinedFilter.PredefinedValue != null) {
                     this.EnableDelete = false;
                     this.IsPreDefined = true;
+                    this.CustomPredefined = preDefinedFilter.CustomPredefined;
                     if (preDefinedFilter.PredefinedValue.toLowerCase() == "false") {
                         this.TextValue = "false";
                     }
@@ -79,6 +80,7 @@ export class FilterField extends BaseComponent {
                 if (preDefinedFilter.PredefinedValue != null) {
                     this.EnableDelete = false;
                     this.IsPreDefined = true;
+                    this.CustomPredefined = preDefinedFilter.CustomPredefined;
                     if (preDefinedFilter.PredefinedValue.toLowerCase() == "false") {
                         this.TextValue = "false";
                     }
@@ -185,6 +187,10 @@ export class FilterField extends BaseComponent {
     private isPreDefined: boolean = false;
     public get IsPreDefined() { return this.isPreDefined; }
     public set IsPreDefined(newValue: boolean) { this.isPreDefined = newValue; }
+
+    private customPredefined: boolean = false;
+    public get CustomPredefined() { return this.customPredefined; }
+    public set CustomPredefined(newValue: boolean) { this.customPredefined = newValue; }
 
     private exists: boolean;
     public get Exists() {
