@@ -62,10 +62,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.Reshimon
             var myQueryService = new DeclarationQueryService(_context);
 
             MyGenericResponseObj.Stage = "GetSingle";
-            this._MyDeclarationPM = myQueryService.GetSingle(this._LogitudeTsrufa.Id, true, false);
+            this._MyDeclarationPM = myQueryService.GetAcceptDeclarationAmendment(this._LogitudeTsrufa.Id, ResolvedTenant());
             if (this._MyDeclarationPM == null)
             {
-                throw new BusinessErrorException("Id is " + this._LogitudeTsrufa.Id + " but not found");
+                this._MyDeclarationPM = myQueryService.GetSingle(this._LogitudeTsrufa.Id, true, false);
+                if (this._MyDeclarationPM == null)
+                {
+                    throw new BusinessErrorException("Id is " + this._LogitudeTsrufa.Id + " but not found");
+                }
             }
             AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart(); 
             ICustomContext dbContext = CustomContext.GetContext(ResolvedTenant());
