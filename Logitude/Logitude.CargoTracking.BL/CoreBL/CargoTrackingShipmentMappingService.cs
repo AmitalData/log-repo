@@ -159,6 +159,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             ShipmentAdditionalCloudData cloudData = GetShipmentCloud(cargoShipmentPM);
             cargoShipmentPM.IsImporterApprovalRequried = cloudData?.IsImporterApprovalRequried ?? false;
             cargoShipmentPM.ApprovedDate = cloudData?.ApproveDateTime;
+            cargoShipmentPM.ApprovedByUserName = cloudData?.ApprovedByUserName;
             cargoShipmentPM.DenyDate = cloudData?.DenyDate;
             cargoShipmentPM.DenyReason = cloudData?.DenyReason;
         }

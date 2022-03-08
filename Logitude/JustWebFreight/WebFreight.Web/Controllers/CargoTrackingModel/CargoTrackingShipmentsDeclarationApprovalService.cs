@@ -226,7 +226,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         Parameters = new List<Logitude.Server.Tools.Parameter>() {
                             new Logitude.Server.Tools.Parameter { Order = 0 , Name = "ShipmentNumber", Value = declarationApprovalArgs.ShipmentNumber},
                             new Logitude.Server.Tools.Parameter { Order = 0 , Name = "Code", Value = "VDA"},
-                            new Logitude.Server.Tools.Parameter { Order = 0 , Name = "ApprovedByUserName", Value = declarationApprovalArgs.ApprovedBy},
                             new Logitude.Server.Tools.Parameter { Order = 0 , Name = "Date", Value = cloudData != null && cloudData.ApproveDateTime != null ? cloudData.ApproveDateTime.Value.ToShortDateString() : "" },
                             new Logitude.Server.Tools.Parameter { Order = 0 , Name = "Time", Value = cloudData != null && cloudData.ApproveDateTime != null ? cloudData.ApproveDateTime.Value.ToShortTimeString() : ""},
                             new Logitude.Server.Tools.Parameter { Order = 0 , Name = "Remarks", Value = remarks},
@@ -244,16 +243,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             {
                 return remark;
             }
-            ContactQuery myQuery = new ContactQuery(cloudData.Tenant);
-            var MyContact = myQuery.GetFirstContactByEnglishNamePM(cloudData.ApprovedByUserName, cloudData.Tenant);
-            if (MyContact != null)
-            {
-                remark = MyContact.EnglishName + ", " + MyContact.LocalName + ", " + MyContact.Email + ", " + cloudData.VersionApproved;
-            }
-            else
-            {
-                remark = "Approved By - " + cloudData.ApprovedByUserName;
-            }
+            remark = "Approved By - " + cloudData.ApprovedByUserName;
             return remark;
         }
 

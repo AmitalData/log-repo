@@ -3102,6 +3102,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private string approvedByUserName ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ApprovedByUserName  
+	   {
+	    
+	     get
+		{
+		   return approvedByUserName;
+		 }
+		 set
+		 {
+		   if(approvedByUserName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ApprovedByUserName",OldValue=approvedByUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   approvedByUserName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

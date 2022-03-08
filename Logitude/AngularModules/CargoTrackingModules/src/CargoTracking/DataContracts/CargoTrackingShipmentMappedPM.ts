@@ -640,6 +640,10 @@ export class CargoTrackingShipmentMappedPM {
     public get ApprovedDate() { return this.approvedDate; }
     public set ApprovedDate(newValue: Date) { if (this.approvedDate != newValue) { this.approvedDate = newValue; this.MarkAsDirty("ApprovedDate"); } }
 
+    private approvedByUserName: Date;
+    public get ApprovedByUserName() { return this.approvedByUserName; }
+    public set ApprovedByUserName(newValue: Date) { if (this.approvedByUserName != newValue) { this.approvedByUserName = newValue; this.MarkAsDirty("approvedByUserName"); } }
+
 
     private denyDate: Date;
     public get DenyDate() { return this.denyDate; }

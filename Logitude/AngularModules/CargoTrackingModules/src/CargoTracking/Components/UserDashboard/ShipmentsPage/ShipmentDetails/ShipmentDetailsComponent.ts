@@ -25,8 +25,8 @@ import { MilestoneCodes } from 'src/CargoTracking/Constants/MilestoneCodes';
 
 const mobileScreenMaxWidth = 470;
 
-const approvalResponseMessage = 'הצהרה זו אושרה בתאריך';
-const declineResponseMessage = 'לקוח יקר, הצהרה זו נדחתה';
+const approvalResponseMessage = 'הצהרה זו אושרה ע';
+const declineResponseMessage = 'הצהרה זו נדחתה';
 
 const orderShipmentTypeCode = 'O';
 const declineText = 'דחיה';
@@ -295,13 +295,13 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     private SetDeniedDeclarationMessage()
     {
         const denyDate = this.datePipe.transform(this.cargoTrackingShipmentPM.DenyDate, 'dd/MM/yyyy, HH:mm');
-        this.approvalMessage = declineResponseMessage + '\n"' + this.cargoTrackingShipmentPM.DenyReason+'"'+ ' ' + denyDate;
+        this.approvalMessage = declineResponseMessage + ' "'+ this.cargoTrackingShipmentPM.DenyReason+'"'+ ' תאריך ' + denyDate;
     }
 
     private SetApprovedDeclarationMessage()
     {
         const approvedDate = this.datePipe.transform(this.cargoTrackingShipmentPM.ApprovedDate, 'dd/MM/yyyy, HH:mm');
-        this.approvalMessage = approvalResponseMessage + ' ' + approvedDate;
+        this.approvalMessage = approvalResponseMessage + ' ' + this.cargoTrackingShipmentPM.ApprovedByUserName + ' בתאריך ' +  approvedDate;
     }
 
     private GetBrandingData()
