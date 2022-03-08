@@ -7,6 +7,12 @@ import { CustomizationSelectors } from "../../selectors/CustomizationModuleSelec
 import { CustomizationConstants } from "../../constants/CustomizationConstants/CustomizationConstants";
 import { CustomizationURLs } from "../../constants/CustomizationURLs/CustomizationURLs";
 import { CustomizationRequestAliases } from "../../constants/CustomizationURLs/CustomizationRequestAliases";
+import { CustomizationScreenLayoutDetails } from "../../models/CustomizationModuleDetails/CustomizationScreenLayoutDetails"
+import { MaintenanceSelectors } from "../../selectors/Selectors";
+
+
+let Field: string[]=["",""]
+
 
 export function ChooseCustomization() {
 
@@ -65,7 +71,7 @@ function ChooseNotificationType(customizationRuleDetails: CustomizationRuleDetai
     if (customizationRuleDetails.RuleType != CustomizationConstants.BlockField &&
         customizationRuleDetails.RuleType != CustomizationConstants.SetFieldValue &&
         customizationRuleDetails.NotificationType != null) {
-        chooseitemcomboBox(CustomizationSelectors.NotificationType, "Notification Type "+customizationRuleDetails.NotificationType)
+        chooseitemcomboBox(CustomizationSelectors.NotificationType, "Notification Type " + customizationRuleDetails.NotificationType)
     }
 }
 
@@ -80,7 +86,7 @@ function ChooseRuleCondition(customizationRuleDetails: CustomizationRuleDetails)
         cy.contains(customizationRuleDetails.ConditionFieldValue).click()
     }
 }
-function addNewRulemoreDetails(customizationRuleDetails: CustomizationRuleDetails){
+function addNewRulemoreDetails(customizationRuleDetails: CustomizationRuleDetails) {
     cy.get(CustomizationSelectors.AddField).click()
     cy.get(CustomizationSelectors.SearchField).click().type(customizationRuleDetails.RuleField)
     cy.get("ul > li").contains(customizationRuleDetails.RuleField).click()
@@ -105,22 +111,22 @@ function AssertPostNewRule() {
     });
 }
 
- export function GetTodayDateTime() {
-    return String(new Date()).substring(0,25)
+export function GetTodayDateTime() {
+    return String(new Date()).substring(0, 25)
 }
 
-export function SearchRule(code:string){
+export function SearchRule(code: string) {
     cy.get(CustomizationSelectors.SearchRulesMainComponent).click().type(code)
 }
 
-export function AssertRuleExection(ValidationMessage:string){
-        cy.get(CustomizationSelectors.ValidationSummary).should("contain.text", ValidationMessage)
-        cy.get(CustomizationSelectors.ShipmentCancel).click()
-        cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+export function AssertRuleExection(ValidationMessage: string) {
+    cy.get(CustomizationSelectors.ValidationSummary).should("contain.text", ValidationMessage)
+    cy.get(CustomizationSelectors.ShipmentCancel).click()
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
 }
 
-export function InactivateRule(){
-    cy.get(CustomizationSelectors.Edit).click({force:true})
+export function InactivateRule() {
+    cy.get(CustomizationSelectors.Edit).click({ force: true })
     cy.get(CustomizationSelectors.InActive).click()
 }
 
@@ -140,5 +146,96 @@ export function AssertSaveRule() {
 }
 function AssertPutRule() {
     BaseAssertion.AssertStatusCode(CustomizationRequestAliases.PutNewRule, 200).then((interception) => {
+    });
+}
+
+export function DisplyCustomFields() {
+    cy.get(CustomizationSelectors.CustomFields).click()
+}
+
+export function GetCustomFields(objectTable: string) {
+    let row = 1
+    cy.get("[data-cy='" + objectTable + ".Field" + row + "']").click()
+
+    cy.get('input[id="FieldLable"]').invoke('val').then((Lable) => {
+        cy.log(Lable.toString())
+        Field[0] = (Lable.toString())
+    });
+    row = 2
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+    cy.get("[data-cy='" + objectTable + ".Field" + row + "']").click()
+
+    cy.get('input[id="FieldLable"]').invoke('val').then((Lable) => {
+        cy.log(Lable.toString())
+        Field[1] = (Lable.toString())
+    })
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+    cy.get(CustomizationSelectors.CustomFieldsClose).click()
+}
+export function GoToScreenLayout() {
+    cy.get(CustomizationSelectors.ScreenLayout).click()
+    DefineGetGeneralTabScreen()
+    cy.get(CustomizationSelectors.GeneralTabScreen).click()
+    AssertGetGeneralTabScreen()
+}
+
+export function DragAndDropFields(fieldDetails: CustomizationScreenLayoutDetails[]) {
+    cy.get(CustomizationSelectors.FieldsSearch).click().type("" + Field[0])
+    for (let i = 0; i < fieldDetails.length; i++) {
+        if (i > 0) {
+            cy.get(CustomizationSelectors.FieldsSearch).within(() => {
+                cy.get(CustomizationSelectors.CloseX).click()
+            })
+            cy.get(CustomizationSelectors.FieldsSearch).type("" + Field[1])
+        }
+        cy.get(MaintenanceSelectors.AvaliableColumnsFields(fieldDetails[i].Field)).drag(MaintenanceSelectors.ColumnDropArea(fieldDetails[i].Column))
+    }
+
+}
+
+export function SaveScreenLayout() {
+    DefinePutScreenLayout();
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+function DefinePutScreenLayout() {
+    cy.DefineRequestWait(RestAPI.PUT, CustomizationURLs.PutScreenFields, CustomizationRequestAliases.PutScreenFields);
+}
+
+export function AssertSaveScreenLayout() {
+    AssertPutScreenLayout();
+
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+function AssertPutScreenLayout() {
+    BaseAssertion.AssertStatusCode(CustomizationRequestAliases.PutScreenFields, 200).then((interception) => {
+    });
+}
+
+export function assertCustomFieldsExist() {
+    cy.get("[class='TabHolder']").within(() => {
+        cy.contains(Field[0])
+        cy.contains(Field[1])
+    });
+}
+
+export function RemoveFromScreenLayout(fieldDetails: CustomizationScreenLayoutDetails[]) {
+    for (let i = 0; i < fieldDetails.length; i++) {
+
+        cy.get(MaintenanceSelectors.ColumnDropArea(fieldDetails[i].Column)).within(() => {
+            cy.get("[data-cy='"+Field[i]+"']").within(() => {
+                cy.get(CustomizationSelectors.RedX).click()
+            });
+
+        });
+    }
+
+}
+
+function DefineGetGeneralTabScreen() {
+    cy.DefineRequestWait(RestAPI.GET, CustomizationURLs.GetGeneralTabScreen, CustomizationRequestAliases.GetGeneralTabScreen);
+}
+
+function AssertGetGeneralTabScreen() {
+    BaseAssertion.AssertStatusCode(CustomizationRequestAliases.GetGeneralTabScreen, 200).then((interception) => {
     });
 }
