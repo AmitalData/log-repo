@@ -146,10 +146,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         CardQuery cardQueryService = new CardQuery(tenant);
                         List<CardList> cardListList = cardQueryService.GetAllCardsByGLAccount(oneGoodGLAccountPM.Id, tenant);
-                        if (cardListList != null)
+                        if (cardListList != null && cardListList.Count > 0)
                         {
                             List<CardList> goodCardListList = cardListList.Where(c => c.CountryCode == "IL").ToList<CardList>();
-                            if (goodCardListList == null)
+                            if (goodCardListList == null || goodCardListList.Count == 0)
                             {
                                 to_do = false;
                             }
