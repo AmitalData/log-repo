@@ -66,6 +66,7 @@
     <Compile Include="RequestParams\CLAIM_2340_ClaimRequestRequestParams.Shared.cs" />
     <Compile Include="RequestParams\ContinuousRequestOnClaimFileRequestParams.Shared.cs" />
     <Compile Include="RequestParams\CourierBOLQueryRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\LogisticActionRequest.Shared.cs" />
     <Compile Include="RequestParams\CreateClientRequestParams.Shared.cs" />
     <Compile Include="RequestParams\CustomItemLegalDemandsRequestParams.Shared.cs" />
     <Compile Include="RequestParams\CustomsBookInRequestParams.Shared.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="ResponseData\ClientSearchResponseData.Shared.cs" />
     <Compile Include="ResponseData\ConstraintAgentAnswerResponseData.Shared.cs" />
     <Compile Include="ResponseData\ContinuousResponseOnClaimFileResponseData.Shared.cs" />
+    <Compile Include="ResponseData\LogisticActionRequestResponseData.Shared.cs" />
     <Compile Include="ResponseData\CourierBOLQueryResponseData.Shared.cs" />
     <Compile Include="ResponseData\CustomItemLegalDemandsResponseData.Shared.cs" />
     <Compile Include="ResponseData\CustomsBookInResponseData.Shared.cs" />
