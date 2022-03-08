@@ -785,8 +785,7 @@ export class CustomsChargesTariffLineData extends BaseComponent {
         var currencyMeasurementLabel = "";
         if (this.FatherComponent.AllMeasurements) {
             var iMeasurement = this.FatherComponent.AllMeasurements.filter(f => f.Id == this.FatherComponent.EntityPM['Surcharge' + index + 'UOM'])[0];
-            var currency = this.FatherComponent.AllCurrencies.filter(f => f.Id == this["Surcharge" + index + "CurrencyId"])[0];
-            var currencyCode = currency != null ? currency.Code : "";
+            var currencyCode = this.GetCurrencyCode(index);
             if (iMeasurement) {
                 if (iMeasurement.Code == "FIXD") {
                     currencyMeasurementLabel = currencyCode;
@@ -803,7 +802,19 @@ export class CustomsChargesTariffLineData extends BaseComponent {
             }
         }
     }
-
+    private GetCurrencyCode(index) {
+        var currencyCode = "";
+        var currencyId = null;
+        if (this.EntityPM != null && !this.EntityPM.IsDifferentCurrenciesPerCharge) {
+            currencyId = this.CurrencyId;
+        }
+        else {
+            currencyId = this["Surcharge" + index + "CurrencyId"];
+        }
+        var currency = this.FatherComponent.AllCurrencies.filter(f => f.Id == currencyId)[0];
+        currencyCode = currency != null ? currency.Code : "";
+        return currencyCode;
+    }
     public CellColor: string = "transparent";
     private SetCellColorsForPriceCheck() {
         if (!AppTool.IsNullOrEmpty(this.FatherComponent.LineIdFromPriceCheck) && this.FatherComponent.LineIdFromPriceCheck == this.EntityPM.Id) {
