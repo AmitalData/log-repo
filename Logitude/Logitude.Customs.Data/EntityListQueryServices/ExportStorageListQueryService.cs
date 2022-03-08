@@ -42,10 +42,15 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                    into ssj
                                                    from cargoStatus in ssj.DefaultIfEmpty()
 
-                                                   join c in context.Cards.Select( r=> new {r.Id, r.LocalName, r.VatNumber})
-                                                   on en.ExporterID equals c.Id
-                                                   into cj
-                                                   from card in cj.DefaultIfEmpty()
+                                                   from client in context.Clients
+                                                   .Where(c => c.Code == en.ExporterID || c.Id == en.ExporterID)
+                                                   .Select( r=> new {r.Id, r.FullName, r.Code})
+                                                   .DefaultIfEmpty()
+
+                                                   //join c in context.Cards.Select( r=> new {r.Id, r.LocalName, r.VatNumber})
+                                                   //on en.ExporterID equals c.Id
+                                                   //into cj
+                                                   //from card in cj.DefaultIfEmpty()
 
                                                    join cs in context.CustomsShips.Select( r=> new {r.Code, r.LocalName})
                                                    on en.ShipCode equals cs.Code
@@ -101,7 +106,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                        CustomStatusName = cargoStatus.LocalName,
 
-                                                       ExporterName = card.LocalName,
+                                                       //ExporterName = card.LocalName,
+                                                       ExporterName = client.FullName,
 
                                                        ShipName = customsShip.LocalName,
 
@@ -121,7 +127,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                        DeclarationNumber = declaration.DeclarationNumber,
 
-                                                       ExporterCode = card.VatNumber
+                                                       //ExporterCode = card.VatNumber
+                                                       ExporterCode = client.Code
                                                    });
             return query;
         }
