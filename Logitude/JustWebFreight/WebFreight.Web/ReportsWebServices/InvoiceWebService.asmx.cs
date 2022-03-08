@@ -1996,7 +1996,7 @@ namespace WebFreight.Web.ReportsWebServices
                             }
                         }
 
-                        reportinvoiceline.Quantity = String.Format("{0:#,0.00}", invoiceline.Quantity);
+                        reportinvoiceline.Quantity = String.Format("{0:#,0.00}", Math.Truncate(invoiceline.Quantity * 100.0) / 100.0);
                         totalQuantity += invoiceline.Quantity;
 
                         ChargesType chargetype = allChargesTypes.Where(d => d.Id == invoiceline.ChargesTypeId).FirstOrDefault();
@@ -2102,7 +2102,7 @@ namespace WebFreight.Web.ReportsWebServices
                             lineAmount_Local = lineAmount_Local * -1;
                         }
 
-                        reportinvoiceline.UnitPrice = line_UnitPrice != null ? String.Format("{0:#,0.00}", line_UnitPrice) : "";
+                        reportinvoiceline.UnitPrice = line_UnitPrice != null ? String.Format("{0:#,0.00}", Math.Truncate(line_UnitPrice.Value * 100.0) / 100.0) : "";
                         reportinvoiceline.UnitPriceDouble = line_UnitPrice == null ? 0 : line_UnitPrice.Value;
                         reportinvoiceline.LocalAmount = lineAmount_Local != null ? String.Format("{0:#,0.00}", lineAmount_Local.Value) : "";
                         reportinvoiceline.InvoiceAmount = lineAmount_Invoice != null ? String.Format("{0:#,0.00}", lineAmount_Invoice.Value) : "";
@@ -2190,7 +2190,7 @@ namespace WebFreight.Web.ReportsWebServices
                             }
                         }
 
-                        reportinvoiceline.Quantity = invoiceline.Quantity != null ? String.Format("{0:#,0.00}", invoiceline.Quantity) : "";
+                        reportinvoiceline.Quantity = invoiceline.Quantity != null ? String.Format("{0:#,0.00}", Math.Truncate(invoiceline.Quantity.Value * 100.0) / 100.0)  : "";
                         totalQuantity += invoiceline.Quantity != null ? invoiceline.Quantity.Value : 0;
 
                         ChargesType chargetype = allChargesTypes.Where(d => d.Id == invoiceline.ChargesTypeId).FirstOrDefault();
@@ -3322,7 +3322,7 @@ namespace WebFreight.Web.ReportsWebServices
                             }
                         }
 
-                        reportinvoiceline.Quantity = String.Format("{0:#,0.00}", invoiceline.Quantity);
+                        reportinvoiceline.Quantity = String.Format("{0:#,0.00}", Math.Truncate(invoiceline.Quantity * 100.0) / 100.0) ;
                         totalQuantity += invoiceline.Quantity;
 
                         ChargesType chargetype = allChargesTypes.Where(d => d.Id == invoiceline.ChargesTypeId).FirstOrDefault();
@@ -3403,7 +3403,7 @@ namespace WebFreight.Web.ReportsWebServices
                             lineAmount_Local = lineAmount_Local * -1;
                         }
 
-                        reportinvoiceline.UnitPrice = line_UnitPrice != null ? String.Format("{0:#,0.00}", line_UnitPrice) : "";
+                        reportinvoiceline.UnitPrice = line_UnitPrice != null ? String.Format("{0:#,0.00}", Math.Truncate(line_UnitPrice.Value * 100.0) / 100.0) : "";
                         reportinvoiceline.UnitPriceDouble = line_UnitPrice == null ? 0 : line_UnitPrice.Value;
                         reportinvoiceline.LocalAmount = lineAmount_Local != null ? String.Format("{0:#,0.00}", lineAmount_Local.Value) : "";
                         reportinvoiceline.InvoiceAmount = lineAmount_Invoice != null ? String.Format("{0:#,0.00}", lineAmount_Invoice.Value) : "";
@@ -3495,8 +3495,8 @@ namespace WebFreight.Web.ReportsWebServices
                                 reportinvoiceline.ClaveUnidad = computingPartnerHelper.GetComputingPartnerCodeTranslation(myMeasurement.Code, "G-Profact", "Measurement");
                             }
                         }
-
-                        reportinvoiceline.Quantity = invoiceline.Quantity != null ? String.Format("{0:#,0.00}", invoiceline.Quantity) : "";
+                         
+                        reportinvoiceline.Quantity = invoiceline.Quantity != null ? String.Format("{0:#,0.00}", Math.Truncate(invoiceline.Quantity.Value * 100.0) / 100.0)  : "";
                         totalQuantity += invoiceline.Quantity != null ? invoiceline.Quantity.Value : 0;
 
                         ChargesType chargetype = allChargesTypes.Where(d => d.Id == invoiceline.ChargesTypeId).FirstOrDefault();
