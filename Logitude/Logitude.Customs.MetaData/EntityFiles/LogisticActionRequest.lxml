@@ -2793,6 +2793,13 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;Customs.LogisticActionRequest.O.CustomsResponse&quot;"
+      DefaultText="&quot;Customs Response&quot;"
+      LocalDefaultText="&quot;תשובת המכס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

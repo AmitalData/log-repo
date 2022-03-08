@@ -25,6 +25,7 @@ using Unifreight.BL.EntityPMs.UGenerated;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using UnifreightIIG.Common.MessageLib.ExportStorage.MN2791;
+using Logitude.Customs.BL.TraceEvents;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -36,7 +37,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             return this.MyResponseData;
         }
-
+        
         public override void Update(MN_MSG2791_ExportDeliveryAnswerMessage customResponse, GenericRequestParams requestParams)
         {
             if (customResponse.ResponseContentHeader.Exception != null)
@@ -65,10 +66,56 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (customResponse.Exception != null)
                 {
                     LogMessagingUtil.Instance.AppendLine("customResponse.Exception");
-
-                    entity.StorErrorXML = 
-                        XmlGenericUtil<UnifreightIIG.Common.MessageLib.ExportStorage.MN2791.Exception[]>.SerializeObject(customResponse.Exception);
+                    string xml = "";
+                    foreach (var item in customResponse.Exception)
+                    {
+                        xml += XmlGenericUtil<UnifreightIIG.Common.MessageLib.ExportStorage.MN2791.Exception>.MySerializeObject(item);
+                    }
+                    entity.StorErrorXML = xml;
                 }
+                var ER1TaskStatus =new int?[] { 2, 9, 8 };
+                var loggingUserId = "";
+                //var loggingUserId = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
+                //if (ER1TaskStatus.Contains(customResponse.CargoDetails?.CargoStatusID))
+                //{
+                    try
+                    {
+                        var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                        {
+                            Tenant = requestParams.Tenant,
+                            objectTableName = "Customs.ExportStorage",
+                            EventCode = "ER1",
+                            notes = "DO_NOT_RAISE_EVENT",
+                            CommunicationLoggingEntityReference = entity.Id,
+                            EntityId = entity.Id,
+                            UserId = loggingUserId,
+
+                            CommunicationSubject = "FU Status ER1 from logitude (Declaration Sent To Customs)",
+                            MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                            {
+                                entname = "MSCSTORAGE",
+                                primary_number = entity.StorageNo,
+                                status = "new",
+                                xml_status = "new",
+                                status_id = "ER1",
+                                status_DateTime = DateTime.Now,
+                                //status_place = "FRA",
+                                //status_save = "no_fail",
+                                comments = "",
+                            }
+                        };
+                        //if (!dirtyDeclarationPM.IsConnectedToUnifreight) myAmitalEventTracerModel.NotConnectedToUniface = true;
+
+                        LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent  eventCode = ER1  entity= " + entity.Id + "   ");
+                        AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+
+                    }
+                    catch (System.Exception)
+                    {
+                        // TODO: BL Stop Execute or Cuntinue - Ask IHAB
+                        throw;
+                    }
+               // }
                 entity.CustomsStatus = customResponse.CargoDetails?.CargoStatusID?.ToString();
                 entity.ChangeSetOp = ChangeSetOperation.Update;
                 var updateService = new ExportStorageUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
