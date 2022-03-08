@@ -442,6 +442,33 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
 
         }
+
+        public HttpResponseMessage GetTaxReportClosingJournalAbility(string taxReportId)
+        {
+            try
+            {
+
+                int tenant = GetAuthinticatedTenant();
+
+                IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+                TaxReportQueryService reportService = new TaxReportQueryService(accountingContext);
+                var canHaveClosingJournal = reportService.CheckIfTaxReportCanHaveClosingJournal(taxReportId, tenant);
+
+                ServiceResponse response = new ServiceResponse
+                {
+                    Result = canHaveClosingJournal
+                };
+
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
         private string EncodeStringFromImageParameter(ImageParameter fileUploadParamerter)
         {
             byte[] dataBytes = Convert.FromBase64String(fileUploadParamerter.Base64String);

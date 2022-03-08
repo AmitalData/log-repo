@@ -385,6 +385,7 @@
     <Compile Include="CoreBL\System1000Service.cs" />
     <Compile Include="CoreBL\TaxDeductionReportService.cs" />
     <Compile Include="CoreBL\ARPaymentReconciliationService.cs" />
+    <Compile Include="CoreBL\TaxReportClosingService.cs" />
     <Compile Include="CoreBL\Testers\GateWayTester.cs" />
     <Compile Include="CoreBL\YearTransferService.cs" />
     <Compile Include="DataContract\ARPaymentChequeFutureData.cs" />

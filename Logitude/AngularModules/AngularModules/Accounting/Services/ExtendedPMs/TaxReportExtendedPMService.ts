@@ -12,15 +12,15 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
- 
+
 @Injectable()
 
 export class TaxReportExtendedPMService {
-  
+
     private _apiUrl: string;
     private httpClient: HttpClient;
     constructor() {
-       
+
         this.httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TaxReportOp';
     }
@@ -36,7 +36,7 @@ export class TaxReportExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-        
+
 
     }
 
@@ -52,7 +52,7 @@ export class TaxReportExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-       
+
 
     }
 
@@ -83,7 +83,7 @@ export class TaxReportExtendedPMService {
             }),
             catchError(ServiceHelper.HandleServiceError));
 
-        
+
       }
 
     GetReportLinesCounter(taxReportId: string) {
@@ -98,8 +98,8 @@ export class TaxReportExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-            
-        
+
+
     }
 
     GetTenantTransmittedTaxReports() {
@@ -145,7 +145,7 @@ export class TaxReportExtendedPMService {
 
     getErrorsCount(reportId: string) {
 	    var callTime = new Date();
-        
+
        return this.httpClient.get(this._apiUrl+'/GetErrorsCount/?'+'reportId=' + reportId,  ServiceHelper.GetHttpHeaders()).pipe(
         map(response => {
             var result = response;
@@ -153,9 +153,20 @@ export class TaxReportExtendedPMService {
             return result;
         }),
         catchError(ServiceHelper.HandleServiceError));
-       
+
     }
 
+
+    CheckIfTaxReportCanHaveClosingJournal(taxReportId: string)
+    {
+        return this.httpClient.get(this._apiUrl + '/GetTaxReportClosingJournalAbility?taxReportId=' + taxReportId, ServiceHelper.GetHttpHeaders()).pipe(
+            map(response =>
+            {
+                let serviceResponse = response;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+    }
 
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: TaxReportPM = null) {
 

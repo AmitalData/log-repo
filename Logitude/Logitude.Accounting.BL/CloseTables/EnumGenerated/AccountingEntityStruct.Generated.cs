@@ -8,6 +8,7 @@ using System.Threading.Tasks;
  
 namespace Logitude.Accounting.BL.CloseTables
 {
+    // one time generated
     public struct AccountingEntityValues
     {   
        public const string Journal = "1";  
@@ -22,6 +23,7 @@ namespace Logitude.Accounting.BL.CloseTables
        public const string Adjustment = "10";  
        public const string YearTransfer = "11";  
        public const string BankAdjustment = "12";  
+       public const string TaxReport = "13";  
     }
 }
 

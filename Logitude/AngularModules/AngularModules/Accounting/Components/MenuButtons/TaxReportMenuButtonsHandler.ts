@@ -1,22 +1,15 @@
 declare var window: any;
 import { TaxReportPM } from '../../EntityPMs/TaxReportPM';
 import { MenuButtonPM } from '../../../Infrastructure/EntityPMs/MenuButtonPM'
-import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import { TaxReportPMService } from '../../Services/StandardPMs/TaxReportPMService';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-import { AppTool } from '../../../Infrastructure/Tools';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-import { EntityPMService } from '../../../Infrastructure/Services/EntityPMService';
-import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { TaxReportExtendedPMService } from '../../Services/ExtendedPMs/TaxReportExtendedPMService';
-import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
-import { strict } from 'assert';
 
 
 export class TaxReportMenuButtonsHandler {
@@ -68,12 +61,16 @@ export class TaxReportMenuButtonsHandler {
                         }
                         case "UPLD": {
                             this.SetUploadButtonEnabilityAccordingToConsolidationVAT(button);
-                            
+
                             break;
                         }
                         case MenuButton.ReturnToDraft: {
 
                             this.SetReturnToDraftButtonStatus(button);
+                        }
+                        case MenuButton.ClosingJournal: {
+                            button.IsDisabled = this.EntityPM.StatusCode == TaxReportStatus.Transmitted;
+                            break;
                         }
                     }
 
@@ -85,7 +82,7 @@ export class TaxReportMenuButtonsHandler {
         return menuButtons;
     }
 
-    
+
 
 
     private SetReturnToDraftButtonStatus(button: MenuButtonPM) {
@@ -177,7 +174,7 @@ export class TaxReportMenuButtonsHandler {
 
                     break;
                 }
-            case MenuButton.Upload: // upload 
+            case MenuButton.Upload: // upload
                 {
                     //this._entityResourceService.getEntityResourceByTableName("GLAccount", 0).subscribe((response: any) => {
                         var logitudeWindow = new LogitudeWindow();
@@ -195,6 +192,11 @@ export class TaxReportMenuButtonsHandler {
                     //});
                     break;
                 }
+                case MenuButton.ClosingJournal: {
+                    this.CreateClosingJournalButtonClicked();
+                    break;
+                }
+
         }
 
 
@@ -227,12 +229,39 @@ export class TaxReportMenuButtonsHandler {
     private StopBusyIndicator() {
         this.CurrentSession.StopBusyIndicator();
     }
+    CreateClosingJournalButtonClicked(){
+        this.taxReportExtendedPMService.CheckIfTaxReportCanHaveClosingJournal(this.EntityPM.Id)
+            .subscribe((response: ServiceResponse) =>
+            {
+                let canHaveClosingJournal: boolean = response.Result;
+                if (canHaveClosingJournal) {
+                    var confirmWindow = new ConfirmWindow();
+                    confirmWindow.Show(TextCodeTranslator.Translate(TextCode.TaxReportClosingJournalConfirmationMessage))
+                    confirmWindow.Width = 400;
+                    confirmWindow.WindowClosed.subscribe(event =>
+                    {
+                        if (confirmWindow.Yes) {
+                            this.CreateClosingJournal();
+                        }
+                    });
+                } else {
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Width = 400;
+                    messageWindow.Show(TextCodeTranslator.Translate(TextCode.TaxReportCantBeClosedValidationMessage));
+                }
+            });
+    }
+    CreateClosingJournal(){
+
+    }
 }
 
 enum MenuButton {
-   
+
     Upload = "UPLD",
     ReturnToDraft ="RTDR",
+    ClosingJournal = 'TRCJ'
+
 }
 
 enum TaxReportStatus {
@@ -242,4 +271,9 @@ enum TaxReportStatus {
     Error = "E",
     CancelationInProgress = "CP",
     CancelationFailed = "CF"
+}
+
+enum TextCode {
+    TaxReportCantBeClosedValidationMessage = "TaxReport.O.ClosingJournalValidationMessage",
+    TaxReportClosingJournalConfirmationMessage = "TaxReport.O.ClosingJournalConfirmationMessage"
 }
