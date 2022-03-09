@@ -18356,9 +18356,9 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AcceptanceStatusRepository acceptanceStatusRepository = new AcceptanceStatusRepository(0);
             Dictionary<string, AcceptanceStatus> TenantAcceptanceStatuses = acceptanceStatusRepository.GetAll().ToDictionary(d => d.Code, a => a);
 
-            AddClosedTables.AddAcceptanceStatus(new AcceptanceStatusDetails() { Code = "0", Name = "Not Available", LocalName = "לא זמין" }, acceptanceStatusRepository);
-            AddClosedTables.AddAcceptanceStatus(new AcceptanceStatusDetails() { Code = "1", Name = "Available", LocalName = "זמין" }, acceptanceStatusRepository);
-            AddClosedTables.AddAcceptanceStatus(new AcceptanceStatusDetails() { Code = "2", Name = "Partly Available", LocalName = "זמין חלקית" }, acceptanceStatusRepository);
+            AddClosedTables.AddAcceptanceStatus(new AcceptanceStatusDetails() { Code = "0", EnglishName = "Not Available", LocalName = "לא זמין" }, acceptanceStatusRepository);
+            AddClosedTables.AddAcceptanceStatus(new AcceptanceStatusDetails() { Code = "1", EnglishName = "Available", LocalName = "זמין" }, acceptanceStatusRepository);
+            AddClosedTables.AddAcceptanceStatus(new AcceptanceStatusDetails() { Code = "2", EnglishName = "Partly Available", LocalName = "זמין חלקית" }, acceptanceStatusRepository);
 
             acceptanceStatusRepository.SubmitChanges();
 
