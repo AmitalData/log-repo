@@ -1263,4 +1263,12 @@
     Columns="ExternalDeclarationNumber" />
   <Index
     Columns="VersionId" />
+
+	<Index
+    Columns="IsAmendment" />
+
+	<Index
+		Columns="TaxationDateTime" />
+
+	
 </Table>
