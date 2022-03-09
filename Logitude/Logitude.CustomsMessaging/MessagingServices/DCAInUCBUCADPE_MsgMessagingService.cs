@@ -58,6 +58,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
             };
 
             genericRequestParams.RequestName = "הזנה גורפת PENDING";
+            if(customsResponse.requestParamsData.isCreateInvoiceDocument)
+                genericRequestParams.RequestName = "יצירת חשבון ספק גורף";
+
 
             return genericRequestParams;
         }

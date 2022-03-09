@@ -4,7 +4,7 @@ import { CourierMasterPM } from 'Customs/EntityPMs/CourierMasterPM';
 import { CourierWorksheetSharedDataService } from 'Customs/Services/DataChange/CourierWorksheetSharedDataService';
 import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
 import { DeclarationCourierStatusPMService } from 'Customs/Services/StandardPMs/DeclarationCourierStatusPMService';
-import { DeclarationsforBulkFeed, PendingWebService } from 'Customs/Services/WebServices/PendingWebService';
+import { DeclarationsforBulkFeed,PendingWebService } from 'Customs/Services/WebServices/PendingWebService';
 import { CourierMasterValidator } from 'Customs/Validators/CourierMasterValidator';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
@@ -81,7 +81,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
 
 
   constructor(
-    private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService,
+      private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, private pendingWebService: PendingWebService
   ) {
     super();
   }
@@ -228,6 +228,25 @@ export class BulkFeedPendingComponent extends BaseComponent {
         });
     }
 
+    async CreateInvoiceDocumentWindow() {
+        if (!this._CourierWorksheetSharedDataService._SelectedItems?.Collection?.length && !this._CourierWorksheetSharedDataService.connectedSelectAll)
+            return new MessageWindow().Show(TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.O.NotCheckDeclarations"));
+
+        var filter = this.getFilter();
+        filter.GetAll = this._CourierWorksheetSharedDataService.connectedSelectAll;
+
+        SessionLocator.SelectedSession.StartBusyIndicatorSaving();
+        const msg: string = await this.pendingWebService.postBulkFeeding(null, null, this._CourierWorksheetSharedDataService._SelectedItems.Collection,
+            this.CourierMasterPM.Id, this._CourierWorksheetSharedDataService.connectedSelectAll,
+            this._CourierWorksheetSharedDataService._UnSelectedItems.Collection, filter, true)
+        SessionLocator.SelectedSession.StopBusyIndicator();
+
+        const myMessageWindow = new MessageWindow();
+        myMessageWindow.Width = 250;
+        myMessageWindow.Height = 150;
+        myMessageWindow.Show(msg);
+        SessionLocator.SelectedSession.CloseCurrentWindow();
+    }
 
   AddPendings() {
     if (!this._CourierWorksheetSharedDataService._SelectedItems?.Collection?.length && !this._CourierWorksheetSharedDataService.connectedSelectAll)
