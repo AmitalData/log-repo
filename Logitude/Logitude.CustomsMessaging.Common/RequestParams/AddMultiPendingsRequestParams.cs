@@ -15,5 +15,6 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
 
         public string courierMasterId { get; set; }
         public bool checkboxAll { get; set; }
+        public bool isCreateInvoiceDocument { get; set; }
     }
 }

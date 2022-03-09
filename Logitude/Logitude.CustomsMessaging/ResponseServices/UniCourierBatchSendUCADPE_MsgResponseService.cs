@@ -24,7 +24,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public override void Update(DCAInUCBUCADPEResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
-            UpdateDeclarationPendings(customResponse);
+            if(customResponse.requestParamsData.isCreateInvoiceDocument)
+            {
+                CreateInvoiceDocument(customResponse);
+            }
+            else
+            {
+                UpdateDeclarationPendings(customResponse);
+
+            }
 
             this.MyResponseData = new INF_MSG_GenericResponseData();
             this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
@@ -34,6 +42,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.Succeeded = true;
             //this.MyResponseData.ApplicationID = customResponse.Declarationid;            
             this.MyResponseData.UserMessage = "ההצהרות עודכנו";
+        }
+
+        public void CreateInvoiceDocument(DCAInUCBUCADPEResponseContentHeader customResponse)
+        {
+            AddMultiPendingsRequestParams rp = customResponse.requestParamsData;
+            ICustomContext customContext = CustomContext.GetContext(customResponse.tenant);
+
+            List<string> declarationIdsList = rp.checkboxAll ?
+               new DeclarationCourierStatusListQueryService(customContext).GetDeclarationCourierStatusListPendingBulk(customResponse.queryOperations, customResponse.tenant).Select(x => x.DeclarationId).ToList() :
+                rp.declarationIdsList.ToList();
+
+
+            if (rp.checkboxAll && rp.allWithoutdeclarationIdsList != null && rp.allWithoutdeclarationIdsList.Count() > 0)
+                declarationIdsList.RemoveAll(x => rp.allWithoutdeclarationIdsList.Contains(x));
+
+            //todo: call to morams service
+            
         }
 
         public void UpdateDeclarationPendings(DCAInUCBUCADPEResponseContentHeader customResponse)

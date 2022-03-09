@@ -56,7 +56,8 @@ export class PendingWebService {
         courierMasterId: string,
         checkboxAll: boolean,
         allWithoutdeclarationIdsList: string[],
-        customFilter: ApiQueryFilters) {
+        customFilter: ApiQueryFilters,
+        isCreateInvoiceDocument: boolean) {
 
         const ajax: Observable<any> = this._http.post(
             this._apiUrl + "/BulkFeeding?" + this.logtuideTableDataService.apiQueryFilterToQueryString(customFilter),
@@ -67,6 +68,7 @@ export class PendingWebService {
                 allWithoutdeclarationIdsList: allWithoutdeclarationIdsList,
                 courierMasterId: courierMasterId,
                 checkboxAll: !!checkboxAll,
+                isCreateInvoiceDocument: !!isCreateInvoiceDocument,
             },
             {
                 headers: ServiceHelper.GetHttpHeaders().headers,

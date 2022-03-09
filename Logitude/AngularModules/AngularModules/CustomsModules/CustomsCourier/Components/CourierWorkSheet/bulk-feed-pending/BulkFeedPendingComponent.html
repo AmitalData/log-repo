@@ -28,9 +28,7 @@
                      style="width:115px; left: 0px; right: initial ;top:22px;text-align:center">
                     <button style="text-align:right" (click)="AddPendings()">הוספת פנדינג</button>
                     <button style="text-align:right" (click)="OpenMultiUpdateWindow()">עדכון נתוני הצהרה</button>
-                    <button style="text-align:right" [disabled]="IsDisplayOnly">
-                        צור מסמך חשבון ספק
-                    </button>
+                    <button style="text-align:right" (click)="CreateInvoiceDocumentWindow()">צור מסמך חשבון ספק</button>
 
                 </div>
 
