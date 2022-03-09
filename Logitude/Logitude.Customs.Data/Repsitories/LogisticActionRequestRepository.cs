@@ -21,6 +21,19 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
+
+        public LogisticActionRequest GetByCargoKey(string key1, string key2, string key3, int type)
+        {
+            string sType = type.ToString();
+
+            var res = (from x in context.LogisticActionRequests
+                     where x.CargoIdentifierKey1 == key1 && x.CargoIdentifierKey1 == key1 && x.CargoIdentifierKey1 == key1 && x.CargoIdentifierType == sType
+                     select x
+                     ).FirstOrDefault();
+            
+            return res;
+        }
+
    }
 
 }

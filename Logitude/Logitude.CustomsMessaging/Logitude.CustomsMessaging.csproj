@@ -146,10 +146,10 @@
       <HintPath>..\Unifreight.Data\obj\Debug\Unifreight.Data.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.52\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.3.1803.53\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.52\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.3.1803.53\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -202,6 +202,8 @@
     <Compile Include="Helpers\ClosedTable\Update1998NDMessageActionCode.cs" />
     <Compile Include="Helpers\ClosedTable\Update1308CustomsShip.cs" />
     <Compile Include="Helpers\ClosedTable\Update1416ModificationAndDiscountType.cs" />
+    <Compile Include="MessagingServices\DCAInLG_NG_8410_LogisticActionRequestMessageMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInLG_NG_8411_SendLogisticActionRequestDecisionMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInMN_MSG2791_ExportDeliveryAnswerMessageMessagingServices.cs" />
     <Compile Include="MessagingServices\DCAInDF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg.cs" />
     <Compile Include="MessagingServices\DCAInUCB2715SendNow_MsgMessagingService.cs" />
@@ -396,6 +398,8 @@
     <Compile Include="ResponseServices\CL_NG_8344_ClientSearchByIDResponseService.cs" />
     <Compile Include="ResponseServices\DCAInUCUDO_UpdateOpenDeclarationsResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_2757_MSG10004_RetrieveExportDeclarationResponseService.cs" />
+    <Compile Include="RequestServices\LG_NG_8410_LogisticActionRequestMessageRequestService.cs" />
+    <Compile Include="ResponseServices\LP_NG_8400_MSG01_LogisticPermitMessageResponseService.cs" />
     <Compile Include="ResponseServices\MN_MSG2791_ExportDeliveryAnswerMessageResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_2757_MSG10004_ExportAmendmentDeclarationResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_2754_MSG10004_SubmitExportDeclarationResponseService.cs" />
@@ -515,7 +519,7 @@
     <Compile Include="ResponseServices\EV_NG_8215_MSG23002_ConstraintApprovalDecisionResponseService.cs" />
     <Compile Include="ResponseServices\INF_MSG_Generic_DOC_NG_5101_GNMessageToAgent_ResponseService.cs" />
     <Compile Include="ResponseServices\LO_NG_3720_MSG313_PoaUpdateForCustomsAgentResponseService.cs" />
-    <Compile Include="ResponseServices\LP_NG_8400_MSG01_LogisticPermitMessageResponseService.cs" />
+    <Compile Include="ResponseServices\LG_NG_8411_SendLogisticActionRequestDecisionResponseService.cs" />
     <Compile Include="ResponseServices\MM_Web02_MorningMessagesListResponseService.cs" />
     <Compile Include="ResponseServices\MN_MSG4_SendManifestFeedBack_MessageResponseService.cs" />
     <Compile Include="ResponseServices\MN_NG_8241_CargoResponseService.cs" />

@@ -15,6 +15,7 @@ import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { LogisticActionRequestPMService } from 'Customs/Services/StandardPMs/LogisticActionRequestPMService';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
+import { LogisticActionRequestRequestParams } from 'Customs/DataContract/RequestParams/LogisticActionRequestRequestParams';
 
 @Component({
     templateUrl: './LogisticActionRequestGeneralTabComponent.html',
@@ -343,6 +344,23 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
     OnCustomSendOptionsButtonClick(customSendOptionsArgs) {
         this.SaveEntityChanges();
+
+        var param = new LogisticActionRequestRequestParams();
+        param.ExporterIdentifierType =  this.entityPM.ExporterIdentifierType;
+        param.ExporterNumber = this.entityPM.ExporterNumber;
+        param.PassportCountry = this.entityPM.PassportCountry;
+        param.PassportNumber = this.entityPM.PassportNumber;
+        param.RequestType = this.entityPM.RequestType;
+        param.RequestReason = this.entityPM.RequestReason;
+        param.DeliverySiteID = this.entityPM.DeliverySiteID;
+        param.CargoIdentifierType = this.entityPM.CargoIdentifierType;
+        param.CargoIdentifierKey1 = this.entityPM.CargoIdentifierKey1;
+        param.CargoIdentifierKey2 = this.entityPM.CargoIdentifierKey2;
+        param.CargoIdentifierKey3 = this.entityPM.CargoIdentifierKey3;
+        param.PackagingTypeCode = this.entityPM.PackagingTypeCode;
+        param.Quantity = this.entityPM.Quantity;
+        param.LogisticActionRequestId = this.entityPM.Id;
+        param.CustomsFile = this.entityPM.ExportFileNo;
     }
 
 
