@@ -694,6 +694,7 @@ namespace WebFreight.Web.DataProviders
     {
         public string Description { get; set; }
         public string Quantity { get; set; }
+        public double? QuantityDouble { get; set; }
         public string Measurement { get; set; }
         public string UnitPrice { get; set; }
         public double UnitPriceDouble { get; set; }
