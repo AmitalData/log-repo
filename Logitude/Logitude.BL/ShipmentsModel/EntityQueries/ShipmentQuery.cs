@@ -3938,6 +3938,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.HandlerUserId = shipment.HandlerUserId;
             shipmentPM.PlannedCargoReadyDate = shipment.PlannedCargoReadyDate;
             shipmentPM.ApprovedCargoReadyDate = shipment.ApprovedCargoReadyDate;
+            shipmentPM.WarehouseLegActualReleaseDate = shipment.WarehouseLegActualReleaseDate;
+            shipmentPM.TerminalAvailable = shipment.TerminalAvailable;
+            shipmentPM.WarehouseLegActualEntryDate = shipment.WarehouseLegActualEntryDate;
 
             if (masterData != null)
             {
