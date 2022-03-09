@@ -235,23 +235,22 @@ export class DeclarationReferantDataFiltersMenuComponent
 
     TransportAdvancedQueryFilterPM: AdvancedQueryFilterPM;
     SaveFilters() {
-        this.updateOrInsertAdvanceFilter(this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName == "TransportModeId"));
-        this.updateOrInsertAdvanceFilter(this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName == "ReferantUserName"));
-        this.updateOrInsertAdvanceFilter(this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName == "ReferentUserId"));
-        this.updateOrInsertAdvanceFilter(this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName == "DepartmentId"));
-        this.updateOrInsertAdvanceFilter(this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName == "DepartmentName"));
+         this.updateOrInsertAdvanceFilter(this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName == "TransportModeId"),"TransportModeId");
+        this.updateOrInsertAdvanceFilter(this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName == "ReferantUserName"),"ReferantUserName");
+        this.updateOrInsertAdvanceFilter(this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName == "ReferentUserId"),"ReferentUserId");
+        this.updateOrInsertAdvanceFilter(this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName == "DepartmentId"),"DepartmentId");
+        this.updateOrInsertAdvanceFilter(this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName == "DepartmentName"),"DepartmentName");
         this.apiQueryFiltersChanged = false;
     }
 
-    private updateOrInsertAdvanceFilter(AdditionalFilters: FilterItem[]) {
+    private updateOrInsertAdvanceFilter(AdditionalFilters: FilterItem[], FieldName:string) {
         var objectFieldPMExtendedService: ObjectFieldPMExtendedService = new ObjectFieldPMExtendedService();
-        if (AdditionalFilters.length > 0) {
-            objectFieldPMExtendedService.GetObjectFieldByName(AdditionalFilters[0].FieldName, this.ObjectTableName).subscribe((objectField: any) => {
+            objectFieldPMExtendedService.GetObjectFieldByName(FieldName, this.ObjectTableName).subscribe((objectField: any) => {
                 if (objectField) {
                     var myService: DeclarationReferantDataWebService = new DeclarationReferantDataWebService();
                     myService.GetSingleByObjectFieldCodeAndTenant(objectField[0].Id, SessionInfo.LoggedUserTenant, this.QueryCode, SessionInfo.LoggedUserId).subscribe((advanceFilterFromDb: any) => {
-                        if (advanceFilterFromDb) { // update if exist in db 
-                            advanceFilterFromDb.PredefinedValue = this.getPredefinedValue(AdditionalFilters[0].FieldValue);
+                        if (advanceFilterFromDb) { // update if exist in db
+                            advanceFilterFromDb.PredefinedValue = this.getPredefinedValue(AdditionalFilters[0]?.FieldValue);
                             myService.update(advanceFilterFromDb).subscribe((myResult: any) => {
                             });
                         } else { // insert if doesnt exist in db
@@ -262,7 +261,6 @@ export class DeclarationReferantDataFiltersMenuComponent
                     });
                 }
             });
-        }
     }
 
     getPredefinedValue(value: string) {

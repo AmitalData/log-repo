@@ -1,11 +1,15 @@
 ﻿using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue;
-using Logitude.Customs.BL.Messaging.U2L.CommDec;
+//using Logitude.Customs.BL.Messaging.U2L.CommDec;
 using Logitude.CustomsMessaging.ResponseServices;
+using Logitude.CustomsMessaging.U2L.CommDec;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Models;
+using Logitude.Server.Tools.Utils;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Web;
 using System.Xml;
@@ -49,7 +53,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ.Handlers
                     tenant = int.Parse(te[0].InnerText);
                     //mySTBMessage = (DCAInUCUW2LResponseContentHeader)serializer.Deserialize(reader1);
                 }
-
+                var sw = Stopwatch.StartNew();
                 var UCUW2LResponseService = new DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceResponseService();
                 UCUW2LResponseService.Update(
                     new MessagingServices.DCAInUCUW2LResponseContentHeader()
@@ -68,8 +72,19 @@ namespace Logitude.CustomsMessaging.RabbitMQ.Handlers
                 string decId = UCUW2LResponseService.MyResponseData.ApplicationID;
                 string customFileNo = UCUW2LResponseService?.MyRequestSheetParam.CustomFileNo;
                 res.EntityID = UCUW2LResponseService?.MyRequestSheetParam.EntityId1;
-                res.EntityReference = customFileNo;
 
+                bool checkUpsertDiff = false;
+                if (checkUpsertDiff)
+                {
+                    var myQueryService = new DeclarationQueryService(tenant);
+                    var pm = myQueryService.GetSingle(res.EntityID, true, false);
+                    var json=ProxyUtil.JsonConvertSerialize(pm);//log the result !!
+                    Debug.WriteLine(json);
+
+                }
+                res.EntityReference = customFileNo;
+                res.MoreInfo = UCUW2LResponseService?.MyRequestSheetParam?.RequestDescription;
+                res.Took = sw.Elapsed.ToString();
                 if (UCUW2LResponseService.MyResponseData.Succeeded)
                 {
                     res.MyCommStatusEnum = Customs.Def.ClosedTable.CommStatusEnum.D;
@@ -122,7 +137,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ.Handlers
                 }
 
 
-                var unifreightGenericService = new Do_CommDecService();
+                var unifreightGenericService = new CommDecService();//Do_CommDecService();
 
                 try
                 {
