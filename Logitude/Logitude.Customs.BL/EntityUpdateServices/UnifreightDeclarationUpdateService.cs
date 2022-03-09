@@ -992,10 +992,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 var casual = declarationCasualDetailsQueryService.GetSingle(_DirtyDeclarationPM.Id, false, true);
                 if (casual != null)
                 {
-                    myCFIDATA_DATA.CasualSupplierName = "CAP";
-                    myCFIDATA_DATA.ImporterName = _DirtyDeclarationPM.ImporterName;
-                    myCFIDATA_DATA.ImporterAddress = _DirtyDeclarationPM.ImporterAddress;
-                    myCFIDATA_DATA.ImporterId = _DirtyDeclarationPM.ImporterCode;
+                    myCFIDATA_DATA.ImporterName = "CAP";
                     myCFIDATA_DATA.COUWTVAL = _DirtyDeclarationPM.WeightValue;
                 }
                 else
