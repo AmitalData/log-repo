@@ -75,52 +75,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     foreach (var item in customResponse.Exception)
                     {
                         xml += XmlGenericUtil<UnifreightIIG.Common.MessageLib.ExportStorage.MN2791.Exception>.MySerializeObject(item);
+                        if(item.ExceptionLevel == 1)
+                        {
+                            RaiseExportStorageStatus("ER2", "ER2", entity, item.ExeptionDescription);
+                        }
+                        if (item.ExceptionLevel == 2)
+                        {
+                            RaiseExportStorageStatus("ALT", "ALT", entity, item.ExeptionDescription);
+                        }
                     }
                     entity.StorErrorXML = xml;
                 }
-                var ER1TaskStatus =new int?[] { 2, 9, 8 };
-                var loggingUserId = "";
-                //var loggingUserId = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
-                //if (ER1TaskStatus.Contains(customResponse.CargoDetails?.CargoStatusID))
-                //{
-                    try
-                    {
-                        var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                        {
-                            Tenant = requestParams.Tenant,
-                            objectTableName = "Customs.ExportStorage",
-                            EventCode = "ER1",
-                            notes = "DO_NOT_RAISE_EVENT",
-                            CommunicationLoggingEntityReference = entity.Id,
-                            EntityId = entity.Id,
-                            UserId = loggingUserId,
-
-                            CommunicationSubject = "FU Status ER1 from logitude (Declaration Sent To Customs)",
-                            MyFUStatus = new AmitalEventTracerModel.FUStatus()
-                            {
-                                entname = "MSCSTORAGE",
-                                primary_number = entity.StorageNo,
-                                status = "new",
-                                xml_status = "new",
-                                status_id = "ER1",
-                                status_DateTime = DateTime.Now,
-                                //status_place = "FRA",
-                                //status_save = "no_fail",
-                                comments = "",
-                            }
-                        };
-                        //if (!dirtyDeclarationPM.IsConnectedToUnifreight) myAmitalEventTracerModel.NotConnectedToUniface = true;
-
-                        LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent  eventCode = ER1  entity= " + entity.Id + "   ");
-                        AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
-
-                    }
-                    catch (System.Exception)
-                    {
-                        // TODO: BL Stop Execute or Cuntinue - Ask IHAB
-                        throw;
-                    }
-               // }
+                
                 entity.CustomsStatus = customResponse.CargoDetails?.CargoStatusID?.ToString();
                 entity.ChangeSetOp = ChangeSetOperation.Update;
                 var updateService = new ExportStorageUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
@@ -129,7 +95,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 MyRequestSheetParam.EntityId2 = entity.DeclarationId;
 
             }
-
             
             MyRequestSheetParam.EntityId1 = entity.Id;
             MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.ExportStorage");
@@ -184,7 +149,4 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
     }
-
-
-}
 }
