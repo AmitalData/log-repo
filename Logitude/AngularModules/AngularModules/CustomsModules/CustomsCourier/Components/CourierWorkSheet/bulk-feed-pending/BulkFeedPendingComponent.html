@@ -109,8 +109,29 @@
                     [LookUpTableName]="'Customs.TermsOfSaleType'" [HideColumns]="true" [SelectedValue]="IncotermCode">
             </LogLov>
         </div>
+        
+            <MultiSelectLOV [DataContext]="DataContext"
+                            style="width: 250px; margin-right: 10px; vertical-align: middle; height: 32px;"
+                            [PlaceHolder]="'PENDING'"
+                            [LayoutDirection]="'rtl'"
+                            [LOVListComponentPropName]="'LOVListPendings'"
+                            (ChosenListItemsChanged)="SelectedValueChangedEmitUser()"
+                            [ChosenListHeader]="'PENDING שנבחרו'"
+                            [ButtonAddLabel]="'בחר'">
+                <span class="class-MultiSelectLOV-content">
+                    <LogLov [ObjectFieldName]="'CourierPendingReasonList'"
+                            [ObjectTableName]="ObjectTableName"
+                            [DataContext]="DataContext"
+                            [HideColumns]="true"
+                            [LookUpTableName]="'Customs.CourierPendingReason'"
+                            [DisplayMemberPath]="'LocalName'">
+                    </LogLov>
+                </span>
+                <!--[QueryFilterItems]="LoadingContactFilterItems"-->
+            </MultiSelectLOV>
+        
 
-        <button class="Button" (click)="search()">
+        <button class="Button" style="height:22px" (click)="search()">
             {{'Customs.General.O.Search' | TextCodeTranslationPipe}}
         </button>
 

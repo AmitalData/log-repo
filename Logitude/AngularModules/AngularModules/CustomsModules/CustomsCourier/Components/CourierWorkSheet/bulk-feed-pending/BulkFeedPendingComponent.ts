@@ -56,7 +56,13 @@ export class BulkFeedPendingComponent extends BaseComponent {
   public set RowsItems(value: any) {
     this._RowsItems = value;
   }
-
+    _LOVListPendings: any[] = [];
+    get LOVListPendings() { return this._LOVListPendings; }
+    set LOVListPendings(value) {
+        if (this._LOVListPendings != value) {
+            this._LOVListPendings = value;
+        }
+    }
   private _SelectedRow: any;
   public get SelectedRow(): any {
     return this._SelectedRow;
@@ -142,6 +148,10 @@ export class BulkFeedPendingComponent extends BaseComponent {
     if (!AppTool.IsNullOrEmpty(this.IncotermCode))
       filters.addAdditionalFilter("IncoTermCode", this.IncotermCode, null, null, "Equals", false, false, false, "string");
 
+    if (this._LOVListPendings.length > 0)
+        filters.addAdditionalFilter("CourierPendingReasonList", this.UsersListString, null, null, "InList", false, false, false, "string", this._LOVListPendings.length == 0);
+
+
     if (!AppTool.IsNullOrEmpty(this.WeightFrom) && !AppTool.IsNullOrEmpty(this.WeightTo))
       filters.addAdditionalFilter("GrossMassMeasure", this.WeightFrom, this.WeightTo, null, "Between", false, false, false, "number");
     else if (!AppTool.IsNullOrEmpty(this.WeightFrom))
@@ -198,6 +208,26 @@ export class BulkFeedPendingComponent extends BaseComponent {
       filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter.toLowerCase(), null, null, "Contains", false, false, false, "string");
 
     return filters;
+    }
+    UsersListString: string = "";
+    UsersListStringl: string[] = [];
+    SelectedValueChangedEmitUser() {
+        var RemoveFilter = false;
+        //if (this.getFilter().AdditionalFilters.length > 0) {
+        //    this.getFilter().AdditionalFilters = this.getFilter().AdditionalFilters.filter(a => a.FieldName != "CourierPendingReasonList");
+        //}
+        this.UsersListString = "";
+        if (this._LOVListPendings.length > 0) {
+
+            this._LOVListPendings.forEach(item => { this.UsersListString += item["Code"] + ","; this.UsersListStringl.push(item["Code"]); });//Id: "1-3697"
+            this.UsersListString = this.UsersListString.slice(0, -1); // trim last comma
+        } else {
+            this.UsersListString = "HowCare"
+            RemoveFilter = true;
+        }
+        debugger;
+        //this.getFilter().addAdditionalFilter("RetrievData", true, null, null, "Equal", true, false, false, "string", this._LOVListPendings.length == 0);
+        //this.SelectedValueChanged.emit({ Filters: this.getFilter(), RemoveFilter: RemoveFilter });
     }
 
     OpenMultiUpdateWindow() {

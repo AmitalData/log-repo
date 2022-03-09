@@ -9,7 +9,7 @@
 }
 
 .search-row-container {
-    height: 22px;
+    height: 32px;
     display: flex;
     align-items: center;
     margin: 17px 0px;
@@ -41,11 +41,11 @@
     }
 
     .label-good-description {
-        width: 66px;
+        width: 80px;
     }
 
     .label-weight {
-        width: 45px;
+        width: 55px;
         margin-right: 15px;
     }
 
@@ -81,13 +81,14 @@
     }
 
     courier-filter-button {
-        margin-right: 300px;
+        margin-right: 160px;
     }
 
     .incoterm-code-wrapper {
-        width: 120px;;
+        width: 120px;
+        ;
     }
-    
+
     .input-good-description {
         width: 200px;
     }
