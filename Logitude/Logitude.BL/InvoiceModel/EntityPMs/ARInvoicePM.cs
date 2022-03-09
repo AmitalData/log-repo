@@ -423,5 +423,8 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string InterestReportNumber { get; set; }
         public string InterestReportId { get;  set; }
         public string PaymentReferences { get; set; }
+
+        public string AgentReference1 { get; set; }
+        public string AgentReference2 { get; set; }
     }
 }

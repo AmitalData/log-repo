@@ -1945,8 +1945,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 ARInvoiceTransferStatus transferStatus = myARInvoiceTransferStatusRepository.GetSingleARInvoiceTransferStatus(entityPOCO.TransferStatusCode);
                 entityPM.TransferStatusName = transferStatus != null ? transferStatus.Name : null;
 
-                ShipmentRepository myShipmentRepository = new ShipmentRepository(tenant);
-                entityPM.MainEntityStatus = myShipmentRepository.GetShipmentStatusName(entityPOCO.MainEntityId, tenant);
+                var shipment = new ShipmentRepository(tenant).GetSingleForARInvoiceByIdAndTenant(entityPOCO.MainEntityId, tenant);
+                entityPM.MainEntityStatus = shipment?.EntityStatus?.Name;
+                entityPM.AgentReference1 = shipment?.AgentReference1;
+                entityPM.AgentReference2 = shipment?.AgentReference2;
 
                 if (entityPM.IsAutoCredit)
                 {
