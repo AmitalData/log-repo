@@ -159,20 +159,9 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                     select d).Count();
         }
 
-        public string GetShipmentStatusName(string id, int tenant)
+        public Shipment GetSingleForARInvoiceByIdAndTenant(string id, int tenant)
         {
-            string result = "";
-            string statusId = (from s in context.Shipments where s.Tenant == tenant && s.Id != id select s.StatusId).FirstOrDefault();
-
-            if (!string.IsNullOrEmpty(statusId))
-            {
-                EntityStatus status = EntityStatusRepository.GetSingleEntityStatus(statusId, tenant, true);
-                if (status != null)
-                {
-                    result = status.Name;
-                }
-            }
-            return result;
+            return (from record in context.Shipments where record.Tenant == tenant && record.Id == id select record).Include("EntityStatus").FirstOrDefault();
         }
 
 
