@@ -89,7 +89,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.SetUnits();
         this.SetLabels();
         this.SetFromPort();
-        //this.checkAirShipmentToggle(); will be added in 2022 R2
+        this.checkAirShipmentToggle();
 
     }
     checkAirShipmentToggle() { 
@@ -683,7 +683,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         if (this.DirectionId == 'C') {
             this.SaveChanges();
         } else { 
-           // this.CreateExportShipment(); will be added in 2022 R2
+            this.CreateExportShipment();
         }
 
     }
