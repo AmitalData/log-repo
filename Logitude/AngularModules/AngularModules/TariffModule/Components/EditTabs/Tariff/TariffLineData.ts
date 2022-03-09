@@ -983,7 +983,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     private GetCurrencyCode(index) {
         var currencyCode = "";
         var currencyId = null;
-        if (this.EntityPM != null && !this.EntityPM.IsDifferentCurrenciesPerCharge) {
+        if (this.EntityPM != null && !this.IsDifferentCurrenciesPerCharge) {
             currencyId = this.CurrencyId;
         }
         else {
@@ -1788,6 +1788,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.lineCurrencyId = this.EntityPM.CurrencyId;
 
             this.SetUIProperties_Currency();
+            this.FillAllSurchargesCurrencyMeasurementLabel();
         }
     }
 
@@ -1836,6 +1837,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
                     this["Surcharge" + i + "CurrencyId"] = null;
                 }
             }
+            this.FillAllSurchargesCurrencyMeasurementLabel();
         }
     }
 
