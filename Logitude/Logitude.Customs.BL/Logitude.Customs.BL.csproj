@@ -1136,6 +1136,7 @@
     <Compile Include="EntityQueryServices\Generated\TransportMeansTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\ContainerTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\CertificateExemptionTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\LogisticActionRequestQueryService.cs" />
     <Compile Include="EntityQueryServices\NDMessageActionCodeQueryService.cs" />
     <Compile Include="EntityQueryServices\ModificationAndDiscountTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\SuppInvoiceItemsAbachStatementQueryService.cs" />
