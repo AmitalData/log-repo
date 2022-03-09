@@ -260,18 +260,48 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
 
         private static void SetCustomerReference(DataRow tableRow)
         {
-            if (!tableRow.IsNull("CustomerReference1") && !tableRow["CustomerReference1"].Equals("") && !tableRow.IsNull("CustomerReference2") && !tableRow["CustomerReference2"].Equals(""))
+            var customerReferences = new List<string>();
+            if (!tableRow.IsNull("CustomerReference1") && !tableRow["CustomerReference1"].Equals(""))
             {
-                tableRow.SetField("CustomerReference", tableRow["CustomerReference1"] + "," + tableRow["CustomerReference2"]);
+                customerReferences.AddRange(GetCustomerReferences(tableRow["CustomerReference1"].ToString()));
             }
-            else if (!tableRow.IsNull("CustomerReference1") && !tableRow["CustomerReference1"].Equals("") && tableRow["CustomerReference1"].GetType().Name != "")
+            if (!tableRow.IsNull("CustomerReference2") && !tableRow["CustomerReference2"].Equals(""))
             {
-                tableRow.SetField("CustomerReference", tableRow["CustomerReference1"]);
+                customerReferences.AddRange(GetCustomerReferences(tableRow["CustomerReference2"].ToString()));
             }
-            else if (!tableRow.IsNull("CustomerReference2") && !tableRow["CustomerReference2"].Equals("") && tableRow["CustomerReference2"].GetType().Name != "")
+            if (!tableRow.IsNull("ForwardingCustomerReference1") && !tableRow["ForwardingCustomerReference1"].Equals(""))
             {
-                tableRow.SetField("CustomerReference", tableRow["CustomerReference2"]);
+                customerReferences.AddRange(GetCustomerReferences(tableRow["ForwardingCustomerReference1"].ToString()));
             }
+            if (!tableRow.IsNull("ForwardingCustomerReference2") && !tableRow["ForwardingCustomerReference2"].Equals(""))
+            {
+                customerReferences.AddRange(GetCustomerReferences(tableRow["ForwardingCustomerReference2"].ToString()));
+            }
+            if (!tableRow.IsNull("OrderCustomerReference") && !tableRow["OrderCustomerReference"].Equals(""))
+            {
+                customerReferences.AddRange(GetCustomerReferences(tableRow["OrderCustomerReference"].ToString()));
+            }
+            tableRow.SetField("CustomerReference", string.Join(",", customerReferences));
+
+
+        }
+
+        private static List<string> GetCustomerReferences(string references)
+        {
+            var customerReferences = new List<string>();
+            var splitedCustomerReferences = references.Split(',');
+            if(splitedCustomerReferences.Length == 0)
+            {
+                return customerReferences;
+            }
+            foreach (var item in splitedCustomerReferences)
+            {
+                if (!string.IsNullOrEmpty(item))
+                {
+                    customerReferences.Add(item);
+                }
+            }
+            return customerReferences;
         }
 
         private static void SetGrossWeightUnit(DataRow tableRow)
