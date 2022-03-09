@@ -120,7 +120,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
              query2 = query2.Skip(skippedPorts);
              query2 = query2.Take(queryOperations.PageSize);
 			}
-            return query2.ToList();
+            var sw= System.Diagnostics.Stopwatch.StartNew();
+            var re= query2.ToList();
+            System.Diagnostics.Debug.WriteLine($"took {sw.Elapsed}");
+            return re;
 
     
         }
