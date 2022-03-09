@@ -88,7 +88,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             _MyDeclarationPM = declaration;
 
-            if (customResponse.Response !=null  && customResponse.Response.AdditionalInformation != null && customResponse.Response.AdditionalInformation.FirstOrDefault(x=>x.StatementTypeCode.Value=="28") != null )
+            //if (customResponse.Response !=null  && customResponse.Response.AdditionalInformation != null && customResponse.Response.AdditionalInformation.FirstOrDefault(x=>x.StatementTypeCode.Value=="28") != null )
+            if (customResponse.Response !=null  && customResponse.Response.Status != null && customResponse.Response.Status[0].NameCode.Value == "36")
             {
                 isExportClose = true;
             }
