@@ -2470,9 +2470,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_GeneralOWrongVatNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.WrongVatNumber", DefaultText = "Wrong Vat Number",LocalDefaultText = @"חפ שגוי", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMCOthersImageLibraries = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.ImageLibraries", DefaultText = "Image Library",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
- 		   TextCode GeneralTextCode_AccountingGeneralOLedgerTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.LedgerTransactions", DefaultText = "Ledger Transactions",LocalDefaultText = @"תנועות", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-            TextCode GeneralTextCode_AccountingGeneralOLedgerTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.LedgerTransactions", DefaultText = "Ledger Transactions", LocalDefaultText = @"תנועות", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+           TextCode GeneralTextCode_AccountingGeneralOLedgerTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.LedgerTransactions", DefaultText = "Ledger Transactions", LocalDefaultText = @"תנועות", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
 
 
