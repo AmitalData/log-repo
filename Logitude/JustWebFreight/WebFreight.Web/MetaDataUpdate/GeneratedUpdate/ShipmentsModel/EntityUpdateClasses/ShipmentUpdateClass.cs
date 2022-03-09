@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "7e4c74d0017d98eb1cb7364a475dffe5";
+		public const string HashString = "56a7edca35e443eff282b1891c388058";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -32709,10 +32709,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						RecordType =  "Shipment",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "TerminalAvailable",
@@ -33597,10 +33598,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						RecordType =  "Shipment",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "WarehouseLegActualEntryDate",
@@ -33723,10 +33725,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						RecordType =  "Shipment",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "WarehouseLegActualReleaseDate",
@@ -49348,7 +49351,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn ShipmentsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShipmentsQuery.Id,QueryCode = ShipmentsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Shipment.MainCarriageATD" , ColumnWidth = 90 }, addedQueryColumns);
 
-             AdvancedQueryFilter ShipmentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.OperationalOpenHousesDirects", PredefinedValue = "false",PredefinedValue2 = null, QueryId = ShipmentsQuery.Id,QueryCode = ShipmentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter ShipmentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.OperationalOpenHousesDirects", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = ShipmentsQuery.Id,QueryCode = ShipmentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -49379,7 +49382,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn MastersQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MastersQuery.Id,QueryCode = MastersQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Shipment.MainCarriageATD" , ColumnWidth = 110 }, addedQueryColumns);
 
-             AdvancedQueryFilter MastersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.OperationalOpenMastersDirects", PredefinedValue = "false",PredefinedValue2 = null, QueryId = MastersQuery.Id,QueryCode = MastersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter MastersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.OperationalOpenMastersDirects", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = MastersQuery.Id,QueryCode = MastersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -49410,7 +49413,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn OpenReceivablesShipmentsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenReceivablesShipmentsQuery.Id,QueryCode = OpenReceivablesShipmentsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Shipment.ProfitInLocalCurrency" , ColumnWidth = 75 }, addedQueryColumns);
 
-             AdvancedQueryFilter OpenReceivablesShipmentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.AccountingOpenHousesDirects", PredefinedValue = "True",PredefinedValue2 = null, QueryId = OpenReceivablesShipmentsQuery.Id,QueryCode = OpenReceivablesShipmentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter OpenReceivablesShipmentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.AccountingOpenHousesDirects", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = OpenReceivablesShipmentsQuery.Id,QueryCode = OpenReceivablesShipmentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -49441,7 +49444,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn OpenPayablesMastersQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPayablesMastersQuery.Id,QueryCode = OpenPayablesMastersQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Shipment.ProfitInLocalCurrency" , ColumnWidth = 75 }, addedQueryColumns);
 
-             AdvancedQueryFilter OpenPayablesMastersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.AccountingOpenMastersDirects", PredefinedValue = "True",PredefinedValue2 = null, QueryId = OpenPayablesMastersQuery.Id,QueryCode = OpenPayablesMastersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter OpenPayablesMastersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.AccountingOpenMastersDirects", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = OpenPayablesMastersQuery.Id,QueryCode = OpenPayablesMastersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -49477,7 +49480,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn ExpectedDeparturesQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpectedDeparturesQuery.Id,QueryCode = ExpectedDeparturesQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Shipment.Consignee" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter ExpectedDeparturesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.ExpectedDepartures", PredefinedValue = "false",PredefinedValue2 = null, QueryId = ExpectedDeparturesQuery.Id,QueryCode = ExpectedDeparturesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter ExpectedDeparturesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.ExpectedDepartures", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = ExpectedDeparturesQuery.Id,QueryCode = ExpectedDeparturesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -49513,7 +49516,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn AirlinesUpdatesQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesUpdatesQuery.Id,QueryCode = AirlinesUpdatesQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Shipment.Consignee" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter AirlinesUpdatesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.AirlinesUpdates", PredefinedValue = "false",PredefinedValue2 = null, QueryId = AirlinesUpdatesQuery.Id,QueryCode = AirlinesUpdatesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter AirlinesUpdatesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.AirlinesUpdates", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = AirlinesUpdatesQuery.Id,QueryCode = AirlinesUpdatesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -49546,7 +49549,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn AllFollowUpsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id,QueryCode = AllFollowUpsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Shipment.ShipmentType" , ColumnWidth = 92 }, addedQueryColumns);
 
-             AdvancedQueryFilter AllFollowUpsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.AllFollowUps", PredefinedValue = "12/4/2018 12:00:00 AM",PredefinedValue2 = null, QueryId = AllFollowUpsQuery.Id,QueryCode = AllFollowUpsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter AllFollowUpsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.AllFollowUps", PredefinedValue = "12/4/2018 12:00:00 AM",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllFollowUpsQuery.Id,QueryCode = AllFollowUpsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -49579,7 +49582,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn MyFollowUpsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id,QueryCode = MyFollowUpsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Shipment.ShipmentType" , ColumnWidth = 92 }, addedQueryColumns);
 
-             AdvancedQueryFilter MyFollowUpsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.MyFollowUps", PredefinedValue = "12/4/2018 12:00:00 AM",PredefinedValue2 = null, QueryId = MyFollowUpsQuery.Id,QueryCode = MyFollowUpsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter MyFollowUpsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.MyFollowUps", PredefinedValue = "12/4/2018 12:00:00 AM",PredefinedValue2 = null, CustomPredefined = false, QueryId = MyFollowUpsQuery.Id,QueryCode = MyFollowUpsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -49610,7 +49613,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn AllShipmentsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllShipmentsQuery.Id,QueryCode = AllShipmentsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Shipment.MainCarriageATD" , ColumnWidth = 90 }, addedQueryColumns);
 
-             AdvancedQueryFilter AllShipmentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.AllShipments", PredefinedValue = "true",PredefinedValue2 = null, QueryId = AllShipmentsQuery.Id,QueryCode = AllShipmentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter AllShipmentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.AllShipments", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllShipmentsQuery.Id,QueryCode = AllShipmentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -49641,7 +49644,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn AllMastersQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMastersQuery.Id,QueryCode = AllMastersQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Shipment.MainCarriageATD" , ColumnWidth = 90 }, addedQueryColumns);
 
-             AdvancedQueryFilter AllMastersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.AllMasters", PredefinedValue = "true",PredefinedValue2 = null, QueryId = AllMastersQuery.Id,QueryCode = AllMastersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter AllMastersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.AllMasters", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllMastersQuery.Id,QueryCode = AllMastersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -49672,7 +49675,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn ImportShipmentsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImportShipmentsQuery.Id,QueryCode = ImportShipmentsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Shipment.MainCarriageATD" , ColumnWidth = 90 }, addedQueryColumns);
 
-             AdvancedQueryFilter ImportShipmentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.ImportShipments", PredefinedValue = "True",PredefinedValue2 = null, QueryId = ImportShipmentsQuery.Id,QueryCode = ImportShipmentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter ImportShipmentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.ImportShipments", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = ImportShipmentsQuery.Id,QueryCode = ImportShipmentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -49703,7 +49706,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn CancelledShipmentsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledShipmentsQuery.Id,QueryCode = CancelledShipmentsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Shipment.MainCarriageATD" , ColumnWidth = 90 }, addedQueryColumns);
 
-             AdvancedQueryFilter CancelledShipmentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.IsCancelled", PredefinedValue = "True",PredefinedValue2 = null, QueryId = CancelledShipmentsQuery.Id,QueryCode = CancelledShipmentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter CancelledShipmentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.IsCancelled", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = CancelledShipmentsQuery.Id,QueryCode = CancelledShipmentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -49725,7 +49728,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn SentFSRQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentFSRQuery.Id,QueryCode = SentFSRQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Shipment.CarrierLastStatusDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter SentFSRQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.SentFSR", PredefinedValue = "True",PredefinedValue2 = null, QueryId = SentFSRQuery.Id,QueryCode = SentFSRQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter SentFSRQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.SentFSR", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = SentFSRQuery.Id,QueryCode = SentFSRQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -49758,7 +49761,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn CustomerShipmentActualDataQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerShipmentActualDataQuery.Id,QueryCode = CustomerShipmentActualDataQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Shipment.CustomerName" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter CustomerShipmentActualDataQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.CustomerActualDataShipments", PredefinedValue = "true",PredefinedValue2 = null, QueryId = CustomerShipmentActualDataQuery.Id,QueryCode = CustomerShipmentActualDataQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter CustomerShipmentActualDataQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.CustomerActualDataShipments", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = CustomerShipmentActualDataQuery.Id,QueryCode = CustomerShipmentActualDataQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -49789,7 +49792,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn CreditLimitBlockedShipmentsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreditLimitBlockedShipmentsQuery.Id,QueryCode = CreditLimitBlockedShipmentsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Shipment.MainCarriageATD" , ColumnWidth = 90 }, addedQueryColumns);
 
-             AdvancedQueryFilter CreditLimitBlockedShipmentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.IsNewARInvoiceBlocked", PredefinedValue = "true",PredefinedValue2 = null, QueryId = CreditLimitBlockedShipmentsQuery.Id,QueryCode = CreditLimitBlockedShipmentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter CreditLimitBlockedShipmentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.IsNewARInvoiceBlocked", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = CreditLimitBlockedShipmentsQuery.Id,QueryCode = CreditLimitBlockedShipmentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -49820,7 +49823,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn ExpDepNotTransmittedQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpDepNotTransmittedQuery.Id,QueryCode = ExpDepNotTransmittedQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Shipment.MainCarriageATD" , ColumnWidth = 110 }, addedQueryColumns);
 
-             AdvancedQueryFilter ExpDepNotTransmittedQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.ExpectedDeparturesNotTransmitted", PredefinedValue = "True",PredefinedValue2 = null, QueryId = ExpDepNotTransmittedQuery.Id,QueryCode = ExpDepNotTransmittedQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter ExpDepNotTransmittedQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.ExpectedDeparturesNotTransmitted", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = ExpDepNotTransmittedQuery.Id,QueryCode = ExpDepNotTransmittedQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -49849,7 +49852,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn ShippingInstructionsLast7DaysQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippingInstructionsLast7DaysQuery.Id,QueryCode = ShippingInstructionsLast7DaysQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Shipment.INTTRASIError" , ColumnWidth = 500 }, addedQueryColumns);
 
-             AdvancedQueryFilter ShippingInstructionsLast7DaysQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.ShippingInstructionsLast7Days", PredefinedValue = "True",PredefinedValue2 = null, QueryId = ShippingInstructionsLast7DaysQuery.Id,QueryCode = ShippingInstructionsLast7DaysQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter ShippingInstructionsLast7DaysQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.ShippingInstructionsLast7Days", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = ShippingInstructionsLast7DaysQuery.Id,QueryCode = ShippingInstructionsLast7DaysQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -49876,7 +49879,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn ContainerStatusLast7DaysQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerStatusLast7DaysQuery.Id,QueryCode = ContainerStatusLast7DaysQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Shipment.INTTRASIError" , ColumnWidth = 500 }, addedQueryColumns);
 
-             AdvancedQueryFilter ContainerStatusLast7DaysQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.ContainerStatusLast7Days", PredefinedValue = "True",PredefinedValue2 = null, QueryId = ContainerStatusLast7DaysQuery.Id,QueryCode = ContainerStatusLast7DaysQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter ContainerStatusLast7DaysQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.ContainerStatusLast7Days", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = ContainerStatusLast7DaysQuery.Id,QueryCode = ContainerStatusLast7DaysQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -49906,7 +49909,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn EBookingInProgressQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EBookingInProgressQuery.Id,QueryCode = EBookingInProgressQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Shipment.Consignee" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter EBookingInProgressQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.EBookingInProgress", PredefinedValue = "True",PredefinedValue2 = null, QueryId = EBookingInProgressQuery.Id,QueryCode = EBookingInProgressQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter EBookingInProgressQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Shipment.EBookingInProgress", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = EBookingInProgressQuery.Id,QueryCode = EBookingInProgressQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
