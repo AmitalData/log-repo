@@ -41,7 +41,7 @@ export class LogitudeGridExportToExcelService {
     openDialog() {
         return this.dialog.open(MessageWindowComponent, {
             data: {
-                title: 'Export to excell',
+                title: 'Export to excel',
                 isLoading: true,
             },
         });
