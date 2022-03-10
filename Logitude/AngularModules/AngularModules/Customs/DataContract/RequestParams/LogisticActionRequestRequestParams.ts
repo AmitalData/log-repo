@@ -1,6 +1,7 @@
 import { RequestParamsBase } from './RequestParamsBase';
 
 export class LogisticActionRequestRequestParams extends RequestParamsBase {
+    public LogisticActionRequestId: string;
     public ExporterIdentifierType: string;
     public ExporterNumber: string;
     public PassportCountry: string;
@@ -14,6 +15,5 @@ export class LogisticActionRequestRequestParams extends RequestParamsBase {
     public CargoIdentifierKey3: string;
     public PackagingTypeCode: string;
     public Quantity: number;
-    public LogisticActionRequestId: string;
     public CustomsFile: string;
 }
