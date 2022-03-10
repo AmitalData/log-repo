@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
-		public const string HashString = "b670fe6f14d88a63d5c6b105a388df56";
+		public const string HashString = "ab386d71934432e38bb7b64b2043196a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5072,10 +5072,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastStatusRemarks",
 					  						DefaultText =  "Last Status Remarks",
-					  						FullLocalDefaultText =  "הערות לסטטוס אחרון",
+					  						FullLocalDefaultText =  "הערות סטטוס אחרון",
 					  						ListFieldLable =  "LastStatusRemarksListLable",
 					  						ListLableDefaultText =  "Last Status Remarks",
-					  						ListLocalDefaultText =  "הערות לסטטוס אחרון",
+					  						ListLocalDefaultText =  "הערות סטטוס אחרון",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -5752,6 +5752,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 
              AdvancedQueryFilter FilesToPayQueryFilter_6 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.DeclarationReferantData.IsExceptionReasonsListNull", PredefinedValue = "true",PredefinedValue2 = null, QueryId = FilesToPayQuery.Id,QueryCode = FilesToPayQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter FilesToPayQueryFilter_7 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.DeclarationReferantData.IsPaymentDateNull", PredefinedValue = "true",PredefinedValue2 = null, QueryId = FilesToPayQuery.Id,QueryCode = FilesToPayQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   
 	      

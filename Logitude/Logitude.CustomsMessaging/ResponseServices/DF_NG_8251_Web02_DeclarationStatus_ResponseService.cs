@@ -82,7 +82,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         if (customResponse.DeclarationStatusAnswer.Count() > 1
                         && requestParams.LoggingObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster"))
                         {
-                            throw new System.Exception();
+                            //throw new System.Exception();
+                            var mess = "SequenceNumber: " + declarationStatus_ResponseDeclarationStatusAnswer.SequenceNumber + " " + declarationStatus_ResponseDeclarationStatusAnswer.ExceptionPerQuery;
+                            var errMess = XmlGenericUtil<DF_NG_8251_Web02_DeclarationStatus_ResponseDeclarationStatusAnswer>.SerializeObject(declarationStatus_ResponseDeclarationStatusAnswer);
+                            MyResponseData.ResponseStatusXML = errMess;
+                            //MyResponseData.Succeeded = true;
+                            MyResponseData.HasException = true;
+                            MyResponseData.UserMessage = mess;
+                            LogMessagingUtil.Instance.AppendLine(mess);
+
+                            continue;
                         }
                         else
                         {

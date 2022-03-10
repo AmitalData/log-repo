@@ -7358,6 +7358,13 @@
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;FilesToPay&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsPaymentDateNull&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
