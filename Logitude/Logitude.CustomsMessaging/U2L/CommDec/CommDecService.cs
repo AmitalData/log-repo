@@ -129,6 +129,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
         //    return _tenant;
         //}
         public string _PBId;
+        private DeclarationCourierStatusPM _currentDeclarationCourierStatusPM;
 
         public void ProccessGenericRequestReal(
               string xmlLOGICOMMDEC, int tenant, string Curruser, string PBId,
@@ -289,6 +290,43 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 string existId = myQueryService.GetIdByCustomFileNo(_LogitudeCommDecFile.CustomFileNo, _tenant);
                 _LogitudeCommDecFile.Id = existId;
             }
+
+            //Delete Supplier Invoice
+
+            if (mode == "1" || mode == "2")
+            {
+                //Delete Supplier Invoice
+                MyGenericResponseObj.Stage = "GetSingle - To delete";
+                _context = CustomContext.GetContext(ResolvedTenant());
+                var myQueryService2 = new DeclarationQueryService(_context);
+                this._MyDeclarationPM = myQueryService2.GetSingle(this._LogitudeCommDecFile.Id, true, false);
+                if (this._MyDeclarationPM == null)
+                {
+                    throw new BusinessErrorException("LOGITUDEFILE is " + this._LogitudeCommDecFile.Id + " but not found");
+                }
+                AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                ICustomContext dbContext2 = CustomContext.GetContext(ResolvedTenant());
+                DeclarationUpdateService DeclarationUpdateService = new DeclarationUpdateService(dbContext2, new Dictionary<string, IContext>(), ResolvedTenant());
+                this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                this._MyDeclarationPM.MarkAsChanged = true;
+
+                DeclarationUpdateService.DeclarationSupplierInvoicesFastDelete(_MyDeclarationPM, dbContext2);
+                dbContext2 = CustomContext.GetContext(ResolvedTenant());
+                DeclarationUpdateService = new DeclarationUpdateService(dbContext2, new Dictionary<string, IContext>(), ResolvedTenant());
+
+                AppendLogLine("MarkToDeleteSupplierInvoice:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                _MyDeclarationPM.CurrentContextTag = UpsertActionConst;
+
+                this._MyDeclarationPM.MyEcomInsert = new EcomInsert()
+                {
+                    MyCourierMasterPM = _CourierMasterPM,
+                    MyDeclarationCourierStatusPM = _currentDeclarationCourierStatusPM
+                };
+                DeclarationUpdateService.Update(this._MyDeclarationPM, true);
+                AppendLogLine("Update:MarkToDeleteSupplierInvoice:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
+            }
+
 
             /////////////////////////////////////////////////////////////
             _context = CustomContext.GetContext(_tenant);
@@ -606,6 +644,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     {
                         DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                         declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                        _currentDeclarationCourierStatusPM = currentDeclarationCourierStatusPM;
                     }
                 }
             }
