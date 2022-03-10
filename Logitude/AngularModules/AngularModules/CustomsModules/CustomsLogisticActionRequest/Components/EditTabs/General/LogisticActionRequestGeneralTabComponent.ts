@@ -350,6 +350,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         this.SaveEntityChanges();
 
         var param = new LogisticActionRequestRequestParams();
+        param.LogisticActionRequestId = this.entityPM.Id;
         param.ExporterIdentifierType =  this.entityPM.ExporterIdentifierType;
         param.ExporterNumber = this.entityPM.ExporterNumber;
         param.PassportCountry = this.entityPM.PassportCountry;
@@ -363,10 +364,9 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         param.CargoIdentifierKey3 = this.entityPM.CargoIdentifierKey3;
         param.PackagingTypeCode = this.entityPM.PackagingTypeCode;
         param.Quantity = this.entityPM.Quantity;
-        param.LogisticActionRequestId = this.entityPM.Id;
         param.CustomsFile = this.entityPM.ExportFileNo;
         
-        const res: string = await this.logisticActionRequestWebService.SendContainerization(param);
+        const res: string = await this.logisticActionRequestWebService.SendCustomsMessage8410(param);
 
         SessionLocator.SelectedSession.StopBusyIndicator();
     }

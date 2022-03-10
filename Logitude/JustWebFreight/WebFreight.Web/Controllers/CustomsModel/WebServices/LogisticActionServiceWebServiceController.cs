@@ -20,8 +20,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         {
             try
             {
-                var myRequestMessagingService = new DCAInLG_NG_8410_LogisticActionRequestMessageMessagingService();
-                var resData = "";//myRequestMessagingService.Send(requestParams);
+                var resData = new DCAInLG_NG_8410_LogisticActionRequestMessageMessagingService().Send(requestParams);
                 return Request.CreateResponse(HttpStatusCode.OK, resData);
             }
             catch (Exception ex)
