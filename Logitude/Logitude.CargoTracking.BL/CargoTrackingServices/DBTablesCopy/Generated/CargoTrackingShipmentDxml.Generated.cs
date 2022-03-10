@@ -81,7 +81,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='ShipperName' Type='nvarchar' Size='70'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='CustomerReference' Type='varchar' Size='101'>"+
+"  <Column Name='CustomerReference' Type='nvarchar' Size='-1'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='IsMainRecord' Type='bit'>"+

@@ -2030,6 +2030,10 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
                 entityPM.ShipperName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ShipperName));
             }
+            if (!String.IsNullOrWhiteSpace(entityPM.CustomerReference)) //T4 find type == nText 
+            {
+                entityPM.CustomerReference = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CustomerReference));
+            }
             if (!String.IsNullOrWhiteSpace(entityPM.FromWarehouseNotes)) //T4 find type == nText 
             {
                 entityPM.FromWarehouseNotes = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.FromWarehouseNotes));
