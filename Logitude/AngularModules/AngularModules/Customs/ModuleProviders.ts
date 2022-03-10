@@ -435,8 +435,6 @@ import { LogisticActionRequestListService } from './Services/StandardLists/Logis
 import { LogisticActionRequestTypeListService } from './Services/StandardLists/LogisticActionRequestTypeListService';
 import { LogisticActionResponseReqSListService } from './Services/StandardLists/LogisticActionResponseReqSListService';
 import { LogisticActionRequestPMService } from './Services/StandardPMs/LogisticActionRequestPMService';
-import { LogisticActionRequestWebService } from './Services/WebServices/LogisticActionRequestWebService';
-
 
 
 export class ModuleProviders {
@@ -856,7 +854,6 @@ export class ModuleProviders {
             case "ContainerizationMessagesService": { myResult = new ContainerizationMessagesService(); break; }
             case "NewQuoteOPWebService": { myResult = new NewQuoteOPWebService(); break; }
             case "CustomsRequestsSheetWebService": { myResult = new CustomsRequestsSheetWebService(); break; }
-            case "LogisticActionRequestWebService": { myResult = new LogisticActionRequestWebService(); break; }
 
 
             //#endregion

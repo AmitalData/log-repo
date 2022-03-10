@@ -27,6 +27,6 @@ export class LogisticActionRequestWebService {
             { headers: ServiceHelper.GetHttpHeaders().headers }
         );
 
-        return this.logtuideTableDataService.standartSendAjax(ajax);
+        return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
     }
 }

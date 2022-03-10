@@ -16,6 +16,7 @@ import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator'
 import { LogisticActionRequestPMService } from 'Customs/Services/StandardPMs/LogisticActionRequestPMService';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
 import { LogisticActionRequestRequestParams } from 'Customs/DataContract/RequestParams/LogisticActionRequestRequestParams';
+import { LogisticActionRequestWebService } from 'Customs/Services/WebServices/LogisticActionRequestWebService';
 
 @Component({
     templateUrl: './LogisticActionRequestGeneralTabComponent.html',
@@ -143,6 +144,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         private logtuideTableDataService: LogtuideTableDataService,
         private cdr: ChangeDetectorRef,
         public entityArgs: EntityArgs,
+        public logisticActionRequestWebService: LogisticActionRequestWebService,
     ) {
         super();
         this.entityPM = new LogisticActionRequestPM();
@@ -342,7 +344,9 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     }
 
 
-    OnCustomSendOptionsButtonClick(customSendOptionsArgs) {
+    async OnCustomSendOptionsButtonClick(customSendOptionsArgs) {
+        SessionLocator.SelectedSession.StartBusyIndicatorSaving();
+
         this.SaveEntityChanges();
 
         var param = new LogisticActionRequestRequestParams();
@@ -361,6 +365,10 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         param.Quantity = this.entityPM.Quantity;
         param.LogisticActionRequestId = this.entityPM.Id;
         param.CustomsFile = this.entityPM.ExportFileNo;
+        
+        const res: string = await this.logisticActionRequestWebService.SendContainerization(param);
+
+        SessionLocator.SelectedSession.StopBusyIndicator();
     }
 
 
