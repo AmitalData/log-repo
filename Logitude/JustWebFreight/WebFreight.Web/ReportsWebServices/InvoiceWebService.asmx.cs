@@ -3811,6 +3811,9 @@ namespace WebFreight.Web.ReportsWebServices
                                     myRecord.PackagesQuantity = myShipment.PackagesQuantity == null ? "" : String.Format("{0:N0}", myShipment.PackagesQuantity.Value);
                                     myRecord.ShipmentNumber = myShipment.ShipmentNumber;
                                     myRecord.ShipmentRouting = myShipment.Routing;
+                                    myRecord.ConnectedQuoteNumber = myShipment.QuoteNumber;
+                                    customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, myShipment, myRecord);
+
 
                                     #region From:To Location
                                     if (myShipment.TransportModeId == "I" && myShipment.DirectionId == "D")
