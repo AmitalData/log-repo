@@ -58,9 +58,19 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                     else queueService.Complete();
                 }
             }
-            catch (Exception ex)
+            catch (AggregateException aggregateException)
             {
-                HandleDocumentsExecutionException(ex);
+
+                foreach (var exception in aggregateException.Flatten().InnerExceptions)
+                {
+                    ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Document execution queue worker role start", null, null);
+                }
+                Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
+            }
+            catch (Exception exception)
+            {
+                ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Document execution queue worker role start", null, null);
+                Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
             }
         }
 
