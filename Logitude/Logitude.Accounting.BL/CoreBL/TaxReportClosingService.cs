@@ -19,20 +19,30 @@ namespace Logitude.Accounting.BL.CoreBL
 {
     public class TaxReportClosingService
     {
+        private const string RequiredAccountsMessage = "Please make sure you select all required accounts in full accounting settings";
         int tenant;
         string taxReportId;
-        JournalPM journalPM;
         TaxReportPM taxReportPM;
         FullAccountingSettingPM fullAccountingSettings;
         TenantPM tenantPM;
+        public JournalPM journalPM;
         public TaxReportClosingService(int tenant, string taxReportId)
         {
             this.tenant = tenant;
             this.taxReportId = taxReportId;
-            EnsureAbilityToCreateClosingJournal();
-            GetRelatedEntities();
 
+            GetRelatedEntities();
+            
+            Validate();
         }
+
+        private void Validate()
+        {
+            EnsureAbilityToCreateClosingJournal();
+            ValidateDate();
+            ValidateFullAccountingSettingsFields();
+        }
+
         private void GetRelatedEntities()
         {
             GetTaxReport();
@@ -61,7 +71,19 @@ namespace Logitude.Accounting.BL.CoreBL
                 throw new ApplicationException(TranslateTextsClass.Translate("TaxReport.O.ClosingJournalValidationMessage",tenant));
         }
 
-
+        private void ValidateDate()
+        {
+            if(taxReportPM.TaxReportMonth >= TenantServerConfigration.GetStartOfCurrentMonthDate(tenant))
+                throw new ApplicationException(TranslateTextsClass.Translate("TaxReport.O.CantCloseThisMonth", tenant));
+        }
+        private void ValidateFullAccountingSettingsFields()
+        {
+            if (fullAccountingSettings.TaxInstitutionGLAccountId == null
+                || fullAccountingSettings.DefaultDifferencesGLAccountId == null
+                || fullAccountingSettings.VATInputsGLAccountId == null
+                || fullAccountingSettings.VATOutputGLAccountId == null)
+                throw new ApplicationException(RequiredAccountsMessage);
+        }
 
         public void CloseTaxReport()
         {
@@ -93,7 +115,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private void SubmitJournalAddionalData(JournalAdditionalDataPM journalAdditionalDataPM)
         {
-            IAccountingContext context = AccountingContext.GetContext(journalPM.Tenant);
+            IAccountingContext accountingContext = AccountingContext.GetContext(journalPM.Tenant);
             JournalAdditionalDataUpdateService journalAdditionalDataUpdateService = new JournalAdditionalDataUpdateService(accountingContext, new Dictionary<string, IContext>(), journalAdditionalDataPM.Tenant);
             journalAdditionalDataUpdateService.Update(journalAdditionalDataPM, true);
         }
@@ -161,7 +183,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 CreatedByUserId = loggedContact.Id,
                 IsVoided = false,
 
-                AccountingDate = TenantServerConfigration.GetLastOfMonthDate(tenant),
+                AccountingDate = TenantServerConfigration.GetLastOfMonthDate(taxReportPM.TaxReportMonth),
                 TypeCode = JournalTypeValues.Regular,
                 StatusCode = JournalStatusTypeValues.Approved,
                 AccountingEntityCode = AccountingEntityValues.TaxReport,
@@ -169,6 +191,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 AccountingEntityReference = taxReportPM.TaxReportNumber,
                 JournalLines = new List<JournalLinePM>()
             };
+
+
         }
 
         private void CreateJournalLines()
@@ -193,9 +217,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 Line = 1,
                 ActionCode = JournalActionType.Credit,
 
-                DueDate = TenantServerConfigration.GetLastOfMonthDate(tenant),
-                DocumentDate = TenantServerConfigration.GetLastOfMonthDate(tenant),
-                AccountingDate = TenantServerConfigration.GetLastOfMonthDate(tenant),
+                DueDate = TenantServerConfigration.GetStartOfMonthDate(taxReportPM.TaxReportMonth),
+                DocumentDate = TenantServerConfigration.GetLastOfMonthDate(taxReportPM.TaxReportMonth),
+                AccountingDate = TenantServerConfigration.GetLastOfMonthDate(taxReportPM.TaxReportMonth),
 
                 CurrencyId = tenantPM.CurrencyId,
                 LocalAmount = taxReportPM.AmountForPayRefund.Value,
@@ -209,7 +233,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
             journalPM.JournalLines.Add(line);
         }
-
         private void CreateVatOutputDebitLine()
         {
             var line = new JournalLinePM()
@@ -219,9 +242,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 Line = 4,
                 ActionCode = JournalActionType.Debit,
 
-                DueDate = TenantServerConfigration.GetLastOfMonthDate(tenant),
-                DocumentDate = TenantServerConfigration.GetLastOfMonthDate(tenant),
-                AccountingDate = TenantServerConfigration.GetLastOfMonthDate(tenant),
+                DueDate = TenantServerConfigration.GetLastOfMonthDate(taxReportPM.TaxReportMonth),
+                DocumentDate = TenantServerConfigration.GetLastOfMonthDate(taxReportPM.TaxReportMonth),
+                AccountingDate = TenantServerConfigration.GetLastOfMonthDate(taxReportPM.TaxReportMonth),
 
                 CurrencyId = tenantPM.CurrencyId,
                 LocalAmount = taxReportPM.OutputTaxAmount.Value + taxReportPM.OutputTaxAmountRound.Value,
@@ -246,9 +269,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 Line = 2,
                 ActionCode = JournalActionType.Credit,
 
-                DueDate = TenantServerConfigration.GetLastOfMonthDate(tenant),
-                DocumentDate = TenantServerConfigration.GetLastOfMonthDate(tenant),
-                AccountingDate = TenantServerConfigration.GetLastOfMonthDate(tenant),
+                DueDate = TenantServerConfigration.GetLastOfMonthDate(taxReportPM.TaxReportMonth),
+                DocumentDate = TenantServerConfigration.GetLastOfMonthDate(taxReportPM.TaxReportMonth),
+                AccountingDate = TenantServerConfigration.GetLastOfMonthDate(taxReportPM.TaxReportMonth),
 
                 CurrencyId = tenantPM.CurrencyId,
                 LocalAmount = taxReportPM.EquipmentInputsTaxAmount.Value + taxReportPM.OtherInputsTaxAmount.Value + taxReportPM.InputsTaxAmountRound.Value,
@@ -273,9 +296,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 Line = 3,
                 ActionCode = JournalActionType.Credit,
 
-                DueDate = TenantServerConfigration.GetLastOfMonthDate(tenant),
-                DocumentDate = TenantServerConfigration.GetLastOfMonthDate(tenant),
-                AccountingDate = TenantServerConfigration.GetLastOfMonthDate(tenant),
+                DueDate = TenantServerConfigration.GetLastOfMonthDate(taxReportPM.TaxReportMonth),
+                DocumentDate = TenantServerConfigration.GetLastOfMonthDate(taxReportPM.TaxReportMonth),
+                AccountingDate = TenantServerConfigration.GetLastOfMonthDate(taxReportPM.TaxReportMonth),
 
                 CurrencyId = tenantPM.CurrencyId,
                 LocalAmount = taxReportPM.OutputTaxAmountRound.Value - taxReportPM.InputsTaxAmountRound.Value,

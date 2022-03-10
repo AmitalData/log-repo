@@ -175,7 +175,7 @@ namespace Logitude.Accounting.BL.CoreBL
         public GLAccountPM GetGLAccount(string GLAccountId, int tenant)
         {
             var a = new GLAccountQueryService(_AccountingContext);
-            return a.GetSingle(GLAccountId, false, true);
+            return a.GetSingle(GLAccountId, false, false);
         }
 
 

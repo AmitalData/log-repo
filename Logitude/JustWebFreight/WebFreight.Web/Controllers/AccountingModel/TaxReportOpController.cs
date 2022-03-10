@@ -31,6 +31,8 @@ using Logitude.Accounting.BL.CoreBL.Testers;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
+using System.Transactions;
 
 namespace WebFreight.Web.Controllers.AccountingModel
 {
@@ -462,6 +464,28 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
                 return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        public HttpResponseMessage PostClosingTaxReportJournal(string taxReportId)
+        {
+            try
+            {
+                int tenant = GetAuthinticatedTenant();
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    TaxReportClosingService closingService = new TaxReportClosingService(tenant, taxReportId);
+                    closingService.CloseTaxReport();
+
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, closingService.journalPM);
+                }
+
             }
             catch (Exception ex)
             {

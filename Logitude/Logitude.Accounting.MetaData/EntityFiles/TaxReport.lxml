@@ -3138,6 +3138,12 @@
       LocalDefaultText="&quot;ישנם תנועות מותאמות המשתתפות בדוח המע&quot;מ , יש לבטל תחילה את ההתאמות בכרטיסי העסקאות /תשומות בטרם ביצוע פקודת הסגירה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.CantCloseThisMonth&quot;"
+      DefaultText="&quot;Can't close a tax report for the current month, please wait until the end of this month&quot;"
+      LocalDefaultText="&quot;לא ניתן לסגור דוח מע''מ עבור החודש הנוכחי מכיוון שהחודש טרם הסתיים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

@@ -168,6 +168,17 @@ export class TaxReportExtendedPMService {
             catchError(ServiceHelper.HandleServiceError));
     }
 
+    CloseTaxReport(taxReportId: string)
+    {
+        return this.httpClient.post(this._apiUrl + '/PostClosingTaxReportJournal?taxReportId=' + taxReportId,null, ServiceHelper.GetHttpHeaders()).pipe(
+            map(response =>
+            {
+                let serviceResponse = response;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+    }
+
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: TaxReportPM = null) {
 
 
