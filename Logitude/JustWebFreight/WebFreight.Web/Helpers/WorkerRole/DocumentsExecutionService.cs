@@ -65,6 +65,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                 {
                     ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Document execution queue worker role start", null, null);
                 }
+                Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
             }
             catch (Exception exception)
             {
