@@ -93,10 +93,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 updateService.Update(entity, true);
                 MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 MyRequestSheetParam.EntityId2 = entity.DeclarationId;
+                MyRequestSheetParam.EntityId1 = entity.Id;
 
             }
-            
-            MyRequestSheetParam.EntityId1 = entity.Id;
+
             MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.ExportStorage");
 
             
