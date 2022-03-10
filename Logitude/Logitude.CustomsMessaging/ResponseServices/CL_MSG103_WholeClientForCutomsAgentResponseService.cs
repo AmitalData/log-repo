@@ -107,7 +107,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this._MyClientSearchPM = new ClientPM();
                     _MyClientSearchPM.ChangeSetOp = ChangeSetOperation.Insert;
                     _MyClientSearchPM.Tenant = requestParams.Tenant;
-                    _MyClientSearchPM.Code = requestParams.ExternalId;
+                    _MyClientSearchPM.Code = externalID;
                     _MyClientSearchPM.PassportNumber = requestParams.PassportNumber;
                     _MyClientSearchPM.PassportTypeCode = requestParams.PassportTypeCode;
                     _MyClientSearchPM.PassportCountryCode = requestParams.PassportCountryCode;
