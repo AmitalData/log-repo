@@ -164,17 +164,17 @@
 
 	 ------------------------------------------------------
 
-	 	 insert into Fact_Containers ([Id], [Source Tenant], [Parent Tenant], [Actual Empty Pickup Date], [Empty Pickup Location Port], [Estimated Empty Pickup Date], [Pre Carriage Location Port], [POL Location Port], [Estimated POL Arrival],
-	 [Actual POL Arrival], [Estimated POL Loaded], [Actual POL Loaded], [Estimated POL Vessel Departure], [Actual POL Vessel Departure], [Transshipment1 Location Port], [Estimated Transshipment1 Vessel Arrival], [Actual Transshipment1 Vessel Arrival],
-	 [Estimated Transshipment1 Discharge], [Actual Transshipment1 Discharge], [Estimated Transshipment1 Loaded], [Actual Transshipment1 Loaded], [Estimated Transshipment1 Vessel Departure], [Actual Transshipment1 Vessel Departure], 
-	 [Transshipment2 Location Port], [Estimated Transshipment2 Vessel Arrival], [Actual Transshipment2 Vessel Arrival], [Estimated Transshipment2 Discharge], [Actual Transshipment2 Discharge], [Estimated Transshipment2 Loaded],
-	 [Actual Transshipment2 Loaded], [Estimated Transshipment2 Vessel Departure], [Actual Transshipment2 Vessel Departure ], [Transshipment3 Location Port], [Estimated Transshipment3 Vessel Arrival], [Actual Transshipment3 Vessel Arrival], [Estimated Transshipment3 Discharge],
-	 [Actual Transshipment3 Discharge], [Estimated Transshipment3 Loaded], [Actual Transshipment3 Loaded], [Estimated Transshipment3 Vessel Departure], [Actual Transshipment3 Vessel Departure ], [Transshipment4 Location Port], [Estimated Transshipment4 Vessel Arrival], [Actual Transshipment4 Vessel Arrival], [Estimated Transshipment4 Discharge], [Actual Transshipment4 Discharge], [Estimated Transshipment4 Loaded],
-	 [Actual Transshipment4 Loaded], [Estimated Transshipment4 Vessel Departure], [Actual Transshipment4 Vessel Departure ], [POD Location Port], [Estimated POD Vessel Arrival], [Estimated POD Discharge], [Actual POD Vessel Arrival], [Actual POD Discharge],
-	 [Estimated POD Departure], [Actual POD Departure], [Empty Return Location Port], [Estimated Empty Return], [Actual Empty Return], [Container Main Carriage ATA], [Container Main Carriage ETA], [Container Main Carriage ETD], 
-	 [Container Main Carriage ATD], [Container Pre Carriage ETD], [On Carriage Location Port], [Estimated On Carriage Departure], [Container On Carriage ETD], [Actual On Carriage Departure], [Container On Carriage ATD], [LIF Location Port], [Actual LIF Arrival], [Container Pre Carriage ATD], [Estimated LIF Arrival],
+	 	 insert into Fact_Containers ([Id], [Source Tenant], [Parent Tenant], [Empty Pickup Actual], [Empty Pickup Port], [Empty Pickup Estimated], [Precarriage Port], [POL Port], [POL ETA],
+	 [POL ATA], [POL Loaded Est], [POL Loaded Actual], [POL Vessel ETD], [POL Vessel ATD], [Trans1 Port], [Trans1 Vessel ETA], [Trans1 Vessel ATA],
+	 [Trans1 Discharge Est], [Trans1 Discharge Actual], [Trans1 Loaded Est], [Trans1 Loaded Actual], [Trans1 Vessel ETD], [Trans1 Vessel ATD], 
+	 [Trans2 Port], [Trans2 Vessel ETA], [Trans2 Vessel ATA], [Trans2 Discharge Est], [Trans2 Discharge Actual], [Trans2 Loaded Est],
+	 [Trans2 Loaded Actual], [Trans2 Vessel ETD], [Trans2 Vessel ATD], [Trans3 Port], [Trans3 Vessel ETA], [Trans3 Vessel ATA], [Trans3 Discharge Est],
+	 [Trans3 Discharge Actual], [Trans3 Loaded Est], [Trans3 Loaded Actual], [Trans3 Vessel ETD], [Trans3 Vessel ATD], [Trans4 Port], [Trans4 Vessel ETA], [Trans4 Vessel ATA], [Trans4 Discharge Est], [Trans4 Discharge Actual], [Trans4 Loaded Est],
+	 [Trans4 Loaded Actual], [Trans4 Vessel ETD], [Trans4 Vessel ATD], [POD Port], [POD Vessel ETA], [POD Discharge Est], [POD Vessel ATA], [POD Discharge Actual],
+	 [POD ETD], [POD ATD], [Empty Return Port], [Empty Return Estimated], [Empty Return Actual], [Container Main Carriage ATA], [Container Main Carriage ETA], [Container Main Carriage ETD], 
+	 [Container Main Carriage ATD], [PreCarriage ETD], [OnCarriage Port], [Estimated On Carriage Departure], [Container On Carriage ETD], [Actual On Carriage Departure], [Container On Carriage ATD], [LIF Port], [LIF ATA], [PreCarriage ATD], [LIF ETA],
 	 [Create Date], [Created By], [Update Date], [Updated By], [Current Status], [Current Status Date], [Closed Date], [Is Closed], [Status], [Shipment Id],[Last Free Day],[POD Gate Out],[Free Days],[CustomFieldNamesVariable],
-	 [POL Gate In],[Availability Date],[Availability Location Port], [On Carriage Gate Out], [Pre Carriage Gate In])
+	 [POL Gate In],[Availability Date],[Availability Port], [On Carriage Gate Out], [Pre Carriage Gate In])
 
 	 values(@Id, @SourceTenant, @ParentTenant,dbo.GetDateFormateAsNumber(@ActualEmptyPickupDate), @emptyPickupLocationPort, dbo.GetDateFormateAsNumber(@EstimatedEmptyPickupDate), @preCarriageLocationPort, @pOLLocationPort, dbo.GetDateFormateAsNumber(@EstimatedPOLArrival),
 	 dbo.GetDateFormateAsNumber(@ActualPOLArrival), dbo.GetDateFormateAsNumber(@EstimatedPOLLoaded), dbo.GetDateFormateAsNumber(@ActualPOLLoaded), dbo.GetDateFormateAsNumber(@EstimatedPOLVesselDeparture), dbo.GetDateFormateAsNumber(@ActualPOLVesselDeparture), @transshipment1LocationPort, dbo.GetDateFormateAsNumber(@EstimatedTrans1VesselArrival), dbo.GetDateFormateAsNumber(@ActualTransshipment1VesselArrival),
