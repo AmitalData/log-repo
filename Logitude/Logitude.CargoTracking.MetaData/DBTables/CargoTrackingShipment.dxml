@@ -167,8 +167,8 @@
   </Column>
   <Column
     Name="CustomerReference"
-    Type="varchar"
-    Size="101">
+    Type="nvarchar"
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
