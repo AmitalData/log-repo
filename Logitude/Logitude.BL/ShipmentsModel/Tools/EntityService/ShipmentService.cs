@@ -7189,105 +7189,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
             }
-        }
-
-        private void ComputeFirstPickupFullAddress(ShipmentPickUpPM firstShipmentPickup)
-        {
-            if (firstShipmentPickup != null)
-            {
-                this.GetFirstPickupFullAddressFromPickUp(firstShipmentPickup);
-            }
-            else
-            {
-                this.entityPM.FirstPickupFullAddress = GetLegFullAddressByPortId(entityPM.MainCarriageFromPortId);
-            }
-        }
-        private void ComputeLastDeliveryFullAddress(ShipmentDeliveryPM lastShipmentDelivery)
-        {
-
-            if (lastShipmentDelivery != null)
-            {
-                GeteLastDeliveryFullAddressFromDelivery(lastShipmentDelivery);
-            }
-            else
-            {
-                this.entityPM.LastDeliveryFullAddress = this.entityPM.LastFinalDestination;
-            }
-        }
-
-        private void GetFirstPickupFullAddressFromPickUp(ShipmentPickUpPM firstShipmentPickup)
-        {
-            if (firstShipmentPickup.PickUpDeliveryFromTypeCode == "PART")
-            {
-                this.entityPM.FirstPickupFullAddress = GetLegFullAddressByPartnerId(firstShipmentPickup.FromAddressId);
-            }
-            else if (firstShipmentPickup.PickUpDeliveryFromTypeCode == "PORT")
-            {
-                this.entityPM.FirstPickupFullAddress = GetLegFullAddressByPortId(firstShipmentPickup.FromPortId);
-            }
-            else if (firstShipmentPickup.PickUpDeliveryFromTypeCode == "CASL")
-            {
-                this.entityPM.FirstPickupFullAddress = this.GetLegFullAddressByCASLAddress(firstShipmentPickup.ToAddressCountryName, firstShipmentPickup.ToAddressCity, firstShipmentPickup.ToAddressZipCode);
-            }
-        }
-
-
-        private void GeteLastDeliveryFullAddressFromDelivery(ShipmentDeliveryPM lastShipmentDelivery)
-        {
-            if (lastShipmentDelivery.PickUpDeliveryToTypeCode == "PART")
-            {
-                this.entityPM.LastDeliveryFullAddress = GetLegFullAddressByPartnerId(lastShipmentDelivery.ToAddressId);
-            }
-            else if (lastShipmentDelivery.PickUpDeliveryToTypeCode == "PORT")
-            {
-                this.entityPM.LastDeliveryFullAddress = GetLegFullAddressByPortId(lastShipmentDelivery.ToPortId);
-            }
-            else if (lastShipmentDelivery.PickUpDeliveryToTypeCode == "CASL")
-            {
-                this.entityPM.LastDeliveryFullAddress = this.GetLegFullAddressByCASLAddress(lastShipmentDelivery.ToAddressCountryName ,lastShipmentDelivery.ToAddressCity ,lastShipmentDelivery.ToAddressZipCode);
-            }
-        }
-
-
-
-        private string GetLegFullAddressByPartnerId(string addressId)
-        {
-            if (string.IsNullOrEmpty(addressId))
-                return "";
-
-            Address partnerAddress = myAddressRepository.GetSingleAddress(addressId, tenant);
-            if (partnerAddress == null)
-                return "";
-            List<string> strPartnerAddressArray = new List<string> { partnerAddress.Country?.EnglishName, partnerAddress.State?.EnglishName, partnerAddress.City};
-
-            string fullPartnerAddress = string.Join(" ,", strPartnerAddressArray.Where(m => !string.IsNullOrEmpty(m)).ToList());
-
-            return fullPartnerAddress;
-        }
-
-        private string GetLegFullAddressByPortId(string portId)
-        {
-            if (string.IsNullOrEmpty(portId))
-                return "";
-
-            Port port = myPortRepository.GetSinglePort(tenant, portId);
-            if (portId == null)
-                return "";
-
-            string fullPortAddress = port.Code + " ," + port.EnglishName;
-
-            return fullPortAddress;
-        }
-
-        private string GetLegFullAddressByCASLAddress(string ToAddressCountryName,string ToAddressCity , string ToAddressZipCode)
-        {
-
-            List<string> strCASLAddressArray = new List<string> { ToAddressCountryName, ToAddressCity, ToAddressZipCode };
-
-            string fullPartnerAddress = string.Join(", ", strCASLAddressArray.Where(m => !string.IsNullOrEmpty(m)).ToList());
-
-            return fullPartnerAddress;
-        }
+        }        
 
         private void UpdateTariffUsedDate(string tariffId)
         {
@@ -7300,7 +7202,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 tariffRepository.SubmitChanges();
             }
         }
-
         private void UpdateHouseRoutingFieldsWhenConnectedToMaster(Shipment houseShipment)
         {
             if (!string.IsNullOrEmpty(entityPM.PreCarriageFromPortId) && !string.IsNullOrEmpty(entityPM.PreCarriageToPortId)
@@ -7315,7 +7216,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 houseShipment.OnForwardingFromPortId = entityPM.OnCarriageToPortId;
             }
         }
-
         private void UpdateShipmentProductItems()
         {
             if (entityPM.IsProductItemsUpdated)
@@ -7644,8 +7544,227 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             return newNumber;
         }
-    }
 
+        private void ComputeFirstPickupFullAddress(ShipmentPickUpPM firstShipmentPickup)
+        {
+            if (firstShipmentPickup != null)
+            {
+                this.entityPM.FirstPickupFullAddress = this.GetFirstPickupFullAddressFromPickUp(firstShipmentPickup);
+            }
+
+            else
+            {
+                this.entityPM.FirstPickupFullAddress = this.GetPickUpAddressFromMainCarriage();
+            }
+        }
+        private void ComputeLastDeliveryFullAddress(ShipmentDeliveryPM lastShipmentDelivery)
+        {
+            if (lastShipmentDelivery != null)
+            {
+                this.entityPM.LastDeliveryFullAddress = this.GeteLastDeliveryFullAddressFromDelivery(lastShipmentDelivery);
+            }
+
+            else
+            {
+                this.entityPM.LastDeliveryFullAddress = this.GetDeliveryAddressFromMainCarriage();
+            }
+        }
+        private string GetFirstPickupFullAddressFromPickUp(ShipmentPickUpPM firstShipmentPickup)
+        {
+            if (firstShipmentPickup.PickUpDeliveryFromTypeCode == "PART")
+            {
+                return GetFullAddressByPartnerId(firstShipmentPickup.FromAddressId);
+            }
+
+            else if (firstShipmentPickup.PickUpDeliveryFromTypeCode == "PORT")
+            {
+                return firstShipmentPickup.FromAddress;
+            }
+
+            else if (firstShipmentPickup.PickUpDeliveryFromTypeCode == "CASL")
+            {
+                return this.GetFullAddressByCASLAddress(firstShipmentPickup.FromAddressCountryId, firstShipmentPickup.FromAddressCity, firstShipmentPickup.FromAddressZipCode);
+            }
+
+            return null;
+        }
+        private string GeteLastDeliveryFullAddressFromDelivery(ShipmentDeliveryPM lastShipmentDelivery)
+        {
+            if (lastShipmentDelivery.PickUpDeliveryToTypeCode == "PART")
+            {
+                return GetFullAddressByPartnerId(lastShipmentDelivery.ToAddressId);
+            }
+
+            else if (lastShipmentDelivery.PickUpDeliveryToTypeCode == "PORT")
+            {
+                return lastShipmentDelivery.ToAddress;
+            }
+
+            else if (lastShipmentDelivery.PickUpDeliveryToTypeCode == "CASL")
+            {
+                return this.GetFullAddressByCASLAddress(lastShipmentDelivery.ToAddressCountryId, lastShipmentDelivery.ToAddressCity, lastShipmentDelivery.ToAddressZipCode);
+            }
+
+            return null;
+        }
+        private string GetPickUpAddressFromMainCarriage()
+        {
+            string myResult = null;
+
+            if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
+            {
+                myResult = this.GetPickupFromAddressForInlandDomestic();
+            }
+
+            else
+            {
+                myResult = entityPM.MainCarriageFromPortName;
+            }
+
+            return myResult;
+        }
+        private string GetDeliveryAddressFromMainCarriage()
+        {
+            string myResult = null;
+
+            if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
+            {
+                myResult = this.GetDeliveryToAddressForInlandDomestic();
+            }
+
+            else
+            {
+                myResult = entityPM.MainCarriageFinalDestinationPortName;
+            }
+
+            return myResult;
+        }
+        private string GetPickupFromAddressForInlandDomestic()
+        {
+            if (entityPM.InlandDomesticFromTypeCode == "PART")
+            {
+                return GetFullAddressByPartnerId(entityPM.MainCarriageFromAddressId);
+            }
+
+            else if (entityPM.InlandDomesticFromTypeCode == "PORT")
+            {
+                return entityPM.MainCarriageFromPortAddress;
+            }
+
+            else if (entityPM.InlandDomesticFromTypeCode == "CASL")
+            {
+                return this.GetFullAddressByCASLAddress(entityPM.InlandDomesticFromCountryId, entityPM.InlandDomesticFromCity, entityPM.InlandDomesticFromZipCode);
+            }
+
+            return null;
+        }
+        private string GetDeliveryToAddressForInlandDomestic()
+        {
+            if (entityPM.InlandDomesticToTypeCode == "PART")
+            {
+                return GetFullAddressByPartnerId(entityPM.MainCarriageToAddressId);
+            }
+
+            else if (entityPM.InlandDomesticToTypeCode == "PORT")
+            {
+                return entityPM.MainCarriageToPortAddress;
+            }
+
+            else if (entityPM.InlandDomesticToTypeCode == "CASL")
+            {
+                return this.GetFullAddressByCASLAddress(entityPM.InlandDomesticToCountryId, entityPM.InlandDomesticToCity, entityPM.InlandDomesticToZipCode);
+            }
+
+            return null;
+        }
+        private string GetFullAddressByPartnerId(string addressId)
+        {
+            if (string.IsNullOrEmpty(addressId))
+            {
+                return null;
+            }
+
+            Address partnerAddress = myAddressRepository.GetSingleAddress(addressId, tenant);            
+            return this.GetAddress(partnerAddress);
+        }
+        private string GetFullAddressByCASLAddress(string countryId, string city, string zipCode)
+        {
+            string myResult = "";
+
+            if (!string.IsNullOrEmpty(city))
+            {
+                myResult = city;
+            }
+
+            if (!string.IsNullOrEmpty(zipCode))
+            {
+                myResult = myResult + " " + zipCode;
+            }
+
+            if (!string.IsNullOrEmpty(countryId))
+            {
+                Country country = CountryRepository.GetSingleCountry(countryId, tenant, false);
+                if (country != null)
+                {
+                    myResult = myResult + Environment.NewLine + country.EnglishName;
+                }
+            }
+
+            return myResult;
+        }
+        public string GetAddress(Address address)
+        {
+            string resultAddress = "";
+
+            if (address != null)
+            {
+                resultAddress = address.Address1 != null ? address.Address1 : "";
+
+                if (!string.IsNullOrEmpty(address.Address2))
+                {
+                    resultAddress = resultAddress + Environment.NewLine + address.Address2;
+                }
+
+                if (!string.IsNullOrEmpty(address.City))
+                {
+                    resultAddress = resultAddress + Environment.NewLine + address.City;
+                }
+
+                if (address.State != null)
+                {
+                    if (address.IsLocalLanguage)
+                    {
+                        resultAddress = resultAddress + " " + (address.State.LocalName != null ? address.State.LocalName : "");
+                    }
+
+                    else
+                    {
+                        resultAddress = resultAddress + " " + (address.State.EnglishName != null ? address.State.EnglishName : "");
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(address.ZipCode))
+                {
+                    resultAddress = resultAddress + " " + address.ZipCode;
+                }
+
+                if (address.Country != null)
+                {
+                    if (address.IsLocalLanguage)
+                    {
+                        resultAddress = resultAddress + Environment.NewLine + address.Country.LocalName;
+                    }
+
+                    else
+                    {
+                        resultAddress = resultAddress + Environment.NewLine + address.Country.EnglishName;
+                    }
+                }
+            }
+
+            return resultAddress;
+        }
+    }
 
     public class NumberOfInsidePackagesHelper
     {
