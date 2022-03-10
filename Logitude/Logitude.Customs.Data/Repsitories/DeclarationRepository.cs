@@ -429,6 +429,21 @@ namespace Logitude.Customs.Data.Repsitories
                   .FirstOrDefault();
         }
 
+        public (string id ,string direction) GetMinDeclarationByDeclarationNumber(string declarationNumber, int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(declarationNumber)) return (id: "", direction: "");// tuple literal
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+            var res=
+                  (
+                  from rec in context.Declarations
+                  where rec.DeclarationNumber == declarationNumber && rec.Tenant == tenant
+                  select new { rec.Id, rec.Direction }
+                  )
+                  .FirstOrDefault();
+            return (id: res.Id, direction:res.Direction);// tuple literal
+        }
+
         public List<Declaration> GetDeclarationsById(List<string> declarationIds)
         {
             List<Declaration> declarations = (from a in context.Declarations

@@ -349,7 +349,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
             if (String.IsNullOrWhiteSpace(declarationNumber)) return "";
             return repository.GetIdByDeclarationNumber(declarationNumber, tenant);
         }
-
+        public (string id, string direction) GetMinDeclarationByDeclarationNumber(string declarationNumber, int tenant)
+        {
+            
+            return repository.GetMinDeclarationByDeclarationNumber(declarationNumber, tenant);
+        }
 
         public DeclarationPM GetDeclarationByfunctionalReferenceID( string functionalReferenceID,  int tenant)
         {
