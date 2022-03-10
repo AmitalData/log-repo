@@ -4,7 +4,7 @@
   ObjectTableName="&quot;Customs.CustomDocumentType&quot;"
   IsNew="false"
   DBTableName="&quot;Customs.CustomDocumentTypes&quot;"
-  OldDBTableName="&quot;Customs.CustomDocumentTypes&quot;"
+  DBTableOldNames="Customs.CustomDocumentTypes"
   ObjectTableSingular="&quot;CustomDocumentType&quot;"
   ObjectTablePlural="&quot;CustomDocumentTypes&quot;"
   HasCustomFilter="false"
@@ -55,6 +55,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;8875&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -67,7 +68,7 @@
   <field
     Id="&quot;755f71f9-6c1f-446e-9305-d1adf80b64d2&quot;"
     FieldName="&quot;Code&quot;"
-    OldFieldName="&quot;Code&quot;"
+    OldNames="Code"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -117,6 +118,7 @@
     ListLocalDefaultText="&quot;קוד&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -130,6 +132,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -140,7 +143,7 @@
   <field
     Id="&quot;99aa87d4-86be-4b56-9e91-b3a89b43b18f&quot;"
     FieldName="&quot;EnglishName&quot;"
-    OldFieldName="&quot;EnglishName&quot;"
+    OldNames="EnglishName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -190,6 +193,7 @@
     ListLocalDefaultText="&quot;שם אנגלית&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -203,6 +207,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -213,7 +218,7 @@
   <field
     Id="&quot;51eb6770-ad47-40eb-a65e-53ced6af511b&quot;"
     FieldName="&quot;LocalName&quot;"
-    OldFieldName="&quot;LocalName&quot;"
+    OldNames="LocalName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -263,6 +268,7 @@
     ListLocalDefaultText="&quot;שם מקומי&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -276,6 +282,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -286,7 +293,7 @@
   <field
     Id="&quot;374f3154-393f-4a59-98a7-aa519d5663e5&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -333,6 +340,7 @@
     ListLableDefaultText="&quot;SearchFields&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -346,6 +354,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -356,7 +365,7 @@
   <field
     Id="&quot;a9e6675c-ac66-4766-8699-0ab5ad763147&quot;"
     FieldName="&quot;Inactive&quot;"
-    OldFieldName="&quot;Inactive&quot;"
+    OldNames="Inactive"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -406,6 +415,7 @@
     ListLocalDefaultText="&quot;לא פּעיל&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -419,6 +429,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -429,7 +440,7 @@
   <field
     Id="&quot;055854f4-e7d8-4a7f-9155-1d7c0a8771af&quot;"
     FieldName="&quot;PointerLevel&quot;"
-    OldFieldName="&quot;PointerLevel&quot;"
+    OldNames="PointerLevel"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -481,6 +492,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="PointerLevel"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="Pointer"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -495,6 +507,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -505,7 +518,7 @@
   <field
     Id="&quot;eb995eb3-61d7-4a25-b7fd-cc3c2b388801&quot;"
     FieldName="&quot;AutoSetOriginalDocumentTrue&quot;"
-    OldFieldName="&quot;AutoSetOriginalDocumentTrue&quot;"
+    OldNames="AutoSetOriginalDocumentTrue"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -555,6 +568,7 @@
     ListLocalDefaultText="&quot;סימון אוטומטי של מסמך מקורי&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -568,6 +582,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -578,7 +593,7 @@
   <field
     Id="&quot;dfb823f9-ce3e-449f-8dd4-f68616efb0d2&quot;"
     FieldName="&quot;PointerLevelName&quot;"
-    OldFieldName="&quot;PointerLevelName&quot;"
+    OldNames="PointerLevelName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -627,6 +642,7 @@
     ListLocalDefaultText="&quot;קשור ל&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -640,6 +656,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -650,7 +667,7 @@
   <field
     Id="&quot;af9dbcc9-72c5-4366-a41e-7df65dd7cfcf&quot;"
     FieldName="&quot;IsCourierManadatory&quot;"
-    OldFieldName="&quot;IsCourierManadatory&quot;"
+    OldNames="IsCourierManadatory"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -700,6 +717,7 @@
     ListLocalDefaultText="&quot;חובה לבלדרות&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -713,6 +731,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -723,7 +742,7 @@
   <field
     Id="&quot;4a2974fd-3291-4e99-b357-6e2409280a3d&quot;"
     FieldName="&quot;IsDiamondManadatory&quot;"
-    OldFieldName="&quot;IsManadatory&quot;"
+    OldNames="IsDiamondManadatory"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -773,6 +792,7 @@
     ListLocalDefaultText="&quot;מסמך חובה ליהלומים&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -786,6 +806,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -793,6 +814,258 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;fafebed7-db93-4e3f-9c9e-91de70d6f098&quot;"
+    FieldName="&quot;CustomsDocumentUpload&quot;"
+    OldNames="CustomsDocumentUpload"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;Customs.CustomDocumentType&quot;"
+    FieldsDataType="&quot;LookUp&quot;"
+    LookUpTableName="&quot;Customs.CustomsDocumentUpload&quot;"
+    MinLength="0"
+    MaxLength="1"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="1"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;CustomsDocumentUpload&quot;"
+    ListPropertyPath="&quot;CustomsDocumentUpload&quot;"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Customs.CustomDocumentType&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;CustomsDocumentUpload&quot;"
+    DefaultText="&quot;CustomsDocumentUpload&quot;"
+    FullLocalDefaultText="&quot;העלאת מסמך למכס&quot;"
+    ListFieldLable="&quot;CustomsDocumentUploadListLable&quot;"
+    ListLableDefaultText="&quot;Customs Document Upload&quot;"
+    ListLocalDefaultText="&quot;העלאת מסמך למכס&quot;"
+    IsNullable="true"
+    IsForeignKey="true"
+    ForeignEntity="CustomsDocumentUpload"
+    DontBuildRelationOnDB="false"
+    NavigationPropertyName="CustomsDocumentUploadT"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;3f7a7022-7aa6-4c1a-917f-b4646a30c030&quot;"
+    FieldName="&quot;CustomsDocumentUploadName&quot;"
+    OldNames="CustomsDocumentUploadName"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;Customs.CustomDocumentType&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="40"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="40"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;CustomsDocumentUploadName&quot;"
+    ListPropertyPath="&quot;CustomsDocumentUploadName&quot;"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Customs.CustomDocumentType&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;CustomsDocumentUploadName&quot;"
+    DefaultText="&quot;Customs Document Upload&quot;"
+    FullLocalDefaultText="&quot;העלאת מסמך למכס&quot;"
+    ListFieldLable="&quot;CustomsDocumentUploadNameListLable&quot;"
+    ListLableDefaultText="&quot;Customs Document Upload&quot;"
+    ListLocalDefaultText="&quot;העלאת מסמך למכס&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <Query
+    Code="&quot;CustomDocumentType&quot;"
+    TextCode="&quot;Document Types&quot;"
+    LocalTextCode="&quot;סוגי מסמך&quot;"
+    QueryGroupCode="&quot;CUDT&quot;"
+    IndexOrder="0"
+    ObjectTableName="&quot;Customs.CustomDocumentType&quot;"
+    QuerySection="&quot;Customs.CustomDocumentType&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    QueryGroupName="&quot;Customs.CustomDocumentType&quot;"
+    TextCodeCode="&quot;Customs.CustomDocumentType.Q.CustomDocumentTypeQuery&quot;"
+    FeatureCode="&quot;CUSTOMDOCUMENTTYPE&quot;"
+    FeatureTextCodeCode="&quot;Customs.CustomDocumentType.Features.CustomDocumentTypes&quot;"
+    FeatureDefaultText="&quot;Custom Document Types&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;CustomDocumentType&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;Code&quot;"
+        ColumnWidth="200" />
+      <QueryColumn
+        QueryCode="&quot;CustomDocumentType&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        ColumnWidth="200" />
+      <QueryColumn
+        QueryCode="&quot;CustomDocumentType&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;LocalName&quot;"
+        ColumnWidth="200" />
+      <QueryColumn
+        QueryCode="&quot;CustomDocumentType&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;Inactive&quot;"
+        ColumnWidth="200" />
+      <QueryColumn
+        QueryCode="&quot;CustomDocumentType&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;PointerLevelName&quot;"
+        ColumnWidth="200" />
+      <QueryColumn
+        QueryCode="&quot;CustomDocumentType&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;AutoSetOriginalDocumentTrue&quot;"
+        ColumnWidth="200" />
+      <QueryColumn
+        QueryCode="&quot;CustomDocumentType&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;IsCourierManadatory&quot;"
+        ColumnWidth="200" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
+  <Screen
+    Name="&quot;GeneralTabScreen&quot;"
+    ObjectTableName="&quot;Customs.CustomDocumentType&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="false"
+    Code="&quot;CustomDocumentType.GeneralTabScreen&quot;"
+    NumberOfColumns="1"
+    NumberOfRows="7">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;Code&quot;"
+        ScreenName="GeneralTabScreen" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;LocalName&quot;"
+        ScreenName="GeneralTabScreen" />
+      <ScreenField
+        Column="0"
+        Row="2"
+        ObjectFieldName="&quot;PointerLevel&quot;"
+        ScreenName="GeneralTabScreen" />
+      <ScreenField
+        Column="0"
+        Row="3"
+        ObjectFieldName="&quot;AutoSetOriginalDocumentTrue&quot;"
+        ScreenName="GeneralTabScreen" />
+      <ScreenField
+        Column="0"
+        Row="4"
+        ObjectFieldName="&quot;IsCourierManadatory&quot;"
+        ScreenName="GeneralTabScreen" />
+      <ScreenField
+        Column="0"
+        Row="5"
+        ObjectFieldName="&quot;IsDiamondManadatory&quot;"
+        ScreenName="GeneralTabScreen" />
+      <ScreenField
+        Column="0"
+        Row="6"
+        ObjectFieldName="&quot;CustomsDocumentUpload&quot;"
+        ScreenName="GeneralTabScreen" />
+    </ScreenFields>
+  </Screen>
   <Tab
     TabName="&quot;General&quot;"
     TabLocalName="&quot;כללי&quot;"
@@ -800,15 +1073,15 @@
     Code="&quot;DTGN&quot;"
     ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;"
     TextCode="&quot;Customs.CustomDocumentType.TH.General&quot;"
-    IsPackagable="False"
+    IsPackagable="false"
     IndexOrder="0"
-    IsSpellChecked="false"
-    HasGeneralFeature="false"
-    HtmlComponentName="&quot;&quot;"
     HtmlComponentURL="&quot;&quot;"
+    HtmlComponentName="&quot;&quot;"
     FeatureCode="&quot;CustomDocumentType.Tab.General&quot;"
     FeatureTextCodeCode="&quot;CustomDocumentType.Features.General&quot;"
-    FeatureDefaultText="&quot;General&quot;" />
+    FeatureDefaultText="&quot;General&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Events&quot;"
     TabLocalName="&quot;אירועים&quot;"
@@ -816,124 +1089,23 @@
     Code="&quot;DOEV&quot;"
     ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
     TextCode="&quot;Customs.CustomDocumentType.TH.Events&quot;"
-    IsPackagable="False"
+    IsPackagable="false"
     IndexOrder="1"
-    IsSpellChecked="false"
-    HasGeneralFeature="false"
-    HtmlComponentName="&quot;&quot;"
     HtmlComponentURL="&quot;&quot;"
+    HtmlComponentName="&quot;&quot;"
     FeatureCode="&quot;CustomDocumentType.Tab.Events&quot;"
     FeatureTextCodeCode="&quot;CustomDocumentType.Features.Events&quot;"
-    FeatureDefaultText="&quot;Events&quot;" />
-  <Records />
-  <DataContracts />
-  <AdditionalTextCodes />
-  <AdditionalFeatures></AdditionalFeatures>
-  <Query
-    Code="&quot;CustomDocumentType&quot;"
-    ObjectTableName="&quot;Customs.CustomDocumentType&quot;"
-    IsAddNewEntity="false"
-    SystemLevel="true"
-    QuerySection="&quot;Customs.CustomDocumentType&quot;"
-    IndexOrder="0"
-    QueryGroupCode="&quot;CUDT&quot;"
-    QueryGroupName="&quot;Customs.CustomDocumentType&quot;"
-    LocalTextCode="&quot;סוגי מסמך&quot;"
-    TextCode="&quot;Document Types&quot;"
-    TextCodeCode="&quot;Customs.CustomDocumentType.Q.CustomDocumentTypeQuery&quot;"
+    FeatureDefaultText="&quot;Events&quot;"
     IsSpellChecked="false"
-    FeatureCode="&quot;CUSTOMDOCUMENTTYPE&quot;"
-    IsPackagable="true"
-    FeatureTextCodeCode="&quot;Customs.CustomDocumentType.Features.CustomDocumentTypes&quot;"
-    FeatureDefaultText="&quot;Custom Document Types&quot;">
-    <QueryColumns>
-      <QueryColumn
-        IndexOrder="0"
-        ColumnWidth="200"
-        ObjectFieldName="&quot;Code&quot;"
-        QueryCode="&quot;CustomDocumentType&quot;" />
-      <QueryColumn
-        IndexOrder="1"
-        ColumnWidth="200"
-        ObjectFieldName="&quot;EnglishName&quot;"
-        QueryCode="&quot;CustomDocumentType&quot;" />
-      <QueryColumn
-        IndexOrder="2"
-        ColumnWidth="200"
-        ObjectFieldName="&quot;LocalName&quot;"
-        QueryCode="&quot;CustomDocumentType&quot;" />
-      <QueryColumn
-        IndexOrder="3"
-        ColumnWidth="200"
-        ObjectFieldName="&quot;Inactive&quot;"
-        QueryCode="&quot;CustomDocumentType&quot;" />
-      <QueryColumn
-        IndexOrder="4"
-        ColumnWidth="200"
-        ObjectFieldName="&quot;PointerLevelName&quot;"
-        QueryCode="&quot;CustomDocumentType&quot;" />
-      <QueryColumn
-        IndexOrder="5"
-        ColumnWidth="200"
-        ObjectFieldName="&quot;AutoSetOriginalDocumentTrue&quot;"
-        QueryCode="&quot;CustomDocumentType&quot;" />
-      <QueryColumn
-        IndexOrder="5"
-        ColumnWidth="200"
-        ObjectFieldName="&quot;IsCourierManadatory&quot;"
-        QueryCode="&quot;CustomDocumentType&quot;" />
-    </QueryColumns>
-    <QueryFilters />
-  </Query>
-  <Screen
-    Code="&quot;CustomDocumentType.GeneralTabScreen&quot;"
-    Name="&quot;GeneralTabScreen&quot;"
-    ObjectTableName="&quot;Customs.CustomDocumentType&quot;"
-    IsHeaderScreen="false"
-    IsReadOnly="true"
-    NumberOfRows="6"
-    NumberOfColumns="1">
-    <ScreenFields>
-      <ScreenField
-        ObjectFieldName="&quot;Code&quot;"
-        ScreenName="CustomDocumentType.GeneralTabScreen"
-        Row="0"
-        Column="0" />
-      <ScreenField
-        ObjectFieldName="&quot;LocalName&quot;"
-        ScreenName="CustomDocumentType.GeneralTabScreen"
-        Row="1"
-        Column="0" />
-      <ScreenField
-        ObjectFieldName="&quot;PointerLevel&quot;"
-        ScreenName="CustomDocumentType.GeneralTabScreen"
-        Row="2"
-        Column="0" />
-      <ScreenField
-        ObjectFieldName="&quot;AutoSetOriginalDocumentTrue&quot;"
-        ScreenName="CustomDocumentType.GeneralTabScreen"
-        Row="3"
-        Column="0" />
-      <ScreenField
-        ObjectFieldName="&quot;IsCourierManadatory&quot;"
-        ScreenName="CustomDocumentType.GeneralTabScreen"
-        Row="4"
-        Column="0" />
-      <ScreenField
-        ObjectFieldName="&quot;IsDiamondManadatory&quot;"
-        ScreenName="CustomDocumentType.GeneralTabScreen"
-        Row="5"
-        Column="0" />
-    </ScreenFields>
-  </Screen>
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
       ObjectTableName="&quot;Customs.CustomDocumentType&quot;"
-      ShortView="true"
-      IsManualEntry="false"
-      LocalName="&quot;Created&quot;"
       EnglishName="&quot;Created&quot;"
+      LocalName="&quot;Created&quot;"
+      IsManualEntry="false"
+      ShortView="true"
       EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
@@ -944,10 +1116,10 @@
     <EventType
       Code="&quot;UPEV&quot;"
       ObjectTableName="&quot;Customs.CustomDocumentType&quot;"
-      ShortView="false"
-      IsManualEntry="false"
-      LocalName="&quot;Updated&quot;"
       EnglishName="&quot;Updated&quot;"
+      LocalName="&quot;Updated&quot;"
+      IsManualEntry="false"
+      ShortView="false"
       EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
       IsCustomerView="false"
@@ -956,4 +1128,8 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
+  <DataContracts />
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
 </entity>

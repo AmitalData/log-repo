@@ -29,7 +29,8 @@ namespace Logitude.CustomsMessaging.RequestServices
                 var queryDetails = new List<DF_NG_8250_Web01_DeclarationStatus_RequestQueryDetails>();
                 foreach (var item in pms)
                 {
-                    if (string.IsNullOrWhiteSpace(item.DeclarationNumber)) continue;
+                    if (string.IsNullOrWhiteSpace(item.DeclarationNumber)) continue;                 
+
                     requestParams.DeclarationNumber = item.DeclarationNumber;
                     queryDetails.AddRange(QueryDetails(requestParams, item));
                 }

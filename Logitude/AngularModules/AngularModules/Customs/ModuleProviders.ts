@@ -208,6 +208,7 @@ import { DeclarationCargoSplitListService } from './Services/StandardLists/Decla
 import { ActionCodeListService } from './Services/StandardLists/ActionCodeListService';
 import { SplitOrMergeReasonListService } from './Services/StandardLists/SplitOrMergeReasonListService';
 import { CargoSplitRequestStatusListService } from './Services/StandardLists/CargoSplitRequestStatusListService';
+import { CargoStatusListService } from './Services/StandardLists/CargoStatusListService';
 import { TreatmentWayListService } from './Services/StandardLists/TreatmentWayListService';
 import { TPGFileTypeListService } from './Services/StandardLists/TPGFileTypeListService';
 import { CustomsAirlineListService } from './Services/StandardLists/CustomsAirlineListService';
@@ -325,6 +326,7 @@ import { SignStationExtendedListService } from './Services/ExtendedLists/SignSta
 import { DeclarationCourierStatusExtendedListService } from './Services/ExtendedLists/DeclarationCourierStatusExtendedListService';
 import { RecallClientsForCutoms } from '../CustomsModules/CustomsGeneralRequests/Components/RecallClientsForCutoms';
 import { CustomsCollateralExtendedListService } from './Services/ExtendedLists/CustomsCollateralExtendedListService';
+ 
 import { CourierMasterExtendedListService } from './Services/ExtendedLists/CourierMasterExtendedListService';
 
  
@@ -429,6 +431,12 @@ import { TradeAgreementProtocolListService } from './Services/StandardLists/Trad
 import { ExportStoragePMService } from './Services/StandardPMs/ExportStoragePMService';
 import { IncotemrsFileValidationListService } from './Services/StandardLists/IncotemrsFileValidationListService';
 import { ClientPMService } from './Services/StandardPMs/ClientPMService';
+import { LogisticActionRequestListService } from './Services/StandardLists/LogisticActionRequestListService';
+import { LogisticActionRequestTypeListService } from './Services/StandardLists/LogisticActionRequestTypeListService';
+import { LogisticActionResponseReqSListService } from './Services/StandardLists/LogisticActionResponseReqSListService';
+import { LogisticActionRequestPMService } from './Services/StandardPMs/LogisticActionRequestPMService';
+import { LogisticActionRequestWebService } from './Services/WebServices/LogisticActionRequestWebService';
+
 
 
 export class ModuleProviders {
@@ -648,6 +656,7 @@ export class ModuleProviders {
             case "ActionCodeListService": { myResult = new ActionCodeListService(); break; }
             case "SplitOrMergeReasonListService": { myResult = new SplitOrMergeReasonListService(); break; }
             case "CargoSplitRequestStatusListService": { myResult = new CargoSplitRequestStatusListService(); break; }
+            case "CargoStatusListService": { myResult = new CargoStatusListService(); break; }
             case "TreatmentWayListService": { myResult = new TreatmentWayListService(); break; }
             case "TPGFileTypeListService": { myResult = new TPGFileTypeListService(); break; }  
             case "CustomsAirlineListService": { myResult = new CustomsAirlineListService(); break; }
@@ -680,6 +689,9 @@ export class ModuleProviders {
             case "CustomerClassificationTypeListService": { myResult = new CustomerClassificationTypeListService(); break; }
             case "LogisticsReferenceTypeListService": { myResult = new LogisticsReferenceTypeListService(); break; }
             case "PoaStatusTypeLookUpListService": { myResult = new PoaStatusTypeLookUpListService(); break; }
+            case "LogisticActionRequestListService": { myResult = new LogisticActionRequestListService(); break; }
+            case "LogisticActionRequestTypeListService": { myResult = new LogisticActionRequestTypeListService(); break; }
+            case "LogisticActionResponseReqSListService": { myResult = new LogisticActionResponseReqSListService(); break; }
 
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
@@ -784,6 +796,7 @@ export class ModuleProviders {
             case "ExportStorgePMService": { myResult = new ExportStorgePMService(); break; }
             case "ContainerizationPMService": { myResult = new ContainerizationPMService(); break; }
             case "TradeAgreementProtocolListService": { myResult = new TradeAgreementProtocolListService(); break; }
+            case "LogisticActionRequestPMService": { myResult = new LogisticActionRequestPMService(); break; }
 
             //#endregion
 
@@ -843,6 +856,7 @@ export class ModuleProviders {
             case "ContainerizationMessagesService": { myResult = new ContainerizationMessagesService(); break; }
             case "NewQuoteOPWebService": { myResult = new NewQuoteOPWebService(); break; }
             case "CustomsRequestsSheetWebService": { myResult = new CustomsRequestsSheetWebService(); break; }
+            case "LogisticActionRequestWebService": { myResult = new LogisticActionRequestWebService(); break; }
 
 
             //#endregion

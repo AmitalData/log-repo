@@ -41,6 +41,14 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool DcaRenameFileEnable { get; set; }
         [Column("DcaRenameFilePrefix")]
 	    public string DcaRenameFilePrefix { get; set; }
+        [Column("QueueType")]
+	    public string QueueType { get; set; }
+        [Column("UseRabbitMQ")]
+	    public bool UseRabbitMQ { get; set; }
+        [Column("QueueGroupCode")]
+	    public string QueueGroupCode { get; set; }
+        [Column("SendTime")]
+	    public string SendTime { get; set; }
     }
 }
 	 

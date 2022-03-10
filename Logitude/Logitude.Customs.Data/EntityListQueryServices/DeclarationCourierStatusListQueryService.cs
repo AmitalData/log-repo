@@ -193,6 +193,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   IsAmendment = d.IsAmendment == true ? true : false,
                                                                   CargoDescription = d.CargoDescription,
                                                                   FinalRelease = !d.HatraDate.HasValue,
+
                                                               });
 
 
@@ -264,6 +265,203 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationCourierStatusList> q = GetIqueryableList(DeclarationCourierStatusQuery);
             return q;
         }
+
+        public IQueryable<DeclarationCourierStatusList> GetDeclarationCourierStatusforPendingBulkFeed(QueryOperations queryOperations)
+        {
+            string courierMasterId = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CourierMasterId").FirstOrDefault().FieldValue.ToString();
+
+            var q1 = (
+                    from cd in context.CourierDeclarations.Include("Declarations").Include("Importer").Where(cd => cd.CourierMasterId == courierMasterId)
+
+                    join dcs in context.DeclarationCourierStatuses on cd.Declaration.Id equals dcs.DeclarationId
+
+                    join cp in context.ConsignmentPackages on cd.Declaration.Id equals cp.DeclarationId into cpjoin
+                    from cj in cpjoin.Where(t => t.PackageMeasureQualifierCode == "2" && t.GrossMassMeasure.HasValue).DefaultIfEmpty()
+
+                    join s in context.SupplierInvoices on cd.Declaration.Id equals s.DeclarationId into sjoin
+                    from sj in sjoin.Take(1).DefaultIfEmpty()
+
+                    group cj by new
+                    {
+                        CourierMasterId = cd.CourierMasterId,
+                        DeclarationId = cd.DeclarationId,
+                        CourierHawb = cd.Declaration.CourierHAWB,
+                        ImporterCode = cd.Declaration.ImporterCode,
+                        ImporterName = cd.Declaration.ImporterName != null ? cd.Declaration.ImporterName : (cd.Declaration.ImporterId != null ? cd.Declaration.Importer.FullName : cd.Declaration.ImporterName),
+                        CargoDescription = cd.Declaration.CargoDescription,
+                        CasualSupplierAddress = cd.Declaration.CasualImporterAddress1 + ", " + cd.Declaration.CasualImporterAddress2,
+                        CasualImporterCity = cd.Declaration.CasualImporterCity,
+                        TotalInvoiceAmountInUSD = dcs.TotalInvoiceAmountInUSD,
+                        IncoTermCode = sj != null ? sj.IncotermCode : "",
+                        CourierSearchFields = cd.Declaration.CourierSearchFields,
+                        FastIndividualProcessCode = dcs.FastIndividualProcessCode,
+
+                    } into t2
+                    select new DeclarationCourierStatusList
+                    {
+                        CourierMasterId = t2.Key.CourierMasterId,
+                        DeclarationId = t2.Key.DeclarationId,
+                        CourierHawb = t2.Key.CourierHawb,
+                        ImporterCode = t2.Key.ImporterCode,
+                        ImporterName = t2.Key.ImporterName,
+                        CargoDescription = t2.Key.CargoDescription,
+                        CasualSupplierAddress = t2.Key.CasualSupplierAddress,
+                        CasualImporterCity = t2.Key.CasualImporterCity,
+                        TotalInvoiceAmountInUSD = t2.Key.TotalInvoiceAmountInUSD,
+                        GrossMassMeasure = t2.Sum(t => t.GrossMassMeasure != null ? t.GrossMassMeasure.Value : 0),
+                        IncoTermCode = t2.Key.IncoTermCode,
+                        CourierSearchFields = t2.Key.CourierSearchFields,
+                        FastIndividualProcessCode = t2.Key.FastIndividualProcessCode,
+                    });
+
+
+            q1 = q1.OrderBy(x => x.DeclarationId);
+
+            return q1;
+        }
+
+        public List<DeclarationCourierStatusList> GetDeclarationCourierStatusListPendingBulk(QueryOperations queryOperations, int tenant)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<DeclarationCourierStatus> iQueryable = (from a in context.DeclarationCourierStatuses
+
+                                                               where a.Tenant == tenant
+                                                               select a);
+            iQueryable = ApplyCustomFilters(queryOperations, iQueryable, tenant);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            iQueryable = filter.GetFilteredQuery<DeclarationCourierStatus>(nonListQueryOperation, iQueryable);
+
+            int skippedPorts = queryOperations.PageIndex;
+
+            IQueryable<DeclarationCourierStatusList> query2 = GetDeclarationCourierStatusforPendingBulkFeed(queryOperations);
+
+            query2 = filter.GetFilteredQuery<DeclarationCourierStatusList>(listQueryOperation, query2);
+
+            var cargoDescriptionF = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CargoDescription").FirstOrDefault();
+            if (cargoDescriptionF != null && !string.IsNullOrEmpty(cargoDescriptionF.FieldValue?.ToString()))
+            {
+                string description = cargoDescriptionF.FieldValue.ToString().ToLower();
+                query2 = query2.Where(x => x.CargoDescription.ToLower().Contains(description));
+            }
+
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                PropertyInfo propInfo = typeof(DeclarationCourierStatusList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> DeclarationCourierStatusObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.DeclarationCourierStatus", tenant).ToList();
+
+                ObjectField objectField = (from a in DeclarationCourierStatusObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
+
+                if (objectField != null)
+                {
+                    if (objectField.IsCustom)
+                    {
+                        query2 = sortClass.GetSorterQuery<DeclarationCourierStatusList, string>(queryOperations, query2);
+                    }
+                    else if (queryOperations.SortByColumnName == "ImporterCode")
+                        query2 = sortClass.GetSorterQuery<DeclarationCourierStatusList, string>(queryOperations, query2);
+                    else
+                    {
+                        switch (objectField.DataTypeCode.ToLower())
+                        {
+                            case "ntext":
+                            case "text":
+                                {
+                                    query2 = sortClass.GetSorterQuery<DeclarationCourierStatusList, string>(queryOperations, query2);
+                                    break;
+                                }
+                            case "sigdouble":
+                            case "double":
+                                {
+                                    query2 = sortClass.GetSorterQuery<DeclarationCourierStatusList, double>(queryOperations, query2);
+                                    break;
+                                }
+                            case "date":
+                            case "datetime":
+                                {
+                                    query2 = sortClass.GetSorterQuery<DeclarationCourierStatusList, DateTime>(queryOperations, query2);
+                                    break;
+                                }
+                            case "unsinteger":
+                            case "integer":
+                                {
+                                    query2 = sortClass.GetSorterQuery<DeclarationCourierStatusList, int>(queryOperations, query2);
+                                    break;
+                                }
+                            case "boolean":
+                                {
+                                    query2 = sortClass.GetSorterQuery<DeclarationCourierStatusList, bool>(queryOperations, query2);
+                                    break;
+                                }
+                            case "unsdecimal":
+                            case "decimal":
+                                {
+                                    query2 = sortClass.GetSorterQuery<DeclarationCourierStatusList, decimal>(queryOperations, query2);
+                                    break;
+                                }
+                            default:
+                                {
+                                    query2 = query2.OrderByDescending(d => d.CourierHawb);
+                                    break;
+                                }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                query2 = query2.OrderByDescending(d => d.CourierHawb);
+            }
+            if (!queryOperations.GetAll)
+            {
+                query2 = query2.Skip(skippedPorts);
+                query2 = query2.Take(queryOperations.PageSize);
+            }
+            return query2.ToList();
+
+
+        }
+
+        public int GetDeclarationCourierStatusforPendingBulkFeedListCount(QueryOperations queryOperations, int tenant)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<DeclarationCourierStatus> iQueryable = (from a in context.DeclarationCourierStatuses
+                                                               where a.Tenant == tenant
+                                                               select a);
+
+            iQueryable = ApplyCustomFilters(queryOperations, iQueryable, tenant);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            iQueryable = filter.GetFilteredQuery<DeclarationCourierStatus>(nonListQueryOperation, iQueryable);
+
+            IQueryable<DeclarationCourierStatusList> query2 = GetDeclarationCourierStatusforPendingBulkFeed(queryOperations);
+
+            var cargoDescriptionF = queryOperations.QueryFilterItems.Where(r => r.FieldName == "CargoDescription").FirstOrDefault();
+            if (cargoDescriptionF != null && !string.IsNullOrEmpty(cargoDescriptionF.FieldValue?.ToString()))
+            {
+                string description = cargoDescriptionF.FieldValue.ToString().ToLower();
+                query2 = query2.Where(x => x.CargoDescription.ToLower().Contains(description));
+            }
+
+            query2 = filter.GetFilteredQuery<DeclarationCourierStatusList>(listQueryOperation, query2);
+            int count = query2.ToList().Count();
+            return count;
+        }
+
     }
 
     public class MyJoin

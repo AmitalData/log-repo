@@ -24,7 +24,7 @@ import { CustomsCollateralList } from '../../../../../Customs/EntityLists/Custom
 import { CustomsCollateralAnswerSharedDataService } from '../../../../../Customs/Services/DataChange/CustomsCollateralAnswerSharedDataService'
 
 @Component({
-  
+
     templateUrl: './DeclarationCollateralsComponent.html',
     providers: [CustomsCollateralAnswerSharedDataService]
 
@@ -289,7 +289,7 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
 
 
         });
-    this.columns.push({
+        this.columns.push({
 
             FieldName: 'OrganizationUnitTypeName',
             DataTypeCode: 'String',//'Number',
@@ -429,5 +429,36 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
         //setTimeout(() => {
 
         //}, 10);
+    }
+
+    IsSelectedNot;
+
+    OnAllBtnClickedNot() {
+        this.IsSelectedNot = true;
+
+        this._customsCollateralAnswerSharedDataService.connectedSelectAll = true;
+        this._customsCollateralAnswerSharedDataService._SelectedItems.Clear()
+            ;
+
+        this.RefreshList();
+        this._customsCollateralAnswerSharedDataService.disconnectedSelectAll = true;
+        //this.CourierMasterPM.ConnectedDeclarations = "ALL";
+
+        //this.LoadNotConnectedDeclarationGrid();
+        //this._CourierMasterService.isNotDirty = false;
+    }
+
+    OnNoneBtnClickedNot() {
+
+        this._customsCollateralAnswerSharedDataService.connectedSelectAll = false;
+        this._customsCollateralAnswerSharedDataService._UnSelectedItems.Clear();
+        this.RefreshList();
+
+        this.IsSelectedNot = false;
+        this._customsCollateralAnswerSharedDataService.disconnectedSelectAll = false;
+        //this.CourierMasterPM.ConnectedDeclarations = "";
+        //this._CourierMasterService.isNotDirty = false;
+
+        //this.LoadNotConnectedDeclarationGrid();
     }
 }

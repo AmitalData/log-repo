@@ -40,6 +40,7 @@ export class NotificationList {
 	ClosedByCustomOfficeUserName: string;
 	ClosedByAssigneeName: string;
 	CustomerId: string;
+	ResponseToMessage: string;
 	
 }
  

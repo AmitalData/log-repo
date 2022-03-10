@@ -7,12 +7,14 @@ import {CustDocRelatedDocsWebService} from '../../../Customs/Services/WebService
 import {ICustomsDocumentsController} from './ICustomsDocumentsController';
 import { DeclarationCancellationCustomsDocumentsController } from '../../CustomsDeclarationModules/DeclarationOthers/Components/DeclarationCancellation/Documents/DeclarationCancellationCustomsDocumentsController';
 import { SpecialActivityCustomsDocumentsController } from '../../CustomsGeneralRequests/Components/Documents/SpecialActivityCustomsDocumentsController';
+import { LogisticActionRequestCustomsDocumentsController } from 'CustomsModules/CustomsLogisticActionRequest/Components/EditTabs/LogisticActionRequestCustomsDocumentsController';
 
 export class CustomsDocumentsDataProvider {
     private declarationCustomsDocumentsController: DeclarationCustomsDocumentsController;
     private collateralCustomsDocumentsController: CollateralCustomsDocumentsController;
     private declarationCancellationCustomsDocumentsController: DeclarationCancellationCustomsDocumentsController;
     private specialActivityCustomsDocumentsController: SpecialActivityCustomsDocumentsController;
+    private logisticActionRequestCustomsDocumentsController: LogisticActionRequestCustomsDocumentsController;
 
     private claimCustomsDocumentsController: ClaimCustomsDocumentsController;
     private vehicleCustomsDocumentsController: VehicleCustomsDocumentsController;
@@ -50,6 +52,10 @@ export class CustomsDocumentsDataProvider {
                 this.vehicleCustomsDocumentsController = new VehicleCustomsDocumentsController(entityPM, childEntity1Id, childEntity1Name);
                 break;
             }
+            case 'Customs.LogisticActionRequest': {
+                this.logisticActionRequestCustomsDocumentsController = new LogisticActionRequestCustomsDocumentsController(entityPM, childEntity1Id, childEntity1Name);
+                break;
+            }
         }
     }
 
@@ -73,6 +79,9 @@ export class CustomsDocumentsDataProvider {
             }
             case 'Customs.Vehicle': {
                 return this.vehicleCustomsDocumentsController;
+            }
+            case 'Customs.LogisticActionRequest': {
+                return this.logisticActionRequestCustomsDocumentsController;
             }
         }
     }

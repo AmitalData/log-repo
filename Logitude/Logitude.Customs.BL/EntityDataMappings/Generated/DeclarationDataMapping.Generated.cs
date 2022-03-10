@@ -170,7 +170,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         PhysicalCheck, 
 	         ExportContainerizationID, 
 	         IsSubmitDeclaration, 
-	         AmedmentType,
+	         AmedmentType, 
+	         IsExportClosed, 
+	         ExportClosedErrorXML,
 	      }
 
 
@@ -404,7 +406,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportContainerizationID, 
 	         IsSubmitDeclaration, 
 	         AmedmentType, 
-	         AmendmentTypeName,
+	         AmendmentTypeName, 
+	         IsExportClosed, 
+	         ExportClosedErrorXML,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1151,6 +1155,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmedmentType))
             {
 				entityPOCO.AmedmentType = entityPM.AmedmentType;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExportClosed))
+            {
+				entityPOCO.IsExportClosed = entityPM.IsExportClosed;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportClosedErrorXML))
+            {
+				entityPOCO.ExportClosedErrorXML = entityPM.ExportClosedErrorXML;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1904,6 +1918,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.AmedmentType = entityPOCO.AmedmentType;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsExportClosed))
+            {
+					entityPM.IsExportClosed = entityPOCO.IsExportClosed;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportClosedErrorXML))
+            {
+					entityPM.ExportClosedErrorXML = entityPOCO.ExportClosedErrorXML;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -2650,6 +2674,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.AmedmentType = entityPM.AmedmentType;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExportClosed))
+            {
+                oldEntityPM.IsExportClosed = entityPM.IsExportClosed;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportClosedErrorXML))
+            {
+                oldEntityPM.ExportClosedErrorXML = entityPM.ExportClosedErrorXML;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(DeclarationPM entityPM)
@@ -2735,6 +2769,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.CargoDescription = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CargoDescription));
             }
+            if (!String.IsNullOrWhiteSpace(entityPM.AmendmentStatus)) //T4 find type == nText 
+            {
+                entityPM.AmendmentStatus = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AmendmentStatus));
+            }
             if (!String.IsNullOrWhiteSpace(entityPM.AmendmentRemarks)) //T4 find type == nText 
             {
                 entityPM.AmendmentRemarks = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AmendmentRemarks));
@@ -2758,6 +2796,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.PalestinianCode)) //T4 find type == nText 
             {
                 entityPM.PalestinianCode = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.PalestinianCode));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ExportClosedErrorXML)) //T4 find type == nText 
+            {
+                entityPM.ExportClosedErrorXML = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ExportClosedErrorXML));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

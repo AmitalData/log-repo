@@ -26,7 +26,25 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         EnglishName, 
 	         LocalName, 
 	         SearchFields, 
-	         Inactive,
+	         Inactive, 
+	         MalamID, 
+	         State, 
+	         Exempt_CertificateDocument, 
+	         IsImport, 
+	         IsExemptOtherAuthority, 
+	         ConfirmationComputerization, 
+	         IsCEO, 
+	         IsNeedDeclaration, 
+	         CertificateDocumentCategory, 
+	         AuthorityID, 
+	         IsQuotaCheckNeeded, 
+	         ExternalIDNumPerAuthority, 
+	         IsForCustomsItem, 
+	         IsPharmacy, 
+	         IsVeterinarian, 
+	         IsVehicleStandardization, 
+	         IsQuantityMandatory, 
+	         IsForCE,
 	      }
 
 
@@ -37,7 +55,25 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         EnglishName, 
 	         LocalName, 
 	         SearchFields, 
-	         Inactive,
+	         Inactive, 
+	         MalamID, 
+	         State, 
+	         Exempt_CertificateDocument, 
+	         IsImport, 
+	         IsExemptOtherAuthority, 
+	         ConfirmationComputerization, 
+	         IsCEO, 
+	         IsNeedDeclaration, 
+	         CertificateDocumentCategory, 
+	         AuthorityID, 
+	         IsQuotaCheckNeeded, 
+	         ExternalIDNumPerAuthority, 
+	         IsForCustomsItem, 
+	         IsPharmacy, 
+	         IsVeterinarian, 
+	         IsVehicleStandardization, 
+	         IsQuantityMandatory, 
+	         IsForCE,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -64,6 +100,96 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
             {
 				entityPOCO.Inactive = entityPM.Inactive;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MalamID))
+            {
+				entityPOCO.MalamID = entityPM.MalamID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.State))
+            {
+				entityPOCO.State = entityPM.State;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Exempt_CertificateDocument))
+            {
+				entityPOCO.Exempt_CertificateDocument = entityPM.Exempt_CertificateDocument;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsImport))
+            {
+				entityPOCO.IsImport = entityPM.IsImport;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExemptOtherAuthority))
+            {
+				entityPOCO.IsExemptOtherAuthority = entityPM.IsExemptOtherAuthority;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConfirmationComputerization))
+            {
+				entityPOCO.ConfirmationComputerization = entityPM.ConfirmationComputerization;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCEO))
+            {
+				entityPOCO.IsCEO = entityPM.IsCEO;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsNeedDeclaration))
+            {
+				entityPOCO.IsNeedDeclaration = entityPM.IsNeedDeclaration;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CertificateDocumentCategory))
+            {
+				entityPOCO.CertificateDocumentCategory = entityPM.CertificateDocumentCategory;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AuthorityID))
+            {
+				entityPOCO.AuthorityID = entityPM.AuthorityID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsQuotaCheckNeeded))
+            {
+				entityPOCO.IsQuotaCheckNeeded = entityPM.IsQuotaCheckNeeded;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExternalIDNumPerAuthority))
+            {
+				entityPOCO.ExternalIDNumPerAuthority = entityPM.ExternalIDNumPerAuthority;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsForCustomsItem))
+            {
+				entityPOCO.IsForCustomsItem = entityPM.IsForCustomsItem;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPharmacy))
+            {
+				entityPOCO.IsPharmacy = entityPM.IsPharmacy;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsVeterinarian))
+            {
+				entityPOCO.IsVeterinarian = entityPM.IsVeterinarian;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsVehicleStandardization))
+            {
+				entityPOCO.IsVehicleStandardization = entityPM.IsVehicleStandardization;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsQuantityMandatory))
+            {
+				entityPOCO.IsQuantityMandatory = entityPM.IsQuantityMandatory;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsForCE))
+            {
+				entityPOCO.IsForCE = entityPM.IsForCE;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -97,6 +223,96 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Inactive = entityPOCO.Inactive;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MalamID))
+            {
+					entityPM.MalamID = entityPOCO.MalamID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.State))
+            {
+					entityPM.State = entityPOCO.State;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Exempt_CertificateDocument))
+            {
+					entityPM.Exempt_CertificateDocument = entityPOCO.Exempt_CertificateDocument;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsImport))
+            {
+					entityPM.IsImport = entityPOCO.IsImport;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsExemptOtherAuthority))
+            {
+					entityPM.IsExemptOtherAuthority = entityPOCO.IsExemptOtherAuthority;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ConfirmationComputerization))
+            {
+					entityPM.ConfirmationComputerization = entityPOCO.ConfirmationComputerization;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsCEO))
+            {
+					entityPM.IsCEO = entityPOCO.IsCEO;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsNeedDeclaration))
+            {
+					entityPM.IsNeedDeclaration = entityPOCO.IsNeedDeclaration;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CertificateDocumentCategory))
+            {
+					entityPM.CertificateDocumentCategory = entityPOCO.CertificateDocumentCategory;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AuthorityID))
+            {
+					entityPM.AuthorityID = entityPOCO.AuthorityID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsQuotaCheckNeeded))
+            {
+					entityPM.IsQuotaCheckNeeded = entityPOCO.IsQuotaCheckNeeded;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExternalIDNumPerAuthority))
+            {
+					entityPM.ExternalIDNumPerAuthority = entityPOCO.ExternalIDNumPerAuthority;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsForCustomsItem))
+            {
+					entityPM.IsForCustomsItem = entityPOCO.IsForCustomsItem;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsPharmacy))
+            {
+					entityPM.IsPharmacy = entityPOCO.IsPharmacy;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsVeterinarian))
+            {
+					entityPM.IsVeterinarian = entityPOCO.IsVeterinarian;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsVehicleStandardization))
+            {
+					entityPM.IsVehicleStandardization = entityPOCO.IsVehicleStandardization;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsQuantityMandatory))
+            {
+					entityPM.IsQuantityMandatory = entityPOCO.IsQuantityMandatory;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsForCE))
+            {
+					entityPM.IsForCE = entityPOCO.IsForCE;
+            }
+
 		}
 
 		public void PMToOldPM(ConfirmationTypePM entityPM, ConfirmationTypePM oldEntityPM)
@@ -121,6 +337,96 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
             {
                 oldEntityPM.Inactive = entityPM.Inactive;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MalamID))
+            {
+                oldEntityPM.MalamID = entityPM.MalamID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.State))
+            {
+                oldEntityPM.State = entityPM.State;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Exempt_CertificateDocument))
+            {
+                oldEntityPM.Exempt_CertificateDocument = entityPM.Exempt_CertificateDocument;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsImport))
+            {
+                oldEntityPM.IsImport = entityPM.IsImport;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExemptOtherAuthority))
+            {
+                oldEntityPM.IsExemptOtherAuthority = entityPM.IsExemptOtherAuthority;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConfirmationComputerization))
+            {
+                oldEntityPM.ConfirmationComputerization = entityPM.ConfirmationComputerization;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCEO))
+            {
+                oldEntityPM.IsCEO = entityPM.IsCEO;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsNeedDeclaration))
+            {
+                oldEntityPM.IsNeedDeclaration = entityPM.IsNeedDeclaration;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CertificateDocumentCategory))
+            {
+                oldEntityPM.CertificateDocumentCategory = entityPM.CertificateDocumentCategory;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AuthorityID))
+            {
+                oldEntityPM.AuthorityID = entityPM.AuthorityID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsQuotaCheckNeeded))
+            {
+                oldEntityPM.IsQuotaCheckNeeded = entityPM.IsQuotaCheckNeeded;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExternalIDNumPerAuthority))
+            {
+                oldEntityPM.ExternalIDNumPerAuthority = entityPM.ExternalIDNumPerAuthority;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsForCustomsItem))
+            {
+                oldEntityPM.IsForCustomsItem = entityPM.IsForCustomsItem;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPharmacy))
+            {
+                oldEntityPM.IsPharmacy = entityPM.IsPharmacy;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsVeterinarian))
+            {
+                oldEntityPM.IsVeterinarian = entityPM.IsVeterinarian;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsVehicleStandardization))
+            {
+                oldEntityPM.IsVehicleStandardization = entityPM.IsVehicleStandardization;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsQuantityMandatory))
+            {
+                oldEntityPM.IsQuantityMandatory = entityPM.IsQuantityMandatory;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsForCE))
+            {
+                oldEntityPM.IsForCE = entityPM.IsForCE;
             }
 			
 		}

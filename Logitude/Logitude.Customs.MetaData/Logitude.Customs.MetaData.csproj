@@ -109,6 +109,7 @@
     <None Include="DBScripts\Post\202005210125_BeforeUpdateDeleteAllMetadata.sxml" />
     <None Include="DBScripts\Post\202005270157_SetNullableForCDROPColumns_Global.sxml" />
     <None Include="DBScripts\Post\202005270158_SetNullableForCDROPColumns_Main.sxml" />
+    <None Include="DBScripts\Post\202201231428_SetReferantPackageType.sxml" />
     <None Include="DBScripts\Post\202108011330_AddPhysicalCheckSearchResultTypes.sxml" />
     <None Include="DBScripts\Post\202111101021_SetCargoDescription.sxml" />
     <None Include="DBScripts\Post\202107071341_SetDeclarationDeclarationTypeCode.sxml" />
@@ -128,6 +129,9 @@
     <None Include="DBScripts\Post\202106061800_AddComputingPartners.sxml" />
     <None Include="DBScripts\Post\2022010514_InterfaceTenantDefS8251.sxml" />
     <None Include="DBScripts\Post\202111101341_InterfaceManagementDefaultPriority89.sxml" />
+    <None Include="DBScripts\Post\20220131_UpdateTerminalReleaseDate.sxml" />
+    <None Include="DBScripts\Post\20220309_RenameAcceptenceCode.sxml" />
+    <None Include="DBScripts\Post\20220221_AddIdColumnPost2.sxml" />
     <None Include="DBScripts\Pre\202108111402_AddONSearchResult.sxml" />
     <None Include="DBScripts\Post\202201031031_SearchFieldCourierMaster.sxml" />
     <None Include="DBScripts\Pre\20210801_DeleteDuplicateQueryColumns .sxml" />
@@ -163,6 +167,7 @@
     <None Include="DBScripts\Pre\20210726_CustomPartnerFTPSDropIndex.sxml" />
     <None Include="DBScripts\Pre\20210929_AddMoveTypes.sxml" />
     <None Include="DBScripts\Pre\20211125_UpdateIsMultiCustomer.sxml" />
+    <None Include="DBScripts\Pre\20220221_AddIdColumn2.sxml" />
     <None Include="DBTables\AcceptanceStatus.dxml" />
     <None Include="DBTables\AccumalationState.dxml" />
     <None Include="DBTables\ActionCode.dxml" />
@@ -290,6 +295,7 @@
     <None Include="DBTables\CustomsDocumentsDefinition.dxml" />
     <None Include="DBTables\CustomsDocumentStatusType.dxml" />
     <None Include="DBTables\CustomsDocumentsTicket.dxml" />
+    <None Include="DBTables\CustomsDocumentUpload.dxml" />
     <None Include="DBTables\CustomsEnvoirmentType.dxml" />
     <None Include="DBTables\CustomsExchangeRate.dxml" />
     <None Include="DBTables\CustomsGeneral.dxml" />
@@ -386,6 +392,8 @@
     <None Include="DBTables\LeadDocumentExceptionType.dxml" />
     <None Include="DBTables\LeadDocumentType.dxml" />
     <None Include="DBTables\LoadingSiteType.dxml" />
+    <None Include="DBTables\LogisticActionRequest.dxml" />
+    <None Include="DBTables\LogisticActionResponseReqS.dxml" />
     <None Include="DBTables\LogisticsReferenceType.dxml" />
     <None Include="DBTables\MamanSpecialAction.dxml" />
     <None Include="DBTables\MamanSpecialActionStatus.dxml" />
@@ -523,7 +531,10 @@
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
+    <None Include="EntityFiles\CustomsDocumentUpload.lxml" />
     <None Include="EntityFiles\ExportStorage.lxml" />
+    <None Include="EntityFiles\LogisticActionRequest.lxml" />
+    <None Include="EntityFiles\LogisticActionRequestType.lxml" />
     <None Include="EntityFiles\PhysicalCheckSearchResultType.lxml" />
     <None Include="EntityFiles\AmendRequestRejectReasonType.lxml" />
     <None Include="EntityFiles\AmendmentStatus.lxml" />
@@ -536,6 +547,7 @@
     <None Include="EntityFiles\PoaAuthorizationTypeLookup.lxml" />
     <None Include="EntityFiles\CustomerIndicationType.lxml" />
     <None Include="EntityFiles\BuyerRoleType.lxml" />
+    <None Include="EntityFiles\CustomsEnvironmentSetting.lxml" />
     <None Include="EntityFiles\PoaStatusTypeLookUp.lxml" />
     <None Include="EntityFiles\Containerization.lxml" />
     <None Include="EntityFiles\ContainerizationHataraStatus.lxml" />
@@ -543,6 +555,8 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\ExportReference.lxml" />
+    <None Include="EntityFiles\ExportStorge.lxml" />
+    <None Include="EntityFiles\CustomsDocumentUpload.lxml" />
     <None Include="EntityFiles\StuffingSiteType.lxml" />
     <None Include="EntityFiles\HandingCode.lxml" />
     <None Include="EntityFiles\NDMessageActionCode.lxml" />
@@ -929,6 +943,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\UnloadingSiteType.lxml" />
+    <None Include="EntityFiles\LogisticActionResponseReqS.lxml" />
     <None Include="EntityFiles\UpdateCode.lxml" />
     <None Include="EntityFiles\ValidCustomsItem.lxml" />
     <None Include="EntityFiles\Vehicle.lxml" />

@@ -228,10 +228,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
             if (customResponse.ResponseContentHeader != null && customResponse.ResponseContentHeader.Exception != null && customResponse.ResponseContentHeader.Exception.Count() > 0)
-            {
+            {                
+                this.MyResponseData.UserMessage = GetExceptionMsg(customResponse.ResponseContentHeader.Exception[0]);
                 this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 this.MyResponseData.Succeeded = true;
-                this.MyResponseData.UserMessage = customResponse.ResponseContentHeader.Exception[0].ExeptionDescription;
                 this.MyResponseData.HasException = false;
                 if (!string.IsNullOrWhiteSpace(requestParams.AppicationId))
                 {
@@ -612,7 +612,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status[0].NameCode.Value;
 
-            if (customResponse.Response.Declaration.DMExtensions.ExpenseLoadingFactorDetails != null)
+            if (requestParams.ResponseName == "8237" && customResponse.Response.Status[0].NameCode.Value == "36")
+            {
+                _MyDeclarationPM.IsExportClosed = true;
+            }
+
+                if (customResponse.Response.Declaration.DMExtensions.ExpenseLoadingFactorDetails != null)
                 _MyDeclarationPM.LoadingFactor = customResponse.Response.Declaration.DMExtensions.ExpenseLoadingFactorDetails.FirstOrDefault()?.ExpenseLoadingFactor.Value;
 
             if (customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalFOBNISAmount != null)
@@ -1199,7 +1204,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     SendDeclarationPrint(_MyDeclarationPM, SendRequestVIA.WebServiceBatch, requestParams);
                 }
             }
-            if (requestParams.InterfaceTypeCode == "8373")
+            if (requestParams.InterfaceTypeCode == "9079")
             {
                 myDeclarationUpdateService.SendDelayedDeclarationStatusRequest(_MyDeclarationPM);
             }
@@ -2382,6 +2387,33 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
+
+        private string GetExceptionMsg(UnifreightIIG.Common.ExportDeclarationServiceReference.Exception ex)
+        {
+            List<string> fieldNames = new List<string>();
+            var fieldList = WCO.Instance.CreateDB().GetCopyList();
+            WCOErrorPointerModel res;
+
+            if(ex.ExceptionParms != null)
+            {
+                ex.ExceptionParms.ToList().ForEach(param =>
+                {
+                    param = param.Substring(param.LastIndexOf(".") + 1);
+
+                    res = fieldList.Find(x => x.XmlTag.EndsWith(param) && !string.IsNullOrEmpty(x.FieldNameHeb));
+                    if (res == null && param.StartsWith("Export"))
+                        res = fieldList.Find(x => x.XmlTag.EndsWith(param.Remove(0, 6)) && !string.IsNullOrEmpty(x.FieldNameHeb));
+
+                    if (res != null)
+                        fieldNames.Add(res.FieldNameHeb);
+                });
+
+            }
+
+            string msg = fieldNames.Count > 0 ? "שגיאה בשדה: " + string.Join(",", fieldNames) : ex.ExeptionDescription;
+
+            return msg;
+        }
     }
 
 }

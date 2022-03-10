@@ -40,6 +40,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool IsCourierManadatory { get; set; }
         [Column("IsDiamondManadatory")]
 	    public bool IsDiamondManadatory { get; set; }
+        [ForeignKey("CustomsDocumentUploadT")]
+        [Column("CustomsDocumentUpload")]
+	    public string CustomsDocumentUpload { get; set; }
+	      
+        public virtual CustomsDocumentUpload CustomsDocumentUploadT { get; set; }
     }
 }
 	 

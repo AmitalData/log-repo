@@ -78,6 +78,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string ClosedByAssigneeName  { get; set; }
        [DataMember]
        public string CustomerId  { get; set; }
+       [DataMember]
+       public string ResponseToMessage  { get; set; }
    }
 
 }

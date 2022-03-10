@@ -28,5 +28,39 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         [Column("TenantPriority")]
         public int? TenantPriority { get; set; }
 
+
+        [Column("InterfaceTypeCode")]
+        public string InterfaceTypeCode { get; set; }
+
+        [Column("UseRabbitMQ")]
+        public string UseRabbitMQ { get; set; }
+
+
+        [Column("QueueCodeRabbit")]
+        public string QueueCodeRabbit  { get; set; }
+
+
+
+
+        [Column("HaveRabbitMQ")]
+        public string HaveRabbitMQ { get; set; }
+
+
+
+
+
+        #region tomer
+        [Column("RabbitMQCreateDate")]
+        public DateTime RabbitMQCreateDate { get; set; }
+
+        [Column("RabbitMQRetryNumber")]
+        public int RabbitMQRetryNumber { get; set; }
+
+        [Column("RabbitMQErrMess")]
+        public string RabbitMQErrMess { get; set; }
+
+
+        #endregion
+
     }
 }

@@ -216,7 +216,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 try
                 {
                     DeclarationPM declarationPM = myDeclarationQueryService.GetSingle(itemPoco.DeclarationId, false, false);
-                    if (declarationPM != null && !string.IsNullOrEmpty(declarationPM.DeclarationNumber))
+                    string[] list = { "12", "7", "8" };
+                    if (declarationPM != null && !string.IsNullOrEmpty(declarationPM.DeclarationNumber) && !list.Contains(declarationPM.DeclarationStatusTypeCode))
                     {
 
                         using (var scopeNewCRS = TransactionFactory.GetNewTransaction())

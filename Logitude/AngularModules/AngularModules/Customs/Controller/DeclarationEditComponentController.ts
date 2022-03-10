@@ -32,6 +32,13 @@ export class DeclarationEditComponentController implements IEditComponentControl
             }
 
         }
+        
+        var indexOfTab = allTabs.findIndex(t => t.Code == "CloD");
+        if (AppTool.IsNullOrEmpty(currentEntity.ExportClosedErrorXML)) {
+            if (indexOfTab > -1) {
+                allTabs.splice(indexOfTab, 1);
+            }
+        }
 
         if (currentEntity.IsAmendment || !FeatureLocator.HasFeaturePermession("Customs.Declaration", "DECLARATIONAMENDMENT") || currentEntity.Direction == "E") {
             var indexOfTab = allTabs.findIndex(t => t.Code == "DCCO");
@@ -60,6 +67,7 @@ export class DeclarationEditComponentController implements IEditComponentControl
 
               }
          }
+
 
     }
     public MustRefresh: boolean = null;
@@ -158,12 +166,14 @@ export class DeclarationEditComponentController implements IEditComponentControl
                 }
             }
             );
-
+        //let unifreightEntity: string = this._CurrentEntity.Direction == "E" ? "BFIFILE" : "CFIFILEM";
         AmitalGatewayUtil.Instance.DeclarationMessaging
             .RaiseCFIFILMLockReturnCFIFILMAlreadyLock(
             this._CurrentEntity.CustomFileNo, this._CurrentEntity.Id,
             //this.GetType().Name
-            "DeclarationEditComponentController"
+                "DeclarationEditComponentController",
+                AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity(this._CurrentEntity.Direction)
+
             );
     }
     ForceCheckIfLockWhileReload() {

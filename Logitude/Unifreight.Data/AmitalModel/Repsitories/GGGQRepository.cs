@@ -65,10 +65,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             get { return currentContext; }
         }
 
-        public GGGQ GetByPrimary(string primary, string entity, string originQue, string formId)
+        public GGGQ GetByPrimary(string primary, string entity, string originQue, string formId, string status)
         {
             var q = (from a in context.GGGQs
-                     where a.PRIMARYNUM == primary & a.ENTNAME == entity & a.ORIGINQUE == originQue & a.FORMID == formId
+                     where a.PRIMARYNUM == primary & a.ENTNAME == entity & a.ORIGINQUE == originQue & a.FORMID == formId & a.STATUS == status
                      select a);
             return q.FirstOrDefault();
         }

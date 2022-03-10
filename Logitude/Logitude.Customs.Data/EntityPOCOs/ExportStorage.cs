@@ -32,11 +32,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual Declaration DeclarationEntity { get; set; }
         [Column("ExportFileNo")]
 	    public string ExportFileNo { get; set; }
-        [ForeignKey("CustomsStorageStatus")]
         [Column("StorageStatus")]
 	    public string StorageStatus { get; set; }
-	      
-        public virtual StorageStatus CustomsStorageStatus { get; set; }
         [ForeignKey("CargoIdentifireType")]
         [Column("CargoTypeCode")]
 	    public string CargoTypeCode { get; set; }
@@ -49,15 +46,15 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CargoType { get; set; }
 	      
         public virtual CargoType CargoTypeEntity { get; set; }
+        [ForeignKey("CustomsCargoStatus")]
         [Column("CustomsStatus")]
 	    public string CustomsStatus { get; set; }
+	      
+        public virtual CargoStatus CustomsCargoStatus { get; set; }
         [Column("ExporterID")]
 	    public string ExporterID { get; set; }
-        [ForeignKey("CustomsShip")]
         [Column("ShipCode")]
 	    public string ShipCode { get; set; }
-	      
-        public virtual CustomsShip CustomsShip { get; set; }
         [Column("FirstCargoID")]
 	    public string FirstCargoID { get; set; }
         [Column("SecondCargoID")]

@@ -64,7 +64,7 @@ namespace Unifreight.BL.BL
             var MainContext = GetAmitalContext(tenant);
 
             return (from Incoterm in MainContext.ETBPAYTRs
-                    select new Incoterms { Name = Incoterm.NAMEENG, PTERMID = Incoterm.PTERMID, SEARCHENG = Incoterm.SEARCHENG }); ;
+                    select new Incoterms { Name = Incoterm.NAMEENG, PTERMID = Incoterm.PTERMID, SEARCHENG = Incoterm.PTERMID + "," + Incoterm.NAMEENG }); ;
         }
 
         private IQueryable<Incoterms> AddFilter(IQueryable<Incoterms> query, QueryOperations queryOperations)

@@ -731,7 +731,7 @@
   </Column>
   <Column
     Name="AmendmentStatus"
-    Type="varchar"
+    Type="nvarchar"
     Size="3">
     <Constraints
       Nullable="true" />
@@ -1022,6 +1022,19 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsExportClosed"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ExportClosedErrorXML"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"
@@ -1178,11 +1191,6 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Relation
-    ForeignKeyColumn="AmendmentStatus"
-    ReferencedTable="AmendmentStatuses"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
-  <Relation
     ForeignKeyColumn="AmendmentCorrectedByUserId"
     ReferencedTable="Users"
     ReferencedColumn="Id"
@@ -1255,4 +1263,12 @@
     Columns="ExternalDeclarationNumber" />
   <Index
     Columns="VersionId" />
+
+	<Index
+    Columns="IsAmendment" />
+
+	<Index
+		Columns="TaxationDateTime" />
+
+	
 </Table>

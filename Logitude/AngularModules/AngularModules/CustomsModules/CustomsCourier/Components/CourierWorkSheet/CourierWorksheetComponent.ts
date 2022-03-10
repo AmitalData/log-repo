@@ -110,6 +110,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     IsFiltered: boolean = false;
     IsMamanEnabled: boolean = false;
     isAllowAccounting: boolean = false;
+    isAllowBulkPendind: boolean = false;
     IsILOVLEnabled: boolean = false;
     IsILSWSEnabled: boolean = false;
 
@@ -148,6 +149,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         this.GetMamanPUR();
         this.GetIsSendDocumentsFromQueueButton();
         this.isAllowAccounting = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowAccounting")
+        this.isAllowBulkPendind = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowBulkPendind")
     }
     //PseventRowSelectEventSubscribe: any;
     ngOnDestroy() {
@@ -323,7 +325,6 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     }
 
     SendALLCorrectManifest(courierDeclarationStatusCode: string) {
-        debugger;
         if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
@@ -658,7 +659,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     _PAY_C_Total = 0;
     _PAY_R_Total = 0;
     _PAY_I_Total = 0;
-    _DecWithoutHaTra = 0;
+   // _DecWithoutHaTra = 0;
 
     _PendingCodes: KeyValuePair[] = [];
 
@@ -830,10 +831,10 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                             this._ACC_WS_Total = item.Value;
                             break;
                         }
-                        case "DecWithoutHaTra": {
-                            this._DecWithoutHaTra = item.Value;
-                            break;
-                        }
+                        //case "DecWithoutHaTra": {
+                        //    this._DecWithoutHaTra = item.Value;
+                        //    break;
+                        //}
                         /*
                     case "PAY": {
                         this._PAY_Total = item.Value;
@@ -974,7 +975,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             FieldName: 'IsCourierMissingClassification',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsCourierMissingClassification"),
-            Styles: { width: '53px' },
+            Styles: { width: '47px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -986,7 +987,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             FieldName: 'CourierManifestStatusCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierManifestStatusCode"),
-            Styles: { width: '53px' },
+            Styles: { width: '50px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -998,7 +999,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             FieldName: 'CourierDeclarationStatusCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierDeclarationStatusCode"),
-            Styles: { width: '53px' },
+            Styles: { width: '50px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -1022,7 +1023,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             FieldName: 'CourierCustomStatusName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierCustomStatusName"),
-            Styles: { width: '120px' },
+            Styles: { width: '100px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -1101,7 +1102,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             FieldName: 'IsClosedForFollowUp',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
-            Styles: { width: '62px' },
+            Styles: { width: '42px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -1216,7 +1217,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             FieldName: 'IsCourierMissingClassification',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsCourierMissingClassification"),
-            Styles: { width: '53px' },
+            Styles: { width: '47px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -1228,7 +1229,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             FieldName: 'CourierManifestStatusCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierManifestStatusCode"),
-            Styles: { width: '53px' },
+            Styles: { width: '50px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -1240,7 +1241,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             FieldName: 'CourierDeclarationStatusCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierDeclarationStatusCode"),
-            Styles: { width: '53px' },
+            Styles: { width: '50px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -1263,8 +1264,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         this.columns.push({
             FieldName: 'CourierCustomStatusName',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierCustomStatusName"),
-            Styles: { width: '120px' },
+            Display:  TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierCustomStatusName"),
+            Styles: { width: '100px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -1343,7 +1344,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             FieldName: 'IsClosedForFollowUp',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
-            Styles: { width: '62px' },
+            Styles: { width: '42px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -1658,6 +1659,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             }
             case "N": {
                 filters.addAdditionalFilter("CourierCustomStatusCode", "2", "1", null, "NotEqual", false, false, false, "string");
+1
+
                 break;
             }
         }
@@ -2192,7 +2195,6 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     }
  
     ClosePendingMethod() {
-        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
          if (this.IsDisplayOnly) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
@@ -2207,7 +2209,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         currRequestParams.Tenant = SessionLocator.Tenant;
         currRequestParams.CourierMasterId = this.entityPM.Id;
         currRequestParams.MAWB = this.entityPM.MAWB;
-        let text = "נא אשר מחיקת קוד עיכוב";
+        let text = "נם םשר מחיקת קוד עיכוב";
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.DeclarationsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
         }
@@ -2484,8 +2486,21 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             });
 
 
-    }
+     }
 
+
+    openBulkFeedPending() {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 1500;
+        logitudeWindow.Height = 800;
+        logitudeWindow.IsShowCloseButton = true;
+        logitudeWindow.Title = "הזנה גורפת PENDING";
+        logitudeWindow.WindowArgs = { CourierMasterPM: this.entityPM };        
+        logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/bulk-feed-pending/BulkFeedPendingComponent');
+        this.ChangedUnloadPortSite = true;
+        logitudeWindow.WindowClosed.subscribe(($event: any) => this.RefreshButtonClicked());
+    }
+ 
 }
 
 

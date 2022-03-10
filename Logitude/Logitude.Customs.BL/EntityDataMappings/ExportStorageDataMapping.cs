@@ -6,70 +6,142 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Logitude.Server.Tools; 
+using Logitude.Server.Tools;
 using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure;
+using Logitude.Customs.BL.TraceEvents;
+using Logitude.Customs.Data.Repsitories;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
-   
-   public partial class ExportStorageDataMapping: IMapping<ExportStoragePM, ExportStorage>
-   {
+
+    public partial class ExportStorageDataMapping : IMapping<ExportStoragePM, ExportStorage>
+    {
 
         public void CustomPMToPOCO(ExportStoragePM entityPM, ExportStorage entityPOCO)
         {
             //throw new NotImplementedException();
 
             CustomMappedPOCOProperties.Add(POCOPropertyNames.Id);
-            
+
             CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
 
-            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
 
                 entityPOCO.Id = entityPM.Id;
-            
+
                 entityPOCO.Tenant = entityPM.Tenant;
 
             }
+
+            BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+            entityPOCO.SearchFields = entityPM.SearchFields;
         }
 
         public void CustomPOCOToPM(ExportStoragePM entityPM, ExportStorage entityPOCO)
         {
             var declarationQueryService = new DeclarationQueryService(entityPOCO.Tenant);
-            DeclarationPM declarationPM = declarationQueryService.GetSingleDeclarationById(entityPOCO.DeclarationId, entityPOCO.Tenant);
+
+
+            DeclarationPM declarationPM = entityPOCO.DeclarationId != null ? declarationQueryService.GetSingleDeclarationById(entityPOCO.DeclarationId, entityPOCO.Tenant) : new DeclarationPM();
+
+
+
 
             var cargoTypeQueryService = new CargoTypeQueryService(entityPOCO.Tenant);
             CargoTypePM cargoTypePM = cargoTypeQueryService.GetSingle(entityPOCO.CargoType, false, true);
 
-            var storageStatusQueryService = new StorageStatusQueryService(entityPOCO.Tenant);
-            StorageStatusPM storageStatusPM = storageStatusQueryService.GetSingle(entityPOCO.StorageStatus, false, true);
+            var cargoStatusQueryService = new CargoStatusQueryService(entityPOCO.Tenant);
+            CargoStatusPM cargoStatusPM = cargoStatusQueryService.GetSingle(entityPOCO.CustomsStatus, false, true);
 
-            var cardQueryService = new CardQueryService(entityPOCO.Tenant);
-            Card cardPM = cardQueryService.GetCardById(entityPOCO.ExporterID, entityPOCO.Tenant);
+            //var cardQueryService = new CardQueryService(entityPOCO.Tenant);
+            //Card cardPM = new CardRepository(entityPOCO.Tenant).GetCardsByIds(new List<string>() { entityPOCO.ExporterID }, entityPOCO.Tenant).Count() > 0 ?
+            // cardQueryService.GetCardById(entityPOCO.ExporterID, entityPOCO.Tenant) : null;
 
+            ClientPM client = new ClientQueryService(entityPOCO.Tenant).GetSingle(entityPOCO.ExporterID, false,false);
+            
             var customsShipQueryService = new CustomsShipQueryService(entityPOCO.Tenant);
             CustomsShipPM customsShipPM = customsShipQueryService.GetSingle(entityPOCO.ShipCode, false, true);
 
             var cargoIdentifireTypeQueryService = new CargoIdentifireTypeQueryService(entityPOCO.Tenant);
-            CargoIdentifireTypePM cargoIdentifireTypePM  = cargoIdentifireTypeQueryService.GetSingle(entityPOCO.CargoTypeCode, false, true);
+            CargoIdentifireTypePM cargoIdentifireTypePM = cargoIdentifireTypeQueryService.GetSingle(entityPOCO.CargoTypeCode, false, true);
 
-            entityPM.Declaration_ID = declarationPM.Id;
-            entityPM.DeclarationStatusTypeName = declarationPM.DeclarationStatusTypeName;
+            entityPM.Declaration_ID = declarationPM?.Id;
+            entityPM.DeclarationStatusTypeName = declarationPM?.DeclarationStatusTypeName;
             entityPM.CargoTypeName = cargoTypePM.LocalName;
-            entityPM.StorageStatusName = storageStatusPM.LocalName;
-            entityPM.ExporterName = cardPM.LocalName;
-            entityPM.ShipName = customsShipPM.LocalName;
-            entityPM.CargoTypeCodeName = cargoIdentifireTypePM.LocalName;
-            entityPM.DeclarationStatusTypeCode = declarationPM.DeclarationStatusTypeCode;
-            entityPM.DeclarationCustomFileNo = declarationPM.CustomFileNo;
-            entityPM.DeclarationNumber = declarationPM.DeclarationNumber;
-            entityPM.ExporterCode = cardPM.VatNumber;
+            entityPM.CustomStatusName = cargoStatusPM?.LocalName;
+            //entityPM.ExporterName = cardPM?.LocalName;
+            entityPM.ExporterName = client?.FullName;
+            entityPM.ShipName = customsShipPM?.LocalName;
+            entityPM.CargoTypeCodeName = cargoIdentifireTypePM?.LocalName;
+            entityPM.DeclarationStatusTypeCode = declarationPM?.DeclarationStatusTypeCode;
+            entityPM.DeclarationCustomFileNo = declarationPM?.CustomFileNo;
+            entityPM.DeclarationNumber = declarationPM?.DeclarationNumber;
+            //entityPM.ExporterCode = cardPM?.VatNumber;
+            entityPM.ExporterCode = client?.Code;
+            try
+            {
+                var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                {
+                    Tenant = 1,
+                    objectTableName = "Customs.ExportStorage",
+                    EventCode = "ER1",
+                    notes = "DO_NOT_RAISE_EVENT",
+                    CommunicationLoggingEntityReference = entityPM.Id,
+                    EntityId = entityPM.Id,
+                    UserId = "1-9",
+
+                    CommunicationSubject = "FU Status ER1 from logitude (Declaration Sent To Customs)",
+                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                    {
+                        entname = "MSCSTORAGE",
+                        primary_number = entityPM.StorageNo,
+                        status = "new",
+                        xml_status = "new",
+                        status_id = "ER1",
+                        status_DateTime = DateTime.Now,
+                        //status_place = "FRA",
+                        //status_save = "no_fail",
+                        comments = "",
+                    }
+                };
+                //if (!dirtyDeclarationPM.IsConnectedToUnifreight) myAmitalEventTracerModel.NotConnectedToUniface = true;
+
+                LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent  eventCode = ER1  entity= " + entityPM.Id + "   ");
+                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+
+            }
+            catch (System.Exception)
+            {
+                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
+                throw;
+            }
         }
-   }
+
+        private void BuildSearchFields(ExportStoragePM entityPM, ExportStorage entityPOCO, bool isNewEntity)
+        {
+            string mySearchFields = "";
+
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.StorageNo);
+
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ExportFileNo);
+
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.DeclarationId);
+
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ExporterID);
+
+            mySearchFields = mySearchFields.ToLower();
+
+            entityPM.SearchFields += mySearchFields;
+            entityPOCO.SearchFields += mySearchFields;
+        }
+    }
 }
-   

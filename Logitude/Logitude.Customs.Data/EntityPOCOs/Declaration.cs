@@ -322,11 +322,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool IsPaymentProtested { get; set; }
         [Column("AmendmentRequestNumber")]
 	    public string AmendmentRequestNumber { get; set; }
-        [ForeignKey("AmendmentStatusFK")]
         [Column("AmendmentStatus")]
 	    public string AmendmentStatus { get; set; }
-	      
-        public virtual AmendmentStatus AmendmentStatusFK { get; set; }
         [Column("AmendmentissueDate")]
 	    public DateTime? AmendmentissueDate { get; set; }
         [Column("AmendmentRemarks")]
@@ -446,6 +443,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string AmedmentType { get; set; }
 	      
         public virtual AmedmentType CustomsAmedmentType { get; set; }
+        [Column("IsExportClosed")]
+	    public bool IsExportClosed { get; set; }
+        [Column("ExportClosedErrorXML")]
+	    public string ExportClosedErrorXML { get; set; }
     }
 }
 	 

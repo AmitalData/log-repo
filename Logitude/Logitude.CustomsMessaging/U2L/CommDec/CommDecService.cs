@@ -146,7 +146,8 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.Clear();
             DeserilazeObject(xmlLOGICOMMDEC);
             AppendLogLine("DeserilazeObject:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-
+            //bool SuppressECommDecInsertService = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20220221.SuppressECommDecInsertService"]);
+            bool useECommDecInsertService = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20220221.UseECommDecInsertService"]);
             //CheckIntegrity();
             AppendLogLine("CheckIntegrity:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
             MyGenericResponseObj.Stage = "GetContext";
@@ -154,7 +155,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             _context = CustomContext.GetContext(_tenant);
             amitalContext = AmitalContext.GetContext(_tenant);
             var myQueryService = new DeclarationQueryService(_context);
-
+            MyGenericResponseObj.EnglishDescription = "Update Declaration Integrator";
             ICustomContext dbContext = CustomContext.GetContext(_tenant);
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), _tenant);
 
@@ -182,6 +183,22 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                             }
                         }
+                        else
+                        {
+                            if (useECommDecInsertService)
+                            {
+
+
+                                /// INSERT !!!
+                                MyGenericResponseObj.EnglishDescription = "Insert Declaration Integrator";
+                                var eCommDecInsertService = new ECommDecInsertService();
+                                eCommDecInsertService.ProccessGenericRequestReal(xmlLOGICOMMDEC, tenant, Curruser, PBId,
+                  ref MoreParams,
+                  out MessageOut, out customFileNo, out decId, out courierMasterID);
+                                return;
+                            }
+
+                        }
                     }
                     AppendLogLine("Updating Master Courier Only " + this._MyDeclarationPM.CustomFileNo + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
                     MyGenericResponseObj.Stage = "Done Updating Master Courier Only ";
@@ -191,6 +208,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     return;
                 }
             }
+            
 
             MyGenericResponseObj.Stage = "GetSingleB4Upsert";
             if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.CustomFileNo))
@@ -208,6 +226,19 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                             AppendLogLine("Updating Not Allowed For Declaration " + this._MyDeclarationPM.CustomFileNo + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
                             return;
                         }
+                    }
+                }
+                else
+                {
+                    if (useECommDecInsertService)
+                    {
+                        //INSERT !!!
+                        MyGenericResponseObj.EnglishDescription = "Insert Declaration Integrator";
+                        var eCommDecInsertService = new ECommDecInsertService();
+                        eCommDecInsertService.ProccessGenericRequestReal(xmlLOGICOMMDEC, tenant, Curruser, PBId,
+          ref MoreParams,
+          out MessageOut, out customFileNo, out decId, out courierMasterID);
+                        return;
                     }
                 }
             }
@@ -2141,7 +2172,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             {
                 if (!string.IsNullOrWhiteSpace(transpValItem.TRANSP_VALUE_L) && transpValItem.TRANSP_VALUE_L != "0")
                 {
-                    var SupplierInvoiceFreightAmountPM = new SupplierInvoiceFreightAmountPM();
+                    var SupplierInvoiceFreightAmountPMFirst = new SupplierInvoiceFreightAmountPM();
 
                     if (!String.IsNullOrWhiteSpace(transpValItem.TRANSP_VALUE_CURR_L))
                     {
@@ -2152,60 +2183,63 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                             string freightCurrencyCode = "";
                             freightCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", transpValItem.TRANSP_VALUE_CURR_L);
 
-                            if (!string.IsNullOrWhiteSpace(freightCurrencyCode)) SupplierInvoiceFreightAmountPM.CurrencyTypeCode = freightCurrencyCode;
+                            if (!string.IsNullOrWhiteSpace(freightCurrencyCode)) SupplierInvoiceFreightAmountPMFirst.CurrencyTypeCode = freightCurrencyCode;
                         }
                         else
                         {
-                            SupplierInvoiceFreightAmountPM.CurrencyTypeCode = myfreightCurrency.Code.ToString();
+                            SupplierInvoiceFreightAmountPMFirst.CurrencyTypeCode = myfreightCurrency.Code.ToString();
                         }
-                        if (String.IsNullOrWhiteSpace(this._MySupplierInvoicePM.FreightCurrencyTypeCode)) this._MySupplierInvoicePM.FreightCurrencyTypeCode = SupplierInvoiceFreightAmountPM.CurrencyTypeCode;
+                        if (String.IsNullOrWhiteSpace(this._MySupplierInvoicePM.FreightCurrencyTypeCode)) this._MySupplierInvoicePM.FreightCurrencyTypeCode = SupplierInvoiceFreightAmountPMFirst.CurrencyTypeCode;
 
                     }
-                    string tempFreightCurrencyCode = SupplierInvoiceFreightAmountPM.CurrencyTypeCode;
+                    string tempFreightCurrencyCode = SupplierInvoiceFreightAmountPMFirst.CurrencyTypeCode;
                     var myQueryService = new SupplierInvoiceFreightAmountQueryService(_context);
-                    SupplierInvoiceFreightAmountPM = myQueryService.GetSingle(supplierInvoicePM.DeclarationId, supplierInvoicePM.InvoiceCounterKey, tempFreightCurrencyCode, true, false);
-                    if (SupplierInvoiceFreightAmountPM != null && SupplierInvoiceFreightAmountPM.InvoiceCounterKey == supplierInvoicePM.InvoiceCounterKey)
-                    {
-                        SupplierInvoiceFreightAmountPM.ChangeSetOp = ChangeSetOperation.Update;
-                    }
-                    else
-                    {
-                        SupplierInvoiceFreightAmountPM = new SupplierInvoiceFreightAmountPM();
-                        SupplierInvoiceFreightAmountPM.ChangeSetOp = ChangeSetOperation.Insert;
-                        SupplierInvoiceFreightAmountPM.DeclarationId = supplierInvoicePM.DeclarationId;
-                        SupplierInvoiceFreightAmountPM.InvoiceCounterKey = supplierInvoicePM.InvoiceCounterKey;
-                        SupplierInvoiceFreightAmountPM.Tenant = _tenant;
-                    }
-                    SupplierInvoiceFreightAmountPM.CurrencyTypeCode = tempFreightCurrencyCode;
-                    decimal decimal1;
-                    if (decimal.TryParse(transpValItem.TRANSP_VALUE_L, out decimal1))
-                    {
-                        SupplierInvoiceFreightAmountPM.Amount = decimal1;
-                    }
-                    else
-                    {
-                        throw new BusinessErrorException("Error in parsing TRANSP_VALUE_L (" + transpValItem.TRANSP_VALUE_L + ") into integer");
-                    }
-
-                    SupplierInvoiceFreightAmountPMList.Add(SupplierInvoiceFreightAmountPM);
-
-                    decimal? amountInNIS = 0;
-
-                    if (!String.IsNullOrWhiteSpace(SupplierInvoiceFreightAmountPM.CurrencyTypeCode) && SupplierInvoiceFreightAmountPM.CurrencyTypeCode != "ILS")
-                    {
-                        customsExchangeRates = CustomsExchangeRatequery.GetExchangeRateByCurrencyAndDate(SupplierInvoiceFreightAmountPM.CurrencyTypeCode, System.DateTime.Now, _tenant);
-                        CustomsExchangeRatePM rate = customsExchangeRates.Where(d => d.CurrencyTypeCode == SupplierInvoiceFreightAmountPM.CurrencyTypeCode).FirstOrDefault();
-                        if (rate != null)
+                    myQueryService.GetSupplierInvoiceFreightAmountsByInvoice(supplierInvoicePM.DeclarationId, supplierInvoicePM.InvoiceCounterKey)
+                        .FindAll(x => x.CurrencyTypeCode == tempFreightCurrencyCode).ForEach(SupplierInvoiceFreightAmountPM =>
+                    {                         
+                        if (SupplierInvoiceFreightAmountPM != null && SupplierInvoiceFreightAmountPM.InvoiceCounterKey == supplierInvoicePM.InvoiceCounterKey)
                         {
-                            amountInNIS = SupplierInvoiceFreightAmountPM.Amount * rate.ExchangeRate;
+                            SupplierInvoiceFreightAmountPM.ChangeSetOp = ChangeSetOperation.Update;
                         }
-                    }
-                    else
-                    {
-                        amountInNIS = SupplierInvoiceFreightAmountPM.Amount;
-                    }
-                    if (this._MySupplierInvoicePM.TotalFreightInNIS == null && amountInNIS > 0) this._MySupplierInvoicePM.TotalFreightInNIS = 0;
-                    this._MySupplierInvoicePM.TotalFreightInNIS = this._MySupplierInvoicePM.TotalFreightInNIS + amountInNIS;
+                        else
+                        {
+                            SupplierInvoiceFreightAmountPM = new SupplierInvoiceFreightAmountPM();
+                            SupplierInvoiceFreightAmountPM.ChangeSetOp = ChangeSetOperation.Insert;
+                            SupplierInvoiceFreightAmountPM.DeclarationId = supplierInvoicePM.DeclarationId;
+                            SupplierInvoiceFreightAmountPM.InvoiceCounterKey = supplierInvoicePM.InvoiceCounterKey;
+                            SupplierInvoiceFreightAmountPM.Tenant = _tenant;
+                        }
+                        SupplierInvoiceFreightAmountPM.CurrencyTypeCode = tempFreightCurrencyCode;
+                        decimal decimal1;
+                        if (decimal.TryParse(transpValItem.TRANSP_VALUE_L, out decimal1))
+                        {
+                            SupplierInvoiceFreightAmountPM.Amount = decimal1;
+                        }
+                        else
+                        {
+                            throw new BusinessErrorException("Error in parsing TRANSP_VALUE_L (" + transpValItem.TRANSP_VALUE_L + ") into integer");
+                        }
+
+                        SupplierInvoiceFreightAmountPMList.Add(SupplierInvoiceFreightAmountPM);
+
+                        decimal? amountInNIS = 0;
+
+                        if (!String.IsNullOrWhiteSpace(SupplierInvoiceFreightAmountPM.CurrencyTypeCode) && SupplierInvoiceFreightAmountPM.CurrencyTypeCode != "ILS")
+                        {
+                            customsExchangeRates = CustomsExchangeRatequery.GetExchangeRateByCurrencyAndDate(SupplierInvoiceFreightAmountPM.CurrencyTypeCode, System.DateTime.Now, _tenant);
+                            CustomsExchangeRatePM rate = customsExchangeRates.Where(d => d.CurrencyTypeCode == SupplierInvoiceFreightAmountPM.CurrencyTypeCode).FirstOrDefault();
+                            if (rate != null)
+                            {
+                                amountInNIS = SupplierInvoiceFreightAmountPM.Amount * rate.ExchangeRate;
+                            }
+                        }
+                        else
+                        {
+                            amountInNIS = SupplierInvoiceFreightAmountPM.Amount;
+                        }
+                        if (this._MySupplierInvoicePM.TotalFreightInNIS == null && amountInNIS > 0) this._MySupplierInvoicePM.TotalFreightInNIS = 0;
+                        this._MySupplierInvoicePM.TotalFreightInNIS = this._MySupplierInvoicePM.TotalFreightInNIS + amountInNIS;
+                    });
                 }
             }
             if (this._MySupplierInvoicePM.TotalFreightInNIS != null) this._MySupplierInvoicePM.TotalFreightInNIS = Math.Round(this._MySupplierInvoicePM.TotalFreightInNIS.Value, 2);

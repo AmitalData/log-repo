@@ -16,11 +16,14 @@ import { ClientMessagesService } from '../../../../../Customs/Services/WebServic
 import { ClaimPMService } from '../../../../../Customs/Services/StandardPMs/ClaimPMService';
 import { Validator } from '../../../../../Infrastructure/Validators/Validator';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
-import { ClientAddressPM } from 'Customs/EntityPMs/ClientAddressPM';
+ import { ClientAddressPM } from 'Customs/EntityPMs/ClientAddressPM';
 import { ClientPM } from 'Customs/EntityPMs/ClientPM';
 import { ClientsAddressCommTypePM } from 'Customs/EntityPMs/ClientsAddressCommTypePM';
 import { ClientPMService } from 'Customs/Services/StandardPMs/ClientPMService';
-
+ import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import { ClaimsRelatedEntitiesReasonPM } from 'Customs/EntityPMs/ClaimsRelatedEntitiesReasonPM';
+import { ClaimsRelatedEntsReasonsExpPM } from 'Customs/EntityPMs/ClaimsRelatedEntsReasonsExpPM';
+ 
 @Component({
     
     templateUrl: './ClaimGeneralTabComponent.html',
@@ -43,6 +46,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
     public CurrentEditComponentId: string;
     private isControlEnabled: boolean = true;
     IsClientPassportEnabled: boolean = false;
+    _declarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
 
     public ClaimPMService: ClaimPMService = new ClaimPMService;
     public ClientMessagesService: ClientMessagesService = new ClientMessagesService;
@@ -287,7 +291,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
         clientSelectionChangedWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
         clientSelectionChangedWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
         clientSelectionChangedWindow.ShowCancelButton = false;
-        clientSelectionChangedWindow.Show("בפעולה זו ימחקו כל הכתובות של הלקוח, האם להמשיך?");
+        clientSelectionChangedWindow.Show("בפעולה זו ימחקו כל הכתובות של הלקוח, הםם להמשיך?");
 
         clientSelectionChangedWindow.WindowClosed.subscribe((event: any) => {
             if (clientSelectionChangedWindow.Yes) {
@@ -356,9 +360,9 @@ export class ClaimGeneralTabComponent extends BaseComponent {
         if ((item.AddressMode == "AddressCode" && AppTool.IsNullOrEmpty(item.ClientPM.Id)
             || (item.AddressMode == "CustomsAddressCode" || item.AddressMode == "ContactPhoneAddressCode") && AppTool.IsNullOrEmpty(item.ClientPM.Id) && AppTool.IsNullOrEmpty(this.EntityPM.PassportNumber))) {
 
-            var text: string = "ראשית חובה לבחור לקוח";
+            var text: string = "רםשית חובה לבחור לקוח";
             if (item.AddressMode == "AddressCode") {
-                text = "ראשית חובה לבחור מגיש לתביעה";
+                text = "רםשית חובה לבחור מגיש לתביעה";
             }
             
             var messageWindow = new MessageWindow();
@@ -399,7 +403,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
             messageWindow.Width = 250;
             messageWindow.Height = 150;
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            messageWindow.Show("לא ניתן לבחור כתובת זו, אנא שלוף לקוח מחדש");
+            messageWindow.Show("לם ניתן לבחור כתובת זו, םנם שלוף לקוח מחדש");
             return;
         }
 
@@ -488,7 +492,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
             messageWindow.Width = 250;
             messageWindow.Height = 150;
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            messageWindow.Show("לא ניתן למחוק ישות תביעה המקושרת לתיק תפג");
+            messageWindow.Show("לם ניתן למחוק ישות תביעה המקושרת לתיק תפג");
             return;
         }
 
@@ -514,6 +518,34 @@ export class ClaimGeneralTabComponent extends BaseComponent {
     }
 
 
+    NavigateToDeclarationButtonClicked(item: ClaimsRelatedEntityLineComponent) {
+        debugger;
+        this._declarationExtendedListService.GetSingleDeclarationByNumber(item.ClaimEntityNumber?.trim(), SessionLocator.Tenant).subscribe((myResult: any) => {
+
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError) {
+                var entity = mm.Result;
+                if (entity != null) {
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.currentSession.SessionLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'Customs.Declaration', BackButtonLabel: "הצהרת יבום" });
+                            //cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                            //    DeclarationEventManager.DisplayModeChanged.emit(null);
+                            //});
+                        });
+                }
+                else {
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Width = 250;
+                    messageWindow.Height = 150;
+                    messageWindow.RTL = true;
+                    messageWindow.Show("לם נמצםה הצהרה");
+                }
+            }
+        });
+    }
+
     CancelOrObjectionButtonClicked(item: ClaimsRelatedEntityLineComponent) {
         if (!this.IsControlEnabled) return;
 
@@ -522,7 +554,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
             messageWindow.Width = 250;
             messageWindow.Height = 150;
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            messageWindow.Show("לא ניתן לבטל/ערר ישות תביעה שאינה המקושרת לתיק תפג");
+            messageWindow.Show("לם ניתן לבטל/ערר ישות תביעה שםינה המקושרת לתיק תפג");
             return;
         }
 
@@ -611,6 +643,62 @@ export class ClaimGeneralTabComponent extends BaseComponent {
     }
 
     //#endregion
+
+    
+    CopyButtonClicked(item: ClaimsRelatedEntityLineComponent) {
+        if (!this.IsControlEnabled) return;
+
+        SessionLocator.SelectedSession.StartBusyIndicator("");
+
+        var newClaimsRelatedEntityPM = new ClaimsRelatedEntityPM(this.EntityPM);
+        newClaimsRelatedEntityPM.ClaimId = this.EntityPM.Id;
+        newClaimsRelatedEntityPM.Tenant = this.EntityPM.Tenant;
+        newClaimsRelatedEntityPM.EntityCounterKey = (ArrayTool.Max(this.EntityPM.ClaimsRelatedEntities, "EntityCounterKey") + 1);
+        newClaimsRelatedEntityPM.WarehouseTypeCode = item.entityPM.WarehouseTypeCode;
+        newClaimsRelatedEntityPM.WarehouseTypeName = item.entityPM.WarehouseTypeName;
+        //newClaimsRelatedEntityPM.ClaimEntityTypeCode = item.entityPM.ClaimEntityTypeCode;
+        //newClaimsRelatedEntityPM.ClaimEntityTypeName = item.entityPM.ClaimEntityTypeName;
+        //newClaimsRelatedEntityPM.ClaimEntityNumber = item.entityPM.ClaimEntityNumber;
+        //newClaimsRelatedEntityPM.IsFinancialRefundDemand = item.entityPM.IsFinancialRefundDemand;
+        newClaimsRelatedEntityPM.IsSendClaimsRelatedEntity = true;
+        newClaimsRelatedEntityPM.ClaimExplanation = item.entityPM.ClaimExplanation;
+        newClaimsRelatedEntityPM.ClaimsRelatedEntitiesReasons = [];
+        for (let i of item.entityPM.ClaimsRelatedEntitiesReasons) {
+            let newClaimsRelatedEntitiesReasonPM = new ClaimsRelatedEntitiesReasonPM(newClaimsRelatedEntityPM)
+            newClaimsRelatedEntitiesReasonPM.Tenant = newClaimsRelatedEntityPM.Tenant;
+            newClaimsRelatedEntitiesReasonPM.ClaimId = i.ClaimId;
+            newClaimsRelatedEntitiesReasonPM.CounterKey = newClaimsRelatedEntityPM.EntityCounterKey;
+            newClaimsRelatedEntitiesReasonPM.LineNo = (ArrayTool.Max(newClaimsRelatedEntityPM.ClaimsRelatedEntitiesReasons, "LineNo") + 1);
+            newClaimsRelatedEntitiesReasonPM.ClaimsRelatedEntsReasonsExps = [];
+            newClaimsRelatedEntitiesReasonPM.ReasonListTypeCode = i.ReasonListTypeCode;
+            newClaimsRelatedEntitiesReasonPM.ReasonListTypeName = i.ReasonListTypeName;
+            for (let j of i.ClaimsRelatedEntsReasonsExps)
+            {
+                let newClaimsRelatedEntsReasonsExpPM = new ClaimsRelatedEntsReasonsExpPM(newClaimsRelatedEntitiesReasonPM)
+                newClaimsRelatedEntsReasonsExpPM.ClaimExplanationTypeCode = j.ClaimExplanationTypeCode;
+                newClaimsRelatedEntsReasonsExpPM.ClaimExplanationTypeName = j.ClaimExplanationTypeName;
+                newClaimsRelatedEntsReasonsExpPM.ClaimId = j.ClaimId;
+                newClaimsRelatedEntsReasonsExpPM.ExplanationNote = j.ExplanationNote;
+                newClaimsRelatedEntsReasonsExpPM.Tenant = j.Tenant;
+                newClaimsRelatedEntsReasonsExpPM.LineNo = (ArrayTool.Max(newClaimsRelatedEntitiesReasonPM.ClaimsRelatedEntsReasonsExps, "LineNo") + 1);
+                newClaimsRelatedEntsReasonsExpPM.CounterKey = i.CounterKey;
+                newClaimsRelatedEntitiesReasonPM.AddClaimsRelatedEntsReasonsExp(newClaimsRelatedEntsReasonsExpPM);
+            }
+            newClaimsRelatedEntityPM.AddClaimsRelatedEntitiesReason(newClaimsRelatedEntitiesReasonPM);
+            //newClaimsRelatedEntityPM.ClaimsRelatedEntitiesReasons.push(newClaimsRelatedEntitiesReasonPM);
+        }
+
+        let newClaimsRelatedEntityLineComponent = new ClaimsRelatedEntityLineComponent(newClaimsRelatedEntityPM, this.EntityPM, false);
+        this.ClaimsRelatedEntitiesObslist.Insert(newClaimsRelatedEntityLineComponent);
+        this.EntityPM.AddClaimsRelatedEntity(newClaimsRelatedEntityPM);
+
+        SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = [];
+        //SessionLocator.SelectedSession.StartBusyIndicator("");
+
+
+        SessionLocator.SelectedSession.StopBusyIndicator();
+        this.EditClaimsRelatedEntityLine(newClaimsRelatedEntityLineComponent, true);
+    }
 }
 
 export class ClaimsRelatedEntityLineComponent extends BaseComponent {
@@ -624,6 +712,10 @@ export class ClaimsRelatedEntityLineComponent extends BaseComponent {
 
     public get ClaimEntityTypeName() { return this.entityPM.ClaimEntityTypeName; }
     public set ClaimEntityTypeName(newValue: string) { this.entityPM.ClaimEntityTypeName = newValue; }
+
+    public get ClaimEntityType() { return this.entityPM.ClaimEntityTypeCode; }
+    public set ClaimEntityType(newValue: string) { this.entityPM.ClaimEntityTypeCode = newValue; }
+
 
     public get ClaimEntityNumber() { return this.entityPM.ClaimEntityNumber; }
     public set ClaimEntityNumber(newValue: string) { this.entityPM.ClaimEntityNumber = newValue; }

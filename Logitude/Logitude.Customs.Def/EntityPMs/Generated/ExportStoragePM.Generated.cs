@@ -411,25 +411,25 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string storageStatusName ;
+	  private string customStatusName ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string StorageStatusName  
+       public string CustomStatusName  
 	   {
 	    
 	     get
 		{
-		   return storageStatusName;
+		   return customStatusName;
 		 }
 		 set
 		 {
-		   if(storageStatusName != value)
+		   if(customStatusName != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StorageStatusName",OldValue=storageStatusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomStatusName",OldValue=customStatusName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   storageStatusName=value;
+		   customStatusName=value;
 		   }
 			
 		 }

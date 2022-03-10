@@ -99,12 +99,25 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.CancelRequestStatusName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.AmendmentRejectionReasonName);
 
-            var amendmentStatusRepository = new AmendmentStatusQueryService(entityPOCO.Tenant);
-            var amendmentStatus = amendmentStatusRepository.GetSingle(entityPOCO.AmendmentStatus,false,true);
-            if (amendmentStatus != null)
+            if (entityPM.Direction == "E")
             {
-                entityPM.AmendmentStatusName = amendmentStatus.Name;
+                var DeclarationStatementTypeQueryService = new DeclarationStatementTypeQueryService(entityPOCO.Tenant);
+                var amendmentStatus = DeclarationStatementTypeQueryService.GetSingle(entityPOCO.AmendmentStatus, false, true);
+                if (amendmentStatus != null)
+                {
+                    entityPM.AmendmentStatusName = amendmentStatus.LocalName;
 
+                }
+            }
+            else
+            {
+                var amendmentStatusRepository = new AmendmentStatusQueryService(entityPOCO.Tenant);
+                var amendmentStatus = amendmentStatusRepository.GetSingle(entityPOCO.AmendmentStatus, false, true);
+                if (amendmentStatus != null)
+                {
+                    entityPM.AmendmentStatusName = amendmentStatus.Name;
+
+                }
             }
 
           
@@ -433,11 +446,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
             DeclarationPaymentPM declarationPaymentPM = declarationPaymentQueryService.GetSingle(entityPOCO.Id, false, false);
          if(declarationPaymentPM!=null)   entityPM.AutomaticPayment = declarationPaymentPM.AutomaticPayment;
 
-            if (entityPOCO.WeightValue != null)
+            if (!String.IsNullOrWhiteSpace( entityPOCO.WeightValue))
             {
                 FreightPaymentMethodQueryService freightPaymentMethodQueryService = new FreightPaymentMethodQueryService(entityPOCO.Tenant);
                 FreightPaymentMethodPM freightPaymentMethodPM = freightPaymentMethodQueryService.GetSingle(entityPOCO.WeightValue, false, true);
-                entityPM.WeightValueName = freightPaymentMethodPM.LocalName;
+                entityPM.WeightValueName = freightPaymentMethodPM?.LocalName;
             }
 
             if (entityPOCO.CourierCustomStatusCode != null)

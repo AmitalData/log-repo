@@ -25,6 +25,9 @@ using Unifreight.Data.AmitalModel;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Logitude.Server.Tools.Contracts;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -93,6 +96,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         statusDateTime = customResponse.RequestContentHeader.TransmitionDateTime;
                     }
+                    var myCourierMasterQueryService = new CourierMasterQueryService(dbContext);
+                    CourierMasterPM _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationPM.Id, requestParams.Tenant);
                     switch (customResponse.GeneralData.ReleaseMessageCode)
                     {
                         case 1: // released
@@ -102,13 +107,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             myEventContextTagModel.EventCode = "RSG";
                             myEventContextTagModel.StatusDateTime = statusDateTime;
                             declarationPM.DeclarationStatusTypeCode = "7";
-                            if(declarationPM.IsCourierDeclaration)
+
+                            if (declarationPM.IsCourierDeclaration)
                             {
+                                // update NoOfCourierHawbwWithoutHatara
+                                IUpdateOpenDeclarationInCourierMasterService myIUpdateOpenDeclarationInCourierMasterService = ContainerAccessor.Container.Resolve(typeof(IUpdateOpenDeclarationInCourierMasterService), "UpdateOpenDeclarationInCourierMasterService", new ParameterOverride("", declarationPM.Tenant)) as IUpdateOpenDeclarationInCourierMasterService;
+                            myIUpdateOpenDeclarationInCourierMasterService.UpdateOpenDeclarationInCourierMaster(declarationPM.Tenant, _CourierMasterPM.Id, null);
+
+                        
                                 declarationPM.CourierCustomStatusCode = "1";
 
                                 string defValue = "";
-                                var myCourierMasterQueryService = new CourierMasterQueryService(dbContext);
-                                CourierMasterPM _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationPM.Id, requestParams.Tenant);
                                 if (_CourierMasterPM != null)
                                 {
                                     Card myCard = null;

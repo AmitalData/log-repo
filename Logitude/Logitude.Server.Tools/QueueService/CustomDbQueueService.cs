@@ -1,4 +1,5 @@
 ﻿using Logitude.Server.Tools.Helpers;
+using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -84,11 +85,12 @@ namespace Logitude.Server.Tools.QueueService
         new private void Send(Dictionary<string, string> messageValues, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null)
         { throw new NotImplementedException(); }
 
-        public int? Send(Dictionary<string, string> messageValues, int tenant,  TimeSpan? delayTime, int tenantPriority)
+        public int? Send(Dictionary<string, string> messageValues, int tenant,  TimeSpan? delayTime, /*int tenantPriority, */
+            QueueSendModel queueSendModel = null)
         {
             //int tenantPriority=8;
             
-            var queueId= base.SendReturnId(messageValues, tenant,delayTime,null,null,null, tenantPriority);
+            var queueId= base.SendReturnId(messageValues, tenant,delayTime,null,null,null, /*tenantPriority,*/ queueSendModel );
             LogMessagingUtil.Instance.AppendLine("CustomDbQueueService:CreateNew:DbQueueName=" + CustomDbQueueParams.QueueCode + "QMId=" + queueId);
             return queueId;
         }
@@ -100,7 +102,7 @@ namespace Logitude.Server.Tools.QueueService
             LogMessagingUtil.Instance.AppendLine("CustomDbQueueService:SafeComplete:DbQueueName=" + CustomDbQueueParams.QueueCode + "QMId=" + base.CurrentMessageId);
 
         }
-        public void SafeAbandon()
+        public bool SafeAbandon()
         {
             bool safcomplete = false;
             if (CurrentCustomQueueResponse.Retries > 10)
@@ -145,9 +147,33 @@ namespace Logitude.Server.Tools.QueueService
             CurrentCustomQueueResponse.QueueStatus = QueueStatusEnum.DeadLetter;
             LogMessagingUtil.Instance.AppendLine("CustomDbQueueService:SafeAbandon:DbQueueName=" + CustomDbQueueParams.QueueCode + "QMId=" + base.CurrentMessageId);
             //this.Return();
+            return safcomplete;
         }
         public CustomDBQueueMessage CurrentCustomQueueResponse { get; set; }
-        
+
+        public CustomDBQueueMessage GetRabbitMQPseudoByMessageId(long messageId)
+        {
+            var messagesRepository = new QueueMessageRepository(Tenant);
+
+            var q = messagesRepository.GetSingleQueueMessage(messageId);
+            if (q?.Id == null )
+            {
+                return null;
+            }
+            Dictionary<string, string> messageValues = DictionaryJsonConverter.FromJsonToDictionary(q.MessageBody);
+            ;
+            QueueResponse myQueueResponse = new QueueResponse()
+            {
+                MessageId = messageId.ToString(),
+                RetryNumber = q.RetryNumber,
+                MessageValues = messageValues
+
+            };
+            CurrentCustomQueueResponse = new CustomDBQueueMessage(myQueueResponse, CustomDbQueueParams);
+            CurrentCustomQueueResponse.QueueStatus = QueueStatusEnum.Received;
+            LogMessagingUtil.Instance.AppendLine("CustomDbQueueService:Receive:DbQueueName=" + CustomDbQueueParams.QueueCode + ":QMId=" + base.CurrentMessageId);
+            return CurrentCustomQueueResponse;
+        }
     }
     public class CustomDbQueueModel
     {

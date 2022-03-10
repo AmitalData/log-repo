@@ -1146,7 +1146,6 @@ export class InvoiceItemVehicleLine extends BaseComponent {
     }
 
     OnRichbitFileNumbernLostFocus(logCellTemplate: any, RichbitFileNumbernTextBox: any) {
-        debugger;
         if (this.RichbitFileNumber) {
             if (!this.vehicleSelected)
                 this.SetChassisNumber(logCellTemplate, RichbitFileNumbernTextBox);
@@ -1162,7 +1161,6 @@ export class InvoiceItemVehicleLine extends BaseComponent {
     }
 
     OnVehicleChassisNumberLostFocus(logCellTemplate: any, VehicleChassisNumberTextBox: any) {
-        debugger;
         if (this.VehicleChassisNumber) {
             if (!this.vehicleSelected)
                 this.SetFileNumber(logCellTemplate, VehicleChassisNumberTextBox);

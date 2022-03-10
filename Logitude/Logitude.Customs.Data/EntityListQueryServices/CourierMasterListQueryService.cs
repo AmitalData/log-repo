@@ -89,6 +89,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        CourierMasterRemarks =a.CourierMasterRemarks,
                                                        EstimatedArrivalTimeOnly= a.EstimatedArrivalDate,
                                                        EstimatedArrivalDateOnly = a.EstimatedArrivalDate,
+                                                       NoOfCourierHawbWithoutDelivery = a.NoOfCourierHawbWithoutDelivery,
+                                                       NoOfCourierHawbwWithoutHatara =a.NoOfCourierHawbwWithoutHatara,
+
                                                    });
 
             return query;
@@ -166,7 +169,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                           r => (r.myDeclarationCourierStatuses.CourierPendingReasonList != null && r.myDeclarationCourierStatuses.CourierPendingReasonList.Contains("902"))
                           && r.myDeclarationCourierStatuses.IsClosedForFollowUp == false),
                       IsPendingCustoms = g.Count(r => r.myDeclarations.CourierCustomStatusCode == "2" && r.myDeclarationCourierStatuses.IsClosedForFollowUp == false),
-                      IsSuspendedDeclarations = g.Count(r => r.myDeclarationCourierStatuses.IsClosedForFollowUp == false && r.myDeclarations.CourierCustomStatusCode == "2")
+                      IsSuspendedDeclarations = g.Count(r => r.myDeclarationCourierStatuses.IsClosedForFollowUp == false && r.myDeclarations.CourierCustomStatusCode == "2"),
+
                   }
                   ).ToList();
 
@@ -216,7 +220,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 CalcMissingImporterId = qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id) != null ? qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).IsMissingImporterId : 0,
                 CalcPending900 = qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id) != null ? qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).P900 : 0,
                 CalcPendingCustoms = qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id) != null ? qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).IsPendingCustoms : 0,
-                CalcSuspendedDeclarations = qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id) != null ? qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).IsSuspendedDeclarations : 0,
+                NoOfCourierHawbWithoutDelivery = string.IsNullOrWhiteSpace(a.NoOfCourierHawbWithoutDelivery) ? "0" : a.NoOfCourierHawbWithoutDelivery,
+                NoOfCourierHawbwWithoutHatara = string.IsNullOrWhiteSpace(a.NoOfCourierHawbwWithoutHatara) ? "0" : a.NoOfCourierHawbwWithoutHatara,
             }).ToList();
 
             return entityLists;

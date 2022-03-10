@@ -50,7 +50,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 		
 		protected override EntityKeyFields GetKeys(SupplierInvoiceFreightAmountPM entityPM)
         {
-            SupplierInvoiceFreightAmountKeys entityKeys = new SupplierInvoiceFreightAmountKeys() { DeclarationId = entityPM.DeclarationId, InvoiceCounterKey = entityPM.InvoiceCounterKey, CurrencyTypeCode = entityPM.CurrencyTypeCode };
+            SupplierInvoiceFreightAmountKeys entityKeys = new SupplierInvoiceFreightAmountKeys() { Id = entityPM.Id };
             return entityKeys;
         }
 

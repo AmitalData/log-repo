@@ -29,6 +29,42 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string SearchFields { get; set; }
         [Column("Inactive")]
 	    public bool Inactive { get; set; }
+        [Column("MalamID")]
+	    public int? MalamID { get; set; }
+        [Column("State")]
+	    public int? State { get; set; }
+        [Column("Exempt_CertificateDocument")]
+	    public int? Exempt_CertificateDocument { get; set; }
+        [Column("IsImport")]
+	    public bool? IsImport { get; set; }
+        [Column("IsExemptOtherAuthority")]
+	    public bool? IsExemptOtherAuthority { get; set; }
+        [Column("ConfirmationComputerization")]
+	    public int? ConfirmationComputerization { get; set; }
+        [Column("IsCEO")]
+	    public bool? IsCEO { get; set; }
+        [Column("IsNeedDeclaration")]
+	    public bool? IsNeedDeclaration { get; set; }
+        [Column("CertificateDocumentCategory")]
+	    public int? CertificateDocumentCategory { get; set; }
+        [Column("AuthorityID")]
+	    public int? AuthorityID { get; set; }
+        [Column("IsQuotaCheckNeeded")]
+	    public bool? IsQuotaCheckNeeded { get; set; }
+        [Column("ExternalIDNumPerAuthority")]
+	    public int? ExternalIDNumPerAuthority { get; set; }
+        [Column("IsForCustomsItem")]
+	    public bool? IsForCustomsItem { get; set; }
+        [Column("IsPharmacy")]
+	    public bool? IsPharmacy { get; set; }
+        [Column("IsVeterinarian")]
+	    public bool? IsVeterinarian { get; set; }
+        [Column("IsVehicleStandardization")]
+	    public bool? IsVehicleStandardization { get; set; }
+        [Column("IsQuantityMandatory")]
+	    public bool? IsQuantityMandatory { get; set; }
+        [Column("IsForCE")]
+	    public bool? IsForCE { get; set; }
     }
 }
 	 

@@ -177,7 +177,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ExportStorage
                 _DBExportStoragePM.DeclarationId = _UnifreigntExportStorage.DeclarationId;
 
                 _DBExportStoragePM.ExportDealIdentification = _UnifreigntExportStorage.General.ExportDealIdentification;
-                _DBExportStoragePM.ExporterID = _UnifreigntExportStorage.General.ExporterNumber;
+                
+                _DBExportStoragePM.ExporterID = TranslateClient(_DBExportStoragePM.Tenant, _UnifreigntExportStorage.General.ExporterNumber);
                 //UnifreigntExportStorage.General.ExporterFileNumber = "Exp_Ref_INV1";
                 _DBExportStoragePM.ShipCode = _UnifreigntExportStorage.General.ShipCode;
 
@@ -191,16 +192,37 @@ namespace Logitude.Customs.BL.Messaging.U2L.ExportStorage
 
                 _DBExportStoragePM.CargoType = _UnifreigntExportStorage.CargoDetails.CargoType;
 
+                //_DBExportStoragePM.StorageStatus = (_UnifreigntExportStorage.StorageStatus ?? "").ToLower();
+                _DBExportStoragePM.StorageStatus = _UnifreigntExportStorage.StorageStatus;
 
 
-                
+
+
                 exportStorageUpdateService.Update(_DBExportStoragePM, true);
 
                 scope.Complete();
             }
         }
 
-        
+        private string TranslateClient(int tenant, string exporterNumber)
+        {
+            if (String.IsNullOrWhiteSpace(exporterNumber))
+            {
+                AppendLogLine("ExporterNumber is null");
+                return null;
+            }
+            ClientQueryService clientQueryService = new ClientQueryService(tenant);
+
+            var clientId = clientQueryService.GetIdByCode(exporterNumber, tenant);
+
+            if (clientId == null)
+            {
+                AppendLogLine("ExporterNumber = " + exporterNumber + " could not translate to Logitude Id");
+                return null;
+            }
+            AppendLogLine("ExporterNumber = " + exporterNumber + " Translated to " + clientId);
+            return clientId;
+        }
 
         protected override int ResolvedTenant() 
         {

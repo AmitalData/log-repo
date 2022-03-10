@@ -55,6 +55,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         PackageQuantity, 
 	         ForwarderId, 
 	         IsManualPayment, 
+	         PackageTypeCode, 
 	         Commodity, 
 	         LastStatusRemarks,
 	      }
@@ -103,6 +104,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ForwarderName, 
 	         FclLclName, 
 	         IsManualPayment, 
+	         PackageTypeCode, 
 	         Commodity, 
 	         LastStatusRemarks,
 	      }
@@ -271,6 +273,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsManualPayment))
             {
 				entityPOCO.IsManualPayment = entityPM.IsManualPayment;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PackageTypeCode))
+            {
+				entityPOCO.PackageTypeCode = entityPM.PackageTypeCode;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Commodity))
@@ -454,6 +461,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsManualPayment = entityPOCO.IsManualPayment;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PackageTypeCode))
+            {
+					entityPM.PackageTypeCode = entityPOCO.PackageTypeCode;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Commodity))
             {
 					entityPM.Commodity = entityPOCO.Commodity;
@@ -628,6 +640,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsManualPayment))
             {
                 oldEntityPM.IsManualPayment = entityPM.IsManualPayment;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PackageTypeCode))
+            {
+                oldEntityPM.PackageTypeCode = entityPM.PackageTypeCode;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Commodity))

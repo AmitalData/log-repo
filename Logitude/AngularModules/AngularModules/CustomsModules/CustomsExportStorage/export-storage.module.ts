@@ -5,12 +5,15 @@ import { ExportStorageGeneralTabComponent } from './components/edit/ExportStorag
 import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { InfrastructureModule } from 'Infrastructure/Module_INFR';
 import { ModuleCustomsControls } from 'CustomsModules/CustomsControls/ModuleCustomsControls';
+import { FeedbackToStorageTabComponent } from './components/edit/FeedbackToStorageTabComponent/FeedbackToStorageTabComponent.component';
+import { Xml2jsonService } from 'Infrastructure/Services/xml2json/xml2json.service';
 
 
 
 @NgModule({
   declarations: [
-    ExportStorageGeneralTabComponent
+    ExportStorageGeneralTabComponent,
+    FeedbackToStorageTabComponent,
   ],
   imports: [
     CommonModule,
@@ -19,14 +22,17 @@ import { ModuleCustomsControls } from 'CustomsModules/CustomsControls/ModuleCust
   ],
   exports:[
     ExportStorageGeneralTabComponent,
-    ModuleCustomsControls
+    FeedbackToStorageTabComponent,
+    ModuleCustomsControls,
   ],
   entryComponents:[
-    ExportStorageGeneralTabComponent
+    ExportStorageGeneralTabComponent,
+    FeedbackToStorageTabComponent,
   ],
   providers: [
     ExportStoragePMService,
     LogtuideTableDataService,
+    Xml2jsonService,
   ]
 })
 export class ExportStorageModule {
@@ -35,6 +41,7 @@ export class ExportStorageModule {
 
     switch (name) {
       case "ExportStorageGeneralTabComponent": { myResult = ExportStorageGeneralTabComponent; break; }
+      case "FeedbackToStorageTabComponent": { myResult = FeedbackToStorageTabComponent; break; }
     }
 
     return myResult;

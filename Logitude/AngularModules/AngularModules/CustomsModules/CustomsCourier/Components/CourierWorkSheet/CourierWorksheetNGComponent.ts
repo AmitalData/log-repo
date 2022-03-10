@@ -97,7 +97,6 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
     _SelectedTotalInvoiceValue: string = 'A';
     _SelectedFastIndividualProcessValue: string = 'A';
     _SelectedCustomStatusValue: string = 'A';
-    _SelectedFinalReleaseValue: string = 'A';
 
     _SelectedMNFValue: string = 'A'; // ALL/Complete/Wrong
     _SelectedDECValue: string = 'A'; // ALL/Complete/Wrong_SelectedItems
@@ -1578,7 +1577,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
 
     SelectedBOLValueClick(value: string) {
         this._SelectedBOLValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A' && this._SelectedFinalReleaseValue == 'A') {
+        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
             this.IsFiltered = false;
         }
         else {
@@ -1589,7 +1588,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
 
     SelectedTotalInvoiceValue(value: string) {
         this._SelectedTotalInvoiceValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A' && this._SelectedFinalReleaseValue == 'A') {
+        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
             this.IsFiltered = false;
         }
         else {
@@ -1600,7 +1599,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
 
     SelectedStatusValueClick(value: string) {
         this._SelectedStatusValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A' && this._SelectedFinalReleaseValue == 'A') {
+        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
             this.IsFiltered = false;
         }
         else {
@@ -1611,7 +1610,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
 
     SelectedAvailableValueClick(value: string) {
         this._SelectedAvailableValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A' && this._SelectedFinalReleaseValue == 'A') {
+        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
             this.IsFiltered = false;
         }
         else {
@@ -1622,7 +1621,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
 
     SelectedFastIndividualProcessValueClick(value: string) {
         this._SelectedFastIndividualProcessValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A' && this._SelectedFinalReleaseValue == 'A') {
+        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
             this.IsFiltered = false;
         }
         else {
@@ -1633,18 +1632,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
 
     SelectedCustomStatusValueClick(value: string) {
         this._SelectedCustomStatusValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A' && this._SelectedFinalReleaseValue == 'A') {
-            this.IsFiltered = false;
-        }
-        else {
-            this.IsFiltered = true;
-        }
-        this.RefreshList();
-    }
-
-    SelectedFinalReleaseValueClick(value: string) {
-        this._SelectedFinalReleaseValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A' && this._SelectedFinalReleaseValue == 'A') {
+        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
             this.IsFiltered = false;
         }
         else {

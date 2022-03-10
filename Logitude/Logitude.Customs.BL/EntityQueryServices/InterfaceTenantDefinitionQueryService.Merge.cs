@@ -33,12 +33,40 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return dummyInterfaceTenantDefinition?.TenantPriority;
 
         }
-        
+
+        public InterfaceTenantDefinitionPM GetFromCacheByTenatCode(int tenant, string code)
+        {
+
+            string entityKeyString = $"InterfaceTenantDefinitionByTenatCode ({tenant},{code})";
+
+            var dummyInterfaceTenantDefinition = CacheManager.GetOrInsertNewObject<InterfaceTenantDefinitionPM>(entityKeyString,
+                () =>
+                {
+
+                    var poco = this.repository.GetSingleDefinitionByCode(code, tenant);
+                    if(poco== null)
+                    {
+                        return new InterfaceTenantDefinitionPM();
+                    }
+                    var pm=this.GetEntityPM(poco);
+                    if (pm.TenantPriority != null)
+                    {
+
+                        var interfaceManagement = this.context.InterfaceManagements.FirstOrDefault(r => r.Code == code);
+                        pm.TenantPriority= interfaceManagement?.DefaultPriority;
+                    }
+                    return pm;
+                });
+            return dummyInterfaceTenantDefinition;
+
+        }
+
+
         //public InterfaceTenantDefinitionPM GetFromCacheByTenatCode(int tenant, string code)
         //{
 
         //    string entityKeyString = $"GetInterfaceTenantDefinitionByTenatCode ({tenant},{code})";
-           
+
         //    var pm1 = CacheManager.GetOrInsertNewObject<InterfaceTenantDefinitionPM>(entityKeyString,
         //        () => 
         //        {

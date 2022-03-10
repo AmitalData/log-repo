@@ -555,7 +555,8 @@
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'Customs.TradeAgreement'"
                                                 [HideColumns]="true"
-                                                [SelectedValue]="PreferenceDocumentTypeCode">
+                                                [SelectedValue]="PreferenceDocumentTypeCode"
+                                                [QueryFilterItems]="tradeAgreementFilter">
                                         </LogLov>
 
                                     </td>
@@ -890,7 +891,7 @@
                                                     <logitude-edit-grid GridWidth="100%"
                                                                         GridHeight="100%"
                                                                         [ItemSource]="AdjustmentsList">
-                                                        <log-column [width]="'10'" [Alignment]="'right'" *ngIf='allowExport && (isInsurance || isFreightCharge)'>
+                                                        <log-column [width]="'10'" [Alignment]="'right'" *ngIf='isInsurance || isFreightCharge'>
                                                             <ng-template let-item>
                                                                 <log-cell-template #logcelltemplate>                                                                    
                                                                     <td style="width: 7px; height: 27px;" *ngIf='(!item.CurrencyTypeName || !item.Amount) && ((item.TypeName === "ביטוח" && isInsurance ) || (item.TypeName === "הובלה" && isFreightCharge))'>
@@ -1186,7 +1187,8 @@
                                                         [LookUpTableName]="'Customs.TradeAgreement'"
                                                         (SelectedItemChanged)="item.TradeAgreement = $event"
                                                         [HideColumns]="true"
-                                                        [FocusOnMe]="true">
+                                                        [FocusOnMe]="true"
+                                                        [QueryFilterItems]="declarationPM.Direction == 'E' ? tradeAgreementFilter : null">
                                                 </LogLov>
 
                                             </div>

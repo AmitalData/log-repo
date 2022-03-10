@@ -30,10 +30,11 @@ import {WarehouseReleasePMExtendedService} from '../../../../Warehouse/Services/
 import { PackageAmountCalculator } from '../../../../Infrastructure/Utilities/PackageAmountCalculator';
 import { ShipmentReceivablePM } from '../../../../Shipment/EntityPMs/ShipmentReceivablePM';
 import { HorseList } from '../../../../Common/EntityLists/HorseList';
+import { ShipmentSubTypeListService } from '../../../../Shipment/services/standardlists/shipmentsubtypelistservice';
 import { ShipmentContainersWebService } from '../../../../Shipment/Services/ShipmentContainersWebService';
 import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
 import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
-import { ShipmentSubTypeListService } from 'Shipment/services/standardlists/shipmentsubtypelistservice';
+
 
 
 declare var ResultAsArray: any;

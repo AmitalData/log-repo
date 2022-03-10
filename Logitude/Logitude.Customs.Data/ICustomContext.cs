@@ -147,6 +147,8 @@ namespace Logitude.Customs.Data
 		 IDbSet<CustomsDocumentsDefinition> CustomsDocumentsDefinitions { get; }
 		 IDbSet<CustomsDocumentStatusType> CustomsDocumentStatusTypes { get; }
 		 IDbSet<CustomsDocumentsTicket> CustomsDocumentsTickets { get; }
+		 IDbSet<CustomsDocumentUpload> CustomsDocumentUploads { get; }
+		 IDbSet<CustomsEnvironmentSetting> CustomsEnvironmentSettings { get; }
 		 IDbSet<CustomsEnvoirmentType> CustomsEnvoirmentTypes { get; }
 		 IDbSet<CustomsExchangeRate> CustomsExchangeRates { get; }
 		 IDbSet<CustomsGeneral> CustomsGenerals { get; }
@@ -245,6 +247,9 @@ namespace Logitude.Customs.Data
 		 IDbSet<LeadDocumentExceptionType> LeadDocumentExceptionTypes { get; }
 		 IDbSet<LeadDocumentType> LeadDocumentTypes { get; }
 		 IDbSet<LoadingSiteType> LoadingSiteTypes { get; }
+		 IDbSet<LogisticActionRequest> LogisticActionRequests { get; }
+		 IDbSet<LogisticActionRequestType> LogisticActionRequestTypes { get; }
+		 IDbSet<LogisticActionResponseReqS> LogisticActionResponseReqSes { get; }
 		 IDbSet<LogisticsReferenceType> LogisticsReferenceTypes { get; }
 		 IDbSet<MamanSpecialAction> MamanSpecialActions { get; }
 		 IDbSet<MamanSpecialActionStatus> MamanSpecialActionStatuses { get; }

@@ -294,6 +294,26 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
                          );
                     }
                     break;
+                case "1604":
+                case "ConfirmationType":
+                    {
+
+                        closedTableService = new Update1604ConfirmationType(customContext, entitySystemTables,
+                         (mycustomContext) =>
+                         {
+                             return new
+                                 ConfirmationTypeUpdateService(mycustomContext, new Dictionary<string, IContext>(), tenant);
+                         },
+                         (mycustomContext) =>
+                         {
+                             var qs = new ConfirmationTypeQueryService(mycustomContext);
+                             return qs as ICanGetAllClosedTable<ConfirmationTypePM>;
+                         }
+                         , tenant
+                         , false
+                         );
+                    }
+                    break;
                 case "23928":
                 case "IncotemrsFileValidation":
                     {
@@ -365,6 +385,25 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
                         {
                             var qs = new CargoIdentifireTypeQueryService(mycustomContext);
                             return qs as ICanGetAllClosedTable<CargoIdentifireTypePM>;
+                        }
+                        , tenant
+                        , false
+                        );
+                    }
+                    break;
+                case "2009":
+                case "TradeAgreementTypeView":
+                    {
+                        closedTableService = new Update2009TradeAgreementTypeView(customContext, entitySystemTables,
+                          (mycustomContext) =>
+                          {
+                              return new
+                                  TradeAgreementUpdateService(mycustomContext, new Dictionary<string, IContext>(), tenant);
+                          },
+                        (mycustomContext) =>
+                        {
+                            var qs = new TradeAgreementQueryService(mycustomContext);
+                            return qs as ICanGetAllClosedTable<TradeAgreementPM>;
                         }
                         , tenant
                         , false

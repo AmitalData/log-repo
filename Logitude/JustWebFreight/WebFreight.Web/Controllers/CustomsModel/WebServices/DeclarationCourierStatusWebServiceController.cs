@@ -55,7 +55,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
         }
 
-        public HttpResponseMessage GetQueriesCounts()
+        
+
+        public HttpResponseMessage GetWorkSpacePendingTab(string IntegratorId)
         {
             try
             {
@@ -65,7 +67,28 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
                 ICustomContext context = CustomContext.GetContext(tenant);
                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(tenant);
-              var counts=  declarationCourierStatusQueryService.GetQueriesCounts(tenant);
+                var counts = declarationCourierStatusQueryService.GetWorkSpacePendingTab(tenant, IntegratorId);
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, counts);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+        public HttpResponseMessage GetQueriesCounts(string IntegratorId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                ICustomContext context = CustomContext.GetContext(tenant);
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(tenant);
+              var counts=  declarationCourierStatusQueryService.GetQueriesCounts(tenant, IntegratorId);
 
 
                 return Request.CreateResponse(HttpStatusCode.OK, counts);

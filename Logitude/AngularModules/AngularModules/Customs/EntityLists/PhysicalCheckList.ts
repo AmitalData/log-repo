@@ -10,6 +10,7 @@ export class PhysicalCheckList {
    
 	Id: string;
 	Tenant: number;
+	DeclarationId: string;
 	StorageSiteCode: string;
 	StorageSiteName: string;
 	CheckSiteCode: string;
@@ -56,6 +57,9 @@ export class PhysicalCheckList {
 	TransportModeId: string;
 	Direction: string;
 	DeclarationOfficeName: string;
+	IntegratorCode: string;
+	AvailabilityDate: Date;
+	IntegratorName: string;
 	
 }
  

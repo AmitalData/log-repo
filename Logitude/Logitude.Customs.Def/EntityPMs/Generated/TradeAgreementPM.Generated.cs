@@ -135,6 +135,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private int? customsBookTypeID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? CustomsBookTypeID  
+	   {
+	    
+	     get
+		{
+		   return customsBookTypeID;
+		 }
+		 set
+		 {
+		   if(customsBookTypeID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsBookTypeID",OldValue=customsBookTypeID,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   customsBookTypeID=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -41,8 +41,8 @@
   </Column>
   <Column
     Name="StorageStatus"
-    Type="varchar"
-    Size="1">
+    Type="nvarchar"
+    Size="10">
     <Constraints
       Nullable="true" />
   </Column>
@@ -68,8 +68,8 @@
   </Column>
   <Column
     Name="CustomsStatus"
-    Type="nvarchar"
-    Size="20">
+    Type="varchar"
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
@@ -112,7 +112,7 @@
   <Column
     Name="StorErrorXML"
     Type="nvarchar"
-    Size="512">
+    Size="2000">
     <Constraints
       Nullable="true" />
   </Column>
@@ -136,11 +136,6 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="Customs" />
   <Relation
-    ForeignKeyColumn="StorageStatus"
-    ReferencedTable="StorageStatuses"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
-  <Relation
     ForeignKeyColumn="CargoTypeCode"
     ReferencedTable="CargoIdentifireTypes"
     ReferencedColumn="Code"
@@ -151,8 +146,8 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Relation
-    ForeignKeyColumn="ShipCode"
-    ReferencedTable="CustomsShips"
+    ForeignKeyColumn="CustomsStatus"
+    ReferencedTable="CargoStatuses"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>

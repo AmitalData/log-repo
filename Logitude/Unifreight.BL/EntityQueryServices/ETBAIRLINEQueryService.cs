@@ -61,7 +61,7 @@ namespace Unifreight.BL.EntityQueryServices
                         ETBAIRLINEquery = ETBAIRLINEquery.Where(o => o.AIRLINENUM.ToLower().Contains(val));
                         break;
                     case "SearchFields":
-                        ETBAIRLINEquery = ETBAIRLINEquery.Where(o => o.SEARCHENG.ToLower().Contains(val));
+                        ETBAIRLINEquery = ETBAIRLINEquery.Where(o => (o.AIRLINEID + "," + o.NAMEENG + "," + o.AIRLINENUM).ToLower().Contains(val));
                         break;
                 }
             }

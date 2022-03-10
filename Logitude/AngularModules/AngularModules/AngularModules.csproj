@@ -284,12 +284,15 @@
     <Content Include="CustomsModules\CustomsControls\Components\TestCase\SendDeclarationTastCaseComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\AutonomyKeyword\AutonomyKeywordComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\AddCourierPendingToUnifreightStatusComponent.html" />
+    <Content Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\DeclarationPendingsBulkFeedingComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\DeclarationPendingsGeneralComponent.html" />
+    <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\bulk-feed-pending\BulkFeedPendingComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\CourierWorksheetNGComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\CourierWSData.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetStorageSiteCodeComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetUnloadPortCodeComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkspaces\CourierDeclarationWorkspaceComponent.html" />
+    <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkspaces\FiltersMenu\CourierDeclarationFiltersMenuComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\GatepassRequest\GatepassRequestComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\MamanSpecialAction\AddEditMamanStickerComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\MamanSpecialAction\DeclarationMamanSpecialActionComponent.html" />
@@ -310,11 +313,14 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\CasualSupplierDetailsComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\DeclarationAmendment\DeclarationAmendmentComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.html" />
+    <Content Include="CustomsModules\CustomsExportStorage\components\edit\ExportStorageGeneralTabComponent\ExportStorageGeneralTabComponent.html" />
+    <Content Include="CustomsModules\CustomsExportStorage\components\edit\FeedbackToStorageTabComponent\feedback-to-storage-tab-component.component.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\CourierWorksheetNGListTemplate.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\CustomsContainerizationListTemplate.html" />
     <Content Include="CustomsModules\CustomsPhysicalCheck\Components\EditTabs\SearchReasult\PhysicalCheckSearchReasultTabComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\InterfaceTenantPriorityComponent.html" />
     <Content Include="CustomsModules\CustomsPhysicalCheck\Components\FiltersMenu\PhysicalCheckFiltersMenuComponent.html" />
+    <Content Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddEditExceptionReasonComponent.html" />
     <Content Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddEditExceptionReasonComponent.html" />
     <Content Include="CustomsModules\CustomsReferant\Components\ReferantWorkspaces\ReferantWorkspaceComponent.html" />
     <Content Include="Customs\Components\ListActionBar\PhysicalCheckListActionBarComponent.html" />
@@ -463,9 +469,13 @@
     <TypeScriptCompile Include="CustomsModules\CustomsContainerization\ModuleCustomsContainerization.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsContainerization\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="Common\Validators\CustomerValidator.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\DeclarationPendingsBulkFeedingComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\bulk-feed-pending\BulkFeedPendingComponent.spec.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\bulk-feed-pending\BulkFeedPendingComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetUnloadPortCodeComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\CourierWorksheetNGComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetUnloadPortCodeComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkspaces\FiltersMenu\CourierDeclarationFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\ModuleSharedPrimeNG.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationCargoSplit\Components\FiltersMenu\DeclarationCargoSplitFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\CloseDeclaration\ExportDeclarationClosingDataComponent.ts" />
@@ -479,6 +489,12 @@
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\SupplierInvoiceItem\ExporterInvoiceItemComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ExportDeclarationComponent.ts" />
     <Content Include="CustomsModules\CustomsGeneralRequests\Components\CopyDeclarationComponent.html" />
+    <TypeScriptCompile Include="CustomsModules\CustomsExportStorage\components\edit\ExportStorageGeneralTabComponent\ExportStorageGeneralTabComponent.spec.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsExportStorage\components\edit\ExportStorageGeneralTabComponent\ExportStorageGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsExportStorage\components\edit\FeedbackToStorageTabComponent\feedback-to-storage-tab-component.component.spec.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsExportStorage\components\edit\FeedbackToStorageTabComponent\FeedbackToStorageTabComponent.component.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsExportStorage\components\edit\FeedbackToStorageTabComponent\FeedbackToStorageTabComponentTypes.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsExportStorage\export-storage.module.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\Documents\SpecialActivityCustomsDocumentsController.ts" />
     <Content Include="CustomsModules\CustomsGeneralRequests\Components\EndPhysicalCheckComponent.html" />
     <Content Include="CustomsModules\CustomsGeneralRequests\Components\PhysicalCheckComponent.html" />
@@ -567,6 +583,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsPhysicalCheck\Components\EditTabs\SearchReasult\PhysicalCheckSearchReasultTabComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\InterfaceTenantPriorityComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsPhysicalCheck\Components\FiltersMenu\PhysicalCheckFiltersMenuComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddEditExceptionReasonComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddExceptionReasonToUnifreightStatusComponent.ts" />
@@ -1450,6 +1467,7 @@
     <TypeScriptCompile Include="Customs\Components\Spotlight\ReferantSpotlightDataTemplate.ts" />
     <TypeScriptCompile Include="Customs\Controller\PhysicalCheckEditComponentController.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\BankAccountToRefundRequestParams.ts" />
+    <TypeScriptCompile Include="Customs\DataContract\RequestParams\AmendmentRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\CargoSealsRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\CargoSplitRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\GatepassRequestMessageRequestParams.ts" />
@@ -1511,6 +1529,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\HazardousSubstanceList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\IncotemrsFileValidationList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\LoadingSiteTypeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\LogisticActionResponseReqSList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\LogisticsReferenceTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\NbcDeclarationTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\NDMessageActionCodeList.ts" />
@@ -1603,6 +1622,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\HazardousSubstancePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\IncotemrsFileValidationPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\LoadingSiteTypePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\LogisticActionResponseReqSPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\LogisticsReferenceTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\NbcDeclarationTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\NDMessageActionCodePM.ts" />
@@ -1643,11 +1663,11 @@
     <TypeScriptCompile Include="Customs\Services\DataChange\CustomsCollateralAnswerSharedDataService.ts" />
     <TypeScriptCompile Include="Customs\Services\DataChange\SpotlightSharedDataService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CourierMasterExtendedListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\ExtendedLists\CourierPendingReasonExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CustomsRequiredFieldExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\ContainerizationExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\DeclarationReferantDataExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\ExceptionReasonExtendedListService.ts" />
-    <TypeScriptCompile Include="Customs\Services\ExtendedLists\CourierPendingReasonExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CustomsCollateralExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\SupplierInvoiceItemsTaxExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\ExceptionReasonExtendedListService.ts" />
@@ -1655,6 +1675,7 @@
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsAutonomyKeywordExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsPartnerFtpExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\DecCargoSplitConExtendedPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\ExtendedPMs\PendingByKeywordWebService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\ReferantExceptionExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\Others\CacheCourierPendingReasonService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AcceptanceStatusListService.ts" />
@@ -1724,6 +1745,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\HazardousSubstanceListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\IncotemrsFileValidationListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\LoadingSiteTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\LogisticActionResponseReqSListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\LogisticsReferenceTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\NbcDeclarationTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\NDMessageActionCodeListService.ts" />
@@ -1801,6 +1823,7 @@
     <TypeScriptCompile Include="Customs\Services\WebServices\DeclarationReferantDataWebService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\InvoiceQueueWebService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\NewQuoteOPWebService.ts" />
+    <TypeScriptCompile Include="Customs\Services\WebServices\PendingWebService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\SupplierInvioceItemCertificatsService.ts" />
     <TypeScriptCompile Include="Customs\Utilities\LuhnAlgorithm.ts" />
     <TypeScriptCompile Include="Customs\Validators\VehicleValidator.ts" />
@@ -8947,6 +8970,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="QuoteOPM\Components\NewEntity\NewQuoteComponent.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\bulk-feed-pending\BulkFeedPendingComponent.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CustomsModules\CustomsExportStorage\components\edit\ExportStorageGeneralTabComponent\ExportStorageGeneralTabComponent.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CustomsModules\CustomsExportStorage\components\edit\FeedbackToStorageTabComponent\feedback-to-storage-tab-component.component.scss" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

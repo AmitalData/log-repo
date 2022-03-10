@@ -14,6 +14,8 @@ import { CustomMessageProgressComponent, ShowProgressBarParams } from '../../../
 import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { DeclarationWebService } from '../../../../../Customs/Services/WebServices/DeclarationWebService';
+import { AmendmentRequestParams } from '../../../../../Customs/DataContract/RequestParams/AmendmentRequestParams';
+import { AppTool, DateTool } from '../../../../../Infrastructure/Tools';
 
 @Component({
     selector: 'ExportDeclarationClosingDataComponent',
@@ -24,8 +26,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     public DataContext: any = this;
     public EntityPM: ExportDeclarationClosingDataPM;
     public DecPM: DeclarationPM;
+    public DeclarationIsClosed:boolean=false;
     public ConPM: ConsignmentPM;
-    public SendButtonEnabled: boolean = true;
     public ObjectTableName: string = "Customs.ExportDeclarationClosingData";
     public IsReady: boolean = false;
     ValidationErrors: string[];
@@ -42,6 +44,10 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         this.UIProperties.SetEnabled("LoadingDateTime", this.ObjectTableName, true);
         if (this.DecPM.TransportModeId != "O") {
             this.UIProperties.SetEnabled("FinalShipCode", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("Smp", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("FlightDate", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("MainAWB", this.ObjectTableName, false);
+
         }
     }
 
@@ -51,8 +57,22 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             this.DecPM = args.EntityPM;
             this.GetExportDeclarationClosingData(this.DecPM.Id);
             this.SetUIProperty();
-
+            if(this.DecPM.IsExportClosed){
+                this.DeclarationIsClosed=true
+                this.setInputsReadOnly();
+            }
         });
+    }
+
+    setInputsReadOnly(){
+        this.UIProperties.SetEnabled("FinalCargoTypeCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("FinalSecondCargoId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("FinalThirdCargoId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("LoadingDateTime", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("FinalManifestNumber", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("FinalShipCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("FinalLoadingSite", this.ObjectTableName, false);
+
     }
 
     GetExportDeclarationClosingData(id: string) {
@@ -73,10 +93,10 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                         this.EntityPM.FinalLoadingSite = consignments[0].ExportLoadingPortCode;
                     }
                     this.IsNew = true;
-                } 
+                }
                 this.IsReady = true;
                 this.ConPM = this.DecPM.Consignments[0];
-            }); 
+            });
         }
     }
 
@@ -99,6 +119,26 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     set FinalLoadingSite(value: string) {
         if (this.EntityPM.FinalLoadingSite != value) {
             this.EntityPM.FinalLoadingSite = value;
+        }
+    }
+    get MainAWB() { return this.EntityPM ? this.EntityPM.MAIN_AWB : null; }
+    set MainAWB(value: string) {
+        if (this.EntityPM.MAIN_AWB != value) {
+            this.EntityPM.MAIN_AWB = value;
+        }
+    }
+    public get FlightDate() {
+        if (this.EntityPM != null && this.EntityPM.FLIGHT_DATE != null) {
+            var myFormats = DateTool.GetDateFormats(this.EntityPM.FLIGHT_DATE);
+            return myFormats.DateString + " " + myFormats.ShortTimeString;
+        }
+        return null;
+    }
+
+    get Smp() { return this.EntityPM ? this.EntityPM.SMP : null; }
+    set Smp(value: string) {
+        if (this.EntityPM.SMP != value) {
+            this.EntityPM.SMP = value;
         }
     }
 
@@ -148,13 +188,13 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         else {
             this.SendAmendmentCloseDeclaration(event);
         }
-        
-    }
     
-   
+    }
+
+
     SendAmendmentCloseDeclaration(event: CustomSendOptionsArgs) {
         this.CurrentSession.CurrentEditComponent.StartBusyIndicator("שליחת מסר סגירת הצהרה");
-        var searchParams: GenericRequestParams = new GenericRequestParams();
+        var searchParams: AmendmentRequestParams = new AmendmentRequestParams();
         searchParams.Tenant = SessionLocator.Tenant;
         searchParams.AppicationId = this.EntityPM.DeclarationId;
         searchParams.LoggingEnabled = true;
@@ -166,38 +206,54 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         searchParams.ResponseName = "Amendment Declaration Response";
         searchParams.RequestVIA = event.RequestVIA;
         searchParams.ForcePersonalSign = event.ForcePersonalSign;
+        searchParams.IsExportClose = true;
         //searchParams.TestCase = event.TestCase;
         let myShowProgressBarParams: ShowProgressBarParams = null;
 
         CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession, searchParams.PBId, "שליחת מסר סגירה", false, myShowProgressBarParams)
             .then((res) => {
-                //this.ResponseData = res;
-                
-                    var myDeclarationEditComponentController = this.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
-                    myDeclarationEditComponentController.CustomsAnswersShowManifest = false;
-
-                    this.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "DCCR";
-                    this.CurrentSession.CurrentEditComponent.SetSelectedTab();
-                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+              
                 
             }
-            ).catch((err) => {
-                this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+        ).catch((err) => {
+                 this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                 this.ValidationErrors.push(err);
                 this.FillValidationErrors("Errors");
             });
 
         this.DeclarationService.PostSendDeclarationClosingAmendment(searchParams).subscribe((response: ServiceResponse) => {
-            SessionLocator.SelectedSession.CloseCurrentWindow();
+             if (!AppTool.IsNullOrEmpty(response) && !AppTool.IsNullOrEmpty(response.Result) && !AppTool.IsNullOrEmpty(response.Result.UserMessage)) {
+                this.ValidationErrors.push(response.Result.UserMessage);
+                this.FillValidationErrors("Errors");
+            }
+            debugger;
+            //DOTO
+
+            //if success
+            if (response.Result) {
+
+
+                this.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "DEGC";
+                this.CurrentSession.CurrentEditComponent.SetSelectedTab();
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            }
+            //if reject
+            else {
+                this.CurrentSession.CurrentEditComponent.PreSelectedTabCode = "CloD";
+                this.CurrentSession.CurrentEditComponent.SetSelectedTab();
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            }
+        
+
+          //  SessionLocator.SelectedSession.CloseCurrentWindow();
         });
 
     }
-    FillValidationErrors(title: string)
-    {
+    FillValidationErrors(title: string) {
         this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
         var windowArgs: any = {};
         windowArgs.Errors = this.ValidationErrors;
-        windowArgs.ComponentHeight = '328px'; 
+        windowArgs.ComponentHeight = '328px';
         var windowTitle = title;
         var logWindow = new LogitudeWindow();
         logWindow.Width = 600;

@@ -27,7 +27,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.InvoiceCounterKey).HasColumnName("InvoiceCounterKey").IsRequired().HasDatabaseGeneratedOption(null);
 
-            this.Property(t => t.TypeCode).HasColumnName("TypeCode").IsRequired().HasMaxLength(3).IsUnicode(false);
+            this.Property(t => t.TypeCode).HasColumnName("TypeCode").HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant");
 
@@ -36,6 +36,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.Amount).HasColumnName("Amount").HasPrecision(16, 2);
 
             this.Property(t => t.ModificationCounterKey).HasColumnName("ModificationCounterKey").IsRequired().HasDatabaseGeneratedOption(null);
+
+            this.Property(t => t.TypeDesc).HasColumnName("TypeDesc").HasMaxLength(256).IsUnicode(true);
         }
     }
 }

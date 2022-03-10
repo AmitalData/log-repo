@@ -1631,7 +1631,21 @@ namespace Logitude.Customs.Def.ClosedTable
                 ResponseInterfaceCode = "8373I",
                 //  NeedSignature = false,
             });
-
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "9079",
+                InOut = InOutEnum.O.ToString(),
+                Description = "שאילתא לשחזור נתוני הצהרת יצוא",
+                DcaPrefixName = "",
+                DefaultSendOptionsCode = Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.WI.ToString(),
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+                // NotificationId = "",//NotificationDefinitionDetails.GetAll().FirstOrDefault(rec=> rec.Code="").Code
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "9079I",
+                //  NeedSignature = false,
+            });
 
             all.Add(new InterfaceManagementDetails()
             {
@@ -1651,6 +1665,19 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = null,
                 //  NeedSignature = false
+            });
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "9079I",
+                InOut = InOutEnum.I.ToString(),
+                Description = "מסר תשובה לשחזור נתוני הצהרת יצוא",
+                DcaPrefixName = "GetDF_Web9079_2757_RetrieveExportDeclaration_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
             });
             //Yuval Chalup 23.12.2014 TASK-9972 --->
 
@@ -2881,6 +2908,20 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = "",
                 InterfaceType = "C",
+            });            
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "UCADPE",
+                InOut = InOutEnum.I.ToString(),
+                Description = "הזנה גורפת PENDING",
+                DcaPrefixName = "UCADPE_OUT",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                InterfaceType = "B",
             });
             //CLAIM_5005_ContinuousRequestOnClaimFileMessagingService
             all.Add(new InterfaceManagementDetails()

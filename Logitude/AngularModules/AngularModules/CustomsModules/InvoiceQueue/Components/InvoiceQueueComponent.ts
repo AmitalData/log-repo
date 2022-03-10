@@ -272,7 +272,7 @@ export class InvoiceQueueComponent
             var unifreightMessageM =
                 AmitalGatewayUtil.Instance.
                     DeclarationMessaging.GetMessage(myDeclaration.CustomFileNo, myDeclaration.Id,
-                        myViewModelName);
+                        myViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity(myDeclaration.Direction));
 
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
                 "ScriptableGatewayUtil.ShowDisbursementList",
@@ -315,7 +315,7 @@ export class InvoiceQueueComponent
             var unifreightMessageM =
                 AmitalGatewayUtil.Instance.
                     DeclarationMessaging.GetMessage(myDeclaration.CustomFileNo, myDeclaration.Id,
-                        myViewModelName);
+                        myViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity(myDeclaration.Direction));
 
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
                 "ScriptableGatewayUtil.ShowPaymentsList",
@@ -356,7 +356,7 @@ export class InvoiceQueueComponent
             var unifreightMessageM =
                 AmitalGatewayUtil.Instance.
                     DeclarationMessaging.GetMessage(myDeclaration.CustomFileNo, myDeclaration.Id,
-                        myViewModelName);
+                        myViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity(myDeclaration.Direction));
 
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
                 "ScriptableGatewayUtil.ShowConnectedFiling",
@@ -399,7 +399,7 @@ export class InvoiceQueueComponent
             var unifreightMessageM =
                 AmitalGatewayUtil.Instance.
                     DeclarationMessaging.GetMessage(myDeclaration.CustomFileNo, myDeclaration.Id,
-                        myViewModelName);
+                        myViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity(myDeclaration.Direction));
 
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
                 "ScriptableGatewayUtil.ShowDAList",
@@ -443,7 +443,7 @@ export class InvoiceQueueComponent
             var unifreightMessageM =
                 AmitalGatewayUtil.Instance.
                     DeclarationMessaging.GetMessage(myDeclaration.CustomFileNo, myDeclaration.Id,
-                        myViewModelName);
+                        myViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity(myDeclaration.Direction));
 
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
                 "ScriptableGatewayUtil.ShowDelivery",
@@ -486,7 +486,7 @@ export class InvoiceQueueComponent
             var unifreightMessageM =
                 AmitalGatewayUtil.Instance.
                     DeclarationMessaging.GetMessage(myDeclaration.CustomFileNo, myDeclaration.Id,
-                        myViewModelName);
+                        myViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity(myDeclaration.Direction));
 
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
                 "ScriptableGatewayUtil.ShowImportFile",
@@ -531,7 +531,7 @@ export class InvoiceQueueComponent
             var unifreightMessageM =
                 AmitalGatewayUtil.Instance.
                     DeclarationMessaging.GetMessage(myDeclaration.CustomFileNo, myDeclaration.Id,
-                        myViewModelName);
+                        myViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity(myDeclaration.Direction));
 
 
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(

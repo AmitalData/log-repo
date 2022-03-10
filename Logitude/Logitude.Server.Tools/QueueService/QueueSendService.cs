@@ -132,13 +132,13 @@ namespace Logitude.Server.Tools.QueueService
                     {
                         
                         
-                        queueService.Send(messageProperties, _QueueSendModel.Tenant, _QueueSendModel.Delay, _QueueSendModel.TenantPriority ?? 89);
+                        queueService.Send(messageProperties, _QueueSendModel.Tenant, _QueueSendModel.Delay, _QueueSendModel/*.TenantPriority ?? 89*/);
                         LogMessagingUtil.Instance.AppendLine("***** Delay _QueueSendModel.Delay " + _QueueSendModel.Delay.ToString());
 
                     }
                     else
                     {
-                        queueId = queueService.Send(messageProperties, _QueueSendModel.Tenant, null, _QueueSendModel.TenantPriority ?? 89);
+                        queueId = queueService.Send(messageProperties, _QueueSendModel.Tenant, null, _QueueSendModel/*.TenantPriority ?? 89*/);
                     }
                     
                     LogMessagingUtil.Instance.AppendLine("CustomDbQueueService:CreateNew:SBQueueName=" + _SBQueueName + "QMId=" + queueId);
@@ -157,8 +157,14 @@ namespace Logitude.Server.Tools.QueueService
     }
     public class QueueSendModel
     {
+        public QueueSendModel()
+        {
+
+        }
         //public int ProcessState { get; set; }
 
+
+        
         public int Tenant { get; set; }
 
         public string InterfaceTypeCode { get; set; }
@@ -177,7 +183,29 @@ namespace Logitude.Server.Tools.QueueService
             set { _DcaAnalyzeAggregateKey = value; }
         }
 
-        
-        
+        public bool UseRabbitMQ { get;  set; }
+        public string QueueGroupCodeRabbit { get; set; }
     }
+    public class RabbitQueueCodeService
+    {
+        public static string GetRabbitQueueCode(string QueueDefinitionCode, string QueueGroupCodeRabbit)
+        {
+            string env = GetEnv();
+            string myQueueCodeRabbit = QueueDefinitionCode;// $"AN_{env}_{this.QueueCode}";
+            if (!string.IsNullOrEmpty(QueueGroupCodeRabbit))
+            {
+                myQueueCodeRabbit = $"{myQueueCodeRabbit}_{QueueGroupCodeRabbit}";
+            }
+            myQueueCodeRabbit += "_" + env;
+            return myQueueCodeRabbit.ToLower();
+        }
+
+        private static string GetEnv()
+        {
+            var uri = new Uri(LogitudeSettings.LogitudeURL);
+            var branchEnv = uri.LocalPath.Trim(@"\"[0]).Trim(@"/"[0]);
+            return branchEnv;
+        }
+    }
+    
 }

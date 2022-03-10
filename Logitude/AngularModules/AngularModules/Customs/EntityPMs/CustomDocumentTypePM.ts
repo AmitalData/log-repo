@@ -74,6 +74,16 @@ export class CustomDocumentTypePM {
     public set IsDiamondManadatory(newValue: boolean) { if (this.isDiamondManadatory != newValue) { this.isDiamondManadatory = newValue; this.MarkAsDirty("IsDiamondManadatory"); } }
        
 	 
+    private customsDocumentUpload: string;
+    public get CustomsDocumentUpload() { return this.customsDocumentUpload; }
+    public set CustomsDocumentUpload(newValue: string) { if (this.customsDocumentUpload != newValue) { this.customsDocumentUpload = newValue; this.MarkAsDirty("CustomsDocumentUpload"); } }
+       
+	 
+    private customsDocumentUploadName: string;
+    public get CustomsDocumentUploadName() { return this.customsDocumentUploadName; }
+    public set CustomsDocumentUploadName(newValue: string) { if (this.customsDocumentUploadName != newValue) { this.customsDocumentUploadName = newValue; this.MarkAsDirty("CustomsDocumentUploadName"); } }
+       
+	 
 
     public OldEntityPM: CustomDocumentTypePM;
 		

@@ -25,13 +25,49 @@ namespace Logitude.Customs.Data.EntityMapping
 	 
             this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(4).IsUnicode(false);
 
-            this.Property(t => t.EnglishName).HasColumnName("EnglishName").HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.EnglishName).HasColumnName("EnglishName").HasMaxLength(200).IsUnicode(false);
 
             this.Property(t => t.LocalName).HasColumnName("LocalName").HasMaxLength(1000).IsUnicode(true);
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
 
             this.Property(t => t.Inactive).HasColumnName("Inactive");
+
+            this.Property(t => t.MalamID).HasColumnName("MalamID");
+
+            this.Property(t => t.State).HasColumnName("State");
+
+            this.Property(t => t.Exempt_CertificateDocument).HasColumnName("Exempt_CertificateDocument");
+
+            this.Property(t => t.IsImport).HasColumnName("IsImport");
+
+            this.Property(t => t.IsExemptOtherAuthority).HasColumnName("IsExemptOtherAuthority");
+
+            this.Property(t => t.ConfirmationComputerization).HasColumnName("ConfirmationComputerization");
+
+            this.Property(t => t.IsCEO).HasColumnName("IsCEO");
+
+            this.Property(t => t.IsNeedDeclaration).HasColumnName("IsNeedDeclaration");
+
+            this.Property(t => t.CertificateDocumentCategory).HasColumnName("CertificateDocumentCategory");
+
+            this.Property(t => t.AuthorityID).HasColumnName("AuthorityID");
+
+            this.Property(t => t.IsQuotaCheckNeeded).HasColumnName("IsQuotaCheckNeeded");
+
+            this.Property(t => t.ExternalIDNumPerAuthority).HasColumnName("ExternalIDNumPerAuthority");
+
+            this.Property(t => t.IsForCustomsItem).HasColumnName("IsForCustomsItem");
+
+            this.Property(t => t.IsPharmacy).HasColumnName("IsPharmacy");
+
+            this.Property(t => t.IsVeterinarian).HasColumnName("IsVeterinarian");
+
+            this.Property(t => t.IsVehicleStandardization).HasColumnName("IsVehicleStandardization");
+
+            this.Property(t => t.IsQuantityMandatory).HasColumnName("IsQuantityMandatory");
+
+            this.Property(t => t.IsForCE).HasColumnName("IsForCE");
         }
     }
 }

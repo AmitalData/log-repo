@@ -84,6 +84,67 @@
 		  Nullable="true" />
 	</Column>
 
+
+	<Column
+		Name="InterfaceTypeCode"
+		Type="varchar"
+		Size="32">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+
+	
+
+	<Column
+		Name="QueueCodeRabbit"
+		Type="varchar"
+		Size="256">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+
+
+
+	<Column
+    Name="UseRabbitMQ"
+    Type="bit"
+	DefaultValue="0">
+		<Constraints
+		  Nullable="false" />
+	</Column>
+
+	
+	<Column
+    Name="HaveRabbitMQ"
+    Type="bit"
+    DefaultValue="0">
+		<Constraints
+		  Nullable="false" />
+	</Column>
+
+
+	<Column
+    Name="RabbitMQCreateDate"
+    Type="datetime">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+   Name="RabbitMQRetryNumber"
+   Type="int"
+   DefaultValue="0">
+		<Constraints
+		  Nullable="false" />
+	</Column>
+	<Column
+    Name="RabbitMQErrMess"
+    Type="varchar"
+    Size="256">
+	<Constraints
+      Nullable="true" />
+	</Column>
+	
+	
 	<Relation
     ForeignKeyColumn="QueueDefinitionCode"
     ReferencedTable="QueueDefinitions"
@@ -92,4 +153,15 @@
   <Index
     Columns="QueueDefinitionCode,Status,NextRunDateTime"
     Include="Id" />
+
+	<Index
+  Columns="UseRabbitMQ"
+   />
+
+
+	<Index
+  Columns="Status,NextRunDateTime,UseRabbitMQ,HaveRabbitMQ"
+   />
+
+
 </Table>

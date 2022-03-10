@@ -551,6 +551,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             newNotificationPM.Reference2Number = responseToMessage;
             newNotificationPM.DueDate = DateTime.Now;
             newNotificationPM.AssigneToNotificationTypeCode = typeCode;
+            
+            if(this._MyDeclarationPM.Direction == "E")
+                newNotificationPM.ResponseToMessage = responseToMessage;
 
             string customerId = null;
             string referentUserId = null;

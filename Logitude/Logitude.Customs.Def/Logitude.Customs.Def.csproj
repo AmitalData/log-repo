@@ -66,6 +66,7 @@
     <Compile Include="Contracts\SendDeclarationChecksResult.cs" />
     <Compile Include="Contracts\UnifreightGenericService.cs" />
     <Compile Include="EntityPMs\CargoIdentifireTypePM.cs" />
+    <Compile Include="EntityPMs\ConfirmationTypePM.cs" />
     <Compile Include="EntityPMs\Generated\AmedmentTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmendCancellRequestInitiatorPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmendmentFieldStatusTypePM.Generated.cs" />
@@ -89,6 +90,8 @@
     <Compile Include="EntityPMs\Generated\CustomerClassificationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomerIdentificationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomerIndicationTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsDocumentUploadPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsEnvironmentSettingPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsShipPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationExportRecipientPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeliveryTypePM.Generated.cs" />
@@ -105,6 +108,9 @@
     <Compile Include="EntityPMs\Generated\HandingCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\IncotemrsFileValidationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LoadingSiteTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\LogisticActionRequestPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\LogisticActionRequestTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\LogisticActionResponseReqSPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LogisticsReferenceTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\NbcDeclarationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\NDMessageActionCodePM.Generated.cs" />

@@ -28,7 +28,7 @@ export class UnifreightController {
         var customFileNo = this._DeclarationPM.CustomFileNo;
 
         AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseInstructionReturnCanIContinue
-            (customFileNo, declarationId, this._ViewModelName, ViewPlace);
+            (customFileNo, declarationId, this._ViewModelName, ViewPlace, this._DeclarationPM.Direction);
 
     }
 

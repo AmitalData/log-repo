@@ -28,6 +28,7 @@ import { DeclarationAmendmentComponent } from './Components/DeclarationAmendment
 import { DeclarationCargoSealTabComponent } from './Components/CargoSeal/DeclarationCargoSealTabComponent';
 import { ExportDeclarationComponent } from './Components/General/ExportDeclarationComponent';
 import { ExportConsigmentContentComponent } from './Components/General/ConsigmentTabContent/ExportConsigmentContentComponent';
+import { ExportDeclarationClosureComponent } from './Components/Closure/ExportDeclarationClosureComponent';
 
 export const Components =
     [
@@ -60,6 +61,7 @@ export const Components =
         DeclarationAmendmentComponent,
         DeclarationCargoSealTabComponent,
         ExportDeclarationComponent,
+        ExportDeclarationClosureComponent,
 
     ];
 
@@ -100,6 +102,8 @@ export class ModuleDeclarations {
             case "DeclarationAmendmentComponent": { myResult = DeclarationAmendmentComponent; break; }
             case "DeclarationCargoSealTabComponent": { myResult = DeclarationCargoSealTabComponent; break; }
             case "ExportDeclarationComponent": { myResult = ExportDeclarationComponent; break; }
+            case "ExportDeclarationClosureComponent": { myResult = ExportDeclarationClosureComponent; break; }
+
         }
 
         return myResult;

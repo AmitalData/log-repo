@@ -40,6 +40,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.IsCourierManadatory).HasColumnName("IsCourierManadatory");
 
             this.Property(t => t.IsDiamondManadatory).HasColumnName("IsDiamondManadatory");
+
+            this.Property(t => t.CustomsDocumentUpload).HasColumnName("CustomsDocumentUpload").HasMaxLength(1).IsUnicode(false);
         }
     }
 }

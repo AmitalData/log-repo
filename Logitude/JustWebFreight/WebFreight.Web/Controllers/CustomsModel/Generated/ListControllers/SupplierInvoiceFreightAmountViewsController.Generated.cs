@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string declarationid, int invoicecounterkey, string currencytypecode)
+        public HttpResponseMessage GetSingle(string id)
         {
 		  try
             {
@@ -61,7 +61,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 SupplierInvoiceFreightAmountListQueryService supplierInvoiceFreightAmountQuery = new SupplierInvoiceFreightAmountListQueryService(MyContext);
-                SupplierInvoiceFreightAmountList supplierInvoiceFreightAmountList = supplierInvoiceFreightAmountQuery.GetSingle(declarationid, invoicecounterkey, currencytypecode);
+                SupplierInvoiceFreightAmountList supplierInvoiceFreightAmountList = supplierInvoiceFreightAmountQuery.GetSingle(id);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
                 return Request.CreateResponse(HttpStatusCode.OK,  supplierInvoiceFreightAmountList);

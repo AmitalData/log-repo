@@ -50,7 +50,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (this._MyDeclarationPM == null) // moran 21.10.15 - Task 17106
                 {
                     string decId = myQueryService.GetIdByDeclarationNumber(customResponse.GeneralDetails.declarationID, requestParams.Tenant);
-                    if(decId != null)this._MyDeclarationPM = myQueryService.GetSingle(decId, true, false);
+                    if (decId != null) this._MyDeclarationPM = myQueryService.GetSingle(decId, true, false);
                 }
             }
 
@@ -82,8 +82,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 MyResponseData.ApplicationID = _MyDeclarationPM.Id;
                 this.MyRequestSheetParam.EntityId1 = _MyDeclarationPM.Id;
                 this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-                
-                
+
+
                 if (eventCode != "")
                 {
                     RaiseEvent(_MyDeclarationPM, requestParams.LoggingUserId, eventCode, remarks);
@@ -115,7 +115,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (notificationCode != "")
             {
                 string logisticPermitId = "";
-                
+
                 if (customResponse.CargoIdentifier.LogisticPermitDetails.Count() > 0)
                 {
                     string containersNumber = "";
@@ -128,9 +128,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 UpdateNotification(this._MyDeclarationPM, notificationCode, notificationDeclaration, requestParams.Tenant, notificationRemarks, logisticPermitId);
             }
-            
+
             MyResponseData.Succeeded = true;
-             
+
         }
 
         private void RaiseEvent(DeclarationPM _MyDeclarationPM, string loggingUserId, string eventCode, string remarks)
@@ -242,6 +242,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
             notificationUpdateService.Update(newNotificationPM, true);
 
         }
-        
+
     }
 }

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "e524263777a421bfaa8064aea485e86c";
+		public const string HashString = "239d325298636e93824e69c7d5f93024";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "8a08",
+			      				    Code =  "2de6",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2055,6 +2055,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOSearch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.Search", DefaultText = "Search",LocalDefaultText = @"חיפוש", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOTermsOfSale = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.TermsOfSale", DefaultText = "Terms of sale",LocalDefaultText = @"תנאי מכר", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOSelectAll = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.SelectAll", DefaultText = "Select All",LocalDefaultText = @"בחר הכל", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOCancelSelect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CancelSelect", DefaultText = "Cancel Select",LocalDefaultText = @"בטל בחירה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_GeneralMHLogisticActionRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.LogisticActionRequest", DefaultText = "Logistic Action Request",LocalDefaultText = @"בקשות ביטול יצוא", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOLand = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.Land", DefaultText = "Land",LocalDefaultText = @"יבשה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOOcean = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.Ocean", DefaultText = "Ocean",LocalDefaultText = @"ים", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOAir = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.Air", DefaultText = "Air",LocalDefaultText = @"אויר", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOImport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.Import", DefaultText = "Import",LocalDefaultText = @"יבוא", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.Export", DefaultText = "Export",LocalDefaultText = @"יצוא", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

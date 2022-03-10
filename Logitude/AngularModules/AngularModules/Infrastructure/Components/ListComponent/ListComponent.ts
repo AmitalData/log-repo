@@ -667,7 +667,7 @@ export class ListComponent implements OnInit, AfterViewInit {
           }
          if (this.ObjectTableName == "Customs.PhysicalCheck") {
              this.IsPhysicalCheckObjectTable = true; }
-        if (this.ObjectTableName == "Customs.DeclarationReferantData" || this.ObjectTableName == "Customs.DeclarationCargoSplit") {
+        if (["Customs.DeclarationReferantData", "Customs.DeclarationCargoSplit", "Customs.LogisticActionRequest"].includes(this.ObjectTableName)) {
             this.HasCustomsFilterMenu = true;
         }
         if (this.ObjectTableName == "Customs.ExportStorge" || this.ObjectTableName == "QuoteOP") {
@@ -906,6 +906,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 myComponentPath = "./CustomsModules";
                                 myComponentPath=(myObjectTableName == "DeclarationReferantData")?myComponentPath+="/CustomsReferant":myComponentPath;
                                 myComponentPath=(myObjectTableName == "DeclarationCargoSplit")?myComponentPath+="/CustomsDeclarationCargoSplit":myComponentPath;
+                                myComponentPath=(myObjectTableName == "LogisticActionRequest")?myComponentPath+="/CustomsLogisticActionRequest":myComponentPath;
                                 myComponentPath=(myObjectTableName == "PhysicalCheck")?myComponentPath+="/CustomsPhysicalCheck":myComponentPath;
                                 myComponentPath+="/Components/FiltersMenu/" + /*this.ObjectTable.Name*/myObjectTableName + "FiltersMenuComponent";
                             }
@@ -919,7 +920,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                     cmpRef.instance.SelectedValueChanged.subscribe(($event: any) => {
                                         this.FiltersMenu = new ApiQueryFilters();
                                         this.FiltersMenu = $event.Filters;
-                                        this.MenuHeaderchangeevent.emit({ Filters: $event.Filters, RemoveFilter: $event.RemoveFilter })
+                                        this.MenuHeaderchangeevent.emit({ Filters: $event.Filters, RemoveFilter: $event.RemoveFilter });
                                     });
 
                                 });
@@ -2276,6 +2277,47 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
                                     break;
                                 }
+                                case 'Customs.LogisticActionRequest': {
+
+                                    var windowArgs: any = {};
+
+                                    // this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe((response:any) => {
+                                    //     this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+                                            this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
+                                                res.subscribe((myResponse: any) => {
+
+                                                    if (myResponse.HasError) {
+                                                        console.log("Error while getting EntityPM", myResponse);
+                                                    }
+                                                    else {
+                                                        windowArgs.CurrentEntity = myResponse.Result;
+                                                        var logWindow = new LogitudeWindow();
+
+                                                        logWindow.Width = 770;
+                                                        logWindow.Height = 750;
+                                                        //logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditDeclarationCargoSplit");
+                                                        let title: string = (myResponse.Result?.ResponseStatusCode || myResponse.Result?.OperationalStatus );
+                                                        title =  title ? ' - ' + title : '';
+                                                        logWindow.Title = 'בקשת ביטול יצוא' + title //TextCodeTranslator.Translate('General.MH.LogisticActionRequest'); //"בקשת פיצול מטען ";// + myResponse.Result != null ? ((!AppTool.IsNullOrEmpty(myResponse.Result.RequestNumber) ? myResponse.Result.RequestNumber : null) + ((!AppTool.IsNullOrEmpty(myResponse.Result.ResponseStatusName) ? " - " + myResponse.Result.ResponseStatusName : null))) : null;
+                                                        logWindow.WindowArgs = windowArgs;
+                                                        logWindow.ShowCloseButton = true;
+                                                        //logWindow.IsHideHeader = true;
+                                                        logWindow.Show('./CustomsModules/CustomsLogisticActionRequest/Components/EditTabs/General/LogisticActionRequestGeneralTabComponent');
+
+                                                        logWindow.WindowClosed.subscribe(($event1: any) => {
+                                                            this.isEditControlOpened = false;
+                                                            this.OnBackFromEdit(selectedEntityId, $event);
+                                                        });
+                                                    }
+                                                });
+
+                                            });
+                                    //     });
+
+                                    // });
+
+                                    break;
+                                }
                                 default: {
                                     //this.onQueryChangeEvent = new EventEmitter();
                                     //this.Filterchangeevent = new LogEvents.EventManager();
@@ -2355,7 +2397,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             var unifreightMessageM =
                                 AmitalGatewayUtil.Instance.
                                     DeclarationMessaging.GetMessage(customFile, selectedEntityId,
-                                        myViewModelName);
+                                        myViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
 
 
                             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
@@ -2425,7 +2467,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             var unifreightMessageM =
                                 AmitalGatewayUtil.Instance.
                                     DeclarationMessaging.GetMessage(customFile, selectedEntityId,
-                                        myViewModelName);
+                                        myViewModelName, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
 
 
                             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
@@ -2848,7 +2890,11 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             if (this.SelectedQuery.ObjectTableNewWizardControlName == "Logitude.Customs.NewDeclarationControlCommand" &&
                                 this.HaveFeatureNewExportDeclararion) {
                                 this.RunNewExportDeclaration();
-                            } else {
+                            
+                            } else if (this.ObjectTableName == "Customs.LogisticActionRequest")
+                                    this.RunNewLogisticActionRequest(); 
+                                
+                            else {
                                 if (this.SelectedQuery.ObjectTableNewWizardControlName == "Logitude.Customs.NewContainerizationControlCommand") {
                                     this.RunNewContainerization();
                                 }
@@ -2874,7 +2920,6 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         else if (this.ObjectTableName == "Customs.DeclarationReferantData") {
                             this.RunNewCustomsFileWizard(); 
                         }
-
                         
                         else {
 
@@ -3238,6 +3283,16 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             messageWindow.Height = 190;
             messageWindow.Show("Fill NewWizard Component Path and Name in ObjectTable !!");
         }
+    }
+
+    RunNewLogisticActionRequest() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 770;
+        logWindow.Height = 750;
+        logWindow.Title = ("המכלה חדשה");
+        logWindow.ShowCloseButton = true;
+        logWindow.Show('./CustomsModules/CustomsLogisticActionRequest/Components/EditTabs/General/LogisticActionRequestGeneralTabComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnNewEntityWindowClosed($event));
     }
  
     private RunNewGenaricEntity() {

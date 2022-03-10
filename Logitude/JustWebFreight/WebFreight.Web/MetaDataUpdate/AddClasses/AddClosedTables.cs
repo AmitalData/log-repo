@@ -3143,14 +3143,14 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             if (tenantAcceptanceStatuses.Keys.Contains(acceptanceStatusDetails.Code))
             {
                 AcceptanceStatus acceptanceStatus = acceptanceStatusRepository.GetSingle(acceptanceStatusDetails.Code);
-                acceptanceStatus.Name = acceptanceStatusDetails.Name;
+                acceptanceStatus.EnglishName = acceptanceStatusDetails.EnglishName;
 
-                acceptanceStatus.SearchFields = (acceptanceStatusDetails.Code + "," + acceptanceStatusDetails.Name).ToLower();
+                acceptanceStatus.SearchFields = (acceptanceStatusDetails.Code + "," + acceptanceStatusDetails.EnglishName).ToLower();
                 acceptanceStatusRepository.Update(acceptanceStatus);
             }
             else
             {
-                AcceptanceStatus newAcceptanceStatus = new AcceptanceStatus() { Code = acceptanceStatusDetails.Code, Name = acceptanceStatusDetails.Name, SearchFields = (acceptanceStatusDetails.Code + "," + acceptanceStatusDetails.Name).ToLower() };
+                AcceptanceStatus newAcceptanceStatus = new AcceptanceStatus() { Code = acceptanceStatusDetails.Code, EnglishName = acceptanceStatusDetails.EnglishName, SearchFields = (acceptanceStatusDetails.Code + "," + acceptanceStatusDetails.EnglishName).ToLower() };
                 acceptanceStatusRepository.Add(newAcceptanceStatus);
             }
         }
@@ -3270,6 +3270,32 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     SearchFields = (mamanSpecialActionStatusDetails.Code + "," + mamanSpecialActionStatusDetails.LocalName).ToLower()
                 };
                 mamanSpecialActionStatusRepository.Add(newMamanSpecialActionStatus);
+            }
+        }
+
+        
+        public static void AddCustomsDocumentUpload(CustomsDocumentUpload customsDocumentUploadDetails, CustomsDocumentUploadRepository customsDocumentUploadRepository)
+        {
+            Dictionary<string, CustomsDocumentUpload> tenant = customsDocumentUploadRepository.GetAll().ToDictionary(d => d.Code, a => a);
+
+            if (tenant.Keys.Contains(customsDocumentUploadDetails.Code))
+            {
+                CustomsDocumentUpload customsDocumentUpload = customsDocumentUploadRepository.GetSingle(customsDocumentUploadDetails.Code);
+                customsDocumentUpload.LocalName = customsDocumentUploadDetails.LocalName;
+                customsDocumentUpload.EnglishName = customsDocumentUploadDetails.EnglishName;
+                customsDocumentUpload.SearchFields = (customsDocumentUploadDetails.Code + "," + customsDocumentUploadDetails.LocalName).ToLower();
+                customsDocumentUploadRepository.Update(customsDocumentUpload);
+            }
+            else
+            {
+                CustomsDocumentUpload customsDocumentUpload = new CustomsDocumentUpload()
+                {
+                    Code = customsDocumentUploadDetails.Code,
+                    LocalName = customsDocumentUploadDetails.LocalName,
+                    EnglishName = customsDocumentUploadDetails.EnglishName,
+                    SearchFields = (customsDocumentUploadDetails.Code + "," + customsDocumentUploadDetails.LocalName).ToLower()
+                };
+                customsDocumentUploadRepository.Add(customsDocumentUploadDetails);
             }
         }
     }

@@ -133,6 +133,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     public addedVehicles: any[] = [];
 
     private CurrentSession = SessionLocator.SelectedSession;
+    public tradeAgreementFilter: ApiQueryFilters = null as any;
 
     constructor(
         private cd: ChangeDetectorRef,
@@ -173,6 +174,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         this.IFritz_feature = FeatureLocator.Features.filter(d => d.Code == "IFRITZ")[0];
         console.log("IFritz feature: ", this.IFritz_feature);
 
+        this.initTradeAgreementFilter();
+
     }
     ngOnInit() {
         if (this.allowExport) {
@@ -188,6 +191,14 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             this.setAdjustmentsWarning(this.IncotermCode)
         }
     }
+
+
+    initTradeAgreementFilter() {
+        this.tradeAgreementFilter = new ApiQueryFilters();
+        this.tradeAgreementFilter.addAdditionalFilter("CustomsBookTypeID", 2, null, null, "Equal", false, false, false, "number");
+    }
+
+
     public SelectInvoiceItemMethod(res) {
         var item: SupplierInvoiceItemLine = this.ItemsSource.Collection.filter(d => d.SequenceNumeric == res.filter)[0];
         //this.SelectedRow = item;
@@ -4478,63 +4489,48 @@ export class SupplierInvoiceFreightAmountLine extends BaseComponent {
     public set CurrencyTypeCode(newValue: string) {
         if (this.Parent.AmountList.Length > 0) {
             if (newValue != null) {
-                var exist = this.Parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.CurrencyTypeCode === newValue);
+                // var exist = this.Parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.CurrencyTypeCode === newValue);
                 this.entityPM.CurrencyTypeCode = newValue
-                if (exist) {
+                // if (exist) {
 
 
-                    var confirmWindow = new ConfirmWindow();
+                //     var confirmWindow = new ConfirmWindow();
 
 
-                    confirmWindow.Width = 400;
+                //     confirmWindow.Width = 400;
 
-                    confirmWindow.Height = 200;
-                    confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                    confirmWindow.ShowNoButton = false;
-                    confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType") + " - מסך נוספים");
-                    this.entityPM.CurrencyTypeCode = newValue;
-                    this.entityPM.CurrencyTypeCode = null;
-                    // this.entityPM.CurrencyTypeName = null;
-                    confirmWindow.WindowClosed.subscribe((event: any) => {
-                        if (confirmWindow.Yes) {
-                            //this.entityPM.CurrencyTypeCode = newValue;
-                            this.entityPM.CurrencyTypeCode = null;
-                            this.CurrencyTypeName = null;
-                            confirmWindow.Close();
-                        }
+                //     confirmWindow.Height = 200;
+                //     confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                //     confirmWindow.ShowNoButton = false;
+                //     confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType") + " - מסך נוספים");
+                //     this.entityPM.CurrencyTypeCode = newValue;
+                //     this.entityPM.CurrencyTypeCode = null;
+                //     // this.entityPM.CurrencyTypeName = null;
+                //     confirmWindow.WindowClosed.subscribe((event: any) => {
+                //         if (confirmWindow.Yes) {
+                //             //this.entityPM.CurrencyTypeCode = newValue;
+                //             this.entityPM.CurrencyTypeCode = null;
+                //             this.CurrencyTypeName = null;
+                //             confirmWindow.Close();
+                //         }
 
-                    });
-                }
-                else {
-                    this.entityPM.CurrencyTypeCode = newValue;
-                    if (this.Parent.AmountList.Length == 1) {
-                        this.Parent.EntityPM.AddSupplierInvoiceFreightAmount(this.entityPM);
-                    }
-
-
-                }
+                //     });
+                // }
+                // else {
+                this.entityPM.CurrencyTypeCode = newValue;
+                if (this.Parent.AmountList.Length == 1)
+                    this.Parent.EntityPM.AddSupplierInvoiceFreightAmount(this.entityPM);
+                // }
             }
-            else {
+            else
                 this.entityPM.CurrencyTypeCode = newValue
-
-            }
-
         }
 
-        if (this.Parent.EntityPM.SupplierInvoiceFreightAmounts.length == 1) {
-
+        if (this.Parent.EntityPM.SupplierInvoiceFreightAmounts.length == 1)
             this.Parent.FreightCurrencyTypeCode = newValue;
 
-        }
-
-        if (this.Amount != null) {
+        if (this.Amount != null)
             this.Parent.LoadCurrenciesExchangeRates(true);
-        }
-
-
-
-
-
     }
 
     public get CurrencyTypeName() { return this.entityPM.CurrencyTypeName; }
