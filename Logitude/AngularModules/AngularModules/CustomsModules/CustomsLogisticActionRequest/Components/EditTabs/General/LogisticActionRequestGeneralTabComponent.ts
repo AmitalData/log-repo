@@ -366,7 +366,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         param.Quantity = this.entityPM.Quantity;
         param.CustomsFile = this.entityPM.ExportFileNo;
         
-        const res: string = await this.logisticActionRequestWebService.SendContainerization(param);
+        const res: string = await this.logisticActionRequestWebService.SendCustomsMessage8410(param);
 
         SessionLocator.SelectedSession.StopBusyIndicator();
     }

@@ -20,7 +20,7 @@ export class LogisticActionRequestWebService {
     }
 
 
-    SendContainerization(genericRequestParams: LogisticActionRequestRequestParams) {
+    SendCustomsMessage8410(genericRequestParams: LogisticActionRequestRequestParams) {
         const ajax: Observable<any> = this._http.post(
             this._apiUrl + "/SendCustomsMessage8410",
             { genericRequestParams: genericRequestParams },
