@@ -530,6 +530,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     RunAutomation("OnUpdate", BuildShipmentChangeTracking());
 
+                    shipmentBehaviourFacade.MapFieldsUpdatedByAutomation(entityPM);
                     shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
                     this.UpdateShipmentFollowUpsCollection();
                     UpdateStandaloneShipments();

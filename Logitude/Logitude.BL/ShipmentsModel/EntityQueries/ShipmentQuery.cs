@@ -4025,6 +4025,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.LastDocumentDateTime = entityComputedFields.LastDocumentDateTime;
                 shipmentPM.CreatedFromDigital = entityComputedFields.CreatedFromDigital;
                 shipmentPM.BookingConfirmationSentDate = entityComputedFields.BookingConfirmationSent;
+                shipmentPM.ContainersNumbers = entityComputedFields.ContainersNumbers;
                 shipmentPM.PreAlertSentDate = entityComputedFields.PreAlertSent;
                 shipmentPM.DeliveryNoticeSentDate = entityComputedFields.DeliveryNoticeSent;
                 shipmentPM.ExpectedArrivalNoticeSentDate = entityComputedFields.ExpectedArrivalNoticeSent;
@@ -5179,6 +5180,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.IsDigitalSignRequired = entityComputedFields.IsDigitalSignRequired;
                         shipmentPM.IsRequestedDocuments = entityComputedFields.IsRequestedDocuments;
                         shipmentPM.BookingConfirmationSentDate = entityComputedFields.BookingConfirmationSent;
+                        shipmentPM.ContainersNumbers = entityComputedFields.ContainersNumbers;
                         shipmentPM.PreAlertSentDate = entityComputedFields.PreAlertSent;
                         shipmentPM.DeliveryNoticeSentDate = entityComputedFields.DeliveryNoticeSent;
                         shipmentPM.ExpectedArrivalNoticeSentDate = entityComputedFields.ExpectedArrivalNoticeSent;

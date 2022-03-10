@@ -2799,6 +2799,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddFieldChangedProperties(changeTrackingPM, "LastSharedEventId", changeTrackingPM.LastSharedEventId, pm.LastSharedEventId, "LastSharedEventId", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "LastSharedEventDate", changeTrackingPM.LastSharedEventDate, pm.LastSharedEventDate, "LastSharedEventDate", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "BookingConfirmationSentDate", changeTrackingPM.BookingConfirmationSentDate, pm.BookingConfirmationSentDate, "BookingConfirmationSentDate", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "ContainersNumbers", changeTrackingPM.ContainersNumbers, pm.ContainersNumbers, "ContainersNumbers", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "PreAlertSentDate", changeTrackingPM.PreAlertSentDate, pm.PreAlertSentDate, "PreAlertSentDate", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "DeliveryNoticeSentDate", changeTrackingPM.DeliveryNoticeSentDate, pm.DeliveryNoticeSentDate, "DeliveryNoticeSentDate", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "ExpectedArrivalNoticeSentDate", changeTrackingPM.ExpectedArrivalNoticeSentDate, pm.ExpectedArrivalNoticeSentDate, "ExpectedArrivalNoticeSentDate", notifyPropertyChangeValuesList);
@@ -2957,6 +2958,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
 
             shipmentPM.BookingConfirmationSentDate = houseShipment.BookingConfirmationSentDate;
+            shipmentPM.ContainersNumbers = houseShipment.ContainersNumbers;
             shipmentPM.PreAlertSentDate = houseShipment.PreAlertSentDate;
             shipmentPM.DeliveryNoticeSentDate = houseShipment.DeliveryNoticeSentDate;
             shipmentPM.ExpectedArrivalNoticeSentDate = houseShipment.ExpectedArrivalNoticeSentDate;
