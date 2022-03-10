@@ -52,6 +52,7 @@ import { ObjectsLocator } from "../../Locators/ObjectsLocator";
         "RefreshMe",
         "IsDisabled",
         "IsDisabledWithColor",
+        "DisableRules",
 
     ]
     //changeDetection: ChangeDetectionStrategy.OnPush,
@@ -83,6 +84,7 @@ export class LogDatePickerComponent
     public InputType: string;
     public IsFreeValue: boolean = false;
     public ForceSubscribe: boolean = false;
+    public DisableRules: boolean = false;
 
     private dataContext: BaseComponent;
     public uiProperty: UIProperty;
@@ -1133,7 +1135,8 @@ export class LogDatePickerComponent
                 var timeUiProp = this.DataContext.UIProperties.GetUIProperty(
                     this.ObjectFieldName + "_timepicker",
                     this.ObjectTableName,
-                    this.DataContext
+                    this.DataContext,
+                    !this.DisableRules
                 );
                 timeUiProp.UIPropertyChanged.emit("datevaluechanges");
                 dateUiProp.UIPropertyChanged.emit("datevaluechanges");
