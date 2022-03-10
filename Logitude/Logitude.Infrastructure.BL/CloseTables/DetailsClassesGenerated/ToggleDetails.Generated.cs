@@ -540,6 +540,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "TAU,Ticket Entity In Automation", 
                 Description = "Use Ticket Entity In Automation", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Split by Quote Charge Group", 
+                Code = "SCG", 
+                SearchFields = "SCG,Split by Quote Charge Group,Quote Template", 
+                Description = "Allow Tenant to Use Split by Quote Charge Group in Quote Template", 
+			});
 			
             return all;
        }

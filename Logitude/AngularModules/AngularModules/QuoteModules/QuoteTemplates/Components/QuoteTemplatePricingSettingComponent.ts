@@ -68,6 +68,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
     ShowTotalPerContinerLink: boolean = false;
     ShowVATDetails :boolean = false;
     DisplayRegoinalTax: boolean = false;
+    CanSplitByQuoteCharge: boolean = false;
 
     constructor() {
         super();
@@ -81,6 +82,8 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
         if (FeatureLocator.HasFeaturePermession("Quote", "TOTALPERCONTAINER")) this.ShowTotalPerContinerLink = true;
         if (SessionLocator.AccountingSettingPM.AllowRegionalTaxManagement) this.DisplayRegoinalTax = true;
+
+        this.CanSplitByQuoteCharge = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SCG")[0]? true : false;
 
     }
 
@@ -491,6 +494,10 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
             
             }
         }
+    }
+
+    get ShowSplitChargeTypes() {
+        return this.CanSplitByQuoteCharge && this.SplitChargesbyGroups;
     }
 
     PricingTableSplitChargeTypes =["Charge Group","Quote Charge Group"]
