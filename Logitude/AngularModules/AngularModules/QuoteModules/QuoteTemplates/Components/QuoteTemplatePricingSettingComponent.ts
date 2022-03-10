@@ -142,6 +142,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
             item.Key = Guid.newGuid();
             item.Show = this.IsMustBeShown(item);
             item.DisplayTextCode = this.GetItemSettingsDataDisplayTextCode(item);
+            this.ChangeTotalPerChargeGroupEnabled(item);
         });
         this.QuoteTemplatePricesTableSettingsData = this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricesPackagesTableSettings;
     }
@@ -151,6 +152,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
             item.Key = Guid.newGuid();
             item.Show = this.IsMustBeShown(item);
             item.DisplayTextCode = this.GetItemSettingsDataDisplayTextCode(item);
+            this.ChangeTotalPerChargeGroupEnabled(item);
         });
         this.QuoteTemplatePricesTableSettingsData = this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricesContainersTableSettings;
     }
@@ -625,24 +627,23 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
         }
     }
 
-    ShowSaleCurrencyColumnKey: string = Guid.newGuid();
-    get ShowSaleCurrencyColumn() {
-        var showSaleCurrencyColumn: boolean = false;
-        if (this.QuoteTemplateSettingPM) showSaleCurrencyColumn = this.QuoteTemplateSectionTypeName == "Packages" ? this.QuoteTemplateSettingPM.ShowSaleCurrencyColumnPackages : this.QuoteTemplateSettingPM.ShowSaleCurrencyColumnContainers;
-        return showSaleCurrencyColumn;
+
+    public InUseChange(checkedItem:any){
+        this.ChangeTotalPerChargeGroupEnabled(checkedItem,true);
     }
-    set ShowSaleCurrencyColumn(value: boolean) {
-        if (this.QuoteTemplateSettingPM != null) {
 
-
-            if (!value) this.ShowTotalPerChargeGroup = false;
-            
-            if (this.QuoteTemplateSectionTypeName == "Packages") {
-                this.QuoteTemplateSettingPM.ShowSaleCurrencyColumnPackages = value;
-            } else this.QuoteTemplateSettingPM.ShowSaleCurrencyColumnContainers = value;
+    public TotalPerChargeGroupEnabled: boolean;
+    ChangeTotalPerChargeGroupEnabled(checkedItem:any, isClicked:boolean = false) {
+        if(this.TotalPerChargeGroupEnabled && !isClicked ||(checkedItem.Name !="ShowTotalInSaleCurrencyContainers" && checkedItem.Name !="ShowSaleCurrencyColumnContainers" &&
+        checkedItem.Name !="ShowTotalInSaleCurrencyPackages" && checkedItem.Name !="ShowSaleCurrencyColumnPackages"))
+        return;
+        if(checkedItem.InUse) {
+            this.TotalPerChargeGroupEnabled = true;
+            return;
         }
+        this.TotalPerChargeGroupEnabled = false;
+        this.ShowTotalPerChargeGroup = false;
     }
-
 
     ShowLocalCurrencyColumnKey: string = Guid.newGuid();
     get ShowLocalCurrencyColumn() {
@@ -872,13 +873,32 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
     private MapIsUsedFieldToCurrentDBFields() {
         this.QuoteTemplatePricesTableSettingsData.forEach((item) => {
-            if(this.InExcludedQuoteTemplatePricesPackagesTableSettingsData(item.Name)) return;
-            this.QuoteTemplateSettingPM[item.Name] = item.InUse;
+            this.SetQuoteTemplateSetting(item);
         });
     }
-    ExcludedQuoteTemplatePricesPackagesTableSettingsData:string[]=["ShowTotalInSaleCurrencyContainers","ShowTotalInSaleCurrencyPackages","ShowTotalInLocalCurrencyContainers","ShowTotalInLocalCurrencyPackages"];
-    InExcludedQuoteTemplatePricesPackagesTableSettingsData(item: string): boolean {
-        return this.ExcludedQuoteTemplatePricesPackagesTableSettingsData.some(x=>x==item);
+
+    WrongQuoteTemplatePricesPackagesTableSettingsData: string[] = ["ShowTotalInSaleCurrencyContainers", "ShowTotalInSaleCurrencyPackages", "ShowTotalInLocalCurrencyContainers", "ShowTotalInLocalCurrencyPackages"];
+    private SetQuoteTemplateSetting(pricesFieldSettings: PricesFieldSettings) {
+        var fieldName = pricesFieldSettings.Name;
+        if (this.HaveWrongFieldName(fieldName)) {
+            fieldName = this.GetCorrectQuoteTemplateFieldName(fieldName);
+        }
+        this.QuoteTemplateSettingPM[fieldName] = pricesFieldSettings.InUse;
+    }
+
+    GetCorrectQuoteTemplateFieldName(fieldName: string): string {
+        switch (fieldName) {
+            case "ShowTotalInSaleCurrencyContainers": return "ShowSaleCurrencyColumnContainers"
+            case "ShowTotalInSaleCurrencyPackages": return "ShowSaleCurrencyColumnPackages"
+            case "ShowTotalInLocalCurrencyContainers": return "ShowLocalCurrencyColumnContainers";
+            case "ShowTotalInLocalCurrencyPackages": return "ShowLocalCurrencyColumnPackages"
+            default: return ""
+        }
+    }
+
+
+    HaveWrongFieldName(item: string): boolean {
+        return this.WrongQuoteTemplatePricesPackagesTableSettingsData.some(x => x == item);
     }
 
     SaveOthers(textDesignPmLists: any[], textCodeDataLists:any[]) {
