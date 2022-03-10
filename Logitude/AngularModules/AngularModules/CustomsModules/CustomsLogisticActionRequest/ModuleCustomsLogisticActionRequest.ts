@@ -5,6 +5,7 @@ import { Components, ModuleDeclarations } from './ModuleDeclarations';
 import { ModuleCustomsControls } from '../CustomsControls/ModuleCustomsControls';
 import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { LogisticActionRequestPMService } from 'Customs/Services/StandardPMs/LogisticActionRequestPMService';
+import { LogisticActionRequestWebService } from 'Customs/Services/WebServices/LogisticActionRequestWebService';
 @NgModule({
   imports: [InfrastructureModule, ModuleCustomsControls],
   exports: [...Components, ModuleCustomsControls],
@@ -12,6 +13,7 @@ import { LogisticActionRequestPMService } from 'Customs/Services/StandardPMs/Log
   providers: [
     LogtuideTableDataService,
     LogisticActionRequestPMService,
+    LogisticActionRequestWebService,
   ],
   entryComponents: [...Components],
 })
