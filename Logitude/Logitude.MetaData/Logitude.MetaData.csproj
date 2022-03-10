@@ -179,6 +179,7 @@
       <LastGenOutput>ControllersGenerator.cs</LastGenOutput>
       <LastOutputs>.\ControllersGenerator.cs</LastOutputs>
     </Content>
+    <None Include="DBOthers\ShipmentsModel\Functions\BuildFullAddressTextFunction.sxml" />
     <None Include="DBScripts\CommonModel\202202171100_RemoveQBOOptionFromDropDown.sxml" />
     <None Include="DBScripts\InfrastructureModel\202202171015_FillEventTriggerField.sxml" />
     <None Include="DBScripts\ShipmentModel\202202241410_FillLastDeilverypFullAddress.sxml" />

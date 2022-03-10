@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Shipment"  AOT="true" TargetTableName="Shipments" BatchSize="10000" >
-  <Sql Version="1">
+  <Sql Version="5">
     <![CDATA[
 
 If(OBJECT_ID('tempdb..#temp') Is Not Null)
@@ -15,23 +15,37 @@ End
 CREATE TABLE #temp_Shipment
 (
 	Id varchar(15) not null,
-	[From] nvarchar(200) null,
+	AddressValue nvarchar(200) null
 )
 
 select
 Shipments.Id,
 Shipments.Tenant as Tenant,
-ShipmentPickUpDeliveries.PickUpDeliveryFromTypeCode as FromTypeCode,
-ShipmentPickUpDeliveries.FromAddressZipCode as FromAddressZipCode,
-ShipmentPickUpDeliveries.FromAddressCity as FromAddressCity,
-FromCountry.EnglishName as FromAddressCountryName,
-FromPort.EnglishName as FromPortName,
-FromPort.Code as FromPortCode,
-ShipmentPickUpDeliveries.FromPartnerCardId as FromPartnerCardId
+Shipments.DirectionId as DirectionId,
+Shipments.TransportModeId as TransportModeId,
+Shipments.ShipmentLevelCode as ShipmentLevelCode,
+Shipments.MasterShipmentDataId as MasterShipmentDataId,
+Shipments.FromPortId as HousePortId,
+
+ShipmentMasterDatas.MainCarriageFromPortId as MainCarriagePortId,
+ShipmentMasterDatas.InlandDomesticFromTypeCode as InlandDomesticTypeCode,
+ShipmentMasterDatas.MainCarriageFromAddressId as MainCarriageAddressId,
+ShipmentMasterDatas.MainCarriageFromPortAddress as MainCarriagePortAddress,
+ShipmentMasterDatas.InlandDomesticFromZipCode as InlandDomesticZipCode,
+ShipmentMasterDatas.InlandDomesticFromCity as InlandDomesticCity,
+InlandDomesticCountry.EnglishName as InlandDomesticCountryName,
+
+ShipmentPickUpDeliveries.PickUpDeliveryFromTypeCode as TypeCode,
+ShipmentPickUpDeliveries.FromAddressId as AddressId,
+ShipmentPickUpDeliveries.FromAddress as PortAddress,
+ShipmentPickUpDeliveries.FromAddressZipCode as ZipCode,
+ShipmentPickUpDeliveries.FromAddressCity as City,
+FromCountry.EnglishName as CountryName
+
 into #temp
 
 from Shipments
-
+left outer join ShipmentMasterDatas on Shipments.MasterShipmentDataId = ShipmentMasterDatas.Id
 left outer join ShipmentPickUpDeliveries
 on ShipmentPickUpDeliveries.Id = 
 (
@@ -40,58 +54,121 @@ on ShipmentPickUpDeliveries.Id =
 	and PickUpDeliveryTypeCode = 'PICK' 
 	order by PickUpDeliveryNumber asc
 )
-left outer join Addresses as FromAddress on FromAddress.Id = ShipmentPickUpDeliveries.FromAddressId
-left outer join Ports as FromPort on FromPort.Id = ShipmentPickUpDeliveries.FromPortId
 left outer join Countries as FromCountry on FromCountry.Id = ShipmentPickUpDeliveries.FromAddressCountryId
-where  $LastCounterWhere$
-
+left outer join Countries as InlandDomesticCountry on InlandDomesticCountry.Id = ShipmentMasterDatas.InlandDomesticFromCountryId
+where $LastCounterWhere$
 
 	declare @Id as varchar(15)
 	declare @Tenant as int
-	declare @FromTypeCode as varchar(4)
-	declare @FromPortCode as varchar(4)
-	declare @FromAddressCity as nvarchar(25)
-	declare @FromPortName as varchar(40)
-	declare @FromAddressCountryName as varchar(40)
-	declare @FromAddressZipCode as varchar(40)
-	declare @From as nvarchar(200)
-	declare @FromPartnerCardId as varchar(15)
+	declare @TypeCode as varchar(4)
+	declare @AddressId as varchar(15)
+	declare @PortAddress as varchar(200)
+	declare @ZipCode as varchar(40)
+	declare @City as varchar(25)
+	declare @CountryName as varchar(120)
+	declare @DirectionId as varchar(2)
+	declare @TransportModeId as varchar(2)
+	declare @ShipmentLevelCode as varchar(2)
+	declare @MasterShipmentDataId as varchar(15)
+	declare @HousePortId as varchar(15)
+	declare @MainCarriagePortId as varchar(15)
+	declare @InlandDomesticTypeCode as varchar(5)
+	declare @MainCarriageAddressId as varchar(15)
+	declare @MainCarriagePortAddress as varchar(200)
+	declare @InlandDomesticZipCode as varchar(40)
+	declare @InlandDomesticCity as varchar(25)
+	declare @InlandDomesticCountryName as varchar(120)
 
+	declare @ResultAddress as varchar(1000)
+	
 	declare @Count as int
 	set @Count = 0;
 
 	DECLARE DataCursor CURSOR READ_ONLY
 	FOR
-	SELECT Id,Tenant, FromTypeCode, FromAddressCity, FromPortName,FromPartnerCardId,FromPortCode,FromAddressZipCode,FromAddressCountryName
+	SELECT Id, Tenant, TypeCode, AddressId, PortAddress, ZipCode, City, CountryName, DirectionId, TransportModeId, ShipmentLevelCode, MasterShipmentDataId, HousePortId, MainCarriagePortId, InlandDomesticTypeCode, MainCarriageAddressId, MainCarriagePortAddress, InlandDomesticZipCode, InlandDomesticCity, InlandDomesticCountryName
 	FROM #temp	
-	OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id,@Tenant, @FromTypeCode, @FromAddressCity, @FromPortName ,@FromPartnerCardId,@FromPortCode,@FromAddressZipCode,@FromAddressCountryName
+	OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id, @Tenant, @TypeCode, @AddressId, @PortAddress, @ZipCode, @City, @CountryName, @DirectionId, @TransportModeId, @ShipmentLevelCode, @MasterShipmentDataId, @HousePortId, @MainCarriagePortId, @InlandDomesticTypeCode, @MainCarriageAddressId, @MainCarriagePortAddress, @InlandDomesticZipCode, @InlandDomesticCity, @InlandDomesticCountryName
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 
-		-- From
-		if (@FromTypeCode = 'PART')
+		set @ResultAddress = NULL
+
+		if(@TypeCode is not null)
 		begin
-			set @From = (Select CONCAT_WS(' ,',CountryName ,StateName,CityName) from Cards where Id = @FromPartnerCardId and Tenant  = @Tenant)
+
+			if (@TypeCode = 'PART')
+			begin
+				set @ResultAddress = dbo.BuildFullAddressTextFunction(@AddressId, @Tenant);
+			end
+
+			else if (@TypeCode = 'CASL')
+			begin
+				set @ResultAddress = isnull(@City, '') + CASE WHEN @ZipCode IS NULL THEN '' ELSE ' ' + @ZipCode END + CASE WHEN @CountryName IS NULL THEN '' ELSE  + CHAR(13) + @CountryName END
+			end
+
+			else if (@TypeCode = 'PORT')
+			begin
+			   set @ResultAddress = @PortAddress
+			end
 		end
 
-		else if (@FromTypeCode = 'CASL')
+		else 
 		begin
-		  set @From = isnull(@FromAddressCountryName+' ,','')+ @FromAddressCity + CASE WHEN @FromAddressZipCode IS NULL THEN '' ELSE ' ,'+@FromAddressZipCode END 
+			if(@DirectionId = 'D' and @TransportModeId = 'I')
+			begin
+
+				if (@InlandDomesticTypeCode = 'PART')
+				begin
+					set @ResultAddress = dbo.BuildFullAddressTextFunction(@MainCarriageAddressId, @Tenant);
+
+				end
+
+				else if (@InlandDomesticTypeCode = 'CASL')
+				begin
+					set @ResultAddress = isnull(@InlandDomesticCity, '') + CASE WHEN @InlandDomesticZipCode IS NULL THEN '' ELSE ' ' + @InlandDomesticZipCode END + CASE WHEN @InlandDomesticCountryName IS NULL THEN '' ELSE  + CHAR(13) + @InlandDomesticCountryName END
+				end
+
+				else if (@InlandDomesticTypeCode = 'PORT')
+				begin
+				   set @ResultAddress = @MainCarriagePortAddress
+				end
+
+			end
+
+			else
+			begin
+				
+				if(@ShipmentLevelCode = 'H')
+				begin
+					if(@MasterShipmentDataId is not null)
+					begin
+						set @ResultAddress = (select EnglishName from Ports where Id = @MainCarriagePortId and Tenant = @Tenant)
+					end
+
+					else 
+					begin
+						set @ResultAddress = (select EnglishName from Ports where Id = @HousePortId and Tenant = @Tenant)						
+					end
+				end
+
+				else 
+				begin
+					set @ResultAddress = (select EnglishName from Ports where Id = @MainCarriagePortId and Tenant = @Tenant)
+				end
+
+			end
+
 		end
 
-		else if (@FromTypeCode = 'PORT')
-		begin
-		   set @From = @FromPortCode+' ,'+@FromPortName
-		end
-
-		insert into #temp_Shipment(Id, [From]) values(@Id, @From)
+		insert into #temp_Shipment(Id, AddressValue) values(@Id, @ResultAddress)
 
 		set @Count = @Count + 1;
 		if(@Count = 1000)
-		begin		
+		begin
 			update Shipments
 			set
-			FirstPickupFullAddress = #temp_Shipment.[From]
+			FirstPickupFullAddress = #temp_Shipment.AddressValue
 			FROM Shipments
 			INNER JOIN #temp_Shipment
 			on Shipments.Id = #temp_Shipment.Id
@@ -99,17 +176,16 @@ where  $LastCounterWhere$
 			truncate table #temp_Shipment
 			set @Count = 0
 		end
-	FETCH NEXT FROM DataCursor INTO  @Id,@Tenant, @FromTypeCode, @FromAddressCity, @FromPortName ,@FromPartnerCardId,@FromPortCode,@FromAddressZipCode,@FromAddressCountryName
+	FETCH NEXT FROM DataCursor INTO  @Id, @Tenant, @TypeCode, @AddressId, @PortAddress, @ZipCode, @City, @CountryName, @DirectionId, @TransportModeId, @ShipmentLevelCode, @MasterShipmentDataId, @HousePortId, @MainCarriagePortId, @InlandDomesticTypeCode, @MainCarriageAddressId, @MainCarriagePortAddress, @InlandDomesticZipCode, @InlandDomesticCity, @InlandDomesticCountryName
 	END
 	CLOSE DataCursor
 	DEALLOCATE DataCursor
-
 
 	if (@Count > 0)
 	begin
 			update Shipments
 			set
-			FirstPickupFullAddress= #temp_Shipment.[From]
+			FirstPickupFullAddress= #temp_Shipment.AddressValue
 			FROM Shipments
 			INNER JOIN #temp_Shipment
 			on Shipments.Id = #temp_Shipment.Id
