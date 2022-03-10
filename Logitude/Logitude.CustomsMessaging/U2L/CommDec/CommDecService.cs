@@ -658,6 +658,12 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
             declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), _tenant);
             if (this.IsProcedureCurrentCodeChanged) declarationUpdateService.IsProcedureCurrentCodeChanged = true;
+
+            this._MyDeclarationPM.MyEcomInsert = new EcomInsert()
+            {
+                MyCourierMasterPM = _CourierMasterPM,
+                MyDeclarationCourierStatusPM = _currentDeclarationCourierStatusPM
+            };
             declarationUpdateService.Update(this._MyDeclarationPM, true);
 
 
