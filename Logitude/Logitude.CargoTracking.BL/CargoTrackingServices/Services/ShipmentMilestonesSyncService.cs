@@ -292,7 +292,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
             var sql = string.Concat(
                         $"update CustomShipment ",
-                        $"set	{buildCustomsUpdatedFields} ,CustomShipment.CustomerReference = CONCAT(CustomShipment.CustomerReference,',', ForwardingShipment.CustomerReference)",
+                        $"set	{buildCustomsUpdatedFields} ",
                         $"from	 CargoTrackingShipments CustomShipment ",
                         $"join CargoTrackingShipments ForwardingShipment on ForwardingShipment.CustomsShipmentHeaderId = CustomShipment.EntityId");
             return sql;

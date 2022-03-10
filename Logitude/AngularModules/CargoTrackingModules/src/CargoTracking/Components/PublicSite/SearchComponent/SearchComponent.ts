@@ -403,7 +403,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         if(shipment.House)
             references = [shipment.House,...references];
         references = references.filter(e=>e.length > 0);
-        references = references.slice(isMobile? 1 : 4 )
+        references = references.slice(isMobile? 1 : 3 )
         this.dialog.open(MessageWindowComponent, {
             data: {
                 title: 'References',
