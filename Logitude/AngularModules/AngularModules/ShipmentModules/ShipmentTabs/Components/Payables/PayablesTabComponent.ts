@@ -236,11 +236,14 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
             ServiceLocator.SendTotangoUserActivity("Tariff", "Generate from Shipment");
 
             var betweenDate: Date = DateTool.GetCurrentDateAsUtc();
+            var betweenDateHelpIconMassage: string = "Today's Date";
             if (!AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageATD)) {
                 betweenDate = this.EntityPM.MainCarriageATD;
+                betweenDateHelpIconMassage = "ATD Date";
             }
             else if (!AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageETD)) {
                 betweenDate = this.EntityPM.MainCarriageETD;
+                betweenDateHelpIconMassage = "ETD Date";
             }
 
             var tariffType = "";
@@ -259,6 +262,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
             var WindowArgs: any =
             {
                 BetweenDate: betweenDate,
+                BetweenDateHelpIconMassage: betweenDateHelpIconMassage ,
                 FromPort: this.EntityPM.MainCarriageFromPortId,
                 ToPort: this.EntityPM.ToPortId,
                 GrossWeight: this.EntityPM.GrossWeight,

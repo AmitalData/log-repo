@@ -56,7 +56,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     public IsFirstTime: boolean = true;
     public IsViewSurchargesClickedEnabled: boolean = true;
     public PortDisplayMemberPath = "Code";
-
+    public BetweenDateHelpIconMassage = "Today's Date";
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.myDomainService = new TariffDomainService();
@@ -188,6 +188,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             }
             if (args['BetweenDate']) {
                 this.date = args['BetweenDate'];
+            }
+            if (args['BetweenDateHelpIconMassage']) {
+                this.BetweenDateHelpIconMassage = args['BetweenDateHelpIconMassage'];
             }
             if (args['ChargeableWeight']) {
                 this.weight = args['ChargeableWeight'];

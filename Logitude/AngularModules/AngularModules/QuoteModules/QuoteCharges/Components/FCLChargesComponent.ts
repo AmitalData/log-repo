@@ -554,18 +554,22 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             ServiceLocator.SendTotangoUserActivity("Tariff", "Generate from Quote");
 
             var betweenDate: Date = DateTool.GetCurrentDateAsUtc();
+            var betweenDateHelpIconMassage: string = "Today's Date";
 
             if (this.EntityPM.DirectionId == "I") {
                 betweenDate = this.EntityPM.ETA;
+                betweenDateHelpIconMassage = this.EntityPM.ETA != null ? "ETA Date" : betweenDateHelpIconMassage;
             }
             else {
                 betweenDate = this.EntityPM.ETD;
+                betweenDateHelpIconMassage = this.EntityPM.ETD != null ? "ETD Date" : betweenDateHelpIconMassage;
             }
 
             var tariffType = "OFC";
             var WindowArgs: any =
             {
                 BetweenDate: betweenDate,
+                BetweenDateHelpIconMassage: betweenDateHelpIconMassage,
                 FromPort: this.EntityPM.FromPortId,
                 ToPort: this.EntityPM.ToPortId,
                 GrossWeight: this.EntityPM.GrossWeight,
