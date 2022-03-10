@@ -129,6 +129,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
         //    return _tenant;
         //}
         public string _PBId;
+        private DeclarationCourierStatusPM _currentDeclarationCourierStatusPM;
 
         public void ProccessGenericRequestReal(
               string xmlLOGICOMMDEC, int tenant, string Curruser, string PBId,
@@ -314,6 +315,12 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                 AppendLogLine("MarkToDeleteSupplierInvoice:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                 _MyDeclarationPM.CurrentContextTag = UpsertActionConst;
+
+                this._MyDeclarationPM.MyEcomInsert = new EcomInsert()
+                {
+                    MyCourierMasterPM = _CourierMasterPM,
+                    MyDeclarationCourierStatusPM = _currentDeclarationCourierStatusPM
+                };
                 DeclarationUpdateService.Update(this._MyDeclarationPM, true);
                 AppendLogLine("Update:MarkToDeleteSupplierInvoice:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
 
@@ -670,6 +677,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     {
                         DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                         declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                        _currentDeclarationCourierStatusPM = currentDeclarationCourierStatusPM;
                     }
                 }
             }
