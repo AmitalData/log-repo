@@ -1717,12 +1717,11 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         filters.AdditionalFilters.forEach((filter, key) => {
             if (filter.FieldName == "CompetitorFields")
                 filter.Operator = "Contains";
-            MyFilters.AdditionalFilters.push(filter);
+                if(!((filter.FieldDataType == "Decimal" || filter.FieldDataType == "DateTime") && filter.FieldValue == "")) {
+                        MyFilters.AdditionalFilters.push(filter);
+                }
+            
         });
-        
-        if(filters.AdditionalFilters?.filter( x => x.FieldDataType == "DateTime" && x.FieldValue == "").length > 0){
-            return;
-        }
         //console.log(searchfields);
         if (searchfields && !this.IsUseCardSearchMechanism()) {
             //filters.addAdditionalFilter("SearchFields", searchfields, null, null, "Contains", null, null, null, "Text");
