@@ -529,6 +529,8 @@ namespace WebFreight.Web.ReportsWebServices
 
                     invoicedataprovider.GrossWeight = shipment.GrossWeight != null ? String.Format("{0:#,0.00}", shipment.GrossWeight.Value) + " " + grossWeightUnitCode : "";
                     invoicedataprovider.ChargeableWeight = shipment.ChargeableWeight != null ? String.Format("{0:#,0.00}", shipment.ChargeableWeight.Value) + " " + chargeableWeightUnitCode : "";
+                    invoicedataprovider.ChargeableWeight_Double = shipment.ChargeableWeight;
+                    invoicedataprovider.ChargeableWeightUnitCode = shipment.ChargeableWeightUnitCode;
                     invoicedataprovider.BillToVatNumber = currentInvoice.VatNumber != null ? currentInvoice.VatNumber : "";
                     invoicedataprovider.ClientRef1 = shipment.CustomerReference1 != null ? shipment.CustomerReference1 : "";
                     invoicedataprovider.ClientRef2 = shipment.CustomerReference2 != null ? shipment.CustomerReference2 : "";
@@ -3808,6 +3810,8 @@ namespace WebFreight.Web.ReportsWebServices
                                     myRecord.Volume = myShipment.Volume == null ? "" : String.Format("{0:N2}", myShipment.Volume.Value);
                                     myRecord.GrossWeight = myShipment.GrossWeight == null ? "" : String.Format("{0:N2}", myShipment.GrossWeight.Value);
                                     myRecord.ChargeableWeight = myShipment.ChargeableWeight == null ? "" : String.Format("{0:N2}", myShipment.ChargeableWeight.Value);
+                                    myRecord.ChargeableWeight_Double = myShipment.ChargeableWeight;
+                                    myRecord.ChargeableWeightUnitCode = myShipment.ChargeableWeightUnitCode;
                                     myRecord.PackagesQuantity = myShipment.PackagesQuantity == null ? "" : String.Format("{0:N0}", myShipment.PackagesQuantity.Value);
                                     myRecord.ShipmentNumber = myShipment.ShipmentNumber;
                                     myRecord.ShipmentRouting = myShipment.Routing;
