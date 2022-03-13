@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;fb38&quot;"
+  Code="&quot;6034&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -717,7 +717,6 @@
       Name="&quot;Ticket Entity In Automation&quot;"
       SearchFields="&quot;TAU,Ticket Entity In Automation&quot;"
       Description="&quot;Use Ticket Entity In Automation&quot;" />
-
     <Record
       Code="&quot;RFF&quot;"
       Name="&quot;Regimen Fiscal Field&quot;"
@@ -743,6 +742,11 @@
       Code="&quot;SCG&quot;"
       SearchFields="&quot;SCG,Split by Quote Charge Group,Quote Template&quot;"
       Description="&quot;Allow Tenant to Use Split by Quote Charge Group in Quote Template&quot;" />
+    <Record
+      Code="&quot;ARN&quot;"
+      Name="&quot;Aging Report Get From GLAccountAgingData&quot;"
+      Description="&quot;Aging Report Get From GLAccountAgingData, new method new way&quot;"
+      SearchFields="&quot;Aging Report Get From GLAccountAgingData, new method new way,ARN&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

@@ -543,18 +543,18 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Name = "Managing Destination Warehouse Leg", 
-                Description = "Managing Destination Warehouse Leg in Drop Shipments", 
-                SearchFields = "MDW,Managing Destination Warehouse Leg", 
-                Code = "MDW", 
-			});
-
-            all.Add(new ToggleDetails()
-            {    
                 Code = "RFF", 
                 Name = "Regimen Fiscal Field", 
                 SearchFields = "RFF,Regimen Fiscal Field", 
                 Description = "Show Regimen Fiscal Field", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Managing Destination Warehouse Leg", 
+                Description = "Managing Destination Warehouse Leg in Drop Shipments", 
+                SearchFields = "MDW,Managing Destination Warehouse Leg", 
+                Code = "MDW", 
 			});
 			 
             all.Add(new ToggleDetails()
@@ -572,13 +572,21 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "TTS,Total Traslado SAT Issue", 
                 Description = "Build a new XML to solve total traslado SAT issue", 
 			});
-
+			 
             all.Add(new ToggleDetails()
             {    
                 Name = "Split by Quote Charge Group", 
                 Code = "SCG", 
                 SearchFields = "SCG,Split by Quote Charge Group,Quote Template", 
                 Description = "Allow Tenant to Use Split by Quote Charge Group in Quote Template", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "ARN", 
+                Name = "Aging Report Get From GLAccountAgingData", 
+                Description = "Aging Report Get From GLAccountAgingData, new method new way", 
+                SearchFields = "Aging Report Get From GLAccountAgingData, new method new way,ARN", 
 			});
 			
             return all;

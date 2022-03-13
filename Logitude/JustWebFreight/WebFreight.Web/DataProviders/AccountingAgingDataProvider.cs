@@ -17,7 +17,8 @@ namespace WebFreight.Web.DataProviders
         public string TenantCurrencyCode { get; set; }
         public string TenantCurrencySign { get; set; }
         public decimal ReportLocalBalanceTotal { get; set; }
-        
+        public bool IsFromGLAccountAgingData { get; set; }
+
         public List<AgingPeriod> AgingPeriods { get; set; }
     }
 
