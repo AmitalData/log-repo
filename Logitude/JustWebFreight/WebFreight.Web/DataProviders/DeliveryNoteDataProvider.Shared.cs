@@ -200,5 +200,6 @@ namespace WebFreight.Web.DataProviders
         public string GrossWeightUnitCode { get; set; }
         public string VolumeUnitCode { get; set; }
         public DateTime? FinalDestinationETA { get; set; }
+        public string TrailerNumber { get; set; }
     }
 }
