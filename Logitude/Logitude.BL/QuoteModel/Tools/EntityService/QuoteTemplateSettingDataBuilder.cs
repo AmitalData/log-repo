@@ -49,8 +49,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             AddNewPricesFieldSettingToPricesTableSettings("ShowMeasurementPackages", "MEASUREMENTPACKAGES", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowUnitsPackages", "UNITSPACKAGES", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowUnitPricePackages", "UNITPRICEPACKAGES", sectionType);
-            AddNewPricesFieldSettingToPricesTableSettings("ShowTotalInSaleCurrencyPackages", "TOTALPACKAGES", sectionType);
-            AddNewPricesFieldSettingToPricesTableSettings("ShowTotalInLocalCurrencyPackages", "LOCALAMOUNTPACKAGES", sectionType);
+            AddNewPricesFieldSettingToPricesTableSettings("ShowSaleCurrencyColumnPackages", "LOCALAMOUNTPACKAGES", sectionType);
+            AddNewPricesFieldSettingToPricesTableSettings("ShowLocalCurrencyColumnPackages", "CHARGEDESCRIPTIONPACKAGES", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowChargeDescriptionPackages", "CHARGEDESCRIPTIONPACKAGES", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowChargeNotePackages", "CHARGENOTEPACKAGES", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowSaleMaxMinAmountPackages", "SALEMINMAXPACKAGES", sectionType);
@@ -93,8 +93,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             AddNewPricesFieldSettingToPricesTableSettings("ShowMeasurementContainers", "MEASUREMENTCONTAINERS", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowFixedPriceContainers", "FIXEDPRICECONTAINERS", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowPriceByContainerColumn", "PRICEBYCONTAINERS", sectionType);
-            AddNewPricesFieldSettingToPricesTableSettings("ShowTotalInSaleCurrencyContainers", "TOTALCONTAINERS", sectionType);
-            AddNewPricesFieldSettingToPricesTableSettings("ShowTotalInLocalCurrencyContainers", "LOCALAMOUNTCONTAINERS", sectionType);
+            AddNewPricesFieldSettingToPricesTableSettings("ShowSaleCurrencyColumnContainers", "TOTALCONTAINERS", sectionType);
+            AddNewPricesFieldSettingToPricesTableSettings("ShowLocalCurrencyColumnContainers", "LOCALAMOUNTCONTAINERS", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowChargeDescriptionContainers", "CHARGEDESCRIPTIONCONTAINERS", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowChargeNoteContainers", "CHARGENOTECONTAINERS", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowSaleMaxMinAmountContainers", "SALEMINMAXCONTAINERS", sectionType);

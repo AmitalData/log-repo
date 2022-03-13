@@ -118,8 +118,8 @@
                                                                                                                             <td style="width:1px;"><div style="width:1px"></div></td>
                                                                                                                             <td style="vertical-align:central;width:200px;">
                                                                                                                                 <div class="CheckBox">
-                                                                                                                                    <input attr.data-cy="{{item.DisplayTextCode}}" [disabled]="!ShowPricesTable" [(ngModel)]="item.InUse" class="LeftCenter" style="text-align:center" [attr.id]="item.Key" type="checkbox" />
-                                                                                                                                    <input attr.data-cy="{{item.DisplayTextCode}}" [disabled]="!ShowPricesTable" [(ngModel)]="item.InUse" class="LeftCenter" style="text-align:center" [attr.id]="item.Key" type="checkbox" />
+                                                                                                                                    <input attr.data-cy="{{item.DisplayTextCode}}" [disabled]="!ShowPricesTable" [(ngModel)]="item.InUse" class="LeftCenter" (change)="InUseChange(item)" style="text-align:center" [attr.id]="item.Key" type="checkbox" />
+                                                                                                                                    <input attr.data-cy="{{item.DisplayTextCode}}" [disabled]="!ShowPricesTable" [(ngModel)]="item.InUse" class="LeftCenter" (change)="InUseChange(item)" style="text-align:center" [attr.id]="item.Key" type="checkbox" />
                                                                                                                                     <label style="color:black" class="LeftCenter" [attr.for]="item.Key">{{item.DisplayTextCode | TextCodeTranslationPipe}}</label>
                                                                                                                                 </div>
                                                                                                                             </td>
@@ -176,7 +176,7 @@
 
                                                                                                 <td>
                                                                                                     <div *ngIf="SplitChargesbyGroups" class="CheckBox">
-                                                                                                        <input [disabled]="!ShowSaleCurrencyColumn || !ShowPricesTable" [(ngModel)]="ShowTotalPerChargeGroup" class="LeftCenter" style="text-align:center" [attr.id]="ShowTotalPerChargeGroupKey" type="checkbox" />
+                                                                                                        <input [disabled]="!TotalPerChargeGroupEnabled || !ShowPricesTable" [(ngModel)]="ShowTotalPerChargeGroup" class="LeftCenter" style="text-align:center" [attr.id]="ShowTotalPerChargeGroupKey" type="checkbox" />
                                                                                                         <label style="color:black" class="LeftCenter" [attr.for]="ShowTotalPerChargeGroupKey">{{'QuoteTemplate.S.ShowTotalPerChargeGroup' | TextCodeTranslationPipe}} </label>
                                                                                                     </div>
                                                                                                 </td>
