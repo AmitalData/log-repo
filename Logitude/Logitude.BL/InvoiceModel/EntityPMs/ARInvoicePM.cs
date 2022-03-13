@@ -379,6 +379,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string SATAdditionalFieldsXML { get; set; }
         public string MetodoPagoCode { get; set; }
         public string UsoCFDICode { get; set; }
+        public string PeriodCode { get; set; }
         public string RegimenFiscalCode { get; set; }
         public bool IsDraft { get; set; }
 

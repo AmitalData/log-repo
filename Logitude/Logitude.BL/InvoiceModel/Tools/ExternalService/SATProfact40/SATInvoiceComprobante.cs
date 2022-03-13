@@ -361,7 +361,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             Dictionary<int, string> satMonths = GetSatMonths();
             return new ComprobanteInformacionGlobal
             {
-                Periodicidad = "",
+                Periodicidad = arInvoicePM.PeriodCode,
                 Meses = satMonths[arInvoiceDate.Month],
                 Año = Convert.ToInt16(arInvoiceDate.Year),
             };

@@ -120,7 +120,9 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         //public string MetodoPagoCode { get; set; }
         public string MetodoPagoCode { get; set; }
         public string UsoCFDICode { get; set; }
+        public string PeriodCode { get; set; }
         public string RegimenFiscalCode { get; set; }
+        public string Period { get; set; }
         public string SATTransferStatusCode { get; set; }
         public string SATTransferStatusName { get; set; }
         public string TransmissionError { get; set; }
