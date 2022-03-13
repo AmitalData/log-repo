@@ -405,7 +405,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         }
 
-        public static void DeclarationRepositoryUpdatePOCO(DeclarationPM dec)
+        public static void DeclarationRepositoryUpdatePOCO(DeclarationPM dec, bool toUpdateUnifreight)
         {
             if (dec == null) return;
             if (dec.ChangeSetOp == ChangeSetOperation.Update || dec.ChangeSetOp == ChangeSetOperation.Insert)
@@ -421,6 +421,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     repository.Update(declaration);
 
                     repository.SubmitChanges();
+
+                    if (toUpdateUnifreight)
+                    {
+                        if (dec.IsConnectedToUnifreight && !(dec.PaymentDate.HasValue && string.IsNullOrEmpty(dec.DeclarationNumber)))
+                        {
+                            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context);
+                            declarationUpdateService.UpdateUnifreight(dec);
+                        }
+                    }
                 }
                 catch (DbEntityValidationException ex)
                 {
