@@ -580,6 +580,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "SCG,Split by Quote Charge Group,Quote Template", 
                 Description = "Allow Tenant to Use Split by Quote Charge Group in Quote Template", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "FIE", 
+                SearchFields = "FIE,Froala Editor Insert Image,Activate Insert Image In Froala Editor", 
+                Name = "Froala Editor Insert Image", 
+                Description = "Activate Insert Image In Froala Editor", 
+			});
 			
             return all;
        }

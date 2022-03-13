@@ -93,15 +93,11 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
 
             HtmlID.froalaEditor({
                 allowedImageTypes: ["jpeg", "jpg", "png"],
-
                 toolbarButtons: this.GetToolbarButtons(),
-
                 toolbarButtonsMD: this.GetToolbarButtonsMD(),
                 toolbarButtonsSM: this.GetToolbarButtonsSM(),
                 toolbarButtonsXS: this.GetToolbarButtonsXS(),
-
-                imageEditButtons: ["imageAlign","imageRemove","|","-","imageDisplay","imageStyle","imageAlt","imageSize"],
-                
+                imageEditButtons: ["imageAlign","imageRemove","|","-","imageDisplay","imageStyle","imageAlt","imageSize"],               
                 lineBreakerTags: ['table', 'hr', 'form'],
                 pluginsEnabled: null,
                 height: height,
@@ -193,6 +189,7 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
 
         this.EditorfroalaSetting.FroalaEditorIsReady = true;
 
+
     }
 
     private GetToolbarButtonsXS() {
@@ -241,8 +238,9 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
     }
 
     private AddInsertImageButton(toolbarButtons: string[]) {
+        if(!SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "FIE")[0]) return;
         if (this.EditorfroalaSetting.PageType != "Send") toolbarButtons.push('InsertImage');
-    }    
+    }
 
     getHtml() {
 
