@@ -150,10 +150,15 @@
                                             <td style="width:150px">
                                                 <LogDatePicker [ObjectFieldName]="'Date'" [SelectedDateValue]="Date" [NoObjectField]="true" [DataContext]="DataContext"></LogDatePicker>
                                             </td>
-
                                             <td>
-                                                <div></div>
+                                                <div float-end>
+                                                    <LogToolTip [bottom]="5"
+                                                                [mode]="'Info'" [title]="''">
+                                                        {{BetweenDateHelpIconMassage}}
+                                                    </LogToolTip>
+                                                </div>
                                             </td>
+                                        
                                         </tr>
                                     </table>
                                 </td>
@@ -548,20 +553,22 @@
                                                             <LogLabel [ObjectFieldName]="'Date'" [NoObjectField]="true" [Text]="'Date'" [DataContext]="DataContext"></LogLabel>
                                                         </td>
 
-                                                        <td style="width:180px">
-                                                            <table>
-                                                                <tr>
-                                                                    <td>
-                                                                        <LogDatePicker [ObjectFieldName]="'Date'" [SelectedDateValue]="Date" [NoObjectField]="true" [DataContext]="DataContext"></LogDatePicker>
-
-                                                                    </td>
-
-                                                                </tr>
-                                                            </table>
+                                                        <td style="width:160px">
+                                                            <LogDatePicker [ObjectFieldName]="'Date'" [SelectedDateValue]="Date" [NoObjectField]="true" [DataContext]="DataContext" [HideLastColumn]="true" [HideColumns]="true"></LogDatePicker>
+                                                        </td>
+                                                        <td style="width: 10px">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width:20px">
+                                                            <div>
+                                                                <HelpIcon [Header]="'Help'" [Text]="BetweenDateHelpIconMassage"></HelpIcon>
+                                                            </div>
                                                         </td>
 
-
-                                                        <td></td>
+                                                        <td>
+                                                            <div>
+                                                            </div>
+                                                        </td>
 
                                                     </tr>
                                                 </table>
