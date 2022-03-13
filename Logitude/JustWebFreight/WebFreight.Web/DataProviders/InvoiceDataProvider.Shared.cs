@@ -57,7 +57,8 @@ namespace WebFreight.Web.DataProviders
         public string MainCarriageMAWBOBLBL_label { get; set; }
         public string GrossWeight { get; set; }
         public string ChargeableWeight { get; set; }
-        public string WeightUnitCode { get; set; }
+        public double? ChargeableWeight_Double { get; set; }
+        public string ChargeableWeightUnitCode { get; set; }
         public string MainCarriageFromPortName { get; set; }
         public string MainCarriageFromPort_LocalName { get; set; }
         public string MainCarriageToPortName { get; set; }
@@ -664,6 +665,8 @@ namespace WebFreight.Web.DataProviders
         public string Volume { get; set; }
         public string GrossWeight { get; set; }
         public string ChargeableWeight { get; set; }
+        public double? ChargeableWeight_Double { get; set; }
+        public string ChargeableWeightUnitCode { get; set; }
         public string PackagesQuantity { get; set; }
         public string SubTotalInInvoiceCurrency { get; set; }
         public string SubTotalInLocalCurrency { get; set; }
