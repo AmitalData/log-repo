@@ -3078,6 +3078,35 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = null,
              });
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "8410",
+                InOut = InOutEnum.O.ToString(),
+                Description = "מסר ביטול יצוא",
+                DefaultSendOptionsCode = InterfaceSendOptionsDetails.InterfaceSendOptionEnum.WI.ToString(),
+                DefaultPriority = CONST_DefaultPriority,
+                DcaPrefixName = "",
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
+             });
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "8411",
+                InOut = InOutEnum.I.ToString(),
+                Description = "מסר תשובה ביטול יצוא",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                DcaPrefixName = "LG_NG_8411_SendLogisticActionRequestDecision_Out.",
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
+             });
+
             //C:\LogitudeWorld\Amital\Logitude.Customs.BL\EntityPMs\InterfaceManagementPM.cs
             var pm = new Logitude.Customs.Def.EntityPMs.InterfaceManagementPM();
             var myRequestCode = pm.ResponseInterfaceCode;
