@@ -72,6 +72,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             cargoShipmentPM.SHOPODate = shipmentOrderPM?.PODate;
             cargoShipmentPM.SHOCarrierName = shipmentOrderPM?.CarrierName;
             cargoShipmentPM.House = shipmentOrderPM?.House;
+            cargoShipmentPM.CustomerEnglishName = shipmentPM?.CustomerName;
 
 
 
@@ -247,7 +248,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                 ImporterId = customsData.ImporterId,
                 CargoIdentifier1 = customsData.CargoIdentifier1,
                 CargoIdentifier2 = customsData.CargoIdentifier2,
-                CargoIdentifier3 = customsData.CargoIdentifier3
+                CargoIdentifier3 = customsData.CargoIdentifier3,
+                SupplierName = customsData.SupplierName
             };
         }
         private void BuildCustomsTaxDetails(CargoTrackingShipmentCustomsData customsData)

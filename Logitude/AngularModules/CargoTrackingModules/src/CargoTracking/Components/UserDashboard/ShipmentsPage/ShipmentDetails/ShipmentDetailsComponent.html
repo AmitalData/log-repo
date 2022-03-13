@@ -781,6 +781,21 @@
                                 {{this.cargoTrackingShipmentPM.CustomsData.TotalValueInForeignCurrency||0 | number}}
                                 {{this.cargoTrackingShipmentPM.CustomsData.CurrencySign }}</div>
                         </div>
+                        <div>
+                            <div class="title">Customer name</div>
+                            <div class="description">
+                                <custom-label >{{this.cargoTrackingShipmentPM.CustomerEnglishName}}</custom-label>
+                                
+                            </div>
+                        </div>
+                        <div>
+                            <div class="title">Supplier Name</div>
+                            <div class="description">
+                                <custom-label >{{this.cargoTrackingShipmentPM.CustomsData?.SupplierName}}</custom-label>
+                                
+                            </div>
+                            
+                        </div>
 
 
                     </div>

@@ -7,6 +7,7 @@ export class ShipmentCustomsData
     CurrencySign: string;
     CurrencyCode: string;
     CurrencyName: string;
+    SupplierName: string;
     GoodsDescription: string;
     ImporterVatAmount: number;
     TotalValueInNIS: number;

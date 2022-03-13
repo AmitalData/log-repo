@@ -14106,6 +14106,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 CargoIdentifier1 = cloudCustomData.CargoIdentifier1,
                 CargoIdentifier2 = cloudCustomData.CargoIdentifier2,
                 CargoIdentifier3 = cloudCustomData.CargoIdentifier3,
+                SupplierName = cloudCustomData.GoodsValueDetails?.FirstOrDefault()?.SupplierName,
             };
 
         }
@@ -14756,6 +14757,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public string CurrencySign { get; set; }
         public string CurrencyCode { get; set; }
         public string CurrencyName { get; set; }
+        public string SupplierName { get; set; }
         public string GoodsDescription { get; set; }
         public decimal ImporterVatAmount { get; set; }
         public decimal TotalValueInNIS { get; set; }
