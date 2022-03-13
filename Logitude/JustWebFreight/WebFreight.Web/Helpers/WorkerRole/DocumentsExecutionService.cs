@@ -50,7 +50,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                 if (queueService != null && queueResponse!=null)
                 {
                     documentsExecutionLog = GetDocumentsExecutionLog();
-                    if (documentsExecutionLog != null && documentsExecutionLog.RetryNumber < 2 &&  (documentsExecutionLog.StatusCode == "W" || documentsExecutionLog.StatusCode == "P"))
+                    if (documentsExecutionLog != null && documentsExecutionLog.RetryNumber < 2 && documentsExecutionLog.CreateDate > DateTime.Now.AddMinutes(-5) &&  (documentsExecutionLog.StatusCode == "W" || documentsExecutionLog.StatusCode == "P"))
                     {
                         UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { StartDate = startDate, StatusCode = "P" });
                         ExportStimulDocumentToPDF();
@@ -60,7 +60,6 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
             }
             catch (AggregateException aggregateException)
             {
-
                 foreach (var exception in aggregateException.Flatten().InnerExceptions)
                 {
                     ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Document execution queue worker role start", null, null);

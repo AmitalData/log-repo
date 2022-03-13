@@ -596,6 +596,7 @@ namespace Logitude.Infrastructure.BL
                 Description = "Aging Report Get From GLAccountAgingData, new method new way", 
                 SearchFields = "Aging Report Get From GLAccountAgingData, new method new way,ARN", 
 			});
+          
 			
             return all;
        }
