@@ -572,6 +572,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "TTS,Total Traslado SAT Issue", 
                 Description = "Build a new XML to solve total traslado SAT issue", 
 			});
+
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Split by Quote Charge Group", 
+                Code = "SCG", 
+                SearchFields = "SCG,Split by Quote Charge Group,Quote Template", 
+                Description = "Allow Tenant to Use Split by Quote Charge Group in Quote Template", 
+			});
 			
             return all;
        }

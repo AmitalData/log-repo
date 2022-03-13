@@ -802,8 +802,8 @@ namespace Logitude.BL.Helpers
             }
 
 
-            ChargesGroupQuery chargesGroupQuery = new ChargesGroupQuery(tenant);
-            List<ChargesGroupList> chargesGroupLists = chargesGroupQuery.GetChargesGroupListsByTenant(tenant).ToList();
+            QuoteTemplateChargeGroupService quoteTemplateChargeGroupService = new QuoteTemplateChargeGroupService(pricingSectionType, setting);
+            List<ChargesGroupList> chargesGroupLists = quoteTemplateChargeGroupService.GetChargesGroup();
 
             StringBuilder HtmlTemplate = new StringBuilder();
 
@@ -816,8 +816,9 @@ namespace Logitude.BL.Helpers
             if (setting != null && isRoutingRates) setting.ShowUnitsPackages = false;
 
 
-            List<QuoteSaleChargePM> QuoteSaleChargePricingTableLists = quotePM.QuoteSaleCharges;
-            List<QuoteSaleChargePM> QuoteSaleChargePerContainersLists = quotePM.QuoteSaleCharges;
+
+            List<QuoteSaleChargePM> QuoteSaleChargePricingTableLists = quoteTemplateChargeGroupService.GetQuoteSaleCharges(quotePM.QuoteSaleCharges);
+            List<QuoteSaleChargePM> QuoteSaleChargePerContainersLists = quoteTemplateChargeGroupService.GetQuoteSaleCharges(quotePM.QuoteSaleCharges);
 
             if (IsShowIncludedChargesPricingTable(pricingSectionType, setting)) QuoteSaleChargePricingTableLists = QuoteSaleChargePricingTableLists.Concat(quotePM.QuotationSaleCharges).ToList();
             if (setting.ShowIncludedChargesPerContainers) QuoteSaleChargePerContainersLists = QuoteSaleChargePerContainersLists.Concat(quotePM.QuotationSaleCharges).ToList();
@@ -2154,10 +2155,10 @@ namespace Logitude.BL.Helpers
                 IsChargesByVAT = true,
             };
 
-            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { VatTypeName ="vat1",VatPercentage =50 ,ChargesTypeCode = "AFT", Notes = "test", ChargesGroupCode = "FRT", ChargesTypeName = "Air Freight", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description", SaleMaxAmount = 50, SaleMinAmount = 20 });
-            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { VatTypeName = "vat2", VatPercentage = 40, ChargesTypeCode = "AFT", Notes = "test2", ChargesGroupCode = "FRT", ChargesTypeName = "Air Freight", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description1", SaleMaxAmount = 40, SaleMinAmount = 25 });
-            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { VatTypeName = "vat3", VatPercentage = 30, ChargesTypeCode = "DEMU", Notes = "test3", ChargesGroupCode = "HNDCH", ChargesTypeName = "Demmurage", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description2", SaleMaxAmount = 45, SaleMinAmount = 33 });
-            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { VatTypeName = "vat4", VatPercentage = 10, ChargesTypeCode = "DU", Notes = "test4", ChargesGroupCode = "FRT", ChargesTypeName = "Duties", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description3", SaleMaxAmount = 22, SaleMinAmount = 15 });
+            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { VatTypeName ="vat1",VatPercentage =50 ,ChargesTypeCode = "AFT", Notes = "test", ChargesGroupCode = "FRT", ChargesTypeName = "Air Freight", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description", SaleMaxAmount = 50, SaleMinAmount = 20, QuoteChargesGroupCode = "ORCH" });
+            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { VatTypeName = "vat2", VatPercentage = 40, ChargesTypeCode = "AFT", Notes = "test2", ChargesGroupCode = "FRT", ChargesTypeName = "Air Freight", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description1", SaleMaxAmount = 40, SaleMinAmount = 25, QuoteChargesGroupCode = "ORCH" });
+            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { VatTypeName = "vat3", VatPercentage = 30, ChargesTypeCode = "DEMU", Notes = "test3", ChargesGroupCode = "HNDCH", ChargesTypeName = "Demmurage", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description2", SaleMaxAmount = 45, SaleMinAmount = 33, QuoteChargesGroupCode = "DECH" });
+            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { VatTypeName = "vat4", VatPercentage = 10, ChargesTypeCode = "DU", Notes = "test4", ChargesGroupCode = "FRT", ChargesTypeName = "Duties", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description3", SaleMaxAmount = 22, SaleMinAmount = 15, QuoteChargesGroupCode = "ORCH" });
 
             return quotePM;
         }
