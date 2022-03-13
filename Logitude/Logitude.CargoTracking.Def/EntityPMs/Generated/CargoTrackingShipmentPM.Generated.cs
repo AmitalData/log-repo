@@ -3125,6 +3125,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private string sHOHouse ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SHOHouse  
+	   {
+	    
+	     get
+		{
+		   return sHOHouse;
+		 }
+		 set
+		 {
+		   if(sHOHouse != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SHOHouse",OldValue=sHOHouse,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   sHOHouse=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

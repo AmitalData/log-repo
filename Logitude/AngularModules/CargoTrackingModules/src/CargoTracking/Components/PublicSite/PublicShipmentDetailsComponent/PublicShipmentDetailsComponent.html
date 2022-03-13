@@ -56,11 +56,6 @@
 
             </div>
             <div class="value">
-                <div *ngIf="Shipment.House != null">{{Shipment.House}}</div>
-                <div *ngIf="IsLoadingReferences">
-                    Loading...
-                </div>
-
                 <ul *ngIf="showMoreReferences && ShipmentReferences">
                     <li *ngFor="let ref of ShipmentReferences, let i = index">{{ref}}</li>
                 </ul>

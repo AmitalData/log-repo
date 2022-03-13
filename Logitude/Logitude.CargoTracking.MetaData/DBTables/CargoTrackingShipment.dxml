@@ -757,6 +757,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="SHOHouse"
+    Type="nvarchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="EntityType"
     ReferencedTable="CargoTrackingHeaderEntityTypes"

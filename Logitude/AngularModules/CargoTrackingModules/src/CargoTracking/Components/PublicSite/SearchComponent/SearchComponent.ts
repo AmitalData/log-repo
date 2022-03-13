@@ -391,17 +391,35 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
 
     references: string[];
     SplitReference(shipment: CargoTrackingShipmentList){
-        this.references = shipment.CustomerReference != null ? shipment.CustomerReference.split(',') : [];
-        this.references = this.references.filter(e=>e.length > 0);
-        if(shipment.House)
-        this.references = [shipment.House,...this.references]
+       
+        
+        this.references = this.getReference(shipment);
 
+    }
+    getReference(shipment: CargoTrackingShipmentList): string[]{
+        var references = shipment.CustomerReference != null ? shipment.CustomerReference.split(',') : [];
+        references = references.filter(e=>e.length > 0);
+        var houseReferences = this.getHouseReferences(shipment);
+        
+        references = [...houseReferences,...references]
+        return references;
+    }
+    getHouseReferences(shipment): string[] {
+        var houseReferences:string[] = [];
+        if(shipment.House && !houseReferences.find(e=>e == shipment.House)){
+            houseReferences.push(shipment.House);
+        }
+        if(shipment.ForwardingHouse && !houseReferences.find(e=>e == shipment.ForwardingHouse)){
+            houseReferences.push(shipment.ForwardingHouse);
+        }
+        if(shipment.SHOHouse && !houseReferences.find(e=>e == shipment.SHOHouse)){
+            houseReferences.push(shipment.SHOHouse);
+        }
+        return houseReferences;
     }
     showReference(event,shipment: CargoTrackingShipmentList,isMobile){
         event.stopPropagation();
-        var references = shipment.CustomerReference? shipment.CustomerReference.split(',') : [];
-        if(shipment.House)
-            references = [shipment.House,...references];
+        var references = this.getReference(shipment);
         references = references.filter(e=>e.length > 0);
         references = references.slice(isMobile? 1 : 3 )
         this.dialog.open(MessageWindowComponent, {

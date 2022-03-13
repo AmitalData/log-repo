@@ -35,7 +35,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             SetCurrentMilestone(args);
             SetShipmentTypeCode(args.TableRow);
             SetExceptionDescription(args.TableRow);
+            SetHouse(args.TableRow);
 
+        }
+
+        private static void SetHouse(DataRow tableRow)
+        {
+            tableRow.SetField("SHOHouse", tableRow["OrderHouse"]);
         }
 
         private static void SetDefaultFields(DataRow tableRow)

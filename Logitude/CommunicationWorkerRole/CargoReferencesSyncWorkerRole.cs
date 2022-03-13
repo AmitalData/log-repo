@@ -155,6 +155,8 @@ namespace CommunicationWorkerRole
             if (customShipmentQueue.Count <= 0)
                 return;
             customShipmentQueue.AddRange(GetSameShipmants(customShipmentQueue));
+            var shipmentsIds = GetShipmentsIds(customShipmentQueue.Where(e=>e.ShipmentId == e.SyncTo).ToList());
+            UpdateCustomCustomerReference(shipmentsIds);
             var customSeatches = GetSearchesByShipmentIds(GetShipmentsIds(customShipmentQueue));
             var newCustomSearches = GetNewSearches(customShipmentQueue, customSeatches, Codes.ForwardingType);
             UpdateSearches(newCustomSearches);
@@ -339,27 +341,51 @@ namespace CommunicationWorkerRole
 
         private void SyncCustomerReference(List<CustomerReferenceModel> customerReferences, string ids)
         {
-            var updateCases = CreateUpdateCases(customerReferences);
+            var updateCustomerReferenceCases = CreateCustomerReferenceUpdateCases(customerReferences);
+            var updateOrderHouseCases = CreateHouseUpdateCases(customerReferences.Where(e=>!string.IsNullOrEmpty(e.OrderHouse)).ToDictionary(e=>e.Id,e=>e.OrderHouse));
+            var updateForwardingHouseCases = CreateHouseUpdateCases(customerReferences.Where(e => !string.IsNullOrEmpty(e.ForwardingHouse)).ToDictionary(e => e.Id, e => e.ForwardingHouse));
             var query = $@"
                             UPDATE CargoTrackingShipments 
-                            SET CustomerReference = (CASE EntityId 
-                                {updateCases}
-                                         END)
+                            SET CustomerReference = 
+                                {updateCustomerReferenceCases}
+                                        ,
+                                SHOHouse = 
+                                {updateOrderHouseCases}
+                                         ,
+                                ForwardingHouse = 
+                                {updateForwardingHouseCases}
+                                        
                             WHERE EntityId IN({ids});
                             ";
             cargoContext.GetActiveDbContext().Database.ExecuteSqlCommand(query);
 
         }
 
-        private object CreateUpdateCases(List<CustomerReferenceModel> customerReferences)
+        private string CreateCustomerReferenceUpdateCases(List<CustomerReferenceModel> customerReferences)
         {
-            var updateCases = "";
+            var updateCases = "(CASE EntityId ";
             foreach (var item in customerReferences)
             {
                 updateCases += $" WHEN '{item.Id}' THEN '{item.CustomerReference}' ";
             }
+            updateCases += " END)";
+            return updateCases ;
+        }
+        private string CreateHouseUpdateCases(Dictionary<string,string> houses)
+        {
+            if(houses.Count <= 0)
+            {
+                return "NULL";
+            }
+            var updateCases = "(CASE EntityId ";
+            foreach (var item in houses)
+            {
+                updateCases += $" WHEN '{item.Key}' THEN '{item.Value}' ";
+            }
+            updateCases += " END)";
             return updateCases;
         }
+       
 
         private List<CustomerReferenceModel> CreateCustomerReferences(List<CustomerReferenceSyncModel> customerReferenceSyncModels)
         {
@@ -374,6 +400,16 @@ namespace CommunicationWorkerRole
         private CustomerReferenceModel CreateCustomerReference(CustomerReferenceSyncModel item)
         {
             var customerReferenceModel = new CustomerReferenceModel();
+
+            customerReferenceModel.CustomerReference = CraeteCustomerReferenceAsString(item);
+            customerReferenceModel.Id = item.Id;
+            customerReferenceModel.OrderHouse = item.OrderHouse;
+            customerReferenceModel.ForwardingHouse = item.ForwardingHouse;
+            return customerReferenceModel;
+        }
+
+        private string CraeteCustomerReferenceAsString(CustomerReferenceSyncModel item)
+        {
             var customerReferences = new List<string>();
             if (!string.IsNullOrEmpty(item.CustomerReference1))
                 customerReferences.AddRange(item.CustomerReference1.Split(','));
@@ -386,10 +422,12 @@ namespace CommunicationWorkerRole
 
             if (!string.IsNullOrEmpty(item.OrderCustomerReferences))
                 customerReferences.AddRange(item.OrderCustomerReferences.Split(','));
+            if (!string.IsNullOrEmpty(item.OrderPONumber))
+                customerReferences.Add(item.OrderPONumber);
+            if (!string.IsNullOrEmpty(item.OrderBookingConfirmationNumber))
+                customerReferences.Add(item.OrderBookingConfirmationNumber);
             customerReferences = customerReferences.Where(e => !string.IsNullOrWhiteSpace(e)).ToList();
-            customerReferenceModel.CustomerReference = string.Join(",", customerReferences);
-            customerReferenceModel.Id = item.Id;
-            return customerReferenceModel;
+            return string.Join(",", customerReferences);
         }
 
         private List<CustomerReferenceSyncModel> GetCustomCustomerReferenceSyncModels(string ids)
@@ -402,13 +440,17 @@ namespace CommunicationWorkerRole
                              SHO.CustomerReferences as OrderCustomerReferences,
                              F.CustomerReference1 as ForwardingCustomerReferences1,
                              F.CustomerReference2 as ForwardingCustomerReferences2,
-                             F.CustomerReference3 as ForwardingCustomerReferences3
+                             F.CustomerReference3 as ForwardingCustomerReferences3,
+                             F.House as ForwardingHouse,
+							 SHO.House as OrderHouse,
+							 SHO.PONumber as OrderPONumber,
+							 SHO.BookingConfirmationNumber as OrderBookingConfirmationNumber
                              from Shipments C 
                              LEFT OUTER JOIN dbo.Shipments F   
                              ON C.Id = F.CustomFileId 
                              LEFT OUTER JOIN dbo.ShipmentOrders SHO    
                              ON SHO.ShipmentId = F.Id 
-                             where F.Id in ({ids}) 
+                             where C.Id in ({ids}) 
                         ";
             var shipmentsContext = ShipmentsContext.GetContext(0);
             var data = shipmentsContext.GetActiveDbContext().Database.SqlQuery<CustomerReferenceSyncModel>( query, new object[0]).ToListAsync().Result;
@@ -422,7 +464,10 @@ namespace CommunicationWorkerRole
                              F.CustomerReference2,
                              F.CustomerReference3,
                              SHO.CustomerReferences as OrderCustomerReferences,
-                             NULL as ForwardingCustomerReferences
+                             NULL as ForwardingCustomerReferences,
+                             SHO.House as OrderHouse,
+							 SHO.PONumber as OrderPONumber,
+							 SHO.BookingConfirmationNumber as OrderBookingConfirmationNumber
                              from Shipments F 
                              LEFT OUTER JOIN dbo.ShipmentOrders SHO    
                              ON SHO.ShipmentId = F.Id 
@@ -484,13 +529,19 @@ namespace CommunicationWorkerRole
         public String ForwardingCustomerReferences2 { get; set; }
         public String ForwardingCustomerReferences3 { get; set; }
         public String OrderCustomerReferences { get; set; }
+        public String OrderBookingConfirmationNumber { get; set; }
+        public String OrderPONumber { get; set; }
+        public String ForwardingHouse { get; set; }
+        public String OrderHouse { get; set; }
         
     }
     public class CustomerReferenceModel
     {
         public String Id { get; set; }
         public String CustomerReference { get; set; }
-       
+        public String OrderHouse { get; set; }
+        public String ForwardingHouse { get; set; }
+
 
     }
 }

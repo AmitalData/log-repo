@@ -231,7 +231,9 @@ export class PublicShipmentDetailsComponent implements OnInit
             this.SetCargoTrackingContainers(result);
             if (this.ShipmentWithMilestones) {
                 this.Shipment = result.ShipmentList;
-                this.ShipmentReferences =result.ShipmentList.CustomerReference? result.ShipmentList.CustomerReference.split(','):null;
+
+                this.ShipmentReferences = this.getShipmentReferences();
+                
                 if (this.Shipment.CurrentMilestoneCode == CargoTrackingMilestones.Delivered) {
                     this.Delivered = true;
                     this.DileveredIconColor = CargoTrackingBrandingData.SecondaryColor;
@@ -259,6 +261,25 @@ export class PublicShipmentDetailsComponent implements OnInit
             this.SetShipmentDetails();
 
         });
+    }
+    getShipmentReferences(): string[] {
+        var references = [];
+        var houseReferences = this.getHouseReferences();
+        references = this.Shipment.CustomerReference? this.Shipment.CustomerReference.split(','):[];
+        return [...houseReferences , ...references];
+    }
+    getHouseReferences(): string[] {
+        var houseReferences:string[] = [];
+        if(this.Shipment.House && !houseReferences.find(e=>e == this.Shipment.House)){
+            houseReferences.push(this.Shipment.House);
+        }
+        if(this.Shipment.ForwardingHouse && !houseReferences.find(e=>e == this.Shipment.ForwardingHouse)){
+            houseReferences.push(this.Shipment.ForwardingHouse);
+        }
+        if(this.Shipment.SHOHouse && !houseReferences.find(e=>e == this.Shipment.SHOHouse)){
+            houseReferences.push(this.Shipment.SHOHouse);
+        }
+        return houseReferences;
     }
     public ShipmentLabel: string;
     public ShipmentReference: string;

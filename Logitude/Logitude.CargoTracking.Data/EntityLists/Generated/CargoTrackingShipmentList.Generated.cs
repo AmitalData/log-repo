@@ -306,6 +306,8 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public string InvoicedNotes  { get; set; }
        [DataMember]
        public string InvoicedExceptionReason  { get; set; }
+       [DataMember]
+       public string SHOHouse  { get; set; }
    }
 
 }
