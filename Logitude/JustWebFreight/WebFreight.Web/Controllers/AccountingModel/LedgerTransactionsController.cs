@@ -106,8 +106,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(accountingContext);
            return ledgerTransactionListQueryService.GetReportLinesLedgerTransactions(LTBFilter).OrderByDescending(d=> d.AccountingDate).ToList();                 
         }
-       
-        public HttpResponseMessage GetTransactionsCurrencies(string AccountId)
+
+        public HttpResponseMessage GetTransactionsCurrencies(string AccountId, bool splittedByCurrencyCheckBox, bool attachedGLAccountChanged)
         {
             try
             {
@@ -118,7 +118,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 List<string> currenciesIds = _LedgerTransactionQueryService.GetTransactionsCurrencies(AccountId, tenant);
 
+                currenciesIds = currenciesIds.Where(x => !x.Contains("1-581")).ToList();
+                if (splittedByCurrencyCheckBox) {
+                    GLAccountCurrencyQueryService accountcurrencyQueryService = new GLAccountCurrencyQueryService(tenant);
 
+                    var currencies = accountcurrencyQueryService.GetRelatedCurrenciesAccountByCustomerGLAccount(AccountId, tenant);
+                    currenciesIds.AddRange(currencies.Select(x => x.CurrencyId));
+                }
+
+                if (attachedGLAccountChanged)
+                {
+                    GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
+
+                    var childAccountsCurrencies = gLAccountQueryService.GetChildAccountsCurrencies(tenant, AccountId);
+                    currenciesIds.AddRange(childAccountsCurrencies);
+                }
+
+                
                 ServiceResponse response = new ServiceResponse();
                 response.Result = currenciesIds;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);

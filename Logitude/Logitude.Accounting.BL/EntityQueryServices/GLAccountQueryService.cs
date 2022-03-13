@@ -229,6 +229,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return allIdAccounts;
         }
+
+        public List<string> GetChildAccountsCurrencies(int tenant, string GLAccountId)
+        {
+            return repository.GetChildAccounts(GLAccountId, tenant)
+                .Select(ca => ca.CurrencyId).ToList();
+        }
+
         public HashSet<string> GetAllIdAccountsCat(int tenant, string GLAccountId, string cat1, string cat2, string cat3, string cat4, string cat5,
     bool IncludeChildAccounts)
         {

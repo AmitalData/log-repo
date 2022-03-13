@@ -61,5 +61,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             var poco = repository.GetEntityByGLAccountId(accountId, tenant);
             return poco;
         }
+
+        public List<GLAccountCurrencyPM> GetRelatedCurrenciesAccountByCustomerGLAccount(string accountId, int tenant)
+        {
+            var relatedCurrenciesAccountByCustomerGLAccount = this.repository.
+                GetRelatedCurrenciesAccountByCustomerGLAccountAll(tenant, accountId);
+            return relatedCurrenciesAccountByCustomerGLAccount.Select(r => this.GetEntityPM(r, false)).ToList();
+        }
     }
 }

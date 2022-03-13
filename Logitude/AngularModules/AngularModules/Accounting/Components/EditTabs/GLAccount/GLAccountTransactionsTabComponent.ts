@@ -351,6 +351,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         if (this.attachedGLAccountCheckBox != value) {
             this.attachedGLAccountCheckBox = value;
             this.RefreshButtonClicked();
+            this.CurrencyId = null;
         }
     }
 
@@ -360,6 +361,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         if (this.splittedByCurrencyCheckBox != value) {
             this.splittedByCurrencyCheckBox = value;
             this.RefreshButtonClicked();
+            this.CurrencyId = null;
         }
     }
 
@@ -783,7 +785,8 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
     GetTransactionsCurrencies(){
         this.CurrentSession.StartBusyIndicatorLoading();
-        this._LedgerTransactionExtendedListService.GetTransactionsCurrencies(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) =>
+        this._LedgerTransactionExtendedListService.GetTransactionsCurrencies(this.EntityPM.Id, this.SplittedByCurrencyCheckBox, this.AttachedGLAccountCheckBox)
+            .subscribe((serviceResponse: ServiceResponse) =>
         {
             if (serviceResponse.Result) {
                 var result = serviceResponse.Result;
@@ -983,7 +986,9 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
     RefreshButtonClicked() {
         this.LoadAllScreenData();
-
+        if(this.EntityPM.IsMultiCurrency) {
+            this.GetTransactionsCurrencies();
+        }
         //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
 
