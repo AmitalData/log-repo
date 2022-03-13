@@ -7760,6 +7760,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         resultAddress = resultAddress + Environment.NewLine + address.Country.EnglishName;
                     }
                 }
+
+                if (!string.IsNullOrEmpty(address.ATTN))
+                {
+                    resultAddress = resultAddress + "Contact: " + address.ATTN;
+                }
+
+                if (!string.IsNullOrEmpty(address.ATTN))
+                {
+                    resultAddress = resultAddress + Environment.NewLine + "Contact: " + address.ATTN;
+                }
+
+                if (!string.IsNullOrEmpty(address.PhoneNumber))
+                {
+                    resultAddress = resultAddress + Environment.NewLine + "Phone: " + address.PhoneNumber;
+                }
             }
 
             return resultAddress;
