@@ -89,7 +89,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             CreateJournal();
             CreateJournalAdditionalDatas();
-            SetTaxReportAsTransmitted();
+            SetTaxReportAsTransmittedAndClosingJournal();
         }
 
 
@@ -146,9 +146,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 JournalLineNumber = 2
             };
         }
-        private void SetTaxReportAsTransmitted()
+        private void SetTaxReportAsTransmittedAndClosingJournal()
         {
-            taxReportPM.StatusCode = VatReportStatusValues.Transmitted;
+            taxReportPM.StatusCode = VatReportStatusValues.TransmittedAndClosingJournal;
 
             SubmitTaxReport();
         }
