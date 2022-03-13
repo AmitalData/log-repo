@@ -17,6 +17,8 @@ import { LogisticActionRequestPMService } from 'Customs/Services/StandardPMs/Log
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
 import { LogisticActionRequestRequestParams } from 'Customs/DataContract/RequestParams/LogisticActionRequestRequestParams';
 import { LogisticActionRequestWebService } from 'Customs/Services/WebServices/LogisticActionRequestWebService';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
+import { ResponseDataBase } from 'Customs/DataContract/ResponseData/ResponseDataBase';
 
 @Component({
     templateUrl: './LogisticActionRequestGeneralTabComponent.html',
@@ -50,20 +52,6 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         'Quantity',
         'DeliverySiteID',
     ]
-
-    // public TabsItemsSource: TabItem[] = [];
-    // public Tabs: LogTab[] = [];
-    // public ValidationErrorsList: any[];
-    // private currentEditComponentId: string;
-    // public DisplayOnlyMessage: string = "";
-    // public ImporterCode: string = "";
-    // public IsCustomsFileRetrieved: boolean = false;
-    // public CargoIdentifiersList: ObservableCollection;
-    // public ExportCargoTypeFilterItems: ApiQueryFilters;
-    // FIELD_IS_REQUIERD: string;
-    // RequestVIA: SendRequestVIA;
-    // //public ItemsList: ObservableCollection;
-    // public decCargoSplitCargoIdentifierModel: DecCargoSplitCargoIdentifierModel;
 
     get ExportFileNo() { return this.entityPM?.ExportFileNo }
     set ExportFileNo(value: string) {
@@ -345,6 +333,8 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
 
     async OnCustomSendOptionsButtonClick(customSendOptionsArgs) {
+        if (this.invalidate()) return;
+
         SessionLocator.SelectedSession.StartBusyIndicatorSaving();
 
         this.SaveEntityChanges();
@@ -365,10 +355,13 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         param.PackagingTypeCode = this.entityPM.PackagingTypeCode;
         param.Quantity = this.entityPM.Quantity;
         param.CustomsFile = this.entityPM.ExportFileNo;
+        param.Tenant = this.entityPM.Tenant;
         
-        const res: string = await this.logisticActionRequestWebService.SendCustomsMessage8410(param);
+        const res: ResponseDataBase = await this.logisticActionRequestWebService.SendCustomsMessage8410(param);
 
         SessionLocator.SelectedSession.StopBusyIndicator();
+
+        new MessageWindow().Show(res.UserMessage);
     }
 
 

@@ -3,7 +3,9 @@ using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.ResponseServices;
 using Simplog.Data.InfrastructureModel.Repositories;
+using UnifreightIIG.Common.ClientSdk;
 using UnifreightIIG.Common.LogisticActionRequestMessageServiceReference;
+using UnifreightIIG.Common.TheGateway;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -30,7 +32,20 @@ namespace Logitude.CustomsMessaging.MessagingServices
         protected override INF_MSG_Generic CallWS(LG_NG_8410_LogisticActionRequestMessage customRequest, LogisticActionRequestRequestParams requestParams, out string exceptionMessage)
         {
             exceptionMessage = null; // to check            
-            return new INF_MSG_Generic();
+            var response = new INF_MSG_Generic();
+
+            using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
+            {
+                _ResponseHeader = uifreightSdkGateway.GetChannel<ILogisticActionRequestMessageOperation>()
+                    .LogisticActionRequestMessage(
+                    this.RequestsSheetExternalId,
+                    base.CustomsSetting.CustomsAgentId,
+                    customRequest,
+                    ref this._IIGGatewayMoreParams,
+                    out response);
+            }
+
+            return response;
         }
 
         public override string MainInterfaceCode { get { return "8410"; } }
