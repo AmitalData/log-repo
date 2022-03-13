@@ -781,14 +781,14 @@
                                 {{this.cargoTrackingShipmentPM.CustomsData.TotalValueInForeignCurrency||0 | number}}
                                 {{this.cargoTrackingShipmentPM.CustomsData.CurrencySign }}</div>
                         </div>
-                        <div>
+                        <div *ngIf="this.cargoTrackingShipmentPM.CustomerEnglishName">
                             <div class="title">Customer name</div>
                             <div class="description">
                                 <custom-label >{{this.cargoTrackingShipmentPM.CustomerEnglishName}}</custom-label>
                                 
                             </div>
                         </div>
-                        <div>
+                        <div *ngIf="this.cargoTrackingShipmentPM.CustomsData?.SupplierName">
                             <div class="title">Supplier Name</div>
                             <div class="description">
                                 <custom-label >{{this.cargoTrackingShipmentPM.CustomsData?.SupplierName}}</custom-label>
