@@ -108,6 +108,29 @@
                                     </td>
                                 </tr>
 
+                                <!-- Period -->
+                                <tr *ngIf="DisplaySATSettings && HaveRegimenFiscalFieldFeatureToggle" class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'PeriodCode'"
+                                                  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                        </LogLabel>
+                                    </td>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <ComboBox (SelectedItemChanged)="SelectdPeriod = $event"
+                                                              [SelectedItem]="SelectdPeriod" [ItemsSource]="Periods"
+                                                              [Binding]="'Name'"></ComboBox>
+                                                </td>
+                                                <td style="width:35px;">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
                                 <tr class="FormFieldRow">
                                     <td style="width: 140px;">
                                         <LogLabel [ObjectFieldName]="'RelatedInvoice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -116,11 +139,11 @@
                                     <td>
                                         <LogTextBox [ObjectFieldName]="'RelatedInvoice'" [Text]="RelatedInvoice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         <!--<LogLov [ObjectFieldName]="'SATPaymentMethodCode'"
-                                            [SelectedValue]="SATPaymentMethodCode"
-                                            [ObjectTableName]="ObjectTableName"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'SATPaymentMethod'">
-                                    </LogLov>-->
+                    [SelectedValue]="SATPaymentMethodCode"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'SATPaymentMethod'">
+            </LogLov>-->
                                     </td>
                                 </tr>
 

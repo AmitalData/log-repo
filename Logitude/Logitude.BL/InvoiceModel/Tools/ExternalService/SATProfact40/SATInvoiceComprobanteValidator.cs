@@ -54,6 +54,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             ValidateFormaPago();
             ValidateMetodoPago();
             ValidateBillToCard();
+            ValidatePeriod();
             ValidateBillToAddress();
             ValidateARInvoiceLines(allChargesTypes);
         }
@@ -151,6 +152,19 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             if (string.IsNullOrEmpty(arInvoicePM.RegimenFiscalCode) && string.IsNullOrEmpty(billToCard.RegimenFiscalCode))
             {
                 throw new ApplicationException("Regimen Fiscal is required ");
+            }
+
+            if (arInvoicePM.IsConsolidationInvoice && string.IsNullOrEmpty(arInvoicePM.PeriodCode))
+            {
+                throw new ApplicationException("Period is required ");
+            }
+        }
+
+        private void ValidatePeriod()
+        {
+            if (arInvoicePM.IsConsolidationInvoice && string.IsNullOrEmpty(arInvoicePM.PeriodCode))
+            {
+                throw new ApplicationException("Period is required ");
             }
         }
 
