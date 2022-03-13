@@ -866,6 +866,16 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                             SupplierInvoiceItemPM.ClassificationCode = invoiceItem.CLASSIFICATIONCODE;
                             SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Update;
                         }
+                        if (invoiceItem.ITEMORIGINCOUNTRY != SupplierInvoiceItemPM.OriginCountryCode)
+                        {
+                            SupplierInvoiceItemPM.OriginCountryCode = invoiceItem.ITEMORIGINCOUNTRY;
+                            SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
+                        if (invoiceItem.TAXEXEMPTCODE != SupplierInvoiceItemPM.TaxExemptCode)
+                        {
+                            SupplierInvoiceItemPM.TaxExemptCode = invoiceItem.TAXEXEMPTCODE;
+                            SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
                         if (invoiceItem.CLASIFIEDREMARKS != SupplierInvoiceItemPM.ClasifiedRemarks)
                         {
                             SupplierInvoiceItemPM.ClasifiedRemarks = invoiceItem.CLASIFIEDREMARKS;
