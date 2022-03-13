@@ -49,8 +49,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             AddNewPricesFieldSettingToPricesTableSettings("ShowMeasurementPackages", "MEASUREMENTPACKAGES", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowUnitsPackages", "UNITSPACKAGES", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowUnitPricePackages", "UNITPRICEPACKAGES", sectionType);
-            AddNewPricesFieldSettingToPricesTableSettings("ShowSaleCurrencyColumnPackages", "LOCALAMOUNTPACKAGES", sectionType);
-            AddNewPricesFieldSettingToPricesTableSettings("ShowLocalCurrencyColumnPackages", "CHARGEDESCRIPTIONPACKAGES", sectionType);
+            AddNewPricesFieldSettingToPricesTableSettings("ShowSaleCurrencyColumnPackages", "TOTALPACKAGES", sectionType);
+            AddNewPricesFieldSettingToPricesTableSettings("ShowLocalCurrencyColumnPackages", "LOCALAMOUNTPACKAGES", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowChargeDescriptionPackages", "CHARGEDESCRIPTIONPACKAGES", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowChargeNotePackages", "CHARGENOTEPACKAGES", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowSaleMaxMinAmountPackages", "SALEMINMAXPACKAGES", sectionType);
@@ -59,7 +59,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             AddNewPricesFieldSettingToPricesTableSettings("ShowVATTypePackages", "VATTYPEPACKAGES", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowVATPercentagePackages", "VATPERCENTAGEPACKAGES", sectionType);
         }
-        
+
         private void AddNewPricesFieldSettingToPricesTableSettings(string fieldDBName, string fieldCode, string sectionType)
         {
             List<PricesFieldSettings> pricesTableSettings = GetPricesPackagesListSettingsBySectionType(sectionType);
