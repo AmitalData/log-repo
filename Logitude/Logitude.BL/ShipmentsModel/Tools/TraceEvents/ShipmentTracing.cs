@@ -2363,16 +2363,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.DeleteTraceEvent(args.EventCode);
             }
 
-            else if (args.EntityPortId != args.DataBasePortId)
+            //else if (args.EntityPortId != args.DataBasePortId)
+            //{
+            if (args.EntityDate != null)
             {
-                if (args.EntityDate != null)
+                if (IsCurrentStatus(args.EventCode))
                 {
-                    if (IsCurrentStatus(args.EventCode))
-                    {
-                        this.UpdateLocation(args.EventCode);
-                    }
+                    this.UpdateLocation(args.EventCode);
                 }
             }
+            //}
         }
 
         private void TraceCargoReadyForPickup()
