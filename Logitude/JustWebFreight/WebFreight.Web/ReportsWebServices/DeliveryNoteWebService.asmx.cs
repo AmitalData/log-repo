@@ -644,6 +644,7 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 dataProvider.DriverName = childEntity.Driver;
                 dataProvider.TruckNumber = childEntity.TruckNumber;
+                dataProvider.TrailerNumber = childEntity.TrailerNumber;
                 dataProvider.TruckerNumber = childEntity.CarrierNumber;
                 dataProvider.SpecialInstructions = childEntity.Notes != null ? childEntity.Notes : "";
                 dataProvider.PickupDeliveryNumber = childEntity.PickUpDeliveryNumber;
