@@ -12,8 +12,7 @@ using WebFreight.Web.Helpers;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
-
-    public class LogisticActionServiceWebServiceController : ApiController
+    public class LogisticActionRequestWebServiceController : ApiController
     {
         [HttpPost]
         public HttpResponseMessage SendCustomsMessage8410([FromBody] LogisticActionRequestRequestParams requestParams)
@@ -27,7 +26,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-
         }
     }
 }

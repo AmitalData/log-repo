@@ -1073,7 +1073,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\LogisticsReferenceTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferenceInputTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferenceStatusController.Generated.cs" />
-    <Compile Include="Controllers\CustomsModel\WebServices\LogisticActionServiceWebServiceController.cs" />
+    <Compile Include="Controllers\CustomsModel\WebServices\LogisticActionRequestWebServiceController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\ContainerizationWebServiceController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\NewQuoteOPWebService.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\PendingWebServiceController.cs" />

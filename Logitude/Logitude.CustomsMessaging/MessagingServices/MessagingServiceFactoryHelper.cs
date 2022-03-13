@@ -560,26 +560,31 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-
-          SaveCC_MSG2450_ContainerizationMessageMessagingService>
-          ((new SaveCC_MSG2450_ContainerizationMessageMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-
-        DCAInUCBClosePending_MsgMessagingService>
-        ((new DCAInUCBClosePending_MsgMessagingService()).MainInterfaceCode);
+              SaveCC_MSG2450_ContainerizationMessageMessagingService>
+              ((new SaveCC_MSG2450_ContainerizationMessageMessagingService()).MainInterfaceCode);
 
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-             DCAInUCBUCADPE_MsgMessagingService>
-             ((new DCAInUCBUCADPE_MsgMessagingService()).MainInterfaceCode);
+                DCAInUCBClosePending_MsgMessagingService>
+                ((new DCAInUCBClosePending_MsgMessagingService()).MainInterfaceCode);
 
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                           NG_9100_MSG_OutgoingMessageRequestMessagingService>
-                           ((new NG_9100_MSG_OutgoingMessageRequestMessagingService()).MainInterfaceCode);
-       
+                 DCAInUCBUCADPE_MsgMessagingService>
+                 ((new DCAInUCBUCADPE_MsgMessagingService()).MainInterfaceCode);
 
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                NG_9100_MSG_OutgoingMessageRequestMessagingService>
+                ((new NG_9100_MSG_OutgoingMessageRequestMessagingService()).MainInterfaceCode);
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                DCAInLG_NG_8410_LogisticActionRequestMessageMessagingService>
+                ((new DCAInLG_NG_8410_LogisticActionRequestMessageMessagingService()).MainInterfaceCode);
+            
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                DCAInLG_NG_8411_SendLogisticActionRequestDecisionMessagingService>
+                ((new DCAInLG_NG_8411_SendLogisticActionRequestDecisionMessagingService()).MainInterfaceCode);
         }
         public static void InitContainer()
         {
