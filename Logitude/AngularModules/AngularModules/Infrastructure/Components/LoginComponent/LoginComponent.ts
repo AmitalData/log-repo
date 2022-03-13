@@ -173,8 +173,8 @@ export class LoginComponent implements OnInit {
 
         // if (isDevMode())
         //     this.developerLogin();
-         if(isDevMode())
-            this.developerLogin();
+         //if(isDevMode())
+         //   this.developerLogin();
     }
 
     async developerLogin() {
