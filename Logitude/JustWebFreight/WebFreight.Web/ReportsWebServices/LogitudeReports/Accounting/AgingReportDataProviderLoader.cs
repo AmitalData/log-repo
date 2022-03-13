@@ -22,6 +22,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
     {
         private QueryOperations reportQueryOperations;
         private bool showLocals = false;
+        private bool isFromGLAccountAgingData = false;
         private int tenant;
 
         public AgingReportDataProviderLoader(int _tenant)
@@ -54,6 +55,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             dataProvider.PrintedByUser = GetLoggedContactName();
             dataProvider.CustomerFilterValue = GetCustomerFilterTitle();
             dataProvider.AgingPeriods = BuildAgingPeriods(filteredPeriods);
+            dataProvider.IsFromGLAccountAgingData = isFromGLAccountAgingData;
 
             SetLocalCurrency(dataProvider);
             AddTotalBalancePeriods(filteredPeriods, dataProvider);
@@ -850,7 +852,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             reportParameters.CollectorId = GetFilterValue<string>("CollectorId");
             reportParameters.SalesmanId = GetFilterValue<string>("SalesmanId");
             reportParameters.AggregateByGLAccountCurrencies = GetFilterValue<bool>("Detailed");
-         
+
             reportParameters.GroupByDate = GetFilterValue<string>("GroupByDate") == "filter_Due" ? AgingReportParam.DateEnum.DueDate : AgingReportParam.DateEnum.AccountingDate;
             reportParameters.AgingMethod = GetFilterValue<string>("AgingMethod") == "Open Transaction" ? AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString() : AgingReportParam.MethodEnum.TotalByMonthFIFOMethod.ToString();
             reportParameters.Aging4AccountTypeCode = (GetFilterValue<string>("GLAccountType") == "2") ? AgingReportParam.Aging4AccountTypeCodeEnum.Customer2 : AgingReportParam.Aging4AccountTypeCodeEnum.Vendor3;
@@ -858,11 +860,23 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             reportParameters.ChartOfAccountsTypeCode = GetFilterValue<string>("ChartOfAccountsTypeCode");
             reportParameters.ChartOfAccountsId = GetFilterValue<string>("ChartOfAccountsId");
-          
+
+            SetFromGLAccountAgingDataServiceParameter(reportParameters);
 
             SetReportCategoryParameters(reportParameters);
 
             return reportParameters;
+        }
+
+        private void SetFromGLAccountAgingDataServiceParameter(AgingReportParam reportParameters)
+        {
+            if (FeatureToggleHelper.HasFeatureToggle("ARN", tenant)
+                && reportParameters.GroupByDate == AgingReportParam.DateEnum.DueDate
+                && GetFilterValue<string>("AgingMethod") == "Open Transaction")
+            {
+                reportParameters.FroceFromGLAccountAgingData = true;
+                isFromGLAccountAgingData = true;
+            }
         }
 
         private AgingReportParam InitiateAgingReportParameters()

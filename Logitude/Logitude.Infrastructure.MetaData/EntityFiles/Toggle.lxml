@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;2b40&quot;"
+  Code="&quot;6034&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -717,7 +717,6 @@
       Name="&quot;Ticket Entity In Automation&quot;"
       SearchFields="&quot;TAU,Ticket Entity In Automation&quot;"
       Description="&quot;Use Ticket Entity In Automation&quot;" />
-
     <Record
       Code="&quot;RFF&quot;"
       Name="&quot;Regimen Fiscal Field&quot;"
@@ -748,6 +747,11 @@
       SearchFields="&quot;FIE,Froala Editor Insert Image,Activate Insert Image In Froala Editor&quot;"
       Name="&quot;Froala Editor Insert Image&quot;"
       Description="&quot;Activate Insert Image In Froala Editor&quot;" />
+    <Record
+      Code="&quot;ARN&quot;"
+      Name="&quot;Aging Report Get From GLAccountAgingData&quot;"
+      Description="&quot;Aging Report Get From GLAccountAgingData, new method new way&quot;"
+      SearchFields="&quot;Aging Report Get From GLAccountAgingData, new method new way,ARN&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
