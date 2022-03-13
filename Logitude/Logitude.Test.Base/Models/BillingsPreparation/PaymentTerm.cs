@@ -1,4 +1,4 @@
-﻿namespace Logitude.Test.Base.Models.BillingsPreparation
+﻿namespace Logitude.Base.Models.BillingsPreparation
 {
     class PaymentTerm
     {

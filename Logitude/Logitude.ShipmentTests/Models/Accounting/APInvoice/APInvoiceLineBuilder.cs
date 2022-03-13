@@ -1,5 +1,5 @@
-﻿using Logitude.Test.Base.Models.BillingsPreparation;
-using Logitude.Test.Base.Models.UserTenantPreparation;
+﻿using Logitude.Base.Models.BillingsPreparation;
+using Logitude.Base.Models.UserTenantPreparation;
 
 namespace Logitude.ShipmentTests.Models.Accounting.APInvoice
 {

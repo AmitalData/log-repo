@@ -147,9 +147,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\Logitude.Test.Base\Logitude.Test.Base.csproj">
+    <ProjectReference Include="..\Logitude.Test.Base\Logitude.Base.csproj">
       <Project>{74FBC07E-5CBF-44C5-85C8-F86FACAA06B6}</Project>
-      <Name>Logitude.Test.Base</Name>
+      <Name>Logitude.Base</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.Test.Base.Models.LocationsPreparation
+namespace Logitude.Base.Models.LocationsPreparation
 {
     public class SpecialServicesTypePM
     {

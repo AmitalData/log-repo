@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Logitude.Test.Base.Context
+namespace Logitude.Base.Context
 {
     public class SecurityAccessStepsContext<T> where T : class, new()
     {

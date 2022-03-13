@@ -939,7 +939,7 @@ namespace TestTenantConfiguration
             SetControlPropertyValue(Timerlbl, "ForeColor", Color.DodgerBlue);
 
             string LogitudeURL = System.Configuration.ConfigurationSettings.AppSettings.Get("LogitudeURL");
-            Logitude.Test.Base.Hooks.BeforeTestRun.PrepareTheData(this.TenantEmail, this.NewPassword, LogitudeURL);
+            Logitude.Base.Hooks.BeforeTestRun.PrepareTheData(this.TenantEmail, this.NewPassword, LogitudeURL);
             Logitude.ShipmentTests.Hooks.BeforeTestRun.SetupShipmentPreparationVariables();
 
             SetControlPropertyValue(ValidatePrepareData, "Text", "The Tenant is ready with the prepared data");

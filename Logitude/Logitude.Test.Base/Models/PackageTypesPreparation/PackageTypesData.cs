@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.Test.Base.Models.PackageTypesPreparation
+namespace Logitude.Base.Models.PackageTypesPreparation
 {
     public static class PackageTypesData
     {

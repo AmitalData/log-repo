@@ -1,5 +1,5 @@
-﻿using Logitude.Test.Base.Models.PartnersPreparation;
-using Logitude.Test.Base.Models.UserTenantPreparation;
+﻿using Logitude.Base.Models.PartnersPreparation;
+using Logitude.Base.Models.UserTenantPreparation;
 using System;
 
 namespace Logitude.CRMTests.Models.Builders

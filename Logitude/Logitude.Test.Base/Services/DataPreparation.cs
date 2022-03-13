@@ -1,16 +1,16 @@
-﻿using Logitude.Test.Base.Models;
-using Logitude.Test.Base.Models.Api;
-using Logitude.Test.Base.Models.BillingsPreparation;
-using Logitude.Test.Base.Models.LocationsPreparation;
-using Logitude.Test.Base.Models.PackageTypesPreparation;
-using Logitude.Test.Base.Models.PartnersPreparation;
-using Logitude.Test.Base.Models.Shared;
-using Logitude.Test.Base.Models.UserTenantPreparation;
+﻿using Logitude.Base.Models;
+using Logitude.Base.Models.Api;
+using Logitude.Base.Models.BillingsPreparation;
+using Logitude.Base.Models.LocationsPreparation;
+using Logitude.Base.Models.PackageTypesPreparation;
+using Logitude.Base.Models.PartnersPreparation;
+using Logitude.Base.Models.Shared;
+using Logitude.Base.Models.UserTenantPreparation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Logitude.Test.Base.Services
+namespace Logitude.Base.Services
 {
     public static class DataPreparation
     {

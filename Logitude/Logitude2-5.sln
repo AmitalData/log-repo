@@ -284,7 +284,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.SpecFlow", "Logitu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.Shipment", "Logitude.ShipmentTests\Logitude.Shipment.csproj", "{81E2985E-F90A-49B1-9D8C-6A28589E7AAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.Test.Base", "Logitude.Test.Base\Logitude.Test.Base.csproj", "{74FBC07E-5CBF-44C5-85C8-F86FACAA06B6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.Base", "Logitude.Test.Base\Logitude.Base.csproj", "{74FBC07E-5CBF-44C5-85C8-F86FACAA06B6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.Invoice", "Logitude.InvoiceTests\Logitude.Invoice.csproj", "{4CDBA717-9F04-4632-94C6-03F692AE76D9}"
 EndProject
@@ -292,7 +292,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.Common", "Logitude
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BDDTests", "BDDTests", "{785555D1-1D4F-480B-B441-B6F0A35965AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.Test.Warmup", "Logitude.Test.Warmup\Logitude.Test.Warmup.csproj", "{A27C8B79-6D09-425E-A81E-232EA3522619}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.Warmup", "Logitude.Test.Warmup\Logitude.Warmup.csproj", "{A27C8B79-6D09-425E-A81E-232EA3522619}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTenantConfiguration", "TestTenantConfiguration\TestTenantConfiguration.csproj", "{16F48BD9-1EE4-44C0-B86D-DDF18ADE70B3}"
 EndProject

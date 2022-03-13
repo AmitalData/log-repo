@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Logitude.Test.Base.Models.Shared
+namespace Logitude.Base.Models.Shared
 {
     public static class Urls
     {

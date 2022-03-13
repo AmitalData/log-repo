@@ -1,14 +1,14 @@
 ﻿using Logitude.FullAccounting.Test.Models;
-using Logitude.Test.Base.Models.Shared;
-using Logitude.Test.Base.Models.UserTenantPreparation;
-using Logitude.Test.Base.Services;
-using Logitude.Test.Base.Models.Api;
+using Logitude.Base.Models.Shared;
+using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Services;
+using Logitude.Base.Models.Api;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Logitude.Test.Base.Models.BillingsPreparation;
+using Logitude.Base.Models.BillingsPreparation;
 using Logitude.FullAccounting.Test.Models.Codes;
 
 namespace Logitude.FullAccounting.Test.Services.Preparation

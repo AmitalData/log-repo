@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Logitude.Test.Base.Services
+namespace Logitude.Base.Services
 {
     public static class Waiter
     {

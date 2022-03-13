@@ -1,5 +1,5 @@
-﻿using Logitude.Test.Base.Models.Api;
-using Logitude.Test.Base.Models.Infrastructure;
+﻿using Logitude.Base.Models.Api;
+using Logitude.Base.Models.Infrastructure;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
@@ -10,7 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Logitude.Test.Base.Services
+namespace Logitude.Base.Services
 {
     public class APICaller
     {

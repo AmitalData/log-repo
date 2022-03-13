@@ -1,4 +1,4 @@
-﻿using Logitude.Test.Base.Models.PartnersPreparation;
+﻿using Logitude.Base.Models.PartnersPreparation;
 using System;
 using System.Collections.Generic;
 using System.Linq;

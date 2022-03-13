@@ -1,4 +1,4 @@
-﻿namespace Logitude.Test.Base.Models.LocationsPreparation
+﻿namespace Logitude.Base.Models.LocationsPreparation
 {
     public class State
     {

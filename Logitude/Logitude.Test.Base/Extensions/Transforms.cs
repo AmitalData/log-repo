@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
 
-namespace Logitude.Test.Base.Extensions
+namespace Logitude.Base.Extensions
 {
     [Binding]
     public class Transforms

@@ -7,8 +7,8 @@
     <ProjectGuid>{74FBC07E-5CBF-44C5-85C8-F86FACAA06B6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Logitude.Test.Base</RootNamespace>
-    <AssemblyName>Logitude.Test.Base</AssemblyName>
+    <RootNamespace>Logitude.Base</RootNamespace>
+    <AssemblyName>Logitude.Base</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

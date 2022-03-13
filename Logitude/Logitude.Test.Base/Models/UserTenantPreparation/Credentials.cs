@@ -1,4 +1,4 @@
-﻿namespace Logitude.Test.Base.Models.UserTenantPreparation
+﻿namespace Logitude.Base.Models.UserTenantPreparation
 {
     public class Credentials
     {
