@@ -59,6 +59,12 @@ namespace CommunicationWorkerRole
     class DocumentsExecutionWorkerRole : WorkerEntryPoint
     {
         private DbQueueService queueService;
+
+        public static int NmuberOfRunningDocumentThreads =0;
+        private const int AllowedThreadNumbers = 20;
+        private static DateTime startExecuteDate;
+
+
         public override bool OnStart()
         {
             ThreadId = Guid.NewGuid().ToString();
@@ -71,6 +77,7 @@ namespace CommunicationWorkerRole
 
         public override void Run()
         {
+            startExecuteDate = DateTime.Now;
             while (IsRunning)
             {
                 if (!General.IsUpdating())
@@ -81,6 +88,7 @@ namespace CommunicationWorkerRole
                     }
                     catch (Exception exception)
                     {
+                        NmuberOfRunningDocumentThreads -= 1;
                         ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Document execution queue worker role start", null, null);
                         Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
                     }
@@ -90,17 +98,38 @@ namespace CommunicationWorkerRole
         }
 
 
-
         private void ExecuteQueue()
         {
+            TimeSpan timeSpan = (DateTime.Now - startExecuteDate);
+            if (timeSpan.Seconds > 30)
+            {
+                NmuberOfRunningDocumentThreads = 0;
+                startExecuteDate = DateTime.Now;
+            }
+            else if(NmuberOfRunningDocumentThreads > AllowedThreadNumbers)
+            {
+                Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
+                return;
+            }
+
             queueService = new DbQueueService("DocumentsExecutionQueue", 0);
             var queueResponse = queueService.Receive(new TimeSpan(0, 0, 0, 0 ,250));
+
             if (queueResponse != null && queueResponse.MessageId != null)
             {
+                NmuberOfRunningDocumentThreads += 1;
                 ThreadStart executeDocumentsThreadStart = (() => new DocumentsExecutionService(queueService, queueResponse).ExecuteDocumentsExecutionQueue());
-                executeDocumentsThreadStart += () => { LogDoneItemInMemory(); };
+                executeDocumentsThreadStart += () =>
+                {
+                    if (NmuberOfRunningDocumentThreads > 0) NmuberOfRunningDocumentThreads -= 1;
+          
+                    LogDoneItemInMemory();
+                };
                 new Thread(executeDocumentsThreadStart) { IsBackground = true }.Start();
                 queueService.Complete();
+
+
+
 
             }
         }
