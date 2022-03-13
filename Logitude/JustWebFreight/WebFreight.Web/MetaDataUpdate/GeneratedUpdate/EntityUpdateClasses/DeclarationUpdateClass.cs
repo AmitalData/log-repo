@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "4000647066e7ea5dc8d66a8dca044618";
+		public const string HashString = "fa48d8332d3178196e49f2ab2d0b2af1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -15117,6 +15117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExporterImporterCode",
 					  						DefaultText =  "Importer ",
+					  						FullLocalDefaultText =  "מספר יצואן",
 					  						ListFieldLable =  "ExporterImporterCodeListLable",
 					  						ListLableDefaultText =  "Importer",
 					  						ListLocalDefaultText =  "מספר יצואן",
@@ -19270,8 +19271,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOExistsClosingAmendments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ExistsClosingAmendments", DefaultText = "Exists declaration closing amendment in status ",LocalDefaultText = @"קיים תיקון הצהרה מסוג סגירה בסטטוס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsCustomsDocumentSupplierInvoiceItems = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.SupplierInvoiceItems", DefaultText = "Supplier Invoice Items",LocalDefaultText = @"פרטי מכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode DeclarationTextCode_CustomsDeclarationOUnSavedDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UnSavedDeclarations", DefaultText = "UnSavedDeclarations",LocalDefaultText = @"בהצהרה זו בוצעו שינויים שלא נשמרו האם ברצונך לשמור?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
