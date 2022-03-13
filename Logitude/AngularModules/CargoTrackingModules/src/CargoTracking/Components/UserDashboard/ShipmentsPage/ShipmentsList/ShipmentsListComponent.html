@@ -229,11 +229,10 @@
     <div class="scrollable-table" *ngIf="!noResult">
         <div class="table" style="height: 100%; box-sizing: border-box;">
 
-
-            <cdk-virtual-scroll-viewport id="scrollArea" *ngIf="ShipmentsDataSource" class="shipment-cards-holder"
+            <cdk-virtual-scroll-viewport #scrollViewport id="scrollArea" *ngIf="ShipmentsDataSource" class="shipment-cards-holder"
                 [itemSize]="170">
 
-
+ 
 
                 <div *cdkVirtualFor="let shipment of ShipmentsDataSource" class="row record-row"
                     (click)="ItemClicked(shipment)" style="cursor: pointer;">
