@@ -683,7 +683,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         if (this.DirectionId == 'C') {
             this.SaveChanges();
         } else { 
-           // this.CreateExportShipment(); will be added in 2022 R2
+            this.CreateExportShipment();
         }
 
     }

@@ -400,6 +400,11 @@ export class QuoteSaleChargePM {
     public set IsRegionalTax(newValue: boolean) { if (this.isRegionalTax != newValue) { this.isRegionalTax = newValue; this.MarkAsDirty("IsRegionalTax"); } }
        
 	 
+    private quoteChargesGroupCode: string;
+    public get QuoteChargesGroupCode() { return this.quoteChargesGroupCode; }
+    public set QuoteChargesGroupCode(newValue: string) { if (this.quoteChargesGroupCode != newValue) { this.quoteChargesGroupCode = newValue; this.MarkAsDirty("QuoteChargesGroupCode"); } }
+       
+	 
 
     public OldEntityPM: QuoteSaleChargePM;
 		

@@ -84,5 +84,6 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool IsChargeBySteps { get; set; }
         public double? SalesWithVATAmount { get; set; }
         public bool IsRegionalTax { get; set; }
+        public string QuoteChargesGroupCode { get; set; }
     }
 }
