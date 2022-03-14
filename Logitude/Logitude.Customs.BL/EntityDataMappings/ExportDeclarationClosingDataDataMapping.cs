@@ -13,6 +13,7 @@ using Logitude.Customs.Data;
 using Unifreight.Data.AmitalModel;
 using Unifreight.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.BL.BL;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -32,7 +33,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPOCOToPM(ExportDeclarationClosingDataPM entityPM, ExportDeclarationClosingData entityPOCO)
         {
-            if(entityPOCO.FinalCargoType != null)
+            var eFIFILEMDataInExportDeclarationClosing = new EFIFILEMDataInExportDeclarationClosing();
+            entityPM = eFIFILEMDataInExportDeclarationClosing.GetEFIFILEMDataInExportDeclarationClosingDataPM(entityPOCO.DeclarationId, entityPOCO.Tenant);
+            if (entityPOCO.FinalCargoType != null)
             {
                 entityPM.FinalCargoTypeName = entityPOCO.FinalCargoType.LocalName;
             }
@@ -44,32 +47,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.FinalShipCodeName = entityPOCO.FinalCustomsShip.LocalName;
             }
-            var dec = new DeclarationQueryService(entityPOCO.Tenant).GetSingle(entityPOCO.DeclarationId, false, false);
-            if (dec != null && dec.ExportFile != null && dec.Direction == "E" && dec.TransportModeId == "A") 
-            { // only if transportmode= A and direction = export 
-                List<AmitalContext> _AmitalContextList = new List<AmitalContext>();
-                var tenantAmitalContext = _AmitalContextList.FirstOrDefault(rec => rec.TenantSeed == entityPM.Tenant);
-                if (tenantAmitalContext == null)
-                {
-                    tenantAmitalContext = AmitalContext.GetContext(entityPM.Tenant);
-                    _AmitalContextList.Add(tenantAmitalContext);
-                }
-                int.TryParse(dec.ExportFile, out int exportFile);
-                var EFIFILEMData = new EFIFILEMQueryService(tenantAmitalContext).GetSingle(exportFile, false);
-                if(EFIFILEMData != null)
-                {
-                    entityPM.SMP = EFIFILEMData.SMP;
-                    entityPM.FLIGHT_DATE=EFIFILEMData.FLIGHT_DATE;
-                    if(EFIFILEMData.SPEDNO != null)
-                    {
-                        var ESPSPEDdata = new ESPSPEDQueryService(tenantAmitalContext).GetSingle(EFIFILEMData.SPEDNO.GetValueOrDefault(), false);
-                        if(ESPSPEDdata != null)
-                        {
-                            entityPM.MAIN_AWB = ESPSPEDdata.MAIN_AWB;
-                        }
-                    }
-                }
-            }
+            
         }
    }
 
