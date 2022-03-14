@@ -709,6 +709,24 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         }
         private string _MAKATREMARK;
 
+        [System.Runtime.Serialization.DataMember]
+        public virtual string PRATMEHES2
+        {
+            get
+            {
+                return _PRATMEHES2;
+            }
+            set
+            {
+                if (_PRATMEHES2 != value)
+                {
+                    _PRATMEHES2 = value;
+                    OnPropertyChanged("PRATMEHES2");
+                }
+            }
+        }
+        private string _PRATMEHES2;
+
         #endregion
 
         #region Extensibility Method Definitions

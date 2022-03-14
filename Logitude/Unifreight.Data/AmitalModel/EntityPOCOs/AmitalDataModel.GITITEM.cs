@@ -594,6 +594,42 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         }
         private string _REMARKSPROTEST;
 
+        [System.Runtime.Serialization.DataMember]
+        public virtual string CLASSIFIER1ID
+        {
+            get
+            {
+                return _CLASSIFIER1ID;
+            }
+            set
+            {
+                if (_CLASSIFIER1ID != value)
+                {
+                    _CLASSIFIER1ID = value;
+                    OnPropertyChanged("CLASSIFIER1ID");
+                }
+            }
+        }
+        private string _CLASSIFIER1ID;
+
+        [System.Runtime.Serialization.DataMember]
+        public virtual string CLASSIFIER2ID
+        {
+            get
+            {
+                return _CLASSIFIER2ID;
+            }
+            set
+            {
+                if (_CLASSIFIER2ID != value)
+                {
+                    _CLASSIFIER2ID = value;
+                    OnPropertyChanged("CLASSIFIER2ID");
+                }
+            }
+        }
+        private string _CLASSIFIER2ID;
+
         #endregion
 
         #region INotifyPropertyChanged Members
