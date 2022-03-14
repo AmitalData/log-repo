@@ -1,5 +1,6 @@
 declare var window: any;
 import {Directive, ElementRef, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit} from '@angular/core';  
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import {SessionLocator} from '../../Utilities/SessionLocator';
 
 
@@ -64,7 +65,7 @@ export class ChooseDatesComponent {
         if(this.QueryCode == "LedgerTransaction.LedgerTransactions" && ValidationErrors.length == 0) {
             var dateDifference = this.calculateDiff(this.SelectedFromDate, this.SelectedToDate)
             if(dateDifference > this.lastYearDays) {
-                ValidationErrors.push("The difference between date from and date to should not be more than one year");
+                ValidationErrors.push(TextCodeTranslator.Translate("LedgerTransaction.O.OneYearValidation"));
             }
         }
 
