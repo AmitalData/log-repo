@@ -18,6 +18,7 @@ using System.Web;
 using System.Web.Services;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using System.Threading;
 
 namespace WebFreight.Web.CustomWebServices
 {
@@ -97,13 +98,21 @@ namespace WebFreight.Web.CustomWebServices
         {
             // tenant = 202;
             //CustomsRequestsSheetId = "1-15015";
-            var c = Calc(tenant, CustomsRequestsSheetId,
+            var c = Calc(tenant, CustomsRequestsSheetId,false,
             out  stopMeNow,
             out  continueInBackground,
             out  responseDataXml);
+            if (stopMeNow && string.IsNullOrWhiteSpace(responseDataXml))
+            {
+                Thread.Sleep(300);
+                c = Calc(tenant, CustomsRequestsSheetId, true,
+            out stopMeNow,
+            out continueInBackground,
+            out responseDataXml);
+            }
             return (int)c;
         }
-        public CustomsStepEnum Calc(int tenant, string CustomsRequestsSheetId,
+        public CustomsStepEnum Calc(int tenant, string CustomsRequestsSheetId,bool suppressCache,
             out  bool stopMeNow,
             out  bool continueInBackground,
             out  string responseDataXml)
@@ -126,6 +135,7 @@ namespace WebFreight.Web.CustomWebServices
 
 
             var cacheRequestStopedNoteClient = Simplog.Server.Infrastructure.Helpers.CacheManager.CacheWrapper.Get("Customs.General.RequestStopedNoteClient," + CustomsRequestsSheetId) as string;
+            cacheRequestStopedNoteClient = suppressCache ? null : cacheRequestStopedNoteClient;
             if (!string.IsNullOrWhiteSpace(cacheRequestStopedNoteClient))
             {
                 responseDataXml = cacheRequestStopedNoteClient;
@@ -140,6 +150,7 @@ namespace WebFreight.Web.CustomWebServices
             CustomsRequestsSheetPM customsRequestsSheetPM = null;
             var cacheSetInCustomsRequestsSheetUpdateServiceOnAfterUpdating = true;
             customsRequestsSheetPM = CustomsRequestsSheetUpdateService.GetFromCache(CustomsRequestsSheetId);
+            customsRequestsSheetPM = suppressCache ? null : customsRequestsSheetPM;
             if (customsRequestsSheetPM == null) 
             {
                 var qs = new CustomsRequestsSheetQueryService(tenant);
@@ -220,7 +231,7 @@ namespace WebFreight.Web.CustomWebServices
             //{
             var communicationLogStepQuery = new CommunicationLogStepQuery(tenant);
             stepList = communicationLogStepQuery
-                .GetCommunicationLogStepsDocumentData(customsRequestsSheetPM.RequestComminicationId, tenant, reqDataList.ToArray(), true);
+                .GetCommunicationLogStepsDocumentData(customsRequestsSheetPM.RequestComminicationId, tenant, reqDataList.ToArray(), true, suppressCache);
 
 
             var inProgress = stepList.FirstOrDefault(r => r.Status == CommStatusEnum.P.ToString());
