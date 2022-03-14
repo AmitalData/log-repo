@@ -175,7 +175,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
             int invoiceDateYear = ((DateTime)arInvoicePM.InvoiceDate).Year;
             int currentDateYear = DateTime.Now.Year;
-            if (invoiceDateYear != currentDateYear && invoiceDateYear != currentDateYear + 1)
+            int previousDateYear = DateTime.Now.Year - 1;
+            if (invoiceDateYear != currentDateYear && invoiceDateYear != previousDateYear)
             {
                 throw new ApplicationException("Invoice Date Year must be equal to the current year or the immediately preceding year");
             }
