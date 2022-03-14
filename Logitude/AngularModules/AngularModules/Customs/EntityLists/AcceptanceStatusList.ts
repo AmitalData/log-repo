@@ -9,9 +9,10 @@
 export class AcceptanceStatusList {
    
 	Code: string;
-	Name: string;
+	EnglishName: string;
 	SearchFields: string;
 	LocalName: string;
+	Inactive: boolean;
 	
 }
  
