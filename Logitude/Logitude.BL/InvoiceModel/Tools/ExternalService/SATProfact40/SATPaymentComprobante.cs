@@ -67,6 +67,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
             Comprobante comprobante = new Comprobante
             {
+                Exportacion = SATData.ComprobanteExportacion,
                 CfdiRelacionados = GetCfdiRelacionados(),
                 Total = 0,
                 Version = SATData.CurrentComprobanteVersion,
@@ -310,6 +311,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 ValorUnitario = 0,
                 ClaveProdServ = "84111506",
                 ClaveUnidad = "ACT",
+                ObjetoImp = SATData.NoTaxObjetoImp,
             };
 
             conceptosList.Add(concepto);
@@ -337,10 +339,32 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 comprobanteReceptor.ResidenciaFiscal = billToCountryCode;
                 comprobanteReceptor.ResidenciaFiscalSpecified = true;
             }
+
+            string billToAddressZipCode = GetbillToAddressZipCode();
+
+            comprobanteReceptor.RegimenFiscalReceptor = billToCard.RegimenFiscalCode;
+            comprobanteReceptor.DomicilioFiscalReceptor = billToAddressZipCode;
             comprobanteReceptor.Nombre = billToCard.EnglishName;
             comprobanteReceptor.UsoCFDI = "P01";
 
             return comprobanteReceptor;
+        }
+
+        private string GetbillToAddressZipCode()
+        {
+            string billToAddressZipCode = "";
+            Address billToAddress = null;
+            AddressRepository addressRepository = new AddressRepository(commonContext);
+            if (!string.IsNullOrEmpty(arPaymentPM.BillToAddressId))
+            {
+                billToAddress = addressRepository.GetSingleAddress(arPaymentPM.BillToAddressId, arPaymentPM.Tenant);
+            }
+            if (billToAddress != null && !string.IsNullOrEmpty(billToAddress.ZipCode))
+            {
+                billToAddressZipCode = SATBaseProfact40Service.GetBillToAddressZipCode(billToAddress, arPaymentPM.Tenant);
+            }
+
+            return billToAddressZipCode;
         }
 
         private ComprobanteEmisor GetEmisor()

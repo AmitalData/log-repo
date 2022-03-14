@@ -92,5 +92,17 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         {
             return decimal.Parse(dNumber.ToString("0.000000"));
         }
+
+        public static string GetBillToAddressZipCode(Address billToAddress, int tenant)
+        {
+            PostalCodeQuery postalCodeQuery = new PostalCodeQuery(tenant);
+            PostalCodePM postalCodePM = postalCodeQuery.GetSinglePM(billToAddress.ZipCode);
+            if (postalCodePM != null)
+            {
+                return billToAddress.ZipCode;
+            }
+
+            return null;
+        }
     }
 }
