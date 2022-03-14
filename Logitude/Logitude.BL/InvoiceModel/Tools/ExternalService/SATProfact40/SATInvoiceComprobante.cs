@@ -259,7 +259,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             string billToAddressZipCode = "";
             if (billToAddress != null && !string.IsNullOrEmpty(billToAddress.ZipCode))
             {
-                billToAddressZipCode = GetBillToAddressZipCode(billToAddress);
+                billToAddressZipCode = SATBaseProfact40Service.GetBillToAddressZipCode(billToAddress, arInvoicePM.Tenant);
             }
 
             return new ComprobanteReceptor
@@ -270,18 +270,6 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 Rfc = GetReceptorRfc(),
                 UsoCFDI = GetReceptorUsoCFDI()
             };
-        }
-
-        private string GetBillToAddressZipCode(Address billToAddress)
-        {
-            PostalCodeQuery postalCodeQuery = new PostalCodeQuery(arInvoicePM.Tenant);
-            PostalCodePM postalCodePM = postalCodeQuery.GetSinglePM(billToAddress.ZipCode);
-            if (postalCodePM != null)
-            {
-                return billToAddress.ZipCode;
-            }
-
-            return null;
         }
 
         private string GetReceptorRfc()
@@ -424,7 +412,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 {
                     ComprobanteConcepto concepto = new ComprobanteConcepto
                     {
-                        ObjetoImp = "02",
+                        ObjetoImp = SATData.NoTaxObjetoImp,
                         Cantidad = Math.Abs((line.Quantity != null ? ((decimal)line.Quantity.Value) : 0)),
                         Unidad = "SERVICIO",
                         Descripcion = line.Description,
