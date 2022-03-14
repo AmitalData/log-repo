@@ -5981,6 +5981,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;UnitOfMeasurementCode&quot;"
     ListPropertyPath="&quot;UnitOfMeasurementCode&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -6100,7 +6101,8 @@
         ObjectFieldName="&quot;TypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -6166,7 +6168,8 @@
         ObjectFieldName="&quot;TypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -6232,7 +6235,8 @@
         ObjectFieldName="&quot;TypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -6298,7 +6302,8 @@
         ObjectFieldName="&quot;TypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -6364,7 +6369,8 @@
         ObjectFieldName="&quot;TypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -6430,7 +6436,8 @@
         ObjectFieldName="&quot;TypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -6496,7 +6503,8 @@
         ObjectFieldName="&quot;TypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -6562,7 +6570,75 @@
         ObjectFieldName="&quot;TypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
+    </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;Inland FTL&quot;"
+    TextCode="&quot;Inland FTL&quot;"
+    LocalTextCode="&quot;Inland FTL&quot;"
+    QueryGroupCode="&quot;d341&quot;"
+    IndexOrder="8"
+    ObjectTableName="&quot;Tariff&quot;"
+    QuerySection="&quot;Tariff&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;CreateDate&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;Inland FTL&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;TariffNumber&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;Inland FTL&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;Name&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;Inland FTL&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;SellerName&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;Inland FTL&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;Notes&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;Inland FTL&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;CreatedByUserName&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;Inland FTL&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;CreateDate&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;Inland FTL&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;UpdatedByUserName&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;Inland FTL&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;UpdateDate&quot;"
+        ColumnWidth="150" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;Inland FTL&quot;"
+        PredefinedValue="&quot;IFT&quot;"
+        ObjectFieldName="&quot;TypeCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Screen

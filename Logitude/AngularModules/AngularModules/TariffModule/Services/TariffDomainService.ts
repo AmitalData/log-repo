@@ -371,6 +371,7 @@ export class TariffSummery {
     OceanFCLSurchargesCount: number;
     ImportCustomsChargesCount: number;
     ExportCustomsChargesCount: number;
+    InlandFTLTariffsCount: number
 }
 
 export class TariffFilterParameter {

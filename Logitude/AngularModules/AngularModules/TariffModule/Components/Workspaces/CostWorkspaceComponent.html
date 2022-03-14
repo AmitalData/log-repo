@@ -81,6 +81,25 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="QueriesSection" *ngIf="IsInlandTariffsVisible">
+                                        <div>Inland Tariffs</div>
+                                        <div style="height:22px; width: 45px; position: absolute; top:4px; right:0px;">
+                                            <div id="{{'NEWTARIFF' | IdGeneratorPipe}}" tabindex="0" class="ToggleButton" style="margin: auto; width: 100% !important; height: 100% !important">
+                                                <label>New</label>
+                                                <img src="./Images/ToggleIcon.png" />
+                                                <div class="ToggleButtonMenu" style="width: 80px;">
+                                                    <button (click)="NewTariff('IFT')">Inland FTL</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div>
+                                                <HyperlinkQuery (click)="ViewTariffs('IFT')" attr.data-cy="{{'InlandFTL' | IdGeneratorPipe}}">Import ({{InlandFTLTariffsCount}})</HyperlinkQuery>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </SectionBody>
                             </SectionBox>
                         </div>

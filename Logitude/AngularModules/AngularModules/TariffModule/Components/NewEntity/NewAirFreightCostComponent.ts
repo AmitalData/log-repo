@@ -53,6 +53,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
     private firstVersion: TariffVersionPM;
     public IsSellerVisible: boolean = false;
     public IsCustomsBrokerVisible: boolean = false;
+    public IsPriceStepsAreaVisible: boolean = false;
     constructor() {
         super();
         this.myService = new TariffPMService();
@@ -104,10 +105,12 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
             this.VisibileSurchargesArea = true;
             this.TariffCurrencyTextCode = "Tariff.O.DefaultCurrency";
         }
-        else if (this.EntityPM.TypeCode == "OFC") {
+
+        else if (this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "IFT") {
             this.VisibleFCLFreightArea = true;
             this.HasAContainerTypeUOM = true;
         }
+
         else {
             this.VisibileSurchargesArea = false;
             this.TariffCurrencyTextCode = "Tariff.F.CurrencyId";
@@ -117,11 +120,46 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
             this.VisibleContainerTypeAreaInOFS = true;
             this.HasAContainerTypeUOM = false;
         }
+
+        this.SetPriceStepsVisibility();
         this.SetDefaultFreightChargeId();
         this.BuildQueryFilters();
         this.BuildFreightChargesQueryFilters();
         this.SetUIProperties();
         this.CreateFirstVersion();
+    }
+
+    private SetPriceStepsVisibility() {
+        var isVisible: boolean = true;
+        if (this.EntityPM.TypeCode == 'ASC') {
+            isVisible = false;
+        }
+
+        else if (this.EntityPM.TypeCode == 'OSC') {
+            isVisible = false;
+        }
+
+        else if (this.EntityPM.TypeCode == 'OFC') {
+            isVisible = false;
+        }
+
+        else if (this.EntityPM.TypeCode == 'OFS') {
+            isVisible = false;
+        }
+
+        else if (this.EntityPM.TypeCode == 'ICC') {
+            isVisible = false;
+        }
+
+        else if (this.EntityPM.TypeCode == 'ECC') {
+            isVisible = false;
+        }
+
+        else if (this.EntityPM.TypeCode == 'IFT') {
+            isVisible = false;
+        }
+
+        this.IsPriceStepsAreaVisible = isVisible;
     }
 
     private CreateFirstVersion() {
@@ -153,7 +191,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
     }
     private SetUIProperties_FreightCharges() {
         var isFreightChargeVisible: boolean = false;
-        if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OFC") {
+        if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "IFT") {
             isFreightChargeVisible = true;
             this.UIProperties.SetRequired("FreightChargeId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.FreightChargeId));
         }

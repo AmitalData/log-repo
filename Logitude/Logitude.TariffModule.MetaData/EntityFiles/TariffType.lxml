@@ -38,7 +38,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Tariff Types&quot;"
-  Code="&quot;91bb&quot;"
+  Code="&quot;6675&quot;"
   Name="&quot;TariffType Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -289,8 +289,7 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;TariffType&quot;"
-    FieldsDataType="&quot;LookUp&quot;"
-    LookUpTableName="&quot;TransportMode&quot;"
+    FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="1"
     IsRequired="false"
@@ -361,8 +360,7 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;TariffType&quot;"
-    FieldsDataType="&quot;LookUp&quot;"
-    LookUpTableName="&quot;Direction&quot;"
+    FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="1"
     IsRequired="false"
@@ -505,6 +503,12 @@
       Name="&quot;Import Customs Charges Cost&quot;"
       Code="&quot;ICC&quot;"
       SearchFields="&quot;ICC,Import Customs Charges Cost&quot;" />
+    <Record
+      DirectionCode="&quot;&quot;"
+      Name="&quot;Inland FTL&quot;"
+      Code="&quot;IFT&quot;"
+      SearchFields="&quot;IFT,Inland FTL&quot;"
+      TransportModeCode="&quot;I&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

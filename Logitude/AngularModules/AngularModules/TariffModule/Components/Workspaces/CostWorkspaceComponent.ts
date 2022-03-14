@@ -21,6 +21,7 @@ export class CostWorkspaceComponent implements OnInit {
     private CurrentSession = SessionLocator.SelectedSession;
     public IsTariffGenerateVisible: boolean = false;
     public IsCustomsChargesVisible: boolean = false;
+    public IsInlandTariffsVisible: boolean = false;
     public QueriesAreaHeight: number = 240;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(private _entityResourceService: EntityResourceService, private tariffDomainService: TariffDomainService) {
@@ -34,6 +35,7 @@ export class CostWorkspaceComponent implements OnInit {
     public OceanFCLSurchargesCount: string;
     public ImportCustomsChargesCount: string;
     public ExportCustomsChargesCount: string;
+    public InlandFTLTariffsCount: string;
     private isLoaderReady: boolean = false;
     RunComponent() {
         if (this.AllLocations) {
@@ -82,6 +84,7 @@ export class CostWorkspaceComponent implements OnInit {
                         this.OceanFCLSurchargesCount = myResult.OceanFCLSurchargesCount > 1000 ? "1000+" : myResult.OceanFCLSurchargesCount.toString();
                         this.ImportCustomsChargesCount = myResult.ImportCustomsChargesCount > 1000 ? "1000+" : myResult.ImportCustomsChargesCount.toString();
                         this.ExportCustomsChargesCount = myResult.ExportCustomsChargesCount > 1000 ? "1000+" : myResult.ExportCustomsChargesCount.toString();
+                        this.InlandFTLTariffsCount = myResult.InlandFTLTariffsCount > 1000 ? "1000+" : myResult.InlandFTLTariffsCount.toString();
                     }
                 }
             }
@@ -114,7 +117,7 @@ export class CostWorkspaceComponent implements OnInit {
     SetQueriesVisibility() {
         if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CCT")[0]) {
             this.IsCustomsChargesVisible = true;
-            this.QueriesAreaHeight = 310;
+            this.QueriesAreaHeight += 70;
         }
 
         if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.AirFreightCostTariffs")) {
@@ -147,6 +150,11 @@ export class CostWorkspaceComponent implements OnInit {
 
         if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.ImportCustomsChargesCost")) {
             this.ImportCustomsCostVisibility = true;
+        }
+
+        if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.InlandFTL")) {
+            this.IsInlandTariffsVisible = true;
+            this.QueriesAreaHeight += 40;
         }
     }
 
@@ -199,6 +207,13 @@ export class CostWorkspaceComponent implements OnInit {
                 typeCode = "ECC";
                 break;
             }
+
+            case "IFT": {
+                windowTitle = "New " + TextCodeTranslator.Translate("Tariff.Q.InlandFTL");
+                typeCode = "IFT";
+                break;
+            }
+
             default: {
                 break;
             }

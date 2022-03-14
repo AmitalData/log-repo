@@ -3223,6 +3223,12 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             windowArgs.TypeCode = "ECC";
                             break;
                         }
+
+                        case "Tariff.Inland FTL": {
+                            logWindow.Title = "New " + TextCodeTranslator.Translate("Tariff.Q.InlandFTL");
+                            windowArgs.TypeCode = "IFT";
+                            break;
+                        }
                     }
 
                     logWindow.WindowArgs = windowArgs;

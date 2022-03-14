@@ -104,7 +104,7 @@
                                 </tr>
 
                                 <!-- Price Steps  -->
-                                <tr *ngIf="EntityPM.TypeCode != 'ASC' && EntityPM.TypeCode != 'OSC' && EntityPM.TypeCode != 'OFC' && EntityPM.TypeCode != 'OFS' && EntityPM.TypeCode != 'ICC' && EntityPM.TypeCode != 'ECC'" class="FormFieldRow">
+                                <tr *ngIf="IsPriceStepsAreaVisible" class="FormFieldRow">
                                     <td>
                                         <LogLabel [NoObjectField]="true" [Text]="'Price Steps'" [DataContext]="DataContext"></LogLabel>
                                     </td>
@@ -126,7 +126,7 @@
                                 </tr>
 
                                 <!-- All in charges  -->
-                                <tr *ngIf="EntityPM.TypeCode == 'AFC' || EntityPM.TypeCode == 'OLC' || EntityPM.TypeCode == 'OFC'" class="FormFieldRow">
+                                <tr *ngIf="EntityPM.TypeCode == 'AFC' || EntityPM.TypeCode == 'OLC' || EntityPM.TypeCode == 'OFC' || EntityPM.TypeCode == 'IFT'" class="FormFieldRow">
                                     <td>
                                         <LogLabel [NoObjectField]="true" [Text]="'All-In Charges'" [DataContext]="DataContext"></LogLabel>
                                     </td>
@@ -199,7 +199,7 @@
                                 </tr>
 
                                 <!-- Freight Charges Type -->
-                                <tr *ngIf="EntityPM.TypeCode == 'AFC' || EntityPM.TypeCode == 'OLC' || EntityPM.TypeCode == 'OFC'" class="FormFieldRow">
+                                <tr *ngIf="EntityPM.TypeCode == 'AFC' || EntityPM.TypeCode == 'OLC' || EntityPM.TypeCode == 'OFC' || EntityPM.TypeCode == 'IFT'" class="FormFieldRow">
                                     <td>
                                         <LogLabel [ObjectFieldName]="'FreightChargeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
 

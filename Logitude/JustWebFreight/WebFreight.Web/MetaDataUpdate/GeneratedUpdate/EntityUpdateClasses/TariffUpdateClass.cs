@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TariffUpdateClass
    {  		
-		public const string HashString = "f751d38861e11690c00904ac3154b940";
+		public const string HashString = "21a627e3100af7586d279cdd1cceec44";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4360,6 +4360,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "UnitOfMeasurementCode",
 					  						ListPropertyPath =  "UnitOfMeasurementCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -4449,6 +4450,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			   TextCode TariffTextCode_7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tariff.Q.ImportCustomsChargesCost", DefaultText = @"Import Customs Charges Cost",LocalDefaultText = "Import Customs Charges Cost", ObjectTableId = TariffObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature TariffFeature_7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Tariff.Q.ImportCustomsChargesCost", ObjectTableId = TariffObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffFeatures.ImportCustomsChargesCost", NameTextCodeDefaultText = "Import Customs Charges Cost", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TariffObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode TariffTextCode_8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tariff.Q.InlandFTL", DefaultText = @"Inland FTL",LocalDefaultText = "Inland FTL", ObjectTableId = TariffObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TariffFeature_8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Tariff.Q.InlandFTL", ObjectTableId = TariffObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffFeatures.InlandFTL", NameTextCodeDefaultText = "Inland FTL", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TariffObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -4638,6 +4643,29 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 QueryColumn ImportCustomsChargesCostQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImportCustomsChargesCostQuery.Id,QueryCode = ImportCustomsChargesCostQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Tariff.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
              AdvancedQueryFilter ImportCustomsChargesCostQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Tariff.TypeCode", PredefinedValue = "ICC",PredefinedValue2 = null, CustomPredefined = false, QueryId = ImportCustomsChargesCostQuery.Id,QueryCode = ImportCustomsChargesCostQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+  
+	      
+
+			  Query InlandFTLQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TariffTextCode_8.Id, NameTextCodeCode = TariffTextCode_8.Code, ObjectTableName = "Tariff", Code = "Inland FTL",  QueryGroupCode = "d341", IndexOrder = 8, Tenant = 0, ObjectTableId = TariffObjectTable.Id, QuerySection = "Tariff", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TariffFeature_8.Id,FeatureUniqeCode= TariffFeature_8.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn InlandFTLQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandFTLQuery.Id,QueryCode = InlandFTLQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Tariff.TariffNumber" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn InlandFTLQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandFTLQuery.Id,QueryCode = InlandFTLQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Tariff.Name" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn InlandFTLQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandFTLQuery.Id,QueryCode = InlandFTLQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Tariff.SellerName" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn InlandFTLQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandFTLQuery.Id,QueryCode = InlandFTLQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Tariff.Notes" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn InlandFTLQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandFTLQuery.Id,QueryCode = InlandFTLQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Tariff.CreatedByUserName" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn InlandFTLQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandFTLQuery.Id,QueryCode = InlandFTLQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Tariff.CreateDate" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn InlandFTLQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandFTLQuery.Id,QueryCode = InlandFTLQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Tariff.UpdatedByUserName" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn InlandFTLQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandFTLQuery.Id,QueryCode = InlandFTLQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Tariff.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
+
+             AdvancedQueryFilter InlandFTLQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Tariff.TypeCode", PredefinedValue = "IFT",PredefinedValue2 = null, CustomPredefined = false, QueryId = InlandFTLQuery.Id,QueryCode = InlandFTLQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
