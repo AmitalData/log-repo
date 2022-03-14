@@ -1,0 +1,146 @@
+﻿<Script DBType="Main" Module="Shipment"  AOT="true" TargetTableName="Shipments" BatchSize="10000" >
+  <Sql Version="1">
+    <![CDATA[
+
+    If(OBJECT_ID('tempdb..#temp') Is Not Null)
+	Begin
+		Drop Table #temp
+	End
+
+	If(OBJECT_ID('tempdb..#temp_Shipment') Is Not Null)
+	Begin
+		Drop Table #temp_Shipment
+	End
+
+	CREATE TABLE #temp_Shipment
+	(
+		Id varchar(15) not null,
+		StatusLocation nvarchar(200) null
+	)
+
+	select
+	Shipments.Id,
+	Shipments.Tenant as Tenant,
+	MainCarriageToPort.Code as MainCarriageToPortAddress,
+	MainCarriageToAddress.City as MainCarriageToAddressCity,
+	ShipmentMasterDatas.InlandDomesticToCity as InlandDomesticToCity,
+	ShipmentMasterDatas.InlandDomesticToTypeCode as InlandDomesticToTypeCode,
+	MainCarriageFromPort.Code as MainCarriageFromPortAddress,
+	MainCarriageFromAddress.City as MainCarriageFromAddressCity,
+	ShipmentMasterDatas.InlandDomesticFromCity as InlandDomesticFromCity,
+	ShipmentMasterDatas.InlandDomesticFromTypeCode as InlandDomesticFromTypeCode,
+	EntityStatus.Name as EntityStatusName
+	into #temp
+	from Shipments
+	left outer join ShipmentMasterDatas on Shipments.MasterShipmentDataId = ShipmentMasterDatas.Id
+	left outer join Addresses as MainCarriageToAddress on MainCarriageToAddress.Id = MainCarriageToAddressId
+	left outer join Ports as MainCarriageToPort on MainCarriageToPort.Id = MainCarriageToPortId
+	left outer join Addresses as MainCarriageFromAddress on MainCarriageFromAddress.Id = MainCarriageFromAddressId
+	left outer join Ports as MainCarriageFromPort on MainCarriageFromPort.Id = MainCarriageFromPortId
+	left outer join EntityStatus as EntityStatus on EntityStatus.Id = Shipments.StatusId
+	where Shipments.StatusLocation is null and Shipments.DirectionId = 'D' and Shipments.TransportModeId = 'I' and $LastCounterWhere$
+
+		declare @Id as varchar(15)
+		declare @Tenant as int
+
+		declare @MainCarriageToPortAddress as varchar(40)
+		declare @MainCarriageToAddressCity as varchar(40)
+		declare @InlandDomesticToCity as varchar(25)
+		declare @InlandDomesticToTypeCode as varchar(5)
+		declare @MainCarriageFromPortAddress as varchar(40)
+		declare @MainCarriageFromAddressCity as varchar(40)
+		declare @InlandDomesticFromCity as varchar(25)
+		declare @InlandDomesticFromTypeCode as varchar(5)
+
+		declare @ResultAddress as varchar(1000)
+		declare @EntityStatusName as varchar(100)
+		declare @Count as int
+		set @Count = 0;
+
+		DECLARE DataCursor CURSOR READ_ONLY
+		FOR
+		SELECT Id, Tenant,EntityStatusName, MainCarriageToPortAddress,MainCarriageToAddressCity,InlandDomesticToCity, InlandDomesticToTypeCode,MainCarriageFromPortAddress,MainCarriageFromAddressCity, InlandDomesticFromCity, InlandDomesticFromTypeCode
+		FROM #temp	
+		OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id, @Tenant,@EntityStatusName, @MainCarriageToPortAddress, @MainCarriageToAddressCity,@InlandDomesticToCity, @InlandDomesticToTypeCode,  @MainCarriageFromPortAddress, @MainCarriageFromAddressCity, @InlandDomesticFromCity, @InlandDomesticFromTypeCode
+		WHILE @@FETCH_STATUS = 0
+		BEGIN
+
+			set @ResultAddress = NULL
+
+			if (@EntityStatusName = 'Departed')
+			begin
+
+				if (@InlandDomesticFromTypeCode = 'PART')
+				begin
+					set @ResultAddress = @MainCarriageFromAddressCity;
+
+				end
+
+				else if (@InlandDomesticFromTypeCode = 'CASL')
+				begin
+					set @ResultAddress = @InlandDomesticFromCity;
+				end
+
+				else if (@InlandDomesticFromTypeCode = 'PORT')
+				begin
+					set @ResultAddress = @MainCarriageFromPortAddress;
+				end
+			end
+
+			else if (@EntityStatusName = 'Arrived')
+			begin
+
+				if (@InlandDomesticToTypeCode = 'PART')
+				begin
+					set @ResultAddress = @MainCarriageToAddressCity;
+
+				end
+
+				else if (@InlandDomesticToTypeCode = 'CASL')
+				begin
+					set @ResultAddress = @InlandDomesticToCity;
+				end
+
+				else if (@InlandDomesticToTypeCode = 'PORT')
+				begin
+					set @ResultAddress = @MainCarriageToPortAddress;
+				end
+			end
+
+			insert into #temp_Shipment(Id, StatusLocation) values(@Id, @ResultAddress)
+
+			set @Count = @Count + 1;
+			if(@Count = 1000)
+			begin
+				update Shipments
+				set
+				StatusLocation = #temp_Shipment.StatusLocation
+				FROM Shipments
+				INNER JOIN #temp_Shipment
+				on Shipments.Id = #temp_Shipment.Id
+
+				truncate table #temp_Shipment
+				set @Count = 0
+			end
+		FETCH NEXT FROM DataCursor INTO  @Id, @Tenant,@EntityStatusName, @MainCarriageToPortAddress, @MainCarriageToAddressCity,@InlandDomesticToCity, @InlandDomesticToTypeCode,  @MainCarriageFromPortAddress, @MainCarriageFromAddressCity, @InlandDomesticFromCity, @InlandDomesticFromTypeCode
+		END
+		CLOSE DataCursor
+		DEALLOCATE DataCursor
+
+		if (@Count > 0)
+		begin
+				update Shipments
+				set
+				StatusLocation = #temp_Shipment.StatusLocation
+				FROM Shipments
+				INNER JOIN #temp_Shipment
+				on Shipments.Id = #temp_Shipment.Id
+		end
+
+	drop table #temp
+	drop table #temp_Shipment
+
+
+    ]]>
+  </Sql>
+</Script>

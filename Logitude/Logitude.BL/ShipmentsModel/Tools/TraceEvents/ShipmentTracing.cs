@@ -19,6 +19,8 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.DataContracts;
 using Simplog.Server.Infrastructure;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityPMs;
 
 namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 {
@@ -42,6 +44,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         private ObjectTableRepository objectTabelRepository;
         string myUserId = null;
         string myCustomerCareUserEmail = null;
+        AddressRepository addressRepository;
         public ShipmentTracing(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData, string loggedContactId, bool isNewEntity)
         {
             this.tenant = entityPM.Tenant;
@@ -56,7 +59,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             this.traceEventRepository = new TraceEventRepository(objectContext);
             this.eventTypeRepository = new EventTypeRepository(objectContext);
             this.entityStatusRepository = new EntityStatusRepository(objectContext);
-
+            this.addressRepository = new AddressRepository(tenant);
             ObjectTable objectTable = objectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
             this.objectTableId = objectTable.Id;
             this.allEventTypes = eventTypeRepository.GetEventTypesByTenantAndObjectTableId(tenant, objectTableId).ToList();
@@ -1543,7 +1546,27 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                 case "ARR":
                     {
-                        myResult = entityPM.MainCarriageToPortCode;
+                        var domesticInlandargs = new
+                        {
+                            TypeCode = entityPM.InlandDomesticToTypeCode,
+                            MainCarriageAddressId = entityPM.MainCarriageToAddressId,
+                            MainCarriagePortId = entityPM.MainCarriageToPortId,
+                            InlandDomesticCity = entityPM.InlandDomesticToCity,
+                        };
+                        myResult = GetStatusLocationForInlandDomestic(domesticInlandargs);
+                        break;
+                    }
+
+                case "DEP":
+                    {
+                        var domesticInlandargs = new
+                        {
+                            TypeCode = entityPM.InlandDomesticFromTypeCode,
+                            MainCarriageAddressId = entityPM.MainCarriageFromAddressId,
+                            MainCarriagePortId = entityPM.MainCarriageFromPortId,
+                            InlandDomesticCity = entityPM.InlandDomesticFromCity,
+                        };
+                        myResult = GetStatusLocationForInlandDomestic(domesticInlandargs);
                         break;
                     }
 
@@ -1586,12 +1609,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 case "ORFA":
                     {
                         myResult = entityPM.OnForwardingToPortCode;
-                        break;
-                    }
-
-                case "DEP":
-                    {
-                        myResult = entityPM.MainCarriageFromPortCode;
                         break;
                     }
 
@@ -1787,6 +1804,60 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             }
 
             return myResult;
+        }
+
+        private string GetStatusLocationForInlandDomestic(dynamic args)
+        {
+            string statusLocation = "";
+            switch (args.TypeCode)
+            {
+                case "PART":
+                    {
+                        statusLocation = GetInlanDomesticCity(args.MainCarriageAddressId);
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        statusLocation = GetInlanDomesticPortCode(args.MainCarriagePortId);
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        statusLocation = args.InlandDomesticCity;
+                        break;
+                    }
+            }
+            return statusLocation;
+        }
+        private string GetInlanDomesticCity(string addressId)
+        {
+            string toLocation = "";
+            if (string.IsNullOrEmpty(addressId))
+            {
+                return null;
+            }
+            if(addressRepository == null)
+            {
+                this.addressRepository = new AddressRepository(tenant);
+            }
+            Address toAddress = this.addressRepository.GetSingleAddress(addressId, tenant);
+            if (toAddress != null)
+            {
+                toLocation = toAddress.City;
+            }
+            return toLocation;
+        }
+        private string GetInlanDomesticPortCode(string portId)
+        {
+            string portCode = "";
+            PortPM port = PortQuery.GetSinglePort(tenant, portId, true);
+            if (port != null)
+            {
+                portCode = port.Code;
+            }
+            return portCode;
         }
         public static void DeleteShipmentTraceEvent(ShipmentPM entityPM, string traceEventId, int tenant, bool external)
         {
@@ -2292,16 +2363,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.DeleteTraceEvent(args.EventCode);
             }
 
-            else if (args.EntityPortId != args.DataBasePortId)
+            //else if (args.EntityPortId != args.DataBasePortId)
+            //{
+            if (args.EntityDate != null)
             {
-                if (args.EntityDate != null)
+                if (IsCurrentStatus(args.EventCode))
                 {
-                    if (IsCurrentStatus(args.EventCode))
-                    {
-                        this.UpdateLocation(args.EventCode);
-                    }
+                    this.UpdateLocation(args.EventCode);
                 }
             }
+            //}
         }
 
         private void TraceCargoReadyForPickup()
