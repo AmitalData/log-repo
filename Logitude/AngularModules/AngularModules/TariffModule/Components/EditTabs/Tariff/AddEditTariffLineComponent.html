@@ -42,7 +42,7 @@
                                 </div>
                             </td>
 
-                            <td *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS'">
+                            <td *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS' || TariffType == 'IFT'">
                                 <table>
                                     <tr>
                                         <td style="width:140px;">
@@ -125,7 +125,7 @@
                                 </div>
                             </td>
 
-                            <td *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS'">
+                            <td *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS' || TariffType == 'IFT'">
                                 <table>
                                     <tr>
                                         <td style="width:140px;">
@@ -209,7 +209,7 @@
                                 </div>
                             </td>
 
-                            <td *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS'">
+                            <td *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS' || TariffType == 'IFT'">
                                 <table>
                                     <tr>
                                         <td style="color:red; padding-left: 10px;">
@@ -221,7 +221,7 @@
                         </tr>
 
                         <!-- Currency -->
-                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS' || TariffType == 'ICC' || TariffType == 'ECC'">
+                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS' || TariffType == 'ICC' || TariffType == 'ECC' || TariffType == 'IFT'">
                             <td>
                                 <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                             </td>
@@ -257,7 +257,7 @@
                         </tr>
 
                         <!-- StartDate -->
-                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS' || TariffType == 'ICC' || TariffType == 'ECC'">
+                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS' || TariffType == 'ICC' || TariffType == 'ECC' || TariffType == 'IFT'">
                             <td>
                                 <LogLabel [ObjectFieldName]="'StartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                             </td>
@@ -272,7 +272,7 @@
                         </tr>
 
                         <!--Notes-->
-                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS' || TariffType == 'ICC' || TariffType == 'ECC'">
+                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS' || TariffType == 'ICC' || TariffType == 'ECC' || TariffType == 'IFT'">
                             <td style="vertical-align:top;">
                                 <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                             </td>
@@ -1046,13 +1046,13 @@
                         </tr>
 
                         <!--Ocean FCL Surchage Cost-->
-                        <tr style="height:10px;" *ngIf="TariffType == 'OFS'">
+                        <tr style="height:10px;" *ngIf="TariffType == 'OFS' || TariffType == 'IFT'">
                             <td>
                                 <div></div>
                             </td>
                         </tr>
 
-                        <tr *ngIf="TariffType == 'OFS'">
+                        <tr *ngIf="TariffType == 'OFS' || TariffType == 'IFT'">
                             <td colspan="3">
                                 <table>
                                     <tr>

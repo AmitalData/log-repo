@@ -1222,7 +1222,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
         {
            TariffPM entityPM = this.GetSingle(TariffId, true, false);
             TariffLineRepository iTariffLineRepository = new TariffLineRepository(entityPM.Tenant);
-            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC" || entityPM.TypeCode == "OFS")
+            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC" || entityPM.TypeCode == "OFS" || entityPM.TypeCode == "IFT")
             {
                 TariffVersionPM iPreviousVersion = entityPM.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
                 if (iPreviousVersion != null)

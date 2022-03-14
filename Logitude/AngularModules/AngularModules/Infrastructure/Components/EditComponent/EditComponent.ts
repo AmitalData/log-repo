@@ -573,7 +573,7 @@ export class EditComponent implements OnDestroy {
         }
 
         else if (this.ObjectTableName == "Tariff") {
-            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
+            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "IFT") {
                 myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code == "Tariff.SurchagesHeaderScreen")[0];
                 myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === this.ObjectTableId);
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);

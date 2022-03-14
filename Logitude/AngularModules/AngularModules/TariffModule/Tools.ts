@@ -3,8 +3,6 @@ import { TariffVersionPM } from './EntityPMs/TariffVersionPM';
 import { SessionInfo } from '../Infrastructure/Utilities/SessionInfo';
 import { DateTool } from '../Infrastructure/Tools';
 
-
-
 export class TariffTool {
 
     public static IsSurchargeTariff(entityPM: TariffPM): boolean {
@@ -21,6 +19,36 @@ export class TariffTool {
         var myResult: boolean = false;
 
         if (entityPM.TypeCode == "AFC" || entityPM.TypeCode == "OLC" || entityPM.TypeCode == "OFC") {
+            myResult = true;
+        }
+
+        return myResult;
+    }
+
+    public static IsCustomsTariff(entityPM: TariffPM): boolean {
+        var myResult: boolean = false;
+
+        if (entityPM.TypeCode == "ICC" || entityPM.TypeCode == "ECC") {
+            myResult = true;
+        }
+
+        return myResult;
+    }
+
+    public static IsInlandFTLTariff(entityPM: TariffPM): boolean {
+        var myResult: boolean = false;
+
+        if (entityPM.TypeCode == "IFT") {
+            myResult = true;
+        }
+
+        return myResult;
+    }
+
+    public static IsTariffHasContainers(entityPM: TariffPM): boolean {
+        var myResult: boolean = false;
+
+        if (entityPM.TypeCode == "OFC" || entityPM.TypeCode == "OFS" || entityPM.TypeCode == "IFT") {
             myResult = true;
         }
 

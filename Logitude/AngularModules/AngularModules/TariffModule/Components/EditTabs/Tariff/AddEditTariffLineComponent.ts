@@ -43,7 +43,7 @@ export class AddEditTariffLineComponent  {
     }
 
     SetFieldsVisiblity() {
-        if (this.TariffType == "OFS" || this.TariffType == "OSC" || this.TariffType == "ASC" || this.TariffType == "ICC" || this.TariffType == "ECC") {
+        if (this.TariffType == "OFS" || this.TariffType == "OSC" || this.TariffType == "ASC" || this.TariffType == "ICC" || this.TariffType == "ECC" || this.TariffType == "IFT") {
             this.IsViaFieldVisible = false;
 
             if (this.TariffType == "ICC" || this.TariffType == "ECC") {
@@ -57,6 +57,12 @@ export class AddEditTariffLineComponent  {
             this.OriginDependencyFilterValue = "O";
             this.DestinationDependencyFilterValue = "O";
             this.ViaDependencyFilterValue = "O";
+        }
+
+        else if (this.TariffType == "IFT") {
+            this.OriginDependencyFilterValue = "I";
+            this.DestinationDependencyFilterValue = "I";
+            this.ViaDependencyFilterValue = "I";
         }
     }
     
@@ -126,7 +132,7 @@ export class AddEditTariffLineComponent  {
                 }
             }
 
-            else if (this.TariffType == "ASC" || this.TariffType == "OSC" || this.TariffType == "OFS") {
+            else if (this.TariffType == "ASC" || this.TariffType == "OSC" || this.TariffType == "OFS" || this.TariffType == "IFT") {
                 if (AppTool.IsNullOrEmpty(this.DataContext.DestinationPortId) && !this.DataContext.IsToAllOtherPorts) {
                     errors.push("To port or To All Other Ports is Required");
                 }
@@ -136,7 +142,7 @@ export class AddEditTariffLineComponent  {
                 }
 
                 if (this.DataContext.IsDifferentCurrenciesPerCharge) {
-                    if (this.TariffType == "OFS") {
+                    if (this.TariffType == "OFS" || this.TariffType == "IFT") {
                         if (this.DataContext.ContainerPricesItemsSource.filter(d => AppTool.IsNullOrEmpty(d.CurrencyId)).length > 0) {
                             errors.push("Some Containers Prices missing Currency");
                         }
@@ -198,7 +204,7 @@ export class AddEditTariffLineComponent  {
                 }
             }
             
-            if (this.TariffType == "OFS") {
+            if (this.TariffType == "OFS" || this.TariffType == "IFT") {
                 if (this.DataContext.ContainerPricesItemsSource) {
                     this.DataContext.ContainerPricesItemsSource.forEach((item) => {
                         if (item.IsNewEntity && (!AppTool.IsNullOrZero(item.Price1) || !AppTool.IsNullOrZero(item.Price2) || !AppTool.IsNullOrZero(item.Price3)
@@ -254,7 +260,7 @@ export class AddEditTariffLineComponent  {
             this.myCloner.AddField('Step8Price');            
         }
 
-        else if (this.TariffType == "ASC" || this.TariffType == "OSC" || this.TariffType == "OFC" || this.TariffType == "OFS" || this.TariffType == "ICC" || this.TariffType == "ECC") {
+        else if (this.TariffType == "ASC" || this.TariffType == "OSC" || this.TariffType == "OFC" || this.TariffType == "OFS" || this.TariffType == "ICC" || this.TariffType == "ECC" || this.TariffType == "IFT") {
             this.myCloner.AddField('Surcharge1Price');
             this.myCloner.AddField('Surcharge2Price');
             this.myCloner.AddField('Surcharge3Price');

@@ -11,6 +11,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
 import { TariffVersionPM } from '../../../EntityPMs/TariffVersionPM';
 import { CardList } from '../../../../Common/EntityLists/CardList';
+import { TariffTool } from '../../../Tools';
 
 @Component({    
     templateUrl: './TariffGeneralTabComponent.html',
@@ -32,26 +33,34 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     public TariffCurrencyTextCode: string = "Tariff.F.CurrencyId";
     public IsContainersAreaVisible: boolean = false;
     public IsUnitOfMeasurementFieldVisible: boolean = false;
-
     private draftVersion: TariffVersionPM;
     public IsSellerVisible: boolean = false;
     public IsCustomsBrokerVisible: boolean = false;
     public CustomsBrokerDependancy: string = "AG,CG";
+    public IsSurchargeTariff: boolean = false;
+    public IsCustomsTariff: boolean = false;
+    public IsInlandFTLTariff: boolean = false;
+    public IsTariffHasContainers: boolean = false;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.chargesTypePMService = new ChargesTypeListService();
         this.draftVersion = this.EntityPM.TariffVersions.filter(d => d.IsDraft)[0];
 
+        this.IsSurchargeTariff = TariffTool.IsSurchargeTariff(this.EntityPM);
+        this.IsCustomsTariff = TariffTool.IsCustomsTariff(this.EntityPM);
+        this.IsInlandFTLTariff = TariffTool.IsInlandFTLTariff(this.EntityPM);
+        this.IsTariffHasContainers = TariffTool.IsTariffHasContainers(this.EntityPM);
+
         this.BuildQueryFilters();
 
-        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
+        if (this.IsSurchargeTariff || this.IsCustomsTariff || this.IsInlandFTLTariff) {
             this.FillChargesIDsAndUOMS();
             this.VisibileSurchargesArea = true;
             this.TariffCurrencyTextCode = "Tariff.O.DefaultCurrency";
         }
 
-        if (this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "OFS") {
+        if (this.IsTariffHasContainers) {
             this.FillContainersIDs();
             this.IsContainersAreaVisible = true;
         }
@@ -64,7 +73,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
 
     private BCNTmeasurementId: string;
     private GetBCNTMeasurementId() {
-        if (this.EntityPM.TypeCode == "OFS") {
+        if (this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "IFT") {
             var commonDomainService: CommonDomainService = new CommonDomainService();
             commonDomainService.GetMeasurementIdByCode("BCNT").subscribe((res:any) => {
                 if (!res.HasError) {
@@ -174,8 +183,13 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             EntityType = this.EntityPM.TypeCode == "ECC" ? "IsExport" : "IsImport";
         }
 
+        if (this.EntityPM.TypeCode == "IFT") {
+            EntityType = "IsInland";
+            this.SellerDependancy = "TR";
+        }
+
         this.MeasurementsQueryFilters = new ApiQueryFilters();
-        if (this.EntityPM.TypeCode == "OFS") {
+        if (this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "IFT") {
             this.MeasurementsQueryFilters.addAdditionalFilter("Code", "BCNT,BTEU,FIXD", null, null, "InList", false, true, false, "string", false, true, true);
         }
         else {
@@ -185,7 +199,10 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
         this.ChargeTypesQueryFilters.addAdditionalFilter(EntityType, true, null, null, "Equals", false, false, false, "Boolean");
-        this.ChargeTypesQueryFilters.addAdditionalFilter("ChargesGroupCode", "FRT", null, null, "NotEqual", false, false, false, "string");        
+
+        if (this.EntityPM.TypeCode != "IFT") {
+            this.ChargeTypesQueryFilters.addAdditionalFilter("ChargesGroupCode", "FRT", null, null, "NotEqual", false, false, false, "string");
+        }
     }
 
     FillChargesIDsAndUOMS() {
@@ -205,7 +222,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
                 if (!res.HasError) {
                     if (res.Result) {
                         var ChargesType: ChargesTypeList = res.Result;
-                        if (this.EntityPM.TypeCode == "OFS") {
+                        if (this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "IFT") {
                             if (!AppTool.IsNullOrEmpty(ChargesType.ContainerMeasurementId)) {
                                 this[this.UOMProps[index]] = ChargesType.ContainerMeasurementId;
                             }
@@ -633,10 +650,11 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     }
 
     ngAfterViewInit() {
-        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
+        if (this.IsSurchargeTariff || this.IsCustomsTariff || this.IsInlandFTLTariff) {
             this.Validate(true);
         }
-        if (this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "OFS") {
+
+        if (this.IsTariffHasContainers) {
             this.ValidateContainers(true);
         }        
     }
@@ -757,10 +775,11 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
                         this["isSurcharges" + i + "Added"] = false;
                     }
 
-                    if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC" ) {
+                    if (this.IsSurchargeTariff || this.IsCustomsTariff || this.IsInlandFTLTariff) {
                         this.Validate(true);
                     }
-                    if (this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "OFS") {
+
+                    if (this.IsTariffHasContainers) {
                         this.ValidateContainers(true);
                     }
                     

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TariffUpdateClass
    {  		
-		public const string HashString = "21a627e3100af7586d279cdd1cceec44";
+		public const string HashString = "57b0f0dc0444cf8dbc9fb487c39ade0e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4452,7 +4452,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature TariffFeature_7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Tariff.Q.ImportCustomsChargesCost", ObjectTableId = TariffObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffFeatures.ImportCustomsChargesCost", NameTextCodeDefaultText = "Import Customs Charges Cost", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TariffObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode TariffTextCode_8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tariff.Q.InlandFTL", DefaultText = @"Inland FTL",LocalDefaultText = "Inland FTL", ObjectTableId = TariffObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode TariffTextCode_8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tariff.Q.InlandFTL", DefaultText = @"Inland FTL Charges Cost",LocalDefaultText = "Inland FTL Charges Cost", ObjectTableId = TariffObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature TariffFeature_8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Tariff.Q.InlandFTL", ObjectTableId = TariffObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffFeatures.InlandFTL", NameTextCodeDefaultText = "Inland FTL", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TariffObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();

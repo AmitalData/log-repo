@@ -599,7 +599,7 @@
                             </div>
 
                             <!-- Ocean FCL Surcharges Cost -->
-                            <div *ngIf="EntityPM.TypeCode == 'OFS'" class="MediaFill">
+                            <div *ngIf="EntityPM.TypeCode == 'OFS' || EntityPM.TypeCode == 'IFT'" class="MediaFill">
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="VersionLinesSource" [SelectedRow]="selectedRow" [ChangeScrollPosition]="changeScrollPosition">
 
                                     <!-- OriginPortId -->

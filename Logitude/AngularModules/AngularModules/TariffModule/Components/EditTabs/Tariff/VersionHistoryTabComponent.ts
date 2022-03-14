@@ -61,7 +61,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
             this.GetAllPackageTypes();
         }
 
-        else if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
+        else if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "IFT") {
             this.IsViaFieldVisible = false;
             this.GetAllChargesTypes();
         }
@@ -402,7 +402,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
             var newVersion: CodeNameClass = new CodeNameClass();
             newVersion.Code_Int = item.Version;
 
-            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
+            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "IFT") {
                 newVersion.Name = "Version " + item.Version;
             }
 
@@ -651,7 +651,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
                 tariffLine.Surcharge5Price = item.Surcharge5Price;
             }
 
-            else if (this.EntityPM.TypeCode == "OFS") {
+            else if (this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "IFT") {
                 tariffLine.StartDate = item.StartDate;
                 tariffLine.CurrencyId = item.CurrencyId;
                 tariffLine.CurrencyCode = item.CurrencyCode;
@@ -789,7 +789,7 @@ export class VersionHistoryTariffLine {
             this.AssignData_AIRLCLSurchargeCost();
         }
 
-        else if (tariff.TypeCode == "OFS") {
+        else if (tariff.TypeCode == "OFS" || tariff.TypeCode == "IFT") {
             this.AssignData_OceanFCLSurchargeCost();
         }
     }

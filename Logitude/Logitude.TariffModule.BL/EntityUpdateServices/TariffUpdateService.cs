@@ -61,6 +61,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 this.ValidateSurchargeUniqueSeller(entityPM);
                 this.ValidateFCLSurchargeUniqueSeller(entityPM);
                 this.ValidateCustomsChargesUniqueBroker(entityPM);
+                this.ValidateInlandFTLUniqueSeller(entityPM);
             }
         }
         
@@ -103,7 +104,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 this.CreateTariffVersion(entityPM);
             }
 
-            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC" || entityPM.TypeCode == "OFS")
+            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC" || entityPM.TypeCode == "OFS" || entityPM.TypeCode == "IFT")
             {
                 if (entityPM.TariffVersions.Where(d => d.StartDate != null || d.ExpirationDate != null).Any())
                 {
@@ -119,6 +120,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             this.ValidateSurchargeUniqueSeller(entityPM);
             this.ValidateFCLSurchargeUniqueSeller(entityPM);
             this.ValidateCustomsChargesUniqueBroker(entityPM);
+            this.ValidateInlandFTLUniqueSeller(entityPM);
 
             if (entityPM.IsApprovingDraftVersion)
             {
@@ -449,7 +451,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     Notes = "Version " + iDraftVersion.Version + " approved",
                 });
 
-                if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC" || entityPM.TypeCode == "OFS")
+                if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC" || entityPM.TypeCode == "OFS" || entityPM.TypeCode == "IFT")
                 {
                     TariffVersionPM iPreviousVersion = entityPM.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
                     if (iPreviousVersion != null)
@@ -691,6 +693,25 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 if (iCount >= 1)
                 {
                     throw new ApplicationException("Tariff customs broker should be unique");
+                }
+            }
+        }
+        private void ValidateInlandFTLUniqueSeller(TariffPM entityPM)
+        {
+            if (entityPM.TypeCode == "IFT")
+            {
+                ITariffModuleContext iContext = TariffModuleContext.GetContext(entityPM.Tenant);
+                int iCount = (from d in iContext.Tariffs
+                              where d.Tenant == entityPM.Tenant
+                              && !d.InActive
+                              && d.Id != entityPM.Id
+                              && d.SellerId == entityPM.SellerId
+                              && d.TypeCode == "IFT"
+                              select d).Count();
+
+                if (iCount >= 1)
+                {
+                    throw new ApplicationException("Tariff seller should be unique");
                 }
             }
         }

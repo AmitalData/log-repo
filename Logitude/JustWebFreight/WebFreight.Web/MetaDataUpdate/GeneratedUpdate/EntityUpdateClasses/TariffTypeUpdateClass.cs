@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TariffTypeUpdateClass
    {  		
-		public const string HashString = "ff3f6c127d13a58fbdd069e75bed63bc";
+		public const string HashString = "071b6ee7d805d11949ae4fa3229fe442";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -121,7 +121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Tariff Types",
-			      				    Code =  "6675",
+			      				    Code =  "de58",
 			      				    Name =  "TariffType Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",

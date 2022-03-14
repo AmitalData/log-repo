@@ -64,6 +64,7 @@ export class CostWorkspaceComponent implements OnInit {
     }
 
     LoadAllScreenData() {
+        this.QueriesAreaHeight = 240;
         this.LoadQueriesCounts();
         this.SetQueriesVisibility();
         this.LoadRecentTariffs();
@@ -291,6 +292,12 @@ export class CostWorkspaceComponent implements OnInit {
             case "ECC": {
                 queryCode = "Export Customs Charges Cost";
                 displayTitle = "Export Customs Charges Cost";
+                break;
+            }
+
+            case "IFT": {
+                queryCode = "Inland FTL";
+                displayTitle = "Inland FTL Charges Cost";
                 break;
             }
 

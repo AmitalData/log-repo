@@ -38,7 +38,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Tariff Types&quot;"
-  Code="&quot;6675&quot;"
+  Code="&quot;de58&quot;"
   Name="&quot;TariffType Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -505,9 +505,9 @@
       SearchFields="&quot;ICC,Import Customs Charges Cost&quot;" />
     <Record
       DirectionCode="&quot;&quot;"
-      Name="&quot;Inland FTL&quot;"
+      Name="&quot;Inland FTL Charges Cost&quot;"
       Code="&quot;IFT&quot;"
-      SearchFields="&quot;IFT,Inland FTL&quot;"
+      SearchFields="&quot;IFT,Inland FTL Charges Cost&quot;"
       TransportModeCode="&quot;I&quot;" />
   </Records>
   <DataContracts />

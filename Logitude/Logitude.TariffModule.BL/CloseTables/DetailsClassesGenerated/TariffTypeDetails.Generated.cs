@@ -88,9 +88,9 @@ namespace Logitude.TariffModule.BL.CLoseTable
             all.Add(new TariffTypeDetails()
             {    
                 DirectionCode = "", 
-                Name = "Inland FTL", 
+                Name = "Inland FTL Charges Cost", 
                 Code = "IFT", 
-                SearchFields = "IFT,Inland FTL", 
+                SearchFields = "IFT,Inland FTL Charges Cost", 
                 TransportModeCode = "I", 
 			});
 			

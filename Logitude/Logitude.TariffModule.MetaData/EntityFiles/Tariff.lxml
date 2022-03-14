@@ -6576,8 +6576,8 @@
   </Query>
   <Query
     Code="&quot;Inland FTL&quot;"
-    TextCode="&quot;Inland FTL&quot;"
-    LocalTextCode="&quot;Inland FTL&quot;"
+    TextCode="&quot;Inland FTL Charges Cost&quot;"
+    LocalTextCode="&quot;Inland FTL Charges Cost&quot;"
     QueryGroupCode="&quot;d341&quot;"
     IndexOrder="8"
     ObjectTableName="&quot;Tariff&quot;"
