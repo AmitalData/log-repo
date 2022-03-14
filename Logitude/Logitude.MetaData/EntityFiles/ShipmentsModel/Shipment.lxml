@@ -77122,7 +77122,7 @@
     IncludeInSearchField="false"
     AllowedinAutomationConditions="true"
     AutomationEmailRecipient="false"
-    CanAutomateSetValue="true"
+    CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
