@@ -479,10 +479,5 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             }
             return partnerAddressCity;
         }
-
-        public void MapFieldsUpdatedByAutomation(ShipmentPM newShipmentPM)
-        {
-            entity.ContainersNumbers = newShipmentPM.ContainersNumbers;
-        }
     }
 }
