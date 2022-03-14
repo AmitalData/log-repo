@@ -268,19 +268,16 @@ export class CourierWorksheetListTemplate {
             this.IsDeclarationChecked = true;
         }
         else {
-            this.IsDeclarationChecked = false;
+            if (this._CourierWorksheetSharedDataService.connectedSelectAll == true) {
+                this.IsDeclarationChecked = true;
+            }
+            else {
+                this.IsDeclarationChecked = false;
+    
+            }
         }
-
-
-        if (this._CourierWorksheetSharedDataService.connectedSelectAll == true) {
-            this.IsDeclarationChecked = true;
-        }
-        else {
-            this.IsDeclarationChecked = false;
-
-        }
-     
     }
+
     ShowFollowUpStatus() {
         if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
             AmitalGatewayUtil.Instance.ShowCFIFILEMFUStatusScreen(
