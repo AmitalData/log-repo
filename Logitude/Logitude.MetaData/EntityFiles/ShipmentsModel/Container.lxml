@@ -19040,7 +19040,8 @@
         PredefinedValue="&quot;True&quot;"
         ObjectFieldName="&quot;IsClosed&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -19089,7 +19090,8 @@
         PredefinedValue="&quot;True&quot;"
         ObjectFieldName="&quot;IsCancelled&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -19139,7 +19141,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;Containers&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Screen
@@ -19189,27 +19192,27 @@
     IsHeaderScreen="false"
     Code="&quot;Container.GeneralTabScreen&quot;"
     NumberOfColumns="2"
-    NumberOfRows="14">
+    NumberOfRows="24">
     <ScreenFields>
       <ScreenField
         Column="0"
         Row="0"
-        ObjectFieldName="&quot;ActualEmptyPickupDate&quot;"
+        ObjectFieldName="&quot;ShipmentPickupATD&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
         Row="1"
-        ObjectFieldName="&quot;PreCarriageGateIn&quot;"
+        ObjectFieldName="&quot;ShipmentPickupATA&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
         Row="2"
-        ObjectFieldName="&quot;POLLocation&quot;"
+        ObjectFieldName="&quot;PreCarriageGateIn&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
         Row="3"
-        ObjectFieldName="&quot;ActualPOLArrival&quot;"
+        ObjectFieldName="&quot;ShipmentPreCarriageATA&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
@@ -19219,116 +19222,176 @@
       <ScreenField
         Column="0"
         Row="5"
+        ObjectFieldName="&quot;ShipmentMainCarriageFromId&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="6"
+        ObjectFieldName="&quot;ShipmentMainCarriageATA&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="7"
+        ObjectFieldName="&quot;ShipmentMainCarriageETD&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="8"
+        ObjectFieldName="&quot;ShipmentMainCarriageATD&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="9"
+        ObjectFieldName="&quot;ShipmentTransshipment1ATD&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="10"
+        ObjectFieldName="&quot;ShipmentTransshipment1ATA&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="11"
         ObjectFieldName="&quot;GateOut&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
-        Row="6"
+        Row="12"
         ObjectFieldName="&quot;OnCarriageGateOut&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
-        Row="7"
+        Row="13"
+        ObjectFieldName="&quot;ShipmentOnCarriageATD&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="14"
         ObjectFieldName="&quot;ShipmentDeliveryETA&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
-        Row="8"
+        Row="15"
         ObjectFieldName="&quot;ShipmentDeliveryATA&quot;"
-        ScreenName="General Tab Screen" />
-      <ScreenField
-        Column="0"
-        Row="9"
-        ObjectFieldName="&quot;EmptyContainerReturnATA&quot;"
-        ScreenName="General Tab Screen" />
-      <ScreenField
-        Column="0"
-        Row="10"
-        ObjectFieldName="&quot;CustomsReleaseDate&quot;"
-        ScreenName="General Tab Screen" />
-      <ScreenField
-        Column="0"
-        Row="11"
-        ObjectFieldName="&quot;CustomsReleaseState&quot;"
-        ScreenName="General Tab Screen" />
-      <ScreenField
-        Column="0"
-        Row="12"
-        ObjectFieldName="&quot;CarrierReleaseDate&quot;"
-        ScreenName="General Tab Screen" />
-      <ScreenField
-        Column="0"
-        Row="13"
-        ObjectFieldName="&quot;CarrierReleaseState&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="1"
         Row="0"
-        ObjectFieldName="&quot;ActualPOLLoaded&quot;"
+        ObjectFieldName="&quot;ActualEmptyPickupDate&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="1"
         Row="1"
-        ObjectFieldName="&quot;EstimatedPOLVesselDeparture&quot;"
+        ObjectFieldName="&quot;EmptyPickupLocation&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="1"
         Row="2"
-        ObjectFieldName="&quot;ActualPOLVesselDeparture&quot;"
+        ObjectFieldName="&quot;POLLocation&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="1"
         Row="3"
-        ObjectFieldName="&quot;ActualTransshipment1VesselArrival&quot;"
+        ObjectFieldName="&quot;ActualPOLLoaded&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="1"
         Row="4"
-        ObjectFieldName="&quot;ActualTransshipment1Discharge&quot;"
+        ObjectFieldName="&quot;EstimatedPOLVesselDeparture&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="1"
         Row="5"
-        ObjectFieldName="&quot;ActualTransshipment1Loaded&quot;"
+        ObjectFieldName="&quot;ActualPOLVesselDeparture&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="1"
         Row="6"
-        ObjectFieldName="&quot;ActualTrans1VesselDeparture&quot;"
+        ObjectFieldName="&quot;ActualPOLArrival&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="1"
         Row="7"
-        ObjectFieldName="&quot;ActualPODVesselArrival&quot;"
+        ObjectFieldName="&quot;ActualTransshipment1VesselArrival&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="1"
         Row="8"
-        ObjectFieldName="&quot;ActualPODDischarge&quot;"
+        ObjectFieldName="&quot;ActualTransshipment1Discharge&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="1"
         Row="9"
-        ObjectFieldName="&quot;ActualPODDeparture&quot;"
+        ObjectFieldName="&quot;ActualTransshipment1Loaded&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="1"
         Row="10"
-        ObjectFieldName="&quot;ActualLIFArrival&quot;"
+        ObjectFieldName="&quot;ActualTrans1VesselDeparture&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="1"
         Row="11"
-        ObjectFieldName="&quot;ActualOnCarriageDeparture&quot;"
+        ObjectFieldName="&quot;ActualPODVesselArrival&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="1"
         Row="12"
-        ObjectFieldName="&quot;OnCarriageATD&quot;"
+        ObjectFieldName="&quot;ActualPODDischarge&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="1"
         Row="13"
+        ObjectFieldName="&quot;EstimatedPODDeparture&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="14"
+        ObjectFieldName="&quot;ActualPODDeparture&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="15"
+        ObjectFieldName="&quot;ActualLIFArrival&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="16"
+        ObjectFieldName="&quot;OnCarriageATD&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="17"
+        ObjectFieldName="&quot;ActualOnCarriageDeparture&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="18"
+        ObjectFieldName="&quot;ActualEmptyReturn&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="19"
+        ObjectFieldName="&quot;CustomsReleaseDate&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="20"
+        ObjectFieldName="&quot;CustomsReleaseState&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="21"
+        ObjectFieldName="&quot;CarrierReleaseDate&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="22"
+        ObjectFieldName="&quot;CarrierReleaseState&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="23"
         ObjectFieldName="&quot;AvailablityDate&quot;"
         ScreenName="General Tab Screen" />
     </ScreenFields>
