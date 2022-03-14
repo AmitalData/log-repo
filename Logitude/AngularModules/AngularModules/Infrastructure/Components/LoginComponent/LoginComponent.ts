@@ -319,15 +319,18 @@ export class LoginComponent implements OnInit {
     }
 
     WarmupCToolLogitudeAuthenticate(userData: any) {
-        this.myInfrastructureDomainService.GetFeatureToggles().subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                var hasCToolToggleFeature = myResponse.Result.filter(f => f.ToggleCode === "CTL")[0];
-                if(hasCToolToggleFeature){
+        this.myInfrastructureDomainService.GetFeatureToggles().subscribe((featureTogglesResponse: ServiceResponse) => {
+            if (!featureTogglesResponse.HasError) {
+                var userTenant = Number(userData.CurrentTenant + "");
+                var ctoolFeatureToggle = featureTogglesResponse.Result
+                .filter((f: any) => (f.TenantNumber == userTenant || (userTenant >= f.FromTenantNumber && userTenant <= f.ToTenantNumber)) && f.ToggleCode === "CTL")[0];
+
+                if(ctoolFeatureToggle){
                     const authenticateService = new AuthenticateService();
                     if(authenticateService){
                         var logitudeAuthenticate = "logitudeAuthenticate";
                         if(authenticateService.hasOwnProperty(logitudeAuthenticate)){
-                            authenticateService[logitudeAuthenticate]({ Tenant: Number(userData.CurrentTenant + ""), Token: userData.Token });
+                            authenticateService[logitudeAuthenticate]({ Tenant: userTenant, Token: userData.Token });
                         }
                     }
                 }
