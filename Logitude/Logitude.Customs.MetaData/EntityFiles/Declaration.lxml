@@ -24471,6 +24471,24 @@
       LocalDefaultText="&quot;פרטי מכס&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CustomsDocument.BulkUploadDocuments&quot;"
+      DefaultText="&quot;Bulk Upload Documents&quot;"
+      LocalDefaultText="&quot;העלאת מסמכים גורפת&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CustomsDocument.MarkOriginalDocument&quot;"
+      DefaultText="&quot;Do mark an original document&quot;"
+      LocalDefaultText="&quot;האם לסמן מסמך מקורי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CustomsDocument.MissingMetadataMsg&quot;"
+      DefaultText="&quot;There are documents with a lack of Metadata data and therefore such documents will not go up to customs&quot;"
+      LocalDefaultText="&quot;ש מסמכים עם חוסר בנתוני Metadata ולכן מסמכים אילו לא יעלו למכס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
