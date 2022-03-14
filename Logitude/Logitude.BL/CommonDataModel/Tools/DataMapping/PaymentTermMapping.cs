@@ -32,7 +32,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.SearchFields = entityPM.EnglishName + "," + entityPM.LocalName;
             poco.IsManuallySet = entityPM.IsManuallySet;
             poco.ExternalId = entityPM.ExternalId;
-            poco.CurrentMonth = entityPM.CurrentMonth;
+            poco.EndOfMonth = entityPM.EndOfMonth;
+            poco.NumberOfMonths = entityPM.NumberOfMonths;
             poco.FromDateTypeCode = entityPM.FromDateTypeCode;
             poco.Code = entityPM.Code;
         }

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class PaymentTermUpdateClass
    {  		
-		public const string HashString = "699e66545b6054ef3d37a4c7b908b594";
+		public const string HashString = "3c93121ce645bbe91079e5817658375f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -970,7 +970,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "CurrentMonth",
+					 						FieldName =  "EndOfMonth",
 					  						ObjectTableName =  "PaymentTerm",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -989,8 +989,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "CurrentMonth",
-					  						ListPropertyPath =  "CurrentMonth",
+					  						PMPropertyPath =  "EndOfMonth",
+					  						ListPropertyPath =  "EndOfMonth",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -1011,8 +1011,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "CurrentMonth",
-					  						DefaultText =  "Current Month",
+					  						FullFieldLable =  "EndOfMonth",
+					  						DefaultText =  "End of Month",
 					  						HelpTextCode =  "CurrentMonth",
 					  						HelpTextDefaultText =  "It sets the deadline for payment at the end of month in which the invoice was issued",
 					  						IsMaxLength =  false,
@@ -1268,6 +1268,65 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "NumberOfMonths",
+					  						ObjectTableName =  "PaymentTerm",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "NumberOfMonths",
+					  						ListPropertyPath =  "NumberOfMonths",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "PaymentTerm",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "NumberOfMonths",
+					  						DefaultText =  "Number of Months",
+					  						ListFieldLable =  "NumberOfMonthsListLable",
+					  						ListLableDefaultText =  "Number of Months",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -1327,7 +1386,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		       
 	      
 
-	         Screen PaymentTermGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "PaymentTerm.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = PaymentTermObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 7, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen PaymentTermGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "PaymentTerm.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = PaymentTermObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 8, IsReadOnly = false }, screensRepository, tenantScreens);
       
              ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
@@ -1335,17 +1394,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	          
              ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.CurrentMonth", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.FromDateTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.FromDateTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.EndOfMonth", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.Days", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.NumberOfMonths", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.Days", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.Description", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.LocalDescription", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.Description", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField PaymentTermPaymentTermGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = PaymentTermGeneralTabScreenScreen0.Id,ScreenCode = PaymentTermGeneralTabScreenScreen0.Code, ObjectFieldCode = "PaymentTerm.LocalDescription", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	            
 	      
 

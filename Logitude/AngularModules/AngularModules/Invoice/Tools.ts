@@ -244,16 +244,19 @@ export class InvoiceTool {
                                     var dateMonth = myComparativeDate.getUTCMonth() + 1;
                                     var dateDay = myComparativeDate.getUTCDate();
 
-                                    if (list.CurrentMonth) {
-                                        dateMonth += 1;
+                                    if (list.EndOfMonth) {
+                                        dateMonth += list.NumberOfMonths;
+                                        dateDay = 0;
+                                    }
+                                    else {
+                                        dateMonth -= 1;
                                         dateDay = 1;
                                     }
-
                                     var myDate = new Date();
                                     myDate.setUTCMonth(0);
                                     myDate.setUTCDate(1);
                                     myDate.setUTCFullYear(dateYear);
-                                    myDate.setUTCMonth(dateMonth - 1);
+                                    myDate.setUTCMonth(dateMonth);
                                     myDate.setUTCDate(dateDay);
                                     myDate.setUTCHours(0);
                                     myDate.setUTCMinutes(0);
@@ -319,8 +322,12 @@ export class InvoiceTool {
                                     var dateMonth = myComparativeDate.getUTCMonth() + 1;
                                     var dateDay = myComparativeDate.getUTCDate();
 
-                                    if (list.CurrentMonth) {
-                                        dateMonth += 1;
+                                    if (list.EndOfMonth) {
+                                        dateMonth += list.NumberOfMonths;
+                                        dateDay = 0;
+                                    }
+                                    else {
+                                        dateMonth -= 1;
                                         dateDay = 1;
                                     }
 
@@ -328,7 +335,7 @@ export class InvoiceTool {
                                     myDate.setUTCMonth(0);
                                     myDate.setUTCDate(1);
                                     myDate.setUTCFullYear(dateYear);
-                                    myDate.setUTCMonth(dateMonth - 1);
+                                    myDate.setUTCMonth(dateMonth);
                                     myDate.setUTCDate(dateDay);
                                     myDate.setUTCHours(0);
                                     myDate.setUTCMinutes(0);
@@ -394,7 +401,7 @@ export class InvoiceTool {
                                     var dateMonth = myComparativeDate.getUTCMonth() + 1;
                                     var dateDay = myComparativeDate.getUTCDate();
 
-                                    if (list.CurrentMonth) {
+                                    if (list.EndOfMonth) {
                                         dateMonth += 1;
                                         dateDay = 1;
                                     }
