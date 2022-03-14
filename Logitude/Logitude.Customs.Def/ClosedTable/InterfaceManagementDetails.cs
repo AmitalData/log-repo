@@ -3101,6 +3101,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 DefaultSendOptionsCode = null,
                 DefaultPriority = CONST_DefaultPriority,
                 DcaPrefixName = "LG_NG_8411_SendLogisticActionRequestDecision_Out.",
+                DcaPrefixName2 = "LG_NG_8411_SendLogisticActionRequestDecision_EX_Out.",
                 AllowRestore = true,
                 Active = true,
                 SendAsDual = false,
