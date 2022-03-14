@@ -171,17 +171,17 @@
                     </ul>
 
                     <ul>
-                        <li *ngFor="let ref of ShipmentReferences?.slice(0,2), let i = index">
+                        <li *ngFor="let ref of ShipmentReferences?.slice(0,WebReferencesViewCount), let i = index">
                             <custom-label>{{ref}}</custom-label>
                         </li>
                         <li>
                             <span class="hide-mobile clickable"
                                 (click)="OpenReferencesMessageWindow(ShipmentReferences, false); $event.stopPropagation()"
-                                *ngIf="ShipmentReferences?.length > 3"
+                                *ngIf="ShipmentReferences?.length > WebReferencesViewCount"
                                 >
                                 <img src="./assets/images/icons/info.png" alt=" "
                                     style="margin-right: 6px; margin-top: 6px" />
-                                <u [attr.title]="ShipmentReferences">+ {{ShipmentReferences?.length - 3}} More</u>
+                                <u [attr.title]="ShipmentReferences">+ {{ShipmentReferences?.length - WebReferencesViewCount}} More</u>
                             </span>
                         </li>
                     </ul>
@@ -394,11 +394,11 @@
                                 </custom-label> -->
                                 <span class="clickable"
                                 (click)="OpenReferencesMessageWindow(ShipmentReferences, true); $event.stopPropagation()"
-                                *ngIf="ShipmentReferences?.length > 1"
+                                *ngIf="ShipmentReferences?.length > MobileReferencesViewCount"
                                 >
                                 <img src="./assets/images/icons/info.png" alt=" "
                                     style="margin-right: 6px; margin-top: 6px" />
-                                <u >+ {{ShipmentReferences?.length - 1}} More</u>
+                                <u >+ {{ShipmentReferences?.length - MobileReferencesViewCount}} More</u>
                             </span>
                             </div>
                         </div>

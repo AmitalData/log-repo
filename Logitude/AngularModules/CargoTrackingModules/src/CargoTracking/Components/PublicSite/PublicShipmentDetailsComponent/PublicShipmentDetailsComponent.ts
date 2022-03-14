@@ -298,7 +298,7 @@ export class PublicShipmentDetailsComponent implements OnInit
         });
     }
     GetReferencesMessageText(references,skip){
-        references.slice(skip, references.length + 1).join("\n")
+        return references.slice(skip, references.length + 1).join("\n");
     }
     public ShipmentLabel: string;
     public ShipmentReference: string;

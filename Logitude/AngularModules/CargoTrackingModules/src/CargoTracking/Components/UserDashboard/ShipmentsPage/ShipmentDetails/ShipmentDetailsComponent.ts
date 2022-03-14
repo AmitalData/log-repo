@@ -93,7 +93,8 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     PartnersPanel: string = "PartnersPanel";
     MaxHeightForPartnersPanel: number = 600;
     MaxNumberOfCarachterForMobile: number = 15;
-
+    MobileReferencesViewCount = 1 ;
+    WebReferencesViewCount = 3
     PartnerCardTypesOfShipmentTransportMode = {
         'A': "AIRLINES",
         'I': "TRUCKER",
