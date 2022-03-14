@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LedgerTransactionUpdateClass
    {  		
-		public const string HashString = "ab731e3ce9f1d6b89943d47afae6958c";
+		public const string HashString = "a62d2ecb6cead15d4293a0d7e7601dd5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1803,7 +1803,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CumulativeLocalAmount",
-					  						DefaultText =  "Cu. Amount ",
+					  						DefaultText =  "Cumulative Local Amount ",
 					  						FullLocalDefaultText =  "יתרה",
 					  						ListFieldLable =  "CumulativeLocalAmountListLable",
 					  						ListLableDefaultText =  "Cumulative Local Amount ",
@@ -1867,7 +1867,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CumulativeForeignAmount",
-					  						DefaultText =  "Cu. F. Amount",
+					  						DefaultText =  "Cumulative Foreign Amount",
 					  						FullLocalDefaultText =  "מצטבר מטבע חוץ",
 					  						ListFieldLable =  "CumulativeForeignAmountListLable",
 					  						ListLableDefaultText =  "Cumulative Foreign Amount",
@@ -2472,10 +2472,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OpenAmountCurrencySign",
-					  						DefaultText =  "Open Amount Currency",
+					  						DefaultText =  "Open Amount Currency Sign",
 					  						FullLocalDefaultText =  "מטבע",
 					  						ListFieldLable =  "OpenAmountCurrencySignListLable",
-					  						ListLableDefaultText =  "Open Amount Currency",
+					  						ListLableDefaultText =  "Open Amount Currency Sign",
 					  						ListLocalDefaultText =  "מטבע",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -3934,7 +3934,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullFieldLable =  "CalculatedLocalAmount",
 					  						DefaultText =  "Calculated Local Amount",
 					  						ListFieldLable =  "CalculatedLocalAmountListLable",
-					  						ListLableDefaultText =  "CalculatedLocalAmount",
+					  						ListLableDefaultText =  "Calculated Local Amount",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3994,9 +3994,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalculatedForeignAmount",
-					  						DefaultText =  "CalculatedForeignAmount",
+					  						DefaultText =  "Calculated Foreign Amount",
 					  						ListFieldLable =  "CalculatedForeignAmountListLable",
-					  						ListLableDefaultText =  "CalculatedForeignAmount",
+					  						ListLableDefaultText =  "Calculated Foreign Amount",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
