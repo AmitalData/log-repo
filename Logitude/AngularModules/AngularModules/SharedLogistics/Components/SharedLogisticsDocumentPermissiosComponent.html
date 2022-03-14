@@ -33,13 +33,13 @@
                                 <div class="TabControlHead">
                                     <ul style="margin-left: 2px;">
                                         <li [class.Selected]="SelectedTabCode == 'CUV'" (click)="SelectedTabChange('CUV')" style="margin-left:2px;">
-                                            <div style="width:100px;text-align:left;font-size:11px;color:black" class="InnerChild">
+                                            <div [attr.data-cy]="'Customer View'" style="width:100px;text-align:left;font-size:11px;color:black" class="InnerChild">
                                                 <span>Customer View</span>
                                             </div>
                                         </li>
 
                                         <li [class.Selected]="SelectedTabCode == 'AGV'" (click)="SelectedTabChange('AGV')" *ngIf="HasAgentDocumentsPermission">
-                                            <div style="width:100px;text-align:left;font-size:11px;color:black" class="InnerChild">
+                                            <div  [attr.data-cy]="'Agent View'" style="width:100px;text-align:left;font-size:11px;color:black" class="InnerChild">
                                                 <span>Agent View</span>
                                             </div>
                                         </li>
@@ -93,7 +93,7 @@
                                                                                                                             </td>
                                                                                                                             <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px; position: relative;">
                                                                                                                                 <div class="CheckBox">
-                                                                                                                                    <input class="CenterCenter" style="text-align:center" [attr.id]="item.CustomerChooseCheckedBoxId" type="checkbox" [(ngModel)]="item.CustomerChooseIsChecked" />
+                                                                                                                                    <input [attr.data-cy]="item.DocumentTypeName" class="CenterCenter" style="text-align:center" [attr.id]="item.CustomerChooseCheckedBoxId" type="checkbox" [(ngModel)]="item.CustomerChooseIsChecked" />
                                                                                                                                     <label class="CenterCenter" [attr.for]="item.CustomerChooseCheckedBoxId"></label>
                                                                                                                                 </div>
                                                                                                                             </td>
