@@ -9,6 +9,8 @@ import { CargoTrackingMilestoneService } from 'src/CargoTracking/Services/Others
 import { CargoTrackingMilestoneList } from 'src/CargoTracking/EntityLists/CargoTrackingMilestoneList';
 import { CargoTrackingMilestones } from 'src/CargoTracking/DataContracts/CargoTrackingMilestones';
 import { MilestoneCodes } from 'src/CargoTracking/Constants/MilestoneCodes';
+import { MatDialog } from '@angular/material/dialog';
+import { MessageWindowComponent } from 'src/Infrastructure/Components/MessageWindow/MessageWindowComponent';
 
 const shipmentOrderEntityType = 'O';
 @Component({
@@ -31,6 +33,8 @@ export class PublicShipmentDetailsComponent implements OnInit
 
     constructor(private route: ActivatedRoute,
         private router: Router,
+        public dialog: MatDialog,
+
         private location: Location,
         private searchService: CargoTrackingSearchService,
         private milestonesService: CargoTrackingMilestoneService)
@@ -280,6 +284,18 @@ export class PublicShipmentDetailsComponent implements OnInit
             houseReferences.push(this.Shipment.SHOHouse);
         }
         return houseReferences;
+    }
+    OpenReferencesMessageWindow(references: any[], isMobile: boolean) {
+        if(!references)
+            return;
+
+        references = references.filter(d=>d).map(x => x.trim());
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: 'References',
+                description: references.slice(2, references.length + 1).join("\n"),
+            }
+        });
     }
     public ShipmentLabel: string;
     public ShipmentReference: string;

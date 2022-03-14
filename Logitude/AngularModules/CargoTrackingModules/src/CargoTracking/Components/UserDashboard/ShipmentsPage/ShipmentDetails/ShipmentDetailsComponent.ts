@@ -272,7 +272,18 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         if (this.cargoTrackingShipmentPM.SHOBookingConfirmationNumber != null)
             this.ShipmentReferences.push(this.cargoTrackingShipmentPM.SHOBookingConfirmationNumber);
     }
+    OpenReferencesMessageWindow(references: any[], isMobile: boolean) {
+        if(!references)
+            return;
 
+        references = references.filter(d=>d).map(x => x.trim());
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: 'References',
+                description: isMobile ? references.slice(1, references.length + 1).join("\n") : references.slice(3, references.length + 1).join("\n"),
+            }
+        });
+    }
     private SetDeclarationMessage()
     {
         if (this.isSharedLink && this.isDeclarationLink) {
