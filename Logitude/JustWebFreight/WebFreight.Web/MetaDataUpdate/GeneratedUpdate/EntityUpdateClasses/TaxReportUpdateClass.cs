@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportUpdateClass
    {  		
-		public const string HashString = "664fd9dd80bb84fa6ad30b02ad70bfb1";
+		public const string HashString = "500ab6c783a69f10a208ff39b21df23a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2677,7 +2677,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode TaxReportTextCode_AccountingOReportExistForPreviousMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ReportExistForPreviousMonth", DefaultText = "There is already a report for the previous month of the chosen month",LocalDefaultText = @"המערכת מוגדרת לדיווח דו-חודשי וקיים כבר דוח מעמ לחודש קודם", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TaxReportTextCode_TaxReportOClosingJournalConfirmationMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.ClosingJournalConfirmationMessage", DefaultText = "This will change the status of the report to be Transmitted and in addition will create a journal that will close the transaction amounts of:  Tax institution GL Account, VAT Output GL Account and VAT Inputs GLAccount, Continue?",LocalDefaultText = "פעולה זאת תשנה את סטאטוס הדו''ח ל''שודר'' ותיצור פקודת יומן שתסגור את סכומי העסקאות +התשומות מול חו''ז המע''מ (כולל התאמות), הפרשי עיגול ירשמו כנגד כרטיס ההפרשים.", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode TaxReportTextCode_TaxReportOClosingJournalConfirmationMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.ClosingJournalConfirmationMessage", DefaultText = "This will change the status of the report to be Transmitted and in addition will create a journal that will close the transaction amounts of:  Tax institution GL Account, VAT Output GL Account and VAT Inputs GLAccount, Continue?",LocalDefaultText = "פעולה זאת תשנה את סטאטוס הדו''ח ל''שודר'' ותיצור פקודת יומן שתסגור את סכומי העסקאות +התשומות מול חו''ז המע''מ (כולל התאמות), הפרשי עיגול ירשמו כנגד כרטיס ההפרשים, האם להמשיך?", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode TaxReportTextCode_TaxReportOClosingJournalValidationMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.ClosingJournalValidationMessage", DefaultText = "There are a reconciled ledger transactions that are included in the VAT report, you must cancel the reconciliations in the glaccount input vat / glaccount output before create the closing journal",LocalDefaultText = "ישנם תנועות מותאמות המשתתפות בדוח המע''מ , יש לבטל תחילה את ההתאמות בכרטיסי העסקאות /תשומות בטרם ביצוע פקודת הסגירה", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
