@@ -168,7 +168,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 messagingService= MessagingServiceFactoryHelper.GetMessagingService(mainInterfaceCode);
             }
             
-            List<CommunicationLogStepList> stepLIstOut = communicationLogStepQuery.GetCommunicationLogStepsDocumentData(communicationLogId, tenant, stepFilter);
+            List<CommunicationLogStepList> stepLIstOut = communicationLogStepQuery.GetCommunicationLogStepsDocumentData(communicationLogId, tenant, stepFilter,false,false);
             foreach (var item in stepLIstOut)
             {
                 if (!String.IsNullOrWhiteSpace(item.DocumentData) && messagingService!=null)

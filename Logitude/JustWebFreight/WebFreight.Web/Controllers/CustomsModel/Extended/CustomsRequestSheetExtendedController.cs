@@ -97,7 +97,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 {
                     var communicationLogStepQuery = new CommunicationLogStepQuery(tenant);
                     var stepList = communicationLogStepQuery
-                        .GetCommunicationLogStepsDocumentData(payRequest.RequestComminicationId, tenant, new int[] { 0 }, true);
+                        .GetCommunicationLogStepsDocumentData(payRequest.RequestComminicationId, tenant, new int[] { 0 }, true,false);
                     var xdoc = XDocument.Parse(stepList.First().DocumentData);
                     var FutureSendDateTime = xdoc.Descendants("FutureSendDateTime").FirstOrDefault();
                     if (FutureSendDateTime != null)
