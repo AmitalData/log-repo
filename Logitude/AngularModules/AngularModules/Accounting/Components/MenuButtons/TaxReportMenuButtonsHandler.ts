@@ -69,7 +69,7 @@ export class TaxReportMenuButtonsHandler {
                             this.SetReturnToDraftButtonStatus(button);
                         }
                         case MenuButton.ClosingJournal: {
-                            button.IsDisabled = this.EntityPM.StatusCode == TaxReportStatus.Transmitted;
+                            button.IsDisabled = this.EntityPM.StatusCode != TaxReportStatus.Transmitted;
                             break;
                         }
                     }
@@ -285,6 +285,7 @@ enum TaxReportStatus {
 
     Darft = "D",
     Transmitted = "T",
+    TransmittedAndClosingJournal = "J",
     Error = "E",
     CancelationInProgress = "CP",
     CancelationFailed = "CF"

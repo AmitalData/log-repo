@@ -317,11 +317,11 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private string GetTaxReportJournalLineNote()
         {
-            return "“דו“ח מע“מ " + taxReportPM.TaxReportMonth.ToString("MM.yyyy");
+            return "דו“ח מע“מ " + taxReportPM.TaxReportMonth.ToString("MM.yyyy");
         }
         private string GetTaxReportDifferencJournalLineNote()
         {
-            return "“דו“ח מע“מ " + taxReportPM.TaxReportMonth.ToString("MM.yyyy") + " - עיגול סכומים“";
+            return "דו“ח מע“מ " + taxReportPM.TaxReportMonth.ToString("MM.yyyy") + " - עיגול סכומים";
         }
     }
     public class TaxReportClosingJournalServiceArguments
