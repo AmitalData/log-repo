@@ -2,5 +2,7 @@
   "url": "https://test.logitudeworld.com/test",
   "email": "specflowstable@mail.com",
   "password": "!Cypress1",
-  "tenant": null
-}
+  "customerCareEmail": "SAT@mail.com",
+  "customerCarePassword": "!RS123Rs",
+  "tenant": 951
+} 

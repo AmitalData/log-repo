@@ -1138,7 +1138,7 @@ function FillShipperAndConsignee(shipmentDetails: ShipmentDetails) {
         if (Conditions.IsImport(shipmentDetails.Direction)) {
             cy.FillLogLov(ShipmentSelectors.ShipmentConsignee, shipmentDetails.Consignee, false)
         } else {
-            cy.FillLogLov(ShipmentSelectors.ShipmentShipper, shipmentDetails.Shipper, false)
+            cy.FillLogLov(ShipmentSelectors.ShipmentShipper, shipmentDetails.Shipper, true)
         }
     }
 }
@@ -1307,4 +1307,5 @@ export function AddReceivable() {
     cy.FillLogTextBox(ShipmentSelectors.ReceivableUnitPrice, "1")
     cy.Click(ShipmentSelectors.AddReceivableOkButton, null)
 }
+
 //#endregion

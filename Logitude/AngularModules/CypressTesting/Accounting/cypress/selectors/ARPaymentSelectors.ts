@@ -18,4 +18,6 @@ export class ARPaymentSelectors {
     public static readonly ARPaymentAmount = '#ARPayment_AmountInPaymentCurrency';
     public static readonly ARPaymentSave = '#ARPayment-Save';
     public static readonly ARPaymentCurrency = '#ARPayment_PaymentCurrencyId';
+    public static readonly MetodoPago = '#ARPayment_MetodoPagoCode';
+    public static readonly FormaPago = '#ARPayment_SATPaymentMethodCode';
 }

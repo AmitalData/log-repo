@@ -18,6 +18,7 @@ export class AccountingSelectors extends RegexSelectors {
     //#region contain
     public static readonly NewPayment = "New Payment"
     public static readonly ContainAccountingSystem = "Accounting System"
+    public static readonly ContainSATInterfaceSettings = "SAT (Mexico) Interface Settings"
     public static readonly ContainNone = "None"
     public static readonly ContainLogitudeGenericInterface = "Logitude Generic Interface"
     public static readonly ContainLogitudeAdvancedGenericInterface = "Logitude Advanced Generic Interface"
@@ -178,4 +179,11 @@ export class AccountingSelectors extends RegexSelectors {
     public static TransferCheckBox(ARInvoiceNumber: string) {
         return "[data-cy='CheckBox" + ARInvoiceNumber + "']";
     }
+
+      //#region SATInterfaceSettings
+      public static readonly SATInterfaceSettingsLogLov = "#SATInterfaceSetting_SATInterfaceCode"
+      public static readonly LogLovSATInterfaceSettingsLogLov = "#LogLov_SATInterfaceSetting_SATInterfaceCode"
+      public static readonly SATexchangerate = "#ConfirmWindow_Yes_0";
+   
+      //#endregion
 }

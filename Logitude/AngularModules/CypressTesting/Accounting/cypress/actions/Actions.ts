@@ -20,6 +20,7 @@ import { InvoiceSettingsDetails } from "../../../Maintenance/cypress/models/Invo
 import { InvoiceLineDetails } from "../../../FullAccounting/cypress/models/InvoiceLineDetails"
 import { APInvoiceSelectors } from "../../../FullAccounting/cypress/selectors/APInvoiceSelectors"
 
+let InvoiceNumber = null;
 
 export function NavigatesToAccountingMenu() {
     cy.Click(BaseSelectors.AccountingMenu, null)
@@ -122,6 +123,7 @@ export function FillAPInvoiceDetails(aPInvoiceDetails: APInvoiceDetails, multipl
         }
     }
 }
+
 export function FillAPInvoiceLine(invoiceLineDetails: InvoiceLineDetails) {
     cy.Click(APInvoiceSelectors.AddInvoiceLine, null)
     cy.FillLogLov(APInvoiceSelectors.APInvoiceLineChargesType, invoiceLineDetails.ChargesType, true);
@@ -289,6 +291,11 @@ export function CreateARInvoice(Constituent?: boolean) {
 export function ARApproveInvoice() {
     cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
     cy.Click(AccountingSelectors.ARInvoiceApproveButton, null)
+}
+export function SATARApproveInvoice() {
+    cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
+    cy.Click(AccountingSelectors.ARInvoiceApproveButton, null)
+    cy.Click(AccountingSelectors.SATexchangerate, null)
 }
 
 export function PostARApproveInvoice() {
@@ -625,4 +632,22 @@ export function AssertAutoCreditByInvoiceNumber(invoiceNumber: string) {
     cy.get(BaseSelectors.RightBorderRadius).invoke("text").then((text) => {
         expect(text.replace(/\s/g, "")).to.equals("ByInvoice" + invoiceNumber);
     });
+}
+
+export function changeSATInterfaceSettings(AccountingsSystem: string) {
+    NavigatesToAccountingSettings()
+    cy.Click(BaseSelectors.buttonspan, AccountingSelectors.ContainSATInterfaceSettings, true)
+    cy.SelectDropDownListItem(AccountingSelectors.LogLovSATInterfaceSettingsLogLov, AccountingsSystem)
+    
+}
+export const SearchInvoice = () => {
+    DefineInvoiceViewsGetFilterSearch(InvoiceNumber);
+    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput,InvoiceNumber);
+    AssertInvoiceViewsGetByFilters();
+}
+export const DefineInvoiceViewsGetFilterSearch = (InvoiceNumber: string) => {
+  //  cy.DefineRequestWait(RestAPI.GET, AccountingURLs.GetFilterSearch(InvoiceNumber), RequestAliases.GetFilterSearch);
+}
+export function AssertInvoiceViewsGetByFilters() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
 }
