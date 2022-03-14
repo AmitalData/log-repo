@@ -190,6 +190,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             _DeclarationCargoSplitPM.DecCargoSplitCargoIdentifiers = myDecCargoSplitCargoIdentifierPMList;
                         }
                     }
+                    if(declaration.Direction == "E")
+                    {
+                        var statuses = new List<string> { "1", "4", "6" };
+                        if (statuses.Contains(customResponse.CargoSplitRequestResponse.responseStatus))
+                        {
+                            _DeclarationCargoSplitPM.IsClosed = true;
+                        }
+                    }
                     DeclarationCargoSplitUpdateService.Update(_DeclarationCargoSplitPM, true);
                 }
                 else
