@@ -3129,12 +3129,12 @@
     <TextCode
       Code="&quot;TaxReport.O.ClosingJournalConfirmationMessage&quot;"
       DefaultText="&quot;This will change the status of the report to be Transmitted and in addition will create a journal that will close the transaction amounts of:  Tax institution GL Account, VAT Output GL Account and VAT Inputs GLAccount, Continue?&quot;"
-      LocalDefaultText="&quot;פעולה זאת תשנה את סטאטוס הדו&quot;ח ל&quot;שודר&quot; ותיצור פקודת יומן שתסגור את סכומי העסקאות +התשומות מול חו&quot;ז המע&quot;מ (כולל התאמות), הפרשי עיגול ירשמו כנגד כרטיס ההפרשים.&quot;"
+      LocalDefaultText="&quot;פעולה זאת תשנה את סטאטוס הדו&quot;ח ל&quot;שודר&quot; ותיצור פקודת יומן שתסגור את סכומי העסקאות +התשומות מול חו&quot;ז המע&quot;מ (כולל התאמות), הפרשי עיגול ירשמו כנגד כרטיס ההפרשים, האם להמשיך?&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxReport.O.ClosingJournalValidationMessage&quot;"
-      DefaultText="&quot;There are a reconciled ledger transactions that are included in the VAT report, you must cancel the reconciliations in the glaccount input vat / glaccount output before the creating closing journal&quot;"
+      DefaultText="&quot;There are a reconciled ledger transactions that are included in the VAT report, you must cancel the reconciliations in the glaccount input vat / glaccount output before create the closing journal&quot;"
       LocalDefaultText="&quot;ישנם תנועות מותאמות המשתתפות בדוח המע&quot;מ , יש לבטל תחילה את ההתאמות בכרטיסי העסקאות /תשומות בטרם ביצוע פקודת הסגירה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
