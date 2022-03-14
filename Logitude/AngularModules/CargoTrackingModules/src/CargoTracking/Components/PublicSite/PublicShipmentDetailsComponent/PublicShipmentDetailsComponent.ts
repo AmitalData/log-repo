@@ -30,7 +30,7 @@ export class PublicShipmentDetailsComponent implements OnInit
     ShipmentQuantity:number=0;
     ShipmentContainers:string[]=[];
     previousUrl: string;
-
+    ReferencesViewCount = 2;
     constructor(private route: ActivatedRoute,
         private router: Router,
         public dialog: MatDialog,
@@ -285,7 +285,7 @@ export class PublicShipmentDetailsComponent implements OnInit
         }
         return houseReferences;
     }
-    OpenReferencesMessageWindow(references: any[], isMobile: boolean) {
+    OpenReferencesMessageWindow(references: any[]) {
         if(!references)
             return;
 
@@ -293,9 +293,12 @@ export class PublicShipmentDetailsComponent implements OnInit
         this.dialog.open(MessageWindowComponent, {
             data: {
                 title: 'References',
-                description: references.slice(2, references.length + 1).join("\n"),
+                description: this.GetReferencesMessageText(references,this.ReferencesViewCount),
             }
         });
+    }
+    GetReferencesMessageText(references,skip){
+        references.slice(skip, references.length + 1).join("\n")
     }
     public ShipmentLabel: string;
     public ShipmentReference: string;

@@ -45,7 +45,8 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     private captchaParameters: CaptchaParameters;
     public errorMessage: string;
     public ShortSearchValueBlockingMessage: string = "Search value must have at least three characters";
-
+    MobileReferencesViewCount = 1 ;
+    WebReferencesViewCount = 3
     constructor(private router: Router,
         private route: ActivatedRoute,
         private formBuilder: FormBuilder,
@@ -421,7 +422,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         event.stopPropagation();
         var references = this.getReference(shipment);
         references = references.filter(e=>e.length > 0);
-        references = references.slice(isMobile? 1 : 3 )
+        references = references.slice(isMobile? this.MobileReferencesViewCount : this.WebReferencesViewCount )
         this.dialog.open(MessageWindowComponent, {
             data: {
                 title: 'References',

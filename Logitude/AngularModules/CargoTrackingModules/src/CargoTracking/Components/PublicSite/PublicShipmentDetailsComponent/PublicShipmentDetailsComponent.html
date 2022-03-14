@@ -50,15 +50,15 @@
             </div>
             <div class="value">
                 <ul *ngIf=" ShipmentReferences">
-                    <li *ngFor="let ref of ShipmentReferences.slice(0,2), let i = index">{{ref}}</li>
+                    <li *ngFor="let ref of ShipmentReferences.slice(0,ReferencesViewCount), let i = index">{{ref}}</li>
                     <li>
                         <span class="clickable"
-                            (click)="OpenReferencesMessageWindow(ShipmentReferences, false); $event.stopPropagation()"
-                            *ngIf="ShipmentReferences?.length > 2"
+                            (click)="OpenReferencesMessageWindow(ShipmentReferences); $event.stopPropagation()"
+                            *ngIf="ShipmentReferences?.length > ReferencesViewCount"
                             >
                             <img height="15px" src="./assets/images/icons/info.png" alt=" "
                                 style="margin-right: 6px; margin-top: 6px" />
-                            <u >+ {{ShipmentReferences?.length - 2}} More</u>
+                            <u >+ {{ShipmentReferences?.length - ReferencesViewCount}} More</u>
                         </span>
                     </li>
                 </ul>

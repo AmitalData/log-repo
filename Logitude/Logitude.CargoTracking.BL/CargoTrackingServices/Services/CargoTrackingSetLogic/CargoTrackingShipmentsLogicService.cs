@@ -267,29 +267,21 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         private static void SetCustomerReference(DataRow tableRow)
         {
             var customerReferences = new List<string>();
-            if (!tableRow.IsNull("CustomerReference1") && !tableRow["CustomerReference1"].Equals(""))
-            {
-                customerReferences.AddRange(GetCustomerReferences(tableRow["CustomerReference1"].ToString()));
-            }
-            if (!tableRow.IsNull("CustomerReference2") && !tableRow["CustomerReference2"].Equals(""))
-            {
-                customerReferences.AddRange(GetCustomerReferences(tableRow["CustomerReference2"].ToString()));
-            }
-            if (!tableRow.IsNull("ForwardingCustomerReference1") && !tableRow["ForwardingCustomerReference1"].Equals(""))
-            {
-                customerReferences.AddRange(GetCustomerReferences(tableRow["ForwardingCustomerReference1"].ToString()));
-            }
-            if (!tableRow.IsNull("ForwardingCustomerReference2") && !tableRow["ForwardingCustomerReference2"].Equals(""))
-            {
-                customerReferences.AddRange(GetCustomerReferences(tableRow["ForwardingCustomerReference2"].ToString()));
-            }
-            if (!tableRow.IsNull("OrderCustomerReference") && !tableRow["OrderCustomerReference"].Equals(""))
-            {
-                customerReferences.AddRange(GetCustomerReferences(tableRow["OrderCustomerReference"].ToString()));
-            }
+            AddCustomerReferences(customerReferences, tableRow, "CustomerReference1");
+            AddCustomerReferences(customerReferences, tableRow, "CustomerReference2");
+            AddCustomerReferences(customerReferences, tableRow, "ForwardingCustomerReference1");
+            AddCustomerReferences(customerReferences, tableRow, "ForwardingCustomerReference2");
+            AddCustomerReferences(customerReferences, tableRow, "OrderCustomerReference");
+            AddCustomerReferences(customerReferences, tableRow, "OrderCustomerReference");
             tableRow.SetField("CustomerReference", string.Join(",", customerReferences));
+        }
 
-
+        private static void AddCustomerReferences(List<string> customerReferences, DataRow tableRow, string referenceName)
+        {
+            if (!tableRow.IsNull(referenceName) && !tableRow[referenceName].Equals(""))
+            {
+                customerReferences.AddRange(GetCustomerReferences(tableRow[referenceName].ToString()));
+            }
         }
 
         private static List<string> GetCustomerReferences(string references)
