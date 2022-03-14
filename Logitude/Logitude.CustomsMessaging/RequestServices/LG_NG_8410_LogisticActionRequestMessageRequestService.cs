@@ -44,7 +44,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 Attachments = GetAttachments(p.LogisticActionRequestId, p.Tenant),
                 RequestContentHeader = new RequestContentHeader() { Convertor = "1", RecieverID = new int[] { 1 } }
         };
-
+            myMsg.GeneralDetails.ExporterNumberSpecified = true;
             this.MyRequestSheetParam = new RequestSheetParam();
             this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.LogisticActionRequest");
             this.MyRequestSheetParam.EntityId1 = p.LogisticActionRequestId;
