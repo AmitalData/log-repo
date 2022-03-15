@@ -9,6 +9,8 @@ import { CargoTrackingMilestoneService } from 'src/CargoTracking/Services/Others
 import { CargoTrackingMilestoneList } from 'src/CargoTracking/EntityLists/CargoTrackingMilestoneList';
 import { CargoTrackingMilestones } from 'src/CargoTracking/DataContracts/CargoTrackingMilestones';
 import { MilestoneCodes } from 'src/CargoTracking/Constants/MilestoneCodes';
+import { MatDialog } from '@angular/material/dialog';
+import { MessageWindowComponent } from 'src/Infrastructure/Components/MessageWindow/MessageWindowComponent';
 
 const shipmentOrderEntityType = 'O';
 @Component({
@@ -28,9 +30,11 @@ export class PublicShipmentDetailsComponent implements OnInit
     ShipmentQuantity:number=0;
     ShipmentContainers:string[]=[];
     previousUrl: string;
-
+    ReferencesViewCount = 2;
     constructor(private route: ActivatedRoute,
         private router: Router,
+        public dialog: MatDialog,
+
         private location: Location,
         private searchService: CargoTrackingSearchService,
         private milestonesService: CargoTrackingMilestoneService)
@@ -231,7 +235,9 @@ export class PublicShipmentDetailsComponent implements OnInit
             this.SetCargoTrackingContainers(result);
             if (this.ShipmentWithMilestones) {
                 this.Shipment = result.ShipmentList;
-                this.ShipmentReferences =result.ShipmentList.CustomerReference? result.ShipmentList.CustomerReference.split(','):null;
+
+                this.ShipmentReferences = this.getShipmentReferences();
+                
                 if (this.Shipment.CurrentMilestoneCode == CargoTrackingMilestones.Delivered) {
                     this.Delivered = true;
                     this.DileveredIconColor = CargoTrackingBrandingData.SecondaryColor;
@@ -259,6 +265,41 @@ export class PublicShipmentDetailsComponent implements OnInit
             this.SetShipmentDetails();
 
         });
+    }
+    getShipmentReferences(): string[] {
+        var references = [];
+        var houseReferences = this.getHouseReferences();
+        references = this.Shipment.CustomerReference? this.Shipment.CustomerReference.split(','):[];
+        references = references.filter(e=>e && e.length> 0);
+        return [...houseReferences , ...references];
+    }
+    getHouseReferences(): string[] {
+        var houseReferences:string[] = [];
+        if(this.Shipment.House && !houseReferences.find(e=>e == this.Shipment.House)){
+            houseReferences.push(this.Shipment.House);
+        }
+        if(this.Shipment.ForwardingHouse && !houseReferences.find(e=>e == this.Shipment.ForwardingHouse)){
+            houseReferences.push(this.Shipment.ForwardingHouse);
+        }
+        if(this.Shipment.SHOHouse && !houseReferences.find(e=>e == this.Shipment.SHOHouse)){
+            houseReferences.push(this.Shipment.SHOHouse);
+        }
+        return houseReferences;
+    }
+    OpenReferencesMessageWindow(references: any[]) {
+        if(!references)
+            return;
+
+        references = references.filter(d=>d).map(x => x.trim());
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: 'References',
+                description: this.GetReferencesMessageText(references,this.ReferencesViewCount),
+            }
+        });
+    }
+    GetReferencesMessageText(references,skip){
+        return references.slice(skip, references.length + 1).join("\n");
     }
     public ShipmentLabel: string;
     public ShipmentReference: string;

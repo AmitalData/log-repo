@@ -699,6 +699,11 @@ export class CargoTrackingShipmentPM {
     public set ApprovedByUserName(newValue: string) { if (this.approvedByUserName != newValue) { this.approvedByUserName = newValue; this.MarkAsDirty("ApprovedByUserName"); } }
        
 	 
+    private sHOHouse: string;
+    public get SHOHouse() { return this.sHOHouse; }
+    public set SHOHouse(newValue: string) { if (this.sHOHouse != newValue) { this.sHOHouse = newValue; this.MarkAsDirty("SHOHouse"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		

@@ -285,8 +285,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             var forwardingShipmentFields =
               "min(P.ShipmentNumber) as ForwardingShipmentNumber , " +
-              " min(P.CustomerReference1) as ForwardingCustomerReference1, " +
-              " min(P.CustomerReference2) as ForwardingCustomerReference2, " +
+              " null as ForwardingCustomerReference1, " +
+              " null as ForwardingCustomerReference2, " +
               " min(com.ContainersNumbers) as ForwardingContainersNumbers, " +
               " min(P.House) as ForwardingHouse, " +
               " min(Mas.Master) as ForwardingMaster, " +

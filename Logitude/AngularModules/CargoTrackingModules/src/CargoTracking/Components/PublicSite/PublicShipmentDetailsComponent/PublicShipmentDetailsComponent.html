@@ -47,27 +47,22 @@
         <div class="field">
             <div class="label">
                 References
-                &nbsp;
-                <a *ngIf="ShipmentReferences && ShipmentReferences.length > 2"
-                    (click)="showMoreReferences=!showMoreReferences"
-                    style="cursor: pointer;text-decoration: underline; font-size: 11px;">
-                    {{showMoreReferences?'Show Less':'See all'}}
-                </a>
-
             </div>
             <div class="value">
-                <div *ngIf="Shipment.House != null">{{Shipment.House}}</div>
-                <div *ngIf="IsLoadingReferences">
-                    Loading...
-                </div>
-
-                <ul *ngIf="showMoreReferences && ShipmentReferences">
-                    <li *ngFor="let ref of ShipmentReferences, let i = index">{{ref}}</li>
+                <ul *ngIf=" ShipmentReferences">
+                    <li *ngFor="let ref of ShipmentReferences.slice(0,ReferencesViewCount), let i = index">{{ref}}</li>
+                    <li>
+                        <span class="clickable"
+                            (click)="OpenReferencesMessageWindow(ShipmentReferences); $event.stopPropagation()"
+                            *ngIf="ShipmentReferences?.length > ReferencesViewCount"
+                            >
+                            <img height="15px" src="./assets/images/icons/info.png" alt=" "
+                                style="margin-right: 6px; margin-top: 6px" />
+                            <u >+ {{ShipmentReferences?.length - ReferencesViewCount}} More</u>
+                        </span>
+                    </li>
                 </ul>
-                <ul *ngIf="!showMoreReferences && ShipmentReferences">
-                    <li *ngFor="let ref of ShipmentReferences.slice(0,2), let i = index">{{ref}}</li>
-                </ul>
-
+               
 
             </div>
         </div>
