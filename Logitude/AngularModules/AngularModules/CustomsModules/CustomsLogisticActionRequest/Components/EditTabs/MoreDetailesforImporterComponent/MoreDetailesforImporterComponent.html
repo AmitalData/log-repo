@@ -1,4 +1,9 @@
 <table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="2">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
     <tr style="height:32px" class="FormFieldRow">
         <td style="width: 150px;">
             <LogLabel [TextCode]="'Customs.LogisticActionRequest.F.ExporterIdentifierType'" [ObjectTableName]="ObjectTableName"

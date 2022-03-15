@@ -17,8 +17,8 @@ import { LogisticActionRequestPMService } from 'Customs/Services/StandardPMs/Log
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
 import { LogisticActionRequestRequestParams } from 'Customs/DataContract/RequestParams/LogisticActionRequestRequestParams';
 import { LogisticActionRequestWebService } from 'Customs/Services/WebServices/LogisticActionRequestWebService';
-import { MessageWindow } from 'Controls/Windows/MessageWindow';
 import { ResponseDataBase } from 'Customs/DataContract/ResponseData/ResponseDataBase';
+import { CustomMessageProgressComponent } from 'CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 
 @Component({
     templateUrl: './LogisticActionRequestGeneralTabComponent.html',
@@ -171,6 +171,8 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
                 this.requierdFieldsList.push(name)
         } else
             this.removeFromArray(this.requierdFieldsList, name)
+
+        this.invalidate()
     }
 
 
@@ -213,14 +215,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     private async syncDeclaration() {
         const consignmentDeclartion: ConsignmentDeclartion = await this.getDeclarationsandConsignment();
 
-        if (!consignmentDeclartion.Consignment) return;
-
-        if (!(await this.confirmSyncDeclaration())) return
-
-        // const declaration: DeclarationList = declarations[0];
-        console.log(consignmentDeclartion)
-        // const consignment: ConsignmentPM = await this.getConsignmentByDeclarationId(declaration.Id);        
-
+        if (!consignmentDeclartion.Consignment || !(await this.confirmSyncDeclaration())) return;
 
         this.ExporterNumber = consignmentDeclartion.Consignment.Declaration.ImporterCode;
         this.CargoIdentifierType = consignmentDeclartion.Consignment.CargoTypeCode
@@ -338,11 +333,22 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     async OnCustomSendOptionsButtonClick(customSendOptionsArgs) {
         if (this.invalidate()) return;
 
-        SessionLocator.SelectedSession.StartBusyIndicatorSaving();
-
         this.SaveEntityChanges();
 
-        var param = new LogisticActionRequestRequestParams();
+        SessionLocator.SelectedSession.StartBusyIndicatorSaving();
+
+        const param: LogisticActionRequestRequestParams = this.getCustomsParams();
+
+        const res: ResponseDataBase = await this.logisticActionRequestWebService.SendCustomsMessage8410(param);
+
+        CustomMessageProgressComponent
+            .ShowProgressBar(SessionLocator.SelectedSession, param.PBId, "בקשת ביטול יצוא", true)
+            .catch((err) => this.ValidationErrorsList.push(err));
+    }
+
+
+    private getCustomsParams() {
+        const param: LogisticActionRequestRequestParams = new LogisticActionRequestRequestParams();
         param.LogisticActionRequestId = this.entityPM.Id;
         param.ExporterIdentifierType = this.entityPM.ExporterIdentifierType;
         param.ExporterNumber = this.entityPM.ExporterNumber;
@@ -359,14 +365,8 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         param.Quantity = this.entityPM.Quantity;
         param.CustomsFile = this.entityPM.ExportFileNo;
         param.Tenant = this.entityPM.Tenant;
-
-        const res: ResponseDataBase = await this.logisticActionRequestWebService.SendCustomsMessage8410(param);
-
-        SessionLocator.SelectedSession.StopBusyIndicator();
-
-        new MessageWindow().Show(res.UserMessage);
+        return param;
     }
-
 
     OkButtonClicked() {
         if (this.invalidate()) return;
@@ -381,8 +381,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
 
     RefreshEntity() {
-        if (SessionLocator.SelectedSession.CurrentEditComponent)
-            SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
+        SessionLocator.SelectedSession.CurrentEditComponent?.ReloadEntityPM();
     }
 
 
@@ -399,9 +398,9 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./CustomsModules/CustomsLogisticActionRequest/Components/EditTabs/MoreDetailesforImporterComponent/MoreDetailesforImporterComponent');
         logWindow.WindowClosed.subscribe(() => {
-            this.setRequiredField('ExporterNumber', this.entityPM.ExporterIdentifierType == '1')
-            this.setRequiredField('PassportNumber', this.entityPM.ExporterIdentifierType == '2')
-            this.setRequiredField('PassportCountry', this.entityPM.ExporterIdentifierType == '2')
+            this.setRequiredField('ExporterNumber', this.entityPM.ExporterIdentifierType == '1' && !this.entityPM.ExporterNumber)
+            this.setRequiredField('PassportNumber', this.entityPM.ExporterIdentifierType == '2' && !this.entityPM.PassportNumber)
+            this.setRequiredField('PassportCountry', this.entityPM.ExporterIdentifierType == '2' && !this.entityPM.PassportCountry)
         })
     }
 
