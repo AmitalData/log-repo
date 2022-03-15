@@ -165,7 +165,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 throw new ApplicationException("Period is required ");
             }
             string regimenFiscalCode = arInvoicePM.RegimenFiscalCode;
-            if (string.IsNullOrEmpty(regimenFiscalCode) && string.IsNullOrEmpty(billToCard.RegimenFiscalCode))
+            if (string.IsNullOrEmpty(regimenFiscalCode) && !string.IsNullOrEmpty(billToCard.RegimenFiscalCode))
                 regimenFiscalCode = billToCard.RegimenFiscalCode;
 
             if (arInvoicePM.PeriodCode == SATData.BimestralPeriod && regimenFiscalCode != SATData.IncorporacionFiscalRegimen)
