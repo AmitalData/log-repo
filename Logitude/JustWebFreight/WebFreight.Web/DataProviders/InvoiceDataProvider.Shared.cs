@@ -57,7 +57,8 @@ namespace WebFreight.Web.DataProviders
         public string MainCarriageMAWBOBLBL_label { get; set; }
         public string GrossWeight { get; set; }
         public string ChargeableWeight { get; set; }
-        public string WeightUnitCode { get; set; }
+        public double? ChargeableWeight_Double { get; set; }
+        public string ChargeableWeightUnitCode { get; set; }
         public string MainCarriageFromPortName { get; set; }
         public string MainCarriageFromPort_LocalName { get; set; }
         public string MainCarriageToPortName { get; set; }
@@ -664,6 +665,8 @@ namespace WebFreight.Web.DataProviders
         public string Volume { get; set; }
         public string GrossWeight { get; set; }
         public string ChargeableWeight { get; set; }
+        public double? ChargeableWeight_Double { get; set; }
+        public string ChargeableWeightUnitCode { get; set; }
         public string PackagesQuantity { get; set; }
         public string SubTotalInInvoiceCurrency { get; set; }
         public string SubTotalInLocalCurrency { get; set; }
@@ -688,12 +691,55 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentNumber { get; set; }
         public string ShipmentRouting { get; set; }
         public DateTime? LastDeliveryATD { get; set; }
+        public string ConnectedQuoteNumber { get; set; }
+        public string ShipmentField1 { get; set; }
+        public string ShipmentField2 { get; set; }
+        public string ShipmentField3 { get; set; }
+        public string ShipmentField4 { get; set; }
+        public string ShipmentField5 { get; set; }
+        public string ShipmentField6 { get; set; }
+        public string ShipmentField7 { get; set; }
+        public string ShipmentField8 { get; set; }
+        public string ShipmentField9 { get; set; }
+        public string ShipmentField10 { get; set; }
+        public string ShipmentField11 { get; set; }
+        public string ShipmentField12 { get; set; }
+        public string ShipmentField13 { get; set; }
+        public string ShipmentField14 { get; set; }
+        public string ShipmentField15 { get; set; }
+        public string ShipmentField16 { get; set; }
+        public string ShipmentField17 { get; set; }
+        public string ShipmentField18 { get; set; }
+        public string ShipmentField19 { get; set; }
+        public string ShipmentField20 { get; set; }
+        public string ShipmentField21 { get; set; }
+        public string ShipmentField22 { get; set; }
+        public string ShipmentField23 { get; set; }
+        public string ShipmentField24 { get; set; }
+        public string ShipmentField25 { get; set; }
+        public string ShipmentField26 { get; set; }
+        public string ShipmentField27 { get; set; }
+        public string ShipmentField28 { get; set; }
+        public string ShipmentField29 { get; set; }
+        public string ShipmentField30 { get; set; }
+        public string ShipmentField31 { get; set; }
+        public string ShipmentField32 { get; set; }
+        public string ShipmentField33 { get; set; }
+        public string ShipmentField34 { get; set; }
+        public string ShipmentField35 { get; set; }
+        public string ShipmentField36 { get; set; }
+        public string ShipmentField37 { get; set; }
+        public string ShipmentField38 { get; set; }
+        public string ShipmentField39 { get; set; }
+        public string ShipmentField40 { get; set; }
+
     }
 
     public class ReportInvoiceLine
     {
         public string Description { get; set; }
         public string Quantity { get; set; }
+        public double? QuantityDouble { get; set; }
         public string Measurement { get; set; }
         public string UnitPrice { get; set; }
         public double UnitPriceDouble { get; set; }

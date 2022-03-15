@@ -204,8 +204,8 @@ namespace Logitude.Server.Tools
                     QueueName = communicationParams.QueueName,
                     Priority = communicationParams.Priority,
                     AdditionalFields = communicationParams.AdditionalFields,
-                    ExceptionMessage = communicationParams.ExceptionMessage
-
+                    ExceptionMessage = communicationParams.ExceptionMessage,
+                    UniqueNumber = communicationParams.UniqueNumber,
                 };
                 communicationLogRepository.Add(commLog);
                 communicationLogRepository.SubmitChanges();
@@ -683,6 +683,7 @@ namespace Logitude.Server.Tools
         public Dictionary<string, string> QueueParameters { get; set; }
         public string AdditionalFields { get; set; }
         public string ExceptionMessage { get; set; }
+        public string UniqueNumber { get; set; }
 
     }
 

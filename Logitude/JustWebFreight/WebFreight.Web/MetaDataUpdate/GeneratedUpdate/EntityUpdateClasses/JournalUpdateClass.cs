@@ -3104,7 +3104,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ExternalJournalsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalJournalsQuery.Id,QueryCode = ExternalJournalsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Journal.AccountingEntityReference" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter ExternalJournalsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Journal.ExternalSystem", PredefinedValue = "1",PredefinedValue2 = null, QueryId = ExternalJournalsQuery.Id,QueryCode = ExternalJournalsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter ExternalJournalsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Journal.ExternalSystem", PredefinedValue = "1",PredefinedValue2 = null, CustomPredefined = false, QueryId = ExternalJournalsQuery.Id,QueryCode = ExternalJournalsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -3147,7 +3147,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ApprovedJournalsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovedJournalsQuery.Id,QueryCode = ApprovedJournalsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Journal.CreatedByUserName" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter ApprovedJournalsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Journal.StatusCode", PredefinedValue = "2",PredefinedValue2 = null, QueryId = ApprovedJournalsQuery.Id,QueryCode = ApprovedJournalsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter ApprovedJournalsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Journal.StatusCode", PredefinedValue = "2",PredefinedValue2 = null, CustomPredefined = false, QueryId = ApprovedJournalsQuery.Id,QueryCode = ApprovedJournalsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -3170,7 +3170,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn DraftJournalsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftJournalsQuery.Id,QueryCode = DraftJournalsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Journal.CreatedByUserName" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter DraftJournalsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Journal.StatusCode", PredefinedValue = "0",PredefinedValue2 = null, QueryId = DraftJournalsQuery.Id,QueryCode = DraftJournalsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter DraftJournalsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Journal.StatusCode", PredefinedValue = "0",PredefinedValue2 = null, CustomPredefined = false, QueryId = DraftJournalsQuery.Id,QueryCode = DraftJournalsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -3193,7 +3193,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn SavedJournalsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SavedJournalsQuery.Id,QueryCode = SavedJournalsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Journal.AccountingEntityReference" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter SavedJournalsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Journal.StatusCode", PredefinedValue = "1",PredefinedValue2 = null, QueryId = SavedJournalsQuery.Id,QueryCode = SavedJournalsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter SavedJournalsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Journal.StatusCode", PredefinedValue = "1",PredefinedValue2 = null, CustomPredefined = false, QueryId = SavedJournalsQuery.Id,QueryCode = SavedJournalsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);

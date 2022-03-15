@@ -1,36 +1,43 @@
-<h1 style="margin-bottom: 0px;" mat-dialog-title>
-    {{title}}
-</h1>
-<div *ngIf="date" mat-dialog-content style="text-align:end">
-    {{date}}
-</div>
-<div style="white-space: pre-wrap;" mat-dialog-content>{{description}}</div>
+<div style="direction: rtl;">
 
-<div *ngIf="showTextBox" mat-dialog-content>
-    <input class="input-text" type="text" [(ngModel)]="TextBoxValue" />
-</div>
+    <h1 style="margin-bottom: 0px;" mat-dialog-title>
+        {{title}}
+    </h1>
+    <div *ngIf="date" mat-dialog-content style="text-align:end">
+        {{date}}
+    </div>
+    <div style="white-space: pre-wrap;" mat-dialog-content>{{description}}</div>
 
-<div *ngIf="showMultilineTextBox" mat-dialog-content>
-    <textarea class="input-text" row="3" [(ngModel)]="TextBoxValue" ></textarea>
-</div>
+    <div class="error-text" *ngIf="error">
+        * {{error}}
+    </div>
+    <div *ngIf="showTextBox " mat-dialog-content>
+        <input class="input-text" [class.error]="error" type="text" [(ngModel)]="TextBoxValue" />
+    </div>
 
-<div *ngIf="link" mat-dialog-content style="text-align:end">
-    <a href="{{link}}"  target="_blank">Download document</a>
-</div>
-<div class="spinner" *ngIf="isLoading">
-    <div class="rect1"></div>
-    <div class="rect2"></div>
-    <div class="rect3"></div>
-    <div class="rect4"></div>
-    <div class="rect5"></div>
-</div>
-<div mat-dialog-actions *ngIf="showOkButton||showCancelButton" class="toolbar">
-    <button class="animate" *ngIf="showOkButton" mat-button (click)="OkButtonClicked()">Ok</button>
-    <button class="animate" *ngIf="showCancelButton" mat-button (click)="CancelButtonClicked()"
-        mat-dialog-close>Cancel</button>
-</div>
+    <div *ngIf="showMultilineTextBox" mat-dialog-content>
+        <textarea class="input-text" [class.error]="error" row="3" [(ngModel)]="TextBoxValue"></textarea>
+    </div>
 
-<div mat-dialog-actions *ngIf="link" class="toolbar">
-    <button class="animate" style="margin: 0 auto !important" mat-button (click)="CancelButtonClicked()"
-        mat-dialog-close>Cancel</button>
+    <div *ngIf="link" mat-dialog-content style="text-align:end">
+        <a href="{{link}}" target="_blank">Download document</a>
+    </div>
+    <div class="spinner" *ngIf="isLoading">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+    </div>
+
+    <div mat-dialog-actions *ngIf="showOkButton||showCancelButton" class="toolbar">
+        <button class="animate" *ngIf="showCancelButton" mat-button (click)="CancelButtonClicked()"
+            mat-dialog-close>{{CancelButtonText}}</button>
+        <button class="animate" *ngIf="showOkButton" mat-button (click)="OkButtonClicked()">{{OkButtonText}}</button>
+    </div>
+
+    <div mat-dialog-actions *ngIf="link" class="toolbar">
+        <button class="animate" style="margin: 0 auto !important" mat-button (click)="CancelButtonClicked()"
+            mat-dialog-close>{{CancelButtonText}}</button>
+    </div>
 </div>

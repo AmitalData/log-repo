@@ -2001,7 +2001,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn TodayDepositsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "BankDeposit.CreateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter TodayDepositsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "BankDeposit.DepositDate", PredefinedValue = "#today",PredefinedValue2 = "#today", QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, Tenant = 0,Operator = "Between"}, addedQueryFilters);
+             AdvancedQueryFilter TodayDepositsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "BankDeposit.DepositDate", PredefinedValue = "#today",PredefinedValue2 = "#today", CustomPredefined = false, QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, Tenant = 0,Operator = "Between"}, addedQueryFilters);
 
   
 	      
@@ -2022,7 +2022,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn cashDepositsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "BankDeposit.CreateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter cashDepositsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "BankDeposit.IsCashDeposit", PredefinedValue = "true",PredefinedValue2 = null, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter cashDepositsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "BankDeposit.IsCashDeposit", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
   
 	      
@@ -2043,7 +2043,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn chequeDepositQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "BankDeposit.CreateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter chequeDepositQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "BankDeposit.IsCashDeposit", PredefinedValue = "false",PredefinedValue2 = null, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter chequeDepositQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "BankDeposit.IsCashDeposit", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);

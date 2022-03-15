@@ -559,6 +559,7 @@ export class AdvanceSearchComponent implements OnInit {
             advanceFilter.Operator = field.Operation.Code;
             advanceFilter.PredefinedValue = predefinedValue;
             advanceFilter.IsPredefined = isPredifined;
+            advanceFilter.CustomPredefined = field.ObjectField.CustomPredefined;
             advanceFilter.UserId = SessionInfo.LoggedUserId;
             advanceFilter.ObjectFieldCode = field.ObjectField.FieldCode;
 

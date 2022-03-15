@@ -89,7 +89,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.SetUnits();
         this.SetLabels();
         this.SetFromPort();
-        this.checkAirShipmentToggle();
+        //this.checkAirShipmentToggle(); will be added in 2022 R2
 
     }
     checkAirShipmentToggle() { 

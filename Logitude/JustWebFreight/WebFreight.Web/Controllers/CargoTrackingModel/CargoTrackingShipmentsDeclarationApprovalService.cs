@@ -54,6 +54,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 cloudData.IsImporterApprovalRequried = false;
                 cloudData.ApproveDateTime = TenantServerConfigration.GetCurrentDateTime(declarationApprovalArgs.Tenant);
+                cloudData.ApprovedByUserName = declarationApprovalArgs.ApprovedBy;
                 SubmitCloudData(declarationApprovalArgs, cloudData);
             }
             return cloudData;
@@ -242,16 +243,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             {
                 return remark;
             }
-            ContactQuery myQuery = new ContactQuery(cloudData.Tenant);
-            var MyContact = myQuery.GetFirstContactByEnglishNamePM(cloudData.ApprovedByUserName, cloudData.Tenant);
-            if (MyContact != null)
-            {
-                remark = MyContact.EnglishName + ", " + MyContact.LocalName + ", " + MyContact.Email + ", " + cloudData.VersionApproved;
-            }
-            else
-            {
-                remark = "Approved By - " + cloudData.ApprovedByUserName;
-            }
+            remark = "Approved By - " + cloudData.ApprovedByUserName;
             return remark;
         }
 
@@ -284,6 +276,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         public int Tenant { get; set; }
         public string ShipmentNumber { get; set; }
         public string ShipmentSecurityKey { get; set; }
+        public string ApprovedBy { get; set; }
         public bool? Approved { get; set; }
         public bool? Denied { get; set; }
         public string DenyReason { get; set; }

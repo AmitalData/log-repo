@@ -1,0 +1,124 @@
+﻿<Script DBType="Main" Module="Shipment" Pre="true">
+  <Sql Version="2">
+    <![CDATA[
+    
+ IF EXISTS (SELECT *
+               FROM   sys.objects
+               WHERE  object_id = OBJECT_ID(N'[dbo].[BuildFullAddressTextFunction]'))
+    
+    DROP FUNCTION [dbo].[BuildFullAddressTextFunction]
+      
+    DECLARE @Sql NVARCHAR(MAX)
+    SET @Sql = 
+    '
+    CREATE FUNCTION dbo.BuildFullAddressTextFunction (@AddressId varchar(15), @Tenant int)
+    RETURNS varchar (1000)
+    WITH EXECUTE AS CALLER
+    AS
+    BEGIN
+        DECLARE @Result varchar(1000);
+	    DECLARE @Address1 as varchar(65);
+	    DECLARE @Address2 as varchar(65);
+	    DECLARE @City as varchar(25);
+		DECLARE @StateId as varchar(15);
+		DECLARE @StateName as varchar(40);
+		DECLARE @ZipCode as varchar(15);
+		DECLARE @CountryId as varchar(15);
+		DECLARE @CountryName as varchar(120);
+		DECLARE @ATTN as varchar(40);
+		DECLARE @PhoneNumber as varchar(40);
+
+		set @Result = null;
+
+		select 
+		@Address1 = Address1, 
+		@Address2 = Address2,
+		@City = City,
+		@StateId = StateId,
+		@ZipCode = ZipCode,
+		@CountryId = CountryId,
+		@ATTN = ATTN,
+		@PhoneNumber = PhoneNumber
+		from Addresses where Id = @AddressId and Tenant = @Tenant
+
+		if(@StateId is not null)
+			set @StateName = (select EnglishName from States where Id = @StateId and Tenant = @Tenant)
+
+		if(@CountryId is not null)
+			set @CountryName = (select EnglishName from Countries where Id = @CountryId and Tenant = @Tenant)
+
+		if(@Address1 is not null)
+			set @Result = @Address1
+
+		if(@Address2 is not null)
+		begin			
+			if(@Result is not null)			
+				set @Result = @Result + CHAR(13) + @Address2
+
+			else		
+				set @Result = @Address2
+		end
+
+		if(@City is not null)
+		begin			
+			if(@Result is not null)			
+				set @Result = @Result + CHAR(13) + @City
+
+			else		
+				set @Result = @City
+		end
+
+		if(@StateName is not null)
+		begin			
+			if(@Result is not null)			
+				set @Result = @Result + '' '' + @StateName
+
+			else		
+				set @Result = @StateName
+		end
+
+		if(@ZipCode is not null)
+		begin			
+			if(@Result is not null)			
+				set @Result = @Result + '' '' + @ZipCode
+
+			else		
+				set @Result = @ZipCode
+		end
+
+		if(@CountryName is not null)
+		begin			
+			if(@Result is not null)			
+				set @Result = @Result + CHAR(13) + @CountryName
+
+			else		
+				set @Result = @CountryName
+		end
+
+		if(@ATTN is not null)
+		begin			
+			if(@Result is not null)			
+				set @Result = @Result + CHAR(13) + ''Contact: '' + @ATTN
+
+			else		
+				set @Result = @ATTN
+		end
+
+		if(@PhoneNumber is not null)
+		begin			
+			if(@Result is not null)			
+				set @Result = @Result + CHAR(13) + ''Phone: '' + @PhoneNumber
+
+			else		
+				set @Result = @PhoneNumber
+		end
+
+        RETURN(@Result);
+    END
+    ';
+
+    EXEC(@Sql);
+		  
+    ]]>
+  </Sql>
+</Script>

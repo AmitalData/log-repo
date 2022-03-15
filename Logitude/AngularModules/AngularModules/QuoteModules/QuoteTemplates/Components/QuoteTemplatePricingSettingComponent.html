@@ -118,8 +118,8 @@
                                                                                                                             <td style="width:1px;"><div style="width:1px"></div></td>
                                                                                                                             <td style="vertical-align:central;width:200px;">
                                                                                                                                 <div class="CheckBox">
-                                                                                                                                    <input attr.data-cy="{{item.DisplayTextCode}}" [disabled]="!ShowPricesTable" [(ngModel)]="item.InUse" class="LeftCenter" style="text-align:center" [attr.id]="item.Key" type="checkbox" />
-                                                                                                                                    <input attr.data-cy="{{item.DisplayTextCode}}" [disabled]="!ShowPricesTable" [(ngModel)]="item.InUse" class="LeftCenter" style="text-align:center" [attr.id]="item.Key" type="checkbox" />
+                                                                                                                                    <input attr.data-cy="{{item.DisplayTextCode}}" [disabled]="!ShowPricesTable" [(ngModel)]="item.InUse" class="LeftCenter" (change)="InUseChange(item)" style="text-align:center" [attr.id]="item.Key" type="checkbox" />
+                                                                                                                                    <input attr.data-cy="{{item.DisplayTextCode}}" [disabled]="!ShowPricesTable" [(ngModel)]="item.InUse" class="LeftCenter" (change)="InUseChange(item)" style="text-align:center" [attr.id]="item.Key" type="checkbox" />
                                                                                                                                     <label style="color:black" class="LeftCenter" [attr.for]="item.Key">{{item.DisplayTextCode | TextCodeTranslationPipe}}</label>
                                                                                                                                 </div>
                                                                                                                             </td>
@@ -153,10 +153,14 @@
                                                                                 <tr style="height:22px">
                                                                                     <td style="width:8px"></td>
                                                                                     <td>
-                                                                                        <div class="CheckBox">
-                                                                                            <input [(ngModel)]="SplitChargesbyGroups" class="LeftCenter" style="text-align:center" [attr.id]="SplitChargesbyGroupsKey" type="checkbox" />
-                                                                                            <label style="color:black" class="LeftCenter" [attr.for]="SplitChargesbyGroupsKey">{{'QuoteTemplate.S.Splitbychargegroup' | TextCodeTranslationPipe}} </label>
+                                                                                        <div style="display: flex;">
+                                                                                            <div class="CheckBox" style="width: 70px;margin-top: 3px;">
+                                                                                                <input [(ngModel)]="SplitChargesbyGroups" class="LeftCenter" style="text-align:center" [attr.id]="SplitChargesbyGroupsKey" type="checkbox" />
+                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="SplitChargesbyGroupsKey">Split by</label>                                                                               
+                                                                                            </div>
+                                                                                            <ComboBox *ngIf="ShowSplitChargeTypes" style="width:150px;margin-left: 5px;float: left" [ItemsSource]="PricingTableSplitChargeTypes" [SelectedItem]="PricingTableSplitChargeType" (SelectedItemChanged)="PricingTableSplitChargeType = $event"></ComboBox>
                                                                                         </div>
+                                                                            
                                                                                     </td>
 
                                                                                 </tr>
@@ -172,7 +176,7 @@
 
                                                                                                 <td>
                                                                                                     <div *ngIf="SplitChargesbyGroups" class="CheckBox">
-                                                                                                        <input [disabled]="!ShowSaleCurrencyColumn || !ShowPricesTable" [(ngModel)]="ShowTotalPerChargeGroup" class="LeftCenter" style="text-align:center" [attr.id]="ShowTotalPerChargeGroupKey" type="checkbox" />
+                                                                                                        <input [disabled]="!TotalPerChargeGroupEnabled || !ShowPricesTable" [(ngModel)]="ShowTotalPerChargeGroup" class="LeftCenter" style="text-align:center" [attr.id]="ShowTotalPerChargeGroupKey" type="checkbox" />
                                                                                                         <label style="color:black" class="LeftCenter" [attr.for]="ShowTotalPerChargeGroupKey">{{'QuoteTemplate.S.ShowTotalPerChargeGroup' | TextCodeTranslationPipe}} </label>
                                                                                                     </div>
                                                                                                 </td>

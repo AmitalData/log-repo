@@ -1868,6 +1868,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.StatusId = shipment.StatusId;
             shipmentPM.StatusLocation = shipment.StatusLocation;
             shipmentPM.PartialStatusAmount = shipment.PartialStatusAmount;
+            shipmentPM.FirstPickupFullAddress = shipment.FirstPickupFullAddress;
+            shipmentPM.LastDeliveryFullAddress = shipment.LastDeliveryFullAddress;
             shipmentPM.StatusDate = shipment.StatusDate;
             shipmentPM.LastSentByUserId = shipment.LastSentByUserId;
             shipmentPM.ProfitCurrencyId = shipment.ProfitCurrencyId;
@@ -2620,10 +2622,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 this.MapMainCarriageLegsForAPI(shipmentPM);
             }
 
-            ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
-            returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
+            //ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
+            //returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
 
-            return returnShipment;
+            return shipmentPM;
         }
 
         private string GetCardName(bool byLocalName, Card cardObject)
@@ -3933,6 +3935,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.HandlerUserId = shipment.HandlerUserId;
             shipmentPM.PlannedCargoReadyDate = shipment.PlannedCargoReadyDate;
             shipmentPM.ApprovedCargoReadyDate = shipment.ApprovedCargoReadyDate;
+            shipmentPM.WarehouseLegActualReleaseDate = shipment.WarehouseLegActualReleaseDate;
+            shipmentPM.TerminalAvailable = shipment.TerminalAvailable;
+            shipmentPM.WarehouseLegActualEntryDate = shipment.WarehouseLegActualEntryDate;
 
             if (masterData != null)
             {
@@ -11335,6 +11340,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         HasUnassignedData = view.HasUnassignedData,
                         DestinationWarehouseId = view.DestinationWarehouseId,
                         DestinationWarehouseName = view.DestinationWarehouseName,
+                        FirstPickupFullAddress = view.FirstPickupFullAddress,
+                        LastDeliveryFullAddress = view.LastDeliveryFullAddress,
                     };
 
                     list.LongMaster = EntityFieldsHelper.GetLongMasterField(view);
@@ -12635,6 +12642,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                OperationalStatusName = f.OperationalStatusName,
                                PrivateLabelAgentName = f.PrivateLabelAgentName,
                                StatusWeight = f.StatusWeight,
+                               FirstPickupFullAddress = f.FirstPickupFullAddress,
+                               LastDeliveryFullAddress = f.LastDeliveryFullAddress,
                            };
             return myResult;
         }
@@ -13031,6 +13040,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CustomerContactName = f.CustomerContactName,
                     HasUnassignedData = f.HasUnassignedData,
                     OperationalStatusName = f.OperationalStatusName,
+                    FirstPickupFullAddress = f.FirstPickupFullAddress,
+                    LastDeliveryFullAddress = f.LastDeliveryFullAddress,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

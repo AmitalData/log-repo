@@ -83,6 +83,7 @@ using System.Reflection;
 using System.Collections;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Helpers.Reports;
+using WebFreight.Web.WebServices;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -10238,6 +10239,7 @@ namespace WebFreight.Web.ReportsWebServices
 
         private OpenShipmentsByCustomerDataProvider GetOpenShipmentsByCustomerDataProvider(byte[] xmlFilters, int tenant)
         {
+            WebServiceHelper servicHelper = new WebServiceHelper(tenant);
             OpenShipmentsByCustomerDataProvider totalData = new OpenShipmentsByCustomerDataProvider();
             totalData.OpenShipmentsRecordList = new List<OpenShipmentsRecord>();
 
@@ -10347,6 +10349,9 @@ namespace WebFreight.Web.ReportsWebServices
                     myRecord.Vessel = a.MainCarriageVesselName;
                     myRecord.Voyage = a.MainCarriageCarrierNumber;
                     myRecord.FullStatus = a.StatusName;
+                    myRecord.FistPickupFromAddress = a.FirstPickupFullAddress;
+                    myRecord.LastDeliveryToAddress = a.LastDeliveryFullAddress;
+
                     if (!string.IsNullOrEmpty(a.StatusLocation))
                     {
                         myRecord.FullStatus = a.StatusName + "(" + a.StatusLocation + ")";
@@ -10365,17 +10370,22 @@ namespace WebFreight.Web.ReportsWebServices
                     string myRoutingField = null;
                     if (a.DirectionId == "D" && a.TransportModeId == "I")
                     {
-                        if (a.MainCarriageFromAddressId != null)
+                        InlandDomesticArgs args = new InlandDomesticArgs()
                         {
-                            Address fromAddress = addressRepository.GetSingleAddress(a.MainCarriageFromAddressId, tenant);
-                            myRoutingField = fromAddress.City;
-                        }
-
-                        if (a.MainCarriageToAddressId != null)
-                        {
-                            Address toAddress = addressRepository.GetSingleAddress(a.MainCarriageToAddressId, tenant);
-                            myRoutingField = myRoutingField + " , " + toAddress.City;
-                        }
+                            InlandDomesticFromTypeCode = a.InlandDomesticFromTypeCode,
+                            MainCarriageFromAddressId = a.MainCarriageFromAddressId,
+                            MainCarriageFromPortId = a.MainCarriageFromPortId,
+                            InlandDomesticFromCity = a.InlandDomesticFromCity,
+                            InlandDomesticFromCountryId = a.InlandDomesticFromCountryId,
+                            InlandDomesticToTypeCode = a.InlandDomesticToTypeCode,
+                            MainCarriageToAddressId = a.MainCarriageToAddressId,
+                            InlandDomesticToCity = a.InlandDomesticToCity,
+                            InlandDomesticToCountryId = a.InlandDomesticToCountryId,
+                            MainCarriageToPortId = a.MainCarriageToPortId,
+                            MainCarriageFromPortCountryCode = a.MainCarriageFromPortCountryCode,
+                            MainCarriageToPortCountryCode = a.MainCarriageToPortCountryCode
+                        };
+                        myRoutingField = servicHelper.GetInlandDomesticRouting(args);
                     }
 
                     else
@@ -12116,6 +12126,7 @@ namespace WebFreight.Web.ReportsWebServices
 
         private ShipmentDetailsDataProvider GetShipmentDetailsDataProvider(byte[] xmlFilters, int tenant)
         {
+            WebServiceHelper servicHelper = new WebServiceHelper(tenant);
             ShipmentDetailsDataProvider totalData = new DataProviders.ShipmentDetailsDataProvider();
             IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
@@ -12318,14 +12329,22 @@ namespace WebFreight.Web.ReportsWebServices
 
                     if (Item.DirectionId == "D" && Item.TransportModeId == "I")
                     {
-                        if (!string.IsNullOrEmpty(Item.MainCarriageToAddressId))
+                        InlandDomesticArgs args = new InlandDomesticArgs()
                         {
-                            Address myPartnerAddress = addressRepository.GetSingleAddress(Item.MainCarriageToAddressId, tenant);
-                            if (myPartnerAddress != null)
-                            {
-                                shipment.FinalCountryofDestination = myPartnerAddress.Country != null ? myPartnerAddress.Country.EnglishName : null;
-                            }
-                        }
+                            InlandDomesticFromTypeCode = Item.InlandDomesticFromTypeCode,
+                            MainCarriageFromAddressId = Item.MainCarriageFromAddressId,
+                            MainCarriageFromPortId = Item.MainCarriageFromPortId,
+                            InlandDomesticFromCity = Item.InlandDomesticFromCity,
+                            InlandDomesticFromCountryId = Item.InlandDomesticFromCountryId,
+                            InlandDomesticToTypeCode = Item.InlandDomesticToTypeCode,
+                            MainCarriageToAddressId = Item.MainCarriageToAddressId,
+                            InlandDomesticToCity = Item.InlandDomesticToCity,
+                            InlandDomesticToCountryId = Item.InlandDomesticToCountryId,
+                            MainCarriageToPortId = Item.MainCarriageToPortId,
+                            MainCarriageFromPortCountryCode = Item.MainCarriageFromPortCountryCode,
+                            MainCarriageToPortCountryCode = Item.MainCarriageToPortCountryCode
+                        };
+                        shipment.FinalCountryofDestination = servicHelper.GetInlandDomesticToCountryName(args);
                     }
                     else
                     {

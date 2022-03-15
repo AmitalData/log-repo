@@ -85,7 +85,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 accountMoreData.AccountId = null;
                 accountMoreData.GLAccountTotalsByCurrencies = GetTotalByCurrencies(account);
 
-                accountMoreData.TotFutureOpenChequesInLocalCur += GetAccountExternalTransactionTotal(account.Tenant, account.Id);
+                //accountMoreData.TotFutureOpenChequesInLocalCur += GetAccountExternalTransactionTotal(account.Tenant, account.Id);
 
                 return accountMoreData;
             }

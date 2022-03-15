@@ -83,6 +83,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         IsBodySecured = a.IsSecured,
                         EmailDeliveryError = a.EmailDeliveryError,
                         ResponseDocumentId = a.ResponseDocumentId,
+                        UniqueNumber = a.UniqueNumber,
                     }).FirstOrDefault();
         }
 
@@ -137,6 +138,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         IsBodySecured = a.IsSecured,
                         EmailDeliveryError = a.EmailDeliveryError,
                         ResponseDocumentId = a.ResponseDocumentId,
+                        UniqueNumber = a.UniqueNumber,
                     });
 
             List<string> contactIds = new List<string>();
@@ -228,6 +230,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         IsBodySecured = a.IsSecured,
                         EmailDeliveryError = a.EmailDeliveryError,
                         ResponseDocumentId = a.ResponseDocumentId,
+                        UniqueNumber = a.UniqueNumber,
                     });
         }
 
@@ -283,6 +286,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                           IsBodySecured = f.IsSecured,
                                                           EmailDeliveryError = f.EmailDeliveryError,
                                                           ResponseDocumentId = f.ResponseDocumentId,
+                                                          UniqueNumber = f.UniqueNumber,
                                                       };
             return result;
         }
@@ -338,7 +342,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                          IsBodySecured = f.IsSecured,
                                                          EmailDeliveryError = f.EmailDeliveryError,
                                                          ResponseDocumentId =f.ResponseDocumentId,
-
+                                                          UniqueNumber = f.UniqueNumber,
                                                      };
 
             if (f.CreatedByUser != null && f.CreatedByUser.Contact != null)
@@ -401,6 +405,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            IsBodySecured = a.IsSecured,
                                                            EmailDeliveryError = a.EmailDeliveryError,
                                                            ResponseDocumentId = a.ResponseDocumentId,
+                                                           UniqueNumber = a.UniqueNumber,
                                                        });
             return commlogs;
         }
@@ -457,6 +462,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            IsBodySecured = a.IsSecured,
                                                            EmailDeliveryError = a.EmailDeliveryError,
                                                            ResponseDocumentId = a.ResponseDocumentId,
+                                                           UniqueNumber = a.UniqueNumber,
                                                        });
             return commlogs;
         }

@@ -111,7 +111,16 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         private void FillConnectedOrders()
         {
             ShipmentOrderQueryService shipmentOrderQuery = new ShipmentOrderQueryService(cargoShipmentPM.Tenant);
-            var shipmentOrders = shipmentOrderQuery.GetConnectedShipmentOrders(cargoShipmentPM.ShipmentNumber, cargoShipmentPM.Tenant);
+
+            var shipmentOrders = new List<ShipmentOrderPM>();
+            // custom shipment
+            if (!string.IsNullOrWhiteSpace(cargoShipmentPM.ForwardingShipmentHeaderId))
+            {
+                shipmentOrders = shipmentOrderQuery.GetConnectedShipmentOrdersByShipmentId(cargoShipmentPM.ForwardingShipmentHeaderId, cargoShipmentPM.Tenant);
+            }
+            else {
+                shipmentOrders = shipmentOrderQuery.GetConnectedShipmentOrdersByShipmentNumber(cargoShipmentPM.ShipmentNumber, cargoShipmentPM.Tenant);
+            }
             if (shipmentOrders.Any())
             {
                 cargoShipmentPM.ConnectedOrders = shipmentOrders.Select(x => new ConnectedOrder
@@ -150,6 +159,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             ShipmentAdditionalCloudData cloudData = GetShipmentCloud(cargoShipmentPM);
             cargoShipmentPM.IsImporterApprovalRequried = cloudData?.IsImporterApprovalRequried ?? false;
             cargoShipmentPM.ApprovedDate = cloudData?.ApproveDateTime;
+            cargoShipmentPM.ApprovedByUserName = cloudData?.ApprovedByUserName;
             cargoShipmentPM.DenyDate = cloudData?.DenyDate;
             cargoShipmentPM.DenyReason = cloudData?.DenyReason;
         }

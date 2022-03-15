@@ -1912,7 +1912,7 @@
   <AdditionalTextCodes>
     <TextCode
       Code="&quot;QuoteTemplate.S.ShowTotalPerChargeGroup&quot;"
-      DefaultText="&quot;ShowTotalPerChargeGroup&quot;"
+      DefaultText="&quot;Show Total Per Charge Group&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode

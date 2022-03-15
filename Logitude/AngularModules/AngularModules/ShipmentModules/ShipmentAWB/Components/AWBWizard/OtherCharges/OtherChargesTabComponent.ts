@@ -699,6 +699,8 @@ export class OtherChargesTabComponent extends BaseComponent {
         this.UpdateQuantitiesMessage = updateMessage;
         this.UpdateQuantitiesMessageWidth = AppTool.GetTextWidth(updateMessage, 11);
         this.IsUpdateQuantitiesVisible = AppTool.IsNullOrEmpty(updateMessage) ? false : true;
+        this.Wizard.IsUpdateQuantitiesVisible = this.IsUpdateQuantitiesVisible;
+        this.FireWizardEvent();
     }    
     FilterPayablesLines(activeLines: AWBWizardOtherChargeItem[]) {
         activeLines = activeLines.filter(d => d.TypeName == "Payable");
@@ -744,11 +746,7 @@ export class OtherChargesTabComponent extends BaseComponent {
         activeFreightLines.filter(d => d.MeasurementCode == "PFCL").forEach((item: AWBWizardOtherChargeItem) => {
             item.SetQuantity();
         });
-        //////////////////////////////////
-        //this.UpdatePayablesQuantities();
-        //this.UpdateReceivablesQuantities();
-        //this.BuildItemsSource();
-        //this.BuildAllItemsSource();
+
         this.CheckUpdateQuantities();
     }
 

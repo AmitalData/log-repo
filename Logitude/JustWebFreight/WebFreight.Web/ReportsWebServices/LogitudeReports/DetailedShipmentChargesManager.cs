@@ -19,6 +19,11 @@ using Logitude.BL.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using WebFreight.Web.WebServices;
+using Logitude.BL.DataContracts;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 {
@@ -41,16 +46,28 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         private CustomFieldResolver customFieldResolver;
         private AddressRepository addressRepository;
         private ShipmentPackageRepository shipmentPackageRepository;
+        private WebServiceHelper servicHelper;
+        private string tenantLocalCurrencyId;
+        private IWebFreightContext webFreightContext;
+        private RatesTableRepository ratesTablesRepository;
+        private RatesTableQuery ratesTableQuery;
+
         public DetailedShipmentChargesManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
-
+            servicHelper = new WebServiceHelper(this.tenant);
             myInvoiceContext = InvoiceContext.GetContext(tenant);
             myCommonContext = CommonDataContext.GetContext(tenant);
             myShipmentsContext = ShipmentsContext.GetContext(tenant);
             customFieldResolver = new CustomFieldResolver();
             addressRepository = new AddressRepository(myCommonContext);
             shipmentPackageRepository = new ShipmentPackageRepository(myShipmentsContext);
+            webFreightContext = WebFreightContext.GetContext(tenant);
+            ratesTablesRepository = new RatesTableRepository(webFreightContext);
+            ratesTableQuery = new RatesTableQuery(ratesTablesRepository);
+
+            Tenant myTenant = (from d in myCommonContext.Tenants where d.Id == tenant select d).FirstOrDefault();
+            tenantLocalCurrencyId = myTenant?.CurrencyId;
 
             MemoryStream memoryStream = new MemoryStream(xmlFilters);
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(QueryOperations));
@@ -284,6 +301,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
                             myRecord.House = myShipment.House;
                             myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
+                            myRecord.ShipmentCreateDate = myShipment.CreateDateTime;
+                            myRecord.ShipmentNotes = myShipment.Notes;
+                            myRecord.ShipmentOpenedBy = myShipment.CreatedByUserName;
 
                             ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
                             myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
@@ -341,6 +361,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
                         myRecord.House = myShipment.House;
                         myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
+                        myRecord.ShipmentCreateDate = myShipment.CreateDateTime;
+                        myRecord.ShipmentNotes = myShipment.Notes;
+                        myRecord.ShipmentOpenedBy = myShipment.CreatedByUserName;
+                        myRecord.InvoiceAmountDueInLocalCurrency = invoice.AmountDueInLocalCurrency;
+                        myRecord.InvoiceAmountDueInInvoiceCurrency = invoice.AmountDue;
+                        myRecord.AccountedReceivablesInInvoiceCurrency = this.ComputeAccountedReceivablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
+                        myRecord.AccountedPayablesInInvoiceCurrency = this.ComputeAccountedPayablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
 
                         ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
                         myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
@@ -421,6 +448,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
                         myRecord.House = myShipment.House;
                         myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
+                        myRecord.ShipmentCreateDate = myShipment.CreateDateTime;
+                        myRecord.ShipmentNotes = myShipment.Notes;
+                        myRecord.ShipmentOpenedBy = myShipment.CreatedByUserName;
+                        myRecord.InvoiceAmountDueInLocalCurrency = invoice.AmountDueInLocalCurrency;
+                        myRecord.InvoiceAmountDueInInvoiceCurrency = invoice.AmountDue;
+                        myRecord.AccountedReceivablesInInvoiceCurrency = this.ComputeAccountedReceivablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
+                        myRecord.AccountedPayablesInInvoiceCurrency = this.ComputeAccountedPayablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
 
                         ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
                         myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
@@ -721,6 +755,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
                                     myRecord.House = myShipment.House;
                                     myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
+                                    myRecord.ShipmentCreateDate = myShipment.CreateDateTime;
+                                    myRecord.ShipmentNotes = myShipment.Notes;
+                                    myRecord.ShipmentOpenedBy = myShipment.CreatedByUserName;
 
                                     ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
                                     myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
@@ -808,6 +845,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
                                     myRecord.House = myShipment.House;
                                     myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
+                                    myRecord.ShipmentCreateDate = myShipment.CreateDateTime;
+                                    myRecord.ShipmentNotes = myShipment.Notes;
+                                    myRecord.ShipmentOpenedBy = myShipment.CreatedByUserName;
 
                                     ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
                                     myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
@@ -899,6 +939,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
                                 myRecord.House = myShipment.House;
                                 myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
+                                myRecord.ShipmentCreateDate = myShipment.CreateDateTime;
+                                myRecord.ShipmentNotes = myShipment.Notes;
+                                myRecord.ShipmentOpenedBy = myShipment.CreatedByUserName;
+                                myRecord.InvoiceAmountDueInLocalCurrency = invoice.AmountDueInLocalCurrency;
+                                myRecord.InvoiceAmountDueInInvoiceCurrency = invoice.AmountDue;
+                                myRecord.AccountedReceivablesInInvoiceCurrency = this.ComputeAccountedReceivablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
+                                myRecord.AccountedPayablesInInvoiceCurrency = this.ComputeAccountedPayablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
 
                                 ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
                                 myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
@@ -1040,6 +1087,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.CountryOfOrigin = myShipment.MainCarriageFromPortCountryName;
                                 myRecord.House = myShipment.House;
                                 myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
+                                myRecord.ShipmentCreateDate = myShipment.CreateDateTime;
+                                myRecord.ShipmentNotes = myShipment.Notes;
+                                myRecord.ShipmentOpenedBy = myShipment.CreatedByUserName;
+                                myRecord.InvoiceAmountDueInLocalCurrency = invoice.AmountDueInLocalCurrency;
+                                myRecord.InvoiceAmountDueInInvoiceCurrency = invoice.AmountDue;
+                                myRecord.AccountedReceivablesInInvoiceCurrency = this.ComputeAccountedReceivablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
+                                myRecord.AccountedPayablesInInvoiceCurrency = this.ComputeAccountedPayablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
 
                                 ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
                                 myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
@@ -1326,14 +1380,22 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
             if (myShipment.DirectionId == "D" && myShipment.TransportModeId == "I")
             {
-                if (!string.IsNullOrEmpty(myShipment.MainCarriageToAddressId))
+                InlandDomesticArgs args = new InlandDomesticArgs()
                 {
-                    Address myPartnerAddress = addressRepository.GetSingleAddress(myShipment.MainCarriageToAddressId, tenant);
-                    if (myPartnerAddress != null)
-                    {
-                        countryName = myPartnerAddress.Country != null ? myPartnerAddress.Country.EnglishName : null;
-                    }
-                }
+                    InlandDomesticFromTypeCode = myShipment.InlandDomesticFromTypeCode,
+                    MainCarriageFromAddressId = myShipment.MainCarriageFromAddressId,
+                    MainCarriageFromPortId = myShipment.MainCarriageFromPortId,
+                    InlandDomesticFromCity = myShipment.InlandDomesticFromCity,
+                    InlandDomesticFromCountryId = myShipment.InlandDomesticFromCountryId,
+                    InlandDomesticToTypeCode = myShipment.InlandDomesticToTypeCode,
+                    MainCarriageToAddressId = myShipment.MainCarriageToAddressId,
+                    InlandDomesticToCity = myShipment.InlandDomesticToCity,
+                    InlandDomesticToCountryId = myShipment.InlandDomesticToCountryId,
+                    MainCarriageToPortId = myShipment.MainCarriageToPortId,
+                    MainCarriageFromPortCountryCode = myShipment.MainCarriageFromPortCountryCode,
+                    MainCarriageToPortCountryCode = myShipment.MainCarriageToPortCountryCode
+                };
+                countryName = servicHelper.GetInlandDomesticToCountryName(args);
             }
 
             else
@@ -1461,6 +1523,69 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             }
 
             return countryName;
+        }
+
+        private double? ComputeAccountedReceivablesInInvoiceCurrency(string invoiceCurrencyId, ShipmentDataView myShipment, DateTime? invoiceDate)
+        {
+            double? myResult = null;
+
+            if (invoiceCurrencyId == myShipment.ProfitCurrencyId)
+            {
+                myResult = myShipment.AccountedReceivablesInProfitCurrency;
+            }
+
+            else if (invoiceCurrencyId == tenantLocalCurrencyId)
+            {
+                myResult = myShipment.AccountedReceivablesInLocalCurrency;
+            }
+
+            else
+            {
+                double? rate = this.GetCurrencysExchangeRate(invoiceCurrencyId, invoiceDate);
+                if (rate != null && rate != 0)
+                {
+                    myResult = myShipment.AccountedReceivablesInLocalCurrency / rate;
+                }
+            }
+
+            return myResult;
+        }
+        private double? ComputeAccountedPayablesInInvoiceCurrency(string invoiceCurrencyId, ShipmentDataView myShipment, DateTime? invoiceDate)
+        {
+            double? myResult = null;
+
+            if (invoiceCurrencyId == myShipment.ProfitCurrencyId)
+            {
+                myResult = myShipment.AccountedPayablesInProfitCurrency;
+            }
+
+            else if (invoiceCurrencyId == tenantLocalCurrencyId)
+            {
+                myResult = myShipment.AccountedPayablesInLocalCurrency;
+            }
+
+            else
+            {
+                double? rate = this.GetCurrencysExchangeRate(invoiceCurrencyId, invoiceDate);
+                if (rate != null && rate != 0)
+                {
+                    myResult = myShipment.AccountedPayablesInLocalCurrency / rate;
+                }
+            }
+
+            return myResult;
+        }
+        private double? GetCurrencysExchangeRate(string foreignCurrencyId, DateTime? rateDate)
+        {
+            double? rate = null;
+
+            LastRate lastRate = ratesTableQuery.GetLastRecordByValueDate(tenant, foreignCurrencyId, tenantLocalCurrencyId, rateDate);
+            if (lastRate != null)
+            {
+                rate = lastRate.Rate;
+            }
+
+            return rate;
         }
     }
 }

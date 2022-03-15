@@ -144,7 +144,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             {
                 LastUpdate = cargoTrackingDataBaseArgs.ShipmentsWaterMark;
 
-                string lastUpdateCondition = $" (C.AutomaticLastUpdateDate > '{LastUpdate}')";
+                string lastUpdateCondition = $" C.CreateDateTime >= DATEADD(M, -6, GETDATE()) AND (C.AutomaticLastUpdateDate > '{LastUpdate}')";
                 whereConditions.Add(lastUpdateCondition);
             }
             else
@@ -226,13 +226,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 when (P.DirectionId = 'I' OR P.ShipmentLevelCode = 'A') AND P.ShipperId IS NULL then P.ShipperName end)
             as ShipperName");
             updatedShipmentFields = updatedShipmentFields.Replace("P.FromPortId", $@"(case 
-                when (P.FromPortId is not null)  then P.FromPortId 
-                when (P.FromPortId is null and P.MasterShipmentDataId is not null) then Mas.MainCarriageFromPortId 
+                when (P.MasterShipmentDataId is null)  then P.FromPortId 
+                when (P.MasterShipmentDataId is not null) then Mas.MainCarriageFromPortId 
              end)
             as FromPortId");
             updatedShipmentFields = updatedShipmentFields.Replace("P.ToPortId", $@"(case 
-                when (P.ToPortId is not null)  then P.ToPortId 
-                when (P.ToPortId is null and P.MasterShipmentDataId is not null) then Mas.MainCarriageToPortId
+                when (P.MasterShipmentDataId is null)  then P.ToPortId 
+                when (P.MasterShipmentDataId is not null) then Mas.MainCarriageToPortId
             end)
             as ToPortId");
 
@@ -351,7 +351,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             {
                 LastUpdate = cargoTrackingDataBaseArgs.ShipmentsWaterMark;
 
-                string lastUpdateCondition = $" (P.AutomaticLastUpdateDate > '{LastUpdate}')";
+                string lastUpdateCondition = $" P.CreateDateTime >= DATEADD(M, -6, GETDATE()) AND (P.AutomaticLastUpdateDate > '{LastUpdate}')";
                 whereConditions.Add(lastUpdateCondition);
             }
             else
@@ -507,7 +507,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             if (cargoTrackingDataBaseArgs.CargoTrackingArguments == null)
             {
                 LastUpdate = cargoTrackingDataBaseArgs.ShipmentsWaterMark;
-                string lastUpdateCondition = $" (SHO.AutomaticLastUpdateDate > '{LastUpdate}')";
+                string lastUpdateCondition = $" SHO.CreateDate >= DATEADD(M, -6, GETDATE()) AND (SHO.AutomaticLastUpdateDate > '{LastUpdate}')";
                 whereConditions.Add(lastUpdateCondition);
             }
             else

@@ -5,6 +5,7 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import {AppTool, FileLoader} from '../../Tools';
+import { FroalaEditorImageService } from 'Infrastructure/Services/FroalaEditorImageService';
 
 @Component({
     
@@ -25,9 +26,19 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
     PreviewDivId: string;
     IsDisableMode: boolean = false;
     UseNormalPreview: boolean = false;
+    private FroalaEditorImageService: FroalaEditorImageService;
+
     @Output() FroalaReady: EventEmitter<boolean> = new EventEmitter<boolean>();
     constructor(elementRef: ElementRef, private cd: ChangeDetectorRef) {
         this.elementRef = elementRef;
+        this.InitializeFroalaEditorImageService();
+    }
+
+    private InitializeFroalaEditorImageService() {
+        this.FroalaEditorImageService = new FroalaEditorImageService();
+        this.FroalaEditorImageService.OnImageSelect.subscribe((image: string) =>{
+            this.InSertHtml(image);
+        });
     }
 
     ngOnInit() {
@@ -82,11 +93,11 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
 
             HtmlID.froalaEditor({
                 allowedImageTypes: ["jpeg", "jpg", "png"],
-                toolbarButtons: this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertTable', 'undo', 'redo', 'selectAll', 'alignRight', 'alignLeft', 'lineHeight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertTable', 'undo', 'redo', 'selectAll', 'insertLink', 'alignRight', 'alignLeft', 'PageBreak', 'lineHeight'],
-
-                toolbarButtonsMD: this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'insertTable', 'alignRight', 'alignLeft', 'lineHeight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'insertTable', 'insertLink', 'alignRight', 'alignLeft', 'PageBreak', 'lineHeight'],
-                toolbarButtonsSM: this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'insertTable', 'align', 'alignRight', 'alignLeft', 'lineHeight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'align', 'insertTable', 'alignRight', 'alignLeft', 'PageBreak', 'lineHeight'],
-                toolbarButtonsXS: this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'insertTable', 'align', 'alignRight', 'alignLeft', 'lineHeight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'align', 'insertTable', 'alignRight', 'alignLeft', 'PageBreak', 'lineHeight'],
+                toolbarButtons: this.GetToolbarButtons(),
+                toolbarButtonsMD: this.GetToolbarButtonsMD(),
+                toolbarButtonsSM: this.GetToolbarButtonsSM(),
+                toolbarButtonsXS: this.GetToolbarButtonsXS(),
+                imageEditButtons: ["imageAlign","imageRemove","|","-","imageDisplay","imageStyle","imageAlt","imageSize"],
                 lineBreakerTags: ['table', 'hr', 'form'],
                 pluginsEnabled: null,
                 height: height,
@@ -180,6 +191,56 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
 
     }
 
+    private GetToolbarButtonsXS() {
+        var toolbarButtonsXS = this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'insertTable', 'align', 'alignRight', 'alignLeft', 'lineHeight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'align', 'insertTable', 'alignRight', 'alignLeft', 'PageBreak', 'lineHeight'];
+
+
+        this.AddInsertImageButton(toolbarButtonsXS);
+
+        return toolbarButtonsXS;
+    }
+
+    private GetToolbarButtonsSM() {
+        var toolbarButtonsSM = this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'insertTable', 'align', 'alignRight', 'alignLeft', 'lineHeight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'align', 'insertTable', 'alignRight', 'alignLeft', 'PageBreak', 'lineHeight'];
+
+
+        this.AddInsertImageButton(toolbarButtonsSM);
+
+        return toolbarButtonsSM;
+    }
+
+    private GetToolbarButtonsMD() {
+        var toolbarButtonsMD = this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'insertTable', 'alignRight', 'alignLeft', 'lineHeight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'insertTable', 'insertLink', 'alignRight', 'alignLeft', 'PageBreak', 'lineHeight'];
+
+
+        this.AddInsertImageButton(toolbarButtonsMD);        
+
+        return toolbarButtonsMD;
+    }
+
+    private GetToolbarButtons() {
+        var toolbarButtons = this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertTable', 'undo', 'redo', 'selectAll', 'alignRight', 'alignLeft', 'lineHeight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertTable', 'undo', 'redo', 'selectAll', 'insertLink', 'alignRight', 'alignLeft', 'PageBreak', 'lineHeight'];
+
+
+        this.AddInsertImageButton(toolbarButtons);
+
+        return toolbarButtons;
+    }
+
+
+
+
+
+
+
+
+
+
+    private AddInsertImageButton(toolbarButtons: string[]) {
+        if(!SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "FIE")[0]) return;
+        if (this.EditorfroalaSetting.PageType != "Send") toolbarButtons.push('InsertImage');
+    }
+
     getHtml() {
 
         var html: string = "";
@@ -243,6 +304,10 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
         }
     }
 
+    public InsertImageClick() {
+        if (this.IsDisableMode || !this.EditorfroalaSetting.FroalaEditorIsReady) return;
+        this.FroalaEditorImageService.ShowImageLibraryWindow();
+    }
 
     public DestroyfroalaEditor() {
 

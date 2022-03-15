@@ -128,6 +128,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                           IsRegionalTax = a.IsRegionalTax,
                                           SaleRatio = (a.SaleMeasurement!=null && a.SaleMeasurement.Code == "PDCW") ? a.Quote.PickupDeliveryRatio : a.Quote.Ratio,
                                           CostRatio   = (a.CostMeasurement != null && a.CostMeasurement.Code == "PDCW")  ? a.Quote.PickupDeliveryRatio : a.Quote.Ratio,
+                                          QuoteChargesGroupCode = a.ChargesType == null ? "" : a.ChargesType.QuoteChargesGroupCode,
                                       }).FirstOrDefault();
 
             return myResult;
@@ -233,6 +234,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                 IsRegionalTax = a.IsRegionalTax,
                                                 SaleRatio = (a.SaleMeasurement != null && a.SaleMeasurement.Code == "PDCW") ? a.Quote.PickupDeliveryRatio : a.Quote.Ratio,
                                                 CostRatio = (a.CostMeasurement != null && a.CostMeasurement.Code == "PDCW") ? a.Quote.PickupDeliveryRatio : a.Quote.Ratio,
+                                                QuoteChargesGroupCode = a.ChargesType == null ? "" : a.ChargesType.QuoteChargesGroupCode,
                                             }).ToList();
 
             QuotePriceStepsRepository quotePriceStepsRepository = new QuotePriceStepsRepository(this.repository.context);
@@ -414,6 +416,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                 TariffLineId = a.TariffLineId,
                                                 TariffVersion = a.TariffVersion,
                                                 IsRegionalTax = a.IsRegionalTax,
+                                                QuoteChargesGroupCode = a.ChargesType == null ? "" : a.ChargesType.QuoteChargesGroupCode,
                                             }).ToList();
 
             return output.OrderBy(d => d.ViewOrder).ThenBy(d => d.ChargesTypeCode).ToList();

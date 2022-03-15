@@ -71,6 +71,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.IsPredefined).HasColumnName("IsPredefined");
             this.Property(t => t.PredefinedValue).HasColumnName("PredefinedValue");
             this.Property(t => t.PredefinedValue2).HasColumnName("PredefinedValue2");
+            this.Property(t => t.CustomPredefined).HasColumnName("CustomPredefined");
             this.Property(t => t.Operator).HasColumnName("Operator");
             this.Property(t => t.IndexOrder).HasColumnName("IndexOrder");
             this.Property(t => t.UserId).HasColumnName("UserId");

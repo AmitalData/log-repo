@@ -79,8 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuoteUpdateClass
    {  		
- 
-		public const string HashString = "08ba9cb15a4479dd1bc16695762ae68d";
+		public const string HashString = "a2490506373bfcdfabee788672c7d669";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -16104,7 +16103,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
 			 QueryColumn CreatedQuotesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedQuotesQuery.Id,QueryCode = CreatedQuotesQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Quote.ExpirationDate" , ColumnWidth = 92 }, addedQueryColumns);
 
-             AdvancedQueryFilter CreatedQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Quote.IsCreatedQuote", PredefinedValue = "true",PredefinedValue2 = null, QueryId = CreatedQuotesQuery.Id,QueryCode = CreatedQuotesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter CreatedQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Quote.IsCreatedQuote", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = CreatedQuotesQuery.Id,QueryCode = CreatedQuotesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -16135,7 +16134,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
 			 QueryColumn DraftQuotesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftQuotesQuery.Id,QueryCode = DraftQuotesQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Quote.ExpirationDate" , ColumnWidth = 92 }, addedQueryColumns);
 
-             AdvancedQueryFilter DraftQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Quote.IsDraftQuote", PredefinedValue = "true",PredefinedValue2 = null, QueryId = DraftQuotesQuery.Id,QueryCode = DraftQuotesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter DraftQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Quote.IsDraftQuote", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = DraftQuotesQuery.Id,QueryCode = DraftQuotesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -16166,7 +16165,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
 			 QueryColumn SentQuotesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SentQuotesQuery.Id,QueryCode = SentQuotesQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Quote.ExpirationDate" , ColumnWidth = 92 }, addedQueryColumns);
 
-             AdvancedQueryFilter SentQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Quote.IsSentQuote", PredefinedValue = "true",PredefinedValue2 = null, QueryId = SentQuotesQuery.Id,QueryCode = SentQuotesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter SentQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Quote.IsSentQuote", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = SentQuotesQuery.Id,QueryCode = SentQuotesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -16199,7 +16198,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
 			 QueryColumn ExpiredQuotesQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExpiredQuotesQuery.Id,QueryCode = ExpiredQuotesQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Quote.ExpirationDate" , ColumnWidth = 92 }, addedQueryColumns);
 
-             AdvancedQueryFilter ExpiredQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Quote.IsExpiredQuote", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ExpiredQuotesQuery.Id,QueryCode = ExpiredQuotesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter ExpiredQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Quote.IsExpiredQuote", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = ExpiredQuotesQuery.Id,QueryCode = ExpiredQuotesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -16258,7 +16257,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
 			 QueryColumn AcceptedQuotesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id,QueryCode = AcceptedQuotesQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Quote.ExpirationDate" , ColumnWidth = 92 }, addedQueryColumns);
 
-             AdvancedQueryFilter AcceptedQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Quote.IsAcceptedQuote", PredefinedValue = "true",PredefinedValue2 = null, QueryId = AcceptedQuotesQuery.Id,QueryCode = AcceptedQuotesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter AcceptedQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Quote.IsAcceptedQuote", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = AcceptedQuotesQuery.Id,QueryCode = AcceptedQuotesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -16289,7 +16288,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
 			 QueryColumn AcceptedWithoutShipmentsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedWithoutShipmentsQuery.Id,QueryCode = AcceptedWithoutShipmentsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Quote.ExpirationDate" , ColumnWidth = 92 }, addedQueryColumns);
 
-             AdvancedQueryFilter AcceptedWithoutShipmentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Quote.AcceptedWithoutShipments", PredefinedValue = "true",PredefinedValue2 = null, QueryId = AcceptedWithoutShipmentsQuery.Id,QueryCode = AcceptedWithoutShipmentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter AcceptedWithoutShipmentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Quote.AcceptedWithoutShipments", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = AcceptedWithoutShipmentsQuery.Id,QueryCode = AcceptedWithoutShipmentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -16350,7 +16349,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
 			 QueryColumn CancelledQuotesQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledQuotesQuery.Id,QueryCode = CancelledQuotesQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Quote.ExpirationDate" , ColumnWidth = 92 }, addedQueryColumns);
 
-             AdvancedQueryFilter CancelledQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Quote.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = CancelledQuotesQuery.Id,QueryCode = CancelledQuotesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter CancelledQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Quote.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = CancelledQuotesQuery.Id,QueryCode = CancelledQuotesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -16383,7 +16382,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
 			 QueryColumn AllFollowUpsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id,QueryCode = AllFollowUpsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Quote.FollowUpOwner" , ColumnWidth = 127 }, addedQueryColumns);
 
-             AdvancedQueryFilter AllFollowUpsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Quote.AllFollowUps", PredefinedValue = "12/6/2018 12:00:00 AM",PredefinedValue2 = null, QueryId = AllFollowUpsQuery.Id,QueryCode = AllFollowUpsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter AllFollowUpsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Quote.AllFollowUps", PredefinedValue = "12/6/2018 12:00:00 AM",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllFollowUpsQuery.Id,QueryCode = AllFollowUpsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -16416,7 +16415,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
 			 QueryColumn MyFollowUpsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id,QueryCode = MyFollowUpsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Quote.FollowUpOwner" , ColumnWidth = 127 }, addedQueryColumns);
 
-             AdvancedQueryFilter MyFollowUpsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Quote.MyFollowUps", PredefinedValue = "12/6/2018 12:00:00 AM",PredefinedValue2 = null, QueryId = MyFollowUpsQuery.Id,QueryCode = MyFollowUpsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter MyFollowUpsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Quote.MyFollowUps", PredefinedValue = "12/6/2018 12:00:00 AM",PredefinedValue2 = null, CustomPredefined = false, QueryId = MyFollowUpsQuery.Id,QueryCode = MyFollowUpsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -16447,7 +16446,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
 			 QueryColumn MyQuotesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyQuotesQuery.Id,QueryCode = MyQuotesQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Quote.ExpirationDate" , ColumnWidth = 92 }, addedQueryColumns);
 
-             AdvancedQueryFilter MyQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Quote.MyQuotes", PredefinedValue = "true",PredefinedValue2 = null, QueryId = MyQuotesQuery.Id,QueryCode = MyQuotesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter MyQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Quote.MyQuotes", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = MyQuotesQuery.Id,QueryCode = MyQuotesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -16478,7 +16477,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
 			 QueryColumn OpenQuotesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenQuotesQuery.Id,QueryCode = OpenQuotesQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Quote.ExpirationDate" , ColumnWidth = 92 }, addedQueryColumns);
 
-             AdvancedQueryFilter OpenQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Quote.OpenQuotes", PredefinedValue = "true",PredefinedValue2 = null, QueryId = OpenQuotesQuery.Id,QueryCode = OpenQuotesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter OpenQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Quote.OpenQuotes", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = OpenQuotesQuery.Id,QueryCode = OpenQuotesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);

@@ -14,6 +14,7 @@ namespace Logitude.BL.GlobalModel.CloseTables
        public const string Cheque = "CH";  
        public const string CreditCard = "CC";  
        public const string PayPal = "PP";  
+       public const string Reseller = "RS";  
     }
 }
 

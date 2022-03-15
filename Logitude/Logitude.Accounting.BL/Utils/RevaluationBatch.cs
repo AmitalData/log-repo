@@ -329,7 +329,7 @@ namespace Logitude.Accounting.BL.Utils
 
                             if (lineList.Count >= 100)
                             {
-                                WriteJournal(journalUpdateService, lineList, revaluation);
+                                WriteJournal(journalUpdateService, lineList, revaluation, gLAccountPM);
                                 lineList.Clear();
                                 //  scope.Complete();
                             }
@@ -351,7 +351,7 @@ namespace Logitude.Accounting.BL.Utils
             service.AddAccountingEntitieJournal(entityPM, action, ChildEntityId);
         }
 
-        private static void WriteJournal(JournalUpdateService journalUpdateService, List<JournalLineList> lineList, RevaluationList revaluation)
+        private static void WriteJournal(JournalUpdateService journalUpdateService, List<JournalLineList> lineList, RevaluationList revaluation, GLAccountPM gLAccountPM = null)
         {
             // Start
             JournalPM newJournal = new JournalPM();
@@ -403,7 +403,7 @@ namespace Logitude.Accounting.BL.Utils
                 newJournal.JournalLines.Add(newJournalLine);
 
             }
-            AddAccountingEntitieJournal(newJournal, AccountingEntityJournalActions.RevaluationApprove);
+            AddAccountingEntitieJournal(newJournal, AccountingEntityJournalActions.RevaluationApprove, gLAccountPM?.Id);
             // End
             journalUpdateService.Update(newJournal, true);
 

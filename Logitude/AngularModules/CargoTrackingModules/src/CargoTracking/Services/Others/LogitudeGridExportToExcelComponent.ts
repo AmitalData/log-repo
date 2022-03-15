@@ -41,7 +41,7 @@ export class LogitudeGridExportToExcelService {
     openDialog() {
         return this.dialog.open(MessageWindowComponent, {
             data: {
-                title: 'Export to excell',
+                title: 'Export to excel',
                 isLoading: true,
             },
         });
@@ -66,7 +66,7 @@ export class LogitudeGridExportToExcelService {
         if (myResult == this.failedResponse) {
             matDialogRef.componentInstance.isLoading = false;
             matDialogRef.componentInstance.description =
-                'Export to excell failed!';
+                'Export to excel failed!';
         } else {
             this.FileName = myResult;
             const url = this.getFileURL(this.FileName);
