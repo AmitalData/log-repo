@@ -769,18 +769,18 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (!string.IsNullOrEmpty(ObjectTableName))
                 {
-                    if (FeatureToggleHelper.HasFeatureToggle("RRS", tenant))
+                  /*  if (FeatureToggleHelper.HasFeatureToggle("RRS", tenant))
                     {
                         Task<HttpResponseMessage> task = Task<HttpResponseMessage>.Factory.StartNew(() => {
                             return ExecuteQuickSearchOnSeconderyDB(ObjectTableName, SearchFields, tenant);
                         });
 
                         return task.Result;
-                    }
-                    else
-                    {
+                    }*/
+                   // else
+                   // {
                         return GetQuickSearch(ObjectTableName, SearchFields, tenant);
-                    }
+                   // }
                 }
                 else
                 {
