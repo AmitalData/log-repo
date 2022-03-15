@@ -185,6 +185,7 @@
     <None Include="DBScripts\InfrastructureModel\202202171015_FillEventTriggerField.sxml" />
 
     <None Include="DBScripts\InvoiceModel\202203021250_FillAPPaymentInvoicesNumbers.sxml" />
+    <None Include="DBScripts\ShipmentModel\202213031031_UpdateDomesticInlandStatusLocation.sxml" />
     <None Include="DBScripts\ShipmentModel\202202241410_FillLastDeilverypFullAddress.sxml" />
     <None Include="DBScripts\ShipmentModel\202202241400_FillFirstPickUpFullAddress.sxml" />
 
