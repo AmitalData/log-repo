@@ -47,6 +47,7 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
                                                 LastUsedDate = a.LastUsedDate,
                                                 TypeCode = a.TypeCode,
                                                 CustomsBrokerName = a.CustomsBroker != null ? a.CustomsBroker.EnglishName : "",
+                                                CustomerGroupName = a.CustomerGroup != null ? a.CustomerGroup.Name : "",
                                             });
             return query;
         }
@@ -103,6 +104,7 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
                         CurrencyId = a.CurrencyId,
                         LastUsedDate = a.LastUsedDate,
                         CustomsBrokerName = a.CustomsBroker != null ? a.CustomsBroker.EnglishName : "",
+                        CustomerGroupName = a.CustomerGroup != null ? a.CustomerGroup.Name : "",
                     };
 
                     TariffType tariffType = GetTariffType(a.TypeCode, tenant);
