@@ -769,297 +769,19 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (!string.IsNullOrEmpty(ObjectTableName))
                 {
-                    bool isFullTextSearch = false;
-                    TenantRepository myTenantRepository = new TenantRepository(tenant);
-                    Tenant myTenant = myTenantRepository.GetSingleTenant(tenant);
-                    if (myTenant != null)
+                    if (FeatureToggleHelper.HasFeatureToggle("RRS", tenant))
                     {
-                        isFullTextSearch = myTenant.IsFullTextSearchEnabled;
+                        Task<HttpResponseMessage> task = Task<HttpResponseMessage>.Factory.StartNew(() => {
+                            return ExecuteQuickSearchOnSeconderyDB(ObjectTableName, SearchFields, tenant);
+                        });
+
+                        return task.Result;
                     }
-
-                    QueryOperations myQueryOperations = new QueryOperations();
-                    myQueryOperations.PageIndex = 0;
-                    myQueryOperations.PageSize = 10;
-                    if (ObjectTableName == "Airline")
+                    else
                     {
-                        myQueryOperations.PageSize = 8;
-                    }
-
-                    if (!string.IsNullOrEmpty(SearchFields))
-                    {
-                        myQueryOperations.SetFilter("SearchFields", SearchFields, false, "Contains", null, false);
-                    }
-
-                    FilterSerializer serializer = new FilterSerializer();
-                    byte[] arrayOfBytes = serializer.SerializeFilterItems(myQueryOperations);
-
-                    switch (ObjectTableName)
-                    {
-                        case "Shipment":
-                            {
-                                ShipmentsDomainService myDomainService = new ShipmentsDomainService();
-                                if (isFullTextSearch)
-                                {
-                                    IQueryable<ShipmentList> myResult = myDomainService.GetShipmentFullTextSearch(arrayOfBytes, tenant);
-                                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                                }
-
-                                else
-                                {
-                                    IShipmentsContext iContext = ShipmentsContext.GetContext(tenant);
-                                    IQueryable<Shipment> iQueryable = (from d in iContext.Shipments where d.Tenant == tenant select d);
-
-                                    if (!string.IsNullOrEmpty(SearchFields))
-                                    {
-                                        iQueryable = iQueryable.Where(d => d.SearchFields != null);
-                                        iQueryable = iQueryable.Where(d => d.SearchFields.ToLower().Contains(SearchFields.ToLower()));
-                                    }
-
-                                    iQueryable = iQueryable.OrderByDescending(d => d.CreateDateTime);
-                                    iQueryable = System.Data.Entity.QueryableExtensions.Skip(iQueryable, () => 0);
-                                    iQueryable = System.Data.Entity.QueryableExtensions.Take(iQueryable, () => 10);
-
-                                    List<ShipmentList> myResult = (from x in iQueryable.Include("Direction").Include("TransportMode").Include("CustomerCard")
-                                                                   join sm in iContext.ShipmentMasterDatas
-                                                                   on x.MasterShipmentDataId equals sm.Id into shipmentJoin
-                                                                   from m in shipmentJoin.DefaultIfEmpty()
-                                                                   select new ShipmentList()
-                                                                   {
-                                                                       Id = x.Id,
-                                                                       Tenant = x.Tenant,
-                                                                       ShipmentNumber = x.ShipmentNumber,
-                                                                       DirectionId = x.DirectionId,
-                                                                       TransportModeId = x.TransportModeId,
-                                                                       CustomerId = x.CustomerId,
-                                                                       DirectionName = x.Direction == null ? null : x.Direction.Name,
-                                                                       TransportModeName = x.TransportMode == null ? null : x.TransportMode.Name,
-                                                                       CustomerName = x.CustomerCard == null ? null : x.CustomerCard.EnglishName,
-                                                                       Master = m.Master,
-                                                                       LongMaster = x.TransportModeId == "A" ? (!string.IsNullOrEmpty(m.AirlinePrefix) && !string.IsNullOrEmpty(m.Master) ? m.AirlinePrefix + "-" + m.Master : "") : m.Master,
-                                                                       House = x.House,
-                                                                       ShipmentLevelCode = x.ShipmentLevelCode,
-                                                                       AgentName = x.AgentCard == null ? null : x.AgentCard.EnglishName,
-                                                                       OpenPayablesInProfitCurrency = x.OpenPayablesInProfitCurrency,
-                                                                       AccountedPayablesInProfitCurrency = x.AccountedPayablesInProfitCurrency,
-                                                                       OpenPayablesInLocalCurrency = x.OpenPayablesInLocalCurrency,
-                                                                       AccountedPayablesInLocalCurrency = x.AccountedPayablesInLocalCurrency,
-                                                                   }).ToList();
-
-                                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                                }
-
-                                //break;
-                            }
-
-                        case "Booking":
-                            {
-                                BookingsDomainService myDomainService = new BookingsDomainService();
-                                List<BookingList> myResult = myDomainService.GetBookingFilters(arrayOfBytes, tenant);
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                                //break;
-                            }
-
-                        case "User":
-                            {
-                                ContactDomainService myDomainService = new ContactDomainService();
-                                List<UserList> myResult = myDomainService.GetUserFilters(arrayOfBytes, tenant);
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                                //break;
-                            }
-
-                        case "Ticket":
-                            {
-                                CRMDomainService myDomainService = new CRMDomainService();
-                                List<TicketList> myResult = myDomainService.GetTicketFilters(arrayOfBytes, tenant).ToList();
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                                //break;
-                            }
-
-                        case "Quote":
-                            {
-                                QuotesDomainService myDomainService = new QuotesDomainService();
-                                List<QuoteList> myResult = myDomainService.GetQuoteFilters(arrayOfBytes, tenant).ToList();
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                                //break;
-                            }
-
-                        case "CardGLAccount":
-                            {
-                                // Set Type Filter
-                                myQueryOperations.SetFilter("AccountTypeCode", "1", false, "Equals", null, false);
-                                arrayOfBytes = serializer.SerializeFilterItems(myQueryOperations);
-
-                                // Get the list
-                                AccountingDomainService myDomainService = new AccountingDomainService();
-                                List<GLAccountList> myResult = myDomainService.GetGLAccountFilters(arrayOfBytes, tenant);
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                                //break;
-                            }
-
-                        case "CustomerGLAccount":
-                            {
-                                // Set Type Filter
-                                myQueryOperations.SetFilter("AccountTypeCode", "2", false, "Equals", null, false);
-                                arrayOfBytes = serializer.SerializeFilterItems(myQueryOperations);
-
-                                // Get the list
-                                AccountingDomainService myDomainService = new AccountingDomainService();
-                                List<GLAccountList> myResult = myDomainService.GetGLAccountFilters(arrayOfBytes, tenant);
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                                //break;
-                            }
-
-                        case "VendorGLAccount":
-                            {
-                                // Set Type Filter
-                                myQueryOperations.SetFilter("AccountTypeCode", "3", false, "Equals", null, false);
-                                arrayOfBytes = serializer.SerializeFilterItems(myQueryOperations);
-
-                                // Get the list
-                                AccountingDomainService myDomainService = new AccountingDomainService();
-                                List<GLAccountList> myResult = myDomainService.GetGLAccountFilters(arrayOfBytes, tenant);
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                                //break;
-                            }
-
-                        case "Journal":
-                            {
-                                AccountingDomainService myDomainService = new AccountingDomainService();
-                                List<JournalList> myResult = myDomainService.GetJournalFilters(arrayOfBytes, tenant);
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                                //break;
-                            }
-
-                        case "CashBook":
-                            {
-                                AccountingDomainService myDomainService = new AccountingDomainService();
-                                List<CashBookList> myResult = myDomainService.GetCashBookFilters(arrayOfBytes, tenant);
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                                //break;
-                            }
-
-                        case "BankDeposit":
-                            {
-                                AccountingDomainService myDomainService = new AccountingDomainService();
-                                List<BankDepositList> myResult = myDomainService.GetBankDepositFilters(arrayOfBytes, tenant);
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                                //break;
-                            }
-
-                        case "Customer":
-                            {
-
-                                PartnersDomainService myDomainService = new PartnersDomainService();
-                                List<CustomerList> myResult = myDomainService.GetCustomerFilters(arrayOfBytes, tenant);
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-
-
-                                //partnerTypeId
-                            }
-
-                        case "Contact":
-                            {
-                                ContactDomainService myDomainService = new ContactDomainService();
-                                List<ContactList> myResult = myDomainService.GetContactFilters(arrayOfBytes, tenant).ToList();
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                            }
-                        case "Activity":
-                            {
-                                CRMDomainService myDomainService = new CRMDomainService();
-                                List<ActivityList> myResult = myDomainService.GetActivityFilters(arrayOfBytes, tenant).ToList();
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                            }
-                        case "Opportunity":
-                            {
-                                CRMDomainService myDomainService = new CRMDomainService();
-                                List<OpportunityList> myResult = myDomainService.GetOpportunityFilters(arrayOfBytes, tenant).ToList();
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                            }
-
-                        case "AgentSharedManifest":
-                            {
-                                ContactDomainService myDomainService = new ContactDomainService();
-                                List<AgentSharedManifestList> myResult = myDomainService.GetAgentSharedManifestFilters(arrayOfBytes, tenant).ToList();
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-
-                            }
-
-                        case "Airline":
-                            {
-                                myQueryOperations.SetFilter("IsAllowedInAirlinesRestriction", false, false, "Equals", null, false);
-                                arrayOfBytes = serializer.SerializeFilterItems(myQueryOperations);
-
-                                PartnersDomainService myDomainService = new PartnersDomainService();
-                                List<AirlineList> myResult = myDomainService.GetAirlineFilters(arrayOfBytes, tenant).ToList();
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                            }
-
-                        //
-                        //Customs
-                        case "Customs.Client":
-                            {
-
-                                CustomDomainService myDomainService = new CustomDomainService();
-                                List<ClientList> myResult = myDomainService.GetClientFilters(arrayOfBytes, tenant);
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                            }
-                        case "Customs.CustomsItems":
-                            {
-                                ICustomContext ctx = CustomContext.GetContext(tenant);
-                                CustomsItemListQueryService query = new CustomsItemListQueryService(ctx);
-
-                                QueryOperations QO = new QueryOperations();
-                                QO.PageIndex = 0;
-                                QO.PageSize = 100;
-                                QO.SetFilter("FullClassification", SearchFields, false, "Contains", null, false);
-                                QO.SetFilter("CustomsItemCategoryID", "2,3", false, "InListInt", null, false);
-
-                                List<CustomsItemList> myResult = query.GetList(QO, tenant);
-
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                            }
-                        case "Customs.CouriersVat":
-                            {
-
-                                ICustomContext ctx = CustomContext.GetContext(tenant);
-                                CouriersVatListQueryService query = new CouriersVatListQueryService(ctx);
-
-                                QueryOperations QO = new QueryOperations();
-                                QO.PageIndex = 0;
-                                QO.PageSize = 100;
-                                QO.SetFilter("SearchFields", SearchFields, false, "Contains", null, false);
-                                QO.SetFilter("InActive", false, false, "Equals", null, false);
-
-                                List<CouriersVatList> myResult = query.GetList(QO, tenant);
-
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                            }
-
-                        case "Customs.CustomsAirline":
-                            {
-
-                                ICustomContext ctx = CustomContext.GetContext(tenant);
-                                CustomsAirlineListQueryService query = new CustomsAirlineListQueryService(ctx);
-
-                                QueryOperations QO = new QueryOperations();
-                                QO.PageIndex = 0;
-                                QO.PageSize = 100;
-                                QO.SetFilter("SearchFields", SearchFields, false, "Contains", null, false);
-                                QO.SetFilter("InActive", false, false, "Equals", null, false);
-
-                                List<CustomsAirlineList> myResult = query.GetList(QO, tenant);
-
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                            }
-
-                        default:
-                            {
-                                object myResult = null;
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                            }
+                        return GetQuickSearch(ObjectTableName, SearchFields, tenant);
                     }
                 }
-
                 else
                 {
                     object myResult = null;
@@ -1072,6 +794,306 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        private HttpResponseMessage GetQuickSearch(string ObjectTableName, string SearchFields, int tenant)
+        {
+            bool isFullTextSearch = false;
+            TenantRepository myTenantRepository = new TenantRepository(tenant);
+            Tenant myTenant = myTenantRepository.GetSingleTenant(tenant);
+            if (myTenant != null)
+            {
+                isFullTextSearch = myTenant.IsFullTextSearchEnabled;
+            }
+
+            QueryOperations myQueryOperations = new QueryOperations();
+            myQueryOperations.PageIndex = 0;
+            myQueryOperations.PageSize = 10;
+            if (ObjectTableName == "Airline")
+            {
+                myQueryOperations.PageSize = 8;
+            }
+
+            if (!string.IsNullOrEmpty(SearchFields))
+            {
+                myQueryOperations.SetFilter("SearchFields", SearchFields, false, "Contains", null, false);
+            }
+
+            FilterSerializer serializer = new FilterSerializer();
+            byte[] arrayOfBytes = serializer.SerializeFilterItems(myQueryOperations);
+
+            switch (ObjectTableName)
+            {
+                case "Shipment":
+                    {
+                        ShipmentsDomainService myDomainService = new ShipmentsDomainService();
+                        if (isFullTextSearch)
+                        {
+                            IQueryable<ShipmentList> myResult = myDomainService.GetShipmentFullTextSearch(arrayOfBytes, tenant);
+                            return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        }
+
+                        else
+                        {
+                            IShipmentsContext iContext = ShipmentsContext.GetContext(tenant);
+                            IQueryable<Shipment> iQueryable = (from d in iContext.Shipments where d.Tenant == tenant select d);
+
+                            if (!string.IsNullOrEmpty(SearchFields))
+                            {
+                                iQueryable = iQueryable.Where(d => d.SearchFields != null);
+                                iQueryable = iQueryable.Where(d => d.SearchFields.ToLower().Contains(SearchFields.ToLower()));
+                            }
+
+                            iQueryable = iQueryable.OrderByDescending(d => d.CreateDateTime);
+                            iQueryable = System.Data.Entity.QueryableExtensions.Skip(iQueryable, () => 0);
+                            iQueryable = System.Data.Entity.QueryableExtensions.Take(iQueryable, () => 10);
+
+                            List<ShipmentList> myResult = (from x in iQueryable.Include("Direction").Include("TransportMode").Include("CustomerCard")
+                                                           join sm in iContext.ShipmentMasterDatas
+                                                           on x.MasterShipmentDataId equals sm.Id into shipmentJoin
+                                                           from m in shipmentJoin.DefaultIfEmpty()
+                                                           select new ShipmentList()
+                                                           {
+                                                               Id = x.Id,
+                                                               Tenant = x.Tenant,
+                                                               ShipmentNumber = x.ShipmentNumber,
+                                                               DirectionId = x.DirectionId,
+                                                               TransportModeId = x.TransportModeId,
+                                                               CustomerId = x.CustomerId,
+                                                               DirectionName = x.Direction == null ? null : x.Direction.Name,
+                                                               TransportModeName = x.TransportMode == null ? null : x.TransportMode.Name,
+                                                               CustomerName = x.CustomerCard == null ? null : x.CustomerCard.EnglishName,
+                                                               Master = m.Master,
+                                                               LongMaster = x.TransportModeId == "A" ? (!string.IsNullOrEmpty(m.AirlinePrefix) && !string.IsNullOrEmpty(m.Master) ? m.AirlinePrefix + "-" + m.Master : "") : m.Master,
+                                                               House = x.House,
+                                                               ShipmentLevelCode = x.ShipmentLevelCode,
+                                                               AgentName = x.AgentCard == null ? null : x.AgentCard.EnglishName,
+                                                               OpenPayablesInProfitCurrency = x.OpenPayablesInProfitCurrency,
+                                                               AccountedPayablesInProfitCurrency = x.AccountedPayablesInProfitCurrency,
+                                                               OpenPayablesInLocalCurrency = x.OpenPayablesInLocalCurrency,
+                                                               AccountedPayablesInLocalCurrency = x.AccountedPayablesInLocalCurrency,
+                                                           }).ToList();
+
+                            return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        }
+
+                        //break;
+                    }
+
+                case "Booking":
+                    {
+                        BookingsDomainService myDomainService = new BookingsDomainService();
+                        List<BookingList> myResult = myDomainService.GetBookingFilters(arrayOfBytes, tenant);
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        //break;
+                    }
+
+                case "User":
+                    {
+                        ContactDomainService myDomainService = new ContactDomainService();
+                        List<UserList> myResult = myDomainService.GetUserFilters(arrayOfBytes, tenant);
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        //break;
+                    }
+
+                case "Ticket":
+                    {
+                        CRMDomainService myDomainService = new CRMDomainService();
+                        List<TicketList> myResult = myDomainService.GetTicketFilters(arrayOfBytes, tenant).ToList();
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        //break;
+                    }
+
+                case "Quote":
+                    {
+                        QuotesDomainService myDomainService = new QuotesDomainService();
+                        List<QuoteList> myResult = myDomainService.GetQuoteFilters(arrayOfBytes, tenant).ToList();
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        //break;
+                    }
+
+                case "CardGLAccount":
+                    {
+                        // Set Type Filter
+                        myQueryOperations.SetFilter("AccountTypeCode", "1", false, "Equals", null, false);
+                        arrayOfBytes = serializer.SerializeFilterItems(myQueryOperations);
+
+                        // Get the list
+                        AccountingDomainService myDomainService = new AccountingDomainService();
+                        List<GLAccountList> myResult = myDomainService.GetGLAccountFilters(arrayOfBytes, tenant);
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        //break;
+                    }
+
+                case "CustomerGLAccount":
+                    {
+                        // Set Type Filter
+                        myQueryOperations.SetFilter("AccountTypeCode", "2", false, "Equals", null, false);
+                        arrayOfBytes = serializer.SerializeFilterItems(myQueryOperations);
+
+                        // Get the list
+                        AccountingDomainService myDomainService = new AccountingDomainService();
+                        List<GLAccountList> myResult = myDomainService.GetGLAccountFilters(arrayOfBytes, tenant);
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        //break;
+                    }
+
+                case "VendorGLAccount":
+                    {
+                        // Set Type Filter
+                        myQueryOperations.SetFilter("AccountTypeCode", "3", false, "Equals", null, false);
+                        arrayOfBytes = serializer.SerializeFilterItems(myQueryOperations);
+
+                        // Get the list
+                        AccountingDomainService myDomainService = new AccountingDomainService();
+                        List<GLAccountList> myResult = myDomainService.GetGLAccountFilters(arrayOfBytes, tenant);
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        //break;
+                    }
+
+                case "Journal":
+                    {
+                        AccountingDomainService myDomainService = new AccountingDomainService();
+                        List<JournalList> myResult = myDomainService.GetJournalFilters(arrayOfBytes, tenant);
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        //break;
+                    }
+
+                case "CashBook":
+                    {
+                        AccountingDomainService myDomainService = new AccountingDomainService();
+                        List<CashBookList> myResult = myDomainService.GetCashBookFilters(arrayOfBytes, tenant);
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        //break;
+                    }
+
+                case "BankDeposit":
+                    {
+                        AccountingDomainService myDomainService = new AccountingDomainService();
+                        List<BankDepositList> myResult = myDomainService.GetBankDepositFilters(arrayOfBytes, tenant);
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        //break;
+                    }
+
+                case "Customer":
+                    {
+
+                        PartnersDomainService myDomainService = new PartnersDomainService();
+                        List<CustomerList> myResult = myDomainService.GetCustomerFilters(arrayOfBytes, tenant);
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+
+
+                        //partnerTypeId
+                    }
+
+                case "Contact":
+                    {
+                        ContactDomainService myDomainService = new ContactDomainService();
+                        List<ContactList> myResult = myDomainService.GetContactFilters(arrayOfBytes, tenant).ToList();
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                    }
+                case "Activity":
+                    {
+                        CRMDomainService myDomainService = new CRMDomainService();
+                        List<ActivityList> myResult = myDomainService.GetActivityFilters(arrayOfBytes, tenant).ToList();
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                    }
+                case "Opportunity":
+                    {
+                        CRMDomainService myDomainService = new CRMDomainService();
+                        List<OpportunityList> myResult = myDomainService.GetOpportunityFilters(arrayOfBytes, tenant).ToList();
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                    }
+
+                case "AgentSharedManifest":
+                    {
+                        ContactDomainService myDomainService = new ContactDomainService();
+                        List<AgentSharedManifestList> myResult = myDomainService.GetAgentSharedManifestFilters(arrayOfBytes, tenant).ToList();
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+
+                    }
+
+                case "Airline":
+                    {
+                        myQueryOperations.SetFilter("IsAllowedInAirlinesRestriction", false, false, "Equals", null, false);
+                        arrayOfBytes = serializer.SerializeFilterItems(myQueryOperations);
+
+                        PartnersDomainService myDomainService = new PartnersDomainService();
+                        List<AirlineList> myResult = myDomainService.GetAirlineFilters(arrayOfBytes, tenant).ToList();
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                    }
+
+                //
+                //Customs
+                case "Customs.Client":
+                    {
+
+                        CustomDomainService myDomainService = new CustomDomainService();
+                        List<ClientList> myResult = myDomainService.GetClientFilters(arrayOfBytes, tenant);
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                    }
+                case "Customs.CustomsItems":
+                    {
+                        ICustomContext ctx = CustomContext.GetContext(tenant);
+                        CustomsItemListQueryService query = new CustomsItemListQueryService(ctx);
+
+                        QueryOperations QO = new QueryOperations();
+                        QO.PageIndex = 0;
+                        QO.PageSize = 100;
+                        QO.SetFilter("FullClassification", SearchFields, false, "Contains", null, false);
+                        QO.SetFilter("CustomsItemCategoryID", "2,3", false, "InListInt", null, false);
+
+                        List<CustomsItemList> myResult = query.GetList(QO, tenant);
+
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                    }
+                case "Customs.CouriersVat":
+                    {
+
+                        ICustomContext ctx = CustomContext.GetContext(tenant);
+                        CouriersVatListQueryService query = new CouriersVatListQueryService(ctx);
+
+                        QueryOperations QO = new QueryOperations();
+                        QO.PageIndex = 0;
+                        QO.PageSize = 100;
+                        QO.SetFilter("SearchFields", SearchFields, false, "Contains", null, false);
+                        QO.SetFilter("InActive", false, false, "Equals", null, false);
+
+                        List<CouriersVatList> myResult = query.GetList(QO, tenant);
+
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                    }
+
+                case "Customs.CustomsAirline":
+                    {
+
+                        ICustomContext ctx = CustomContext.GetContext(tenant);
+                        CustomsAirlineListQueryService query = new CustomsAirlineListQueryService(ctx);
+
+                        QueryOperations QO = new QueryOperations();
+                        QO.PageIndex = 0;
+                        QO.PageSize = 100;
+                        QO.SetFilter("SearchFields", SearchFields, false, "Contains", null, false);
+                        QO.SetFilter("InActive", false, false, "Equals", null, false);
+
+                        List<CustomsAirlineList> myResult = query.GetList(QO, tenant);
+
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                    }
+
+                default:
+                    {
+                        object myResult = null;
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                    }
+            }
+        }
+
+        private HttpResponseMessage ExecuteQuickSearchOnSeconderyDB(string ObjectTableName, string SearchFields, int tenant)
+        {
+            DatabaseInitializer.RunOnSeconderyDB = true;
+            return GetQuickSearch(ObjectTableName, SearchFields, tenant);
+        }
+
         public HttpResponseMessage GetDashboardSpotlightCounts(int tenant)
         {
 
