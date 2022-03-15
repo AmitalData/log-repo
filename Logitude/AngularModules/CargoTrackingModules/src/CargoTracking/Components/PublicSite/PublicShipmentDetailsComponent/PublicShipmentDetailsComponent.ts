@@ -270,6 +270,7 @@ export class PublicShipmentDetailsComponent implements OnInit
         var references = [];
         var houseReferences = this.getHouseReferences();
         references = this.Shipment.CustomerReference? this.Shipment.CustomerReference.split(','):[];
+        references = references.filter(e=>e && e.length> 0);
         return [...houseReferences , ...references];
     }
     getHouseReferences(): string[] {
