@@ -1091,7 +1091,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         private HttpResponseMessage ExecuteQuickSearchOnSeconderyDB(string ObjectTableName, string SearchFields, int tenant)
         {
             DatabaseInitializer.RunOnSeconderyDB = true;
-            return GetQuickSearch(ObjectTableName, SearchFields, tenant);
+            HttpResponseMessage result = GetQuickSearch(ObjectTableName, SearchFields, tenant);
+            DatabaseInitializer.RunOnSeconderyDB = false;
+            return result;
         }
 
         public HttpResponseMessage GetDashboardSpotlightCounts(int tenant)
