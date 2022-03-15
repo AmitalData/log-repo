@@ -178,7 +178,7 @@ namespace CommunicationWorkerRole
                 {
                     From = "admin@fnarsoft.com",
                     To = "ahmada@logitudeworld.com",//;itzik@amital.co.il;YaronC@AMITAL.CO.IL",
-                    CC = "YaronC@AMITAL.CO.IL;boazelkana@gmail.com",
+                    CC = "Eric@AMITAL.CO.IL;boazelkana@gmail.com",
                     BCC = "",
                     Subject = LogitudeSettings.DeploymentStage + " - SignUp complete successfully for " + signUpInfo.Company,
                     EmailBody = emailbody,
@@ -211,7 +211,7 @@ namespace CommunicationWorkerRole
                 {
                     From = "admin@fnarsoft.com",
                     To = "jalal@logitudeworld.com",//;itzik@amital.co.il;YaronC@AMITAL.CO.IL",
-                    CC = "ahmada@logitudeworld.com;ahmadb@logitudeworld.com;YaronC@AMITAL.CO.IL;razan@logitudeworld.com;lana@logitudeworld.com",
+                    CC = "ahmada@logitudeworld.com;ahmadb@logitudeworld.com;Eric@AMITAL.CO.IL;razan@logitudeworld.com;lana@logitudeworld.com",
                     BCC = "",
                     Subject = LogitudeSettings.DeploymentStage + " - SignUp complete successfully for " + signUpInfo.Company,
                     EmailBody = emailbody,
@@ -221,7 +221,7 @@ namespace CommunicationWorkerRole
 
                 if (LogitudeSettings.IsCostomsDeploy)
                 {
-                    emailParams.To += "eldad@amital.co.il;itzik@amital.co.il;YaronC@AMITAL.CO.IL";
+                    emailParams.To += "eldad@amital.co.il;itzik@amital.co.il;Eric@AMITAL.CO.IL";
                 }
             }
 
