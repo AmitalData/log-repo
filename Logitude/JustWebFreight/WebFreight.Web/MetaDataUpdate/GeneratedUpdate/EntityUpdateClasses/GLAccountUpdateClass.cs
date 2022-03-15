@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "b0307dba2e48c10b525fd5051553c39c";
+		public const string HashString = "d78cf7ea0d9c889a4d32a6dc5a54ea6f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1185,7 +1185,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountsTypeCode",
 					  						DefaultText =  "Chart of Accounts Type ",
-					  						FullLocalDefaultText =  "סוג קבוצת מאזן",
+					  						FullLocalDefaultText =  "קבוצת מאזן",
 					  						ListFieldLable =  "ChartOfAccountsTypeCodeListLable",
 					  						ListLableDefaultText =  "Chart of Accounts Type ",
 					  						ListLocalDefaultText =  "קבוצת מאזן",
@@ -10522,6 +10522,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsSplitGLAccout",
 					  						ListPropertyPath =  "IsSplitGLAccout",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -10577,6 +10578,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsMainGLAccount",
 					  						ListPropertyPath =  "IsMainGLAccount",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

@@ -158,7 +158,8 @@
                                                           [DataContext]="DataContext"></LogLabel>
                                             </td>
                                             <td style="width:120px">
-                                                <ComboBox [ItemsSource]="CategoriesList" (SelectedItemChanged)="SelectedItemChanged($event)" [IsDisabled]="IsCategoryDisabled"></ComboBox>
+                                                <ComboBox [ItemsSource]="CategoriesList" [SelectedItem]="SelectedCategory"
+                                                (SelectedItemChanged)="SelectedItemChanged($event)" [IsDisabled]="IsCategoryDisabled"></ComboBox>
                                             </td>
                                             <td style="width:10px"></td>
                                             <td style="padding-left: 5px;width:120px">
