@@ -29,6 +29,7 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<PartnerType> PartnerTypes { get; }
         IDbSet<Rank> Ranks { get; }
         IDbSet<CustomerTeam> CustomerTeams { get; }
+        IDbSet<CustomerGroup> CustomerGroups { get; }
         IDbSet<User> Users { get; }
         IDbSet<Department> Departments { get; }
         IDbSet<Branch> Branches { get; }

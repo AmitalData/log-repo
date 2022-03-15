@@ -162,7 +162,8 @@ namespace WebFreight.Web.InfrastructureModel
         private static CustomsRequiredFieldRepository customsRequiredFieldRepository;
         private static QuoteClosingReasonQuery quoteClosingReasonQuery;
         private static ShipmentSubTypeQuery shipmentSubTypeQuery;
-         
+        static CustomerGroupRepository customerGroupRepository;
+
         public static ScreenFieldsRepository ScreenFieldsRepository
         {
             get { return screenFieldsRepository; }
@@ -314,7 +315,7 @@ namespace WebFreight.Web.InfrastructureModel
             fullAccountingSettingsRepository = new FullAccountingSettingRepository(theTenant);
             bankCodeRepository = new BankCodeRepository(theTenant);
             taxWithholdingAssessOfficeRepository = new TaxWithholdingAssessOfficeRepository(theTenant);
- 
+            customerGroupRepository = new CustomerGroupRepository(theTenant);
             #endregion
         }
         private static Setting setting;
@@ -572,7 +573,7 @@ namespace WebFreight.Web.InfrastructureModel
 
             InitializeEmployeeGroup(signUpInfo.Email);
             InitializeTicketClassification();
-
+            AddGeneralCustomerGroup();
 
             AddQuoteTemplate(tenant);
             if (signUpInfo.IsCrmTenant)
@@ -988,6 +989,25 @@ namespace WebFreight.Web.InfrastructureModel
                     classifiationRepository.SubmitChanges();
                 }
             }
+        }
+        private static void AddGeneralCustomerGroup()
+        {
+            User systemUser = GetTenantSystemUser(tenant);
+            CustomerGroup customerGroup = new CustomerGroup()
+            {
+                Id = IdCounter.GetNumber("CustomerGroup", tenant).ToString(),
+                Tenant = tenant,
+                Name = "General",
+                CreateDate = DateTime.Now,
+                CreatedByUserId = systemUser?.Id,
+                UpdateDate = DateTime.Now,
+                UpdatedByUserId = systemUser?.Id,
+                SearchFields = "General",
+                InActive = false,
+            };
+
+            customerGroupRepository.Add(customerGroup);
+            customerGroupRepository.SubmitChanges();
         }
 
         private static void AddJournalActionTypes(int tenant)

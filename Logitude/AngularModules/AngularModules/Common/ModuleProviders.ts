@@ -218,6 +218,8 @@ import { PortTimeZoneListService } from './Services/StandardLists/PortTimeZoneLi
 import { PortTimeZonePMService } from './Services/StandardPMs/PortTimeZonePMService';
 import { CustomerTeamPMService } from './Services/StandardPMs/CustomerTeamPMService';
 import { CustomerTeamListService } from './Services/StandardLists/CustomerTeamListService';
+import { CustomerGroupPMService } from './Services/StandardPMs/CustomerGroupPMService';
+import { CustomerGroupListService } from './Services/StandardLists/CustomerGroupListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -439,6 +441,8 @@ export class ModuleProviders {
             case "PortTimeZonePMService": { myResult = new PortTimeZonePMService(); break; }
             case "CustomerTeamPMService": { myResult = new CustomerTeamPMService(); break; }
             case "CustomerTeamListService": { myResult = new CustomerTeamListService(); break; }
+            case "CustomerGroupPMService": { myResult = new CustomerGroupPMService(); break; }
+            case "CustomerGroupListService": { myResult = new CustomerGroupListService(); break; }
         }
 
         return myResult;
