@@ -162,7 +162,7 @@ namespace Logitude.Server.Tools.Helpers
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
                     SqlCommand cmd = new SqlCommand("dbo.usp_GetNextTableNumberValue", cn);
-                    if (tenant == 1 || tenant == 42 || tenant == 1330 || tenant == 2653 || 1688)
+                    if (tenant == 1 || tenant == 42 || tenant == 1330 || tenant == 2653 || tenant == 1688)
                     {
                         cmd = new SqlCommand("dbo.usp_GetNextTableNumberValueWithSnapshot", cn);
                     }
