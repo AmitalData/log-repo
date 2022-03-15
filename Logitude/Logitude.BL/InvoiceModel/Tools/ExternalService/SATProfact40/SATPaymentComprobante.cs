@@ -205,7 +205,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 }
                 catch (Exception ex)
                 {
-                     invoiceComprobanteV33 = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(invoice.SATXML);
+                    invoiceComprobanteV33 = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(invoice.SATXML);
                 }
 
                 List<ARInvoicePayment> allInvoicePayments = (from a in invoiceContext.ARInvoicePayments.Include("ARPayment")
@@ -239,7 +239,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
                 ComprobanteConcepto[] comprobanteConceptos = sATInvoiceComprobante.GetConceptoList().ToArray();
                 List<ARInvoiceTotalVATPM> arTotalVats = sATInvoiceComprobante.GetARInvoiceTotalVATPMs();
-
+          
                 ComprobanteImpuestosResults comprobanteImpuestosResults = sATInvoiceComprobante.GetComprobanteImpuestos(arTotalVats, comprobanteConceptos);
                 comprobanteImpuestosResults.ComprobanteImpuestos.Traslados.ToList().ForEach(comprobanteImpuestosTraslado =>
                 {
@@ -311,7 +311,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 ValorUnitario = 0,
                 ClaveProdServ = "84111506",
                 ClaveUnidad = "ACT",
-                ObjetoImp = SATData.NoTaxObjetoImp,
+                ObjetoImp = SATData.NotIncludeTaxObjetoImp,
             };
 
             conceptosList.Add(concepto);
@@ -544,7 +544,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         {
             return new PagosTotales
             {
-                MontoTotalPagos = pagoItem.Monto * pagoItem.TipoCambioP,
+                MontoTotalPagos = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(pagoItem.Monto * pagoItem.TipoCambioP),
                 //TotalRetencionesIVA = 0,
                 //TotalRetencionesISR = 0,
                 //TotalRetencionesIEPS = 0,

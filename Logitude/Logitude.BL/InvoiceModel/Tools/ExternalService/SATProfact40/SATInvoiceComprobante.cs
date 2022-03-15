@@ -412,7 +412,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 {
                     ComprobanteConcepto concepto = new ComprobanteConcepto
                     {
-                        ObjetoImp = SATData.NoTaxObjetoImp,
+                        ObjetoImp = SATData.IncludeTaxObjetoImp,
                         Cantidad = Math.Abs((line.Quantity != null ? ((decimal)line.Quantity.Value) : 0)),
                         Unidad = "SERVICIO",
                         Descripcion = line.Description,
