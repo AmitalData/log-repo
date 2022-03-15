@@ -682,7 +682,8 @@ ExceptionInErrorLog.ToString()
 
 
                 Dictionary<string, byte[]> files = new Dictionary<string, byte[]>();
-                files.Add(BMKdocumentName.Split('.')[0] + "." + "zip", CompressionFile(BMKdocumentName, BMKDatainByte));
+                //files.Add(BMKdocumentName.Split('.')[0] + "." + "zip", CompressionFile(BMKdocumentName, BMKDatainByte));
+                files.Add(BMKdocumentName.Split('.')[0] + "." + "txt", BMKDatainByte);
 
 
                 files.Add(INIdocumentName, INIDatainByte);
