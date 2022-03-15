@@ -17,7 +17,31 @@ export class TariffDomainService {
         this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TariffDomain';
     }
+    GetSaleTariffsCounts() {
 
+        var url = this._apiUrl + '/GetSaleTariffsCounts';
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var myJsonResult = response;
+
+                var myResult = new TariffSummery();
+
+                if (myJsonResult) {
+                    var jsonListKeys = Object.keys(myJsonResult);
+                    for (var key in jsonListKeys) {
+                        var property = jsonListKeys[key];
+                        myResult[property] = myJsonResult[property];
+                    }
+                }
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
     GetTariffsCounts() {
 
         var url = this._apiUrl + '/GetTariffsCounts';
@@ -371,7 +395,9 @@ export class TariffSummery {
     OceanFCLSurchargesCount: number;
     ImportCustomsChargesCount: number;
     ExportCustomsChargesCount: number;
-    InlandFTLTariffsCount: number
+    InlandFTLTariffsCount: number;
+    ImportSaleCount: number;
+    ExportSaleCount: number;
 }
 
 export class TariffFilterParameter {

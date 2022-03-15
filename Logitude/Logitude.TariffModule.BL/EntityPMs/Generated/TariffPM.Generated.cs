@@ -1774,6 +1774,52 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string customerGroupId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerGroupId  
+	   {
+	    
+	     get
+		{
+		   return customerGroupId;
+		 }
+		 set
+		 {
+		   if(customerGroupId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerGroupId",OldValue=customerGroupId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customerGroupId=value;
+		   }
+			
+		 }
+	   }
+	  private string customerGroupName ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerGroupName  
+	   {
+	    
+	     get
+		{
+		   return customerGroupName;
+		 }
+		 set
+		 {
+		   if(customerGroupName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerGroupName",OldValue=customerGroupName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customerGroupName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

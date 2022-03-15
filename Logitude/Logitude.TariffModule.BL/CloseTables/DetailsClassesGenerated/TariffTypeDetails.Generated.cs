@@ -93,6 +93,22 @@ namespace Logitude.TariffModule.BL.CLoseTable
                 SearchFields = "IFT,Inland FTL Charges Cost", 
                 TransportModeCode = "I", 
 			});
+			 
+            all.Add(new TariffTypeDetails()
+            {    
+                Code = "ICS", 
+                Name = "Import Local Charges Sale", 
+                SearchFields = "ICS,Import Local Charges Sale", 
+                DirectionCode = "I"
+			});
+			 
+            all.Add(new TariffTypeDetails()
+            {    
+                Code = "ECS", 
+                Name = "Export Local Charges Sale", 
+                SearchFields = "ECS,Export Local Charges Sale", 
+                DirectionCode = "E"
+			});
 			
             return all;
        }

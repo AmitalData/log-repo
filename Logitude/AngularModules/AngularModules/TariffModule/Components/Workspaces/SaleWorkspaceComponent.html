@@ -1,0 +1,175 @@
+<table>
+    <tr>
+        <td style="width:265px;min-width:265px;">
+            <table>
+                <tr [style.height.px]="QueriesAreaHeight">
+                    <td>
+                        <div class="MediaFill">
+                            <SectionBox [Scrolling]="true">
+                                <SectionHead>Queries</SectionHead>
+                                <SectionBody>
+                                    <div class="QueriesSection">
+                                        <div>Local Charges</div>
+                                        <div style="height:22px; width: 45px; position: absolute; top:4px; right:0px;">
+                                            <div id="{{'NEWTARIFF' | IdGeneratorPipe}}" tabindex="0" class="ToggleButton" style="margin: auto; width: 100% !important; height: 100% !important">
+                                                <label>New</label>
+                                                <img src="./Images/ToggleIcon.png" />
+                                                <div class="ToggleButtonMenu" style="width: 50px;">
+                                                    <button *ngIf="ImportSaleVisibility" (click)="NewTariff('I')">Import</button>
+                                                    <button *ngIf="ExportSaleVisibility" (click)="NewTariff('E')">Export</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div *ngIf="ImportSaleVisibility">
+                                                <HyperlinkQuery (click)="ViewTariffs('I')">Import ({{ImportSaleCount}})</HyperlinkQuery>
+                                            </div>
+                                            <div *ngIf="ExportSaleVisibility">
+                                                <HyperlinkQuery (click)="ViewTariffs('E')">Export ({{ExportSaleCount}})</HyperlinkQuery>
+                                            </div>
+                                         
+                                        </div>
+                                    </div>
+
+                                </SectionBody>
+                            </SectionBox>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+        <td style="min-width:10px;width:10px;">
+            <div></div>
+        </td>
+
+        <!-- Recent Tariffs -->
+        <td>
+            <table>
+                <tr style="height:400px;">
+                    <td>
+                        <div class="MediaFill">
+                            <SectionBox [Scrolling]="true">
+                                <SectionHead>{{RecentTariffsCount}} Recent Tariffs</SectionHead>
+                                <SectionBody>
+
+                                    <div class="RecentEntityItem" *ngFor="let item of RecentTariffsList" (click)="EditTariff(item)">
+                                        <table>
+                                            <tr>
+                                                <td style="width:5px;min-width:5px;">
+                                                    <div></div>
+                                                </td>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width: 2px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width:100px;min-width:100px;max-width:100px; position: relative; " rowspan="2">
+                                                                <div style="position: absolute; left: 3px; top: 3px; width: 20px; height: 20px;" title="{{item.LastActivityTypeName}}">
+                                                                    <div *ngIf="item.LastActivityTypeName == 'New'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Added.png') center center no-repeat; background-size: contain;"></div>
+                                                                    <div *ngIf="item.LastActivityTypeName == 'View'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Viewed.png') center center no-repeat; background-size: contain;"></div>
+                                                                    <div *ngIf="item.LastActivityTypeName == 'Update'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Edited.png') center center no-repeat; background-size: contain;"></div>
+                                                                </div>
+                                                                <div style="position: absolute; left: 3px; bottom: 1px; color: #282E30;">{{item.LastActivityDate | DateTimeToDatePipe}}</div>
+                                                            </td>
+
+                                                            <td class="TextTrimming" style="width:200px;min-width:200px;max-width:200px;text-align:left;color:#282E30;float:left;font-size:11px;">
+                                                                <div>
+                                                                    {{item.Name}}
+                                                                </div>
+                                                            </td>
+
+                                                            <td style="width:80px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td *ngIf="item.TypeCode != 'ICC' && item.TypeCode != 'ECC'" style="width:250px;min-width:250px;max-width:250px; color:#282E30;font-size:11px; text-align:left;">
+                                                                {{item.SellerName}}
+                                                            </td>
+
+                                                            <td *ngIf="item.TypeCode == 'ICC' || item.TypeCode == 'ECC'" style="width:250px;min-width:250px;max-width:250px; color:#282E30;font-size:11px; text-align:left;">
+                                                                {{item.CustomsBrokerName}}
+                                                            </td>
+
+                                                            <td style="width:7px; height: 100%;" rowspan="2">
+                                                                <div style="width:1px; height: calc(100% - 5px); background: #DADADA; margin:auto;"></div>
+                                                            </td>
+
+                                                            <!-- Transport -->
+                                                            <td *ngIf="item.TypeCode != 'ICC' && item.TypeCode != 'ECC'" style="width:30px; height: 100%;" rowspan="2">
+                                                                <div title="{{item.TransportModeName}}" style="width: 100%; height: 100%; position:relative;">
+                                                                    <img class="CenterCenter" style="height:auto;width:20px;" [attr.src]="'./Images/Icons/' + item.TransportModeCode + '.png'" />
+                                                                </div>
+                                                            </td>
+
+                                                            <td *ngIf="item.TypeCode == 'ICC' || item.TypeCode == 'ECC'" style="width:30px; height: 100%;" rowspan="2">
+                                                                <div title="{{item.DirectionName}}" style="width: 100%; height: 100%; position:relative;">
+                                                                    <img class="CenterCenter" style="height:auto;width:20px;" [attr.src]="'./Images/Directions/' + item.DirectionCode + '.png'" />
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width: 3px;">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td style="width:2px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td class="TextTrimming" style="width:200px;min-width:200px;max-width:200px;color:#1B90CB;text-align:left;font-size:11px;">
+                                                                <div>
+                                                                    {{item.TypeName}}
+                                                                </div>
+                                                            </td>
+
+                                                            <td style="width:80px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td class="TextTrimming" style="width:250px;min-width:250px;max-width:250px;color: #1B90CB;font-size:10px;text-align:left;">
+                                                                {{item.TariffNumber}}
+                                                            </td>
+
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width:3px;">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td style="width:5px;min-width:5px;">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                </SectionBody>
+                            </SectionBox>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

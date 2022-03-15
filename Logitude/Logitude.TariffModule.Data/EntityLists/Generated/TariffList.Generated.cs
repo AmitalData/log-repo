@@ -92,6 +92,10 @@ namespace Logitude.TariffModule.Data.EntityLists
        public string DirectionName  { get; set; }
        [DataMember]
        public string UnitOfMeasurementCode  { get; set; }
+       [DataMember]
+       public string CustomerGroupId  { get; set; }
+       [DataMember]
+       public string CustomerGroupName  { get; set; }
    }
 
 }

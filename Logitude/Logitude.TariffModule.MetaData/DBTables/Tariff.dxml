@@ -373,6 +373,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CustomerGroupId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
@@ -532,5 +539,10 @@
     ForeignKeyColumn="UnitOfMeasurementCode"
     ReferencedTable="WeightUnits"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CustomerGroupId"
+    ReferencedTable="CustomerGroups"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

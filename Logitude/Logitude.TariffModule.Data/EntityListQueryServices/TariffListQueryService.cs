@@ -62,6 +62,7 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
             customFieldResolver.SetCustomFieldsValues("Tariffs", tenant, myResult.Cast<object>().ToList());
             return myResult.ToList();
         }
+      
         public List<TariffList> GetRecentEntityLists(int tenant, string userId, string objectTableId)
         {
             List<TariffList> entityList = new List<TariffList>();

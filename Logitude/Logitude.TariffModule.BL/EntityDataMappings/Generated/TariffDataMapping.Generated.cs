@@ -75,7 +75,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         FreightChargeId, 
 	         CustomsBrokerId, 
 	         CustomsBrokerPartnerTypeId, 
-	         UnitOfMeasurementCode,
+	         UnitOfMeasurementCode, 
+	         CustomerGroupId,
 	      }
 
 
@@ -153,7 +154,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         CustomsBrokerId, 
 	         CustomsBrokerName, 
 	         CustomsBrokerPartnerTypeId, 
-	         UnitOfMeasurementCode,
+	         UnitOfMeasurementCode, 
+	         CustomerGroupId, 
+	         CustomerGroupName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -425,6 +428,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnitOfMeasurementCode))
             {
 				entityPOCO.UnitOfMeasurementCode = entityPM.UnitOfMeasurementCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerGroupId))
+            {
+				entityPOCO.CustomerGroupId = entityPM.CustomerGroupId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -703,6 +711,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.UnitOfMeasurementCode = entityPOCO.UnitOfMeasurementCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomerGroupId))
+            {
+					entityPM.CustomerGroupId = entityPOCO.CustomerGroupId;
+            }
+
 		}
 
 		public void PMToOldPM(TariffPM entityPM, TariffPM oldEntityPM)
@@ -972,6 +985,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnitOfMeasurementCode))
             {
                 oldEntityPM.UnitOfMeasurementCode = entityPM.UnitOfMeasurementCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerGroupId))
+            {
+                oldEntityPM.CustomerGroupId = entityPM.CustomerGroupId;
             }
 			
 		}

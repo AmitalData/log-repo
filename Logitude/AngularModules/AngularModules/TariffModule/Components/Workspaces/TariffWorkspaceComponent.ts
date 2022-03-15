@@ -63,6 +63,7 @@ export class TariffWorkspaceComponent {
 
   private Page_TW: any = null;
   private Page_DW: any = null;
+  private Page_SA: any = null;
   SelectionChanged() {
     if (this.isLoaderReady) {
       if (this.SelectedItem != null) {
@@ -89,7 +90,23 @@ export class TariffWorkspaceComponent {
 
               break;
             }
+              case "SALE": {
+                  if (this.Page_SA == null) {
+                      this._entityResourceService.getEntityResourceByTableName("Tariff", 0).subscribe((response: any) => {
+                          this._entityResourceService.getEntityResourceByTableName("TariffLinesContainersPrice", 0).subscribe((response: any) => {
+                              SessionLocator.DynamicLoader.Load('./TariffModule/Components/Workspaces/SaleWorkspaceComponent', myLocation.viewContainerRef)
+                                  .then(cmpRef => {
+                                      this.Page_SA = cmpRef.instance;
+                                  });
+                          });
+                      });
+                  }
+                  else {
+                      this.Page_SA.LoadAllScreenData();
+                  }
 
+                  break;
+              }
             case "SETG": {
               if (this.Page_DW == null) {
                 this._entityResourceService.getEntityResourceByTableName("Tariff", 0).subscribe((response: any) => {

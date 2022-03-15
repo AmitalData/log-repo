@@ -130,6 +130,8 @@ namespace Logitude.TariffModule.Data.EntityMapping
             this.Property(t => t.CustomsBrokerPartnerTypeId).HasColumnName("CustomsBrokerPartnerTypeId").HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.UnitOfMeasurementCode).HasColumnName("UnitOfMeasurementCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.CustomerGroupId).HasColumnName("CustomerGroupId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

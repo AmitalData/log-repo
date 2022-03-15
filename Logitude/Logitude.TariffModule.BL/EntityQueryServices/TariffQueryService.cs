@@ -54,7 +54,13 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
             return tariffsSummary;
         }
-
+        public TariffsSummary GetSaleCount(int tenant)
+        {
+            TariffsSummary tariffsSummary = new TariffsSummary() { Id = tenant };
+            tariffsSummary.ImportSaleCount = this.repository.GetAll(tenant).Where(p => p.TypeCode == "ILCS").Count();
+            tariffsSummary.ExportSaleCount = this.repository.GetAll(tenant).Where(p => p.TypeCode == "ELCS").Count();
+            return tariffsSummary;
+        }
         public List<TariffSearchSummary> GetTariffSearchSummary(TariffSearchArgs args, int tenant) {
 
             string fromport = args.OriginPortId;

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TariffUpdateClass
    {  		
-		public const string HashString = "57b0f0dc0444cf8dbc9fb487c39ade0e";
+		public const string HashString = "d6940c560cf9818f4b8c4b7eb6d30781";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4395,6 +4395,125 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CustomerGroupId",
+					  						ObjectTableName =  "Tariff",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "CustomerGroup",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CustomerGroupId",
+					  						ListPropertyPath =  "CustomerGroupId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Tariff",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CustomerGroupId",
+					  						DefaultText =  "Customer Group",
+					  						ListFieldLable =  "CustomerGroupIdListLable",
+					  						ListLableDefaultText =  "Customer Group",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CustomerGroupName",
+					  						ObjectTableName =  "Tariff",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  100,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CustomerGroupName",
+					  						ListPropertyPath =  "CustomerGroupName",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Tariff",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CustomerGroupName",
+					  						DefaultText =  "CustomerGroup",
+					  						ListFieldLable =  "CustomerGroupNameListLable",
+					  						ListLableDefaultText =  "Customer Group",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -4454,6 +4573,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			   TextCode TariffTextCode_8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tariff.Q.InlandFTL", DefaultText = @"Inland FTL Charges Cost",LocalDefaultText = "Inland FTL Charges Cost", ObjectTableId = TariffObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature TariffFeature_8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Tariff.Q.InlandFTL", ObjectTableId = TariffObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffFeatures.InlandFTL", NameTextCodeDefaultText = "Inland FTL", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TariffObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode TariffTextCode_9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tariff.Q.ExportLocalChargesSale", DefaultText = @"Export Local Charges Sale",LocalDefaultText = "Export Local Charges Sale", ObjectTableId = TariffObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TariffFeature_9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Tariff.Q.ExportLocalChargesSale", ObjectTableId = TariffObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffFeatures.ExportLocalChargesSale", NameTextCodeDefaultText = "Export Local Charges Sale", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TariffObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode TariffTextCode_10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tariff.Q.ImportLocalChargesSale", DefaultText = @"Import Local Charges Sale",LocalDefaultText = "Import Local Charges Sale", ObjectTableId = TariffObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TariffFeature_10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Tariff.Q.ImportLocalChargesSale", ObjectTableId = TariffObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffFeatures.ImportLocalChargesSale", NameTextCodeDefaultText = "Import Local Charges Sale", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TariffObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -4666,6 +4793,52 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 QueryColumn InlandFTLQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InlandFTLQuery.Id,QueryCode = InlandFTLQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Tariff.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
              AdvancedQueryFilter InlandFTLQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Tariff.TypeCode", PredefinedValue = "IFT",PredefinedValue2 = null, CustomPredefined = false, QueryId = InlandFTLQuery.Id,QueryCode = InlandFTLQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+  
+	      
+
+			  Query ExportLocalChargesSaleQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TariffTextCode_9.Id, NameTextCodeCode = TariffTextCode_9.Code, ObjectTableName = "Tariff", Code = "Export Local Charges Sale",  QueryGroupCode = "d341", IndexOrder = 9, Tenant = 0, ObjectTableId = TariffObjectTable.Id, QuerySection = "Tariff", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TariffFeature_9.Id,FeatureUniqeCode= TariffFeature_9.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn ExportLocalChargesSaleQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportLocalChargesSaleQuery.Id,QueryCode = ExportLocalChargesSaleQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Tariff.TariffNumber" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn ExportLocalChargesSaleQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportLocalChargesSaleQuery.Id,QueryCode = ExportLocalChargesSaleQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Tariff.Name" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn ExportLocalChargesSaleQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportLocalChargesSaleQuery.Id,QueryCode = ExportLocalChargesSaleQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Tariff.CustomerGroupName" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn ExportLocalChargesSaleQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportLocalChargesSaleQuery.Id,QueryCode = ExportLocalChargesSaleQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Tariff.Notes" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn ExportLocalChargesSaleQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportLocalChargesSaleQuery.Id,QueryCode = ExportLocalChargesSaleQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Tariff.CreatedByUserName" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn ExportLocalChargesSaleQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportLocalChargesSaleQuery.Id,QueryCode = ExportLocalChargesSaleQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Tariff.CreateDate" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn ExportLocalChargesSaleQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportLocalChargesSaleQuery.Id,QueryCode = ExportLocalChargesSaleQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Tariff.UpdatedByUserName" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn ExportLocalChargesSaleQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportLocalChargesSaleQuery.Id,QueryCode = ExportLocalChargesSaleQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Tariff.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
+
+             AdvancedQueryFilter ExportLocalChargesSaleQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Tariff.TypeCode", PredefinedValue = "ELCS",PredefinedValue2 = null, CustomPredefined = false, QueryId = ExportLocalChargesSaleQuery.Id,QueryCode = ExportLocalChargesSaleQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+  
+	      
+
+			  Query ImportLocalChargesSaleQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TariffTextCode_10.Id, NameTextCodeCode = TariffTextCode_10.Code, ObjectTableName = "Tariff", Code = "Import Local Charges Sale",  QueryGroupCode = "d341", IndexOrder = 10, Tenant = 0, ObjectTableId = TariffObjectTable.Id, QuerySection = "Tariff", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TariffFeature_10.Id,FeatureUniqeCode= TariffFeature_10.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn ImportLocalChargesSaleQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImportLocalChargesSaleQuery.Id,QueryCode = ImportLocalChargesSaleQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Tariff.TariffNumber" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn ImportLocalChargesSaleQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImportLocalChargesSaleQuery.Id,QueryCode = ImportLocalChargesSaleQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Tariff.Name" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn ImportLocalChargesSaleQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImportLocalChargesSaleQuery.Id,QueryCode = ImportLocalChargesSaleQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Tariff.CustomerGroupName" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn ImportLocalChargesSaleQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImportLocalChargesSaleQuery.Id,QueryCode = ImportLocalChargesSaleQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Tariff.Notes" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn ImportLocalChargesSaleQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImportLocalChargesSaleQuery.Id,QueryCode = ImportLocalChargesSaleQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Tariff.CreatedByUserName" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn ImportLocalChargesSaleQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImportLocalChargesSaleQuery.Id,QueryCode = ImportLocalChargesSaleQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Tariff.CreateDate" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn ImportLocalChargesSaleQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImportLocalChargesSaleQuery.Id,QueryCode = ImportLocalChargesSaleQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Tariff.UpdatedByUserName" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn ImportLocalChargesSaleQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImportLocalChargesSaleQuery.Id,QueryCode = ImportLocalChargesSaleQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Tariff.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
+
+             AdvancedQueryFilter ImportLocalChargesSaleQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Tariff.TypeCode", PredefinedValue = "ILCS",PredefinedValue2 = null, CustomPredefined = false, QueryId = ImportLocalChargesSaleQuery.Id,QueryCode = ImportLocalChargesSaleQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);

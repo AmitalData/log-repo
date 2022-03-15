@@ -47,6 +47,8 @@ export class TariffList {
 	DirectionCode: string;
 	DirectionName: string;
 	UnitOfMeasurementCode: string;
+	CustomerGroupId: string;
+	CustomerGroupName: string;
 	
 }
  
