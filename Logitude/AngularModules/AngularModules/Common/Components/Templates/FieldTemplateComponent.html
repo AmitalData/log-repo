@@ -140,7 +140,7 @@
                                 <div></div>
                             </td>
                             <td *ngIf="Entity['EmailDeliveryError'] != null && Entity['CommunicationStatusTypeCode'] = 'D'" style="width:25px;">
-                                <HelpIcon [IconSize]='25' [Header]="'Email Delivery Error'" [Text]="Entity['EmailDeliveryError']" [IconPath]="'./Images/Warning_icon_24.png'"></HelpIcon>
+                                <HelpIcon [Position]="Entity['$id']" [V2Grid]="true" [IconSize]='25' [Header]="'Email Delivery Error'" [Text]="Entity['EmailDeliveryError']" [IconPath]="'./Images/Warning_icon_24.png'"></HelpIcon>
                             </td>
                             <td>
                                 <div></div>
