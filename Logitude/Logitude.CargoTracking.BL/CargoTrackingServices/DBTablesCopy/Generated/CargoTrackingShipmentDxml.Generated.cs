@@ -81,7 +81,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='ShipperName' Type='nvarchar' Size='70'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='CustomerReference' Type='varchar' Size='101'>"+
+"  <Column Name='CustomerReference' Type='nvarchar' Size='-1'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='IsMainRecord' Type='bit'>"+
@@ -358,6 +358,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='InvoicedExceptionReason' Type='nvarchar' Size='-1'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='SHOHouse' Type='nvarchar' Size='200'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Relation ForeignKeyColumn='EntityType' ReferencedTable='CargoTrackingHeaderEntityTypes' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+

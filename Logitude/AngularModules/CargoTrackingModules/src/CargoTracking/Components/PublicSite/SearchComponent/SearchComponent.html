@@ -263,15 +263,15 @@
                                 <div  class="subtitle">Reference NO.</div>
                                 <div class="truncateText" >
                                     <span *ngFor="let item of references; let i = index">
-                                        <div *ngIf="i < 4">{{item}}</div>
+                                        <div *ngIf="i < 3">{{item}}</div>
                                     </span>
                                     
                                     <span 
                                     (click)="showReference($event,shipment,false)"
-                                    *ngIf="references && references.length  > 4">
+                                    *ngIf="references && references.length  > WebReferencesViewCount">
                                     <img src="./assets/images/icons/info.png" alt=" "
                                         style="margin-right: 6px; margin-top: 6px" />
-                                    <u>+ {{references.length - 4}} More</u>
+                                    <u>+ {{references.length - 3}} More</u>
                                 </span>
                                 </div>
                             </div>
@@ -280,13 +280,15 @@
                                 <div  class="subtitle">Reference NO. </div>
                                 <div class="truncateText" >
                                     <span *ngFor="let item of references; let i = index">
-                                        <div *ngIf="i < 1" >
+                                        <div *ngIf="i < MobileReferencesViewCount" >
                                             <span class="truncateText mobile-inline-block">
                                                 {{item}}
                                                 <span class="more-mobile "
                                                     (click)="showReference($event,shipment,true)"
-                                                    *ngIf="i == 0 && references && references.length  > 1">
-                                                    <u>+ {{references.length - 1}} More</u>
+                                                    *ngIf="i == 0 && references && references.length  > MobileReferencesViewCount">
+                                                    <img src="./assets/images/icons/info.png" alt=" "
+                                        style="margin-right: 6px; margin-top: 6px" />
+                                                    <u>+ {{references.length - MobileReferencesViewCount}} More</u>
                                                 </span>
                                             </span>
 

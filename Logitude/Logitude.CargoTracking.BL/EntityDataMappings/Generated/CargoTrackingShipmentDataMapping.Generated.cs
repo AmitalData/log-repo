@@ -138,7 +138,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         InvoicedDate, 
 	         InvoicedDone, 
 	         InvoicedNotes, 
-	         InvoicedExceptionReason,
+	         InvoicedExceptionReason, 
+	         SHOHouse,
 	      }
 
 
@@ -279,7 +280,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         InvoicedDone, 
 	         InvoicedNotes, 
 	         InvoicedExceptionReason, 
-	         ApprovedByUserName,
+	         ApprovedByUserName, 
+	         SHOHouse,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -856,6 +858,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvoicedExceptionReason))
             {
 				entityPOCO.InvoicedExceptionReason = entityPM.InvoicedExceptionReason;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SHOHouse))
+            {
+				entityPOCO.SHOHouse = entityPM.SHOHouse;
 			}
 			}
 
@@ -1437,6 +1444,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.InvoicedExceptionReason = entityPOCO.InvoicedExceptionReason;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SHOHouse))
+            {
+					entityPM.SHOHouse = entityPOCO.SHOHouse;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingShipmentPM entityPM, CargoTrackingShipmentPM oldEntityPM)
@@ -2013,6 +2025,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
                 oldEntityPM.InvoicedExceptionReason = entityPM.InvoicedExceptionReason;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SHOHouse))
+            {
+                oldEntityPM.SHOHouse = entityPM.SHOHouse;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(CargoTrackingShipmentPM entityPM)
@@ -2029,6 +2046,10 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.ShipperName)) //T4 find type == nText 
             {
                 entityPM.ShipperName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ShipperName));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CustomerReference)) //T4 find type == nText 
+            {
+                entityPM.CustomerReference = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CustomerReference));
             }
             if (!String.IsNullOrWhiteSpace(entityPM.FromWarehouseNotes)) //T4 find type == nText 
             {
@@ -2109,6 +2130,10 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.InvoicedExceptionReason)) //T4 find type == nText 
             {
                 entityPM.InvoicedExceptionReason = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.InvoicedExceptionReason));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.SHOHouse)) //T4 find type == nText 
+            {
+                entityPM.SHOHouse = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SHOHouse));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

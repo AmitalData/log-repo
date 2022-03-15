@@ -154,6 +154,7 @@ export class CargoTrackingShipmentList {
 	InvoicedDone: boolean;
 	InvoicedNotes: string;
 	InvoicedExceptionReason: string;
+	SHOHouse: string;
 	
 }
  

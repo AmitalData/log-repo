@@ -259,6 +259,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public string InvoicedNotes { get; set; }
         [Column("InvoicedExceptionReason")]
 	    public string InvoicedExceptionReason { get; set; }
+        [Column("SHOHouse")]
+	    public string SHOHouse { get; set; }
     }
 }
 	 
