@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {PaymentTermPMCustomCode} from '../EntityPMCustomCode/PaymentTermPMCustomCode';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -105,9 +106,14 @@ export class PaymentTermPM {
     public set IsManuallySet(newValue: boolean) { if (this.isManuallySet != newValue) { this.isManuallySet = newValue; this.MarkAsDirty("IsManuallySet"); } }
        
 	 
-    private currentMonth: boolean;
-    public get CurrentMonth() { return this.currentMonth; }
-    public set CurrentMonth(newValue: boolean) { if (this.currentMonth != newValue) { this.currentMonth = newValue; this.MarkAsDirty("CurrentMonth"); } }
+    private endOfMonth: boolean;
+    public get EndOfMonth() { return this.endOfMonth; }
+    public set EndOfMonth(newValue: boolean) { if (this.endOfMonth != newValue) { this.endOfMonth = newValue; this.MarkAsDirty("EndOfMonth"); } }
+       
+	 
+    private numberOfMonths: number;
+    public get NumberOfMonths() { return this.numberOfMonths; }
+    public set NumberOfMonths(newValue: number) { if (this.numberOfMonths != newValue) { this.numberOfMonths = newValue; this.MarkAsDirty("NumberOfMonths"); } }
        
 	 
     private calculatedLocalName: string;
@@ -142,6 +148,7 @@ export class PaymentTermPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
+            PaymentTermPMCustomCode.ApplyEntityChanged(propertyName, this);
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "PaymentTerm");
            
         }

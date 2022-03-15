@@ -385,7 +385,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
                             if (myComparativeDate != null)
                             {
-                                if (myPaymentTerm.CurrentMonth)
+                                if (myPaymentTerm.EndOfMonth)
                                 {
                                     myComparativeDate = myComparativeDate.Value.AddMonths(1);
 
