@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Shipment"  AOT="true" TargetTableName="Shipments" BatchSize="10000" >
-  <Sql Version="4">
+  <Sql Version="6">
     <![CDATA[
 
 If(OBJECT_ID('tempdb..#temp') Is Not Null)
@@ -79,7 +79,7 @@ where $LastCounterWhere$
 	declare @InlandDomesticCity as varchar(25)
 	declare @InlandDomesticCountryName as varchar(120)
 
-	declare @ResultAddress as varchar(1000)
+	declare @ResultAddress as varchar(200)
 	
 	declare @Count as int
 	set @Count = 0;

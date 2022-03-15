@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Shipment" Pre="true">
-  <Sql Version="2">
+  <Sql Version="3">
     <![CDATA[
     
  IF EXISTS (SELECT *
@@ -12,11 +12,11 @@
     SET @Sql = 
     '
     CREATE FUNCTION dbo.BuildFullAddressTextFunction (@AddressId varchar(15), @Tenant int)
-    RETURNS varchar (1000)
+    RETURNS varchar (200)
     WITH EXECUTE AS CALLER
     AS
     BEGIN
-        DECLARE @Result varchar(1000);
+        DECLARE @Result varchar(200);
 	    DECLARE @Address1 as varchar(65);
 	    DECLARE @Address2 as varchar(65);
 	    DECLARE @City as varchar(25);
