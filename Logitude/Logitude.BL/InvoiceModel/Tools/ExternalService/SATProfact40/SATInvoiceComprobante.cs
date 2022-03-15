@@ -350,7 +350,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             return new ComprobanteInformacionGlobal
             {
                 Periodicidad = arInvoicePM.PeriodCode,
-                Meses = satMonths[arInvoiceDate.Month],
+                Meses = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint((decimal)arInvoiceDate.Month).ToString(),
                 Año = Convert.ToInt16(arInvoiceDate.Year),
             };
         }
@@ -417,7 +417,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 {
                     ComprobanteConcepto concepto = new ComprobanteConcepto
                     {
-                        ObjetoImp = SATData.NoTaxObjetoImp,
+                        ObjetoImp = SATData.IncludeTaxObjetoImp,
                         Cantidad = Math.Abs((line.Quantity != null ? ((decimal)line.Quantity.Value) : 0)),
                         Unidad = "SERVICIO",
                         Descripcion = line.Description,

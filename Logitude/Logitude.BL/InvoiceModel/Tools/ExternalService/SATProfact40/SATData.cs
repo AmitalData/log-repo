@@ -35,6 +35,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         public static string VoidedInvoiceStatusCode = "VD";
         public static string BimestralPeriod = "05";
         public static string IncorporacionFiscalRegimen = "621";
-        public static string NoTaxObjetoImp = "02";
+        public static string NotIncludeTaxObjetoImp = "01";
+        public static string IncludeTaxObjetoImp = "02";
     }
 }
