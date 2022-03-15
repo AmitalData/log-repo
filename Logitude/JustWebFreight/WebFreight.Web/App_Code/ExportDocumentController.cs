@@ -799,9 +799,9 @@ namespace WebFreight.Web.App_Code
                 if (authToken.Tenant == tenant)
                 {
                     DocumentRepository documentRepository = new DocumentRepository(tenant);
-                    double? usedSpace = documentRepository.GetUsedSpaceForTenant(tenant);
+                    double usedSpace = documentRepository.GetUsedSpaceForTenant(tenant) ?? 0;
 
-                    string result = GetUsedSpaceAndUnit((int?)usedSpace);
+                    string result = GetUsedSpaceAndUnit((long)usedSpace);
                     return Request.CreateResponse(HttpStatusCode.OK, result);
                 }
                 else throw new Exception("Sorry you’re not authenticated to view system info.");
@@ -812,17 +812,13 @@ namespace WebFreight.Web.App_Code
             }
         }
 
-        private string GetUsedSpaceAndUnit(int? usedSpace)
+        private string GetUsedSpaceAndUnit(long usedSpace)
         {
             double Byte = 1024;
             string FileSize = "";
             double usedSpaceInDouble;
-            if (usedSpace == null)
-            {
-                usedSpace = 0;
-            }
 
-            double.TryParse(usedSpace.Value.ToString(), out usedSpaceInDouble);
+            double.TryParse(usedSpace.ToString(), out usedSpaceInDouble);
             if (usedSpace < Byte)
             {
                 FileSize = string.Format("{0:0.00}", usedSpaceInDouble) + " B";
