@@ -59,8 +59,8 @@ Test:hover {
                                                     <div>Activation</div>
 
                                                     <div>
-                                                        <p *ngIf="IsShowActivationWizardLink" class="QueryLink" (click)="ActivationWizardLinkClick()"> Activation Wizard</p>                                                       
-                                                        <p *ngIf="IsShowSettingLink" class="QueryLink" (click)="SettingsLinkClick()">Settings</p>
+                                                        <p [attr.data-cy]="'Activation Wizard'" *ngIf="IsShowActivationWizardLink" class="QueryLink" (click)="ActivationWizardLinkClick()"> Activation Wizard</p>                                                       
+                                                        <p [attr.data-cy]="'Settings'" *ngIf="IsShowSettingLink" class="QueryLink" (click)="SettingsLinkClick()">Settings</p>
 
                                                     </div>
                                                 </div>
@@ -70,11 +70,11 @@ Test:hover {
                                                 <div class="QueriesSection">
                                                     <div>Display Settings</div>
                                                     <div>
-                                                        <p *ngIf="SharedTitleType != 'CargoTracking'"[class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="EventsPermissionsLinkClick()">Events Permissions</p>
-                                                        <p *ngIf="SharedTitleType == 'CargoTracking'"[class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="MilestonesPermissionsLinkClick()">Milestones Permissions</p>
-                                                        <p [class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="DocumentsPermissionsLinkClick()">Documents Permissions</p>
-                                                        <p [class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="PartnersPermissionsLinkClick()">Partners Permissions</p>
-                                                        <p *ngIf="SharedTitleType != 'CargoTracking'" [class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="MoneyPermissionsLinkClick()">Money Permissions</p>
+                                                        <p [attr.data-cy]="'Events Permissions'" *ngIf="SharedTitleType != 'CargoTracking'"[class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="EventsPermissionsLinkClick()">Events Permissions</p>
+                                                        <p [attr.data-cy]="'Milestones Permissions'" *ngIf="SharedTitleType == 'CargoTracking'"[class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="MilestonesPermissionsLinkClick()">Milestones Permissions</p>
+                                                        <p [attr.data-cy]="'Documents Permissions'" [class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="DocumentsPermissionsLinkClick()">Documents Permissions</p>
+                                                        <p [attr.data-cy]="'Partners Permissions'" [class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="PartnersPermissionsLinkClick()">Partners Permissions</p>
+                                                        <p [attr.data-cy]="'Money Permissions'" *ngIf="SharedTitleType != 'CargoTracking'" [class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="MoneyPermissionsLinkClick()">Money Permissions</p>
                                                     </div>
                                                 </div>
 
@@ -82,7 +82,7 @@ Test:hover {
                                                 <div *ngIf="EAWBQueryGroupVisibility" class="QueriesSection">
                                                     <div>Invitations</div>
                                                     <div>
-                                                        <p [class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="InviteLinkClick('Customers')">Invite Customers</p>   
+                                                        <p [attr.data-cy]="'Invite Customers'" [class.HyperlinkDisabled]="!SharedLogisticsActivatedEnabled" class="QueryLink" (click)="InviteLinkClick('Customers')">Invite Customers</p>   
                                                     </div>
                                                 </div>
 

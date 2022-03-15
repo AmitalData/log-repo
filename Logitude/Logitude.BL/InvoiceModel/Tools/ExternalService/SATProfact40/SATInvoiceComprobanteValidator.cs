@@ -23,6 +23,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         private ComputingPartnerTranslationHelper computingPartnerHelper;
         private ICommonDataContext commonContext;
         private Tenant currentTenant;
+        private Card billToCard;
         public SATInvoiceComprobanteValidator(ARInvoicePM arInvoicePM, Tenant currentTenant)
         {
             this.arInvoicePM = arInvoicePM;
@@ -54,7 +55,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             ValidateFormaPago();
             ValidateMetodoPago();
             ValidateBillToCard();
-            ValidatePeriod();
+            ValidateInformacionGlobal();
             ValidateBillToAddress();
             ValidateARInvoiceLines(allChargesTypes);
         }
@@ -143,7 +144,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
         private void ValidateBillToCard()
         {
-            Card billToCard = cardRepository.GetSingleCard(arInvoicePM.BillToId, arInvoicePM.Tenant);
+            billToCard = cardRepository.GetSingleCard(arInvoicePM.BillToId, arInvoicePM.Tenant);
             if (string.IsNullOrEmpty(billToCard.EnglishName))
             {
                 throw new ApplicationException("Bill to Name is required");
@@ -153,18 +154,31 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             {
                 throw new ApplicationException("Regimen Fiscal is required ");
             }
+        }
 
-            if (arInvoicePM.IsConsolidationInvoice && string.IsNullOrEmpty(arInvoicePM.PeriodCode))
+        private void ValidateInformacionGlobal()
+        {
+            if (!arInvoicePM.IsConsolidationInvoice) return;
+
+            if (string.IsNullOrEmpty(arInvoicePM.PeriodCode))
             {
                 throw new ApplicationException("Period is required ");
             }
-        }
+            string regimenFiscalCode = arInvoicePM.RegimenFiscalCode;
+            if (string.IsNullOrEmpty(regimenFiscalCode) && !string.IsNullOrEmpty(billToCard.RegimenFiscalCode))
+                regimenFiscalCode = billToCard.RegimenFiscalCode;
 
-        private void ValidatePeriod()
-        {
-            if (arInvoicePM.IsConsolidationInvoice && string.IsNullOrEmpty(arInvoicePM.PeriodCode))
+            if (arInvoicePM.PeriodCode == SATData.BimestralPeriod && regimenFiscalCode != SATData.IncorporacionFiscalRegimen)
             {
-                throw new ApplicationException("Period is required ");
+                throw new ApplicationException("Regimen Fiscal must be equal to Incorporación Fiscal");
+            }
+
+            int invoiceDateYear = ((DateTime)arInvoicePM.InvoiceDate).Year;
+            int currentDateYear = DateTime.Now.Year;
+            int previousDateYear = DateTime.Now.Year - 1;
+            if (invoiceDateYear != currentDateYear && invoiceDateYear != previousDateYear)
+            {
+                throw new ApplicationException("Invoice Date Year must be equal to the current year or the immediately preceding year");
             }
         }
 

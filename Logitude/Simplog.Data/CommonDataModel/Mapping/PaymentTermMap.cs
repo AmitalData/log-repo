@@ -37,7 +37,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.ExternalId).HasColumnName("ExternalId");
             this.Property(t => t.IsManuallySet).HasColumnName("IsManuallySet");
-            this.Property(t => t.CurrentMonth).HasColumnName("CurrentMonth");
+            this.Property(t => t.EndOfMonth).HasColumnName("EndOfMonth");
+            this.Property(t => t.NumberOfMonths).HasColumnName("NumberOfMonths");
             this.Property(t => t.FromDateTypeCode).HasColumnName("FromDateTypeCode");
             this.Property(t => t.Code).HasColumnName("Code");
 

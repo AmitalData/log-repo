@@ -372,6 +372,7 @@
     <Content Include="TasksApp\Components\TasksAppComponent.html" />
     <Content Include="TasksApp\Scripts\tasks-app.js" />
     <Content Include="_Resources\css\PrimeWebComponent.css" />
+    <Content Include="_Resources\Images\Icons\Tooltips\TootipBottom.png" />
     <Content Include="_Resources\js\UnifreightJSBridge.js" />
     <TypeScriptCompile Include="Abstractions\Services\BaseService.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\Journal\JournalDebugTabComponent.ts" />

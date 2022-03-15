@@ -23,7 +23,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string SearchFields { get; set; }
         public string ExternalId { get; set; }
         public bool IsManuallySet { get; set; }
-        public bool CurrentMonth { get; set; }
+        public bool EndOfMonth { get; set; }
+        public int NumberOfMonths { get; set; }
         public string FromDateTypeCode { get; set; }
         public string Code { get; set; }
 

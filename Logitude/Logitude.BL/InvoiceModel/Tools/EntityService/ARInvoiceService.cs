@@ -1346,7 +1346,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                             if (myComparativeDate != null)
                             {
-                                if (myPaymentTerm.CurrentMonth)
+                                if (myPaymentTerm.EndOfMonth)
                                 {
                                     myComparativeDate = myComparativeDate.Value.AddMonths(1);
 

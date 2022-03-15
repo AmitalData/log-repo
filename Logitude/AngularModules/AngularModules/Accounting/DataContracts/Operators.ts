@@ -4,6 +4,7 @@ export enum Operators{
     LessThan='LessThan',
     LargerThan='LargerThan',
     NotEqual='NotEqual',
-    Equals='Equals'
+    Equals='Equals',
+    Between='Between'
 
 }

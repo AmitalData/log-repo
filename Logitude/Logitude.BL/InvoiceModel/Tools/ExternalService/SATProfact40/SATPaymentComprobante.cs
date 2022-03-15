@@ -67,6 +67,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
             Comprobante comprobante = new Comprobante
             {
+                Exportacion = SATData.ComprobanteExportacion,
                 CfdiRelacionados = GetCfdiRelacionados(),
                 Total = 0,
                 Version = SATData.CurrentComprobanteVersion,
@@ -204,7 +205,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 }
                 catch (Exception ex)
                 {
-                     invoiceComprobanteV33 = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(invoice.SATXML);
+                    invoiceComprobanteV33 = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(invoice.SATXML);
                 }
 
                 List<ARInvoicePayment> allInvoicePayments = (from a in invoiceContext.ARInvoicePayments.Include("ARPayment")
@@ -213,13 +214,14 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
                 XmlElement[] comprobanteComplementoAnyXmlElements = invoiceComprobante != null ? invoiceComprobante.Complemento.Any : invoiceComprobanteV33.Complemento.Any;
                 decimal totalInvoiceComprobante = invoiceComprobante != null ? invoiceComprobante.Total : invoiceComprobanteV33.Total;
+                decimal invoiceAmountToPay = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint((decimal)(allInvoicePayments.FirstOrDefault(p => p.ARPaymentId == arPaymentPM.Id)).ForeignAmount);
                 PagosPagoDoctoRelacionado doctoItem = new PagosPagoDoctoRelacionado
                 {
                     MonedaDR = GetPagosPagoDoctoRelacionadoMonedaDR(currencies, invoice),
                     Serie = invoiceComprobante != null ? invoiceComprobante.Serie : invoiceComprobanteV33.Serie,
                     Folio = invoiceComprobante != null ? invoiceComprobante.Folio : invoiceComprobanteV33.Folio,
                     ObjetoImpDR = "02",
-                    ImpPagado = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint((decimal)(allInvoicePayments.FirstOrDefault(p => p.ARPaymentId == arPaymentPM.Id)).ForeignAmount),
+                    ImpPagado = invoiceAmountToPay,
                     ImpPagadoSpecified = true,
                     EquivalenciaDR = (invoice.InvoiceCurrencyExchangeRate != null ? Convert.ToDecimal(invoice.InvoiceCurrencyExchangeRate.Value) : 0),
                     EquivalenciaDRSpecified = true,
@@ -238,32 +240,16 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
                 ComprobanteConcepto[] comprobanteConceptos = sATInvoiceComprobante.GetConceptoList().ToArray();
                 List<ARInvoiceTotalVATPM> arTotalVats = sATInvoiceComprobante.GetARInvoiceTotalVATPMs();
-
+          
                 ComprobanteImpuestosResults comprobanteImpuestosResults = sATInvoiceComprobante.GetComprobanteImpuestos(arTotalVats, comprobanteConceptos);
                 comprobanteImpuestosResults.ComprobanteImpuestos.Traslados.ToList().ForEach(comprobanteImpuestosTraslado =>
                 {
-                    trasladoDRList.Add(new PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR
-                    {
-                        BaseDR = comprobanteImpuestosTraslado.Base,
-                        ImporteDR = comprobanteImpuestosTraslado.Importe,
-                        ImporteDRSpecified = true,
-                        ImpuestoDR = comprobanteImpuestosTraslado.Impuesto,
-                        TasaOCuotaDR = comprobanteImpuestosTraslado.TasaOCuota != null ? Convert.ToDecimal(comprobanteImpuestosTraslado.TasaOCuota) : 0,
-                        TasaOCuotaDRSpecified = true,
-                        TipoFactorDR = comprobanteImpuestosTraslado.TipoFactor,
-                    });
+                    trasladoDRList.Add(GetNewPagosPagoDoctoRelacionadoImpuestosDRTrasladoDR(comprobanteImpuestosTraslado, invoiceAmountToPay));
                 });
 
                 comprobanteImpuestosResults.ComprobanteImpuestosRetencionDRs.ToList().ForEach(comprobanteImpuestosRetencion =>
                 {
-                    retencionDRList.Add(new PagosPagoDoctoRelacionadoImpuestosDRRetencionDR
-                    {
-                        ImporteDR = comprobanteImpuestosRetencion.Importe,
-                        ImpuestoDR = comprobanteImpuestosRetencion.Impuesto,
-                        BaseDR = comprobanteImpuestosRetencion.Base,
-                        TasaOCuotaDR = comprobanteImpuestosRetencion.TasaOCuota != null ? Convert.ToDecimal(comprobanteImpuestosRetencion.TasaOCuota) : 0,
-                        TipoFactorDR = comprobanteImpuestosRetencion.TipoFactor,
-                    });
+                    retencionDRList.Add(GetNewPagosPagoDoctoRelacionadoImpuestosDRRetencionDR(comprobanteImpuestosRetencion, invoiceAmountToPay));
                 });
 
                 if(trasladoDRList.Count > 0) doctoItem.ImpuestosDR.TrasladosDR = trasladoDRList.ToArray();
@@ -272,6 +258,46 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 doctos.Add(doctoItem);
             });
             return doctos;
+        }
+
+        private PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR GetNewPagosPagoDoctoRelacionadoImpuestosDRTrasladoDR(ComprobanteImpuestosTraslado comprobanteImpuestosTraslado, decimal invoiceAmountToPay)
+        {
+            decimal invoiceAmountToPayRatio = GetinvoiceAmountToPayRatio(comprobanteImpuestosTraslado.Base, comprobanteImpuestosTraslado.Importe, invoiceAmountToPay);
+            
+            return new PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR
+            {
+                BaseDR = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(comprobanteImpuestosTraslado.Base * invoiceAmountToPayRatio),
+                ImporteDR = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(comprobanteImpuestosTraslado.Importe * invoiceAmountToPayRatio),
+                ImporteDRSpecified = true,
+                ImpuestoDR = comprobanteImpuestosTraslado.Impuesto,
+                TasaOCuotaDR = comprobanteImpuestosTraslado.TasaOCuota != null ? Convert.ToDecimal(comprobanteImpuestosTraslado.TasaOCuota) : 0,
+                TasaOCuotaDRSpecified = true,
+                TipoFactorDR = comprobanteImpuestosTraslado.TipoFactor,
+            };
+        }
+
+        private decimal GetinvoiceAmountToPayRatio(decimal invoiceBase, decimal invoiceImporte, decimal invoiceAmountToPay)
+        {
+            decimal invoiceAmountToPayRatio = 1;
+            decimal totalInvoiceAmount = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(invoiceBase + invoiceImporte);
+            if (invoiceAmountToPay == totalInvoiceAmount) return invoiceAmountToPayRatio;
+            invoiceAmountToPayRatio = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(invoiceAmountToPay / totalInvoiceAmount);
+            
+            return invoiceAmountToPayRatio;
+        }
+
+        private PagosPagoDoctoRelacionadoImpuestosDRRetencionDR GetNewPagosPagoDoctoRelacionadoImpuestosDRRetencionDR(ComprobanteImpuestosRetencionDR comprobanteImpuestosRetencionDR, decimal invoiceAmountToPay)
+        {
+            decimal invoiceAmountToPayRatio = GetinvoiceAmountToPayRatio(comprobanteImpuestosRetencionDR.Base, comprobanteImpuestosRetencionDR.Importe, invoiceAmountToPay);
+
+            return new PagosPagoDoctoRelacionadoImpuestosDRRetencionDR
+            {
+                ImporteDR = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(comprobanteImpuestosRetencionDR.Importe * invoiceAmountToPayRatio),
+                ImpuestoDR = comprobanteImpuestosRetencionDR.Impuesto,
+                BaseDR = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(comprobanteImpuestosRetencionDR.Base * invoiceAmountToPayRatio),
+                TasaOCuotaDR = comprobanteImpuestosRetencionDR.TasaOCuota != null ? Convert.ToDecimal(comprobanteImpuestosRetencionDR.TasaOCuota) : 0,
+                TipoFactorDR = comprobanteImpuestosRetencionDR.TipoFactor,
+            };
         }
 
         private List<ARInvoice> GetPaymentARInvoices()
@@ -310,6 +336,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 ValorUnitario = 0,
                 ClaveProdServ = "84111506",
                 ClaveUnidad = "ACT",
+                ObjetoImp = SATData.NotIncludeTaxObjetoImp,
             };
 
             conceptosList.Add(concepto);
@@ -337,10 +364,32 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 comprobanteReceptor.ResidenciaFiscal = billToCountryCode;
                 comprobanteReceptor.ResidenciaFiscalSpecified = true;
             }
+
+            string billToAddressZipCode = GetbillToAddressZipCode();
+
+            comprobanteReceptor.RegimenFiscalReceptor = billToCard.RegimenFiscalCode;
+            comprobanteReceptor.DomicilioFiscalReceptor = billToAddressZipCode;
             comprobanteReceptor.Nombre = billToCard.EnglishName;
             comprobanteReceptor.UsoCFDI = "P01";
 
             return comprobanteReceptor;
+        }
+
+        private string GetbillToAddressZipCode()
+        {
+            string billToAddressZipCode = "";
+            Address billToAddress = null;
+            AddressRepository addressRepository = new AddressRepository(commonContext);
+            if (!string.IsNullOrEmpty(arPaymentPM.BillToAddressId))
+            {
+                billToAddress = addressRepository.GetSingleAddress(arPaymentPM.BillToAddressId, arPaymentPM.Tenant);
+            }
+            if (billToAddress != null && !string.IsNullOrEmpty(billToAddress.ZipCode))
+            {
+                billToAddressZipCode = SATBaseProfact40Service.GetBillToAddressZipCode(billToAddress, arPaymentPM.Tenant);
+            }
+
+            return billToAddressZipCode;
         }
 
         private ComprobanteEmisor GetEmisor()
@@ -520,7 +569,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         {
             return new PagosTotales
             {
-                MontoTotalPagos = pagoItem.Monto * pagoItem.TipoCambioP,
+                MontoTotalPagos = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(pagoItem.Monto * pagoItem.TipoCambioP),
                 //TotalRetencionesIVA = 0,
                 //TotalRetencionesISR = 0,
                 //TotalRetencionesIEPS = 0,

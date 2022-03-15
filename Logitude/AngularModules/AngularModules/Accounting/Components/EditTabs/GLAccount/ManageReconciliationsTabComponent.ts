@@ -93,9 +93,12 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
         {Code:Operators.LessThan, EnglishName: 'Less Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThan") },
         {Code:Operators.LessThanOrEqual, EnglishName: 'Less Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThanOrEqual") },
         {Code:Operators.GreaterThanOrEqual, EnglishName: 'Greater Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.GreaterThanOrEqual") },
+        {Code:Operators.Between, EnglishName: 'Between', LocalName: TextCodeTranslator.Translate("Accounting.General.O.Between") },
     ];
     selectedAmountOperator:{Code:string, EnglishName: string, LocalName: string };
     amount: number;
+    amountFrom: number;
+    amountTo: number;
     get Amount() { return this.amount; }
     set Amount(value: number) {
         if (this.amount != value) {
@@ -143,7 +146,35 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
             }, 700);
         }
     }
+    AmountTextFromChanged(num) {
+        this.amountFrom = num;
+        this.filterByAmountFromAndTo();
+    }
+    AmountTextToChanged(num) {
+        this.amountTo = num;
+        this.filterByAmountFromAndTo();
+    }
 
+    private filterByAmountFromAndTo() {
+        if (!AppTool.IsNullOrEmpty(this.amountFrom) && !AppTool.IsNullOrEmpty(this.amountTo) && this.selectedAmountOperator ) {
+            var amountFieldName = 'TransactionAmount';
+            this.timerToken = setTimeout(() => {
+                if (!AppTool.IsNullOrEmpty(this.amountFrom) && !AppTool.IsNullOrEmpty(this.amountTo)) {
+                    this.amountFieldFilter = new FilterItem(amountFieldName,Math.abs(this.amountFrom), Math.abs(this.amountTo), null, this.selectedAmountOperator.Code, true, false, false, "number", false);
+                    this.RefreshButtonClicked();
+                } else {
+                    this.amountFieldFilter = null;
+                    this.RefreshButtonClicked();
+                }
+            }, 700);
+
+        } else {
+            this.timerToken = setTimeout(() => {
+                this.amountFieldFilter = null;
+                    this.RefreshButtonClicked();
+            }, 700);
+        }
+    }
     //#endregion
 
     //#region Data

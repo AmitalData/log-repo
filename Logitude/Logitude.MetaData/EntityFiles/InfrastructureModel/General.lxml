@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;22b2&quot;"
+  Code="&quot;4441&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5124,6 +5124,12 @@
       Code="&quot;Accounting.General.O.LedgerTransactions&quot;"
       DefaultText="&quot;Ledger Transactions&quot;"
       LocalDefaultText="&quot;תנועות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.Between&quot;"
+      DefaultText="&quot;Between&quot;"
+      LocalDefaultText="&quot;בין&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

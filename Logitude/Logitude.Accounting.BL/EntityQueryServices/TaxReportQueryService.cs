@@ -116,7 +116,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             
         }
 
-
+        public bool CheckIfTaxReportCanHaveClosingJournal(string taxReportId, int tenant)
+        {
+            bool hasReconciledLines = (from line in context.TaxReportLines
+                                   where line.TaxReportId == taxReportId && line.Tenant == tenant && line.IsReconciled == true
+                                   select line).Any();
+            return !hasReconciledLines;
+        }
     }
 
 }

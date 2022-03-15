@@ -32,7 +32,7 @@
                     <td style="width:20px;text-align:left;">
                         <div class="CheckBox">
                             <input [attr.id]="IsSharedLogisticsActivatedCheckboxBoxId" [disabled]="!IsSharedLogisticsActivatedEnable" [(ngModel)]="IsSharedLogisticsActivated" class="CenterCenter" (change)="OnShardLogisticChange()" id="test" type="checkbox" />
-                            <label [attr.for]="IsSharedLogisticsActivatedCheckboxBoxId" class="CenterCenter" id="test"></label>
+                            <label [attr.data-cy]="'Activate Shared Logistics'" [attr.for]="IsSharedLogisticsActivatedCheckboxBoxId" class="CenterCenter" id="test"></label>
                         </div>
                     </td>
                     <td>
@@ -62,7 +62,7 @@
                                                     </td>
                                                     <td style="width:20px;text-align:left;">
                                                         <div class="CheckBox">
-                                                            <input *ngIf="SharedTitleType != 'CargoTracking'" [attr.id]="IsWebAccessActivatedCheckboxBoxId" [disabled]="!IsSharedLogisticsActivated" [(ngModel)]="IsWebAccessActivated" class="CenterCenter" id="test" type="checkbox" />
+                                                            <input [attr.data-cy]="'Activate Web Access'" *ngIf="SharedTitleType != 'CargoTracking'" [attr.id]="IsWebAccessActivatedCheckboxBoxId" [disabled]="!IsSharedLogisticsActivated" [(ngModel)]="IsWebAccessActivated" class="CenterCenter" id="test" type="checkbox" />
                                                             <label *ngIf="SharedTitleType != 'CargoTracking'" [attr.for]="IsWebAccessActivatedCheckboxBoxId" class="CenterCenter" id="test"></label>
                                                             <input *ngIf="SharedTitleType == 'CargoTracking'" [attr.id]="IsCargoTrackWebAccessActivatedCheckboxBoxId" [disabled]="!IsSharedLogisticsActivated" [(ngModel)]="IsCargoTrackWebAccessActivated" class="CenterCenter" id="test" type="checkbox" />
                                                             <label *ngIf="SharedTitleType == 'CargoTracking'" [attr.for]="IsCargoTrackWebAccessActivatedCheckboxBoxId" class="CenterCenter" id="test"></label>
@@ -101,7 +101,7 @@
                                                     </td>
                                                     <td style="width:20px;text-align:left;">
                                                         <div class="CheckBox">
-                                                            <input [attr.id]="IsMobileActivatedCheckboxBoxId" [disabled]="!IsMobileActivatedEnable" [(ngModel)]="IsMobileActivated" class="CenterCenter" id="test" type="checkbox" />
+                                                            <input [attr.data-cy]="'Activate Mobile'" [attr.id]="IsMobileActivatedCheckboxBoxId" [disabled]="!IsMobileActivatedEnable" [(ngModel)]="IsMobileActivated" class="CenterCenter" id="test" type="checkbox" />
                                                             <label [attr.for]="IsMobileActivatedCheckboxBoxId" class="CenterCenter" id="test"></label>
                                                         </div>
                                                     </td>
@@ -141,7 +141,7 @@
                                                     </td>
                                                     <td style="width:20px;text-align:left;">
                                                         <div class="CheckBox">
-                                                            <input [attr.id]="SharedLogisticsMessageLinkCheckboxBoxId" [disabled]="!IsSharedLogisticsActivated" [(ngModel)]="SharedLogisticsMessageLink" class="CenterCenter" id="test" type="checkbox" />
+                                                            <input [attr.data-cy]="'Send Link in email messages to your partners'" [attr.id]="SharedLogisticsMessageLinkCheckboxBoxId" [disabled]="!IsSharedLogisticsActivated" [(ngModel)]="SharedLogisticsMessageLink" class="CenterCenter" id="test" type="checkbox" />
                                                             <label [attr.for]="SharedLogisticsMessageLinkCheckboxBoxId" class="CenterCenter" id="test"></label>
                                                         </div>
                                                     </td>
@@ -172,7 +172,7 @@
                                                         <div style="width:5px"></div>
                                                     </td>
                                                     <td style="width:20px;text-align:left;">
-                                                        <CheckBox [IsChecked]="DisplayDocumentsAndEvents" (Checked)="DisplayDocumentsAndEvents = $event"></CheckBox>
+                                                        <CheckBox [DataCy]="'Display Documents & Events in messages link'" [IsChecked]="DisplayDocumentsAndEvents" (Checked)="DisplayDocumentsAndEvents = $event"></CheckBox>
                                                     </td>
                                                     <td>
                                                         <div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Display Documents & Events in messages link</div>
@@ -203,7 +203,7 @@
                                                     </td>
                                                     <td style="width:20px;text-align:left;">
                                                         <div class="CheckBox">
-                                                            <input [attr.id]="SharedLogisticsMasterMessageLinkCheckboxBoxId" [disabled]="!IsSharedLogisticsActivated" [(ngModel)]="SharedLogisticsMasterMessageLink" class="CenterCenter" id="test" type="checkbox" />
+                                                            <input [attr.data-cy]="'Enable Masters Documents Link for Agents'" [attr.id]="SharedLogisticsMasterMessageLinkCheckboxBoxId" [disabled]="!IsSharedLogisticsActivated" [(ngModel)]="SharedLogisticsMasterMessageLink" class="CenterCenter" id="test" type="checkbox" />
                                                             <label [attr.for]="SharedLogisticsMasterMessageLinkCheckboxBoxId" class="CenterCenter" id="test"></label>
                                                         </div>
                                                     </td>
@@ -233,7 +233,7 @@
                                                         <div style="width:5px"></div>
                                                     </td>
                                                     <td style="width:20px;text-align:left;">
-                                                        <CheckBox [IsEnabled]="IsSharedLogisticsActivated" [IsChecked]="IsQuotesRequestActivatedInSharedLogistics" (Checked)="IsQuotesRequestActivatedInSharedLogistics = $event"></CheckBox>
+                                                        <CheckBox [DataCy]="'Enable Quotes Requests in Shared Logistics'" [IsEnabled]="IsSharedLogisticsActivated" [IsChecked]="IsQuotesRequestActivatedInSharedLogistics" (Checked)="IsQuotesRequestActivatedInSharedLogistics = $event"></CheckBox>
                                                     </td>
                                                     <td>
                                                         <div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Enable Quotes Requests in Shared Logistics</div>

@@ -2996,6 +2996,12 @@
         IndexOrder="3"
         LocalDefaultText="&quot;החזר לטיוטה&quot;"
         IsPackagable="false" />
+      <MenuItem
+        EventCode="&quot;TRCJ&quot;"
+        DefaultText="&quot;Create closing journal&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="4"
+        IsPackagable="false" />
     </MenuButton>
   </MenuButtons>
   <DataContracts />
@@ -3118,6 +3124,24 @@
       Code="&quot;Accounting.O.ReportExistForPreviousMonth&quot;"
       DefaultText="&quot;There is already a report for the previous month of the chosen month&quot;"
       LocalDefaultText="&quot;המערכת מוגדרת לדיווח דו-חודשי וקיים כבר דוח מעמ לחודש קודם&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.ClosingJournalConfirmationMessage&quot;"
+      DefaultText="&quot;This will change the status of the report to be Transmitted and in addition will create a journal that will close the transaction amounts of:  Tax institution GL Account, VAT Output GL Account and VAT Inputs GLAccount, Continue?&quot;"
+      LocalDefaultText="&quot;פעולה זאת תשנה את סטאטוס הדו&quot;ח ל&quot;שודר&quot; ותיצור פקודת יומן שתסגור את סכומי העסקאות +התשומות מול חו&quot;ז המע&quot;מ (כולל התאמות), הפרשי עיגול ירשמו כנגד כרטיס ההפרשים, האם להמשיך?&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.ClosingJournalValidationMessage&quot;"
+      DefaultText="&quot;There are a reconciled ledger transactions that are included in the VAT report, you must cancel the reconciliations in the glaccount input vat / glaccount output before create the closing journal&quot;"
+      LocalDefaultText="&quot;ישנם תנועות מותאמות המשתתפות בדוח המע&quot;מ , יש לבטל תחילה את ההתאמות בכרטיסי העסקאות /תשומות בטרם ביצוע פקודת הסגירה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.CantCloseThisMonth&quot;"
+      DefaultText="&quot;Can't close a tax report for the current month, please wait until the end of this month&quot;"
+      LocalDefaultText="&quot;לא ניתן לסגור דוח מע''מ עבור החודש הנוכחי מכיוון שהחודש טרם הסתיים&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

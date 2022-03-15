@@ -18,7 +18,7 @@ import {CustomFieldClass} from '../../DataContracts/CustomFieldClass';
         <tr>
             <td style="width: 16px;">
                 <div [attr.data-cy]="DataCy" class="CheckBox">
-                    <input  [attr.id]="ControlId" type="checkbox" [disabled]="IsDisabled" [(ngModel)]="BoolValue" (focus)="onFocus()" (blur)="onBlur()" />
+                    <input [attr.data-cy]="DataCy+'_input'" [attr.id]="ControlId" type="checkbox" [disabled]="IsDisabled" [(ngModel)]="BoolValue" (focus)="onFocus()" (blur)="onBlur()" />
                     <label [attr.for]="ControlId">{{Text}}</label>
                 </div>
             </td>

@@ -15,7 +15,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
         void Handle();
 
         void Save();
-        void MapFieldsUpdatedByAutomation(ShipmentPM newShipmentPM);
         void Trace(ShipmentTracing shipmentTracing);
 
     }

@@ -2430,60 +2430,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipmentPM.ShipmentPackages != null)
             {
                 // By Samar: for message variables
-                string myContainersNumbers = null;
-                string myPackagesNames = null;
-                string myPackagesPrintAs = null;
-                foreach (ShipmentPackagePM packagePM in shipmentPM.ShipmentPackages)
-                {
-                    if (string.IsNullOrEmpty(myContainersNumbers))
-                    {
-                        myContainersNumbers = packagePM.ContainerNumber;
-                    }
-
-                    else
-                    {
-                        myContainersNumbers += ", " + packagePM.ContainerNumber;
-                    }
-
-                    if (string.IsNullOrEmpty(myPackagesNames))
-                    {
-                        myPackagesNames = packagePM.PackageTypeName;
-                    }
-
-                    else
-                    {
-                        myPackagesNames += ", " + packagePM.PackageTypeName;
-                    }
-
-                    if (string.IsNullOrEmpty(myPackagesPrintAs))
-                    {
-                        myPackagesPrintAs = packagePM.PrintAs;
-                    }
-
-                    else
-                    {
-                        myPackagesPrintAs += ", " + packagePM.PrintAs;
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(myPackagesNames) && myPackagesNames.Length > 1000)
-                {
-                    myPackagesNames = myPackagesNames.Substring(0, 1000);
-                }
-
-                if (!string.IsNullOrEmpty(myPackagesPrintAs) && myPackagesPrintAs.Length > 1000)
-                {
-                    myPackagesPrintAs = myPackagesPrintAs.Substring(0, 1000);
-                }
-
-                if (!string.IsNullOrEmpty(myContainersNumbers) && myContainersNumbers.Length > 1000)
-                {
-                    myContainersNumbers = myContainersNumbers.Substring(0, 1000);
-                }
-
-                shipmentPM.PackagesTypesNames = myPackagesNames;
-                shipmentPM.PackagesTypesPrintAs = myPackagesPrintAs;
-                shipmentPM.ContainersNumbers = myContainersNumbers;
+                MapShipmentPackagesDetails(shipmentPM);
                 // end 
 
                 var myGroup = (from a in shipmentPM.ShipmentPackages
@@ -2627,6 +2574,38 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             //returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
 
             return shipmentPM;
+        }
+
+        public static void MapFieldsBeforeTrackingChangedForAutomation(ShipmentPM shipmentPM)
+        {
+            MapShipmentPackagesDetails(shipmentPM);
+        }
+
+        private static void MapShipmentPackagesDetails(ShipmentPM shipmentPM)
+        {
+            string myContainersNumbers = null;
+            string myPackagesNames = null;
+            string myPackagesPrintAs = null;
+            foreach (ShipmentPackagePM packagePM in shipmentPM.ShipmentPackages)
+            {
+                myContainersNumbers = string.IsNullOrEmpty(myContainersNumbers) ? packagePM.ContainerNumber : myContainersNumbers + ", " + packagePM.ContainerNumber;
+                myPackagesNames = string.IsNullOrEmpty(myPackagesNames) ? packagePM.PackageTypeName : myPackagesNames + ", " + packagePM.PackageTypeName;
+                myPackagesPrintAs = string.IsNullOrEmpty(myPackagesPrintAs) ? packagePM.PrintAs : myPackagesPrintAs + ", " + packagePM.PrintAs;
+            }
+
+            shipmentPM.PackagesTypesNames = SubStringToNLength(myPackagesNames, 1000);
+            shipmentPM.PackagesTypesPrintAs = SubStringToNLength(myPackagesPrintAs, 1000);
+            shipmentPM.ContainersNumbers = SubStringToNLength(myContainersNumbers, 1000);
+        }
+
+        private static string SubStringToNLength(string value, int length)
+        {
+            if (!string.IsNullOrEmpty(value) && value.Length > length)
+            {
+                return value.Substring(0, length);
+            }
+
+            return value;
         }
 
         private string GetCardName(bool byLocalName, Card cardObject)
@@ -3862,8 +3841,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return returnShipment;
         }
 
-        public ShipmentPM MapShipmentToShipmentPMForAutomation(ShipmentPM shipmentPM, Shipment shipment, IQueryable<ShipmentMasterData> shipmentMasterDataList, ShipmentMasterData masterData)
+        public ShipmentPM MapShipmentToShipmentPMForAutomation(AutomationShipmentMappingArgs automationShipmentMappingArgs)
         {
+            ShipmentPM shipmentPM = automationShipmentMappingArgs.ShipmentPM;
+            Shipment shipment = automationShipmentMappingArgs.Shipment;
+            IQueryable<ShipmentMasterData> shipmentMasterDataList = automationShipmentMappingArgs.ShipmentMasterDataList;
+            ShipmentMasterData masterData = automationShipmentMappingArgs.MasterData;
+            ShipmentPM shipmentPMBeforeNewMapping = automationShipmentMappingArgs.ShipmentPMBeforeNewMapping;
+
             if (masterData == null)
             {
                 if (shipment.MasterShipmentDataId != null && shipmentMasterDataList != null)
@@ -4000,14 +3985,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.Field38 = new CustomFieldClass("Field38", "Shipment", shipment.Field38);
             shipmentPM.Field39 = new CustomFieldClass("Field39", "Shipment", shipment.Field39);
             shipmentPM.Field40 = new CustomFieldClass("Field40", "Shipment", shipment.Field40);
-   
-
-
+            
+            MappingOldFieldsBeforeChanging(shipmentPM, shipmentPMBeforeNewMapping);
+            
             #region ShipmentComputedFields
-            MapShipmentComputedFields(shipmentPM , masterData);
+            MapShipmentComputedFields(shipmentPM, masterData);
             #endregion
 
             return null;
+        }
+
+        private static void MappingOldFieldsBeforeChanging(ShipmentPM shipmentPM, ShipmentPM shipmentPMBeforeNewMapping)
+        {
+            shipmentPM.ContainersNumbers = shipmentPMBeforeNewMapping.ContainersNumbers;
         }
 
         private static void MapShipmentComputedFields(ShipmentPM shipmentPM , ShipmentMasterData shipmentMasterData)
@@ -4030,7 +4020,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.LastDocumentDateTime = entityComputedFields.LastDocumentDateTime;
                 shipmentPM.CreatedFromDigital = entityComputedFields.CreatedFromDigital;
                 shipmentPM.BookingConfirmationSentDate = entityComputedFields.BookingConfirmationSent;
-                shipmentPM.ContainersNumbers = entityComputedFields.ContainersNumbers;
                 shipmentPM.PreAlertSentDate = entityComputedFields.PreAlertSent;
                 shipmentPM.DeliveryNoticeSentDate = entityComputedFields.DeliveryNoticeSent;
                 shipmentPM.ExpectedArrivalNoticeSentDate = entityComputedFields.ExpectedArrivalNoticeSent;
@@ -14908,5 +14897,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public string MasterNumber { get; set; }
     }
 
-
+    public class AutomationShipmentMappingArgs
+    {
+        public ShipmentPM ShipmentPM { get; set; }
+        public Shipment Shipment { get; set; }
+        public IQueryable<ShipmentMasterData> ShipmentMasterDataList { get; set; }
+        public ShipmentMasterData MasterData { get; set; }
+        public ShipmentPM ShipmentPMBeforeNewMapping { get; set; }
+    }
 }

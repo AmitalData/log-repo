@@ -687,8 +687,8 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
 
     private SetDateProperties(invoiceDateParts: Date, list: PaymentTermList) {
         var dateYear = invoiceDateParts.getUTCFullYear();
-        var dateMonth = list.CurrentMonth ? invoiceDateParts.getUTCMonth() + 2 : invoiceDateParts.getUTCMonth() + 1;
-        var dateDay = list.CurrentMonth ? 1 : invoiceDateParts.getUTCDate();
+        var dateMonth = list.EndOfMonth ? invoiceDateParts.getUTCMonth() + 2 : invoiceDateParts.getUTCMonth() + 1;
+        var dateDay = list.EndOfMonth ? 1 : invoiceDateParts.getUTCDate();
      
         var date = new Date();
         date.setUTCFullYear(dateYear);

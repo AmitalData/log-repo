@@ -145,6 +145,26 @@ namespace Simplog.Data.Helpers
             todayDate = new DateTime(todayDate.Year, todayDate.Month, todayDate.Day, 0, 0, 0, 0);
             return todayDate;
         }
+
+        public static DateTime GetLastOfCurrentMonthDate(int tenant)
+        {
+            var todayDate = GetCurrentDateTime(tenant);
+            return new DateTime(todayDate.Year, todayDate.Month, DateTime.DaysInMonth(todayDate.Year,todayDate.Month), 0, 0, 0, 0);
+        }
+        public static DateTime GetStartOfCurrentMonthDate(int tenant)
+        {
+            var todayDate = GetCurrentDateTime(tenant);
+            return new DateTime(todayDate.Year, todayDate.Month, 1, 0, 0, 0, 0);
+        }
+
+        public static DateTime GetLastOfMonthDate(DateTime date)
+        {
+            return new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month), 0, 0, 0, 0);
+        }
+        public static DateTime GetStartOfMonthDate(DateTime todayDate)
+        {
+            return new DateTime(todayDate.Year, todayDate.Month, 1, 0, 0, 0, 0);
+        }
     }
 
     public class TenantServerConfigrationWrapper
