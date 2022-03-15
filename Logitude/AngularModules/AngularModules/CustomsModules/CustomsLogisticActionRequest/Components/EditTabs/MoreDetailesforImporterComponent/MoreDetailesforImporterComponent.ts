@@ -13,7 +13,9 @@ export class MoreDetailesforImporterComponent extends BaseComponent {
     public ObjectTableName: string = "Customs.LogisticActionRequestGeneralTabComponent";
     public OriginalEntityPM: LogisticActionRequestPM;
     public ClonedEntityPM: LogisticActionRequestPM;
-    requierdFieldsList = []
+    FIELD_IS_REQUIERD: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+    requierdFieldsList: string[] = []
+    ValidationErrorsList: string[] = []
 
     constructor() {
         super();
@@ -33,18 +35,21 @@ export class MoreDetailesforImporterComponent extends BaseComponent {
     public set ExporterIdentifierType(newValue: string) {
         this.entityPM.ExporterIdentifierType = newValue;
         this.SetScreenFieldsEditability()
+        this.invalidate()
     }
 
     public get PassportCountry() { return this.entityPM.PassportCountry; }
     public set PassportCountry(newValue: string) {
         this.entityPM.PassportCountry = newValue;
         this.setRequiredField("PassportCountry", this.entityPM.ExporterIdentifierType == '2' && !this.entityPM.PassportCountry);
+        this.invalidate()
     }
 
     public get PassportNumber() { return this.entityPM.PassportNumber; }
     public set PassportNumber(newValue: string) {
         this.entityPM.PassportNumber = newValue;
         this.setRequiredField("PassportNumber", this.entityPM.ExporterIdentifierType == '2' && !this.entityPM.PassportNumber);
+        this.invalidate()
     }
 
 
@@ -82,8 +87,19 @@ export class MoreDetailesforImporterComponent extends BaseComponent {
     }
 
 
+    invalidate(): boolean {
+        this.ValidationErrorsList = []
+        this.requierdFieldsList
+            .filter(filed => !this[filed])
+            .forEach(filed =>
+                this.ValidationErrorsList.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Customs.LogisticActionRequest.F." + filed))));
+
+        return !!this.ValidationErrorsList.length;
+    }
+
+    
     OkButtonClicked() {
-        if (this.requierdFieldsList.length) return;
+        if (this.invalidate()) return;
 
         SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");
     }
