@@ -101,6 +101,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                     {
                         FieldName = reconciliationAmountFieldOperations.FieldName,
                         FieldValue = decimal.Parse(reconciliationAmountFieldOperations.FieldValue.ToString()),
+                        FieldValue2 = reconciliationAmountFieldOperations.FieldValue2 != null ? 
+                        decimal.Parse(reconciliationAmountFieldOperations.FieldValue2.ToString()) : reconciliationAmountFieldOperations.FieldValue2,
                         Operator = reconciliationAmountFieldOperations.Operator
                     }
                 }

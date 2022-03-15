@@ -1399,7 +1399,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 			 QueryColumn TodayAPILogsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "APILogs.Refrence" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter TodayAPILogsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APILogs.CreateDate", PredefinedValue = "Today",PredefinedValue2 = null, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter TodayAPILogsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APILogs.CreateDate", PredefinedValue = "Today",PredefinedValue2 = null, CustomPredefined = false, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
