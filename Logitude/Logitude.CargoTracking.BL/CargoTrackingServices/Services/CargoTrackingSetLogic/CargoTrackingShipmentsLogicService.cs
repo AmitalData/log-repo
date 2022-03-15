@@ -272,7 +272,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             AddCustomerReferences(customerReferences, tableRow, "ForwardingCustomerReference1");
             AddCustomerReferences(customerReferences, tableRow, "ForwardingCustomerReference2");
             AddCustomerReferences(customerReferences, tableRow, "OrderCustomerReference");
-            AddCustomerReferences(customerReferences, tableRow, "OrderCustomerReference");
             tableRow.SetField("CustomerReference", string.Join(",", customerReferences));
         }
 
