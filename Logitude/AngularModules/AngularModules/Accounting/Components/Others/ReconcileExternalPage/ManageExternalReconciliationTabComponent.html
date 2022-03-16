@@ -70,6 +70,7 @@
                                                     [InputType]="'double'"
                                                     [DataContext]="DataContext"
                                                     [DebounceTime]="400"
+                                                    [ObjectFieldName]="'From'"
                                                     (ValueChanged)="AmountTextFromChanged($event)"
                                                 ></LogTextBox>
                                                 </td>
@@ -85,6 +86,7 @@
                                                     [InputType]="'double'"
                                                     [DataContext]="DataContext"
                                                     [DebounceTime]="400"
+                                                    [ObjectFieldName]="'To'"
                                                     (ValueChanged)="AmountTextToChanged($event)"
                                                 ></LogTextBox>
                                                 </td>
