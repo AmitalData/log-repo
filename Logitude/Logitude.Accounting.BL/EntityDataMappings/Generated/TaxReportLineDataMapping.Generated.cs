@@ -47,7 +47,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         OriginalReference, 
 	         JournalLineNumber, 
 	         PreviousReference, 
-	         IsReconciled,
+	         LedgerTransactionId,
 	      }
 
 
@@ -83,8 +83,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         UpdatedBUserName, 
 	         JournalLineNumber, 
 	         PreviousReference, 
-	         IsReconciled, 
-	         VatAmountRound,
+	         VatAmountRound, 
+	         LedgerTransactionId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -208,9 +208,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 				entityPOCO.PreviousReference = entityPM.PreviousReference;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsReconciled))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LedgerTransactionId))
             {
-				entityPOCO.IsReconciled = entityPM.IsReconciled;
+				entityPOCO.LedgerTransactionId = entityPM.LedgerTransactionId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -344,9 +344,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.PreviousReference = entityPOCO.PreviousReference;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsReconciled))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LedgerTransactionId))
             {
-					entityPM.IsReconciled = entityPOCO.IsReconciled;
+					entityPM.LedgerTransactionId = entityPOCO.LedgerTransactionId;
             }
 
 		}
@@ -470,9 +470,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.PreviousReference = entityPM.PreviousReference;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsReconciled))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LedgerTransactionId))
             {
-                oldEntityPM.IsReconciled = entityPM.IsReconciled;
+                oldEntityPM.LedgerTransactionId = entityPM.LedgerTransactionId;
             }
 			
 		}

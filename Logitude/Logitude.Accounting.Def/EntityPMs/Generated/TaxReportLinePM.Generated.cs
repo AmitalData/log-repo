@@ -689,29 +689,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private bool isReconciled ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsReconciled  
-	   {
-	    
-	     get
-		{
-		   return isReconciled;
-		 }
-		 set
-		 {
-		   if(isReconciled != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsReconciled",OldValue=isReconciled,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   isReconciled=value;
-		   }
-			
-		 }
-	   }
 	  private decimal? vatAmountRound ;
 	  	  
        
@@ -731,6 +708,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VatAmountRound",OldValue=vatAmountRound,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   vatAmountRound=value;
+		   }
+			
+		 }
+	   }
+	  private string ledgerTransactionId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LedgerTransactionId  
+	   {
+	    
+	     get
+		{
+		   return ledgerTransactionId;
+		 }
+		 set
+		 {
+		   if(ledgerTransactionId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LedgerTransactionId",OldValue=ledgerTransactionId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   ledgerTransactionId=value;
 		   }
 			
 		 }

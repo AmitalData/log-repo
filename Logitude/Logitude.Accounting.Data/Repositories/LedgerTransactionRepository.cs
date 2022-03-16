@@ -1416,36 +1416,37 @@ on record.JournalId equals j.Id
             FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
             FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
            
-            return (from a in context.LedgerTransactions
-                    join j in context.Journals on a.JournalId equals j.Id
-                    join m in context.JournalAdditionalDatas on new { a.JournalId, a.JournalLineNumber } equals new { m.JournalId, m.JournalLineNumber }
+            return (from ledger in context.LedgerTransactions
+                    join j in context.Journals on ledger.JournalId equals j.Id
+                    join m in context.JournalAdditionalDatas on new { ledger.JournalId, ledger.JournalLineNumber } equals new { m.JournalId, m.JournalLineNumber }
 
                     where (m.TaxReportId == null || m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode==null || j.IsVoided == true) 
-                            && a.DocumentDate <= endOfTaxReportDate
-                            && a.AccountId == setting.VATInputsGLAccountId 
-                            && a.Tenant == tenant 
-                            && a.LocalAmountDebit != 0
-                            && a.OppositeAccountId != setting.VATOutputGLAccountId 
+                            && ledger.DocumentDate <= endOfTaxReportDate
+                            && ledger.AccountId == setting.VATInputsGLAccountId 
+                            && ledger.Tenant == tenant 
+                            && ledger.LocalAmountDebit != 0
+                            && ledger.OppositeAccountId != setting.VATOutputGLAccountId 
 
                     select new CustomTaxReportData()
                     {
                         Id = Guid.NewGuid().ToString(),
                         AccountingEntity = j.AccountingEntityCode,
-                        Reference = a.Reference1,
-                        ReferenceDate = a.DocumentDate,
-                        JournalId = a.JournalId,
-                        LocalAmountDebit = a.LocalAmountDebit,
-                        LocalAmountCredit = a.LocalAmountCredit,
-                        OppositGLAccount = a.OppositeAccountId,
+                        Reference = ledger.Reference1,
+                        ReferenceDate = ledger.DocumentDate,
+                        JournalId = ledger.JournalId,
+                        LocalAmountDebit = ledger.LocalAmountDebit,
+                        LocalAmountCredit = ledger.LocalAmountCredit,
+                        OppositGLAccount = ledger.OppositeAccountId,
                         AccountingEntityId= j.AccountingEntityId,
-                        JournalLineNumber = a.JournalLineNumber,
-                        AccountId = a.AccountId,
+                        JournalLineNumber = ledger.JournalLineNumber,
+                        AccountId = ledger.AccountId,
                         TransmitStatusCode = m.TaxReportTransmitStatusCode,
                         IsVoided = j.IsVoided,
                         TaxReportId = m.TaxReportId,
                         OriginalJournalId = j.OriginalJournalId,
-                        Tenant = a.Tenant,
-                        IsLedgerReconciled = a.IsReconciled
+                        Tenant = ledger.Tenant,
+                        IsLedgerReconciled = ledger.IsReconciled,
+                        LedgerTransactionId = ledger.Id
                     }
                     
                     ).ToList();

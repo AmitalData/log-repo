@@ -155,7 +155,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             UpdatedBUserName = taxReport.UpdatedByUserName,
                             Tenant = tenant,
                             TaxReportDate = taxReport.TaxReportMonth,
-                            IsReconciled = taxData.IsLedgerReconciled
+                            LedgerTransactionId = taxData.LedgerTransactionId
 
                         };
                         Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cards.Where(d => d.Id == invoice.BillToId).FirstOrDefault();
@@ -270,7 +270,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     TransmitStatusCode = transmitStatusCode,
                     TaxReportDate = taxReport.TaxReportMonth,                   
                     JournalLineNumber = transaction.JournalLineNumber,
-                    IsReconciled = transaction.IsLedgerReconciled
+                    LedgerTransactionId = transaction.LedgerTransactionId
+
                 };
 
                 JournalPM journal = journalPMs.Where(d => d.Id == transaction.JournalId && d.TaxReportJournalLineNumber == transaction.JournalLineNumber).FirstOrDefault();

@@ -73,7 +73,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.PreviousReference).HasColumnName("PreviousReference").HasMaxLength(20).IsUnicode(false);
 
-            this.Property(t => t.IsReconciled).HasColumnName("IsReconciled");
+            this.Property(t => t.LedgerTransactionId).HasColumnName("LedgerTransactionId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

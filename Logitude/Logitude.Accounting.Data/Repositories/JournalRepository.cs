@@ -529,7 +529,8 @@ namespace Logitude.Accounting.Data.Repositories
                                               {
                                                   Id = j.Id,
                                                   AccountingEntityId = j.AccountingEntityId,
-                                                  IsLedgerReconciled = (ledger == null ? false : ledger.IsReconciled)
+                                                  IsLedgerReconciled = (ledger == null ? false : ledger.IsReconciled),
+                                                  LedgerTransactionId = (ledger == null ? null : ledger.Id)
 
                                               }).ToList();
 
