@@ -350,7 +350,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             return new ComprobanteInformacionGlobal
             {
                 Periodicidad = arInvoicePM.PeriodCode,
-                Meses = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint((decimal)arInvoiceDate.Month).ToString(),
+                Meses = arInvoiceDate.Month.ToString().PadLeft(2, '0'),
                 Año = Convert.ToInt16(arInvoiceDate.Year),
             };
         }
