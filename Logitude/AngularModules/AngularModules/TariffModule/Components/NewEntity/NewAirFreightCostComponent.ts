@@ -102,7 +102,8 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
     SetWindowArgs(args) {
         this.EntityPM.TypeCode = args.TypeCode;
 
-        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "IFT") {
+        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "IFT"
+            || this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
             this.VisibileSurchargesArea = true;
             this.TariffCurrencyTextCode = "Tariff.O.DefaultCurrency";
         }
@@ -159,6 +160,9 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         else if (this.EntityPM.TypeCode == 'IFT') {
             isVisible = false;
         }
+        else if (this.EntityPM.TypeCode == 'ECS' || this.EntityPM.TypeCode == 'ICS') {
+            isVisible = false;
+        }
 
         this.IsPriceStepsAreaVisible = isVisible;
     }
@@ -203,7 +207,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         var isSellerVisible: boolean = true;
         var isSellerRequired: boolean = false;
 
-        if (this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
+        if (this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "ECS" || this.EntityPM.TypeCode == "ICS") {
             isSellerVisible = false;
         }
 
@@ -277,7 +281,9 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         else if (this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "ICC") {
             chargesTypeFilterField = this.EntityPM.TypeCode == "ECC" ? "IsExport" : "IsImport";
         }
-
+        else if (this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
+            chargesTypeFilterField = this.EntityPM.TypeCode == "ECS" ? "IsExport" : "IsImport";
+        }
         if (this.EntityPM.TypeCode == "IFT") {
             chargesTypeFilterField = "IsInland";
             this.SellerDependancy = "TR";
@@ -992,7 +998,11 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
                 this.ValidationErrorsList.push("Customs Broker Field is Required");
             }
         }
-
+        else if (this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
+            if (AppTool.IsNullOrEmpty(this.CustomerGroupId)) {
+                this.ValidationErrorsList.push("Customer Group Field is Required");
+            }
+        }
         else {
             if (AppTool.IsNullOrEmpty(this.SellerId)) {
                 this.ValidationErrorsList.push("Seller Field is Required");
@@ -1037,7 +1047,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
             this.ValidateSurcharge();
         }
 
-        else if (this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
+        else if (this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
             this.ValidateSurcharge();
         }
 
