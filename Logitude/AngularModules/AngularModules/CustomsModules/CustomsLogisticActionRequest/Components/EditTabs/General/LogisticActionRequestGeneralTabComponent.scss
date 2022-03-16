@@ -3,3 +3,16 @@
     opacity: 0.7;
     cursor: default;
 }
+
+:host ::ng-deep {
+    .customs-response {
+        .InputDivDisabled {
+            opacity: 0.7 !important;
+        }
+        
+        input,
+        textarea {
+            opacity: 1 !important;
+        }
+    }
+}

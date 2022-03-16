@@ -4,7 +4,7 @@
             <table style="height:250px">
                 <tr style="height:30px">
                     <td>
-                        <LogLabel [NoObjectField]="true" [Text]="'יבוא/יצוא'" [ObjectFieldName]="'Direction'"
+                        <LogLabel [NoObjectField]="true" [Text]="'????/????'" [ObjectFieldName]="'Direction'"
                             [DataContext]="DataContext"></LogLabel>
                     </td>
                 </tr>
@@ -109,6 +109,7 @@
                                             [DataContext]="DataContext" 
                                             [HideColumns]="true"
                                             [Text]="ExportFileNo"
+                                            (LostFocus)="onBlurExportFileNo()"                                         
                                         ></LogTextBox>
                                     </div>
                                 </td>
@@ -336,7 +337,7 @@
                                 <td><div></div></td>
                             </tr>
                             
-                            <tr class="FormFieldRow" style="width:200px;text-align: right;">
+                            <tr class="FormFieldRow customs-response" style="width:200px;text-align: right;">
                                 <td style="text-align: right;">
                                     <label style="font-size:12px; padding-right:20px;text-align: right;">
                                         {{'Customs.LogisticActionRequest.F.RequestCancelStatus' | TextCodeTranslationPipe}}:
@@ -369,7 +370,7 @@
                                 </td>
                             </tr>
                         
-                            <tr class="FormFieldRow" style="width:200px;text-align: right;">
+                            <tr class="FormFieldRow customs-response" style="width:200px;text-align: right;">
                                 <td style="text-align: right;vertical-align: top;top: 8px;">
                                     <label style="font-size:12px; padding-right:20px;text-align: right;">
                                         {{'Customs.LogisticActionRequest.F.DecisionRmarks' | TextCodeTranslationPipe}}:
@@ -382,6 +383,7 @@
                                         [ObjectTableName]="ObjectTableName"
                                         [HideColumns]="true"
                                         [IsMultiline]="true" 
+                                        class="DecisionRmarks"
                                     ></LogTextBox>                                    
                                 </td>
                                 <!-- <td style="text-align: right;"></td>                     -->

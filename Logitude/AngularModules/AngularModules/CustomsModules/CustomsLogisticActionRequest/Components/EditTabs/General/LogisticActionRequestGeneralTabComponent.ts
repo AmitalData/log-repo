@@ -9,9 +9,7 @@ import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/componen
 import { CargoIdentifireTypeList } from 'Customs/EntityLists/CargoIdentifireTypeList';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { Subject, Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
 import { ConsignmentDeclartion, DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
-import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { LogisticActionRequestPMService } from 'Customs/Services/StandardPMs/LogisticActionRequestPMService';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
@@ -36,8 +34,9 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     public IsDisplayOnly: boolean = false;
     SendButtonEnabled: boolean = true;
     OKButtonEnabled: boolean = true;
+    submit: boolean = false;
     exporterName: string = ''
-    syncDeclaration$ = new Subject();
+    // syncDeclaration$ = new Subject();
     subscriber: Subscription;
     ValidationErrorsList: any[] = [];
     FIELD_IS_REQUIERD: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -57,9 +56,6 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     set ExportFileNo(value: string) {
         this.entityPM.ExportFileNo = value;
         this.setRequiredField('ExportFileNo', !value)
-
-        if (value)
-            this.syncDeclaration$.next()
     }
 
     get ExporterNumber() { return this.entityPM?.ExporterNumber }
@@ -205,11 +201,11 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     }
 
 
-    subscribesyncDeclaration() {
-        this.subscriber = this.syncDeclaration$
-            .pipe(debounceTime(500))
-            .subscribe(x => this.syncDeclaration())
-    }
+    // subscribesyncDeclaration() {
+    //     this.subscriber = this.syncDeclaration$
+    //         .pipe(debounceTime(500))
+    //         .subscribe(x => this.syncDeclaration())
+    // }
 
 
     private async syncDeclaration() {
@@ -259,7 +255,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         if (!this.entityPM.RequestDate)
             this.initDefaultValue();
 
-        this.subscribesyncDeclaration()
+        // this.subscribesyncDeclaration()
 
         this.UIProperties.SetEnabled("RequestCancelStatus", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("RequestNumber", this.ObjectTableName, false);
@@ -270,7 +266,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
 
     ngOnDestroy() {
-        this.subscriber.unsubscribe();
+        this.subscriber?.unsubscribe();
     }
 
 
@@ -280,6 +276,13 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         this.entityPM.Tenant = SessionLocator.Tenant;
         this.entityPM.Direction = 'E'
         this.entityPM.ExporterIdentifierType = '1'
+    }
+
+
+    onBlurExportFileNo() {
+        if (this.entityPM.ExportFileNo)
+            this.syncDeclaration()
+            // this.syncDeclaration$.next()
     }
 
 
@@ -305,20 +308,23 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     }
 
 
-    SaveEntityChanges() {
+    async SaveEntityChanges() {
         const isInsert: boolean = !this.entityPM.Id;
 
         SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
-        (isInsert ? this.logisticActionRequestPMService.insert(this.entityPM) : this.logisticActionRequestPMService.update(this.entityPM))
-            .subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");
-                SessionLocator.SelectedSession.StopBusyIndicator();
-            });
+        const res = await this.logtuideTableDataService.getDataFromService(
+            (isInsert ? this.logisticActionRequestPMService.insert(this.entityPM) : this.logisticActionRequestPMService.update(this.entityPM)))
+
+        SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");
+        SessionLocator.SelectedSession.StopBusyIndicator();
+        return res;
     }
 
 
     invalidate(): boolean {
+        if (!this.submit) return;
+
         this.ValidationErrorsList = []
         this.requierdFieldsList
             .filter(filed => !this[filed])
@@ -331,9 +337,11 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
 
     async OnCustomSendOptionsButtonClick(customSendOptionsArgs) {
+        this.submit = true;
         if (this.invalidate()) return;
 
-        this.SaveEntityChanges();
+        const entity: LogisticActionRequestPM = await this.SaveEntityChanges();
+        this.entityPM.Id = entity.Id;
 
         SessionLocator.SelectedSession.StartBusyIndicatorSaving();
 
@@ -369,6 +377,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     }
 
     OkButtonClicked() {
+        this.submit = true;
         if (this.invalidate()) return;
 
         this.SaveEntityChanges();

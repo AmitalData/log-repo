@@ -69,8 +69,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public decimal Quantity { get; set; }
         [Column("RequestNumber")]
 	    public string RequestNumber { get; set; }
+        [ForeignKey("LogisticActionResponseReqS")]
         [Column("ResponseStatusCode")]
 	    public string ResponseStatusCode { get; set; }
+	      
+        public virtual LogisticActionResponseReqS LogisticActionResponseReqS { get; set; }
         [Column("OperationalStatus")]
 	    public string OperationalStatus { get; set; }
         [Column("Direction")]

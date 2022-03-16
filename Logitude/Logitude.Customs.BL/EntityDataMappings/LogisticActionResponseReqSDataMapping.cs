@@ -20,12 +20,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(LogisticActionResponseReqSPM entityPM, LogisticActionResponseReqS entityPOCO)
         {
-            CustomMappedPOCOProperties.Add(POCOPropertyNames.Code);
 
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
-            {
-                entityPOCO.Code = entityPM.Code;
-            }
         }
 
         public void CustomPOCOToPM(LogisticActionResponseReqSPM entityPM, LogisticActionResponseReqS entityPOCO)
