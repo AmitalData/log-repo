@@ -183,14 +183,10 @@
     <None Include="DBOthers\ShipmentsModel\Functions\BuildFullAddressTextFunction.sxml" />
     <None Include="DBScripts\CommonModel\202202171100_RemoveQBOOptionFromDropDown.sxml" />
     <None Include="DBScripts\InfrastructureModel\202202171015_FillEventTriggerField.sxml" />
-
     <None Include="DBScripts\InvoiceModel\202203021250_FillAPPaymentInvoicesNumbers.sxml" />
     <None Include="DBScripts\ShipmentModel\202213031031_UpdateDomesticInlandStatusLocation.sxml" />
     <None Include="DBScripts\ShipmentModel\202202241410_FillLastDeilverypFullAddress.sxml" />
     <None Include="DBScripts\ShipmentModel\202202241400_FillFirstPickUpFullAddress.sxml" />
-
-    <None Include="DBScripts\ShipmentModel\202213031031_UpdateDomesticInlandStatusLocation.sxml" />
-
     <None Include="DBTables\CommonDataModel\HTSCode.dxml" />
     <None Include="EntityFiles\InfrastructureModel\ImageLibrary.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ContainersExternalData.lxml" />
