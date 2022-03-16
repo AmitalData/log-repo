@@ -3289,7 +3289,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         var logWindow = new LogitudeWindow();
         logWindow.Width = 770;
         logWindow.Height = 750;
-        logWindow.Title = ("המכלה חדשה");
+        logWindow.Title = ("ביטול יצוא חדש");
         logWindow.ShowCloseButton = true;
         logWindow.Show('./CustomsModules/CustomsLogisticActionRequest/Components/EditTabs/General/LogisticActionRequestGeneralTabComponent');
         logWindow.WindowClosed.subscribe(($event: any) => this.OnNewEntityWindowClosed($event));

@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
         private IQueryable<LogisticActionRequestList> GetIqueryableList(IQueryable<LogisticActionRequest> iQueryable)
         {
-            IQueryable<LogisticActionRequestList> query = (from a in iQueryable.Include("LogisticActionRequestTypes")
+            IQueryable<LogisticActionRequestList> query = (from a in iQueryable.Include("logisticactionresponsereqses")
                                                            join d in context.Declarations.Select(r => new { r.Id, r.DeclarationStatusTypeCode, r.CustomFileNo, r.DeclarationNumber })
                                                            on a.DeclarationId equals d.Id
                                                            into dj
@@ -88,7 +88,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                                DeclarationNumber = declaration != null ? declaration.DeclarationNumber : null,
 
-                                                               RequestCancelStatus = a.LogisticActionRequestType.LocalName
+                                                               RequestCancelStatus = a.LogisticActionResponseRequestS.LocalName
 
                                                            });
             return query;
