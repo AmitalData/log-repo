@@ -177,10 +177,11 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IsReconciled"
-    Type="bit">
+    Name="LedgerTransactionId"
+    Type="varchar"
+    Size="15">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="UpdatedByUserId"

@@ -39,6 +39,7 @@ namespace Logitude.Accounting.Data.DataContract
         public string TaxReportId { get; set; }
         public string OriginalJournalId { get; set; }
         public bool IsLedgerReconciled { get; set; }
+        public string LedgerTransactionId { get; set; }
 
     }
 }

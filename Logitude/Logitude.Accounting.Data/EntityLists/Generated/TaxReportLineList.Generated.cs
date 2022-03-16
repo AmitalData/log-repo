@@ -73,7 +73,7 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string PreviousReference  { get; set; }
        [DataMember]
-       public bool IsReconciled  { get; set; }
+       public string LedgerTransactionId  { get; set; }
    }
 
 }

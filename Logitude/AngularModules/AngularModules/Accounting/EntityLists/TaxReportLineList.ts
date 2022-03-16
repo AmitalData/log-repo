@@ -36,7 +36,7 @@ export class TaxReportLineList {
 	OriginalReference: string;
 	UpdatedBUserName: string;
 	PreviousReference: string;
-	IsReconciled: boolean;
+	LedgerTransactionId: string;
 	
 }
  

@@ -88,8 +88,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public int JournalLineNumber { get; set; }
         [Column("PreviousReference")]
 	    public string PreviousReference { get; set; }
-        [Column("IsReconciled")]
-	    public bool IsReconciled { get; set; }
+        [Column("LedgerTransactionId")]
+	    public string LedgerTransactionId { get; set; }
     }
 }
 	 

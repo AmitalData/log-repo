@@ -169,14 +169,14 @@ export class TaxReportLinePM {
     public set PreviousReference(newValue: string) { if (this.previousReference != newValue) { this.previousReference = newValue; this.MarkAsDirty("PreviousReference"); } }
        
 	 
-    private isReconciled: boolean;
-    public get IsReconciled() { return this.isReconciled; }
-    public set IsReconciled(newValue: boolean) { if (this.isReconciled != newValue) { this.isReconciled = newValue; this.MarkAsDirty("IsReconciled"); } }
-       
-	 
     private vatAmountRound: number;
     public get VatAmountRound() { return this.vatAmountRound; }
     public set VatAmountRound(newValue: number) { if (this.vatAmountRound != newValue) { this.vatAmountRound = newValue; this.MarkAsDirty("VatAmountRound"); } }
+       
+	 
+    private ledgerTransactionId: string;
+    public get LedgerTransactionId() { return this.ledgerTransactionId; }
+    public set LedgerTransactionId(newValue: string) { if (this.ledgerTransactionId != newValue) { this.ledgerTransactionId = newValue; this.MarkAsDirty("LedgerTransactionId"); } }
        
 	 
 
