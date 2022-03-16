@@ -3441,10 +3441,6 @@
       Nullable="true" />
   </Column>
   <Column
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="FirstPickupFullAddress"
     Type="varchar"
     Size="200">
