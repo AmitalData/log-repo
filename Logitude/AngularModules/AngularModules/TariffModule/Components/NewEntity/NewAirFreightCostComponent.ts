@@ -54,6 +54,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
     public IsSellerVisible: boolean = false;
     public IsCustomsBrokerVisible: boolean = false;
     public IsPriceStepsAreaVisible: boolean = false;
+    public IsCustomerGroupVisible: boolean = false;
     constructor() {
         super();
         this.myService = new TariffPMService();
@@ -226,6 +227,23 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         }
 
         this.IsCustomsBrokerVisible = isBrokerVisible;
+        this.UIProperties.SetVisibility("CustomsBrokerId", this.ObjectTableName, isBrokerVisible);
+        this.UIProperties.SetRequired("CustomsBrokerId", this.ObjectTableName, isBrokerRequired)
+    }
+
+    private SetUIProperties_CustomerGroup() {
+        var isCustomerGroupVisible: boolean = false;
+        var isisCustomerGroupVisibleRequired: boolean = false;
+
+        if (this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
+            isisCustomerGroupVisibleVisible = true;
+        }
+
+        if (isisCustomerGroupVisibleVisible) {
+            isisCustomerGroupVisibleRequired = AppTool.IsNullOrEmpty(this.CustomsBrokerId);
+        }
+
+        this.IsCustomerGroupVisible = isCustomerGroupVisible;
         this.UIProperties.SetVisibility("CustomsBrokerId", this.ObjectTableName, isBrokerVisible);
         this.UIProperties.SetRequired("CustomsBrokerId", this.ObjectTableName, isBrokerRequired)
     }

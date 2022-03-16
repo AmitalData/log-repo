@@ -84,6 +84,26 @@
                                     </td>
                                 </tr>
 
+                                <!-- CustomerGroupId -->
+                                <tr class="FormFieldRow" *ngIf="IsCustomerGroupVisible">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'CustomerGroupId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'CustomerGroupId'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [SelectedValue]="CustomerGroupId"
+                                                [DataContext]="DataContext"
+                                                [DependencyFilter1IsList]="true"
+                                                [HideMaintenanceIcon]="true"
+                                                [LookUpTableName]="'CustomerGroup'">
+                                        </LogLov>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
                                 <!-- Currency -->
                                 <tr class="FormFieldRow">
                                     <td>
@@ -151,7 +171,7 @@
                                 </tr>
 
                                 <!-- StartDate -->
-                                <tr *ngIf="!VisibileSurchargesArea && EntityPM.TypeCode != 'ICC' && EntityPM.TypeCode != 'ECC'" class="FormFieldRow">
+                                <tr *ngIf="!VisibileSurchargesArea && EntityPM.TypeCode != 'ICC' && EntityPM.TypeCode != 'ECC' && EntityPM.TypeCode != 'ICS' && EntityPM.TypeCode != 'ECS'" class="FormFieldRow">
                                     <td>
                                         <LogLabel [ObjectFieldName]="'StartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
@@ -167,7 +187,7 @@
                                 </tr>
 
                                 <!-- ExpirationDate -->
-                                <tr *ngIf="!VisibileSurchargesArea && EntityPM.TypeCode != 'ICC' && EntityPM.TypeCode != 'ECC'" class="FormFieldRow">
+                                <tr *ngIf="!VisibileSurchargesArea && EntityPM.TypeCode != 'ICC' && EntityPM.TypeCode != 'ECC' && EntityPM.TypeCode != 'ICS' && EntityPM.TypeCode != 'ECS'" class="FormFieldRow">
                                     <td>
                                         <LogLabel [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
@@ -376,12 +396,16 @@
                         <td style="width: 350px;">
                             <table *ngIf="VisibileSurchargesArea">
                                 <tr class="TabTitleRow">
-                                    <td *ngIf="EntityPM.TypeCode != 'ICC' && EntityPM.TypeCode != 'ECC'">
+                                    <td *ngIf="EntityPM.TypeCode != 'ICC' && EntityPM.TypeCode != 'ECC' && EntityPM.TypeCode != 'ICS' && EntityPM.TypeCode != 'ECS'">
                                         Surcharges
                                     </td>
 
                                     <td *ngIf="EntityPM.TypeCode == 'ICC' || EntityPM.TypeCode == 'ECC'">
                                         Customs Charges
+                                    </td>
+
+                                    <td *ngIf="EntityPM.TypeCode == 'ICS' || EntityPM.TypeCode == 'ECS'">
+                                        Local Charges
                                     </td>
                                 </tr>
 
