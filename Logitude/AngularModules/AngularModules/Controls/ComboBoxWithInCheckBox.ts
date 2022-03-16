@@ -20,6 +20,8 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
     public ListControlId: string = null;
     @Input() public MinHeight: number = 45;
     public MaxHeight: number = 250;
+    @Input() public AutoHeight: boolean = false;
+
     public IsBlueBox: boolean = false;
     public IsDisabled: boolean = false;
     public IsOpened: boolean = false;
@@ -99,17 +101,25 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
                 document.getElementById(this.DropdownId).style.height = this.MinHeight + "px";
             }
             else {
-                var itemsHeight = ((this.ItemsSource.length * 23) + this.MinHeight);
-                if (itemsHeight > this.MaxHeight) {
-                    document.getElementById(this.DropdownId).style.height = this.MaxHeight + "px";
-                 //   document.getElementById(this.ListControlId).style.height = itemsHeight + "px";
-                } else if (itemsHeight < this.MinHeight) {
-                    document.getElementById(this.DropdownId).style.height = this.MinHeight + "px";
+                if (this.AutoHeight) {
+                    document.getElementById(this.DropdownId).style.height = "auto";
+                    document.getElementById(this.DropdownId).style.maxHeight = this.MaxHeight + "px";
+                    document.getElementById(this.DropdownId).style.minHeight = this.MinHeight + "px";
+                }else{
+
+                    var itemsHeight = ((this.ItemsSource.length * 23) + this.MinHeight);
+                    if (itemsHeight > this.MaxHeight) {
+                        document.getElementById(this.DropdownId).style.height = this.MaxHeight + "px";
+                        //   document.getElementById(this.ListControlId).style.height = itemsHeight + "px";
+                    } else if (itemsHeight < this.MinHeight) {
+                        document.getElementById(this.DropdownId).style.height = this.MinHeight + "px";
+                    }
+                    else {
+                            document.getElementById(this.DropdownId).style.height = itemsHeight + "px";
+                        // document.getElementById(this.ListControlId).style.height = "100%";
+                    }
                 }
-                else {
-                    document.getElementById(this.DropdownId).style.height = itemsHeight + "px";
-                   // document.getElementById(this.ListControlId).style.height = "100%";
-                }
+
             }
           //  document.getElementById(this.DropdownId).style.visibility = "visible";
         }

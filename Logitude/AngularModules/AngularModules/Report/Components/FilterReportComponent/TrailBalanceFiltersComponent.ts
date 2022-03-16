@@ -96,10 +96,13 @@ export class TrailBalanceFiltersComponent extends BaseComponent
 
     }
 
-
+    isReady = false;
     private LoadResources()
     {
         this.entityResourceService.getEntityResourceByTableName("ExternalReconciliation").subscribe((response: any) => { });
+        this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => {
+            this.isReady = true;
+        });
     }
 
     GetDropDownItemsData(){

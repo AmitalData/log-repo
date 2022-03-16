@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "d78cf7ea0d9c889a4d32a6dc5a54ea6f";
+		public const string HashString = "91ea476f9f6a5df91984dd42c5750cb9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1185,10 +1185,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountsTypeCode",
 					  						DefaultText =  "Chart of Accounts Type ",
-					  						FullLocalDefaultText =  "קבוצת מאזן",
+					  						FullLocalDefaultText =  "סוג קבוצת מאזן",
 					  						ListFieldLable =  "ChartOfAccountsTypeCodeListLable",
 					  						ListLableDefaultText =  "Chart of Accounts Type ",
-					  						ListLocalDefaultText =  "קבוצת מאזן",
+					  						ListLocalDefaultText =  "סוג קבוצת מאזן",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

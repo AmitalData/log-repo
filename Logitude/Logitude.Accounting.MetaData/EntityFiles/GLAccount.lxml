@@ -1475,10 +1475,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ChartOfAccountsTypeCode&quot;"
     DefaultText="&quot;Chart of Accounts Type &quot;"
-    FullLocalDefaultText="&quot;קבוצת מאזן&quot;"
+    FullLocalDefaultText="&quot;סוג קבוצת מאזן&quot;"
     ListFieldLable="&quot;ChartOfAccountsTypeCodeListLable&quot;"
     ListLableDefaultText="&quot;Chart of Accounts Type &quot;"
-    ListLocalDefaultText="&quot;קבוצת מאזן&quot;"
+    ListLocalDefaultText="&quot;סוג קבוצת מאזן&quot;"
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="ChartOfAccountsType"
@@ -13115,7 +13115,8 @@
         ObjectFieldName="&quot;AccountTypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -13179,7 +13180,8 @@
         ObjectFieldName="&quot;AccountTypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -13248,14 +13250,16 @@
         ObjectFieldName="&quot;AccountTypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
       <QueryFilter
         QueryCode="&quot;MyCustomersAsCollectors&quot;"
         PredefinedValue="&quot;#logged-user&quot;"
         ObjectFieldName="&quot;CardCollectorId&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -13324,14 +13328,16 @@
         ObjectFieldName="&quot;AccountTypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
       <QueryFilter
         QueryCode="&quot;DebetorsCustomers&quot;"
         PredefinedValue="&quot;0&quot;"
         ObjectFieldName="&quot;LocalBalanceInDue&quot;"
         IsPredefined="true"
         Operator="&quot;LargerThan&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -13395,14 +13401,16 @@
         ObjectFieldName="&quot;AccountTypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
       <QueryFilter
         QueryCode="&quot;ActiveCustomersGLAccounts&quot;"
         PredefinedValue="&quot;false&quot;"
         ObjectFieldName="&quot;Inactive&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -13466,14 +13474,16 @@
         ObjectFieldName="&quot;AccountTypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
       <QueryFilter
         QueryCode="&quot;InactiveCustomersGLAccount&quot;"
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;Inactive&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -13547,14 +13557,16 @@
         ObjectFieldName="&quot;AccountTypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
       <QueryFilter
         QueryCode="&quot;ActiveGLAccounts&quot;"
         PredefinedValue="&quot;false&quot;"
         ObjectFieldName="&quot;Inactive&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -13628,14 +13640,16 @@
         ObjectFieldName="&quot;AccountTypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
       <QueryFilter
         QueryCode="&quot;InactiveGLAccounts&quot;"
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;Inactive&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -13709,14 +13723,16 @@
         ObjectFieldName="&quot;AccountTypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
       <QueryFilter
         QueryCode="&quot;OpenFiles&quot;"
         PredefinedValue="&quot;0&quot;"
         ObjectFieldName="&quot;BalanceInLocalCurrency&quot;"
         IsPredefined="true"
         Operator="&quot;NotEqual&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -13790,14 +13806,16 @@
         ObjectFieldName="&quot;AccountTypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
       <QueryFilter
         QueryCode="&quot;ClosedFiles&quot;"
         PredefinedValue="&quot;0&quot;"
         ObjectFieldName="&quot;BalanceInLocalCurrency&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -13871,7 +13889,8 @@
         ObjectFieldName="&quot;AccountTypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -13945,7 +13964,8 @@
         ObjectFieldName="&quot;AccountTypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -14009,14 +14029,16 @@
         ObjectFieldName="&quot;AccountTypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
       <QueryFilter
         QueryCode="&quot;ActiveVendorsGLAccounts&quot;"
         PredefinedValue="&quot;false&quot;"
         ObjectFieldName="&quot;Inactive&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -14080,14 +14102,16 @@
         ObjectFieldName="&quot;AccountTypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
       <QueryFilter
         QueryCode="&quot;InactiveVendorsGLAccount&quot;"
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;Inactive&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -14216,7 +14240,8 @@
         ObjectFieldName="&quot;AccountTypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equals&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -14287,14 +14312,16 @@
         ObjectFieldName="&quot;AccountTypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
       <QueryFilter
         QueryCode="&quot;OpenMasters&quot;"
         PredefinedValue="&quot;0&quot;"
         ObjectFieldName="&quot;BalanceInLocalCurrency&quot;"
         IsPredefined="true"
         Operator="&quot;NotEqual&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Screen
@@ -15234,7 +15261,8 @@
   <DataContracts>
     <DataContract
       Name="&quot;GLAccount&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Id&quot;"
         FieldName="&quot;Id&quot;"
@@ -16349,7 +16377,8 @@
     </DataContract>
     <DataContract
       Name="&quot;GLAccountChequeDetails&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Id&quot;"
         FieldName="&quot;Id&quot;"
