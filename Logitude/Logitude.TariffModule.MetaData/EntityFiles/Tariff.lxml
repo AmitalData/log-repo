@@ -6839,7 +6839,7 @@
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;Export Local Charges Sale&quot;"
-        PredefinedValue="&quot;ELCS&quot;"
+        PredefinedValue="&quot;ECS&quot;"
         ObjectFieldName="&quot;TypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
@@ -6905,7 +6905,7 @@
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;Import Local Charges Sale&quot;"
-        PredefinedValue="&quot;ILCS&quot;"
+        PredefinedValue="&quot;ICS&quot;"
         ObjectFieldName="&quot;TypeCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TariffUpdateClass
    {  		
-		public const string HashString = "67bb0d076a0dc2f05f9a60010a2ce872";
+		public const string HashString = "788ae454469a47057d228db145deb22a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4816,7 +4816,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ExportLocalChargesSaleQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportLocalChargesSaleQuery.Id,QueryCode = ExportLocalChargesSaleQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Tariff.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter ExportLocalChargesSaleQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Tariff.TypeCode", PredefinedValue = "ELCS",PredefinedValue2 = null, CustomPredefined = false, QueryId = ExportLocalChargesSaleQuery.Id,QueryCode = ExportLocalChargesSaleQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter ExportLocalChargesSaleQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Tariff.TypeCode", PredefinedValue = "ECS",PredefinedValue2 = null, CustomPredefined = false, QueryId = ExportLocalChargesSaleQuery.Id,QueryCode = ExportLocalChargesSaleQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   
 	      
@@ -4839,7 +4839,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ImportLocalChargesSaleQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImportLocalChargesSaleQuery.Id,QueryCode = ImportLocalChargesSaleQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Tariff.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter ImportLocalChargesSaleQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Tariff.TypeCode", PredefinedValue = "ILCS",PredefinedValue2 = null, CustomPredefined = false, QueryId = ImportLocalChargesSaleQuery.Id,QueryCode = ImportLocalChargesSaleQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter ImportLocalChargesSaleQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Tariff.TypeCode", PredefinedValue = "ICS",PredefinedValue2 = null, CustomPredefined = false, QueryId = ImportLocalChargesSaleQuery.Id,QueryCode = ImportLocalChargesSaleQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
