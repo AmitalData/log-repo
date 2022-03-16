@@ -835,6 +835,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         else
                         {
                             IShipmentsContext iContext = ShipmentsContext.GetContext(tenant);
+                            if (FeatureToggleHelper.HasFeatureToggle("RRS", tenant))
+                            {
+                                iContext = ShipmentsContext.GetSecContext(tenant);
+                            }
                             IQueryable<Shipment> iQueryable = (from d in iContext.Shipments where d.Tenant == tenant select d);
 
                             if (!string.IsNullOrEmpty(SearchFields))
