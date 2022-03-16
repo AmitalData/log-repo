@@ -32,7 +32,7 @@ export class TariffValidator {
                     this.Errors.push("Customs Broker Field is Required");
                 }
             }
-            if (entityPM.TypeCode == "ICS" || entityPM.TypeCode == "ECS") {
+            else if (entityPM.TypeCode == "ICS" || entityPM.TypeCode == "ECS") {
                 if (AppTool.IsNullOrEmpty(entityPM.CustomerGroupId)) {
                     this.Errors.push("Customer Group Field is Required");
                 }
