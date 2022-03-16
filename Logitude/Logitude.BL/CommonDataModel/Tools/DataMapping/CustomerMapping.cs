@@ -26,7 +26,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 entityCard.CreateDate = entityPM.CreateDate;
                 entityCard.CreatedByUserId = entityPM.CreatedByUserId;
             }
-
+            entityPOCO.ImportLocalCustomerGroupId = entityPM.ImportLocalCustomerGroupId;
+            entityPOCO.ExportLocalCustomerGroupId = entityPM.ExportLocalCustomerGroupId;
             entityPOCO.LogBoxActivated = entityPM.LogBoxActivated;
             entityPOCO.IsPrivateLabelCustomer = entityPM.IsPrivateLabelCustomer;
             entityPOCO.RankId = entityPM.RankId;

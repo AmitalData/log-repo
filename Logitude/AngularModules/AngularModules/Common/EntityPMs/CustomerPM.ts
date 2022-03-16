@@ -1443,6 +1443,16 @@ export class CustomerPM {
     public set AddLogboxCustomerQueue(newValue: boolean) { if (this.addLogboxCustomerQueue != newValue) { this.addLogboxCustomerQueue = newValue; this.MarkAsDirty("AddLogboxCustomerQueue"); } }
        
 	 
+    private importLocalCustomerGroupId: string;
+    public get ImportLocalCustomerGroupId() { return this.importLocalCustomerGroupId; }
+    public set ImportLocalCustomerGroupId(newValue: string) { if (this.importLocalCustomerGroupId != newValue) { this.importLocalCustomerGroupId = newValue; this.MarkAsDirty("ImportLocalCustomerGroupId"); } }
+       
+	 
+    private exportLocalCustomerGroupId: string;
+    public get ExportLocalCustomerGroupId() { return this.exportLocalCustomerGroupId; }
+    public set ExportLocalCustomerGroupId(newValue: string) { if (this.exportLocalCustomerGroupId != newValue) { this.exportLocalCustomerGroupId = newValue; this.MarkAsDirty("ExportLocalCustomerGroupId"); } }
+       
+	 
 
     public OldEntityPM: CustomerPM;
 		

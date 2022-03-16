@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TariffUpdateClass
    {  		
-		public const string HashString = "788ae454469a47057d228db145deb22a";
+		public const string HashString = "67b07a361dea0349f944d1be838d56c4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4921,24 +4921,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	   		  
 	      
 
-	         Screen TariffTariffSaleLocalChargesHeaderScreenScreen3 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "SaleLocalChargesHeaderScreen", Name = "Tariff.SaleLocalChargesHeaderScreen", ObjectTableId = TariffObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen TariffSaleLocalChargesHeaderScreenScreen3 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Tariff.SaleLocalChargesHeaderScreen", Name = "SaleLocalChargesHeaderScreen", ObjectTableId = TariffObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
       
-             ScreenField TariffSaleLocalChargesHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TariffTariffSaleLocalChargesHeaderScreenScreen3.Id,ScreenCode = TariffTariffSaleLocalChargesHeaderScreenScreen3.Code, ObjectFieldCode = "Tariff.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TariffTariffSaleLocalChargesHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TariffSaleLocalChargesHeaderScreenScreen3.Id,ScreenCode = TariffSaleLocalChargesHeaderScreenScreen3.Code, ObjectFieldCode = "Tariff.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField TariffSaleLocalChargesHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TariffTariffSaleLocalChargesHeaderScreenScreen3.Id,ScreenCode = TariffTariffSaleLocalChargesHeaderScreenScreen3.Code, ObjectFieldCode = "Tariff.CreateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TariffTariffSaleLocalChargesHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TariffSaleLocalChargesHeaderScreenScreen3.Id,ScreenCode = TariffSaleLocalChargesHeaderScreenScreen3.Code, ObjectFieldCode = "Tariff.CreateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField TariffSaleLocalChargesHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = TariffTariffSaleLocalChargesHeaderScreenScreen3.Id,ScreenCode = TariffTariffSaleLocalChargesHeaderScreenScreen3.Code, ObjectFieldCode = "Tariff.CustomerGroupName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TariffTariffSaleLocalChargesHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = TariffSaleLocalChargesHeaderScreenScreen3.Id,ScreenCode = TariffSaleLocalChargesHeaderScreenScreen3.Code, ObjectFieldCode = "Tariff.CustomerGroupName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField TariffSaleLocalChargesHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = TariffTariffSaleLocalChargesHeaderScreenScreen3.Id,ScreenCode = TariffTariffSaleLocalChargesHeaderScreenScreen3.Code, ObjectFieldCode = "Tariff.UpdateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TariffTariffSaleLocalChargesHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = TariffSaleLocalChargesHeaderScreenScreen3.Id,ScreenCode = TariffSaleLocalChargesHeaderScreenScreen3.Code, ObjectFieldCode = "Tariff.UpdateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField TariffSaleLocalChargesHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = TariffTariffSaleLocalChargesHeaderScreenScreen3.Id,ScreenCode = TariffTariffSaleLocalChargesHeaderScreenScreen3.Code, ObjectFieldCode = "Tariff.CurrencyId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TariffTariffSaleLocalChargesHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = TariffSaleLocalChargesHeaderScreenScreen3.Id,ScreenCode = TariffSaleLocalChargesHeaderScreenScreen3.Code, ObjectFieldCode = "Tariff.CurrencyId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField TariffSaleLocalChargesHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = TariffTariffSaleLocalChargesHeaderScreenScreen3.Id,ScreenCode = TariffTariffSaleLocalChargesHeaderScreenScreen3.Code, ObjectFieldCode = "Tariff.ContractNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TariffTariffSaleLocalChargesHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = TariffSaleLocalChargesHeaderScreenScreen3.Id,ScreenCode = TariffSaleLocalChargesHeaderScreenScreen3.Code, ObjectFieldCode = "Tariff.ContractNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField TariffSaleLocalChargesHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = TariffTariffSaleLocalChargesHeaderScreenScreen3.Id,ScreenCode = TariffTariffSaleLocalChargesHeaderScreenScreen3.Code, ObjectFieldCode = "Tariff.TariffNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TariffTariffSaleLocalChargesHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = TariffSaleLocalChargesHeaderScreenScreen3.Id,ScreenCode = TariffSaleLocalChargesHeaderScreenScreen3.Code, ObjectFieldCode = "Tariff.TariffNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          	
-		    TariffObjectTable.HeaderScreenId = TariffTariffSaleLocalChargesHeaderScreenScreen3.Id;
-		    TariffObjectTable.HeaderScreenCode = TariffTariffSaleLocalChargesHeaderScreenScreen3.Code;
+		    TariffObjectTable.HeaderScreenId = TariffSaleLocalChargesHeaderScreenScreen3.Id;
+		    TariffObjectTable.HeaderScreenCode = TariffSaleLocalChargesHeaderScreenScreen3.Code;
 
 	   		  
 
