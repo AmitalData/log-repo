@@ -2296,7 +2296,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                                         logWindow.Width = 770;
                                                         logWindow.Height = 750;
                                                         //logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditDeclarationCargoSplit");
-                                                        let title: string = (myResponse.Result?.ResponseStatusCode || myResponse.Result?.OperationalStatus );
+                                                        let title: string = (myResponse.Result?.RequestCancelStatus || myResponse.Result?.OperationalStatus );
                                                         title =  title ? ' - ' + title : '';
                                                         logWindow.Title = 'בקשת ביטול יצוא' + title //TextCodeTranslator.Translate('General.MH.LogisticActionRequest'); //"בקשת פיצול מטען ";// + myResponse.Result != null ? ((!AppTool.IsNullOrEmpty(myResponse.Result.RequestNumber) ? myResponse.Result.RequestNumber : null) + ((!AppTool.IsNullOrEmpty(myResponse.Result.ResponseStatusName) ? " - " + myResponse.Result.ResponseStatusName : null))) : null;
                                                         logWindow.WindowArgs = windowArgs;

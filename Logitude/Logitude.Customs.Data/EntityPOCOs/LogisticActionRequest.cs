@@ -31,11 +31,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ExportFileNo { get; set; }
         [Column("ExporterIdentifierType")]
 	    public string ExporterIdentifierType { get; set; }
-        [ForeignKey("Client")]
         [Column("ExporterNumber")]
 	    public string ExporterNumber { get; set; }
-	      
-        public virtual Client Client { get; set; }
         [Column("PassportCountry")]
 	    public string PassportCountry { get; set; }
         [Column("PassportNumber")]
@@ -72,11 +69,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public decimal Quantity { get; set; }
         [Column("RequestNumber")]
 	    public string RequestNumber { get; set; }
-        [ForeignKey("LogisticActionResponseRequestS")]
+        [ForeignKey("LogisticActionResponseReqS")]
         [Column("ResponseStatusCode")]
 	    public string ResponseStatusCode { get; set; }
 	      
-        public virtual LogisticActionResponseRequestS LogisticActionResponseRequestS { get; set; }
+        public virtual LogisticActionResponseReqS LogisticActionResponseReqS { get; set; }
         [Column("OperationalStatus")]
 	    public string OperationalStatus { get; set; }
         [Column("Direction")]

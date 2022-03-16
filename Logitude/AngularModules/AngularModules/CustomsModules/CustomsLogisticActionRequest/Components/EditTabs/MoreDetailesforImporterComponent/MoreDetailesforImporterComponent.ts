@@ -16,6 +16,7 @@ export class MoreDetailesforImporterComponent extends BaseComponent {
     FIELD_IS_REQUIERD: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
     requierdFieldsList: string[] = []
     ValidationErrorsList: string[] = []
+    private isSubmit: boolean = false;
 
     constructor() {
         super();
@@ -35,21 +36,18 @@ export class MoreDetailesforImporterComponent extends BaseComponent {
     public set ExporterIdentifierType(newValue: string) {
         this.entityPM.ExporterIdentifierType = newValue;
         this.SetScreenFieldsEditability()
-        this.invalidate()
     }
 
     public get PassportCountry() { return this.entityPM.PassportCountry; }
     public set PassportCountry(newValue: string) {
         this.entityPM.PassportCountry = newValue;
         this.setRequiredField("PassportCountry", this.entityPM.ExporterIdentifierType == '2' && !this.entityPM.PassportCountry);
-        this.invalidate()
     }
 
     public get PassportNumber() { return this.entityPM.PassportNumber; }
     public set PassportNumber(newValue: string) {
         this.entityPM.PassportNumber = newValue;
         this.setRequiredField("PassportNumber", this.entityPM.ExporterIdentifierType == '2' && !this.entityPM.PassportNumber);
-        this.invalidate()
     }
 
 
@@ -61,6 +59,8 @@ export class MoreDetailesforImporterComponent extends BaseComponent {
                 this.requierdFieldsList.push(name)
         } else
             this.removeFromArray(this.requierdFieldsList, name)
+        
+        this.invalidate();
     }
 
 
@@ -88,6 +88,8 @@ export class MoreDetailesforImporterComponent extends BaseComponent {
 
 
     invalidate(): boolean {
+        if(!this.isSubmit) return false;
+
         this.ValidationErrorsList = []
         this.requierdFieldsList
             .filter(filed => !this[filed])
@@ -99,6 +101,7 @@ export class MoreDetailesforImporterComponent extends BaseComponent {
 
     
     OkButtonClicked() {
+        this.isSubmit = true;
         if (this.invalidate()) return;
 
         SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");

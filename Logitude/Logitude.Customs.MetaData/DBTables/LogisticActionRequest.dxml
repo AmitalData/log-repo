@@ -214,7 +214,7 @@
     ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="ResponseStatusCode"
-    ReferencedTable="LogisticActionResponseRequestSes"
+    ReferencedTable="LogisticActionResponseReqSes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>
