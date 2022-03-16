@@ -1,64 +1,59 @@
+import { AfterViewInit, Component, ElementRef, OnChanges, OnDestroy, ViewChild } from "@angular/core";
 import { BaseComponent } from "../../Infrastructure/Components/LogitudeComponents/BaseComponent";
-import { Component, OnChanges, AfterViewInit } from "@angular/core";
-import * as React from "react";
-import * as ReactDOM from "react-dom";
+import TasksList from "collaboration-tool-tasks-list";
 import { SessionInfo } from "../../Infrastructure/Utilities/SessionInfo";
 import { SessionLocator } from "../../Infrastructure/Utilities/SessionLocator";
 import { ShipmentPMService } from "../../Shipment/Services/StandardPMs/ShipmentPMService";
-import TasksList from "collaboration-tool-tasks-list";
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+
+const tasksAppComponentContainer = "TasksAppComponentContainer";
 
 @Component({
     selector: "tasks-list",
-    template: "<div [id]='rootId' class='prime-web-component'></div>"
+    template: `<div #${tasksAppComponentContainer} class="prime-web-component"></div>`,
 })
 
-export class TasksAppComponent extends BaseComponent implements OnChanges, AfterViewInit {
-
-    public rootId = "tasks-list-root";
-    private hasViewLoaded = false;
+export class TasksAppComponent extends BaseComponent implements OnChanges, AfterViewInit, OnDestroy {
+    @ViewChild(tasksAppComponentContainer, { static: false }) containerRef: ElementRef;
 
     constructor() {
         super();
     }
 
-    public ngOnChanges() {
-        this.renderComponent();
+    ngOnChanges() {
+        this.render();
     }
 
-    public ngAfterViewInit() {
-        this.hasViewLoaded = true;
-        this.renderComponent();
+    ngAfterViewInit() {
+        this.render();
     }
 
-    private renderComponent() {
-        if (!this.hasViewLoaded) {
-            return;
-        }
+    ngOnDestroy() {
+        ReactDOM.unmountComponentAtNode(this.containerRef.nativeElement);
+    }
 
+    private render() {
         const props: any = {
             logitudeAuthentication: { Tenant: SessionLocator.Tenant, Token: SessionInfo.Token },
             enableUncLink: true,
-            uncLinkClickCallback: this.UNCNumberClicked
+            uncLinkClickCallback: this.uncNumberClicked
         };
 
-        ReactDOM.render(
-            React.createElement(TasksList, props),
-            document.getElementById(this.rootId)
-        );
+        ReactDOM.render(React.createElement(TasksList, props), this.containerRef.nativeElement);
     }
 
-    private UNCNumberClicked(entityNumber: string) {
-        var ShipmentNumber = entityNumber;
-        var _ShipmentPMService = new ShipmentPMService();
-        var CurrentSession = SessionLocator.SelectedSession;
-        _ShipmentPMService.getSingleByShipmentNumber(ShipmentNumber).subscribe((myResult: any) => {
-            if (!myResult.HasError) {
-                var backLabel = "Tasks";
-                var myEntityId = myResult.Result;
+    private uncNumberClicked(entityNumber: string) {
+        let shipmentPMService = new ShipmentPMService();
+        let CurrentSession = SessionLocator.SelectedSession;
+        shipmentPMService.getSingleByShipmentNumber(entityNumber).subscribe((getByShipmentNumberResult: any) => {
+            if (!getByShipmentNumberResult.HasError) {
+                let backButtonLabel = "Tasks";
+                let entityId = getByShipmentNumberResult.Result;
                 SessionLocator.DynamicLoader.Load("./Infrastructure/Components/EditComponent/EditComponent", CurrentSession.SessionLocation.viewContainerRef)
-                    .then(cmpRef => {
+                    .then((cmpRef: any) => {
                         cmpRef.instance.ComponentRef = cmpRef;
-                        cmpRef.instance.Run({ EntityId: myEntityId, ObjectTableName: "Shipment", BackButtonLabel: backLabel });
+                        cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: "Shipment", BackButtonLabel: backButtonLabel });
                     });
             }
         });
