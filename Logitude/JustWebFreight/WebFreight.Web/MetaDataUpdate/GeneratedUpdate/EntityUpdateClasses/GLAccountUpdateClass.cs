@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "b0307dba2e48c10b525fd5051553c39c";
+		public const string HashString = "e575fd8de9c6e631aed78b02b5f27958";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -10522,6 +10522,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsSplitGLAccout",
 					  						ListPropertyPath =  "IsSplitGLAccout",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -10577,6 +10578,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsMainGLAccount",
 					  						ListPropertyPath =  "IsMainGLAccount",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -12082,24 +12084,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 Code =  "GLDD",
                 EnglishName =  "GLAccount.currency disconnected",
                 LocalName =  "GLAccount.currency disconnected",
-                IsManualEntry =  false,
-                ShortView =  false,
-                IsAgentView =  false,
-                IsCustomerView =  false,
-                IsSharedLogisticsEnabled =  false,
-                AllowedInAutomation =  false,
-                ManualActivatedFollowUp =  false,
-                IsFollowUp =  false,
-                ObjectTableId = GLAccountObjectTable.Id,
-				 
-            }, EventTypeRepository, tenantEventTypes);
-
-
-            AddEventTypes.AddEventType(new EventTypeDetails()
-            {
-                Code =  "GLRC",
-                EnglishName =  "Reporting as Another Document Changed",
-                LocalName =  " דיווח תשומות - מסמך אחר - עודכן",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
