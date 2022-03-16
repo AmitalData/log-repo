@@ -1,5 +1,6 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.BL.Messaging.Amital;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityListQueryServices;
 using Logitude.Customs.Data.Repsitories;
@@ -58,7 +59,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 declarationIdsList.RemoveAll(x => rp.allWithoutdeclarationIdsList.Contains(x));
 
             //todo: call to morams service
-            
+            UnifreightTaskService unifreightTaskService = new UnifreightTaskService();
+            DeclarationPM _MyDeclarationPM;
+            var myDeclarationQueryService = new DeclarationQueryService(customContext);
+            foreach (var item in declarationIdsList)
+            {
+                _MyDeclarationPM = myDeclarationQueryService.GetSingle(item, false, false);
+                if(_MyDeclarationPM != null)unifreightTaskService.OpenUnifreighTask(_MyDeclarationPM, "L2USID", null, false, "");
+            }
         }
 
         public void UpdateDeclarationPendings(DCAInUCBUCADPEResponseContentHeader customResponse)
