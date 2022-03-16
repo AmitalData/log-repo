@@ -33,6 +33,7 @@ using System.Xml;
 using Simplog.Server.Infrastructure;
 using Logitude.BL.ShipmentsModel.DigitalModels;
 using System.Threading.Tasks;
+using Logitude.BL.ShipmentsModel.Tools.Initializers;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -2576,17 +2577,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return shipmentPM;
         }
 
-        public static void MapFieldsBeforeTrackingChangedForAutomation(ShipmentPM shipmentPM)
+        public static void MapFieldsBeforeTrackingChangedForAutomation(ShipmentPM shipmentPM, ShipmentServiceInitializer initializer)
         {
-            MapShipmentPackagesDetails(shipmentPM);
+            List<ShipmentPackagePM> newShipmentPackagePMsWithoutDeleted = initializer.ShipmentPackagesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            MapShipmentPackagesDetails(shipmentPM, newShipmentPackagePMsWithoutDeleted);
         }
 
-        private static void MapShipmentPackagesDetails(ShipmentPM shipmentPM)
+        private static void MapShipmentPackagesDetails(ShipmentPM shipmentPM, List<ShipmentPackagePM> newShipmentPackagePMsWithoutDeleted = null)
         {
             string myContainersNumbers = null;
             string myPackagesNames = null;
             string myPackagesPrintAs = null;
-            foreach (ShipmentPackagePM packagePM in shipmentPM.ShipmentPackages)
+            List<ShipmentPackagePM> shipmentPackagePMs = newShipmentPackagePMsWithoutDeleted == null ? shipmentPM.ShipmentPackages : newShipmentPackagePMsWithoutDeleted;
+            foreach (ShipmentPackagePM packagePM in shipmentPackagePMs)
             {
                 myContainersNumbers = string.IsNullOrEmpty(myContainersNumbers) ? packagePM.ContainerNumber : myContainersNumbers + ", " + packagePM.ContainerNumber;
                 myPackagesNames = string.IsNullOrEmpty(myPackagesNames) ? packagePM.PackageTypeName : myPackagesNames + ", " + packagePM.PackageTypeName;
