@@ -20,9 +20,9 @@ namespace Simplog.Server.Infrastructure.Helpers
         {
             try
             {
-                var filePath = Path.Combine(_ApplicationPhysicalPath, @"App_Data\ProductInfo.txt");
-                var aa=File.ReadAllText(filePath);
-                return aa;
+                //var filePath = Path.Combine(_ApplicationPhysicalPath, @"App_Data\ProductInfo.txt");
+                //var aa=File.ReadAllText(filePath);
+                return "";// aa;
             }
             catch (Exception)
             {
