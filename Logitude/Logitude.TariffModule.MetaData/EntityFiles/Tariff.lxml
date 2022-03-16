@@ -6131,6 +6131,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CustomerGroupName&quot;"
     ListPropertyPath="&quot;CustomerGroupName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -6148,7 +6149,7 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;CustomerGroupName&quot;"
-    DefaultText="&quot;CustomerGroup&quot;"
+    DefaultText="&quot;Customer Group&quot;"
     ListFieldLable="&quot;CustomerGroupNameListLable&quot;"
     ListLableDefaultText="&quot;Customer Group&quot;"
     IsNullable="false"
@@ -7042,6 +7043,52 @@
         Row="0"
         ObjectFieldName="&quot;TariffNumber&quot;"
         ScreenName="CustomsChargesHeaderScreen" />
+    </ScreenFields>
+  </Screen>
+  <Screen
+    Name="&quot;Tariff.SaleLocalChargesHeaderScreen&quot;"
+    ObjectTableName="&quot;Tariff&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="true"
+    Code="&quot;SaleLocalChargesHeaderScreen&quot;"
+    NumberOfColumns="4"
+    NumberOfRows="2">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;Name&quot;"
+        ScreenName="Tariff.SaleLocalChargesHeaderScreen" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;CreateDate&quot;"
+        ScreenName="Tariff.SaleLocalChargesHeaderScreen" />
+      <ScreenField
+        Column="1"
+        Row="0"
+        ObjectFieldName="&quot;CustomerGroupName&quot;"
+        ScreenName="Tariff.SaleLocalChargesHeaderScreen" />
+      <ScreenField
+        Column="1"
+        Row="1"
+        ObjectFieldName="&quot;UpdateDate&quot;"
+        ScreenName="Tariff.SaleLocalChargesHeaderScreen" />
+      <ScreenField
+        Column="2"
+        Row="0"
+        ObjectFieldName="&quot;CurrencyId&quot;"
+        ScreenName="Tariff.SaleLocalChargesHeaderScreen" />
+      <ScreenField
+        Column="2"
+        Row="1"
+        ObjectFieldName="&quot;ContractNumber&quot;"
+        ScreenName="Tariff.SaleLocalChargesHeaderScreen" />
+      <ScreenField
+        Column="3"
+        Row="0"
+        ObjectFieldName="&quot;TariffNumber&quot;"
+        ScreenName="Tariff.SaleLocalChargesHeaderScreen" />
     </ScreenFields>
   </Screen>
   <Tab

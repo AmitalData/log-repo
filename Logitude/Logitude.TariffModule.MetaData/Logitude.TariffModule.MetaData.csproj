@@ -90,6 +90,7 @@
     <None Include="DBScripts\202103242130_FillSellerPartnerTypeId.sxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="DBScripts\202203160925_AddLocalCustomsTariffTypes.sxml" />
     <None Include="DBTables\Tariff.dxml" />
     <None Include="DBTables\TariffLine.dxml" />
     <None Include="DBTables\TariffLinesContainersPrice.dxml" />

@@ -189,6 +189,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         this.SetUIProperties_FreightCharges();
         this.SetUIProperties_Seller();
         this.SetUIProperties_CustomsBroker();
+        this.SetUIProperties_CustomerGroup();
     }
     private SetUIProperties_FreightCharges() {
         var isFreightChargeVisible: boolean = false;
@@ -228,24 +229,24 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
 
         this.IsCustomsBrokerVisible = isBrokerVisible;
         this.UIProperties.SetVisibility("CustomsBrokerId", this.ObjectTableName, isBrokerVisible);
-        this.UIProperties.SetRequired("CustomsBrokerId", this.ObjectTableName, isBrokerRequired)
+        this.UIProperties.SetRequired("CustomsBrokerId", this.ObjectTableName, isBrokerRequired);
     }
 
     private SetUIProperties_CustomerGroup() {
         var isCustomerGroupVisible: boolean = false;
-        var isisCustomerGroupVisibleRequired: boolean = false;
+        var isisCustomerGroupRequired: boolean = false;
 
-        if (this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
-            isisCustomerGroupVisibleVisible = true;
+        if (this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
+            isCustomerGroupVisible = true;
         }
 
-        if (isisCustomerGroupVisibleVisible) {
-            isisCustomerGroupVisibleRequired = AppTool.IsNullOrEmpty(this.CustomsBrokerId);
+        if (isCustomerGroupVisible) {
+            isisCustomerGroupRequired = AppTool.IsNullOrEmpty(this.CustomerGroupId);
         }
 
         this.IsCustomerGroupVisible = isCustomerGroupVisible;
-        this.UIProperties.SetVisibility("CustomsBrokerId", this.ObjectTableName, isBrokerVisible);
-        this.UIProperties.SetRequired("CustomsBrokerId", this.ObjectTableName, isBrokerRequired)
+        this.UIProperties.SetVisibility("CustomerGroupId", this.ObjectTableName, isCustomerGroupVisible);
+        this.UIProperties.SetRequired("CustomerGroupId", this.ObjectTableName, isisCustomerGroupRequired);
     }
 
     FillChargesIDsAndUOMS() {
@@ -386,6 +387,18 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         }
     }
 
+    get CustomerGroupId() {
+        return this.EntityPM.CustomerGroupId;
+    }
+    set CustomerGroupId(value: string) {
+        if (this.EntityPM.CustomerGroupId != value) {
+            this.EntityPM.CustomerGroupId = value;
+
+            this.SetUIProperties_CustomerGroup();
+        }
+    }
+
+    
     get ContractNumber() {
         return this.EntityPM.ContractNumber;
     }

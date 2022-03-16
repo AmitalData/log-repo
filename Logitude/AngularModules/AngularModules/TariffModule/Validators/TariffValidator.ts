@@ -32,14 +32,18 @@ export class TariffValidator {
                     this.Errors.push("Customs Broker Field is Required");
                 }
             }
-
+            if (entityPM.TypeCode == "ICS" || entityPM.TypeCode == "ECS") {
+                if (AppTool.IsNullOrEmpty(entityPM.CustomerGroupId)) {
+                    this.Errors.push("Customer Group Field is Required");
+                }
+            }
             else {
                 if (AppTool.IsNullOrEmpty(entityPM.SellerId)) {
                     this.Errors.push("Seller Field is Required");
                 }
             }
 
-            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC" || entityPM.TypeCode == "ICC" || entityPM.TypeCode == "ECC") {
+            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC" || entityPM.TypeCode == "ICC" || entityPM.TypeCode == "ECC" || entityPM.TypeCode == "ICS" || entityPM.TypeCode == "ECS") {
                 this.chargesTypePMService = new ChargesTypeListService();
                 this.FillChargesIDsAndUOMS();
                 this.ValidateSurcharge();
