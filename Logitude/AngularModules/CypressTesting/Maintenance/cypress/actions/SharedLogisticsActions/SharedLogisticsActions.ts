@@ -14,7 +14,10 @@ import {MoneyPermissionsDetails} from "../../models/SharedLogisticsDetails/Money
 import { MaintenanceSelectors } from "../../selectors/Selectors";
 import { And } from "cypress-cucumber-preprocessor/steps/index";
 import * as Actions from "../Actions"
+import { ContactContext } from "../../models/ContactContext";
+import { ContactDetails } from "../../models/ContactDetails";
 
+let CustomerCode:string
 
 export function ChooseSharedLogistics() {
     
@@ -147,4 +150,109 @@ export function AssertMoneyPermissions() {
 function AssertPutMoneyPermissions() {
     BaseAssertion.AssertStatusCode(SharedLogisticsRequestAliases.sharedlogisticssettings, 200).then((interception) => {
     });
+}
+
+export function GetFirstCustomer(){
+    cy.get(SharedLogisticsSelectors.InviteCustomers).click()
+    cy.get(SharedLogisticsSelectors.FirstCustomer).click()
+    GetCustomerCode(SharedLogisticsSelectors.CustomerCode)
+    cy.get(SharedLogisticsSelectors.NewContact).click()
+    
+}
+export function GetCustomerCode(CustomerCodeSelector:string){
+    cy.get(CustomerCodeSelector).invoke('text').then((Lable) => {
+        cy.log(Lable.toString())
+        CustomerCode = (Lable.toString())
+    })
+}
+export function CreateContact(){
+DefinePostContactRequest();
+
+cy.Click(BaseSelectors.RedButton + ":last", null);
+}
+
+function DefinePostContactRequest() {
+    cy.DefineRequestWait(RestAPI.POST,SharedLogisticsURLs.PartnersDomain, SharedLogisticsRequestAliases.PostPartnersDomain);
+}
+
+
+export function AssertPostContact() {
+    BaseAssertion.AssertStatusCode(SharedLogisticsRequestAliases.PostPartnersDomain, 200).then((interception) => {
+        let responseBody = interception.response.body;
+        ContactContext.Id = responseBody.Id;
+        ContactContext.Email = responseBody.Email;
+    });
+}
+export function InviteAddedContact(NewContactEmail:string){
+cy.get('[data-cy="'+NewContactEmail+'_Contact"]').within(() => {
+    DefinePutContactInvitationRequest();
+    cy.get(SharedLogisticsSelectors.Invite).click()
+});
+
+}
+function DefinePutContactInvitationRequest() {
+    cy.DefineRequestWait(RestAPI.PUT,SharedLogisticsURLs.contactinvitation, SharedLogisticsRequestAliases.putcontactinternetaccessinvitation);
+}
+export function AssertPutContactInvitation() {
+    BaseAssertion.AssertStatusCode(SharedLogisticsRequestAliases.putcontactinternetaccessinvitation, 200).then((interception) => {
+    });
+}
+
+export function ConfirmInviting(ContactEnglishName:string,MsgPart1:string,MsgPart2:string){
+
+cy.get(SharedLogisticsSelectors.Message).contains(MsgPart1+'" '+ContactEnglishName+' "'+MsgPart2)
+cy.Click(BaseSelectors.RedButton + ":last", null);
+cy.Click(BaseSelectors.RedButton + ":last", null);
+cy.get(SharedLogisticsSelectors.BackBottun).click()
+}
+
+export function AssertcustomerInInvitedList() {
+    cy.get(SharedLogisticsSelectors.InvitedCustomersCount).click()
+    cy.get(SharedLogisticsSelectors.Search).click().type(CustomerCode)
+    cy.get(SharedLogisticsSelectors.row0).contains(CustomerCode)
+    cy.get(SharedLogisticsSelectors.row0).within(() => {
+        cy.get(SharedLogisticsSelectors.FirstCustomer).contains("Invited")
+    });
+    cy.get(SharedLogisticsSelectors.BackBottun).click()
+}
+
+export function GetFirstNotInvited() {
+    cy.get(SharedLogisticsSelectors.NotInvitedCustomersCount).click()
+    cy.get(SharedLogisticsSelectors.FirstCustomer).click()
+    GetCustomerCode(SharedLogisticsSelectors.CustomerCode)
+    cy.Click(BaseSelectors.RedButton + ":last", null);
+    cy.get(SharedLogisticsSelectors.BackBottun).click()
+}
+export function SearchInvitedCustomers(){
+    cy.get(SharedLogisticsSelectors.InvitedCustomersCount).click()
+    cy.get(SharedLogisticsSelectors.Search).click().type(CustomerCode)
+}
+export function SearchInvitedNotCustomers(){
+    cy.get(SharedLogisticsSelectors.NotInvitedCustomersCount).click()
+    cy.get(SharedLogisticsSelectors.Search).click().type(CustomerCode)
+}
+export function AssertCustomerExist(){
+    cy.get(SharedLogisticsSelectors.row0).contains(CustomerCode)
+}
+
+export function GetFirstInvited(){
+    cy.get(SharedLogisticsSelectors.InvitedCustomersCount).click()
+    DefineGetContactsRequest()
+    cy.get(SharedLogisticsSelectors.FirstCustomer).click()
+    GetCustomerCode(SharedLogisticsSelectors.CustomerCode)
+    cy.Click(BaseSelectors.RedButton + ":last", null);
+    cy.get(SharedLogisticsSelectors.BackBottun).click()
+}
+
+function DefineGetContactsRequest() {
+    cy.DefineRequestWait(RestAPI.GET,SharedLogisticsURLs.GetContacts, SharedLogisticsRequestAliases.GetContacts);
+}
+export function AssertGetContacts() {
+    BaseAssertion.AssertStatusCode(SharedLogisticsRequestAliases.GetContacts, 200).then((interception) => {
+    });
+}
+
+export function AssertSearchIsNull(){
+cy.get(SharedLogisticsSelectors.CellContent).contains(' No Data Found ')
+cy.get(SharedLogisticsSelectors.BackBottun).click()
 }
