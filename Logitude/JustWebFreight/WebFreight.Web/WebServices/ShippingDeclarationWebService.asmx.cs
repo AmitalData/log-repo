@@ -604,7 +604,7 @@ namespace WebFreight.Web.WebServices
 
                         if (freightLocationWarehouseAddress.PhoneNumber != null || freightLocationWarehouseAddress.FaxNumber != null)
                         {
-                            myDataProvider.FreightLocationAddress = myDataProvider.FreightLocationAddress + Environment.NewLine + (freightLocationWarehouseAddress.PhoneNumber != null ? "Tel: " + freightLocationWarehouseAddress.PhoneNumber + " " : "") + (freightLocationWarehouseAddress.FaxNumber != null ? "Fax: " + freightLocationWarehouseAddress.FaxNumber + " " : "");
+                            myDataProvider.FreightLocationAddress = myDataProvider.FreightLocationAddress + Environment.NewLine + (freightLocationWarehouseAddress.PhoneNumber != null ? "Tel: " + freightLocationWarehouseAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(freightLocationWarehouseAddress.FaxNumber)? "Fax: " + freightLocationWarehouseAddress.FaxNumber + " " : "");
                             myDataProvider.FreightLocationAddressWithPhone = myDataProvider.FreightLocationAddress;
                         }
                     }
@@ -664,10 +664,10 @@ namespace WebFreight.Web.WebServices
 
                             if (shipperClientAddress.PhoneNumber != null || shipperClientAddress.FaxNumber != null)
                             {
-                                myDataProvider.ShipperAddress = myDataProvider.ShipperAddress + Environment.NewLine + (shipperClientAddress.PhoneNumber != null ? "Tel: " + shipperClientAddress.PhoneNumber + " " : "") + (shipperClientAddress.FaxNumber != null ? "Fax: " + shipperClientAddress.FaxNumber + " " : "");
+                                myDataProvider.ShipperAddress = myDataProvider.ShipperAddress + Environment.NewLine + (shipperClientAddress.PhoneNumber != null ? "Tel: " + shipperClientAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty( shipperClientAddress.FaxNumber)? "Fax: " + shipperClientAddress.FaxNumber + " " : "");
                             }
 
-                            if (shipperClientAddress.FaxNumber != null)
+                            if (!string.IsNullOrEmpty(shipperClientAddress.FaxNumber))
                             {
                                 myDataProvider.ShipperAddress_NoTel = myDataProvider.ShipperAddress_NoTel + Environment.NewLine + "Fax: " + shipperClientAddress.FaxNumber;
                             }
@@ -812,7 +812,7 @@ namespace WebFreight.Web.WebServices
 
                                 if (consigneeAddress.PhoneNumber != null || consigneeAddress.FaxNumber != null)
                                 {
-                                    myResultConsignee += Environment.NewLine + (consigneeAddress.PhoneNumber != null ? "Tel: " + consigneeAddress.PhoneNumber + " " : "") + (consigneeAddress.FaxNumber != null ? "Fax: " + consigneeAddress.FaxNumber + " " : "");
+                                    myResultConsignee += Environment.NewLine + (consigneeAddress.PhoneNumber != null ? "Tel: " + consigneeAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(consigneeAddress.FaxNumber)? "Fax: " + consigneeAddress.FaxNumber + " " : "");
                                 }
 
 
@@ -977,7 +977,7 @@ namespace WebFreight.Web.WebServices
 
                             if (customAgentImportAddress.PhoneNumber != null || customAgentImportAddress.FaxNumber != null)
                             {
-                                myDataProvider.Broker = myDataProvider.Broker + Environment.NewLine + (customAgentImportAddress.PhoneNumber != null ? "Tel: " + customAgentImportAddress.PhoneNumber + " " : "") + (customAgentImportAddress.FaxNumber != null ? "Fax: " + customAgentImportAddress.FaxNumber + " " : "");
+                                myDataProvider.Broker = myDataProvider.Broker + Environment.NewLine + (customAgentImportAddress.PhoneNumber != null ? "Tel: " + customAgentImportAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(customAgentImportAddress.FaxNumber)? "Fax: " + customAgentImportAddress.FaxNumber + " " : "");
                             }
                         }
                     }
@@ -1034,7 +1034,7 @@ namespace WebFreight.Web.WebServices
 
                             if (consigneeNotImporterAddress.PhoneNumber != null || consigneeNotImporterAddress.FaxNumber != null)
                             {
-                                myResult = myResult + Environment.NewLine + (consigneeNotImporterAddress.PhoneNumber != null ? "Tel: " + consigneeNotImporterAddress.PhoneNumber + " " : "") + (consigneeNotImporterAddress.FaxNumber != null ? "Fax: " + consigneeNotImporterAddress.FaxNumber + " " : "");
+                                myResult = myResult + Environment.NewLine + (consigneeNotImporterAddress.PhoneNumber != null ? "Tel: " + consigneeNotImporterAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(consigneeNotImporterAddress.FaxNumber)? "Fax: " + consigneeNotImporterAddress.FaxNumber + " " : "");
                             }
 
 
@@ -1065,7 +1065,7 @@ namespace WebFreight.Web.WebServices
 
                             if (myConsigneePartnerAddress.PhoneNumber != null || myConsigneePartnerAddress.FaxNumber != null)
                             {
-                                myResult = myResult + Environment.NewLine + (myConsigneePartnerAddress.PhoneNumber != null ? "Tel: " + myConsigneePartnerAddress.PhoneNumber + " " : "") + (myConsigneePartnerAddress.FaxNumber != null ? "Fax: " + myConsigneePartnerAddress.FaxNumber + " " : "");
+                                myResult = myResult + Environment.NewLine + (myConsigneePartnerAddress.PhoneNumber != null ? "Tel: " + myConsigneePartnerAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(myConsigneePartnerAddress.FaxNumber)? "Fax: " + myConsigneePartnerAddress.FaxNumber + " " : "");
                             }
                             myDataProvider.ConsigneeAddress_WithName = DataProviders.General.GetAddressWithName(myConsigneePartnerAddress, true);
                         }
@@ -1108,7 +1108,7 @@ namespace WebFreight.Web.WebServices
 
                         if (mainCarriageCarrierAddress.PhoneNumber != null || mainCarriageCarrierAddress.FaxNumber != null)
                         {
-                            myDataProvider.MainCarriageCarrierAddress = myDataProvider.MainCarriageCarrierAddress + Environment.NewLine + (mainCarriageCarrierAddress.PhoneNumber != null ? "Tel: " + mainCarriageCarrierAddress.PhoneNumber + " " : "") + (mainCarriageCarrierAddress.FaxNumber != null ? "Fax: " + mainCarriageCarrierAddress.FaxNumber + " " : "");
+                            myDataProvider.MainCarriageCarrierAddress = myDataProvider.MainCarriageCarrierAddress + Environment.NewLine + (mainCarriageCarrierAddress.PhoneNumber != null ? "Tel: " + mainCarriageCarrierAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(mainCarriageCarrierAddress.FaxNumber)? "Fax: " + mainCarriageCarrierAddress.FaxNumber + " " : "");
                         }
                     }
 
@@ -1348,7 +1348,7 @@ namespace WebFreight.Web.WebServices
 
                             if (notify1Address.PhoneNumber != null || notify1Address.FaxNumber != null)
                             {
-                                myDataProvider.NotifyAddress = myDataProvider.NotifyAddress + Environment.NewLine + (notify1Address.PhoneNumber != null ? "Tel: " + notify1Address.PhoneNumber + " " : "") + (notify1Address.FaxNumber != null ? "Fax: " + notify1Address.FaxNumber + " " : "");
+                                myDataProvider.NotifyAddress = myDataProvider.NotifyAddress + Environment.NewLine + (notify1Address.PhoneNumber != null ? "Tel: " + notify1Address.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(notify1Address.FaxNumber)? "Fax: " + notify1Address.FaxNumber + " " : "");
                             }
 
                             myDataProvider.NotifyAddress_WithName = DataProviders.General.GetAddressWithName(notify1Address, true);
@@ -1412,7 +1412,7 @@ namespace WebFreight.Web.WebServices
 
                                 if (myAddress.PhoneNumber != null || myAddress.FaxNumber != null)
                                 {
-                                    myResult = myResult + Environment.NewLine + (myAddress.PhoneNumber != null ? "Tel: " + myAddress.PhoneNumber + " " : "") + (myAddress.FaxNumber != null ? "Fax: " + myAddress.FaxNumber + " " : "");
+                                    myResult = myResult + Environment.NewLine + (myAddress.PhoneNumber != null ? "Tel: " + myAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(myAddress.FaxNumber)? "Fax: " + myAddress.FaxNumber + " " : "");
                                 }
                             }
                         }
@@ -1475,7 +1475,7 @@ namespace WebFreight.Web.WebServices
 
                             if (notify2Address.PhoneNumber != null || notify2Address.FaxNumber != null)
                             {
-                                myDataProvider.Notify2Address = myDataProvider.Notify2Address + Environment.NewLine + (notify2Address.PhoneNumber != null ? "Tel: " + notify2Address.PhoneNumber + " " : "") + (notify2Address.FaxNumber != null ? "Fax: " + notify2Address.FaxNumber + " " : "");
+                                myDataProvider.Notify2Address = myDataProvider.Notify2Address + Environment.NewLine + (notify2Address.PhoneNumber != null ? "Tel: " + notify2Address.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(notify2Address.FaxNumber)? "Fax: " + notify2Address.FaxNumber + " " : "");
                             }
 
                             myDataProvider.Notify2Address_WithName = DataProviders.General.GetAddressWithName(notify2Address, true);
@@ -1579,7 +1579,7 @@ namespace WebFreight.Web.WebServices
 
                                 if (myPartnerAddress.PhoneNumber != null || myPartnerAddress.FaxNumber != null)
                                 {
-                                    myDataProvider.ReleasingAgentAddress = myDataProvider.ReleasingAgentAddress + Environment.NewLine + (myPartnerAddress.PhoneNumber != null ? "Tel: " + myPartnerAddress.PhoneNumber + " " : "") + (myPartnerAddress.FaxNumber != null ? "Fax: " + myPartnerAddress.FaxNumber + " " : "");
+                                    myDataProvider.ReleasingAgentAddress = myDataProvider.ReleasingAgentAddress + Environment.NewLine + (myPartnerAddress.PhoneNumber != null ? "Tel: " + myPartnerAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(myPartnerAddress.FaxNumber)? "Fax: " + myPartnerAddress.FaxNumber + " " : "");
                                 }
                             }
                         }
@@ -1705,7 +1705,7 @@ namespace WebFreight.Web.WebServices
 
                             if (preCarriageCarrierAddress.PhoneNumber != null || preCarriageCarrierAddress.FaxNumber != null)
                             {
-                                myDataProvider.PreCarriageCarrierAddress = myDataProvider.PreCarriageCarrierAddress + Environment.NewLine + (preCarriageCarrierAddress.PhoneNumber != null ? "Tel: " + preCarriageCarrierAddress.PhoneNumber + " " : "") + (preCarriageCarrierAddress.FaxNumber != null ? "Fax: " + preCarriageCarrierAddress.FaxNumber + " " : "");
+                                myDataProvider.PreCarriageCarrierAddress = myDataProvider.PreCarriageCarrierAddress + Environment.NewLine + (preCarriageCarrierAddress.PhoneNumber != null ? "Tel: " + preCarriageCarrierAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(preCarriageCarrierAddress.FaxNumber)? "Fax: " + preCarriageCarrierAddress.FaxNumber + " " : "");
                             }
                         }
                     }
@@ -1738,7 +1738,7 @@ namespace WebFreight.Web.WebServices
 
                             if (preForwardingCarrierAddress.PhoneNumber != null || preForwardingCarrierAddress.FaxNumber != null)
                             {
-                                myDataProvider.PreForwardingCarrierAddress = myDataProvider.PreForwardingCarrierAddress + Environment.NewLine + (preForwardingCarrierAddress.PhoneNumber != null ? "Tel: " + preForwardingCarrierAddress.PhoneNumber + " " : "") + (preForwardingCarrierAddress.FaxNumber != null ? "Fax: " + preForwardingCarrierAddress.FaxNumber + " " : "");
+                                myDataProvider.PreForwardingCarrierAddress = myDataProvider.PreForwardingCarrierAddress + Environment.NewLine + (preForwardingCarrierAddress.PhoneNumber != null ? "Tel: " + preForwardingCarrierAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(preForwardingCarrierAddress.FaxNumber)? "Fax: " + preForwardingCarrierAddress.FaxNumber + " " : "");
                             }
                         }
                     }
@@ -1772,7 +1772,7 @@ namespace WebFreight.Web.WebServices
 
                                 if (myPartnerAddress.PhoneNumber != null || myPartnerAddress.FaxNumber != null)
                                 {
-                                    myDataProvider.ConsigneeNotImporter = myDataProvider.ConsigneeNotImporter + Environment.NewLine + (myPartnerAddress.PhoneNumber != null ? "Tel: " + myPartnerAddress.PhoneNumber + " " : "") + (myPartnerAddress.FaxNumber != null ? "Fax: " + myPartnerAddress.FaxNumber + " " : "");
+                                    myDataProvider.ConsigneeNotImporter = myDataProvider.ConsigneeNotImporter + Environment.NewLine + (myPartnerAddress.PhoneNumber != null ? "Tel: " + myPartnerAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(myPartnerAddress.FaxNumber)? "Fax: " + myPartnerAddress.FaxNumber + " " : "");
                                 }
                             }
                         }
@@ -3974,7 +3974,7 @@ namespace WebFreight.Web.WebServices
 
                 if (address.PhoneNumber != null || address.FaxNumber != null)
                 {
-                    myDataProvider.CustomerAddress = myDataProvider.CustomerAddress + Environment.NewLine + (address.PhoneNumber != null ? "Tel: " + address.PhoneNumber + " " : "") + (address.FaxNumber != null ? "Fax: " + address.FaxNumber + " " : "");
+                    myDataProvider.CustomerAddress = myDataProvider.CustomerAddress + Environment.NewLine + (address.PhoneNumber != null ? "Tel: " + address.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(address.FaxNumber)? "Fax: " + address.FaxNumber + " " : "");
                 }
             }
 
@@ -4151,7 +4151,7 @@ namespace WebFreight.Web.WebServices
 
                             if (myPickUpDeliveryAddress.PhoneNumber != null || myPickUpDeliveryAddress.FaxNumber != null)
                             {
-                                myDataProvider.PickUpAddress_New = myDataProvider.PickUpAddress_New + Environment.NewLine + (myPickUpDeliveryAddress.PhoneNumber != null ? "Tel: " + myPickUpDeliveryAddress.PhoneNumber + " " : "") + (myPickUpDeliveryAddress.FaxNumber != null ? "Fax: " + myPickUpDeliveryAddress.FaxNumber + " " : "");
+                                myDataProvider.PickUpAddress_New = myDataProvider.PickUpAddress_New + Environment.NewLine + (myPickUpDeliveryAddress.PhoneNumber != null ? "Tel: " + myPickUpDeliveryAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(myPickUpDeliveryAddress.FaxNumber)? "Fax: " + myPickUpDeliveryAddress.FaxNumber + " " : "");
                             }
                         }
                     }
@@ -4183,7 +4183,7 @@ namespace WebFreight.Web.WebServices
 
                                 if (myShipperAddress.PhoneNumber != null || myShipperAddress.FaxNumber != null)
                                 {
-                                    myDataProvider.PickUpAddress_New = myDataProvider.PickUpAddress_New + Environment.NewLine + (myShipperAddress.PhoneNumber != null ? "Tel: " + myShipperAddress.PhoneNumber + " " : "") + (myShipperAddress.FaxNumber != null ? "Fax: " + myShipperAddress.FaxNumber + " " : "");
+                                    myDataProvider.PickUpAddress_New = myDataProvider.PickUpAddress_New + Environment.NewLine + (myShipperAddress.PhoneNumber != null ? "Tel: " + myShipperAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(myShipperAddress.FaxNumber)? "Fax: " + myShipperAddress.FaxNumber + " " : "");
                                 }
                             }
                         }
@@ -4285,7 +4285,7 @@ namespace WebFreight.Web.WebServices
 
                             if (myPickUpDeliveryAddress.PhoneNumber != null || myPickUpDeliveryAddress.FaxNumber != null)
                             {
-                                myDataProvider.DeliveryAddress_New = myDataProvider.DeliveryAddress_New + Environment.NewLine + (myPickUpDeliveryAddress.PhoneNumber != null ? "Tel: " + myPickUpDeliveryAddress.PhoneNumber + " " : "") + (myPickUpDeliveryAddress.FaxNumber != null ? "Fax: " + myPickUpDeliveryAddress.FaxNumber + " " : "");
+                                myDataProvider.DeliveryAddress_New = myDataProvider.DeliveryAddress_New + Environment.NewLine + (myPickUpDeliveryAddress.PhoneNumber != null ? "Tel: " + myPickUpDeliveryAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(myPickUpDeliveryAddress.FaxNumber)? "Fax: " + myPickUpDeliveryAddress.FaxNumber + " " : "");
                             }
                         }
                     }
@@ -4317,7 +4317,7 @@ namespace WebFreight.Web.WebServices
 
                                 if (myConsigneeAddress.PhoneNumber != null || myConsigneeAddress.FaxNumber != null)
                                 {
-                                    myDataProvider.DeliveryAddress_New = myDataProvider.DeliveryAddress_New + Environment.NewLine + (myConsigneeAddress.PhoneNumber != null ? "Tel: " + myConsigneeAddress.PhoneNumber + " " : "") + (myConsigneeAddress.FaxNumber != null ? "Fax: " + myConsigneeAddress.FaxNumber + " " : "");
+                                    myDataProvider.DeliveryAddress_New = myDataProvider.DeliveryAddress_New + Environment.NewLine + (myConsigneeAddress.PhoneNumber != null ? "Tel: " + myConsigneeAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(myConsigneeAddress.FaxNumber)? "Fax: " + myConsigneeAddress.FaxNumber + " " : "");
                                 }
                             }
                         }
