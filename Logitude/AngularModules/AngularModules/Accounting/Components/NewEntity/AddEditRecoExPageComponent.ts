@@ -309,18 +309,6 @@ export class AddEditRecoExPageComponent extends BaseComponent
 
         if (this.ReconcileExternalPagePM.StatusCode == "2") {  // 2- Approved
 
-            // * Check last approved page
-            var isLastApprovedPage = this.additionalDataPM.LastPageNumber == this.ReconcileExternalPagePM.PageNo + "";
-            if (isLastApprovedPage) {
-                // continue...
-            }
-            else {
-                errors.push(TextCodeTranslator.Translate("BankAccounts.O.CantCancelItsNotLastApproved"));
-                this.ValidationErrorsList = errors;
-                return;
-            }
-
-
             // * Check reconciled page lines
             var hasReconciledLines: boolean = false;
             var lines = this.PageLinesList.Collection;
