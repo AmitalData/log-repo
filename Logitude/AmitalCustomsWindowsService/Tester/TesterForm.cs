@@ -339,7 +339,7 @@ namespace AmitalCustomsWindowsService.Tester
             ;
             return;
             clsTester.TestUpdateLOGITUDE_FILE();
->>>>>>>>> Temporary merge branch 2
+
             //clsTester.GetListByCourierHAWB();
 
             return;
