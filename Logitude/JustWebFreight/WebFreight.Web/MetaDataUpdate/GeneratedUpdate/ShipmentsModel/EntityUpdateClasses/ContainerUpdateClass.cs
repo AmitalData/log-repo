@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerUpdateClass
    {  		
-		public const string HashString = "ef7e22e20dc11a218ca5af99cf819e50";
+		public const string HashString = "ba03ebf5783fa811e1a498e7341a42d8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -13307,7 +13307,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
-					  						IsCustomFilter =  true,
+					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -14849,7 +14849,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn ClosedContainersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedContainersQuery.Id,QueryCode = ClosedContainersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 120 }, addedQueryColumns);
 
-             AdvancedQueryFilter ClosedContainersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.IsClosed", PredefinedValue = "True",PredefinedValue2 = null, QueryId = ClosedContainersQuery.Id,QueryCode = ClosedContainersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter ClosedContainersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.IsClosed", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = ClosedContainersQuery.Id,QueryCode = ClosedContainersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -14866,7 +14866,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn CancelledContainersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainersQuery.Id,QueryCode = CancelledContainersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 120 }, addedQueryColumns);
 
-             AdvancedQueryFilter CancelledContainersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.IsCancelled", PredefinedValue = "True",PredefinedValue2 = null, QueryId = CancelledContainersQuery.Id,QueryCode = CancelledContainersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter CancelledContainersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.IsCancelled", PredefinedValue = "True",PredefinedValue2 = null, CustomPredefined = false, QueryId = CancelledContainersQuery.Id,QueryCode = CancelledContainersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -14883,7 +14883,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn ContainersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 120 }, addedQueryColumns);
 
-             AdvancedQueryFilter ContainersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.Containers", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter ContainersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.Containers", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
