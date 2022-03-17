@@ -396,7 +396,7 @@
                         <td style="width: 350px;">
                             <table *ngIf="VisibileSurchargesArea">
                                 <tr class="TabTitleRow">
-                                    <td *ngIf="EntityPM.TypeCode != 'ICC' && EntityPM.TypeCode != 'ECC' && EntityPM.TypeCode != 'ICS' && EntityPM.TypeCode != 'ECS'">
+                                    <td *ngIf="EntityPM.TypeCode != 'ICC' && EntityPM.TypeCode != 'ECC' && EntityPM.TypeCode != 'ICS' && EntityPM.TypeCode != 'ECS' && EntityPM.TypeCode != 'IFT'">
                                         Surcharges
                                     </td>
 
@@ -406,6 +406,10 @@
 
                                     <td *ngIf="EntityPM.TypeCode == 'ICS' || EntityPM.TypeCode == 'ECS'">
                                         Local Charges
+                                    </td>
+
+                                    <td *ngIf="EntityPM.TypeCode == 'IFT'">
+                                        Charges
                                     </td>
                                 </tr>
 
