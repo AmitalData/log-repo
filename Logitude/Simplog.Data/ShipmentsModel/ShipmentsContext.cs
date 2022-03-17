@@ -60,6 +60,21 @@ namespace Simplog.Data.ShipmentsModel
             ShipmentsContext context = new ShipmentsContext(connection);
             return context;
         }
+        public static IShipmentsContext GetSecContext(int tenant)
+        {
+            GlobalDB currentDb;
+            //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            //{
+            currentDb = GlobalDbHelper.GetGlobalDB(tenant);
+            //}
+            string dbConnectionInfo = currentDb.DBConnection;
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            //DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbSeconderyConnectionInfo, null, null);
+            ShipmentsContext context = new ShipmentsContext(connection);
+            return context;
+        }
         public override LogitudeDBSchema LogitudeDBSchema
         {
             get { return Simplog.Server.Infrastructure.LogitudeDBSchema.LOGITUDE_MAIN; }

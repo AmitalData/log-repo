@@ -1372,6 +1372,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 invoicedataprovider.BillToAddress = invoicedataprovider.BillTo_LocalName + Environment.NewLine + DataProviders.General.GetAddress(billToCardAddress);
                                 invoicedataprovider.BillToAddress_OneLine = Environment.NewLine + DataProviders.General.GetAddress_OneLine(billToCardAddress);
                                 invoicedataprovider.BillToAddressDescription = billToCardAddress.Description;
+                                invoicedataprovider.BillToAddressName = billToCardAddress.Name;
                             }
 
                             else
@@ -1379,6 +1380,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 invoicedataprovider.BillToAddress = invoicedataprovider.BillTo + DataProviders.General.GetAddress(billToCardAddress);
                                 invoicedataprovider.BillToAddress_OneLine = DataProviders.General.GetAddress_OneLine(billToCardAddress);
                                 invoicedataprovider.BillToAddressDescription = billToCardAddress.Description;
+                                invoicedataprovider.BillToAddressName = billToCardAddress.Name;
                             }
 
                             invoicedataprovider.SAT.BillToZipCode = billToCardAddress.ZipCode;
