@@ -400,9 +400,10 @@ export class LedgerTransactionExtendedListService {
 
     }
 
-    GetTransactionsCurrencies(AccountId:string) {
+    GetTransactionsCurrencies(AccountId:string, splittedByCurrencyCheckBox: boolean, attachedGLAccountChanged: boolean) {
 
-        var urlparameters = '/GetTransactionsCurrencies?AccountId=' + AccountId;
+        var urlparameters = '/GetTransactionsCurrencies?AccountId=' + AccountId + '&splittedByCurrencyCheckBox=' + splittedByCurrencyCheckBox
+        + '&attachedGLAccountChanged=' + attachedGLAccountChanged;
 
         var callUrl = this._apiUrl.concat(urlparameters);
         return this.httpClient.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(
@@ -415,7 +416,7 @@ export class LedgerTransactionExtendedListService {
 
 
     }
-
+    
 
     MapJsonToEntityList(jsonList: any) {
 
