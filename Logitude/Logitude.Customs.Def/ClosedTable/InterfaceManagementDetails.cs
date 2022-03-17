@@ -515,7 +515,7 @@ namespace Logitude.Customs.Def.ClosedTable
             {
                 Code = "5118",
                 InOut = InOutEnum.I.ToString(),
-                Description = "מענה לבקשת ביטול הצהרת יבוא",
+                Description = "מענה לבקשת ביטול הצהרת",
                 DcaPrefixName = "SendDF_MSG5118_DeclarationCancellationReplyMsg_Out.",
                 DefaultSendOptionsCode = null,
                 DefaultPriority = CONST_DefaultPriority,
