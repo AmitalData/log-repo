@@ -15,7 +15,7 @@ Feature: AR Invoice Approve With SAT
             | ShipmentLevel        | Direct                     |
             | Direction            | Export                     |
             | TransportMode        | Air                        |
-            | Shipper              | Cliente de prueba SA de CV |
+            | Shipper              | Cliente de prueba          |
             | MainCarriageFromPort | LHR                        |
             | MainCarriageToPort   | MIA                        |
         When create shipment
