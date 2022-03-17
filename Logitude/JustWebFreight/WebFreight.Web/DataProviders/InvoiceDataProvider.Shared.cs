@@ -31,6 +31,7 @@ namespace WebFreight.Web.DataProviders
         public string BillTo { get; set; }
         public string BillTo_LocalName { get; set; }
         public string BillToAddress { get; set; }
+        public string BillToAddressName { get; set; }
         public string BillToAddress_NoName { get; set; }
         public string BillToAddress_OneLine { get; set; }
         public string BillToAddressDescription { get; set; }
