@@ -44,7 +44,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Card&quot;"
-  Code="&quot;42f3&quot;"
+  Code="&quot;1561&quot;"
   Name="&quot;Card&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Common&quot;"
@@ -1508,7 +1508,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -1535,7 +1535,7 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;PartnerTypeName&quot;"
-    DefaultText="&quot;Type&quot;"
+    DefaultText="&quot;Partner Type&quot;"
     ListFieldLable="&quot;PartnerTypeNameListLable&quot;"
     ListLableDefaultText="&quot;Type&quot;"
     IsNullable="false"
@@ -8909,6 +8909,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;RegimenFiscalCode&quot;"
     ListPropertyPath="&quot;RegimenFiscalCode&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -9029,6 +9030,53 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Query
+    Code="&quot;CTool Partners&quot;"
+    TextCode="&quot;CTool Partners&quot;"
+    QueryGroupCode="&quot;1561&quot;"
+    IndexOrder="0"
+    ObjectTableName="&quot;Card&quot;"
+    QuerySection="&quot;Card&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    DefaultSortName="&quot;SharedLogisticsInvitationStatusName&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    EditWizardName="&quot;SharedLogistics.Views.InviteCustomersControl&quot;"
+    IsSpellChecked="false"
+    Perspective="&quot;Cards&quot;">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;CTool Partners&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;Code&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CTool Partners&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CTool Partners&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;LocalName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CTool Partners&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;PartnerTypeName&quot;"
+        ColumnWidth="200" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;CTool Partners&quot;"
+        PredefinedValue="&quot;CS&quot;"
+        ObjectFieldName="&quot;PartnerTypeId&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="0" />
+    </QueryFilters>
+  </Query>
   <Screen
     Name="&quot;CardHeaderScreen&quot;"
     ObjectTableName="&quot;Card&quot;"

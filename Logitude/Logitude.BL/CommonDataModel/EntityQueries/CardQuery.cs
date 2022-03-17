@@ -470,7 +470,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              CountryCode = a.CountryCode,
                                              CountryName = a.CountryName,
                                              CityName = a.CityName,
-                                             GLAccountId = a.GLAccountId
+                                             GLAccountId = a.GLAccountId,
+                                            SharedLogisticsInvitationStatusCode = a.SharedLogisticsInvitationStatusCode,
+                                            InActive = a.InActive , 
+                                            PartnerTypeId = a.PartnerTypeId,
                                          };
 
             return cards;
