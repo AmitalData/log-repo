@@ -315,6 +315,8 @@ namespace AmitalCustomsWindowsService.Tester
             ;
             return;
             clsTester.TestUpdateLOGITUDE_FILE();
+            Logitude.CustomsMessaging.Dca.WaitingTester.SendWaiting();
+            //clsTester.TestUpdateLOGITUDE_FILE();
             //clsTester.GetListByCourierHAWB();
 
             return;

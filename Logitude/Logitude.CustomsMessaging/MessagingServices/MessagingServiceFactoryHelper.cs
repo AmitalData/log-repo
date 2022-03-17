@@ -558,6 +558,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
              DCAInUCBUCADPE_MsgMessagingService>
              ((new DCAInUCBUCADPE_MsgMessagingService()).MainInterfaceCode);
+
+
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                           NG_9100_MSG_OutgoingMessageRequestMessagingService>
+                           ((new NG_9100_MSG_OutgoingMessageRequestMessagingService()).MainInterfaceCode);
         }
         public static void InitContainer()
         {
