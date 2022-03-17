@@ -48,6 +48,7 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
                                                 TypeCode = a.TypeCode,
                                                 CustomsBrokerName = a.CustomsBroker != null ? a.CustomsBroker.EnglishName : "",
                                                 CustomerGroupName = a.CustomerGroup != null ? a.CustomerGroup.Name : "",
+                                                ContractNumber = a.ContractNumber,
                                             });
             return query;
         }
