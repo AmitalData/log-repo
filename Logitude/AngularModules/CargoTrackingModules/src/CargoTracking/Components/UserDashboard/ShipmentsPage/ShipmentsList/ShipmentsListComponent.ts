@@ -5,7 +5,7 @@ import { FormBuilder } from '@angular/forms';
 import { CargoTrackingSearchService } from '../../../../Services/Others/CargoTrackingSearchService';
 import { CargoTrackingShipmentList } from '../../../../EntityLists/CargoTrackingShipmentList';
 import { SessionInfo } from '../../../../../Infrastructure/Utilities/SessionInfo';
-import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { CdkScrollable, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { ShipmentDataSource } from '../../../../DataContracts/CargoTrackingShipmentDataSource';
 import { CargoTrackingShipmentSearchInput, MoreFilter } from '../../../../DataContracts/CargoTrackingShipmentFilters';
 import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
@@ -63,6 +63,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     @ViewChild('shipmentDirectionMultipleSelection') shipmentDirectionMultipleSelection: MultipleSelectionComponent;
     @ViewChild('shipmentMoreFiltersMultipleSelection') shipmentMoreFiltersMultipleSelection: MultipleSelectionComponent;
     @ViewChild('sortByMultipleSelection') sortByMultipleSelection: MultipleSelectionComponent;
+    @ViewChild('scrollViewport') scrollViewport: CdkScrollable;
     public MoreReferenceText: string;
     public ConsignmentNumber: string;
     public toPortCode: string;
@@ -105,6 +106,10 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         private logitudeGridExportToExcelService: LogitudeGridExportToExcelService) {
         this.InitComponent();
         this.SetDefaultBackgroundColor();
+
+        router.events.subscribe((value) => {
+            this.OnRouteChanged(value);
+        });
     }
 
     ngOnInit(): void {
@@ -115,6 +120,11 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.GetCompanyLoginsFromCache();
         this.fillFeltersDictionary();
         this.setViews();
+    }
+    OnRouteChanged(event){
+        if(event instanceof NavigationEnd) {
+            this.RerenderVirtualScroll();
+        }
     }
     public ExportToExcelClick(){
 
@@ -999,7 +1009,11 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.setViews();
     }
 
-    private setViews()
+    RerenderVirtualScroll(){
+        this.virtualScroll.checkViewportSize();
+    }
+
+    setViews() 
     {
         if(this.IsWebView) {
             this.isMobileView = window.innerWidth <= 479;
