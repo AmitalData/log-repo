@@ -127,7 +127,7 @@ export class DeclarationReferantDataFiltersMenuComponent
 
         var i = 0;
         var myService: UserListService = new UserListService();
-        if (UserListFromFilters[0] != "HowCare" && UserListFromFilters.length != 0 && UserListFromFilters[0] != null ) {
+        if (UserListFromFilters[0] != "HowCare" && UserListFromFilters.length != 0 && !AppTool.IsNullOrEmpty(UserListFromFilters[0])) {
             UserListFromFilters[0].split("%2C").forEach(function (value) {
                 let ul = new UserList();
                 ul.Id = value;
@@ -143,7 +143,7 @@ export class DeclarationReferantDataFiltersMenuComponent
 
         }
         i = 0;
-        if (DepartmentFromFilters[0] != "HowCare" && DepartmentFromFilters.length != 0 && DepartmentFromFilters[0] != null) {
+        if (DepartmentFromFilters[0] != "HowCare" && DepartmentFromFilters.length != 0 && !AppTool.IsNullOrEmpty(DepartmentFromFilters[0])) {
             DepartmentFromFilters[0].split("%2C").forEach(function (value) {
                 let ul = new DepartmentList();
                 ul.Id = value;
@@ -457,15 +457,14 @@ export class DeclarationReferantDataFiltersMenuComponent
 
             this._LOVListUsers.forEach(item => { this.UserNamesListString += item["LocalName"] + ","; });//Id: "1-3697"
             this.UserNamesListString = this.UserNamesListString.slice(0, -1); // trim last comma
-            this.apiQueryFilters.addAdditionalFilter("ReferantUserName", this.UserNamesListString, null, null, "Equal", true, false, false, "string", true);
-            this.apiQueryFilters.addAdditionalFilter("ReferentUserId", this.UsersListString, null, null, "InListExact", false, false, false, "string", this._LOVListUsers.length == 0);
 
         } else {
-            this.UsersListString = "HowCare"
+            //this.UsersListString = "HowCare"
             //  UserNamesListString = "HowCare"LOVListUsers
-            //RemoveFilter = true;
+            RemoveFilter = true;
         }
-        
+        this.apiQueryFilters.addAdditionalFilter("ReferantUserName", this.UserNamesListString, null, null, "Equal", true, false, false, "string",  true);
+        this.apiQueryFilters.addAdditionalFilter("ReferentUserId", this.UsersListString, null, null, "InListExact", false, false, false, "string", this._LOVListUsers.length == 0);
         this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
         this.apiQueryFiltersChanged = true;
     }
@@ -483,14 +482,14 @@ export class DeclarationReferantDataFiltersMenuComponent
             this.DepartmentListString = this.DepartmentListString.slice(0, -1); // trim last comma
             this.LOVListDepartment.forEach(item => { this.DepartmentNamesListString += item["LocalName"] + ","; });//Id: "1-3697"
             this.DepartmentNamesListString = this.DepartmentNamesListString.slice(0, -1); // trim last comma
-            this.apiQueryFilters.addAdditionalFilter("DepartmentName", this.DepartmentNamesListString, null, null, "Equal", true, false, false, "string", true);
-            this.apiQueryFilters.addAdditionalFilter("DepartmentId", this.DepartmentListString, null, null, "InListExact", false, false, false, "string", this.LOVListDepartment.length == 0);
+            
         } else {
-            this.DepartmentListString = "HowCare";
+           // this.DepartmentListString = "HowCare";
             //  DepartmentNamesListString =  "HowCare";
-           //RemoveFilter = true;
+           RemoveFilter = true;
         }
-        
+        this.apiQueryFilters.addAdditionalFilter("DepartmentName", this.DepartmentNamesListString, null, null, "Equal", true, false, false, "string", true);
+        this.apiQueryFilters.addAdditionalFilter("DepartmentId", this.DepartmentListString, null, null, "InListExact", false, false, false, "string", this.LOVListDepartment.length == 0);
         this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
         this.apiQueryFiltersChanged = true;
 
