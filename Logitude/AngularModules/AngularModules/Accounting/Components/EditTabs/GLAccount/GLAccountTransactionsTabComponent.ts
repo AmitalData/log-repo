@@ -114,6 +114,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                 this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
                     if (_CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "GATR") {
+                            this.GetTransactionsCurrencies();
                             this.LoadAllScreenData();
                             this.SetDateFilterWidth();
                         }
