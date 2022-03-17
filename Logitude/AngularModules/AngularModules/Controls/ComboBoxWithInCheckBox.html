@@ -114,9 +114,10 @@
         opacity: 0.5;
         pointer-events: none;
     }
+
 </style>
 
-<div *ngIf="!IsAreasMenu" tabindex="0" class="ToggleButton" (mousedown)="mousedown()">
+<div *ngIf="!IsAreasMenu" tabindex="0" class="ToggleButton" (mousedown)="mousedown()" [class.ComboBoxDisabled]="IsDisabled" >
     <label class="TextTrimming" style="width: calc(100% - 10px);padding-right:5px;" [title]="TotalPickedItems">{{TotalPickedItems}}</label>
     <img src="./Images/ToggleIcon.png" />
     <div *ngIf="!WithinImage && !CheckBoxOnly" [id]="ControlId" class="ToggleButtonMenu" style="width: 200px;-webkit-box-sizing: border-box;">
