@@ -208,6 +208,7 @@ using Logitude.Customs.BL.Messaging.Customs;
         private CustomBankQueryService customBankQuery;
         private PayerTypeQueryService payerTypeQuery;
         private PointerLevelQueryService pointerLevelQuery;
+        private CustomsDocumentUploadQueryService customsDocumentUploadQuery;
 
         private ProductIdentificationTypeQueryService productIdentificationTypeQuery;
         private ProductNameTypeQueryService productNameTypeQuery;
