@@ -291,6 +291,8 @@ namespace AmitalCustomsWindowsService.Tester
         bool _MultiThreard = false;
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Logitude.CustomsMessaging.Dca.WaitingTester.SendWaiting();
+            return;
             var sw = Stopwatch.StartNew();
             int tenant =GetTenant();
             _MultiThreard = !_MultiThreard;
@@ -315,7 +317,7 @@ namespace AmitalCustomsWindowsService.Tester
             ;
             return;
             clsTester.TestUpdateLOGITUDE_FILE();
-            Logitude.CustomsMessaging.Dca.WaitingTester.SendWaiting();
+            
             //clsTester.TestUpdateLOGITUDE_FILE();
             //clsTester.GetListByCourierHAWB();
 
