@@ -28,8 +28,10 @@
     <OldToolsVersion>4.0</OldToolsVersion>
     <UpgradeBackupLocation />
     <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
-    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressAnonymousAuthentication>
+    </IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>
+    </IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
     <TargetFrameworkProfile />
     <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
@@ -37,7 +39,8 @@
     <RestorePackages>true</RestorePackages>
     <UseGlobalApplicationHostFile />
     <TypeScriptToolsVersion>2.0</TypeScriptToolsVersion>
-    <Use64BitIISExpress>true</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -1042,11 +1045,8 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomerClassificationTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomerIdentificationTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomerIndicationTypeViewsController.Generated.cs" />
-
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DeclarationCasualDetailsViewsController.Generated.cs" />
-
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsEnvironmentSettingViewsController.Generated.cs" />
-
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsDocumentUploadViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DeliveryTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CancelRequestRejectReasonTypeViewsController.Generated.cs" />
@@ -1064,11 +1064,8 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ReferenceStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ClientsPoaController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ContainerizationController.Generated.cs" />
-
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DeclarationCasualDetailsController.Generated.cs" />
-
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsEnvironmentSettingController.Generated.cs" />
-
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ExportDeclarationClosingDataController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ExportStorageController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\LogisticsReferenceTypeController.Generated.cs" />
@@ -1144,6 +1141,7 @@
     <Compile Include="Controllers\WebDomainControllers\QuoteOPDomainController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\PendingWebServiceController.cs" />
     <Compile Include="Controllers\WebServices\ShipmentContainersWebServiceController.cs" />
+    <Compile Include="CustomModel\DomainServices\CustomDomainService.CustomsDocumentUpload.cs" />
     <Compile Include="CustomWebServices\BL\XLSReports\LastMileReport.cs" />
     <Compile Include="CustomWebServices\BL\XLSReports\SlaReport.cs" />
     <Compile Include="CustomWebServices\BL\XLSReports\SlaReportTypes\SlaDetailedReport.cs" />
