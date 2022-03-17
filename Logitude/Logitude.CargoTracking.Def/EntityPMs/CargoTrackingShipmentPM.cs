@@ -93,6 +93,7 @@ namespace Logitude.CargoTracking.Def.EntityPMs
         public string CurrencySign { get; set; }
         public string CurrencyCode { get; set; }
         public string CurrencyName { get; set; }
+        public string SupplierName { get; set; }
         public string GoodsDescription { get; set; }
         public decimal ImporterVatAmount { get; set; }
         public decimal TotalValueInNIS { get; set; }
