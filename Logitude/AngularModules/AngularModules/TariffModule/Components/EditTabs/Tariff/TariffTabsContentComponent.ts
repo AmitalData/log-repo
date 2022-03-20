@@ -185,7 +185,9 @@ export class TariffTabsContentComponent implements OnDestroy {
         else if (this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
             this.EditTabTariffType = "CHVR";
         }
-
+        else if (this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
+            this.EditTabTariffType = "LCVR";
+        }
         this.BuildTabs();
         this.RunComponent();        
     }
@@ -462,6 +464,15 @@ class TariffDetailsTab {
                 this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/CustomChargesVersionTabComponent";
                 break;
             }
+
+            case "LCVR":
+                {
+                    this.IsDraft = version.IsDraft;
+                    this.VersionPM = version;
+                    this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/LocalChargesVersionTabComponent";
+                    break;
+
+                }
         }
     }
 }

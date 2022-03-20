@@ -30,6 +30,7 @@ import { AddTariffContainersComponent } from './Components/NewEntity/AddTariffCo
 import { ChooseCountryComponent } from './Components/EditTabs/Tariff/ChooseCountryComponent';
 import { UploadedExcelsComponent } from './Components/EditTabs/Tariff/UploadedExcelsComponent';
 import { CustomChargesVersionTabComponent } from './Components/EditTabs/Tariff/CustomChargesVersionTabComponent';
+import { LocalChargesVersionTabComponent } from './Components/EditTabs/Tariff/LocalChargesVersionTabComponent';
 
 export const Components =
     [
@@ -64,6 +65,7 @@ export const Components =
         ChooseCountryComponent,
         UploadedExcelsComponent,
         CustomChargesVersionTabComponent,
+        LocalChargesVersionTabComponent,
     ];
 
 export const ControlsComponents =
@@ -107,6 +109,7 @@ export class ModuleDeclarations {
             case "UploadedExcelsComponent": { myResult = UploadedExcelsComponent; break; }
             case "CustomChargesVersionTabComponent": { myResult = CustomChargesVersionTabComponent; break; }
             case "SaleWorkspaceComponent": { myResult = SaleWorkspaceComponent; break; }
+            case "LocalChargesVersionTabComponent": { myResult = LocalChargesVersionTabComponent; break; }
         }
 
         return myResult;
