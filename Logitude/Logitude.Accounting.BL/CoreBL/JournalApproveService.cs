@@ -525,7 +525,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 
 
                 var myReconciliation = myCreateAutoReconcileWhileStreamingService.ReconciliationList.First();
-                taxReportPM.ReconciliationsNumbers = !string.IsNullOrWhiteSpace(taxReportPM.ReconciliationsNumbers) ? ", " + myReconciliation.Number : myReconciliation.Number;
+                taxReportPM.ReconciliationsNumbers = !string.IsNullOrWhiteSpace(taxReportPM.ReconciliationsNumbers) ? taxReportPM.ReconciliationsNumbers +", " + myReconciliation.Number : myReconciliation.Number;
                 TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(this._AccountingContext, new Dictionary<string, IContext>(), _JournalPM.Tenant);
                 taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
                 taxReportUpdateService.Update(taxReportPM, true);
