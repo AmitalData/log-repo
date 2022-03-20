@@ -6,4 +6,6 @@ export interface ARPaymentDetails {
     RegisterDate:string,
     PaymentMethod:string,
     PaymentAmount:string,
+    MetodoPago:string,
+    FormaPago:string,
 }

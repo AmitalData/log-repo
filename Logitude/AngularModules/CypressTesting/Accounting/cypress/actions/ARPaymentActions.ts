@@ -16,6 +16,17 @@ export function FillARPayment(aRPaymentDetails: ARPaymentDetails) {
     cy.FillLogTextBox(ARPaymentSelectors.PaymentAmount, aRPaymentDetails.PaymentAmount)
     cy.FillLogLov(ARPaymentSelectors.PaymentCurrency, aRPaymentDetails.PaymentCurrency, true)
     cy.FillLogTextBox(ARPaymentSelectors.RegisterDate, aRPaymentDetails.RegisterDate)
+    
+}
+export function FillARPaymentWithSAT(aRPaymentDetails: ARPaymentDetails) {
+    cy.FillLogLov(ARPaymentSelectors.Partner, aRPaymentDetails.Partner, true)
+    cy.FillLogLov(ARPaymentSelectors.PaymentMethod, aRPaymentDetails.PaymentMethod, true)
+    cy.FillLogTextBox(ARPaymentSelectors.PaymentAmount, aRPaymentDetails.PaymentAmount)
+    cy.FillLogLov(ARPaymentSelectors.PaymentCurrency, aRPaymentDetails.PaymentCurrency, true)
+    cy.FillLogTextBox(ARPaymentSelectors.RegisterDate, aRPaymentDetails.RegisterDate)
+    cy.FillLogLov(ARPaymentSelectors.MetodoPago, aRPaymentDetails.MetodoPago, true)
+    cy.FillLogLov(ARPaymentSelectors.FormaPago, aRPaymentDetails.FormaPago, true)
+    
 }
 
 export function CreateARPayment() {
