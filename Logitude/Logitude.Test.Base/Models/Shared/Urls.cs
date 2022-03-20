@@ -116,6 +116,9 @@ namespace Logitude.Test.Base.Models.Shared
         public static string SprintsController = "Sprints";
         public static string TimeManagementDomainController = "TimeManagementDomain";
         public static string ShipmentOrderController = "ShipmentOrder";
+        public static string ReportController = "Report";
+        public static string ReportsTemplateViewsGetByFilters = "ReportsTemplateViews/GetByFilters";
+        public static string ReportViewsGetByFilters = "ReportViews/GetByFilters";
 
         #region Shipment Prepare Data URls
         //locations
@@ -418,8 +421,11 @@ namespace Logitude.Test.Base.Models.Shared
         {
             return $"ExportDocument?documentTypeId={getDocumentCopy.DocumentTypeId}&entityId={getDocumentCopy.EntityId}&entityObjectTableId={getDocumentCopy.EntityObjectTableId}&childEntityId=&childObjectTableId=&documentOutId={getDocumentCopy.DocumentOutId}&tenant={getDocumentCopy.Tenant}&documentTypeCopyId={getDocumentCopy.DocumentTypeCopyId}&userId={getDocumentCopy.UserId}";
         }
-        
 
+        public static string GetCheckIfStimulSoftReportIsBliud(string reportKey, int tenant)
+        {
+            return $"Report/GetCheckIfStimulSoftReportIsBliud?reportKey={reportKey}&tenant={tenant}";
+        }
 
     }
 }
