@@ -44,6 +44,8 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     public IsPriceCheckVisible: boolean = false;
     private entityResourceService: EntityResourceService = new EntityResourceService();
     public ComponentRef: any;
+    public IsAllowingMultipleFreightCharges: boolean = false;
+
     constructor(private entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -62,7 +64,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         }
 
         this.IsPriceCheckVisible = QuoteUtilities.IsPriceCheckVisible(this.EntityPM);
-        
+        this.IsAllowingMultipleFreightChargesMethod();
         this.InitBehaviours();
 
         this.SetLabels();
@@ -72,6 +74,10 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         this.BuildItemsSource();
         this.InitializeProfit();
         this.Listen();
+    }
+
+    private IsAllowingMultipleFreightChargesMethod() {
+        this.IsAllowingMultipleFreightCharges = QuoteUtilities.IsAllowingMultipleFreightCharges(this.EntityPM);
     }
 
     public Behaviours: QuoteChargesBehaviours;
@@ -269,6 +275,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             this.OnPercentForeignAmountChanged();
             this.BuildItemsSource();
             this.ComputeTotals();
+            this.IsAllowingMultipleFreightChargesMethod();
         });
 
         this.Behaviours.DeleteCharge(itemComponent.EntityPM);

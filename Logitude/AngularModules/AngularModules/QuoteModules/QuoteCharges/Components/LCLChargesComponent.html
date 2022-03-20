@@ -494,7 +494,7 @@
 
                                                 <div style="height: 100%; width: 100%; position:relative;">
                                                     <div class="CenterCenter" style="width: 16px;">
-                                                        <CheckBox *ngIf="item.IsAllInCheckBoxVisible" [IsChecked]="item.IsAllIN" (Checked)="item.IsAllIN = $event" [IsEnabled]="item.IsEditingEnabled"></CheckBox>
+                                                        <CheckBox *ngIf="item.IsAllInCheckBoxVisible" [IsChecked]="item.IsAllIN" (Checked)="item.IsAllIN = $event" [IsEnabled]="item.IsEditingEnabled && !IsAllowingMultipleFreightCharges"></CheckBox>
                                                     </div>
                                                 </div>
                                             </log-cell-template>

@@ -47,10 +47,11 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
     private IsHyprid: boolean;
     private ChargesTypeCode: string;
     private PropertyChangedEvent: any = null;
+    private QuoteValidator;
 
     constructor() {
         super();
-
+        this.QuoteValidator = new QuoteValidator();
         this.ItemsSource = new ObservableCollection([]);
         this.StepsItemsSource = new ObservableCollection([]);
         this.CurrentSession.SessionEvent.subscribe((res) => {
@@ -270,8 +271,9 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
         }
 
         if (this.EntityPM.ChargesGroupCode == "FRT") {
-            if (this.DataContext.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d != this.EntityPM).length > 0) {
-                this.errors.push("Freight Charge already added");
+            var freightError = this.QuoteValidator.ValidateFreightQuoteCharges(this.DataContext.QuotePM, this.EntityPM);
+            if (freightError) {
+                this.errors.push(freightError);
             }
         }
 
@@ -376,7 +378,7 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
         }
 
         this.DataContext.fatherComponent.OnPercentForeignAmountChanged();
-
+        this.Father.IsAllowingMultipleFreightChargesMethod();
         if (!AppTool.IsNullOrEmpty(this.DataContext.TariffId) && this.EntityPM.IsDirty && !this.DataContext.IsNew) {
             var property = this.propertiesChanges.filter(a => a == "CostUnitPrice" || a == "CostTotalAmount" || a == "CostCurrencyId")[0];
             if (property) {
