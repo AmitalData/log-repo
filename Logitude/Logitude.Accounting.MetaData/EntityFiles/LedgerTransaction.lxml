@@ -2197,12 +2197,12 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="true"
+    CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="true"
+    DisplayInList="false"
     IsCustomFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
@@ -2274,12 +2274,12 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="true"
+    CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="true"
+    DisplayInList="false"
     IsCustomFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
@@ -5316,96 +5316,86 @@
       <QueryColumn
         QueryCode="&quot;LedgerTransactions&quot;"
         IndexOrder="18"
-        ObjectFieldName="&quot;CumulativeLocalAmount&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;LedgerTransactions&quot;"
-        IndexOrder="19"
-        ObjectFieldName="&quot;CumulativeForeignAmount&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;LedgerTransactions&quot;"
-        IndexOrder="20"
         ObjectFieldName="&quot;AmountToReconcile&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;LedgerTransactions&quot;"
-        IndexOrder="21"
+        IndexOrder="19"
         ObjectFieldName="&quot;Mark&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;LedgerTransactions&quot;"
-        IndexOrder="22"
+        IndexOrder="20"
         ObjectFieldName="&quot;OpenAmountCurrencyCode&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;LedgerTransactions&quot;"
-        IndexOrder="23"
+        IndexOrder="21"
         ObjectFieldName="&quot;IsReconciled&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;LedgerTransactions&quot;"
-        IndexOrder="24"
+        IndexOrder="22"
         ObjectFieldName="&quot;SourceNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;LedgerTransactions&quot;"
-        IndexOrder="25"
+        IndexOrder="23"
         ObjectFieldName="&quot;CurrencySign&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;LedgerTransactions&quot;"
-        IndexOrder="26"
+        IndexOrder="24"
         ObjectFieldName="&quot;OpenAmountCurrencySign&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;LedgerTransactions&quot;"
-        IndexOrder="27"
+        IndexOrder="25"
         ObjectFieldName="&quot;IsExternalReconcile&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;LedgerTransactions&quot;"
-        IndexOrder="28"
+        IndexOrder="26"
         ObjectFieldName="&quot;InReconcileProgress&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;LedgerTransactions&quot;"
-        IndexOrder="29"
+        IndexOrder="27"
         ObjectFieldName="&quot;ForeignAmount&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;LedgerTransactions&quot;"
-        IndexOrder="30"
+        IndexOrder="28"
         ObjectFieldName="&quot;ReconcileRemarks&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;LedgerTransactions&quot;"
-        IndexOrder="31"
+        IndexOrder="29"
         ObjectFieldName="&quot;OppositeAccountEnglishName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;LedgerTransactions&quot;"
-        IndexOrder="32"
+        IndexOrder="30"
         ObjectFieldName="&quot;OppositeAccountLocalName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;LedgerTransactions&quot;"
-        IndexOrder="33"
+        IndexOrder="31"
         ObjectFieldName="&quot;OppositeAccountDisplayNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;LedgerTransactions&quot;"
-        IndexOrder="34"
+        IndexOrder="32"
         ObjectFieldName="&quot;InProgressExternalReconcile&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;LedgerTransactions&quot;"
-        IndexOrder="35"
+        IndexOrder="33"
         ObjectFieldName="&quot;CalculatedLocalAmount&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;LedgerTransactions&quot;"
-        IndexOrder="36"
+        IndexOrder="34"
         ObjectFieldName="&quot;CalculatedForeignAmount&quot;"
         ColumnWidth="100" />
     </QueryColumns>
