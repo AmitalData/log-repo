@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TariffUpdateClass
    {  		
-		public const string HashString = "67b07a361dea0349f944d1be838d56c4";
+		public const string HashString = "40ae0d4ae880a7f94fd7a2fd7dd74989";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4990,6 +4990,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature TariffFeature_UPDATEMISSINGPORTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATEMISSINGPORTS", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TariffObjectTable.Id, Tenant = 0, NameTextCodeCode = "Tariff.Features.UPDATEMISSINGPORTS", NameTextCodeDefaultText = @"Update Missing Ports" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TariffObjectTable);
 
 		   Feature TariffFeature_TARIFFGENERATE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TARIFFGENERATE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TariffObjectTable.Id, Tenant = 0, NameTextCodeCode = "Tariff.Features.TARIFFGENERATE", NameTextCodeDefaultText = @"Tariff Generate" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TariffObjectTable);
+
+		   Feature TariffFeature_SaleTariff = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SaleTariff", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TariffObjectTable.Id, Tenant = 0, NameTextCodeCode = "Tariff.Features.SaleTariff", NameTextCodeDefaultText = @"Sale Tariff" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TariffObjectTable);
 
    
 	    

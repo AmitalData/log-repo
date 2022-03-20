@@ -34,7 +34,15 @@ export class TariffTool {
 
         return myResult;
     }
+    public static IsLocalCustomsTariff(entityPM: TariffPM): boolean {
+        var myResult: boolean = false;
 
+        if (entityPM.TypeCode == "ICS" || entityPM.TypeCode == "ECS") {
+            myResult = true;
+        }
+
+        return myResult;
+    }
     public static IsInlandFTLTariff(entityPM: TariffPM): boolean {
         var myResult: boolean = false;
 

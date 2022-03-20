@@ -205,7 +205,7 @@ export class SaleWorkspaceComponent implements OnInit {
     public RecentTariffsList: TariffList[] = [];
     LoadRecentTariffs() {
         var tariffService: TariffDomainService = new TariffDomainService();
-        tariffService.GetRecentTariffs().subscribe((myResult: any) => {
+        tariffService.GetRecentSaleTariffs().subscribe((myResult: any) => {
             if (myResult == null) {
                 this.RecentTariffsList = [];
                 this.RecentTariffsCount = 0;

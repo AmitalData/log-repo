@@ -319,6 +319,16 @@ export class TariffDomainService {
         });
     }
 
+    GetRecentSaleTariffs() {
+
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetRecentSaleTariffs', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
+                return allLists;
+            }));
+        });
+    }
+
     GetTariffLineContainerPrices(tariffId:string, version: number, fromPortId: string, toPortId: string) {
 
         var url = this._apiUrl + "/GetTariffLineContainerPrices?tariffId=" + tariffId + "&version=" + version + "&fromPortId=" + fromPortId + "&toPortId=" + toPortId;

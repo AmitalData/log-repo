@@ -86,6 +86,26 @@
                         </td>
                     </tr>
 
+                    <!-- CustomerGroupId -->
+                    <tr class="FormFieldRow" *ngIf="IsCustomerGroupVisible">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'CustomerGroupId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td>
+                            <LogLov [ObjectFieldName]="'CustomerGroupId'"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [SelectedValue]="CustomerGroupId"
+                                    [DataContext]="DataContext"
+                                    [DependencyFilter1IsList]="true"
+                                    [HideMaintenanceIcon]="true"
+                                    [LookUpTableName]="'CustomerGroup'">
+                            </LogLov>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
                     <!-- Currency -->
                     <tr class="FormFieldRow">
                         <td>
@@ -189,7 +209,7 @@
             <td style="width: 450px;" *ngIf="VisibileSurchargesArea">
                 <table>
                     <tr class="TabTitleRow">
-                        <td *ngIf="EntityPM.TypeCode != 'ICC' && EntityPM.TypeCode != 'ECC' && EntityPM.TypeCode != 'IFT'">
+                        <td *ngIf="EntityPM.TypeCode != 'ICC' && EntityPM.TypeCode != 'ECC'  && EntityPM.TypeCode != 'ICS' && EntityPM.TypeCode != 'ECS' && EntityPM.TypeCode != 'IFT'">
                             Surcharges
                         </td>
 
@@ -199,6 +219,11 @@
 
                         <td *ngIf="EntityPM.TypeCode == 'IFT'">
                             Charges
+                        </td>
+
+
+                        <td *ngIf="EntityPM.TypeCode == 'ICS' || EntityPM.TypeCode == 'ECS'">
+                            Local Charges
                         </td>
                     </tr>
 

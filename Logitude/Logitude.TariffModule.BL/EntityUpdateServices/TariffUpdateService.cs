@@ -62,6 +62,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 this.ValidateFCLSurchargeUniqueSeller(entityPM);
                 this.ValidateCustomsChargesUniqueBroker(entityPM);
                 this.ValidateInlandFTLUniqueSeller(entityPM);
+                this.ValidateLocalChargesUniqueCustomerGroup(entityPM);
             }
         }
         
@@ -121,6 +122,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             this.ValidateFCLSurchargeUniqueSeller(entityPM);
             this.ValidateCustomsChargesUniqueBroker(entityPM);
             this.ValidateInlandFTLUniqueSeller(entityPM);
+            this.ValidateLocalChargesUniqueCustomerGroup(entityPM);
 
             if (entityPM.IsApprovingDraftVersion)
             {
@@ -495,7 +497,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     }
                 }
 
-                else if (entityPM.TypeCode == "ECC" || entityPM.TypeCode == "ICC")
+                else if (entityPM.TypeCode == "ECC" || entityPM.TypeCode == "ICC" || entityPM.TypeCode == "ICS" || entityPM.TypeCode == "ECS")
                 {
                     TariffVersionPM iPreviousVersion = entityPM.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
                     if (iPreviousVersion != null)
@@ -602,10 +604,10 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
                 else
                 {
-                    string from = (type == "ECC" || type == "ICC") ? tariffLinePM.FromCountryCode : tariffLinePM.OriginPortCode;
-                    string to = (type == "ECC" || type == "ICC") ? tariffLinePM.ToCountryCode : tariffLinePM.DestinationPortCode;
+                    string from = (type == "ECC" || type == "ICC" || type == "ICS") ? tariffLinePM.FromCountryCode : tariffLinePM.OriginPortCode;
+                    string to = (type == "ECC" || type == "ICC" || type == "ECS") ? tariffLinePM.ToCountryCode : tariffLinePM.DestinationPortCode;
 
-                    if(type != "ASC" && type != "ECC" && type != "ICC")
+                    if(type != "ASC" && type != "ECC" && type != "ICC" && type != "ICS" && type != "ECS")
                     {
                         from = tariffLinePM.OriginPortCombinedCode;
                         to = tariffLinePM.DestinationPortCombinedCode;
@@ -696,6 +698,26 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 }
             }
         }
+        private void ValidateLocalChargesUniqueCustomerGroup(TariffPM entityPM)
+        {
+            if (entityPM.TypeCode == "ICS" || entityPM.TypeCode == "ECS")
+            {
+                ITariffModuleContext iContext = TariffModuleContext.GetContext(entityPM.Tenant);
+                int iCount = (from d in iContext.Tariffs
+                              where d.Tenant == entityPM.Tenant
+                              && !d.InActive
+                              && d.Id != entityPM.Id
+                              && d.CustomerGroupId == entityPM.CustomerGroupId
+                              && d.TypeCode == entityPM.TypeCode
+                              select d).Count();
+
+                if (iCount >= 1)
+                {
+                    throw new ApplicationException("Tariff customer group should be unique");
+                }
+            }
+        }
+        
         private void ValidateInlandFTLUniqueSeller(TariffPM entityPM)
         {
             if (entityPM.TypeCode == "IFT")

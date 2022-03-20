@@ -61,7 +61,7 @@
                             </td>
                         </tr>
 
-                        <tr *ngIf="!IsPortsVisible" class="FormFieldRow">
+                        <tr *ngIf="!IsPortsVisible && TariffType != 'ECS'" class="FormFieldRow">
                             <td style="width:100px;">
                                 <LogLabel [ObjectFieldName]="'FromCountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                             </td>
@@ -79,11 +79,11 @@
                             <td>
                                 <table>
                                     <tr>
-                                        <td style="width:160px;">
+                                        <td *ngIf="TariffType != 'ICS' && TariffType != 'ECS'" style="width:160px;">
                                             <LogLabel [ObjectFieldName]="'IsFromAllOtherCountries'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
-                                        <td style="width:25px;">
+                                        <td *ngIf="TariffType != 'ICS' && TariffType != 'ECS'" style="width:25px;">
                                             <LogCheckBox [ObjectFieldName]="'IsFromAllOtherCountries'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Checked]="DataContext.IsFromAllOtherCountries"></LogCheckBox>
                                         </td>
 
@@ -144,7 +144,7 @@
                             </td>
                         </tr>
 
-                        <tr *ngIf="!IsPortsVisible" class="FormFieldRow">
+                        <tr *ngIf="!IsPortsVisible && TariffType != 'ICS'" class="FormFieldRow">
                             <td>
                                 <LogLabel [ObjectFieldName]="'ToCountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                             </td>
@@ -163,11 +163,11 @@
                             <td>
                                 <table>
                                     <tr>
-                                        <td style="width:160px;">
+                                        <td *ngIf="TariffType != 'ICS' && TariffType != 'ECS'" style="width:160px;">
                                             <LogLabel [ObjectFieldName]="'IsToAllOtherCountries'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
-                                        <td style="width:25px;">
+                                        <td *ngIf="TariffType != 'ICS' && TariffType != 'ECS'" style="width:25px;">
                                             <LogCheckBox [ObjectFieldName]="'IsToAllOtherCountries'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Checked]="DataContext.IsToAllOtherCountries"></LogCheckBox>
                                         </td>
 
@@ -221,7 +221,7 @@
                         </tr>
 
                         <!-- Currency -->
-                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS' || TariffType == 'ICC' || TariffType == 'ECC' || TariffType == 'IFT'">
+                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS' || TariffType == 'ICC' || TariffType == 'ECC' || TariffType == 'IFT' || TariffType == 'ICS' || TariffType == 'ECS'">
                             <td>
                                 <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                             </td>
@@ -240,7 +240,7 @@
                             <td>
                                 <table>
                                     <tr>
-                                        <td [style.width.px]="TariffType == 'ICC' || TariffType == 'ECC' ? 160 : 140">
+                                        <td [style.width.px]="(TariffType == 'ICC' || TariffType == 'ECC' || TariffType == 'ICS' || TariffType == 'ECS')? 160 : 140">
                                             <LogLabel [ObjectFieldName]="'IsDifferentCurrenciesPerCharge'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Different per Charge'"></LogLabel>
                                         </td>
 
@@ -257,7 +257,7 @@
                         </tr>
 
                         <!-- StartDate -->
-                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS' || TariffType == 'ICC' || TariffType == 'ECC' || TariffType == 'IFT'">
+                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS' || TariffType == 'ICC' || TariffType == 'ECC' || TariffType == 'IFT' || TariffType == 'ICS' || TariffType == 'ECS'">
                             <td>
                                 <LogLabel [ObjectFieldName]="'StartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                             </td>
@@ -272,7 +272,7 @@
                         </tr>
 
                         <!--Notes-->
-                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS' || TariffType == 'ICC' || TariffType == 'ECC' || TariffType == 'IFT'">
+                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS' || TariffType == 'ICC' || TariffType == 'ECC' || TariffType == 'IFT' || TariffType == 'ICS' || TariffType == 'ECS'">
                             <td style="vertical-align:top;">
                                 <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                             </td>
@@ -445,7 +445,7 @@
                         </tr>
 
                         <!-- Air Surcharges Cost-->
-                        <tr *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'ICC' || TariffType == 'ECC'" style="height:1px;">
+                        <tr *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'ICC' || TariffType == 'ECC' || TariffType == 'ICS' || TariffType == 'ECS'" style="height:1px;">
                             <td colspan="3">
                                 <table>
                                     <tr class="FormFieldRow" style="height:28px;">
