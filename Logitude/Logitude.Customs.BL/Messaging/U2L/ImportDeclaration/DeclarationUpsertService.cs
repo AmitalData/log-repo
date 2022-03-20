@@ -317,7 +317,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.CustomerId))
                 {
                     MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
-                    MyGenericResponseObj.Message = "CustomerId " + _AmitalCustomsFile.CustomerId + " could not translate (is must )";
+                    MyGenericResponseObj.Message += "CustomerId " + _AmitalCustomsFile.CustomerId + " could not translate (is must )";
                     return;
                 }
                 if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.Direction))
@@ -1384,6 +1384,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
                 if (myCard == null)
                 {
+                    AppendLogLine("Customer Card does not exist for Amital Customer Code " + amitalCustomerCode);
+                    MyGenericResponseObj.Message = "Customer Card does not exist for Amital Customer Code " + amitalCustomerCode;
+                    return null;
                     AppendLogLine("Open A new Card in the same Transaction Scope ");
                     //repository = new CardRepository(ResolvedTenant());
                     myCard = new Card();
