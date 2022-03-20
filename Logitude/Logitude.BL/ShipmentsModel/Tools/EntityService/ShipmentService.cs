@@ -7619,7 +7619,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             else
             {
-                myResult = entityPM.MainCarriageFromPortName;
+                myResult = this.GetMainCarriagePortName(entityPM.MainCarriageFromPortId, entityPM.MainCarriageFromPortName);
             }
 
             return myResult;
@@ -7635,7 +7635,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             else
             {
-                myResult = entityPM.MainCarriageFinalDestinationPortName;
+                this.GetMainCarriagePortName(entityPM.MainCarriageFinalDestinationPortId, entityPM.MainCarriageFinalDestinationPortName);
             }
 
             return myResult;
@@ -7713,7 +7713,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             return myResult;
         }
-        public string GetAddress(Address address)
+        private string GetAddress(Address address)
         {
             string resultAddress = "";
 
@@ -7779,6 +7779,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
 
             return resultAddress;
+        }
+        private string GetMainCarriagePortName(string portId, string portName)
+        {
+            string myResult = portName;
+
+            if (string.IsNullOrEmpty(myResult))
+            {
+                Port port = myPortRepository.GetSinglePort(portId, tenant);
+                myResult = port?.EnglishName;
+            }
+
+            return myResult;
         }
     }
 
