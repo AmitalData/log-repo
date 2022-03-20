@@ -692,4 +692,15 @@ export class QuoteUtilities {
         return myResult;
     }
 
+    public static IsAllowingMultipleFreightCharges(quotePM: QuotePM) {
+        var myResult = false;
+        var numberOfFreightQuoteCharges = quotePM.QuoteCharges?.filter(d => d.ChargesGroupCode == "FRT").length;
+        if (quotePM.TransportModeId == "I") {
+            if (numberOfFreightQuoteCharges > 1) {
+                myResult = true;
+            }
+        }
+       
+        return myResult;
+    }
 }

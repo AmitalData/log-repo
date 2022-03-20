@@ -316,4 +316,23 @@ export class QuoteValidator {
             errors.push(charge.ChargesTypeName + " Charge is duplicated");
         }
     }
+
+    public ValidateFreightQuoteCharges(quotePM: QuotePM, charge: QuoteChargePM): string {
+        var errors = null;
+        var numberOfFreightQuoteCharges = quotePM.QuoteCharges?.filter(d => d.ChargesGroupCode == "FRT" && d != charge).length;
+        if (quotePM.TransportModeId == "I") {
+            var allInItems = quotePM.QuoteCharges.filter(d => d.IsAllIN).length;
+            if (numberOfFreightQuoteCharges > 0 && charge.ChargesGroupCode == "FRT" && allInItems > 0) {
+                errors = "A second freight charge cannot be added while some charges are marked as 'All-In'.";
+            }
+        }
+        else {
+            if (numberOfFreightQuoteCharges > 0) {
+                errors = "Freight Charge already added";
+            }
+        }
+        
+        return errors;
+    }
+
 }

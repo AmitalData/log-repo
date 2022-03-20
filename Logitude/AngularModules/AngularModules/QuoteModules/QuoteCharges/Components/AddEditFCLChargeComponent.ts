@@ -39,8 +39,9 @@ export class AddEditFCLChargeComponent implements OnDestroy {
     private IsHyprid: boolean;
     private ChargesTypeCode: string;
     private PropertyChangedEvent: any = null;
-
+    private QuoteValidator;
     constructor() {
+        this.QuoteValidator = new QuoteValidator();
         this.ItemsSource = new ObservableCollection([]);
         this.HideFCLAllIn = SessionLocator.TenantPM.HideFCLAllIn;
         this.IsHyprid = SessionLocator.TenantPM.IsHybrid;
@@ -139,13 +140,15 @@ export class AddEditFCLChargeComponent implements OnDestroy {
         this.CheckChargeTypeDuplication();
 
         if (this.IsHyprid && this.CheckChargeTypeDuplicationFlag) {
-            var quoteValidator: QuoteValidator = new QuoteValidator();
-            quoteValidator.CheckDuplicateInCharges(this.QuotePM, this.EntityPM, this.errors);
+          
+            this.QuoteValidator.CheckDuplicateInCharges(this.QuotePM, this.EntityPM, this.errors);
         }
 
         if (this.EntityPM.ChargesGroupCode == "FRT") {
-            if (this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d != this.EntityPM).length > 0) {
-                this.errors.push("Freight Charge already added");
+
+            var freightError = this.QuoteValidator.ValidateFreightQuoteCharges(this.QuotePM, this.EntityPM);
+            if (freightError) {
+                this.errors.push(freightError);
             }
         }
 
@@ -214,7 +217,7 @@ export class AddEditFCLChargeComponent implements OnDestroy {
             }
 
             this.DataContext.fatherComponent.OnPercentForeignAmountChanged();
-
+            this.Father.IsAllowingMultipleFreightChargesMethod();
             if (!AppTool.IsNullOrEmpty(this.DataContext.TariffId) && this.EntityPM.IsDirty && !this.DataContext.IsNew) {
                 var property = this.propertiesChanges.filter(a => a == "CostUnitPrice" || a == "CostTotalAmount" || a == "CostCurrencyId"
                     || a == "CostContainerType1UnitPrice" || a == "CostContainerType2UnitPrice" || a == "CostContainerType3UnitPrice"
