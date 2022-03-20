@@ -713,7 +713,8 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
                 if (iCount >= 1)
                 {
-                    throw new ApplicationException("Tariff customer group should be unique");
+                    var type = entityPM.TypeCode == "ICS" ? "import": "export";
+                    throw new ApplicationException("An "+ type + " sales tariff already exists for this customer group");
                 }
             }
         }
