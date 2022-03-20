@@ -155,7 +155,9 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         const cargoIdentifireTypeTable: CargoIdentifireTypeList[] = await this.logtuideTableDataService.getTable("Customs.CargoIdentifireType")
         const cargoIdentifireType: CargoIdentifireTypeList = cargoIdentifireTypeTable.find(x => x.Code == this.entityPM.CargoIdentifierType);
         this.setRequiredField('CargoIdentifierKey2', !this.entityPM.CargoIdentifierKey2 && cargoIdentifireType.IsKey2Mandatory)
-        this.setRequiredField('CargoIdentifierKey3', !this.entityPM.CargoIdentifierKey3 && cargoIdentifireType.IsKey3Mandatory)
+        this.setRequiredField('CargoIdentifierKey3', !this.entityPM.CargoIdentifierKey3 && cargoIdentifireType.IsKey3Mandatory)       
+        // this.UIProperties.SetWarning('CargoIdentifierKey2', this.ObjectTableName, !this.entityPM.CargoIdentifierKey2 && cargoIdentifireType.IsKey2Mandatory);
+        // this.UIProperties.SetWarning('CargoIdentifierKey3', this.ObjectTableName, !this.entityPM.CargoIdentifierKey3 && cargoIdentifireType.IsKey3Mandatory)
     }
 
 
