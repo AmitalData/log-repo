@@ -47,7 +47,7 @@ using Simplog.Data.ShipmentsModel;
 		    try
             {
 								
-				var temp = query.GetSinglePM(Id, Tenant, include);
+				var temp = query.GetSinglePMWithInclude(Id, Tenant, include);
 				 if (temp == null)
                     throw new ApplicationException("Shipment with Id " + Id + " doesn't exist");
 
@@ -65,7 +65,7 @@ using Simplog.Data.ShipmentsModel;
 		    try
             {
 								
-				var temp = query.GetSinglePMByShipmentNumber(ShipmentNumber, Tenant, include);
+				var temp = query.GetSinglePMWithIncludeByShipmentNumber(ShipmentNumber, Tenant, include);
 				 if (temp == null)
                     throw new ApplicationException("Shipment with ShipmentNumber " + ShipmentNumber + " doesn't exist");
 
