@@ -8,8 +8,8 @@ Scenario: Run Report
 		| Name     | Open Shipments by Customer |
 		| Template | open shipment by customer  |
 	And filter fields
-		| Name     | DisplayValue | DataType | EntityName | PropertyName | SearchBy | Value |
-		| Customer | Abed         | String   | Card       | CustomerId   | Code     | 70000 |
+		| Name     | Value | DataType | PropertyName | EntityName | SearchKeyName | SearchKeyValue |
+		| Customer | Abed  | String   | CustomerId   | Card       | Code          | 70000          |
 	When run report
 	Then the report should run successfully
 	And with values

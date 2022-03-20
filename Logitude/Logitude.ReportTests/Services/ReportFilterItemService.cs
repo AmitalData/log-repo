@@ -40,15 +40,14 @@ namespace Logitude.ReportTests.Services
 
         private object GetFilterValue(ExpandoObject reportFliterItem)
         {
-            if (string.IsNullOrEmpty(reportFliterItem.Get<string>("PropertyName"))
-                || string.IsNullOrEmpty(reportFliterItem.Get<string>("Value"))
-                || string.IsNullOrEmpty(reportFliterItem.Get<string>("EntityName"))
-                || string.IsNullOrEmpty(reportFliterItem.Get<string>("SearchBy")))
+            if (string.IsNullOrEmpty(reportFliterItem.Get<string>("EntityName"))
+                || string.IsNullOrEmpty(reportFliterItem.Get<string>("SearchKeyName"))
+                || string.IsNullOrEmpty(reportFliterItem.Get<string>("SearchKeyValue")))
                 return reportFliterItem.Get<string>("Value");
 
             return entityService.GetIdentity(
-                reportFliterItem.Get<string>("Value"),
-                 reportFliterItem.Get<string>("SearchBy"),
+                reportFliterItem.Get<string>("SearchKeyValue"),
+                 reportFliterItem.Get<string>("SearchKeyName"),
                  reportFliterItem.Get<string>("EntityName")
              );
         }
