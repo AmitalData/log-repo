@@ -1662,6 +1662,7 @@
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
     DisplayInList="true"
+    DataTemplateName="&quot;SharedLogisticsInvitationStatusDataTemplate&quot;"
     IsCustomFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
@@ -1710,7 +1711,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    HasTemplate="false"
+    HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;SharedLogisticsInvitationStatusName&quot;"
     IsSpellCheckedFullFieldLable="false"
@@ -3466,10 +3467,11 @@
     FieldName="&quot;PartnerTypeId&quot;"
     OldNames="PartnerTypeId"
     IsNew="false"
-    IsChecked="false"
+    IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;Card&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;LookUp&quot;"
+    LookUpTableName="&quot;PartnerType&quot;"
     MinLength="0"
     MaxLength="2"
     IsRequired="true"
@@ -9049,21 +9051,26 @@
       <QueryColumn
         QueryCode="&quot;CTool Partners&quot;"
         IndexOrder="0"
-        ObjectFieldName="&quot;Code&quot;"
+        ObjectFieldName="&quot;SharedLogisticsInvitationStatusName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CTool Partners&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;EnglishName&quot;"
+        ObjectFieldName="&quot;Code&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CTool Partners&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;LocalName&quot;"
+        ObjectFieldName="&quot;EnglishName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CTool Partners&quot;"
         IndexOrder="3"
+        ObjectFieldName="&quot;LocalName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CTool Partners&quot;"
+        IndexOrder="4"
         ObjectFieldName="&quot;PartnerTypeName&quot;"
         ColumnWidth="200" />
     </QueryColumns>

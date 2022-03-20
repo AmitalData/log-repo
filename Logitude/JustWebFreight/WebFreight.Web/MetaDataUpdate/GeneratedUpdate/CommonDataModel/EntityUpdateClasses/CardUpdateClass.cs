@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CardUpdateClass
    {  		
-		public const string HashString = "910c4cde98425edb489afe147ecbaf2e";
+		public const string HashString = "dfc642a2be1cbb01b9ac42342c85ed82";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -549,6 +549,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
+					  						DataTemplateName =  "SharedLogisticsInvitationStatusDataTemplate",
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
@@ -588,7 +589,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "SharedLogisticsInvitationStatusName",
 					  						EnableFullscreenTextBox =  false,
@@ -2035,7 +2036,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "PartnerTypeId",
 					  						ObjectTableName =  "Card",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "PartnerType",
 					  						MinLength =  0,
 					  						MaxLength =  2,
 					  						IsRequired =  true,
@@ -4413,13 +4415,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			  Query CToolPartnersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CardTextCode_0.Id, NameTextCodeCode = CardTextCode_0.Code, ObjectTableName = "Card", Code = "CTool Partners",  EditWizardName = "SharedLogistics.Views.InviteCustomersControl",
 			   QueryGroupCode = "1561", IndexOrder = 0, Tenant = 0, ObjectTableId = CardObjectTable.Id, QuerySection = "Card", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CardFeature_0.Id,FeatureUniqeCode= CardFeature_0.FeatureUniqeCode, DefaultSortName = "SharedLogisticsInvitationStatusName", DefaultSortDirection = "Desending", Perspective = "Cards" }, addedQueries);
 	
-			 QueryColumn CToolPartnersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CToolPartnersQuery.Id,QueryCode = CToolPartnersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Card.Code" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CToolPartnersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CToolPartnersQuery.Id,QueryCode = CToolPartnersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Card.SharedLogisticsInvitationStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CToolPartnersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CToolPartnersQuery.Id,QueryCode = CToolPartnersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Card.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CToolPartnersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CToolPartnersQuery.Id,QueryCode = CToolPartnersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Card.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CToolPartnersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CToolPartnersQuery.Id,QueryCode = CToolPartnersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Card.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CToolPartnersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CToolPartnersQuery.Id,QueryCode = CToolPartnersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Card.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CToolPartnersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CToolPartnersQuery.Id,QueryCode = CToolPartnersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Card.PartnerTypeName" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn CToolPartnersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CToolPartnersQuery.Id,QueryCode = CToolPartnersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Card.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CToolPartnersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CToolPartnersQuery.Id,QueryCode = CToolPartnersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Card.PartnerTypeName" , ColumnWidth = 200 }, addedQueryColumns);
 
              AdvancedQueryFilter CToolPartnersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Card.PartnerTypeId", PredefinedValue = "CS",PredefinedValue2 = null, CustomPredefined = false, QueryId = CToolPartnersQuery.Id,QueryCode = CToolPartnersQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
 
