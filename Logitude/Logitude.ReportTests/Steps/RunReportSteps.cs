@@ -1,0 +1,48 @@
+﻿using Logitude.ReportTests.Models;
+using Logitude.ReportTests.Services;
+using Logitude.Test.Base.Models.Shared;
+using Logitude.Test.Base.Models.UserTenantPreparation;
+using Logitude.Test.Base.Services;
+using TechTalk.SpecFlow;
+
+namespace Logitude.ReportTests.Steps
+{
+    [Binding]
+    public class RunReportSteps
+    {
+        private readonly ReportService reportService;
+        private readonly ReportContext reportContext;
+        private readonly ReportAssertService reportAssertService;
+
+        public RunReportSteps(ReportService reportService, ReportContext reportContext, ReportAssertService reportAssertService)
+        {
+            this.reportService = reportService;
+            this.reportContext = reportContext;
+            this.reportAssertService = reportAssertService;
+        }
+
+        [Given(@"report with the following properties")]
+        public void GivenReportWithTheFollowingProperties(Table table)
+        {
+            reportContext.ReportFilter = reportService.CreateFilterInstance(table);
+        }
+        
+        [Given(@"filter fields")]
+        public void GivenFilterFields(Table table)
+        {
+            reportContext.ReportFilter.QueryFilterItemLists = reportService.BuildReportFliterItems(table);
+        }
+        
+        [When(@"run report")]
+        public void WhenRunReport()
+        {
+            reportContext.ReportFilter = APICaller.CallPut<ReportFliter>(reportContext.ReportFilter, Urls.ReportController, UserTenant.Token)?.Data;
+        }
+        
+        [Then(@"the report should run successfully")]
+        public void ThenTheReportShouldRunSuccessfully()
+        {
+            reportAssertService.Assert(reportContext.ReportFilter);
+        }
+    }
+}

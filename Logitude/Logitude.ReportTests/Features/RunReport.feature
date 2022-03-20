@@ -7,8 +7,7 @@ Scenario: Run Report
 		| Code     | OSBC                       |
 		| Name     | Open Shipments by Customer |
 	And filter fields
-		| Name | Value | Operator |
-		| 70   | 10    | 20       |
-		| 50   |       |          |
+		| Name       | Value    | Table | From        |
+		| CustomerId | Abdallah | Card  | EnglishName |
 	When run report
 	Then the report should run successfully
