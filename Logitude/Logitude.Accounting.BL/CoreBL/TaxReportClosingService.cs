@@ -2,6 +2,7 @@
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -259,6 +260,8 @@ namespace Logitude.Accounting.BL.CoreBL
             };
 
             journalPM.JournalLines.Add(line);
+
+            CreateInternalReconciliationForVATOutputGLAccount(line);
         }
         private void CreateVatInputCreditLine()
         {
@@ -286,6 +289,7 @@ namespace Logitude.Accounting.BL.CoreBL
             };
 
             journalPM.JournalLines.Add(line);
+            CreateInternalReconciliationForVATInputGLAccount(line);
         }
         private void CreateDifferencesCreditLine()
         {
@@ -322,6 +326,64 @@ namespace Logitude.Accounting.BL.CoreBL
         private string GetTaxReportDifferencJournalLineNote()
         {
             return "דו“ח מע“מ " + taxReportPM.TaxReportMonth.ToString("MM.yyyy") + " - עיגול סכומים";
+        }
+
+        private void CreateInternalReconciliationForVATOutputGLAccount(JournalLinePM journalLinePM) {
+            // GetReportLinesPMs
+            TaxReportQueryService taxReportQueryService = new TaxReportQueryService(tenant);
+            var outputLines = taxReportQueryService.GetReportLines(taxReportId, tenant).Where(d => d.OutputOrInput == "O").ToList();
+            
+            if (outputLines.Any()) {
+                LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(tenant);
+                var ledgerTranasctionsIds = outputLines.Select(x => x.LedgerTransactionId).ToList();
+                var ledgerTranasctions = ledgerTransactionRepository.GetLedgerTransactionsByIds(ledgerTranasctionsIds, tenant);
+                foreach (var transaction in ledgerTranasctions) {
+                    if (!journalPM.JournalReconciles.Any(x => x.LedgerTransactionId == transaction.Id)) { 
+                        journalPM.JournalReconciles.Add(new JournalReconcilePM()
+                        {
+                            Tenant = tenant,
+                            ChangeSetOp = ChangeSetOperation.Insert,
+                            JournalId = journalPM.Id,
+                            Line = journalLinePM.Line,
+                            LedgerTransactionId = transaction.Id,
+                            CurrencyId = transaction.OpenAmountCurrencyId,
+                            ReconciliationAmount = transaction.OpenAmount,
+                            IsPartial = false
+                        });
+                    }
+                }
+            }
+        }
+        
+        private void CreateInternalReconciliationForVATInputGLAccount(JournalLinePM journalLinePM)
+        {
+            TaxReportQueryService taxReportQueryService = new TaxReportQueryService(tenant);
+            var inputLines = taxReportQueryService.GetReportLines(taxReportId, tenant).Where(d => d.OutputOrInput == "I").ToList();
+            if (inputLines.Any())
+            {
+                LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(tenant);
+                var ledgerTranasctionsIds = inputLines.Select(x => x.LedgerTransactionId).ToList();
+                var ledgerTranasctions = ledgerTransactionRepository.GetLedgerTransactionsByIds(ledgerTranasctionsIds, tenant);
+                foreach (var transaction in ledgerTranasctions)
+                {
+                    if (!journalPM.JournalReconciles.Any(x => x.LedgerTransactionId == transaction.Id))
+                    {
+                        journalPM.JournalReconciles.Add(new JournalReconcilePM()
+                        {
+                            Tenant = tenant,
+                            ChangeSetOp = ChangeSetOperation.Insert,
+                            JournalId = journalPM.Id,
+                            Line = journalLinePM.Line,
+                            LedgerTransactionId = transaction.Id,
+                            CurrencyId = transaction.OpenAmountCurrencyId,
+                            ReconciliationAmount = transaction.OpenAmount,
+                            IsPartial = false
+                        });
+                    }
+                    
+                }
+            }
+
         }
     }
     public class TaxReportClosingJournalServiceArguments

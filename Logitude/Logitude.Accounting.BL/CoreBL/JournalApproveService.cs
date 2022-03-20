@@ -301,6 +301,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         //    UpdateInReconcileProgressToFalse();
                         //}
                         UpdateJournalWithReconcileNumber(myCreateAutoReconcileWhileStreamingService);
+                        UpdateTaxReportWithReconcileNumber(myCreateAutoReconcileWhileStreamingService);
 
                     }
                     //}
@@ -510,6 +511,24 @@ namespace Logitude.Accounting.BL.CoreBL
                     poco.AccountingEntityId = myReconciliation.Id;
                 });
 
+            }
+        }
+
+
+        private void UpdateTaxReportWithReconcileNumber(ICreateAutoReconcileWhileStreamingService myCreateAutoReconcileWhileStreamingService)
+        {
+            if (this._JournalPM.AccountingEntityCode == "13" && this._JournalPM.JournalReconciles.Count > 0 && 
+                myCreateAutoReconcileWhileStreamingService.ReconciliationList.Count == 1)
+            {
+                TaxReportQueryService taxReportQueryService = new TaxReportQueryService(_JournalPM.Tenant);
+                var taxReportPM = taxReportQueryService.GetSingle(_JournalPM.AccountingEntityId, false, false);
+                
+
+                var myReconciliation = myCreateAutoReconcileWhileStreamingService.ReconciliationList.First();
+                taxReportPM.ReconciliationsNumbers = !string.IsNullOrWhiteSpace(taxReportPM.ReconciliationsNumbers) ? ", " + myReconciliation.Number : myReconciliation.Number;
+                TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(this._AccountingContext, new Dictionary<string, IContext>(), _JournalPM.Tenant);
+                taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
+                taxReportUpdateService.Update(taxReportPM, true);
             }
         }
 

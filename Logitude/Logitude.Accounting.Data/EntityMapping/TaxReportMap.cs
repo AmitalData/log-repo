@@ -82,6 +82,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.OutputTaxAmountRound).HasColumnName("OutputTaxAmountRound").HasPrecision(16, 2);
 
             this.Property(t => t.InputsTaxAmountRound).HasColumnName("InputsTaxAmountRound").HasPrecision(16, 2);
+
+            this.Property(t => t.ReconciliationsNumbers).HasColumnName("ReconciliationsNumbers").HasMaxLength(200).IsUnicode(false);
         }
     }
 }

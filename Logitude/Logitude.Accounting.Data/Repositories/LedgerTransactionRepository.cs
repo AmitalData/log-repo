@@ -219,6 +219,13 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             return transactionsQuery;
         }
 
+        public IQueryable<LedgerTransaction> GetLedgerTransactionsByIds(List<string> ledgerTransactionsIds, int tenant)
+        {
+            return (from transaction in context.LedgerTransactions
+                    where transaction.Tenant == tenant && ledgerTransactionsIds.Contains(transaction.Id)
+                    select transaction);
+        }
+
         private IQueryable<LedgerTransaction> GetTenantTransactionsFilteredByAccountsIds(IQueryable<string> accountsIds, LedgerTransactionBalanceFilter filters)
         {
             return (from transaction in context.LedgerTransactions

@@ -209,6 +209,11 @@ export class TaxReportPM {
     public set InputsTaxAmountRound(newValue: number) { if (this.inputsTaxAmountRound != newValue) { this.inputsTaxAmountRound = newValue; this.MarkAsDirty("InputsTaxAmountRound"); } }
        
 	 
+    private reconciliationsNumbers: string;
+    public get ReconciliationsNumbers() { return this.reconciliationsNumbers; }
+    public set ReconciliationsNumbers(newValue: string) { if (this.reconciliationsNumbers != newValue) { this.reconciliationsNumbers = newValue; this.MarkAsDirty("ReconciliationsNumbers"); } }
+       
+	 
 
     public OldEntityPM: TaxReportPM;
 		

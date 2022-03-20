@@ -51,7 +51,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         NeedsRebulid, 
 	         CreatedInTwoMonthsLogic, 
 	         OutputTaxAmountRound, 
-	         InputsTaxAmountRound,
+	         InputsTaxAmountRound, 
+	         ReconciliationsNumbers,
 	      }
 
 
@@ -94,7 +95,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         UpdatedByUserName, 
 	         CreatedInTwoMonthsLogic, 
 	         OutputTaxAmountRound, 
-	         InputsTaxAmountRound,
+	         InputsTaxAmountRound, 
+	         ReconciliationsNumbers,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -246,6 +248,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InputsTaxAmountRound))
             {
 				entityPOCO.InputsTaxAmountRound = entityPM.InputsTaxAmountRound;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReconciliationsNumbers))
+            {
+				entityPOCO.ReconciliationsNumbers = entityPM.ReconciliationsNumbers;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -404,6 +411,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.InputsTaxAmountRound = entityPOCO.InputsTaxAmountRound;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ReconciliationsNumbers))
+            {
+					entityPM.ReconciliationsNumbers = entityPOCO.ReconciliationsNumbers;
+            }
+
 		}
 
 		public void PMToOldPM(TaxReportPM entityPM, TaxReportPM oldEntityPM)
@@ -553,6 +565,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InputsTaxAmountRound))
             {
                 oldEntityPM.InputsTaxAmountRound = entityPM.InputsTaxAmountRound;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReconciliationsNumbers))
+            {
+                oldEntityPM.ReconciliationsNumbers = entityPM.ReconciliationsNumbers;
             }
 			
 		}
