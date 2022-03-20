@@ -2665,9 +2665,9 @@
                                             <RowDefinition Height="*" />
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="200" />
+                                            <ColumnDefinition Width="300" />
                                             <ColumnDefinition Width="auto" />
-                                            <ColumnDefinition Width="200" />
+                                            <ColumnDefinition Width="300" />
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Row="0"

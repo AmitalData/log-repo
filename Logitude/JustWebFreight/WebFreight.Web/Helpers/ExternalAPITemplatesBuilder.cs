@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Server.Tools.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,9 @@ namespace WebFreight.Web.Helpers
         private ExternalAPIResponseParameters responseParameters;
         private TenantPM tenantPM;
         private TenantQuery tenantQuery;
-        private string[] generalTenantsAPISNames= new[] { "House", "Direct", "Master", "Rates Update" };
+        private string[] generalTenantsAPISNames = new[] { "House", "Direct", "Master", "Rates Update" };
         private string[] hypridTenantsAPISNames = new[] { "Customs", "Quote", "Customer", "Vendor", "Cargo Tracking Shipment Details" };
+        private string[] oceanInsightAPISNames = new[] { "Container" };
         private string[] fullAccountingTenantsAPISNames = new[] { "Customer", "Vendor", "ARPayment", "Cancel ARPayment", "APInvoice Cancellation",
                                                                   "ARInvoice", "APInvoice", "ARInvoice Additional Data", "Journal", "GLAccount" , 
                                                                   "Customer Open Files Amount", "GL Account More Data" };
@@ -68,22 +70,35 @@ namespace WebFreight.Web.Helpers
                 if (this.responseParameters.ApiTanentType == "General")
                 {
                     AddTenantAPIsNames(generalTenantsAPISNames);
+
+                    if(FeatureToggleHelper.HasFeatureToggle("OIC", this.responseParameters.Tenant))
+                    {
+                        AddTenantAPIsNames(oceanInsightAPISNames);
+                    }
                 }
+
                 else if (this.responseParameters.ApiTanentType == "FullAccounting")
                 {
                     AddTenantAPIsNames(generalTenantsAPISNames);
                     AddTenantAPIsNames(fullAccountingTenantsAPISNames);
                 }
+
                 else if(this.responseParameters.ApiTanentType == "Hybrid")
                 {
                     AddTenantAPIsNames(generalTenantsAPISNames);
                     AddTenantAPIsNames(hypridTenantsAPISNames);
                 }
+
                 else if (this.responseParameters.ApiTanentType == "All")
                 {
                     AddTenantAPIsNames(generalTenantsAPISNames);
                     AddTenantAPIsNames(hypridTenantsAPISNames);
                     AddTenantAPIsNames(fullAccountingTenantsAPISNames);
+
+                    if (FeatureToggleHelper.HasFeatureToggle("OIC", this.responseParameters.Tenant))
+                    {
+                        AddTenantAPIsNames(oceanInsightAPISNames);
+                    }
                 }
             }
         }

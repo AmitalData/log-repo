@@ -30,6 +30,9 @@ namespace RestClientApplication
             this.actionCombo.Items.Add("Accept");
             this.actionCombo.Items.Add("Decline");
             this.actionCombo.Items.Add("Cancel");
+
+            Includelabel.Visible = false;
+            IncludeEventsCheckBox.Visible = false;
         }
 
         private void BuildOperationComboBox()
@@ -42,6 +45,7 @@ namespace RestClientApplication
                     this.operationCombo.Items.Clear();
                     this.operationCombo.Items.Add("Create (POST)");
                 }
+
                 else if(apiCombo.SelectedItem.Equals("Direct"))
                 {
                     this.operationCombo.SelectedItem = null;
@@ -49,6 +53,15 @@ namespace RestClientApplication
                     AddGeneralOperationsToComboBox();
                     this.operationCombo.Items.Add("Update (Patch)");
                 }
+
+                else if (apiCombo.SelectedItem.Equals("Container"))
+                {
+                    this.operationCombo.SelectedItem = null;
+                    this.operationCombo.Items.Clear();
+                    this.operationCombo.Items.Add("Update (PUT)");
+                    this.operationCombo.Items.Add("Get");
+                }
+
                 else
                 {
                     AddGeneralOperationsToComboBox();
@@ -209,22 +222,20 @@ namespace RestClientApplication
         {
             actionCombo.Visible = false;
             ActionLabel.Visible = false;
-            string requestText = "";
-
             txtParameter.Visible = false;
             lblParameter.Visible = false;
-
             txtParameter2.Visible = false;
             lblParameter2.Visible = false;
-
             txtParameter3.Visible = false;
             lblParameter3.Visible = false;
-
             txtParameter4.Visible = false;
             lblParameter4.Visible = false;
-
             rdbXml.Visible = true;
             rdbJson.Checked = false;
+            Includelabel.Visible = false;
+            IncludeEventsCheckBox.Visible = false;
+
+            string requestText = "";
 
             switch (apiCombo.SelectedItem)
             {
@@ -256,6 +267,9 @@ namespace RestClientApplication
 
                                 txtParameter2.Visible = true;
                                 lblParameter2.Visible = true;
+
+                                Includelabel.Visible = true;
+                                IncludeEventsCheckBox.Visible = true;
                                 break;
                         }
                         break;
@@ -275,7 +289,11 @@ namespace RestClientApplication
 
                             txtParameter2.Visible = true;
                             lblParameter2.Visible = true;
+
+                            Includelabel.Visible = true;
+                            IncludeEventsCheckBox.Visible = true;
                         }
+
                         else if (operationCombo.SelectedItem != null && operationCombo.SelectedItem.Equals("Update (Patch)"))
                         {
                             lblParameter2.Text = "Id";
@@ -286,10 +304,12 @@ namespace RestClientApplication
                             rdbXml.Visible = false;
                             requestText = responseParameters.XMLRequestText["PatchDirect"];
                         }
+
                         else
                         {
                             requestText = responseParameters.XMLRequestText["PostDirect"];
                         }
+
                         apiName = "direct";
                         break;
                     }
@@ -373,6 +393,7 @@ namespace RestClientApplication
                     }
                 #endregion
 
+                #region GLAccount
                 case "GLAccount":
                     {
                         lblParameter.Text = "Id";
@@ -397,7 +418,9 @@ namespace RestClientApplication
 
                         break;
                     }
+                #endregion
 
+                #region Journal
                 case "Journal":
                     {
                         txtParameter.Visible = true;
@@ -420,6 +443,7 @@ namespace RestClientApplication
 
                         break;
                     }
+                #endregion
 
                 #region Master
                 case "Master":
@@ -434,6 +458,9 @@ namespace RestClientApplication
 
                             txtParameter2.Visible = true;
                             lblParameter2.Visible = true;
+
+                            Includelabel.Visible = true;
+                            IncludeEventsCheckBox.Visible = true;
                         }
 
                         apiName = "master";
@@ -456,7 +483,7 @@ namespace RestClientApplication
                     {
                         txtParameter2.Visible = true;
                         apiName = "vendorpartner";
-                      //  requestText = responseParameters.XMLRequestText["Vendor"];
+                        //  requestText = responseParameters.XMLRequestText["Vendor"];
                         break;
                     }
                 #endregion
@@ -571,8 +598,36 @@ namespace RestClientApplication
                         apiName = "CargoTrackingShipmentDetails";
                         break;
                     }
-                    #endregion
+                #endregion
 
+                #region Container
+                case "Container":
+                    {
+                        apiName = "container";
+
+                        if (operationCombo.SelectedItem != null)
+                        {
+                            if (operationCombo.SelectedItem.Equals("Update (PUT)"))
+                            {
+                                //requestText = responseParameters.XMLRequestText["PutContainer"];
+                            }
+
+                            else if (operationCombo.SelectedItem.Equals("Get"))
+                            {
+                                lblParameter.Text = "Container No";
+                                lblParameter2.Text = "Shipment No";
+
+                                txtParameter.Visible = true;
+                                lblParameter.Visible = true;
+
+                                txtParameter2.Visible = true;
+                                lblParameter2.Visible = true;
+                            }
+                        }
+
+                        break;
+                    }
+                    #endregion
             }
 
             txtRequestBody.Text = requestText;
@@ -606,15 +661,16 @@ namespace RestClientApplication
                     var content = new StringContent(txtRequestBody.Text, Encoding.UTF8, txtRequestContentType.Text);
                     HttpResponseMessage response = new HttpResponseMessage();
 
-                    if (operationCombo.SelectedIndex == 0)
+                    if (operationCombo.SelectedItem.Equals("Create (POST)"))
                     {
                         response = await client.PostAsync(txtServerUrl.Text + "/" + api, content);
                     }
-                    else if (operationCombo.SelectedIndex == 1)
+                    else if (operationCombo.SelectedItem.Equals("Update (PUT)"))
                     {
                         response = await client.PutAsync(txtServerUrl.Text + "/" + api, content);
                     }
-                    else if (operationCombo.SelectedIndex == 2)
+
+                    else if (operationCombo.SelectedItem.Equals("Get"))
                     {
                         client.DefaultRequestHeaders.Add("Accept", "application/xml");
 
@@ -637,6 +693,11 @@ namespace RestClientApplication
                             }
 
                             response = await client.GetAsync(url);
+                        }
+
+                        else if (apiName == "container")
+                        {
+                            response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?containerNumber=" + txtParameter.Text + "&shipmentNumber=" + txtParameter2.Text);
                         }
 
                         else
