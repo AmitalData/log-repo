@@ -8,6 +8,7 @@
         overflow-y: auto;
         overflow-x: hidden;
         height: calc(100% - 6px);
+        padding: 5px;
     }
 
     .gallery img {
@@ -23,9 +24,11 @@
         padding: 2px;
     }
 
-    .gallery-item{
+    .gallery-item {
         border-radius: 5px;
         margin: 5px;
+        max-height: 140px;
+        max-width: 225px;
     }
 
     .gallery .gallery-item {
@@ -41,8 +44,75 @@
     }
 </style>
 
-<div class="gallery">
-    <div *ngFor="let image of Images;" class="gallery-item" (click)="OnImageClick(image)">
-        <div class="content"><img [src]="image.URL"></div>
-    </div>
-</div>
+<table>
+    <tr style="height:100%;vertical-align:top">
+        <td>
+            <table>
+                <tr style="height:20px">
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <span
+                                        style="color:gray;font-size:11px;vertical-align:top;width:300px">{{MainMessage}}</span>
+                                </td>
+                                <td><span>
+                                        <SearchTextBox style="float: right;margin-top:0px;margin-right:0px;width: 100%;margin-bottom: 5px;"
+                                            [ObjectTableName]="'ImageLibrary'" [PlaceHolder]="'Search'"
+                                            (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"
+                                            [SearchText]="SearchText">
+                                        </SearchTextBox>
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="MediaFill">
+                            <div class="TabControl">
+                                <div class="TabControlHead">
+                                    <ul style="margin-left: 2px;">
+                                        <li [class.Selected]="SelectedTabCode == 'CT'"
+                                            (click)="SelectedTabChange('CT')" style="margin-left:2px;">
+                                            <div [attr.data-cy]="'My Images'"
+                                                style="width:100px;text-align:left;font-size:11px;color:black"
+                                                class="InnerChild">
+                                                <span>My Images</span>
+                                            </div>
+                                        </li>
+
+                                        <li [class.Selected]="SelectedTabCode == 'ZT'"
+                                            (click)="SelectedTabChange('ZT')">
+                                            <div [attr.data-cy]="'System Images'"
+                                                style="width:100px;text-align:left;font-size:11px;color:black"
+                                                class="InnerChild"
+                                                *ngIf="IsNotTenantZero()">
+                                                <span>System Images</span>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+
+                                <div class="TabControlBody">
+                                    <div class="gallery">
+                                        <div *ngFor="let image of FilteredImages;" class="gallery-item"
+                                            (click)="OnImageClick(image)">
+                                            <div class="content"><img [src]="image.URL"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
