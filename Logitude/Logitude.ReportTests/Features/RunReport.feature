@@ -6,9 +6,10 @@ Scenario: Run Report
 		| property | Value                      |
 		| Code     | OSBC                       |
 		| Name     | Open Shipments by Customer |
+		| Template | open shipment by customer  |
 	And filter fields
-		| Name     | Value    | DataType | EntityName | PropertyName | SearchBy    |
-		| Customer | Abdallah | String   | Card       | CustomerId   | EnglishName |
+		| Name     | DisplayValue | DataType | EntityName | PropertyName | SearchBy | Value |
+		| Customer | Abed         | String   | Card       | CustomerId   | Code     | 70000 |
 	When run report
 	Then the report should run successfully
 	And with values

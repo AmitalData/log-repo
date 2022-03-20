@@ -2,11 +2,8 @@
 using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logitude.ReportTests.Services
 {
@@ -24,7 +21,7 @@ namespace Logitude.ReportTests.Services
             .Filter2Value(code)
             .Build();
             ApiResponse<IEnumerable<dynamic>> response = APICaller.CallGetByFilters<IEnumerable<dynamic>>(Urls.ReportViewsGetByFilters, UserTenant.Token, apiQueryFilters);
-            return response.Data?.FirstOrDefault()?["Id"];
+            return response.Data?.FirstOrDefault();
         }
 
 

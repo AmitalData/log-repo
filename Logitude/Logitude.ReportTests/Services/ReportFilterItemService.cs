@@ -1,12 +1,9 @@
 ﻿using Logitude.ReportTests.Models;
 using Logitude.ReportTests.Models.Builders;
 using Logitude.Test.Base;
-using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -14,8 +11,8 @@ namespace Logitude.ReportTests.Services
 {
     public class ReportFilterItemService
     {
-        private  EntityService entityService;
-        private List<ReportFliterItem> reportFliterItems;
+        private readonly EntityService entityService;
+        private readonly List<ReportFliterItem> reportFliterItems;
         public ReportFilterItemService()
         {
             entityService = new EntityService();
@@ -51,8 +48,8 @@ namespace Logitude.ReportTests.Services
 
             return entityService.GetIdentity(
                 reportFliterItem.Get<string>("Value"),
-                 reportFliterItem.Get<string>("EntityName"),
-                 reportFliterItem.Get<string>("SearchBy")
+                 reportFliterItem.Get<string>("SearchBy"),
+                 reportFliterItem.Get<string>("EntityName")
              );
         }
 

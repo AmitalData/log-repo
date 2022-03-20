@@ -1,11 +1,7 @@
 ﻿using Logitude.ReportTests.Models;
 using Logitude.ReportTests.Models.Builders;
 using Logitude.Test.Base;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -14,8 +10,8 @@ namespace Logitude.ReportTests.Services
     public class ReportFilterService
     {
 
-        private ReportService reportService;
-        private ReportFilterItemService reportFilterItemService;
+        private readonly ReportService reportService;
+        private readonly ReportFilterItemService reportFilterItemService;
 
         public ReportFilterService()
         {
@@ -42,7 +38,6 @@ namespace Logitude.ReportTests.Services
         {
             return reportFilterItemService.Build(filterTable);
         }
-
 
     }
 }

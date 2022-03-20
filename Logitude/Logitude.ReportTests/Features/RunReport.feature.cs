@@ -117,31 +117,49 @@ this.ScenarioInitialize(scenarioInfo);
                 table1.AddRow(new string[] {
                             "Name",
                             "Open Shipments by Customer"});
+                table1.AddRow(new string[] {
+                            "Template",
+                            "open shipment by customer"});
 #line 5
  testRunner.Given("report with the following properties", ((string)(null)), table1, "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
-                            "Value",
+                            "DisplayValue",
                             "DataType",
                             "EntityName",
                             "PropertyName",
-                            "SearchBy"});
+                            "SearchBy",
+                            "Value"});
                 table2.AddRow(new string[] {
                             "Customer",
-                            "Abdallah",
+                            "Abed",
                             "String",
                             "Card",
                             "CustomerId",
-                            "EnglishName"});
-#line 9
+                            "Code",
+                            "70000"});
+#line 10
  testRunner.And("filter fields", ((string)(null)), table2, "And ");
 #line hidden
-#line 12
+#line 13
  testRunner.When("run report", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 13
+#line 14
  testRunner.Then("the report should run successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                            "FieldName",
+                            "Operation",
+                            "ValueOne",
+                            "ValueTwo"});
+                table3.AddRow(new string[] {
+                            "CustomerName",
+                            "Equal",
+                            "Abed",
+                            ""});
+#line 15
+ testRunner.And("with values", ((string)(null)), table3, "And ");
 #line hidden
             }
             this.ScenarioCleanup();
