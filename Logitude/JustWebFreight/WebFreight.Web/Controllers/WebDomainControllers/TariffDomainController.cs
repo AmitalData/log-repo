@@ -2575,7 +2575,33 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        
+        public HttpResponseMessage GetRecentSaleTariffs()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("Tariff", "READ", tenant);
+
+                string mail = SecurityUtility.GetAuthenticatedUser();
+                ContactQuery contactQuery = new ContactQuery(tenant);
+                ContactPM contact = contactQuery.GetContactByEmailOnly(mail, tenant);
+
+                ITariffModuleContext iContext = TariffModuleContext.GetContext(tenant);
+                TariffListQueryService tariffListQueryservice = new TariffListQueryService(iContext);
+                List<TariffList> myResult = tariffListQueryservice.GetRecentSaleTariffs(contact.Id, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         public HttpResponseMessage GetTariffLineContainerPrices(string tariffId, int version, string fromPortId, string toPortId)
         {
             try

@@ -43,10 +43,10 @@ export class AddEditTariffLineComponent  {
     }
 
     SetFieldsVisiblity() {
-        if (this.TariffType == "OFS" || this.TariffType == "OSC" || this.TariffType == "ASC" || this.TariffType == "ICC" || this.TariffType == "ECC" || this.TariffType == "IFT") {
+        if (this.TariffType == "OFS" || this.TariffType == "OSC" || this.TariffType == "ASC" || this.TariffType == "ICC" || this.TariffType == "ECC" || this.TariffType == "IFT" || this.TariffType == "ICS" || this.TariffType == "ECS") {
             this.IsViaFieldVisible = false;
 
-            if (this.TariffType == "ICC" || this.TariffType == "ECC") {
+            if (this.TariffType == "ICC" || this.TariffType == "ECC" || this.TariffType == "ICS" || this.TariffType == "ECS") {
                 this.IsPortsVisible = false;
             }
         }
@@ -189,6 +189,30 @@ export class AddEditTariffLineComponent  {
                     }
                 }
             }
+
+            else if (this.TariffType == "ICS" || this.TariffType == "ECS") {
+                if (this.TariffType == "ICS" && AppTool.IsNullOrEmpty(this.DataContext.FromCountryId)) {
+                    errors.push("From country or from all other countries is required");
+                }
+                if (this.TariffType == "ECS" && AppTool.IsNullOrEmpty(this.DataContext.ToCountryId)) {
+                    errors.push("To country or to all other countries is required");
+                }
+                
+                if (this.DataContext.IsDifferentCurrenciesPerCharge) {
+                    for (var i = 1; i <= 10; i++) {
+                        if (this.DataContext.FatherComponent["Surcharge" + i + "PriceVisibility"]) {
+                            if (AppTool.IsNullOrEmpty(this.DataContext["Surcharge" + i + "CurrencyId"])) {
+                                errors.push("Surcharge " + i + " Currency Field is Required");
+                            }
+                        }
+                    }
+                }
+                else {
+                    if (AppTool.IsNullOrEmpty(this.DataContext.CurrencyId)) {
+                        errors.push("Currency Field is Required");
+                    }
+                }
+            }
         }
 
         this.ValidationErrorsList = errors;
@@ -260,7 +284,7 @@ export class AddEditTariffLineComponent  {
             this.myCloner.AddField('Step8Price');            
         }
 
-        else if (this.TariffType == "ASC" || this.TariffType == "OSC" || this.TariffType == "OFC" || this.TariffType == "OFS" || this.TariffType == "ICC" || this.TariffType == "ECC" || this.TariffType == "IFT") {
+        else if (this.TariffType == "ASC" || this.TariffType == "OSC" || this.TariffType == "OFC" || this.TariffType == "OFS" || this.TariffType == "ICC" || this.TariffType == "ECC" || this.TariffType == "IFT" || this.TariffType == "ICS" || this.TariffType == "ECS" ) {
             this.myCloner.AddField('Surcharge1Price');
             this.myCloner.AddField('Surcharge2Price');
             this.myCloner.AddField('Surcharge3Price');

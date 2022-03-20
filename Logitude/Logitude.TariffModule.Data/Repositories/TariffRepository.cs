@@ -89,6 +89,11 @@ namespace Logitude.TariffModule.Data.Repositories
             IQueryable<Tariff> entities = (from a in context.Tariffs where a.Tenant == tenant && ids.Contains(a.Id) select a);
             return entities;
         }
+        public IQueryable<Tariff> GetAllSaleTariffFromIdList(List<string> ids, int tenant)
+        {
+            IQueryable<Tariff> entities = (from a in context.Tariffs where a.Tenant == tenant && (a.TypeCode == "ICS" || a.TypeCode == "ECS") && ids.Contains(a.Id) select a);
+            return entities;
+        }
 
         public IQueryable<TariffLine> GetAllTariffLinesByTariffId(string tariffId, int tenant)
         {
