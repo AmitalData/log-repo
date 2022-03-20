@@ -97177,7 +97177,7 @@
     ObjectTableName="&quot;Shipment&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="200"
+    MaxLength="1000"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -97249,7 +97249,7 @@
     ObjectTableName="&quot;Shipment&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="200"
+    MaxLength="1000"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -97396,7 +97396,8 @@
         PredefinedValue="&quot;false&quot;"
         ObjectFieldName="&quot;OperationalOpenHousesDirects&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -97484,7 +97485,8 @@
         PredefinedValue="&quot;false&quot;"
         ObjectFieldName="&quot;OperationalOpenMastersDirects&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -97574,7 +97576,8 @@
         PredefinedValue="&quot;True&quot;"
         ObjectFieldName="&quot;AccountingOpenHousesDirects&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -97664,7 +97667,8 @@
         PredefinedValue="&quot;True&quot;"
         ObjectFieldName="&quot;AccountingOpenMastersDirects&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -97764,7 +97768,8 @@
         PredefinedValue="&quot;false&quot;"
         ObjectFieldName="&quot;ExpectedDepartures&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -97864,7 +97869,8 @@
         PredefinedValue="&quot;false&quot;"
         ObjectFieldName="&quot;AirlinesUpdates&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -97957,7 +97963,8 @@
         PredefinedValue="&quot;12/4/2018 12:00:00 AM&quot;"
         ObjectFieldName="&quot;AllFollowUps&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -98050,7 +98057,8 @@
         PredefinedValue="&quot;12/4/2018 12:00:00 AM&quot;"
         ObjectFieldName="&quot;MyFollowUps&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -98138,7 +98146,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;AllShipments&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -98226,7 +98235,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;AllMasters&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -98314,7 +98324,8 @@
         PredefinedValue="&quot;True&quot;"
         ObjectFieldName="&quot;ImportShipments&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -98402,7 +98413,8 @@
         PredefinedValue="&quot;True&quot;"
         ObjectFieldName="&quot;IsCancelled&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -98467,7 +98479,8 @@
         PredefinedValue="&quot;True&quot;"
         ObjectFieldName="&quot;SentFSR&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -98560,7 +98573,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;CustomerActualDataShipments&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -98648,7 +98662,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsNewARInvoiceBlocked&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -98736,7 +98751,8 @@
         PredefinedValue="&quot;True&quot;"
         ObjectFieldName="&quot;ExpectedDeparturesNotTransmitted&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -98819,7 +98835,8 @@
         PredefinedValue="&quot;True&quot;"
         ObjectFieldName="&quot;ShippingInstructionsLast7Days&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -98897,7 +98914,8 @@
         PredefinedValue="&quot;True&quot;"
         ObjectFieldName="&quot;ContainerStatusLast7Days&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -98978,7 +98996,8 @@
         PredefinedValue="&quot;True&quot;"
         ObjectFieldName="&quot;EBookingInProgress&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -101949,7 +101968,8 @@
   <DataContracts>
     <DataContract
       Name="&quot;House&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Id&quot;"
         DCVersion="&quot;&quot;"
@@ -103234,7 +103254,8 @@
     </DataContract>
     <DataContract
       Name="&quot;Direct&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Id&quot;"
         DCVersion="&quot;&quot;"
@@ -105335,7 +105356,8 @@
     </DataContract>
     <DataContract
       Name="&quot;Customs&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Id&quot;"
         DCVersion="&quot;&quot;"
@@ -105998,7 +106020,8 @@
     </DataContract>
     <DataContract
       Name="&quot;Master&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Id&quot;"
         FieldName="&quot;Id&quot;"

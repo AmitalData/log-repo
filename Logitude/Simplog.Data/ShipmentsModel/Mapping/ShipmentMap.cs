@@ -361,8 +361,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.DestinationWarehouseId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.PreForwardingVesselName).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.OnForwardingVesselName).HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.LastDeliveryFullAddress).HasMaxLength(200).IsUnicode(false);
-            this.Property(t => t.FirstPickupFullAddress).HasMaxLength(200).IsUnicode(false);
+            this.Property(t => t.LastDeliveryFullAddress).HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.FirstPickupFullAddress).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.PrivateLabelAgentName).HasMaxLength(70).IsUnicode(false);
 
             // Table & Column Mappings

@@ -3436,7 +3436,7 @@
   <Column
     Name="FirstPickupFullAddress"
     Type="varchar"
-    Size="200">
+    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>
@@ -3444,7 +3444,7 @@
 
     Name="LastDeliveryFullAddress"
     Type="varchar"
-    Size="200">
+    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>
