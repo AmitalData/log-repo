@@ -1,4 +1,5 @@
-﻿using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
+﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 using System;
 using System.Collections.Generic;
 using System.Linq;

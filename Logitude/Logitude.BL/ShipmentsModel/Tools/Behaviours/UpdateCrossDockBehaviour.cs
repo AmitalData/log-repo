@@ -291,7 +291,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 }
             }
             shipmentPM.WarehouseReleasesIds = null;
-        }        
+        }
     }
 
     public class StorageCalculater

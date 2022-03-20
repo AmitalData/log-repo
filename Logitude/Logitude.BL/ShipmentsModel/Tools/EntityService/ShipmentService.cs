@@ -2608,7 +2608,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ShipmentMapping.ComputeMainCarriageFinalDestinationDates(this.entityMasterData, this.entityPM, true);
             ShipmentChangeTracking shipmentChangeTracking = new ShipmentChangeTracking() { ChangeTrackingPM = new ShipmentPM() };
             ShipmentQuery query = new ShipmentQuery(tenant);
-            query.MapShipmentToShipmentPMForAutomation(shipmentChangeTracking.ChangeTrackingPM, this.entityPoco, null, this.entityMasterData);
+            query.MapShipmentToShipmentPMForAutomation(new AutomationShipmentMappingArgs { ShipmentPM = shipmentChangeTracking.ChangeTrackingPM, Shipment = this.entityPoco, ShipmentMasterDataList =  null, MasterData = this.entityMasterData, ShipmentPMBeforeNewMapping = this.entityPM });
+            ShipmentQuery.MapFieldsBeforeTrackingChangedForAutomation(entityPM, initializer);
             shipmentChangeTracking.ChangeTrackingPM.StatusId = entityPM.OldStatusValue;
             if (entityPM.ShipmentLevelCode == "H") shipmentChangeTracking.ChangeTrackingPM.StatusId = entityPM.StatusId;
             shipmentChangeTracking.NotifyPropertyChangeValuesLists = ShipmentMapping.BuildChangedProperties(entityPM, shipmentChangeTracking.ChangeTrackingPM);

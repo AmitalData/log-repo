@@ -37,7 +37,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
             updateCrossDocks.Trace(shipmentTracing);
         }
 
-
         public void Save()
         {
             updateShipmentComputedFields.Save();
