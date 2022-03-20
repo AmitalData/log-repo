@@ -82,7 +82,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         {
             var domain = LogitudeSettings.LogitudeURL;
             List<ImageLibraryList> result = repository.context.ImageLibraries.Include(a => a.ImageDetail)
-                .Where(a => a.Tenant == tenant).Select(entity => new ImageLibraryList
+                .Where(a => a.Tenant == tenant  || a.Tenant == 0).Select(entity => new ImageLibraryList
                 {
                     Id = entity.Id,
                     ImageDetailId = entity.ImageDetailId,

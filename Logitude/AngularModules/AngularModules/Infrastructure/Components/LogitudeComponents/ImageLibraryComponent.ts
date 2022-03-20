@@ -3,6 +3,7 @@ import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator
 import { ImageLibraryList } from 'Infrastructure/EntityLists/ImageLibraryList';
 import { ImageLibraryExtendedListService } from 'Infrastructure/Services/ExtendedLists/ImageLibraryExtendedListService';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
+import { AppTool } from 'Infrastructure/Tools';
 
 @Component({
     selector: 'ImageLibraryComponent',
@@ -10,11 +11,14 @@ import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 
 })
 
-
 export class ImageLibraryComponent implements OnInit {
     private CurrentSession = SessionLocator.SelectedSession;
     private ImageLibraryExtendedListService: ImageLibraryExtendedListService;
     Images: ImageLibraryList[] = [];
+    FilteredImages: ImageLibraryList[] = [];
+    SearchText: string;
+    private ListTenant: number = SessionLocator.Tenant;
+    SelectedTabCode: string = 'CT';
 
     constructor() {
         this.ImageLibraryExtendedListService = new ImageLibraryExtendedListService();
@@ -34,10 +38,37 @@ export class ImageLibraryComponent implements OnInit {
         var images = response?.Result;
         if (images == undefined || images == null) return;
         this.Images = images;
+        this.FilteredImages = this.GetTenantImages();
+    }
+
+    GetTenantImages(): ImageLibraryList[] {
+        return this.Images.filter(x => x.Tenant == this.ListTenant);
     }
 
     OnImageClick(image: ImageLibraryList) {
         this.CurrentSession.CurrentWindow.Close(JSON.stringify(image));
     }
 
+    onSearchTextChangeEvent(searchText) {
+        if (!searchText) searchText = "";
+        this.SearchText = searchText;
+        this.FilterList(searchText);
+    }
+
+    FilterList(searchText: string) {
+        this.FilteredImages = [];
+        if (AppTool.IsNullOrEmpty(searchText)) this.FilteredImages = this.GetTenantImages();
+        else this.FilteredImages = this.GetTenantImages().filter(d => (d.Name && d.Name.toLowerCase().indexOf(searchText.toLowerCase()) > -1));
+    }
+
+    SelectedTabChange(selectedTabCode: string) {
+        this.SelectedTabCode = selectedTabCode;
+        if (selectedTabCode == 'CT') this.ListTenant = SessionLocator.Tenant;
+        else this.ListTenant = 0;
+        this.onSearchTextChangeEvent(this.SearchText);
+    }
+
+    IsNotTenantZero(): boolean {
+        return SessionLocator.Tenant != 0;
+    }
 }

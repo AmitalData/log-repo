@@ -61,9 +61,15 @@ namespace WebFreight.Web.WebPages
         {
             ImageLibrary imageLibrary = GetImageDetail();
             Uploader uploader = new Uploader();
-            byte[] imageBytes = uploader.DownloadFile(imageLibrary.ImageDetail.Id, imageLibrary.ImageDetail.Extension, "images", tenant, tenant == 0);
+            byte[] imageBytes = GetImageByteByTenant(imageLibrary, uploader, tenant);
+            if (imageBytes == null) imageBytes = GetImageByteByTenant(imageLibrary, uploader, 0);
             if (imageBytes == null) ThrowAuthenticationError();
             BuildHttpResponse(imageBytes, imageLibrary);
+        }
+
+        private byte[] GetImageByteByTenant(ImageLibrary imageLibrary, Uploader uploader, int tenant)
+        {
+            return uploader.DownloadFile(imageLibrary.ImageDetail.Id, imageLibrary.ImageDetail.Extension, "images", tenant, tenant == 0);
         }
 
         private void BuildHttpResponse(byte[] imageBytes, ImageLibrary imageLibrary)
@@ -95,6 +101,7 @@ namespace WebFreight.Web.WebPages
         private ImageLibrary GetImageDetail()
         {
             ImageLibrary imageLibrary = new ImageLibraryRepository(tenant).GetSingleBySecurityIdAndTenant(securityId, tenant);
+            if (imageLibrary == null) imageLibrary = new ImageLibraryRepository(0).GetSingleBySecurityIdAndTenant(securityId, 0);
             if (imageLibrary == null || imageLibrary.ImageDetail == null) ThrowAuthenticationError();
             return imageLibrary;
         }
