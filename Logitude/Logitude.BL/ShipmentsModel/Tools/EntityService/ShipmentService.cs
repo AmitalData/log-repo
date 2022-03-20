@@ -7547,27 +7547,35 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void ComputeFirstPickupFullAddress(ShipmentPickUpPM firstShipmentPickup)
         {
+            string myResult = null;
+
             if (firstShipmentPickup != null)
             {
-                this.entityPM.FirstPickupFullAddress = this.GetFirstPickupFullAddressFromPickUp(firstShipmentPickup);
+                myResult = this.GetFirstPickupFullAddressFromPickUp(firstShipmentPickup);
             }
 
             else
             {
-                this.entityPM.FirstPickupFullAddress = this.GetPickUpAddressFromMainCarriage();
+                myResult = this.GetPickUpAddressFromMainCarriage();
             }
+
+            this.entityPM.FirstPickupFullAddress = this.TrimLengthTo1000(myResult);
         }
         private void ComputeLastDeliveryFullAddress(ShipmentDeliveryPM lastShipmentDelivery)
         {
+            string myResult = null;
+
             if (lastShipmentDelivery != null)
             {
-                this.entityPM.LastDeliveryFullAddress = this.GeteLastDeliveryFullAddressFromDelivery(lastShipmentDelivery);
+                myResult = this.GeteLastDeliveryFullAddressFromDelivery(lastShipmentDelivery);
             }
 
             else
             {
-                this.entityPM.LastDeliveryFullAddress = this.GetDeliveryAddressFromMainCarriage();
+                myResult = this.GetDeliveryAddressFromMainCarriage();
             }
+
+            this.entityPM.LastDeliveryFullAddress = this.TrimLengthTo1000(myResult);
         }
         private string GetFirstPickupFullAddressFromPickUp(ShipmentPickUpPM firstShipmentPickup)
         {
@@ -7778,6 +7786,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
 
             return resultAddress;
+        }
+        private string TrimLengthTo1000(string fieldValue)
+        {
+            string myResult = fieldValue;
+
+            if (!string.IsNullOrEmpty(fieldValue))
+            {
+                if (fieldValue.Length > 1000)
+                {
+                    myResult = fieldValue.Substring(0, 1000);
+                }
+            }
+
+            return myResult;
         }
     }
 
