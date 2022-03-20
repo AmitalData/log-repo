@@ -145,11 +145,11 @@
                         </tr>
 
                         <tr *ngIf="!IsPortsVisible && TariffType != 'ICS'" class="FormFieldRow">
-                            <td>
+                            <td style="width:100px;">
                                 <LogLabel [ObjectFieldName]="'ToCountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                             </td>
 
-                            <td>
+                            <td style="width:230px;">
                                 <LogLov [ObjectFieldName]="'ToCountryId'"
                                         [ObjectTableName]="ObjectTableName"
                                         [LookUpTableName]="'Country'"
