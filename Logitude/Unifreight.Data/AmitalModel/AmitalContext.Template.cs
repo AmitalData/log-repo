@@ -4777,6 +4777,12 @@ namespace Unifreight.Data.AmitalModel
             .HasColumnName(@"MAKAT_REMARK")
             .HasMaxLength(255)
             .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVLINE>()
+    .Property(p => p.PRATMEHES2)
+        .HasColumnName(@"PRAT_MEHES2")
+        .HasMaxLength(11)
+        .HasColumnType("varchar2");
+
             #endregion
 
             #region CFIMSVDOC
@@ -5326,6 +5332,17 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"REMARKS_PROTEST")
                     .HasMaxLength(255)
                     .HasColumnType("varchar2");
+            modelBuilder.Entity<GITITEM>()
+    .Property(p => p.CLASSIFIER1ID)
+        .HasColumnName(@"CLASSIFIER1_ID")
+        .HasMaxLength(16)
+        .HasColumnType("varchar2");
+            modelBuilder.Entity<GITITEM>()
+                .Property(p => p.CLASSIFIER2ID)
+                    .HasColumnName(@"CLASSIFIER2_ID")
+                    .HasMaxLength(16)
+                    .HasColumnType("varchar2");
+
 
             #endregion
 

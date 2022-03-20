@@ -23,19 +23,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     ExporterIdentifierType = p.ExporterIdentifierType,
                     ExporterNumber = p.ExporterNumber,
+                    ExporterNumberSpecified = p.ExporterIdentifierType == 1 || p.ExporterNumber > 0,
                     PassportCountry = p.PassportCountry,
                     PassportNumber = p.PassportNumber,
                     RequestType = p.RequestType,
                     RequestReason = p.RequestReason,
                     DeliverySiteID = p.DeliverySiteID,
-                    CargoIdentifier =  new UnifreightIIG.Common.LogisticActionRequestMessageServiceReference.cargoIdentifier() 
+                    CargoIdentifier = new UnifreightIIG.Common.LogisticActionRequestMessageServiceReference.cargoIdentifier()
                     {
                         cargoIdentifierKey1 = p.CargoIdentifierKey1,
                         cargoIdentifierKey2 = p.CargoIdentifierKey2,
                         cargoIdentifierKey3 = p.CargoIdentifierKey3,
                         cargoIdentifierType = p.CargoIdentifierType,
                     },
-                    PackingDetails = new LG_NG_8410_LogisticActionRequestMessageGeneralDetailsPackingDetails() 
+                    PackingDetails = new LG_NG_8410_LogisticActionRequestMessageGeneralDetailsPackingDetails()
                     {
                         PackagingTypeCode = p.PackagingTypeCode,
                         Quantity = p.Quantity,
@@ -43,7 +44,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 },
                 Attachments = GetAttachments(p.LogisticActionRequestId, p.Tenant),
                 RequestContentHeader = new RequestContentHeader() { Convertor = "1", RecieverID = new int[] { 1 } }
-        };
+            };
 
             this.MyRequestSheetParam = new RequestSheetParam();
             this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.LogisticActionRequest");

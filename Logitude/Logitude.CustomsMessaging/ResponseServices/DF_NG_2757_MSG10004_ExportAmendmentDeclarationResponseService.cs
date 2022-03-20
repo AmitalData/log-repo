@@ -818,8 +818,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 consignmentPackagePM.PackageMeasureQualifierCode = GetValueCodeType(packagesMeasure.PackageMeasureQualifier);
                 consignmentPackagePM.PackageQuantityTypeCode = packagesMeasure.TotalPackageQuantity.unitCode.ToString();
                 consignmentPackagePM.PackageQuantity = Convert.ToInt32(packagesMeasure.TotalPackageQuantity.Value);
-                consignmentPackagePM.GrossMassMeasureTypeCode = packagesMeasure.GrossMassMeasure.unitCode.ToString();
-                if (packagesMeasure.GrossMassMeasure != null) consignmentPackagePM.GrossMassMeasure = packagesMeasure.GrossMassMeasure.Value;
+                if(packagesMeasure.GrossMassMeasure != null)
+                {
+                    consignmentPackagePM.GrossMassMeasureTypeCode = packagesMeasure.GrossMassMeasure.unitCode.ToString();
+                    consignmentPackagePM.GrossMassMeasure = packagesMeasure.GrossMassMeasure.Value;
+                }
                 consignmentPackagePM.PackageTypeCode = GetValueCodeType(packagesMeasure.TypeCode);
                 consignmentPackagePM.MarksNumbers = GetValueTextType(packagesMeasure.MarksNumbers);
                 consignmentPackagePM.Tenant = tenant;
