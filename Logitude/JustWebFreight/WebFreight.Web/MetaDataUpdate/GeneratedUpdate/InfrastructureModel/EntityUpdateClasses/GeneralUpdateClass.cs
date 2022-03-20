@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "65877a4e08db7ebf3efded7f703db666";
+		public const string HashString = "c5f989fc1cd2b637b2fb12a3dec74c69";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "4441",
+			      				    Code =  "c1ca",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -648,6 +648,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature GeneralFeature_SHLOGCARGOTRACKING = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHLOGCARGOTRACKING", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.SHLOGCARGOTRACKING", NameTextCodeDefaultText = @"Shared Logistic Cargo Tracking" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
 		   Feature GeneralFeature_IMAGELIBRARIES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IMAGELIBRARIES", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.IMAGELIBRARIES", NameTextCodeDefaultText = @"Image Libraries" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
+		   Feature GeneralFeature_CustomerGroups = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomerGroups", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CustomerGroups", NameTextCodeDefaultText = @"Customer Groups" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
    
 	    
@@ -2470,12 +2472,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_GeneralOWrongVatNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.WrongVatNumber", DefaultText = "Wrong Vat Number",LocalDefaultText = @"חפ שגוי", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMCOthersImageLibraries = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.ImageLibraries", DefaultText = "Image Library",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-           TextCode GeneralTextCode_AccountingGeneralOLedgerTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.LedgerTransactions", DefaultText = "Ledger Transactions", LocalDefaultText = @"תנועות", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+
+ 		   TextCode GeneralTextCode_AccountingGeneralOLedgerTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.LedgerTransactions", DefaultText = "Ledger Transactions",LocalDefaultText = @"תנועות", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
 
  		   TextCode GeneralTextCode_AccountingGeneralOBetween = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Between", DefaultText = "Between",LocalDefaultText = @"בין", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-   
-	    
 
+	    
 }
 
     

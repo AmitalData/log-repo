@@ -78,6 +78,7 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.TypeName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.CustomsBrokerName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.CustomsBrokerPartnerTypeId);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.CustomerGroupName);
 
             if (!string.IsNullOrEmpty(entityPOCO.SellerId))
             {
@@ -86,6 +87,16 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
                 {
                     entityPM.SellerName = seller.EnglishName;
                     entityPM.SellerPartnerTypeId = seller.PartnerTypeId;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(entityPOCO.CustomerGroupId))
+            {
+                CustomerGroupRepository customerGroupRepository = new CustomerGroupRepository(entityPOCO.Tenant);
+                CustomerGroup customerGroup = customerGroupRepository.GetSingleCustomerGroup(entityPOCO.CustomerGroupId, entityPOCO.Tenant);
+                if (customerGroup != null)
+                {
+                    entityPM.CustomerGroupName = customerGroup.Name;
                 }
             }
 

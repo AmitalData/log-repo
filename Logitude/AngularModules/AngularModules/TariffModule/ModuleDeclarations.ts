@@ -11,7 +11,7 @@ import { SettingsWorkspaceComponent } from './Components/Workspaces/SettingsWork
 import { ContainerDefaultsComponent } from './Components/Workspaces/ContainerDefaultsComponent';
 import { NewTariffProductsComponent } from './Components/NewEntity/NewTariffProductsComponent';
 import { TariffShortTitleComponent } from './Components/ShortTitles/TariffShortTitleComponent';
-
+import { SaleWorkspaceComponent } from './Components/Workspaces/SaleWorkspaceComponent';
 // Tabs
 import { TariffDetailsTabComponent } from './Components/EditTabs/Tariff/TariffDetailsTabComponent';
 import { VersionTabComponent } from './Components/EditTabs/Tariff/VersionTabComponent';
@@ -35,6 +35,7 @@ export const Components =
     [
         ContainerDefaultsComponent,
         CostWorkspaceComponent,
+        SaleWorkspaceComponent,
         TariffSettingComponent,
         NewAirFreightCostComponent,
         FieldTemplateComponent,
@@ -105,6 +106,7 @@ export class ModuleDeclarations {
             case "ChooseCountryComponent": { myResult = ChooseCountryComponent; break; }
             case "UploadedExcelsComponent": { myResult = UploadedExcelsComponent; break; }
             case "CustomChargesVersionTabComponent": { myResult = CustomChargesVersionTabComponent; break; }
+            case "SaleWorkspaceComponent": { myResult = SaleWorkspaceComponent; break; }
         }
 
         return myResult;

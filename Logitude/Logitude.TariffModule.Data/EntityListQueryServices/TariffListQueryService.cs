@@ -47,6 +47,8 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
                                                 LastUsedDate = a.LastUsedDate,
                                                 TypeCode = a.TypeCode,
                                                 CustomsBrokerName = a.CustomsBroker != null ? a.CustomsBroker.EnglishName : "",
+                                                CustomerGroupName = a.CustomerGroup != null ? a.CustomerGroup.Name : "",
+                                                ContractNumber = a.ContractNumber,
                                             });
             return query;
         }
@@ -62,6 +64,7 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
             customFieldResolver.SetCustomFieldsValues("Tariffs", tenant, myResult.Cast<object>().ToList());
             return myResult.ToList();
         }
+      
         public List<TariffList> GetRecentEntityLists(int tenant, string userId, string objectTableId)
         {
             List<TariffList> entityList = new List<TariffList>();
@@ -102,6 +105,7 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
                         CurrencyId = a.CurrencyId,
                         LastUsedDate = a.LastUsedDate,
                         CustomsBrokerName = a.CustomsBroker != null ? a.CustomsBroker.EnglishName : "",
+                        CustomerGroupName = a.CustomerGroup != null ? a.CustomerGroup.Name : "",
                     };
 
                     TariffType tariffType = GetTariffType(a.TypeCode, tenant);

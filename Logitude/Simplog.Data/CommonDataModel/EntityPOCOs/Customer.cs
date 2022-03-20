@@ -130,6 +130,11 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string PrimaryContactName { get; set; }
         public string PrimaryContactEmail { get; set; }
         public string PrimaryContactPhone { get; set; }
-
+        public string ImportLocalCustomerGroupId { get; set; }
+        public string ExportLocalCustomerGroupId { get; set; }
+        [ForeignKey("ImportLocalCustomerGroupId")]
+        public virtual CustomerGroup ImportLocalCustomerGroup { get; set; }
+        [ForeignKey("ExportLocalCustomerGroupId")]
+        public virtual CustomerGroup ExportLocalCustomerGroup { get; set; }
     }
 }

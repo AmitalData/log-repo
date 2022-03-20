@@ -50,10 +50,17 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
             tariffsSummary.OceanFCLSurchargesCount = this.repository.GetAll(tenant).Where(p => p.TypeCode == "OFS").Count();
             tariffsSummary.ImportCustomsChargesCount = this.repository.GetAll(tenant).Where(p => p.TypeCode == "ICC").Count();
             tariffsSummary.ExportCustomsChargesCount = this.repository.GetAll(tenant).Where(p => p.TypeCode == "ECC").Count();
+            tariffsSummary.InlandFTLTariffsCount = this.repository.GetAll(tenant).Where(p => p.TypeCode == "IFT").Count();
 
             return tariffsSummary;
         }
-
+        public TariffsSummary GetSaleCount(int tenant)
+        {
+            TariffsSummary tariffsSummary = new TariffsSummary() { Id = tenant };
+            tariffsSummary.ImportSaleCount = this.repository.GetAll(tenant).Where(p => p.TypeCode == "ICS").Count();
+            tariffsSummary.ExportSaleCount = this.repository.GetAll(tenant).Where(p => p.TypeCode == "ECS").Count();
+            return tariffsSummary;
+        }
         public List<TariffSearchSummary> GetTariffSearchSummary(TariffSearchArgs args, int tenant) {
 
             string fromport = args.OriginPortId;
@@ -1221,7 +1228,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
         {
            TariffPM entityPM = this.GetSingle(TariffId, true, false);
             TariffLineRepository iTariffLineRepository = new TariffLineRepository(entityPM.Tenant);
-            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC" || entityPM.TypeCode == "OFS")
+            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC" || entityPM.TypeCode == "OFS" || entityPM.TypeCode == "IFT")
             {
                 TariffVersionPM iPreviousVersion = entityPM.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
                 if (iPreviousVersion != null)

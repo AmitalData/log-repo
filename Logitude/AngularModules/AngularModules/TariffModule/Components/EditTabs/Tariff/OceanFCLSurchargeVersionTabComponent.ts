@@ -31,8 +31,7 @@ import { TariffLinesContainersPricePM } from '../../../EntityPMs/TariffLinesCont
 import { PackageTypeList } from '../../../../Common/EntityLists/PackageTypeList';
 import { PackageTypeListService } from '../../../../Common/Services/StandardLists/PackageTypeListService';
 
-@Component({
-    
+@Component({    
     templateUrl: './OceanFCLSurchargeVersionTabComponent.html',
 })
 
@@ -251,7 +250,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
                 isApproveVersionButtonVisible = true;
             }
 
-            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "UPDATESURCHARGES")) {
+            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "UPDATESURCHARGES") && this.EntityPM.TypeCode == "OFS") {
                 isUpdateSurchargesButtonVisible = true;
             }
         }
@@ -525,19 +524,8 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
             newVersion.Version = item.Version;
             newVersion.ParentVersionNumber = item.ParentVersionNumber;
             newVersion.Id = item.TariffId;
-
-            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
-                newVersion.Name = "Version " + item.Version;
-            }
-
-            else {
-                var from: string = datePipe.transform(item.StartDate, 'dd/MM/yyyy');
-                var to: string = datePipe.transform(item.ExpirationDate, 'dd/MM/yyyy');
-                newVersion.Name = "Version " + item.Version + " (" + from + " - " + to + ")";
-            }
-
+            newVersion.Name = "Version " + item.Version;
             this.VersionsList.push(newVersion);
-
         });
 
         this.SelectedVersion = this.VersionsList.filter(a => a.Version == this.CurrentVersion.ParentVersionNumber)[0];
@@ -550,21 +538,19 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
     }
 
     ComparingCalculations(load: boolean) {
-        //if (this.IsComparToChecked && this.SelectedVersion != null) {
-            if (load) {
-                this.LoadTariffLines("compareVersion");
+        if (load) {
+            this.LoadTariffLines("compareVersion");
+        }
+
+        else {
+            if (this.CurrentVersion != null && this.CurrentVersion.IsDraft) {
+                this.FillTariffLines(this.CurrentVersion.TariffLines);
             }
 
             else {
-                if (this.CurrentVersion != null && this.CurrentVersion.IsDraft) {
-                    this.FillTariffLines(this.CurrentVersion.TariffLines);
-                }
-
-                else {
-                    this.FillTariffLines(this.loadedTariffLines);
-                }
+                this.FillTariffLines(this.loadedTariffLines);
             }
-        //}
+        }
     }
 
     AddTariffLine() {

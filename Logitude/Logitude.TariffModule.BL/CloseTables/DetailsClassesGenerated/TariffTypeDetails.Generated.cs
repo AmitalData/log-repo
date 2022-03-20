@@ -84,6 +84,33 @@ namespace Logitude.TariffModule.BL.CLoseTable
                 Code = "ICC", 
                 SearchFields = "ICC,Import Customs Charges Cost", 
 			});
+			 
+            all.Add(new TariffTypeDetails()
+            {    
+                DirectionCode = "", 
+                Name = "Inland FTL Charges Cost", 
+                Code = "IFT", 
+                SearchFields = "IFT,Inland FTL Charges Cost", 
+                TransportModeCode = "I", 
+			});
+			 
+            all.Add(new TariffTypeDetails()
+            {    
+                Code = "ICS", 
+                Name = "Import Local Charges Sale", 
+                SearchFields = "ICS,Import Local Charges Sale", 
+                DirectionCode = "I", 
+                TransportModeCode = "", 
+			});
+			 
+            all.Add(new TariffTypeDetails()
+            {    
+                Code = "ECS", 
+                Name = "Export Local Charges Sale", 
+                SearchFields = "ECS,Export Local Charges Sale", 
+                DirectionCode = "E", 
+                TransportModeCode = "", 
+			});
 			
             return all;
        }

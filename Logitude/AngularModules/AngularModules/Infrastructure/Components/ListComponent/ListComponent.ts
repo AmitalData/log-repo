@@ -3222,6 +3222,22 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             windowArgs.TypeCode = "ECC";
                             break;
                         }
+
+                        case "Tariff.Inland FTL": {
+                            logWindow.Title = "New " + TextCodeTranslator.Translate("Tariff.Q.InlandFTL");
+                            windowArgs.TypeCode = "IFT";
+                            break;
+                        }
+                        case "Tariff.Import Local Charges Sale": {
+                            logWindow.Title = "New " + TextCodeTranslator.Translate("Tariff.Q.ImportLocalChargesSale");
+                            windowArgs.TypeCode = "ICS";
+                            break;
+                        }
+                        case "Tariff.Export Local Charges Sale": {
+                            logWindow.Title = "New " + TextCodeTranslator.Translate("Tariff.Q.ExportLocalChargesSale");
+                            windowArgs.TypeCode = "ECS";
+                            break;
+                        }
                     }
 
                     logWindow.WindowArgs = windowArgs;

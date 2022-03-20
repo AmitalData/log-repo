@@ -448,6 +448,16 @@ export class TariffPM {
     public set UnitOfMeasurementCode(newValue: string) { if (this.unitOfMeasurementCode != newValue) { this.unitOfMeasurementCode = newValue; this.MarkAsDirty("UnitOfMeasurementCode"); } }
        
 	 
+    private customerGroupId: string;
+    public get CustomerGroupId() { return this.customerGroupId; }
+    public set CustomerGroupId(newValue: string) { if (this.customerGroupId != newValue) { this.customerGroupId = newValue; this.MarkAsDirty("CustomerGroupId"); } }
+       
+	 
+    private customerGroupName: string;
+    public get CustomerGroupName() { return this.customerGroupName; }
+    public set CustomerGroupName(newValue: string) { if (this.customerGroupName != newValue) { this.customerGroupName = newValue; this.MarkAsDirty("CustomerGroupName"); } }
+       
+	 
 
     public OldEntityPM: TariffPM;
 		

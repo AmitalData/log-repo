@@ -257,6 +257,23 @@ namespace Simplog.Data.CommonDataModel.Mocks
             }
         }
 
+        List<CustomerGroup> customerGroups;
+        MockObjectSet<CustomerGroup> customerGroupObjectSet;
+        public IDbSet<CustomerGroup> CustomerGroups
+        {
+            get
+            {
+                if (customerGroups == null)
+                {
+                    customerGroups = new List<CustomerGroup>() {
+                        new CustomerGroup() { Id = "1-1", Name = "General", InActive = false, Tenant = 1}};
+                    customerGroupObjectSet = new MockObjectSet<CustomerGroup>(customerGroups);
+                }
+                return customerGroupObjectSet;
+            }
+        }
+
+
         public IDbSet<User> Users
         {
             get { return new MockObjectSet<User>(new List<User>() { new User() { BranchId = "1-1", DepartmentId = "1-1", Id = "1-3", Tenant = 1,Contact=Contacts.Where(d=>d.Id=="1-3").FirstOrDefault()  },

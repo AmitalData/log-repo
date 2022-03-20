@@ -223,6 +223,11 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public string UnitOfMeasurementCode { get; set; }
 	      
         public virtual WeightUnit UnitOfMeasurement { get; set; }
+        [ForeignKey("CustomerGroup")]
+        [Column("CustomerGroupId")]
+	    public string CustomerGroupId { get; set; }
+	      
+        public virtual CustomerGroup CustomerGroup { get; set; }
     }
 }
 	 
