@@ -53,7 +53,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             this.repository = repository;
         }
 
-        public ShipmentPM GetSinglePMByShipmentNumber(string shipmentNumber, int tenant, string include)
+        public ShipmentPM GetSinglePMWithIncludeByShipmentNumber(string shipmentNumber, int tenant, string include)
         {
             ShipmentPM shipmentPM = this.GetSinglePMByShipmentNumber(shipmentNumber, tenant);
 
@@ -64,7 +64,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return shipmentPM;
         }
-        public ShipmentPM GetSinglePM(string shipmentId, int tenant, string include)
+        public ShipmentPM GetSinglePMWithInclude(string shipmentId, int tenant, string include)
         {
             ShipmentPM shipmentPM = this.GetSinglePM(shipmentId, tenant);
 
