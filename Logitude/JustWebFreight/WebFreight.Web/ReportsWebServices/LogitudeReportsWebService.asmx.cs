@@ -1235,10 +1235,13 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.HouseNumber = a.HouseNumber;
                 invoicesRecored.YourRefrence = a.CustomerRef;
                 invoicesRecored.BillToName = a.BillToName;
+                invoicesRecored.InvoicePrintNotes = a.PrintNotes;
 
                 if (shipment != null)
                 {
                     invoicesRecored.ShipmentNumber = shipment.ShipmentNumber;
+                    invoicesRecored.Routing = shipment.Routing;
+
                     switch (shipment.DirectionId)
                     {
                         case "E":
