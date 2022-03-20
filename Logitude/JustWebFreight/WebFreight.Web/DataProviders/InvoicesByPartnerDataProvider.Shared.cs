@@ -48,6 +48,8 @@ namespace WebFreight.Web.DataProviders
             public string YourRefrence { get; set; }
             public string BillToName { get; set; }
             public string ShipmentNumber { get; set; }
+            public string InvoicePrintNotes { get; set; }
+            public string Routing { get; set; }
         }
     }
 }
