@@ -58,7 +58,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
         }
         public AccountingIntegrityResult CheckIntegrity(AccountingIntegrityInParam accountingIntegrityInParam)
         {
-            
+
             string errorMessage = CheckParams(accountingIntegrityInParam);
             if (!string.IsNullOrEmpty(errorMessage))
             {
@@ -98,25 +98,8 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                     }
 
                 }
-                else
-                {
-                    Convert2DisplayNumber(myAccountingIntegrityResult);
-                }
             }
             return myAccountingIntegrityResult;
-        }
-
-        private void Convert2DisplayNumber(AccountingIntegrityResult myAccountingIntegrityResult)
-        {
-            try
-            {
-                
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
         }
 
         private static void RebuildAgingData(AccountingIntegrityInParam accountingIntegrityInParam, AccountingIntegrityResult myAccountingIntegrityResult)
@@ -234,7 +217,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
             {
 
                 sb.AppendLine(eee.ToString());
-                throw new Exception(eee.ToString(),eee);// Itzik the exceptions is not thrown so i threw them
+                throw new Exception(eee.ToString(), eee);// Itzik the exceptions is not thrown so i threw them
             }
             finally
             {
@@ -304,7 +287,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
             var sw = Stopwatch.StartNew();
             string ExceptionMessage = "";
             int badRows = 0;
-            
+
             try
             {
                 var myDueLocalBalanceService = new DueLocalBalanceService();
@@ -329,7 +312,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                     //Month = currentMonth,
                     ExceptionMessage = ExceptionMessage,
                     BadRows = badRows,
-                    ShouldFix = (badRows>0 && String.IsNullOrWhiteSpace( ExceptionMessage)),
+                    ShouldFix = (badRows > 0 && String.IsNullOrWhiteSpace(ExceptionMessage)),
                     ElapsedMilliseconds = sw.ElapsedMilliseconds,
                 });
             }
@@ -356,7 +339,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                     var ReverseEngineerGLAccountBalance = new ReverseEngineerGLAccountBalance(/*currentMonth, */accountingIntegrityInParam.Tenant);
                     ReverseEngineerGLAccountBalance.CheckDbIntegrity();
 
-                    
+
                     myAccountingIntegrityResult.BalanceInLocalCurrencyResult = myAccountingIntegrityResult.BalanceInLocalCurrencyResult ?? new List<GLAccountBalanceDTO>();
                     myAccountingIntegrityResult.BalanceInLocalCurrencyResult.AddRange(ReverseEngineerGLAccountBalance.CompareReport.GLAccountBalanceList);
                     badRows = ReverseEngineerGLAccountBalance.CompareReport.GLAccountBalanceList.Count();
@@ -516,9 +499,9 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
         }
 
 
-        public  BatchTaskExecutionPM FixEntegrityCheckErrorInBatch(string id, int tenant)
+        public BatchTaskExecutionPM FixEntegrityCheckErrorInBatch(string id, int tenant)
         {
-            string xmlParameters=  SerializeXMLParameters(id, tenant);
+            string xmlParameters = SerializeXMLParameters(id, tenant);
 
             CreateBatchTaskExecution(xmlParameters, tenant);
             BatchTaskExecutionPM taskExecution = CreateBatchTaskExecution(xmlParameters, tenant);
@@ -526,7 +509,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
             return taskExecution;
         }
 
-        public  string SerializeXMLParameters(string id, int tenant)
+        public string SerializeXMLParameters(string id, int tenant)
         {
             IntegrityCheckArgs args = new IntegrityCheckArgs() { EntityId = id, Tenant = tenant };
             var stringwriter = new System.IO.StringWriter();
@@ -536,7 +519,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
             return xmlParameters;
         }
 
-        public  BatchTaskExecutionPM CreateBatchTaskExecution(string xmlParameter, int tenant)
+        public BatchTaskExecutionPM CreateBatchTaskExecution(string xmlParameter, int tenant)
         {
             BatchTaskExecutionPM taskExe = null;
             taskExe = new BatchTaskExecutionPM()
@@ -557,7 +540,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
             return taskExe;
         }
 
-        public  void SendBatchTaskToQueue(BatchTaskExecutionPM taskExecution )
+        public void SendBatchTaskToQueue(BatchTaskExecutionPM taskExecution)
         {
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
@@ -579,16 +562,16 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
     public class AccountingIntegrityResult
     {
         public bool HasException { get; set; }
-    
+
         public List<AccountingIntegrityStep> MyAccountingIntegrityStep { get; set; }
 
         public List<JournalLineLedgerDTO> JournalLineToLedgerResult { get; set; }
         public List<GLAccountTotalByMonthsDTO> LedgerToMounthTotalResult { get; set; }
         public List<GLAccountBalanceDTO> BalanceInLocalCurrencyResult { get; set; }
         public List<DueLocalBalanceDiffM> DueLocalBalance { get; set; }
-        public bool ShouldFix { get;  set; }
+        public bool ShouldFix { get; set; }
         public List<LedgerOpenAmountRecoDiffM> LedgerOpenAmount { get; set; }
-        public List<GLAccountBalanceDTO> TotalOpenReconciliationResult { get;  set; }
+        public List<GLAccountBalanceDTO> TotalOpenReconciliationResult { get; set; }
     }
 
     public class AccountingIntegrityStep
@@ -598,6 +581,6 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
         public string ExceptionMessage { get; set; }
         public bool ShouldFix { get; set; }
         public int BadRows { get; set; }
-        public long ElapsedMilliseconds { get;  set; }
+        public long ElapsedMilliseconds { get; set; }
     }
 }
