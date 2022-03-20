@@ -15,6 +15,8 @@ export class SharedLogisticMainMenuComponent {
     public CustomerTenantAccessVisibility: boolean = false;
     public CargoTrackingAccessVisibility: boolean = false;
     
+    public CtoolAccessVisibility: boolean = false;
+
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(private _entityResourceService: EntityResourceService) {
         this.RunComponent();
@@ -58,6 +60,8 @@ export class SharedLogisticMainMenuComponent {
        
             this.CustomerTenantAccessVisibility = false;
             this.CargoTrackingAccessVisibility = false;
+            this.CtoolAccessVisibility = false;
+
 
             this.SelectedItem = "SHLO";
       
@@ -66,9 +70,17 @@ export class SharedLogisticMainMenuComponent {
            
         }
 
+        
+
         if (FeatureLocator.HasFeaturePermession("General", "SHLOGCARGOTRACKING")) {
             this.CargoTrackingAccessVisibility = true;
         }
+
+        let collaborationToolFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CTL")[0];
+        if (collaborationToolFeatureToggle) {
+            this.CtoolAccessVisibility = true;
+        }
+
     }
 
     private selectedItem: string;
@@ -83,6 +95,8 @@ export class SharedLogisticMainMenuComponent {
     private Page_BOOK: any = null;
     private Page_SHIP: any = null;
     private Page_CATR: any = null;
+    private Page_CTOOL: any = null;
+
     SelectionChanged() {
         if (this.isLoaderReady) {
             if (this.SelectedItem != null) {
@@ -128,6 +142,20 @@ export class SharedLogisticMainMenuComponent {
                             }
                             break;
                         }
+
+                        case "CTOOL": {
+                            if (this.Page_CTOOL == null) {
+                                SessionLocator.DynamicLoader.Load('./SharedLogistics/Components/SharedLogisticsMainComponent', myLocation.viewContainerRef)
+                                    .then(cmpRef => {
+                                        this.Page_CTOOL = cmpRef.instance;
+                                        this.Page_CTOOL.SetSharedTitleType("CTool");
+                                    });
+                            }
+                            break;
+                        }
+                            
+
+
                     }
                 }
             }
