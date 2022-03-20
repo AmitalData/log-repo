@@ -2838,6 +2838,11 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             isVisible = false;
                             break;
                         }
+                    case "Card":
+                        {
+                            isVisible = false;
+                            break;
+                        }
                 }
             }
         }

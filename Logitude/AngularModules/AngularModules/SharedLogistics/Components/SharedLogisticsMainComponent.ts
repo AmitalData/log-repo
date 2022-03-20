@@ -91,7 +91,7 @@ export class SharedLogisticsMainComponent implements OnInit {
     public IsShowDisplaySetting: boolean = false;
     public IsShowActivatedMobileArea: boolean = false;
     public IsShowAgentStatisticsArea: boolean = false;
-
+    public ActivatedLabel = "Activated Shared Logistics";
     constructor(public _sharedLogisticsService: SharedLogisticsService, public _documentTypeListService: DocumentTypeListService) {
         if (this.tenantPMService == null) {
             this.tenantPMService = new TenantPMService();
@@ -161,9 +161,8 @@ export class SharedLogisticsMainComponent implements OnInit {
         this.TitleSettings = "CTool Settings";
         this.InviteLinkLable = "Invite CTool Partners";
         this.TitleStatus = "CTool Status";
+        this.ActivatedLabel = "Activated Ctool";
 
-        
-        
     }
 
 
