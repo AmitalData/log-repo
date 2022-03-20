@@ -1,5 +1,5 @@
-﻿<Script DBType="Main" Module="Shipment"  AOT="true" TargetTableName="Shipments" BatchSize="10000" >
-  <Sql Version="6">
+﻿<Script DBType="Main" Module="Shipment"  AOT="true" TargetTableName="Shipments" BatchSize="10000" Env="Logitude">
+  <Sql Version="7">
     <![CDATA[
 
 If(OBJECT_ID('tempdb..#temp') Is Not Null)
@@ -15,7 +15,7 @@ End
 CREATE TABLE #temp_Shipment
 (
 	Id varchar(15) not null,
-	AddressValue nvarchar(200) null
+	AddressValue nvarchar(1000) null
 )
 
 select
@@ -79,7 +79,7 @@ where $LastCounterWhere$
 	declare @InlandDomesticCity as varchar(25)
 	declare @InlandDomesticCountryName as varchar(120)
 
-	declare @ResultAddress as varchar(200)
+	declare @ResultAddress as varchar(1000)
 	
 	declare @Count as int
 	set @Count = 0;
