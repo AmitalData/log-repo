@@ -189,12 +189,16 @@
             <td style="width: 450px;" *ngIf="VisibileSurchargesArea">
                 <table>
                     <tr class="TabTitleRow">
-                        <td *ngIf="EntityPM.TypeCode != 'ICC' && EntityPM.TypeCode != 'ECC'">
+                        <td *ngIf="EntityPM.TypeCode != 'ICC' && EntityPM.TypeCode != 'ECC' && EntityPM.TypeCode != 'IFT'">
                             Surcharges
                         </td>
 
                         <td *ngIf="EntityPM.TypeCode == 'ICC' || EntityPM.TypeCode == 'ECC'">
                             Customs Charges
+                        </td>
+
+                        <td *ngIf="EntityPM.TypeCode == 'IFT'">
+                            Charges
                         </td>
                     </tr>
 
