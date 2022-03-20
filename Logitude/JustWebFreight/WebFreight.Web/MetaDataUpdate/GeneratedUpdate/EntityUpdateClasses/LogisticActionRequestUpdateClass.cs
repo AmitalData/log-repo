@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LogisticActionRequestUpdateClass
    {  		
-		public const string HashString = "5bc63cde7e4b277092f53a3f9795a186";
+		public const string HashString = "07b04cdd8fa61e056e992a6d380fd309";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1694,8 +1694,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationId",
 					  						DefaultText =  "Declaration Id",
+					  						FullLocalDefaultText =  "מזהה הצהרה",
 					  						ListFieldLable =  "DeclarationIdListLable",
 					  						ListLableDefaultText =  "Declaration Id",
+					  						ListLocalDefaultText =  "מזהה הצהרה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
