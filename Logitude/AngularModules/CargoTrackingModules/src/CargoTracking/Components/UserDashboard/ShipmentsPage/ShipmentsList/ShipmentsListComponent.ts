@@ -783,8 +783,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     ShipmentDirectionFilters: ToggleFilter[] = [
         new ToggleFilter(ShipmentDirectionCodes.Import, 'Import'),
         new ToggleFilter(ShipmentDirectionCodes.Export, 'Export'),
-        new ToggleFilter(ShipmentDirectionCodes.Drop, 'Drop'),
-        new ToggleFilter(ShipmentDirectionCodes.Domestic, 'Domestic'),
+        new ToggleFilter(ShipmentDirectionCodes.Drop, 'Drop')
     ];
     ShipmentTypeFilters: ToggleFilter[] = [
         new ToggleFilter(shipmentTypeCodes.Air, 'Air'),
@@ -853,8 +852,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
             return this.ShipmentsCounter.Drop;
         } else if (toggleFilter.Code == ShipmentDirectionCodes.Export) {
             return this.ShipmentsCounter.Export;
-        } else if (toggleFilter.Code == ShipmentDirectionCodes.Domestic) {
-            return this.ShipmentsCounter.Domestic;
         }
     }
     setCounterForMoreFiltersMultipleSelect(toggleFilter: ToggleFilter) {
@@ -1099,7 +1096,6 @@ export class CargoTrackingShipmentsCounter {
     Import: number = 0;
     Export: number = 0;
     Drop: number = 0;
-    Domestic: number = 0;
     Air: number = 0;
     Land: number = 0;
     Sea: number = 0;
@@ -1158,7 +1154,6 @@ export enum ShipmentDirectionCodes {
     Import = 'I',
     Export = 'E',
     Drop = 'R',
-    Domestic = 'D',
     CustomsImport = 'C'
 
 }
