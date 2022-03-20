@@ -67,6 +67,7 @@ namespace WebFreight.Web.Controllers.ShardLogistics
                     ctoolPartners = cards.Where(d => d.PartnerTypeId != "CS" && !d.InActive);
                 }
 
+
                 if (agents != null && agents.Count() > 0)
                 {
                     dataClass.InvitedAgentsCount = agents.Where(d => d.SharedLogisticsInvitationStatusCode == 2).Count();
@@ -74,7 +75,10 @@ namespace WebFreight.Web.Controllers.ShardLogistics
                     dataClass.ActivatedAgentsCount = agents.Where(d => d.SharedLogisticsInvitationStatusCode == 3).Count();
                 }
 
-                  SetCtoolpartnersStatistics(dataClass, ctoolPartners);
+                if (ctoolPartners != null && ctoolPartners.Count() > 0)
+                {
+                    SetCtoolpartnersStatistics(dataClass, ctoolPartners);
+                }
 
                 return Request.CreateResponse(HttpStatusCode.OK, dataClass);
             }
@@ -87,12 +91,11 @@ namespace WebFreight.Web.Controllers.ShardLogistics
 
         private void SetCtoolpartnersStatistics(SharedLogisticsStatusStatistics sharedLogisticsStatusStatistics, IQueryable<CardList> ctoolPartners)
         {
-            if (ctoolPartners != null && ctoolPartners.Count() > 0)
-            {
-                sharedLogisticsStatusStatistics.InvitedCToolPartnersCount = ctoolPartners.Where(d => d.SharedLogisticsInvitationStatusCode == 2).Count();
-                sharedLogisticsStatusStatistics.NotInvitedCToolPartnersCount = ctoolPartners.Where(d => d.SharedLogisticsInvitationStatusCode == 1).Count();
-                sharedLogisticsStatusStatistics.ActivatedCToolPartnersCount = ctoolPartners.Where(d => d.SharedLogisticsInvitationStatusCode == 3).Count();
-            }
+
+            sharedLogisticsStatusStatistics.InvitedCToolPartnersCount = ctoolPartners.Where(d => d.SharedLogisticsInvitationStatusCode == 2).Count();
+            sharedLogisticsStatusStatistics.NotInvitedCToolPartnersCount = ctoolPartners.Where(d => d.SharedLogisticsInvitationStatusCode == 1).Count();
+            sharedLogisticsStatusStatistics.ActivatedCToolPartnersCount = ctoolPartners.Where(d => d.SharedLogisticsInvitationStatusCode == 3).Count();
+
         }
 
         public HttpResponseMessage GetSharedLogisticsSummaryData(int tenant)

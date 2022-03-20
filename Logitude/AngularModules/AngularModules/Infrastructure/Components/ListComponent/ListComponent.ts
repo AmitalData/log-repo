@@ -1115,7 +1115,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         else {
             this.SelectedQuery = this.Queries[0];
         }
-        if (this.listArgs.DontCheckQueryFeature && !this.SelectedQuery && this.Queries && this.Queries.length > 0) {
+
+        if (this.listArgs.DontCheckQueryFeature && this.IFSelectedQueryEmpty()) {
             this.SelectedQuery = this.Queries[0];
         }
 
@@ -1181,6 +1182,10 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
         this.SetNewEntityButton();
         this.SetAddButton();
+    }
+
+    IFSelectedQueryEmpty() {
+        return (!this.SelectedQuery && this.Queries && this.Queries.length > 0) ? true : false;
     }
 
 

@@ -108,23 +108,24 @@ export class SharedLogisticsMainComponent implements OnInit {
 
 
     SetSettings() {
-        if (this.SharedTitleType == "CTool") {
-            this.ObjectTableInviteName = "Card";
-            this.DisplayObjectTableInviteName = "Partners";
-            this.InviteQueryCode = "Ctool Partners";
-            this.IsCtoolSetting = true
-        }
+
+        if (this.SharedTitleType != "CTool") return;
+        this.ObjectTableInviteName = "Card";
+        this.DisplayObjectTableInviteName = "Partners";
+        this.InviteQueryCode = "Ctool Partners";
+        this.IsCtoolSetting = true
 
     }
 
 
     SetVisibility() {
-        if (this.SharedTitleType != "CTool") {
-            this.LastMonthAccessVisibility = this.LastActivityVisibility = true;
-            this.IsShowDisplaySetting= true;
-            this.IsShowActivatedMobileArea = true;
-            this.IsShowAgentStatisticsArea = true;
-        } 
+
+        if (this.SharedTitleType == "CTool") return;
+        this.LastMonthAccessVisibility = this.LastActivityVisibility = true;
+        this.IsShowDisplaySetting = true;
+        this.IsShowActivatedMobileArea = true;
+        this.IsShowAgentStatisticsArea = true;
+        
 
     }
 
@@ -156,12 +157,13 @@ export class SharedLogisticsMainComponent implements OnInit {
             this.TitleStatus = "Shared Logistics Status";
 
 
-        if (this.SharedTitleType == "CTool") {
-            this.TitleSettings = "CTool Settings";
-            this.InviteLinkLable = "Invite CTool Partners";
-            this.TitleStatus = "CTool Status";
+        if (this.SharedTitleType != "CTool") return;
+        this.TitleSettings = "CTool Settings";
+        this.InviteLinkLable = "Invite CTool Partners";
+        this.TitleStatus = "CTool Status";
+
         
-        }
+        
     }
 
 
@@ -455,12 +457,7 @@ export class SharedLogisticsMainComponent implements OnInit {
 
     CustomersZoomLinkClcik(code: string) {
         this.filterAgrs = new ApiQueryFilters();
-        if (!this.IsCtoolSetting) {
-            this.filterAgrs.addAdditionalFilter("CustomerStatusCode", "ACT", null, null, "Equals", false, true, false, "string");
-            this.filterAgrs.addAdditionalFilter("PartnerTypeId", "CS", null, null, "Equals", false, true, false, "string");
-        } else {
-            this.filterAgrs.addAdditionalFilter("InActive", false, null, null, "Equals", true, false, false, "boolean");
-        }
+        this.SetAddAdditionalFilters();
         var backButtonTitle = !this.IsCtoolSetting ? "Shared Logistics" :"Ctool";
         var queryCode = this.InviteQueryCode;
         var displayTitle = "";
@@ -554,6 +551,15 @@ export class SharedLogisticsMainComponent implements OnInit {
 
 
 
+
+    private SetAddAdditionalFilters() {
+        if (this.IsCtoolSetting) {
+            this.filterAgrs.addAdditionalFilter("InActive", false, null, null, "Equals", true, false, false, "boolean");
+            return;
+        }
+        this.filterAgrs.addAdditionalFilter("CustomerStatusCode", "ACT", null, null, "Equals", false, true, false, "string");
+        this.filterAgrs.addAdditionalFilter("PartnerTypeId", "CS", null, null, "Equals", false, true, false, "string");
+    }
 
     ActivityZoomLinkClick(m: string) {
         var windowArgs: any = {};
