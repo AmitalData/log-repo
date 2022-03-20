@@ -98,8 +98,25 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                     }
 
                 }
+                else
+                {
+                    Convert2DisplayNumber(myAccountingIntegrityResult);
+                }
             }
             return myAccountingIntegrityResult;
+        }
+
+        private void Convert2DisplayNumber(AccountingIntegrityResult myAccountingIntegrityResult)
+        {
+            try
+            {
+                
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         private static void RebuildAgingData(AccountingIntegrityInParam accountingIntegrityInParam, AccountingIntegrityResult myAccountingIntegrityResult)
