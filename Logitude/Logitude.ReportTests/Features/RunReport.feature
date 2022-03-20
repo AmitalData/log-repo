@@ -11,3 +11,6 @@ Scenario: Run Report
 		| Customer | Abdallah | String   | Card       | CustomerId   | EnglishName |
 	When run report
 	Then the report should run successfully
+	And with values
+		| FieldName    | Operation | ValueOne | ValueTwo |
+		| CustomerName | Equal     | Abed     |          |

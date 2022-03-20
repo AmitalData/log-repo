@@ -4,28 +4,29 @@ using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
 using System;
+using TechTalk.SpecFlow;
 
 namespace Logitude.ReportTests.Services
 {
-    public class ReportAssertService
+    public class ReportAssertService : ReportDataAssertService
     {
         public void Assert(ReportFliter reportFilter)
         {
             reportFilter.Should().NotBeNull();
             reportFilter.ReportKey.Should().NotBeNull();
-            AssertReport(reportFilter);
+            AssertReportExecutionLog(reportFilter);
+            AssertStimulReportResult(reportFilter);
         }
 
-        private void AssertReport(ReportFliter reportFilter)
+        private void AssertReportExecutionLog(ReportFliter reportFilter)
         {
-            var tryEvreySecound = 4;
-            var timeLifeInSecound = 60 * 3;
-            var isDone = Waiter.RunAndWait(tryEvreySecound, timeLifeInSecound, () => AssertStimulSoftReportIsBliud(reportFilter.Tenant, reportFilter.ReportKey));
-            isDone.Should().BeTrue();
-            AssertBuildStimulReportResult(reportFilter);
+            var tryEvreySecound = 4;// add it to 
+            var timeLifeInSecound = 60 * 3; // add it to 
+            var seuccess = Waiter.RunAndWait(tryEvreySecound, timeLifeInSecound, () => GetExecutionLogResult(reportFilter.Tenant, reportFilter.ReportKey));
+            seuccess.Should().BeTrue();
         }
 
-        private bool AssertStimulSoftReportIsBliud(int tenant, string reportKey)
+        private bool GetExecutionLogResult(int tenant, string reportKey)
         {
             var reportReult = APICaller.CallGet<ReportBuildResult>(Urls.GetCheckIfStimulSoftReportIsBliud(reportKey, tenant), UserTenant.Token)?.Data;
             if (reportReult == null) return false;
@@ -34,12 +35,14 @@ namespace Logitude.ReportTests.Services
             return true;
         }
 
-        private void AssertBuildStimulReportResult(ReportFliter reportFilter)
+        private void AssertStimulReportResult(ReportFliter reportFilter)
         {
             reportFilter.ProcessType = "ReportsRunUsingWR";
             StimulReportResult stimulReportResult = APICaller.CallPut<StimulReportResult>(reportFilter, Urls.ReportController, UserTenant.Token)?.Data;
             stimulReportResult.Should().NotBeNull();
             stimulReportResult.StimulImageBase64.Should().NotBeNull();
+            Initialize(stimulReportResult.DataProvider);
         }
+
     }
 }
