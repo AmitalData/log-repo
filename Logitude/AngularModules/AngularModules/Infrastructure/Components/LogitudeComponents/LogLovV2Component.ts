@@ -196,22 +196,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ShowInactivePopUpConfirmWindow(newValue: any) {
-        var confirmWindow = new ConfirmWindow();
-        confirmWindow.Width = 500;
-        confirmWindow.Height = 190;
-        confirmWindow.ShowCancelButton = false;
-        confirmWindow.YesButtonText = "Confirm";
-        confirmWindow.NoButtonText = "Cancel";
-        confirmWindow.Title = "Activate shipping line";
-        confirmWindow.Show("This shipping line is marked as inactive, would you like to re-activate it?");
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                this.SetSelectedValue(newValue);
-                this.SetSelectedItemInActiveField();
-            }
-            else if (confirmWindow.No) {
-                this.OnDeleteValue();
-            }
+        var messageWindow = new MessageWindow();
+        messageWindow.Width = 400;
+        messageWindow.Height = 150;
+        messageWindow.Show("The shipping line " + this.SelectedItem?.Code + " is inactive and cannot be selected.");
+        messageWindow.WindowClosed.subscribe((event: any) => {
+            this.OnDeleteValue();
         });
     }
 
