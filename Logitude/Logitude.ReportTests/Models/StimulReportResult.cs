@@ -2,7 +2,7 @@
 
 namespace Logitude.ReportTests.Models
 {
-    public class BuildStimulReportResult
+    public class StimulReportResult
     {
         public int PageCount { get; set; }
         public string ReportKey { get; set; }

@@ -7,7 +7,7 @@ Scenario: Run Report
 		| Code     | OSBC                       |
 		| Name     | Open Shipments by Customer |
 	And filter fields
-		| Name       | Value    | Table | From        |
-		| CustomerId | Abdallah | Card  | EnglishName |
+		| Name     | Value    | DataType | EntityName | PropertyName | SearchBy    |
+		| Customer | Abdallah | String   | Card       | CustomerId   | EnglishName |
 	When run report
 	Then the report should run successfully

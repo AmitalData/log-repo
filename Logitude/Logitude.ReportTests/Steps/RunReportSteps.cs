@@ -10,13 +10,13 @@ namespace Logitude.ReportTests.Steps
     [Binding]
     public class RunReportSteps
     {
-        private readonly ReportService reportService;
+        private readonly ReportFilterService reportFilterService;
         private readonly ReportContext reportContext;
         private readonly ReportAssertService reportAssertService;
 
-        public RunReportSteps(ReportService reportService, ReportContext reportContext, ReportAssertService reportAssertService)
+        public RunReportSteps(ReportFilterService reportFilterService, ReportContext reportContext, ReportAssertService reportAssertService)
         {
-            this.reportService = reportService;
+            this.reportFilterService = reportFilterService;
             this.reportContext = reportContext;
             this.reportAssertService = reportAssertService;
         }
@@ -24,13 +24,13 @@ namespace Logitude.ReportTests.Steps
         [Given(@"report with the following properties")]
         public void GivenReportWithTheFollowingProperties(Table table)
         {
-            reportContext.ReportFilter = reportService.CreateFilterInstance(table);
+            reportContext.ReportFilter = reportFilterService.Create(table);
         }
         
         [Given(@"filter fields")]
         public void GivenFilterFields(Table table)
         {
-            reportContext.ReportFilter.QueryFilterItemLists = reportService.BuildReportFliterItems(table);
+            reportContext.ReportFilter.QueryFilterItemLists = reportFilterService.BuildFilterItems(table);
         }
         
         [When(@"run report")]

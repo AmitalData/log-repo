@@ -7,18 +7,24 @@ using System.Linq;
 
 namespace Logitude.ReportTests.Services
 {
-    public class EntityIdentityService
+    public class EntityService
     {
-        public string GetIdentity(EntityIdentifier entityIdentifier)
+        public string GetIdentity(string fieldValue , string fieldName , string entityName)
         {
             ApiQueryFilters apiQueryFilters = new ApiQueryFiltersBuilder().WithDefualtValues()
-                .Filter1Name(entityIdentifier.From ?? "SearchFields")
+                .Filter1Name(fieldName ?? "SearchFields")
                 .Filter1Operator("Equal")
-                .Filter1Value(entityIdentifier.Value).Build();
+                .Filter1Value(fieldValue).Build();
 
-            ApiResponse<IEnumerable<dynamic>> response = APICaller.CallGetByFilters<IEnumerable<dynamic>>(GetURL(entityIdentifier.Table), UserTenant.Token, apiQueryFilters);
+            return CallGetByFilters(entityName, apiQueryFilters);
+        }
+
+        private string CallGetByFilters(string entityName, ApiQueryFilters apiQueryFilters)
+        {
+            ApiResponse<IEnumerable<dynamic>> response = APICaller.CallGetByFilters<IEnumerable<dynamic>>(GetURL(entityName), UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault()?["Id"];
         }
+
 
         private string GetURL(string tableName)
         {

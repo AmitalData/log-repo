@@ -123,12 +123,16 @@ this.ScenarioInitialize(scenarioInfo);
                 TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "Value",
-                            "Table",
-                            "From"});
+                            "DataType",
+                            "EntityName",
+                            "PropertyName",
+                            "SearchBy"});
                 table2.AddRow(new string[] {
-                            "CustomerId",
+                            "Customer",
                             "Abdallah",
+                            "String",
                             "Card",
+                            "CustomerId",
                             "EnglishName"});
 #line 9
  testRunner.And("filter fields", ((string)(null)), table2, "And ");

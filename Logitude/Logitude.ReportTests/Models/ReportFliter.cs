@@ -22,4 +22,13 @@ namespace Logitude.ReportTests.Models
         public List<ReportFliterItem> QueryFilterItemLists { get; set; }
 
     }
+
+    public class ReportFliterItem
+    {
+        public string FieldName { get; set; }
+        public object FieldValue { get; set; }
+        public string FieldDataType { get; set; }
+        public string Operator { get; set; }
+    }
+
 }

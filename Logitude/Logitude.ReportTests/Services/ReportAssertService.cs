@@ -37,9 +37,9 @@ namespace Logitude.ReportTests.Services
         private void AssertBuildStimulReportResult(ReportFliter reportFilter)
         {
             reportFilter.ProcessType = "ReportsRunUsingWR";
-            BuildStimulReportResult buildStimulReportResult = APICaller.CallPut<BuildStimulReportResult>(reportFilter, Urls.ReportController, UserTenant.Token)?.Data;
-            buildStimulReportResult.Should().NotBeNull();
-            buildStimulReportResult.StimulImageBase64.Should().NotBeNull();
+            StimulReportResult stimulReportResult = APICaller.CallPut<StimulReportResult>(reportFilter, Urls.ReportController, UserTenant.Token)?.Data;
+            stimulReportResult.Should().NotBeNull();
+            stimulReportResult.StimulImageBase64.Should().NotBeNull();
         }
     }
 }
