@@ -147,12 +147,19 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             List<ARInvoiceTotalVATPM> arTotalVats = GetARInvoiceTotalVATPMs();
             if(hasExpenses)
             {
-                SetComprobanteTotalAndSubTotal(comprobante, arTotalVats);
+                MapComprobanteTotalAndSubTotal(comprobante, arTotalVats);
             }
 
             comprobante.Impuestos = GetComprobanteImpuestos(arTotalVats, comprobante.Conceptos)?.ComprobanteImpuestos;
 
             return comprobante;
+        }
+
+        private void MapComprobanteTotalAndSubTotal(Comprobante comprobante, List<ARInvoiceTotalVATPM> arTotalVats)
+        {
+            ComprobanteTotalAndSubTotal comprobanteTotalAndSubTotal = GetComprobanteTotalAndSubTotal(arTotalVats);
+            comprobante.Total = comprobanteTotalAndSubTotal.Total;
+            comprobante.SubTotal = comprobanteTotalAndSubTotal.SubTotal;
         }
 
         private string GetMoneda()
@@ -896,7 +903,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                     }).ToList();
         }
 
-        private void SetComprobanteTotalAndSubTotal(Comprobante comprobante, List<ARInvoiceTotalVATPM> arTotalVats)
+        public ComprobanteTotalAndSubTotal GetComprobanteTotalAndSubTotal(List<ARInvoiceTotalVATPM> arTotalVats)
         {
             double? localAmountTotal = 0;
             double? invoiceAmountTotal = 0;
@@ -917,9 +924,12 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 subtotal += (line.InvoiceCurrencyAmount != null ? line.InvoiceCurrencyAmount.Value : 0);
             }
 
-            comprobante.SubTotal = Math.Abs((decimal)subtotal);
             var total = Math.Abs((subtotal + invoiceAmountTotal).Value);
-            comprobante.Total = Math.Abs((decimal)total);
+            return new ComprobanteTotalAndSubTotal
+            {
+                SubTotal = Math.Abs((decimal)subtotal),
+                Total = Math.Abs((decimal)total)
+            };
         }
 
         public ComprobanteImpuestosResults GetComprobanteImpuestos(List<ARInvoiceTotalVATPM> arTotalVats, ComprobanteConcepto[] comprobanteConceptos)
@@ -1142,5 +1152,11 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
     {
         public ComprobanteImpuestos ComprobanteImpuestos { get; set; }
         public List<ComprobanteImpuestosRetencionDR> ComprobanteImpuestosRetencionDRs { get; set; }
+    }
+
+    public class ComprobanteTotalAndSubTotal
+    {
+        public decimal Total { get; set; }
+        public decimal SubTotal { get; set; }
     }
 }

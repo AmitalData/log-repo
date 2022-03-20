@@ -201,26 +201,23 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
             SATInvoiceComprobante sATInvoiceComprobante = new SATInvoiceComprobante(arInvoicePM, currentTenant, null);
 
             List<ARInvoiceTotalVATPM> arTotalVats = sATInvoiceComprobante.GetARInvoiceTotalVATPMs();
-
+            ComprobanteTotalAndSubTotal comprobanteTotalAndSubTotal = sATInvoiceComprobante.GetComprobanteTotalAndSubTotal(arTotalVats);
             List<PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR> trasladoDRList = new List<PagosPagoDoctoRelacionadoImpuestosDRTrasladoDR>();
             List<PagosPagoDoctoRelacionadoImpuestosDRRetencionDR> retencionDRList = new List<PagosPagoDoctoRelacionadoImpuestosDRRetencionDR>();
 
             ComprobanteImpuestosResults comprobanteImpuestosResults = sATInvoiceComprobante.GetComprobanteImpuestos(arTotalVats, sATInvoiceComprobante.GetConceptoList().ToArray());
 
-            decimal totalInvoiceAmount = 0;
             comprobanteImpuestosResults?.ComprobanteImpuestos.Traslados.ToList().ForEach(comprobanteImpuestosTraslado =>
             {
-                totalInvoiceAmount += (comprobanteImpuestosTraslado.Base + comprobanteImpuestosTraslado.Importe);
                 trasladoDRList.Add(GetNewPagosPagoDoctoRelacionadoImpuestosDRTrasladoDR(comprobanteImpuestosTraslado));
             });
 
             comprobanteImpuestosResults?.ComprobanteImpuestosRetencionDRs.ToList().ForEach(comprobanteImpuestosRetencion =>
             {
-                totalInvoiceAmount -= comprobanteImpuestosRetencion.Importe;
                 retencionDRList.Add(GetNewPagosPagoDoctoRelacionadoImpuestosDRRetencionDR(comprobanteImpuestosRetencion));
             });
 
-            MapPaidAmounts(new FullyPatiallyPaidAmountArgs { InvoiceAmountToPay = invoiceAmountToPay, TrasladoDRs = trasladoDRList, RetencionDRs = retencionDRList, TotalInvoiceAmount = totalInvoiceAmount });
+            MapPaidAmounts(new FullyPatiallyPaidAmountArgs { InvoiceAmountToPay = invoiceAmountToPay, TrasladoDRs = trasladoDRList, RetencionDRs = retencionDRList, TotalInvoiceAmount = comprobanteTotalAndSubTotal.Total });
 
             PagosPagoDoctoRelacionadoImpuestosDR pagosPagoDoctoRelacionadoImpuestosDR = new PagosPagoDoctoRelacionadoImpuestosDR();
             if (trasladoDRList.Count > 0) pagosPagoDoctoRelacionadoImpuestosDR.TrasladosDR = trasladoDRList.ToArray();
@@ -260,11 +257,9 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
 
         private static decimal GetinvoiceAmountToPayRatio(decimal totalInvoiceAmount, decimal invoiceAmountToPay)
         {
-            decimal invoiceAmountToPayRatio = 1;
-            if (invoiceAmountToPay == totalInvoiceAmount) return invoiceAmountToPayRatio;
-            invoiceAmountToPayRatio = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(invoiceAmountToPay / totalInvoiceAmount);
+            if (invoiceAmountToPay == totalInvoiceAmount) return 1;
 
-            return invoiceAmountToPayRatio;
+            return invoiceAmountToPay / totalInvoiceAmount;
         }
 
         private static PagosPagoDoctoRelacionadoImpuestosDRRetencionDR GetNewPagosPagoDoctoRelacionadoImpuestosDRRetencionDR(ComprobanteImpuestosRetencionDR comprobanteImpuestosRetencionDR)
