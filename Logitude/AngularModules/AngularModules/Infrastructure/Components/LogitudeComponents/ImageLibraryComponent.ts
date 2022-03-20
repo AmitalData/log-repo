@@ -30,6 +30,7 @@ export class ImageLibraryComponent implements OnInit {
 
     GetImages() {
         this.ImageLibraryExtendedListService.GetAll().subscribe((response: ServiceResponse) => {
+            if (response.HasError) return;
             this.FillImages(response);
         });
     }
