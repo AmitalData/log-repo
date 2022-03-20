@@ -86,11 +86,11 @@ export class SharedLogisticsMainComponent implements OnInit {
     public InviteLinkLable: string = "Invite Customers";
     public IsCtoolSetting: boolean = false;
     private ObjectTableInviteName: string = "Customer";
-    private DisplayObjectTableInviteName: string = "Customers";
+    public DisplayObjectTableInviteName: string = "Customers";
     private InviteQueryCode: string = "Shared Logistics Customers";
-    private IsShowDisplaySetting: boolean = false;
-    private IsShowActivatedMobileArea: boolean = false;
-    private IsShowAgentStatisticsArea: boolean = false;
+    public IsShowDisplaySetting: boolean = false;
+    public IsShowActivatedMobileArea: boolean = false;
+    public IsShowAgentStatisticsArea: boolean = false;
 
     constructor(public _sharedLogisticsService: SharedLogisticsService, public _documentTypeListService: DocumentTypeListService) {
         if (this.tenantPMService == null) {
