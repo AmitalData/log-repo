@@ -123,7 +123,7 @@ export class TariffTabsContentComponent implements OnDestroy {
 
         var draftVersion: TariffVersionPM = this.EntityPM.TariffVersions.filter(d => d.IsDraft)[0];
         if (draftVersion != null) {
-            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "IFT") {
+            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "IFT" || this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
                 header = "Version " + draftVersion.Version;
             }
 
@@ -185,7 +185,9 @@ export class TariffTabsContentComponent implements OnDestroy {
         else if (this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
             this.EditTabTariffType = "CHVR";
         }
-
+        else if (this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
+            this.EditTabTariffType = "LCVR";
+        }
         this.BuildTabs();
         this.RunComponent();        
     }
@@ -203,7 +205,7 @@ export class TariffTabsContentComponent implements OnDestroy {
 
         var draftVersion: TariffVersionPM = this.EntityPM.TariffVersions.filter(d => d.IsDraft)[0];
         if (draftVersion != null) {
-            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "IFT") {
+            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "IFT" || this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
                 header = "Version " + draftVersion.Version;
             }
 
@@ -233,7 +235,7 @@ export class TariffTabsContentComponent implements OnDestroy {
         }
                 
         this.EntityPM.ActiveVersions.sort((a, b) => { return (a.Version === b.Version) ? 0 : (a.Version > b.Version) ? -1 : 1 }).forEach(item => {
-            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "IFT") {
+            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "IFT" || this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
                 header = "Version " + item.Version;
             }
 
@@ -462,6 +464,15 @@ class TariffDetailsTab {
                 this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/CustomChargesVersionTabComponent";
                 break;
             }
+
+            case "LCVR":
+                {
+                    this.IsDraft = version.IsDraft;
+                    this.VersionPM = version;
+                    this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/LocalChargesVersionTabComponent";
+                    break;
+
+                }
         }
     }
 }

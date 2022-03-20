@@ -54,7 +54,7 @@ export class TariffValidator {
                 this.ValidateContainers();
                 this.HasAContainerTypeUOM = true;
             }
-            else if (entityPM.TypeCode == "OFS") {
+            else if (entityPM.TypeCode == "OFS" || entityPM.TypeCode == "IFT") {
                 this.chargesTypePMService = new ChargesTypeListService();
                 this.packageTypeListService = new PackageTypeListService();
                 this.measurementPMService = new MeasurementListService();

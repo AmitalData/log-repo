@@ -823,8 +823,8 @@
                                 </logitude-edit-grid>
                             </div>
 
-                            <!-- Customs Charges-->
-                            <div *ngIf="EntityPM.TypeCode == 'ECC' || EntityPM.TypeCode == 'ICC'" class="MediaFill">
+                            <!-- Customs/Local Charges -->
+                            <div *ngIf="EntityPM.TypeCode == 'ECC' || EntityPM.TypeCode == 'ICC' || EntityPM.TypeCode == 'ICS' || EntityPM.TypeCode == 'ECS'" class="MediaFill">
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="VersionLinesSource" [SelectedRow]="selectedRow" [ChangeScrollPosition]="changeScrollPosition">
                                     <log-column [header]="'TariffLine.F.OriginPortId' | TextCodeTranslationPipe" [width]="'70'">
                                         <ng-template let-item>

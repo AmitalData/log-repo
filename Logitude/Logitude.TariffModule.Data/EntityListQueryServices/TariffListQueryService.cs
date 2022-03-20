@@ -64,7 +64,7 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
             customFieldResolver.SetCustomFieldsValues("Tariffs", tenant, myResult.Cast<object>().ToList());
             return myResult.ToList();
         }
-      
+       
         public List<TariffList> GetRecentEntityLists(int tenant, string userId, string objectTableId)
         {
             List<TariffList> entityList = new List<TariffList>();
@@ -119,7 +119,70 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
             }
             return entityList;
         }
+        public List<TariffList> GetRecentSaleTariffs(string userId, int tenant)
+        {
+            ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
+            ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Tariff", 0, true);
 
+            IQueryable<TariffList> myResult = this.GetRecentSaleTariffLists(tenant, userId, objectTable.Id).AsQueryable();
+
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            customFieldResolver.SetCustomFieldsValues("Tariffs", tenant, myResult.Cast<object>().ToList());
+            return myResult.ToList();
+        }
+        public List<TariffList> GetRecentSaleTariffLists(int tenant, string userId, string objectTableId)
+        {
+            List<TariffList> entityList = new List<TariffList>();
+            List<EntityLastActivity> lastActivities = GetLastActivityList(tenant, userId, objectTableId);
+            List<string> lastActivetyIds = GetLastActivityIds(lastActivities);
+            IQueryable<Tariff> entities = GetSaleTariffsEntitysFromIds(lastActivetyIds, tenant);
+
+            foreach (EntityLastActivity lastActivity in lastActivities)
+            {
+                Tariff a = (from d in entities.Include("UpdatedByUser.Contact").Include("CreatedByUser.Contact").Include("Seller").Include("CustomerGroup")
+                            where d.Id == lastActivity.EntityId
+                            select d).FirstOrDefault();
+
+                if (a != null)
+                {
+                    TariffList list = new TariffList()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        CreateDate = a.CreateDate,
+                        CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact != null ? a.CreatedByUser.Contact.EnglishName : "" : "",
+                        SearchFields = a.SearchFields,
+                        StartDate = a.StartDate,
+                        ExpirationDate = a.ExpirationDate,
+                        Name = a.Name,
+                        InActive = a.InActive,
+                        Notes = a.Notes,
+                        SellerName = a.Seller != null ? a.Seller.EnglishName : "",
+                        UpdateDate = a.UpdateDate,
+                        UpdatedByUserName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact != null ? a.UpdatedByUser.Contact.EnglishName : "" : "",
+                        TariffNumber = a.TariffNumber,
+                        ContractNumber = a.ContractNumber,
+                        TypeCode = a.TypeCode,
+                        PriceSteps = a.PriceSteps,
+                        LastActivityDate = lastActivity.ActivityDate,
+                        LastActivityTypeName = lastActivity.ActivityType.Name,
+                        LastActivityByUserName = lastActivity.User.Contact.EnglishName,
+                        CurrencyId = a.CurrencyId,
+                        LastUsedDate = a.LastUsedDate,
+                        CustomerGroupName = a.CustomerGroup != null ? a.CustomerGroup.Name : "",
+                    };
+
+                    TariffType tariffType = GetTariffType(a.TypeCode, tenant);
+                    list.TypeName = tariffType.Name != null ? tariffType.Name : "";
+                    list.TransportModeCode = tariffType.TransportModeCode != null ? tariffType.TransportModeCode : "";
+                    list.TransportModeName = GetTransportModeName(tariffType.TransportModeCode, tenant);
+                    list.DirectionCode = tariffType.DirectionCode != null ? tariffType.DirectionCode : "";
+                    list.DirectionName = GetDirectionName(tariffType.DirectionCode, tenant);
+                    entityList.Add(list);
+                }
+            }
+            return entityList;
+        }
         private string GetTransportModeName(string code, int tenant)
         {
             TransportModeRepository transportModeRepository = new TransportModeRepository(tenant);
@@ -162,6 +225,11 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
         {
             tariffRepository = new TariffRepository(tenant);
             return tariffRepository.GetAllFromIdList(lastActivetyIds, tenant);
+        }
+        private IQueryable<Tariff> GetSaleTariffsEntitysFromIds(List<string> lastActivetyIds, int tenant)
+        {
+            tariffRepository = new TariffRepository(tenant);
+            return tariffRepository.GetAllSaleTariffFromIdList(lastActivetyIds, tenant);
         }
         private List<EntityLastActivity> GetLastActivityList(int tenant, string userId, string objectTableId)
         {
