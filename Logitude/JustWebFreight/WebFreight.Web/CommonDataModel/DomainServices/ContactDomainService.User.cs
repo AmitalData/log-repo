@@ -313,7 +313,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
             List<UserList> userLists = query2.ToList();
 
-            if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+            if (HttpContext.Current != null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
             {
                 contactRepository = new ContactRepository(tenant);
                 Contact contact = (from a in contactRepository.context.Contacts
