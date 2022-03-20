@@ -27,6 +27,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         public static string ARInvoiceObjectTableName = "ARInvoice";
         public static string ARPaymentObjectTableName = "ARPayment";
         public static string OutSideMexicoRfc = "XEXX010101000";
+        public static string MexicoRfc = "AAA010101AAA";
         public static string MexicoCountryCode = "MX";
         public static string LogitudeSATPaymentBankTransferMethod = "03";
         public static string SATPaymentBankTransferTypeCode = "01";
@@ -37,5 +38,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         public static string IncorporacionFiscalRegimen = "621";
         public static string NotIncludeTaxObjetoImp = "01";
         public static string IncludeTaxObjetoImp = "02";
+        public static string PaymentReceiptType = "P";
+        public static string PaymentCurrency = "XXX";
     }
 }

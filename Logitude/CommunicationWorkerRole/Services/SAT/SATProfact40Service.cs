@@ -180,13 +180,13 @@ namespace CommunicationWorkerRole.Services.SAT
 						Simplog.Data.InvoiceModel.EntityPOCOs.ARPayment payment = arpaymentRep.GetSingleARPayment(waitingCommLog.EntityId);
 						if (payment != null)
 						{
-							HandlePaymentError(waitingCommLog, arpaymentRep, communicationLogRep, transError);
+							HandlePaymentError(new SATErrorArgs { WaitingCommLog = waitingCommLog, ArpaymentRep = arpaymentRep, CommunicationLogRep = communicationLogRep, TransError = transError, ResultadoTimbre = resultadoTimbre });
 						}
 					}
 					else
 					{
 						Simplog.Data.InvoiceModel.EntityPOCOs.ARInvoice invoice = arinvoiceRep.GetSingleInvoice(waitingCommLog.EntityId);
-						HandleInvoiceError(waitingCommLog, arinvoiceRep, communicationLogRep, transError, invoice);
+						HandleInvoiceError(new SATErrorArgs { WaitingCommLog = waitingCommLog, ArinvoiceRep = arinvoiceRep, CommunicationLogRep = communicationLogRep, TransError = transError, Invoice = invoice, ResultadoTimbre = resultadoTimbre });
 					}
 				}
 
@@ -258,12 +258,12 @@ namespace CommunicationWorkerRole.Services.SAT
 					}
 					else
 					{
-						HandlePaymentError(waitingCommLog, arpaymentRep, communicationLogRep, transError);
+						HandlePaymentError(new SATErrorArgs { WaitingCommLog = waitingCommLog, ArpaymentRep = arpaymentRep, CommunicationLogRep = communicationLogRep, TransError = transError, ResultadoTimbre = resultadoTimbre });
 					}
 				}
 				else
 				{
-					HandlePaymentError(waitingCommLog, arpaymentRep, communicationLogRep, transError);
+					HandlePaymentError(new SATErrorArgs { WaitingCommLog = waitingCommLog, ArpaymentRep = arpaymentRep, CommunicationLogRep = communicationLogRep, TransError = transError, ResultadoTimbre = resultadoTimbre });
 				}
 			}
 			else
@@ -331,13 +331,13 @@ namespace CommunicationWorkerRole.Services.SAT
 					}
 					else
 					{
-						HandleInvoiceError(waitingCommLog, arinvoiceRep, communicationLogRep, transError, invoice);
+						HandleInvoiceError(new SATErrorArgs { WaitingCommLog = waitingCommLog, ArinvoiceRep = arinvoiceRep, CommunicationLogRep = communicationLogRep, TransError = transError, Invoice = invoice, ResultadoTimbre = resultadoTimbre });
 
 					}
 				}
 				else
 				{
-					HandleInvoiceError(waitingCommLog, arinvoiceRep, communicationLogRep, transError, invoice);
+					HandleInvoiceError(new SATErrorArgs { WaitingCommLog = waitingCommLog, ArinvoiceRep = arinvoiceRep, CommunicationLogRep = communicationLogRep, TransError = transError, Invoice = invoice, ResultadoTimbre = resultadoTimbre });
 				}
 
 			}
@@ -389,48 +389,48 @@ namespace CommunicationWorkerRole.Services.SAT
 			return transError;
 		}
 
-		private void HandlePaymentError(CommunicationLog waitingCommLog, Simplog.Data.InvoiceModel.Repositories.ARPaymentRepository arpaymentRep, CommunicationLogRepository communicationLogRep, string transError)
+		private void HandlePaymentError(SATErrorArgs sATErrorArgs)
 		{
-			Simplog.Data.InvoiceModel.EntityPOCOs.ARPayment payment = arpaymentRep.GetSingleARPayment(waitingCommLog.EntityId);
+			Simplog.Data.InvoiceModel.EntityPOCOs.ARPayment payment = sATErrorArgs.ArpaymentRep.GetSingleARPayment(sATErrorArgs.WaitingCommLog.EntityId);
 			if (payment != null)
 			{
-				if (transError != payment.TransmissionError || payment.SATTransferStatusCode != "TE")
+				if (sATErrorArgs.TransError != payment.TransmissionError || payment.SATTransferStatusCode != "TE")
 				{
 					payment.SATTransferStatusCode = "TE";
-					payment.TransmissionError = transError;
-					arpaymentRep.Update(payment);
-					arpaymentRep.SubmitChanges();
+					payment.TransmissionError = sATErrorArgs.TransError;
+					sATErrorArgs.ArpaymentRep.Update(payment);
+					sATErrorArgs.ArpaymentRep.SubmitChanges();
 				}
 			}
 
-			SaveCommunicationLogAsDoneWithSATError(waitingCommLog, communicationLogRep, transError);
+			SaveCommunicationLogAsDoneWithSATError(sATErrorArgs);
 		}
 
-		private void HandleInvoiceError(CommunicationLog waitingCommLog, Simplog.Data.InvoiceModel.Repositories.ARInvoiceRepository arinvoiceRep, CommunicationLogRepository communicationLogRep, string transError, Simplog.Data.InvoiceModel.EntityPOCOs.ARInvoice invoice)
+		private void HandleInvoiceError(SATErrorArgs sATErrorArgs)
 		{
-			if (transError != invoice.TransmissionError || invoice.SATTransferStatusCode != "TE")
+			if (sATErrorArgs.TransError != sATErrorArgs.Invoice.TransmissionError || sATErrorArgs.Invoice.SATTransferStatusCode != "TE")
 			{
-				invoice.SATTransferStatusCode = "TE";
-				invoice.TransmissionError = transError;
+				sATErrorArgs.Invoice.SATTransferStatusCode = "TE";
+				sATErrorArgs.Invoice.TransmissionError = sATErrorArgs.TransError;
 
-				arinvoiceRep.Update(invoice);
-				arinvoiceRep.SubmitChanges();
+				sATErrorArgs.ArinvoiceRep.Update(sATErrorArgs.Invoice);
+				sATErrorArgs.ArinvoiceRep.SubmitChanges();
 			}
 
-			SaveCommunicationLogAsDoneWithSATError(waitingCommLog, communicationLogRep, transError);
+			SaveCommunicationLogAsDoneWithSATError(sATErrorArgs);
 		}
 
-		private void SaveCommunicationLogAsDoneWithSATError(CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, string transError)
+		private void SaveCommunicationLogAsDoneWithSATError(SATErrorArgs sATErrorArgs)
 		{
-			string exceptionMessage = "Done, with SAT Error: " + transError;
-			waitingCommLog.CommunicationStatusTypeCode = "D";
-			waitingCommLog.ExceptionMessage = StringHelper.TruncateLongString(exceptionMessage, 7000);
-			waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+			string exceptionMessage = "Done, with SAT Error: " + sATErrorArgs.TransError + "\nMore Details: " + sATErrorArgs.ResultadoTimbre.Detalle;
+			sATErrorArgs.WaitingCommLog.CommunicationStatusTypeCode = "D";
+			sATErrorArgs.WaitingCommLog.ExceptionMessage = StringHelper.TruncateLongString(exceptionMessage, 7000);
+			sATErrorArgs.WaitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(sATErrorArgs.WaitingCommLog.Tenant);
 
 			if (context != null)
 			{
-				communicationLogRep.Update(waitingCommLog);
-				communicationLogRep.SubmitChanges();
+				sATErrorArgs.CommunicationLogRep.Update(sATErrorArgs.WaitingCommLog);
+				sATErrorArgs.CommunicationLogRep.SubmitChanges();
 			}
 
 			queueservice.Complete();
@@ -606,5 +606,16 @@ namespace CommunicationWorkerRole.Services.SAT
 		public CommunicationLogRepository CommunicationLogRep { get; set; }
 		public byte[] DatainByte { get; set; }
 		public Simplog.Data.InvoiceModel.EntityPOCOs.SATInterfaceSetting SatSetting { get; set; }
+	}
+
+	public class SATErrorArgs
+	{
+		public CommunicationLog WaitingCommLog { get; set; }
+		public Simplog.Data.InvoiceModel.Repositories.ARPaymentRepository ArpaymentRep { get; set; }
+		public Simplog.Data.InvoiceModel.Repositories.ARInvoiceRepository ArinvoiceRep { get; set; }
+		public Simplog.Data.InvoiceModel.EntityPOCOs.ARInvoice Invoice { get; set; }
+		public CommunicationLogRepository CommunicationLogRep { get; set; }
+		public string TransError { get; set; }
+		public ResultadoTimbre ResultadoTimbre { get; set; }
 	}
 }

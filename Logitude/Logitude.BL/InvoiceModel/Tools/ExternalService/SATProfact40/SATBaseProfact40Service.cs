@@ -75,6 +75,30 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             return conector;
         }
 
+        public static string GetBillToCountryCode(string billToAddressId, int tenant, ICommonDataContext commonContext)
+        {
+            AddressRepository addressReposirory = new AddressRepository(commonContext);
+            Address billToAddress = null;
+            if (!string.IsNullOrEmpty(billToAddressId))
+            {
+                billToAddress = addressReposirory.GetSingleAddress(billToAddressId, tenant);
+            }
+            ComputingPartnerTranslationHelper computingPartnerHelper = new ComputingPartnerTranslationHelper(tenant);
+            string billToCountryCode = GetBillToCountryCodeByBillToAddress(computingPartnerHelper, billToAddress);
+            return billToCountryCode;
+        }
+
+        private static string GetBillToCountryCodeByBillToAddress(ComputingPartnerTranslationHelper computingPartnerHelper, Address billToAddress)
+        {
+            string billToCountryCode = (billToAddress != null ? (billToAddress.Country != null ? billToAddress.Country.Code : null) : null);
+            if (billToAddress.Country != null)
+            {
+                billToCountryCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(billToAddress.Country.Code, "G-Profact", "Country");
+            }
+
+            return billToCountryCode;
+        }
+
         public static decimal GetDecimalWith3DigitsAfterPointIfZero(decimal dNumber)
         {
             decimal result = decimal.Parse(dNumber.ToString("0.00"));
@@ -86,6 +110,11 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         public static decimal GetDecimalWith2DigitsAfterPoint(decimal dNumber)
         {
             return decimal.Parse(dNumber.ToString("0.00"));
+        }
+
+        public static decimal GetDecimalWith4DigitsAfterPoint(decimal dNumber)
+        {
+            return decimal.Parse(dNumber.ToString("0.0000"));
         }
 
         public static decimal GetDecimalWith6DigitsAfterPoint(decimal dNumber)

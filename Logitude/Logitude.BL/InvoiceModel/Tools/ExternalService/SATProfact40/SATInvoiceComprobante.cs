@@ -150,7 +150,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 SetComprobanteTotalAndSubTotal(comprobante, arTotalVats);
             }
 
-            comprobante.Impuestos = GetComprobanteImpuestos(arTotalVats, comprobante.Conceptos).ComprobanteImpuestos;
+            comprobante.Impuestos = GetComprobanteImpuestos(arTotalVats, comprobante.Conceptos)?.ComprobanteImpuestos;
 
             return comprobante;
         }
@@ -260,6 +260,11 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             if (billToAddress != null && !string.IsNullOrEmpty(billToAddress.ZipCode))
             {
                 billToAddressZipCode = SATBaseProfact40Service.GetBillToAddressZipCode(billToAddress, arInvoicePM.Tenant);
+            }
+
+            if (string.IsNullOrEmpty(arInvoicePM.RegimenFiscalCode) && !string.IsNullOrEmpty(billToCard.RegimenFiscalCode))
+            {
+                arInvoicePM.RegimenFiscalCode = billToCard.RegimenFiscalCode;
             }
 
             return new ComprobanteReceptor
@@ -917,7 +922,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             comprobante.Total = Math.Abs((decimal)total);
         }
 
-        public ComprobanteImpuestosResults GetComprobanteImpuestos(List<ARInvoiceTotalVATPM> arTotalVats, ComprobanteConcepto[] comprobanteConceptos, bool FromPayment = false)
+        public ComprobanteImpuestosResults GetComprobanteImpuestos(List<ARInvoiceTotalVATPM> arTotalVats, ComprobanteConcepto[] comprobanteConceptos)
         {
             decimal TotalImpuestosRetenidos = 0;
             decimal TotalImpuestosTrasladados = 0;
@@ -941,12 +946,9 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                         || (traslado != null && (totalVat.VATPercent != 0 && traslado.TasaOCuota == "0.000000")
                         || (totalVat.VATPercent == 0 && traslado.TasaOCuota != "0.000000")))
                     {
-                        if (_totaltipoFactor != "Exento")
-                        {
-                            traslado = GetNewComprobanteImpuestosTrasladoInstance(totalVat, _totaltipoFactor, total_tasaOCuota);
+                        traslado = GetNewComprobanteImpuestosTrasladoInstance(totalVat, _totaltipoFactor, total_tasaOCuota);
 
-                            trasladoList.Add(traslado);
-                        }
+                        trasladoList.Add(traslado);
                     }
                     else
                     {
@@ -956,10 +958,11 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                         }
                     }
                 }
-                else if(!FromPayment)
+                else
                 {
                     TotalImpuestosRetenidos += Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? (Math.Abs((decimal)totalVat.InvoiceCurrencyVATAmount.Value)) : 0));
                     ComprobanteImpuestosRetencion retencion = retencionList.FirstOrDefault();
+                    ComprobanteImpuestosRetencionDR retencionDR = retencionDRList.FirstOrDefault();
                     if (retencion == null)
                     {
                         retencion = new ComprobanteImpuestosRetencion()
@@ -968,33 +971,25 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                             Impuesto = "002",
                         };
 
+                        retencionDR = new ComprobanteImpuestosRetencionDR()
+                        {
+                            Impuesto = "002",
+                            Base = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVatableAmount != null ? (decimal)totalVat.InvoiceCurrencyVatableAmount.Value : 0))),
+                            TipoFactor = _totaltipoFactor
+                        };
+
+                        if (_totaltipoFactor != "Exento")
+                        {
+                            retencionDR.TasaOCuota = total_tasaOCuota;
+                            retencionDR.Importe = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? (Math.Abs((decimal)totalVat.InvoiceCurrencyVATAmount.Value)) : 0)));
+                        }
+                        retencionDRList.Add(retencionDR);
                         retencionList.Add(retencion);
                     }
                     else
                     {
                         retencion.Importe = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(TotalImpuestosRetenidos);
-                    }
-                }
-                else
-                {
-                    TotalImpuestosRetenidos += Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? (Math.Abs((decimal)totalVat.InvoiceCurrencyVATAmount.Value)) : 0));
-                    ComprobanteImpuestosRetencionDR retencion = retencionDRList.FirstOrDefault();
-                    if (retencion == null)
-                    {
-                        retencion = new ComprobanteImpuestosRetencionDR()
-                        {
-                            Importe = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? (Math.Abs((decimal)totalVat.InvoiceCurrencyVATAmount.Value)) : 0))),
-                            Impuesto = "002",
-                            TipoFactor = _totaltipoFactor,
-                            TasaOCuota = total_tasaOCuota,
-                            Base = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVatableAmount != null ? (decimal)totalVat.InvoiceCurrencyVatableAmount.Value : 0))),
-                        };
-
-                        retencionDRList.Add(retencion);
-                    }
-                    else
-                    {
-                        retencion.Importe = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(TotalImpuestosRetenidos);
+                        if(_totaltipoFactor != "Exento") retencionDR.Importe = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(TotalImpuestosRetenidos);
                     }
                 }
             }
