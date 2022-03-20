@@ -4,6 +4,7 @@ import { ImageLibraryList } from 'Infrastructure/EntityLists/ImageLibraryList';
 import { ImageLibraryExtendedListService } from 'Infrastructure/Services/ExtendedLists/ImageLibraryExtendedListService';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { AppTool } from 'Infrastructure/Tools';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 @Component({
     selector: 'ImageLibraryComponent',
@@ -17,7 +18,7 @@ export class ImageLibraryComponent implements OnInit {
     Images: ImageLibraryList[] = [];
     FilteredImages: ImageLibraryList[] = [];
     SearchText: string;
-    private ListTenant: number = SessionLocator.Tenant;
+    private Tenant: number = SessionLocator.Tenant;
     SelectedTabCode: string = 'CT';
 
     constructor() {
@@ -30,9 +31,16 @@ export class ImageLibraryComponent implements OnInit {
 
     GetImages() {
         this.ImageLibraryExtendedListService.GetAll().subscribe((response: ServiceResponse) => {
-            if (response.HasError) return;
-            this.FillImages(response);
+            if (response.HasError) this.ShowErrorMessage(response);
+            else this.FillImages(response);
         });
+    }
+
+    ShowErrorMessage(response: ServiceResponse) {
+        if (!response.ErrorsArray || response.ErrorsArray.length == 0) return;
+        var messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Title = 'Error';
+        messageWindow.Show(response.ErrorsArray.join(", "));
     }
 
     FillImages(response: ServiceResponse) {
@@ -43,7 +51,7 @@ export class ImageLibraryComponent implements OnInit {
     }
 
     GetTenantImages(): ImageLibraryList[] {
-        return this.Images.filter(x => x.Tenant == this.ListTenant);
+        return this.Images.filter(x => x.Tenant == this.Tenant);
     }
 
     OnImageClick(image: ImageLibraryList) {
@@ -64,8 +72,8 @@ export class ImageLibraryComponent implements OnInit {
 
     SelectedTabChange(selectedTabCode: string) {
         this.SelectedTabCode = selectedTabCode;
-        if (selectedTabCode == 'CT') this.ListTenant = SessionLocator.Tenant;
-        else this.ListTenant = 0;
+        if (selectedTabCode == 'CT') this.Tenant = SessionLocator.Tenant;
+        else this.Tenant = 0;
         this.onSearchTextChangeEvent(this.SearchText);
     }
 
