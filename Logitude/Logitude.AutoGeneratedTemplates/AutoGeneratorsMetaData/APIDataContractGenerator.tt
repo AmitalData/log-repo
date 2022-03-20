@@ -218,9 +218,9 @@ using <#=myspacestring#>
 				<#+if(ObjectTableName == "Shipment"){#>
 				<#+if(FieldName != "Id" && IsClosed != "true"){#>
 
-				var temp = query.GetSinglePMBy<#=FieldName#>(<#=FieldName#>, Tenant, include);<#+}else{#>
+				var temp = query.GetSinglePMWithIncludeBy<#=FieldName#>(<#=FieldName#>, Tenant, include);<#+}else{#>
 
-				var temp = query.GetSinglePM(<#=FieldName#>, Tenant, include);<#+}#><#+}
+				var temp = query.GetSinglePMWithInclude(<#=FieldName#>, Tenant, include);<#+}#><#+}
 
 
 				else if(ObjectTableName == "EventType"){#>
