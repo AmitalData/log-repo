@@ -60,13 +60,13 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
                         this.IsResourcesReady = true;
                         this.SetUIProperties();
                         this.BuildProductItems();
-                        this.BuildQueryFilters();
+                        this.BuildQueryFilters();                        
                     });
                 });
             });
         }
     }
-
+    
     Listen() {
         if (this.entityArgs.EditComponent) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -128,10 +128,21 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
         var itemsCollection: ProductItem[] = [];
 
         this.EntityPM.ShipmentProductItems.forEach(item => {            
-            itemsCollection.push(new ProductItem(item, this, false));
+            itemsCollection.push(new ProductItem(item, this, false, false));
         });
 
-        this.ProductItems.InsertCollection(itemsCollection);        
+        this.ProductItems.InsertCollection(itemsCollection);
+        this.AddEmptyProductItemLine();
+    }
+
+    private AddEmptyProductItemLine() {
+        if (this.ProductItems.Length == 0) {
+            var item: ShipmentProductItemPM = new ShipmentProductItemPM(null);
+            item.Tenant = SessionLocator.Tenant;
+            item.ShipmentId = this.EntityPM.Id;
+
+            this.ProductItems.Insert(new ProductItem(item, this, true, true));
+        }
     }
 
     public BuildQueryFilters() {
@@ -162,9 +173,9 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
             item.Tenant = SessionLocator.Tenant;
             item.ShipmentId = this.EntityPM.Id;
 
-            this.ProductItems.Insert(new ProductItem(item, this, true));
-            this.EntityPM.AddProductItem(item);
-        }
+            this.ProductItems.Insert(new ProductItem(item, this, true, false));
+            this.EntityPM.AddProductItem(item);            
+        }        
     }
     EditCustomerProductItem(item: ProductItem) {
         this.entityResourceService.getEntityResourceByTableName("ProductItem").subscribe((res1: any) => {
@@ -254,7 +265,7 @@ export class ProductItem extends BaseComponent {
     public EntityPM: ShipmentProductItemPM;
     public ObjectTableName: string = "ShipmentProductItem";
     public IsNewEntity: boolean = false;
-    constructor(entity: ShipmentProductItemPM, public fatherComponent: ProductItemsTabComponent, isNew: boolean) {
+    constructor(entity: ShipmentProductItemPM, public fatherComponent: ProductItemsTabComponent, isNew: boolean, public isFirstLine: boolean) {
         super();
         this.EntityPM = entity;
         this.IsNewEntity = isNew;
@@ -323,6 +334,10 @@ export class ProductItem extends BaseComponent {
             this.OriginCountryName = value.OriginCountryName;
             this.ShipperId = value.ShipperId;
             this.ShipperName = value.ShipperName;
+
+            if (this.isFirstLine) {
+                this.fatherComponent.EntityPM.AddProductItem(this.EntityPM);
+            }
         }
 
         else {
@@ -336,6 +351,16 @@ export class ProductItem extends BaseComponent {
             this.OriginCountryName = null;
             this.ShipperId = null;
             this.ShipperName = null;
+
+            if (this.isFirstLine) {
+                if (this.fatherComponent.EntityPM.ShipmentProductItems.indexOf(this.EntityPM) != -1) {
+                    this.fatherComponent.EntityPM.RemoveProductItem(this.EntityPM);
+                }
+
+                if (this.fatherComponent.ProductItems.Collection.indexOf(this) != -1) {
+                    this.fatherComponent.ProductItems.Remove(this);
+                }
+            }
         }
 
         this.fatherComponent.BuildQueryFilters();
