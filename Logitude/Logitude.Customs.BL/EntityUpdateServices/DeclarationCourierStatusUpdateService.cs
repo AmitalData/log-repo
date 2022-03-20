@@ -80,9 +80,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 bool useCRS = true;
                 if (useCRS)
                 {
-                    IUpdateOpenDeclarationInCourierMasterService myIUpdateOpenDeclarationInCourierMasterService = ContainerAccessor.Container.Resolve(typeof(IUpdateOpenDeclarationInCourierMasterService), "UpdateOpenDeclarationInCourierMasterService", new ParameterOverride("", entityPM.Tenant)) as IUpdateOpenDeclarationInCourierMasterService;
-                    myIUpdateOpenDeclarationInCourierMasterService.UpdateOpenDeclarationInCourierMaster(entityPM.Tenant, courierMasterPM.Id, null);
-
+                    if (courierMasterPM != null)
+                    {
+                        IUpdateOpenDeclarationInCourierMasterService myIUpdateOpenDeclarationInCourierMasterService = ContainerAccessor.Container.Resolve(typeof(IUpdateOpenDeclarationInCourierMasterService), "UpdateOpenDeclarationInCourierMasterService", new ParameterOverride("", entityPM.Tenant)) as IUpdateOpenDeclarationInCourierMasterService;
+                        myIUpdateOpenDeclarationInCourierMasterService.UpdateOpenDeclarationInCourierMaster(entityPM.Tenant, courierMasterPM.Id, null);
+                    }
                 }
                 else
                 {
