@@ -40,6 +40,8 @@ export class NewConsolidationComponent extends BaseComponent {
     public DisplaySATSettings: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
+    public Periods: PeriodDetails[] = [];
+    public HaveRegimenFiscalFieldFeatureToggle: boolean = false;
 
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
@@ -86,8 +88,35 @@ export class NewConsolidationComponent extends BaseComponent {
             if (AppTool.IsNullOrEmpty(this.MetodoPagoCode)) {
               this.UIProperties.SetRequired("MetodoPagoCode", this.ObjectTableName, true);
             }
+
+            this.SetHaveRegimenFiscalFieldFeatureToggle();
+            this.FillPeriodList();
           }
         });
+    }
+
+    private SetHaveRegimenFiscalFieldFeatureToggle() {
+        var RegimenFiscalFieldFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "RFF")[0];
+        if (RegimenFiscalFieldFeatureToggle) {
+            this.HaveRegimenFiscalFieldFeatureToggle = true;
+        }
+    }
+
+    FillPeriodList() {
+        this.FillPeriods();
+
+        if (AppTool.IsNullOrEmpty(this.EntityPM.PeriodCode))
+            this.SelectdPeriod = null;
+        else
+            this.SelectdPeriod = this.Periods.filter(per => per.Code == this.EntityPM.PeriodCode)[0];
+    }
+
+    FillPeriods() {
+        this.Periods.push(new PeriodDetails("01", "Diario"));
+        this.Periods.push(new PeriodDetails("02", "Semanal"));
+        this.Periods.push(new PeriodDetails("03", "Quincenal"));
+        this.Periods.push(new PeriodDetails("04", "Mensual"));
+        this.Periods.push(new PeriodDetails("05", "Bimestral"));
     }
 
 
@@ -254,7 +283,24 @@ export class NewConsolidationComponent extends BaseComponent {
         this.SetUIProperties_Payment();
       }
     }
-  }
+    }
+
+    get PeriodCode() { return this.EntityPM.PeriodCode; }
+    set PeriodCode(newValue: string) {
+        if (this.EntityPM.PeriodCode != newValue) {
+            this.EntityPM.PeriodCode = newValue;
+        }
+    }
+
+    private selectdPeriod: PeriodDetails;
+    get SelectdPeriod() { return this.selectdPeriod; }
+    set SelectdPeriod(value: PeriodDetails) {
+        if (this.selectdPeriod != value) {
+            this.selectdPeriod = value;
+            this.PeriodCode = !AppTool.IsNullOrEmpty(value) ? this.selectdPeriod.Code : "";
+        }
+    }
+
     // BillTo
     public BillToDependencyValue1: string = "CS";
     public BillToDependencyValue2: boolean = false;
@@ -904,4 +950,13 @@ export class NewConsolidationComponent extends BaseComponent {
             this.IsCreditLimitHasAction = (ObjectsLocator.CreditLimitSettingPM.InvoiceCreationBlock == true || ObjectsLocator.CreditLimitSettingPM.InvoiceCreationWarning == true) ? true : false;
         }
     }
+}
+
+class PeriodDetails {
+    constructor(code: string, name: string) {
+        this.Code = code;
+        this.Name = name;
+    }
+    Code: string;
+    Name: string;
 }

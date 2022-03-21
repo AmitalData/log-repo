@@ -119,7 +119,9 @@ export class ARInvoiceList {
 		CreditedByARInvoiceTypeCode: string;
 		MetodoPagoCode: string;
 		UsoCFDICode: string;
+		PeriodCode: string;
 		RegimenFiscalCode: string;
+		Period: string;
 		SATTransferStatusCode: string;
 		SATTransferStatusName: string;
 		TransmissionError: string;

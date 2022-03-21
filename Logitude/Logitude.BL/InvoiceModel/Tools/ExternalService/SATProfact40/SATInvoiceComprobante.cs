@@ -147,12 +147,19 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             List<ARInvoiceTotalVATPM> arTotalVats = GetARInvoiceTotalVATPMs();
             if(hasExpenses)
             {
-                SetComprobanteTotalAndSubTotal(comprobante, arTotalVats);
+                MapComprobanteTotalAndSubTotal(comprobante, arTotalVats);
             }
 
-            comprobante.Impuestos = GetComprobanteImpuestos(arTotalVats, comprobante.Conceptos).ComprobanteImpuestos;
+            comprobante.Impuestos = GetComprobanteImpuestos(arTotalVats, comprobante.Conceptos)?.ComprobanteImpuestos;
 
             return comprobante;
+        }
+
+        private void MapComprobanteTotalAndSubTotal(Comprobante comprobante, List<ARInvoiceTotalVATPM> arTotalVats)
+        {
+            ComprobanteTotalAndSubTotal comprobanteTotalAndSubTotal = GetComprobanteTotalAndSubTotal(arTotalVats);
+            comprobante.Total = comprobanteTotalAndSubTotal.Total;
+            comprobante.SubTotal = comprobanteTotalAndSubTotal.SubTotal;
         }
 
         private string GetMoneda()
@@ -259,7 +266,12 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             string billToAddressZipCode = "";
             if (billToAddress != null && !string.IsNullOrEmpty(billToAddress.ZipCode))
             {
-                billToAddressZipCode = GetBillToAddressZipCode(billToAddress);
+                billToAddressZipCode = SATBaseProfact40Service.GetBillToAddressZipCode(billToAddress, arInvoicePM.Tenant);
+            }
+
+            if (string.IsNullOrEmpty(arInvoicePM.RegimenFiscalCode) && !string.IsNullOrEmpty(billToCard.RegimenFiscalCode))
+            {
+                arInvoicePM.RegimenFiscalCode = billToCard.RegimenFiscalCode;
             }
 
             return new ComprobanteReceptor
@@ -270,18 +282,6 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 Rfc = GetReceptorRfc(),
                 UsoCFDI = GetReceptorUsoCFDI()
             };
-        }
-
-        private string GetBillToAddressZipCode(Address billToAddress)
-        {
-            PostalCodeQuery postalCodeQuery = new PostalCodeQuery(arInvoicePM.Tenant);
-            PostalCodePM postalCodePM = postalCodeQuery.GetSinglePM(billToAddress.ZipCode);
-            if (postalCodePM != null)
-            {
-                return billToAddress.ZipCode;
-            }
-
-            return null;
         }
 
         private string GetReceptorRfc()
@@ -356,8 +356,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             Dictionary<int, string> satMonths = GetSatMonths();
             return new ComprobanteInformacionGlobal
             {
-                Periodicidad = "",
-                Meses = satMonths[arInvoiceDate.Month],
+                Periodicidad = arInvoicePM.PeriodCode,
+                Meses = arInvoiceDate.Month.ToString().PadLeft(2, '0'),
                 Año = Convert.ToInt16(arInvoiceDate.Year),
             };
         }
@@ -424,7 +424,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 {
                     ComprobanteConcepto concepto = new ComprobanteConcepto
                     {
-                        ObjetoImp = "02",
+                        ObjetoImp = SATData.IncludeTaxObjetoImp,
                         Cantidad = Math.Abs((line.Quantity != null ? ((decimal)line.Quantity.Value) : 0)),
                         Unidad = "SERVICIO",
                         Descripcion = line.Description,
@@ -903,7 +903,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                     }).ToList();
         }
 
-        private void SetComprobanteTotalAndSubTotal(Comprobante comprobante, List<ARInvoiceTotalVATPM> arTotalVats)
+        public ComprobanteTotalAndSubTotal GetComprobanteTotalAndSubTotal(List<ARInvoiceTotalVATPM> arTotalVats)
         {
             double? localAmountTotal = 0;
             double? invoiceAmountTotal = 0;
@@ -924,12 +924,15 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 subtotal += (line.InvoiceCurrencyAmount != null ? line.InvoiceCurrencyAmount.Value : 0);
             }
 
-            comprobante.SubTotal = Math.Abs((decimal)subtotal);
             var total = Math.Abs((subtotal + invoiceAmountTotal).Value);
-            comprobante.Total = Math.Abs((decimal)total);
+            return new ComprobanteTotalAndSubTotal
+            {
+                SubTotal = Math.Abs((decimal)subtotal),
+                Total = Math.Abs((decimal)total)
+            };
         }
 
-        public ComprobanteImpuestosResults GetComprobanteImpuestos(List<ARInvoiceTotalVATPM> arTotalVats, ComprobanteConcepto[] comprobanteConceptos, bool FromPayment = false)
+        public ComprobanteImpuestosResults GetComprobanteImpuestos(List<ARInvoiceTotalVATPM> arTotalVats, ComprobanteConcepto[] comprobanteConceptos)
         {
             decimal TotalImpuestosRetenidos = 0;
             decimal TotalImpuestosTrasladados = 0;
@@ -953,12 +956,9 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                         || (traslado != null && (totalVat.VATPercent != 0 && traslado.TasaOCuota == "0.000000")
                         || (totalVat.VATPercent == 0 && traslado.TasaOCuota != "0.000000")))
                     {
-                        if (_totaltipoFactor != "Exento")
-                        {
-                            traslado = GetNewComprobanteImpuestosTrasladoInstance(totalVat, _totaltipoFactor, total_tasaOCuota);
+                        traslado = GetNewComprobanteImpuestosTrasladoInstance(totalVat, _totaltipoFactor, total_tasaOCuota);
 
-                            trasladoList.Add(traslado);
-                        }
+                        trasladoList.Add(traslado);
                     }
                     else
                     {
@@ -968,10 +968,11 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                         }
                     }
                 }
-                else if(!FromPayment)
+                else
                 {
                     TotalImpuestosRetenidos += Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? (Math.Abs((decimal)totalVat.InvoiceCurrencyVATAmount.Value)) : 0));
                     ComprobanteImpuestosRetencion retencion = retencionList.FirstOrDefault();
+                    ComprobanteImpuestosRetencionDR retencionDR = retencionDRList.FirstOrDefault();
                     if (retencion == null)
                     {
                         retencion = new ComprobanteImpuestosRetencion()
@@ -980,33 +981,25 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                             Impuesto = "002",
                         };
 
+                        retencionDR = new ComprobanteImpuestosRetencionDR()
+                        {
+                            Impuesto = "002",
+                            Base = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVatableAmount != null ? (decimal)totalVat.InvoiceCurrencyVatableAmount.Value : 0))),
+                            TipoFactor = _totaltipoFactor
+                        };
+
+                        if (_totaltipoFactor != "Exento")
+                        {
+                            retencionDR.TasaOCuota = total_tasaOCuota;
+                            retencionDR.Importe = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? (Math.Abs((decimal)totalVat.InvoiceCurrencyVATAmount.Value)) : 0)));
+                        }
+                        retencionDRList.Add(retencionDR);
                         retencionList.Add(retencion);
                     }
                     else
                     {
                         retencion.Importe = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(TotalImpuestosRetenidos);
-                    }
-                }
-                else
-                {
-                    TotalImpuestosRetenidos += Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? (Math.Abs((decimal)totalVat.InvoiceCurrencyVATAmount.Value)) : 0));
-                    ComprobanteImpuestosRetencionDR retencion = retencionDRList.FirstOrDefault();
-                    if (retencion == null)
-                    {
-                        retencion = new ComprobanteImpuestosRetencionDR()
-                        {
-                            Importe = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? (Math.Abs((decimal)totalVat.InvoiceCurrencyVATAmount.Value)) : 0))),
-                            Impuesto = "002",
-                            TipoFactor = _totaltipoFactor,
-                            TasaOCuota = total_tasaOCuota,
-                            Base = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVatableAmount != null ? (decimal)totalVat.InvoiceCurrencyVatableAmount.Value : 0))),
-                        };
-
-                        retencionDRList.Add(retencion);
-                    }
-                    else
-                    {
-                        retencion.Importe = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(TotalImpuestosRetenidos);
+                        if(_totaltipoFactor != "Exento") retencionDR.Importe = SATBaseProfact40Service.GetDecimalWith2DigitsAfterPoint(TotalImpuestosRetenidos);
                     }
                 }
             }
@@ -1159,5 +1152,11 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
     {
         public ComprobanteImpuestos ComprobanteImpuestos { get; set; }
         public List<ComprobanteImpuestosRetencionDR> ComprobanteImpuestosRetencionDRs { get; set; }
+    }
+
+    public class ComprobanteTotalAndSubTotal
+    {
+        public decimal Total { get; set; }
+        public decimal SubTotal { get; set; }
     }
 }

@@ -114,6 +114,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
 
         [ForeignKey("UsoCFDICode")]
         public virtual UsoCFDI UsoCFDI { get; set; }
+        public string PeriodCode { get; set; }
         public string RegimenFiscalCode { get; set; }
 
         [ForeignKey("RegimenFiscalCode")]

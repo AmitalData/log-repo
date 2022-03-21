@@ -19,21 +19,51 @@ export class ARInvoiceGeneralTabComponent extends BaseComponent implements OnIni
     private ScreenCode: string = "ARInvoice.GeneralTabScreen";
     public DisplaySATSettings: boolean = false;
     public DisplayQBOSettings: boolean = false;
+    public Periods: PeriodDetails[] = [];
+    public HaveRegimenFiscalFieldFeatureToggle: boolean = false;
+
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs) {
         super();
+        this.EntityPM = entityArgs.EntityPM;
+
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
+            this.SetHaveRegimenFiscalFieldFeatureToggle();
+            this.FillPeriodList();
         }
 
         if (this.IsQBOAccountingSystem() && SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "QBT")[0]) {
             this.DisplayQBOSettings = true;
         }
 
-        this.EntityPM = entityArgs.EntityPM;
         this.RunComponent();
         this.SetUIProperties();
         this.Listen();
+    }
+
+    private SetHaveRegimenFiscalFieldFeatureToggle() {
+        var RegimenFiscalFieldFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "RFF")[0];
+        if (RegimenFiscalFieldFeatureToggle) {
+            this.HaveRegimenFiscalFieldFeatureToggle = true;
+        }
+    }
+
+    FillPeriodList() {
+        this.FillPeriods();
+
+        if (AppTool.IsNullOrEmpty(this.EntityPM.PeriodCode))
+            this.SelectdPeriod = null;
+        else
+            this.SelectdPeriod = this.Periods.filter(per => per.Code == this.EntityPM.PeriodCode)[0];
+    }
+
+    FillPeriods() {
+        this.Periods.push(new PeriodDetails("01", "Diario"));
+        this.Periods.push(new PeriodDetails("02", "Semanal"));
+        this.Periods.push(new PeriodDetails("03", "Quincenal"));
+        this.Periods.push(new PeriodDetails("04", "Mensual"));
+        this.Periods.push(new PeriodDetails("05", "Bimestral"));
     }
 
     IsQBOAccountingSystem() {
@@ -85,6 +115,22 @@ export class ARInvoiceGeneralTabComponent extends BaseComponent implements OnIni
     set SATPaymentMethodCode(newValue: string) {
         if (this.EntityPM.SATPaymentMethodCode != newValue) {
             this.EntityPM.SATPaymentMethodCode = newValue;
+        }
+    }
+
+    get PeriodCode() { return this.EntityPM.PeriodCode; }
+    set PeriodCode(newValue: string) {
+        if (this.EntityPM.PeriodCode != newValue) {
+            this.EntityPM.PeriodCode = newValue;
+        }
+    }
+
+    private selectdPeriod: PeriodDetails;
+    get SelectdPeriod() { return this.selectdPeriod; }
+    set SelectdPeriod(value: PeriodDetails) {
+        if (this.selectdPeriod != value) {
+            this.selectdPeriod = value;
+            this.PeriodCode = !AppTool.IsNullOrEmpty(value) ? this.selectdPeriod.Code : "";
         }
     }
 
@@ -149,4 +195,13 @@ export class ARInvoiceGeneralTabComponent extends BaseComponent implements OnIni
             this.UIProperties.SetEnabled("GlobalTaxCalculation", this.ObjectTableName, true);
         }
     }
+}
+
+class PeriodDetails {
+    constructor(code: string, name: string) {
+        this.Code = code;
+        this.Name = name;
+    }
+    Code: string;
+    Name: string;
 }
