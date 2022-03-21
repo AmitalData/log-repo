@@ -82,6 +82,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
         this.Initialize();
         this.SetEditEnabled();
         this.LoadRequiredData();
+        this.CheckUpdateQuantities();
     }
 
     private Initialize() {

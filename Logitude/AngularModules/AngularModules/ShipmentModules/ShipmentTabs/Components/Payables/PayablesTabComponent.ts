@@ -80,6 +80,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         this.Listen();
         this.SetEditEnabled();
         this.LoadRequiredData();
+        this.CheckUpdateQuantities();
     }
 
     private SessionEvent: any = null;
@@ -102,11 +103,6 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                     else if (event == "UpdateCustomsCharges") {
                         this.CheckUpdateCustomsCharges();
                     }
-
-                    //else if (event.includes("UpdateCustomsChargesPartnerDeleted", 0)) {
-                    //    var args = event.split(',');
-                    //    this.CheckUpdateCustomsCharges(args[1]);
-                    //}
                 }
             });
 
