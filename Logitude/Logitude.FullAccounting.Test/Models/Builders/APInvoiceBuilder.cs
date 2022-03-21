@@ -1,5 +1,5 @@
 ﻿using Logitude.FullAccounting.Test.Models.Codes;
-using Logitude.Base.Models.BillingsPreparation;
+using Logitude.Base.Models.Billings;
 using Logitude.Base.Models.PartnersPreparation;
 using Logitude.Base.Models.UserTenantPreparation;
 using System;

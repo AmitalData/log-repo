@@ -1,27 +1,31 @@
 ﻿using Logitude.Base.Models.Api;
-using Logitude.Base.Models.PackageTypesPreparation;
 using Logitude.Base.Models.Shared;
 using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Services;
+using Logitude.Tariff.Models.PackageTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Logitude.Base.Services
+namespace LLogitude.Tariff.Services
 {
     public static class PackageTypesDataPreparation
     {
         #region Get Package Types Variables
 
-        public static PackageTypesVariables GetVariables()
-        {
-            return new PackageTypesVariables
-            {
-                PackageTypeOceanPC1Id = GetPackageTypeId("PC1", "O", true),
-                PackageTypeOceanPC2Id = GetPackageTypeId("PC2", "O", true),
-                PackageTypeAirPP1Id = GetPackageTypeId("PP1", "A", false),
-                PackageTypeAirPP2Id = GetPackageTypeId("PP2", "A", false),
+        private static string PackageTypeOceanPC1Code = "PC1";
+        private static string PackageTypeOceanPC2Code = "PC2";
+        private static string PackageTypeOceanPC3Code = "PP1";
+        private static string PackageTypeOceanPC4Code = "PP2";
+        private static string transportModeAirCode = "A";
+        private static string transportModeOceanCode = "O";
 
-            };
+        public static void Prepare()
+        {
+            PackageTypesData.PackageTypeOceanPC1Id = GetPackageTypeId(PackageTypeOceanPC1Code, transportModeOceanCode, true);
+            PackageTypesData.PackageTypeOceanPC2Id = GetPackageTypeId(PackageTypeOceanPC2Code, transportModeOceanCode, true);
+            PackageTypesData.PackageTypeAirPP1Id = GetPackageTypeId(PackageTypeOceanPC3Code, transportModeAirCode, false);
+            PackageTypesData.PackageTypeAirPP2Id = GetPackageTypeId(PackageTypeOceanPC4Code, transportModeAirCode, false);
         }
 
         #region PackageType

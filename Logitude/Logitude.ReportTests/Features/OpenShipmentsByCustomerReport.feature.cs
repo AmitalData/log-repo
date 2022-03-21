@@ -28,7 +28,7 @@ namespace Logitude.ReportTests.Features
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "RunReport.feature"
+#line 1 "OpenShipmentsByCustomerReport.feature"
 #line hidden
         
         public RunReportFeature(RunReportFeature.FixtureData fixtureData, Logitude_ReportTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)

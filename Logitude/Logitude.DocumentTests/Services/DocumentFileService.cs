@@ -18,6 +18,7 @@ namespace Logitude.DocumentTests.Services
         const string FileName = "manage_users.pdf";
         const string FileExtension = "pdf";
         const int FileSize = 267607;
+
         public int Uploadfile(DocumentsFilingPM document)
         {
             var chunk1 = UploadChunk1(document);
@@ -35,7 +36,7 @@ namespace Logitude.DocumentTests.Services
             document.UpdateDate = DateTime.Now;
             document.FileExtension = FileExtension;
             document.FileSize = FileSize;
-            return APICaller.CallPut<DocumentsFilingPM>(document, Urls.DocumentsFilingsController, UserTenant.Token)?.Data;
+            return APICaller.CallPut<DocumentsFilingPM>(document, Base.Models.Shared.Urls.DocumentsFilingsController, UserTenant.Token)?.Data;
 
         }
         public void AssertDocument(DocumentsFilingPM document)

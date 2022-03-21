@@ -164,9 +164,11 @@
     <Compile Include="Models\JournalTypeEnum.cs" />
     <Compile Include="Models\LedgerTransactionPM.cs" />
     <Compile Include="Models\PaymentChequePM.cs" />
+    <Compile Include="Models\PostReturnChequeArgs.cs" />
     <Compile Include="Models\ReconcileMethodEnum.cs" />
     <Compile Include="Models\RevenueExpenseTypeEnum.cs" />
     <Compile Include="Models\StatusCodeEnum.cs" />
+    <Compile Include="Models\FullAccountingAPIUrls.cs" />
     <Compile Include="Models\VendorPM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AccountingEntegrityCheckServices.cs" />

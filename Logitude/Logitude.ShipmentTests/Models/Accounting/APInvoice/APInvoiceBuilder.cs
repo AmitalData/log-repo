@@ -1,5 +1,5 @@
 ﻿using LLogitude.ShipmentTests.Services;
-using Logitude.Base.Models.BillingsPreparation;
+using Logitude.Base.Models.Billings;
 using Logitude.Base.Models.PartnersPreparation;
 using Logitude.Base.Models.UserTenantPreparation;
 using System;

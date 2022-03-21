@@ -1,5 +1,5 @@
 ﻿using Logitude.ShipmentTests.Models.Accounting;
-using Logitude.Base.Models.BillingsPreparation;
+using Logitude.Base.Models.Billings;
 using Logitude.Base.Models.UserTenantPreparation;
 using System;
 using TechTalk.SpecFlow;

@@ -11,9 +11,9 @@ namespace Logitude.DocumentTests.Services
 {
     public class DocumentService
     {
-        public GetCreateDocumentsFilingArgs GetCreateDocumentsFilingArgs(string directionCode)
+        public DocumentsFilingArgs GetCreateDocumentsFilingArgs(string directionCode)
         {
-            return new GetCreateDocumentsFilingArgs()
+            return new DocumentsFilingArgs()
             {
                 DocumentTypeId = DocumentData.DocumentTypeAirManifestId,
                 EntityId = DocumentData.ShipmentId,

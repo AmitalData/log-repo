@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Logitude.Base.Models.BillingsPreparation;
+using Logitude.Base.Models.Billings;
 using Logitude.FullAccounting.Test.Models.Codes;
 
 namespace Logitude.FullAccounting.Test.Services.Preparation

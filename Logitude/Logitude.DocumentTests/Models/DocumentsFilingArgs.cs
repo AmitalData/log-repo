@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.Base.Models.Shared
+namespace Logitude.DocumentTests.Models
 {
-    public class GetCreateDocumentsFilingArgs
+    public class DocumentsFilingArgs
     {
         public string DocumentTypeId;
         public string EntityId;

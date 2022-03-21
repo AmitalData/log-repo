@@ -1,4 +1,7 @@
-﻿using Logitude.ShipmentTests.Models;
+﻿
+using LLogitude.ShipmentTests.Services;
+using Logitude.ShipmentTests.Models;
+using Logitude.ShipmentTests.Models.PackageTypes;
 using Logitude.ShipmentTests.Services;
 using Logitude.ShipmentTests.Services.OceanInsight;
 using TechTalk.SpecFlow;
@@ -13,7 +16,19 @@ namespace Logitude.ShipmentTests.Hooks
         {
             ShipmentVariables shipmentVariables = DataPreparation.GetShipmentVariables();
             ShipmentDataMap(shipmentVariables);
+            PackageTypesVariables packageTypesVariables = PackageTypesDataPreparation.GetVariables();
+            PackageTypesDataMap(packageTypesVariables);
         }
+
+        private static void PackageTypesDataMap(PackageTypesVariables packageTypesVariables)
+        {
+            PackageTypesData.PackageTypeOceanPC1Id = packageTypesVariables.PackageTypeOceanPC1Id;
+            PackageTypesData.PackageTypeOceanPC2Id = packageTypesVariables.PackageTypeOceanPC2Id;
+            PackageTypesData.PackageTypeAirPP1Id = packageTypesVariables.PackageTypeAirPP1Id;
+            PackageTypesData.PackageTypeAirPP2Id = packageTypesVariables.PackageTypeAirPP2Id;
+        }
+
+
 
         private static void ShipmentDataMap(ShipmentVariables shipmentVariables)
         {
@@ -28,6 +43,8 @@ namespace Logitude.ShipmentTests.Hooks
             ShipmentData.MoveTypeMTOId = shipmentVariables.MoveTypeMTOId;
             ShipmentData.ShipmentSubTypeTSSTId = shipmentVariables.ShipmentSubTypeTSSTId;
         }
+
+
         [BeforeFeature("Pre-Prepare-OceanInsight")]
         public static void SetUpPrepareDataBeforeFeatureRun()
         {

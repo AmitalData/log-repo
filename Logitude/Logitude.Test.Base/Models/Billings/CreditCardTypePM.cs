@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.Base.Models.BillingsPreparation
+namespace Logitude.Base.Models.Billings
 {
     public class CreditCardTypePM
     {

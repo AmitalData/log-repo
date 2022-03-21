@@ -18,7 +18,7 @@ namespace Logitude.DocumentTests.Services
         public DocumentsFilingPM CreateDocument()
         {
             var arguments = GetCreateDocumentsFilingArgs(DirectionCodes.In);
-            return APICaller.CallGet<DocumentsFilingPM>(Urls.GetCreateDocumentsFiling(arguments), UserTenant.Token)?.Data;
+            return APICaller.CallGet<DocumentsFilingPM>(DocumentAPIUrls.GetCreateDocumentsFiling(arguments), UserTenant.Token)?.Data;
         }
         public void UpdateDocumentReceived(DocumentsFilingPM document)
         {

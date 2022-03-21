@@ -112,11 +112,11 @@
     <Compile Include="Services\ReportFilterItemService.cs" />
     <Compile Include="Services\ReportFilterService.cs" />
     <Compile Include="Services\ReportService.cs" />
-    <Compile Include="Steps\RunReportSteps.cs" />
+    <Compile Include="Steps\OpenShipmentsByCustomerReportSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Features\RunReport.feature" />
+    <None Include="Features\OpenShipmentsByCustomerReport.feature" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

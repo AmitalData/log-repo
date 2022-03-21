@@ -10,8 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TechTalk.SpecFlow;
-using Logitude.Base.Models.BillingsPreparation;
-using Logitude.Base.Models.PackageTypesPreparation;
+using Logitude.Base.Models.Billings;
 
 namespace Logitude.Base.Hooks
 {
@@ -27,7 +26,6 @@ namespace Logitude.Base.Hooks
             SetupLocationPreparationVariables();
             SetupPartnerPreparationVariables();
             SetupBillingPreparationVariables();
-            SetupPackageTypePreparationVariables();
         }
 
         public static void PrepareTheData(string email, string password, string url)
@@ -38,7 +36,6 @@ namespace Logitude.Base.Hooks
             SetupLocationPreparationVariables();
             SetupPartnerPreparationVariables();
             SetupBillingPreparationVariables();
-            SetupPackageTypePreparationVariables();
         }
 
         private static void SetupBaseSettings()
@@ -132,12 +129,7 @@ namespace Logitude.Base.Hooks
             BillingDataMap(BillingsVariables);
         }
 
-        private static void SetupPackageTypePreparationVariables()
-        {
-            PackageTypesVariables packageTypesVariables = PackageTypesDataPreparation.GetVariables();
-            PackageTypesDataMap(packageTypesVariables);
-        }
-
+    
 
         private static Configurations GetConfigurations()
         {
@@ -299,13 +291,6 @@ namespace Logitude.Base.Hooks
            // BillingData.CreditCardTSId = billingVariables.CreditCardTSId;
         }
 
-        private static void PackageTypesDataMap(PackageTypesVariables packageTypesVariables)
-        {
-            PackageTypesData.PackageTypeOceanPC1Id = packageTypesVariables.PackageTypeOceanPC1Id;
-            PackageTypesData.PackageTypeOceanPC2Id = packageTypesVariables.PackageTypeOceanPC2Id;
-            PackageTypesData.PackageTypeAirPP1Id = packageTypesVariables.PackageTypeAirPP1Id;
-            PackageTypesData.PackageTypeAirPP2Id = packageTypesVariables.PackageTypeAirPP2Id;
-        }
 
     }
 }

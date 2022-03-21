@@ -98,9 +98,9 @@
     <Compile Include="Models\BillingsPreparation\PaymentTerm.cs" />
     <Compile Include="Models\BillingsPreparation\VATType.cs" />
     <Compile Include="Models\Infrastructure\Configurations.cs" />
-    <Compile Include="Models\PackageTypesPreparation\PackageType.cs" />
-    <Compile Include="Models\PackageTypesPreparation\PackageTypesData.cs" />
-    <Compile Include="Models\PackageTypesPreparation\PackageTypesVariables.cs" />
+    <Compile Include="Models\PackageTypes\PackageType.cs" />
+    <Compile Include="Models\PackageTypes\PackageTypesData.cs" />
+    <Compile Include="Models\PackageTypes\PackageTypesVariables.cs" />
     <Compile Include="Models\Shared\GetCreateDocumentsFilingArgs.cs" />
     <Compile Include="Models\Shared\GetDocumentCopyArgs.cs" />
     <Compile Include="Models\Shared\PostReturnChequeArgs.cs" />

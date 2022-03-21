@@ -100,12 +100,15 @@
   <ItemGroup>
     <Compile Include="Hooks\BeforeFeatureRun.cs" />
     <Compile Include="Models\Builders\TariffBuilder.cs" />
+    <Compile Include="Models\PackageTypes\PackageType.cs" />
+    <Compile Include="Models\PackageTypes\PackageTypesData.cs" />
     <Compile Include="Models\TariffContext.cs" />
     <Compile Include="Models\TariffData.cs" />
     <Compile Include="Models\TariffPM.cs" />
     <Compile Include="Models\TariffSettingPM.cs" />
     <Compile Include="Models\TariffVersionPM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\PackageTypesDataPreparation.cs" />
     <Compile Include="Services\TariffAirFreightCostDataPreparation.cs" />
     <Compile Include="Services\TariffAirFreightCostServices.cs" />
     <Compile Include="Services\TariffAirSurchargeCostServices.cs" />

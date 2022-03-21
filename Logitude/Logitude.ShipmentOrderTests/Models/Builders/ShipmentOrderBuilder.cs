@@ -1,4 +1,4 @@
-﻿using Logitude.Base.Models.BillingsPreparation;
+﻿using Logitude.Base.Models.Billings;
 using Logitude.Base.Models.Infrastructure;
 using Logitude.Base.Models.LocationsPreparation;
 using Logitude.Base.Models.PartnersPreparation;

@@ -8,13 +8,13 @@ using TechTalk.SpecFlow;
 namespace Logitude.ReportTests.Steps
 {
     [Binding]
-    public class RunReportSteps
+    public class OpenShipmentsByCustomerReportSteps
     {
         private readonly ReportFilterService reportFilterService;
         private readonly ReportContext reportContext;
         private readonly ReportAssertService reportAssertService;
 
-        public RunReportSteps(ReportFilterService reportFilterService, ReportContext reportContext, ReportAssertService reportAssertService)
+        public OpenShipmentsByCustomerReportSteps(ReportFilterService reportFilterService, ReportContext reportContext, ReportAssertService reportAssertService)
         {
             this.reportFilterService = reportFilterService;
             this.reportContext = reportContext;

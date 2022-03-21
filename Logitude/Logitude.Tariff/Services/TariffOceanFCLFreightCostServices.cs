@@ -1,8 +1,7 @@
 ﻿using Logitude.Tariff.Models;
 using Logitude.Tariff.Models.Builders;
 using Logitude.Base.Models.Api;
-using Logitude.Base.Models.BillingsPreparation;
-using Logitude.Base.Models.PackageTypesPreparation;
+using Logitude.Base.Models.Billings;
 using Logitude.Base.Models.PartnersPreparation;
 using Logitude.Base.Models.Shared;
 using Logitude.Base.Models.UserTenantPreparation;
@@ -12,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
+using Logitude.Tariff.Models.PackageTypes;
 
 namespace Logitude.Tariff.Services
 {

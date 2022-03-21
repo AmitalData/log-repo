@@ -270,10 +270,7 @@ namespace Logitude.Base.Models.Shared
         {
             return "Containers/GetSingle?id=" + id;
         }
-        public static string PostReturnCheque(PostReturnChequeArgs postReturnChequeArgs)
-        {
-            return $"BankDeposit/PostReturnCheque?bankDepositId={postReturnChequeArgs.BankDepositId}&arpChequeId={postReturnChequeArgs.ARPChequeId}&returnType={postReturnChequeArgs.ReturnType}&notes={postReturnChequeArgs.Notes}";
-        }
+   
 
         public static string FTPDetailsGetSingle(string id)
         {
@@ -401,14 +398,7 @@ namespace Logitude.Base.Models.Shared
             return "TimeManagementDomain/GetDataEntryTimeSheetList?employeeUserId=" + employeeUserId + "&locationCode=" +
                 locationCode + "&startDate=" + startDate.ToString("yyyy:M:d:H:m:s") + "&endDate=" + endDate.ToString("yyyy:M:d:H:m:s");
         }
-        public static string GetCreateDocumentsFiling(GetCreateDocumentsFilingArgs arguments)
-        {
-            return $"DocumentsFilingExtended/GetCreateDocumentsFiling?documentTypeId={arguments.DocumentTypeId}&entityId={arguments.EntityId}&childEntityId=&childReference=&objectTableId={arguments.ObjectTableId}&directionCode={arguments.DirectionCode}&tenant={arguments.Tenant}";
-        }
-        public static string GetCreateDocumentsOut(GetCreateDocumentsFilingArgs arguments)
-        {
-            return $"DocumentOutExtended/getcreatedocumentout?documentTypeId={arguments.DocumentTypeId}&entityId={arguments.EntityId}&childEntityId=&childReference=&objectTableId={arguments.ObjectTableId}&directionCode={arguments.DirectionCode}&tenant={arguments.Tenant}";
-        }
+     
         public static string GetDocumentType(string id, string documentOutId, int tenant)
         {
             return $"DocumentTypeExtended/getsingledocumenttype/?id={id}&documentOutId={documentOutId}&tenant={tenant}";
@@ -417,10 +407,7 @@ namespace Logitude.Base.Models.Shared
         {
             return $"DocumentTypeTemplateExtended/getdocumenttypetemplatelistsfordocumenttype?documentTypeId={documentOutId}&tenant={tenant}";
         }
-        public static string GetDocumentCopy(GetDocumentCopyArgs getDocumentCopy)
-        {
-            return $"ExportDocument?documentTypeId={getDocumentCopy.DocumentTypeId}&entityId={getDocumentCopy.EntityId}&entityObjectTableId={getDocumentCopy.EntityObjectTableId}&childEntityId=&childObjectTableId=&documentOutId={getDocumentCopy.DocumentOutId}&tenant={getDocumentCopy.Tenant}&documentTypeCopyId={getDocumentCopy.DocumentTypeCopyId}&userId={getDocumentCopy.UserId}";
-        }
+   
 
         public static string GetCheckIfStimulSoftReportIsBliud(string reportKey, int tenant)
         {

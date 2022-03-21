@@ -1,4 +1,4 @@
-﻿using Logitude.Base.Models.BillingsPreparation;
+﻿using Logitude.Base.Models.Billings;
 using Logitude.Base.Models.UserTenantPreparation;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;

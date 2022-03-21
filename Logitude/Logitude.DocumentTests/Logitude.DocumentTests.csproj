@@ -113,9 +113,11 @@
     <Compile Include="Models\Codes\TemplateFormatCodes.cs" />
     <Compile Include="Models\Codes\UploadModes.cs" />
     <Compile Include="Models\DocumentContext.cs" />
+    <Compile Include="Models\DocumentCopyArgs.cs" />
     <Compile Include="Models\DocumentData.cs" />
     <Compile Include="Models\DocumentOutCopyPM.cs" />
     <Compile Include="Models\DocumentOutPM.cs" />
+    <Compile Include="Models\DocumentsFilingArgs.cs" />
     <Compile Include="Models\DocumentsFilingPM.cs" />
     <Compile Include="Models\DocumentTypeCopyPM.cs" />
     <Compile Include="Models\DocumentTypeList.cs" />
@@ -125,6 +127,7 @@
     <Compile Include="Models\SendHtmlFilter.cs" />
     <Compile Include="Models\ShipmentBuilder.cs" />
     <Compile Include="Models\ShipmentPM.cs" />
+    <Compile Include="Models\DocumentAPIUrls.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DocumentFileService.cs" />
     <Compile Include="Services\DocumentInService.cs" />

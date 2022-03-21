@@ -1,5 +1,5 @@
-﻿using Logitude.Base.Models.PackageTypesPreparation;
-using Logitude.Base.Models.UserTenantPreparation;
+﻿using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.ShipmentTests.Models.PackageTypes;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 

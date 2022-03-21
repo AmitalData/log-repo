@@ -1,4 +1,4 @@
-﻿namespace Logitude.Base.Models.BillingsPreparation
+﻿namespace Logitude.Base.Models.Billings
 {
     public class Incoterm
     {

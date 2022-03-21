@@ -1,6 +1,6 @@
 ﻿using Logitude.FullAccounting.Test.Models;
 using Logitude.FullAccounting.Test.Models.Builders;
-using Logitude.Base.Models.BillingsPreparation;
+using Logitude.Base.Models.Billings;
 using Logitude.Base.Models.Shared;
 using Logitude.Base.Models.UserTenantPreparation;
 using Logitude.Base.Services;
