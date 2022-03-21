@@ -125,18 +125,18 @@ this.ScenarioInitialize(scenarioInfo);
 #line hidden
                 TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
-                            "DisplayValue",
+                            "Value",
                             "DataType",
-                            "EntityName",
                             "PropertyName",
-                            "SearchBy",
-                            "Value"});
+                            "EntityName",
+                            "SearchKeyName",
+                            "SearchKeyValue"});
                 table2.AddRow(new string[] {
                             "Customer",
                             "Abed",
                             "String",
-                            "Card",
                             "CustomerId",
+                            "Card",
                             "Code",
                             "70000"});
 #line 10

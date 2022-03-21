@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Logitude.Test.Warmup.Features
+namespace Logitude.Warmup.Features
 {
     using TechTalk.SpecFlow;
     using System;
@@ -31,7 +31,7 @@ namespace Logitude.Test.Warmup.Features
 #line 1 "Shipment.feature"
 #line hidden
         
-        public WarmupShipmentsFeature(WarmupShipmentsFeature.FixtureData fixtureData, Logitude_Test_Warmup_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public WarmupShipmentsFeature(WarmupShipmentsFeature.FixtureData fixtureData, Logitude_Warmup_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();

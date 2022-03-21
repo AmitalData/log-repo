@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
 using Logitude.FullAccounting.Test.Models;
 using Logitude.FullAccounting.Test.Models.Codes;
-using Logitude.Test.Base.Models.Shared;
-using Logitude.Test.Base.Models.UserTenantPreparation;
-using Logitude.Test.Base.Services;
+using Logitude.Base.Models.Shared;
+using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Services;
 using System;
 using TechTalk.SpecFlow;
 
@@ -30,13 +30,13 @@ namespace Logitude.FullAccounting.Test.Steps.Security
         [When(@"post return cheque bank deposit by not authentication user")]
         public void WhenPostReturnChequeBankDepositByNotAuthenticationUser()
         {
-            context.Action = () => APICaller.CallPost<object>(null, Urls.PostReturnCheque(postReturnChequeArgs), "0");
+            context.Action = () => APICaller.CallPost<object>(null, FullAccountingUrls.PostReturnCheque(postReturnChequeArgs), "0");
         }
 
         [When(@"post return cheque bank deposit by not authorize user")]
         public void WhenPostReturnChequeBankDepositByNotAuthorizeUser()
         {
-            context.Action = () => APICaller.CallPost<object>(null, Urls.PostReturnCheque(postReturnChequeArgs), UserTenant.Token);
+            context.Action = () => APICaller.CallPost<object>(null, FullAccountingUrls.PostReturnCheque(postReturnChequeArgs), UserTenant.Token);
         }
 
         [Then(@"the post return cheque bank deposit api should return you have no permissions")]

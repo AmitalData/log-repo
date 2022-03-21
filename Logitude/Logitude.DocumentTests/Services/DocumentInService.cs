@@ -2,9 +2,9 @@
 using Logitude.DocumentTests.Models;
 using Logitude.DocumentTests.Models.Codes;
 using Logitude.DocumentTests.Services.Preparation;
-using Logitude.Test.Base.Models.Shared;
-using Logitude.Test.Base.Models.UserTenantPreparation;
-using Logitude.Test.Base.Services;
+using Logitude.Base.Models.Shared;
+using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +18,7 @@ namespace Logitude.DocumentTests.Services
         public DocumentsFilingPM CreateDocument()
         {
             var arguments = GetCreateDocumentsFilingArgs(DirectionCodes.In);
-            return APICaller.CallGet<DocumentsFilingPM>(Urls.GetCreateDocumentsFiling(arguments), UserTenant.Token)?.Data;
+            return APICaller.CallGet<DocumentsFilingPM>(DocumentAPIUrls.GetCreateDocumentsFiling(arguments), UserTenant.Token)?.Data;
         }
         public void UpdateDocumentReceived(DocumentsFilingPM document)
         {

@@ -1,4 +1,4 @@
-﻿using Logitude.Test.Base.Extensions;
+﻿using Logitude.Base.Extensions;
 using System;
 using TechTalk.SpecFlow;
 

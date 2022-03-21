@@ -2,10 +2,10 @@
 using Logitude.DocumentTests.Models;
 using Logitude.DocumentTests.Models.Codes;
 using Logitude.DocumentTests.Services.Preparation;
-using Logitude.Test.Base.Models.Api;
-using Logitude.Test.Base.Models.Shared;
-using Logitude.Test.Base.Models.UserTenantPreparation;
-using Logitude.Test.Base.Services;
+using Logitude.Base.Models.Api;
+using Logitude.Base.Models.Shared;
+using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,21 +44,21 @@ namespace Logitude.DocumentTests.Services
                 Attachments = documentOut.DocumentOutCopies[0].Id,
                 ObjectTableName= "Shipment",
             };
-            return APICaller.CallPost<string>(htmlFilter,Urls.PostSendHtmlDocument, UserTenant.Token);
+            return APICaller.CallPost<string>(htmlFilter,DocumentAPIUrls.PostSendHtmlDocument, UserTenant.Token);
 
         }
 
         public DocumentOutPM CreateDocumentOut()
         {
             var arguments = GetCreateDocumentsFilingArgs(DirectionCodes.Out);
-            return APICaller.CallGet<DocumentOutPM>(Urls.GetCreateDocumentsOut(arguments), UserTenant.Token)?.Data;
+            return APICaller.CallGet<DocumentOutPM>(DocumentAPIUrls.GetCreateDocumentsOut(arguments), UserTenant.Token)?.Data;
         }
         
         public string GetDocumentOutCopyId(string documentTypeId, string documentId, int tenant)
         {
             var typeCopy = GetDocumentTypeAirManifestTemplateCopyId(documentTypeId, documentId, tenant);
             typeCopy.DocumentTypeCopies.Should().NotBeEmpty();
-            var args = new GetDocumentCopyArgs()
+            var args = new DocumentCopyArgs()
             {
                 DocumentTypeId = documentTypeId,
                 EntityId = DocumentData.ShipmentId,
@@ -68,7 +68,7 @@ namespace Logitude.DocumentTests.Services
                 DocumentTypeCopyId = typeCopy.DocumentTypeCopies[0].Id,
                 UserId = UserTenant.UserId
             };
-            return APICaller.CallGet<string>(Urls.GetDocumentCopy(args), UserTenant.Token).Data;
+            return APICaller.CallGet<string>(DocumentAPIUrls.GetDocumentCopy(args), UserTenant.Token).Data;
         }
 
         public DocumentOutPM UpdateOutDocument(DocumentOutPM documentOut, string documentOutCopyId)

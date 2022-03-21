@@ -1,19 +1,18 @@
-﻿using Logitude.Test.Base.Models.Api;
-using Logitude.Test.Base.Models.Infrastructure;
-using Logitude.Test.Base.Models.Shared;
-using Logitude.Test.Base.Models.UserTenantPreparation;
-using Logitude.Test.Base.Models.LocationsPreparation;
-using Logitude.Test.Base.Models.PartnersPreparation;
-using Logitude.Test.Base.Services;
+﻿using Logitude.Base.Models.Api;
+using Logitude.Base.Models.Infrastructure;
+using Logitude.Base.Models.Shared;
+using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Models.LocationsPreparation;
+using Logitude.Base.Models.PartnersPreparation;
+using Logitude.Base.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TechTalk.SpecFlow;
-using Logitude.Test.Base.Models.BillingsPreparation;
-using Logitude.Test.Base.Models.PackageTypesPreparation;
+using Logitude.Base.Models.Billings;
 
-namespace Logitude.Test.Base.Hooks
+namespace Logitude.Base.Hooks
 {
     [Binding]
     public class BeforeTestRun
@@ -27,7 +26,6 @@ namespace Logitude.Test.Base.Hooks
             SetupLocationPreparationVariables();
             SetupPartnerPreparationVariables();
             SetupBillingPreparationVariables();
-            SetupPackageTypePreparationVariables();
         }
 
         public static void PrepareTheData(string email, string password, string url)
@@ -38,7 +36,6 @@ namespace Logitude.Test.Base.Hooks
             SetupLocationPreparationVariables();
             SetupPartnerPreparationVariables();
             SetupBillingPreparationVariables();
-            SetupPackageTypePreparationVariables();
         }
 
         private static void SetupBaseSettings()
@@ -132,12 +129,7 @@ namespace Logitude.Test.Base.Hooks
             BillingDataMap(BillingsVariables);
         }
 
-        private static void SetupPackageTypePreparationVariables()
-        {
-            PackageTypesVariables packageTypesVariables = PackageTypesDataPreparation.GetVariables();
-            PackageTypesDataMap(packageTypesVariables);
-        }
-
+    
 
         private static Configurations GetConfigurations()
         {
@@ -293,19 +285,12 @@ namespace Logitude.Test.Base.Hooks
             BillingData.MeasurementGRWTId = billingVariables.MeasurementGRWTId;
             BillingData.ChargeTypeAFTId = billingVariables.ChargeTypeAFTId;
             BillingData.ChargeTypeOFTId = billingVariables.ChargeTypeOFTId;
-            BillingData.IncotermLDEId = billingVariables.IncotermLDEId;
+            //BillingData.IncotermLDEId = billingVariables.IncotermLDEId;
             BillingData.VATTypeZeroId = billingVariables.VATTypeZeroId;
             BillingData.PaymentTermCashId = billingVariables.PaymentTermCashId;
-            BillingData.CreditCardTSId = billingVariables.CreditCardTSId;
+           // BillingData.CreditCardTSId = billingVariables.CreditCardTSId;
         }
 
-        private static void PackageTypesDataMap(PackageTypesVariables packageTypesVariables)
-        {
-            PackageTypesData.PackageTypeOceanPC1Id = packageTypesVariables.PackageTypeOceanPC1Id;
-            PackageTypesData.PackageTypeOceanPC2Id = packageTypesVariables.PackageTypeOceanPC2Id;
-            PackageTypesData.PackageTypeAirPP1Id = packageTypesVariables.PackageTypeAirPP1Id;
-            PackageTypesData.PackageTypeAirPP2Id = packageTypesVariables.PackageTypeAirPP2Id;
-        }
 
     }
 }

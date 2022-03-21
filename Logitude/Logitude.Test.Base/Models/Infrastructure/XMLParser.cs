@@ -2,7 +2,7 @@
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace Logitude.Test.Base.Models.Infrastructure
+namespace Logitude.Base.Models.Infrastructure
 {
     public static class XMLParser
     {

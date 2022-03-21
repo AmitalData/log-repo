@@ -1,4 +1,4 @@
-﻿using Logitude.Test.Base.Models.Infrastructure;
+﻿using Logitude.Base.Models.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.IO;

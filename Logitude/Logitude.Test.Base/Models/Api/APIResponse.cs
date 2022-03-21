@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Logitude.Test.Base.Models.Api
+namespace Logitude.Base.Models.Api
 {
     public class ApiResponse<T>
     {

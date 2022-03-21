@@ -134,6 +134,9 @@
     <Compile Include="Models\MoveType.cs" />
     <Compile Include="Models\OceanOrInlandPackage.cs" />
     <Compile Include="Models\PackageType.cs" />
+    <Compile Include="Models\PackageTypes\PackageType.cs" />
+    <Compile Include="Models\PackageTypes\PackageTypesData.cs" />
+    <Compile Include="Models\PackageTypes\PackageTypesVariables.cs" />
     <Compile Include="Models\Port.cs" />
     <Compile Include="Models\PreparationShortClass.cs" />
     <Compile Include="Models\QuoteStage.cs" />
@@ -158,6 +161,7 @@
     <Compile Include="Services\OceanInsight\OceanInsightService.cs" />
     <Compile Include="Services\OceanInsight\ShipmentDataPreparation.cs" />
     <Compile Include="Services\OceanInsight\XMLOceanInsightAnalyzer.cs" />
+    <Compile Include="Services\PackageTypesDataPreparation.cs" />
     <Compile Include="Steps\AccountingTests\AccountingSharedSteps.cs" />
     <Compile Include="Steps\AccountingTests\GETAPInvoiceSteps.cs" />
     <Compile Include="Steps\AccountingTests\GETARInvoiceSteps.cs" />
@@ -201,9 +205,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Logitude.Test.Base\Logitude.Test.Base.csproj">
+    <ProjectReference Include="..\Logitude.Test.Base\Logitude.Base.csproj">
       <Project>{74fbc07e-5cbf-44c5-85c8-f86facaa06b6}</Project>
-      <Name>Logitude.Test.Base</Name>
+      <Name>Logitude.Base</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
