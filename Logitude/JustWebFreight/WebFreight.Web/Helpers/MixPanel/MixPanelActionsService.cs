@@ -15,6 +15,7 @@ namespace WebFreight.Web.Helpers.MixPanel
         public void Build(MixPanelActionsEvent mixPanelActionsEvent)
         {
             mixPanelEvent = MixPanelFactory.Create(mixPanelActionsEvent.ProjectName, tenant);
+            if (!mixPanelEvent.IsValid) return;
             MixPanelEventTracker eventTracker = new MixPanelEventTracker(mixPanelEvent.ProjectToken, mixPanelActionsEvent.Email, tenant);
             eventTracker.TrackEvent(mixPanelEvent.BuildEvent(mixPanelActionsEvent));
         }
