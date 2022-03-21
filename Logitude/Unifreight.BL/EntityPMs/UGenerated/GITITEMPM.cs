@@ -62,6 +62,8 @@ namespace Unifreight.BL.EntityPMs
         public string REMARKSMAKAT { get; set; }
 
         public string REMARKSPROTEST { get; set; }
+        public string CLASSIFIER1ID { get; set; }
+        public string CLASSIFIER2ID { get; set; }
 
     }
 
@@ -121,5 +123,9 @@ namespace Unifreight.BL.EntityPMs
         public string REMARKSMAKAT { get; set; }
 
         public string REMARKSPROTEST { get; set; }
+        public string CLASSIFIER1ID { get; set; }
+        public string CLASSIFIER2ID { get; set; }
+
+
     }
 }
