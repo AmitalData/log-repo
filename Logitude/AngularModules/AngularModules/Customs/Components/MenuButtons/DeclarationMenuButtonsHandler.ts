@@ -197,7 +197,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     }
                     if (button.EventCode == "CloseDeclaration") {
                         button.Width = 100;
-                        if (this.EntityPM.Direction == "E") {
+                        if (this.EntityPM.Direction == "E" && this.EntityPM.DeclarationNumber != null) {
                             button.IsHidden = false;
                             if (this.EntityPM.IsSubmitDeclaration)
                                 button.IsDisabled = false
