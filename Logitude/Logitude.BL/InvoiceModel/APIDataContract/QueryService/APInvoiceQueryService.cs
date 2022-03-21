@@ -438,7 +438,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
                         if (!string.IsNullOrEmpty(chargesType.ContainerMeasurementId))
                         {
-                            Simplog.Data.CommonDataModel.EntityPOCOs.Measurement measurement = measurementRepository.GetSingleMeasurement(chargesType.ContainerMeasurementId, tenant);
+                            Simplog.Data.CommonDataModel.EntityPOCOs.Measurement measurement = measurementRepository.GetSingleMeasurement(chargesType.ContainerMeasurementId, this.tenant);
                             if (measurement != null)
                             {
                                 if (measurement.Code == "BCNT")
@@ -460,15 +460,15 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
                                     if (!string.IsNullOrEmpty(line.ContainerTypeId) && line.Quantity != null && line.Quantity != 0)
                                     {
-                                        Simplog.Data.CommonDataModel.EntityPOCOs.PackageType packageType = packageTypeRepository.GetSinglePackageType(line.ContainerTypeId, tenant);
-                                        if(packageType != null)
+                                        Simplog.Data.CommonDataModel.EntityPOCOs.PackageType packageType = packageTypeRepository.GetSinglePackageType(line.ContainerTypeId, this.tenant);
+                                        if (packageType != null)
                                         {
-                                            if(!packageType.IsContainer)
+                                            if (!packageType.IsContainer)
                                             {
                                                 throw new ApplicationException(chargesType.Code + " Line Container Type should be is Container");
                                             }
 
-                                            if(!packageType.IsOcean)
+                                            if (!packageType.IsOcean)
                                             {
                                                 throw new ApplicationException(chargesType.Code + " Line Container Type should be Ocean");
                                             }
@@ -496,8 +496,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                             chargeDebitAccount = chargesType.PayableDebitAccount;
                         }
 
-                        line.Description = chargesType.EnglishName;
-                        line.LocalDescription = chargesType.LocalName;
+                        SetLineDescription(line, chargesType);
 
                         if (!aPInvoicePM.TotalVATOnly)
                         {
@@ -508,7 +507,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
                             if (!string.IsNullOrEmpty(line.VatTypeId))
                             {
-                                Simplog.Data.CommonDataModel.EntityPOCOs.VatType vatType = VatTypeRepository.GetSingleVatType(line.VatTypeId, tenant, true);
+                                Simplog.Data.CommonDataModel.EntityPOCOs.VatType vatType = VatTypeRepository.GetSingleVatType(line.VatTypeId, this.tenant, true);
                                 if (vatType != null)
                                 {
                                     line.VatTypeName = vatType.EnglishName;
@@ -518,7 +517,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                                     {
                                         if (!vatType.IsMultiPercentage)
                                         {
-                                            VatTypePercentage vatTypePercentage = vatTypePercentageRepository.GetVatTypePercentageByDate(vatType.Id, tenant, this.aPInvoicePM.InvoiceDate);
+                                            VatTypePercentage vatTypePercentage = vatTypePercentageRepository.GetVatTypePercentageByDate(vatType.Id, this.tenant, this.aPInvoicePM.InvoiceDate);
                                             if (vatTypePercentage != null)
                                             {
                                                 line.VatPercentage = vatTypePercentage.Percentage;
@@ -554,7 +553,32 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 line.EntityId = this.aPInvoicePM.MainEntityId;
             }
         }
-        
+
+        private void SetLineDescription(APInvoiceLinePM line, Simplog.Data.CommonDataModel.EntityPOCOs.ChargesType chargesType)
+        {
+            Tenant tenant = GetTenant();
+            if (tenant.AccountingActivated)
+            {
+                if (string.IsNullOrWhiteSpace(line.Description))
+                    line.Description = chargesType.EnglishName;
+
+                if (string.IsNullOrWhiteSpace(line.LocalDescription))
+                    line.LocalDescription = chargesType.LocalName;
+            }
+            else
+            {
+                line.Description = chargesType.EnglishName;
+                line.LocalDescription = chargesType.LocalName;
+            }
+        }
+
+        private Tenant GetTenant()
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+            return tenantPOCO;
+        }
+
         private void FillVATTransferExternalCodes(string accountingSysytemCode, string payableVATCard)
         {
             var myGroup = (from a in this.aPInvoicePM.InvoiceLines
