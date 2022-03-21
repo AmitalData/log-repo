@@ -543,6 +543,38 @@ export class DeclarationValidator {
         }
     }
 
+    public CheckIfClassificationCodeValid() {
+        if (this._DeclarationPM != null && this._DeclarationPM.SupplierInvoices.length > 0 && this._DeclarationPM.SupplierInvoices[0].SupplierInvoiceItems.length > 0) {
+            var SourceclassificationCode = this._DeclarationPM.SupplierInvoices[0].SupplierInvoiceItems[0].ClassificationCodeSource;
+            var classificationCode = this._DeclarationPM.SupplierInvoices[0].SupplierInvoiceItems[0].ClassificationCode;
+            if (SourceclassificationCode != classificationCode) {
+                if (classificationCode.toString().length > 11) {
+                    this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.CodeLong"));
+                }
+                else if (classificationCode.toString().length < 8) {
+                    this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.CodeShort"));
+                }
+                else if (classificationCode.toString().length == 9) {
+                    var digit = classificationCode.toString().substring(8);
+
+                    classificationCode = classificationCode.toString().substring(0, 8) + "00" + classificationCode.toString().substring(8);
+                    var checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(classificationCode.substring(0, 10));
+
+                    if (digit != checkDigit.toString()) {
+                        this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + checkDigit.toString());
+                    }
+                }
+                else if (classificationCode.toString().length == 11) {
+                    digit = classificationCode.toString().substring(10);
+                    checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(classificationCode.toString().substring(0, 10));
+                    if (digit != checkDigit.toString()) {
+                        this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + checkDigit.toString());
+                    }
+                }
+            }
+        }
+        return;
+    }
     //Check if ImporterCode Valid
     public CheckIsImporterCodeValid() {
 
@@ -585,7 +617,7 @@ export class DeclarationValidator {
         this._DeclarationPM = entityPM;
         this.EmptyConsignmentPackageCheck();
         this.CheckIsImporterCodeValid();
-
+        this.CheckIfClassificationCodeValid();
         return this.ValidationErrorMessageCodes;
     }
 
