@@ -25,6 +25,7 @@ import { LogboxShipmentExportExcelArgs } from '../../../../Shipment/DataContract
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { SystemEnvironmentService } from '../../../../Infrastructure/Utilities/SystemEnvironmentService';
 import { CustomerTenantAccessRequestExtendedPMService } from '../../../../Common/Services/ExtendedPMs/CustomerTenantAccessRequestExtendedPMService';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 
 @Component({
     templateUrl: './LogBoxMainComponent.html',
@@ -286,6 +287,8 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             console.log("2");
             this.SaveUserLastSettings("SelectedTransportFilter", this.mySelectedTransportFilter);
             ServiceLocator.SendTotangoUserActivity("LogBox", "Transportation type filter changed");
+            MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Transportation filter" });
+
         }
     }
 
@@ -310,6 +313,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             console.log("4");
             this.SaveUserLastSettings("SelectedArchiveFilter", this.mySelectedArchiveFilter);
             ServiceLocator.SendTotangoUserActivity("LogBox", "Open/Close filter changed");
+            MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Open/Close filter" });
 
         }
     }
@@ -1063,6 +1067,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     }
 
     btnExcelCLicked() {
+        MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Export shipment query to excel" });
         let windowArgs: any = {};
         windowArgs.ExportExcelArgs = this.GetExportToExcelArgs();
         windowArgs.tenant = SessionLocator.Tenant;
@@ -1146,6 +1151,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.SearchFilter = temp;
             this.LoadImporterShipments();
             ServiceLocator.SendTotangoUserActivity("LogBox", "SearchFields filter changed");
+            MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Free text search" });
         }
     }
 
