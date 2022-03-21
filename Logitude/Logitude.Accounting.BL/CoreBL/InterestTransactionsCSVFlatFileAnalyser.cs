@@ -79,7 +79,6 @@ namespace Logitude.Accounting.BL.CoreBL
                             if (!itLine.ErrorInLine)
                             {
                                 count++;
-                                bool errors = false;
 
                                 InterestTransactionPM newItPM = new InterestTransactionPM()
                                 {
@@ -139,10 +138,11 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             catch (Exception e)
             {
-                string text = TranslateTextsClassTranslate("InterestTransactionsCSV.O.FailedWhilePerforming", 0, useLocal);
-                if (String.IsNullOrEmpty(text)) text = "failed while performing";
+                //string text = TranslateTextsClassTranslate("InterestTransactionsCSV.O.FailedWhilePerforming", 0, useLocal);
+                //if (String.IsNullOrEmpty(text)) text = "failed while performing";
 
-                throw new ApplicationException($"{text} ", e);
+                //throw new ApplicationException($"{text} ", e);
+                throw;
             }
 
 
@@ -363,14 +363,16 @@ namespace Logitude.Accounting.BL.CoreBL
                             foreach (JournalLinePM journalLine in journalPM.JournalLines)
                             {
                                 if ((journalLine.ActionCode == "1" || journalLine.ActionCode == "3") && itLine.CreditAmount != 0m && journalLine.CreditAccountId == itLine.GLAccountId
-                                    && (journalLine.Reference1 == itLine.Reference || journalLine.Reference2 == itLine.Reference || String.IsNullOrWhiteSpace(itLine.Reference)))
+                                    && (journalLine.Reference1 == itLine.Reference || journalLine.Reference2 == itLine.Reference || String.IsNullOrWhiteSpace(itLine.Reference))
+                                    && (journalLine.LocalAmount == itLine.CreditAmount))
                                 {
                                     lineFound = true;
                                     jlPM = journalLine;
                                     break;
                                 }
                                 else if ((journalLine.ActionCode == "2" || journalLine.ActionCode == "3") && itLine.DebitAmount != 0m && journalLine.DebitAccountId == itLine.GLAccountId
-                                    && (journalLine.Reference1 == itLine.Reference || journalLine.Reference2 == itLine.Reference || String.IsNullOrWhiteSpace(itLine.Reference)))
+                                    && (journalLine.Reference1 == itLine.Reference || journalLine.Reference2 == itLine.Reference || String.IsNullOrWhiteSpace(itLine.Reference))
+                                    && (journalLine.LocalAmount == itLine.DebitAmount))
                                 {
                                     lineFound = true;
                                     jlPM = journalLine;
@@ -406,16 +408,16 @@ namespace Logitude.Accounting.BL.CoreBL
                                 InterestTransactionPM itPM = itQueryService.GetTransactionByUniqueConstraintFields(uniqueConstraintFields);
                                 if (itPM != null)
                                 {
-                                    text = TranslateTextsClassTranslate("InterestTransactionsCSV.O.Line", 0, useLocal);
-                                    if (String.IsNullOrEmpty(text)) text = "Line";
+                                    //text = TranslateTextsClassTranslate("InterestTransactionsCSV.O.Line", 0, useLocal);
+                                    //if (String.IsNullOrEmpty(text)) text = "Line";
 
-                                    text_44 = TranslateTextsClassTranslate("InterestTransactionsCSV.O.AlreadyFound", 0, useLocal);
-                                    if (String.IsNullOrEmpty(text_44)) text_44 = "already found";
+                                    //text_44 = TranslateTextsClassTranslate("InterestTransactionsCSV.O.AlreadyFound", 0, useLocal);
+                                    //if (String.IsNullOrEmpty(text_44)) text_44 = "already found";
 
-                                    text_2 = TranslateTextsClassTranslate("InterestTransactionsCSV.O.TransactionLine", 0, useLocal);
-                                    if (String.IsNullOrEmpty(text_2)) text_2 = "Journal Line";
+                                    //text_2 = TranslateTextsClassTranslate("InterestTransactionsCSV.O.TransactionLine", 0, useLocal);
+                                    //if (String.IsNullOrEmpty(text_2)) text_2 = "Journal Line";
 
-                                    this.AddErrorRow($"{text}{count} {text_2} {itLine.ExternalNumber} {text_44} ({itPM.LocalAmount} ID={itPM.Id})");
+                                    //this.AddErrorRow($"{text}{count} {text_2} {itLine.ExternalNumber} {text_44} ({itPM.LocalAmount} ID={itPM.Id})");
                                     itLine.ErrorInLine = true;
 
                                 }
