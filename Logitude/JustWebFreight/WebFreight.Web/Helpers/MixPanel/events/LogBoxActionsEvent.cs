@@ -3,6 +3,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.MixPanelTracker;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure;
 
 namespace WebFreight.Web.Helpers.MixPanel.events
 {
@@ -16,6 +17,8 @@ namespace WebFreight.Web.Helpers.MixPanel.events
         }
 
         public string ProjectToken { get { return "6da04c25721c3a0269bab184d35fbc1a"; } }
+
+        public bool IsValid => LogitudeSettings.LogitudeURL != "http://localhost:9996" && (LogitudeSettingConfigration.IsLogBoxEnvironment());
 
         public MixPanelEvent BuildEvent(MixPanelActionsEvent mixPanelActionsEvent)
         {
