@@ -1,31 +1,17 @@
-﻿using Logitude.Customs.BL.EntityQueryServiceExt;
-using Logitude.Customs.BL.EntityQueryServices;
-using Logitude.Customs.Def.EntityQueryServicesExt;
-using Logitude.CustomsMessaging.MessagingServices;
-using Logitude.CustomsMessaging.ResponseServices;
+﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
 using Logitude.SystemLogs;
-using Microsoft.Practices.Unity;
-using Microsoft.WindowsAzure.ServiceRuntime;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
+//using Microsoft.WindowsAzure.ServiceRuntime;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
-using WebFreight.Web;
 
 namespace CustomsWorkerRole
 {
@@ -73,9 +59,15 @@ namespace CustomsWorkerRole
 
         public override bool OnStart()
         {
+            throw new Exception("how use this ?");
+
             StartStatic();
+#if false //"how use this ?"
+
+
             workers = //new List<WorkerEntryPoint>();
              GetAllWorkerEntryPointType();
+#endif
 
 #if false
             {
@@ -100,6 +92,7 @@ namespace CustomsWorkerRole
 
         }
 
+#if false
         public static List<Logitude.Server.Tools.WorkerEntryPoint> GetAllWorkerEntryPointType()
         //where TWorker :WorkerEntryPoint,new() 
         {
@@ -154,7 +147,7 @@ namespace CustomsWorkerRole
 
 
 #endif
-
+            
 
             return new WorkerEntryPoint[] {
                 new   SendDataToExternalServicesWR() ,
@@ -171,6 +164,8 @@ namespace CustomsWorkerRole
             }.ToList();
         }
 
+
+#endif
 
 
         private void AddWorker<T1>()
@@ -331,6 +326,24 @@ namespace CustomsWorkerRole
             return queueName;
 #endif
 
+        }
+    }
+
+
+    public abstract class RoleEntryPoint
+    {
+        public virtual bool OnStart()
+        {
+            return true;
+        }
+
+        public virtual void Run()
+        {
+            Thread.Sleep(-1);
+        }
+
+        public virtual void OnStop()
+        {
         }
     }
 
