@@ -53,10 +53,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 					throw new ApplicationException("Container with number " + containerData.ContainerNumber + " and shipment number " + containerData.ShipmentNumber +  " doesn't exist");
 				}
 
-				containerPM.MainCarriageETA = containerData.MainCarriageETA;
-				containerPM.MainCarriageETD = containerData.MainCarriageETD;
-				containerPM.MainCarriageATA = containerData.MainCarriageATA;
-				containerPM.MainCarriageATD = containerData.MainCarriageATD;
 				containerPM.DischargeDate = containerData.DischargeDate;
 				containerPM.EstimatedEmptyPickupDate = containerData.EstimatedEmptyPickupDate;
 				containerPM.ActualEmptyPickupDate = containerData.ActualEmptyPickupDate;

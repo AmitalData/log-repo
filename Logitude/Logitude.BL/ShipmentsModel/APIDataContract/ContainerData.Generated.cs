@@ -28,14 +28,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 	[XmlAttribute]
     public string ContainerNumber { get; set; }
     
-    public DateTime? MainCarriageETA { get; set; }
-    
-    public DateTime? MainCarriageETD { get; set; }
-    
-    public DateTime? MainCarriageATA { get; set; }
-    
-    public DateTime? MainCarriageATD { get; set; }
-    
     public DateTime? DischargeDate { get; set; }
     
     public DateTime? EstimatedEmptyPickupDate { get; set; }
