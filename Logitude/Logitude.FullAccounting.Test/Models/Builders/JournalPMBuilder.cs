@@ -1,4 +1,4 @@
-﻿using Logitude.Test.Base.Models.UserTenantPreparation;
+﻿using Logitude.Base.Models.UserTenantPreparation;
 using System;
 using System.Collections.Generic;
 

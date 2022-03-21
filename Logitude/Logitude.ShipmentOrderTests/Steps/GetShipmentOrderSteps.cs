@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
-using Logitude.Test.Base.Models.Shared;
-using Logitude.Test.Base.Models.UserTenantPreparation;
-using Logitude.Test.Base.Services;
+using Logitude.Base.Models.Shared;
+using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Services;
 using Logitude.ShipmentOrderTests.Models;
 using System;
 using TechTalk.SpecFlow;

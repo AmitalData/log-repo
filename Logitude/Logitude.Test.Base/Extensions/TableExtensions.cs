@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
-namespace Logitude.Test.Base.Extensions
+namespace Logitude.Base.Extensions
 {
     public static class TableExtensions
     {

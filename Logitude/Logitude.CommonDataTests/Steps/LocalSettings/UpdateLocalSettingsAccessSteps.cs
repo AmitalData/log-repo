@@ -1,11 +1,11 @@
 ﻿using FluentAssertions;
 using Logitude.CommonDataTests.Services;
 using Logitude.CommonTests.Models;
-using Logitude.Test.Base.Context;
-using Logitude.Test.Base.Models.Api;
-using Logitude.Test.Base.Models.Shared;
-using Logitude.Test.Base.Models.UserTenantPreparation;
-using Logitude.Test.Base.Services;
+using Logitude.Base.Context;
+using Logitude.Base.Models.Api;
+using Logitude.Base.Models.Shared;
+using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Services;
 using System;
 using TechTalk.SpecFlow;
 

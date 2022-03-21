@@ -1,6 +1,6 @@
 ﻿using Logitude.DocumentTests.Models;
-using Logitude.Test.Base.Models.Shared;
-using Logitude.Test.Base.Models.UserTenantPreparation;
+using Logitude.Base.Models.Shared;
+using Logitude.Base.Models.UserTenantPreparation;
 using System;
 using System.Collections.Generic;
 using System.Linq;

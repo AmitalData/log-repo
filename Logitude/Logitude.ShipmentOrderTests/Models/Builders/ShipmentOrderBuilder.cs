@@ -1,8 +1,8 @@
-﻿using Logitude.Test.Base.Models.BillingsPreparation;
-using Logitude.Test.Base.Models.Infrastructure;
-using Logitude.Test.Base.Models.LocationsPreparation;
-using Logitude.Test.Base.Models.PartnersPreparation;
-using Logitude.Test.Base.Models.UserTenantPreparation;
+﻿using Logitude.Base.Models.BillingsPreparation;
+using Logitude.Base.Models.Infrastructure;
+using Logitude.Base.Models.LocationsPreparation;
+using Logitude.Base.Models.PartnersPreparation;
+using Logitude.Base.Models.UserTenantPreparation;
 using System;
 using System.Collections.Generic;
 using System.Linq;

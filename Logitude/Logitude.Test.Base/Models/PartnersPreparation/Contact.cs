@@ -1,4 +1,4 @@
-﻿namespace Logitude.Test.Base.Models.PartnersPreparation
+﻿namespace Logitude.Base.Models.PartnersPreparation
 {
     public class Contact
     {

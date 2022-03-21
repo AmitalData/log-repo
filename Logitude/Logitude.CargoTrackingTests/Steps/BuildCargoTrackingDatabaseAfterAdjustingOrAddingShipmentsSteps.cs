@@ -5,10 +5,10 @@ using Logitude.CargoTrackingTests.Configurations;
 using Logitude.CargoTrackingTests.Models;
 using Logitude.CargoTrackingTests.Services;
 
-using Logitude.Test.Base.Models.Api;
-using Logitude.Test.Base.Models.Shared;
-using Logitude.Test.Base.Models.UserTenantPreparation;
-using Logitude.Test.Base.Services;
+using Logitude.Base.Models.Api;
+using Logitude.Base.Models.Shared;
+using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Services;
 using System;
 using System.Configuration;
 using TechTalk.SpecFlow;

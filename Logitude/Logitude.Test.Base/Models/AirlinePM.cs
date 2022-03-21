@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace Logitude.Test.Base.Models
+namespace Logitude.Base.Models
 {
 
     public class AirlinePM

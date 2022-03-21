@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
 using Logitude.DocumentTests.Models;
 using Logitude.DocumentTests.Models.Codes;
-using Logitude.Test.Base.Models.Shared;
-using Logitude.Test.Base.Models.UserTenantPreparation;
-using Logitude.Test.Base.Services;
+using Logitude.Base.Models.Shared;
+using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;

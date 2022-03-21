@@ -1,5 +1,5 @@
 ﻿using Logitude.DocumentTests.Models;
-using Logitude.Test.Base.Services;
+using Logitude.Base.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;

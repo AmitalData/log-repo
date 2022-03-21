@@ -1,7 +1,7 @@
-﻿using Logitude.Test.Base.Models.Api;
-using Logitude.Test.Base.Models.Shared;
-using Logitude.Test.Base.Models.UserTenantPreparation;
-using Logitude.Test.Base.Services;
+﻿using Logitude.Base.Models.Api;
+using Logitude.Base.Models.Shared;
+using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Services;
 using Logitude.ShipmentOrderTests.Models;
 using Logitude.ShipmentOrderTests.Models.Builders;
 using System;
@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
-using Logitude.Test.Base.Models.Infrastructure;
+using Logitude.Base.Models.Infrastructure;
 using FluentAssertions;
 
 namespace Logitude.ShipmentOrderTests.Services

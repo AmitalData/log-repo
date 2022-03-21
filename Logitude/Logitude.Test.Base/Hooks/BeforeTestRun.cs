@@ -1,19 +1,19 @@
-﻿using Logitude.Test.Base.Models.Api;
-using Logitude.Test.Base.Models.Infrastructure;
-using Logitude.Test.Base.Models.Shared;
-using Logitude.Test.Base.Models.UserTenantPreparation;
-using Logitude.Test.Base.Models.LocationsPreparation;
-using Logitude.Test.Base.Models.PartnersPreparation;
-using Logitude.Test.Base.Services;
+﻿using Logitude.Base.Models.Api;
+using Logitude.Base.Models.Infrastructure;
+using Logitude.Base.Models.Shared;
+using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Models.LocationsPreparation;
+using Logitude.Base.Models.PartnersPreparation;
+using Logitude.Base.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TechTalk.SpecFlow;
-using Logitude.Test.Base.Models.BillingsPreparation;
-using Logitude.Test.Base.Models.PackageTypesPreparation;
+using Logitude.Base.Models.BillingsPreparation;
+using Logitude.Base.Models.PackageTypesPreparation;
 
-namespace Logitude.Test.Base.Hooks
+namespace Logitude.Base.Hooks
 {
     [Binding]
     public class BeforeTestRun
@@ -293,10 +293,10 @@ namespace Logitude.Test.Base.Hooks
             BillingData.MeasurementGRWTId = billingVariables.MeasurementGRWTId;
             BillingData.ChargeTypeAFTId = billingVariables.ChargeTypeAFTId;
             BillingData.ChargeTypeOFTId = billingVariables.ChargeTypeOFTId;
-            BillingData.IncotermLDEId = billingVariables.IncotermLDEId;
+            //BillingData.IncotermLDEId = billingVariables.IncotermLDEId;
             BillingData.VATTypeZeroId = billingVariables.VATTypeZeroId;
             BillingData.PaymentTermCashId = billingVariables.PaymentTermCashId;
-            BillingData.CreditCardTSId = billingVariables.CreditCardTSId;
+           // BillingData.CreditCardTSId = billingVariables.CreditCardTSId;
         }
 
         private static void PackageTypesDataMap(PackageTypesVariables packageTypesVariables)
