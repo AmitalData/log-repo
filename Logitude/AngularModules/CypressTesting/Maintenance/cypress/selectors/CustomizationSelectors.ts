@@ -18,6 +18,8 @@ export class CustomizationSelectors {
     public static readonly Generaltabscreen= "#null_Search_2";
     public static readonly ScreenLayoutCoulmn0= "[data-cy='Column_0']";
     public static readonly ScreenLayoutCoulmn1= "[data-cy='Column_1']";
+    public static readonly MessageWindow= "#MessageWindow_Ok_0";
+ 
   }
   
   

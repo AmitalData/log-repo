@@ -7,7 +7,6 @@ Feature: Create Custom Field ,Edit and add it to Shipment Screen
         When search for shipment module
         Then shipment module will appears successfully
 
-
      Scenario: Add new custom fields With Text Type
         Given the user click on Add button to add Text field
         Given a text field with the following details
@@ -20,7 +19,7 @@ Feature: Create Custom Field ,Edit and add it to Shipment Screen
         Then the text custom field should create successfully
 
         
-  Scenario: Add new custom fields with Code already exist
+     Scenario: Add new custom fields with Code already exist
         Given the user click on Add button to add new field with Code already exist
         Given a field with the following details already exists
             | FieldLabel | CustomField1   |
@@ -31,14 +30,13 @@ Feature: Create Custom Field ,Edit and add it to Shipment Screen
         When create custome field
         Then a validation error message with "An Object Field with the same code already exists" should appear
        
-  Scenario: Add new custom fields with Boolean Type
+     Scenario: Add new custom fields with Boolean Type
         Given the user click on Add button to add boolean field
         Given a boolean field with the following details
             | FieldLabel | BooleanField   |
             | Code       | BooleanField   |
             | DataType   | Boolean        |
-        When create boolean custome field
-        Then the boolean custom field should create successfully
+        When create boolean custome field,it will create successfully
 
   Scenario: Add new custom fields with Decimal Type
         Given the user click on Add button to add Decimal field
@@ -46,18 +44,5 @@ Feature: Create Custom Field ,Edit and add it to Shipment Screen
             | FieldLabel | DecimalField   |
             | Code       | DecimalField   |
             | DataType   | Decimal        |
-        When create Decimal custome field
-        Then the Decimal custom field should create successfully
+        When create Decimal custome field,it will create successfully
 
-
-    Scenario: Add custom filed to shipment general screen 
-        Given the user click on screen layout button
-        Given  search for custom field to add 
-        When click on custom field 
-        Then it should add successfully to the screen 
-
-
- Scenario: Check custom field from Shipment side 
-        Given the user create open a shipment 
-        When open General Screen  
-        Then the custom field should be exist
