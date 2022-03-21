@@ -9376,10 +9376,108 @@ namespace Unifreight.Data.AmitalModel
 
             #endregion
 
+            #region CFIMSVSTATL
+
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .HasKey(p => p.GUID)
+                .ToTable("CFIMSVSTATL", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.GUID)
+                    .IsRequired()
+                    .HasMaxLength(36)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.FILENO)
+                    .HasColumnName(@"FILE_NO")
+                    .IsRequired()
+                    .HasColumnType("int64");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.COMID)
+                    .HasColumnName(@"COM_ID")
+                    .IsRequired()
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.CREATEDATE)
+                    .HasColumnName(@"CREATE_DATE")
+                    .IsRequired()
+                    .HasColumnType("date");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.PAGENUM)
+                    .HasColumnName(@"PAGE_NUM")
+                    .IsRequired()
+                    .HasColumnType("int");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.LINENUM)
+                    .HasColumnName(@"LINE_NUM")
+                    .IsRequired()
+                    .HasColumnType("int");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.LINECOUNTER)
+                    .HasColumnName(@"LINE_COUNTER")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.PRATMEHES)
+                    .HasColumnName(@"PRAT_MEHES")
+                    .HasMaxLength(11)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.TARIFFCODE)
+                    .HasColumnName(@"TARIFF_CODE")
+                    .HasMaxLength(8)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.CUSTOMSSUPPLIERID)
+                    .HasColumnName(@"CUSTOMS_SUPPLIER_ID")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.CUSTOMERID)
+                    .HasColumnName(@"CUSTOMER_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                 .Property(p => p.CATALOGID)
+                     .HasColumnName(@"CATALOG_ID")
+                     .HasMaxLength(128)
+                     .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.CATALOGNAME)
+                    .HasColumnName(@"CATALOG_NAME")
+                    .HasMaxLength(128)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.ITEMPRICE)
+                    .HasColumnName(@"ITEM_PRICE")
+                    .HasColumnType("decimal")
+                    .HasPrecision(19, 4);
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.OCRQUANTITY)
+                    .HasColumnName(@"OCR_QUANTITY")
+                    .HasColumnType("double");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.OCRQUANTITYTYPE)
+                    .HasColumnName(@"OCR_QUANTITY_TYPE")
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.AMOUNT)
+                    .HasColumnType("double");
+            modelBuilder.Entity<CFIMSVSTATL>()
+                .Property(p => p.ORIGINID)
+                    .HasColumnName(@"ORIGIN_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+
+            #endregion
+
+
             #region Disabled conventions
 
 
-#endregion
+            #endregion
             return modelBuilder;///base.OnModelCreating(modelBuilder);
         }
 
@@ -9501,6 +9599,7 @@ namespace Unifreight.Data.AmitalModel
         public virtual DbSet<EFIFILEM> EFIFILEMs { get; set; }
         public virtual DbSet<ESPSPED> ESPSPEDs { get; set; }
         public virtual DbSet<GITITEMAP> GITITEMAPs { get; set; }
+        public virtual DbSet<CFIMSVSTATL> CFIMSVSTATLs { get; set; }
 
     }
 }
