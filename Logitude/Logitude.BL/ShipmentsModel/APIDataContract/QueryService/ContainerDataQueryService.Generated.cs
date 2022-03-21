@@ -78,10 +78,6 @@ using Simplog.Data.ShipmentsModel;
 					   				   }
 				   
 				   temp.ContainerNumber = MyEntityPM.ContainerNumber;
-				   temp.MainCarriageETA = MyEntityPM.MainCarriageETA;
-				   temp.MainCarriageETD = MyEntityPM.MainCarriageETD;
-				   temp.MainCarriageATA = MyEntityPM.MainCarriageATA;
-				   temp.MainCarriageATD = MyEntityPM.MainCarriageATD;
 				   temp.DischargeDate = MyEntityPM.DischargeDate;
 				   temp.EstimatedEmptyPickupDate = MyEntityPM.EstimatedEmptyPickupDate;
 				   temp.ActualEmptyPickupDate = MyEntityPM.ActualEmptyPickupDate;
@@ -403,30 +399,6 @@ using Simplog.Data.ShipmentsModel;
 						temp.ContainerNumber = MyEntity.ContainerNumber;
 
 										}  
-
-					
-                    							
-						temp.MainCarriageETA = MyEntity.MainCarriageETA;
-
-					 
-
-					
-                    							
-						temp.MainCarriageETD = MyEntity.MainCarriageETD;
-
-					 
-
-					
-                    							
-						temp.MainCarriageATA = MyEntity.MainCarriageATA;
-
-					 
-
-					
-                    							
-						temp.MainCarriageATD = MyEntity.MainCarriageATD;
-
-					 
 
 					
                     							

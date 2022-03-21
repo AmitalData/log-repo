@@ -7,6 +7,9 @@ using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -55,6 +58,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.isNewEntity = false;
             this.containerPm = entityPM;
             containerPm.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+            this.SetUpdatedByUser();
             this.containerPoco = entityRepository.GetSingleContainer(entityPM.Id, tenant);
             this.MapContainerClosedDate(entityPM, containerPoco);
             ContainerTracing containerTracing = new ContainerTracing(entityPM, containerPoco, isNewEntity);
@@ -70,7 +74,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityRepository.SubmitChanges();
             AddShipmentUpdateKafkaQueueMessage("CToolContainerUpdate");
         }
+        private void SetUpdatedByUser()
+        {
+            if (string.IsNullOrEmpty(containerPm.UpdatedByUserId))
+            {
+                ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+                ContactRepository contactRep = new ContactRepository(commonContext);
+                string email = "system@tenant" + tenant + ".com";
 
+                if (AuthenticationUtil.IsAuthenticatedUserExists())
+                {
+                    email = AuthenticationUtil.GetAuthenticatedUser();
+                }
+
+                Contact contact = contactRep.GetSingleContactByEmail(email, tenant);
+                if (contact != null)
+                {
+                    containerPm.UpdatedByUserId = contact.Id;
+                }
+            }
+        }
         private void HandleContainersExternalData(ContainerPM entityPM, ContainersExternal containersExternal)
         {
             if(containersExternal == null)
