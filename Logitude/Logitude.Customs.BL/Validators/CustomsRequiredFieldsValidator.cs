@@ -78,7 +78,8 @@ namespace Logitude.Customs.BL.Validators
                 {
                     if (info.GetValue(declaration) == null || info.GetValue(declaration) == "")
                     {
-                        requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.Declaration" });
+                        string name = info.Name == "ImporterCode" && declaration.Direction == "E" ? "ExporterImporterCode" : info.Name;
+                        requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = name, TableName = "Customs.Declaration" });
                     }
                 }
             }

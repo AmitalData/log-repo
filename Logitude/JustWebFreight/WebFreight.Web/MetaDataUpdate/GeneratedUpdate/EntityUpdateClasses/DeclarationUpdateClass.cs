@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "4000647066e7ea5dc8d66a8dca044618";
+		public const string HashString = "b2396b25294574692325eb61656c2b7a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -15117,6 +15117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExporterImporterCode",
 					  						DefaultText =  "Importer ",
+					  						FullLocalDefaultText =  "מספר יצואן",
 					  						ListFieldLable =  "ExporterImporterCodeListLable",
 					  						ListLableDefaultText =  "Importer",
 					  						ListLocalDefaultText =  "מספר יצואן",

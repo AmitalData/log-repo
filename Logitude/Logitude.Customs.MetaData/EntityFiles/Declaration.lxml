@@ -18489,6 +18489,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ExporterImporterCode&quot;"
     DefaultText="&quot;Importer &quot;"
+    FullLocalDefaultText="&quot;מספר יצואן&quot;"
     ListFieldLable="&quot;ExporterImporterCodeListLable&quot;"
     ListLableDefaultText="&quot;Importer&quot;"
     ListLocalDefaultText="&quot;מספר יצואן&quot;"
