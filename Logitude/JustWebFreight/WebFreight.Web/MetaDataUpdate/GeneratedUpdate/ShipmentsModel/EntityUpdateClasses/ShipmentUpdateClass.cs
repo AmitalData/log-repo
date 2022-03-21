@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "6ae73a305638f02b46f7f07261687d8a";
+		public const string HashString = "64289feb4222d6ad0491180634cb2802";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -49259,9 +49259,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FirstPickupFullAddress",
-					  						DefaultText =  "Fist Pickup From Address",
+					  						DefaultText =  "First Pickup From Address",
 					  						ListFieldLable =  "FirstPickupFullAddressListLable",
-					  						ListLableDefaultText =  "Fist Pickup From Address",
+					  						ListLableDefaultText =  "First Pickup From Address",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
