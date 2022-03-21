@@ -1,4 +1,5 @@
-﻿using Logitude.Customs.BL.CloseTables;
+﻿#if false
+using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue;
 using Logitude.CustomsMessaging.RabbitMQ;
@@ -535,3 +536,6 @@ namespace RabbitMQSRV
 
 
 }
+
+
+#endif
