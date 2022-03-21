@@ -498,11 +498,10 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
         }
     }
 
-    get ShowSplitChargeTypes() {
-        return this.CanSplitByQuoteCharge && this.SplitChargesbyGroups;
+    get PricingTableSplitChargeTypes() {
+        if(this.CanSplitByQuoteCharge) return ["Charge Group","Quote Charge Group"];       
+        return ["Charge Group"];
     }
-
-    PricingTableSplitChargeTypes =["Charge Group","Quote Charge Group"]
     get PricingTableSplitChargeType() {
         if (!this.QuoteTemplateSettingPM || !this.QuoteTemplateSettingPM.QuoteTemplateSettingData) return "Charge Group";
         if(this.QuoteTemplateSectionTypeName == "Packages"){
