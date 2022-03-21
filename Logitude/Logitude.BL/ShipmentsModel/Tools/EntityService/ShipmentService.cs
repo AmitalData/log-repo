@@ -7643,7 +7643,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             else
             {
-                this.GetMainCarriagePortName(entityPM.MainCarriageFinalDestinationPortId, entityPM.MainCarriageFinalDestinationPortName);
+                myResult = this.GetMainCarriagePortName(entityPM.MainCarriageFinalDestinationPortId, entityPM.MainCarriageFinalDestinationPortName);
             }
 
             return myResult;
