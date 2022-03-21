@@ -159,8 +159,17 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 					{
 						containerPM.UpdatedByUserId = myUpdatedByUserPM.Id;
 					}
+
+					else
+                    {
+						containerPM.UpdatedByUserId = null;
+					}
 				}
-				
+				else
+				{
+					containerPM.UpdatedByUserId = null;
+				}
+
 				if (containerData.EmptyPickupLocationPort != null)
 				{
 					var myEmptyPickupLocationPortPM = portService.PortDataMappingAndValidatin(containerData.EmptyPickupLocationPort, tenant, ComputingPartnerName, IsUpdate);
