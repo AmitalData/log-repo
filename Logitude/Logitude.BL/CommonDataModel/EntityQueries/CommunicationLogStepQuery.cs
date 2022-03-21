@@ -119,7 +119,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return result;
         }
 
-        public  List<CommunicationLogStepList> GetCommunicationLogStepsDocumentData(string communicationLogId, int tenant, int[] blobStepFilter,bool serverRequest = false)
+        public  List<CommunicationLogStepList> GetCommunicationLogStepsDocumentData(string communicationLogId, int tenant, int[] blobStepFilter,bool serverRequest /*= false*/, bool suppressCache)
         {
             byte[] ArryByte = null;
             //var myFilter = new int[] { 0, 30 };
@@ -140,7 +140,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         ///&& step.Status=="D" 
                         )
                     {
-                        if (GetBlob(tenant, step.Document, out ArryByte))
+                        if (GetBlob(tenant, step.Document, out ArryByte, suppressCache))
                         {
                             if (ArryByte != null)
                             {
@@ -159,7 +159,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 {
                     
                     var stepListVersion = CommunicationLogStepQuery.GetStepListVersion(step);
-                    if (GetBlob(tenant, step.Document, out ArryByte))
+                    if (GetBlob(tenant, step.Document, out ArryByte, suppressCache))
                     {
 
 
@@ -179,7 +179,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             
             return stepLIstOut;
         }
-        public static bool GetBlob(int tenant, Document document, out byte[] ArryByte)
+        public static bool GetBlob(int tenant, Document document, out byte[] ArryByte,bool suppressCache)
         {
             ArryByte = null;
             var stopwatch = Stopwatch.StartNew();
@@ -192,71 +192,50 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             
 
             string entityKeyString = "GetBlob:" + filePath;
-            //var cacheObj = CacheManager.CacheWrapper.Get(entityKeyString);
-            //if (cacheObj != null)
-            //{
-            //    ArryByte = cacheObj as byte[];
-            //}
-            //else
-            //{
-            //    IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-            //    LogMessagingUtil.Instance.AppendLine("Try Read Bolb :" + filePath);
-            //    Logitude.Server.Tools.BlobServiceReference.Response response = storageservice.Read(filePath);
 
-            //    stopwatch.Stop();
-            //    LogMessagingUtil.Instance.AppendLine("getBolb:" + filePath + "Took:" + stopwatch.Elapsed.ToString());
-            //    if (response.Result == null)
-            //    {
-            //        LogMessagingUtil.Instance.AppendLine("Bolb is null! ");
-            //        LogMessagingUtil.Instance.AppendLine(response.ErrorMessage);
-            //        //throw new Exception("Bolb is null!  " + response.ErrorMessage);
-            //        return false;
-            //    }
-            //    ArryByte = response.Result as byte[];
-
-            //    if (ArryByte != null)
-            //    {
-            //        CacheManager.CacheWrapper.Insert(entityKeyString, ArryByte);
-            //    }
-            //    else
-            //    {
-            //        CacheManager.CacheWrapper.Insert(entityKeyString, new NullCache());
-            //    }
-            //}
-
-            ArryByte =CacheManager.GetOrInsertNewObject<byte[]>(entityKeyString, () =>
+            if (suppressCache)
             {
-
-                byte[] myArryByte = null;
-                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-                LogMessagingUtil.Instance.AppendLine("Try Read Bolb :" + filePath);
-
-                BlobFileInfo fileInfo = new BlobFileInfo()
-                {
-                    FileName = document.Id,
-                    FolderName = document.Folder,
-                    Extension = document.Extension,
-                    Tenant = tenant,
-                    FileSize = document.FileSize,
-
-                };
-                myArryByte = storageservice.Read(fileInfo);
-
-                stopwatch.Stop();
-                LogMessagingUtil.Instance.AppendLine("getBolb:" + filePath + "Took:" + stopwatch.Elapsed.ToString());
-                if (myArryByte == null)
-                {
-                    LogMessagingUtil.Instance.AppendLine("Bolb is null! ");
-                    //LogMessagingUtil.Instance.AppendLine(response.ErrorMessage);
-                    //throw new Exception("Bolb is null!  " + response.ErrorMessage);
-                    return null;
-                }
-                
-                return myArryByte;
+                ArryByte = GetBlob_NoCache(tenant, document, stopwatch, filePath);
+                return true;
+            }
+            ArryByte = CacheManager.GetOrInsertNewObject<byte[]>(entityKeyString, () =>
+            {
+                return GetBlob_NoCache(tenant, document, stopwatch, filePath);
             });
 
             return true;
         }
+
+        public static byte[] GetBlob_NoCache(int tenant, Document document, Stopwatch stopwatch, string filePath)
+        {
+            byte[] myArryByte = null;
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            LogMessagingUtil.Instance.AppendLine("Try Read Bolb :" + filePath);
+
+            BlobFileInfo fileInfo = new BlobFileInfo()
+            {
+                FileName = document.Id,
+                FolderName = document.Folder,
+                Extension = document.Extension,
+                Tenant = tenant,
+                FileSize = document.FileSize,
+
+            };
+            myArryByte = storageservice.Read(fileInfo);
+
+            stopwatch.Stop();
+            LogMessagingUtil.Instance.AppendLine("getBolb:" + filePath + "Took:" + stopwatch.Elapsed.ToString());
+            if (myArryByte == null)
+            {
+                LogMessagingUtil.Instance.AppendLine("Bolb is null! ");
+                //LogMessagingUtil.Instance.AppendLine(response.ErrorMessage);
+                //throw new Exception("Bolb is null!  " + response.ErrorMessage);
+                return null;
+            }
+
+            return myArryByte;
+        }
+
         public string  GetStartRequestParams(int tenant,string RequestComminicationId)
         {
             List<CommunicationLogStepList> stepList = null;
@@ -266,7 +245,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             int StartRequestParams = 0;
             reqDataList.Add(StartRequestParams); //(int)CustomsStepEnum.StartRequestParams);
             stepList = communicationLogStepQuery
-                .GetCommunicationLogStepsDocumentData(RequestComminicationId, tenant, reqDataList.ToArray(), true);
+                .GetCommunicationLogStepsDocumentData(RequestComminicationId, tenant, reqDataList.ToArray(), true,false);
 
             var stepReq = stepList.FirstOrDefault(rec => rec.StepNumber == (int)StartRequestParams //CustomsStepEnum.StartRequestParams
             );

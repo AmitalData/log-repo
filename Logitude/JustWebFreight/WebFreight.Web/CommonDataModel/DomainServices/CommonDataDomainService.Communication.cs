@@ -1039,7 +1039,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
         {
             var communicationLogStepQuery = new CommunicationLogStepQuery(tenant);
 
-            List<CommunicationLogStepList> stepLIstOut = communicationLogStepQuery.GetCommunicationLogStepsDocumentData(communicationLogId, tenant, stepFilter);
+            List<CommunicationLogStepList> stepLIstOut = communicationLogStepQuery.GetCommunicationLogStepsDocumentData(communicationLogId, tenant, stepFilter,false,false);
             return stepLIstOut;
 #if false
            
