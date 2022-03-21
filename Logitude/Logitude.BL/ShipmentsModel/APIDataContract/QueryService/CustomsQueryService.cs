@@ -254,6 +254,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 temp.ShipperName = MyEntity.ShipperName;
                 temp.DeclarationXMLData = MyEntity.DeclarationXMLData;
                 temp.DeclarationDate = MyEntity.DeclarationDate;
+                temp.CustomerReference3 = MyEntity.CustomerReference3;
                 return temp;
             }
             catch (Exception ex)
@@ -304,6 +305,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 temp.Master = MyEntity.Master;
                 temp.ShipperName = MyEntity.ShipperName;
                 temp.DeclarationDate = MyEntity.DeclarationDate;
+                temp.CustomerReference3 = MyEntity.CustomerReference3;
 
                 if (temp.DeclarationDate != null || !string.IsNullOrEmpty(temp.DeclarationNumber))
                 {
