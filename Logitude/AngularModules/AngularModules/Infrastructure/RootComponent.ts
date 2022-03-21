@@ -11,8 +11,7 @@ import { environment } from '../environments/environment';
 import { LoginService } from './Services/LoginService';
 import { AppTool } from './Tools'
 import { ChildDirective } from './Directives/ChildDirective';
-import { ObjectsLocator } from './Locators/ObjectsLocator';
-import { Console } from 'console';
+import { ObjectsLocator } from './Locators/ObjectsLocator'; 
 declare var IsMobileDetected;
 
 @Component({
