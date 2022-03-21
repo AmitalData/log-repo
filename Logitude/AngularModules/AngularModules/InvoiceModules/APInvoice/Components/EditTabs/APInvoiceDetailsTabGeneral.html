@@ -187,7 +187,7 @@
                                                     <div></div>
                                                 </td>
                                             </tr>
-                                
+
                                         </table>
                                     </td>
 
@@ -198,7 +198,7 @@
                     </tr>
 
                     <tr style="height: 15px;">
-           
+
                         <td>
                             <div></div>
                         </td>
@@ -294,7 +294,7 @@
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackgroundColor">
                                                 <div style="width: 100%;" [ngStyle]="{color: item.CellReadOnlyForeground}">
-                                                    {{accountingActivated? item.Description: item.ChargesTypeName}}
+                                                    {{accountingActivated? (item.LocalDescription||item.Description): item.ChargesTypeName}}
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
@@ -353,7 +353,7 @@
                                                     </table>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>                                        
+                                        </ng-template>
                                     </log-column>
 
                                     <!--  Expected Amount -->
@@ -531,7 +531,7 @@
                                                     </table>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>                                        
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Tool -->
@@ -567,7 +567,7 @@
                                                     </tr>
                                                 </table>
                                             </log-cell-template>
-                                        </ng-template>                                        
+                                        </ng-template>
                                     </log-column>
 
                                 </logitude-edit-grid>
