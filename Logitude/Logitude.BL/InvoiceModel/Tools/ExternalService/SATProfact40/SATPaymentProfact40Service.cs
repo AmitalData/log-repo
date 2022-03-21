@@ -76,8 +76,8 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             SATPaymentComprobanteValidator sATPaymentComprobanteValidator = new SATPaymentComprobanteValidator(arPaymentPM);
             sATPaymentComprobanteValidator.Validate();
 
-            SATPaymentComprobante sATPaymentComprobante = new SATPaymentComprobante(arPaymentPM);
-            Comprobante comprobante = sATPaymentComprobante.BuildNewPaymentComprobante();
+            SATComprobante sATPaymentComprobante = new SATComprobante(arPaymentPM);
+            Comprobante comprobante = sATPaymentComprobante.Get();
 
             sATCommunicationLogBuilder.Build(new SATCommunicationLogArgs { Comprobante = comprobante, EntityReference = arPaymentPM.PaymentNo.ToString(), EntityId = paymentId, IsCancellation = false, IsPayment = true });
             SetSATTransferStatus(arPayment, arPaymentPM, SATData.InTransferingSATTransferStatusCode);

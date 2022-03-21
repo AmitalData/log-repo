@@ -74,6 +74,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.MetodoPagoCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.UsoCFDICode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.RegimenFiscalCode).HasMaxLength(3).IsUnicode(false);
+            this.Property(t => t.PeriodCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.TransmissionError).HasMaxLength(8000).IsUnicode(true);
             this.Property(t => t.ExternalAccountingEntityId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.BankAccountLiteId).HasMaxLength(15).IsUnicode(true);
@@ -184,6 +185,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.MetodoPagoCode).HasColumnName("MetodoPagoCode");
             this.Property(t => t.UsoCFDICode).HasColumnName("UsoCFDICode");
             this.Property(t => t.RegimenFiscalCode).HasColumnName("RegimenFiscalCode");
+            this.Property(t => t.PeriodCode).HasColumnName("PeriodCode");
             this.Property(t => t.SATTransferStatusCode).HasColumnName("SATTransferStatusCode");
             this.Property(t => t.SATInvoiceStatusCode).HasColumnName("SATInvoiceStatusCode");
             this.Property(t => t.Intercompany).HasColumnName("Intercompany");

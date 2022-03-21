@@ -1060,7 +1060,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             {
                 if (!string.IsNullOrEmpty(shipmentPackagePM.ContainerEntityId))
                 {
-                    containerPMs.Add(containerQuery.GetSinglePM(shipmentPackagePM.ContainerEntityId, shipmentPM.Tenant));
+                    ContainerPM containerPM = containerQuery.GetSinglePM(shipmentPackagePM.ContainerEntityId, shipmentPM.Tenant);
+                    if (containerPM != null)
+                    {
+                        containerPMs.Add(containerPM);
+                    }
                 }
             }
             return containerPMs;
