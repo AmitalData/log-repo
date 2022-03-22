@@ -153,7 +153,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
             //var controller = new CommunicationLogStepController();
             //List<CommunicationLogStepList> myResult = controller.GetCommunicationLogStepsDocumentData(mainInterfaceCode, communicationLogId, tenant, myFilter, false);
             var communicationLogStepQuery = new CommunicationLogStepQuery();
-            stepLIstOut = communicationLogStepQuery.GetCommunicationLogStepsDocumentData(communicationLogId, tenant, myFilter);
+            stepLIstOut = communicationLogStepQuery.GetCommunicationLogStepsDocumentData(communicationLogId, tenant, myFilter,false,false);
             return stepLIstOut;
         }
 

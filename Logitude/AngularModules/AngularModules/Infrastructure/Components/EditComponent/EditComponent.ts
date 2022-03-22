@@ -1346,7 +1346,18 @@ export class EditComponent implements OnDestroy {
         var noAction = (): void => {
             this.Close();
         };
-
+        if(this.ObjectTableName == "Customs.Declaration"){
+            this.ShowConfirmationMessage(new ConfirmationMessageArgs()
+            .Builder
+            .YesText(TextCodeTranslator.Translate('General.B.Save'))
+            .NoText(TextCodeTranslator.Translate('General.B.DontSave'))
+            .MessageText(TextCodeTranslator.Translate("Customs.Declaration.O.UnSavedDeclarations"))
+            .ShowCancelButton(true)
+            .YesAction(yesAction)
+            .NoAction(noAction)
+            .build());
+        }
+        else{
         this.ShowConfirmationMessage(new ConfirmationMessageArgs()
             .Builder
             .YesText(TextCodeTranslator.Translate('General.B.Save'))
@@ -1356,6 +1367,7 @@ export class EditComponent implements OnDestroy {
             .YesAction(yesAction)
             .NoAction(noAction)
             .build());
+        }
     }
 
     Close() {

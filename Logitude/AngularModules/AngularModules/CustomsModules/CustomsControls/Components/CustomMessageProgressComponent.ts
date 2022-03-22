@@ -300,7 +300,7 @@ export class CustomMessageProgressHelper
     }
 
 
-    private ClientProgressBarIndicatorCurrentStageCompleted(serviceResponse: ServiceResponse) {
+    private async  ClientProgressBarIndicatorCurrentStageCompleted(serviceResponse: ServiceResponse) {
 
 
         if (this.MessageArrived) return;
@@ -349,6 +349,24 @@ export class CustomMessageProgressHelper
                 return;
             }
             if (e.stopMeNow) {
+
+                
+
+                
+                if (AppTool.IsNullOrEmpty(responseDataXml)) {
+                    try {
+                        console.log("responseDataXml is null avoid that .." );
+                        let myIIGGeneralMessagesService = new IIGGeneralMessagesService();
+                        let res: ServiceResponse = await myIIGGeneralMessagesService
+                            .GetClientProgressBarIndicatorCurrentStage(
+                                SessionLocator.Tenant, this._PBId, this.BasicResponse
+                            ).toPromise();
+                        let resultClientProgressBar: ResultClientProgressBar = res.Result;
+                        responseDataXml = resultClientProgressBar.responseDataXml;
+                    } catch (e) {
+                        console.warn("GetClientProgressBarIndicatorCurrentStage()" + e);
+                    }
+                }
 
                 if (AppTool.IsNullOrEmpty(responseDataXml)) {
                     this.CurrentStageLine = this._ContinueInBackgroundMess;//"המסר נבנה בהצלחה וישלח בתהליך רקע" + mess;

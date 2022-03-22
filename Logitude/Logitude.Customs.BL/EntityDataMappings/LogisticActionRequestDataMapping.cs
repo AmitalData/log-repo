@@ -12,6 +12,7 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Customs.Data.Repsitories;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {   
@@ -34,6 +35,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPOCOToPM(LogisticActionRequestPM entityPM, LogisticActionRequest entityPOCO)
         {
+            if(entityPOCO.ResponseStatusCode != null)
+                entityPM.RequestCancelStatus =  new LogisticActionResponseReqSRepository(entityPOCO.Tenant).GetSingle(entityPOCO.ResponseStatusCode).LocalName;
         }
 
 
