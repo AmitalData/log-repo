@@ -746,20 +746,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
                     SendManifest(_MyDeclarationPM, requestParams); 
-
+                 318657327
                 }
-            bool CloseDeclaration = false;
-            foreach (var item in customResponse?.Response?.AdditionalInformation)
-            {
-                if (item.StatementTypeCode?.Value == "28")
-                {
-                    CloseDeclaration = true;
-                }
-            }
             this.MyResponseData.ApplicationID = requestParams.AppicationId;
             this.MyResponseData.Succeeded = true;
             this.MyResponseData.HasException = false;
-            if (CloseDeclaration) {
+            if (requestParams.IsExportClose) {
                 this.MyResponseData.UserMessage = "מענה לסגירת הצהרה " + this._MyDeclarationPM.DeclarationNumber + " נקלט בהצלחה";
             }
             else{
@@ -770,7 +762,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyRequestSheetParam.CustomFileNo = this._MyDeclarationPM.CustomFileNo;
             this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             this.MyRequestSheetParam.EntityId1 = this._MyDeclarationPM.Id;
-            if (CloseDeclaration){
+            if (requestParams.IsExportClose)
+            {
                 this.MyRequestSheetParam.RequestDescription = "מענה לסגירת הצהרה " + this._MyDeclarationPM.DeclarationNumber;
             }
             else{
