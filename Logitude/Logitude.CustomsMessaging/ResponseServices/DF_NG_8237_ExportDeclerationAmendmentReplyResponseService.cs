@@ -746,7 +746,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
                     SendManifest(_MyDeclarationPM, requestParams); 
-                 318657327
                 }
             this.MyResponseData.ApplicationID = requestParams.AppicationId;
             this.MyResponseData.Succeeded = true;
