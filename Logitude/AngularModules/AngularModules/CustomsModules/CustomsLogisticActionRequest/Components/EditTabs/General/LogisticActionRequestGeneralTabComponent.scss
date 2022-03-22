@@ -16,3 +16,10 @@
         }
     }
 }
+
+.FormFieldRow {
+    td:nth-child(1),
+    td:nth-child(3) {
+        width: 120px;
+    }
+}

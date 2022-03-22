@@ -186,7 +186,7 @@
 
                                 <td style="text-align: right; padding-right: 20px;">
                                     <LogLabel [ObjectFieldName]="'CargoIdentifierKey1'" [ObjectTableName]="ObjectTableName"
-                                        [DataContext]="DataContext"></LogLabel>
+                                        [DataContext]="DataContext" ></LogLabel>
                                 </td>
                                 <td style="width:130px">
                                     <div style="width:135px">
@@ -197,11 +197,12 @@
                                             [ObjectTableName]="ObjectTableName"
                                             [HideColumns]="true"
                                             [Text]="CargoIdentifierKey1"
+                                            [Placeholder]="ManifestNumberPlaceholder"
                                             ></LogTextBox>
                                         </div>
                                 </td>
                             </tr>
-                            <tr class="FormFieldRow" style="width:200px;text-align: right;">
+                            <tr class="FormFieldRow" style="width:250px;text-align: right;">
                                 <td style="text-align: right; padding-right: 20px;">
                                     <LogLabel [ObjectFieldName]="'CargoIdentifierKey2'" [ObjectTableName]="ObjectTableName"
                                         [DataContext]="DataContext"></LogLabel>
@@ -215,6 +216,7 @@
                                             [ObjectTableName]="ObjectTableName"
                                             [HideColumns]="true"
                                             [Text]="CargoIdentifierKey2"
+                                            [Placeholder]="SecondCargoIDPlaceholder"
                                         ></LogTextBox>
                                     </div>
                                 </td>
@@ -231,6 +233,7 @@
                                         [ObjectTableName]="ObjectTableName"
                                         [HideColumns]="true"
                                         [Text]="CargoIdentifierKey3"
+                                        [Placeholder]="ThirdCargoIdPlaceholder"
                                         ></LogTextBox>
                                     </div>
                                 </td>
@@ -362,7 +365,7 @@
                                         {{'Customs.LogisticActionRequest.F.DecisionRmarks' | TextCodeTranslationPipe}}:
                                     </label>
                                 </td>
-                                <td  rowspan="1" colspan="3" style="">                                    
+                                <td  rowspan="1" colspan="3">                                    
                                     <LogTextBox 
                                         [ObjectFieldName]="'DecisionRmarks'" 
                                         [DataContext]="DataContext" 
