@@ -25,6 +25,7 @@ export class GlAccountLedgerTransactionsListTemplate {
     public TenantCurrencySign: string;
     public ChequeStatusColor = "black";
     public ChartOfAccountsTypeCode: string;
+    public ChartOfAccountsTypeBankCode = '5';
     public ChequeStatusColorDictionary = {
         'הופקד- טרם נפרע': 'orange',
         'בקופה': 'orange',
