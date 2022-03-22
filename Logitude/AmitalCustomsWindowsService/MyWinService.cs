@@ -133,7 +133,7 @@ namespace AmitalCustomsWindowsService
             if (_Workers == null)
             {
                 _Workers = new List<IWorkerBaseWorkOnce>();
-                var listOfWorkerEntryPoint = CustomsWorkerRole.ThreadedRoleEntryPoint.GetAllWorkerEntryPointType();
+                var listOfWorkerEntryPoint = CustomsWorkerRole.AllWorkerEntryPointTypeService.GetAllWorkerEntryPointType();
 
                 bool suppresDoOnlyCheck = true;
                 if (false)//no 10x - change to interactive in TesterForm
@@ -238,7 +238,7 @@ namespace AmitalCustomsWindowsService
             {
                 throw new Exception("how change code where is method >public AddWorkerFromAppSettingDB");
             }
-            var listOfWorkerEntryPoint = CustomsWorkerRole.ThreadedRoleEntryPoint.GetAllWorkerEntryPointType();
+            var listOfWorkerEntryPoint = CustomsWorkerRole.AllWorkerEntryPointTypeService.GetAllWorkerEntryPointType();
             ///itzik +  ihab  listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.CommunicationLogWorkerRoleWinService());
             listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService());
             listOfWorkerEntryPoint.Add(new SendWEBAPIMessage2MamanWR());
