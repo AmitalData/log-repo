@@ -391,7 +391,8 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             Styles: { width: '20px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            AdditionalDataCustom: this.EntityPM.ChartOfAccountsTypeCode
         });
 
         this.columns.push({

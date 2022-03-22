@@ -24,6 +24,7 @@ export class GlAccountLedgerTransactionsListTemplate {
     public ColorCode: string;
     public TenantCurrencySign: string;
     public ChequeStatusColor = "black";
+    public ChartOfAccountsTypeCode: string;
     public ChequeStatusColorDictionary = {
         'הופקד- טרם נפרע': 'orange',
         'בקופה': 'orange',
@@ -71,7 +72,7 @@ export class GlAccountLedgerTransactionsListTemplate {
         }
         this.fieldName = fieldName;
         this.AdditionalData = MyAdditionalData;
-
+        this.ChartOfAccountsTypeCode = MyAdditionalData;
         //#region Set Icons
 
         this.IconCode = AccountingEntityHelper.getEntityIcon(this.rowData.SourceTypeCode);
@@ -198,6 +199,7 @@ export class GlAccountLedgerTransactionsListTemplate {
     GetGLAccountIndicatorText() {
         if ((this.rowData['LocalAmountDebit'] != 0 && this.rowData['OpenAmount'] != this.CalculateOriginalAmount()) || (this.rowData['LocalAmountCredit'] != 0 && this.rowData['OpenAmount'] != -1 * this.CalculateOriginalAmount()))
             return this.showLocal ? "סכום פתוח חלקית" : "Partial transaction";
+        else if (this.rowData['IsExternalReconcile'] == false && this.ChartOfAccountsTypeCode == "5")  return this.showLocal ? "תנועות חיצוניות פתוחות " : "Open External Transaction";
         else return this.showLocal ? "סכום פתוח " : "Open transaction";
     }
 
