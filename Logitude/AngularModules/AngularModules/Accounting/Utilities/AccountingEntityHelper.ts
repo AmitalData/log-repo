@@ -69,6 +69,10 @@ export class AccountingEntityHelper {
 
                 break;
             }
+            case AccountingEntityValues.TaxReport: {
+                iconTxt = "TR";
+                break;
+            }
         }
         return iconTxt;
     }
@@ -150,10 +154,33 @@ export class AccountingEntityHelper {
 
                 break;
             }
+            case AccountingEntityValues.TaxReport: {
+                tableName = "TaxReport";
+                break;
+            }
 
         }
         return tableName;
 
     }
 
+
+
+}
+
+export class AccountingEntityValues
+{
+   public static Journal: string = "1";
+   public static ARInvoice: string = "2";
+   public static ARPayment: string = "3";
+   public static APInvoice: string = "4";
+   public static APPayment: string = "5";
+   public static ChequeDeposit: string = "6";
+   public static CashDeposit: string = "7";
+   public static Revaluation: string = "8";
+   public static PaymentCheque: string = "9";
+   public static Adjustment: string = "10";
+   public static YearTransfer: string = "11";
+   public static BankAdjustment: string = "12";
+   public static TaxReport: string = "13";
 }

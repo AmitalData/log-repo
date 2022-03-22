@@ -217,7 +217,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 Line = 1,
                 ActionCode = JournalActionType.Credit,
 
-                DueDate = TenantServerConfigration.GetStartOfMonthDate(taxReportPM.TaxReportMonth),
+                DueDate = TenantServerConfigration.GetLastOfMonthDate(taxReportPM.TaxReportMonth),
                 DocumentDate = TenantServerConfigration.GetLastOfMonthDate(taxReportPM.TaxReportMonth),
                 AccountingDate = TenantServerConfigration.GetLastOfMonthDate(taxReportPM.TaxReportMonth),
 
