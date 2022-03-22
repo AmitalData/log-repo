@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.Helpers;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
@@ -150,7 +151,11 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 Logitude.Server.Tools.StorageService.IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
                 storageservice.Write(bytearray.ToArray(), fileInfo);
 
-                SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, tenant);
+                var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
+                var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
+                bool UseRabbitMQ = customsEnvironmentSettingPM.UseRabbitMQ;//currInterfaceTenantDefinition.UseRabbitMQ;
+
+                CustomDbQueueService.SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, tenant, UseRabbitMQ);
 
 #if false
                 ShipmentCustomsTransmissionArgs args = new ShipmentCustomsTransmissionArgs()
@@ -180,20 +185,20 @@ namespace Logitude.Customs.BL.Messaging.Maman
             return FileName;
         }
 
-        private void SendCommunicationLogMessageToQueue(string queueName, string communicationLogId, int tenant)
-        {
-            try
-            {
-                IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue(queueName, 0);
-                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } }, tenant);
+        //private void SendCommunicationLogMessageToQueue(string queueName, string communicationLogId, int tenant)
+        //{
+        //    try
+        //    {
+        //        IQueueService queueservice = new DbQueueService();
+        //        queueservice.InitializeQueue(queueName, 0);
+        //        queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } }, tenant);
 
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Send FTP CommunicationLog Queue", null, null);
-            }
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Send FTP CommunicationLog Queue", null, null);
+        //    }
+        //}
     }
 
     public class CommunicationLogSettings
