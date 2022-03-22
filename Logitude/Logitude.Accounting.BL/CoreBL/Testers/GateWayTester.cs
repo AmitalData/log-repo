@@ -104,6 +104,12 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                     }
                     break;
 
+                case "ButtonLoadGLAccounts_Click":
+                    {
+                        return ButtonLoadGLAccounts_Click(tenant, _TextBoxParam);
+                    }
+                    break;
+
                 case "WorkWithoutQueue_Click":
                     {
                         return WorkWithoutQueue_Click(tenant, _TextBoxParam);
