@@ -2579,7 +2579,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         public static void MapFieldsBeforeTrackingChangedForAutomation(ShipmentPM shipmentPM, ShipmentServiceInitializer initializer)
         {
-            List<ShipmentPackagePM> newShipmentPackagePMsWithoutDeleted = initializer.ShipmentPackagesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            List<ShipmentPackagePM> newShipmentPackagePMsWithoutDeleted = initializer?.ShipmentPackagesChangeSet?.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
             MapShipmentPackagesDetails(shipmentPM, newShipmentPackagePMsWithoutDeleted);
         }
 
