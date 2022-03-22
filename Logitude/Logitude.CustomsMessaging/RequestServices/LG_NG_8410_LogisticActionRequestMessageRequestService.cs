@@ -1,29 +1,20 @@
-﻿using Logitude.Customs.Def.EntityPMs;
-using Logitude.Customs.BL.EntityQueryServices;
-using Logitude.Customs.BL.EntityUpdateServices;
-using Logitude.Customs.BL.NotificationBL;
-using Logitude.Customs.BL.TraceEvents;
-using Logitude.Customs.Data;
+﻿using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.Data.Repsitories;
 using Logitude.CustomsMessaging.Common.RequestParams;
-using Logitude.CustomsMessaging.Common.ResponseData;
-using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Server.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnifreightIIG.Common.MessageLib.CargoTracking;
 using Logitude.CustomsMessaging.RequestServices;
-using UnifreightIIG.Common.LogisticActionRequestMessageDecision;
-using UnifreightIIG.Common.MessageLib.LogisticActionRequestMessage;
+using Simplog.Data.InfrastructureModel.Repositories;
+using System.Collections.Generic;
+using UnifreightIIG.Common.LogisticActionRequestMessageServiceReference;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class LG_NG_8410_LogisticActionRequestMessageRequestService : RequestServiceBase<LG_NG_8410_LogisticActionRequestMessage, LogisticActionRequestRequestParams>
     {
+        public override void OnRequestFail(LogisticActionRequestRequestParams requestParams)
+        {
+            base.OnRequestFail(requestParams);
+        }
+
         public override LG_NG_8410_LogisticActionRequestMessage GetRequest(LogisticActionRequestRequestParams p)
         {
             var myMsg = new LG_NG_8410_LogisticActionRequestMessage()
@@ -32,25 +23,27 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     ExporterIdentifierType = p.ExporterIdentifierType,
                     ExporterNumber = p.ExporterNumber,
+                    ExporterNumberSpecified = p.ExporterIdentifierType == 1 || p.ExporterNumber > 0,
                     PassportCountry = p.PassportCountry,
                     PassportNumber = p.PassportNumber,
                     RequestType = p.RequestType,
                     RequestReason = p.RequestReason,
                     DeliverySiteID = p.DeliverySiteID,
-                    CargoIdentifier =  new UnifreightIIG.Common.MessageLib.LogisticActionRequestMessage.cargoIdentifier() 
+                    CargoIdentifier = new UnifreightIIG.Common.LogisticActionRequestMessageServiceReference.cargoIdentifier()
                     {
                         cargoIdentifierKey1 = p.CargoIdentifierKey1,
                         cargoIdentifierKey2 = p.CargoIdentifierKey2,
                         cargoIdentifierKey3 = p.CargoIdentifierKey3,
                         cargoIdentifierType = p.CargoIdentifierType,
                     },
-                    PackingDetails = new LG_NG_8410_LogisticActionRequestMessageGeneralDetailsPackingDetails() 
+                    PackingDetails = new LG_NG_8410_LogisticActionRequestMessageGeneralDetailsPackingDetails()
                     {
                         PackagingTypeCode = p.PackagingTypeCode,
                         Quantity = p.Quantity,
                     }
                 },
-                Attachments = new Attachment[] { }   // need add
+                Attachments = GetAttachments(p.LogisticActionRequestId, p.Tenant),
+                RequestContentHeader = new RequestContentHeader() { Convertor = "1", RecieverID = new int[] { 1 } }
             };
 
             this.MyRequestSheetParam = new RequestSheetParam();
@@ -62,5 +55,30 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return myMsg;
         }
 
+
+        private Attachment[] GetAttachments(string parentEntityId, int tenant)
+        {
+            List<Attachment> attachments = new List<Attachment>();
+
+            var customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
+            var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = parentEntityId, ParentEntityCode = "LogisticActionRequest" }, tenant);
+
+            foreach (var customsDocumentPM in customsDocumentPMList)
+            {
+                if (!string.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
+                {
+                    var attachment = new Attachment();
+                    attachment.externalAttachmentID = customsDocumentPM.ExternalAttachmentId;
+                    attachment.IsAttachment = "false";
+                    //   attachment.keywords = customsDocumentPM.Name;
+                    //    attachment.fileName = customsDocumentPM.Name;
+
+                    //  attachment.documentType = customsDocumentPM.DocumentTypeCode;
+                    attachments.Add(attachment);
+                }
+            }
+            return attachments.ToArray();
+
+        }
     }
 }

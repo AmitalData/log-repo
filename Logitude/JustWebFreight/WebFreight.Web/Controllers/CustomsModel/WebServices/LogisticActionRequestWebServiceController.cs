@@ -12,23 +12,20 @@ using WebFreight.Web.Helpers;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
-
-    public class LogisticActionServiceWebServiceController : ApiController
+    public class LogisticActionRequestWebServiceController : ApiController
     {
         [HttpPost]
         public HttpResponseMessage SendCustomsMessage8410([FromBody] LogisticActionRequestRequestParams requestParams)
         {
             try
             {
-                var myRequestMessagingService = new DCAInLG_NG_8410_LogisticActionRequestMessageMessagingService();
-                var resData = "";//myRequestMessagingService.Send(requestParams);
+                var resData = new DCAInLG_NG_8410_LogisticActionRequestMessageMessagingService().Send(requestParams);
                 return Request.CreateResponse(HttpStatusCode.OK, resData);
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-
         }
     }
 }
