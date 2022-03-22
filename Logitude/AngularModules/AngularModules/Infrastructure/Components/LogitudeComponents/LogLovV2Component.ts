@@ -1100,6 +1100,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             });
             this.dataColumns.push({ Field: lookupFields[i].FieldName });
         }
+
+        this.SetDropDownWidthAccordingToTable();
     }
 
     private DrawDefaultColumns(lookupFields: any[]) {

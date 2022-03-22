@@ -36,7 +36,7 @@ import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    
+
     templateUrl: './APInvoiceDetailsTabGeneral.html',
 })
 
@@ -57,6 +57,8 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     DisplayLocalFieldsFromList:string;
     VendorLovSizeForFullAccounting: number;
     forceShowLocalAndEnglishColumns = false;
+    ColumnsWidths: any[] = [];
+
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -85,12 +87,30 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
     private InitializeVendorLov() {
         if (this.accountingActivated) {
-            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
-            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
+            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
             this.VendorLovSizeForFullAccounting = 550;
             this.forceShowLocalAndEnglishColumns = true;
+            this.FillLOVColumnsWidths();
+
         }
     }
+
+
+    FillLOVColumnsWidths()
+    {
+        this.ColumnsWidths = [
+            { ColumnName: 'Code', Width: 100 },
+            { ColumnName: 'CalculatedEnglishName', Width: 120 },
+            { ColumnName: 'CalculatedLocalName', Width: 120 },
+            { ColumnName: 'LocalName', Width: 120 },
+            { ColumnName: 'GLAccountDisplayNumber', Width: 120 },
+            // { ColumnName: 'CityName', Width: 85 },
+            { ColumnName: 'CountryCode', Width: 60 },
+            { ColumnName: 'PartnerTypeName', Width: 60 }
+        ];
+    }
+
 
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
@@ -903,10 +923,10 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     set InvoiceNumber(newValue: string) {
         if (this.EntityPM.InvoiceNumber != newValue) {
             this.EntityPM.InvoiceNumber = newValue;
-          
+
         }
     }
-    
+
     get PaymentTermId() {
         if (this.EntityPM == null) {
             return null;
@@ -1544,9 +1564,9 @@ export class APInvoiceLineItem extends BaseComponent {
                         if (SessionLocator.TenantPM.AccountingActivated) {
                             this.Description = this.chargesTypeList.Description != null ? this.chargesTypeList.Description : this.chargesTypeList.EnglishName;
                         }
-                       
+
                         this.LocalDescription = this.chargesTypeList.LocalName;
-                        
+
                         if (!AppTool.IsNullOrEmpty(this.chargesTypeList.PayableDebitGLAcountId)) {
                             this.fatherComponent.myGLAccountPMService.get(this.chargesTypeList.PayableDebitGLAcountId).subscribe((myResponse: ServiceResponse) => {
                                 if (!myResponse.HasError) {
