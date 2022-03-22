@@ -127,14 +127,14 @@
                                                     <div style="width: 150px;" *ngIf="chartOfAccountsTypes.length > 0">
                                                         <ComboBoxWithInCheckBox [AutoHeight]="true" [MinHeight]="150" [ItemsSource]="chartOfAccountsTypes" [IsDisabled]="isChartOfAccountsTypesDisabled"
                                                             [SelectedItem]="ChartOfAccountsTypeComboboxValue" (EditedItemSource)="OnChartOfAccountsTypeItemClicked($event)"
-                                                            (SelectedItemChanged)="ChartOfAccountsTypeComboboxValue = $event" [Binding]="'EnglishName'"></ComboBoxWithInCheckBox>
+                                                            (SelectedItemChanged)="ChartOfAccountsTypeComboboxValue = $event" [Binding]="'LocalName'" [AlternativeBinding]="'EnglishName'"></ComboBoxWithInCheckBox>
                                                     </div>
                                                     <div style="width: 50px;"></div>
                                                     <div style="padding: 4px 15px;">{{'GLAccount.F.ChartOfAccountsId' | TextCodeTranslationPipe}}</div>
                                                     <div style="width: 150px;" *ngIf="chartOfAccounts.length > 0">
                                                         <ComboBoxWithInCheckBox [AutoHeight]="true" [MinHeight]="150" [ItemsSource]="chartOfAccounts" [IsDisabled]="isChartOfAccountsDisabled"
                                                             [SelectedItem]="ChartOfAccountsComboBoxValue" (EditedItemSource)="OnChartOfAccountsItemClicked($event)"
-                                                            (SelectedItemChanged)="ChartOfAccountsComboBoxValue = $event" [Binding]="'EnglishName'"></ComboBoxWithInCheckBox>
+                                                            (SelectedItemChanged)="ChartOfAccountsComboBoxValue = $event" [Binding]="'LocalName'" [AlternativeBinding]="'EnglishName'"></ComboBoxWithInCheckBox>
                                                     </div>
                                                 </div>
                                             </td>

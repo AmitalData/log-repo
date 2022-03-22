@@ -15,6 +15,7 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
     public ItemsSource: any[];
     public WithinImage: boolean = false;
     public Binding: string = null;
+    @Input() public AlternativeBinding: string = null;
     public ControlId: string = null;
     public DropdownId: string = null;
     public ListControlId: string = null;
@@ -50,7 +51,7 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
         this.ProductsSelectionType = " Selected " + this.SelectionType;
     }
     public ProductsSelectionType: string = " Selected " + this.SelectionType;
-    
+
     constructor() {
         this.ItemsSource = [];
 
@@ -267,9 +268,13 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
             if (this.Binding == null) {
                 myDisplayText = this.SelectedItem;
             }
-
             else {
-                myDisplayText = this.SelectedItem[this.Binding];
+                let value = this.SelectedItem[this.Binding];
+
+                if(!value && this.AlternativeBinding)
+                    value = this.SelectedItem[this.AlternativeBinding];
+
+                myDisplayText = value;
             }
         }
 
