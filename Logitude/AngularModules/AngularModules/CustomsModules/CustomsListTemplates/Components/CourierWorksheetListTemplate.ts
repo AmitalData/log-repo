@@ -268,19 +268,16 @@ export class CourierWorksheetListTemplate {
             this.IsDeclarationChecked = true;
         }
         else {
-            this.IsDeclarationChecked = false;
+            if (this._CourierWorksheetSharedDataService.connectedSelectAll == true) {
+                this.IsDeclarationChecked = true;
+            }
+            else {
+                this.IsDeclarationChecked = false;
+    
+            }
         }
-
-
-        if (this._CourierWorksheetSharedDataService.connectedSelectAll == true) {
-            this.IsDeclarationChecked = true;
-        }
-        else {
-            this.IsDeclarationChecked = false;
-
-        }
-     
     }
+
     ShowFollowUpStatus() {
         if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
             AmitalGatewayUtil.Instance.ShowCFIFILEMFUStatusScreen(
@@ -298,6 +295,7 @@ export class CourierWorksheetListTemplate {
 
     }
     SendManifest(event) {
+        debugger;
         this.ButtonClick(event);
         let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
         myDeclarationPMService.get(this._CourierWorksheet['DeclarationId'])

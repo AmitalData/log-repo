@@ -13,7 +13,8 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Name"
+    Name="EnglishName"
+    OldNames="Name"
     Type="varchar"
     Size="100">
     <Constraints
@@ -32,5 +33,11 @@
     Size="100">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="Inactive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
 </Table>

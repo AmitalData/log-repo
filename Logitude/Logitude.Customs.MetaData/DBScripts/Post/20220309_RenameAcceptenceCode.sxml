@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs">
+	<Sql Version="1">
+	</Sql>
+	<Oracle Version="1">
+		<![CDATA[			
+			EXECUTE immediate 'alter table
+   AcceptanceStatuses
+rename column
+   name
+TO
+   EnglishName';
+
+			EXECUTE IMMEDIATE 'COMMIT';
+    ]]>
+	</Oracle>
+</Script>
+

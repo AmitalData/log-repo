@@ -3143,14 +3143,14 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             if (tenantAcceptanceStatuses.Keys.Contains(acceptanceStatusDetails.Code))
             {
                 AcceptanceStatus acceptanceStatus = acceptanceStatusRepository.GetSingle(acceptanceStatusDetails.Code);
-                acceptanceStatus.Name = acceptanceStatusDetails.Name;
+                acceptanceStatus.EnglishName = acceptanceStatusDetails.EnglishName;
 
-                acceptanceStatus.SearchFields = (acceptanceStatusDetails.Code + "," + acceptanceStatusDetails.Name).ToLower();
+                acceptanceStatus.SearchFields = (acceptanceStatusDetails.Code + "," + acceptanceStatusDetails.EnglishName).ToLower();
                 acceptanceStatusRepository.Update(acceptanceStatus);
             }
             else
             {
-                AcceptanceStatus newAcceptanceStatus = new AcceptanceStatus() { Code = acceptanceStatusDetails.Code, Name = acceptanceStatusDetails.Name, SearchFields = (acceptanceStatusDetails.Code + "," + acceptanceStatusDetails.Name).ToLower() };
+                AcceptanceStatus newAcceptanceStatus = new AcceptanceStatus() { Code = acceptanceStatusDetails.Code, EnglishName = acceptanceStatusDetails.EnglishName, SearchFields = (acceptanceStatusDetails.Code + "," + acceptanceStatusDetails.EnglishName).ToLower() };
                 acceptanceStatusRepository.Add(newAcceptanceStatus);
             }
         }

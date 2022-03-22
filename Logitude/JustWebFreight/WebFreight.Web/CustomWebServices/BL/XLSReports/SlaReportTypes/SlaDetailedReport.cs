@@ -39,15 +39,15 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports.SlaReportTypes
             {
                 if (item.LandingDate.HasValue)
                 {
-                    var DeclarationIdList = qs.GetByMasterID_DeclarationIdList(this.tenant, item.Id);
-                    foreach (string decId in DeclarationIdList)
+                    var DeclarationDataForSlaReportList = qs.GetDeclarationDataForSlaReportByMasterId(this.tenant, item.Id);
+                    foreach (DeclarationDataForSlaReport DeclarationDataForSlaReport in DeclarationDataForSlaReportList)
                     {
                         var detailedReportData = new DetailedReportData();
                         detailedReportData.MAWB = item.MAWB;
                         detailedReportData.IntegratorName = this.GetIntegratorName(integratorCode);
                         detailedReportData.LandingDate = item.LandingDate?.Date.ToShortDateString();
-                        detailedReportData = GetSlaDaysForDecId(decId, item.LandingDate, qs, detailedReportData);
-                        detailedReportData.HatraDate = declarationQueryService.GetHatraDateForDecId(decId, tenant);
+                        detailedReportData = GetSlaDaysForDecId(DeclarationDataForSlaReport, item.LandingDate, qs, detailedReportData);
+                        detailedReportData.HatraDate = DeclarationDataForSlaReport.HatraDate.ToString();
                         detailedReportDataList.Add(detailedReportData);
 
                     }
@@ -75,34 +75,31 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports.SlaReportTypes
             }
             return "";
         }
-        private DetailedReportData GetSlaDaysForDecId(string decId, DateTime? landingDate, DeclarationCourierStatusQueryService qs, DetailedReportData report)
+        private DetailedReportData GetSlaDaysForDecId(DeclarationDataForSlaReport declarationDataForSlaReport, DateTime? landingDate, DeclarationCourierStatusQueryService qs, DetailedReportData report)
         {
-            DeclarationCourierStatusPM decStatus = qs.GetSingle(decId, false, false);
             int SlaDays = 0;
-            if (decStatus != null)
+            report.TerminalReleaseDate = declarationDataForSlaReport.TerminalReleaseDate?.ToShortDateString();
+            if (declarationDataForSlaReport.Delivered && declarationDataForSlaReport.LastMileStatusDate.HasValue)
             {
-                report.TerminalReleaseDate = decStatus.TerminalReleaseDate?.ToShortDateString();
-                if (decStatus.Delivered && decStatus.LastMileStatusDate.HasValue)
+                report.LastMileDate = declarationDataForSlaReport.LastMileStatusDate?.ToShortDateString();
+                double daysBetween = (declarationDataForSlaReport.LastMileStatusDate.Value - landingDate.Value).TotalDays;
+                if (daysBetween > 0)
                 {
-                    report.LastMileDate = decStatus.LastMileStatusDate?.ToShortDateString();
-                    double daysBetween = (decStatus.LastMileStatusDate.Value - landingDate.Value).TotalDays;
-                    if (daysBetween > 0)
+                    DateTime day = (DateTime)(landingDate?.Date);
+                    while (daysBetween >= 0)
                     {
-                        DateTime day = (DateTime)(landingDate?.Date);
-                        while (daysBetween >= 0)
+                        if (day.DayOfWeek != DayOfWeek.Friday && day.DayOfWeek != DayOfWeek.Saturday && this.holidayList.Find(x => x.HOLIDAY.Day == day.Day && x.HOLIDAY.Month == day.Month && x.HOLIDAY.Year == day.Year) == null)
                         {
-                            if (day.DayOfWeek != DayOfWeek.Friday && day.DayOfWeek != DayOfWeek.Saturday && this.holidayList.Find(x => x.HOLIDAY.Day == day.Day && x.HOLIDAY.Month == day.Month && x.HOLIDAY.Year == day.Year) == null)
-                            {
-                                SlaDays++;
-                            }
-                            daysBetween--;
-                            day = day.AddDays(1);
+                            SlaDays++;
                         }
+                        daysBetween--;
+                        day = day.AddDays(1);
                     }
                 }
-
-                report.CourierHawb = decStatus.CourierHawb;
             }
+
+            report.CourierHawb = declarationDataForSlaReport.CourierHawb;
+
             report.Sla = SlaDays.ToString();
             return report;
         }

@@ -130,7 +130,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         //    QuantityTypeCode = measurmentUnit.Code;
                         //}
 
-                        QuantityTypeCode = customsItemQueryService.GetQuantityTypeByClassificationCode(classificationCode, tenant);
+                        QuantityTypeCode = customsItemQueryService.GetQuantityTypeByClassificationWithMultiCustomItems(classificationCode, tenant);
                         if (QuantityTypeCode != null)
                         {
 

@@ -1,6 +1,7 @@
 ﻿using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,6 +61,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
                                              routingKey: rabbitMQCode,
                                              basicProperties: prop,
                                              body: message);
+                Debug.WriteLine($"RABBITMQ.BasicPublish {  rabbitMQCode }");
 
             }
         }

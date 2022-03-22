@@ -21,10 +21,13 @@ import { ExceptionReasonList } from '../../EntityLists/ExceptionReasonList';
 
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { PhysicalChecksCloseSharedDataService } from '../../Services/DataChange/PhysicalChecksCloseSharedDataService';
+import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPMService';
+import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
+import { PendingByKeywordWebService } from 'Customs/Services/ExtendedPMs/PendingByKeywordWebService';
 @Component({
 
     templateUrl: './FieldTemplateComponent.html',
-    providers: [ListComponentArgs],
+    providers: [ListComponentArgs, PendingByKeywordWebService],
 })
 
 export class FieldTemplateComponent {
@@ -39,11 +42,19 @@ export class FieldTemplateComponent {
     public IsHeaderScreenTemplate: boolean = false;
     courierMasterService: CourierMasterService = new CourierMasterService();
     customsAutonomyKeywordExtendedPMService: CustomsAutonomyKeywordExtendedPMService = new CustomsAutonomyKeywordExtendedPMService();
+    declarationPMService: DeclarationPMService = new DeclarationPMService();
     exceptionReasonExtendedListService: ExceptionReasonExtendedListService = new ExceptionReasonExtendedListService();
+    _declarationReferantDataPMService: DeclarationReferantDataPMService = new DeclarationReferantDataPMService();
     private _ListComponentArgs: ListComponentArgs;
     @ViewChild('SpotLight', { read: ViewContainerRef, static: false }) SpotLightViewContainerRef: ViewContainerRef;
     RowIndex: any;
-    constructor(private CD: ChangeDetectorRef, private entityResourceService: EntityResourceService, private _physicalChecksCloseSharedDataService: PhysicalChecksCloseSharedDataService) {
+    constructor(
+        private CD: ChangeDetectorRef,
+        private entityResourceService: EntityResourceService,
+        private _physicalChecksCloseSharedDataService: PhysicalChecksCloseSharedDataService,
+        private logtuideTableDataService: LogtuideTableDataService,
+        private pendingByKeywordWebService: PendingByKeywordWebService,
+    ) {
         if (SessionLocator.SelectedSession.CurrentListComponent != null) {
             this._ListComponentArgs = SessionLocator.SelectedSession.CurrentListComponent._ListComponentArgs;
         } else {
@@ -114,7 +125,7 @@ export class FieldTemplateComponent {
         return myFormats.DateString;
     }
     get ExceptionReasonText() {
-        var ToolTipValue: string = this.Entity.ExceptionReasonsList; 
+        var ToolTipValue: string = this.Entity.ExceptionReasonsList;
         var list = ToolTipValue.split(',').filter(Boolean);
         if (list.length > 1) {
             return list.toString();
@@ -161,20 +172,25 @@ export class FieldTemplateComponent {
         //});
 
     }
-    private _declarationReferantDataPMService: DeclarationReferantDataPMService = new DeclarationReferantDataPMService();
-    EditFavorite() {
-        this._ListComponentArgs.SuppressOnRowSelectedField = true;
-        var x = this.Entity.SortedColumns;
-        this.Entity.Favorite = !this.Entity.Favorite;
-        this._declarationReferantDataPMService.update(this.Entity).subscribe((response: any) => {
-            SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });
-        });
 
-    }
-    EditMyCloseCheckBox(eventM) {
-        
+    EditFavorite(e: MouseEvent) {
+        this.Entity.Favorite = !this.Entity.Favorite;
         this._ListComponentArgs.SuppressOnRowSelectedField = true;
-        
+        this._declarationReferantDataPMService.get(this.Entity?.DeclarationId).subscribe((getResponse: any) => {
+            if (getResponse?.Result) {
+                const declarationReferantDataPM=getResponse.Result;
+                declarationReferantDataPM.Favorite = this.Entity.Favorite;
+                this._declarationReferantDataPMService.update(declarationReferantDataPM).subscribe((UpdateResponse: any) => {
+                    SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });
+                });
+            }
+        });
+    }
+
+    EditMyCloseCheckBox(eventM) {
+
+        this._ListComponentArgs.SuppressOnRowSelectedField = true;
+
 
         //eventM.stopPropagation();
         if (!this._physicalChecksCloseSharedDataService._SelectedItems.Collection.includes(this.Entity.Id)) {
@@ -418,7 +434,7 @@ export class FieldTemplateComponent {
 
     ShowCFIFILEMMoveToCollector() {
         this._ListComponentArgs.SuppressOnRowSelectedField = true;
-        
+
 
         let myDeclarationReferantDataList: DeclarationReferantDataList = this.Entity;
         let myViewModelName = "FieldTemplateComponent.ts-ShowCFIFILEMMoveToCollector";
@@ -646,6 +662,7 @@ export class FieldTemplateComponent {
     }
 
     ShowDeclaration(event) {
+        this._ListComponentArgs.SuppressOnRowSelectedField = true;
         if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
             SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = true;
         }
@@ -663,7 +680,11 @@ export class FieldTemplateComponent {
                     if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
                         SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = false;
                     }
-                    this.OnBackFromEdit(this.Entity.DeclarationId, event);
+                    if (this.ObjectTableName == "Customs.PhysicalCheck") {
+                        this.OnBackFromEdit(this.Entity.Id, event);
+                    } else {
+                        this.OnBackFromEdit(this.Entity.DeclarationId, event);
+                    }
                 });
             });
     }
@@ -671,7 +692,7 @@ export class FieldTemplateComponent {
 
     OnBackFromEdit(selectedEntityId, $event) {
         if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentListComponent != null) {
-            SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });
+            SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(selectedEntityId, { rowIndex: this.RowIndex });
         }
     }
 
@@ -695,6 +716,8 @@ export class FieldTemplateComponent {
             }
         });
     }
+
+
 
     ShowCFIUFILEFromDeclarationReferantData() {
 
@@ -791,7 +814,58 @@ export class FieldTemplateComponent {
     }
 
 
+    async onRemoveInclusiveVisibilityClick(e: MouseEvent) {
+        e.stopPropagation();
 
+        if (!(await this.confirmRemoveInclusiveVisibility())) return;
+
+        SessionLocator.SelectedSession.StartBusyIndicator('')
+
+        const declarationPM = await this.logtuideTableDataService.getDataFromService(this.declarationPMService.get(this.Entity.DeclarationId));
+        declarationPM.RequestedCustomsDocId = 0;
+        await this.logtuideTableDataService.getDataFromService(this.declarationPMService.update(declarationPM));
+
+        SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+
+        SessionLocator.SelectedSession.StopBusyIndicator();
+    }
+
+
+    async onRemovePendingByKeywordClick(e: MouseEvent) {
+        e.stopPropagation();
+
+        if (!(await this.confirmMsg(TextCodeTranslator.Translate('Accounting.General.O.Areyousuredeleteline')))) return;
+
+        SessionLocator.SelectedSession.StartBusyIndicator("");
+
+        await this.pendingByKeywordWebService.delete(this.Entity.Id)
+
+        SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+
+        SessionLocator.SelectedSession.StopBusyIndicator();
+    }
+
+
+    private async confirmRemoveInclusiveVisibility(): Promise<boolean> {
+        var myConfirmWindow = new ConfirmWindow();
+        myConfirmWindow.Width = 400;
+        myConfirmWindow.Show(TextCodeTranslator.Translate("Customs.DeclarationReferantData.RemoveInclusiveMessage"));
+
+        return new Promise<boolean>(resolve =>
+            myConfirmWindow.WindowClosed.subscribe(e =>
+                resolve(myConfirmWindow.Yes)));
+    }
+
+
+    private async confirmMsg(msg: string): Promise<boolean> {
+        var myConfirmWindow = new ConfirmWindow();
+        myConfirmWindow.Width = 400;
+        myConfirmWindow.Show(msg);
+
+        return new Promise<boolean>(resolve =>
+            myConfirmWindow.WindowClosed.subscribe(e =>
+                resolve(myConfirmWindow.Yes)));
+    }
 }
 
 //class MyClass {

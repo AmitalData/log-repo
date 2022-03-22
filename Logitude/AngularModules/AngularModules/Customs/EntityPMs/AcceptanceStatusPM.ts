@@ -29,9 +29,9 @@ export class AcceptanceStatusPM {
     public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
        
 	 
-    private name: string;
-    public get Name() { return this.name; }
-    public set Name(newValue: string) { if (this.name != newValue) { this.name = newValue; this.MarkAsDirty("Name"); } }
+    private englishName: string;
+    public get EnglishName() { return this.englishName; }
+    public set EnglishName(newValue: string) { if (this.englishName != newValue) { this.englishName = newValue; this.MarkAsDirty("EnglishName"); } }
        
 	 
     private searchFields: string;
@@ -42,6 +42,11 @@ export class AcceptanceStatusPM {
     private localName: string;
     public get LocalName() { return this.localName; }
     public set LocalName(newValue: string) { if (this.localName != newValue) { this.localName = newValue; this.MarkAsDirty("LocalName"); } }
+       
+	 
+    private inactive: boolean;
+    public get Inactive() { return this.inactive; }
+    public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
        
 	 
 

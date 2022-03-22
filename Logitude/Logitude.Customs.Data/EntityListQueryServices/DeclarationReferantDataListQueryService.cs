@@ -33,6 +33,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                              .Include("DeclarationOffice")
                                                              .Include("DeclarationStatusType")
                                                              .Include("Importer")
+                                                             .Include("PackageType")
                                                              on a.DeclarationId equals d.Id
                                                               select new DeclarationReferantDataList()
                                                              {
@@ -138,8 +139,10 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  IsManualPayment = a.IsManualPayment,
                                                                  Commodity=a.Commodity,
                                                                  LastStatusRemarks=a.LastStatusRemarks,
-
-                                                                 
+                                                                 PackageTypeCode = a.PackageType.LocalName,
+                                                                 ReferantUserName="",
+                                                                 DepartmentName="",                                                                
+                                                                 RemoveInclusiveVisibility = "",                                                                
                                                               }) ;
                                                                 
                                               return query;
@@ -149,12 +152,10 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
         private IQueryable<DeclarationReferantData> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<DeclarationReferantData> iQueryable, int tenant)
         {
             DeclarationReferantDataCustomFilters filters = new DeclarationReferantDataCustomFilters();
-
             var filter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "RetrievData");
             if (filter == null)
             {
-
-                iQueryable = filters.GetFilteredQuery(iQueryable);
+                //iQueryable = filters.GetFilteredQuery(iQueryable);
                 //iQueryable = filters.GetFreelancerDeclarationReferantDatas(queryOperations, iQueryable, tenant,context);
             }
             iQueryable = filters.GetFreelancerDeclarationReferantDatas(queryOperations, iQueryable, tenant, context);
@@ -234,8 +235,8 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                 FilesRejectedByController_A = groupBy1.Count(x => x.ControllerStatus == "X" && x.IsAvailabilityDateNull == false && x.IsClosedForFollowUp != "1"),
                                 FilesRejectedByClassification = groupBy1.Count(x => x.ClassificationStatus == "X" && x.IsClosedForFollowUp != "1"),
                                 FilesRejectedByClassification_A = groupBy1.Count(x => x.ClassificationStatus == "X" && x.IsAvailabilityDateNull == false && x.IsClosedForFollowUp != "1"),
-                                FilesToPay = groupBy1.Count(x => x.ClassificationStatus == "V" && x.ControllerStatus == "V" && x.IsClosedForFollowUp != "1" && x.CollectionOfMoneyStatus == "V" && x.IsAvailabilityDateNull==false && x.IsExceptionReasonsListNull==true),
-                                FilesToPay_A = groupBy1.Count(x => x.ClassificationStatus == "V" && x.ControllerStatus == "V" && x.IsClosedForFollowUp != "1" && x.CollectionOfMoneyStatus == "V" && x.IsAvailabilityDateNull == false && x.IsExceptionReasonsListNull == true),
+                                FilesToPay = groupBy1.Count(x => x.ClassificationStatus == "V" && x.ControllerStatus == "V" && x.IsClosedForFollowUp != "1" && x.CollectionOfMoneyStatus == "V" && x.IsAvailabilityDateNull== false && x.IsPaymentDateNull == true && x.IsExceptionReasonsListNull==true),
+                                FilesToPay_A = groupBy1.Count(x => x.ClassificationStatus == "V" && x.ControllerStatus == "V" && x.IsClosedForFollowUp != "1" && x.CollectionOfMoneyStatus == "V" && x.IsAvailabilityDateNull == false && x.IsPaymentDateNull == true && x.IsExceptionReasonsListNull == true),
                                 FilesWithoutRelease_A = groupBy1.Count(x => x.IsPaymentDateNull == false && x.IsHatraDateNull == true && x.CancelRequestStatusCode!="5" && x.IsClose == false && x.IsAvailabilityDateNull == false && x.IsClosedForFollowUp != "1"),
 
                             }

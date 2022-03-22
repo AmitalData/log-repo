@@ -146,7 +146,8 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.Clear();
             DeserilazeObject(xmlLOGICOMMDEC);
             AppendLogLine("DeserilazeObject:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-
+            //bool SuppressECommDecInsertService = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20220221.SuppressECommDecInsertService"]);
+            bool useECommDecInsertService = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20220221.UseECommDecInsertService"]);
             //CheckIntegrity();
             AppendLogLine("CheckIntegrity:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
             MyGenericResponseObj.Stage = "GetContext";
@@ -154,7 +155,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             _context = CustomContext.GetContext(_tenant);
             amitalContext = AmitalContext.GetContext(_tenant);
             var myQueryService = new DeclarationQueryService(_context);
-
+            MyGenericResponseObj.EnglishDescription = "Update Declaration Integrator";
             ICustomContext dbContext = CustomContext.GetContext(_tenant);
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), _tenant);
 
@@ -182,6 +183,22 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                             }
                         }
+                        else
+                        {
+                            if (useECommDecInsertService)
+                            {
+
+
+                                /// INSERT !!!
+                                MyGenericResponseObj.EnglishDescription = "Insert Declaration Integrator";
+                                var eCommDecInsertService = new ECommDecInsertService();
+                                eCommDecInsertService.ProccessGenericRequestReal(xmlLOGICOMMDEC, tenant, Curruser, PBId,
+                  ref MoreParams,
+                  out MessageOut, out customFileNo, out decId, out courierMasterID);
+                                return;
+                            }
+
+                        }
                     }
                     AppendLogLine("Updating Master Courier Only " + this._MyDeclarationPM.CustomFileNo + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
                     MyGenericResponseObj.Stage = "Done Updating Master Courier Only ";
@@ -191,6 +208,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     return;
                 }
             }
+            
 
             MyGenericResponseObj.Stage = "GetSingleB4Upsert";
             if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.CustomFileNo))
@@ -208,6 +226,19 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                             AppendLogLine("Updating Not Allowed For Declaration " + this._MyDeclarationPM.CustomFileNo + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
                             return;
                         }
+                    }
+                }
+                else
+                {
+                    if (useECommDecInsertService)
+                    {
+                        //INSERT !!!
+                        MyGenericResponseObj.EnglishDescription = "Insert Declaration Integrator";
+                        var eCommDecInsertService = new ECommDecInsertService();
+                        eCommDecInsertService.ProccessGenericRequestReal(xmlLOGICOMMDEC, tenant, Curruser, PBId,
+          ref MoreParams,
+          out MessageOut, out customFileNo, out decId, out courierMasterID);
+                        return;
                     }
                 }
             }

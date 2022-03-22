@@ -7,6 +7,8 @@ import { ObjectFieldPM } from '../../EntityPMs/ObjectFieldPM';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
+import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
+import { defer } from 'rxjs';
 
 @Injectable()
 export class ObjectFieldPMExtendedService {
@@ -16,6 +18,30 @@ export class ObjectFieldPMExtendedService {
         this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ObjectFieldExtended';
     }
+
+    GetObjectFieldByName(objectfieldName: string,querySection:string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetObjectFieldByName?' + 'objectFieldName=' + objectfieldName +'&querySection=' + querySection , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var lists = response;
+                return lists;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+    getSingleFromQueries(UniqueCode: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetSingleQuery?' + 'UniqueCode=' + UniqueCode  , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var lists = response;
+                return lists;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
 
     GetEntityAuomationAllowedinAutomationConditionsObjectFieldPMsByEntityTableIds(entityAutomationIds: string, tenant: number) {
         var url = this._apiUrl + '/GetEntityAuomationAllowedinAutomationConditionsObjectFieldPMsByEntityTableIds/?' + 'entityAutomationIds=' + entityAutomationIds + '&tenant=' + tenant;

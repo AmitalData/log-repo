@@ -47,6 +47,15 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="SearchType"
+    OldNames="SerachType"
+    Type="varchar"
+    Size="2"
+    DefaultValue="1">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CourierPendingReasonCode"
     ReferencedTable="CourierPendingReasons"

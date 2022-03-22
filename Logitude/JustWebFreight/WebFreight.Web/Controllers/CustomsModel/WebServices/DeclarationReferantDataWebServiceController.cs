@@ -1,10 +1,14 @@
 ﻿
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.Customs.BL.DataContracts;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityListQueryServices;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +45,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
 
 
-        public HttpResponseMessage GetQueriesCounts (string refId, string depId,string transportMode)
+        public HttpResponseMessage GetQueriesCounts(string refId, string depId, string transportMode)
         {
             try
             {
@@ -60,6 +64,64 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+        public HttpResponseMessage GetAdvancedQueryFilters(int tenant, string loggedcontactid, string queryCode)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                ICustomContext context = CustomContext.GetContext(authToken.Tenant);
+
+                DeclarationReferantDataQueryService advancedQueryFilterQuery = new DeclarationReferantDataQueryService(tenant);
+                var result = advancedQueryFilterQuery.GetAdvancedQueryFilterPMsByTenantAndUserAndQuery(tenant, loggedcontactid, queryCode);
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+        public HttpResponseMessage insertDeclarationReferantFilters(AdvancedQueryFilterPM entityPM)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+
+                IWebFreightContext objectContext = WebFreightContext.GetContext(entityPM.Tenant);
+                AdvancedQueryFilterService service = new AdvancedQueryFilterService(objectContext, entityPM.Tenant);
+                service.Create(entityPM);
+
+                return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage Put(AdvancedQueryFilterPM entityPM)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+
+                IWebFreightContext objectContext = WebFreightContext.GetContext(entityPM.Tenant);
+                AdvancedQueryFilterService service = new AdvancedQueryFilterService(objectContext, entityPM.Tenant);
+                service.Update(entityPM);
+
+                return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
         }
     }
 }

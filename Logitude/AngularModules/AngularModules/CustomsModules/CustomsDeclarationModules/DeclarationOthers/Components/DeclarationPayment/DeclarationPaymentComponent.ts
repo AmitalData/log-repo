@@ -2377,11 +2377,11 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                             //do not close Win !!
                         }
                         else {
-                            SessionLocator.SelectedSession.CloseCurrentWindow();
+                             //SessionLocator.SelectedSession.CloseCurrentWindow();
                         }
                     }
                 };
-        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession, params.PBId, "תחילת שליחה למכס- הגשת תשלום", false, myShowProgressBarParams).then(res => {
+            CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession, params.PBId, "תחילת שליחה למכס- הגשת תשלום", false, myShowProgressBarParams).then(res => {
                 var ResponseData = res; // this solution to fix the paid declaration not showing a yellow message.
                 if (ResponseData && ResponseData.ContinueProcessInBackground) {
                     SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
@@ -2403,18 +2403,15 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                         SessionLocator.SelectedSession.CloseCurrentWindow();
                     });
                 });
-            if (this.DeclarationPM.DeclarationTypeCode == "2") {
+            if (this.DeclarationPM.DeclarationTypeCode== "2") {
                 this.declarationMessagesService.PostSendExportPaymentOnly(params)
                     .subscribe(res1 => {
                     });
             } else {
-                if (this.AutomaticPayment != 1) {
+                if (this.AutomaticPayment != 1)
                     this.declarationMessagesService.PostSendPaymentOnly(params)
                         .subscribe(res1 => {
                         });
-                } else {
-                    SessionLocator.SelectedSession.CloseCurrentWindow();
-                }
             }
         }
     }

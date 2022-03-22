@@ -103,6 +103,16 @@
                     </td>
                     <td></td>
                 </tr>
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'SearchType'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <ComboBox [ItemsSource]="SearchTypes" [SelectedItem]="SelectedItemSearchType" [Binding]="'Value'" (SelectedItemChanged)="SearchTypeClicked($event.Key)"></ComboBox>
+                    </td>
+                    <td></td>
+                </tr>
 
                 <tr>
                     <td></td>

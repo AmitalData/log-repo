@@ -40,7 +40,7 @@ export class DeclarationCourierStatusWebService {
 
         );
     }
-    GetQueriesCounts() {
+    GetWorkSpacePendingTab(integratorId: string) {
         return defer(() => {
 
             var authHeader = new Headers();
@@ -50,7 +50,27 @@ export class DeclarationCourierStatusWebService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetQueriesCounts", ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + "/GetWorkSpacePendingTab/?IntegratorId=" + integratorId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = response;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        }
+
+        );
+    }
+    GetQueriesCounts(integratorId:string) {
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.get(this._apiUrl + "/GetQueriesCounts/?IntegratorId="+integratorId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse.Result = response;

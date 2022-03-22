@@ -64,6 +64,16 @@ export class PendingByKeywordPM {
     public set SearchByFieldName(newValue: string) { if (this.searchByFieldName != newValue) { this.searchByFieldName = newValue; this.MarkAsDirty("SearchByFieldName"); } }
        
 	 
+    private searchType: string;
+    public get SearchType() { return this.searchType; }
+    public set SearchType(newValue: string) { if (this.searchType != newValue) { this.searchType = newValue; this.MarkAsDirty("SearchType"); } }
+       
+	 
+    private searchTypesName: string;
+    public get SearchTypesName() { return this.searchTypesName; }
+    public set SearchTypesName(newValue: string) { if (this.searchTypesName != newValue) { this.searchTypesName = newValue; this.MarkAsDirty("SearchTypesName"); } }
+       
+	 
 
     public OldEntityPM: PendingByKeywordPM;
 		

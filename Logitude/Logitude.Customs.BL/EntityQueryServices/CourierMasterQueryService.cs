@@ -213,6 +213,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             int PAY_C = 0;
             int PAY_R = 0;
             int PAY_I = 0;
+            int DecWithoutHaTra = 0;
 
             var totQ =
             (from dStatus in q
@@ -250,6 +251,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                  ACC = g.Count(r => (r.StorageSiteStatusCode == "2" || r.SpecialActionStatus == "X")),
                  ACC_W = g.Count(r => (r.StorageSiteStatusCode == "2")),
                  ACC_WS = g.Count(r => (r.SpecialActionStatus == "X")),
+                 //DecWithoutHaTra = g.Count (r=> (r.Declaration.HatraDate == null))
              });
 
             var tot =totQ.FirstOrDefault();
@@ -284,6 +286,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 ACC_WS = tot.ACC_WS;
                 PAY_I = tot.pAY_I;
                 PAY_C = tot.pAY_C;
+              //  DecWithoutHaTra = tot.DecWithoutHaTra;
             }
 
             keyValuePairList.Add(new KeyValuePair<string, int>("ALL", ALL));
@@ -315,6 +318,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
             keyValuePairList.Add(new KeyValuePair<string, int>("ACC", ACC));
             keyValuePairList.Add(new KeyValuePair<string, int>("ACC_W", ACC_W));
             keyValuePairList.Add(new KeyValuePair<string, int>("ACC_WS", ACC_WS));
+           // keyValuePairList.Add(new KeyValuePair<string, int>("DecWithoutHaTra", DecWithoutHaTra));
+
         }
 
         public IQueryable<DeclarationPM> GetNotConnectedDeclaratins(QueryOperations queryOperations, int tenant)
