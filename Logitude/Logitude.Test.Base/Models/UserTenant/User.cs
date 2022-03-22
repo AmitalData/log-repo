@@ -1,4 +1,4 @@
-﻿namespace Logitude.Base.Models.UserTenantPreparation
+﻿namespace Logitude.Base.Models.UserTenant
 {
     public class User
     {

@@ -1,6 +1,6 @@
 ﻿using Logitude.CrossDockTests.Services;
 using Logitude.Base.Models.Infrastructure;
-using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Models.UserTenant;
 using System;
 using System.Collections.Generic;
 using System.Linq;

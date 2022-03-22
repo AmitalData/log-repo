@@ -6,7 +6,7 @@ using System.Linq;
 using TechTalk.SpecFlow;
 using Logitude.InvoiceTests.Models.Invoice;
 using Logitude.Base.Models.Api;
-using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Models.UserTenant;
 using Logitude.Base.Models.Shared;
 
 namespace Logitude.InvoiceTests.Steps.SecurityTests

@@ -5,9 +5,9 @@ using Logitude.Tariff.Models;
 using Logitude.Tariff.Models.Builders;
 using Logitude.Base.Models.Api;
 using Logitude.Base.Models.Billings;
-using Logitude.Base.Models.PartnersPreparation;
+using Logitude.Base.Models.Partners;
 using Logitude.Base.Models.Shared;
-using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Models.UserTenant;
 using Logitude.Base.Services;
 
 

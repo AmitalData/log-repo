@@ -3,7 +3,7 @@ using Logitude.CommonDataTests.Services;
 using Logitude.CommonTests.Models;
 using Logitude.Base.Context;
 using Logitude.Base.Models.Shared;
-using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Models.UserTenant;
 using Logitude.Base.Services;
 using System;
 using TechTalk.SpecFlow;

@@ -1,5 +1,5 @@
 ﻿using Logitude.Base.Models.Shared;
-using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Models.UserTenant;
 using Logitude.Base.Services;
 using Logitude.ShipmentOrderTests.Models;
 using Logitude.ShipmentOrderTests.Services;

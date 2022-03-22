@@ -1,6 +1,6 @@
 ﻿using Logitude.ReportTests.Models;
 using Logitude.ReportTests.Models.Builders;
-using Logitude.Test.Base;
+using Logitude.Base;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;

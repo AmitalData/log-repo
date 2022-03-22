@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Logitude.SpecFlow.Builders.ChargeType;
 using Logitude.SpecFlow.Models.ChargeType;
-using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Models.UserTenant;
 using Logitude.Base.Services;
 using TechTalk.SpecFlow;
 

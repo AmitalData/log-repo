@@ -3,7 +3,7 @@ using Logitude.ShipmentOrderTests.Models;
 using Logitude.ShipmentOrderTests.Models.Builders;
 using Logitude.Base.Models.Api;
 using Logitude.Base.Models.Shared;
-using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Models.UserTenant;
 using Logitude.Base.Services;
 
 namespace Logitude.ShipmentOrderTests.Services

@@ -3,7 +3,7 @@ using Logitude.CargoTrackingTests.Models;
 using Logitude.CargoTrackingTests.Models.Builders;
 using Logitude.Base.Models.Api;
 using Logitude.Base.Models.Shared;
-using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Models.UserTenant;
 using Logitude.Base.Services;
 using System;
 using System.Collections.Generic;

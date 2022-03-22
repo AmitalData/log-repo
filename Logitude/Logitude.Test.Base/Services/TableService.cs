@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
 
-namespace Logitude.Test.Base
+namespace System.Dynamic
 {
     public static class TableService
     {

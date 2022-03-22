@@ -1,4 +1,4 @@
-﻿namespace Logitude.Base.Models.PartnersPreparation
+﻿namespace Logitude.Base.Models.Partners
 {
     public static class PartnersData
     {

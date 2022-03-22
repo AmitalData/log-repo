@@ -1,7 +1,7 @@
 ﻿using Logitude.ShipmentTests.Models;
 using Logitude.ShipmentTests.Services.OceanInsight;
 using Logitude.Base.Models.Shared;
-using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Models.UserTenant;
 using Logitude.Base.Services;
 using System;
 using TechTalk.SpecFlow;

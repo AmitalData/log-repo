@@ -7,7 +7,7 @@ using System.Linq;
 using TechTalk.SpecFlow;
 using Logitude.Base.Models.Shared;
 using Logitude.Base.Models.Api;
-using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Models.UserTenant;
 
 namespace Logitude.CommonTests.Steps.Security
 {

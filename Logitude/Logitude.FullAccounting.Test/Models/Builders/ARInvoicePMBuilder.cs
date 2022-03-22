@@ -1,7 +1,7 @@
 ﻿using Logitude.FullAccounting.Test.Models;
 using Logitude.FullAccounting.Test.Models.Codes;
 using Logitude.Base.Models.Billings;
-using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Models.UserTenant;
 using System;
 using System.Collections.Generic;
 

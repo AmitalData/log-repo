@@ -1,4 +1,4 @@
-﻿using Logitude.Base.Models.UserTenantPreparation;
+﻿using Logitude.Base.Models.UserTenant;
 
 namespace Logitude.Base.Models.Infrastructure
 {

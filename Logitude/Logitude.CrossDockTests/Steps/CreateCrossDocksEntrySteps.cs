@@ -2,7 +2,7 @@
 using Logitude.CrossDockTests.Services;
 using Logitude.CrossDockTests.Models;
 using Logitude.Base.Models.Shared;
-using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Models.UserTenant;
 using Logitude.Base.Services;
 using TechTalk.SpecFlow;
 

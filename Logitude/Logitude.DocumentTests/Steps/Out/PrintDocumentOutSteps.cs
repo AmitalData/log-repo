@@ -3,7 +3,7 @@ using Logitude.DocumentTests.Models;
 using Logitude.DocumentTests.Models.Codes;
 using Logitude.DocumentTests.Services;
 using Logitude.Base.Models.Shared;
-using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Models.UserTenant;
 using Logitude.Base.Services;
 using System;
 using System.Net;

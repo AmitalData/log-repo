@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
-using Logitude.Test.Base;
+using Logitude.Base;
 namespace Logitude.ReportTests.Services
 {
     public class ReportDataAssertService

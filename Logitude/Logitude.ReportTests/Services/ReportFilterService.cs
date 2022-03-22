@@ -1,9 +1,10 @@
 ﻿using Logitude.ReportTests.Models;
 using Logitude.ReportTests.Models.Builders;
-using Logitude.Test.Base;
+using Logitude.Base;
 using System.Collections.Generic;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
+using System.Dynamic;
 
 namespace Logitude.ReportTests.Services
 {
