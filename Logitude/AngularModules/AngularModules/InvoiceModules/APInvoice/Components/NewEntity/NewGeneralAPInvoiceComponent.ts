@@ -69,8 +69,8 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
 
     private InitializeVendorLov() {
         if (this.IsAccountingActivated) {
-            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
-            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
+            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
             this.VendorLovSizeForFullAccounting = 550;
             this.ForceShowLocalAndEnglishColumns = true;
             this.FillLOVColumnsWidths();
@@ -81,11 +81,11 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     FillLOVColumnsWidths()
     {
         this.ColumnsWidths = [
-            { ColumnName: 'Code', Width: 40 },
+            { ColumnName: 'Code', Width: 100 },
             { ColumnName: 'CalculatedEnglishName', Width: 120 },
+            { ColumnName: 'CalculatedLocalName', Width: 120 },
             { ColumnName: 'LocalName', Width: 120 },
             { ColumnName: 'GLAccountDisplayNumber', Width: 120 },
-            { ColumnName: 'CityName', Width: 85 },
             { ColumnName: 'CountryCode', Width: 60 },
             { ColumnName: 'PartnerTypeName', Width: 60 }
         ];
