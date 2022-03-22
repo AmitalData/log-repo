@@ -7,7 +7,7 @@ using Logitude.CargoTrackingTests.Services;
 
 using Logitude.Base.Models.Api;
 using Logitude.Base.Models.Shared;
-using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Models.UserTenant;
 using Logitude.Base.Services;
 using System;
 using System.Configuration;

@@ -104,7 +104,7 @@
     <Compile Include="Models\Shared\GetCreateDocumentsFilingArgs.cs" />
     <Compile Include="Models\Shared\GetDocumentCopyArgs.cs" />
     <Compile Include="Models\Shared\PostReturnChequeArgs.cs" />
-    <Compile Include="Models\UserTenantPreparation\UserEmptyTenant.cs" />
+    <Compile Include="Models\UserTenant\UserEmptyTenant.cs" />
     <Compile Include="Services\ObjectTableService.cs" />
     <Compile Include="Services\PackageTypesDataPreparation.cs" />
     <Compile Include="Services\RandomGeneratorService.cs" />
@@ -115,7 +115,7 @@
     <Compile Include="Models\PartnersPreparation\Address.cs" />
     <Compile Include="Models\PartnersPreparation\Contact.cs" />
     <Compile Include="Models\PartnersPreparation\PartnerParameters.cs" />
-    <Compile Include="Models\UserTenantPreparation\Credentials.cs" />
+    <Compile Include="Models\UserTenant\Credentials.cs" />
     <Compile Include="Models\PartnersPreparation\Partner.cs" />
     <Compile Include="Models\LocationsPreparation\Port.cs" />
     <Compile Include="Models\Infrastructure\Settings.cs" />
@@ -127,12 +127,12 @@
     <Compile Include="Models\Api\ApiQueryFilters.cs" />
     <Compile Include="Models\Api\ApiRequestParameters.cs" />
     <Compile Include="Models\Api\ApiResponse.cs" />
-    <Compile Include="Models\UserTenantPreparation\LoginParameters.cs" />
-    <Compile Include="Models\UserTenantPreparation\UserLogin.cs" />
-    <Compile Include="Models\UserTenantPreparation\Tenant.cs" />
-    <Compile Include="Models\UserTenantPreparation\User.cs" />
-    <Compile Include="Models\UserTenantPreparation\UserOtherTenant.cs" />
-    <Compile Include="Models\UserTenantPreparation\UserTenant.cs" />
+    <Compile Include="Models\UserTenant\LoginParameters.cs" />
+    <Compile Include="Models\UserTenant\UserLogin.cs" />
+    <Compile Include="Models\UserTenant\Tenant.cs" />
+    <Compile Include="Models\UserTenant\User.cs" />
+    <Compile Include="Models\UserTenant\UserOtherTenant.cs" />
+    <Compile Include="Models\UserTenant\UserTenant.cs" />
     <Compile Include="Models\LocationsPreparation\LocationsData.cs" />
     <Compile Include="Models\LocationsPreparation\LocationsVariables.cs" />
     <Compile Include="Models\PartnersPreparation\PartnersData.cs" />

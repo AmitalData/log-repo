@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Logitude.CommonDataTests.Models;
 using Logitude.Base.Models.Shared;
-using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Models.UserTenant;
 using Logitude.Base.Services;
 using System;
 using TechTalk.SpecFlow;

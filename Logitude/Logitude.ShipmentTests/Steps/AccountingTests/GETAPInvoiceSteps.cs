@@ -2,9 +2,9 @@
 using Logitude.ShipmentTests.Models.Accounting;
 using Logitude.ShipmentTests.Models.Accounting.APInvoice;
 using Logitude.Base.Models.Api;
-using Logitude.Base.Models.PartnersPreparation;
+using Logitude.Base.Models.Partners;
 using Logitude.Base.Models.Shared;
-using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Models.UserTenant;
 using Logitude.Base.Services;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
 using Logitude.FullAccounting.Test.Models;
 using Logitude.FullAccounting.Test.Services.Preparation;
-using Logitude.Base.Models.PartnersPreparation;
+using Logitude.Base.Models.Partners;
 using Logitude.Base.Models.Shared;
-using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Models.UserTenant;
 using Logitude.Base.Services;
 using System;
 using TechTalk.SpecFlow;

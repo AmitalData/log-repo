@@ -1,9 +1,9 @@
 ﻿using Logitude.Base.Models.Api;
 using Logitude.Base.Models.Infrastructure;
 using Logitude.Base.Models.Shared;
-using Logitude.Base.Models.UserTenantPreparation;
-using Logitude.Base.Models.LocationsPreparation;
-using Logitude.Base.Models.PartnersPreparation;
+using Logitude.Base.Models.UserTenant;
+using Logitude.Base.Models.Locations;
+using Logitude.Base.Models.Partners;
 using Logitude.Base.Services;
 using System;
 using System.Collections.Generic;

@@ -1,7 +1,7 @@
 ﻿using Logitude.CommonTests.Models;
 using Logitude.Base.Models.Api;
 using Logitude.Base.Models.Shared;
-using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Models.UserTenant;
 using Logitude.Base.Services;
 
 namespace Logitude.CommonDataTests.Services

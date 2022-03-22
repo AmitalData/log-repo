@@ -1,5 +1,5 @@
 ﻿using Logitude.Base.Models.Billings;
-using Logitude.Base.Models.UserTenantPreparation;
+using Logitude.Base.Models.UserTenant;
 
 namespace Logitude.ShipmentTests.Models.Accounting.ARInvoice
 {

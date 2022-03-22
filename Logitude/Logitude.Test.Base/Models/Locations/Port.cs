@@ -1,4 +1,4 @@
-﻿namespace Logitude.Base.Models.LocationsPreparation
+﻿namespace Logitude.Base.Models.Locations
 {
     public class Port
     {
