@@ -26,6 +26,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
 
         [ForeignKey("MetodoPagoCode")]
         public virtual MetodoPago MetodoPago { get; set; }
+        public string SATCompanyName { get; set; }
 
     }
 }

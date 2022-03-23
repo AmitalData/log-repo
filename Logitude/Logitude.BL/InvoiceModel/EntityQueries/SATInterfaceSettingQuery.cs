@@ -45,6 +45,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         MetodoPagoCode = a.MetodoPagoCode,
                         IsARInvoiceTransferEnabled = a.IsARInvoiceTransferEnabled,
                         IsCartaPorteTransferEnabled = a.IsCartaPorteTransferEnabled,
+                        SATCompanyName = a.SATCompanyName,
                     }).FirstOrDefault();
         }
 
@@ -64,6 +65,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         MetodoPagoCode = a.MetodoPagoCode,
                         IsARInvoiceTransferEnabled = a.IsARInvoiceTransferEnabled,
                         IsCartaPorteTransferEnabled = a.IsCartaPorteTransferEnabled,
+                        SATCompanyName = a.SATCompanyName,
                     }).FirstOrDefault();
         }
 
@@ -80,6 +82,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                        MetodoPagoCode = a.MetodoPagoCode,
                        IsARInvoiceTransferEnabled = a.IsARInvoiceTransferEnabled,
                        IsCartaPorteTransferEnabled = a.IsCartaPorteTransferEnabled,
+                       SATCompanyName = a.SATCompanyName,
                    };
         }
 
@@ -96,6 +99,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                              MetodoPagoCode = entity.MetodoPagoCode,
                                                              IsARInvoiceTransferEnabled = entity.IsARInvoiceTransferEnabled,
                                                              IsCartaPorteTransferEnabled = entity.IsCartaPorteTransferEnabled,
+                                                             SATCompanyName = entity.SATCompanyName,
                                                          };
             return result;
         }

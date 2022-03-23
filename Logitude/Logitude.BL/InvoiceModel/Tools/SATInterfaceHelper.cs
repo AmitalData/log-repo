@@ -1780,7 +1780,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             if (satSetting != null && satSetting.SATInterfaceCode == "PROF40")
             {
                 SATPaymentProfact40Service sATPaymentProfact40Service = new SATPaymentProfact40Service(paymentId, tenant);
-                sATPaymentProfact40Service.SendRequest();
+                sATPaymentProfact40Service.SendRequest(satSetting);
                 return;
             }
             ComputingPartnerTranslationHelper computingPartnerHelper = new ComputingPartnerTranslationHelper(tenant);

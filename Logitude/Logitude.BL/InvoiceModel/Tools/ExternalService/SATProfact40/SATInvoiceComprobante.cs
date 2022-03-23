@@ -4,6 +4,7 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Base;
 using Logitude.Server.Tools.Helpers;
 using Profact.TimbraCFDI40;
 using Simplog.Data.CommonDataModel;
@@ -131,7 +132,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 MetodoPagoSpecified = true,
                 SubTotal = GetARInvoiceCurrencySubTotal(),
                 Total = GetARInvoiceCurrencyAmount(),
-                Emisor = GetEmisor(),
+                Emisor = Emisor.Get(currentTenant, satSetting),
                 Receptor = GetComprobanteReceptor(),
                 TipoDeComprobante = GetTipoDeComprobante(),
                 CondicionesDePago = GetCondicionesDePago(),
@@ -249,16 +250,6 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         private decimal GetARInvoiceCurrencyAmount()
         {
             return Math.Abs((arInvoicePM.AmountInInvoiceCurrency != null ? (decimal)arInvoicePM.AmountInInvoiceCurrency.Value : 0));
-        }
-
-        private ComprobanteEmisor GetEmisor()
-        {
-            return new ComprobanteEmisor
-            {
-                Rfc = currentTenant.VatNumber,
-                Nombre = currentTenant.Company,
-                RegimenFiscal = "601"
-            };
         }
 
         private ComprobanteReceptor GetComprobanteReceptor()

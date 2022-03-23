@@ -29,6 +29,7 @@ export class SATInterfaceSettingsComponent {
     IsDropboxConnected: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsCartaPorteSettingsEnabled: boolean = false;
+    public HaveRegimenFiscalField: boolean = false;
     constructor(private entityResourceService: EntityResourceService) {
         this._entityResourceService = new EntityResourceService();
         this.sATInterfaceSettingPMService = new SATInterfaceSettingPMService();
@@ -39,6 +40,7 @@ export class SATInterfaceSettingsComponent {
 
 
         this.IsCartaPorteSettingsEnabled = SessionLocator.FeatureToggles.some(d => d.ToggleCode == "CPT");
+        this.HaveRegimenFiscalField = SessionLocator.FeatureToggles.some(d => d.ToggleCode == "RFF");
     }
 
     private LoadData() {
