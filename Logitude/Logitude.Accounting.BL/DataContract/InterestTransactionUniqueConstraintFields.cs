@@ -13,5 +13,8 @@ namespace Logitude.Accounting.BL.DataContract
         public string EntityId { get; set; }
         public int OriginalEntityLineNumber { get; set; }
         public string GLAccountId { get; set; }
+        public decimal ForeignAmount { get; set; }
+        public decimal LocalAmount { get; set; }
+        public string CurrencyId { get; set; }
     }
 }
