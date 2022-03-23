@@ -75,6 +75,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         DeclarationCustomFileNo, 
 	         DeclarationNumber, 
 	         ExporterCode, 
+	         PackageQuantity, 
+	         GrossMassMeasure, 
+	         MarksNumbers, 
+	         ExportLoadingPortcode, 
+	         StorageSiteCode, 
+	         ExportUnloadingPortCode, 
+	         FinalDestinationPortCode, 
+	         IsDangerousGoods, 
 	         StorageStatusIsOpen,
 	      }
 
