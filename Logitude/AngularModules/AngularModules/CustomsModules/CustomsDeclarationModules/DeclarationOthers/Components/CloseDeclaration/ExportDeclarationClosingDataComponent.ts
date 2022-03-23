@@ -130,7 +130,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     public get FlightDate() {
         if (this.EntityPM != null && this.EntityPM.FLIGHT_DATE != null) {
             var myFormats = DateTool.GetDateFormats(this.EntityPM.FLIGHT_DATE);
-            return myFormats.DateString + " " + myFormats.ShortTimeString;
+            return myFormats.DateString;
+            // + " " + myFormats.ShortTimeString;
         }
         return null;
     }
