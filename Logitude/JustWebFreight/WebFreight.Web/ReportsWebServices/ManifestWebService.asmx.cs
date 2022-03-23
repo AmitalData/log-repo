@@ -1044,6 +1044,7 @@ namespace WebFreight.Web.ReportsWebServices
                     detail.OpenPayablesInProfitCurrency = shipmentView.OpenPayablesInProfitCurrency;
                     newDetail.OpenPayablesInLocalCurrency = shipmentView.OpenPayablesInLocalCurrency;
                     newDetail.OpenPayablesInProfitCurrency = shipmentView.OpenPayablesInProfitCurrency;
+                    newDetail.SpecialServicesType = shipmentView.SpecialServicesTypeName;
 
                     if (!string.IsNullOrEmpty(shipmentView.QuoteId))
                     {
