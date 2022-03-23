@@ -687,6 +687,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool? storageStatusIsOpen ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? StorageStatusIsOpen  
+	   {
+	    
+	     get
+		{
+		   return storageStatusIsOpen;
+		 }
+		 set
+		 {
+		   if(storageStatusIsOpen != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StorageStatusIsOpen",OldValue=storageStatusIsOpen,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   storageStatusIsOpen=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

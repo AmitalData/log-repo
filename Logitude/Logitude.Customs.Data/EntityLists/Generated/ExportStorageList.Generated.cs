@@ -72,6 +72,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string DeclarationNumber  { get; set; }
        [DataMember]
        public string ExporterCode  { get; set; }
+       [DataMember]
+       public bool? StorageStatusIsOpen  { get; set; }
    }
 
 }
