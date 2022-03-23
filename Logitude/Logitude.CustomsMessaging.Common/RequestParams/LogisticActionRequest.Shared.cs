@@ -11,6 +11,7 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
 {
     public class LogisticActionRequestRequestParams : RequestParamsBase
     {
+        public string LogisticActionRequestId { get; set; }        
         public int ExporterIdentifierType { get; set; }
         public int ExporterNumber { get; set; }
         public string PassportCountry { get; set; }
@@ -24,7 +25,6 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public string CargoIdentifierKey3 { get; set; }
         public string PackagingTypeCode { get; set; }
         public string Quantity { get; set; }        
-        public string LogisticActionRequestId { get; set; }        
         public string CustomsFile { get; set; }        
     }
 }
