@@ -463,7 +463,8 @@ using Simplog.Data.ShipmentsModel;
 					   					   temp.UnassignedConsigneeAddress = AddressService30.AddressCustomDataMapping(MyEntityPM.UnassignedConsigneeAddressId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
-				   					
+				   
+				   temp.FullMaster = MyEntityPM.LongMaster;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -1519,6 +1520,14 @@ using Simplog.Data.ShipmentsModel;
 
 					}
 			
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.LongMaster = MyEntity.FullMaster;
+
+										}  
+
 										   
 					return temp;
 		    }
