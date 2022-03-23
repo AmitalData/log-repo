@@ -68,9 +68,9 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("ExportDealIdentification")]
 	    public string ExportDealIdentification { get; set; }
         [Column("PackageQuantity")]
-	    public int PackageQuantity { get; set; }
+	    public decimal? PackageQuantity { get; set; }
         [Column("GrossMassMeasure")]
-	    public int GrossMassMeasure { get; set; }
+	    public decimal? GrossMassMeasure { get; set; }
         [Column("MarksNumbers")]
 	    public string MarksNumbers { get; set; }
         [Column("ExportLoadingPortcode")]
@@ -82,7 +82,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("FinalDestinationPortCode")]
 	    public string FinalDestinationPortCode { get; set; }
         [Column("IsDangerousGoods")]
-	    public bool IsDangerousGoods { get; set; }
+	    public decimal? IsDangerousGoods { get; set; }
     }
 }
 	 
