@@ -108,6 +108,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                                   && a.Tenant == uniqueConstraintFields.Tenant
                                                                   && a.GLAccountId == uniqueConstraintFields.GLAccountId
                                                                   && a.EntityId == uniqueConstraintFields.EntityId
+                                                                  && a.LocalAmount == uniqueConstraintFields.LocalAmount
+                                                                  && a.ForeignAmount == uniqueConstraintFields.ForeignAmount
+                                                                  && a.CurrencyId == uniqueConstraintFields.CurrencyId
                                                               select a).FirstOrDefault();
 
             InterestTransactionPM interestTransactionPMs = GetEntityPM(interestTransactions);
