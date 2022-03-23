@@ -147,5 +147,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string UploadingUniqueKey { get; set; }
 
         public string BillToId { get; set; }
+        public string SATCustomerName { get; set; }
     }
 }

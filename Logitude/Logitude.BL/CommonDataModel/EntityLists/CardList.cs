@@ -130,6 +130,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public DateTime? RecordDate { get; set; }
         public string BillToId { get; set; }
         public double? AccountingPartnerCreditLimit { get; set; }
+        public string SATCustomerName { get; set; }
 
 
     }

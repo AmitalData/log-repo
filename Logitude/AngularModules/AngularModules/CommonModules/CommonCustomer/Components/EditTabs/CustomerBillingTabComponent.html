@@ -96,6 +96,16 @@
                                     </td>
                                 </tr>
 
+                                <tr *ngIf="ShowRegimenFiscalField" class="FormFieldRow">
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'SATCustomerName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'SATCustomerName'" [Text]="SATCustomerName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+                                </tr>
+
                                 <tr>
                                     <td></td>
                                 </tr>

@@ -119,5 +119,6 @@ export class CardList {
 		RecordDate: Date;
 		BillToId: string;
 		AccountingPartnerCreditLimit: number;
+		SATCustomerName: string;
 	
 }

@@ -267,7 +267,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
             return new ComprobanteReceptor
             {
-                Nombre = billToCard.EnglishName,
+                Nombre = !string.IsNullOrEmpty(billToCard.SATCustomerName) ? billToCard.SATCustomerName : billToCard.EnglishName,
                 RegimenFiscalReceptor = arInvoicePM.RegimenFiscalCode,
                 DomicilioFiscalReceptor = billToAddressZipCode,
                 Rfc = GetReceptorRfc(),

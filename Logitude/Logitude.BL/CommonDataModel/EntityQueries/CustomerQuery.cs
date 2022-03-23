@@ -188,6 +188,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   GLAccountNumber = a.Card.GLAccountDisplayNumber,
                                   EORInumber = a.EORInumber,
                                   IsAutonomy = a.Card.IsAutonomy,
+                                  SATCustomerName = a.Card.SATCustomerName,
                                   Card = new CardPM()
                                   {
                                       Id = a.Id,
@@ -355,6 +356,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               GLAccountNumber = a.Card.GLAccountDisplayNumber,
                               EORInumber = a.EORInumber,
                               IsAutonomy = a.Card.IsAutonomy,
+                              SATCustomerName = a.Card.SATCustomerName,
                               Card = new CardPM
                               {
                                   Id = a.Id,
@@ -714,6 +716,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CreatedByPartner = a.Card.CreatedByPartner,
                                   IsAutonomy = a.Card.IsAutonomy,
                                   InsuredcreditLimit = a.InsuredcreditLimit,
+                                  SATCustomerName = a.Card.SATCustomerName,
 
                                   Card = new CardPM()
                                   {
@@ -854,6 +857,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               CreatedByPartner = a.Card.CreatedByPartner,
                               IsAutonomy = a.Card.IsAutonomy,
                               InsuredcreditLimit = a.InsuredcreditLimit,
+                              SATCustomerName = a.Card.SATCustomerName,
 
                               Card = new CardPM()
                               {
@@ -1218,6 +1222,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       CreatedByPartner = a.Card.CreatedByPartner,
                                       IsAutonomy = a.Card.IsAutonomy,
                                       InsuredcreditLimit = a.InsuredcreditLimit,
+                                      SATCustomerName = a.Card.SATCustomerName,
 
                                       Card = new CardPM()
                                       {
@@ -1359,6 +1364,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CreatedByPartner = a.Card.CreatedByPartner,
                                   IsAutonomy = a.Card.IsAutonomy,
                                   InsuredcreditLimit = a.InsuredcreditLimit,
+                                  SATCustomerName = a.Card.SATCustomerName,
 
                                   Card = new CardPM
                                   {
@@ -1487,6 +1493,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               CreatedByPartner = a.Card.CreatedByPartner,
                               IsAutonomy = a.Card.IsAutonomy,
                               InsuredcreditLimit = a.InsuredcreditLimit,
+                              SATCustomerName = a.Card.SATCustomerName,
 
                               Card = new CardPM()
                               {
@@ -1702,6 +1709,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       CreatedByPartner = a.Card.CreatedByPartner,
                                       IsAutonomy = a.Card.IsAutonomy,
                                       InsuredcreditLimit = a.InsuredcreditLimit,
+                                      SATCustomerName = a.Card.SATCustomerName,
 
                                       Card = new CardPM()
                                       {
@@ -1843,6 +1851,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CreatedByPartner = a.Card.CreatedByPartner,
                                   IsAutonomy = a.Card.IsAutonomy,
                                   InsuredcreditLimit = a.InsuredcreditLimit,
+                                  SATCustomerName = a.Card.SATCustomerName,
 
                                   Card = new CardPM
                                   {
@@ -1976,6 +1985,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               CreatedByPartner = a.Card.CreatedByPartner,
                               IsAutonomy = a.Card.IsAutonomy,
                               InsuredcreditLimit = a.InsuredcreditLimit,
+                              SATCustomerName = a.Card.SATCustomerName,
 
                               Card = new CardPM()
                               {
@@ -2193,6 +2203,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    EORInumber = a.EORInumber,
                                                    IsAutonomy = a.Card.IsAutonomy,
                                                    InsuredcreditLimit = a.InsuredcreditLimit,
+                                                   SATCustomerName = a.Card.SATCustomerName,
 
                                                    Card = new CardPM()
                                                    {
@@ -2329,6 +2340,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             EORInumber = a.EORInumber,
                             IsAutonomy = a.Card.IsAutonomy,
                             InsuredcreditLimit = a.InsuredcreditLimit,
+                            SATCustomerName = a.Card.SATCustomerName,
 
                             Card = new CardPM()
                             {
@@ -2543,6 +2555,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    IsAutonomy = customer.IsAutonomy,
                                                    BillToId = customer.BillToId,
                                                    BillToName = customer.BillToName,
+                                                   SATCustomerName = customer.SATCustomerName,
                                                });
 
 
@@ -2688,6 +2701,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              BillToId = customer.Card.BillToId,
                                              ImportLocalCustomerGroupId = customer.ImportLocalCustomerGroupId,
                                              ExportLocalCustomerGroupId = customer.ExportLocalCustomerGroupId,
+                                             SATCustomerName = customer.Card.SATCustomerName,
                                          }).FirstOrDefault();
 
             return customerList;
@@ -2883,6 +2897,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              BillToId = customer.Card.BillToId,
                                              ImportLocalCustomerGroupId = customer.ImportLocalCustomerGroupId,
                                              ExportLocalCustomerGroupId = customer.ExportLocalCustomerGroupId,
+                                             SATCustomerName = customer.Card.SATCustomerName,
 
                                          }).FirstOrDefault();
 
@@ -3012,6 +3027,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              BillToId = customer.Card.BillToId,
                                              ImportLocalCustomerGroupId = customer.ImportLocalCustomerGroupId,
                                              ExportLocalCustomerGroupId = customer.ExportLocalCustomerGroupId,
+                                             SATCustomerName = customer.Card.SATCustomerName,
                                          }).FirstOrDefault();
 
             return customerList;
@@ -3153,6 +3169,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         BillToId = a.Card.BillToId,
                         ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
                         ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
+                        SATCustomerName = a.Card.SATCustomerName,
                     };
 
                     entityList.Add(list);
@@ -3847,6 +3864,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CreatedByPartner = a.Card.CreatedByPartner,
                                   IsAutonomy = a.Card.IsAutonomy,
                                   InsuredcreditLimit = a.InsuredcreditLimit,
+                                  SATCustomerName = a.Card.SATCustomerName,
 
                                   Card = new CardPM()
                                   {
@@ -4002,6 +4020,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               CreatedByPartner = a.Card.CreatedByPartner,
                               IsAutonomy = a.Card.IsAutonomy,
                               InsuredcreditLimit = a.InsuredcreditLimit,
+                              SATCustomerName = a.Card.SATCustomerName,
 
                               Card = new CardPM
                               {
@@ -4350,6 +4369,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      CreatedByPartner = a.Card.CreatedByPartner,
                                      IsAutonomy = a.Card.IsAutonomy,
                                      InsuredcreditLimit = a.InsuredcreditLimit,
+                                     SATCustomerName = a.Card.SATCustomerName,
 
                                      Card = new CardPM()
                                      {
@@ -4584,6 +4604,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   StorageFreeDays = a.Card.StorageFreeDays,
                                   IsAutonomy = a.Card.IsAutonomy,
                                   InsuredcreditLimit = a.InsuredcreditLimit,
+                                  SATCustomerName = a.Card.SATCustomerName,
 
                                   Card = new CardPM()
                                   {
@@ -4741,6 +4762,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               StorageFreeDays = a.Card.StorageFreeDays,
                               IsAutonomy = a.Card.IsAutonomy,
                               InsuredcreditLimit = a.InsuredcreditLimit,
+                              SATCustomerName = a.Card.SATCustomerName,
 
                               Card = new CardPM
                               {
@@ -4868,6 +4890,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      CreatedByPartner = a.Card.CreatedByPartner,
                                      IsAutonomy = a.Card.IsAutonomy,
                                      InsuredcreditLimit = a.InsuredcreditLimit,
+                                     SATCustomerName = a.Card.SATCustomerName,
 
                                      Card = new CardPM()
                                      {

@@ -152,5 +152,6 @@ export class CustomerList {
 		BillToName: string;
 		ImportLocalCustomerGroupId: string;
 		ExportLocalCustomerGroupId: string;
+		SATCustomerName: string;
 	
-}
+}
