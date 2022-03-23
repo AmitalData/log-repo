@@ -72,6 +72,22 @@ namespace Logitude.Customs.Data.EntityLists
        public string DeclarationNumber  { get; set; }
        [DataMember]
        public string ExporterCode  { get; set; }
+       [DataMember]
+       public int PackageQuantity  { get; set; }
+       [DataMember]
+       public int GrossMassMeasure  { get; set; }
+       [DataMember]
+       public string MarksNumbers  { get; set; }
+       [DataMember]
+       public string ExportLoadingPortcode  { get; set; }
+       [DataMember]
+       public string StorageSiteCode  { get; set; }
+       [DataMember]
+       public string ExportUnloadingPortCode  { get; set; }
+       [DataMember]
+       public string FinalDestinationPortCode  { get; set; }
+       [DataMember]
+       public bool IsDangerousGoods  { get; set; }
    }
 
 }

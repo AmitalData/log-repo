@@ -37,6 +37,14 @@ export class ExportStorageList {
 	DeclarationCustomFileNo: string;
 	DeclarationNumber: string;
 	ExporterCode: string;
+	PackageQuantity: number;
+	GrossMassMeasure: number;
+	MarksNumbers: string;
+	ExportLoadingPortcode: string;
+	StorageSiteCode: string;
+	ExportUnloadingPortCode: string;
+	FinalDestinationPortCode: string;
+	IsDangerousGoods: boolean;
 	
 }
  
