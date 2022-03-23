@@ -687,12 +687,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private int packageQuantity ;
+	  private decimal? packageQuantity ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int PackageQuantity  
+       public decimal? PackageQuantity  
 	   {
 	    
 	     get
@@ -703,19 +703,19 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(packageQuantity != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageQuantity",OldValue=packageQuantity,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageQuantity",OldValue=packageQuantity,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   packageQuantity=value;
 		   }
 			
 		 }
 	   }
-	  private int grossMassMeasure ;
+	  private decimal? grossMassMeasure ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int GrossMassMeasure  
+       public decimal? GrossMassMeasure  
 	   {
 	    
 	     get
@@ -726,7 +726,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(grossMassMeasure != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GrossMassMeasure",OldValue=grossMassMeasure,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GrossMassMeasure",OldValue=grossMassMeasure,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   grossMassMeasure=value;
 		   }
@@ -848,12 +848,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private bool isDangerousGoods ;
+	  private decimal? isDangerousGoods ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public bool IsDangerousGoods  
+       public decimal? IsDangerousGoods  
 	   {
 	    
 	     get
@@ -864,7 +864,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(isDangerousGoods != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsDangerousGoods",OldValue=isDangerousGoods,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsDangerousGoods",OldValue=isDangerousGoods,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   isDangerousGoods=value;
 		   }

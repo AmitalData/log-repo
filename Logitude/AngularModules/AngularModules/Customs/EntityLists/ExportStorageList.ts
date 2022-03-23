@@ -44,7 +44,7 @@ export class ExportStorageList {
 	StorageSiteCode: string;
 	ExportUnloadingPortCode: string;
 	FinalDestinationPortCode: string;
-	IsDangerousGoods: boolean;
+	IsDangerousGoods: number;
 	
 }
  

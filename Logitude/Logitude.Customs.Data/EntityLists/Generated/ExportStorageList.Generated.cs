@@ -73,9 +73,9 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string ExporterCode  { get; set; }
        [DataMember]
-       public int PackageQuantity  { get; set; }
+       public decimal? PackageQuantity  { get; set; }
        [DataMember]
-       public int GrossMassMeasure  { get; set; }
+       public decimal? GrossMassMeasure  { get; set; }
        [DataMember]
        public string MarksNumbers  { get; set; }
        [DataMember]
@@ -87,7 +87,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string FinalDestinationPortCode  { get; set; }
        [DataMember]
-       public bool IsDangerousGoods  { get; set; }
+       public decimal? IsDangerousGoods  { get; set; }
    }
 
 }

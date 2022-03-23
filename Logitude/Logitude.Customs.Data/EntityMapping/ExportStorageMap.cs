@@ -59,9 +59,9 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.ExportDealIdentification).HasColumnName("ExportDealIdentification").HasMaxLength(16).IsUnicode(true);
 
-            this.Property(t => t.PackageQuantity).HasColumnName("PackageQuantity");
+            this.Property(t => t.PackageQuantity).HasColumnName("PackageQuantity").HasPrecision(10, 0);
 
-            this.Property(t => t.GrossMassMeasure).HasColumnName("GrossMassMeasure");
+            this.Property(t => t.GrossMassMeasure).HasColumnName("GrossMassMeasure").HasPrecision(18, 2);
 
             this.Property(t => t.MarksNumbers).HasColumnName("MarksNumbers").HasMaxLength(512).IsUnicode(false);
 
@@ -73,7 +73,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.FinalDestinationPortCode).HasColumnName("FinalDestinationPortCode").HasMaxLength(17).IsUnicode(false);
 
-            this.Property(t => t.IsDangerousGoods).HasColumnName("IsDangerousGoods");
+            this.Property(t => t.IsDangerousGoods).HasColumnName("IsDangerousGoods").HasPrecision(1, 0);
         }
     }
 }

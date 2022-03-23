@@ -204,9 +204,9 @@ export class ExportStoragePM {
     public set FinalDestinationPortCode(newValue: string) { if (this.finalDestinationPortCode != newValue) { this.finalDestinationPortCode = newValue; this.MarkAsDirty("FinalDestinationPortCode"); } }
        
 	 
-    private isDangerousGoods: boolean;
+    private isDangerousGoods: number;
     public get IsDangerousGoods() { return this.isDangerousGoods; }
-    public set IsDangerousGoods(newValue: boolean) { if (this.isDangerousGoods != newValue) { this.isDangerousGoods = newValue; this.MarkAsDirty("IsDangerousGoods"); } }
+    public set IsDangerousGoods(newValue: number) { if (this.isDangerousGoods != newValue) { this.isDangerousGoods = newValue; this.MarkAsDirty("IsDangerousGoods"); } }
        
 	 
 
