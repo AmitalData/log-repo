@@ -688,7 +688,8 @@ using Simplog.Data.ShipmentsModel;
 					   				   }
 				   
 				   temp.PreCarriageVesselName = MyEntityPM.PreCarriageVesselName;
-				   temp.OnCarriageVesselName = MyEntityPM.OnCarriageVesselName;					
+				   temp.OnCarriageVesselName = MyEntityPM.OnCarriageVesselName;
+				   temp.FullMaster = MyEntityPM.LongMaster;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -2267,6 +2268,14 @@ using Simplog.Data.ShipmentsModel;
 						temp.OnCarriageVesselName = MyEntity.OnCarriageVesselName;
 
 					 
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.LongMaster = MyEntity.FullMaster;
+
+										}  
 
 										   
 					return temp;
