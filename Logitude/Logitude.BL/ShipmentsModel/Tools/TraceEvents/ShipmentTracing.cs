@@ -1546,27 +1546,41 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                 case "ARR":
                     {
-                        var domesticInlandargs = new
+                        if (entityPM.TransportModeId == "I" && entityPM.DirectionId == "D")
                         {
-                            TypeCode = entityPM.InlandDomesticToTypeCode,
-                            MainCarriageAddressId = entityPM.MainCarriageToAddressId,
-                            MainCarriagePortId = entityPM.MainCarriageToPortId,
-                            InlandDomesticCity = entityPM.InlandDomesticToCity,
-                        };
-                        myResult = GetStatusLocationForInlandDomestic(domesticInlandargs);
+                            var domesticInlandargs = new
+                            {
+                                TypeCode = entityPM.InlandDomesticToTypeCode,
+                                MainCarriageAddressId = entityPM.MainCarriageToAddressId,
+                                MainCarriagePortId = entityPM.MainCarriageToPortId,
+                                InlandDomesticCity = entityPM.InlandDomesticToCity,
+                            };
+                            myResult = GetStatusLocationForInlandDomestic(domesticInlandargs);
+                        }
+                        else
+                        {
+                            myResult = entityPM.MainCarriageToPortCode;
+                        }
                         break;
                     }
 
                 case "DEP":
                     {
-                        var domesticInlandargs = new
+                        if (entityPM.TransportModeId == "I" && entityPM.DirectionId == "D")
                         {
-                            TypeCode = entityPM.InlandDomesticFromTypeCode,
-                            MainCarriageAddressId = entityPM.MainCarriageFromAddressId,
-                            MainCarriagePortId = entityPM.MainCarriageFromPortId,
-                            InlandDomesticCity = entityPM.InlandDomesticFromCity,
-                        };
-                        myResult = GetStatusLocationForInlandDomestic(domesticInlandargs);
+                            var domesticInlandargs = new
+                            {
+                                TypeCode = entityPM.InlandDomesticFromTypeCode,
+                                MainCarriageAddressId = entityPM.MainCarriageFromAddressId,
+                                MainCarriagePortId = entityPM.MainCarriageFromPortId,
+                                InlandDomesticCity = entityPM.InlandDomesticFromCity,
+                            };
+                            myResult = GetStatusLocationForInlandDomestic(domesticInlandargs);
+                        }
+                        else
+                        {
+                            myResult = entityPM.MainCarriageFromPortCode;
+                        }
                         break;
                     }
 
