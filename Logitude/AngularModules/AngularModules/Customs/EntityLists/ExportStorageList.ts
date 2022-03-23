@@ -37,6 +37,7 @@ export class ExportStorageList {
 	DeclarationCustomFileNo: string;
 	DeclarationNumber: string;
 	ExporterCode: string;
+	StorageStatusIsOpen: boolean;
 	
 }
  

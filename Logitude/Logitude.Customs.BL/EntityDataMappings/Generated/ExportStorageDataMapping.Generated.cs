@@ -74,7 +74,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Declaration_ID, 
 	         DeclarationCustomFileNo, 
 	         DeclarationNumber, 
-	         ExporterCode,
+	         ExporterCode, 
+	         StorageStatusIsOpen,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
