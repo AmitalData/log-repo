@@ -36,10 +36,10 @@ export function EditShipmentView() {
     cy.Click(ShipmentSelectors.EditViewButton, null, true)
     cy.get(ShipmentSelectors.ListBoxItem).eq(0).click();
     cy.Click(ShipmentSelectors.ViewAddButton, null)
-    cy.Click(ShipmentSelectors.ViewAddFilter, null)
-    cy.FillLogTextBox(ShipmentSelectors.ViewFilterSearchField, "Shipment Type")
-    cy.get(ShipmentSelectors.LogitudeCheckBox).eq(2).click();
-    cy.FillLogLov(ShipmentSelectors.ViewShipmentTypeValue, ShipmentConstants.Air, true)
+    //cy.Click(ShipmentSelectors.ViewAddFilter, null)
+    //cy.FillLogTextBox(ShipmentSelectors.ViewFilterSearchField, "Shipment Type")
+   // cy.get(ShipmentSelectors.LogitudeCheckBox).eq(2).click();
+    //cy.FillLogLov(ShipmentSelectors.ViewShipmentTypeValue, ShipmentConstants.Air, true)
 }
 
 export function UpdateShipmentView() {
