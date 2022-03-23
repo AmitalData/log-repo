@@ -29,7 +29,7 @@
 	dw_PackageTypes.TEU, dw_PackageTypes.ContainerSize, dw_PackageTypes.IsContainer, dw_PackageTypes.Volume, dw_PackageTypes.PrintAs
 	From dw_PackageTypes
 	INNER JOIN dw_DWHSettings ON dw_PackageTypes.Tenant = dw_DWHSettings.Tenant
-	where dw_PackageTypes.AutomaticLastUpdateDate > @LastUpdateDate
+	where dw_PackageTypes.Id !='-1' and dw_PackageTypes.AutomaticLastUpdateDate > @LastUpdateDate
 	OPEN PackageTypesCursor FETCH NEXT FROM PackageTypesCursor INTO @Id , @Name, @LocalName, @SourceTenant, @ParentTenant, @AutomaticLastUpdateDate,
 	@TEU, @ContainerSize, @IsContainer, @Volume, @PrintAs
 	WHILE @@FETCH_STATUS = 0
