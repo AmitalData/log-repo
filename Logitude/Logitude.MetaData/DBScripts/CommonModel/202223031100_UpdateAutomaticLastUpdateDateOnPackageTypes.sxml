@@ -1,0 +1,9 @@
+﻿<Script DBType="Main" Module="Common" >
+	<Sql Version="1">
+		<![CDATA[
+
+    update PackageTypes set AutomaticLastUpdateDate = GETDATE() where AutomaticLastUpdateDate is null
+
+    ]]>
+	</Sql>
+</Script>
