@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExportStorageUpdateClass
    {  		
-		public const string HashString = "9b2717ea8c888c7f63f3184806c6bc08";
+		public const string HashString = "16a245a4480c9ea6c7e126f6ad2ee450";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1789,152 +1789,27 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "PackageQuantity",
+					 						FieldName =  "StorageStatusIsOpen",
 					  						ObjectTableName =  "Customs.ExportStorage",
-					  						FieldsDataType =  "Decimal",
+					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
+					  						IsCustomFilter =  true,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "PackageQuantity",
-					  						ListPropertyPath =  "PackageQuantity",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ExportStorage",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  10,
-					  						DigitsAfterPoint =  0,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "PackageQuantity",
-					  						DefaultText =  "Quantity",
-					  						FullLocalDefaultText =  "כמות",
-					  						ListFieldLable =  "PackageQuantityListLable",
-					  						ListLableDefaultText =  "Quantity",
-					  						ListLocalDefaultText =  "כמות",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "GrossMassMeasure",
-					  						ObjectTableName =  "Customs.ExportStorage",
-					  						FieldsDataType =  "Decimal",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "GrossMassMeasure",
-					  						ListPropertyPath =  "GrossMassMeasure",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ExportStorage",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  18,
-					  						DigitsAfterPoint =  2,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "GrossMassMeasure",
-					  						DefaultText =  "Weight",
-					  						FullLocalDefaultText =  "משקל",
-					  						ListFieldLable =  "GrossMassMeasureListLable",
-					  						ListLableDefaultText =  "Weight",
-					  						ListLocalDefaultText =  "משקל",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "MarksNumbers",
-					  						ObjectTableName =  "Customs.ExportStorage",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  512,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  512,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "MarksNumbers",
-					  						ListPropertyPath =  "MarksNumbers",
+					  						PMPropertyPath =  "StorageStatusIsOpen",
+					  						ListPropertyPath =  "StorageStatusIsOpen",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -1952,319 +1827,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "MarksNumbers",
-					  						DefaultText =  "CargoDescription",
-					  						FullLocalDefaultText =  "סימנים ומספרים",
-					  						ListFieldLable =  "MarksNumbersListLable",
-					  						ListLableDefaultText =  "CargoDescription",
-					  						ListLocalDefaultText =  "סימנים ומספרים",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "ExportLoadingPortcode",
-					  						ObjectTableName =  "Customs.ExportStorage",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  10,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  10,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ExportLoadingPortcode",
-					  						ListPropertyPath =  "ExportLoadingPortcode",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ExportStorage",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ExportLoadingPortcode",
-					  						DefaultText =  "LoadingSite",
-					  						FullLocalDefaultText =  "נמל טעינה",
-					  						ListFieldLable =  "ExportLoadingPortcodeListLable",
-					  						ListLableDefaultText =  "LoadingSite",
-					  						ListLocalDefaultText =  "נמל טעינה",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "StorageSiteCode",
-					  						ObjectTableName =  "Customs.ExportStorage",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  20,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  20,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "StorageSiteCode",
-					  						ListPropertyPath =  "StorageSiteCode",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ExportStorage",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "StorageSiteCode",
-					  						DefaultText =  "StorageSite",
-					  						FullLocalDefaultText =  "אתר מסירה",
-					  						ListFieldLable =  "StorageSiteCodeListLable",
-					  						ListLableDefaultText =  "StorageSite",
-					  						ListLocalDefaultText =  "אתר מסירה",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "ExportUnloadingPortCode",
-					  						ObjectTableName =  "Customs.ExportStorage",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  17,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  17,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ExportUnloadingPortCode",
-					  						ListPropertyPath =  "ExportUnloadingPortCode",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ExportStorage",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ExportUnloadingPortCode",
-					  						DefaultText =  "FirstDestinationInternationalSiteID",
-					  						FullLocalDefaultText =  "נמל פריקה",
-					  						ListFieldLable =  "ExportUnloadingPortCodeListLable",
-					  						ListLableDefaultText =  "FirstDestinationInternationalSiteID",
-					  						ListLocalDefaultText =  "נמל פריקה",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "FinalDestinationPortCode",
-					  						ObjectTableName =  "Customs.ExportStorage",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  17,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  17,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "FinalDestinationPortCode",
-					  						ListPropertyPath =  "FinalDestinationPortCode",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ExportStorage",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "FinalDestinationPortCode",
-					  						DefaultText =  "FinalDestinationInternationalSiteID",
-					  						FullLocalDefaultText =  "נמל יעד",
-					  						ListFieldLable =  "FinalDestinationPortCodeListLable",
-					  						ListLableDefaultText =  "FinalDestinationInternationalSiteID",
-					  						ListLocalDefaultText =  "נמל יעד",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "IsDangerousGoods",
-					  						ObjectTableName =  "Customs.ExportStorage",
-					  						FieldsDataType =  "Decimal",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "IsDangerousGoods",
-					  						ListPropertyPath =  "IsDangerousGoods",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ExportStorage",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  1,
-					  						DigitsAfterPoint =  0,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "IsDangerousGoods",
-					  						DefaultText =  "UNNumber",
-					  						FullLocalDefaultText =  "חומר מסוכן",
-					  						ListFieldLable =  "IsDangerousGoodsListLable",
-					  						ListLableDefaultText =  "UNNumber",
-					  						ListLocalDefaultText =  "חומר מסוכן",
+					  						FullFieldLable =  "StorageStatusIsOpen",
+					  						DefaultText =  "Storage Status Is Open",
+					  						FullLocalDefaultText =  "סטטוס פתוח",
+					  						ListFieldLable =  "StorageStatusIsOpenListLable",
+					  						ListLableDefaultText =  "Storage Status Is Open",
+					  						ListLocalDefaultText =  "סטטוס פתוח",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2304,32 +1872,65 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode ExportStorageTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExportStorage.Q.OpenStorages", DefaultText = @"Open Storages",LocalDefaultText = null, ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode ExportStorageTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExportStorage.Q.OpenStorages", DefaultText = @"Open Storages",LocalDefaultText = "אחסנות פתוחות", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ExportStorageFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportStorage.Q.OpenStorages", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExportStorageFeatures.OpenStorages", NameTextCodeDefaultText = "OpenStorages", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ExportStorageObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode ExportStorageTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExportStorage.Q.AllStorages", DefaultText = @"All Storages",LocalDefaultText = "כל האחסנות", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ExportStorageFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportStorage.Q.AllStorages", ObjectTableId = ExportStorageObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExportStorageFeatures.AllStorages", NameTextCodeDefaultText = "AllStorages", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ExportStorageObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query OpenStoragesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExportStorageTextCode_0.Id, NameTextCodeCode = ExportStorageTextCode_0.Code, ObjectTableName = "Customs.ExportStorage", Code = "OpenStorages",  QueryGroupCode = "0c30", IndexOrder = 0, Tenant = 0, ObjectTableId = ExportStorageObjectTable.Id, QuerySection = "Customs.ExportStorage", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ExportStorageFeature_0.Id,FeatureUniqeCode= ExportStorageFeature_0.FeatureUniqeCode, DefaultSortName = "StorageNo", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+			  Query OpenStoragesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExportStorageTextCode_0.Id, NameTextCodeCode = ExportStorageTextCode_0.Code, ObjectTableName = "Customs.ExportStorage", Code = "OpenStorages",  QueryGroupCode = "0c30", IndexOrder = 0, Tenant = 0, ObjectTableId = ExportStorageObjectTable.Id, QuerySection = "Customs.ExportStorage", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ExportStorageFeature_0.Id,FeatureUniqeCode= ExportStorageFeature_0.FeatureUniqeCode, DefaultSortName = "OpenDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn OpenStoragesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenStoragesQuery.Id,QueryCode = OpenStoragesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ExportStorage.OpenDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenStoragesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenStoragesQuery.Id,QueryCode = OpenStoragesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ExportStorage.ExporterName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenStoragesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenStoragesQuery.Id,QueryCode = OpenStoragesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ExportStorage.CustomStatusName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn OpenStoragesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenStoragesQuery.Id,QueryCode = OpenStoragesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ExportStorage.ExportFileNo" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenStoragesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenStoragesQuery.Id,QueryCode = OpenStoragesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ExportStorage.ExporterName" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn OpenStoragesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenStoragesQuery.Id,QueryCode = OpenStoragesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ExportStorage.StorageNo" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenStoragesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenStoragesQuery.Id,QueryCode = OpenStoragesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ExportStorage.ExportFileNo" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenStoragesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenStoragesQuery.Id,QueryCode = OpenStoragesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.ExportStorage.DeclarationNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenStoragesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenStoragesQuery.Id,QueryCode = OpenStoragesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.ExportStorage.StorageNo" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenStoragesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenStoragesQuery.Id,QueryCode = OpenStoragesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.ExportStorage.CargoTypeName" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn OpenStoragesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenStoragesQuery.Id,QueryCode = OpenStoragesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.ExportStorage.DeclarationNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenStoragesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenStoragesQuery.Id,QueryCode = OpenStoragesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.ExportStorage.ShipName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenStoragesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenStoragesQuery.Id,QueryCode = OpenStoragesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.ExportStorage.CargoTypeName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn OpenStoragesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenStoragesQuery.Id,QueryCode = OpenStoragesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.ExportStorage.StorageStatus" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn OpenStoragesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenStoragesQuery.Id,QueryCode = OpenStoragesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.ExportStorage.ShipName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenStoragesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenStoragesQuery.Id,QueryCode = OpenStoragesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.ExportStorage.DeclarationStatusTypeName" , ColumnWidth = 175 }, addedQueryColumns);
+			 QueryColumn OpenStoragesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenStoragesQuery.Id,QueryCode = OpenStoragesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.ExportStorage.StorageStatus" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn OpenStoragesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenStoragesQuery.Id,QueryCode = OpenStoragesQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.ExportStorage.DeclarationStatusTypeName" , ColumnWidth = 175 }, addedQueryColumns);
+
+             AdvancedQueryFilter OpenStoragesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.ExportStorage.StorageStatusIsOpen", PredefinedValue = "true",PredefinedValue2 = null, QueryId = OpenStoragesQuery.Id,QueryCode = OpenStoragesQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+  
+	      
+
+			  Query AllStoragesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExportStorageTextCode_1.Id, NameTextCodeCode = ExportStorageTextCode_1.Code, ObjectTableName = "Customs.ExportStorage", Code = "AllStorages",  QueryGroupCode = "0c30", IndexOrder = 1, Tenant = 0, ObjectTableId = ExportStorageObjectTable.Id, QuerySection = "Customs.ExportStorage", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ExportStorageFeature_1.Id,FeatureUniqeCode= ExportStorageFeature_1.FeatureUniqeCode, DefaultSortName = "OpenDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn AllStoragesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ExportStorage.OpenDate" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllStoragesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ExportStorage.CustomStatusName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn AllStoragesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ExportStorage.ExporterName" , ColumnWidth = 200 }, addedQueryColumns);
+
+			 QueryColumn AllStoragesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ExportStorage.ExportFileNo" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllStoragesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.ExportStorage.StorageNo" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllStoragesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.ExportStorage.DeclarationNumber" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllStoragesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.ExportStorage.CargoTypeName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn AllStoragesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.ExportStorage.ShipName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllStoragesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.ExportStorage.StorageStatus" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn AllStoragesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStoragesQuery.Id,QueryCode = AllStoragesQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.ExportStorage.DeclarationStatusTypeName" , ColumnWidth = 175 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

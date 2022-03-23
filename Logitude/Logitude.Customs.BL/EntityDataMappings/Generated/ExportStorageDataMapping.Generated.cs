@@ -83,6 +83,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         DeclarationCustomFileNo, 
 	         DeclarationNumber, 
 	         ExporterCode, 
+	         StorageStatusIsOpen,	          
 	         PackageQuantity, 
 	         GrossMassMeasure, 
 	         MarksNumbers, 

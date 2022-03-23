@@ -87,6 +87,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
             entityPM.DeclarationNumber = declarationPM?.DeclarationNumber;
             //entityPM.ExporterCode = cardPM?.VatNumber;
             entityPM.ExporterCode = client?.Code;
+            entityPM.StorageStatusIsOpen = entityPOCO.StorageStatus != null && entityPOCO.StorageStatus.ToLower() == "open";
+
             try
             {
                 var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
