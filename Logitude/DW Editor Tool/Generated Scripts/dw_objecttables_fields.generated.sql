@@ -1853,6 +1853,9 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ContainersShipmentNumberNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ContainersShipmentNumberNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ContainersShipmentNumberNewId,0,'Fact_Containers','[Shipment Number]','Shipment Number','Text','false',20,20,'false','false','false','General','false','false','false','Container.ShipmentNumber','true','false')  
+declare @Fact_ContainersContainerTypeNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ContainersContainerTypeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ContainersContainerTypeNewId,0,'Fact_Containers','[Container Type]','Container Type','Dimension','false',0,15,'DIM_PackageTypes','false','false','true','General','false','false','false','Container.ShipmentPackagesId','false','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_InlandDomesticShipmentsNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_InlandDomesticShipmentsNewId OUTPUT,'DWObjectTable' 
