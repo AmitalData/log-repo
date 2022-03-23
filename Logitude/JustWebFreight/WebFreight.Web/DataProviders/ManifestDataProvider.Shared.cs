@@ -339,6 +339,7 @@ namespace WebFreight.Web.DataProviders
         public double? Volume { get; set; }
         public double? Weight { get; set; }        
         public string DescriptionOfGoods { get; set; }
+        public string SpecialServicesType { get; set; }
 
         List<PackageDetails> packageDetails;
         public List<PackageDetails> PackageDetails
