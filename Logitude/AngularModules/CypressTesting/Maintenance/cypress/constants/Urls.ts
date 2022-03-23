@@ -148,6 +148,9 @@ export class Urls {
     public static readonly CustomerGetSingle = "**/customers/getsingle?**";
 
     public static readonly Report = " **/reports"
+    
+    public static readonly EntityResource = '**/EntityResource?**';
+    public static readonly ObjectFields = '**/objectfields';
 
     public static GetFilterSearch(filterBy: string) {
         return '**/getbyfilters?**' + filterBy + '**'
