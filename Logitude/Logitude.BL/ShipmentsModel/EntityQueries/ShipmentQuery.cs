@@ -14245,7 +14245,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 var shipmentsMasterDataFields = GetShipmentMasterDataFields(targetedShipmentsQuery);
 
                 var shipmentsAdditionalFields = new List<ShipmentAdditionalFields>();
-                Parallel.ForEach(shipmentIdsList, shipmentId =>
+                var targetedShipmentIds = targetedShipmentsQuery.Select(s => s.Id).ToList();
+                foreach (var shipmentId in targetedShipmentIds)
                 {
                     var shipmentAdditionalFields = new ShipmentAdditionalFields() { ShipmentId = shipmentId };
 
@@ -14259,7 +14260,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     MapShipmentMasterDataFields(shipmentAdditionalFields, shipmentMasterDataFields);
 
                     shipmentsAdditionalFields.Add(shipmentAdditionalFields);
-                });
+                }
 
                 return shipmentsAdditionalFields;
             }
@@ -14445,7 +14446,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             if (!string.IsNullOrEmpty(shipmentMasterDataFields.ToPortId))
             {
-                PortPM port = portQuery.GetSinglePM(shipmentMasterDataFields.Transshipment1FromPortId, shipmentMasterDataFields.Tenant);
+                PortPM port = portQuery.GetSinglePM(shipmentMasterDataFields.ToPortId, shipmentMasterDataFields.Tenant);
                 if (port != null)
                 {
                     shipmentAdditionalFields.ToPortId = shipmentMasterDataFields.ToPortId;
