@@ -17395,6 +17395,75 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;790de096-d7f1-4d87-8db5-64dd67dd9166&quot;"
+    FieldName="&quot;SATCustomerName&quot;"
+    OldNames="SATCustomerName"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;Customer&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="200"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;SATCustomerName&quot;"
+    ListPropertyPath="&quot;SATCustomerName&quot;"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Customer&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="true"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;SATCustomerName&quot;"
+    DefaultText="&quot;SAT Customer Name&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;By Last Shipment&quot;"
     TextCode="&quot;By Last Shipment&quot;"
@@ -17457,7 +17526,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsCustomer&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -17614,7 +17684,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;SharedLogisticsCustomers&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -17722,7 +17793,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsCustomer&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -17805,13 +17877,15 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;MyCustomersAsAccountManager&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
       <QueryFilter
         QueryCode="&quot;Customer.Q.MyCustomersAccMngr&quot;"
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsCustomer&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -17894,13 +17968,15 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;MyCustomers&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
       <QueryFilter
         QueryCode="&quot;Customer.MyCustomers&quot;"
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsCustomer&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -17973,13 +18049,15 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;ReadyCustomers&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
       <QueryFilter
         QueryCode="&quot;Customer.ReadyCustomers&quot;"
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsCustomer&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -18047,7 +18125,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;PotentialCustomers&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -18115,7 +18194,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;ActiveCustomers&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Query
@@ -18183,7 +18263,8 @@
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;InactiveCustomers&quot;"
         IsPredefined="true"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Screen

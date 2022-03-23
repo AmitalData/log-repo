@@ -120,6 +120,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  CalculatedLocalName = string.IsNullOrEmpty(card.LocalName) ? card.EnglishName : card.LocalName,
                                                  CreatedByPartner = card.CreatedByPartner,
                                                  BillToId = card.BillToId,
+                                                 SATCustomerName = card.SATCustomerName,
                                              });
 
 
@@ -245,6 +246,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       IndustryId = a.Customer != null ? (a.Customer.Industry != null ? a.Customer.Industry.Id : null) : null,
                                       BillToId = a.BillToId,
                                       ICAO = al != null ? al.ICAO : "",
+                                      SATCustomerName = a.SATCustomerName,
                                   }).FirstOrDefault();
 
 
@@ -341,6 +343,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CreatedByPartner = a.CreatedByPartner,
                                   BillToId = a.BillToId,
                                   ICAO = al != null ? al.ICAO : "",
+                                  SATCustomerName = a.SATCustomerName,
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -573,6 +576,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsAutonomy = a.IsAutonomy,
                                               CreatedByPartner = a.CreatedByPartner,
                                               BillToId = a.BillToId,
+                                              SATCustomerName = a.SATCustomerName,
                                           });
             return cards;
         }
@@ -643,6 +647,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsAutonomy = a.IsAutonomy,
                                               CreatedByPartner = a.CreatedByPartner,
                                               BillToId = a.BillToId,
+                                              SATCustomerName = a.SATCustomerName,
                                           });
             return cards;
         }
@@ -742,6 +747,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           IsAutonomy = a.IsAutonomy,
                                           CreatedByPartner = a.CreatedByPartner,
                                           BillToId = a.BillToId,
+                                          SATCustomerName = a.SATCustomerName,
                                       }).FirstOrDefault();
 
                             if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
@@ -830,6 +836,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       IsAutonomy = a.IsAutonomy,
                                       CreatedByPartner = a.CreatedByPartner,
                                       BillToId = a.BillToId,
+                                      SATCustomerName = a.SATCustomerName,
                                   }).FirstOrDefault();
                     }
                 }
@@ -908,6 +915,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   IsAutonomy = a.IsAutonomy,
                                   CreatedByPartner = a.CreatedByPartner,
                                   BillToId = a.BillToId,
+                                  SATCustomerName = a.SATCustomerName,
                               }).FirstOrDefault();
                 }
 
@@ -980,6 +988,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     CreatedByPartner = entityPOCO.CreatedByPartner,
                     StorageFreeDays = entityPOCO.StorageFreeDays,
                     BillToId = entityPOCO.BillToId,
+                    SATCustomerName = entityPOCO.SATCustomerName,
                 };
 
                 if (entityPOCO.Customer != null)
@@ -1236,6 +1245,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 IndustryId = card.Customer != null ? (card.Customer.Industry != null ? card.Customer.Industry.Name : null) : null,
                                                 RecordDate = card.UpdateDate != null ? card.UpdateDate : card.CreateDate,
                                                 BillToId = card.BillToId,
+                                                SATCustomerName = card.SATCustomerName,
                                             };
 
             if (myResult.Count() > 0)
@@ -1317,6 +1327,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               CalculatedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                               CreatedByPartner = a.CreatedByPartner,
                                               BillToId = a.BillToId,
+                                              SATCustomerName = a.SATCustomerName,
                                           });
             return cards;
         }
@@ -1509,6 +1520,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     StateName = oldTenantCard.StateName,
                     IsInternationalPartner = oldTenantCard.IsInternationalPartner,
                     IsAutonomy = oldTenantCard.IsAutonomy,
+                    SATCustomerName = oldTenantCard.SATCustomerName,
                 };
 
                 #region PaymentTerm
@@ -2170,6 +2182,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        IsAutonomy = a.IsAutonomy,
                                        CreatedByPartner = a.CreatedByPartner,
                                        BillToId = a.BillToId,
+                                       SATCustomerName = a.SATCustomerName,
                                    }).ToList();
             return card.FirstOrDefault();
         }

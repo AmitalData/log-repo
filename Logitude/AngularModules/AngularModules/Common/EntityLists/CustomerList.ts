@@ -150,5 +150,6 @@ export class CustomerList {
 		IsAutonomy: boolean;
 		BillToId: string;
 		BillToName: string;
+		SATCustomerName: string;
 	
 }

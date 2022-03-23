@@ -67,6 +67,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.AccountingVATSplit = entityPM.AccountingVATSplit;
             entityPOCO.GLAccountDisplayNumber = entityPM.GLAccountDisplayNumber;
             entityPOCO.BillToId = entityPM.BillToId;
+            entityPOCO.SATCustomerName = entityPM.SATCustomerName;
             BuildSearchFields(entityPM, entityPOCO);
         }
 

@@ -342,6 +342,13 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
         }
     }
 
+    get SATCustomerName() { return this.EntityPM.SATCustomerName; }
+    set SATCustomerName(newValue: string) {
+        if (this.EntityPM.SATCustomerName != newValue) {
+            this.EntityPM.SATCustomerName = newValue;
+        }
+    }
+
     get BlockNewInvoiceCreation() { return this.EntityPM.BlockNewInvoiceCreation; }
     set BlockNewInvoiceCreation(value: boolean) {
         if (this.EntityPM.BlockNewInvoiceCreation != value) {
