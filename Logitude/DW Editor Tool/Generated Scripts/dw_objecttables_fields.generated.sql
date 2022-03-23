@@ -1806,6 +1806,12 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ContainersPreCarriageGateInNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ContainersPreCarriageGateInNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ContainersPreCarriageGateInNewId,0,'Fact_Containers','[Pre Carriage Gate In]','Pre Carriage Gate In','Dimension','false',0,0,'DIM_Dates','false','false','true','Pre-Carriage','false','false','false','Container.PreCarriageGateIn','false','false')  
+declare @Fact_ContainersContainerNumberNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ContainersContainerNumberNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ContainersContainerNumberNewId,0,'Fact_Containers','[Container Number]','Container Number','Text','false',20,20,'false','false','true','General','false','false','false','Container.ContainerNumber','false','false')  
+declare @Fact_ContainersShipmentNumberNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ContainersShipmentNumberNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ContainersShipmentNumberNewId,0,'Fact_Containers','[Shipment Number]','Shipment Number','Text','false',20,20,'false','false','false','General','false','false','false','Container.ShipmentNumber','true','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_InlandDomesticShipmentsNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_InlandDomesticShipmentsNewId OUTPUT,'DWObjectTable' 
