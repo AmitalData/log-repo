@@ -2293,7 +2293,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                                         windowArgs.CurrentEntity = myResponse.Result;
                                                         var logWindow = new LogitudeWindow();
 
-                                                        logWindow.Width = 770;
+                                                        logWindow.Width = 920;
                                                         logWindow.Height = 750;
                                                         //logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditDeclarationCargoSplit");
                                                         let title: string = (myResponse.Result?.RequestCancelStatus || myResponse.Result?.OperationalStatus );
@@ -3287,7 +3287,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
     RunNewLogisticActionRequest() {
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 770;
+        logWindow.Width = 920;
         logWindow.Height = 750;
         logWindow.Title = ("ביטול יצוא חדש");
         logWindow.ShowCloseButton = true;

@@ -710,6 +710,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string calculatedExporterName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CalculatedExporterName  
+	   {
+	    
+	     get
+		{
+		   return calculatedExporterName;
+		 }
+		 set
+		 {
+		   if(calculatedExporterName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalculatedExporterName",OldValue=calculatedExporterName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   calculatedExporterName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
