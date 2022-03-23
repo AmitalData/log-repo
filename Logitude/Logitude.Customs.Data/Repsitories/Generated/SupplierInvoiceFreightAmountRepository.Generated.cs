@@ -28,10 +28,10 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  SupplierInvoiceFreightAmount GetSingle(string declarationid, int invoicecounterkey, string currencytypecode, int tenant)
+		public  SupplierInvoiceFreightAmount GetSingle(string id, int tenant)
         {
             return (from a in context.SupplierInvoiceFreightAmounts
-                    where a.DeclarationId == declarationid && a.InvoiceCounterKey == invoicecounterkey && a.CurrencyTypeCode == currencytypecode && a.Tenant == tenant
+                    where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
@@ -46,7 +46,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             SupplierInvoiceFreightAmountKeys keys = entityKeys as SupplierInvoiceFreightAmountKeys;
             return (from a in context.SupplierInvoiceFreightAmounts
-                    where a.DeclarationId == keys.DeclarationId && a.InvoiceCounterKey == keys.InvoiceCounterKey && a.CurrencyTypeCode == keys.CurrencyTypeCode
+                    where a.Id == keys.Id
                     select a).FirstOrDefault();
         }
 		         

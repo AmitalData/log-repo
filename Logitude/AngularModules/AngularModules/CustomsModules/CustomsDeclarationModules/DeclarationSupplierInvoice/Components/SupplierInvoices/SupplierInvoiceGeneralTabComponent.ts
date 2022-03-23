@@ -4437,63 +4437,48 @@ export class SupplierInvoiceFreightAmountLine extends BaseComponent {
     public set CurrencyTypeCode(newValue: string) {
         if (this.Parent.AmountList.Length > 0) {
             if (newValue != null) {
-                var exist = this.Parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.CurrencyTypeCode === newValue);
+                // var exist = this.Parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.CurrencyTypeCode === newValue);
                 this.entityPM.CurrencyTypeCode = newValue
-                if (exist) {
+                // if (exist) {
 
 
-                    var confirmWindow = new ConfirmWindow();
+                //     var confirmWindow = new ConfirmWindow();
 
 
-                    confirmWindow.Width = 400;
+                //     confirmWindow.Width = 400;
 
-                    confirmWindow.Height = 200;
-                    confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                    confirmWindow.ShowNoButton = false;
-                    confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType") + " - מסך נוספים");
-                    this.entityPM.CurrencyTypeCode = newValue;
-                    this.entityPM.CurrencyTypeCode = null;
-                    // this.entityPM.CurrencyTypeName = null;
-                    confirmWindow.WindowClosed.subscribe((event: any) => {
-                        if (confirmWindow.Yes) {
-                            //this.entityPM.CurrencyTypeCode = newValue;
-                            this.entityPM.CurrencyTypeCode = null;
-                            this.CurrencyTypeName = null;
-                            confirmWindow.Close();
-                        }
+                //     confirmWindow.Height = 200;
+                //     confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                //     confirmWindow.ShowNoButton = false;
+                //     confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType") + " - מסך נוספים");
+                //     this.entityPM.CurrencyTypeCode = newValue;
+                //     this.entityPM.CurrencyTypeCode = null;
+                //     // this.entityPM.CurrencyTypeName = null;
+                //     confirmWindow.WindowClosed.subscribe((event: any) => {
+                //         if (confirmWindow.Yes) {
+                //             //this.entityPM.CurrencyTypeCode = newValue;
+                //             this.entityPM.CurrencyTypeCode = null;
+                //             this.CurrencyTypeName = null;
+                //             confirmWindow.Close();
+                //         }
 
-                    });
-                }
-                else {
-                    this.entityPM.CurrencyTypeCode = newValue;
-                    if (this.Parent.AmountList.Length == 1) {
-                        this.Parent.EntityPM.AddSupplierInvoiceFreightAmount(this.entityPM);
-                    }
-
-
-                }
+                //     });
+                // }
+                // else {
+                this.entityPM.CurrencyTypeCode = newValue;
+                if (this.Parent.AmountList.Length == 1)
+                    this.Parent.EntityPM.AddSupplierInvoiceFreightAmount(this.entityPM);
+                // }
             }
-            else {
+            else
                 this.entityPM.CurrencyTypeCode = newValue
-
-            }
-
         }
 
-        if (this.Parent.EntityPM.SupplierInvoiceFreightAmounts.length == 1) {
-
+        if (this.Parent.EntityPM.SupplierInvoiceFreightAmounts.length == 1)
             this.Parent.FreightCurrencyTypeCode = newValue;
 
-        }
-
-        if (this.Amount != null) {
+        if (this.Amount != null)
             this.Parent.LoadCurrenciesExchangeRates(true);
-        }
-
-
-
-
-
     }
 
     public get CurrencyTypeName() { return this.entityPM.CurrencyTypeName; }

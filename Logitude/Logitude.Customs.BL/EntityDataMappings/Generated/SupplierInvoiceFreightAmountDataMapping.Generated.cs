@@ -26,7 +26,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         InvoiceCounterKey, 
 	         Tenant, 
 	         CurrencyTypeCode, 
-	         Amount,
+	         Amount, 
+	         Id,
 	      }
 
 
@@ -38,7 +39,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Tenant, 
 	         CurrencyTypeCode, 
 	         Amount, 
-	         CurrencyTypeName,
+	         CurrencyTypeName, 
+	         Id,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -47,9 +49,24 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	    public void PMToPOCO(SupplierInvoiceFreightAmountPM entityPM, SupplierInvoiceFreightAmount entityPOCO)
         {
 			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationId))
+            {
+				entityPOCO.DeclarationId = entityPM.DeclarationId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvoiceCounterKey))
+            {
+				entityPOCO.InvoiceCounterKey = entityPM.InvoiceCounterKey;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
 				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyTypeCode))
+            {
+				entityPOCO.CurrencyTypeCode = entityPM.CurrencyTypeCode;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Amount))
@@ -86,15 +103,35 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Amount = entityPOCO.Amount;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
+
 		}
 
 		public void PMToOldPM(SupplierInvoiceFreightAmountPM entityPM, SupplierInvoiceFreightAmountPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationId))
+            {
+                oldEntityPM.DeclarationId = entityPM.DeclarationId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvoiceCounterKey))
+            {
+                oldEntityPM.InvoiceCounterKey = entityPM.InvoiceCounterKey;
+            }
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
                 oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyTypeCode))
+            {
+                oldEntityPM.CurrencyTypeCode = entityPM.CurrencyTypeCode;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Amount))
