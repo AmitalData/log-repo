@@ -567,7 +567,7 @@
     ListFieldLable="&quot;ExporterNumberListLable&quot;"
     ListLableDefaultText="&quot;Exporter Number&quot;"
     ListLocalDefaultText="&quot;מספר יצואן&quot;"
-    IsNullable="true"
+    IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"

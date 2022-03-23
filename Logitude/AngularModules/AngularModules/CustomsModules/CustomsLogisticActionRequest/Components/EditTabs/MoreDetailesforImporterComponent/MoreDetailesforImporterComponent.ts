@@ -10,7 +10,7 @@ import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator"
 export class MoreDetailesforImporterComponent extends BaseComponent {
     public DataContext: any = this;
     entityPM: LogisticActionRequestPM;
-    public ObjectTableName: string = "Customs.LogisticActionRequestGeneralTabComponent";
+    public ObjectTableName: string = "Customs.LogisticActionRequest";
     public OriginalEntityPM: LogisticActionRequestPM;
     public ClonedEntityPM: LogisticActionRequestPM;
     FIELD_IS_REQUIERD: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");

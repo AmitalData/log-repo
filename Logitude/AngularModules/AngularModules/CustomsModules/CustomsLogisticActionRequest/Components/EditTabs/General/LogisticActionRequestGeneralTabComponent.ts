@@ -19,6 +19,7 @@ import { ResponseDataBase } from 'Customs/DataContract/ResponseData/ResponseData
 import { CustomMessageProgressComponent } from 'CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { CargoIdentifireTypeListService } from 'Customs/Services/StandardLists/CargoIdentifireTypeListService';
 import { CargoIdentifireTypePM } from 'Customs/EntityPMs/CargoIdentifireTypePM';
+import { Validator } from 'Infrastructure/Validators/Validator';
 
 @Component({
     templateUrl: './LogisticActionRequestGeneralTabComponent.html',
@@ -52,6 +53,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         'PackagingTypeCode',
         'Quantity',
         'DeliverySiteID',
+        'RequestReason',
     ]
     public SecondCargoIDPlaceholder: string = " ";
     public ThirdCargoIdPlaceholder: string = " ";
@@ -68,13 +70,17 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     get ExporterNumber() { return this.entityPM?.ExporterNumber }
     set ExporterNumber(value: string) {
         this.entityPM.ExporterNumber = value;
+        this.setRequiredField('ExporterNumber', !value)
     }
 
     get RequestDate() { return this.entityPM?.RequestDate }
     set RequestDate(value: Date) { this.entityPM.RequestDate = value; }
 
     get RequestType() { return this.entityPM?.RequestType }
-    set RequestType(value: string) { this.entityPM.RequestType = value; }
+    set RequestType(value: string) { 
+        this.entityPM.RequestType = value; 
+        this.setRequiredField('RequestType', !value)
+    }
 
     get CargoIdentifierType() { return this.entityPM?.CargoIdentifierType }
     set CargoIdentifierType(value: string) {
@@ -105,7 +111,10 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     }
 
     get PackagingTypeCode() { return this.entityPM?.PackagingTypeCode }
-    set PackagingTypeCode(value: string) { this.entityPM.PackagingTypeCode = value; }
+    set PackagingTypeCode(value: string) { 
+        this.entityPM.PackagingTypeCode = value;
+        this.setRequiredField('PackagingTypeCode', !value)
+    }
 
     get Quantity() { return this.entityPM?.Quantity }
     set Quantity(value: number) {
@@ -332,23 +341,23 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     }
 
 
-    // invalidate(): boolean {
-    //     if (!this.submit) return;
+    invalidate(): boolean {
+        if (!this.submit) return;
 
-    //     this.ValidationErrorsList = []
-    //     this.requierdFieldsList
-    //         .filter(filed => !this[filed])
-    //         .forEach(filed =>
-    //             this.ValidationErrorsList.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Customs.LogisticActionRequest.F." + filed))));
-
-    //     // Validator.TryValidateObject(this.entityPM, this.ObjectTableName,  this.ValidationErrorsList);
-    //     return !!this.ValidationErrorsList.length;
-    // }
+        this.ValidationErrorsList = []
+        this.requierdFieldsList
+            .filter(filed => !this[filed])
+            .forEach(filed =>
+                this.ValidationErrorsList.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Customs.LogisticActionRequest.F." + filed))));
+        
+        // Validator.TryValidateObject(this.entityPM, this.ObjectTableName,  this.ValidationErrorsList);
+        return !!this.ValidationErrorsList.length;
+    }
 
 
     async OnCustomSendOptionsButtonClick(customSendOptionsArgs) {
         this.submit = true;
-        // if (this.invalidate()) return;
+        if (this.invalidate()) return;
 
         const entity: LogisticActionRequestPM = await this.SaveEntityChanges();
         this.entityPM.Id = entity.Id;
