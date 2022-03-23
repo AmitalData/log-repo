@@ -58,6 +58,22 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.StorageNo).HasColumnName("StorageNo").HasMaxLength(20).IsUnicode(true);
 
             this.Property(t => t.ExportDealIdentification).HasColumnName("ExportDealIdentification").HasMaxLength(16).IsUnicode(true);
+
+            this.Property(t => t.PackageQuantity).HasColumnName("PackageQuantity");
+
+            this.Property(t => t.GrossMassMeasure).HasColumnName("GrossMassMeasure");
+
+            this.Property(t => t.MarksNumbers).HasColumnName("MarksNumbers").HasMaxLength(512).IsUnicode(false);
+
+            this.Property(t => t.ExportLoadingPortcode).HasColumnName("ExportLoadingPortcode").HasMaxLength(10).IsUnicode(false);
+
+            this.Property(t => t.StorageSiteCode).HasColumnName("StorageSiteCode").HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.ExportUnloadingPortCode).HasColumnName("ExportUnloadingPortCode").HasMaxLength(17).IsUnicode(false);
+
+            this.Property(t => t.FinalDestinationPortCode).HasColumnName("FinalDestinationPortCode").HasMaxLength(17).IsUnicode(false);
+
+            this.Property(t => t.IsDangerousGoods).HasColumnName("IsDangerousGoods");
         }
     }
 }
