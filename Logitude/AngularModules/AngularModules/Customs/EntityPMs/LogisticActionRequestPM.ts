@@ -174,6 +174,11 @@ export class LogisticActionRequestPM {
     public set HaveDeclarationId(newValue: boolean) { if (this.haveDeclarationId != newValue) { this.haveDeclarationId = newValue; this.MarkAsDirty("HaveDeclarationId"); } }
        
 	 
+    private calculatedExporterName: string;
+    public get CalculatedExporterName() { return this.calculatedExporterName; }
+    public set CalculatedExporterName(newValue: string) { if (this.calculatedExporterName != newValue) { this.calculatedExporterName = newValue; this.MarkAsDirty("CalculatedExporterName"); } }
+       
+	 
 
     public OldEntityPM: LogisticActionRequestPM;
 		
