@@ -140,6 +140,7 @@
     <None Include="Files\DIM_InvoiceStatus.dwml" />
     <None Include="Files\DIM_InvoiceTypes.dwml" />
     <None Include="Files\DIM_OBLType.dwml" />
+    <None Include="Files\DIM_PackageTypes.dwml" />
     <None Include="Files\DIM_PaymentTerms.dwml" />
     <None Include="Files\DIM_QuoteClosingReasons.dwml" />
     <None Include="Files\DIM_QuoteStages.dwml" />

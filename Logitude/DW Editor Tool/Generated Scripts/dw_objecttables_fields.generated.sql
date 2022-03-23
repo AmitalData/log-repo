@@ -491,6 +491,47 @@ declare @DIM_OBLTypesAutomaticLastUpdateDateNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_OBLTypesAutomaticLastUpdateDateNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_OBLTypesAutomaticLastUpdateDateNewId,0,'DIM_OBLTypes','[Automatic Last Update Date]','Last Update Date','DateTime','false',0,0,'false','false','false','false','false','false','true','false')  
 ------------------------------------------------------------------------------------
+declare @DIM_PackageTypesNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PackageTypesNewId OUTPUT,'DWObjectTable' 
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn,HasCustomFields,MaxNumberOfCustomFields) Values(@DIM_PackageTypesNewId,0,'','DIM_PackageTypes','DIM_PackageTypes','Dimension','false','[Name]','false','false',0)  
+--Fields --
+declare @DIM_PackageTypesId_NumberNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PackageTypesId_NumberNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_PackageTypesId_NumberNewId,0,'DIM_PackageTypes','[Id_Number]','Id_Number','Integer','true',0,0,'true','false','false','false','false','false','false','false')  
+declare @DIM_PackageTypesIdNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PackageTypesIdNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_PackageTypesIdNewId,0,'DIM_PackageTypes','[Id]','Id','Text','true',0,15,'false','false','false','false','false','false','true','false')  
+declare @DIM_PackageTypesNameNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PackageTypesNameNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_PackageTypesNameNewId,0,'DIM_PackageTypes','[Name]','Name','Text','false',0,40,'false','false','true','false','false','false','false','false')  
+declare @DIM_PackageTypesLocalNameNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PackageTypesLocalNameNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_PackageTypesLocalNameNewId,0,'DIM_PackageTypes','[Local Name]','Local Name','nText','false',0,40,'false','false','true','false','false','false','false','false')  
+declare @DIM_PackageTypesAutomaticLastUpdateDateNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PackageTypesAutomaticLastUpdateDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_PackageTypesAutomaticLastUpdateDateNewId,0,'DIM_PackageTypes','[Automatic Last Update Date]','Last Update Date','DateTime','false',0,0,'false','false','true','false','false','false','false','false')  
+declare @DIM_PackageTypesSourceTenantNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PackageTypesSourceTenantNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,ViewFieldDisplayName,DontDisplayInView,IsMultipleSelection) Values(@DIM_PackageTypesSourceTenantNewId,0,'DIM_PackageTypes','[Source Tenant]','Source Tenant','Integer','true',0,0,'false','false','false','false','false','false','Tenant','false','false')  
+declare @DIM_PackageTypesParentTenantNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PackageTypesParentTenantNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_PackageTypesParentTenantNewId,0,'DIM_PackageTypes','[Parent Tenant]','Parent Tenant','Integer','true',0,0,'false','false','true','false','false','false','true','false')  
+declare @DIM_PackageTypesTEUNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PackageTypesTEUNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_PackageTypesTEUNewId,0,'DIM_PackageTypes','[TEU]','TEU','Decimal','false',0,0,'false','false','true','false','false','false','false','false')  
+declare @DIM_PackageTypesContainerSizeNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PackageTypesContainerSizeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_PackageTypesContainerSizeNewId,0,'DIM_PackageTypes','[Container Size]','Container Size','Integer','false',0,0,'false','false','true','false','false','false','false','false')  
+declare @DIM_PackageTypesIsContainerNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PackageTypesIsContainerNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_PackageTypesIsContainerNewId,0,'DIM_PackageTypes','[Is Container]','Is Container','Boolean','false',0,0,'false','false','true','false','false','false','false','false')  
+declare @DIM_PackageTypesVolumeNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PackageTypesVolumeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_PackageTypesVolumeNewId,0,'DIM_PackageTypes','[Volume]','Volume','Decimal','false',0,0,'false','false','true','false','false','false','false','false')  
+declare @DIM_PackageTypesPrintAsNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PackageTypesPrintAsNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_PackageTypesPrintAsNewId,0,'DIM_PackageTypes','[Print As]','Print As','Text','false',0,20,'false','false','true','false','false','false','false','false')  
+------------------------------------------------------------------------------------
 declare @DIM_PartnersNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_PartnersNewId OUTPUT,'DWObjectTable' 
 insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn,HasCustomFields,MaxNumberOfCustomFields) Values(@DIM_PartnersNewId,0,'<ArrayOfIndexItem xmlns:i="http://www.w3.org/2001/XMLSchema-instance"><IndexItem> <Columns>[InActive],[Source Tenant]</Columns></IndexItem><IndexItem> <Columns>[InActive], [Source Tenant], [Country]</Columns></IndexItem></ArrayOfIndexItem>','DIM_Partners','DIM_Partners','Dimension','false','[Name]','false','false',0)  
