@@ -121,7 +121,7 @@ export class Export2ExcelControl {
 
     initializeStartExecutionLogCheckTimer() {
         const source = interval(2000);
-        const timer$ = timer(300000); //complete after
+        const timer$ = timer(1200000); //complete after
         //return interval(2000).pipe(takeUntil(timer$));
 
         return source.pipe(takeUntil(timer$));
