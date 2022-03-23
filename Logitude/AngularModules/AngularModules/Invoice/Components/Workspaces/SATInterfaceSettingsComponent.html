@@ -15,7 +15,7 @@
 
 
                     <tr class="FormFieldRow">
-                        <td style="width:120px; ">
+                        <td style="width:128px; ">
                             <LogLabel [ObjectFieldName]="'SATInterfaceCode'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
                         </td>
 
@@ -35,7 +35,7 @@
                     </tr>
 
                     <tr class="FormFieldRow">
-                        <td style="width:120px; ">
+                        <td style="width:128px; ">
                             <LogLabel [ObjectFieldName]="'ActivationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
                         </td>
 
@@ -52,7 +52,7 @@
                     </tr>
 
                     <tr class="FormFieldRow" *ngIf="EntityPM.SATInterfaceCode === 'PROF' || EntityPM.SATInterfaceCode === 'PROF33' || EntityPM.SATInterfaceCode === 'PROF40'">
-                        <td style="width:120px; ">
+                        <td style="width:128px; ">
                             <LogLabel [ObjectFieldName]="'Token'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
                         </td>
 
@@ -81,7 +81,7 @@
 
 
                     <tr class="FormFieldRow" *ngIf="EntityPM.SATInterfaceCode === 'CONT'">
-                        <td style="width:120px; ">
+                        <td style="width:128px; ">
                             <LogLabel [Text]="'Folder'" [DataContext]="EntityPM"></LogLabel>
                         </td>
 
@@ -95,7 +95,7 @@
 
                     <tr class="FormFieldRow" *ngIf="EntityPM.SATInterfaceCode === 'PROF' || EntityPM.SATInterfaceCode === 'PROF33' || EntityPM.SATInterfaceCode === 'PROF40'">
 
-                        <td style="width:120px; ">
+                        <td style="width:128px; ">
                             <LogLabel [ObjectFieldName]="'MetodoPagoCode'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
                         </td>
 
@@ -106,6 +106,24 @@
                                     [SelectedValue]="EntityPM.MetodoPagoCode"
                                     [LookUpTableName]="'MetodoPago'">
                             </LogLov>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+
+
+                    </tr>
+
+                    <tr class="FormFieldRow" *ngIf="(EntityPM.SATInterfaceCode === 'PROF33' && HaveRegimenFiscalField) || EntityPM.SATInterfaceCode === 'PROF40'">
+
+                        <td style="width:128px; ">
+                            <LogLabel [ObjectFieldName]="'SATCompanyName'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
+                        </td>
+
+                        <td style="width:230px; ">
+                            <LogTextBox [ObjectFieldName]="'SATCompanyName'" [InputType]="'text'" [DataContext]="EntityPM"
+                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                         </td>
 
                         <td>
@@ -176,10 +194,10 @@
                                 </tr>
                             </table>
                         </td>
-                
+
                     </tr>
 
-                  
+
                     <tr>
                         <td>
                             <div></div>

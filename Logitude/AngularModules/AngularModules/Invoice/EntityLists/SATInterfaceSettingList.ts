@@ -15,5 +15,6 @@ export class SATInterfaceSettingList {
 		MetodoPagoCode: string;
 		IsARInvoiceTransferEnabled: boolean;
 		IsCartaPorteTransferEnabled: boolean;
+		SATCompanyName: string;
 	
 }

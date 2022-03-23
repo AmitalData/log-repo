@@ -29,14 +29,16 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         public static ARPaymentPM arPaymentPM;
         public static IInvoiceContext invoiceContext;
         public static ICommonDataContext commonContext;
+        private SATInterfaceSetting satSetting;
         public SATComprobante()
         {
 
         }
 
-        public SATComprobante(ARPaymentPM aRPaymentPM)
+        public SATComprobante(ARPaymentPM aRPaymentPM, SATInterfaceSetting satSetting)
         {
             arPaymentPM = aRPaymentPM;
+            this.satSetting = satSetting;
             InitalizeContexts(arPaymentPM.Tenant);
         }
 
@@ -65,7 +67,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
                 Folio = Folio.Get(arPaymentPM.PaymentNo, arPaymentCounterPrefix),
                 Fecha = Fecha.Get(),
                 LugarExpedicion = LugarExpedicion.Get(new LugarExpedicionArgs { CommonContext = commonContext, BranchId = arPaymentPM.BranchId, CurrentTenantZipCode = currentTenant.Address.ZipCode, Tenant = arPaymentPM.Tenant }),
-                Emisor = Emisor.Get(currentTenant),
+                Emisor = Emisor.Get(currentTenant, satSetting),
                 Receptor = Receptor.Get(),
                 Conceptos = Conceptos.Get(),
                 Complemento = Complemento.Get(currentTenant),
