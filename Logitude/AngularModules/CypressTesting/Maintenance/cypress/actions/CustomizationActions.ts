@@ -6,19 +6,19 @@ import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import { CustomizationSelectors } from "../selectors/CustomizationSelectors";
 
 export function NavigatesToSCustomizationWorkspace() {
-    cy.Click(CustomizationSelectors.SettingMenu,null,true);
-    cy.Click(CustomizationSelectors.CustomizationTab,null,true);
+    cy.Click(CustomizationSelectors.SettingMenu, null, true);
+    cy.Click(CustomizationSelectors.CustomizationTab, null, true);
 }
 
 export const SearchModule = () => {
     cy.wait(2000)
-    cy.FillLogTextBox(CustomizationSelectors.SearchModule,"Shipment",true);
+    cy.FillLogTextBox(CustomizationSelectors.SearchModule, "Shipment", true);
     cy.get(CustomizationSelectors.GridViewCell).contains('Shipment').click()
-    cy.Click(CustomizationSelectors.CustomeFields,null,true);
+    cy.Click(CustomizationSelectors.CustomeFields, null, true);
 }
 
 export function AssertSearchModule() {
-   BaseAssertion.AssertStatusCode(RequestAliases.EntityResource, 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.EntityResource, 200);
 }
 
 export const DefineSearchAssert = () => {
@@ -34,22 +34,33 @@ export const DefineCreateFieldAssert = () => {
 }
 
 const formatId = (id: string, appendNumber): string => {
-    return id + (appendNumber !== null? `_${appendNumber}`: "");
+    return id + (appendNumber !== null ? `_${appendNumber}` : "");
 }
 
-export function FillCustomFieldDetailes(customizationDetailes: CustomizationDetails,id:number, selectText,dropdownId, appendNumber) {
-    cy.FillLogTextBox(formatId(CustomizationSelectors.CustomFieldLable, appendNumber),customizationDetailes.FieldLabel)
-    cy.FillLogTextBox(formatId(CustomizationSelectors.CustomFieldsCode, appendNumber), customizationDetailes.Code+id)
+export function FillCustomFieldDetailes(customizationDetailes: CustomizationDetails, id: number, selectText, dropdownId, appendNumber) {
+    cy.FillLogTextBox(formatId(CustomizationSelectors.CustomFieldLable, appendNumber), customizationDetailes.FieldLabel)
+    cy.FillLogTextBox(formatId(CustomizationSelectors.CustomFieldsCode, appendNumber), customizationDetailes.Code + id)
     cy.Click(formatId("#ComboBox_0", dropdownId), null, true)
     cy.Click(".ComboBoxItem", selectText, true)
     if (customizationDetailes.MaxLength) {
-    cy.FillLogTextBox(CustomizationSelectors.CustomMinLength,customizationDetailes.MinLength)
-    cy.FillLogTextBox(CustomizationSelectors.CustomMaxLength, customizationDetailes.MaxLength)
-   }
+        cy.FillLogTextBox(CustomizationSelectors.CustomMinLength, customizationDetailes.MinLength)
+        cy.FillLogTextBox(CustomizationSelectors.CustomMaxLength, customizationDetailes.MaxLength)
+    }
 };
 
-export function EditCustomFieldDetailes(customizationDetailes: CustomizationDetails,id:number, selectText,dropdownId, appendNumber) {
+export function EditCustomFieldDetailes() {
     cy.Click('#edit', '', true);
-    cy.FillLogTextBox(CustomizationSelectors.HelpText,"Cypress Test")
+    cy.FillLogTextBox(CustomizationSelectors.HelpText, "Cypress Test")
 
- };
+};
+
+export function EditOrCreateCustomField(isEdit: Boolean, CutomFieldID: number, customizationDetailes: CustomizationDetails) {
+    if (isEdit) {
+        EditCustomFieldDetailes();
+    }
+    else {
+        cy.Click(CustomizationSelectors.AddCustomField, null, true);
+        FillCustomFieldDetailes(customizationDetailes, CutomFieldID, "Text", 3, null);
+        DefineCreateFieldAssert();
+    }
+}

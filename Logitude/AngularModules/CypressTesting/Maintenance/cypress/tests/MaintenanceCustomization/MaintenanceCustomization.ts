@@ -10,6 +10,8 @@ let customizationDetailes: CustomizationDetails
 let CutomFieldID = Math.random() * 100
 let currentlyCreated = 0;
 const LIMIT = 4; // TODO change when switching to Shipment Custom Fields
+const CELLS_PER_ROW = 10;
+
 
 //#region open Customization and search for Shipment Module
 Given("the user logged in and open Customization in setting menu", (Customization) => {
@@ -33,33 +35,24 @@ Given("the user click on Add button to add Text field", () => {
     let documentResult = null;
     cy.document().then(($document) => {
         documentResult = $document.getElementsByClassName('LogCellTemplate').length
-        currentlyCreated =  documentResult/ 4;
+        currentlyCreated = documentResult / CELLS_PER_ROW;
     });
 });
 
 Given("a text field with the following details", (dataTable) => {
     customizationDetailes = Assists.CreateInstance<CustomizationDetails>(dataTable, true);
-    console.log(currentlyCreated,"currentlyCreated")
-    if (currentlyCreated >= LIMIT) {
-        CustomizationActions.EditCustomFieldDetailes(customizationDetailes, CutomFieldID, "Text", 0, null)
-    } 
-    else {
-        cy.Click(CustomizationSelectors.AddCustomField, null, true);
-        CustomizationActions.FillCustomFieldDetailes(customizationDetailes, CutomFieldID, "Text", 3, null);
-        CustomizationActions.DefineCreateFieldAssert();
-   }
+    CustomizationActions.EditOrCreateCustomField(currentlyCreated >= LIMIT, CutomFieldID, customizationDetailes)
 });
 
 When("create text custome field", () => {
-   // if (currentlyCreated < LIMIT) {
-        cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK, true);
-   // }
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK, true);
 });
 
 Then("the text custom field should create successfully", () => {
     if (currentlyCreated < LIMIT)
         CustomizationActions.AssertCreateField();
-});//#endregion
+});
+//#endregion
 
 //#region open Add new custom fields with Code already exist
 
