@@ -709,7 +709,7 @@ Line4
     ButtonLoadGLAccounts_Click() {
         let opr = "ButtonLoadGLAccounts_Click";
         let str: string =
-            `Please insert page, you can add a header  //Tenant=1071
+            `Please insert page, you HAVE to add a header  //Tenant=1071
 Headers - this line will be deleted
 Line3
 Line4
