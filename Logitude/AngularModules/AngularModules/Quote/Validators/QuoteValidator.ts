@@ -335,4 +335,4 @@ export class QuoteValidator {
         return errors;
     }
 
-}
+}   
